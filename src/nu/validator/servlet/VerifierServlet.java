@@ -98,7 +98,6 @@ public class VerifierServlet extends HttpServlet {
             Integer.parseInt(System.getProperty("nu.validator.servlet.connection-timeout","5000")),
             Integer.parseInt(System.getProperty("nu.validator.servlet.socket-timeout","5000")),
             100);
-        PrudentHttpEntityResolver.setUserAgent(System.getProperty("nu.validator.servlet.user-agent","Validator.nu/LV"));
         // force some class loading
         new VerifierServletTransaction(null, null);
         new MessageEmitterAdapter(null, false, null, 0, false, null);

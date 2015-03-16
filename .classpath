@@ -7,7 +7,8 @@
 	<classpathentry kind="lib" path="jars/htmlparser.jar"/>
 	<classpathentry kind="lib" path="dependencies/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-fileupload-1.3.1.jar"/>
-	<classpathentry kind="lib" path="dependencies/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/httpcore-4.4.jar"/>
+	<classpathentry kind="lib" path="dependencies/httpclient-4.4.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-adapters.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-api.jar"/>

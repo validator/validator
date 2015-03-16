@@ -872,6 +872,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         httpRes = new PrudentHttpEntityResolver(SIZE_LIMIT, laxType,
                 errorHandler);
+        httpRes.setUserAgent(System.getProperty("nu.validator.servlet.user-agent","Validator.nu/LV"));
         dataRes = new DataUriEntityResolver(httpRes, laxType, errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
         entityResolver = new LocalCacheEntityResolver(dataRes);

@@ -25,25 +25,42 @@ package nu.validator.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.zip.GZIPInputStream;
 
-import nu.validator.httpclient.ssl.PromiscuousSSLProtocolSocketFactory;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
 import nu.validator.io.StreamBoundException;
 import nu.validator.io.StreamObserver;
 import nu.validator.io.SystemIdIOException;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.log4j.Logger;
+
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -63,9 +80,7 @@ import io.mola.galimatias.GalimatiasParseException;
 
     private static final Logger log4j = Logger.getLogger(PrudentHttpEntityResolver.class);
 
-    private static final MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
-
-    private static final HttpClient client = new HttpClient(manager);
+    private static HttpClient client;
 
     private static int maxRequests;
 
@@ -74,8 +89,6 @@ import io.mola.galimatias.GalimatiasParseException;
     private final ErrorHandler errorHandler;
 
     private int requestsLeft;
-
-    private boolean laxContentType;
 
     private boolean allowRnc = false;
 
@@ -89,13 +102,7 @@ import io.mola.galimatias.GalimatiasParseException;
 
     private final ContentTypeParser contentTypeParser;
 
-    static {
-        if ("true".equals(System.getProperty(
-                "nu.validator.xml.promiscuous-ssl", "false"))) {
-            Protocol.registerProtocol("https", new Protocol("https",
-                    new PromiscuousSSLProtocolSocketFactory(), 443));
-        }
-    }
+    private String userAgent;
 
     /**
      * Sets the timeouts of the HTTP client.
@@ -106,24 +113,67 @@ import io.mola.galimatias.GalimatiasParseException;
      * @param socketTimeout
      *            timeout for waiting for data in milliseconds. Zero means no
      *            timeout.
+     * @param maxRequests
+     *            maximum number of connections to a particuar host
      */
     public static void setParams(int connectionTimeout, int socketTimeout,
             int maxRequests) {
-        HttpConnectionManagerParams hcmp = client.getHttpConnectionManager().getParams();
-        hcmp.setConnectionTimeout(connectionTimeout);
-        hcmp.setSoTimeout(socketTimeout);
-        hcmp.setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION,
-                maxRequests);
-        hcmp.setMaxTotalConnections(200); // XXX take this from a property
         PrudentHttpEntityResolver.maxRequests = maxRequests;
-        HttpClientParams hcp = client.getParams();
-        hcp.setBooleanParameter(HttpClientParams.ALLOW_CIRCULAR_REDIRECTS, true);
-        hcp.setIntParameter(HttpClientParams.MAX_REDIRECTS, 20); // Gecko
-        // default
+        PoolingHttpClientConnectionManager phcConnMgr;
+        Registry<ConnectionSocketFactory> registry = //
+        RegistryBuilder.<ConnectionSocketFactory> create() //
+        .register("http", PlainConnectionSocketFactory.getSocketFactory()) //
+        .register("https", SSLConnectionSocketFactory.getSocketFactory()) //
+        .build();
+        HttpClientBuilder builder = HttpClients.custom();
+        builder.setRedirectStrategy(new LaxRedirectStrategy());
+        builder.setMaxConnPerRoute(maxRequests);
+        builder.setMaxConnTotal(200);
+        if ("true".equals(System.getProperty(
+                "nu.validator.xml.promiscuous-ssl", "false"))) { //
+            try {
+                SSLContext promiscuousSSLContext = new SSLContextBuilder() //
+                .loadTrustMaterial(null, new TrustStrategy() {
+                    public boolean isTrusted(X509Certificate[] arg0, String arg1)
+                            throws CertificateException {
+                        return true;
+                    }
+                }).build();
+                builder.setSslcontext(promiscuousSSLContext);
+                HostnameVerifier verifier = //
+                SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+                SSLConnectionSocketFactory promiscuousSSLConnSocketFactory = //
+                new SSLConnectionSocketFactory(promiscuousSSLContext, verifier);
+                registry = RegistryBuilder.<ConnectionSocketFactory> create() //
+                .register("https", promiscuousSSLConnSocketFactory) //
+                .register("http",
+                        PlainConnectionSocketFactory.getSocketFactory()) //
+                .build();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyStoreException e) {
+                e.printStackTrace();
+            }
+        }
+        phcConnMgr = new PoolingHttpClientConnectionManager(registry);
+        phcConnMgr.setDefaultMaxPerRoute(maxRequests);
+        phcConnMgr.setMaxTotal(200);
+        builder.setConnectionManager(phcConnMgr);
+        RequestConfig.Builder config = RequestConfig.custom();
+        config.setCircularRedirectsAllowed(true);
+        config.setMaxRedirects(20); // Gecko default
+        config.setConnectTimeout(connectionTimeout);
+        config.setCookieSpec(CookieSpecs.BEST_MATCH);
+        config.setSocketTimeout(socketTimeout);
+        client = builder.setDefaultRequestConfig(config.build()).build();
     }
 
-    public static void setUserAgent(String ua) {
-        client.getParams().setParameter("http.useragent", ua);
+    public void setUserAgent(String ua) {
+        userAgent = ua;
     }
 
     /**
@@ -135,7 +185,6 @@ import io.mola.galimatias.GalimatiasParseException;
             ErrorHandler errorHandler) {
         this.sizeLimit = sizeLimit;
         this.requestsLeft = maxRequests;
-        this.laxContentType = laxContentType;
         this.errorHandler = errorHandler;
         this.contentTypeParser = new ContentTypeParser(errorHandler,
                 laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml,
@@ -156,7 +205,7 @@ import io.mola.galimatias.GalimatiasParseException;
                 requestsLeft--;
             }
         }
-        GetMethod m = null;
+        HttpGet m = null;
         try {
             URL url;
             try {
@@ -183,7 +232,7 @@ import io.mola.galimatias.GalimatiasParseException;
             }
             systemId = url.toString();
             try {
-                m = new GetMethod(systemId);
+                m = new HttpGet(systemId);
             } catch (IllegalArgumentException e) {
                 SAXParseException spe = new SAXParseException(
                         e.getMessage(),
@@ -197,13 +246,12 @@ import io.mola.galimatias.GalimatiasParseException;
                 }
                 throw spe;
             }
-            m.setFollowRedirects(true);
-            m.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-            m.addRequestHeader("Accept", buildAccept());
-            m.addRequestHeader("Accept-Encoding", "gzip");
+            m.setHeader("User-Agent", userAgent);
+            m.setHeader("Accept", buildAccept());
+            m.setHeader("Accept-Encoding", "gzip");
             log4j.info(systemId);
-            client.executeMethod(m);
-            int statusCode = m.getStatusCode();
+            HttpResponse response = client.execute(m);
+            int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
                 String msg = "HTTP resource not retrievable. The HTTP status from the remote server was: "
                         + statusCode + ".";
@@ -214,7 +262,8 @@ import io.mola.galimatias.GalimatiasParseException;
                 }
                 throw spe;
             }
-            long len = m.getResponseContentLength();
+            HttpEntity entity = response.getEntity();
+            long len = entity.getContentLength();
             if (sizeLimit > -1 && len > sizeLimit) {
                 SAXParseException spe = new SAXParseException(
                         "Resource size exceeds limit.",
@@ -229,7 +278,7 @@ import io.mola.galimatias.GalimatiasParseException;
                 throw spe;
             }
             TypedInputSource is;
-            Header ct = m.getResponseHeader("Content-Type");
+            org.apache.http.Header ct = response.getFirstHeader("Content-Type");
             String contentType = null;
             final String baseUri = m.getURI().toString();
             if (ct != null) {
@@ -238,12 +287,12 @@ import io.mola.galimatias.GalimatiasParseException;
             is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
                     contentType);
 
-            Header cl = m.getResponseHeader("Content-Language");
+            Header cl = response.getFirstHeader("Content-Language");
             if (cl != null) {
                 is.setLanguage(cl.getValue().trim());
             }
 
-            Header xuac = m.getResponseHeader("X-UA-Compatible");
+            Header xuac = response.getFirstHeader("X-UA-Compatible");
             if (xuac != null) {
                 String val = xuac.getValue().trim();
                 if (!"ie=edge".equalsIgnoreCase(val)) {
@@ -255,12 +304,12 @@ import io.mola.galimatias.GalimatiasParseException;
                 }
             }
 
-            final GetMethod meth = m;
-            InputStream stream = m.getResponseBodyAsStream();
+            final HttpGet meth = m;
+            InputStream stream = entity.getContent();
             if (sizeLimit > -1) {
                 stream = new BoundedInputStream(stream, sizeLimit, baseUri);
             }
-            Header ce = m.getResponseHeader("Content-Encoding");
+            Header ce = response.getFirstHeader("Content-Encoding");
             if (ce != null) {
                 String val = ce.getValue().trim();
                 if ("gzip".equalsIgnoreCase(val)
