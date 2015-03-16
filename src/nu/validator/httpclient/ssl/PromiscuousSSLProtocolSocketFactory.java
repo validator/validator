@@ -1,7 +1,7 @@
 /*
  * This class is based on EasySSLProtocolSocketFactory from the
  * Apache Software Foundation. Modifications are
- * Copyright 2008 Mozilla Foundation. The original came with the
+ * Copyright 2008-2015 Mozilla Foundation. The original came with the
  * following notice:
  *
  * ====================================================================
@@ -38,14 +38,14 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
-import org.apache.commons.httpclient.ConnectTimeoutException;
-import org.apache.commons.httpclient.HttpClientError;
-import org.apache.commons.httpclient.params.HttpConnectionParams;
-import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
+import org.apache.http.HttpException;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.conn.scheme.SocketFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
@@ -89,17 +89,9 @@ import javax.net.ssl.TrustManager;
  * client.executeMethod(httpget);
  * </pre>
  *
- * @author <a href="mailto:oleg -at- ural.ru">Oleg Kalnichevski</a>
- *
- *         <p>
- *         DISCLAIMER: HttpClient developers DO NOT actively support this
- *         component. The component is provided as a reference material, which
- *         may be inappropriate for use without additional customization.
- *         </p>
  */
 
-public class PromiscuousSSLProtocolSocketFactory implements
-        SecureProtocolSocketFactory {
+public class PromiscuousSSLProtocolSocketFactory implements SocketFactory {
 
     /** Log object for this class. */
     private static final Log LOG = LogFactory.getLog(PromiscuousSSLProtocolSocketFactory.class);
@@ -113,7 +105,7 @@ public class PromiscuousSSLProtocolSocketFactory implements
         super();
     }
 
-    private static SSLContext createEasySSLContext() {
+    private static SSLContext createEasySSLContext() throws HttpException {
         try {
             SSLContext context = SSLContext.getInstance("SSL");
             context.init(null,
@@ -122,11 +114,11 @@ public class PromiscuousSSLProtocolSocketFactory implements
             return context;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            throw new HttpClientError(e.toString());
+            throw new HttpException(e.toString());
         }
     }
 
-    private SSLContext getSSLContext() {
+    private SSLContext getSSLContext() throws HttpException {
         if (this.sslcontext == null) {
             this.sslcontext = createEasySSLContext();
         }
@@ -134,10 +126,12 @@ public class PromiscuousSSLProtocolSocketFactory implements
     }
 
     /**
+     * @throws HttpException
      * @see SecureProtocolSocketFactory#createSocket(java.lang.String,int,java.net.InetAddress,int)
      */
     public Socket createSocket(String host, int port, InetAddress clientHost,
-            int clientPort) throws IOException, UnknownHostException {
+            int clientPort) throws IOException, UnknownHostException,
+            HttpException {
 
         return getSSLContext().getSocketFactory().createSocket(host, port,
                 clientHost, clientPort);
@@ -165,25 +159,24 @@ public class PromiscuousSSLProtocolSocketFactory implements
      * @param params
      *            {@link HttpConnectionParams Http connection parameters}
      * @return Socket a new socket
-     *
+     * @throws HttpException
+     *             if an error occurs
      * @throws IOException
      *             if an I/O error occurs while creating the socket
-     * @throws ConnectTimeoutException
      * @throws UnknownHostException
      *             if the IP address of the host cannot be determined
      */
     public Socket createSocket(final String host, final int port,
             final InetAddress localAddress, final int localPort,
-            final HttpConnectionParams params) throws IOException,
-            UnknownHostException, ConnectTimeoutException {
+            final HttpParams params) throws IOException, UnknownHostException,
+            HttpException {
         if (params == null) {
             throw new IllegalArgumentException("Parameters may not be null");
         }
-        int timeout = params.getConnectionTimeout();
-        SocketFactory socketfactory = getSSLContext().getSocketFactory();
+        int timeout = HttpConnectionParams.getConnectionTimeout(params);
+        SocketFactory socketfactory = (SocketFactory) getSSLContext().getSocketFactory();
         if (timeout == 0) {
-            return socketfactory.createSocket(host, port, localAddress,
-                    localPort);
+            return socketfactory.createSocket();
         } else {
             Socket socket = socketfactory.createSocket();
             SocketAddress localaddr = new InetSocketAddress(localAddress,
@@ -195,19 +188,41 @@ public class PromiscuousSSLProtocolSocketFactory implements
         }
     }
 
+    public Socket connectSocket(Socket sock, String host, int port,
+            InetAddress localAddress, int localPort, HttpParams params)
+            throws UnknownHostException, IOException {
+        try {
+            return getSSLContext().getSocketFactory().createSocket(host, port,
+                    localAddress, localPort);
+        } catch (HttpException e) {
+            throw new IOException(e.toString());
+        }
+    }
+
+    public Socket createSocket() throws UnknownHostException, IOException {
+        try {
+            return getSSLContext().getSocketFactory().createSocket();
+        } catch (HttpException e) {
+            throw new IOException(e.toString());
+        }
+    }
+
     /**
+     * @throws HttpException
      * @see SecureProtocolSocketFactory#createSocket(java.lang.String,int)
      */
     public Socket createSocket(String host, int port) throws IOException,
-            UnknownHostException {
+            UnknownHostException, HttpException {
         return getSSLContext().getSocketFactory().createSocket(host, port);
     }
 
     /**
+     * @throws HttpException
      * @see SecureProtocolSocketFactory#createSocket(java.net.Socket,java.lang.String,int,boolean)
      */
     public Socket createSocket(Socket socket, String host, int port,
-            boolean autoClose) throws IOException, UnknownHostException {
+            boolean autoClose) throws IOException, UnknownHostException,
+            HttpException {
         return getSSLContext().getSocketFactory().createSocket(socket, host,
                 port, autoClose);
     }
@@ -219,6 +234,10 @@ public class PromiscuousSSLProtocolSocketFactory implements
 
     public int hashCode() {
         return PromiscuousSSLProtocolSocketFactory.class.hashCode();
+    }
+
+    public boolean isSecure(Socket sock) {
+        return true;
     }
 
 }
