@@ -2,22 +2,22 @@
  * Copyright (c) 2005 Henri Sivonen
  * Copyright (c) 2007-2015 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -58,8 +58,8 @@ import io.mola.galimatias.GalimatiasParseException;
  *          hsivonen Exp $
  * @author hsivonen
  */
-@SuppressWarnings("deprecation")
-public class PrudentHttpEntityResolver implements EntityResolver {
+@SuppressWarnings("deprecation") public class PrudentHttpEntityResolver
+        implements EntityResolver {
 
     private static final Logger log4j = Logger.getLogger(PrudentHttpEntityResolver.class);
 
@@ -99,7 +99,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Sets the timeouts of the HTTP client.
-     * 
+     *
      * @param connectionTimeout
      *            timeout until connection established in milliseconds. Zero
      *            means no timeout.
@@ -237,7 +237,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             }
             is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
                     contentType);
-            
+
             Header cl = m.getResponseHeader("Content-Language");
             if (cl != null) {
                 is.setLanguage(cl.getValue().trim());
@@ -249,7 +249,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 if (!"ie=edge".equalsIgnoreCase(val)) {
                     SAXParseException spe = new SAXParseException(
                             "X-UA-Compatible HTTP header must have the value \u201CIE=edge\u201D,"
-                                + " was \u201C" + val + "\u201D.",
+                                    + " was \u201C" + val + "\u201D.",
                             publicId, systemId, -1, -1);
                     errorHandler.error(spe);
                 }
@@ -422,7 +422,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Returns the acceptAllKnownXmlTypes.
-     * 
+     *
      * @return the acceptAllKnownXmlTypes
      */
     public boolean isAcceptAllKnownXmlTypes() {
@@ -431,7 +431,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Sets the acceptAllKnownXmlTypes.
-     * 
+     *
      * @param acceptAllKnownXmlTypes
      *            the acceptAllKnownXmlTypes to set
      */
@@ -442,7 +442,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Returns the allowGenericXml.
-     * 
+     *
      * @return the allowGenericXml
      */
     public boolean isAllowGenericXml() {
@@ -451,7 +451,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Sets the allowGenericXml.
-     * 
+     *
      * @param allowGenericXml
      *            the allowGenericXml to set
      */
@@ -462,7 +462,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Returns the allowXhtml.
-     * 
+     *
      * @return the allowXhtml
      */
     public boolean isAllowXhtml() {
@@ -471,7 +471,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Sets the allowXhtml.
-     * 
+     *
      * @param allowXhtml
      *            the allowXhtml to set
      */
@@ -486,7 +486,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     /**
      * Returns the allowHtml.
-     * 
+     *
      * @return the allowHtml
      */
     public boolean isAllowHtml() {
