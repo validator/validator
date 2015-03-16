@@ -77,7 +77,6 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `collections` - sorting of collections (utility code)
   * `datatype` - checking microsyntax of attribute values (datatype library)
   * `gnu/xml/aelfred2` - processing XML (XML parser)
-  * `httpclient/ssl` - enabling the `promiscuous-ssl` option (to skip cert checks)
   * `io` - variety of \*InputStream classes, `DataUri`, related exception classes
   * `json` - SAX-inspired streaming interface for writing JSON (utility code)
   * `localentities` - fetching resources from local cache; `LocalCacheEntityResolver`
