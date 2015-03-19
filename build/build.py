@@ -798,7 +798,7 @@ class Release():
     for filename in findFiles(distDir):
       runCmd('"%s" -ab %s' % (gpgCmd, filename))
 
-  def upload(self, path):
+  def uploadToReleasesHost(self, path):
     for filename in findFiles(distDir):
       runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
 
@@ -874,21 +874,30 @@ class Release():
       writeHash(filename, "sha1")
 
   def createNightly(self, jarOrWar):
+    self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
+    self.writeVersion()
     self.createExecutable(jarOrWar)
     removeIfExists(os.path.join(distDir, "VERSION"))
+    self.createDist(jarOrWar)
     self.writeHashes()
     self.sign()
-    self.upload(nightliesPath)
+    self.uploadToReleasesHost(nightliesPath)
 
   def createAndUploadDist(self, jarOrWar):
-    self.setVersion()
-    print "Building %s/vnu-%s.%s.zip" % (distDir, self.version, jarOrWar)
     self.createExecutable(jarOrWar)
+    self.createDist(jarOrWar)
+    self.writeHashes()
+    self.sign()
+    self.uploadDist()
+
+  def createDist(self, jarOrWar):
+    self.setVersion()
+    print "Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version)
     docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
     for filename in docs:
       shutil.copy(os.path.join(buildRoot, filename), distDir)
     os.chdir("build")
-    distroFile = os.path.join("vnu-%s.%s.zip" % (self.version, jarOrWar))
+    distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar ,self.version))
     removeIfExists(distroFile)
     zf = zipfile.ZipFile(distroFile, "w")
     for dirname, subdirs, files in os.walk("dist"):
@@ -899,12 +908,12 @@ class Release():
     for filename in docs:
       removeIfExists(os.path.join("dist", filename))
       removeIfExists(os.path.join("dist", "VERSION"))
-      removeIfExists(os.path.join("dist", "vnu.%s" % jarOrWar))
+     # removeIfExists(os.path.join("dist", "vnu.%s" % jarOrWar))
     shutil.move(distroFile, "dist")
     os.chdir("..")
-    self.writeHashes()
-    self.sign()
-    self.upload(releasesPath)
+
+  def uploadDist(self):
+    self.uploadToReleasesHost(releasesPath)
     self.uploadToGithub()
 
   def createOrUpdateGithubData(self):
