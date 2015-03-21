@@ -773,6 +773,7 @@ class Release():
       os.path.join(jingTrangDir, "build", "jing.jar"),
       os.path.join(jarsDir, "htmlparser.jar"),
     ])
+    self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
 
   def reInitDistDir(self):
     removeIfDirExists(distDir)
@@ -788,19 +789,38 @@ class Release():
     f.write(self.version)
     f.close()
 
+  def writeHash(self, filename, md5OrSha1):
+      BLOCKSIZE = 65536
+      hasher = md5()
+      if md5OrSha1 == "sha1":
+        hasher = sha1()
+      with open(filename, 'rb') as f:
+        buf = f.read(BLOCKSIZE)
+        while len(buf) > 0:
+          hasher.update(buf)
+          buf = f.read(BLOCKSIZE)
+      o = open("%s.%s" % (filename, md5OrSha1), 'wb')
+      o.write(hasher.hexdigest())
+      o.close
+
+  def writeHashes(self):
+    for filename in findFiles(distDir):
+      if os.path.basename(filename) in self.docs:
+        continue
+      self.writeHash(filename, "md5")
+      self.writeHash(filename, "sha1")
+
+  def sign(self):
+    for filename in findFiles(distDir):
+      if os.path.basename(filename) in self.docs:
+        continue
+      runCmd('"%s" --yes -ab %s' % (gpgCmd, filename))
+
   def createArtifacts(self):
     self.reInitDistDir()
     self.setVersion()
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
       % (javaCmd, self.classpath, self.buildXml, self.artifactId))
-
-  def sign(self):
-    for filename in findFiles(distDir):
-      runCmd('"%s" -ab %s' % (gpgCmd, filename))
-
-  def uploadToReleasesHost(self, path):
-    for filename in findFiles(distDir):
-      runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
 
   def createBundle(self):
     self.createArtifacts()
@@ -868,36 +888,46 @@ class Release():
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
       % (javaCmd, self.classpath, self.buildXml, jarOrWar))
 
-  def writeHashes(self):
+  def removeExtras(self):
+    removeIfExists(os.path.join(distDir, "VERSION"))
+    sigsums = re.compile("^.+\.asc$|^.+\.md5$|.+\.sha1$")
     for filename in findFiles(distDir):
-      writeHash(filename, "md5")
-      writeHash(filename, "sha1")
+      if (os.path.basename(filename) in self.docs
+          or sigsums.match(filename)):
+        removeIfExists(filename)
+
+  def cleanAndCreateAdditional(self):
+    self.removeExtras()
+    self.writeHashes()
+    self.sign()
 
   def createNightly(self, jarOrWar):
     self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
-    self.writeVersion()
     self.createExecutable(jarOrWar)
-    removeIfExists(os.path.join(distDir, "VERSION"))
+    self.cleanAndCreateAdditional()
     self.createDist(jarOrWar)
-    self.writeHashes()
-    self.sign()
+    self.cleanAndCreateAdditional()
     self.uploadToReleasesHost(nightliesPath)
 
   def createAndUploadDist(self, jarOrWar):
+    self.setVersion()
     self.createExecutable(jarOrWar)
+    self.cleanAndCreateAdditional()
     self.createDist(jarOrWar)
-    self.writeHashes()
-    self.sign()
+    self.cleanAndCreateAdditional()
     self.uploadDist()
 
+  def createAndUploadDistributions(self):
+    self.createAndUploadDist("jar")
+    self.createAndUploadDist("war")
+
   def createDist(self, jarOrWar):
-    self.setVersion()
     print "Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version)
-    docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
-    for filename in docs:
-      shutil.copy(os.path.join(buildRoot, filename), distDir)
+    if "nightly" not in self.version:
+      for filename in self.docs:
+        shutil.copy(os.path.join(buildRoot, filename), distDir)
     os.chdir("build")
-    distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar ,self.version))
+    distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar, self.version))
     removeIfExists(distroFile)
     zf = zipfile.ZipFile(distroFile, "w")
     for dirname, subdirs, files in os.walk("dist"):
@@ -905,16 +935,8 @@ class Release():
       for filename in files:
         zf.write(os.path.join(dirname, filename))
     zf.close()
-    for filename in docs:
-      removeIfExists(os.path.join("dist", filename))
-      removeIfExists(os.path.join("dist", "VERSION"))
-     # removeIfExists(os.path.join("dist", "vnu.%s" % jarOrWar))
     shutil.move(distroFile, "dist")
     os.chdir("..")
-
-  def uploadDist(self):
-    self.uploadToReleasesHost(releasesPath)
-    self.uploadToGithub()
 
   def createOrUpdateGithubData(self):
     runCmd('"%s" tag -f v%s' % (gitCmd, validatorVersion))
@@ -941,7 +963,17 @@ class Release():
         "-n %s" % os.path.basename(filename),
         "-f %s" % filename,
       ]
-      runCmd('"%s" upload %s' % (ghRelCmd, " ".join(args)))
+      if "zip" in filename:
+        runCmd('"%s" upload %s' % (ghRelCmd, " ".join(args)))
+
+  def uploadToReleasesHost(self, path):
+    for filename in findFiles(distDir):
+      if "nightly" in self.version or "zip" in filename:
+        runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
+
+  def uploadDist(self):
+    self.uploadToReleasesHost(releasesPath)
+    self.uploadToGithub()
 
   def check(self):
     vnu = os.path.join(distDir, "vnu.jar")
@@ -957,20 +989,6 @@ class Release():
       sys.exit(1)
     if runCmd('"%s" -jar %s --version' % (javaCmd, vnu)):
       sys.exit(1)
-
-def writeHash(filename, md5OrSha1):
-    BLOCKSIZE = 65536
-    hasher = md5()
-    if md5OrSha1 == "sha1":
-      hasher = sha1()
-    with open(filename, 'rb') as f:
-      buf = f.read(BLOCKSIZE)
-      while len(buf) > 0:
-        hasher.update(buf)
-        buf = f.read(BLOCKSIZE)
-    o = open("%s.%s" % (filename, md5OrSha1), 'wb')
-    o.write(hasher.hexdigest())
-    o.close
 
 def createTarball():
   args = [
@@ -1345,8 +1363,7 @@ else:
       release = Release()
       release.deployToCentral(stagingRepoUrl)
       release.createOrUpdateGithubData()
-      release.createAndUploadDist("jar")
-      release.createAndUploadDist("war")
+      release.createAndUploadDistributions()
     elif arg == 'htmlparser-bundle':
       release = Release("htmlparser")
       release.createBundle()
