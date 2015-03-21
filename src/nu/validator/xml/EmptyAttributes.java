@@ -28,7 +28,7 @@ import org.xml.sax.Attributes;
  * @version $Id$
  * @author hsivonen
  */
-public class EmptyAttributes implements Attributes {
+public final class EmptyAttributes implements Attributes {
 
     public final static EmptyAttributes EMPTY_ATTRIBUTES = new EmptyAttributes();
     

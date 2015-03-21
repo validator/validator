@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class StringWithoutLineBreaks extends AbstractDatatype {
+public final class StringWithoutLineBreaks extends AbstractDatatype {
 
     /**
      * The singleton instance.
@@ -32,7 +32,7 @@ public class StringWithoutLineBreaks extends AbstractDatatype {
     public static final StringWithoutLineBreaks THE_INSTANCE = new StringWithoutLineBreaks();
 
     /**
-     * Package-private constructor
+     * Private constructor
      */
     private StringWithoutLineBreaks() {
         super();

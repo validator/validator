@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class FloatingPointExponentPositive extends AbstractDatatype {
+public final class FloatingPointExponentPositive extends AbstractDatatype {
 
     /**
      * The singleton instance.

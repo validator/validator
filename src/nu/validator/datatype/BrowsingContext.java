@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class BrowsingContext extends AbstractDatatype {
+public final class BrowsingContext extends AbstractDatatype {
 
     /**
      * The singleton instance.

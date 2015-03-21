@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import com.ibm.icu.text.UnicodeSet;
 
-public class ParenthesisStart extends AbstractUnicodeClassCharacter {
+public final class ParenthesisStart extends AbstractUnicodeClassCharacter {
     
     private static final UnicodeSet UNICODE_SET = new UnicodeSet("[:Ps:]");
     

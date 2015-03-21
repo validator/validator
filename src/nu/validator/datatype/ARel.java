@@ -27,7 +27,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.HashSet;
 
-public class ARel extends AbstractRel {
+public final class ARel extends AbstractRel {
 
     private static final HashSet<String> registeredValues = new HashSet<String>();
 
@@ -69,7 +69,7 @@ public class ARel extends AbstractRel {
     public static final ARel THE_INSTANCE = new ARel();
 
     /**
-     * Package-private constructor
+     * Private constructor
      */
     private ARel() {
         super();

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * @version $Id$
  * @author hsivonen
  */
-public class AttributeUtil {
+public final class AttributeUtil {
 
     /**
      * An empty string array instance.

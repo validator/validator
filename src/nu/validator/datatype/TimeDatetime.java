@@ -25,7 +25,7 @@ package nu.validator.datatype;
 
 import java.util.regex.Pattern;
 
-public class TimeDatetime extends AbstractDatetime {
+public final class TimeDatetime extends AbstractDatetime {
     /**
      * The singleton instance.
      */
@@ -97,6 +97,7 @@ public class TimeDatetime extends AbstractDatetime {
      *
      */
     private static final Pattern THE_PATTERN = Pattern.compile("^[ \\t\\r\\n\\f]*(?:(?:([0-9]{4,})-([0-9]{2}))|(?:([0-9]{4,})-([0-9]{2})-([0-9]{2}))|(?:([0-9]{2})-([0-9]{2}))|(?:([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]+))?)?)|(?:([0-9]{4,})-([0-9]{2})-([0-9]{2})(?:T| )([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]+))?)?)|(?:Z|(?:[+-]([0-9]{2}):?([0-9]{2})))|(?:([0-9]{4,})-([0-9]{2})-([0-9]{2})(?:T| )([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]+))?)?(?:Z|(?:[+-]([0-9]{2}):?([0-9]{2}))))|(?:([0-9]{4,})-W([0-9]{2}))|(?:([0-9]{4,}))|(?:P(?:(?:[0-9]+D)|(?:(?:[0-9]+D)?T[0-9]+H)|(?:(?:[0-9]+D)?T(?:[0-9]+H)?[0-9]+M)|(?:(?:[0-9]+D)?T(?:(?:[0-9]+)H)?(?:(?:[0-9]+)M)?(?:[0-9]+(?:\\.([0-9]+))?S))))|(?:[ \\t\\r\\n\\f]*[0-9]+(?:(?:[ \\t\\r\\n\\f]*(?:[Ww]|[Dd]|[Hh]|[Mm]))|(?:(?:\\.([0-9]+))?[ \\t\\r\\n\\f]*[Ss])))+)[ \\t\\r\\n\\f]*$");
+
     private TimeDatetime() {
         super();
     }

@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class MimeType extends AbstractDatatype {
+public final class MimeType extends AbstractDatatype {
 
     /**
      * The singleton instance.

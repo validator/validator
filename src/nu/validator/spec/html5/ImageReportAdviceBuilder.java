@@ -39,7 +39,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-public class ImageReportAdviceBuilder implements ContentHandler {
+public final class ImageReportAdviceBuilder implements ContentHandler {
 
     private static final String NS = "http://www.w3.org/1999/xhtml";
 

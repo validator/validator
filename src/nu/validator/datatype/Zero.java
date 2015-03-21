@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class Zero extends AbstractDatatype {
+public final class Zero extends AbstractDatatype {
     
     /**
      * The singleton instance.

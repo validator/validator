@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class XmlName extends AbstractDatatype {
+public final class XmlName extends AbstractDatatype {
 
     public static boolean isNameStart(char c) {
         return ((c >= '\u0041' && c <= '\u005A')
