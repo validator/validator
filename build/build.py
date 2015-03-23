@@ -907,7 +907,7 @@ class Release():
     self.cleanAndCreateAdditional()
     self.createDist(jarOrWar)
     self.cleanAndCreateAdditional()
-    self.uploadToReleasesHost(nightliesPath)
+    self.uploadToReleasesHost("%s/%s" % (nightliesPath, jarOrWar))
 
   def createAndUploadDist(self, jarOrWar):
     self.setVersion()
@@ -915,7 +915,7 @@ class Release():
     self.cleanAndCreateAdditional()
     self.createDist(jarOrWar)
     self.cleanAndCreateAdditional()
-    self.uploadDist()
+    self.uploadDist(jarOrWar)
 
   def createAndUploadDistributions(self):
     self.createAndUploadDist("jar")
@@ -971,8 +971,8 @@ class Release():
       if "nightly" in self.version or "zip" in filename:
         runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
 
-  def uploadDist(self):
-    self.uploadToReleasesHost(releasesPath)
+  def uploadDist(self, jarOrWar):
+    self.uploadToReleasesHost("%s/%s" % (releasesPath, jarOrWar))
     self.uploadToGithub()
 
   def check(self):
