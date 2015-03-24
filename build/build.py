@@ -61,8 +61,8 @@ releasesHost = "releasesHost"
 nightliesPath = "/var/www/nightlies"
 releasesPath = "/var/www/releases"
 
-releaseDate = "14 March 2015"
-validatorVersion = "15.3.14"
+releaseDate = time.strftime('%d %B %Y')
+validatorVersion = time.strftime('%y.%-m.%-e')
 jingVersion = "20130806VNU"
 htmlparserVersion = "1.4.1"
 
@@ -695,7 +695,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.statistics=%d' % statistics,
     '-Dnu.validator.servlet.style-sheet=' + stylesheet,
     '-Dnu.validator.servlet.user-agent=' + userAgent,
-    '-Dnu.validator.servlet.version=3',
+    '-Dnu.validator.servlet.version=' + validatorVersion,
     '-Dnu.validator.spec.html5-load=' + html5specLoad,
     '-Dnu.validator.spec.html5-link=' + html5specLink,
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),

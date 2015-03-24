@@ -200,7 +200,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final char[] SERVICE_TITLE;
 
-    private static final char[] VERSION = "Living Validator".toCharArray();
+    private static final char[] LIVING_VERSION = "Living Validator".toCharArray();
+
+    private static final char[] VERSION = System.getProperty(
+            "nu.validator.servlet.version", "Living Validator").toCharArray();
 
     private static final char[] RESULTS_TITLE;
 
@@ -1525,7 +1528,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     && System.getProperty("nu.validator.servlet.service-name",
                             "").equals("Validator.nu")) {
                 emitter.startElement("span");
-                emitter.characters(VERSION);
+                emitter.characters(LIVING_VERSION);
                 emitter.endElement("span");
             }
         }
@@ -1948,6 +1951,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         emitter.startElement("a", attrs);
         emitter.characters(ABOUT_THIS_SERVICE);
         emitter.endElement("a");
+    }
+
+    void emitVersion() throws SAXException {
+        emitter.characters(VERSION);
     }
 
     void emitOtherFacetLink() throws SAXException {

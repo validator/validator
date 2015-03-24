@@ -17,7 +17,10 @@
 		><?SaxCompiler-code t.validate(); ?></div
 		><hr></hr
 		><div id="about"><p
-                    ><a href="about.html">About this checker</a> • <a href="about.html#issues">Report an issue</a></p
+			><a href="about.html">About this checker</a
+			> • <a href="about.html#issues">Report an issue</a
+			> • <span class="version">Version <?SaxCompiler-code t.emitVersion(); ?></span
+			></p
 		></div
 	></body
 ></html>
