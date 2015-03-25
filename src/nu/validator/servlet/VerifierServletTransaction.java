@@ -202,8 +202,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final char[] LIVING_VERSION = "Living Validator".toCharArray();
 
-    private static final char[] VERSION = System.getProperty(
-            "nu.validator.servlet.version", "Living Validator").toCharArray();
+    private static final char[] VERSION;
 
     private static final char[] RESULTS_TITLE;
 
@@ -212,6 +211,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final char[] ABOUT_THIS_SERVICE = "About this Service".toCharArray();
 
     private static final char[] SIMPLE_UI = "Simplified Interface".toCharArray();
+
+    private static final String USER_AGENT;
 
     private static Spec html5spec;
 
@@ -342,6 +343,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean showOutline;
 
+    private String userAgent;
+
     private BaseUriTracker baseUriTracker = null;
 
     private String charsetOverride = null;
@@ -387,6 +390,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     "nu.validator.servlet.results-title", props.getProperty(
                             "nu.validator.servlet.results-title",
                             "Validation results"))).toCharArray();
+            VERSION = (System.getProperty("nu.validator.servlet.version",
+                    props.getProperty("nu.validator.servlet.version",
+                            "Living Validator"))).toCharArray();
+            USER_AGENT= (System.getProperty("nu.validator.servlet.user-agent",
+                    props.getProperty("nu.validator.servlet.user-agent",
+                            "Validator.nu/LV")));
 
             log4j.debug("Starting to loop over config file lines.");
 
@@ -695,6 +704,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         setup();
 
+        if (request.getParameter("useragent") != null) {
+            userAgent = scrub(request.getParameter("useragent"));
+        } else {
+            userAgent = USER_AGENT;
+        }
         showSource = (request.getParameter("showsource") != null);
         showOutline = (request.getParameter("showoutline") != null);
         if (request.getParameter("showimagereport") != null) {
@@ -875,7 +889,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         httpRes = new PrudentHttpEntityResolver(SIZE_LIMIT, laxType,
                 errorHandler);
-        httpRes.setUserAgent(System.getProperty("nu.validator.servlet.user-agent","Validator.nu/LV"));
+        httpRes.setUserAgent(userAgent);
         dataRes = new DataUriEntityResolver(httpRes, laxType, errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
         entityResolver = new LocalCacheEntityResolver(dataRes);
@@ -1955,6 +1969,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     void emitVersion() throws SAXException {
         emitter.characters(VERSION);
+    }
+
+    void emitUserAgentInput() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("name", "useragent");
+        attrs.addAttribute("list", "useragents");
+        attrs.addAttribute("value", userAgent);
+        emitter.startElement("input", attrs);
+        emitter.endElement("input");
     }
 
     void emitOtherFacetLink() throws SAXException {

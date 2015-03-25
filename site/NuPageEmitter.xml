@@ -6,7 +6,8 @@
 	><head
 		><?SaxCompiler-code t.emitIcon(); ?><?SaxCompiler-code t.emitStyle(); ?><title
 		><?SaxCompiler-code t.emitTitle(false); ?> - Nu Html Checker</title
-	></head
+		><meta name="viewport" content="width=device-width, initial-scale=1"
+		/></head
 	><body
 		><div id="banner"
 			><h1 id="title"
@@ -19,7 +20,7 @@
 		><div id="about"><p
 			><a href="about.html">About this checker</a
 			> • <a href="about.html#issues">Report an issue</a
-			> • <span class="version">Version <?SaxCompiler-code t.emitVersion(); ?></span
+			> • <span class="version">Version: <?SaxCompiler-code t.emitVersion(); ?></span
 			></p
 		></div
 	></body

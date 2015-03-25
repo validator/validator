@@ -51,7 +51,6 @@ acronym:hover, abbr:hover {
 
 body {
 	padding-bottom: 6em;
-	min-width: 40em; /* for the tabs, mostly */
 }
 
 h3 {
@@ -66,7 +65,7 @@ h3 {
 }
 
 textarea {
-	width: 98.5%;
+	width: 95.5%;
 }
 
 label {
@@ -230,11 +229,12 @@ textarea {
 }
 
 #doc {
-	width: 99%;
-	padding-left: 4px;
-	padding-top: 2px;
+	width: 95.5%;
 	margin-left: 2px;
 	margin-top: 2px;
+	padding: 3px 5px 2px 5px;
+	border-radius: 6px;
+	border: solid #ccc 1px;
 }
 
 #doc[type="file"] {
@@ -244,6 +244,10 @@ textarea {
 
 #docselect {
 	margin-left: 3px;
+}
+
+#submit {
+	margin-left: 2px;
 }
 
 table {
@@ -428,7 +432,7 @@ code {
 .extract code {
 	background-color: inherit;
 	border: none;
-	padding: none;
+	padding: 0;
 }
 
 dl {
@@ -776,15 +780,16 @@ dl.inputattrs .highlight {
 	color: blue;
 }
 
+.checkboxes {
+	margin-left: 2px;
+}
+
 .checkboxes label {
 	margin-right: 16px;
 }
 
 .showwhat {
-	padding: 2px;
-	padding-right: 6px;
-	padding-top: 3px;
-	padding-bottom: 2px;
+	padding: 3px 6px 2px 2px;
 	border-radius: 6px;
 	border: solid #ccc 1px;
 	font-size: 11px;
@@ -797,4 +802,33 @@ dl.inputattrs .highlight {
 
 label[for=showimagereport] {
 	margin-right: 0px;
+}
+
+input[list=useragents] {
+	width: 45.5%;
+	padding: 2px 4px 3px 4px;
+	border-radius: 6px;
+	border: solid #ccc 1px;
+}
+
+@media (max-width: 767px) {
+	.useragent {
+		display: block;
+		margin-top: 8px;
+	}
+	#inputregion {
+		margin-top: 0px;
+	}
+	input[list=useragents] {
+		width: 76.9%;
+	}
+}
+
+@media (max-width: 479px) {
+	input[list=useragents] {
+		width: 96.8%;
+	}
+	div#about {
+		font-size: 13px;
+	}
 }

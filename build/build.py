@@ -1079,6 +1079,8 @@ def preparePropertiesFile():
   f = open(os.path.join(filesDir, "misc.properties"), 'w')
   f.write("nu.validator.servlet.service-name=%s\n" % serviceName)
   f.write("nu.validator.servlet.results-title=%s\n" % resultsTitle)
+  f.write("nu.validator.servlet.version=%s\n" % validatorVersion)
+  f.write("nu.validator.servlet.user-agent=%s\n" % userAgent)
   f.close()
 
 def prepareLocalEntityJar():

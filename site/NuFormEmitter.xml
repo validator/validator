@@ -18,6 +18,9 @@
 			><?SaxCompiler-code t.emitShowImageReportField();
 			?>image report</label
 			></span
+			><span class="useragent"><label title="Specify the user-agent string to send in the document request"
+			>User-Agent <?SaxCompiler-code t.emitUserAgentInput(); ?></label
+			></span
 		></p
 		><div id="inputregion"
 			><label id="inputlabel" for="doc">Document URL:</label
