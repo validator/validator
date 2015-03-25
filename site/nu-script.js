@@ -50,6 +50,7 @@ function boot() {
 function reboot() {
 	boot()
 	initFieldHolders()
+	initUserAgents()
 	installDynamicStyle()
 	updateFragmentIdHilite()
 	window.setInterval(emulateHashChanged, 50)
@@ -125,6 +126,43 @@ function initFieldHolders() {
 		installTextarea()
 		modeSelect.value = 'textarea'
 	}
+}
+
+function initUserAgents() {
+	var userAgents = createHtmlElement("datalist")
+	userAgents.id = 'useragents'
+	userAgents.appendChild(createLabeledOption(
+		'Mozilla/5.0 (Linux; Android 4.4.2; en-us; SC-04E Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.5 Chrome/28.0.1500.94 Mobile Safari/537.36',
+		'Android'))
+	userAgents.appendChild(createLabeledOption(
+		'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+		'Chrome'))
+	userAgents.appendChild(createLabeledOption(
+		'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0',
+		'Firefox'))
+	userAgents.appendChild(createLabeledOption(
+		'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko',
+		'Internet Explorer'))
+	userAgents.appendChild(createLabeledOption(
+		'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25',
+		'iPhone/iOS Safari'))
+	userAgents.appendChild(createLabeledOption(
+		'Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36 OPR/28.0.1750.48',
+		'Opera'))
+	userAgents.appendChild(createLabeledOption(
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.4.10 (KHTML, like Gecko) Version/8.0.4 Safari/600.4.10',
+		'Safari'))
+	userAgents.appendChild(createLabeledOption(
+		'Validator.nu/LV',
+		'default'))
+	document.querySelector(".useragent").appendChild(userAgents)
+}
+
+function createLabeledOption(value, label) {
+	var rv = createHtmlElement('option')
+	rv.value = value
+	rv.label = label
+	return rv
 }
 
 function createOption(text, value) {
