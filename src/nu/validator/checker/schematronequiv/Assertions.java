@@ -126,6 +126,33 @@ public class Assertions extends Checker {
         return "";
     }
 
+    private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<String, String[]>();
+
+    static {
+        INPUT_ATTRIBUTES.put("autocomplete", new String[] { "text", "search",
+                "url", "tel", "e-mail", "password", "datetime", "date",
+                "month", "week", "time", "datetime-local", "number", "range",
+                "color" });
+        INPUT_ATTRIBUTES.put("list", new String[] { "text", "search", "url",
+                "tel", "e-mail", "datetime", "date", "month", "week", "time",
+                "datetime-local", "number", "range", "color" });
+        INPUT_ATTRIBUTES.put("maxlength", new String[] { "text", "search",
+                "url", "tel", "e-mail", "password" });
+        INPUT_ATTRIBUTES.put("pattern", new String[] { "text", "search", "url",
+                "tel", "e-mail", "password" });
+        INPUT_ATTRIBUTES.put("placeholder", new String[] { "text", "search",
+                "url", "tel", "e-mail", "password", "number" });
+        INPUT_ATTRIBUTES.put("readonly", new String[] { "text", "search",
+                "url", "tel", "e-mail", "password", "datetime", "date",
+                "month", "week", "time", "datetime-local", "number" });
+        INPUT_ATTRIBUTES.put("required", new String[] { "text", "search",
+                "url", "tel", "e-mail", "password", "datetime", "date",
+                "month", "week", "time", "datetime-local", "number",
+                "checkbox", "radio", "file" });
+        INPUT_ATTRIBUTES.put("size", new String[] { "text", "search", "url",
+                "tel", "e-mail", "password" });
+    }
+
     private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<String, String>();
 
     static {
@@ -1390,6 +1417,20 @@ public class Assertions extends Checker {
                             errObsoleteAttribute(attLocal, localName,
                                     " Use CSS instead.");
                         }
+                    } else if (INPUT_ATTRIBUTES.containsKey(attLocal)
+                            && "input" == localName) {
+                        String typeVal = "text";
+                        if (atts.getIndex("", "type") > -1) {
+                            typeVal = atts.getValue("", "type");
+                        }
+                        String[] allowedTypes = INPUT_ATTRIBUTES.get(attLocal);
+                        Arrays.sort(allowedTypes);
+                        if (Arrays.binarySearch(allowedTypes, typeVal) < 0) {
+                            err("Attribute \u201c" + attLocal
+                                    + "\u201d is only allowed when the input"
+                                    + " type is "
+                                    + renderTypeList(allowedTypes) + ".");
+                        }
                     } else if ("dropzone" == attLocal) {
                         String[] tokens = atts.getValue(i).toString().split(
                                 "[ \\t\\n\\f\\r]+");
@@ -2181,6 +2222,23 @@ public class Assertions extends Checker {
                     return;
             }
         }
+    }
+
+    private CharSequence renderTypeList(String[] types) {
+        StringBuilder sb = new StringBuilder();
+        int len = types.length;
+        for (int i = 0; i < len; i++) {
+            if (i > 0) {
+                sb.append(", ");
+            }
+            if (i == len - 1) {
+                sb.append("or ");
+            }
+            sb.append("\u201C");
+            sb.append(types[i]);
+            sb.append('\u201D');
+        }
+        return sb;
     }
 
     private CharSequence renderRoleSet(Set<String> roles) {
