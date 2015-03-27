@@ -1,4 +1,5 @@
-# 15.3.27 (27 March 2015)
+# 15.3.27
+27 March 2015
   - Renamed from "Nu HTML Checker" to "Nu Html Checker".
   - Improved error messages for input[type] attribute mismatches.
   - Added support for checking object[typemustmatch] per-spec.
