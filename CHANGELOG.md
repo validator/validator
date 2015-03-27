@@ -1,3 +1,44 @@
+# 15.3.27 (27 March 2015)
+  - Renamed from "Nu HTML Checker" to "Nu Html Checker".
+  - Improved error messages for input[type] attribute mismatches.
+  - Added support for checking object[typemustmatch] per-spec.
+  - Added error message for case of title element that only has whitespace.
+  - Dropped all meta[name] checking. We now just accept any arbitrary
+    meta[name] value without doing any checking on it at all.
+  - Made a couple select/option error messages more precise.
+  - Added `useragent` parameter, for allowing you to specify any arbitrary
+    user-agent string for the checker to use when fetching remote documents.
+  - Added option to limit maximum number of errors shown. Exposed thru
+    `nu.validator.messages.limit` Java system prop & `--messages-limit`
+    option for the build script. Controls limit on maximum number of
+    messages the checker service will report for a single document before
+    stopping with a "Too many messages." fatal error.
+  - Added full support for checking documents at SNI origins.
+  - Changed backend handling for the case when the "promiscuous-ssl" is on
+    (that is, when you're requesting the doc-fetching backend ignore any
+    SSL/TLS cert errors). This should be a transparent change.
+  - Updated doc-fetching backend to Apache HTTP Components HttpClient 4.4.
+  - Make the API/CLI (command-line interface) emit source extracts &
+    "hilite" info.  When you set the `--format` option to `json`, `xml`,
+    `xhtml`, or `html` (but not `gnu` or `text`), the output now includes:
+      - an extract from the doc source (`extract` field in JSON output)
+      - which extract part to hilight (JSON `hiliteLength` & `hiliteStart`)
+      - error range starting line/column (JSON `firstColumn` & `firstLine`)
+  - Fixed regression that caused CLI/API to parse .xhtml docs as text/html
+    instead of using the XML parser.
+  - Replaced all Jena IRI code dependencies with dependency on galimatias.
+  - Now available from (Maven) Central Repository (nu.validator.validator).
+  - Made a number of look&feel refinements to the Web frontend.
+  - Changed build to cut dependency download size from ~300MB down to ~16MB.
+  - Upgraded to Jetty 9.2.9 & upgraded many other build/run dependencies to
+    latest versions; e.g., log4j 1.2.17, Apache Commons Codec 1.10.
+  - Dropped some dependencies that aren't actually needed.
+  - Made change to force java to always use Saxon instead of Xalan.
+  - Renamed all org.whattf classes to nu.validator.
+  - Did large reorganization/consolidation of sources.
+  - Added `--javaversion` option, to generate class files targeted for
+    particular VM versions (compiles for Java6/1.6 by default).
+
 # 16 February 2015
   - added new "`sizes` attr required when `srcset` specifies width" check
   - added `--skip-non-html` option to CLI; http://goo.gl/sKjRD5
