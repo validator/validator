@@ -1,16 +1,16 @@
 
 What’s new: This release drops all `meta[name]` checking and adds: improved
 error messages for `input[type]` attribute mismatches; support for checking
-`object[typemustmatch]`; and a new error message for `title` elements that
-only have whitespace; new `useragent` request parameter, for allowing you
+`object[typemustmatch]`; new error message for `title` elements that
+only have whitespace; new `useragent` request param, to allow you
 to specify any arbitrary user-agent string for the checker to use when
 fetching remote documents; new `nu.validator.messages.limit` Java system
-prop for controlling the limit on maximum number of messages the checker
-service will report for a single document before stopping with a "Too many
-messages." fatal error. This release also adds full support for checking
-documents at SNI origins, and changes the API/CLI (command-line interface)
+prop to control limit on maximum number of messages the checker
+service will report for a single doc before stopping with a "Too many
+messages" fatal error. This release also adds full support for checking
+documents at SNI origins & changes the API/CLI (command-line interface)
 to emit source extracts & “hilite” info when you set the `--format` option
-to `json`, `xml`, `xhtml`, or `html`, and fixes a regression that caused
+to `json`, `xml`, `xhtml`, or `html` & fixes regression that caused
 CLI/API to parse .xhtml docs as text/html instead of using the XML parser.
 More: https://github.com/validator/validator/blob/master/CHANGELOG.md#15327
 
