@@ -7,7 +7,7 @@ changes to any options/interfaces the checker exposes for developers.
   - Renamed from “Nu HTML Checker” to “Nu Html Checker”.
   - Improved error messages for `input[type]` attribute mismatches.
   - Added support for checking `object[typemustmatch]` per-spec.
-  - Added error message for case of title element that only has whitespace.
+  - Added error message for `title` element that only has whitespace.
   - Dropped all `meta[name]` checking. We now just accept any arbitrary
     meta[name] value without doing any checking on it at all.
   - Made a couple select/option error messages more precise.
