@@ -12,7 +12,7 @@ changes the API/CLI (command-line interface) to emit source extracts +
 “hilite” info when you set the `--format` option to `json`, `xml`, `xhtml`,
 or `html` & fixes regression that caused CLI/API to parse .xhtml docs as
 text/html instead of using the XML parser.
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#15327
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#15328
 
 The files in this release provide a portable standalone version of the Nu Html
 Checker in two different forms: as a Java jar file, and as a Java war file.
