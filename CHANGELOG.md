@@ -8,8 +8,8 @@ changes to any options/interfaces the checker exposes for developers.
   - Improved error messages for `input[type]` attribute mismatches.
   - Added support for checking `object[typemustmatch]` per-spec.
   - Added error message for `title` element that only has whitespace.
-  - Dropped all `meta[name]` checking. We now just accept any arbitrary
-    meta[name] value without doing any checking on it at all.
+  - Dropped all `meta[name]` checking. Any arbitrary `meta[name]` value
+    is now accepted unchecked.
   - Made a couple select/option error messages more precise.
   - Added `useragent` parameter, for allowing you to specify any arbitrary
     user-agent string for the checker to use when fetching remote documents.
