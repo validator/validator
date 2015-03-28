@@ -1,5 +1,5 @@
 
-28 March 2015
+28 March 2015.
 What’s new: This release drops all `meta[name]` checking and adds: improved
 error messages for `input[type]` attribute mismatches; support for checking
 `object[typemustmatch]`; new error message for `title` elements that only
