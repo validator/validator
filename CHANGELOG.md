@@ -1,3 +1,7 @@
+With a few exceptions, this is a record of mainly just user-facing
+changes—that is, either changes to the actual behavior of the checker, or
+changes to any interfaces the checker exposes for developers.
+
 # 15.3.27
 27 March 2015
   - Renamed from "Nu HTML Checker" to "Nu Html Checker".
