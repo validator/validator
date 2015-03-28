@@ -30,10 +30,10 @@ changes to any options/interfaces the checker exposes for developers.
   - Changed backend handling for the case when the “promiscuous-ssl” option
     is on (that is, when you’re requesting the doc-fetching backend ignore
     any SSL/TLS cert errors). This should be a transparent change.
-  - Updated doc-fetching backend to Apache HTTP Components HttpClient 4.4.
   - Now available from (Maven) Central Repository (nu.validator.validator).
   - Made a number of look&feel refinements to the Web frontend.
   - Replaced all Jena IRI code dependencies with dependency on galimatias.
+  - Updated doc-fetching backend to Apache HTTP Components HttpClient 4.4.
   - Upgraded to Jetty 9.2.9 & upgraded many other build/run dependencies to
     latest versions; e.g., log4j 1.2.17, Apache Commons Codec 1.10.
   - Dropped some dependencies that aren’t actually needed.
