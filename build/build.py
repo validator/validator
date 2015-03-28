@@ -952,6 +952,7 @@ class Release():
     args.append('-n "%s"' % releaseDate)
     f = open(os.path.join(buildRoot, "WHATSNEW.md"))
     desc = f.read().replace('"', '\\"')
+    desc = f.read().replace('`', '\\`')
     args.append('-d "%s"' % desc)
     runCmd('"%s" edit -p %s' % (ghRelCmd, " ".join(args)))
 
@@ -968,8 +969,7 @@ class Release():
 
   def uploadToReleasesHost(self, path):
     for filename in findFiles(distDir):
-      if "nightly" in self.version or "zip" in filename:
-        runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
+      runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
 
   def uploadDist(self, jarOrWar):
     self.uploadToReleasesHost("%s/%s" % (releasesPath, jarOrWar))
