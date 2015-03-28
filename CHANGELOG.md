@@ -1,14 +1,14 @@
 With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
-changes to any interfaces the checker exposes for developers.
+changes to any options/interfaces the checker exposes for developers.
 
 # 15.3.28
 28 March 2015
-  - Renamed from "Nu HTML Checker" to "Nu Html Checker".
-  - Improved error messages for input[type] attribute mismatches.
-  - Added support for checking object[typemustmatch] per-spec.
+  - Renamed from “Nu HTML Checker” to “Nu Html Checker”.
+  - Improved error messages for `input[type]` attribute mismatches.
+  - Added support for checking `object[typemustmatch]` per-spec.
   - Added error message for case of title element that only has whitespace.
-  - Dropped all meta[name] checking. We now just accept any arbitrary
+  - Dropped all `meta[name]` checking. We now just accept any arbitrary
     meta[name] value without doing any checking on it at all.
   - Made a couple select/option error messages more precise.
   - Added `useragent` parameter, for allowing you to specify any arbitrary
@@ -17,14 +17,14 @@ changes to any interfaces the checker exposes for developers.
     `nu.validator.messages.limit` Java system prop & `--messages-limit`
     option for the build script. Controls limit on maximum number of
     messages the checker service will report for a single document before
-    stopping with a "Too many messages." fatal error.
+    stopping with a “Too many messages” fatal error.
   - Added full support for checking documents at SNI origins.
-  - Changed backend handling for the case when the "promiscuous-ssl" is on
-    (that is, when you're requesting the doc-fetching backend ignore any
-    SSL/TLS cert errors). This should be a transparent change.
+  - Changed backend handling for the case when the “promiscuous-ssl” option
+    is on (that is, when you’re requesting the doc-fetching backend ignore
+    any SSL/TLS cert errors). This should be a transparent change.
   - Updated doc-fetching backend to Apache HTTP Components HttpClient 4.4.
   - Make the API/CLI (command-line interface) emit source extracts &
-    "hilite" info.  When you set the `--format` option to `json`, `xml`,
+    “hilite” info.  When you set the `--format` option to `json`, `xml`,
     `xhtml`, or `html` (but not `gnu` or `text`), the output now includes:
       - an extract from the doc source (`extract` field in JSON output)
       - which extract part to hilight (JSON `hiliteLength` & `hiliteStart`)
@@ -37,7 +37,7 @@ changes to any interfaces the checker exposes for developers.
   - Changed build to cut dependency download size from ~300MB down to ~16MB.
   - Upgraded to Jetty 9.2.9 & upgraded many other build/run dependencies to
     latest versions; e.g., log4j 1.2.17, Apache Commons Codec 1.10.
-  - Dropped some dependencies that aren't actually needed.
+  - Dropped some dependencies that aren’t actually needed.
   - Made change to force java to always use Saxon instead of Xalan.
   - Renamed all org.whattf classes to nu.validator.
   - Did large reorganization/consolidation of sources.
