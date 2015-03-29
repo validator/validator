@@ -130,27 +130,27 @@ public class Assertions extends Checker {
 
     static {
         INPUT_ATTRIBUTES.put("autocomplete", new String[] { "text", "search",
-                "url", "tel", "e-mail", "password", "datetime", "date",
+                "url", "tel", "email", "password", "datetime", "date",
                 "month", "week", "time", "datetime-local", "number", "range",
                 "color" });
         INPUT_ATTRIBUTES.put("list", new String[] { "text", "search", "url",
-                "tel", "e-mail", "datetime", "date", "month", "week", "time",
+                "tel", "email", "datetime", "date", "month", "week", "time",
                 "datetime-local", "number", "range", "color" });
         INPUT_ATTRIBUTES.put("maxlength", new String[] { "text", "search",
-                "url", "tel", "e-mail", "password" });
+                "url", "tel", "email", "password" });
         INPUT_ATTRIBUTES.put("pattern", new String[] { "text", "search", "url",
-                "tel", "e-mail", "password" });
+                "tel", "email", "password" });
         INPUT_ATTRIBUTES.put("placeholder", new String[] { "text", "search",
-                "url", "tel", "e-mail", "password", "number" });
+                "url", "tel", "email", "password", "number" });
         INPUT_ATTRIBUTES.put("readonly", new String[] { "text", "search",
-                "url", "tel", "e-mail", "password", "datetime", "date",
+                "url", "tel", "email", "password", "datetime", "date",
                 "month", "week", "time", "datetime-local", "number" });
         INPUT_ATTRIBUTES.put("required", new String[] { "text", "search",
-                "url", "tel", "e-mail", "password", "datetime", "date",
+                "url", "tel", "email", "password", "datetime", "date",
                 "month", "week", "time", "datetime-local", "number",
                 "checkbox", "radio", "file" });
         INPUT_ATTRIBUTES.put("size", new String[] { "text", "search", "url",
-                "tel", "e-mail", "password" });
+                "tel", "email", "password" });
     }
 
     private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<String, String>();
