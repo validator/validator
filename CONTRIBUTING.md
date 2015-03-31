@@ -15,7 +15,7 @@ Along with using the [project issue tracker][1] you can get help in real time on
 
    [1]: https://github.com/validator/validator/issues
    [2]: https://gitter.im/validator/validator
-   [2]: http://webchat.freenode.net/?channels=whatwg
+   [3]: http://webchat.freenode.net/?channels=whatwg
 
 ## Want to build, test, and run the code?
 
