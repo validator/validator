@@ -7,7 +7,8 @@ project, and about "signing off" on code contributions. Please make sure to read
 ## Questions or problems?
 
 Along with using the [project issue tracker][1] you can get help in real time on the
-[validator project channel on Gitter][2] or [#whatwg channel on irc.freenode.net][3].
+[validator project channel on Gitter][2] ![](https://goo.gl/1kHqwI) or the
+[#whatwg channel on irc.freenode.net][3].
 
    [1]: https://github.com/validator/validator/issues
    [2]: https://gitter.im/validator/validator
