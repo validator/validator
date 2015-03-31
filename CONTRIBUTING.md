@@ -97,7 +97,7 @@ To add a "Signed-off-by" line, invoke `git commit` with the `-s` option:
 
     git commit -s
 
-To save yourself some time, tou probably want to set `user.name` and `user.email`
+To save yourself some time, you probably want to set `user.name` and `user.email`
 values in a git config file (e.g., in `~/.gitconfig`), like this:
 
     [user]
