@@ -1,12 +1,8 @@
-## Grant of license
+## Code contributions
 
-By contributing to this project, you agree to license your contributions under
-[an MIT license](https://github.com/validator/validator/blob/master/LICENSE) and
-to waive any requirement to include an additional copyright notice.
-
-To record a grant of license for contributions to the project, please visit the
-[project CLAHub page](https://www.clahub.com/agreements/validator/validator)
-and complete the steps on the page.
+The https://github.com/validator/validator/blob/master/CONTRIBUTING.md#grant-of-license
+section at the end of this file has details about licensing code contributions to this
+project, and about "signing off" on code contributions. Please make sure to read it.
 
 ## Questions or problems?
 
@@ -83,3 +79,33 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
   * `xml` - utility code of various kinds
 * `tests` - (submodule) valid/invalid HTML docs for (regression) testing the checker
+
+## Grant of license
+
+Please read the https://github.com/validator/validator/blob/master/DCO file.
+
+By contributing to this project, you agree to license your contributions under
+[the MIT license](https://github.com/validator/validator/blob/master/LICENSE)
+and to waive any requirement to include an additional copyright notice.
+
+When contributing pull requests, please add a "Signed-off-by" line to your
+git commit messages to indicate that you have read all of the content of
+https://github.com/validator/validator/blob/master/DCO and that you certify
+your code contributions actually conform to the terms of that agreement.
+
+To add a "Signed-off-by" line, invoke `git commit` with the `-s` option:
+
+    git commit -s
+
+To save yourself some time, tou probably want to set `user.name` and `user.email`
+values in a git config file (e.g., in `~/.gitconfig`), like this:
+
+    [user]
+       name = Zaphod Beeblebrox
+       email = zaphodb@example.com
+
+Running `git commit -s` will then add a "Signed-off-by" line in this form:
+
+    Signed-off-by: Zaphod Beeblebrox <zaphodb@example.com>
+
+(Of course you need to instead use your own real name and e-mail address.)
