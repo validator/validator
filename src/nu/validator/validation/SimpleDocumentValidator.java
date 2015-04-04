@@ -133,6 +133,11 @@ public class SimpleDocumentValidator {
         this(true);
     }
 
+    /**
+     * Allow devloper to choose whether to intialize log4j or not.  This becomes important when the
+     * SimpleDocumentValidator is called from within another application that has log4j configured.
+     * Without it, the configuration call will overwrite the existing configuration.
+     */
     public SimpleDocumentValidator(boolean initializeLog4j) {
         if (initializeLog4j) {
             PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
