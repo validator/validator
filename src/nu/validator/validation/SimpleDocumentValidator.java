@@ -130,8 +130,24 @@ public class SimpleDocumentValidator {
     }
 
     public SimpleDocumentValidator() {
-        PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
-                "nu/validator/localentities/files/log4j.properties"));
+        this(true);
+    }
+
+    /* *
+     * Constructs a <code>SimpleDocumentValidator</code>.
+     *
+     * @param initializeLog4j <code>true</code> to initialize log4j,
+     * <code>false</code> to not initialize log4j. Use this parameter to prevent
+     * <code>SimpleDocumentValidator</code> from overwriting an existing log4j
+     * configuration when calling <code>SimpleDocumentValidator</code> from an
+     * application that already has log4j configured.
+     */
+    public SimpleDocumentValidator(boolean initializeLog4j) {
+        if (initializeLog4j) {
+            PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
+                    "nu/validator/localentities/files/log4j.properties"));
+        }
+
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
