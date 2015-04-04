@@ -133,18 +133,23 @@ public class SimpleDocumentValidator {
         this(true);
     }
 
-    /**
-     * Allow devloper to choose whether to intialize log4j or not.  This becomes important when the
-     * SimpleDocumentValidator is called from within another application that has log4j configured.
-     * Without it, the configuration call will overwrite the existing configuration.
+    /* *
+     * Constructs a <code>SimpleDocumentValidator</code>.
+     * 
+     * @param initializeLog4j <code>true</code> to initialize log4j,
+     * <code>false</code> to not initialize log4j. Use this parameter to prevent
+     * <code>SimpleDocumentValidator</code> from overwriting an existing log4j
+     * configuration when calling <code>SimpleDocumentValidator</code> from an
+     * application that already has log4j configured.
      */
     public SimpleDocumentValidator(boolean initializeLog4j) {
         if (initializeLog4j) {
             PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
                     "nu/validator/localentities/files/log4j.properties"));
         }
-        
-        this.entityResolver = new LocalCacheEntityResolver(new NullEntityResolver());
+
+        this.entityResolver = new LocalCacheEntityResolver(
+                new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
     }
 
@@ -265,7 +270,8 @@ public class SimpleDocumentValidator {
                     (LexicalHandler) lexicalHandler);
         }
         xmlReader = new IdFilter(xmlParser);
-        xmlReader.setFeature("http://xml.org/sax/features/string-interning", true);
+        xmlReader.setFeature("http://xml.org/sax/features/string-interning",
+                true);
         xmlReader.setContentHandler(validator.getContentHandler());
         xmlReader.setFeature(
                 "http://xml.org/sax/features/unicode-normalization-checking",
