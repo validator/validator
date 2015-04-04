@@ -130,8 +130,14 @@ public class SimpleDocumentValidator {
     }
 
     public SimpleDocumentValidator() {
-        PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
-                "nu/validator/localentities/files/log4j.properties"));
+        this(true);
+    }
+
+    public SimpleDocumentValidator(boolean initializeLog4j) {
+        if (initializeLog4j) {
+            PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
+                    "nu/validator/localentities/files/log4j.properties"));
+        }
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
