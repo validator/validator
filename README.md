@@ -360,11 +360,11 @@ open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
 For example:
 
-    * `export JAVA_HOME=/usr/lib/jvm/java-6-openjdk` (older Ubuntu)
+    * export JAVA_HOME=/usr/lib/jvm/java-6-openjdk (older Ubuntu)
 
-    * `export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64` (newer Ubuntu)
+    * export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 (newer Ubuntu)
 
-    * `export JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
+    * export JAVA_HOME=$(/usr/libexec/java_home) (Mac OS X)
 
   3. Create a working directory:
 
