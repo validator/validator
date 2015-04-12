@@ -668,6 +668,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (document == null) {
             document = request.getParameter("doc");
         }
+        if (document == null) {
+            document = request.getParameter("file");
+        }
 
         document = ("".equals(document)) ? null : document;
 
