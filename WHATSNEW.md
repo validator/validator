@@ -1,7 +1,11 @@
 
-28 March 2015.
-What’s new: This release drops all `meta[name]` checking and adds: improved
-error messages for `input[type]` attribute mismatches; support for checking
+12 April 2015.
+What’s new: This release fixes two regressions in the v15.3.28 release: A
+bug that caused spurious errors for input[type=email], and a dependency
+configuration issue that broke gzip handling in the the war release.
+Previous “What’s new” notes from the v15.3.28 release: This release drops
+all `meta[name]` checking and adds: improved error messages for
+`input[type]` attribute mismatches; support for checking
 `object[typemustmatch]`; new error message for `title` elements that only
 have whitespace; new `useragent` request param, to allow you to specify any
 arbitrary user-agent string for the checker to use when fetching remote

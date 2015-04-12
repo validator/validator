@@ -2,6 +2,11 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 15.4.12
+12 April 2015
+  - Fixed regression that caused spurious errors for input[type=email]
+  - Fixed regression in war caused by missing jar needed for gzip handling
+
 # 15.3.28
 28 March 2015
   - Renamed from “Nu HTML Checker” to “Nu Html Checker”.
