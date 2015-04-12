@@ -177,6 +177,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/icu4j-54.1.1.jar"/>
       <fileset file="../dependencies/jchardet-1.0.jar"/>
       <fileset file="../dependencies/jetty-http-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
+      <fileset file="../dependencies/jetty-server-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
       <fileset file="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/> <!-- GzipFilter provider -->
       <fileset file="../dependencies/jetty-util-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
       <fileset file="../dependencies/log4j-1.2.17.jar"/>
