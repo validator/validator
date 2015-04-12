@@ -668,6 +668,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (document == null) {
             document = request.getParameter("doc");
         }
+        if ("".equals(document)
+                && request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename") != null) {
+            document = (String) request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename");
+        }
 
         document = ("".equals(document)) ? null : document;
 
@@ -895,6 +899,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         entityResolver = new LocalCacheEntityResolver(dataRes);
         setAllowRnc(true);
         try {
+            if (document == null
+                    && request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename") != null) {
+                document = (String) request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename");
+            }
             this.errorHandler.start(document);
             PropertyMapBuilder pmb = new PropertyMapBuilder();
             pmb.put(ValidateProperty.ERROR_HANDLER, errorHandler);
@@ -1928,6 +1936,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     request.getInputStream(), SIZE_LIMIT, document)
                     : request.getInputStream());
             documentInput.setSystemId(request.getHeader("Content-Location"));
+            if (documentInput.getSystemId() == null
+                    && request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename") != null) {
+                documentInput.setSystemId((String) request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename"));
+            }
         }
         if (imageCollector != null) {
             baseUriTracker = new BaseUriTracker(documentInput.getSystemId(),
