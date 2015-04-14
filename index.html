@@ -97,6 +97,12 @@ pre {
   margin-top: 6px;
   line-height: 1.2
 }
+pre code {
+  background: transpaernt;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
 pre.aligned {
   margin-left: 40px;
 }
@@ -369,7 +375,7 @@ providing the <code>-Xss</code> option to java:
 
 </div>
   </section>
-  <section id=servlet>   
+  <section id=servlet>
     <h3>Deployment to servlet container</h3>
     <p>To run the checker inside of an existing servlet container
     such as Apache Tomcat you will need to deploy the <code>vnu.war</code>
@@ -400,7 +406,7 @@ INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
 	to modify the servlet filter configuration.
 	For example, if you wanted to disable gzip decompression you
 	could comment out that filter like this:
-	
+
 	<pre>
 &lt;!--
   &lt;filter>
@@ -558,22 +564,22 @@ Follow the steps below to build, test, and run the checker such that you can ope
 <li>Make sure you have git, python, and JDK 5 or later installed.
 
 <li>Set the <code>JAVA_HOME</code> environment variable:
-<pre>export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@</pre>
+<pre><code>export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@</code></pre>
 For example:
 <ul>
-<li>export JAVA_HOME=/usr/lib/jvm/java-6-openjdk (older Ubuntu)
-<li>export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 (newer Ubuntu)
-<li>export JAVA_HOME=$(/usr/libexec/java_home) (Mac OS X)
+<li><code>export JAVA_HOME=/usr/lib/jvm/java-6-openjdk</code> (older Ubuntu)
+<li><code>export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64</code> (newer Ubuntu)
+<li><code>export JAVA_HOME=$(/usr/libexec/java_home)</code> (Mac OS X)
 </ul>
 
 <li>Create a working directory:
-<pre>git clone https://github.com/validator/validator.git</pre>
+<pre><code>git clone https://github.com/validator/validator.git</code></pre>
 
 <li>Change into your working directory:
-<pre>cd validator</pre>
+<pre><code>cd validator</code></pre>
 
 <li>Start the build script:
-<pre>python ./build/build.py all</pre>
+<pre><code>python ./build/build.py all</code></pre>
 
 <p class=note>
 The first time you run the build script, you’ll need to be online and the
