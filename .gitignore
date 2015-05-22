@@ -5,6 +5,7 @@ build/vnu*.jar.zip
 build/vnu*.war.zip
 build/validator*.jar
 build/VERSION
+run-validator.sh
 classes/
 dependencies/
 extras/
