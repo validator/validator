@@ -172,13 +172,14 @@ public class XmlMessageEmitter extends MessageEmitter {
         endText();
         startElaboration();
         attrs.clear();
-        contentHandler.startElement("http://www.w3.org/1999/xhtml", "h2", "h2", attrs);
+        attrs.addAttribute("style", "padding-top: 1em");
+        emitter.startElement("http://www.w3.org/1999/xhtml", "h2", attrs);
         emitter.characters(USE_THE_NU_CHECKER);
         messageTextHandler.startLink(SERVICE_ORIGIN, "");
         emitter.characters(SERVICE_ORIGIN.toCharArray());
         messageTextHandler.endLink();
         emitter.characters(DIRECTLY_INSTEAD);
-        contentHandler.endElement("http://www.w3.org/1999/xhtml", "h2", "h2");
+        emitter.endElement("http://www.w3.org/1999/xhtml", "h2");
         endElaboration();
         endMessage();
     }
