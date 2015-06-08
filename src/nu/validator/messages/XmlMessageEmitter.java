@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -44,6 +44,15 @@ public class XmlMessageEmitter extends MessageEmitter {
     private final XmlExtractHandler extractHandler;
 
     private String openMessage;
+
+    private static final String SERVICE_ORIGIN = System.getProperty(
+            "nu.validator.servlet.origin", "https://validator.nu/");
+
+    private static final char[] DEPRECATION_PROLOG = ("This interface"
+            + " to HTML5 document checking is deprecated."
+            + " Use the Nu Html Checker at ").toCharArray();
+
+    private static final char[] DEPRECATION_EPILOG = " directly instead.".toCharArray();
 
     /**
      * @param contentHandler
@@ -147,7 +156,23 @@ public class XmlMessageEmitter extends MessageEmitter {
                     CharacterUtil.prudentlyScrubCharacterData(documentUri));
         }
         emitter.startElement("messages", attrs);
+        maybeEmitDeprecationWarning();
         openMessage = null;
+    }
+
+    private void maybeEmitDeprecationWarning() throws SAXException {
+        if (!("true".equals(System.getProperty("nu.validator.servlet.request.legacy")))) {
+            return;
+        }
+        startMessage(MessageType.WARNING, null, -1, -1, -1, -1, false);
+        startText();
+        emitter.characters(DEPRECATION_PROLOG);
+        messageTextHandler.startLink(SERVICE_ORIGIN, "");
+        emitter.characters(SERVICE_ORIGIN.toCharArray());
+        messageTextHandler.endLink();
+        emitter.characters(DEPRECATION_EPILOG);
+        endText();
+        endMessage();
     }
 
     /**

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -297,6 +297,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private final static String SCRIPT = System.getProperty(
             "nu.validator.servlet.script",
             "script.js");
+
+    private final static String[] LEGACY_HOSTS = System.getProperty(
+            "nu.validator.servlet.host.legacy", "").split("\\s+");
 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
@@ -617,6 +620,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "HEAD".equals(request.getMethod());
 
         this.out = response.getOutputStream();
+
+        System.setProperty("nu.validator.servlet.request.legacy", "false");
+
+        if (Arrays.asList(LEGACY_HOSTS).contains(request.getRemoteHost())) {
+            System.setProperty("nu.validator.servlet.request.legacy", "true");
+        }
 
         try {
             request.setCharacterEncoding("utf-8");
