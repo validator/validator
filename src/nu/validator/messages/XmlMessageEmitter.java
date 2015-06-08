@@ -48,11 +48,13 @@ public class XmlMessageEmitter extends MessageEmitter {
     private static final String SERVICE_ORIGIN = System.getProperty(
             "nu.validator.servlet.origin", "https://validator.nu/");
 
-    private static final char[] DEPRECATION_PROLOG = ("This interface"
-            + " to HTML5 document checking is deprecated."
-            + " Use the Nu Html Checker at ").toCharArray();
+    private static final char[] DEPRECATED_INTERFACE = ("This interface"
+            + " to HTML5 document checking is deprecated.").toCharArray();
 
-    private static final char[] DEPRECATION_EPILOG = " directly instead.".toCharArray();
+    private static final char[] USE_THE_NU_CHECKER = ("Use the"
+            + " Nu Html Checker at ").toCharArray();
+
+    private static final char[] DIRECTLY_INSTEAD = " directly instead.".toCharArray();
 
     /**
      * @param contentHandler
@@ -166,12 +168,18 @@ public class XmlMessageEmitter extends MessageEmitter {
         }
         startMessage(MessageType.WARNING, null, -1, -1, -1, -1, false);
         startText();
-        emitter.characters(DEPRECATION_PROLOG);
+        emitter.characters(DEPRECATED_INTERFACE);
+        endText();
+        startElaboration();
+        attrs.clear();
+        contentHandler.startElement("http://www.w3.org/1999/xhtml", "h2", "h2", attrs);
+        emitter.characters(USE_THE_NU_CHECKER);
         messageTextHandler.startLink(SERVICE_ORIGIN, "");
         emitter.characters(SERVICE_ORIGIN.toCharArray());
         messageTextHandler.endLink();
-        emitter.characters(DEPRECATION_EPILOG);
-        endText();
+        emitter.characters(DIRECTLY_INSTEAD);
+        contentHandler.endElement("http://www.w3.org/1999/xhtml", "h2", "h2");
+        endElaboration();
         endMessage();
     }
 
