@@ -687,7 +687,9 @@ dl.inputattrs .highlight {
 	font: caption;
 }
 
-#filters fieldset.hidden {
+#filters fieldset.hidden,
+.checkboxes input.hidden,
+.checkboxes .useragent.hidden {
 	-o-transition: all .8s ease-out;
 	-moz-transition: all .8s ease-out;
 	-ms-transition: all .8s ease-out;
@@ -698,14 +700,20 @@ dl.inputattrs .highlight {
 	margin: -45px;
 }
 
-#filters fieldset.unhidden {
-	background-color: #FFFFCC;
+#filters fieldset.unhidden,
+.checkboxes input.unhidden,
+.checkboxes .useragent.unhidden {
 	-o-transition: all .8s ease-out;
 	-moz-transition: all .8s ease-out;
 	-ms-transition: all .8s ease-out;
 	-webkit-transition: all .8s ease-out;
 	opacity: 1;
 	visibility: visible;
+}
+
+#filters fieldset.unhidden,
+.checkboxes input.unhidden {
+	background-color: #FFFFCC;
 }
 
 #filters fieldset legend {
@@ -811,13 +819,26 @@ input[list=useragents] {
 	border: solid #ccc 1px;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 925px) {
+	.checkboxes .useragent {
+		padding-left: 8px;
+	}
+}
+
+@media (max-width: 924px) {
 	.useragent {
 		display: block;
 		margin-top: 8px;
+		padding-left: 0px;
+	}
+	.checkboxes {
+		margin-bottom: -43px;
 	}
 	#inputregion {
-		margin-top: 0px;
+		margin-top: 76px;
+	}
+	.useragent.unhidden {
+		margin-bottom: -68px;
 	}
 	input[list=useragents] {
 		width: 76.9%;
@@ -825,6 +846,17 @@ input[list=useragents] {
 }
 
 @media (max-width: 479px) {
+	#show_options {
+		display: block;
+		margin-top: 8px;
+		padding-left: 0px;
+	}
+	#inputregion {
+		margin-top: 100px;
+	}
+	.useragent.unhidden {
+		margin-bottom: -90px;
+	}
 	input[list=useragents] {
 		width: 96.8%;
 	}

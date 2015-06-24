@@ -126,11 +126,26 @@ function initFieldHolders() {
 		installTextarea()
 		modeSelect.value = 'textarea'
 	}
+	document.querySelector('#show_options')
+		.addEventListener('click', function (e) {
+			toggleUserAgent()
+		}, false)
+}
+
+function toggleUserAgent() {
+	var useragent = document.querySelector('.useragent'),
+		useragent_input = document.querySelector('.useragent input')
+	if (useragent.className.indexOf("unhidden") != -1) {
+		useragent.className = useragent.className.replace(/unhidden/, 'hidden')
+		useragent_input.setAttribute("disabled", "")
+	} else {
+		useragent.className = useragent.className.replace(/hidden/, 'unhidden')
+		useragent_input.removeAttribute("disabled")
+	}
 }
 
 function initUserAgents() {
-	var userAgents = createHtmlElement("datalist")
-	userAgents.id = 'useragents'
+	var userAgents = document.querySelector("#useragents")
 	userAgents.appendChild(createLabeledOption(
 		'Mozilla/5.0 (Linux; Android 4.4.2; en-us; SC-04E Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.5 Chrome/28.0.1500.94 Mobile Safari/537.36',
 		'Android'))
@@ -155,7 +170,8 @@ function initUserAgents() {
 	userAgents.appendChild(createLabeledOption(
 		'Validator.nu/LV',
 		'default'))
-	document.querySelector(".useragent").appendChild(userAgents)
+	document.querySelector("span.useragent").appendChild(userAgents)
+	document.querySelector("input[list=useragents]").setAttribute("disabled", "")
 }
 
 function createLabeledOption(value, label) {
