@@ -13,7 +13,7 @@
 			><h1 id="title"
 				><a href="."><span>Nu Html Checker</span></a></h1
 		></div
-		><p class="disclaimer">This is an experimental checker and its behavior remains subject to change</p
+		><p class="disclaimer">This tool is an ongoing experiment in better HTML checking, and its behavior remains subject to change</p
 		><h2 id="top"><?SaxCompiler-code t.emitTitle(true); ?></h2><?SaxCompiler-code t.emitForm(); t.emitScript(); ?><div id="results"
 		><?SaxCompiler-code t.validate(); ?></div
 		><hr></hr
