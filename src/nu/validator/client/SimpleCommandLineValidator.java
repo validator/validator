@@ -216,7 +216,8 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void checkFiles(String[] args, int fileArgsStart) throws IOException, SAXException {
+    private static void checkFiles(String[] args, int fileArgsStart)
+            throws IOException, SAXException {
         for (int i = fileArgsStart; i < args.length; i++) {
             if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
                 emitFilename(args[i]);
