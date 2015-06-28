@@ -177,9 +177,10 @@ if response.getheader('Content-Encoding', 'identity').lower() == 'gzip':
   
 if fileName and gnu:
   quotedName = '"%s"' % fileName.replace('"', '\\042')
-  for line in response:
-    sys.stdout.write(quotedName)
-    sys.stdout.write(line)
+  for line in response.read().split('\n'):
+    if line:
+      sys.stdout.write(quotedName)
+      sys.stdout.write(line + '\n')
 else:
   sys.stdout.write(response.read())
 
