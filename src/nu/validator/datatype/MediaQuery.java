@@ -22,7 +22,6 @@
 
 package nu.validator.datatype;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -73,20 +72,13 @@ public class MediaQuery extends AbstractDatatype {
 
     static {
         MEDIA_TYPES.add("all");
-        MEDIA_TYPES.add("aural");
-        MEDIA_TYPES.add("braille");
-        MEDIA_TYPES.add("handheld");
         MEDIA_TYPES.add("print");
-        MEDIA_TYPES.add("projection");
         MEDIA_TYPES.add("screen");
-        MEDIA_TYPES.add("tty");
-        MEDIA_TYPES.add("tv");
-        MEDIA_TYPES.add("embossed");
         MEDIA_TYPES.add("speech");
     }
 
     private enum MediaType {
-        ALL, AURAL, BRAILLE, HANDHELD, PRINT, PROJECTION, SCREEN, TTY, TV, EMBOSSED, SPEECH, INVALID;
+        ALL, PRINT, SCREEN, SPEECH, INVALID;
         private static MediaType toCaps(String str) {
             try {
                 return valueOf(toAsciiUpperCase(str));
@@ -105,15 +97,6 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("height", ValueType.LENGTH);
         FEATURES_TO_VALUE_TYPES.put("min-height", ValueType.LENGTH);
         FEATURES_TO_VALUE_TYPES.put("max-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("device-width", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("min-device-width", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("max-device-width", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("device-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("min-device-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("max-device-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("device-aspect-ratio", ValueType.RATIO);
-        FEATURES_TO_VALUE_TYPES.put("min-device-aspect-ratio", ValueType.RATIO);
-        FEATURES_TO_VALUE_TYPES.put("max-device-aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("min-aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("max-aspect-ratio", ValueType.RATIO);
@@ -137,24 +120,9 @@ public class MediaQuery extends AbstractDatatype {
     private static final Map<String, ValueType> NONSTANDARD_FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
 
     static {
-        NONSTANDARD_FEATURES_TO_VALUE_TYPES.put("-webkit-min-device-pixel-ratio", ValueType.INTEGER);
+        NONSTANDARD_FEATURES_TO_VALUE_TYPES.put(
+                "-webkit-min-device-pixel-ratio", ValueType.INTEGER);
     }
-
-    private static final String[] visualFeatures = { "aspect-ratio", "color",
-            "color-index", "device-aspect-ratio", "max-aspect-ratio",
-            "max-color", "max-color-index", "max-device-aspect-ratio",
-            "max-monochrome", "max-resolution", "min-aspect-ratio",
-            "min-color", "min-color-index", "min-device-aspect-ratio",
-            "min-monochrome", "min-resolution", "monochrome", "orientation",
-            "resolution", };
-
-    private static final String[] bitmapFeatures = { "aspect-ratio",
-            "device-aspect-ratio", "max-aspect-ratio",
-            "max-device-aspect-ratio", "max-resolution", "min-aspect-ratio",
-            "min-device-aspect-ratio", "min-resolution", "orientation",
-            "resolution", };
-
-    private static final String scanWarning = "The media feature \u201cscan\u201d is applicable only to the media type \u201ctv\u201d. ";
 
     protected MediaQuery() {
         super();
@@ -181,7 +149,6 @@ public class MediaQuery extends AbstractDatatype {
             List<String> warnings) throws DatatypeException {
         int unmatchedParen = -1;
         int unmatchedCalcParen = -1;
-        boolean containsAural = false;
         boolean zero = true;
         String type = null;
         String feature = null;
@@ -288,9 +255,6 @@ public class MediaQuery extends AbstractDatatype {
                             errNotMediaCondition(type);
                         }
                         if (isMediaType(type)) {
-                            if ("aural".equals(type)) {
-                                containsAural = true;
-                            }
                             state = State.WS_BEFORE_AND;
                             continue;
                         } else {
@@ -704,10 +668,10 @@ public class MediaQuery extends AbstractDatatype {
                             continue;
                         }
                     } else if ('(' == c) {
-                      unmatchedCalcParen++;
-                      continue;
+                        unmatchedCalcParen++;
+                        continue;
                     } else {
-                      continue;
+                        continue;
                     }
                 case IN_VALUE_DIGITS_AFTER_DOT:
                     if ('0' == c) {
@@ -850,9 +814,6 @@ public class MediaQuery extends AbstractDatatype {
         switch (state) {
             case AFTER_CLOSE_PAREN:
             case WS_BEFORE_AND:
-                if (containsAural && WARN) {
-                    warnings.add("The media type \u201caural\u201d is deprecated. Use \u201cspeech\u201d instead. ");
-                }
                 return warnings;
             case IN_MEDIA_TYPE:
                 String kw = sb.toString();
@@ -861,9 +822,6 @@ public class MediaQuery extends AbstractDatatype {
                     errNotMediaCondition(kw);
                 }
                 if (isMediaType(kw)) {
-                    if ("aural".equals(kw) && WARN) {
-                        warnings.add("The media type \u201caural\u201d is deprecated. Use \u201cspeech\u201d instead. ");
-                    }
                     return warnings;
                 } else {
                     throw newDatatypeException("Expected a CSS media type but the query ended.");
@@ -903,31 +861,11 @@ public class MediaQuery extends AbstractDatatype {
                     "Expected a CSS media feature but saw \u201C" + feature
                             + "\u201D instead.");
         }
-        if ("scan".equals(feature) && !"tv".equals(type)) {
-            warnings.add(scanWarning);
-            return warnings;
-        }
         switch (MediaType.toCaps(type)) {
             case SPEECH:
                 warnings.add("The media feature \u201c"
                         + feature
                         + "\u201d is not applicable to the media type \u201cspeech\u201d. ");
-                return warnings;
-            case BRAILLE:
-            case EMBOSSED:
-                if (Arrays.binarySearch(visualFeatures, feature) > -1) {
-                    warnings.add("The visual media feature \u201c"
-                            + feature
-                            + "\u201d is not applicable to the tactile media type \u201c"
-                            + type + "\u201d. ");
-                }
-                return warnings;
-            case TTY:
-                if (Arrays.binarySearch(bitmapFeatures, feature) > -1) {
-                    warnings.add("The bitmap media feature \u201c"
-                            + feature
-                            + "\u201d is not applicable to the media type \u201ctty\u201d. ");
-                }
                 return warnings;
             default:
                 return warnings;
