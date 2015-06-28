@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 2008-2015 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -130,9 +130,8 @@ public class Assertions extends Checker {
 
     static {
         INPUT_ATTRIBUTES.put("autocomplete", new String[] { "text", "search",
-                "url", "tel", "email", "password", "datetime", "date",
-                "month", "week", "time", "datetime-local", "number", "range",
-                "color" });
+                "url", "tel", "email", "password", "datetime", "date", "month",
+                "week", "time", "datetime-local", "number", "range", "color" });
         INPUT_ATTRIBUTES.put("list", new String[] { "text", "search", "url",
                 "tel", "email", "datetime", "date", "month", "week", "time",
                 "datetime-local", "number", "range", "color" });
@@ -143,12 +142,12 @@ public class Assertions extends Checker {
         INPUT_ATTRIBUTES.put("placeholder", new String[] { "text", "search",
                 "url", "tel", "email", "password", "number" });
         INPUT_ATTRIBUTES.put("readonly", new String[] { "text", "search",
-                "url", "tel", "email", "password", "datetime", "date",
-                "month", "week", "time", "datetime-local", "number" });
+                "url", "tel", "email", "password", "datetime", "date", "month",
+                "week", "time", "datetime-local", "number" });
         INPUT_ATTRIBUTES.put("required", new String[] { "text", "search",
-                "url", "tel", "email", "password", "datetime", "date",
-                "month", "week", "time", "datetime-local", "number",
-                "checkbox", "radio", "file" });
+                "url", "tel", "email", "password", "datetime", "date", "month",
+                "week", "time", "datetime-local", "number", "checkbox",
+                "radio", "file" });
         INPUT_ATTRIBUTES.put("size", new String[] { "text", "search", "url",
                 "tel", "email", "password" });
     }
@@ -219,7 +218,8 @@ public class Assertions extends Checker {
                     new String[] { "img", "iframe" });
         }
         OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
-        OBSOLETE_ATTRIBUTES.put("name", new String[] { "img", "embed", "option" });
+        OBSOLETE_ATTRIBUTES.put("name",
+                new String[] { "img", "embed", "option" });
         OBSOLETE_ATTRIBUTES.put("nohref", new String[] { "area" });
         OBSOLETE_ATTRIBUTES.put("profile", new String[] { "head" });
         OBSOLETE_ATTRIBUTES.put("scheme", new String[] { "meta" });
@@ -262,9 +262,15 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES_MSG.put("coords",
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
         OBSOLETE_ATTRIBUTES_MSG.put("datapagesize", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("datafld", "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("dataformatas", "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("datasrc", "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "datafld",
+                "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "dataformatas",
+                "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "datasrc",
+                "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
         OBSOLETE_ATTRIBUTES_MSG.put("for",
                 "Use DOM Events mechanisms to register event listeners.");
         OBSOLETE_ATTRIBUTES_MSG.put("event",
@@ -338,14 +344,17 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] { "iframe" });
         OBSOLETE_STYLE_ATTRS.put("frame", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("height", new String[] { "td", "th" });
-        OBSOLETE_STYLE_ATTRS.put("hspace", new String[] { "img", "object", "embed" });
+        OBSOLETE_STYLE_ATTRS.put("hspace", new String[] { "img", "object",
+                "embed" });
         OBSOLETE_STYLE_ATTRS.put("link", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("marginbottom", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] { "iframe", "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] { "iframe",
+                "body" });
         OBSOLETE_STYLE_ATTRS.put("marginleft", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("marginright", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("margintop", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("marginwidth", new String[] { "iframe", "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginwidth",
+                new String[] { "iframe", "body" });
         OBSOLETE_STYLE_ATTRS.put("noshade", new String[] { "hr" });
         OBSOLETE_STYLE_ATTRS.put("nowrap", new String[] { "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("rules", new String[] { "table" });
@@ -356,7 +365,8 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("valign", new String[] { "col", "colgroup",
                 "tbody", "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("vlink", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("vspace", new String[] { "img", "object", "embed" });
+        OBSOLETE_STYLE_ATTRS.put("vspace", new String[] { "img", "object",
+                "embed" });
         OBSOLETE_STYLE_ATTRS.put("width", new String[] { "hr", "table", "td",
                 "th", "col", "colgroup", "pre" });
     }
@@ -578,7 +588,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the locator.
-         * 
+         *
          * @return the locator
          */
         public Locator getLocator() {
@@ -587,7 +597,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the idref.
-         * 
+         *
          * @return the idref
          */
         public String getIdref() {
@@ -596,7 +606,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the additional.
-         * 
+         *
          * @return the additional
          */
         public String getAdditional() {
@@ -661,7 +671,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the ancestorMask.
-         * 
+         *
          * @return the ancestorMask
          */
         public int getAncestorMask() {
@@ -670,7 +680,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the name.
-         * 
+         *
          * @return the name
          */
         public String getName() {
@@ -679,7 +689,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the selectedOptions.
-         * 
+         *
          * @return the selectedOptions
          */
         public boolean isSelectedOptions() {
@@ -688,7 +698,7 @@ public class Assertions extends Checker {
 
         /**
          * Sets the selectedOptions.
-         * 
+         *
          * @param selectedOptions
          *            the selectedOptions to set
          */
@@ -698,7 +708,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the labeledDescendants.
-         * 
+         *
          * @return the labeledDescendants
          */
         public boolean isLabeledDescendants() {
@@ -707,7 +717,7 @@ public class Assertions extends Checker {
 
         /**
          * Sets the labeledDescendants.
-         * 
+         *
          * @param labeledDescendants
          *            the labeledDescendants to set
          */
@@ -717,7 +727,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the trackDescendants.
-         * 
+         *
          * @return the trackDescendants
          */
         public boolean isTrackDescendant() {
@@ -726,7 +736,7 @@ public class Assertions extends Checker {
 
         /**
          * Sets the trackDescendants.
-         * 
+         *
          * @param trackDescendants
          *            the trackDescendants to set
          */
@@ -736,7 +746,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the role.
-         * 
+         *
          * @return the role
          */
         public String getRole() {
@@ -745,7 +755,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the activeDescendant.
-         * 
+         *
          * @return the activeDescendant
          */
         public String getActiveDescendant() {
@@ -754,7 +764,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the forAttr.
-         * 
+         *
          * @return the forAttr
          */
         public String getForAttr() {
@@ -763,7 +773,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the textNodeFound.
-         * 
+         *
          * @return the textNodeFound
          */
         public boolean hasTextNode() {
@@ -779,7 +789,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the imgFound.
-         * 
+         *
          * @return the imgFound
          */
         public boolean hasImg() {
@@ -795,7 +805,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the embeddedContentFound.
-         * 
+         *
          * @return the embeddedContentFound
          */
         public boolean hasEmbeddedContent() {
@@ -811,7 +821,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the figcaptionNeeded.
-         * 
+         *
          * @return the figcaptionNeeded
          */
         public boolean needsFigcaption() {
@@ -827,7 +837,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the figcaptionContentFound.
-         * 
+         *
          * @return the figcaptionContentFound
          */
         public boolean hasFigcaptionContent() {
@@ -859,7 +869,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the imagesLackingAlt
-         * 
+         *
          * @return the imagesLackingAlt
          */
         public Set<Locator> getImagesLackingAlt() {
@@ -875,7 +885,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the optionNeeded.
-         * 
+         *
          * @return the optionNeeded
          */
         public boolean isOptionNeeded() {
@@ -891,7 +901,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the optionFound.
-         * 
+         *
          * @return the optionFound
          */
         public boolean hasOption() {
@@ -907,7 +917,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the noValueOptionFound.
-         * 
+         *
          * @return the noValueOptionFound
          */
         public boolean hasNoValueOption() {
@@ -923,7 +933,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the emptyValueOptionFound.
-         * 
+         *
          * @return the emptyValueOptionFound
          */
         public boolean hasEmptyValueOption() {
@@ -939,7 +949,7 @@ public class Assertions extends Checker {
 
         /**
          * Returns the nonEmptyOption.
-         * 
+         *
          * @return the nonEmptyOption
          */
         public Locator nonEmptyOptionLocator() {
@@ -1047,8 +1057,8 @@ public class Assertions extends Checker {
             throws SAXException {
         err("An element with \u201Crole=" + role + "\u201D"
                 + " must be contained in, or owned by, an element with "
-                + renderRoleSet(REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(role)) + ".",
-                locator);
+                + renderRoleSet(REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(role))
+                + ".", locator);
     }
 
     private final void errObsoleteAttribute(String attribute, String element,
@@ -1083,8 +1093,7 @@ public class Assertions extends Checker {
         // contextmenu
         for (IdrefLocator idrefLocator : contextmenuReferences) {
             if (!menuIds.contains(idrefLocator.getIdref())) {
-                err(
-                        "The \u201Ccontextmenu\u201D attribute must refer to a \u201Cmenu\u201D element.",
+                err("The \u201Ccontextmenu\u201D attribute must refer to a \u201Cmenu\u201D element.",
                         idrefLocator.getLocator());
             }
         }
@@ -1092,8 +1101,7 @@ public class Assertions extends Checker {
         // label for
         for (IdrefLocator idrefLocator : formControlReferences) {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
-                err(
-                        "The \u201Cfor\u201D attribute of the \u201Clabel\u201D element must refer to a form control.",
+                err("The \u201Cfor\u201D attribute of the \u201Clabel\u201D element must refer to a form control.",
                         idrefLocator.getLocator());
             }
         }
@@ -1109,8 +1117,7 @@ public class Assertions extends Checker {
         // input list
         for (IdrefLocator idrefLocator : listReferences) {
             if (!listIds.contains(idrefLocator.getIdref())) {
-                err(
-                        "The \u201Clist\u201D attribute of the \u201Cinput\u201D element must refer to a \u201Cdatalist\u201D element.",
+                err("The \u201Clist\u201D attribute of the \u201Cinput\u201D element must refer to a \u201Cdatalist\u201D element.",
                         idrefLocator.getLocator());
             }
         }
@@ -1118,10 +1125,9 @@ public class Assertions extends Checker {
         // ARIA idrefs
         for (IdrefLocator idrefLocator : ariaReferences) {
             if (!allIds.contains(idrefLocator.getIdref())) {
-                err(
-                        "The \u201C"
-                                + idrefLocator.getAdditional()
-                                + "\u201D attribute must point to an element in the same document.",
+                err("The \u201C"
+                        + idrefLocator.getAdditional()
+                        + "\u201D attribute must point to an element in the same document.",
                         idrefLocator.getLocator());
             }
         }
@@ -1244,8 +1250,7 @@ public class Assertions extends Checker {
             }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
-            warn(
-                    "Attribute \u201Caria-activedescendant\u201D value should "
+            warn("Attribute \u201Caria-activedescendant\u201D value should "
                     + "either refer to a descendant element, or should "
                     + "be accompanied by attribute \u201Caria-owns\u201D.",
                     locator);
@@ -1302,7 +1307,8 @@ public class Assertions extends Checker {
         boolean href = false;
         boolean activeDescendantWithAriaOwns = false;
         // see nu.validator.datatype.ImageCandidateStrings
-        System.setProperty("nu.validator.checker.imageCandidateString.hasWidth", "0");
+        System.setProperty(
+                "nu.validator.checker.imageCandidateString.hasWidth", "0");
 
         StackNode parent = peek();
         int ancestorMask = 0;
@@ -1408,7 +1414,8 @@ public class Assertions extends Checker {
                             String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(attLocal) ? " "
                                     + OBSOLETE_ATTRIBUTES_MSG.get(attLocal)
                                     : "";
-                            errObsoleteAttribute(attLocal, localName, suggestion);
+                            errObsoleteAttribute(attLocal, localName,
+                                    suggestion);
                         }
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                         String[] elementNames = OBSOLETE_STYLE_ATTRS.get(attLocal);
@@ -1654,7 +1661,8 @@ public class Assertions extends Checker {
                             + "\u201Chref\u201D attribute.");
                 }
                 if (atts.getIndex("", "alt") < 0) {
-                    if (followW3Cspec || (titleVal == null || "".equals(titleVal))) {
+                    if (followW3Cspec
+                            || (titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"
                                     + " \u201Calt\u201D attribute, except under"
@@ -1676,8 +1684,7 @@ public class Assertions extends Checker {
                     Locator locator = entry.getValue();
                     if (node.isLabeledDescendants()) {
                         err("The \u201Clabel\u201D element may contain at most one \u201Cinput\u201D, \u201Cbutton\u201D, \u201Cselect\u201D, \u201Ctextarea\u201D, or \u201Ckeygen\u201D descendant.");
-                        warn(
-                                "\u201Clabel\u201D element with multiple labelable descendants.",
+                        warn("\u201Clabel\u201D element with multiple labelable descendants.",
                                 locator);
                     } else {
                         node.setLabeledDescendants();
@@ -1700,14 +1707,16 @@ public class Assertions extends Checker {
                 }
             } else if ("table" == localName) {
                 if (atts.getIndex("", "summary") >= 0) {
-                    errObsoleteAttribute("summary", "table",
+                    errObsoleteAttribute(
+                            "summary",
+                            "table",
                             " Consider describing the structure of the"
-                            + " \u201Ctable\u201D in a \u201Ccaption\u201D "
-                            + " element or in a \u201Cfigure\u201D element "
-                            + " containing the \u201Ctable\u201D; or,"
-                            + " simplify the structure of the"
-                            + " \u201Ctable\u201D so that no description"
-                            + " is needed.");
+                                    + " \u201Ctable\u201D in a \u201Ccaption\u201D "
+                                    + " element or in a \u201Cfigure\u201D element "
+                                    + " containing the \u201Ctable\u201D; or,"
+                                    + " simplify the structure of the"
+                                    + " \u201Ctable\u201D so that no description"
+                                    + " is needed.");
                 }
                 if (atts.getIndex("", "border") > -1) {
                     if (followW3Cspec) {
@@ -1725,7 +1734,8 @@ public class Assertions extends Checker {
                                 " Use CSS instead.");
                     }
                 }
-            } else if ("track" == localName && atts.getIndex("", "default") >= 0) {
+            } else if ("track" == localName
+                    && atts.getIndex("", "default") >= 0) {
                 for (Map.Entry<StackNode, TaintableLocatorImpl> entry : openMediaElements.entrySet()) {
                     StackNode node = entry.getKey();
                     TaintableLocatorImpl locator = entry.getValue();
@@ -1962,8 +1972,8 @@ public class Assertions extends Checker {
                     || "select" == localName || "textarea" == localName) {
                 String formVal = atts.getValue("", "form");
                 if (formVal != null) {
-                    formElementReferences.add(new IdrefLocator(
-                            new LocatorImpl(getDocumentLocator()), formVal));
+                    formElementReferences.add(new IdrefLocator(new LocatorImpl(
+                            getDocumentLocator()), formVal));
                 }
             }
 
@@ -2005,9 +2015,9 @@ public class Assertions extends Checker {
                 if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                         "content-language", atts.getValue("", "http-equiv"))) {
                     err("Using the \u201Cmeta\u201D element to specify the"
-                        + " document-wide default language is obsolete."
-                        + " Consider specifying the language on the root"
-                        + " element instead.");
+                            + " document-wide default language is obsolete."
+                            + " Consider specifying the language on the root"
+                            + " element instead.");
                 } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                         "x-ua-compatible", atts.getValue("", "http-equiv"))
                         && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
@@ -2057,8 +2067,8 @@ public class Assertions extends Checker {
         // ARIA required owner/ancestors
         Set<String> requiredAncestorRoles = REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(role);
         if (requiredAncestorRoles != null && !"presentation".equals(parentRole)
-               && !"tbody".equals(localName) && !"tfoot".equals(localName)
-               && !"thead".equals(localName)) {
+                && !"tbody".equals(localName) && !"tfoot".equals(localName)
+                && !"thead".equals(localName)) {
             if (!currentElementHasRequiredAncestorRole(requiredAncestorRoles)) {
                 if (atts.getIndex("", "id") > -1
                         && !"".equals(atts.getValue("", "id"))) {
@@ -2088,16 +2098,16 @@ public class Assertions extends Checker {
         // aria-activedescendant accompanied by aria-owns
         if (activeDescendant != null && !"".equals(activeDescendant)) {
             // String activeDescendantVal = atts.getValue("",
-                    // "aria-activedescendant");
+            // "aria-activedescendant");
             if (owns != null && !"".equals(owns)) {
                 activeDescendantWithAriaOwns = true;
                 // String[] tokens = AttributeUtil.split(owns);
                 // for (int i = 0; i < tokens.length; i++) {
-                    // String token = tokens[i];
-                    // if (token.equals(activeDescendantVal)) {
-                        // activeDescendantWithAriaOwns = true;
-                        // break;
-                    // }
+                // String token = tokens[i];
+                // if (token.equals(activeDescendantVal)) {
+                // activeDescendantWithAriaOwns = true;
+                // break;
+                // }
                 // }
             }
         }
@@ -2127,8 +2137,9 @@ public class Assertions extends Checker {
                 openSingleSelects.put(child, getDocumentLocator());
             } else if ("label" == localName) {
                 openLabels.put(child, new LocatorImpl(getDocumentLocator()));
-            } else if ("video" == localName || "audio" == localName ) {
-                openMediaElements.put(child, new TaintableLocatorImpl(getDocumentLocator()));
+            } else if ("video" == localName || "audio" == localName) {
+                openMediaElements.put(child, new TaintableLocatorImpl(
+                        getDocumentLocator()));
             }
             push(child);
             if ("select" == localName && atts.getIndex("", "required") > -1
@@ -2160,8 +2171,7 @@ public class Assertions extends Checker {
             }
             push(child);
         }
-        stack[currentPtr].setLocator(new LocatorImpl(
-                getDocumentLocator()));
+        stack[currentPtr].setLocator(new LocatorImpl(getDocumentLocator()));
     }
 
     /**
