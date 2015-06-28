@@ -1047,6 +1047,8 @@ public class Assertions extends Checker {
 
     private boolean hasMain;
 
+    private boolean hasAutofocus;
+
     private boolean hasTopLevelH1;
 
     private Set<Locator> secondLevelH1s = new HashSet<Locator>();
@@ -1449,6 +1451,12 @@ public class Assertions extends Checker {
                                         + ". Each keyword must be unique.");
                             }
                         }
+                    } else if ("autofocus" == attLocal) {
+                        if (hasAutofocus) {
+                            err("A document must not include more than one"
+                                    + " \u201Cautofocus\u201D attribute.");
+                        }
+                        hasAutofocus = true;
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
