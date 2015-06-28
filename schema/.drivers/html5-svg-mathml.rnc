@@ -23,9 +23,9 @@ annotation-xml.model.xhtml |=
 	|	common.elem.flow
 	)
 
-SVG.desc.content |= ( common.elem.flow & text )*
-SVG.title.content |= ( common.elem.flow & text )*
-SVG.metadata.content |= ( common.elem.flow & text )*
+SVG.desc.content |= common.inner.flow
+SVG.title.content |= common.inner.flow
+SVG.metadata.content |= common.inner.flow
 
 # in our integration, <mtext> is the only MathML "token element" that can
 # contain HTML element content; the <mi>, <mn>, <mo> and <ms> elements
