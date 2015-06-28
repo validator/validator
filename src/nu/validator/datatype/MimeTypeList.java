@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -32,7 +32,7 @@ public class MimeTypeList extends AbstractDatatype {
     public static final MimeTypeList THE_INSTANCE = new MimeTypeList();
 
     private enum State {
-        WS_BEFORE_TYPE, IN_TYPE, ASTERISK_TYPE_SEEN, ASTERISK_AND_SLASH_SEEN, WS_BEFORE_COMMA, SLASH_SEEN, IN_SUBTYPE
+        WS_BEFORE_TYPE, IN_TYPE, ASTERISK_TYPE_SEEN, ASTERISK_AND_SLASH_SEEN, WS_BEFORE_COMMA, SLASH_SEEN, IN_SUBTYPE, BEFORE_EXTENSION, IN_EXTENSION
     }
 
     private MimeTypeList() {
@@ -50,6 +50,9 @@ public class MimeTypeList extends AbstractDatatype {
                         continue;
                     } else if (c == '*') {
                         state = State.ASTERISK_TYPE_SEEN;
+                    } else if (c == '.') {
+                        state = State.BEFORE_EXTENSION;
+                        continue;
                     } else if (isTokenChar(c)) {
                         state = State.IN_TYPE;
                         continue;
@@ -87,6 +90,31 @@ public class MimeTypeList extends AbstractDatatype {
                         throw newDatatypeException(
                                 i,
                                 "Expected a token character or \u201C/\u201D but saw ",
+                                c, " instead.");
+                    }
+                case BEFORE_EXTENSION:
+                    if (isTokenChar(c)) {
+                        state = State.IN_EXTENSION;
+                        continue;
+                    } else {
+                        throw newDatatypeException(
+                                i,
+                                "Expected a token character but saw ",
+                                c, " instead.");
+                    }
+                case IN_EXTENSION:
+                    if (isWhitespace(c)) {
+                        state = State.WS_BEFORE_COMMA;
+                        continue;
+                    } else if (c == ',') {
+                        state = State.WS_BEFORE_TYPE;
+                        continue;
+                    } else if (isTokenChar(c)) {
+                        continue;
+                    } else {
+                        throw newDatatypeException(
+                                i,
+                                "Expected a token character, whitespace or a comma but saw ",
                                 c, " instead.");
                     }
                 case SLASH_SEEN:
@@ -132,6 +160,7 @@ public class MimeTypeList extends AbstractDatatype {
         }
         switch (state) {
             case IN_SUBTYPE:
+            case IN_EXTENSION:
             case WS_BEFORE_COMMA:
                 return;
             case ASTERISK_AND_SLASH_SEEN:
@@ -144,6 +173,8 @@ public class MimeTypeList extends AbstractDatatype {
                 throw newDatatypeException("Expected subtype but the literal ended.");
             case WS_BEFORE_TYPE:
                 throw newDatatypeException("Expected a MIME type but the literal ended.");
+            case BEFORE_EXTENSION:
+                throw newDatatypeException("Expected a file extension but the literal ended.");
         }
     }
 
