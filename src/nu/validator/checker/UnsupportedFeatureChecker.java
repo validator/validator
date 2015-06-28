@@ -44,9 +44,15 @@ public class UnsupportedFeatureChecker extends Checker {
             if (atts.getIndex("", "dirname") > -1) {
                 warn("The \u201Cdirname\u201D attribute on the \u201Ctextarea\u201D element is not supported by browsers yet.");
             }
+            if (atts.getIndex("", "inputmode") > -1) {
+                warn("The \u201Cinputmode\u201D attribute is not widely supported in browsers.");
+            }
         } else if ("input" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
                 warn("The \u201Cdirname\u201D attribute on the \u201Cinput\u201D element is not supported by browsers yet.");
+            }
+            if (atts.getIndex("", "inputmode") > -1) {
+                warn("The \u201Cinputmode\u201D attribute is not widely supported in browsers.");
             }
             String type = atts.getValue("", "type");
             if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("datetime", type)) {
