@@ -1,23 +1,17 @@
 
-12 April 2015.
-What’s new: This release fixes two regressions in the v15.3.28 release: A
-bug that caused spurious errors for input[type=email], and a dependency
-configuration issue that broke gzip handling in the the war release.
-Previous “What’s new” notes from the v15.3.28 release: This release drops
-all `meta[name]` checking and adds: improved error messages for
-`input[type]` attribute mismatches; support for checking
-`object[typemustmatch]`; new error message for `title` elements that only
-have whitespace; new `useragent` request param, to allow you to specify any
-arbitrary user-agent string for the checker to use when fetching remote
-documents; new `nu.validator.messages.limit` Java system prop to control
-limit on maximum number of messages the checker service will report for a
-single doc before stopping with a "Too many messages" fatal error. This
-release also adds full support for checking documents at SNI origins &
-changes the API/CLI (command-line interface) to emit source extracts +
-“hilite” info when you set the `--format` option to `json`, `xml`, `xhtml`,
-or `html` & fixes regression that caused CLI/API to parse .xhtml docs as
-text/html instead of using the XML parser.
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#15328
+29 June 2015.
+This release fixes a bug that caused spurious error to be emitted for ID
+references in `aria-controls` and `aria-labelledby` with trailing
+whitespace, along with fixing a bug that prevented the command-line checker
+from being able to check URLs when run in a Windows environment. It
+adds spec-conformant support for `<rb>` and `<rtc>` elements and updates
+checking of the `accept` attribute for input[type=file] to allow file
+extensions in the value (per spec). It makes the use of `data-*` attributes
+for SVG & MathML elements non-errors, as well as the use of HTML content in
+the SVG `<desc>`, `<title>`, and `<metadata>` elements. And it adds error
+messages for deprecated CSS media types/features (per spec).
+
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#15629
 
 The files in this release provide a portable standalone version of the Nu Html
 Checker in two different forms: as a Java jar file, and as a Java war file.

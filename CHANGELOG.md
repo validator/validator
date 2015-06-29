@@ -2,6 +2,23 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 15.6.29
+29 June 2015
+  - Added error messages for deprecated CSS media types/features.
+  - Changed checking of the `accept` attribute for input[type=file] to
+    allow file extensions in the value (per spec).
+  - Added error for documents that have  multiple `autofocus` attributes.
+  - Made the `<rb>` and `<rtc>` elements non-errors.
+  - Made use of `data-*` attributes for SVG & MathML elements non-errors.
+  - Made use of HTML content in the SVG `<desc>`, `<title>`, and
+    `<metadata>` elements a non-error (per spec).
+  - Changed error message for the `inputmode` attribute to a warning.
+  - Fixed a bug that caused spurious error to be emitted for ID references
+    in `aria-controls` and `aria-labelledby` with trailing whitespace.
+  - Fixed a bug that prevented the command-line checker from being able
+    to check URLs when run in a Windows environment. (patch from @mariusj)
+  - Added option to disable log4j when using Java API. (patch from @abrin)
+
 # 15.4.12
 12 April 2015
   - Fixed regression that caused spurious errors for `input[type=email]`.

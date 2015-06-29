@@ -63,7 +63,7 @@ releasesPath = "/var/www/releases"
 
 releaseDate = time.strftime('%d %B %Y')
 validatorVersion = time.strftime('%y.%-m.%-e')
-jingVersion = "20130806VNU"
+jingVersion = "20150629VNU"
 htmlparserVersion = "1.4.1"
 
 buildRoot = '.'

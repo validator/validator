@@ -257,7 +257,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="log4j" artifactId="log4j" version="1.2.17"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.1"/>
-      <dependency groupId="nu.validator" artifactId="jing" version="20130806VNU"/>
+      <dependency groupId="nu.validator" artifactId="jing" version="20150629VNU"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="4.4"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="4.4"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="9.2.9.v20150224"/>
