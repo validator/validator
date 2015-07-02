@@ -19,13 +19,13 @@ namespace local = ""
 		(	(	common.inner.phrasing
 			|	rb.elem+
 			)
-		,	(	(	rt.elem
+		|	(	(	rt.elem
 				|	rtc.elem
-				)
+				)+
 				|	(	rp.elem
 					,	(	rt.elem
 						|	rtc.elem
-						)
+						)+
 					,	rp.elem
 					)
 			)
