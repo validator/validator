@@ -88,6 +88,32 @@ public class MediaQuery extends AbstractDatatype {
         }
     }
 
+    private static final Set<String> OLD_MEDIA_TYPES = new HashSet<String>();
+
+    static {
+        OLD_MEDIA_TYPES.add("aural");
+        OLD_MEDIA_TYPES.add("braille");
+        OLD_MEDIA_TYPES.add("embossed");
+        OLD_MEDIA_TYPES.add("handheld");
+        OLD_MEDIA_TYPES.add("projection");
+        OLD_MEDIA_TYPES.add("tty");
+        OLD_MEDIA_TYPES.add("tv");
+    }
+
+    private static final Set<String> OLD_MEDIA_FEATURES = new HashSet<String>();
+
+    static {
+        OLD_MEDIA_FEATURES.add("device-width");
+        OLD_MEDIA_FEATURES.add("min-device-width");
+        OLD_MEDIA_FEATURES.add("max-device-width");
+        OLD_MEDIA_FEATURES.add("device-height");
+        OLD_MEDIA_FEATURES.add("min-device-height");
+        OLD_MEDIA_FEATURES.add("max-device-height");
+        OLD_MEDIA_FEATURES.add("device-aspect-ratio");
+        OLD_MEDIA_FEATURES.add("min-device-aspect-ratio");
+        OLD_MEDIA_FEATURES.add("max-device-aspect-ratio");
+    }
+
     private static final Map<String, ValueType> FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
 
     static {
@@ -258,6 +284,13 @@ public class MediaQuery extends AbstractDatatype {
                         if (isMediaType(type)) {
                             state = State.WS_BEFORE_AND;
                             continue;
+                        } else if (isOldMediaType(type)) {
+                            throw newDatatypeException(offset + i,
+                                    "Deprecated media type \u201C" + type
+                                            + "\u201D. For guidance, see the"
+                                            + " Media Types section in the"
+                                            + " current Media Queries"
+                                            + " specification.");
                         } else {
                             throw newDatatypeException(offset + i,
                                     "Expected a CSS media type but saw \u201C"
@@ -850,8 +883,14 @@ public class MediaQuery extends AbstractDatatype {
                 }
                 if (isMediaType(kw)) {
                     return warnings;
+                } else if (isOldMediaType(kw)) {
+                    throw newDatatypeException("Deprecated media type \u201C"
+                            + kw + "\u201D. For guidance, see the Media Types"
+                            + " section in the current Media Queries"
+                            + " specification.");
                 } else {
-                    throw newDatatypeException("Expected a CSS media type but the query ended.");
+                    throw newDatatypeException("Expected a CSS media type but"
+                            + " the query ended.");
                 }
             default:
                 throw newDatatypeException("Media query ended prematurely.");
@@ -860,6 +899,10 @@ public class MediaQuery extends AbstractDatatype {
 
     private boolean isMediaFeature(String feature) {
         return FEATURES_TO_VALUE_TYPES.containsKey(feature);
+    }
+
+    private boolean isOldMediaFeature(String type) {
+        return OLD_MEDIA_FEATURES.contains(type);
     }
 
     private ValueType valueExpectationFor(String feature) {
@@ -874,6 +917,10 @@ public class MediaQuery extends AbstractDatatype {
         return MEDIA_TYPES.contains(type);
     }
 
+    private boolean isOldMediaType(String type) {
+        return OLD_MEDIA_TYPES.contains(type);
+    }
+
     private boolean isLengthUnit(String unit) {
         return LENGTH_UNITS.contains(unit);
     }
@@ -882,6 +929,12 @@ public class MediaQuery extends AbstractDatatype {
             String type, List<String> warnings) throws DatatypeException {
         if (!isMediaType(type)) {
             return warnings;
+        }
+        if (isOldMediaFeature(feature)) {
+            throw newDatatypeException(index, "Deprecated media feature \u201C"
+                    + feature + "\u201D. For guidance, see the Deprecated Media"
+                    + " Features section in the current Media Queries"
+                    + " specification.");
         }
         if (!isMediaFeature(feature)) {
             throw newDatatypeException(index,
@@ -900,7 +953,7 @@ public class MediaQuery extends AbstractDatatype {
     }
 
     private void errNotMediaCondition(String type) throws DatatypeException {
-        if (isMediaType(type)) {
+        if (isMediaType(type) || isOldMediaType(type)) {
             throw newDatatypeException("Expected a CSS media condition but saw"
                     + " CSS media type ", type, " instead.");
         } else {

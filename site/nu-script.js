@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2005-2007 Henri Sivonen
  * Copyright (c) 2007 Simon Pieters
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -238,7 +238,7 @@ function createHtmlElement(tagName) {
 }
 
 function injectHyperlinks() {
-	// var errors = document.getElementsByClassName("error")
+	var errors = document.getElementsByClassName("error")
 	var warnings = document.getElementsByClassName("warning")
 	linkify(warnings, "checking against the HTML5 + RDFa 1.1 schema",
 		"about.html#rdfa",
@@ -252,6 +252,12 @@ function injectHyperlinks() {
 	linkify(warnings, "add identifying headings to all articles",
 		"https://www.w3.org/wiki/HTML/Usage/Headings/Missing",
 		"Identifying article elements with headings")
+	linkify(errors, "the Media Types section in the current Media Queries specification",
+		"http://drafts.csswg.org/mediaqueries/#media-types",
+		"Media Types sections in the Media Queries specification")
+	linkify(errors, "the Deprecated Media Features section in the current Media Queries specification",
+		"http://drafts.csswg.org/mediaqueries/#mf-deprecated",
+		"Deprecated Media Features section in the current Media Queries specification")
 	}
 
 function replaceSuccessFailure() {
