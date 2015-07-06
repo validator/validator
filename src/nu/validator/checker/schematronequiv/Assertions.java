@@ -1684,35 +1684,6 @@ public class Assertions extends Checker {
                         }
                     }
                 }
-            } else if ("input" == localName || "button" == localName
-                    || "select" == localName || "textarea" == localName
-                    || "keygen" == localName) {
-                for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
-                    StackNode node = entry.getKey();
-                    Locator locator = entry.getValue();
-                    if (node.isLabeledDescendants()) {
-                        err("The \u201Clabel\u201D element may contain at most one \u201Cinput\u201D, \u201Cbutton\u201D, \u201Cselect\u201D, \u201Ctextarea\u201D, or \u201Ckeygen\u201D descendant.");
-                        warn("\u201Clabel\u201D element with multiple labelable descendants.",
-                                locator);
-                    } else {
-                        node.setLabeledDescendants();
-                    }
-                }
-                if ((ancestorMask & LABEL_FOR_MASK) != 0) {
-                    boolean hasMatchingFor = false;
-                    for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
-                        String forVal = stack[currentPtr - i].getForAttr();
-                        if (forVal != null && forVal.equals(id)) {
-                            hasMatchingFor = true;
-                            break;
-                        }
-                    }
-                    if (id == null || !hasMatchingFor) {
-                        err("Any \u201C"
-                                + localName
-                                + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
-                    }
-                }
             } else if ("table" == localName) {
                 if (atts.getIndex("", "summary") >= 0) {
                     errObsoleteAttribute(
@@ -1918,6 +1889,47 @@ public class Assertions extends Checker {
             // bdo required attrs
             else if ("bdo" == localName && atts.getIndex("", "dir") < 0) {
                 err("Element \u201Cbdo\u201D must have attribute \u201Cdir\u201D.");
+            }
+
+            // labelable elements
+            if ("button" == localName
+                    || ("input" == localName && atts.getIndex("", "hidden") < 0)
+                    || "keygen" == localName || "meter" == localName
+                    || "output" == localName || "progress" == localName
+                    || "select" == localName || "textarea" == localName) {
+                for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
+                    StackNode node = entry.getKey();
+                    Locator locator = entry.getValue();
+                    if (node.isLabeledDescendants()) {
+                        err("The \u201Clabel\u201D element may contain at most"
+                                + " one \u201Cbutton\u201D, \u201Cinput\u201D,"
+                                + " \u201Ckeygen\u201D, \u201Cmeter\u201D,"
+                                + " \u201Coutput\u201D, \u201Cprogress\u201D,"
+                                + " \u201Cselect\u201D, or \u201Ctextarea\u201D"
+                                + " descendant.");
+                        warn("\u201Clabel\u201D element with multiple labelable"
+                                + " descendants.", locator);
+                    } else {
+                        node.setLabeledDescendants();
+                    }
+                }
+                if ((ancestorMask & LABEL_FOR_MASK) != 0) {
+                    boolean hasMatchingFor = false;
+                    for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
+                        String forVal = stack[currentPtr - i].getForAttr();
+                        if (forVal != null && forVal.equals(id)) {
+                            hasMatchingFor = true;
+                            break;
+                        }
+                    }
+                    if (id == null || !hasMatchingFor) {
+                        err("Any \u201C" + localName
+                                + "\u201D descendant of a \u201Clabel\u201D"
+                                + " element with a \u201Cfor\u201D attribute"
+                                + " must have an ID value that matches that"
+                                + " \u201Cfor\u201D attribute.");
+                    }
+                }
             }
 
             // lang and xml:lang for XHTML5
