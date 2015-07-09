@@ -406,7 +406,6 @@ public class Assertions extends Checker {
 
     static {
         registerProhibitedAncestor("form", "form");
-        registerProhibitedAncestor("time", "time");
         registerProhibitedAncestor("progress", "progress");
         registerProhibitedAncestor("meter", "meter");
         registerProhibitedAncestor("dfn", "dfn");
