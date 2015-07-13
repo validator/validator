@@ -1516,6 +1516,8 @@ public class Assertions extends Checker {
                             && "input" == localName) {
                         String[] allowedTypes = INPUT_ATTRIBUTES.get(attLocal);
                         Arrays.sort(allowedTypes);
+                        inputTypeVal = inputTypeVal == null ? "text"
+                                : inputTypeVal;
                         if (Arrays.binarySearch(allowedTypes, inputTypeVal) < 0) {
                             err("Attribute \u201c" + attLocal
                                     + "\u201d is only allowed when the input"
@@ -2174,7 +2176,7 @@ public class Assertions extends Checker {
                     if (atts.getIndex("", "list") < 0) {
                         if ("textbox".equals(role)) {
                             warn("The \u201Ctextbox\u201D role is unnecessary"
-                                    + "for an \u201Cinput\u201D element that"
+                                    + " for an \u201Cinput\u201D element that"
                                     + " has no \u201Clist\u201D attribute and"
                                     + " whose type is" + " \u201C"
                                     + inputTypeVal + "\u201D.");
