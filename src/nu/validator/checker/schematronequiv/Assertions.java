@@ -602,12 +602,14 @@ public class Assertions extends Checker {
     private static final Map<String, String> INPUT_TYPES_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
 
     static {
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("button", "button");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("checkbox", "checkbox");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("image", "button");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("number", "spinbutton");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("password", "textbox");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("radio", "radio");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("range", "slider");
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("reset", "button");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("submit", "button");
     }
 
@@ -1148,9 +1150,9 @@ public class Assertions extends Checker {
 
     private final void warnExplicitRoleUnnecessaryForType(String element,
             String role, String type) throws SAXException {
-        warn("Specifying the \u201C" + role + "\u201D role for" + " \u201C"
-                + element + "\u201D element whose" + " type is" + " \u201C"
-                + type + "\u201D is unnecessary.");
+        warn("The \u201C" + role + "\u201D role is unnecessary for element"
+                + " \u201C" + element + "\u201D whose" + " type is" + " \u201C"
+                + type + "\u201D.");
     }
 
     private boolean currentElementHasRequiredAncestorRole(
@@ -1380,7 +1382,8 @@ public class Assertions extends Checker {
             String name, Attributes atts) throws SAXException {
         Set<String> ids = new HashSet<String>();
         String role = null;
-        String typeVal = "text";
+        String inputTypeVal = null;
+        String menuitemTypeVal = null;
         String activeDescendant = null;
         String owns = null;
         String forAttr = null;
@@ -1430,6 +1433,11 @@ public class Assertions extends Checker {
                     } else if ("type" == attLocal && "param" != localName
                             && "ol" != localName && "ul" != localName
                             && "li" != localName) {
+                        if ("input" == localName) {
+                            inputTypeVal = atts.getValue(i);
+                        } else if ("menuitem" == localName) {
+                            menuitemTypeVal = atts.getValue(i);
+                        }
                         String attValue = atts.getValue(i);
                         if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "hidden", attValue)) {
@@ -1506,12 +1514,9 @@ public class Assertions extends Checker {
                         }
                     } else if (INPUT_ATTRIBUTES.containsKey(attLocal)
                             && "input" == localName) {
-                        if (atts.getIndex("", "type") > -1) {
-                            typeVal = atts.getValue("", "type");
-                        }
                         String[] allowedTypes = INPUT_ATTRIBUTES.get(attLocal);
                         Arrays.sort(allowedTypes);
-                        if (Arrays.binarySearch(allowedTypes, typeVal) < 0) {
+                        if (Arrays.binarySearch(allowedTypes, inputTypeVal) < 0) {
                             err("Attribute \u201c" + attLocal
                                     + "\u201d is only allowed when the input"
                                     + " type is "
@@ -2151,41 +2156,49 @@ public class Assertions extends Checker {
             // Warnings for use of ARIA attributes with markup already
             // having implicit ARIA semantics.
             if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
-                    && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(
-                            role)) {
+                    && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(role)) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
-                       + " element" + " \u201C" + localName + "\u201D.");
+                        + " element" + " \u201C" + localName + "\u201D.");
             } else if ("input" == localName) {
-                if (INPUT_TYPES_WITH_IMPLICIT_ROLE.containsKey(typeVal)
-                        && INPUT_TYPES_WITH_IMPLICIT_ROLE.get(typeVal).equals(
+                inputTypeVal = inputTypeVal == null ? "text" : inputTypeVal;
+                if (INPUT_TYPES_WITH_IMPLICIT_ROLE.containsKey(inputTypeVal)
+                        && INPUT_TYPES_WITH_IMPLICIT_ROLE.get(inputTypeVal).equals(
                                 role)) {
-                    warnExplicitRoleUnnecessaryForType("input", role, typeVal);
-                } else if ("email".equals(typeVal) || "search".equals(typeVal)
-                        || "tel".equals(typeVal) || "text".equals(typeVal)
-                        || "url".equals(typeVal)) {
+                    warnExplicitRoleUnnecessaryForType("input", role,
+                            inputTypeVal);
+                } else if ("email".equals(inputTypeVal)
+                        || "search".equals(inputTypeVal)
+                        || "tel".equals(inputTypeVal)
+                        || "text".equals(inputTypeVal)
+                        || "url".equals(inputTypeVal)) {
                     if (atts.getIndex("", "list") < 0) {
                         if ("textbox".equals(role)) {
-                            warn("Specifying the \u201Ctextbox\u201D role for"
-                                    + " an \u201Cinput\u201D element which has"
-                                    + " no \u201Clist\u201D attribute and whose"
-                                    + " type is" + " \u201C" + typeVal
-                                    + "\u201D is unnecessary.");
+                            warn("The \u201Ctextbox\u201D role is unnecessary"
+                                    + "for an \u201Cinput\u201D element that"
+                                    + " has no \u201Clist\u201D attribute and"
+                                    + " whose type is" + " \u201C"
+                                    + inputTypeVal + "\u201D.");
                         }
                     } else {
                         if ("combobox".equals(role)) {
-                            warn("Specifying the \u201Ccombobox\u201D role for"
-                                    + " an \u201Cinput\u201D element which has"
-                                    + " a \u201Clist\u201D attribute and whose"
-                                    + " type is" + " \u201C" + typeVal
-                                    + "\u201D is unnecessary.");
+                            warn("The \u201Ccombobox\u201D role is unnecessary"
+                                    + " for an \u201Cinput\u201D element that"
+                                    + " has a \u201Clist\u201D attribute and"
+                                    + " whose type is" + " \u201C"
+                                    + inputTypeVal + "\u201D.");
                         }
 
                     }
                 }
-            } else if (MENUITEM_TYPES_WITH_IMPLICIT_ROLE.containsKey(typeVal)
-                    && MENUITEM_TYPES_WITH_IMPLICIT_ROLE.get(typeVal).equals(
-                            role)) {
-                warnExplicitRoleUnnecessaryForType("menuitem", role, typeVal);
+            } else if ("menuitem" == localName) {
+                menuitemTypeVal = menuitemTypeVal == null ? "command"
+                        : menuitemTypeVal;
+                if (MENUITEM_TYPES_WITH_IMPLICIT_ROLE.containsKey(menuitemTypeVal)
+                        && MENUITEM_TYPES_WITH_IMPLICIT_ROLE.get(
+                                menuitemTypeVal).equals(role)) {
+                    warnExplicitRoleUnnecessaryForType("menuitem", role,
+                            menuitemTypeVal);
+                }
             } else if (atts.getIndex("", "href") > -1
                     && "link".equals(role)
                     && ("a".equals(localName) || "area".equals(localName) || "link".equals(localName))) {
@@ -2196,8 +2209,8 @@ public class Assertions extends Checker {
                     && "rowgroup".equals(role)) {
                 warn("The \u201Crowgroup\u201D role is unnecessary for element"
                         + " \u201C" + localName + "\u201D.");
-            } else if ("th" == localName && ( "columnheader".equals(role)
-                  || "columnheader".equals(role))) {
+            } else if ("th" == localName
+                    && ("columnheader".equals(role) || "columnheader".equals(role))) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element \u201Cth\u201D.");
             } else if ("li" == localName && "listitem".equals(role)
