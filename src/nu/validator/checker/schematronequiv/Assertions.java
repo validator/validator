@@ -485,6 +485,8 @@ public class Assertions extends Checker {
     private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
             | (1 << specialAncestorNumber("button"));
 
+    private static final int ARTICLE_MASK = (1 << specialAncestorNumber("article"));
+
     private static final int FIGCAPTION_MASK = (1 << specialAncestorNumber("figcaption"));
 
     private static final int FIGURE_MASK = (1 << specialAncestorNumber("figure"));
@@ -502,6 +504,8 @@ public class Assertions extends Checker {
     private static final int H6_MASK = (1 << specialAncestorNumber("h6"));
 
     private static final int MAP_MASK = (1 << specialAncestorNumber("map"));
+
+    private static final int SECTION_MASK = (1 << specialAncestorNumber("section"));
 
     private static final int HREF_MASK = (1 << 30);
 
@@ -555,6 +559,73 @@ public class Assertions extends Checker {
         MUST_NOT_DANGLE_IDREFS.add("aria-flowto");
         MUST_NOT_DANGLE_IDREFS.add("aria-labelledby");
         MUST_NOT_DANGLE_IDREFS.add("aria-owns");
+    }
+
+    private static final Map<String, String> ELEMENTS_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
+
+    static {
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("article", "article");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("aside", "complimentary");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("body", "document");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("button", "button");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("datalist", "listbox");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("details", "group");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("dl", "list");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("form", "form");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("h1", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("h2", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("h3", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("h4", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("h5", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("h6", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("hr", "separator");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("img", "img");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("main", "main");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("math", "math");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("meter", "progressbar");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("nav", "navigation");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("option", "option");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("progress", "progressbar");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("section", "region");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("select", "listbox");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("summary", "button");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("textarea", "textbox");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("tbody", "rowgroup");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("tfoot", "rowgroup");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("thead", "rowgroup");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("ul", "list");
+    }
+
+    private static final Map<String, String> INPUT_TYPES_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
+
+    static {
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("checkbox", "checkbox");
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("image", "button");
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("number", "spinbutton");
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("password", "textbox");
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("radio", "radio");
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("range", "slider");
+        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("submit", "button");
+    }
+
+    private static final Map<String, String> MENUITEM_TYPES_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
+
+    static {
+        MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("checkbox", "menuitemcheckbox");
+        MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("command", "menuitem");
+        MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("radio", "menuitemcheckbox");
+    }
+
+    private static final Set<String> ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY = new HashSet<String>();
+
+    static {
+        ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("disabled");
+        ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("hidden");
+        ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("readonly");
+        ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("required");
     }
 
     private static final String h1WarningMessage = "Consider using the"
@@ -1075,6 +1146,13 @@ public class Assertions extends Checker {
                 + " Consider using CSS instead." + suggestion);
     }
 
+    private final void warnExplicitRoleUnnecessaryForType(String element,
+            String role, String type) throws SAXException {
+        warn("Specifying the \u201C" + role + "\u201D role for" + " \u201C"
+                + element + "\u201D element whose" + " type is" + " \u201C"
+                + type + "\u201D is unnecessary.");
+    }
+
     private boolean currentElementHasRequiredAncestorRole(
             Set<String> requiredAncestorRoles) {
         for (String role : requiredAncestorRoles) {
@@ -1302,6 +1380,7 @@ public class Assertions extends Checker {
             String name, Attributes atts) throws SAXException {
         Set<String> ids = new HashSet<String>();
         String role = null;
+        String typeVal = "text";
         String activeDescendant = null;
         String owns = null;
         String forAttr = null;
@@ -1427,7 +1506,6 @@ public class Assertions extends Checker {
                         }
                     } else if (INPUT_ATTRIBUTES.containsKey(attLocal)
                             && "input" == localName) {
-                        String typeVal = "text";
                         if (atts.getIndex("", "type") > -1) {
                             typeVal = atts.getValue("", "type");
                         }
@@ -1456,6 +1534,16 @@ public class Assertions extends Checker {
                                     + " \u201Cautofocus\u201D attribute.");
                         }
                         hasAutofocus = true;
+                    } else if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(attLocal)) {
+                        String stateOrProperty = "aria-" + attLocal;
+                        if (atts.getIndex("", stateOrProperty) > -1
+                                && "true".equals(atts.getValue("",
+                                        stateOrProperty))) {
+                            warn("Attribute \u201C" + stateOrProperty
+                                    + "\u201D is unnecessary for elements that"
+                                    + " have attribute \u201C" + attLocal
+                                    + "\u201D.");
+                        }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
@@ -2058,6 +2146,85 @@ public class Assertions extends Checker {
             }
             if (itemtype && !itemscope) {
                 err("The \u201Citemtype\u201D attribute must not be specified on elements that do not have an \u201Citemscope\u201D attribute specified.");
+            }
+
+            // Warnings for use of ARIA attributes with markup already
+            // having implicit ARIA semantics.
+            if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
+                    && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(
+                            role)) {
+                warn("The \u201C" + role + "\u201D role is unnecessary for"
+                       + " element" + " \u201C" + localName + "\u201D.");
+            } else if ("input" == localName) {
+                if (INPUT_TYPES_WITH_IMPLICIT_ROLE.containsKey(typeVal)
+                        && INPUT_TYPES_WITH_IMPLICIT_ROLE.get(typeVal).equals(
+                                role)) {
+                    warnExplicitRoleUnnecessaryForType("input", role, typeVal);
+                } else if ("email".equals(typeVal) || "search".equals(typeVal)
+                        || "tel".equals(typeVal) || "text".equals(typeVal)
+                        || "url".equals(typeVal)) {
+                    if (atts.getIndex("", "list") < 0) {
+                        if ("textbox".equals(role)) {
+                            warn("Specifying the \u201Ctextbox\u201D role for"
+                                    + " an \u201Cinput\u201D element which has"
+                                    + " no \u201Clist\u201D attribute and whose"
+                                    + " type is" + " \u201C" + typeVal
+                                    + "\u201D is unnecessary.");
+                        }
+                    } else {
+                        if ("combobox".equals(role)) {
+                            warn("Specifying the \u201Ccombobox\u201D role for"
+                                    + " an \u201Cinput\u201D element which has"
+                                    + " a \u201Clist\u201D attribute and whose"
+                                    + " type is" + " \u201C" + typeVal
+                                    + "\u201D is unnecessary.");
+                        }
+
+                    }
+                }
+            } else if (MENUITEM_TYPES_WITH_IMPLICIT_ROLE.containsKey(typeVal)
+                    && MENUITEM_TYPES_WITH_IMPLICIT_ROLE.get(typeVal).equals(
+                            role)) {
+                warnExplicitRoleUnnecessaryForType("menuitem", role, typeVal);
+            } else if (atts.getIndex("", "href") > -1
+                    && "link".equals(role)
+                    && ("a".equals(localName) || "area".equals(localName) || "link".equals(localName))) {
+                warn("The \u201Clink\u201D role is unnecessary for element"
+                        + " \u201C" + localName + "\u201D with attribute"
+                        + " \u201Chref\u201D.");
+            } else if (("tbody".equals(localName) || "tfoot".equals(localName) || "thead".equals(localName))
+                    && "rowgroup".equals(role)) {
+                warn("The \u201Crowgroup\u201D role is unnecessary for element"
+                        + " \u201C" + localName + "\u201D.");
+            } else if ("th" == localName && ( "columnheader".equals(role)
+                  || "columnheader".equals(role))) {
+                warn("The \u201C" + role + "\u201D role is unnecessary for"
+                        + " element \u201Cth\u201D.");
+            } else if ("li" == localName && "listitem".equals(role)
+                    && !"menu".equals(parentName)) {
+                warn("The \u201Clistitem\u201D role is unnecessary for an"
+                        + " \u201Cli\u201D element whose parent is"
+                        + " an \u201Col\u201D element or a"
+                        + " \u201Cul\u201D element.");
+            } else if ("button" == localName && "button".equals(role)
+                    && "menu".equals(atts.getValue("", "type"))) {
+                warnExplicitRoleUnnecessaryForType("button", "button", "menu");
+            } else if ("menu" == localName && "toolbar".equals(role)
+                    && "toolbar".equals(atts.getValue("", "type"))) {
+                warnExplicitRoleUnnecessaryForType("menu", "toolbar", "toolbar");
+            } else if ("header" == localName
+                    && "banner".equals(role)
+                    && ((ancestorMask & ARTICLE_MASK) != 0 || (ancestorMask & SECTION_MASK) != 0)) {
+                warn("The \u201Cbanner\u201D role is unnecessary for a"
+                        + " \u201Cheader\u201D element that is a descendant"
+                        + " of an \u201Carticle\u201D element or a"
+                        + " \u201Csection\u201D element.");
+            } else if ("li" == localName && "listitem".equals(role)
+                    && !"menu".equals(parentName)) {
+                warn("The \u201Clistitem\u201D role is unnecessary for an"
+                        + " \u201Cli\u201D element whose parent is"
+                        + " an \u201Col\u201D element or a"
+                        + " \u201Cul\u201D element.");
             }
         } else {
             int len = atts.getLength();
