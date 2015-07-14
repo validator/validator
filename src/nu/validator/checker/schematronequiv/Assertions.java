@@ -2229,10 +2229,17 @@ public class Assertions extends Checker {
                 warnExplicitRoleUnnecessaryForType("menu", "toolbar", "toolbar");
             } else if ("header" == localName
                     && "banner".equals(role)
-                    && ((ancestorMask & ARTICLE_MASK) != 0 || (ancestorMask & SECTION_MASK) != 0)) {
+                    && !((ancestorMask & ARTICLE_MASK) != 0 || (ancestorMask & SECTION_MASK) != 0)) {
                 warn("The \u201Cbanner\u201D role is unnecessary for a"
-                        + " \u201Cheader\u201D element that is a descendant"
-                        + " of an \u201Carticle\u201D element or a"
+                        + " \u201Cheader\u201D element that is not"
+                        + " a descendant of an \u201Carticle\u201D element or a"
+                        + " \u201Csection\u201D element.");
+            } else if ("footer" == localName
+                    && "contentinfo".equals(role)
+                    && !((ancestorMask & ARTICLE_MASK) != 0 || (ancestorMask & SECTION_MASK) != 0)) {
+                warn("The \u201Ccontentinfo\u201D role is unnecessary for a"
+                        + " \u201Cfooter\u201D element that is not"
+                        + " a descendant of an \u201Carticle\u201D element or a"
                         + " \u201Csection\u201D element.");
             } else if ("li" == localName && "listitem".equals(role)
                     && !"menu".equals(parentName)) {
