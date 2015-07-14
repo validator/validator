@@ -1,3 +1,4 @@
+sudo: false # cause Travis to start builds much faster
 language: java
 notifications:
   webhooks:
