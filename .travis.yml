@@ -1,10 +1,4 @@
-sudo: false # cause Travis to start builds much faster
-addons:
-  apt:
-    sources:
-      - debian-sid
-    packages:
-      - tomcat7
+sudo: required # we need sudo for testing the war file
 language: java
 notifications:
   webhooks:
@@ -26,7 +20,8 @@ script:
 - echo "test" | python ./build/build.py war
 - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class
   | grep "version 50.0"
-- cp ./build/dist/vnu.war /var/lib/tomcat7/webapps
+- sudo apt-get install tomcat7
+- sudo cp ./build/dist/vnu.war /var/lib/tomcat7/webapps
 - sleep 15
 - curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
 - test -z "$(cat RESULTS)"
