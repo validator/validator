@@ -1,4 +1,4 @@
-sudo: false # cause Travis to start builds much faster
+sudo: required # we need sudo for testing the war file
 language: java
 notifications:
   webhooks:
