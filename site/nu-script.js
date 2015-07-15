@@ -425,6 +425,9 @@ if (document.getElementById) {
 		document.addEventListener("DOMContentLoaded", function() {
 			window.onload = undefined
 			reboot()
+			setTimeout(function () {
+				document.querySelector("#filters button").className = "message_filtering"
+			}, 500);
 		}, false)
 	}
 	window.onunload = undoFormSubmission

@@ -651,6 +651,17 @@ dl.inputattrs .highlight {
 
 #filters button {
 	min-height: 18px;
+	border-radius: 6px;
+	border: solid #ccc 1px;
+	background-color: #FFFFCC;
+}
+
+button.message_filtering {
+	background-color: white !important;
+	-o-transition: all 1.5s ease-out;
+	-moz-transition: all 1.5s ease-out;
+	-ms-transition: all 1.5s ease-out;
+	-webkit-transition: all 1.5s ease-out;
 }
 
 #filters .filtercount {
