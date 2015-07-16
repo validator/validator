@@ -108,7 +108,7 @@ executable provides the following options:
 
     possible values: "gnu", "xml", "json", "text" [see information at URL below]
 
-    https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out
+    https://github.com/validator/validator/wiki/Service:-Common-parameters#out
 
 #### --help
 
@@ -276,9 +276,9 @@ ones by setting the value of the `nu.validator.client.level` system property to
 
 Most of the properties listed below map to the validator.nu common input
 parameters documented at
-[wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters][25].
+[github.com/validator/validator/wiki/Service:-Common-parameters][25].
 
-   [25]: https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters
+   [25]: https://github.com/validator/validator/wiki/Service:-Common-parameters
 
 #### nu.validator.client.host
 
@@ -314,7 +314,7 @@ parameters documented at
 
     possible values: [see information at URL below]
 
-    https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#parser"
+    https://github.com/validator/validator/wiki/Service:-Common-parameters#parser
 
 #### nu.validator.client.charset
 
@@ -336,7 +336,7 @@ parameters documented at
 
     possible values: [see information at URL below]
 
-    https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out"
+    https://github.com/validator/validator/wiki/Service:-Common-parameters#out
 
 #### nu.validator.client.asciiquotes
 
