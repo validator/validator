@@ -108,13 +108,16 @@ function initFieldHolders() {
 	modeSelect.onchange = function() {
 	if (this.value == 'file') {
 		installFileUpload()
+		location.hash = '#file'
 	}
 	else
 		if (this.value == 'textarea') {
 			installTextarea()
+			location.hash = '#textarea'
 		}
 		else {
 			installUrlInput()
+			history.pushState("", document.title, location.pathname);
 		}
 	}
 	label.appendChild(modeSelect)
@@ -130,6 +133,18 @@ function initFieldHolders() {
 		.addEventListener('click', function (e) {
 			toggleUserAgent()
 		}, false)
+	if (location.hash == '#file') {
+		installFileUpload()
+		modeSelect.value = 'file'
+	} else {
+		if (location.hash == '#textarea') {
+			installTextarea()
+			modeSelect.value = 'textarea'
+		}
+		else {
+			installUrlInput()
+		}
+	}
 }
 
 function toggleUserAgent() {
