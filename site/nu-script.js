@@ -337,8 +337,13 @@ function installTextarea() {
 
 function installFileUpload() {
 	var input = document.getElementById('doc')
-	var xnote = document.createElement("div")
-	var tn = document.createTextNode("Uploaded files with .xhtml or .xht extensions are automatically processed as XHTML.")
+	if (!document.querySelector("#xnote")) {
+		var xnote = document.createElement("div")
+		xnote.setAttribute('id', 'xnote')
+		xnote.appendChild(document.createTextNode("Uploaded files"
+			+ " with xhtml or .xht extensions are automatically"
+			+ " processed as XHTML."))
+	}
 	if (input && fileInput) {
 		var form = document.forms[0]
 		if (form) {
@@ -346,8 +351,6 @@ function installFileUpload() {
 			form.enctype = 'multipart/form-data'
 			input.parentNode.replaceChild(fileInput, input)
 			document.getElementById("inputregion").appendChild(xnote)
-			xnote.setAttribute('id', 'xnote')
-			xnote.appendChild(tn)
 			reflow(fileInput)
 		}
 	}
