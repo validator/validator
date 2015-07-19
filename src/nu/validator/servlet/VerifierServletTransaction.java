@@ -721,7 +721,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } else {
             userAgent = USER_AGENT;
         }
+        Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
         showSource = (request.getParameter("showsource") != null);
+        showSource = (showSource || "textarea".equals(inputType));
         showOutline = (request.getParameter("showoutline") != null);
         if (request.getParameter("showimagereport") != null) {
             imageCollector = new ImageCollector(sourceCode);

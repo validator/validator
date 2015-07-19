@@ -135,7 +135,8 @@ public final class MultipartFormDataFilter implements Filter {
                     FileItemStream fileItemStream = iter.next();
                     if (fileItemStream.isFormField()) {
                         String fieldName = fileItemStream.getFieldName();
-                        if ("content".equals(fieldName)) {
+                        if ("content".equals(fieldName)
+                                || "fragment".equals(fieldName)) {
                             utf8 = true;
                             String[] parser = params.get("parser");
                             if (parser != null && parser[0].startsWith("xml")) {
