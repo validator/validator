@@ -238,8 +238,9 @@ textarea {
 }
 
 #doc[type="file"] {
-	padding: 0px;
+	margin-top: -3px;
 	width: initial;
+	border: 0;
 }
 
 #docselect {
