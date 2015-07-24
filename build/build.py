@@ -97,7 +97,6 @@ icon = None
 stylesheet = None
 script = None
 serviceName = 'Validator.nu'
-serviceOrigin = 'https://validator.nu/'
 resultsTitle = 'Validation results'
 messagesLimit=1000
 maxFileSize = 8192
@@ -113,7 +112,6 @@ httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 followW3Cspec = 0
-legacyHosts = ''
 statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
@@ -680,14 +678,12 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.follow-w3c-spec=%d' % followW3Cspec,
-    '-Dnu.validator.servlet.host.legacy=' + legacyHosts,
     '-Dnu.validator.servlet.host.generic=' + genericHost,
     '-Dnu.validator.servlet.host.html5=' + html5Host,
     '-Dnu.validator.servlet.host.parsetree=' + parsetreeHost,
     '-Dnu.validator.servlet.icon=' + icon,
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
-    '-Dnu.validator.servlet.origin=' + serviceOrigin,
     '-Dnu.validator.servlet.path.generic=' + genericPath,
     '-Dnu.validator.servlet.path.html5=' + html5Path,
     '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
@@ -1310,8 +1306,6 @@ else:
       script = arg[9:]
     elif arg.startswith("--name="):
       serviceName = arg[7:]
-    elif arg.startswith("--origin="):
-      serviceOrigin = arg[9:]
     elif arg.startswith("--results-title="):
       resultsTitle = arg[16:]
     elif arg.startswith("--messages-limit="):
@@ -1348,8 +1342,6 @@ else:
       socketTimeoutSeconds = int(arg[17:])
     elif arg == '--follow-w3c-spec':
       followW3Cspec = 1
-    elif arg.startswith("--legacy-hosts="):
-      legacyHosts = arg[15:]
     elif arg == '--statistics':
       statistics = 1
     elif arg == '--help':
