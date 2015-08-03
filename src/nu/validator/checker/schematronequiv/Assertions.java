@@ -485,8 +485,6 @@ public class Assertions extends Checker {
     private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
             | (1 << specialAncestorNumber("button"));
 
-    private static final int ARTICLE_MASK = (1 << specialAncestorNumber("article"));
-
     private static final int FIGCAPTION_MASK = (1 << specialAncestorNumber("figcaption"));
 
     private static final int FIGURE_MASK = (1 << specialAncestorNumber("figure"));
@@ -504,8 +502,6 @@ public class Assertions extends Checker {
     private static final int H6_MASK = (1 << specialAncestorNumber("h6"));
 
     private static final int MAP_MASK = (1 << specialAncestorNumber("map"));
-
-    private static final int SECTION_MASK = (1 << specialAncestorNumber("section"));
 
     private static final int HREF_MASK = (1 << 30);
 
@@ -566,37 +562,44 @@ public class Assertions extends Checker {
     static {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("article", "article");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("aside", "complimentary");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("body", "document");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("button", "button");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("datalist", "listbox");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("details", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("dl", "list");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("form", "form");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h1", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h2", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h3", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h4", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h5", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h6", "heading");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("hr", "separator");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("img", "img");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("main", "main");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("math", "math");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("meter", "progressbar");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("nav", "navigation");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("option", "option");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("progress", "progressbar");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("section", "region");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("select", "listbox");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("summary", "button");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("textarea", "textbox");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tbody", "rowgroup");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tfoot", "rowgroup");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("thead", "rowgroup");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ul", "list");
+    }
+
+    private static final Set<String> ELEMENTS_THAT_NEVER_NEED_ROLE = new HashSet<String>();
+
+    static {
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("body");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("button");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("datalist");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("details");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("dl");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("footer");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("form");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("header");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("hr");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("img");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("main");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("math");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("meter");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("nav");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("option");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("progress");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("select");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("summary");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.add("textarea");
     }
 
     private static final Map<String, String> INPUT_TYPES_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
@@ -2161,6 +2164,10 @@ public class Assertions extends Checker {
                     && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(role)) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element" + " \u201C" + localName + "\u201D.");
+            } else if (ELEMENTS_THAT_NEVER_NEED_ROLE.contains(localName)
+                    && role != null) {
+                warn("Element \u201C" + localName + "\u201D does not need a"
+                        + " \u201Crole\u201D attribute.");
             } else if ("input" == localName) {
                 inputTypeVal = inputTypeVal == null ? "text" : inputTypeVal;
                 if (INPUT_TYPES_WITH_IMPLICIT_ROLE.containsKey(inputTypeVal)
@@ -2227,20 +2234,6 @@ public class Assertions extends Checker {
             } else if ("menu" == localName && "toolbar".equals(role)
                     && "toolbar".equals(atts.getValue("", "type"))) {
                 warnExplicitRoleUnnecessaryForType("menu", "toolbar", "toolbar");
-            } else if ("header" == localName
-                    && "banner".equals(role)
-                    && !((ancestorMask & ARTICLE_MASK) != 0 || (ancestorMask & SECTION_MASK) != 0)) {
-                warn("The \u201Cbanner\u201D role is unnecessary for a"
-                        + " \u201Cheader\u201D element that is not"
-                        + " a descendant of an \u201Carticle\u201D element or a"
-                        + " \u201Csection\u201D element.");
-            } else if ("footer" == localName
-                    && "contentinfo".equals(role)
-                    && !((ancestorMask & ARTICLE_MASK) != 0 || (ancestorMask & SECTION_MASK) != 0)) {
-                warn("The \u201Ccontentinfo\u201D role is unnecessary for a"
-                        + " \u201Cfooter\u201D element that is not"
-                        + " a descendant of an \u201Carticle\u201D element or a"
-                        + " \u201Csection\u201D element.");
             } else if ("li" == localName && "listitem".equals(role)
                     && !"menu".equals(parentName)) {
                 warn("The \u201Clistitem\u201D role is unnecessary for an"
