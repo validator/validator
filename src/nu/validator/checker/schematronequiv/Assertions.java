@@ -561,7 +561,7 @@ public class Assertions extends Checker {
 
     static {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("article", "article");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("aside", "complimentary");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("aside", "complementary");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h1", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h2", "heading");
