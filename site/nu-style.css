@@ -144,7 +144,7 @@ div#banner {
 
 div#results,
 div#about {
-	font: caption;
+	font-size: 14px;
 	margin-top: 30px;
 	padding-left: 3%;
 	margin-right: 3%;
@@ -324,31 +324,68 @@ li li {
 	padding-top: 0.2em;
 }
 
-.info {
-	color: black;
-	background-color: #CCFFFF;
+#results ol:first-child {
+	padding-top: 35px;
+	padding-bottom: 25px;
+	background-color: #efefef;
+	border-radius: 4px;
 }
 
-.warning {
-	color: black;
-	background-color: #FFFFCC;
+#results > ol:first-child > li {
+	border: 1px solid #ccc;
+	margin-bottom: 8px;
+	padding-left: 12px;
+	border-radius: 4px;
+	background-color: white;
 }
 
-.error {
-	color: black;
-	background-color: #FFCCCC;
+#results > ol:first-child > li > p:first-child,
+#results > ol:first-child > li > p:first-child code {
+	font-size: 16px;
+	font-weight: bold;
 }
 
-.io, .fatal, .schema {
-	color: black;
-	background-color: #FF9999;
+#results > ol:first-child > li > p:first-child code,
+#results > ol:first-child > li > p:first-child a {
+	font-weight: normal;
 }
 
-.internal {
-	color: black;
-	background-color: #FF6666;
+#results > ol:first-child > li > p:first-child {
+	color: transparent;
 }
 
+#results > ol:first-child > li > p:first-child > strong,
+#results > ol:first-child > li > p:first-child > span {
+	color: black;
+}
+
+#results > ol:first-child > li > p:first-child > strong:first-child {
+	padding: 1px 6px 1px 6px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font: caption;
+	font-weight: bold;
+}
+
+.info, .warning, .error, .io, .fatal, .schema, .internal {
+	color: black;
+}
+
+.info > p:first-child > strong:first-child {
+	background-color: #ccffcc;
+}
+
+.warning > p:first-child > strong:first-child {
+	background-color: #ffffcc;
+}
+
+.error > p:first-child > strong:first-child,
+.io > p:first-child > strong:first-child,
+.fatal > p:first-child > strong:first-child,
+.schema > p:first-child > strong:first-child,
+.internal > p:first-child > strong:first-child {
+	background-color: #ffcccc;
+}
 
 hr {
 	border-top: 1px dotted #666666;
@@ -381,7 +418,11 @@ li p {
 
 .extract b, .source b {
 	color: black;
-	background-color: #FF6666;
+	background-color: #ffff80;
+}
+
+.extract b {
+	font-weight: normal;
 }
 
 ol.source li {
@@ -391,7 +432,7 @@ ol.source li {
 
 ol.source b, ol.source .b {
 	color: black;
-	background-color: #FFFFCC;
+	background-color: #ffff80;
 	font-weight: bold;
 }
 
@@ -416,7 +457,6 @@ code {
 
 .error p code {
 	border: 1px dashed #999;
-	background-color: #fdd;
 	padding: 2px;
 	padding-left: 4px;
 	padding-right: 4px;
@@ -424,7 +464,6 @@ code {
 
 .warning code {
 	border: 1px dashed #999;
-	background-color: #ffd;
 	padding: 2px;
 	padding-left: 4px;
 	padding-right: 4px;

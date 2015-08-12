@@ -414,7 +414,7 @@ function updateFragmentIdHilite() {
 	}
 	var rule = ''
 	if (selector) {
-		rule = selector + " { background-color: #FF6666; font-weight: bold; }"
+		rule = selector + " { background-color: #ffcccc; font-weight: bold; }"
 	}
 	var newStyle = createHtmlElement('style')
 	var ex
