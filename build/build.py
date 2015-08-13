@@ -62,7 +62,7 @@ nightliesPath = "/var/www/nightlies"
 releasesPath = "/var/www/releases"
 
 releaseDate = time.strftime('%d %B %Y')
-validatorVersion = time.strftime('%y.%-m.%-e')
+validatorVersion = time.strftime('%y.%m.%d')
 jingVersion = "20150629VNU"
 htmlparserVersion = "1.4.1"
 
