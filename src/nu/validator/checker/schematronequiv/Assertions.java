@@ -1990,7 +1990,7 @@ public class Assertions extends Checker {
 
             // labelable elements
             if ("button" == localName
-                    || ("input" == localName && atts.getIndex("", "hidden") < 0)
+                    || ("input" == localName && !lowerCaseLiteralEqualsIgnoreAsciiCaseString("hidden", atts.getValue("", "type")))
                     || "keygen" == localName || "meter" == localName
                     || "output" == localName || "progress" == localName
                     || "select" == localName || "textarea" == localName) {
