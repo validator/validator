@@ -446,7 +446,10 @@ if (document.getElementById) {
 			window.onload = undefined
 			reboot()
 			setTimeout(function () {
-				document.querySelector("#filters button").className = "message_filtering"
+				var filtersbutton = document.querySelector("#filters button")
+				if (filtersbutton) {
+					filtersbutton.className = "message_filtering"
+				}
 			}, 500);
 		}, false)
 	}
