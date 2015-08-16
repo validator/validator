@@ -276,12 +276,18 @@ function injectHyperlinks() {
 	}
 
 function replaceSuccessFailure() {
-	var success = document.querySelector(".success"),
-	failure = document.querySelector(".failure")
-	if (success) {
-		success.textContent = "Document checking completed."
-	} else if (failure) {
-		failure.textContent = "Document checking completed."
+	successfailure = document.querySelector(".success, .failure")
+	if (document.querySelector(".error:not(.hidden), .warning:not(.hidden)") !== null) {
+		successfailure.className = "failure"
+		successfailure.textContent = "Document checking completed."
+	} else {
+		successfailure.className = "success"
+		successfailure.textContent = "Document checking completed. No errors or warnings to show."
+	}
+	if (document.querySelector("#results ol:first-child li:not(.hidden)") === null) {
+		document.querySelector("#results ol:first-child").className = "hidden"
+	} else {
+		document.querySelector("#results ol:first-child").className = ""
 	}
 }
 
@@ -595,7 +601,7 @@ function initFilters() {
 			fieldset = document.createElement("fieldset")
 			fieldset.className = "hidden"
 			legend = document.createElement("legend")
-			legend.appendChild(document.createTextNode(displayType + " · "))
+			legend.appendChild(document.createTextNode(displayType + " (" + messages.length + ") · "))
 			hide = document.createElement("a")
 			hide.href = ""
 			show = hide.cloneNode(true)
@@ -662,6 +668,7 @@ function initFilters() {
 			heading.appendChild(document.createTextNode(" "))
 			heading.appendChild(span)
 		}
+		replaceSuccessFailure()
 	}
 
 	makeFieldset(errors, 'Errors')

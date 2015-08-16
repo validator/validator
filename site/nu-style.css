@@ -286,14 +286,21 @@ textarea, #doc[type="url"] {
 	font-size: 0.85em;	
 }
 
-.success {
+.success, .failure {
+	border-radius: 4px;
 	padding: 0.5em;
-	border: double 6px purple;
+	font-weight: bold;
+}
+
+.success {
+	color: black;
+	background-color: #ccffcc;
+	border: 1px solid #ccc;
 }
 
 .failure {
-	padding: 0.5em;
-	border: double 6px purple;
+	color: white;
+	background-color: #365D95;
 }
 
 ol {
