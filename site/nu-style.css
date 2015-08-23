@@ -290,6 +290,7 @@ textarea, #doc[type="url"] {
 	border-radius: 4px;
 	padding: 0.5em;
 	font-weight: bold;
+	font-family: Arial, sans-serif;
 }
 
 .success {

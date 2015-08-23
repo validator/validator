@@ -277,6 +277,7 @@ function injectHyperlinks() {
 
 function replaceSuccessFailure() {
 	successfailure = document.querySelector(".success, .failure")
+	if (successfailure === null) return
 	if (document.querySelector(".error:not(.hidden), .warning:not(.hidden)") !== null) {
 		successfailure.className = "failure"
 		successfailure.textContent = "Document checking completed."
