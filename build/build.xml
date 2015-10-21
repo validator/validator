@@ -96,7 +96,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>gzip-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -105,7 +105,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>inbound-size-limit-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -114,7 +114,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>inbound-gzip-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -123,7 +123,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>multipart-form-data-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <servlet>
