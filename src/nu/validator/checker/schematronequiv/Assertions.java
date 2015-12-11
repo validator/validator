@@ -572,6 +572,7 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h5", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h6", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("header", "banner");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("img", "img");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("section", "region");
