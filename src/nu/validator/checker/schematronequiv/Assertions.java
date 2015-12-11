@@ -562,13 +562,16 @@ public class Assertions extends Checker {
     static {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("article", "article");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("aside", "complementary");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("button", "button");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("footer", "contentinfo");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h1", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h2", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h3", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h4", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h5", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h6", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("header", "banner");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("section", "region");
@@ -582,15 +585,11 @@ public class Assertions extends Checker {
 
     static {
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("body");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("button");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("datalist");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("details");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("dl");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("footer");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("form");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("header");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("hr");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("img");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("main");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("math");
         ELEMENTS_THAT_NEVER_NEED_ROLE.add("meter");
