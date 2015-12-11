@@ -581,24 +581,24 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ul", "list");
     }
 
-    private static final Set<String> ELEMENTS_THAT_NEVER_NEED_ROLE = new HashSet<String>();
+    private static final Map<String, String> ELEMENTS_THAT_NEVER_NEED_ROLE = new HashMap<String, String>();
 
     static {
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("body");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("datalist");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("details");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("dl");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("form");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("hr");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("main");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("math");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("meter");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("nav");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("option");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("progress");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("select");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("summary");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.add("textarea");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("body", "document");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("datalist", "listbox");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("details", "group");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("dl", "list");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("form", "form");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("hr", "separator");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("main", "main");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("math", "math");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("meter", "progressbar");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("nav", "navigation");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("option", "option");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("progress", "progressbar");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("select", "listbox");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("summary", "button");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("textarea", "textbox");
     }
 
     private static final Map<String, String> INPUT_TYPES_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
@@ -2163,8 +2163,8 @@ public class Assertions extends Checker {
                     && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(role)) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element" + " \u201C" + localName + "\u201D.");
-            } else if (ELEMENTS_THAT_NEVER_NEED_ROLE.contains(localName)
-                    && role != null) {
+            } else if (ELEMENTS_THAT_NEVER_NEED_ROLE.containsKey(localName)
+                    && ELEMENTS_THAT_NEVER_NEED_ROLE.get(localName).equals(role)) {
                 warn("Element \u201C" + localName + "\u201D does not need a"
                         + " \u201Crole\u201D attribute.");
             } else if ("input" == localName) {
