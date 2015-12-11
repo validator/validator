@@ -1,4 +1,8 @@
 sudo: required # we need sudo for testing the war file
+addons:
+  apt:
+    packages:
+      - tomcat7
 language: java
 notifications:
   webhooks:
