@@ -145,7 +145,7 @@ div#banner {
 div#results,
 div#about {
 	font-size: 14px;
-	margin-top: 30px;
+	margin-top: 50px;
 	padding-left: 3%;
 	margin-right: 3%;
 }
@@ -697,6 +697,13 @@ dl.inputattrs .highlight {
 	padding-bottom: 0.5em;
 }
 
+#filters > div {
+	font: caption;
+	color: #aaa;
+	background-color: #FFFFCC;
+	padding: 4px;
+}
+
 #filters button {
 	min-height: 18px;
 	border-radius: 6px;
@@ -704,7 +711,7 @@ dl.inputattrs .highlight {
 	background-color: #FFFFCC;
 }
 
-button.message_filtering {
+.message_filtering {
 	background-color: white !important;
 	-o-transition: all 1.5s ease-out;
 	-moz-transition: all 1.5s ease-out;

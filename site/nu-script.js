@@ -454,8 +454,12 @@ if (document.getElementById) {
 			reboot()
 			setTimeout(function () {
 				var filtersbutton = document.querySelector("#filters button")
+				var helptext = document.querySelector("#filters > div")
 				if (filtersbutton) {
 					filtersbutton.className = "message_filtering"
+				}
+				if (helptext) {
+					helptext.className = "message_filtering"
 				}
 			}, 500);
 		}, false)
@@ -470,6 +474,7 @@ function initFilters() {
 		warnings,
 		info,
 		filters,
+		helptext,
 		heading,
 		filtersButton,
 		makeFieldset,
@@ -493,6 +498,7 @@ function initFilters() {
 		return
 	}
 
+	helptext = document.querySelector("#filters > div")
 	errors = document.getElementsByClassName('error')
 	warnings = document.getElementsByClassName('warning')
 	info = document.querySelectorAll('[class=info]')
@@ -500,12 +506,15 @@ function initFilters() {
 	filters.id = "filters"
 	filters.className = "unexpanded"
 	heading = document.createElement("h2")
+	helptext = document.createElement("div")
+	helptext.appendChild(document.createTextNode("Use the Message Filtering button below to hide/show particular messages, and to see total counts of errors and warnings."))
+	filters.appendChild(helptext)
 	filtersButton = document.createElement("button")
-	filtersButton.appendChild(document.createTextNode("Message filtering"))
+	filtersButton.appendChild(document.createTextNode("Message Filtering"))
 	heading.appendChild(filtersButton)
 	filters.appendChild(heading)
 	filtersButton.addEventListener('click', function (e) {
-	  toggleFilters()
+	 	toggleFilters()
 	}, false)
 
 	// Generate errors/warnings/info fieldsets
@@ -682,6 +691,13 @@ function initFilters() {
 	fieldsets = filters.getElementsByTagName("fieldset")
 
 	toggleFilters = function() {
+		if (helptext.className === "expanded") {
+			helptext.className = "message_filtering"
+			helptext.textContent = "Use the Message Filtering button below to display options for hiding/showing particular messages, and to see total counts of errors and warnings."
+		} else {
+			helptext.className = "expanded"
+			helptext.textContent = "Press the Message Filtering button to collapse the filtering options and error/warning/info counts."
+		}
 		filters.className === "expanded" ? filters.className = "unexpanded" : filters.className = "expanded"
 		for (var i = 0; i < fieldsets.length; ++i) {
 			fieldset = fieldsets[i]
