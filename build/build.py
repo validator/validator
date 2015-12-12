@@ -65,6 +65,7 @@ releaseDate = time.strftime('%d %B %Y')
 validatorVersion = time.strftime('%y.%-m.%-e')
 jingVersion = "20150629VNU"
 htmlparserVersion = "1.4.1"
+galimatiasVersion = "0.1.1"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
@@ -123,12 +124,14 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar", "040b4b4d8eac886f6b4a2a3bd2f31b00"),
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-adapters.jar", "5c82e86cc5b769f72abd2af1f92255fa"),
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-api.jar", "289dcb376743ab24ecaeb194a0d287d9"),
-  ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
+  ("https://repo1.maven.org/maven2/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar", "1d04e4713e19ff23f9820f271e45c3be"),
   ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),
+  ("https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar", "5b38c40c97fbd0adee29f91e60405584"),
   ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),
   ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
   ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),
   ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),
+  ("https://repo1.maven.org/maven2/org/easytesting/fest-assert/1.4/fest-assert-1.4.jar", "05b9012baeccce4379d125a2050c6574"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.2.9.v20150224/jetty-security-9.2.9.v20150224.jar", "2bad0336376b71a5ec81bc3150b898a0"),
@@ -138,6 +141,7 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.9.v20150224/jetty-util-9.2.9.v20150224.jar", "cb039d6b03c838ea90748469fe928d60"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.9.v20150224/jetty-util-ajax-9.2.9.v20150224.jar", "e3f16ce949fa5103975a1c056d2cc9cb"),
   ("https://repo1.maven.org/maven2/org/mozilla/rhino/1.7R5/rhino-1.7R5.jar", "515233bd8a534c0468f6e397fc6b1925"),
+  ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),
   ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/a878df1503af3bfb63493a63685a117a24988959/parse-css.js", "adbb69f7c71c8d5703f8b9d770bfc71f"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
@@ -150,7 +154,6 @@ runDependencyJars = [
   "commons-logging-1.2.jar",
   "commons-logging-1.2-adapters.jar",
   "commons-logging-1.2-api.jar",
-  "galimatias-0.1.0.jar",
   "httpcore-4.4.jar",
   "httpclient-4.4.jar",
   "icu4j-54.1.1.jar",
@@ -169,6 +172,10 @@ runDependencyJars = [
 ]
 
 buildOnlyDependencyJars = [
+  "fest-assert-1.4.jar",
+  "hamcrest-api-1.0.jar",
+  "junit-4.12.jar",
+  "slf4j-api-1.7.13.jar",
   "xom-1.2.5.jar"
 ]
 
@@ -619,6 +626,10 @@ def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
 # end of data and functions for building schema drivers
 #################################################################
 
+def buildGalimatias():
+  classPath = os.pathsep.join(dependencyJarPaths())
+  buildModule( os.path.join(buildRoot, "galimatias"), "galimatias", classPath)
+
 def buildHtmlParser():
   classPath = os.pathsep.join(dependencyJarPaths())
   buildModule( os.path.join(buildRoot, "htmlparser"), "htmlparser", classPath)
@@ -654,13 +665,13 @@ def buildEmitters():
 
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["htmlparser"])
+                              + jarNamesToPaths(["galimatias", "htmlparser"])
                               + jingJarPath())
   buildEmitters()
   buildModule(buildRoot, "validator", classPath)
 
 def ownJarList():
-  return jarNamesToPaths(["htmlparser", "validator"]) + jingJarPath()
+  return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + jingJarPath()
 
 def buildRunJarPathList():
   return dependencyJarPaths(runDependencyJars)  + ownJarList()
@@ -772,6 +783,7 @@ class Release():
       os.pathsep.join(dependencyJarPaths()),
       os.path.join(jingTrangDir, "build", "jing.jar"),
       os.path.join(jarsDir, "htmlparser.jar"),
+      os.path.join(jarsDir, "galimatias.jar"),
     ])
     self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
 
@@ -779,9 +791,11 @@ class Release():
     removeIfDirExists(distDir)
     ensureDirExists(distDir)
 
-  def setVersion(self):
+  def setVersion(self, url=None):
     if self.artifactId == "jing" : self.version = jingVersion
-    if self.artifactId == "htmlparser": self.version = jingVersion
+    if self.artifactId == "htmlparser": self.version = htmlparserVersion
+    if self.artifactId == "galimatias": self.version = galimatiasVersion
+    if url == snapshotsRepoUrl: self.version += "-SNAPSHOT"
     self.writeVersion()
 
   def writeVersion(self):
@@ -816,9 +830,9 @@ class Release():
         continue
       runCmd('"%s" --yes -ab %s' % (gpgCmd, filename))
 
-  def createArtifacts(self):
+  def createArtifacts(self, url=None):
     self.reInitDistDir()
-    self.setVersion()
+    self.setVersion(url)
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
       % (javaCmd, self.classpath, self.buildXml, self.artifactId))
 
@@ -831,8 +845,7 @@ class Release():
       % (javaCmd, self.classpath, self.buildXml, self.artifactId))
 
   def deployToCentral(self, url):
-    if url == snapshotsRepoUrl: self.version += "-SNAPSHOT"
-    self.createArtifacts()
+    self.createArtifacts(url)
     basename = "%s-%s" % (self.artifactId, self.version)
     mvnArgs = [
       "-f %s.pom" % os.path.join(distDir, basename),
@@ -1178,6 +1191,7 @@ def buildAll():
   buildJing()
   buildSchemaDrivers()
   prepareLocalEntityJar()
+  buildGalimatias()
   buildHtmlParser()
   buildValidator()
 
@@ -1188,7 +1202,7 @@ def runTests():
     args = "--ignore=html-its tests/messages.json"
   className = "nu.validator.client.TestRunner"
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["htmlparser", "validator"])
+                              + jarNamesToPaths(["galimatias", "htmlparser", "validator"])
                               + jingJarPath())
   if runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args)):
     sys.exit(1)
@@ -1366,6 +1380,15 @@ else:
       release.deployToCentral(stagingRepoUrl)
       release.createOrUpdateGithubData()
       release.createAndUploadDistributions()
+    elif arg == 'galimatias-bundle':
+      release = Release("galimatias")
+      release.createBundle()
+    elif arg == 'galimatias-snapshot':
+      release = Release("galimatias")
+      release.deployToCentral(snapshotsRepoUrl)
+    elif arg == 'galimatias-release':
+      release = Release("galimatias")
+      release.deployToCentral(stagingRepoUrl)
     elif arg == 'htmlparser-bundle':
       release = Release("htmlparser")
       release.createBundle()

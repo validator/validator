@@ -1,0 +1,90 @@
+<!--
+Copyright (c) 2015 Mozilla Foundation
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+-->
+<project name="html5-galimatias" basedir="."
+  xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+  <property name="galimatias-base" location="${dist}/galimatias-${version}" />
+  <property name="galimatias-src" location="../galimatias/src" />
+  <property name="galimatias-javadoc-jar" value="${galimatias-base}-javadoc.jar" />
+  <property name="galimatias-sources-jar" value="${galimatias-base}-sources.jar" />
+  <property name="galimatias-bundle-jar" value="${galimatias-base}-bundle.jar" />
+  <target name="galimatias-javadoc-jar">
+    <javadoc destdir="${javadoc-dir}">
+      <fileset dir="${galimatias-src}"/>
+    </javadoc>
+    <jar destfile="${galimatias-javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="galimatias-sources-jar">
+    <jar destfile="${galimatias-sources-jar}">
+      <fileset dir="${galimatias-src}"/>
+    </jar>
+  </target>
+  <target name="galimatias-artifacts" depends="galimatias-javadoc-jar, galimatias-sources-jar">
+    <delete file="${dist}/VERSION" />
+    <artifact:pom
+      id="galimatias-pom"
+      groupId="nu.validator"
+      artifactId="galimatias"
+      version="${version}"
+      name="galimatias"
+      description="Fork of the galimatias URL parsing and normalization library."
+      url="https://github.com/smola/galimatias#galimatias"
+      packaging="jar">
+      <license
+        name="The MIT License"
+        distribution="repo"
+        url="http://www.opensource.org/licenses/mit-license.php"/>
+      <scm
+        connection="scm:git:git://github.com/validator/galimatias.git"
+        developerConnection="scm:git:git://github.com/validator/galimatias.git"
+        url="https://github.com/validator/galimatias"/>
+      <issueManagement
+        system="GitHub Issues"
+        url="https://github.com/validator/galimatias/issues"/>
+      <ciManagement
+        system="Travis CI"
+        url="https://travis-ci.org/validator/galimatias"/>
+      <developer
+        name="Santiago M. Mola"
+        id="smola"
+        email="santi@mola.io"
+        url="http://mola.io/"/>
+      <developer
+        name="Michael[tm] Smith"
+        id="sideshowbarker"
+        email="mike@w3.org"
+        url="https://people.w3.org/mike/"/>
+      <dependency groupId="com.ibm.icu" artifactId="icu4j" version="4.0.1" scope="compile" optional="true"/>
+      <dependency groupId="junit" artifactId="junit" version="4.12" scope="test"/>
+      <dependency groupId="org.easytesting" artifactId="fest-assert" version="1.4" scope="test"/>
+      <dependency groupId="org.hamcrest" artifactId="hamcrest-api" version="1.0" scope="test"/>
+      <dependency groupId="org.slf4j" artifactId="slf4j-api" version="1.7.13" scope="test"/>
+    </artifact:pom>
+    <artifact:writepom pomRefId="galimatias-pom" file="${galimatias-base}.pom"/>
+    <copy file="../jars/galimatias.jar" tofile="${galimatias-base}.jar"/>
+  </target>
+  <target name="galimatias-bundle">
+    <jar basedir="${dist}" destfile="${galimatias-bundle-jar}"/>
+  </target>
+</project>

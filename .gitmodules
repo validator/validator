@@ -8,3 +8,6 @@
 [submodule "tests"]
 	path = tests
 	url = https://github.com/validator/tests.git
+[submodule "galimatias"]
+	path = galimatias
+	url = https://github.com/validator/galimatias.git
