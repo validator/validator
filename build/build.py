@@ -1201,7 +1201,7 @@ def runTests():
   else:
     args = "--ignore=html-its tests/messages.json"
   className = "nu.validator.client.TestRunner"
-  classPath = os.pathsep.join(dependencyJarPaths()
+  classPath = os.pathsep.join(buildRunJarPathList()
                               + jarNamesToPaths(["galimatias", "htmlparser", "validator"])
                               + jingJarPath())
   if runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args)):
