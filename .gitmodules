@@ -1,6 +1,7 @@
 [submodule "htmlparser"]
 	path = htmlparser
 	url = https://github.com/validator/htmlparser.git
+	branch = validator-nu
 [submodule "jing-trang"]
 	path = jing-trang
 	url = https://github.com/relaxng/jing-trang.git
