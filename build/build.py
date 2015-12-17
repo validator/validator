@@ -682,6 +682,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-XX:-DontCompileHugeMethods',
     '-Xms%sk' % heap,
     '-Xmx%sk' % heap,
+    '-Djava.security.properties=' + os.path.join(buildRoot, "resources", "security.properties"),
     '-classpath',
     classPath,
     '-Dnu.validator.datatype.warn=true',
