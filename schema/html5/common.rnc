@@ -390,6 +390,10 @@ common.attrs.other =
 	common.data.source.size.list =
 		w:source-size-list
 
+## Subresource Integrity
+	common.data.integrity =
+		string
+
 ## Microdata Properties
   common.data.microdata-properties =
     list { w:microdata-property+ }

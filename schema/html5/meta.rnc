@@ -159,6 +159,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.other
 		&	link.attrs.href
 		&	link.attrs.rel
+		&	link.attrs.integrity?
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
@@ -177,6 +178,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		link.attrs.rel =
 			attribute rel {
 				w:link-rel
+			}
+		link.attrs.integrity =
+			attribute integrity {
+				common.data.integrity
 			}
 		link.attrs.sizes =
 			attribute sizes {
