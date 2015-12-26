@@ -93,6 +93,7 @@
 		(	common.attrs
 		&	(	common.attrs.aria.implicit.banner
 			|	common.attrs.aria.landmark.banner
+			|	common.attrs.aria.role.group
 			|	common.attrs.aria.role.presentation
 			)?
 		)
@@ -109,6 +110,7 @@
 		(	common.attrs
 		&	(	common.attrs.aria.implicit.contentinfo
 			|	common.attrs.aria.landmark.contentinfo
+			|	common.attrs.aria.role.group
 			|	common.attrs.aria.role.presentation
 			)?
 		)

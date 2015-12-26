@@ -53,6 +53,9 @@ common.attrs.aria.implicit.dialog |=
 common.attrs.aria.implicit.document |=
 	(	aria.state.expanded? )
 
+common.attrs.aria.implicit.form |=
+	(	aria.state.expanded? )
+
 common.attrs.aria.implicit.group |=
 	(	aria.state.expanded?
 	&	aria.prop.activedescendant?
