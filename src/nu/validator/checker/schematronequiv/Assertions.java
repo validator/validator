@@ -1780,6 +1780,17 @@ public class Assertions extends Checker {
                                     getDocumentLocator()));
                         }
                     }
+                } else {
+                    if ("".equals(atts.getValue("", "alt"))
+                            && atts.getIndex("", "role") > -1
+                            && !"presentation".equals(atts.getValue("", "role"))) {
+                        err("An \u201Cimg\u201D element which has an"
+                                + " \u201Calt\u201D attribute whose value"
+                                + " is the empty string must not have a"
+                                + " \u201Crole\u201D attribute with any"
+                                + " value other than"
+                                + " \u201Cpresentation\u201D");
+                    }
                 }
             } else if ("table" == localName) {
                 if (atts.getIndex("", "summary") >= 0) {
