@@ -1671,7 +1671,11 @@ public class Assertions extends Checker {
                     stack[currentFigurePtr].setEmbeddedContentFound();
                 }
             }
-
+            if ("article" == localName || "aside" == localName
+                    || "nav" == localName || "section" == localName) {
+                currentSectioningElementPtr = currentPtr + 1;
+                currentSectioningDepth++;
+            }
             if ("h1" == localName || "h2" == localName || "h3" == localName
                     || "h4" == localName || "h5" == localName
                     || "h6" == localName) {
@@ -2351,8 +2355,6 @@ public class Assertions extends Checker {
             push(child);
             if ("article" == localName || "aside" == localName
                     || "nav" == localName || "section" == localName) {
-                currentSectioningElementPtr = currentPtr + 1;
-                currentSectioningDepth++;
                 if (atts.getIndex("", "aria-label") > -1
                         && !"".equals(atts.getValue("", "aria-label"))) {
                     child.setHeadingFound();
