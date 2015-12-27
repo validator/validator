@@ -199,6 +199,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	style.attrs.type?
 		&	style.attrs.media?
+		&	style.attrs.nonce?
 		#	style.attrs.title included in common.attrs
 		&	(	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.menuitem
@@ -211,6 +212,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		style.attrs.media =
 			attribute media {
 				common.data.mediaquery
+			}
+		style.attrs.nonce =
+			attribute nonce{
+				string
 			}
 	style.inner =
 		( common.inner.anything )
