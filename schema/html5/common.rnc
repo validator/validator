@@ -394,6 +394,10 @@ common.attrs.other =
 	common.data.integrity =
 		w:integrity-metadata
 
+## List of sandbox keywords
+	common.data.sandbox-allow-list =
+		w:string "" | w:sandbox-allow-list
+
 ## Microdata Properties
   common.data.microdata-properties =
     list { w:microdata-property+ }
