@@ -137,6 +137,8 @@ public class Assertions extends Checker {
                 "datetime-local", "number", "range", "color" });
         INPUT_ATTRIBUTES.put("maxlength", new String[] { "text", "search",
                 "url", "tel", "email", "password" });
+        INPUT_ATTRIBUTES.put("minlength", new String[] { "text", "search",
+                "url", "tel", "email", "password" });
         INPUT_ATTRIBUTES.put("pattern", new String[] { "text", "search", "url",
                 "tel", "email", "password" });
         INPUT_ATTRIBUTES.put("placeholder", new String[] { "text", "search",

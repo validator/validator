@@ -31,6 +31,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			common.data.integer.non-negative
 		}
 
+	shared-form.attrs.minlength =
+		attribute minlength {
+			common.data.integer.non-negative
+		}
+
 	shared-form.attrs.size = 
 		attribute size {
 			common.data.integer.positive
