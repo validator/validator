@@ -68,7 +68,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	body.attrs.onpagehide?
 		&	body.attrs.onpageshow?
 		&	body.attrs.onpopstate?
-		&	body.attrs.onresize?
 		&	body.attrs.onstorage?
 		&	body.attrs.onunload?
 		)
