@@ -394,6 +394,10 @@ common.attrs.other =
 	common.data.integrity =
 		w:integrity-metadata
 
+## Content Security Policy
+	common.data.content-security-policy =
+		w:content-security-policy
+
 ## List of sandbox keywords
 	common.data.sandbox-allow-list =
 		w:string "" | w:sandbox-allow-list

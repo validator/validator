@@ -35,6 +35,9 @@ import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 
+import org.relaxng.datatype.DatatypeException;
+import nu.validator.datatype.ContentSecurityPolicy;
+import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
 import nu.validator.io.StreamBoundException;
@@ -301,6 +304,24 @@ import io.mola.galimatias.GalimatiasParseException;
                                     + " was \u201C" + val + "\u201D.",
                             publicId, systemId, -1, -1);
                     errorHandler.error(spe);
+                }
+            }
+
+            Header csp = response.getFirstHeader("Content-Security-Policy");
+            if (csp != null) {
+                try {
+                    ContentSecurityPolicy.THE_INSTANCE.checkValid(csp.getValue().trim());
+                } catch (DatatypeException e) {
+                    SAXParseException spe = new SAXParseException(
+                            "Content-Security-Policy HTTP header: "
+                                    + e.getMessage(), publicId, systemId, -1,
+                            -1);
+                    Html5DatatypeException ex5 = (Html5DatatypeException) e;
+                    if (ex5.isWarning()) {
+                        errorHandler.warning(spe);
+                    } else {
+                        errorHandler.error(spe);
+                    }
                 }
             }
 

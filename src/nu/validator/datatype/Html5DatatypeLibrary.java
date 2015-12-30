@@ -182,6 +182,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return IntegrityMetadata.THE_INSTANCE;
         } else if ("sandbox-allow-list".equals(typeLocalName)) {
             return SandboxAllowList.THE_INSTANCE;
+        } else if ("content-security-policy".equals(typeLocalName)) {
+            return ContentSecurityPolicy.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

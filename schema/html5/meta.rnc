@@ -324,6 +324,31 @@ datatypes w = "http://whattf.org/datatype-draft"
                                                                # if the definition is 
                                                                # reused in another language
 
+## Content Security Policy pragma directive: <meta http-equiv='content-security-policy'>
+
+	meta.http-equiv.content-security-policy.elem =
+		element meta { meta.inner & meta.http-equiv.content-security-policy.attrs }
+	meta.http-equiv.content-security-policy.attrs =
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
+		&	meta.http-equiv.attrs.http-equiv.content-security-policy
+		&	meta.http-equiv.attrs.content.content-security-policy
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
+		)
+		meta.http-equiv.attrs.http-equiv.content-security-policy =
+			attribute http-equiv {
+				w:string "content-security-policy"
+			}
+		meta.http-equiv.attrs.content.content-security-policy =
+			attribute content {
+				common.data.content-security-policy
+			}
+	common.elem.metadata |= meta.http-equiv.content-security-policy.elem
+
 ## "x-ua-compatible" pragma directive: <meta http-equiv='x-ua-compatible'>
 
 	meta.http-equiv.x-ua-compatible.elem =

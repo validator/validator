@@ -14,6 +14,7 @@
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-adapters.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-api.jar"/>
 	<classpathentry kind="lib" path="dependencies/icu4j-54.1.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/salvation-1.0.3.jar"/>
 	<classpathentry kind="lib" path="dependencies/javax.servlet-api-3.1.0.jar"/>
 	<classpathentry kind="lib" path="dependencies/jetty-server-9.2.9.v20150224.jar"/>
 	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.2.9.v20150224.jar"/>
