@@ -3,7 +3,7 @@
 Java8 is now required to run the checker jar and service. This release fixes a
 long-standing bug such that errors are no longer reported for ampersands in
 cases that the spec does not define as invalid; for example, an error will no
-longer be reported for a case like `<a href="foo/?bar=1&baz=2"">`. Also new in
+longer be reported for a case like `<a href="foo/?bar=1&baz=2">`. Also new in
 this release is support for Content Security Policy syntax checking in values of
 `content` attributes in `<meta http-equiv=content-security-policy content="…">`
 elements as well as in Content-Security-Policy HTTP headers, and support for the
