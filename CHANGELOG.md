@@ -24,7 +24,7 @@ changes to any options/interfaces the checker exposes for developers.
   - Refined Web UI "Message Filtering" to show total error/warning counts
   - Refined Web UI to show green if there are 0 errors or warnings to show
   - Fixed "`input[type=hidden]` label descendants" bug (@takenspc patch)
-  - Refined Web UI to remove background colors and increat font size
+  - Refined Web UI to remove background colors and increase font size
   - Made a variety of refinements and fixes to ARIA role checking.
   - Made `ol>li[role=menuitem]` & `ol>li[role=tab]` non-errors.
   - Added warnings for use of ARIA roles with implicit-semantics elements.
