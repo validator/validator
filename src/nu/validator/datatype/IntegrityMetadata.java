@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
 
+import com.shapesecurity.salvation.data.Base64Value;
+
 public final class IntegrityMetadata extends AbstractDatatype {
 
     /**
@@ -36,10 +38,6 @@ public final class IntegrityMetadata extends AbstractDatatype {
 
     private static final Pattern THE_PATTERN = Pattern.compile(
             "^(?:sha256-|sha384-|sha512)(.+$)", Pattern.CASE_INSENSITIVE);
-
-    private static final Pattern FULL_PATTERN = Pattern.compile(
-            "^(?:sha256-|sha384-|sha512-)(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
-            Pattern.CASE_INSENSITIVE);
 
     private IntegrityMetadata() {
         super();
@@ -51,11 +49,10 @@ public final class IntegrityMetadata extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {
-            Matcher n = getFullPattern().matcher(literal);
-            if (WARN && !n.matches()) {
-                throw newDatatypeException("The text \u201c" + m.group(1)
-                        + "\u201d does not appear to be a valid"
-                        + " base64-encoded string.", WARN);
+            try {
+                new Base64Value(m.group(1));
+            } catch (IllegalArgumentException e) {
+                throw newDatatypeException(e.getMessage(), WARN);
             }
         } else {
             throw newDatatypeException("The value must start with"
@@ -72,16 +69,6 @@ public final class IntegrityMetadata extends AbstractDatatype {
      */
     protected Pattern getPattern() {
         return THE_PATTERN;
-    }
-
-    /**
-     * Returns the full regexp for this datatype.
-     *
-     * @return the full regexp for this datatype
-     * @see nu.validator.datatype.AbstractDatetime#getPattern()
-     */
-    protected Pattern getFullPattern() {
-        return FULL_PATTERN;
     }
 
     @Override public String getName() {
