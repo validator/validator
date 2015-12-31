@@ -4,6 +4,8 @@ addons:
     packages:
       - tomcat7
 language: java
+jdk:
+  - oraclejdk8
 notifications:
   webhooks:
     urls:
