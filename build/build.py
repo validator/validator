@@ -257,10 +257,7 @@ def runJavac(sourceDir, classDir, classPath):
   ensureDirExists(classDir)
   sourceFiles = findFilesWithExtension(sourceDir, "java")
   f = open("temp-javac-list", "w")
-  if os.name == 'nt':
-    f.write("\r\n".join(sourceFiles))
-  else:
-    f.write("\n".join(sourceFiles))
+  f.write("\n".join(sourceFiles))
   f.close()
   args = [
     '-g',
@@ -302,10 +299,7 @@ def runJar(classDir, jarFile, sourceDir):
                for x in
                classFiles]
   f = open("temp-jar-list", "w")
-  if os.name == 'nt':
-    f.write("\r\n".join(classList))
-  else:
-    f.write("\n".join(classList))
+  f.write("\n".join(classList))
   f.close()
   runCmd('"%s" cf "%s" %s'
     % (jarCmd, jarFile, "@temp-jar-list"))
