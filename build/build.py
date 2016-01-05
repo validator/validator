@@ -203,17 +203,18 @@ class UrlExtractor(SGMLParser):
           self.leaves.append(self.baseUrl + value)
 
 def runCmd(cmd):
-  print cmd
-  if os.name == 'nt' and cmd[:1] == '"':
-    subprocess.call(cmd)
-  else:
-    return os.system(cmd)
+  print " ".join(cmd)
+  subprocess.call(cmd)
 
 def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
   if subprocess.call([cmd,] + args):
     print "Command failed."
     sys.exit(2)
+
+def runShell(shellCmd):
+  print shellCmd
+  return subprocess.call(shellCmd, shell=True)
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
@@ -263,14 +264,15 @@ def runJavac(sourceDir, classDir, classPath):
     f.write("\n".join(sourceFiles))
   f.close()
   args = [
+    javacCmd,
     '-g',
     '-nowarn',
     '-classpath',
-    '"%s"' % classPath,
+    classPath,
     '-sourcepath',
-    '"%s"' % sourceDir,
+    sourceDir,
     '-d',
-    '"%s"' % classDir,
+    classDir,
     '-encoding',
     'UTF-8',
   ]
@@ -279,7 +281,8 @@ def runJavac(sourceDir, classDir, classPath):
     args.append(javaVersion)
     args.append('-source')
     args.append(javaVersion)
-  if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), '@temp-javac-list')):
+  args.append('@temp-javac-list')
+  if runCmd(args):
     sys.exit(1)
   removeIfExists("temp-javac-list")
 
@@ -307,8 +310,7 @@ def runJar(classDir, jarFile, sourceDir):
   else:
     f.write("\n".join(classList))
   f.close()
-  runCmd('"%s" cf "%s" %s'
-    % (jarCmd, jarFile, "@temp-jar-list"))
+  runCmd([jarCmd, 'cf', jarFile, '@temp-jar-list'])
   removeIfExists("temp-jar-list")
 
 def buildModule(rootDir, jarName, classPath):
@@ -639,7 +641,7 @@ def buildHtmlParser():
 
 def buildJing():
   os.chdir("jing-trang")
-  runCmd(os.path.join(".", "ant"))
+  runCmd([os.path.join(".", "ant")])
   os.chdir("..")
 
 def buildEmitters():
@@ -648,23 +650,27 @@ def buildEmitters():
   classDir = os.path.join(buildRoot, "classes")
   ensureDirExists(classDir)
   args = [
+    javacCmd,
     '-g',
     '-nowarn',
     '-d',
-    '"%s"' % classDir,
+    classDir,
     '-encoding',
     'UTF-8',
   ]
   if javaVersion != "":
-    args.append('-target ' + javaVersion)
-    args.append('-source ' + javaVersion)
-  if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), compilerFile)):
+    args.append('-target')
+    args.append(javaVersion)
+    args.append('-source')
+    args.append(javaVersion)
+  args.append(compilerFile)
+  if runCmd(args):
     sys.exit(1)
   pageEmitter = os.path.join(vnuSrc, "servlet", "PageEmitter.java")
   formEmitter = os.path.join(vnuSrc, "servlet", "FormEmitter.java")
-  if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, pageTemplate, pageEmitter)):
+  if runCmd([javaCmd, '-cp', classDir, compilerClass, pageTemplate, pageEmitter]):
     sys.exit(1)
-  if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, formTemplate, formEmitter)):
+  if runCmd([javaCmd, '-cp', classDir, compilerClass, formTemplate, formEmitter]):
     sys.exit(1)
   removeIfDirExists(classDir)
 
@@ -834,26 +840,25 @@ class Release():
     for filename in findFiles(distDir):
       if os.path.basename(filename) in self.docs:
         continue
-      runCmd('"%s" --yes -ab %s' % (gpgCmd, filename))
+      runCmd([gpgCmd, '--yes', '-ab', filename])
 
   def createArtifacts(self, url=None):
     self.reInitDistDir()
     self.setVersion(url)
-    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
-      % (javaCmd, self.classpath, self.buildXml, self.artifactId))
+    runCmd([javaCmd, '-cp', self.classpath, 'org.apache.tools.ant.Main', '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
   def createBundle(self):
     self.createArtifacts()
     print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
     self.sign()
     self.writeVersion()
-    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-bundle'
-      % (javaCmd, self.classpath, self.buildXml, self.artifactId))
+    runCmd([javaCmd, '-cp', self.classpath, 'org.apache.tools.ant.Main', '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
   def deployToCentral(self, url):
     self.createArtifacts(url)
     basename = "%s-%s" % (self.artifactId, self.version)
     mvnArgs = [
+      mvnCmd,
       "-f",
       "%s.pom" % os.path.join(distDir, basename),
       "gpg:sign-and-deploy-file",
@@ -865,19 +870,21 @@ class Release():
       "-Djavadoc='%s-javadoc.jar'" % basename,
       "-Dsources='%s-sources.jar'" % basename,
     ]
-    runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
+    runCmd(mvnArgs)
     mvnArgs = [
+      mvnCmd,
       "-f",
       "%s.pom" % os.path.join(distDir, basename),
       "org.sonatype.plugins:nexus-staging-maven-plugin:rc-list",
       "-DnexusUrl=https://oss.sonatype.org/",
       "-DserverId=ossrh",
     ]
-    output = subprocess.check_output("%s %s" % (mvnCmd, " ".join(mvnArgs)), shell=True)
+    output = subprocess.check_output(mvnArgs)
     for line in output.split('\n'):
       if "nuvalidator" in line:
          stagingRepositoryId = "nuvalidator-" + line[19:23]
          mvnArgs = [
+          mvnCmd,
            "-f",
            "%s.pom" % os.path.join(distDir, basename),
            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-close",
@@ -886,8 +893,9 @@ class Release():
            "-DautoReleaseAfterClose=true",
            "-DstagingRepositoryId=" + stagingRepositoryId
          ]
-         runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
+         runCmd(mvnArgs)
          mvnArgs = [
+           mvnCmd,
            "-f",
            "%s.pom" % os.path.join(distDir, basename),
            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",
@@ -896,20 +904,18 @@ class Release():
            "-DautoReleaseAfterClose=true",
            "-DstagingRepositoryId=" + stagingRepositoryId
          ]
-         runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
+         runCmd(mvnArgs)
 
   def deployToHeroku(self):
     self.createExecutable("war")
-    runCmd('"%s" deploy:war --war %s --app vnu'
-        % (herokuCmd, os.path.join(distDir, "vnu.war")))
+    runCmd([herokuCmd, 'deploy:war', '--war', os.path.join(distDir, "vnu.war"), '--app', 'vnu'])
 
   def createExecutable(self, jarOrWar):
     self.reInitDistDir()
     self.setVersion()
     if jarOrWar == "war":
       os.mkdir(os.path.join(distDir, "war"))
-    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
-      % (javaCmd, self.classpath, self.buildXml, jarOrWar))
+    runCmd([javaCmd, '-cp', self.classpath, 'org.apache.tools.ant.Main', '-f', self.buildXml, jarOrWar])
 
   def removeExtras(self):
     removeIfExists(os.path.join(distDir, "VERSION"))
@@ -962,7 +968,7 @@ class Release():
     os.chdir("..")
 
   def createOrUpdateGithubData(self):
-    runCmd('"%s" tag -f v%s' % (gitCmd, validatorVersion))
+    runCmd([gitCmd, 'tag', '-f', ('v%s' % validatorVersion)])
     args = [
       "-u",
       "validator",
@@ -971,38 +977,46 @@ class Release():
       "-t",
       validatorVersion,
     ]
-    if (runCmd('"%s" info %s > /dev/null 2>&1' % (ghRelCmd, " ".join(args)))):
-       runCmd('"%s" release -p %s' % (ghRelCmd, " ".join(args)))
+    devnull = open(os.devnull, 'wb')
+    infoArgs = [ghRelCmd, 'info'] + args
+    print " ".join(infoArgs)
+    if subprocess.call(infoArgs, stdout=devnull, stderr=subprocess.STDOUT):
+       runCmd([ghRelCmd, 'release', '-p'] + args)
     else:
-       runCmd('"%s" delete %s' % (ghRelCmd, " ".join(args)))
-       runCmd('"%s" release -p %s' % (ghRelCmd, " ".join(args)))
-    args.append('-n "%s"' % releaseDate)
+       runCmd([ghRelCmd, 'delete'] + args)
+       runCmd([ghRelCmd, 'release', '-p'] + args)
+    devnull.close()
+    args.append('-n')
+    args.append(releaseDate)
     f = open(os.path.join(buildRoot, "WHATSNEW.md"))
     desc = f.read().replace('"', '\\"')
     desc = f.read().replace('`', '\\`')
-    args.append('-d "%s"' % desc)
-    runCmd('"%s" edit -p %s' % (ghRelCmd, " ".join(args)))
+    args.append('-d')
+    args.append(desc)
+    runCmd([ghRelCmd, 'edit', '-p'] + args)
 
   def uploadToGithub(self):
     for filename in findFiles(distDir):
-      args = [
-        "-u",
-        "validator",
-        "-r",
-        "validator",
-        "-t",
-        validatorVersion,
-        "-n",
-        os.path.basename(filename),
-        "-f",
-        filename,
-      ]
       if "zip" in filename:
-        runCmd('"%s" upload %s' % (ghRelCmd, " ".join(args)))
+        args = [
+          ghRelCmd,
+          'upload',
+          "-u",
+          "validator",
+          "-r",
+          "validator",
+          "-t",
+          validatorVersion,
+          "-n",
+          os.path.basename(filename),
+          "-f",
+          filename,
+        ]
+        runCmd(args)
 
   def uploadToReleasesHost(self, path):
     for filename in findFiles(distDir):
-      runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
+      runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
   def uploadDist(self, jarOrWar):
     self.uploadToReleasesHost("%s/%s" % (releasesPath, jarOrWar))
@@ -1014,17 +1028,18 @@ class Release():
       return
     formats = ["gnu", "xml", "json", "text"]
     for _format in formats:
-      if runCmd('echo \'%s\' | "%s" -jar %s --format %s -'
+      if runShell('echo \'%s\' | "%s" -jar %s --format %s -'
           % (miniDoc, javaCmd, vnu, _format)):
         sys.exit(1)
     # to also make sure it works even w/o --format value given; returns gnu output
-    if runCmd('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
+    if runShell('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
       sys.exit(1)
-    if runCmd('"%s" -jar %s --version' % (javaCmd, vnu)):
+    if runCmd([javaCmd, '-jar', vnu, '--version']):
       sys.exit(1)
 
 def createTarball():
   args = [
+    tarCmd,
     "zcf",
     os.path.join(buildRoot, "jars.tar.gz"),
     os.path.join(buildRoot, "run-validator.sh"),
@@ -1032,25 +1047,26 @@ def createTarball():
     os.path.join(buildRoot, "site", "script.js"),
     os.path.join(buildRoot, "site", "icon.png"),
   ] + ownJarList()
-  runCmd('"%s" %s' %(tarCmd, " ".join(args)))
+  runCmd(args)
 
 def createDepTarball():
   args = [
+    tarCmd,
     "zcf",
     os.path.join(buildRoot, "deps.tar.gz"),
   ] + dependencyJarPaths(runDependencyJars)
-  runCmd('"%s" %s' %(tarCmd, " ".join(args)))
+  runCmd(args)
 
 def deployOverScp():
   if not deploymentTarget:
     print "No target"
     return
-  runCmd('"%s" "%s" %s/deps.tar.gz' % (scpCmd, os.path.join(buildRoot, "deps.tar.gz"), deploymentTarget))
-  runCmd('"%s" "%s" %s/jars.tar.gz' % (scpCmd, os.path.join(buildRoot, "jars.tar.gz"), deploymentTarget))
+  runCmd([scpCmd, os.path.join(buildRoot, "deps.tar.gz"), ('%s/deps.tar.gz' % deploymentTarget)])
+  runCmd([scpCmd, os.path.join(buildRoot, "jars.tar.gz"), ('%s/jars.tar.gz' % deploymentTarget)])
   emptyPath = os.path.join(buildRoot, "EMPTY")
   f = open(emptyPath, 'wb')
   f.close()
-  runCmd('"%s" "%s" %s/DEPLOY' % (scpCmd, emptyPath, deploymentTarget))
+  runCmd([scpCmd, emptyPath, ('%s/DEPLOY' % deploymentTarget)])
   os.remove(emptyPath)
 
 def fetchUrlTo(url, path, md5sum=None):
@@ -1197,7 +1213,7 @@ def downloadDependency(url, md5sum):
       zipExtract(path, dependencyDir)
 
 def updateSubmodules():
-  runCmd('"%s" submodule update --init' % gitCmd)
+  runCmd([gitCmd, 'submodule', 'update', '--init'])
 
 def downloadDependencies():
   for url, md5sum in dependencyPackages:
@@ -1217,14 +1233,14 @@ def buildAll():
 
 def runTests():
   if followW3Cspec:
-    args = "--ignore=hgroup tests/messages.json"
+    args = ["--ignore=hgroup", "tests/messages.json"]
   else:
-    args = "--ignore=html-its tests/messages.json"
+    args = ["--ignore=html-its", "tests/messages.json"]
   className = "nu.validator.client.TestRunner"
   classPath = os.pathsep.join(buildRunJarPathList()
                               + jarNamesToPaths(["galimatias", "htmlparser", "validator"])
                               + jingJarPath())
-  if runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args)):
+  if runCmd([javaCmd, '-classpath', classPath, className] + args):
     sys.exit(1)
 
 def splitHostSpec(spec):
