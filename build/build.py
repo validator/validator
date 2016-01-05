@@ -211,14 +211,9 @@ def runCmd(cmd):
 
 def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
-  if os.name == 'nt':
-    if subprocess.call([cmd,] + args):
-      print "Command failed."
-      sys.exit(2)
-  else:
-    if os.execvp(cmd, [cmd,] + args):
-      print "Command failed."
-      sys.exit(2)
+  if subprocess.call([cmd,] + args):
+    print "Command failed."
+    sys.exit(2)
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
