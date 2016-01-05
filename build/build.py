@@ -270,14 +270,20 @@ def runJavac(sourceDir, classDir, classPath):
   args = [
     '-g',
     '-nowarn',
-    '-classpath "%s"' % classPath,
-    '-sourcepath "%s"' % sourceDir,
-    '-d "%s"' % classDir,
-    '-encoding UTF-8',
+    '-classpath',
+    '"%s"' % classPath,
+    '-sourcepath',
+    '"%s"' % sourceDir,
+    '-d',
+    '"%s"' % classDir,
+    '-encoding',
+    'UTF-8',
   ]
   if javaVersion != "":
-    args.append('-target ' + javaVersion)
-    args.append('-source ' + javaVersion)
+    args.append('-target')
+    args.append(javaVersion)
+    args.append('-source')
+    args.append(javaVersion)
   if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), '@temp-javac-list')):
     sys.exit(1)
   removeIfExists("temp-javac-list")
@@ -649,8 +655,10 @@ def buildEmitters():
   args = [
     '-g',
     '-nowarn',
-    '-d "%s"' % classDir,
-    '-encoding UTF-8',
+    '-d',
+    '"%s"' % classDir,
+    '-encoding',
+    'UTF-8',
   ]
   if javaVersion != "":
     args.append('-target ' + javaVersion)
@@ -851,7 +859,8 @@ class Release():
     self.createArtifacts(url)
     basename = "%s-%s" % (self.artifactId, self.version)
     mvnArgs = [
-      "-f %s.pom" % os.path.join(distDir, basename),
+      "-f",
+      "%s.pom" % os.path.join(distDir, basename),
       "gpg:sign-and-deploy-file",
       "-Dgpg.executable=%s" % gpgCmd,
       "-DrepositoryId=ossrh",
@@ -863,7 +872,8 @@ class Release():
     ]
     runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
     mvnArgs = [
-      "-f %s.pom" % os.path.join(distDir, basename),
+      "-f",
+      "%s.pom" % os.path.join(distDir, basename),
       "org.sonatype.plugins:nexus-staging-maven-plugin:rc-list",
       "-DnexusUrl=https://oss.sonatype.org/",
       "-DserverId=ossrh",
@@ -873,7 +883,8 @@ class Release():
       if "nuvalidator" in line:
          stagingRepositoryId = "nuvalidator-" + line[19:23]
          mvnArgs = [
-           "-f %s.pom" % os.path.join(distDir, basename),
+           "-f",
+           "%s.pom" % os.path.join(distDir, basename),
            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-close",
            "-DnexusUrl=https://oss.sonatype.org/",
            "-DserverId=ossrh",
@@ -882,7 +893,8 @@ class Release():
          ]
          runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
          mvnArgs = [
-           "-f %s.pom" % os.path.join(distDir, basename),
+           "-f",
+           "%s.pom" % os.path.join(distDir, basename),
            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",
            "-DnexusUrl=https://oss.sonatype.org/",
            "-DserverId=ossrh",
@@ -957,8 +969,12 @@ class Release():
   def createOrUpdateGithubData(self):
     runCmd('"%s" tag -f v%s' % (gitCmd, validatorVersion))
     args = [
-      "-u validator -r validator",
-      "-t %s" % validatorVersion,
+      "-u",
+      "validator",
+      "-r",
+      "validator",
+      "-t",
+      validatorVersion,
     ]
     if (runCmd('"%s" info %s > /dev/null 2>&1' % (ghRelCmd, " ".join(args)))):
        runCmd('"%s" release -p %s' % (ghRelCmd, " ".join(args)))
@@ -975,10 +991,16 @@ class Release():
   def uploadToGithub(self):
     for filename in findFiles(distDir):
       args = [
-        "-u validator -r validator",
-        "-t %s" % validatorVersion,
-        "-n %s" % os.path.basename(filename),
-        "-f %s" % filename,
+        "-u",
+        "validator",
+        "-r",
+        "validator",
+        "-t",
+        validatorVersion,
+        "-n",
+        os.path.basename(filename),
+        "-f",
+        filename,
       ]
       if "zip" in filename:
         runCmd('"%s" upload %s' % (ghRelCmd, " ".join(args)))
