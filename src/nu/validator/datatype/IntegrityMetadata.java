@@ -37,7 +37,7 @@ public final class IntegrityMetadata extends AbstractDatatype {
     public static final IntegrityMetadata THE_INSTANCE = new IntegrityMetadata();
 
     private static final Pattern THE_PATTERN = Pattern.compile(
-            "^(?:sha256-|sha384-|sha512)(.+$)", Pattern.CASE_INSENSITIVE);
+            "^(?:sha256|sha384|sha512)-(.+$)", Pattern.CASE_INSENSITIVE);
 
     private IntegrityMetadata() {
         super();
