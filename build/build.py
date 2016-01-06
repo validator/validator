@@ -1335,7 +1335,6 @@ else:
       html5specLink = arg[12:]
     elif arg.startswith("--html5load="):
       html5specLoad = arg[12:]
-      ianaCharset = arg[15:]
     elif arg.startswith("--about="):
       aboutPage = arg[8:]
     elif arg.startswith("--stylesheet="):
