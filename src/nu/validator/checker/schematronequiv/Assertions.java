@@ -1969,7 +1969,7 @@ public class Assertions extends Checker {
                             err("Element \u201Cobject\u201D must not have"
                                     + " attribute \u201Ctypemustmatch\u201D unless"
                                     + " both attribute \u201Cdata\u201D"
-                                    + " and attribute \u201Csrc\u201D are also specified.");
+                                    + " and attribute \u201Ctype\u201D are also specified.");
                         }
                     }
                 }
