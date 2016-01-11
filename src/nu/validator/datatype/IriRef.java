@@ -29,18 +29,18 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.RhinoException;
+//import org.mozilla.javascript.Context;
+//import org.mozilla.javascript.ContextFactory;
+//import org.mozilla.javascript.RhinoException;
 import org.relaxng.datatype.DatatypeException;
 import nu.validator.io.DataUri;
 import nu.validator.io.DataUriException;
 import nu.validator.io.Utf8PercentDecodingReader;
 
-import io.mola.galimatias.URL;
-import io.mola.galimatias.URLParsingSettings;
-import io.mola.galimatias.GalimatiasParseException;
-import io.mola.galimatias.StrictErrorHandler;
+//import io.mola.galimatias.URL;
+//import io.mola.galimatias.URLParsingSettings;
+//import io.mola.galimatias.GalimatiasParseException;
+//import io.mola.galimatias.StrictErrorHandler;
 
 public class IriRef extends AbstractDatatype {
 
@@ -93,112 +93,112 @@ public class IriRef extends AbstractDatatype {
     }
 
     public void checkValid(CharSequence literal) throws DatatypeException {
-        String messagePrologue = "";
-        int length = literal.length();
-        if (reportValue()) {
-            if (length < ELIDE_LIMIT) {
-                messagePrologue = "\u201c" + literal + "\u201d: ";
-            } else {
-                StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
-                sb.append(literal, 0, ELIDE_LIMIT / 2);
-                sb.append('\u2026');
-                sb.append(literal, length - ELIDE_LIMIT / 2, length);
-                messagePrologue = "\u201c" + sb.toString() + "\u201d: ";
-            }
-        }
-        if ("".equals(trimHtmlSpaces(literal.toString()))) {
-            throw newDatatypeException("Must be non-empty.");
-        }
-        URL url = null;
-        URLParsingSettings settings = URLParsingSettings.create().withErrorHandler(
-                StrictErrorHandler.getInstance());
-        boolean data = false;
-        try {
-            CharSequencePair pair = splitScheme(literal);
-            if (pair == null) {
-                // no scheme or scheme is private
-                if (isAbsolute()) {
-                    throw newDatatypeException("The string \u201c" + literal
-                            + "\u201d is not an absolute URL.");
-                } else {
-                    // in this case, doc's actual base URL isn't relevant,
-                    // so just use http://example.org/foo/bar as base
-                    url = URL.parse(settings,
-                            URL.parse("http://example.org/foo/bar"),
-                            literal.toString());
-                }
-            } else {
-                CharSequence scheme = pair.getHead();
-                CharSequence tail = pair.getTail();
-                if (isWellKnown(scheme)) {
-                    url = URL.parse(settings, literal.toString());
-                } else if ("javascript".contentEquals(scheme)) {
-                    // StringBuilder sb = new StringBuilder(2 +
-                    // literal.length());
-                    // sb.append("x-").append(literal);
-                    // iri = fac.construct(sb.toString());
-                    url = null; // Don't bother user with generic IRI syntax
-                    Reader reader = new BufferedReader(
-                            new Utf8PercentDecodingReader(new StringReader(
-                                    "function(event){" + tail.toString() + "}")));
-                    // XXX CharSequenceReader
-                    reader.mark(1);
-                    int c = reader.read();
-                    if (c != 0xFEFF) {
-                        reader.reset();
-                    }
-                    try {
-                        Context context = ContextFactory.getGlobal().enterContext();
-                        context.setOptimizationLevel(0);
-                        context.setLanguageVersion(Context.VERSION_1_6);
-                        // -1 for lineno arg prevents Rhino from appending
-                        // "(unnamed script#1)" to all error messages
-                        context.compileReader(reader, null, -1, null);
-                    } finally {
-                        Context.exit();
-                    }
-                } else if ("data".contentEquals(scheme)) {
-                    data = true;
-                    url = URL.parse(settings, literal.toString());
-                } else if (isHttpAlias(scheme)) {
-                    StringBuilder sb = new StringBuilder(5 + tail.length());
-                    sb.append("http:").append(tail);
-                    url = URL.parse(settings, sb.toString());
-                } else {
-                    StringBuilder sb = new StringBuilder(2 + literal.length());
-                    sb.append("x-").append(literal);
-                    url = URL.parse(settings, sb.toString());
-                }
-            }
-        } catch (GalimatiasParseException e) {
-            throw newDatatypeException(messagePrologue + e.getMessage() + ".");
-        } catch (IOException e) {
-            throw newDatatypeException(messagePrologue + e.getMessage());
-        } catch (RhinoException e) {
-            throw newDatatypeException(messagePrologue + e.getMessage());
-        }
-        if (url != null) {
-            if (data) {
-                try {
-                    DataUri dataUri = new DataUri(url);
-                    InputStream is = dataUri.getInputStream();
-                    while (is.read() >= 0) {
-                        // spin
-                    }
-                } catch (DataUriException e) {
-                    throw newDatatypeException(e.getIndex(), e.getHead(),
-                            e.getLiteral(), e.getTail());
-                } catch (IOException e) {
-                    String msg = e.getMessage();
-                    if (WARN
-                            && "Fragment is not allowed for data: URIs according to RFC 2397.".equals(msg)) {
-                        throw newDatatypeException(messagePrologue + msg, WARN);
-                    } else {
-                        throw newDatatypeException(messagePrologue + msg);
-                    }
-                }
-            }
-        }
+//        String messagePrologue = "";
+//        int length = literal.length();
+//        if (reportValue()) {
+//            if (length < ELIDE_LIMIT) {
+//                messagePrologue = "\u201c" + literal + "\u201d: ";
+//            } else {
+//                StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
+//                sb.append(literal, 0, ELIDE_LIMIT / 2);
+//                sb.append('\u2026');
+//                sb.append(literal, length - ELIDE_LIMIT / 2, length);
+//                messagePrologue = "\u201c" + sb.toString() + "\u201d: ";
+//            }
+//        }
+//        if ("".equals(trimHtmlSpaces(literal.toString()))) {
+//            throw newDatatypeException("Must be non-empty.");
+//        }
+//        URL url = null;
+//        URLParsingSettings settings = URLParsingSettings.create().withErrorHandler(
+//                StrictErrorHandler.getInstance());
+//        boolean data = false;
+//        try {
+//            CharSequencePair pair = splitScheme(literal);
+//            if (pair == null) {
+//                // no scheme or scheme is private
+//                if (isAbsolute()) {
+//                    throw newDatatypeException("The string \u201c" + literal
+//                            + "\u201d is not an absolute URL.");
+//                } else {
+//                    // in this case, doc's actual base URL isn't relevant,
+//                    // so just use http://example.org/foo/bar as base
+//                    url = URL.parse(settings,
+//                            URL.parse("http://example.org/foo/bar"),
+//                            literal.toString());
+//                }
+//            } else {
+//                CharSequence scheme = pair.getHead();
+//                CharSequence tail = pair.getTail();
+//                if (isWellKnown(scheme)) {
+//                    url = URL.parse(settings, literal.toString());
+//                } else if ("javascript".contentEquals(scheme)) {
+//                    // StringBuilder sb = new StringBuilder(2 +
+//                    // literal.length());
+//                    // sb.append("x-").append(literal);
+//                    // iri = fac.construct(sb.toString());
+//                    url = null; // Don't bother user with generic IRI syntax
+//                    Reader reader = new BufferedReader(
+//                            new Utf8PercentDecodingReader(new StringReader(
+//                                    "function(event){" + tail.toString() + "}")));
+//                    // XXX CharSequenceReader
+//                    reader.mark(1);
+//                    int c = reader.read();
+//                    if (c != 0xFEFF) {
+//                        reader.reset();
+//                    }
+//                    try {
+//                        Context context = ContextFactory.getGlobal().enterContext();
+//                        context.setOptimizationLevel(0);
+//                        context.setLanguageVersion(Context.VERSION_1_6);
+//                        // -1 for lineno arg prevents Rhino from appending
+//                        // "(unnamed script#1)" to all error messages
+//                        context.compileReader(reader, null, -1, null);
+//                    } finally {
+//                        Context.exit();
+//                    }
+//                } else if ("data".contentEquals(scheme)) {
+//                    data = true;
+//                    url = URL.parse(settings, literal.toString());
+//                } else if (isHttpAlias(scheme)) {
+//                    StringBuilder sb = new StringBuilder(5 + tail.length());
+//                    sb.append("http:").append(tail);
+//                    url = URL.parse(settings, sb.toString());
+//                } else {
+//                    StringBuilder sb = new StringBuilder(2 + literal.length());
+//                    sb.append("x-").append(literal);
+//                    url = URL.parse(settings, sb.toString());
+//                }
+//            }
+//        } catch (GalimatiasParseException e) {
+//            throw newDatatypeException(messagePrologue + e.getMessage() + ".");
+//        } catch (IOException e) {
+//            throw newDatatypeException(messagePrologue + e.getMessage());
+//        } catch (RhinoException e) {
+//            throw newDatatypeException(messagePrologue + e.getMessage());
+//        }
+//        if (url != null) {
+//            if (data) {
+//                try {
+//                    DataUri dataUri = new DataUri(url);
+//                    InputStream is = dataUri.getInputStream();
+//                    while (is.read() >= 0) {
+//                        // spin
+//                    }
+//                } catch (DataUriException e) {
+//                    throw newDatatypeException(e.getIndex(), e.getHead(),
+//                            e.getLiteral(), e.getTail());
+//                } catch (IOException e) {
+//                    String msg = e.getMessage();
+//                    if (WARN
+//                            && "Fragment is not allowed for data: URIs according to RFC 2397.".equals(msg)) {
+//                        throw newDatatypeException(messagePrologue + msg, WARN);
+//                    } else {
+//                        throw newDatatypeException(messagePrologue + msg);
+//                    }
+//                }
+//            }
+//        }
     }
 
     private final boolean isHttpAlias(CharSequence scheme) {
