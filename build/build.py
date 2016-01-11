@@ -41,7 +41,7 @@ from sgmllib import SGMLParser
 import subprocess
 import time
 
-javaVersion = '1.6'
+javaVersion = '1.8'
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
@@ -63,8 +63,9 @@ releasesPath = "/var/www/releases"
 
 releaseDate = time.strftime('%d %B %Y')
 validatorVersion = time.strftime('%y.%-m.%-e')
-jingVersion = "20130806VNU"
-htmlparserVersion = "1.4.1"
+jingVersion = "20150629VNU"
+htmlparserVersion = "1.4.2"
+galimatiasVersion = "0.1.1"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
@@ -117,18 +118,20 @@ miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
   ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/54.1.1/icu4j-54.1.1.jar", "d75417a813c37b958be2be0a766f0a65"),
+  ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/1.0.3/salvation-1.0.3.jar", "32d44c3a5810bc74dc2b87509f9e76a2"),
   ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),
   ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),
   ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar", "040b4b4d8eac886f6b4a2a3bd2f31b00"),
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-adapters.jar", "5c82e86cc5b769f72abd2af1f92255fa"),
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-api.jar", "289dcb376743ab24ecaeb194a0d287d9"),
-  ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),
+  ("https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar", "5b38c40c97fbd0adee29f91e60405584"),
   ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),
   ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
   ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),
   ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),
+  ("https://repo1.maven.org/maven2/org/easytesting/fest-assert/1.4/fest-assert-1.4.jar", "05b9012baeccce4379d125a2050c6574"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.2.9.v20150224/jetty-security-9.2.9.v20150224.jar", "2bad0336376b71a5ec81bc3150b898a0"),
@@ -137,7 +140,9 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.2.9.v20150224/jetty-servlets-9.2.9.v20150224.jar", "5ec4c25b552df1f7b6785b7b5bbbd54c"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.9.v20150224/jetty-util-9.2.9.v20150224.jar", "cb039d6b03c838ea90748469fe928d60"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.9.v20150224/jetty-util-ajax-9.2.9.v20150224.jar", "e3f16ce949fa5103975a1c056d2cc9cb"),
+  ("https://repo1.maven.org/maven2/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar", "1d04e4713e19ff23f9820f271e45c3be"),
   ("https://repo1.maven.org/maven2/org/mozilla/rhino/1.7R5/rhino-1.7R5.jar", "515233bd8a534c0468f6e397fc6b1925"),
+  ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),
   ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/a878df1503af3bfb63493a63685a117a24988959/parse-css.js", "adbb69f7c71c8d5703f8b9d770bfc71f"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
@@ -150,10 +155,10 @@ runDependencyJars = [
   "commons-logging-1.2.jar",
   "commons-logging-1.2-adapters.jar",
   "commons-logging-1.2-api.jar",
-  "galimatias-0.1.0.jar",
   "httpcore-4.4.jar",
   "httpclient-4.4.jar",
   "icu4j-54.1.1.jar",
+  "salvation-1.0.3.jar",
   "javax.servlet-api-3.1.0.jar",
   "jchardet-1.0.jar",
   "jetty-http-9.2.9.v20150224.jar",
@@ -170,6 +175,10 @@ runDependencyJars = [
 ]
 
 buildOnlyDependencyJars = [
+  "fest-assert-1.4.jar",
+  "hamcrest-api-1.0.jar",
+  "junit-4.12.jar",
+  "slf4j-api-1.7.13.jar",
   "xom-1.2.5.jar"
 ]
 
@@ -195,22 +204,18 @@ class UrlExtractor(SGMLParser):
           self.leaves.append(self.baseUrl + value)
 
 def runCmd(cmd):
-  print cmd
-  if os.name == 'nt' and cmd[:1] == '"':
-    subprocess.call(cmd)
-  else:
-    return os.system(cmd)
+  print " ".join(cmd)
+  subprocess.call(cmd)
 
 def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
-  if os.name == 'nt':
-    if subprocess.call([cmd,] + args):
-      print "Command failed."
-      sys.exit(2)
-  else:
-    if os.execvp(cmd, [cmd,] + args):
-      print "Command failed."
-      sys.exit(2)
+  if subprocess.call([cmd,] + args):
+    print "Command failed."
+    sys.exit(2)
+
+def runShell(shellCmd):
+  print shellCmd
+  return subprocess.call(shellCmd, shell=True)
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
@@ -254,23 +259,28 @@ def runJavac(sourceDir, classDir, classPath):
   ensureDirExists(classDir)
   sourceFiles = findFilesWithExtension(sourceDir, "java")
   f = open("temp-javac-list", "w")
-  if os.name == 'nt':
-    f.write("\r\n".join(sourceFiles))
-  else:
-    f.write("\n".join(sourceFiles))
+  f.write("\n".join(sourceFiles))
   f.close()
   args = [
+    javacCmd,
     '-g',
     '-nowarn',
-    '-classpath "%s"' % classPath,
-    '-sourcepath "%s"' % sourceDir,
-    '-d "%s"' % classDir,
-    '-encoding UTF-8',
+    '-classpath',
+    classPath,
+    '-sourcepath',
+    sourceDir,
+    '-d',
+    classDir,
+    '-encoding',
+    'UTF-8',
   ]
   if javaVersion != "":
-    args.append('-target ' + javaVersion)
-    args.append('-source ' + javaVersion)
-  if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), '@temp-javac-list')):
+    args.append('-target')
+    args.append(javaVersion)
+    args.append('-source')
+    args.append(javaVersion)
+  args.append('@temp-javac-list')
+  if runCmd(args):
     sys.exit(1)
   removeIfExists("temp-javac-list")
 
@@ -293,13 +303,9 @@ def runJar(classDir, jarFile, sourceDir):
                for x in
                classFiles]
   f = open("temp-jar-list", "w")
-  if os.name == 'nt':
-    f.write("\r\n".join(classList))
-  else:
-    f.write("\n".join(classList))
+  f.write("\n".join(classList))
   f.close()
-  runCmd('"%s" cf "%s" %s'
-    % (jarCmd, jarFile, "@temp-jar-list"))
+  runCmd([jarCmd, 'cf', jarFile, '@temp-jar-list'])
   removeIfExists("temp-jar-list")
 
 def buildModule(rootDir, jarName, classPath):
@@ -620,13 +626,17 @@ def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
 # end of data and functions for building schema drivers
 #################################################################
 
+def buildGalimatias():
+  classPath = os.pathsep.join(dependencyJarPaths())
+  buildModule( os.path.join(buildRoot, "galimatias"), "galimatias", classPath)
+
 def buildHtmlParser():
   classPath = os.pathsep.join(dependencyJarPaths())
   buildModule( os.path.join(buildRoot, "htmlparser"), "htmlparser", classPath)
 
 def buildJing():
   os.chdir("jing-trang")
-  runCmd(os.path.join(".", "ant"))
+  runCmd([os.path.join(".", "ant")])
   os.chdir("..")
 
 def buildEmitters():
@@ -635,34 +645,40 @@ def buildEmitters():
   classDir = os.path.join(buildRoot, "classes")
   ensureDirExists(classDir)
   args = [
+    javacCmd,
     '-g',
     '-nowarn',
-    '-d "%s"' % classDir,
-    '-encoding UTF-8',
+    '-d',
+    classDir,
+    '-encoding',
+    'UTF-8',
   ]
   return
   if javaVersion != "":
-    args.append('-target ' + javaVersion)
-    args.append('-source ' + javaVersion)
-  if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), compilerFile)):
+    args.append('-target')
+    args.append(javaVersion)
+    args.append('-source')
+    args.append(javaVersion)
+  args.append(compilerFile)
+  if runCmd(args):
     sys.exit(1)
   pageEmitter = os.path.join(vnuSrc, "servlet", "PageEmitter.java")
   formEmitter = os.path.join(vnuSrc, "servlet", "FormEmitter.java")
-  if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, pageTemplate, pageEmitter)):
+  if runCmd([javaCmd, '-cp', classDir, compilerClass, pageTemplate, pageEmitter]):
     sys.exit(1)
-  if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, formTemplate, formEmitter)):
+  if runCmd([javaCmd, '-cp', classDir, compilerClass, formTemplate, formEmitter]):
     sys.exit(1)
   removeIfDirExists(classDir)
 
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["htmlparser"])
+                              + jarNamesToPaths(["galimatias", "htmlparser"])
                               + jingJarPath())
   buildEmitters()
   buildModule(buildRoot, "validator", classPath)
 
 def ownJarList():
-  return jarNamesToPaths(["htmlparser", "validator"]) + jingJarPath()
+  return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + jingJarPath()
 
 def buildRunJarPathList():
   return dependencyJarPaths(runDependencyJars)  + ownJarList()
@@ -673,6 +689,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-XX:-DontCompileHugeMethods',
     '-Xms%sk' % heap,
     '-Xmx%sk' % heap,
+    '-Djava.security.properties=' + os.path.join(buildRoot, "resources", "security.properties"),
     '-classpath',
     classPath,
     '-Dnu.validator.datatype.warn=true',
@@ -774,6 +791,7 @@ class Release():
       os.pathsep.join(dependencyJarPaths()),
       os.path.join(jingTrangDir, "build", "jing.jar"),
       os.path.join(jarsDir, "htmlparser.jar"),
+      os.path.join(jarsDir, "galimatias.jar"),
     ])
     self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
 
@@ -781,9 +799,11 @@ class Release():
     removeIfDirExists(distDir)
     ensureDirExists(distDir)
 
-  def setVersion(self):
+  def setVersion(self, url=None):
     if self.artifactId == "jing" : self.version = jingVersion
-    if self.artifactId == "htmlparser": self.version = jingVersion
+    if self.artifactId == "htmlparser": self.version = htmlparserVersion
+    if self.artifactId == "galimatias": self.version = galimatiasVersion
+    if url == snapshotsRepoUrl: self.version += "-SNAPSHOT"
     self.writeVersion()
 
   def writeVersion(self):
@@ -816,28 +836,27 @@ class Release():
     for filename in findFiles(distDir):
       if os.path.basename(filename) in self.docs:
         continue
-      runCmd('"%s" --yes -ab %s' % (gpgCmd, filename))
+      runCmd([gpgCmd, '--yes', '-ab', filename])
 
-  def createArtifacts(self):
+  def createArtifacts(self, url=None):
     self.reInitDistDir()
-    self.setVersion()
-    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
-      % (javaCmd, self.classpath, self.buildXml, self.artifactId))
+    self.setVersion(url)
+    runCmd([javaCmd, '-cp', self.classpath, 'org.apache.tools.ant.Main', '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
   def createBundle(self):
     self.createArtifacts()
     print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
     self.sign()
     self.writeVersion()
-    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-bundle'
-      % (javaCmd, self.classpath, self.buildXml, self.artifactId))
+    runCmd([javaCmd, '-cp', self.classpath, 'org.apache.tools.ant.Main', '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
   def deployToCentral(self, url):
-    if url == snapshotsRepoUrl: self.version += "-SNAPSHOT"
-    self.createArtifacts()
+    self.createArtifacts(url)
     basename = "%s-%s" % (self.artifactId, self.version)
     mvnArgs = [
-      "-f %s.pom" % os.path.join(distDir, basename),
+      mvnCmd,
+      "-f",
+      "%s.pom" % os.path.join(distDir, basename),
       "gpg:sign-and-deploy-file",
       "-Dgpg.executable=%s" % gpgCmd,
       "-DrepositoryId=ossrh",
@@ -847,48 +866,52 @@ class Release():
       "-Djavadoc='%s-javadoc.jar'" % basename,
       "-Dsources='%s-sources.jar'" % basename,
     ]
-    runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
+    runCmd(mvnArgs)
     mvnArgs = [
-      "-f %s.pom" % os.path.join(distDir, basename),
+      mvnCmd,
+      "-f",
+      "%s.pom" % os.path.join(distDir, basename),
       "org.sonatype.plugins:nexus-staging-maven-plugin:rc-list",
       "-DnexusUrl=https://oss.sonatype.org/",
       "-DserverId=ossrh",
     ]
-    output = subprocess.check_output("%s %s" % (mvnCmd, " ".join(mvnArgs)), shell=True)
+    output = subprocess.check_output(mvnArgs)
     for line in output.split('\n'):
       if "nuvalidator" in line:
          stagingRepositoryId = "nuvalidator-" + line[19:23]
          mvnArgs = [
-           "-f %s.pom" % os.path.join(distDir, basename),
+          mvnCmd,
+           "-f",
+           "%s.pom" % os.path.join(distDir, basename),
            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-close",
            "-DnexusUrl=https://oss.sonatype.org/",
            "-DserverId=ossrh",
            "-DautoReleaseAfterClose=true",
            "-DstagingRepositoryId=" + stagingRepositoryId
          ]
-         runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
+         runCmd(mvnArgs)
          mvnArgs = [
-           "-f %s.pom" % os.path.join(distDir, basename),
+           mvnCmd,
+           "-f",
+           "%s.pom" % os.path.join(distDir, basename),
            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",
            "-DnexusUrl=https://oss.sonatype.org/",
            "-DserverId=ossrh",
            "-DautoReleaseAfterClose=true",
            "-DstagingRepositoryId=" + stagingRepositoryId
          ]
-         runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
+         runCmd(mvnArgs)
 
   def deployToHeroku(self):
     self.createExecutable("war")
-    runCmd('"%s" deploy:war --war %s --app vnu'
-        % (herokuCmd, os.path.join(distDir, "vnu.war")))
+    runCmd([herokuCmd, 'deploy:war', '--war', os.path.join(distDir, "vnu.war"), '--app', 'vnu'])
 
   def createExecutable(self, jarOrWar):
     self.reInitDistDir()
     self.setVersion()
     if jarOrWar == "war":
       os.mkdir(os.path.join(distDir, "war"))
-    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
-      % (javaCmd, self.classpath, self.buildXml, jarOrWar))
+    runCmd([javaCmd, '-cp', self.classpath, 'org.apache.tools.ant.Main', '-f', self.buildXml, jarOrWar])
 
   def removeExtras(self):
     removeIfExists(os.path.join(distDir, "VERSION"))
@@ -941,37 +964,55 @@ class Release():
     os.chdir("..")
 
   def createOrUpdateGithubData(self):
-    runCmd('"%s" tag -f v%s' % (gitCmd, validatorVersion))
+    runCmd([gitCmd, 'tag', '-f', ('v%s' % validatorVersion)])
     args = [
-      "-u validator -r validator",
-      "-t %s" % validatorVersion,
+      "-u",
+      "validator",
+      "-r",
+      "validator",
+      "-t",
+      validatorVersion,
     ]
-    if (runCmd('"%s" info %s > /dev/null 2>&1' % (ghRelCmd, " ".join(args)))):
-       runCmd('"%s" release -p %s' % (ghRelCmd, " ".join(args)))
+    devnull = open(os.devnull, 'wb')
+    infoArgs = [ghRelCmd, 'info'] + args
+    print " ".join(infoArgs)
+    if subprocess.call(infoArgs, stdout=devnull, stderr=subprocess.STDOUT):
+       runCmd([ghRelCmd, 'release', '-p'] + args)
     else:
-       runCmd('"%s" delete %s' % (ghRelCmd, " ".join(args)))
-       runCmd('"%s" release -p %s' % (ghRelCmd, " ".join(args)))
-    args.append('-n "%s"' % releaseDate)
+       runCmd([ghRelCmd, 'delete'] + args)
+       runCmd([ghRelCmd, 'release', '-p'] + args)
+    devnull.close()
+    args.append('-n')
+    args.append(releaseDate)
     f = open(os.path.join(buildRoot, "WHATSNEW.md"))
     desc = f.read().replace('"', '\\"')
     desc = f.read().replace('`', '\\`')
-    args.append('-d "%s"' % desc)
-    runCmd('"%s" edit -p %s' % (ghRelCmd, " ".join(args)))
+    args.append('-d')
+    args.append(desc)
+    runCmd([ghRelCmd, 'edit', '-p'] + args)
 
   def uploadToGithub(self):
     for filename in findFiles(distDir):
-      args = [
-        "-u validator -r validator",
-        "-t %s" % validatorVersion,
-        "-n %s" % os.path.basename(filename),
-        "-f %s" % filename,
-      ]
       if "zip" in filename:
-        runCmd('"%s" upload %s' % (ghRelCmd, " ".join(args)))
+        args = [
+          ghRelCmd,
+          'upload',
+          "-u",
+          "validator",
+          "-r",
+          "validator",
+          "-t",
+          validatorVersion,
+          "-n",
+          os.path.basename(filename),
+          "-f",
+          filename,
+        ]
+        runCmd(args)
 
   def uploadToReleasesHost(self, path):
     for filename in findFiles(distDir):
-      runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
+      runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
   def uploadDist(self, jarOrWar):
     self.uploadToReleasesHost("%s/%s" % (releasesPath, jarOrWar))
@@ -983,17 +1024,18 @@ class Release():
       return
     formats = ["gnu", "xml", "json", "text"]
     for _format in formats:
-      if runCmd('echo \'%s\' | "%s" -jar %s --format %s -'
+      if runShell('echo \'%s\' | "%s" -jar %s --format %s -'
           % (miniDoc, javaCmd, vnu, _format)):
         sys.exit(1)
     # to also make sure it works even w/o --format value given; returns gnu output
-    if runCmd('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
+    if runShell('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
       sys.exit(1)
-    if runCmd('"%s" -jar %s --version' % (javaCmd, vnu)):
+    if runCmd([javaCmd, '-jar', vnu, '--version']):
       sys.exit(1)
 
 def createTarball():
   args = [
+    tarCmd,
     "zcf",
     os.path.join(buildRoot, "jars.tar.gz"),
     os.path.join(buildRoot, "run-validator.sh"),
@@ -1001,25 +1043,26 @@ def createTarball():
     os.path.join(buildRoot, "site", "script.js"),
     os.path.join(buildRoot, "site", "icon.png"),
   ] + ownJarList()
-  runCmd('"%s" %s' %(tarCmd, " ".join(args)))
+  runCmd(args)
 
 def createDepTarball():
   args = [
+    tarCmd,
     "zcf",
     os.path.join(buildRoot, "deps.tar.gz"),
   ] + dependencyJarPaths(runDependencyJars)
-  runCmd('"%s" %s' %(tarCmd, " ".join(args)))
+  runCmd(args)
 
 def deployOverScp():
   if not deploymentTarget:
     print "No target"
     return
-  runCmd('"%s" "%s" %s/deps.tar.gz' % (scpCmd, os.path.join(buildRoot, "deps.tar.gz"), deploymentTarget))
-  runCmd('"%s" "%s" %s/jars.tar.gz' % (scpCmd, os.path.join(buildRoot, "jars.tar.gz"), deploymentTarget))
+  runCmd([scpCmd, os.path.join(buildRoot, "deps.tar.gz"), ('%s/deps.tar.gz' % deploymentTarget)])
+  runCmd([scpCmd, os.path.join(buildRoot, "jars.tar.gz"), ('%s/jars.tar.gz' % deploymentTarget)])
   emptyPath = os.path.join(buildRoot, "EMPTY")
   f = open(emptyPath, 'wb')
   f.close()
-  runCmd('"%s" "%s" %s/DEPLOY' % (scpCmd, emptyPath, deploymentTarget))
+  runCmd([scpCmd, emptyPath, ('%s/DEPLOY' % deploymentTarget)])
   os.remove(emptyPath)
 
 def fetchUrlTo(url, path, md5sum=None):
@@ -1166,7 +1209,7 @@ def downloadDependency(url, md5sum):
       zipExtract(path, dependencyDir)
 
 def updateSubmodules():
-  runCmd('"%s" submodule update --init' % gitCmd)
+  runCmd([gitCmd, 'submodule', 'update', '--init'])
 
 def downloadDependencies():
   for url, md5sum in dependencyPackages:
@@ -1180,19 +1223,20 @@ def buildAll():
   buildJing()
   buildSchemaDrivers()
   prepareLocalEntityJar()
+  buildGalimatias()
   buildHtmlParser()
   buildValidator()
 
 def runTests():
   if followW3Cspec:
-    args = "--ignore=hgroup tests/messages.json"
+    args = ["--ignore=hgroup", "tests/messages.json"]
   else:
-    args = "--ignore=html-its tests/messages.json"
+    args = ["--ignore=html-its", "tests/messages.json"]
   className = "nu.validator.client.TestRunner"
-  classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["htmlparser", "validator"])
+  classPath = os.pathsep.join(buildRunJarPathList()
+                              + jarNamesToPaths(["galimatias", "htmlparser", "validator"])
                               + jingJarPath())
-  if runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args)):
+  if runCmd([javaCmd, '-classpath', classPath, className] + args):
     sys.exit(1)
 
 def splitHostSpec(spec):
@@ -1368,6 +1412,15 @@ else:
       release.deployToCentral(stagingRepoUrl)
       release.createOrUpdateGithubData()
       release.createAndUploadDistributions()
+    elif arg == 'galimatias-bundle':
+      release = Release("galimatias")
+      release.createBundle()
+    elif arg == 'galimatias-snapshot':
+      release = Release("galimatias")
+      release.deployToCentral(snapshotsRepoUrl)
+    elif arg == 'galimatias-release':
+      release = Release("galimatias")
+      release.deployToCentral(stagingRepoUrl)
     elif arg == 'htmlparser-bundle':
       release = Release("htmlparser")
       release.createBundle()

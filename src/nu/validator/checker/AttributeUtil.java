@@ -122,11 +122,20 @@ public final class AttributeUtil {
             }
         }
         if (start < len) {
-            list.add(value.substring(start, len));
+            int end = len;
+            for (int i = 1; len > i; i++) {
+                char c = value.charAt(len - i);
+                if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
+                    end--;
+                    continue;
+                }
+                break;
+            }
+            list.add(value.substring(start, end));
         }
         return list.toArray(EMPTY_STRING_ARRAY);
     }
-    
+
     /**
      * Checks if <code>string</code> matches <code>lowerCaseLiteral</code> when
      * ASCII-lowercased.

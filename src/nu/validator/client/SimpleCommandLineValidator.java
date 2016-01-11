@@ -27,8 +27,6 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.messages.GnuMessageEmitter;
@@ -177,13 +175,9 @@ public class SimpleCommandLineValidator {
             validator.checkHtmlInputSource(is);
             end();
         } else if (hasFileArgs) {
-            List<File> files = new ArrayList<File>();
-            for (int i = fileArgsStart; i < args.length; i++) {
-                files.add(new File(args[i]));
-            }
             validator = new SimpleDocumentValidator();
             setup(schemaUrl);
-            checkFiles(files);
+            checkFiles(args, fileArgsStart);
             end();
         } else {
             System.err.printf("\nError: No documents specified.\n");
@@ -222,13 +216,24 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void checkFiles(List<File> files) throws SAXException,
-            IOException {
-        for (File file : files) {
-            if (file.isDirectory()) {
-                recurseDirectory(file);
+    private static void checkFiles(String[] args, int fileArgsStart)
+            throws IOException, SAXException {
+        for (int i = fileArgsStart; i < args.length; i++) {
+            if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
+                emitFilename(args[i]);
+                try {
+                    validator.checkHttpURL(new URL(args[i]));
+                } catch (IOException e) {
+                    errorHandler.error(new SAXParseException(e.toString(),
+                            null, args[i], -1, -1));
+                }
             } else {
-                checkHtmlFile(file);
+                File file = new File(args[i]);
+                if (file.isDirectory()) {
+                    recurseDirectory(file);
+                } else {
+                    checkHtmlFile(file);
+                }
             }
         }
     }
@@ -251,25 +256,7 @@ public class SimpleCommandLineValidator {
     private static void checkHtmlFile(File file) throws IOException {
         try {
             String path = file.getPath();
-            if (path.matches("^http:/[^/].+$")) {
-                path = "http://" + path.substring(path.indexOf('/') + 1);
-                emitFilename(path);
-                try {
-                    validator.checkHttpURL(new URL(path));
-                } catch (IOException e) {
-                    errorHandler.error(new SAXParseException(e.toString(),
-                            null, path, -1, -1));
-                }
-            } else if (path.matches("^https:/[^/].+$")) {
-                path = "https://" + path.substring(path.indexOf('/') + 1);
-                emitFilename(path);
-                try {
-                    validator.checkHttpURL(new URL(path));
-                } catch (IOException e) {
-                    errorHandler.error(new SAXParseException(e.toString(),
-                            null, path, -1, -1));
-                }
-            } else if (!file.exists()) {
+            if (!file.exists()) {
                 if (verbose) {
                     errorHandler.warning(new SAXParseException(
                             "File not found.", null,

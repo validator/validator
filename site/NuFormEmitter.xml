@@ -18,8 +18,11 @@
 			><?SaxCompiler-code t.emitShowImageReportField();
 			?>image report</label
 			></span
-			><span class="useragent"><label title="Specify the user-agent string to send in the document request"
-			>User-Agent <?SaxCompiler-code t.emitUserAgentInput(); ?></label
+			><input id="show_options" type="button" value="Options…"></input
+			><span class="useragent hidden"
+				><label title="Specify the user-agent string to send in the document request"
+				>User-Agent <?SaxCompiler-code t.emitUserAgentInput(); ?></label
+				><datalist id="useragents"></datalist
 			></span
 		></p
 		><div id="inputregion"

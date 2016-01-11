@@ -2,6 +2,55 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 16.1.1
+1 January 2016
+  - Java8 is now required to run the checker (and to build it).
+  - Made the `<meta http-equiv=content-security-policy content="...">`
+    element a non-error & added syntax checking of its `content` attribute
+    and checking of the value of the Content-Security-Policy HTTP header.
+  - Made the Content Security Policy `nonce` attribute a non-error.
+  - Aligned `on*` event-handler-attribute checking with spec.
+  - Aligned `iframe[sandbox]` checking with spec.
+  - Made `minlength` attribute a non-error.
+  - Dropped “heading needed” warning for cases where `aria-label` found.
+  - Made unescaped ampersand a non-error in, e.g. `href="foo?bar=1&baz=2"`.
+  - Added error for `img[alt=""]` w/ `role` != `presentation`.
+  - Made `role=switch` a non-error.
+  - Made `role=group` for `header` & `footer` a non-error.
+  - Made `role=search` for `form` a non-error.
+  - Made the Subresource Integrity `integrity` attribute a non-error and
+    added syntax checking for it.
+  - Refined bad-URL error message to indicate which character is invalid.
+  - Refined Web UI "Message Filtering" to show total error/warning counts
+  - Refined Web UI to show green if there are 0 errors or warnings to show
+  - Fixed "`input[type=hidden]` label descendants" bug (@takenspc patch)
+  - Refined Web UI to remove background colors and increase font size
+  - Made a variety of refinements and fixes to ARIA role checking.
+  - Made `ol>li[role=menuitem]` & `ol>li[role=tab]` non-errors.
+  - Added warnings for use of ARIA roles with implicit-semantics elements.
+  - Made nesting of `time` elements a non-error.
+  - Made checker ignore `input[type=hidden]` label descendants in checks.
+  - Improved errors for obsolete media types/features.
+  - Fixed bug in checking of the content model for the `ruby` element.
+
+
+# 15.6.29
+29 June 2015
+  - Added error messages for deprecated CSS media types/features.
+  - Changed checking of the `accept` attribute for input[type=file] to
+    allow file extensions in the value (per spec).
+  - Added error for documents that have  multiple `autofocus` attributes.
+  - Made the `<rb>` and `<rtc>` elements non-errors.
+  - Made use of `data-*` attributes for SVG & MathML elements non-errors.
+  - Made use of HTML content in the SVG `<desc>`, `<title>`, and
+    `<metadata>` elements a non-error (per spec).
+  - Changed error message for the `inputmode` attribute to a warning.
+  - Fixed a bug that caused spurious error to be emitted for ID references
+    in `aria-controls` and `aria-labelledby` with trailing whitespace.
+  - Fixed a bug that prevented the command-line checker from being able
+    to check URLs when run in a Windows environment. (patch from @mariusj)
+  - Added option to disable log4j when using Java API. (patch from @abrin)
+
 # 15.4.12
 12 April 2015
   - Fixed regression that caused spurious errors for `input[type=email]`.

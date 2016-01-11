@@ -1,28 +1,27 @@
 /*
  * Copyright (c) 2007-2015 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
 package nu.validator.datatype;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -73,20 +72,13 @@ public class MediaQuery extends AbstractDatatype {
 
     static {
         MEDIA_TYPES.add("all");
-        MEDIA_TYPES.add("aural");
-        MEDIA_TYPES.add("braille");
-        MEDIA_TYPES.add("handheld");
         MEDIA_TYPES.add("print");
-        MEDIA_TYPES.add("projection");
         MEDIA_TYPES.add("screen");
-        MEDIA_TYPES.add("tty");
-        MEDIA_TYPES.add("tv");
-        MEDIA_TYPES.add("embossed");
         MEDIA_TYPES.add("speech");
     }
 
     private enum MediaType {
-        ALL, AURAL, BRAILLE, HANDHELD, PRINT, PROJECTION, SCREEN, TTY, TV, EMBOSSED, SPEECH, INVALID;
+        ALL, PRINT, SCREEN, SPEECH, INVALID;
         private static MediaType toCaps(String str) {
             try {
                 return valueOf(toAsciiUpperCase(str));
@@ -94,6 +86,32 @@ public class MediaQuery extends AbstractDatatype {
                 return INVALID;
             }
         }
+    }
+
+    private static final Set<String> OLD_MEDIA_TYPES = new HashSet<String>();
+
+    static {
+        OLD_MEDIA_TYPES.add("aural");
+        OLD_MEDIA_TYPES.add("braille");
+        OLD_MEDIA_TYPES.add("embossed");
+        OLD_MEDIA_TYPES.add("handheld");
+        OLD_MEDIA_TYPES.add("projection");
+        OLD_MEDIA_TYPES.add("tty");
+        OLD_MEDIA_TYPES.add("tv");
+    }
+
+    private static final Set<String> OLD_MEDIA_FEATURES = new HashSet<String>();
+
+    static {
+        OLD_MEDIA_FEATURES.add("device-width");
+        OLD_MEDIA_FEATURES.add("min-device-width");
+        OLD_MEDIA_FEATURES.add("max-device-width");
+        OLD_MEDIA_FEATURES.add("device-height");
+        OLD_MEDIA_FEATURES.add("min-device-height");
+        OLD_MEDIA_FEATURES.add("max-device-height");
+        OLD_MEDIA_FEATURES.add("device-aspect-ratio");
+        OLD_MEDIA_FEATURES.add("min-device-aspect-ratio");
+        OLD_MEDIA_FEATURES.add("max-device-aspect-ratio");
     }
 
     private static final Map<String, ValueType> FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
@@ -105,15 +123,6 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("height", ValueType.LENGTH);
         FEATURES_TO_VALUE_TYPES.put("min-height", ValueType.LENGTH);
         FEATURES_TO_VALUE_TYPES.put("max-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("device-width", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("min-device-width", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("max-device-width", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("device-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("min-device-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("max-device-height", ValueType.LENGTH);
-        FEATURES_TO_VALUE_TYPES.put("device-aspect-ratio", ValueType.RATIO);
-        FEATURES_TO_VALUE_TYPES.put("min-device-aspect-ratio", ValueType.RATIO);
-        FEATURES_TO_VALUE_TYPES.put("max-device-aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("min-aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("max-aspect-ratio", ValueType.RATIO);
@@ -137,24 +146,9 @@ public class MediaQuery extends AbstractDatatype {
     private static final Map<String, ValueType> NONSTANDARD_FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
 
     static {
-        NONSTANDARD_FEATURES_TO_VALUE_TYPES.put("-webkit-min-device-pixel-ratio", ValueType.INTEGER);
+        NONSTANDARD_FEATURES_TO_VALUE_TYPES.put(
+                "-webkit-min-device-pixel-ratio", ValueType.INTEGER);
     }
-
-    private static final String[] visualFeatures = { "aspect-ratio", "color",
-            "color-index", "device-aspect-ratio", "max-aspect-ratio",
-            "max-color", "max-color-index", "max-device-aspect-ratio",
-            "max-monochrome", "max-resolution", "min-aspect-ratio",
-            "min-color", "min-color-index", "min-device-aspect-ratio",
-            "min-monochrome", "min-resolution", "monochrome", "orientation",
-            "resolution", };
-
-    private static final String[] bitmapFeatures = { "aspect-ratio",
-            "device-aspect-ratio", "max-aspect-ratio",
-            "max-device-aspect-ratio", "max-resolution", "min-aspect-ratio",
-            "min-device-aspect-ratio", "min-resolution", "orientation",
-            "resolution", };
-
-    private static final String scanWarning = "The media feature \u201cscan\u201d is applicable only to the media type \u201ctv\u201d. ";
 
     protected MediaQuery() {
         super();
@@ -181,7 +175,6 @@ public class MediaQuery extends AbstractDatatype {
             List<String> warnings) throws DatatypeException {
         int unmatchedParen = -1;
         int unmatchedCalcParen = -1;
-        boolean containsAural = false;
         boolean zero = true;
         String type = null;
         String feature = null;
@@ -207,10 +200,10 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.IN_MEDIA_TYPE;
                         continue;
                     } else {
-                        throw newDatatypeException(
-                                offset + i,
-                                "Expected \u201C(\u201D or letter at start of a media query part but saw ",
-                                c, " instead.");
+                        throw newDatatypeException(offset + i,
+                                "Expected \u201C(\u201D or letter at start of a"
+                                        + " media query part but saw ", c,
+                                " instead.");
                     }
                 case IN_ONLY_OR_NOT:
                     if ('a' <= c && 'z' >= c) {
@@ -237,7 +230,8 @@ public class MediaQuery extends AbstractDatatype {
                             continue;
                         } else {
                             throw newDatatypeException(offset + i,
-                                    "Expected \u201Conly\u201D or \u201Cnot\u201D but saw \u201C"
+                                    "Expected \u201Conly\u201D or"
+                                            + " \u201Cnot\u201D but saw \u201C"
                                             + kw + "\u201D instead.");
                         }
                     } else {
@@ -288,11 +282,15 @@ public class MediaQuery extends AbstractDatatype {
                             errNotMediaCondition(type);
                         }
                         if (isMediaType(type)) {
-                            if ("aural".equals(type)) {
-                                containsAural = true;
-                            }
                             state = State.WS_BEFORE_AND;
                             continue;
+                        } else if (isOldMediaType(type)) {
+                            throw newDatatypeException(offset + i,
+                                    "Deprecated media type \u201C" + type
+                                            + "\u201D. For guidance, see the"
+                                            + " Media Types section in the"
+                                            + " current Media Queries"
+                                            + " specification.");
                         } else {
                             throw newDatatypeException(offset + i,
                                     "Expected a CSS media type but saw \u201C"
@@ -300,8 +298,8 @@ public class MediaQuery extends AbstractDatatype {
                         }
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a letter, hyphen or whitespace but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected a letter, hyphen or whitespace but"
+                                        + " saw \u201C" + c + "\u201D instead.");
                     }
                 case WS_BEFORE_AND:
                     if (isWhitespace(c)) {
@@ -343,8 +341,8 @@ public class MediaQuery extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected \u201C(\u201D or whitespace but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected \u201C(\u201D or whitespace but saw"
+                                        + " \u201C" + c + "\u201D instead.");
                     }
                 case OPEN_PAREN_SEEN:
                     if (isWhitespace(c)) {
@@ -358,8 +356,9 @@ public class MediaQuery extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a letter at start of a media feature part but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected a letter at start of a media feature"
+                                        + " part but saw \u201C" + c
+                                        + "\u201D instead.");
                     }
                 case IN_MEDIA_FEATURE:
                     if (('a' <= c && 'z' >= c) || c == '-') {
@@ -398,8 +397,9 @@ public class MediaQuery extends AbstractDatatype {
                         }
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a letter, hyphen, colon or whitespace but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected a letter, hyphen, colon or whitespace"
+                                        + " but saw \u201C" + c
+                                        + "\u201D instead.");
                     }
                 case WS_BEFORE_COLON:
                     if (isWhitespace(c)) {
@@ -446,10 +446,12 @@ public class MediaQuery extends AbstractDatatype {
                                 } else {
                                     throw newDatatypeException(
                                             offset + i,
-                                            "Expected \u201C0\u201D or \u201C1\u201D as \u201c"
+                                            "Expected \u201C0\u201D or"
+                                                    + " \u201C1\u201D as \u201c"
                                                     + feature
-                                                    + "\u201d value but found \u201C"
-                                                    + c + "\u201D instead.");
+                                                    + "\u201d value but found"
+                                                    + " \u201C" + c
+                                                    + "\u201D instead.");
                                 }
                             default:
                                 if ('1' <= c && '9' >= c) {
@@ -471,12 +473,14 @@ public class MediaQuery extends AbstractDatatype {
                                     continue;
                                 } else if (valueExpectation == ValueType.LENGTH) {
                                     throw newDatatypeException(offset + i,
-                                            "Expected a digit, a dot or a plus sign but saw \u201C"
+                                            "Expected a digit, a dot or a plus"
+                                                    + " sign but saw \u201C"
                                                     + c + "\u201D instead.");
                                 } else {
                                     throw newDatatypeException(offset + i,
-                                            "Expected a digit or a plus sign but saw \u201C"
-                                                    + c + "\u201D instead.");
+                                            "Expected a digit or a plus sign"
+                                                    + " but saw \u201C" + c
+                                                    + "\u201D instead.");
                                 }
                         }
                     }
@@ -488,11 +492,11 @@ public class MediaQuery extends AbstractDatatype {
                         String kw = sb.toString();
                         sb.setLength(0);
                         if (!("progressive".equals(kw) || "interlace".equals(kw))) {
-                            throw newDatatypeException(
-                                    offset + i,
-                                    "Expected \u201Cprogressive\u201D or \u201Cinterlace\u201D as the scan mode value but saw \u201C"
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201Cprogressive\u201D or"
+                                            + " \u201Cinterlace\u201D as the"
+                                            + " scan mode value but saw \u201C"
                                             + kw + "\u201D instead.");
-
                         }
                         if (c == ')') {
                             state = State.AFTER_CLOSE_PAREN;
@@ -503,8 +507,9 @@ public class MediaQuery extends AbstractDatatype {
                         }
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a letter, whitespace or \u201C)\u201D but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected a letter, whitespace or"
+                                        + " \u201C)\u201D but saw \u201C" + c
+                                        + "\u201D instead.");
                     }
                 case IN_VALUE_ORIENTATION:
                     if ('a' <= c && 'z' >= c) {
@@ -514,10 +519,12 @@ public class MediaQuery extends AbstractDatatype {
                         String kw = sb.toString();
                         sb.setLength(0);
                         if (!("portrait".equals(kw) || "landscape".equals(kw))) {
-                            throw newDatatypeException(
-                                    offset + i,
-                                    "Expected \u201Cportrait\u201D or \u201Clandscape\u201D as the \u201corientation\u201d value but saw \u201C"
-                                            + kw + "\u201D instead.");
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201Cportrait\u201D or"
+                                            + " \u201Clandscape\u201D as the"
+                                            + " \u201corientation\u201d value"
+                                            + " but saw" + " \u201C" + kw
+                                            + "\u201D instead.");
 
                         }
                         if (c == ')') {
@@ -529,8 +536,9 @@ public class MediaQuery extends AbstractDatatype {
                         }
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a letter, whitespace or \u201C)\u201D but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected a letter, whitespace or \u201C)\u201D"
+                                        + " but saw \u201C" + c
+                                        + "\u201D instead.");
                     }
                 case IN_VALUE_ONEORZERO:
                     if (isWhitespace(c) || c == ')') {
@@ -546,8 +554,8 @@ public class MediaQuery extends AbstractDatatype {
                         sb.append(c);
                         String kw = sb.toString();
                         throw newDatatypeException(offset + i,
-                                "Expected \u201C0\u201D or \u201C1\u201D as \u201c"
-                                        + feature
+                                "Expected \u201C0\u201D or \u201C1\u201D as"
+                                        + " \u201c" + feature
                                         + "\u201d value but saw \u201C" + kw
                                         + "\u201D instead.");
                     }
@@ -568,8 +576,9 @@ public class MediaQuery extends AbstractDatatype {
                                     continue;
                                 } else {
                                     throw newDatatypeException(offset + i,
-                                            "Expected a dot or a digit but saw \u201C"
-                                                    + c + "\u201D instead.");
+                                            "Expected a dot or a digit but saw"
+                                                    + " \u201C" + c
+                                                    + "\u201D instead.");
                                 }
                             case INTEGER:
                             case RATIO:
@@ -602,11 +611,12 @@ public class MediaQuery extends AbstractDatatype {
                                         if (valueExpectation == ValueType.LENGTH) {
                                             throw newDatatypeException(offset
                                                     + i,
-                                                    "Non-zero lengths require a unit.");
+                                                    "Non-zero lengths require"
+                                                            + " a unit.");
                                         } else {
                                             throw newDatatypeException(offset
-                                                    + i,
-                                                    "Non-zero resolutions require a unit.");
+                                                    + i, "Non-zero resolutions"
+                                                    + " require a unit.");
                                         }
                                     }
                                     if (c == ')') {
@@ -618,7 +628,8 @@ public class MediaQuery extends AbstractDatatype {
                                     }
                                 } else {
                                     throw newDatatypeException(offset + i,
-                                            "Expected a letter, a dot or a digit but saw \u201C"
+                                            "Expected a letter, a dot or a"
+                                                    + " digit but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             case INTEGER:
@@ -629,15 +640,18 @@ public class MediaQuery extends AbstractDatatype {
                                     state = State.WS_BEFORE_CLOSE_PAREN;
                                     continue;
                                 } else {
-                                    throw newDatatypeException(offset + i,
-                                            "Expected a digit, whitespace or \u201C)\u201D but saw \u201C"
+                                    throw newDatatypeException(
+                                            offset + i,
+                                            "Expected a digit, whitespace or"
+                                                    + " \u201C)\u201D but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             case NONZEROINTEGER:
                                 if (c == ')') {
                                     if (zero) {
                                         throw newDatatypeException(offset + i,
-                                                "Expected a non-zero positive integer.");
+                                                "Expected a non-zero positive"
+                                                        + " integer.");
                                     }
                                     state = State.AFTER_CLOSE_PAREN;
                                     continue;
@@ -646,8 +660,10 @@ public class MediaQuery extends AbstractDatatype {
                                     continue;
                                 } else {
                                     throw newDatatypeException(offset + i,
-                                            "Expected a digit, whitespace or \u201C)\u201D but saw \u201C"
-                                                    + c + "\u201D instead.");
+                                            "Expected a digit, whitespace or"
+                                                    + " \u201C)\u201D but saw"
+                                                    + " \u201C" + c
+                                                    + "\u201D instead.");
                                 }
                             case RATIO:
                                 if (isWhitespace(c)) {
@@ -655,7 +671,9 @@ public class MediaQuery extends AbstractDatatype {
                                 } else if (c == '/') {
                                     if (zero) {
                                         throw newDatatypeException(offset + i,
-                                                "Expected non-zero positive integer in ratio value.");
+                                                "Expected non-zero positive"
+                                                        + " integer in ratio"
+                                                        + " value.");
                                     }
                                     valueExpectation = ValueType.NONZEROINTEGER;
                                     state = State.RATIO_SECOND_INTEGER_START;
@@ -704,10 +722,10 @@ public class MediaQuery extends AbstractDatatype {
                             continue;
                         }
                     } else if ('(' == c) {
-                      unmatchedCalcParen++;
-                      continue;
+                        unmatchedCalcParen++;
+                        continue;
                     } else {
-                      continue;
+                        continue;
                     }
                 case IN_VALUE_DIGITS_AFTER_DOT:
                     if ('0' == c) {
@@ -741,11 +759,13 @@ public class MediaQuery extends AbstractDatatype {
                                         if (valueExpectation == ValueType.LENGTH) {
                                             throw newDatatypeException(offset
                                                     + i,
-                                                    "Non-zero lengths require a unit.");
+                                                    "Non-zero lengths require a"
+                                                            + " unit.");
                                         } else {
                                             throw newDatatypeException(offset
                                                     + i,
-                                                    "Non-zero resolutions require a unit.");
+                                                    "Non-zero resolutions require"
+                                                            + " a unit.");
                                         }
                                     }
                                     if (c == ')') {
@@ -757,8 +777,11 @@ public class MediaQuery extends AbstractDatatype {
                                     }
                                 } else {
                                     throw newDatatypeException(offset + i,
-                                            "Expected a letter, a digit, whitespace or \u201C)\u201D but saw \u201C"
-                                                    + c + "\u201D instead.");
+                                            "Expected a letter, a digit,"
+                                                    + " whitespace or"
+                                                    + " \u201C)\u201D"
+                                                    + " but saw \u201C" + c
+                                                    + "\u201D instead.");
                                 }
                             default:
                                 throw new RuntimeException("Impossible state.");
@@ -780,8 +803,9 @@ public class MediaQuery extends AbstractDatatype {
                         } else {
                             if (!("dpi".equals(kw) || "dpcm".equals(kw))) {
                                 throw newDatatypeException(offset + i,
-                                        "Expected a resolution unit but saw \u201C"
-                                                + c + "\u201D instead.");
+                                        "Expected a resolution unit but saw"
+                                                + " \u201C" + c
+                                                + "\u201D instead.");
                             }
                         }
                         if (c == ')') {
@@ -793,8 +817,8 @@ public class MediaQuery extends AbstractDatatype {
                         }
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a letter, a dot or a digit but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected a letter, a dot or a digit but saw"
+                                        + " \u201C" + c + "\u201D instead.");
                     }
                 case RATIO_SECOND_INTEGER_START:
                     valueExpectation = ValueType.NONZEROINTEGER;
@@ -842,17 +866,14 @@ public class MediaQuery extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected whitespace or \u201C)\u201D but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected whitespace or \u201C)\u201D but saw"
+                                        + " \u201C" + c + "\u201D instead.");
                     }
             }
         }
         switch (state) {
             case AFTER_CLOSE_PAREN:
             case WS_BEFORE_AND:
-                if (containsAural && WARN) {
-                    warnings.add("The media type \u201caural\u201d is deprecated. Use \u201cspeech\u201d instead. ");
-                }
                 return warnings;
             case IN_MEDIA_TYPE:
                 String kw = sb.toString();
@@ -861,12 +882,15 @@ public class MediaQuery extends AbstractDatatype {
                     errNotMediaCondition(kw);
                 }
                 if (isMediaType(kw)) {
-                    if ("aural".equals(kw) && WARN) {
-                        warnings.add("The media type \u201caural\u201d is deprecated. Use \u201cspeech\u201d instead. ");
-                    }
                     return warnings;
+                } else if (isOldMediaType(kw)) {
+                    throw newDatatypeException("Deprecated media type \u201C"
+                            + kw + "\u201D. For guidance, see the Media Types"
+                            + " section in the current Media Queries"
+                            + " specification.");
                 } else {
-                    throw newDatatypeException("Expected a CSS media type but the query ended.");
+                    throw newDatatypeException("Expected a CSS media type but"
+                            + " the query ended.");
                 }
             default:
                 throw newDatatypeException("Media query ended prematurely.");
@@ -875,6 +899,10 @@ public class MediaQuery extends AbstractDatatype {
 
     private boolean isMediaFeature(String feature) {
         return FEATURES_TO_VALUE_TYPES.containsKey(feature);
+    }
+
+    private boolean isOldMediaFeature(String type) {
+        return OLD_MEDIA_FEATURES.contains(type);
     }
 
     private ValueType valueExpectationFor(String feature) {
@@ -889,6 +917,10 @@ public class MediaQuery extends AbstractDatatype {
         return MEDIA_TYPES.contains(type);
     }
 
+    private boolean isOldMediaType(String type) {
+        return OLD_MEDIA_TYPES.contains(type);
+    }
+
     private boolean isLengthUnit(String unit) {
         return LENGTH_UNITS.contains(unit);
     }
@@ -898,36 +930,22 @@ public class MediaQuery extends AbstractDatatype {
         if (!isMediaType(type)) {
             return warnings;
         }
+        if (isOldMediaFeature(feature)) {
+            throw newDatatypeException(index, "Deprecated media feature \u201C"
+                    + feature + "\u201D. For guidance, see the Deprecated Media"
+                    + " Features section in the current Media Queries"
+                    + " specification.");
+        }
         if (!isMediaFeature(feature)) {
             throw newDatatypeException(index,
                     "Expected a CSS media feature but saw \u201C" + feature
                             + "\u201D instead.");
         }
-        if ("scan".equals(feature) && !"tv".equals(type)) {
-            warnings.add(scanWarning);
-            return warnings;
-        }
         switch (MediaType.toCaps(type)) {
             case SPEECH:
-                warnings.add("The media feature \u201c"
-                        + feature
-                        + "\u201d is not applicable to the media type \u201cspeech\u201d. ");
-                return warnings;
-            case BRAILLE:
-            case EMBOSSED:
-                if (Arrays.binarySearch(visualFeatures, feature) > -1) {
-                    warnings.add("The visual media feature \u201c"
-                            + feature
-                            + "\u201d is not applicable to the tactile media type \u201c"
-                            + type + "\u201d. ");
-                }
-                return warnings;
-            case TTY:
-                if (Arrays.binarySearch(bitmapFeatures, feature) > -1) {
-                    warnings.add("The bitmap media feature \u201c"
-                            + feature
-                            + "\u201d is not applicable to the media type \u201ctty\u201d. ");
-                }
+                warnings.add("The media feature \u201c" + feature
+                        + "\u201d is not applicable to the media type"
+                        + " \u201cspeech\u201d.");
                 return warnings;
             default:
                 return warnings;
@@ -935,7 +953,7 @@ public class MediaQuery extends AbstractDatatype {
     }
 
     private void errNotMediaCondition(String type) throws DatatypeException {
-        if (isMediaType(type)) {
+        if (isMediaType(type) || isOldMediaType(type)) {
             throw newDatatypeException("Expected a CSS media condition but saw"
                     + " CSS media type ", type, " instead.");
         } else {

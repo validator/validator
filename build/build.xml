@@ -50,7 +50,6 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/commons-logging-1.2.jar"/>
       <zipfileset src="../dependencies/commons-logging-1.2-adapters.jar"/>
       <zipfileset src="../dependencies/commons-logging-1.2-api.jar"/>
-      <zipfileset src="../dependencies/galimatias-0.1.0.jar"/>
       <zipfileset src="../dependencies/httpclient-4.4.jar"/>
       <zipfileset src="../dependencies/httpcore-4.4.jar"/>
       <zipfileset src="../dependencies/icu4j-54.1.1.jar"/>
@@ -66,6 +65,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-util-ajax-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/log4j-1.2.17.jar"/>
       <zipfileset src="../dependencies/rhino-1.7R5.jar"/>
+      <zipfileset src="../dependencies/salvation-1.0.3.jar"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
@@ -96,7 +96,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>gzip-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -105,7 +105,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>inbound-size-limit-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -114,7 +114,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>inbound-gzip-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -123,7 +123,7 @@ DEALINGS IN THE SOFTWARE.
     </filter>
     <filter-mapping>
         <filter-name>multipart-form-data-filter</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -171,10 +171,10 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/commons-logging-1.2.jar"/>
       <fileset file="../dependencies/commons-logging-1.2-adapters.jar"/>
       <fileset file="../dependencies/commons-logging-1.2-api.jar"/>
-      <fileset file="../dependencies/galimatias-0.1.0.jar"/>
       <fileset file="../dependencies/httpclient-4.4.jar"/>
       <fileset file="../dependencies/httpcore-4.4.jar"/>
       <fileset file="../dependencies/icu4j-54.1.1.jar"/>
+      <fileset file="../dependencies/salvation-1.0.3.jar"/>
       <fileset file="../dependencies/jchardet-1.0.jar"/>
       <fileset file="../dependencies/jetty-http-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
       <fileset file="../dependencies/jetty-server-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
@@ -247,17 +247,18 @@ DEALINGS IN THE SOFTWARE.
         email="mike@w3.org"
         url="https://people.w3.org/mike/"/>
       <dependency groupId="com.ibm.icu" artifactId="icu4j" version="54.1.1"/>
+      <dependency groupId="com.shapesecurity" artifactId="salvation" version="1.0.3"/>
       <dependency groupId="commons-codec" artifactId="commons-codec" version="1.10"/>
       <dependency groupId="commons-fileupload" artifactId="commons-fileupload" version="1.3.1"/>
       <dependency groupId="commons-io" artifactId="commons-io" version="2.4"/>
       <dependency groupId="commons-logging" artifactId="commons-logging" version="1.2"/>
-      <dependency groupId="io.mola.galimatias" artifactId="galimatias" version="0.1.0"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="javax.servlet" artifactId="javax.servlet-api" version="3.1.0"/>
       <dependency groupId="log4j" artifactId="log4j" version="1.2.17"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
-      <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.1"/>
-      <dependency groupId="nu.validator" artifactId="jing" version="20130806VNU"/>
+      <dependency groupId="nu.validator" artifactId="galimatias" version="0.1.1"/>
+      <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.2"/>
+      <dependency groupId="nu.validator" artifactId="jing" version="20150629VNU"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="4.4"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="4.4"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="9.2.9.v20150224"/>
@@ -288,6 +289,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="validator-bundle">
     <jar basedir="${dist}" destfile="${validator-bundle-jar}"/>
   </target>
+  <import file=".ant/build-galimatias.xml"/>
   <import file=".ant/build-htmlparser.xml"/>
   <import file=".ant/build-jing.xml"/>
 </project>

@@ -144,8 +144,8 @@ div#banner {
 
 div#results,
 div#about {
-	font: caption;
-	margin-top: 30px;
+	font-size: 14px;
+	margin-top: 50px;
 	padding-left: 3%;
 	margin-right: 3%;
 }
@@ -238,8 +238,9 @@ textarea {
 }
 
 #doc[type="file"] {
-	padding: 0px;
+	margin-top: -3px;
 	width: initial;
+	border: 0;
 }
 
 #docselect {
@@ -285,14 +286,22 @@ textarea, #doc[type="url"] {
 	font-size: 0.85em;	
 }
 
-.success {
+.success, .failure {
+	border-radius: 4px;
 	padding: 0.5em;
-	border: double 6px purple;
+	font-weight: bold;
+	font-family: Arial, sans-serif;
+}
+
+.success {
+	color: black;
+	background-color: #ccffcc;
+	border: 1px solid #ccc;
 }
 
 .failure {
-	padding: 0.5em;
-	border: double 6px purple;
+	color: white;
+	background-color: #365D95;
 }
 
 ol {
@@ -323,31 +332,68 @@ li li {
 	padding-top: 0.2em;
 }
 
-.info {
-	color: black;
-	background-color: #CCFFFF;
+#results ol:first-child {
+	padding-top: 35px;
+	padding-bottom: 25px;
+	background-color: #efefef;
+	border-radius: 4px;
 }
 
-.warning {
-	color: black;
-	background-color: #FFFFCC;
+#results > ol:first-child > li {
+	border: 1px solid #ccc;
+	margin-bottom: 8px;
+	padding-left: 12px;
+	border-radius: 4px;
+	background-color: white;
 }
 
-.error {
-	color: black;
-	background-color: #FFCCCC;
+#results > ol:first-child > li > p:first-child,
+#results > ol:first-child > li > p:first-child code {
+	font-size: 16px;
+	font-weight: bold;
 }
 
-.io, .fatal, .schema {
-	color: black;
-	background-color: #FF9999;
+#results > ol:first-child > li > p:first-child code,
+#results > ol:first-child > li > p:first-child a {
+	font-weight: normal;
 }
 
-.internal {
-	color: black;
-	background-color: #FF6666;
+#results > ol:first-child > li > p:first-child {
+	color: transparent;
 }
 
+#results > ol:first-child > li > p:first-child > strong,
+#results > ol:first-child > li > p:first-child > span {
+	color: black;
+}
+
+#results > ol:first-child > li > p:first-child > strong:first-child {
+	padding: 1px 6px 1px 6px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font: caption;
+	font-weight: bold;
+}
+
+.info, .warning, .error, .io, .fatal, .schema, .internal {
+	color: black;
+}
+
+.info > p:first-child > strong:first-child {
+	background-color: #ccffcc;
+}
+
+.warning > p:first-child > strong:first-child {
+	background-color: #ffffcc;
+}
+
+.error > p:first-child > strong:first-child,
+.io > p:first-child > strong:first-child,
+.fatal > p:first-child > strong:first-child,
+.schema > p:first-child > strong:first-child,
+.internal > p:first-child > strong:first-child {
+	background-color: #ffcccc;
+}
 
 hr {
 	border-top: 1px dotted #666666;
@@ -380,7 +426,11 @@ li p {
 
 .extract b, .source b {
 	color: black;
-	background-color: #FF6666;
+	background-color: #ffff80;
+}
+
+.extract b {
+	font-weight: normal;
 }
 
 ol.source li {
@@ -390,7 +440,7 @@ ol.source li {
 
 ol.source b, ol.source .b {
 	color: black;
-	background-color: #FFFFCC;
+	background-color: #ffff80;
 	font-weight: bold;
 }
 
@@ -415,7 +465,6 @@ code {
 
 .error p code {
 	border: 1px dashed #999;
-	background-color: #fdd;
 	padding: 2px;
 	padding-left: 4px;
 	padding-right: 4px;
@@ -423,7 +472,6 @@ code {
 
 .warning code {
 	border: 1px dashed #999;
-	background-color: #ffd;
 	padding: 2px;
 	padding-left: 4px;
 	padding-right: 4px;
@@ -649,8 +697,26 @@ dl.inputattrs .highlight {
 	padding-bottom: 0.5em;
 }
 
+#filters > div {
+	font: caption;
+	color: #aaa;
+	background-color: #FFFFCC;
+	padding: 4px;
+}
+
 #filters button {
 	min-height: 18px;
+	border-radius: 6px;
+	border: solid #ccc 1px;
+	background-color: #FFFFCC;
+}
+
+.message_filtering {
+	background-color: white !important;
+	-o-transition: all 1.5s ease-out;
+	-moz-transition: all 1.5s ease-out;
+	-ms-transition: all 1.5s ease-out;
+	-webkit-transition: all 1.5s ease-out;
 }
 
 #filters .filtercount {
@@ -687,7 +753,9 @@ dl.inputattrs .highlight {
 	font: caption;
 }
 
-#filters fieldset.hidden {
+#filters fieldset.hidden,
+.checkboxes input.hidden,
+.checkboxes .useragent.hidden {
 	-o-transition: all .8s ease-out;
 	-moz-transition: all .8s ease-out;
 	-ms-transition: all .8s ease-out;
@@ -698,14 +766,20 @@ dl.inputattrs .highlight {
 	margin: -45px;
 }
 
-#filters fieldset.unhidden {
-	background-color: #FFFFCC;
+#filters fieldset.unhidden,
+.checkboxes input.unhidden,
+.checkboxes .useragent.unhidden {
 	-o-transition: all .8s ease-out;
 	-moz-transition: all .8s ease-out;
 	-ms-transition: all .8s ease-out;
 	-webkit-transition: all .8s ease-out;
 	opacity: 1;
 	visibility: visible;
+}
+
+#filters fieldset.unhidden,
+.checkboxes input.unhidden {
+	background-color: #FFFFCC;
 }
 
 #filters fieldset legend {
@@ -811,13 +885,26 @@ input[list=useragents] {
 	border: solid #ccc 1px;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 925px) {
+	.checkboxes .useragent {
+		padding-left: 8px;
+	}
+}
+
+@media (max-width: 924px) {
 	.useragent {
 		display: block;
 		margin-top: 8px;
+		padding-left: 0px;
+	}
+	.checkboxes {
+		margin-bottom: -43px;
 	}
 	#inputregion {
-		margin-top: 0px;
+		margin-top: 76px;
+	}
+	.useragent.unhidden {
+		margin-bottom: -68px;
 	}
 	input[list=useragents] {
 		width: 76.9%;
@@ -825,6 +912,17 @@ input[list=useragents] {
 }
 
 @media (max-width: 479px) {
+	#show_options {
+		display: block;
+		margin-top: 8px;
+		padding-left: 0px;
+	}
+	#inputregion {
+		margin-top: 100px;
+	}
+	.useragent.unhidden {
+		margin-bottom: -90px;
+	}
 	input[list=useragents] {
 		width: 96.8%;
 	}

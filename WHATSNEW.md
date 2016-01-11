@@ -1,23 +1,20 @@
 
-12 April 2015.
-What’s new: This release fixes two regressions in the v15.3.28 release: A
-bug that caused spurious errors for input[type=email], and a dependency
-configuration issue that broke gzip handling in the the war release.
-Previous “What’s new” notes from the v15.3.28 release: This release drops
-all `meta[name]` checking and adds: improved error messages for
-`input[type]` attribute mismatches; support for checking
-`object[typemustmatch]`; new error message for `title` elements that only
-have whitespace; new `useragent` request param, to allow you to specify any
-arbitrary user-agent string for the checker to use when fetching remote
-documents; new `nu.validator.messages.limit` Java system prop to control
-limit on maximum number of messages the checker service will report for a
-single doc before stopping with a "Too many messages" fatal error. This
-release also adds full support for checking documents at SNI origins &
-changes the API/CLI (command-line interface) to emit source extracts +
-“hilite” info when you set the `--format` option to `json`, `xml`, `xhtml`,
-or `html` & fixes regression that caused CLI/API to parse .xhtml docs as
-text/html instead of using the XML parser.
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#15328
+1 January 2016.
+Java8 is now required to run the checker jar and service. This release fixes a
+long-standing bug such that errors are no longer reported for ampersands in
+cases that the spec does not define as invalid; for example, an error will no
+longer be reported for a case like `<a href="foo/?bar=1&baz=2">`. Also new in
+this release is support for Content Security Policy syntax checking in values of
+`content` attributes in `<meta http-equiv=content-security-policy content="…">`
+elements as well as in Content-Security-Policy HTTP headers, and support for the
+CSP-related `nonce` attribute. Support for Subresource Integrity-related syntax
+checking has also been added, for the `integrity` attribute. Other changes
+include a refinement of error-reporting for cases of URLs that contain invalid
+characters, so that the error message now includes an explicit indication of
+which specific characters in the URL are invalid. Various refinements to
+checking of ARIA `role` attributes have also been made.
+
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1611
 
 The files in this release provide a portable standalone version of the Nu Html
 Checker in two different forms: as a Java jar file, and as a Java war file.

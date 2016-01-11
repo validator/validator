@@ -5,6 +5,7 @@
 	<classpathentry kind="output" path="classes"/>
 	<classpathentry kind="lib" path="jars/validator.jar"/>
 	<classpathentry kind="lib" path="jars/htmlparser.jar"/>
+	<classpathentry kind="lib" path="jars/galimatias.jar"/>
 	<classpathentry kind="lib" path="dependencies/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-fileupload-1.3.1.jar"/>
 	<classpathentry kind="lib" path="dependencies/httpcore-4.4.jar"/>
@@ -12,8 +13,8 @@
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-adapters.jar"/>
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-api.jar"/>
-	<classpathentry kind="lib" path="dependencies/galimatias-0.1.0.jar"/>
 	<classpathentry kind="lib" path="dependencies/icu4j-54.1.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/salvation-1.0.3.jar"/>
 	<classpathentry kind="lib" path="dependencies/javax.servlet-api-3.1.0.jar"/>
 	<classpathentry kind="lib" path="dependencies/jetty-server-9.2.9.v20150224.jar"/>
 	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.2.9.v20150224.jar"/>

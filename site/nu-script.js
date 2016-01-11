@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2005-2007 Henri Sivonen
  * Copyright (c) 2007 Simon Pieters
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -108,13 +108,16 @@ function initFieldHolders() {
 	modeSelect.onchange = function() {
 	if (this.value == 'file') {
 		installFileUpload()
+		location.hash = '#file'
 	}
 	else
 		if (this.value == 'textarea') {
 			installTextarea()
+			location.hash = '#textarea'
 		}
 		else {
 			installUrlInput()
+			history.pushState("", document.title, location.pathname);
 		}
 	}
 	label.appendChild(modeSelect)
@@ -126,11 +129,38 @@ function initFieldHolders() {
 		installTextarea()
 		modeSelect.value = 'textarea'
 	}
+	document.querySelector('#show_options')
+		.addEventListener('click', function (e) {
+			toggleUserAgent()
+		}, false)
+	if (location.hash == '#file') {
+		installFileUpload()
+		modeSelect.value = 'file'
+	} else {
+		if (location.hash == '#textarea') {
+			installTextarea()
+			modeSelect.value = 'textarea'
+		}
+		else {
+			installUrlInput()
+		}
+	}
+}
+
+function toggleUserAgent() {
+	var useragent = document.querySelector('.useragent'),
+		useragent_input = document.querySelector('.useragent input')
+	if (useragent.className.indexOf("unhidden") != -1) {
+		useragent.className = useragent.className.replace(/unhidden/, 'hidden')
+		useragent_input.setAttribute("disabled", "")
+	} else {
+		useragent.className = useragent.className.replace(/hidden/, 'unhidden')
+		useragent_input.removeAttribute("disabled")
+	}
 }
 
 function initUserAgents() {
-	var userAgents = createHtmlElement("datalist")
-	userAgents.id = 'useragents'
+	var userAgents = document.querySelector("#useragents")
 	userAgents.appendChild(createLabeledOption(
 		'Mozilla/5.0 (Linux; Android 4.4.2; en-us; SC-04E Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.5 Chrome/28.0.1500.94 Mobile Safari/537.36',
 		'Android'))
@@ -155,7 +185,8 @@ function initUserAgents() {
 	userAgents.appendChild(createLabeledOption(
 		'Validator.nu/LV',
 		'default'))
-	document.querySelector(".useragent").appendChild(userAgents)
+	document.querySelector("span.useragent").appendChild(userAgents)
+	document.querySelector("input[list=useragents]").setAttribute("disabled", "")
 }
 
 function createLabeledOption(value, label) {
@@ -222,7 +253,7 @@ function createHtmlElement(tagName) {
 }
 
 function injectHyperlinks() {
-	// var errors = document.getElementsByClassName("error")
+	var errors = document.getElementsByClassName("error")
 	var warnings = document.getElementsByClassName("warning")
 	linkify(warnings, "checking against the HTML5 + RDFa 1.1 schema",
 		"about.html#rdfa",
@@ -236,15 +267,28 @@ function injectHyperlinks() {
 	linkify(warnings, "add identifying headings to all articles",
 		"https://www.w3.org/wiki/HTML/Usage/Headings/Missing",
 		"Identifying article elements with headings")
+	linkify(errors, "the Media Types section in the current Media Queries specification",
+		"http://drafts.csswg.org/mediaqueries/#media-types",
+		"Media Types sections in the Media Queries specification")
+	linkify(errors, "the Deprecated Media Features section in the current Media Queries specification",
+		"http://drafts.csswg.org/mediaqueries/#mf-deprecated",
+		"Deprecated Media Features section in the current Media Queries specification")
 	}
 
 function replaceSuccessFailure() {
-	var success = document.querySelector(".success"),
-	failure = document.querySelector(".failure")
-	if (success) {
-		success.textContent = "Document checking completed."
-	} else if (failure) {
-		failure.textContent = "Document checking completed."
+	successfailure = document.querySelector(".success, .failure")
+	if (successfailure === null) return
+	if (document.querySelector(".error:not(.hidden), .warning:not(.hidden)") !== null) {
+		successfailure.className = "failure"
+		successfailure.textContent = "Document checking completed."
+	} else {
+		successfailure.className = "success"
+		successfailure.textContent = "Document checking completed. No errors or warnings to show."
+	}
+	if (document.querySelector("#results ol:first-child li:not(.hidden)") === null) {
+		document.querySelector("#results ol:first-child").className = "hidden"
+	} else {
+		document.querySelector("#results ol:first-child").className = ""
 	}
 }
 
@@ -300,17 +344,22 @@ function installTextarea() {
 
 function installFileUpload() {
 	var input = document.getElementById('doc')
-	var xnote = document.createElement("div")
-	var tn = document.createTextNode("Uploaded files with .xhtml or .xht extensions are automatically processed as XHTML.")
 	if (input && fileInput) {
 		var form = document.forms[0]
 		if (form) {
 			form.method = 'post'
 			form.enctype = 'multipart/form-data'
 			input.parentNode.replaceChild(fileInput, input)
-			document.getElementById("inputregion").appendChild(xnote)
-			xnote.setAttribute('id', 'xnote')
-			xnote.appendChild(tn)
+			if (!document.querySelector("#xnote")) {
+				var xnote = document.createElement("div")
+				xnote.setAttribute('id', 'xnote')
+				xnote.appendChild(document.createTextNode(
+					"Uploaded files with xhtml or .xht"
+					+ " extensions are automatically"
+					+ " processed as XHTML."))
+				document.getElementById("inputregion")
+					.appendChild(xnote)
+			}
 			reflow(fileInput)
 		}
 	}
@@ -372,7 +421,7 @@ function updateFragmentIdHilite() {
 	}
 	var rule = ''
 	if (selector) {
-		rule = selector + " { background-color: #FF6666; font-weight: bold; }"
+		rule = selector + " { background-color: #ffcccc; font-weight: bold; }"
 	}
 	var newStyle = createHtmlElement('style')
 	var ex
@@ -403,6 +452,16 @@ if (document.getElementById) {
 		document.addEventListener("DOMContentLoaded", function() {
 			window.onload = undefined
 			reboot()
+			setTimeout(function () {
+				var filtersbutton = document.querySelector("#filters button")
+				var helptext = document.querySelector("#filters > div")
+				if (filtersbutton) {
+					filtersbutton.className = "message_filtering"
+				}
+				if (helptext) {
+					helptext.className = "message_filtering"
+				}
+			}, 500);
 		}, false)
 	}
 	window.onunload = undoFormSubmission
@@ -415,6 +474,7 @@ function initFilters() {
 		warnings,
 		info,
 		filters,
+		helptext,
 		heading,
 		filtersButton,
 		makeFieldset,
@@ -438,6 +498,7 @@ function initFilters() {
 		return
 	}
 
+	helptext = document.querySelector("#filters > div")
 	errors = document.getElementsByClassName('error')
 	warnings = document.getElementsByClassName('warning')
 	info = document.querySelectorAll('[class=info]')
@@ -445,12 +506,15 @@ function initFilters() {
 	filters.id = "filters"
 	filters.className = "unexpanded"
 	heading = document.createElement("h2")
+	helptext = document.createElement("div")
+	helptext.appendChild(document.createTextNode("Use the Message Filtering button below to hide/show particular messages, and to see total counts of errors and warnings."))
+	filters.appendChild(helptext)
 	filtersButton = document.createElement("button")
-	filtersButton.appendChild(document.createTextNode("Message filtering"))
+	filtersButton.appendChild(document.createTextNode("Message Filtering"))
 	heading.appendChild(filtersButton)
 	filters.appendChild(heading)
 	filtersButton.addEventListener('click', function (e) {
-	  toggleFilters()
+	 	toggleFilters()
 	}, false)
 
 	// Generate errors/warnings/info fieldsets
@@ -547,7 +611,7 @@ function initFilters() {
 			fieldset = document.createElement("fieldset")
 			fieldset.className = "hidden"
 			legend = document.createElement("legend")
-			legend.appendChild(document.createTextNode(displayType + " · "))
+			legend.appendChild(document.createTextNode(displayType + " (" + messages.length + ") · "))
 			hide = document.createElement("a")
 			hide.href = ""
 			show = hide.cloneNode(true)
@@ -614,6 +678,7 @@ function initFilters() {
 			heading.appendChild(document.createTextNode(" "))
 			heading.appendChild(span)
 		}
+		replaceSuccessFailure()
 	}
 
 	makeFieldset(errors, 'Errors')
@@ -626,6 +691,13 @@ function initFilters() {
 	fieldsets = filters.getElementsByTagName("fieldset")
 
 	toggleFilters = function() {
+		if (helptext.className === "expanded") {
+			helptext.className = "message_filtering"
+			helptext.textContent = "Use the Message Filtering button below to display options for hiding/showing particular messages, and to see total counts of errors and warnings."
+		} else {
+			helptext.className = "expanded"
+			helptext.textContent = "Press the Message Filtering button to collapse the filtering options and error/warning/info counts."
+		}
 		filters.className === "expanded" ? filters.className = "unexpanded" : filters.className = "expanded"
 		for (var i = 0; i < fieldsets.length; ++i) {
 			fieldset = fieldsets[i]
