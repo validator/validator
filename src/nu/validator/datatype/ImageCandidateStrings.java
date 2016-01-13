@@ -40,9 +40,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private static final int NO_WIDTH = -1;
 
-    private static final float NO_DENSITY = (float) -1;
+    private static final float NO_DENSITY = -1F;
 
-    private static final float ONE = (float) 1;
+    private static final float ONE = 1F;
 
     private static final ImageCandidateURL IC_URL = ImageCandidateURL.THE_INSTANCE;
 

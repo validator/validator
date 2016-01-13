@@ -127,8 +127,8 @@ public class Statistics {
                 totalCopy = total;
                 System.arraycopy(counters, 0, countersCopy, 0, counters.length);
             }
-            double totalDouble = (double) totalCopy;
-            double uptimeMillis = (double) (System.currentTimeMillis() - startTime);
+            double totalDouble = totalCopy;
+            double uptimeMillis = System.currentTimeMillis() - startTime;
             response.setContentType("text/html; charset=utf-8");
             ContentHandler ch = new HtmlSerializer(response.getOutputStream());
             try {
@@ -198,7 +198,7 @@ public class Statistics {
                     endElement(ch, "td");
                     startElement(ch, "td");
 
-                    characters(ch, ((double) count) / totalDouble);
+                    characters(ch, count / totalDouble);
 
                     endElement(ch, "td");
                     endElement(ch, "tr");

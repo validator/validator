@@ -644,7 +644,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         if (currentOutlinee != null) {
             request.setAttribute(
                     "http://validator.nu/properties/document-outline",
-                    (Deque<Section>) currentOutlinee.outline);
+                    currentOutlinee.outline);
             setOutline(currentOutlinee.outline);
         }
         contentHandler.endDocument();

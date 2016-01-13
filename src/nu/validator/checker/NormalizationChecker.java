@@ -67,7 +67,7 @@ public final class NormalizationChecker extends Checker {
      * A thread-safe set of composing characters as per Charmod Norm.
      */
     @SuppressWarnings("deprecation")
-    private static final UnicodeSet COMPOSING_CHARACTERS = (UnicodeSet) new UnicodeSet(
+    private static final UnicodeSet COMPOSING_CHARACTERS = new UnicodeSet(
             "[[:nfc_qc=maybe:][:^ccc=0:]]").freeze();
     // see http://sourceforge.net/mailarchive/message.php?msg_id=37279908
 

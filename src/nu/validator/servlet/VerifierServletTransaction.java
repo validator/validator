@@ -1343,7 +1343,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         xmlParser.setCharacterHandler(sourceCode);
         if (lexicalHandler != null) {
           xmlParser.setProperty("http://xml.org/sax/properties/lexical-handler",
-              (LexicalHandler) lexicalHandler);
+              lexicalHandler);
         }
         reader = new IdFilter(xmlParser);
         reader.setFeature("http://xml.org/sax/features/string-interning", true);

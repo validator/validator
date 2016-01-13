@@ -346,7 +346,7 @@ public class SaxCompiler implements ContentHandler {
                 if (c >= ' ' && c <= '~') {
                     return "" + c;
                 } else {
-                    String hex = Integer.toHexString((int) c);
+                    String hex = Integer.toHexString(c);
                     switch (hex.length()) {
                         case 1:
                             return "\\u000" + hex;

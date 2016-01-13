@@ -267,7 +267,7 @@ public class SimpleDocumentValidator {
         if (lexicalHandler != null) {
             xmlParser.setProperty(
                     "http://xml.org/sax/properties/lexical-handler",
-                    (LexicalHandler) lexicalHandler);
+                    lexicalHandler);
         }
         xmlReader = new IdFilter(xmlParser);
         xmlReader.setFeature("http://xml.org/sax/features/string-interning", true);
