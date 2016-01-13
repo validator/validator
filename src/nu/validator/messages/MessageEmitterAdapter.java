@@ -897,7 +897,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         emitter.endText();
     }
 
-    @SuppressWarnings("unchecked") private void rngMessageText(
+    private void rngMessageText(
             AbstractValidationException e) throws SAXException {
         MessageTextHandler messageTextHandler = emitter.startText();
         if (messageTextHandler != null) {
@@ -1231,7 +1231,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    @SuppressWarnings("unchecked") private void elaboration(Exception e)
+    private void elaboration(Exception e)
             throws SAXException {
         if (!(e instanceof AbstractValidationException
                 || e instanceof VnuBadAttrValueException || e instanceof DatatypeMismatchException)) {
