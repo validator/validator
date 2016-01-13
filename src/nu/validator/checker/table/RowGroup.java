@@ -66,7 +66,7 @@ final class RowGroup {
      * The set of cells from previous rows that are still in effect extending
      * downwards.
      */
-    private final SortedSet<Cell> cellsIfEffect = new TreeSet<Cell>(
+    private final SortedSet<Cell> cellsIfEffect = new TreeSet<>(
             VerticalCellComparator.THE_INSTANCE);
 
     /**

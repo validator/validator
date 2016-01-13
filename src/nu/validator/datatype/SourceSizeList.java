@@ -37,7 +37,7 @@ public class SourceSizeList extends AbstractDatatype {
 
     private static final int CLIP_LIMIT = 25;
 
-    private static final Set<String> LENGTH_UNITS = new LinkedHashSet<String>();
+    private static final Set<String> LENGTH_UNITS = new LinkedHashSet<>();
 
     private static final StringBuilder VALID_UNITS = new StringBuilder();
 

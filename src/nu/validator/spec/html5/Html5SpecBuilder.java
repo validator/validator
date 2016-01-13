@@ -90,15 +90,15 @@ public final class Html5SpecBuilder implements ContentHandler {
 
     private Name currentName;
 
-    private Map<Name, String> urisByElement = new HashMap<Name, String>();
+    private Map<Name, String> urisByElement = new HashMap<>();
 
-    private Map<Name, DocumentFragment> categoriesByElement = new HashMap<Name, DocumentFragment>();
+    private Map<Name, DocumentFragment> categoriesByElement = new HashMap<>();
 
-    private Map<Name, DocumentFragment> contextsByElement = new HashMap<Name, DocumentFragment>();
+    private Map<Name, DocumentFragment> contextsByElement = new HashMap<>();
 
-    private Map<Name, DocumentFragment> contentModelsByElement = new HashMap<Name, DocumentFragment>();
+    private Map<Name, DocumentFragment> contentModelsByElement = new HashMap<>();
 
-    private Map<Name, DocumentFragment> attributesByElement = new HashMap<Name, DocumentFragment>();
+    private Map<Name, DocumentFragment> attributesByElement = new HashMap<>();
 
     private boolean ignoreTextNodes = false;
 

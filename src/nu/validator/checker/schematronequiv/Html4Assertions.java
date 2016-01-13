@@ -100,7 +100,7 @@ public class Html4Assertions extends Checker {
         return -1;
     }
 
-    private static Map<String, Integer> ANCESTOR_MASK_BY_DESCENDANT = new HashMap<String, Integer>();
+    private static Map<String, Integer> ANCESTOR_MASK_BY_DESCENDANT = new HashMap<>();
 
     private static void registerProhibitedAncestor(String ancestor,
             String descendant) {
@@ -266,17 +266,17 @@ public class Html4Assertions extends Checker {
         return stack[currentPtr];
     }
 
-    private Map<StackNode, Locator> openSingleSelects = new HashMap<StackNode, Locator>();
+    private Map<StackNode, Locator> openSingleSelects = new HashMap<>();
 
-    private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<>();
 
-    private Set<String> formControlIds = new HashSet<String>();
+    private Set<String> formControlIds = new HashSet<>();
 
-    private LinkedHashSet<IdrefLocator> listReferences = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> listReferences = new LinkedHashSet<>();
 
-    private Set<String> listIds = new HashSet<String>();
+    private Set<String> listIds = new HashSet<>();
 
-    private Set<String> allIds = new HashSet<String>();
+    private Set<String> allIds = new HashSet<>();
 
     /**
      * @see nu.validator.checker.Checker#endDocument()
@@ -335,7 +335,7 @@ public class Html4Assertions extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String name, Attributes atts) throws SAXException {
-        Set<String> ids = new HashSet<String>();
+        Set<String> ids = new HashSet<>();
         String role = null;
         String activeDescendant = null;
         String forAttr = null;

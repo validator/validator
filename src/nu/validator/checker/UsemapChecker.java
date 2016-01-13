@@ -33,9 +33,9 @@ import org.xml.sax.SAXException;
 
 public class UsemapChecker extends Checker {
 
-    private final Map<String, Locator> usemapLocationsByName = new LinkedHashMap<String, Locator>();
+    private final Map<String, Locator> usemapLocationsByName = new LinkedHashMap<>();
     
-    private final Set<String> mapNames = new HashSet<String>();
+    private final Set<String> mapNames = new HashSet<>();
     
     private Locator locator = null;
     

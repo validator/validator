@@ -37,7 +37,7 @@ abstract class AbstractRel extends AbstractDatatype {
         // There are currently no registered rel tokens with a colon in them
         // so don't bother supporting the colon case until there are 
         // registered tokens with a colon.
-        Set<String> tokensSeen = new HashSet<String>();
+        Set<String> tokensSeen = new HashSet<>();
         StringBuilder builder = new StringBuilder();
         int len = literal.length();
         for (int i = 0; i < len; i++) {

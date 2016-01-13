@@ -257,7 +257,7 @@ public abstract class AbstractDatatype implements Datatype {
     public abstract String getName();
     
     protected List<CharSequenceWithOffset> split(CharSequence sequence, char delimiter) {
-        List<CharSequenceWithOffset> rv = new ArrayList<CharSequenceWithOffset>();
+        List<CharSequenceWithOffset> rv = new ArrayList<>();
         int offset = 0;
         for (int i = 0; i < sequence.length(); i++) {
             char c = sequence.charAt(i);

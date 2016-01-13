@@ -78,7 +78,7 @@ public class VnuBadAttrValueException extends SAXParseException {
         this.element = new Name(uri, elementName);
         this.attributeName = new Name("", attributeName);
         this.attributeValue = attributeValue;
-        this.exceptions = new HashMap<String, DatatypeException>();
+        this.exceptions = new HashMap<>();
         this.exceptions.put("", ex5);
     }
 

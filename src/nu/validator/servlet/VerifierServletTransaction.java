@@ -323,7 +323,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     protected ContentTypeParser contentTypeParser;
 
-    private Set<String> loadedValidatorUrls = new HashSet<String>();
+    private Set<String> loadedValidatorUrls = new HashSet<>();
 
     private boolean checkNormalization = false;
 
@@ -349,7 +349,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private String charsetOverride = null;
 
-    private Set<String> filteredNamespaces = new LinkedHashSet<String>(); // linked
+    private Set<String> filteredNamespaces = new LinkedHashSet<>(); // linked
 
     private LexicalHandler lexicalHandler;
 
@@ -372,10 +372,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             lastModified = 0;
             BufferedReader r = new BufferedReader(new InputStreamReader(LocalCacheEntityResolver.getPresetsAsStream(), "UTF-8"));
             String line;
-            List<String> doctypes = new LinkedList<String>();
-            List<String> namespaces = new LinkedList<String>();
-            List<String> labels = new LinkedList<String>();
-            List<String> urls = new LinkedList<String>();
+            List<String> doctypes = new LinkedList<>();
+            List<String> namespaces = new LinkedList<>();
+            List<String> labels = new LinkedList<>();
+            List<String> urls = new LinkedList<>();
             Properties props = new Properties();
 
             log4j.debug("Reading miscellaneous properties.");
@@ -454,7 +454,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
             log4j.debug("Parsing set up. Starting to read schemas.");
 
-            SortedMap<String, Schema> schemaMap = new TreeMap<String, Schema>();
+            SortedMap<String, Schema> schemaMap = new TreeMap<>();
 
             schemaMap.put("http://c.validator.nu/table/",
                     CheckerSchema.TABLE_CHECKER);
@@ -1188,7 +1188,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     protected void setErrorProfile() {
         profile = request.getParameter("profile");
 
-        HashMap<String, String> profileMap = new HashMap<String, String>();
+        HashMap<String, String> profileMap = new HashMap<>();
 
         if ("pedagogical".equals(profile)) {
             profileMap.put("xhtml1", "warn");

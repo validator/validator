@@ -45,7 +45,7 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
 
     private final XhtmlSaxEmitter emitter;
 
-    private static final Map<String, String[]> MAGIC_LINKS = new HashMap<String, String[]>();
+    private static final Map<String, String[]> MAGIC_LINKS = new HashMap<>();
     static {
       MAGIC_LINKS.put("Use CSS instead",
           new String[] {"http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes",
@@ -68,7 +68,7 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         String str = new String(ch);
-        Map<Integer, String> linkText = new TreeMap<Integer, String>();
+        Map<Integer, String> linkText = new TreeMap<>();
         int index;
         for (Map.Entry<String, String[]> entry : MAGIC_LINKS.entrySet()) {
           index = str.indexOf(entry.getKey());

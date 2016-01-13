@@ -38,7 +38,7 @@ public final class SandboxAllowList extends AbstractDatatype {
         super();
     }
 
-    private static final HashSet<String> allowedKeywords = new HashSet<String>();
+    private static final HashSet<String> allowedKeywords = new HashSet<>();
 
     static {
         allowedKeywords.add("allow-forms");
@@ -52,7 +52,7 @@ public final class SandboxAllowList extends AbstractDatatype {
     }
 
     public void checkValid(CharSequence literal) throws DatatypeException {
-        Set<String> tokensSeen = new HashSet<String>();
+        Set<String> tokensSeen = new HashSet<>();
         StringBuilder builder = new StringBuilder();
         int len = literal.length();
         for (int i = 0; i < len; i++) {

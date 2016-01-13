@@ -66,7 +66,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         }
     }
 
-    private LinkedList<Node> stack = new LinkedList<Node>();
+    private LinkedList<Node> stack = new LinkedList<>();
 
     private boolean baseSeen = false;
 
@@ -208,7 +208,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         baseSeen = true;
 
         LinkedList<Node> oldStack = stack;
-        stack = new LinkedList<Node>();
+        stack = new LinkedList<>();
         int i = 0;
         for (Node node : oldStack) {
             if (i == 0) {

@@ -79,7 +79,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
 
     private final Comparator<? super E> comparator;
 
-    private final Node<E> head = new Node<E>(null, null);
+    private final Node<E> head = new Node<>(null, null);
 
     private int size = 0;
 
@@ -167,7 +167,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
         while (prev.next != null) {
             int comp = compare(o, prev.next.value);
             if (comp < 0) {
-                prev.next = new Node<E>(o, prev.next);
+                prev.next = new Node<>(o, prev.next);
                 size++;
                 return true;
             } else if (comp == 0) {
@@ -176,7 +176,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
             prev = prev.next;
         }
         // if we haven't returned yet, this is greater than
-        prev.next = new Node<E>(o, null);
+        prev.next = new Node<>(o, null);
         size++;
         return true;
     }

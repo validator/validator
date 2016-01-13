@@ -113,7 +113,7 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
             writer.write(">\n");
             level++;
 
-            TreeMap<String, String> map = new TreeMap<String, String>();
+            TreeMap<String, String> map = new TreeMap<>();
             for (int i = 0; i < atts.getLength(); i++) {
                 String ns = atts.getURI(i);
                 String name;

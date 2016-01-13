@@ -49,7 +49,7 @@ public class MediaQuery extends AbstractDatatype {
         LENGTH, RATIO, INTEGER, RESOLUTION, SCAN, ORIENTATION, NONZEROINTEGER, ONEORZERO
     }
 
-    private static final Set<String> LENGTH_UNITS = new HashSet<String>();
+    private static final Set<String> LENGTH_UNITS = new HashSet<>();
 
     static {
         LENGTH_UNITS.add("em");
@@ -68,7 +68,7 @@ public class MediaQuery extends AbstractDatatype {
         LENGTH_UNITS.add("pc");
     }
 
-    private static final Set<String> MEDIA_TYPES = new HashSet<String>();
+    private static final Set<String> MEDIA_TYPES = new HashSet<>();
 
     static {
         MEDIA_TYPES.add("all");
@@ -88,7 +88,7 @@ public class MediaQuery extends AbstractDatatype {
         }
     }
 
-    private static final Set<String> OLD_MEDIA_TYPES = new HashSet<String>();
+    private static final Set<String> OLD_MEDIA_TYPES = new HashSet<>();
 
     static {
         OLD_MEDIA_TYPES.add("aural");
@@ -100,7 +100,7 @@ public class MediaQuery extends AbstractDatatype {
         OLD_MEDIA_TYPES.add("tv");
     }
 
-    private static final Set<String> OLD_MEDIA_FEATURES = new HashSet<String>();
+    private static final Set<String> OLD_MEDIA_FEATURES = new HashSet<>();
 
     static {
         OLD_MEDIA_FEATURES.add("device-width");
@@ -114,7 +114,7 @@ public class MediaQuery extends AbstractDatatype {
         OLD_MEDIA_FEATURES.add("max-device-aspect-ratio");
     }
 
-    private static final Map<String, ValueType> FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
+    private static final Map<String, ValueType> FEATURES_TO_VALUE_TYPES = new HashMap<>();
 
     static {
         FEATURES_TO_VALUE_TYPES.put("width", ValueType.LENGTH);
@@ -143,7 +143,7 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("grid", ValueType.ONEORZERO);
     }
 
-    private static final Map<String, ValueType> NONSTANDARD_FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
+    private static final Map<String, ValueType> NONSTANDARD_FEATURES_TO_VALUE_TYPES = new HashMap<>();
 
     static {
         NONSTANDARD_FEATURES_TO_VALUE_TYPES.put(
@@ -156,7 +156,7 @@ public class MediaQuery extends AbstractDatatype {
 
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         List<CharSequenceWithOffset> queries = split(literal, ',');
         for (CharSequenceWithOffset query : queries) {
             warnings = checkQuery(query.getSequence(), query.getOffset(),

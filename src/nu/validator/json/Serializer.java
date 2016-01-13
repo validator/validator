@@ -40,7 +40,7 @@ public class Serializer implements JsonHandler {
         INITIAL, DOCUMENT, ARRAY, OBJECT, VALUE, STRING
     }
 
-    private final List<State> stack = new ArrayList<State>();
+    private final List<State> stack = new ArrayList<>();
 
     private boolean hadCallback = false;
 

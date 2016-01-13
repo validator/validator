@@ -54,7 +54,7 @@ public final class ImageReportAdviceBuilder implements ContentHandler {
 
     private TreeBuilder treeBuilder;
 
-    private final List<DocumentFragment> fragments = new LinkedList<DocumentFragment>();
+    private final List<DocumentFragment> fragments = new LinkedList<>();
 
     public static List<DocumentFragment> parseAltAdvice()
             throws IOException, SAXException {

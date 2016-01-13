@@ -85,7 +85,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final Logger log4j = Logger.getLogger(MessageEmitterAdapter.class);
 
-    private final static Map<String, char[]> WELL_KNOWN_NAMESPACES = new HashMap<String, char[]>();
+    private final static Map<String, char[]> WELL_KNOWN_NAMESPACES = new HashMap<>();
 
     static {
         WELL_KNOWN_NAMESPACES.put("", "unnamespaced".toCharArray());
@@ -148,7 +148,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "Adobe TIFF".toCharArray());
     }
 
-    private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
+    private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<>();
 
     private final static DocumentFragment IMAGE_REPORT_GENERAL;
 
@@ -171,7 +171,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private static final long MAX_MESSAGES = Integer.parseInt(System.getProperty(
             "nu.validator.messages.limit", "1000"));
 
-    private static final Map<String, String[]> validInputTypesByAttributeName = new TreeMap<String, String[]>();
+    private static final Map<String, String[]> validInputTypesByAttributeName = new TreeMap<>();
 
     static {
         validInputTypesByAttributeName.put("accept", new String[] {
@@ -252,7 +252,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "#attr-dim-width", "image" });
     }
 
-    private static final Map<String, String> fragmentIdByInputType = new TreeMap<String, String>();
+    private static final Map<String, String> fragmentIdByInputType = new TreeMap<>();
 
     static {
         fragmentIdByInputType.put("hidden", "#hidden-state-type-hidden");
@@ -666,10 +666,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private void emitImageReview(ImageReviewHandler imageReviewHandler)
             throws SAXException {
-        List<Image> noAltNoLink = new LinkedList<Image>();
-        List<Image> noAltLink = new LinkedList<Image>();
-        List<Image> emptyAlt = new LinkedList<Image>();
-        List<Image> hasAlt = new LinkedList<Image>();
+        List<Image> noAltNoLink = new LinkedList<>();
+        List<Image> noAltLink = new LinkedList<>();
+        List<Image> emptyAlt = new LinkedList<>();
+        List<Image> hasAlt = new LinkedList<>();
 
         for (Image image : imageCollector) {
             String alt = image.getAlt();
@@ -1308,7 +1308,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private void elaborateDatatypes(Map<String, DatatypeException> map)
             throws SAXException {
-        Set<DocumentFragment> fragments = new HashSet<DocumentFragment>();
+        Set<DocumentFragment> fragments = new HashSet<>();
         for (Map.Entry<String, DatatypeException> entry : map.entrySet()) {
             DatatypeException ex = entry.getValue();
             if (ex instanceof Html5DatatypeException) {

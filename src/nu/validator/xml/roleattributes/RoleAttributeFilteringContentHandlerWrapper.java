@@ -202,7 +202,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
             return "";
         }
         int len = tokenList.length();
-        List<String> tokens = new LinkedList<String>();
+        List<String> tokens = new LinkedList<>();
         boolean collectingSpace = true;
         int start = 0;
         for (int i = 0; i < len; i++) {
@@ -223,8 +223,8 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
             tokens.add(tokenList.substring(start, len));
         }
         String roleValue = null;
-        List<String> unrecognizedTokens = new LinkedList<String>();
-        List<String> superfluousTokens = new LinkedList<String>();
+        List<String> unrecognizedTokens = new LinkedList<>();
+        List<String> superfluousTokens = new LinkedList<>();
         for (String token : tokens) {
             if (Arrays.binarySearch(nonAbstractAriaRoles, token) < 0) {
                 unrecognizedTokens.add(token);

@@ -63,7 +63,7 @@ public final class Html5AttributeDatatypeBuilder implements ContentHandler {
 
     private TreeBuilder treeBuilder;
 
-    private Map<Class, DocumentFragment> adviceByClass = new HashMap<Class, DocumentFragment>();
+    private Map<Class, DocumentFragment> adviceByClass = new HashMap<>();
 
     public static Map<Class, DocumentFragment> parseSyntaxDescriptions() throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);

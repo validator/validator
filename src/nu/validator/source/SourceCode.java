@@ -53,24 +53,24 @@ public final class SourceCode implements CharacterHandler {
 
     private int expectedLength;
 
-    private final SortedSet<Location> reverseSortedLocations = new HeadBiasedSortedSet<Location>(Collections.reverseOrder());
+    private final SortedSet<Location> reverseSortedLocations = new HeadBiasedSortedSet<>(Collections.reverseOrder());
 
-    private final SortedSet<Location> exactErrors = new TailBiasedSortedSet<Location>();
+    private final SortedSet<Location> exactErrors = new TailBiasedSortedSet<>();
 
-    private final SortedSet<Location> rangeLasts = new TailBiasedSortedSet<Location>();
+    private final SortedSet<Location> rangeLasts = new TailBiasedSortedSet<>();
     
-    private final SortedSet<Integer> oneBasedLineErrors = new TailBiasedSortedSet<Integer>();
+    private final SortedSet<Integer> oneBasedLineErrors = new TailBiasedSortedSet<>();
 
-//    private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(Collections.reverseOrder());
+//    private final SortedSet<Location> reverseSortedLocations = new TreeSet<>(Collections.reverseOrder());
 //
-//    private final SortedSet<Location> exactErrors = new TreeSet<Location>();
+//    private final SortedSet<Location> exactErrors = new TreeSet<>();
 //
-//    private final SortedSet<Location> rangeLasts = new TreeSet<Location>();
+//    private final SortedSet<Location> rangeLasts = new TreeSet<>();
 //    
-//    private final SortedSet<Integer> oneBasedLineErrors = new TreeSet<Integer>();
+//    private final SortedSet<Integer> oneBasedLineErrors = new TreeSet<>();
 
     
-    private final List<Line> lines = new ArrayList<Line>();
+    private final List<Line> lines = new ArrayList<>();
 
     private Line currentLine = null;
 
@@ -328,7 +328,7 @@ public final class SourceCode implements CharacterHandler {
     }
 
     public void emitSource(SourceHandler handler) throws SAXException {
-        List<Range> ranges = new LinkedList<Range>();
+        List<Range> ranges = new LinkedList<>();
         Location[] locations = reverseSortedLocations.toArray(SOURCE_LOCATION_ARRAY_TYPE);
         int i = locations.length - 1;
         for (Location loc : rangeLasts) {

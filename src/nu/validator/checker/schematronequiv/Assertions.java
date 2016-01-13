@@ -126,7 +126,7 @@ public class Assertions extends Checker {
         return "";
     }
 
-    private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<String, String[]>();
+    private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
     static {
         INPUT_ATTRIBUTES.put("autocomplete", new String[] { "text", "search",
@@ -154,7 +154,7 @@ public class Assertions extends Checker {
                 "tel", "email", "password" });
     }
 
-    private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<String, String>();
+    private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<>();
 
     static {
         OBSOLETE_ELEMENTS.put("center", "Use CSS instead.");
@@ -192,7 +192,7 @@ public class Assertions extends Checker {
         }
     }
 
-    private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<String, String[]>();
+    private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<>();
 
     static {
         OBSOLETE_ATTRIBUTES.put("abbr", new String[] { "td", "th" });
@@ -236,7 +236,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("version", new String[] { "html" });
     }
 
-    private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<String, String>();
+    private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<>();
 
     static {
         OBSOLETE_ATTRIBUTES_MSG.put(
@@ -321,7 +321,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES_MSG.put("version", "You can safely omit it.");
     }
 
-    private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<String, String[]>();
+    private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<>();
 
     static {
         OBSOLETE_STYLE_ATTRS.put("align", new String[] { "caption", "iframe",
@@ -388,7 +388,7 @@ public class Assertions extends Checker {
         return -1;
     }
 
-    private static Map<String, Integer> ANCESTOR_MASK_BY_DESCENDANT = new HashMap<String, Integer>();
+    private static Map<String, Integer> ANCESTOR_MASK_BY_DESCENDANT = new HashMap<>();
 
     private static void registerProhibitedAncestor(String ancestor,
             String descendant) {
@@ -509,14 +509,14 @@ public class Assertions extends Checker {
 
     private static final int LABEL_FOR_MASK = (1 << 28);
 
-    private static final Map<String, Set<String>> REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT = new HashMap<String, Set<String>>();
+    private static final Map<String, Set<String>> REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT = new HashMap<>();
 
-    private static final Map<String, Set<String>> ariaOwnsIdsByRole = new HashMap<String, Set<String>>();
+    private static final Map<String, Set<String>> ariaOwnsIdsByRole = new HashMap<>();
 
     private static void registerRequiredAncestorRole(String parent, String child) {
         Set<String> parents = REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(child);
         if (parents == null) {
-            parents = new HashSet<String>();
+            parents = new HashSet<>();
         }
         parents.add(parent);
         REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.put(child, parents);
@@ -549,7 +549,7 @@ public class Assertions extends Checker {
         registerRequiredAncestorRole("treegrid", "row");
     }
 
-    private static final Set<String> MUST_NOT_DANGLE_IDREFS = new HashSet<String>();
+    private static final Set<String> MUST_NOT_DANGLE_IDREFS = new HashSet<>();
 
     static {
         MUST_NOT_DANGLE_IDREFS.add("aria-controls");
@@ -559,7 +559,7 @@ public class Assertions extends Checker {
         MUST_NOT_DANGLE_IDREFS.add("aria-owns");
     }
 
-    private static final Map<String, String> ELEMENTS_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
+    private static final Map<String, String> ELEMENTS_WITH_IMPLICIT_ROLE = new HashMap<>();
 
     static {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("article", "article");
@@ -584,7 +584,7 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ul", "list");
     }
 
-    private static final Map<String, String> ELEMENTS_THAT_NEVER_NEED_ROLE = new HashMap<String, String>();
+    private static final Map<String, String> ELEMENTS_THAT_NEVER_NEED_ROLE = new HashMap<>();
 
     static {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("body", "document");
@@ -604,7 +604,7 @@ public class Assertions extends Checker {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("textarea", "textbox");
     }
 
-    private static final Map<String, String> INPUT_TYPES_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
+    private static final Map<String, String> INPUT_TYPES_WITH_IMPLICIT_ROLE = new HashMap<>();
 
     static {
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("button", "button");
@@ -618,7 +618,7 @@ public class Assertions extends Checker {
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("submit", "button");
     }
 
-    private static final Map<String, String> MENUITEM_TYPES_WITH_IMPLICIT_ROLE = new HashMap<String, String>();
+    private static final Map<String, String> MENUITEM_TYPES_WITH_IMPLICIT_ROLE = new HashMap<>();
 
     static {
         MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("checkbox", "menuitemcheckbox");
@@ -626,7 +626,7 @@ public class Assertions extends Checker {
         MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("radio", "menuitemcheckbox");
     }
 
-    private static final Set<String> ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY = new HashSet<String>();
+    private static final Set<String> ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY = new HashSet<>();
 
     static {
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("disabled");
@@ -702,7 +702,7 @@ public class Assertions extends Checker {
 
         private final String forAttr;
 
-        private Set<Locator> imagesLackingAlt = new HashSet<Locator>();
+        private Set<Locator> imagesLackingAlt = new HashSet<>();
 
         private Locator nonEmptyOption = null;
 
@@ -1086,35 +1086,35 @@ public class Assertions extends Checker {
         return stack[currentPtr];
     }
 
-    private Map<StackNode, Locator> openSingleSelects = new HashMap<StackNode, Locator>();
+    private Map<StackNode, Locator> openSingleSelects = new HashMap<>();
 
-    private Map<StackNode, Locator> openLabels = new HashMap<StackNode, Locator>();
+    private Map<StackNode, Locator> openLabels = new HashMap<>();
 
-    private Map<StackNode, TaintableLocatorImpl> openMediaElements = new HashMap<StackNode, TaintableLocatorImpl>();
+    private Map<StackNode, TaintableLocatorImpl> openMediaElements = new HashMap<>();
 
-    private Map<StackNode, Locator> openActiveDescendants = new HashMap<StackNode, Locator>();
+    private Map<StackNode, Locator> openActiveDescendants = new HashMap<>();
 
-    private LinkedHashSet<IdrefLocator> contextmenuReferences = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> contextmenuReferences = new LinkedHashSet<>();
 
-    private Set<String> menuIds = new HashSet<String>();
+    private Set<String> menuIds = new HashSet<>();
 
-    private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<>();
 
-    private LinkedHashSet<IdrefLocator> formElementReferences = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> formElementReferences = new LinkedHashSet<>();
 
-    private LinkedHashSet<IdrefLocator> needsAriaOwner = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> needsAriaOwner = new LinkedHashSet<>();
 
-    private Set<String> formControlIds = new HashSet<String>();
+    private Set<String> formControlIds = new HashSet<>();
 
-    private Set<String> formElementIds = new HashSet<String>();
+    private Set<String> formElementIds = new HashSet<>();
 
-    private LinkedHashSet<IdrefLocator> listReferences = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> listReferences = new LinkedHashSet<>();
 
-    private Set<String> listIds = new HashSet<String>();
+    private Set<String> listIds = new HashSet<>();
 
-    private LinkedHashSet<IdrefLocator> ariaReferences = new LinkedHashSet<IdrefLocator>();
+    private LinkedHashSet<IdrefLocator> ariaReferences = new LinkedHashSet<>();
 
-    private Set<String> allIds = new HashSet<String>();
+    private Set<String> allIds = new HashSet<>();
 
     private int currentFigurePtr;
 
@@ -1128,9 +1128,9 @@ public class Assertions extends Checker {
 
     private boolean hasTopLevelH1;
 
-    private Set<Locator> secondLevelH1s = new HashSet<Locator>();
+    private Set<Locator> secondLevelH1s = new HashSet<>();
 
-    private Map<Locator, Map<String, String>> siblingSources = new ConcurrentHashMap<Locator, Map<String, String>>();
+    private Map<Locator, Map<String, String>> siblingSources = new ConcurrentHashMap<>();
 
     private final void errContainedInOrOwnedBy(String role, Locator locator)
             throws SAXException {
@@ -1385,7 +1385,7 @@ public class Assertions extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String name, Attributes atts) throws SAXException {
-        Set<String> ids = new HashSet<String>();
+        Set<String> ids = new HashSet<>();
         String role = null;
         String inputTypeVal = null;
         String menuitemTypeVal = null;
@@ -1648,7 +1648,7 @@ public class Assertions extends Checker {
             }
 
             if ("picture".equals(parentName) && "source".equals(localName)) {
-                Map<String, String> sourceAtts = new HashMap<String, String>();
+                Map<String, String> sourceAtts = new HashMap<>();
                 for (int i = 0; i < atts.getLength(); i++) {
                     sourceAtts.put(atts.getLocalName(i), atts.getValue(i));
                 }
@@ -2062,7 +2062,7 @@ public class Assertions extends Checker {
                         for (int i = 0; i < ownedIds.length; i++) {
                             Set<String> ownedIdsForThisRole = ariaOwnsIdsByRole.get(role);
                             if (ownedIdsForThisRole == null) {
-                                ownedIdsForThisRole = new HashSet<String>();
+                                ownedIdsForThisRole = new HashSet<>();
                             }
                             ownedIdsForThisRole.add(ownedIds[i]);
                             ariaOwnsIdsByRole.put(role, ownedIdsForThisRole);

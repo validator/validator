@@ -55,7 +55,7 @@ public final class TextContentChecker extends Checker {
      * element does not need <code>textContent</code> checking. Grows from the
      * tail.
      */
-    private final LinkedList<DatatypeStreamingValidator> stack = new LinkedList<DatatypeStreamingValidator>();
+    private final LinkedList<DatatypeStreamingValidator> stack = new LinkedList<>();
     private boolean inEmptyTitleOrOption = false;
 
     /**

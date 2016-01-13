@@ -59,9 +59,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
         if (literal.length() == 0) {
             err("Must contain one or more image candidate strings.");
         }
-        List<String> urls = new ArrayList<String>();
-        List<Integer> widths = new ArrayList<Integer>();
-        List<Float> denses = new ArrayList<Float>();
+        List<String> urls = new ArrayList<>();
+        List<Integer> widths = new ArrayList<>();
+        List<Float> denses = new ArrayList<>();
         StringBuilder url = new StringBuilder();
         StringBuilder tok = new StringBuilder();
         StringBuilder extract = new StringBuilder();

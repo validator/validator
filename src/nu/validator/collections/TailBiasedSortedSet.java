@@ -85,9 +85,9 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
 
     private final Comparator<? super E> comparator;
 
-    private final Node<E> head = new Node<E>(null, null, null);
+    private final Node<E> head = new Node<>(null, null, null);
 
-    private final Node<E> tail = new Node<E>(null, null, null);
+    private final Node<E> tail = new Node<>(null, null, null);
     
     private int size = 0;
 
@@ -178,7 +178,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
             Node<E> prev = next.prev;
             int comp = compare(o, prev.value);
             if (comp > 0) {
-                next.prev = prev.next = new Node<E>(o, next, prev);
+                next.prev = prev.next = new Node<>(o, next, prev);
                 size++;
                 return true;
             } else if (comp == 0) {
@@ -187,7 +187,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
             next = next.prev;
         }
         // if we haven't returned yet, this is less than
-        next.prev = head.next = new Node<E>(o, next, head);
+        next.prev = head.next = new Node<>(o, next, head);
         size++;
         return true;
     }

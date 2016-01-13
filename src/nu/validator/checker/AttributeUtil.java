@@ -104,7 +104,7 @@ public final class AttributeUtil {
             return EMPTY_STRING_ARRAY;
         }
         int len = value.length();
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
         boolean collectingSpace = true;
         int start = 0;
         for (int i = 0; i < len; i++) {

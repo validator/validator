@@ -88,7 +88,7 @@ public class TestRunner implements ErrorHandler {
     private Map<String, String> reportedMessages;
 
     public TestRunner() throws IOException {
-        reportedMessages = new LinkedHashMap<String, String>();
+        reportedMessages = new LinkedHashMap<>();
         validator = new SimpleDocumentValidator();
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
@@ -380,9 +380,9 @@ public class TestRunner implements ErrorHandler {
     private void checkTestFiles(File directory, State state)
             throws SAXException, IOException {
         File[] files = directory.listFiles();
-        List<File> validFiles = new ArrayList<File>();
-        List<File> invalidFiles = new ArrayList<File>();
-        List<File> hasWarningFiles = new ArrayList<File>();
+        List<File> validFiles = new ArrayList<>();
+        List<File> invalidFiles = new ArrayList<>();
+        List<File> hasWarningFiles = new ArrayList<>();
         if (files == null) {
             if (verbose) {
                 try {

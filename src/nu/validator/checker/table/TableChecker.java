@@ -56,7 +56,7 @@ public final class TableChecker extends Checker {
      * A stack for holding the tables that are open and ancestors of 
      * the current table. Grows from the tail.
      */
-    private final LinkedList<Table> stack = new LinkedList<Table>();
+    private final LinkedList<Table> stack = new LinkedList<>();
 
     /**
      * Pushes the current table onto the stack and creates a new one.

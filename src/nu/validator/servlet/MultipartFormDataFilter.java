@@ -61,7 +61,7 @@ public final class MultipartFormDataFilter implements Filter {
 
     private static Pattern EXTENSION = Pattern.compile("^.*\\.(.+)$");
 
-    private final static Map<String, String> EXTENSION_TO_TYPE = new HashMap<String, String>();
+    private final static Map<String, String> EXTENSION_TO_TYPE = new HashMap<>();
 
     static {
         EXTENSION_TO_TYPE.put("html", "text/html");
@@ -127,7 +127,7 @@ public final class MultipartFormDataFilter implements Filter {
             try {
                 boolean utf8 = false;
                 String contentType = null;
-                Map<String, String[]> params = new HashMap<String, String[]>();
+                Map<String, String[]> params = new HashMap<>();
                 InputStream fileStream = null;
                 ServletFileUpload upload = new ServletFileUpload();
                 FileItemIterator iter = upload.getItemIterator(request);
@@ -260,7 +260,7 @@ public final class MultipartFormDataFilter implements Filter {
         @Override
         public Enumeration getHeaderNames() {
             Enumeration e = super.getHeaderNames();
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             while (e.hasMoreElements()) {
                 String name = (String) e.nextElement();
                 if ("Content-Length".equalsIgnoreCase(name)) {

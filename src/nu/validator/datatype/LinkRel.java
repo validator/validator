@@ -31,7 +31,7 @@ import org.relaxng.datatype.DatatypeException;
 
 public final class LinkRel extends AbstractRel {
 
-    private static final HashSet<String> registeredValues = new HashSet<String>();
+    private static final HashSet<String> registeredValues = new HashSet<>();
 
     static {
         // Standard rel values for <link> from the spec

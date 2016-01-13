@@ -42,7 +42,7 @@ public class ImageCollector implements Validator, ContentHandler, Iterable<Image
 
     private final SourceCode sourceCode;
     
-    private final List<Image> images = new LinkedList<Image>();
+    private final List<Image> images = new LinkedList<>();
     
     private UriLangContext context = null;
     

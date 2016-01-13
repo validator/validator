@@ -37,7 +37,7 @@ public class BufferingRootNamespaceSniffer implements ContentHandler {
 
     private Locator locator = null;
     
-    private List<String[]> namespaces = new LinkedList<String[]>();
+    private List<String[]> namespaces = new LinkedList<>();
     
     private VerifierServletTransaction vst;
     

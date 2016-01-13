@@ -107,7 +107,7 @@ public final class InboundGzipFilter implements Filter {
         @Override
         public Enumeration getHeaderNames() {
             Enumeration e = super.getHeaderNames();
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             while (e.hasMoreElements()) {
                 String name = (String) e.nextElement();
                 if ("Content-Length".equalsIgnoreCase(name)) {

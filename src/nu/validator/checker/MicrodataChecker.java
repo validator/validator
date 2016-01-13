@@ -90,7 +90,7 @@ public class MicrodataChecker extends Checker {
             this.itemProp = itemProp;
             this.itemRef = itemRef;
             this.itemScope = itemScope;
-            this.children = new LinkedList<Element>();
+            this.children = new LinkedList<>();
             this.order = counter++;
         }
 
@@ -141,9 +141,9 @@ public class MicrodataChecker extends Checker {
         depth = 0;
         builder = null;
         counter = 0;
-        items = new LinkedList<Element>();
-        properties = new LinkedHashSet<Element>();
-        idmap = new HashMap<String, Element>();
+        items = new LinkedList<>();
+        properties = new LinkedHashSet<>();
+        idmap = new HashMap<>();
     }
 
      /**
@@ -234,8 +234,8 @@ public class MicrodataChecker extends Checker {
      * http://www.whatwg.org/specs/web-apps/current-work/multipage/microdata.html#the-properties-of-an-item
      */
     private void checkItem(Element root, Deque<Element> parents) throws SAXException {
-        Deque<Element> pending = new ArrayDeque<Element>();
-        Set<Element> memory = new HashSet<Element>();
+        Deque<Element> pending = new ArrayDeque<>();
+        Set<Element> memory = new HashSet<>();
         memory.add(root);
         for (Element child : root.children) {
             pending.push(child);

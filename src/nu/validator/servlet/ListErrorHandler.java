@@ -32,7 +32,7 @@ public class ListErrorHandler implements ErrorHandler {
 
     private boolean fatal = false;
     
-    private LinkedList<String> errors = new LinkedList<String>();
+    private LinkedList<String> errors = new LinkedList<>();
     
     public void error(SAXParseException spe) throws SAXException {
         errors.add(Integer.toString(spe.getColumnNumber()) + ": " + spe.getMessage());

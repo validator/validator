@@ -59,31 +59,31 @@ public class LanguageData {
 
     private BufferedReader in;
 
-    private SortedSet<String> languageSet = new TreeSet<String>();
+    private SortedSet<String> languageSet = new TreeSet<>();
 
-    private SortedSet<String> extlangSet = new TreeSet<String>();
+    private SortedSet<String> extlangSet = new TreeSet<>();
 
-    private SortedSet<String> scriptSet = new TreeSet<String>();
+    private SortedSet<String> scriptSet = new TreeSet<>();
 
-    private SortedSet<String> regionSet = new TreeSet<String>();
+    private SortedSet<String> regionSet = new TreeSet<>();
 
-    private SortedSet<String> variantSet = new TreeSet<String>();
+    private SortedSet<String> variantSet = new TreeSet<>();
 
-    private SortedSet<String> grandfatheredSet = new TreeSet<String>();
+    private SortedSet<String> grandfatheredSet = new TreeSet<>();
 
-    private SortedSet<String> redundantSet = new TreeSet<String>();
+    private SortedSet<String> redundantSet = new TreeSet<>();
 
-    private SortedSet<String> deprecatedLangSet = new TreeSet<String>();
+    private SortedSet<String> deprecatedLangSet = new TreeSet<>();
 
-    private SortedSet<String> deprecatedSet = new TreeSet<String>();
+    private SortedSet<String> deprecatedSet = new TreeSet<>();
 
-    private Map<String, String> suppressedScriptByLanguageMap = new HashMap<String, String>();
+    private Map<String, String> suppressedScriptByLanguageMap = new HashMap<>();
 
-    private Map<String, String> prefixByExtlangMap = new HashMap<String, String>();
+    private Map<String, String> prefixByExtlangMap = new HashMap<>();
 
-    private Map<String, String> preferredValueByLanguageMap = new HashMap<String, String>();
+    private Map<String, String> preferredValueByLanguageMap = new HashMap<>();
 
-    private Map<String, Set<String[]>> prefixesByVariantMap = new HashMap<String, Set<String[]>>();
+    private Map<String, Set<String[]>> prefixesByVariantMap = new HashMap<>();
 
     private String[] languages = null;
 
@@ -194,7 +194,7 @@ public class LanguageData {
         String subtag = null;
         String suppressScript = null;
         String preferredValue = null;
-        Set<String[]> prefixes = new HashSet<String[]>();
+        Set<String[]> prefixes = new HashSet<>();
         String singlePrefix = null;
         boolean depr = false;
         String line = null;

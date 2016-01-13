@@ -21,7 +21,7 @@ public class LocalCacheEntityResolver implements EntityResolver {
 
     private static final ClassLoader LOADER = LocalCacheEntityResolver.class.getClassLoader();
 
-    private static final Map<String, String> PATH_MAP = new HashMap<String, String>();
+    private static final Map<String, String> PATH_MAP = new HashMap<>();
 
     static {
         try {

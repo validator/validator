@@ -69,7 +69,7 @@ public class DatatypeMismatchException extends SAXParseException {
         this.warning = warning;
         Html5DatatypeException ex5 = new Html5DatatypeException(0,
                 datatypeClass, "", "", warning);
-        this.exceptions = new HashMap<String, DatatypeException>();
+        this.exceptions = new HashMap<>();
         this.exceptions.put("", ex5);
     }
 

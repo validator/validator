@@ -71,7 +71,7 @@ public final class Language extends AbstractDatatype {
 
     private static int[] suppressedScriptByLanguage = null;
 
-    private static Map<String, String> preferredValueByLanguageMap = new HashMap<String, String>();
+    private static Map<String, String> preferredValueByLanguageMap = new HashMap<>();
 
     private static String[][][] prefixesByVariant = null;
 
@@ -314,7 +314,7 @@ public final class Language extends AbstractDatatype {
         if (prefixes.length == 0) {
             return;
         }
-        List<String> recommendedPrefixes = new ArrayList<String>();
+        List<String> recommendedPrefixes = new ArrayList<>();
         for (int j = 0; j < prefixes.length; j++) {
             String[] prefix = prefixes[j];
             for (int k = 0; k < prefix.length; k++) {

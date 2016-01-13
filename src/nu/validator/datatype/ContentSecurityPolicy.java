@@ -62,7 +62,7 @@ public class ContentSecurityPolicy extends AbstractDatatype {
 
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
-            List<Warning> warnings = new ArrayList<Warning>();
+            List<Warning> warnings = new ArrayList<>();
             Parser.parse(literal.toString(), "http://example.org", warnings);
             if (!warnings.isEmpty() && WARN) {
                 StringBuilder sb = new StringBuilder();

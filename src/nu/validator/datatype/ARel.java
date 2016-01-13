@@ -29,7 +29,7 @@ import java.util.HashSet;
 
 public final class ARel extends AbstractRel {
 
-    private static final HashSet<String> registeredValues = new HashSet<String>();
+    private static final HashSet<String> registeredValues = new HashSet<>();
 
     static {
         // Standard rel values for <a> and <area> from the spec

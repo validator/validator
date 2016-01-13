@@ -153,12 +153,12 @@ final class Table {
     /**
      * A set of the IDs of header cells.
      */
-    private final Set<String> headerIds = new HashSet<String>();
+    private final Set<String> headerIds = new HashSet<>();
 
     /**
      * A list of cells that refer to headers (in the document order).
      */
-    private final List<Cell> cellsReferringToHeaders = new LinkedList<Cell>();
+    private final List<Cell> cellsReferringToHeaders = new LinkedList<>();
 
     /**
      * The owning checker.

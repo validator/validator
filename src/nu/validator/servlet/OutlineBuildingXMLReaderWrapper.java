@@ -105,7 +105,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         // the outline for a sectioning content element or a sectioning root
         // element consists of a list of one or more potentially nested sections
-        final private Deque<Section> outline = new LinkedList<Section>();
+        final private Deque<Section> outline = new LinkedList<>();
 
         public Element(int depth, String name, boolean hidden) {
             this.depth = depth;
@@ -163,7 +163,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         private int headingRank = Integer.MAX_VALUE;
 
         // each section can contain any number of further nested sections
-        final public Deque<Section> sections = new LinkedList<Section>();
+        final public Deque<Section> sections = new LinkedList<>();
 
         public Section(String elementName) {
             this.elementName = elementName;
@@ -245,7 +245,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     // open elements at all with a "hidden" attribute -- including elements
     // that may be descendants of heading-content elements (which per the
     // spec never end up on the outline stack).
-    private Deque<Element> elementStack = new LinkedList<Element>();
+    private Deque<Element> elementStack = new LinkedList<>();
 
     private boolean inHiddenSubtree() {
         for (Element element : elementStack) {
@@ -259,7 +259,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     // A stack, defined in the spec, to which we only add open
     // heading-content elements and elements with a "hidden" attribute that
     // are ancestors to heading-content elements.
-    private Deque<Element> outlineStack = new LinkedList<Element>();
+    private Deque<Element> outlineStack = new LinkedList<>();
 
     // The top of the outline stack defined in the spec is always either a
     // heading content element or an element with a hidden attribute.
