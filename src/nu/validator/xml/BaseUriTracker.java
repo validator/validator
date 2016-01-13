@@ -113,8 +113,6 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         URL url = null;
         try {
             url = URL.parse(systemId);
-        } catch (GalimatiasParseException e) {
-            url = null;
         } catch (Exception e) {
             url = null;
         }

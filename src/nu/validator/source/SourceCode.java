@@ -390,7 +390,6 @@ public final class SourceCode implements CharacterHandler {
                     emitContent(previousLocation, rangeEnd, handler);
                     handler.endRange();
                     previousLocation = rangeEnd;
-                    rangeEnd = null;
 
                     if (rangeIter.hasNext()) {
                         Range r = rangeIter.next();
