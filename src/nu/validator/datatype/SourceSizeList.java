@@ -26,7 +26,6 @@ import java.text.ParseException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import nu.validator.datatype.tools.CssParser;
 import org.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
@@ -40,8 +39,6 @@ public class SourceSizeList extends AbstractDatatype {
     private static final Set<String> LENGTH_UNITS = new LinkedHashSet<String>();
 
     private static final StringBuilder VALID_UNITS = new StringBuilder();
-
-    private static CssParser cssParser = new CssParser();
 
     static {
         /* font-relative lengths */
@@ -118,18 +115,6 @@ public class SourceSizeList extends AbstractDatatype {
         if (unparsedSize.length() == 0) {
             errEmpty(isFirst, isLast, extract);
             return;
-        }
-        try {
-            cssParser.tokenize(unparsedSize.toString());
-            if ('(' == unparsedSize.codePointAt(0)) {
-                cssParser.parseARule("@media " + unparsedSize.toString()
-                        + " {}");
-            } else {
-                cssParser.parseARule(".foo { width: " + unparsedSize.toString()
-                        + " }");
-            }
-        } catch (ParseException e) {
-            errCssParseError(e.getMessage(), unparsedSize, extract);
         }
         if (')' == unparsedSize.charAt(unparsedSize.length() - 1)) {
             checkCalc(unparsedSize, extract, isLast);

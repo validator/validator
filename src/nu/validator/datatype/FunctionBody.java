@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.RhinoException;
+//import org.mozilla.javascript.Context;
+//import org.mozilla.javascript.ContextFactory;
+//import org.mozilla.javascript.RhinoException;
 import org.relaxng.datatype.DatatypeException;
 
 public class FunctionBody extends AbstractDatatype {
@@ -44,25 +44,25 @@ public class FunctionBody extends AbstractDatatype {
     }
 
     public void checkValid(CharSequence literal) throws DatatypeException {
-        try {
-            Reader reader = new BufferedReader((new StringReader(
-                    "function(event){" + literal.toString() + "}")));
-            reader.mark(1);
-            try {
-                Context context = ContextFactory.getGlobal().enterContext();
-                context.setOptimizationLevel(0);
-                context.setLanguageVersion(Context.VERSION_1_6);
-                // -1 for lineno arg prevents Rhino from appending
-                // "(unnamed script#1)" to all error messages
-                context.compileReader(reader, null, -1, null);
-            } finally {
-                Context.exit();
-            }
-        } catch (IOException e) {
-            throw newDatatypeException(e.getMessage());
-        } catch (RhinoException e) {
-            throw newDatatypeException(e.getMessage());
-        }
+//        try {
+//            Reader reader = new BufferedReader((new StringReader(
+//                    "function(event){" + literal.toString() + "}")));
+//            reader.mark(1);
+//            try {
+//                Context context = ContextFactory.getGlobal().enterContext();
+//                context.setOptimizationLevel(0);
+//                context.setLanguageVersion(Context.VERSION_1_6);
+//                // -1 for lineno arg prevents Rhino from appending
+//                // "(unnamed script#1)" to all error messages
+//                context.compileReader(reader, null, -1, null);
+//            } finally {
+//                Context.exit();
+//            }
+//        } catch (IOException e) {
+//            throw newDatatypeException(e.getMessage());
+//        } catch (RhinoException e) {
+//            throw newDatatypeException(e.getMessage());
+//        }
     }
 
     @Override public String getName() {

@@ -22,10 +22,10 @@
 
 package nu.validator.datatype;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.EcmaError;
-import org.mozilla.javascript.regexp.RegExpImpl;
+//import org.mozilla.javascript.Context;
+//import org.mozilla.javascript.ContextFactory;
+//import org.mozilla.javascript.EcmaError;
+//import org.mozilla.javascript.regexp.RegExpImpl;
 import org.relaxng.datatype.DatatypeException;
 
 /**
@@ -58,18 +58,18 @@ public final class Pattern extends AbstractDatatype {
     public void checkValid(CharSequence literal)
             throws DatatypeException {
         // TODO find out what kind of thread concurrency guarantees are made
-        ContextFactory cf = new ContextFactory();
-        Context cx = cf.enterContext();
-        cx.setOptimizationLevel(0);
-        RegExpImpl rei = new RegExpImpl();
-        String anchoredRegex = "^(?:" + literal + ")$";
-        try {
-            rei.compileRegExp(cx, anchoredRegex, "");
-        } catch (EcmaError ee) {
-            throw newDatatypeException(ee.getErrorMessage());
-        } finally {
-            Context.exit();
-        }
+//        ContextFactory cf = new ContextFactory();
+//        Context cx = cf.enterContext();
+//        cx.setOptimizationLevel(0);
+//        RegExpImpl rei = new RegExpImpl();
+//        String anchoredRegex = "^(?:" + literal + ")$";
+//        try {
+//            rei.compileRegExp(cx, anchoredRegex, "");
+//        } catch (EcmaError ee) {
+//            throw newDatatypeException(ee.getErrorMessage());
+//        } finally {
+//            Context.exit();
+//        }
     }
 
     @Override

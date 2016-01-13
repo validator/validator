@@ -179,6 +179,7 @@ runDependencyJars = [
   "jetty-util-ajax-9.2.9.v20150224.jar",
   "log4j-1.2.17.jar",
   "rhino-1.7R5.jar",
+  "iri.jar"
 ]
 
 buildOnlyDependencyJars = [
@@ -662,6 +663,7 @@ def buildEmitters():
     '-encoding',
     'UTF-8',
   ]
+  return
   if javaVersion != "":
     args.append('-target')
     args.append(javaVersion)
