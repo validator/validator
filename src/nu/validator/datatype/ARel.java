@@ -61,7 +61,7 @@ public final class ARel extends AbstractRel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    };
+    }
 
     /**
      * The singleton instance.

@@ -62,7 +62,7 @@ public final class LinkRel extends AbstractRel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    };
+    }
 
     /**
      * The singleton instance.
