@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 
 # Copyright (c) 2007 Henri Sivonen
 # Copyright (c) 2008-2015 Mozilla Foundation
@@ -23,8 +23,13 @@
 
 import os
 import shutil
-import httplib
-import urllib2
+try:
+  from urllib.request import urlopen
+  from urllib.error import URLError, HTTPError
+  from http.client import BadStatusLine
+except ImportError:
+  from urllib2 import urlopen, URLError, HTTPError
+  from httplib import BadStatusLine
 import socket
 import re
 try:
@@ -37,7 +42,10 @@ except ImportError:
   from sha1 import new as sha1
 import zipfile
 import sys
-from sgmllib import SGMLParser
+try:
+  from html.parser import HTMLParser
+except ImportError:
+  from HTMLParser import HTMLParser
 import subprocess
 import time
 
@@ -187,43 +195,45 @@ javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
 leafPat = re.compile(r'^[a-zA-Z0-9_-]+\.[a-z]+$')
 
-class UrlExtractor(SGMLParser):
+class UrlExtractor(HTMLParser):
   def __init__(self, baseUrl):
-    SGMLParser.__init__(self)
+    HTMLParser.__init__(self)
     self.baseUrl = baseUrl
     self.leaves = []
     self.directories = []
 
-  def start_a(self, attrs):
-    for name, value in attrs:
-      if name == "href":
-        if directoryPat.match(value):
-          self.directories.append(self.baseUrl + value)
-        if leafPat.match(value):
-          self.leaves.append(self.baseUrl + value)
+  def handle_starttag(self, tag, attrs):
+    if tag == "a":
+      print(attrs)
+      for name, value in attrs:
+        if name == "href":
+          if directoryPat.match(value):
+            self.directories.append(self.baseUrl + value)
+          if leafPat.match(value):
+            self.leaves.append(self.baseUrl + value)
 
 def runCmd(cmd):
-  print " ".join(cmd)
+  print(" ".join(cmd))
   subprocess.call(cmd)
 
 def execCmd(cmd, args):
-  print "%s %s" % (cmd, " ".join(args))
+  print("%s %s" % (cmd, " ".join(args)))
   if subprocess.call([cmd,] + args):
-    print "Command failed."
+    print("Command failed.")
     sys.exit(2)
 
 def runShell(shellCmd):
-  print shellCmd
+  print(shellCmd)
   return subprocess.call(shellCmd, shell=True)
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
-    print "Removing %s" % filePath
+    print("Removing %s" % filePath)
     os.unlink(filePath)
 
 def removeIfDirExists(dirPath):
   if os.path.exists(dirPath):
-    print "Removing %s" % dirPath
+    print("Removing %s" % dirPath)
     shutil.rmtree(dirPath)
 
 def ensureDirExists(dirPath):
@@ -356,17 +366,17 @@ def buildSchemaDrivers():
   buildSchemaDriverXhtml5xhtmlRDFaLite(html5Dir)
   buildSchemaDriverXhtml5htmlRDFaLite(html5Dir)
   for file in coreSchemaDriverFiles:
-    print "Copying %s to %s" % (os.path.join(driversDir, file), os.path.join(baseDir, file))
+    print("Copying %s to %s" % (os.path.join(driversDir, file), os.path.join(baseDir, file)))
     shutil.copy(os.path.join(driversDir, file), baseDir)
   xhtmlSourceDir = os.path.join(driversDir, "xhtml10")
   xhtmlTargetDir = os.path.join(baseDir, "xhtml10")
   removeIfDirExists(xhtmlTargetDir)
   shutil.copytree(xhtmlSourceDir, xhtmlTargetDir)
-  print "Copying %s to %s" % (xhtmlSourceDir, xhtmlTargetDir)
+  print("Copying %s to %s" % (xhtmlSourceDir, xhtmlTargetDir))
   rdfDir = os.path.join(baseDir, "rdf")
   removeIfDirExists(rdfDir)
   os.mkdir(rdfDir)
-  print "Copying %s to %s/rdf.rnc" % (os.path.join(driversDir, "rdf.rnc"), rdfDir)
+  print("Copying %s to %s/rdf.rnc" % (os.path.join(driversDir, "rdf.rnc"), rdfDir))
   shutil.copy(os.path.join(driversDir, "rdf.rnc"), rdfDir)
   removeIfExists(os.path.join(html5Dir, "legacy.rnc"))
   removeIfExists(os.path.join(html5Dir, "its20-html5.rnc"))
@@ -762,14 +772,14 @@ def checkService():
   args = getRunArgs(str(int(heapSize) * 1024))
   daemon = subprocess.Popen([javaCmd,] + args)
   time.sleep(15)
-  print "Checking %s" % url
+  print("Checking %s" % url)
   try:
-    print urllib2.urlopen(url).read()
-  except urllib2.HTTPError as e:
-    print e.reason
+    print(urlopen(url).read())
+  except HTTPError as e:
+    print(e.reason)
     sys.exit(1)
-  except urllib2.URLError as e:
-    print e.reason
+  except URLError as e:
+    print(e.reason)
     sys.exit(1)
   time.sleep(5)
   daemon.terminate()
@@ -843,7 +853,7 @@ class Release():
 
   def createBundle(self):
     self.createArtifacts()
-    print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
+    print("Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version))
     self.sign()
     self.writeVersion()
     runCmd([javaCmd, '-cp', self.classpath, 'org.apache.tools.ant.Main', '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
@@ -945,7 +955,7 @@ class Release():
     self.createAndUploadDist("war")
 
   def createDist(self, jarOrWar):
-    print "Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version)
+    print("Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version))
     if "nightly" not in self.version:
       for filename in self.docs:
         shutil.copy(os.path.join(buildRoot, filename), distDir)
@@ -973,7 +983,7 @@ class Release():
     ]
     devnull = open(os.devnull, 'wb')
     infoArgs = [ghRelCmd, 'info'] + args
-    print " ".join(infoArgs)
+    print(" ".join(infoArgs))
     if subprocess.call(infoArgs, stdout=devnull, stderr=subprocess.STDOUT):
        runCmd([ghRelCmd, 'release', '-p'] + args)
     else:
@@ -1053,7 +1063,7 @@ def createDepTarball():
 
 def deployOverScp():
   if not deploymentTarget:
-    print "No target"
+    print("No target")
     return
   runCmd([scpCmd, os.path.join(buildRoot, "deps.tar.gz"), ('%s/deps.tar.gz' % deploymentTarget)])
   runCmd([scpCmd, os.path.join(buildRoot, "jars.tar.gz"), ('%s/jars.tar.gz' % deploymentTarget)])
@@ -1065,24 +1075,24 @@ def deployOverScp():
 
 def fetchUrlTo(url, path, md5sum=None):
   # I bet there's a way to do this with more efficient IO and less memory
-  print url
+  print(url)
   completed = False
   defaultTimeout = socket.getdefaulttimeout()
   while not completed:
    try:
     socket.setdefaulttimeout(httpTimeoutSeconds)
-    f = urllib2.urlopen(url)
+    f = urlopen(url)
     data = f.read()
     f.close()
     completed = True
-   except httplib.BadStatusLine:
-    print "received error, retrying"
+   except BadStatusLine:
+    print("received error, retrying")
    finally:
     socket.setdefaulttimeout(defaultTimeout)
   if md5sum:
     m = md5(data)
     if md5sum != m.hexdigest():
-      print "Bad MD5 hash for %s." % url
+      print("Bad MD5 hash for %s." % url)
       sys.exit(1)
   head, tail = os.path.split(path)
   if not os.path.exists(head):
@@ -1092,7 +1102,7 @@ def fetchUrlTo(url, path, md5sum=None):
   f.close()
 
 def spiderApacheDirectories(baseUrl, baseDir):
-  f = urllib2.urlopen(baseUrl, timeout=httpTimeoutSeconds)
+  f = urlopen(baseUrl, timeout=httpTimeoutSeconds)
   parser = UrlExtractor(baseUrl)
   parser.feed(f.read())
   f.close()
@@ -1141,7 +1151,7 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
   shutil.copyfile(os.path.join(buildRoot, "README.md"), os.path.join(filesDir, "cli-help"))
   f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
-  o = open(os.path.join(filesDir, "entitymap"), 'wb')
+  o = open(os.path.join(filesDir, "entitymap"), 'w')
   try:
     for line in f:
       url, path = line.strip().split("\t")
@@ -1167,14 +1177,14 @@ def prepareLocalEntityJar():
   removeIfDirExists(os.path.join(schemaDir, "rdf"))
 
 def createCssParserJS(filesDir):
-  p = open(os.path.join(dependencyDir, "parse-css.js"), 'r')
-  j = open(os.path.join(dependencyDir, "json.js"), 'r')
+  p = open(os.path.join(dependencyDir, "parse-css.js"), 'rb')
+  j = open(os.path.join(dependencyDir, "json.js"), 'rb')
   o = open(os.path.join(filesDir, "parse-css-js"), 'wb')
   shutil.copyfileobj(p, o)
   shutil.copyfileobj(j, o)
   p.close()
   j.close()
-  consoleLogForRhino = '''\
+  consoleLogForRhino = b'''\
   var console = {
     log: function (msg) {
       throw msg;
@@ -1215,8 +1225,8 @@ def downloadDependencies():
 
 def buildAll():
   if 'JAVA_HOME' not in os.environ:
-    print "Error: The JAVA_HOME environment variable is not set."
-    print "Set the JAVA_HOME environment variable to the pathname of the directory where your JDK is installed."
+    print("Error: The JAVA_HOME environment variable is not set.")
+    print("Set the JAVA_HOME environment variable to the pathname of the directory where your JDK is installed.")
     sys.exit(1)
   buildJing()
   buildSchemaDrivers()
@@ -1242,60 +1252,60 @@ def splitHostSpec(spec):
   return (spec[0:index], spec[index:])
 
 def printHelp():
-  print "Usage: python build/build.py [options] [tasks]"
-  print ""
-  print "Options:"
-  print "  --about=https://about.validator.nu/"
-  print "                                Sets the URL for the about page"
-  print "  --control-port=-1"
-  print "                                Sets the server control port number"
-  print "                                (necessary for daemonizing)"
-  print "  --git=/usr/bin/git         -- Sets the path to the git binary"
-  print "  --heap=64                  -- Sets the Java heap size in MB"
-  print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
-  print "                                Sets the link URL of the HTML5 spec"
-  print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
-  print "                                Sets the load URL of the HTML5 spec"
-  print "  --jar=/usr/bin/jar         -- Sets the path to the jar binary"
-  print "  --java=/usr/bin/java       -- Sets the path to the java binary"
-  print "  --javac=/usr/bin/javac     -- Sets the path to the javac binary"
-  print "  --javadoc=/usr/bin/javadoc -- Sets the path to the javadoc binary"
-  print "  --javaversion=N.N          -- Sets the Java VM version to build for"
-  print "  --jdk-bin=/j2se/bin        -- Sets the paths for all JDK tools"
-  print "  --log4j=log4j.properties   -- Sets the path to log4 configuration"
-  print "  --messages-limit=1000"
-  print "                                Sets the limit on the maximum number"
-  print "                                of error+warning messages to report"
-  print "                                for any document before stopping"
-  print "  --name=Validator.nu        -- Sets the service name"
-  print "  --port=8888                -- Sets the server port number"
-  print "  --promiscuous-ssl=on       -- Don't check SSL/TLS certificate trust chain"
-  print "  --results-title=Validation results"
-  print "                                Sets the title to show on the results page"
-  print "  --script=script.js"
-  print "                                Sets the URL for the script"
-  print "                                Defaults to just script.js relative to"
-  print "                                the validator URL"
-  print "  --stacksize=NN             -- Sets the Java thread stack size in KB"
-  print "  --stylesheet=style.css"
-  print "                                Sets the URL for the style sheet"
-  print "                                Defaults to just style.css relative to"
-  print "                                the validator URL"
-  print "  --user-agent                  Sets the User-Agent string for the checker"
-  print ""
-  print "Tasks:"
-  print "  update   -- Update git submodules"
-  print "  dldeps   -- Download missing dependency libraries and entities"
-  print "  build    -- Build the source"
-  print "  test     -- Run regression tests"
-  print "  check    -- Perform self-test of the system"
-  print "  run      -- Run the system"
-  print "  all      -- update dldeps build test run"
-  print "  bundle   -- Create a Maven release bundle"
-  print "  jar      -- Create a JAR file containing a release distribution"
-  print "  war      -- Create a WAR file containing a release distribution"
-  print "  checkjar -- Run tests with the build jar file"
-  print "  script   -- Make run-validator.sh script for running the system"
+  print("Usage: python build/build.py [options] [tasks]")
+  print("")
+  print("Options:")
+  print("  --about=https://about.validator.nu/")
+  print("                                Sets the URL for the about page")
+  print("  --control-port=-1")
+  print("                                Sets the server control port number")
+  print("                                (necessary for daemonizing)")
+  print("  --git=/usr/bin/git         -- Sets the path to the git binary")
+  print("  --heap=64                  -- Sets the Java heap size in MB")
+  print("  --html5link=http://www.whatwg.org/specs/web-apps/current-work/")
+  print("                                Sets the link URL of the HTML5 spec")
+  print("  --html5load=http://www.whatwg.org/specs/web-apps/current-work/")
+  print("                                Sets the load URL of the HTML5 spec")
+  print("  --jar=/usr/bin/jar         -- Sets the path to the jar binary")
+  print("  --java=/usr/bin/java       -- Sets the path to the java binary")
+  print("  --javac=/usr/bin/javac     -- Sets the path to the javac binary")
+  print("  --javadoc=/usr/bin/javadoc -- Sets the path to the javadoc binary")
+  print("  --javaversion=N.N          -- Sets the Java VM version to build for")
+  print("  --jdk-bin=/j2se/bin        -- Sets the paths for all JDK tools")
+  print("  --log4j=log4j.properties   -- Sets the path to log4 configuration")
+  print("  --messages-limit=1000")
+  print("                                Sets the limit on the maximum number")
+  print("                                of error+warning messages to report")
+  print("                                for any document before stopping")
+  print("  --name=Validator.nu        -- Sets the service name")
+  print("  --port=8888                -- Sets the server port number")
+  print("  --promiscuous-ssl=on       -- Don't check SSL/TLS certificate trust chain")
+  print("  --results-title=Validation results")
+  print("                                Sets the title to show on the results page")
+  print("  --script=script.js")
+  print("                                Sets the URL for the script")
+  print("                                Defaults to just script.js relative to")
+  print("                                the validator URL")
+  print("  --stacksize=NN             -- Sets the Java thread stack size in KB")
+  print("  --stylesheet=style.css")
+  print("                                Sets the URL for the style sheet")
+  print("                                Defaults to just style.css relative to")
+  print("                                the validator URL")
+  print("  --user-agent                  Sets the User-Agent string for the checker")
+  print("")
+  print("Tasks:")
+  print("  update   -- Update git submodules")
+  print("  dldeps   -- Download missing dependency libraries and entities")
+  print("  build    -- Build the source")
+  print("  test     -- Run regression tests")
+  print("  check    -- Perform self-test of the system")
+  print("  run      -- Run the system")
+  print("  all      -- update dldeps build test run")
+  print("  bundle   -- Create a Maven release bundle")
+  print("  jar      -- Create a JAR file containing a release distribution")
+  print("  war      -- Create a WAR file containing a release distribution")
+  print("  checkjar -- Run tests with the build jar file")
+  print("  script   -- Make run-validator.sh script for running the system")
 
 buildScript = sys.argv[0]
 argv = sys.argv[1:]
@@ -1501,5 +1511,5 @@ else:
         icon = 'icon.png'
       runValidator()
     else:
-      print "Unknown option %s." % arg
+      print("Unknown option %s." % arg)
 # vim: sw=2
