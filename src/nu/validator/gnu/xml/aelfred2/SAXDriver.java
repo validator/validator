@@ -181,7 +181,7 @@ import org.xml.sax.helpers.NamespaceSupport;
  * @author Updated by David Brownell &lt;dbrownell@users.sourceforge.net&gt;
  * @see org.xml.sax.Parser
  */
-final public class SAXDriver implements Locator2, Attributes2, XMLReader,
+@SuppressWarnings("deprecation") final public class SAXDriver implements Locator2, Attributes2, XMLReader,
         Parser, AttributeList {
 
     private final DefaultHandler2 base = new DefaultHandler2();
