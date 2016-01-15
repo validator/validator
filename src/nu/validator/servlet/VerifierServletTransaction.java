@@ -879,7 +879,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     /**
      * @throws SAXException
      */
-    @SuppressWarnings("deprecation") void validate() throws SAXException {
+    @SuppressWarnings({ "deprecation", "unchecked" }) void validate() throws SAXException {
         if (!willValidate()) {
             return;
         }

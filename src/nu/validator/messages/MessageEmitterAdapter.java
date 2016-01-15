@@ -81,6 +81,7 @@ import com.thaiopensource.xml.util.Name;
 import org.apache.log4j.Logger;
 import com.ibm.icu.text.Normalizer;
 
+@SuppressWarnings("unchecked")
 public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final Logger log4j = Logger.getLogger(MessageEmitterAdapter.class);

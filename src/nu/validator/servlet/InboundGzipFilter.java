@@ -105,7 +105,7 @@ public final class InboundGzipFilter implements Filter {
         /**
          * @see javax.servlet.http.HttpServletRequestWrapper#getHeaderNames()
          */
-        @Override
+        @SuppressWarnings("unchecked") @Override
         public Enumeration getHeaderNames() {
             Enumeration e = super.getHeaderNames();
             List<String> list = new ArrayList<>();

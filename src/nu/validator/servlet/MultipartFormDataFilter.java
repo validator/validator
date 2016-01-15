@@ -57,7 +57,7 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "unchecked"})
 public final class MultipartFormDataFilter implements Filter {
 
     private static Pattern EXTENSION = Pattern.compile("^.*\\.(.+)$");
@@ -282,7 +282,6 @@ public final class MultipartFormDataFilter implements Filter {
         /**
          * @see javax.servlet.http.HttpServletRequestWrapper#getHeaders(java.lang.String)
          */
-        @SuppressWarnings("unchecked")
         @Override
         public Enumeration getHeaders(String name) {
             if ("Content-Length".equalsIgnoreCase(name)) {

@@ -51,6 +51,7 @@ import nu.validator.datatype.Html5DatatypeException;
 
 import nu.validator.validation.SimpleDocumentValidator;
 
+@SuppressWarnings("unchecked")
 public class TestRunner implements ErrorHandler {
 
     private boolean inError = false;

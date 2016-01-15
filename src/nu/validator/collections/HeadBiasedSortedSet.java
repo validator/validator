@@ -181,6 +181,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     private int compare(E one, E other) {
         if (comparator == null) {
             return ((Comparable<E>) one).compareTo(other);
