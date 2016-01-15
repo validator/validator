@@ -40,7 +40,7 @@ public class DataUriEntityResolver implements EntityResolver {
     
     private final ErrorHandler errorHandler;
 
-    private boolean laxContentType;
+    @SuppressWarnings("unused") private boolean laxContentType;
 
     private boolean allowRnc = false;
 

@@ -888,7 +888,7 @@ final public class SAXDriver implements Locator2, Attributes2, XMLReader,
         // process namespace decls immediately;
         // then maybe forget this as an attribute
         if (namespaces) {
-            int index;
+            @SuppressWarnings("unused") int index;
 
             // default NS declaration?
             if (stringInterning) {

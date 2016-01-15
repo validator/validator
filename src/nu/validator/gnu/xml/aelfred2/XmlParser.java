@@ -100,8 +100,8 @@ final class XmlParser {
 
     private static final int SURROGATE_OFFSET = 0x10000 - (0xD800 << 10) - 0xDC00;
 
-    private static final char[] NEW_LINE_ARR = {'\n'};
-    
+    @SuppressWarnings("unused") private static final char[] NEW_LINE_ARR = {'\n'};
+
     //
     // Constants for element content type.
     //
@@ -316,7 +316,7 @@ final class XmlParser {
 //    private final static int READ_BUFFER_MAX = 16384;
     private final static int READ_BUFFER_MAX = 60;
 
-    private byte[] rawReadBuffer;
+    @SuppressWarnings("unused") private byte[] rawReadBuffer;
 
     //
     // Buffer for attribute values, char refs, DTD stuff.

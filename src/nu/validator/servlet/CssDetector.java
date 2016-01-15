@@ -59,7 +59,7 @@ public class CssDetector implements Validator, ContentHandler {
     
     private static final Pattern TEXT_CSS = Pattern.compile("^[tT][eE][xX][tT]/[cC][sS][sS]\\s*(?:;.*)?$");
     
-    private boolean sawCss = false;
+    @SuppressWarnings("unused") private boolean sawCss = false;
     
     public ContentHandler getContentHandler() {
         return this;
