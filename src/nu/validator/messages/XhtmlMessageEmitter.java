@@ -297,8 +297,8 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
      * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String, boolean)
      */
     @Override
-    public void startMessages(String documentUri, @SuppressWarnings("hiding")
-    boolean willShowSource) throws SAXException {
+    public void startMessages(String documentUri, boolean willShowSource)
+            throws SAXException {
         this.willShowSource = willShowSource;
     }
 
