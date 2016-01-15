@@ -390,8 +390,7 @@ public class SimpleDocumentValidator {
         }
     }
 
-    @SuppressWarnings("serial") public class SchemaReadException extends
-            Exception {
+    public class SchemaReadException extends Exception {
 
         public SchemaReadException() {
         }
