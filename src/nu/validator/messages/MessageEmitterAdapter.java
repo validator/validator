@@ -148,6 +148,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "Adobe TIFF".toCharArray());
     }
 
+    @SuppressWarnings("rawtypes")
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<>();
 
     private final static DocumentFragment IMAGE_REPORT_GENERAL;

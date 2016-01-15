@@ -29,6 +29,7 @@ import org.relaxng.datatype.DatatypeException;
  * @version $Id$
  * @author hsivonen
  */
+@SuppressWarnings("rawtypes")
 public class Html5DatatypeException extends DatatypeException {
 
     private Class datatypeClass;

@@ -57,6 +57,7 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+@SuppressWarnings("rawtypes")
 public final class MultipartFormDataFilter implements Filter {
 
     private static Pattern EXTENSION = Pattern.compile("^.*\\.(.+)$");

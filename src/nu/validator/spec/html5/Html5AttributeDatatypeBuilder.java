@@ -42,6 +42,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
+@SuppressWarnings("rawtypes")
 public final class Html5AttributeDatatypeBuilder implements ContentHandler {
 
     private static final String NS = "http://www.w3.org/1999/xhtml";

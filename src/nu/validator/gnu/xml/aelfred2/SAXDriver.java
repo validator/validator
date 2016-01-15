@@ -1043,6 +1043,7 @@ import org.xml.sax.helpers.NamespaceSupport;
         prefixStack.processName(elname, nsTemp, false);
         handler.endElement(nsTemp[0], nsTemp[1], elname);
 
+        @SuppressWarnings("rawtypes")
         Enumeration prefixes = prefixStack.getDeclaredPrefixes();
 
         while (prefixes.hasMoreElements()) {

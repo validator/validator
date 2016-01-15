@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
+@SuppressWarnings("rawtypes")
 public final class InboundGzipFilter implements Filter {
 
     public void destroy() {
