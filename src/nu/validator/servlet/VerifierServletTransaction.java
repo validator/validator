@@ -1020,7 +1020,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
     }
 
-    private void gatherStatistics() {
+    @SuppressWarnings("incomplete-switch") private void gatherStatistics() {
         Statistics stats = Statistics.STATISTICS;
         if (stats == null) {
             return;
