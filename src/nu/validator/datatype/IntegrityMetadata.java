@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Mozilla Foundation
+ * Copyright (c) 2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -47,17 +47,37 @@ public final class IntegrityMetadata extends AbstractDatatype {
             "nu.validator.datatype.warn", "").equals("true") ? true : false;
 
     public void checkValid(CharSequence literal) throws DatatypeException {
-        Matcher m = getPattern().matcher(literal);
+        StringBuilder builder = new StringBuilder();
+        int len = literal.length();
+        for (int i = 0; i < len; i++) {
+            char c = literal.charAt(i);
+            if (isWhitespace(c) && builder.length() > 0) {
+                checkToken(literal, builder, i);
+                builder.setLength(0);
+            } else if (!isWhitespace(c)) {
+                builder.append(c);
+            }
+        }
+        if (builder.length() > 0) {
+            checkToken(literal, builder, len);
+        }
+    }
+
+    private void checkToken(CharSequence literal, StringBuilder builder, int i)
+            throws DatatypeException {
+        String token = builder.toString();
+        Matcher m = getPattern().matcher(token);
         if (m.matches()) {
             try {
                 new Base64Value(m.group(1));
             } catch (IllegalArgumentException e) {
-                throw newDatatypeException(e.getMessage(), WARN);
+                throw newDatatypeException(i - 1, e.getMessage(), WARN);
             }
         } else {
-            throw newDatatypeException("The value must start with"
-                    + " \u201csha256-\u201d or \u201csha384-\u201d"
-                    + " or \u201csha512-\u201d.");
+            throw newDatatypeException(i - 1,
+                    "Values must start with"
+                            + " \u201csha256-\u201d or \u201csha384-\u201d"
+                            + " or \u201csha512-\u201d.");
         }
     }
 
