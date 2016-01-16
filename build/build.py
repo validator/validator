@@ -868,11 +868,11 @@ class Release():
       "gpg:sign-and-deploy-file",
       "-Dgpg.executable=%s" % gpgCmd,
       "-DrepositoryId=ossrh",
-      "-Durl='%s'" % url,
-      "-DpomFile='%s.pom'" % basename,
-      "-Dfile='%s.jar'" % basename,
-      "-Djavadoc='%s-javadoc.jar'" % basename,
-      "-Dsources='%s-sources.jar'" % basename,
+      "-Durl=%s" % url,
+      "-DpomFile=%s.pom" % basename,
+      "-Dfile=%s.jar" % basename,
+      "-Djavadoc=%s-javadoc.jar" % basename,
+      "-Dsources=%s-sources.jar" % basename,
     ]
     runCmd(mvnArgs)
     mvnArgs = [
