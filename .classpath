@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="classes"/>
-	<classpathentry kind="lib" path="jars/validator.jar"/>
 	<classpathentry kind="lib" path="jars/htmlparser.jar"/>
 	<classpathentry kind="lib" path="jars/galimatias.jar"/>
 	<classpathentry kind="lib" path="dependencies/log4j-1.2.17.jar">
