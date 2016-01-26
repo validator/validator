@@ -118,6 +118,7 @@ public class Base64InputStream extends InputStream {
      * @throws IOException
      * @see java.io.InputStream#close()
      */
+    @Override
     public void close() throws IOException {
         delegate.close();
     }

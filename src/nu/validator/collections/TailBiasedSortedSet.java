@@ -64,10 +64,12 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
             this.sentinel = sentinel;
         }
 
+        @Override
         public boolean hasNext() {
             return next != sentinel;
         }
 
+        @Override
         public E next() {
             if (next == sentinel) {
                 throw new NoSuchElementException();
@@ -77,6 +79,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
             return rv;
         }
 
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
@@ -124,6 +127,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
         }
     }
 
+    @Override
     public Comparator<? super E> comparator() {
         return comparator;
     }
@@ -138,6 +142,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
         return size;
     }
 
+    @Override
     public E first() {
         Node<E> first = head.next;
         if (first == null) {
@@ -147,10 +152,12 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
         }
     }
 
+    @Override
     public SortedSet<E> headSet(E toElement) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public E last() {
         Node<E> last = tail.prev;
         if (last == null) {
@@ -160,10 +167,12 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
         }
     }
 
+    @Override
     public SortedSet<E> subSet(E fromElement, E toElement) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public SortedSet<E> tailSet(E fromElement) {
         throw new UnsupportedOperationException();
     }

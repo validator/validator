@@ -39,6 +39,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getLength()
      */
+    @Override
     public int getLength() {
         return 0;
     }
@@ -46,6 +47,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getURI(int)
      */
+    @Override
     public String getURI(int arg0) {
         return null;
     }
@@ -53,6 +55,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getLocalName(int)
      */
+    @Override
     public String getLocalName(int arg0) {
         return null;
     }
@@ -60,6 +63,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getQName(int)
      */
+    @Override
     public String getQName(int arg0) {
         return null;
     }
@@ -67,6 +71,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getType(int)
      */
+    @Override
     public String getType(int arg0) {
         return null;
     }
@@ -74,6 +79,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getValue(int)
      */
+    @Override
     public String getValue(int arg0) {
         return null;
     }
@@ -81,6 +87,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getIndex(java.lang.String, java.lang.String)
      */
+    @Override
     public int getIndex(String arg0, String arg1) {
         return -1;
     }
@@ -88,6 +95,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getIndex(java.lang.String)
      */
+    @Override
     public int getIndex(String arg0) {
         return -1;
     }
@@ -95,6 +103,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getType(java.lang.String, java.lang.String)
      */
+    @Override
     public String getType(String arg0, String arg1) {
         return null;
     }
@@ -102,6 +111,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getType(java.lang.String)
      */
+    @Override
     public String getType(String arg0) {
         return null;
     }
@@ -109,6 +119,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getValue(java.lang.String, java.lang.String)
      */
+    @Override
     public String getValue(String arg0, String arg1) {
         return null;
     }
@@ -116,6 +127,7 @@ public final class EmptyAttributes implements Attributes {
     /**
      * @see org.xml.sax.Attributes#getValue(java.lang.String)
      */
+    @Override
     public String getValue(String arg0) {
         return null;
     }

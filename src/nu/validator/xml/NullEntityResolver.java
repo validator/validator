@@ -39,6 +39,7 @@ public class NullEntityResolver implements EntityResolver {
     public NullEntityResolver() {
     }
     
+    @Override
     public InputSource resolveEntity(String str, String str1) throws SAXException, IOException {
         InputSource is = new InputSource(new ByteArrayInputStream(new byte[0]));
         is.setPublicId(str);

@@ -38,39 +38,48 @@ public class XmlExtractHandler implements SourceHandler {
         this.emitter = emitter;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         emitter.characters(ch, start, length);
     }
 
+    @Override
     public void endCharHilite() throws SAXException {
         emitter.endElement("m");
     }
 
+    @Override
     public void endRange() throws SAXException {
         emitter.endElement("m");        
     }
 
+    @Override
     public void endSource() throws SAXException {
     }
 
+    @Override
     public void newLine() throws SAXException {
         emitter.characters(NEWLINE);
     }
 
+    @Override
     public void startCharHilite(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
         emitter.startElement("m");
     }
 
+    @Override
     public void startRange(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
         emitter.startElement("m");
     }
 
+    @Override
     public void startSource(String type, String encoding) throws SAXException {
     }
     
+    @Override
     public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
         
     }

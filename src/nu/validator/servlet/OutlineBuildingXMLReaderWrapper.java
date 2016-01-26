@@ -290,6 +290,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     /**
      * @see org.xml.sax.helpers.XMLFilterImpl#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         if (contentHandler == null) {
@@ -310,6 +311,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @see org.xml.sax.helpers.XMLFilterImpl#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         if (contentHandler == null) {
@@ -449,6 +451,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     /**
      * @see org.xml.sax.helpers.XMLFilterImpl#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         if (contentHandler == null) {
             return;
@@ -460,6 +463,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @see org.xml.sax.helpers.XMLFilterImpl#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         if (contentHandler == null) {
@@ -622,6 +626,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     /**
      * @see org.xml.sax.helpers.XMLFilterImpl#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator locator) {
         if (contentHandler == null) {
             return;
@@ -629,6 +634,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         contentHandler.setDocumentLocator(locator);
     }
 
+    @Override
     public ContentHandler getContentHandler() {
         return contentHandler;
     }
@@ -637,6 +643,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         if (contentHandler == null) {
             return;
@@ -655,6 +662,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String prefix) throws SAXException {
         if (contentHandler == null) {
             return;
@@ -669,6 +677,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(char[] ch, int start, int length)
             throws SAXException {
         if (contentHandler == null) {
@@ -684,6 +693,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
         if (contentHandler == null) {
@@ -697,6 +707,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String name) throws SAXException {
         if (contentHandler == null) {
             return;
@@ -711,6 +722,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
         if (contentHandler == null) {
@@ -723,6 +735,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @return
      * @see org.xml.sax.XMLReader#getDTDHandler()
      */
+    @Override
     public DTDHandler getDTDHandler() {
         return wrappedReader.getDTDHandler();
     }
@@ -731,6 +744,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @return
      * @see org.xml.sax.XMLReader#getEntityResolver()
      */
+    @Override
     public EntityResolver getEntityResolver() {
         return wrappedReader.getEntityResolver();
     }
@@ -739,6 +753,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @return
      * @see org.xml.sax.XMLReader#getErrorHandler()
      */
+    @Override
     public ErrorHandler getErrorHandler() {
         return wrappedReader.getErrorHandler();
     }
@@ -750,6 +765,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXNotSupportedException
      * @see org.xml.sax.XMLReader#getFeature(java.lang.String)
      */
+    @Override
     public boolean getFeature(String name) throws SAXNotRecognizedException,
             SAXNotSupportedException {
         return wrappedReader.getFeature(name);
@@ -762,6 +778,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXNotSupportedException
      * @see org.xml.sax.XMLReader#getProperty(java.lang.String)
      */
+    @Override
     public Object getProperty(String name) throws SAXNotRecognizedException,
             SAXNotSupportedException {
         return wrappedReader.getProperty(name);
@@ -773,6 +790,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXException
      * @see org.xml.sax.XMLReader#parse(org.xml.sax.InputSource)
      */
+    @Override
     public void parse(InputSource input) throws IOException, SAXException {
         wrappedReader.parse(input);
     }
@@ -783,6 +801,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXException
      * @see org.xml.sax.XMLReader#parse(java.lang.String)
      */
+    @Override
     public void parse(String systemId) throws IOException, SAXException {
         wrappedReader.parse(systemId);
     }
@@ -791,6 +810,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @param handler
      * @see org.xml.sax.XMLReader#setContentHandler(org.xml.sax.ContentHandler)
      */
+    @Override
     public void setContentHandler(ContentHandler handler) {
         contentHandler = handler;
     }
@@ -799,6 +819,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @param handler
      * @see org.xml.sax.XMLReader#setDTDHandler(org.xml.sax.DTDHandler)
      */
+    @Override
     public void setDTDHandler(DTDHandler handler) {
         wrappedReader.setDTDHandler(handler);
     }
@@ -807,6 +828,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @param resolver
      * @see org.xml.sax.XMLReader#setEntityResolver(org.xml.sax.EntityResolver)
      */
+    @Override
     public void setEntityResolver(EntityResolver resolver) {
         wrappedReader.setEntityResolver(resolver);
     }
@@ -815,6 +837,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @param handler
      * @see org.xml.sax.XMLReader#setErrorHandler(org.xml.sax.ErrorHandler)
      */
+    @Override
     public void setErrorHandler(ErrorHandler handler) {
         wrappedReader.setErrorHandler(handler);
     }
@@ -826,6 +849,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @throws SAXNotSupportedException
      * @see org.xml.sax.XMLReader#setFeature(java.lang.String, boolean)
      */
+    @Override
     public void setFeature(String name, boolean value)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         wrappedReader.setFeature(name, value);
@@ -839,6 +863,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
      * @see org.xml.sax.XMLReader#setProperty(java.lang.String,
      *      java.lang.Object)
      */
+    @Override
     public void setProperty(String name, Object value)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         wrappedReader.setProperty(name, value);

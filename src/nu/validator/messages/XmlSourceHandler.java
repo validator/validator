@@ -42,33 +42,41 @@ public class XmlSourceHandler implements SourceHandler {
         this.emitter = emitter;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         emitter.characters(ch, start, length);
     }
 
+    @Override
     public void endCharHilite() throws SAXException {
     }
 
+    @Override
     public void endRange() throws SAXException {
     }
 
+    @Override
     public void endSource() throws SAXException {
         emitter.endElement("source");
     }
 
+    @Override
     public void newLine() throws SAXException {
         emitter.characters(NEWLINE);
     }
 
+    @Override
     public void startCharHilite(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
     }
 
+    @Override
     public void startRange(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
     }
 
+    @Override
     public void startSource(String type, String encoding) throws SAXException {
         attrs.clear();
         if (type != null) {
@@ -80,6 +88,7 @@ public class XmlSourceHandler implements SourceHandler {
         emitter.startElement("source", attrs);
     }
 
+    @Override
     public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
         
     }

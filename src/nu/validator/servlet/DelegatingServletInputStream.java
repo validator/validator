@@ -41,6 +41,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @throws IOException
      * @see java.io.InputStream#available()
      */
+    @Override
     public int available() throws IOException {
         return delegate.available();
     }
@@ -49,6 +50,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @throws IOException
      * @see java.io.InputStream#close()
      */
+    @Override
     public void close() throws IOException {
         delegate.close();
     }
@@ -58,6 +60,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @return
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object obj) {
         return delegate.equals(obj);
     }
@@ -66,6 +69,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @return
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode() {
         return delegate.hashCode();
     }
@@ -74,6 +78,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @param readlimit
      * @see java.io.InputStream#mark(int)
      */
+    @Override
     public void mark(int readlimit) {
         delegate.mark(readlimit);
     }
@@ -82,6 +87,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @return
      * @see java.io.InputStream#markSupported()
      */
+    @Override
     public boolean markSupported() {
         return delegate.markSupported();
     }
@@ -91,6 +97,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @throws IOException
      * @see java.io.InputStream#read()
      */
+    @Override
     public int read() throws IOException {
         return delegate.read();
     }
@@ -103,6 +110,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @throws IOException
      * @see java.io.InputStream#read(byte[], int, int)
      */
+    @Override
     public int read(byte[] b, int off, int len) throws IOException {
         return delegate.read(b, off, len);
     }
@@ -113,6 +121,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @throws IOException
      * @see java.io.InputStream#read(byte[])
      */
+    @Override
     public int read(byte[] b) throws IOException {
         return delegate.read(b);
     }
@@ -121,6 +130,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @throws IOException
      * @see java.io.InputStream#reset()
      */
+    @Override
     public void reset() throws IOException {
         delegate.reset();
     }
@@ -131,6 +141,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @throws IOException
      * @see java.io.InputStream#skip(long)
      */
+    @Override
     public long skip(long n) throws IOException {
         return delegate.skip(n);
     }
@@ -139,6 +150,7 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      * @return
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
         return delegate.toString();
     }

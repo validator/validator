@@ -60,6 +60,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#available()
      */
+    @Override
     public int available() throws IOException {
         return delegate.available();
     }
@@ -67,6 +68,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#close()
      */
+    @Override
     public void close() throws IOException {
         delegate.close();
     }
@@ -74,6 +76,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#mark(int)
      */
+    @Override
     public void mark(int arg0) {
         delegate.mark(arg0);
     }
@@ -81,6 +84,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#markSupported()
      */
+    @Override
     public boolean markSupported() {
         return delegate.markSupported();
     }
@@ -88,6 +92,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#read()
      */
+    @Override
     public int read() throws IOException {
         this.checkLimit();
         this.counter++;
@@ -97,6 +102,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#read(byte[])
      */
+    @Override
     public int read(byte[] arg0) throws IOException {
         this.checkLimit();
         int c = delegate.read(arg0);
@@ -107,6 +113,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#read(byte[], int, int)
      */
+    @Override
     public int read(byte[] arg0, int arg1, int arg2) throws IOException {
         this.checkLimit();
         int c = delegate.read(arg0, arg1, arg2);
@@ -117,6 +124,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#reset()
      */
+    @Override
     public void reset() throws IOException {
         delegate.reset();
     }
@@ -124,6 +132,7 @@ public final class BoundedInputStream extends InputStream {
     /**
      * @see java.io.InputStream#skip(long)
      */
+    @Override
     public long skip(long arg0) throws IOException {
         return delegate.skip(arg0);
     }

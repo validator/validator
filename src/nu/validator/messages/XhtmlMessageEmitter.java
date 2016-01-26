@@ -411,11 +411,13 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
         return this;
     }
 
+    @Override
     public void endImageGroup() throws SAXException {
         this.emitter.endElement("tbody");
         this.emitter.endElement("table");
     }
 
+    @Override
     public void image(Image image, boolean showAlt, String aSystemId,
             int aOneBasedFirstLine, int aOneBasedFirstColumn,
             int aOneBasedLastLine, int aOneBasedLastColumn) throws SAXException {
@@ -502,6 +504,7 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
         this.emitter.endElement("td");
     }
 
+    @Override
     public void startImageGroup(char[] heading, DocumentFragment instruction,
             boolean hasAlt) throws SAXException {
         this.emitter.startElement("h3");               

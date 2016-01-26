@@ -52,6 +52,7 @@ public final class Time extends AbstractDatetime {
         super();
     }
 
+    @Override
     public void checkValid(CharSequence literal)
             throws DatatypeException {
         Matcher m = getPattern().matcher(literal);
@@ -74,6 +75,7 @@ public final class Time extends AbstractDatetime {
      * @return the regexp for this datatype
      * @see nu.validator.datatype.AbstractDatetime#getPattern()
      */
+    @Override
     protected Pattern getPattern() {
         return THE_PATTERN;
     }

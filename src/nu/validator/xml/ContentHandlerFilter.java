@@ -55,12 +55,14 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param length
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void characters(char[] chars, int start, int length) throws SAXException {
         contentHandler.characters(chars, start, length);
     }
     /**
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void endDocument() throws SAXException {
         contentHandler.endDocument();
     }
@@ -70,6 +72,7 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param qName
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void endElement(String uri, String local, String qName)
             throws SAXException {
         contentHandler.endElement(uri, local, qName);
@@ -78,6 +81,7 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param arg0
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
         contentHandler.endPrefixMapping(arg0);
     }
@@ -87,6 +91,7 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param arg2
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
         contentHandler.ignorableWhitespace(arg0, arg1, arg2);
@@ -96,6 +101,7 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param arg1
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void processingInstruction(String arg0, String arg1)
             throws SAXException {
         contentHandler.processingInstruction(arg0, arg1);
@@ -103,6 +109,7 @@ public abstract class ContentHandlerFilter implements ContentHandler {
     /**
      * @param locator
      */
+    @Override
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
         contentHandler.setDocumentLocator(locator);
@@ -111,12 +118,14 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param arg0
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
         contentHandler.skippedEntity(arg0);
     }
     /**
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void startDocument() throws SAXException {
         contentHandler.startDocument();
     }
@@ -127,6 +136,7 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param attrs
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void startElement(String uri, String local, String qName,
             Attributes attrs) throws SAXException {
         contentHandler.startElement(uri, local, qName, attrs);
@@ -136,6 +146,7 @@ public abstract class ContentHandlerFilter implements ContentHandler {
      * @param arg1
      * @throws org.xml.sax.SAXException
      */
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
         contentHandler.startPrefixMapping(arg0, arg1);

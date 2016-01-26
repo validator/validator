@@ -142,6 +142,7 @@ public final class Html5SpecBuilder implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         switch (state) {
@@ -196,6 +197,7 @@ public final class Html5SpecBuilder implements ContentHandler {
         }
     }
 
+    @Override
     public void endDocument() throws SAXException {
         switch (state) {
             case AWAITING_ELEMENT_DL:
@@ -218,6 +220,7 @@ public final class Html5SpecBuilder implements ContentHandler {
         }
     }
 
+    @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         switch (state) {
@@ -325,29 +328,36 @@ public final class Html5SpecBuilder implements ContentHandler {
         }
     }
 
+    @Override
     public void endPrefixMapping(String prefix) throws SAXException {
     }
 
+    @Override
     public void ignorableWhitespace(char[] ch, int start, int length)
             throws SAXException {
     }
 
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
     }
 
+    @Override
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
     }
 
+    @Override
     public void skippedEntity(String name) throws SAXException {
     }
 
+    @Override
     public void startDocument() throws SAXException {
         // TODO Auto-generated method stub
 
     }
 
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         switch (state) {
@@ -446,6 +456,7 @@ public final class Html5SpecBuilder implements ContentHandler {
         }
     }
 
+    @Override
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
     }

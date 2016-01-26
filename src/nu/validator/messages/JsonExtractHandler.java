@@ -51,6 +51,7 @@ public class JsonExtractHandler implements SourceHandler {
         this.handler = handler;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         handler.characters(ch, start, length);
@@ -65,20 +66,24 @@ public class JsonExtractHandler implements SourceHandler {
         }
     }
 
+    @Override
     public void endCharHilite() throws SAXException {
         assert hiliteState == HiliteState.INSIDE;
         hiliteState = HiliteState.AFTER;
     }
 
+    @Override
     public void endRange() throws SAXException {
         assert hiliteState == HiliteState.INSIDE;
         hiliteState = HiliteState.AFTER;
     }
 
+    @Override
     public void endSource() throws SAXException {
         handler.endString();
     }
 
+    @Override
     public void newLine() throws SAXException {
         handler.characters(NEWLINE, 0, 1);
         switch (hiliteState) {
@@ -92,18 +97,21 @@ public class JsonExtractHandler implements SourceHandler {
         }
     }
 
+    @Override
     public void startCharHilite(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
         assert hiliteState == HiliteState.BEFORE;
         hiliteState = HiliteState.INSIDE;
     }
 
+    @Override
     public void startRange(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
         assert hiliteState == HiliteState.BEFORE;
         hiliteState = HiliteState.INSIDE;
     }
 
+    @Override
     public void startSource(String type, String encoding) throws SAXException {
         hiliteStart = 0;
         hiliteLength = 0;
@@ -129,6 +137,7 @@ public class JsonExtractHandler implements SourceHandler {
         return hiliteStart;
     }
 
+    @Override
     public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
         
     }

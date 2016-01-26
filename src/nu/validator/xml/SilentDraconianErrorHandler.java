@@ -38,12 +38,14 @@ public class SilentDraconianErrorHandler implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
+    @Override
     public void warning(SAXParseException arg0) throws SAXException {
     }
 
     /**
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
+    @Override
     public void error(SAXParseException arg0) throws SAXException {
         throw arg0;
     }
@@ -51,6 +53,7 @@ public class SilentDraconianErrorHandler implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
+    @Override
     public void fatalError(SAXParseException arg0) throws SAXException {
         throw arg0;
     }

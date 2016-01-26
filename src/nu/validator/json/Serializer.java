@@ -77,6 +77,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void bool(boolean bool) throws SAXException {
         try {
             State state = peek();
@@ -154,6 +155,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         try {
@@ -170,6 +172,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void endArray() throws SAXException {
         try {
             State state = peek();
@@ -190,6 +193,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void endDocument() throws SAXException {
         try {
             State state = peek();
@@ -211,6 +215,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void endObject() throws SAXException {
         try {
             State state = peek();
@@ -231,6 +236,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void endString() throws SAXException {
         try {
             State state = peek();
@@ -251,6 +257,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void key(String key) throws SAXException {
         try {
             State state = peek();
@@ -273,6 +280,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void number(int number) throws SAXException {
         try {
             State state = peek();
@@ -298,6 +306,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void number(long number) throws SAXException {
         try {
             State state = peek();
@@ -323,6 +332,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void number(float number) throws SAXException {
         try {
             State state = peek();
@@ -348,6 +358,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void number(double number) throws SAXException {
         try {
             State state = peek();
@@ -373,6 +384,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void startArray() throws SAXException {
         try {
             State state = peek();
@@ -396,6 +408,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void startDocument(String callback) throws SAXException {
         try {
             State state = peek();
@@ -419,6 +432,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void startObject() throws SAXException {
         try {
             State state = peek();
@@ -442,6 +456,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void startString() throws SAXException {
         try {
             State state = peek();
@@ -464,6 +479,7 @@ public class Serializer implements JsonHandler {
         }
     }
 
+    @Override
     public void string(String string) throws SAXException {
         try {
             State state = peek();

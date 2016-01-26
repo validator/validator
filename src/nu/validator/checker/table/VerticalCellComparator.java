@@ -41,6 +41,7 @@ final class VerticalCellComparator implements Comparator<Cell> {
         super();
     }
 
+    @Override
     public int compare(Cell cell0, Cell cell1) {
         if (cell0.getBottom() < cell1.getBottom()) {
             return -1;

@@ -86,6 +86,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @return
      * @see org.xml.sax.XMLReader#getContentHandler()
      */
+    @Override
     public ContentHandler getContentHandler() {
         return contentHandler;
     }
@@ -94,6 +95,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @return
      * @see org.xml.sax.XMLReader#getDTDHandler()
      */
+    @Override
     public DTDHandler getDTDHandler() {
         return wrappedReader.getDTDHandler();
     }
@@ -102,6 +104,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @return
      * @see org.xml.sax.XMLReader#getEntityResolver()
      */
+    @Override
     public EntityResolver getEntityResolver() {
         return wrappedReader.getEntityResolver();
     }
@@ -110,6 +113,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @return
      * @see org.xml.sax.XMLReader#getErrorHandler()
      */
+    @Override
     public ErrorHandler getErrorHandler() {
         return wrappedReader.getErrorHandler();
     }
@@ -121,6 +125,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @throws SAXNotSupportedException
      * @see org.xml.sax.XMLReader#getFeature(java.lang.String)
      */
+    @Override
     public boolean getFeature(String arg0) throws SAXNotRecognizedException,
             SAXNotSupportedException {
         return wrappedReader.getFeature(arg0);
@@ -133,6 +138,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @throws SAXNotSupportedException
      * @see org.xml.sax.XMLReader#getProperty(java.lang.String)
      */
+    @Override
     public Object getProperty(String name) throws SAXNotRecognizedException,
             SAXNotSupportedException {
         if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
@@ -148,6 +154,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @throws SAXException
      * @see org.xml.sax.XMLReader#parse(org.xml.sax.InputSource)
      */
+    @Override
     public void parse(InputSource arg0) throws IOException, SAXException {
         wrappedReader.parse(arg0);
     }
@@ -158,6 +165,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @throws SAXException
      * @see org.xml.sax.XMLReader#parse(java.lang.String)
      */
+    @Override
     public void parse(String arg0) throws IOException, SAXException {
         wrappedReader.parse(arg0);
     }
@@ -166,6 +174,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @param contentHandler
      * @see org.xml.sax.XMLReader#setContentHandler(org.xml.sax.ContentHandler)
      */
+    @Override
     public void setContentHandler(ContentHandler contentHandler) {
         this.contentHandler = contentHandler;
         updateWiretap();
@@ -175,6 +184,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @param arg0
      * @see org.xml.sax.XMLReader#setDTDHandler(org.xml.sax.DTDHandler)
      */
+    @Override
     public void setDTDHandler(DTDHandler arg0) {
         wrappedReader.setDTDHandler(arg0);
     }
@@ -183,6 +193,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @param arg0
      * @see org.xml.sax.XMLReader#setEntityResolver(org.xml.sax.EntityResolver)
      */
+    @Override
     public void setEntityResolver(EntityResolver arg0) {
         wrappedReader.setEntityResolver(arg0);
     }
@@ -191,6 +202,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @param arg0
      * @see org.xml.sax.XMLReader#setErrorHandler(org.xml.sax.ErrorHandler)
      */
+    @Override
     public void setErrorHandler(ErrorHandler arg0) {
         wrappedReader.setErrorHandler(arg0);
     }
@@ -202,6 +214,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @throws SAXNotSupportedException
      * @see org.xml.sax.XMLReader#setFeature(java.lang.String, boolean)
      */
+    @Override
     public void setFeature(String arg0, boolean arg1)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         wrappedReader.setFeature(arg0, arg1);
@@ -215,6 +228,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
      * @see org.xml.sax.XMLReader#setProperty(java.lang.String,
      *      java.lang.Object)
      */
+    @Override
     public void setProperty(String name, Object value)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {

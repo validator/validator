@@ -150,27 +150,34 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
         alreadyHasElement = false;
     }
 
+    @Override
     public void startDTD(String name, String publicId, String systemId)
             throws SAXException {
         inDoctype = true;
     }
 
+    @Override
     public void endDTD() throws SAXException {
         inDoctype = false;
     }
 
+    @Override
     public void startEntity(String name) throws SAXException {
     }
 
+    @Override
     public void endEntity(String name) throws SAXException {
     }
 
+    @Override
     public void startCDATA() throws SAXException {
     }
 
+    @Override
     public void endCDATA() throws SAXException {
     }
 
+    @Override
     public void comment(char[] ch, int start, int len) throws SAXException {
     }
 

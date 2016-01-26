@@ -105,6 +105,7 @@ public final class Language extends AbstractDatatype {
         super();
     }
 
+    @Override
     public void checkValid(CharSequence lit) throws DatatypeException {
         String literal = lit.toString();
         if (literal.length() == 0) {

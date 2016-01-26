@@ -52,15 +52,18 @@ public final class InboundSizeLimitFilter implements Filter {
         this(Long.MAX_VALUE);
     }
     
+    @Override
     public void destroy() {
     }
 
+    @Override
     public void doFilter(ServletRequest req, ServletResponse res,
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         chain.doFilter(new RequestWrapper(request), res);
     }
 
+    @Override
     public void init(FilterConfig config) throws ServletException {
         // XXX add configurability
     }

@@ -38,6 +38,7 @@ public class TextResultHandler implements ResultHandler {
         this.writer = writer;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         try {
@@ -47,6 +48,7 @@ public class TextResultHandler implements ResultHandler {
         }
     }
 
+    @Override
     public void endResult() throws SAXException {
         try {
             writer.write('\n');
@@ -55,6 +57,7 @@ public class TextResultHandler implements ResultHandler {
         }
     }
 
+    @Override
     public void startResult(Result result) throws SAXException {
     }
 

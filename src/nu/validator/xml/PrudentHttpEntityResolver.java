@@ -137,6 +137,7 @@ import io.mola.galimatias.GalimatiasParseException;
             try {
                 SSLContext promiscuousSSLContext = new SSLContextBuilder() //
                 .loadTrustMaterial(null, new TrustStrategy() {
+                    @Override
                     public boolean isTrusted(X509Certificate[] arg0, String arg1)
                             throws CertificateException {
                         return true;
@@ -198,6 +199,7 @@ import io.mola.galimatias.GalimatiasParseException;
      * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {
         if (requestsLeft > -1) {
@@ -348,6 +350,7 @@ import io.mola.galimatias.GalimatiasParseException;
 
                         private boolean released = false;
 
+                        @Override
                         public void closeCalled() {
                             log4j.debug("closeCalled");
                             if (!released) {
@@ -362,6 +365,7 @@ import io.mola.galimatias.GalimatiasParseException;
                             }
                         }
 
+                        @Override
                         public void exceptionOccurred(Exception ex)
                                 throws IOException {
                             if (!released) {
@@ -397,6 +401,7 @@ import io.mola.galimatias.GalimatiasParseException;
                             }
                         }
 
+                        @Override
                         public void finalizerCalled() {
                             if (!released) {
                                 released = true;

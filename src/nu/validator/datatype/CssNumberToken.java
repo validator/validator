@@ -30,6 +30,7 @@ public class CssNumberToken extends FloatingPointExponent {
         super();
     }
 
+    @Override
     protected boolean isCSS() {
         return true;
     }

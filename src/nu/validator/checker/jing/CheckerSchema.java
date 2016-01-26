@@ -82,6 +82,7 @@ public class CheckerSchema implements Schema {
         this.klazz = klazz;
     }
 
+    @Override
     public Validator createValidator(PropertyMap props) {
         try {
             return new CheckerValidator(klazz.newInstance(), props);
@@ -92,6 +93,7 @@ public class CheckerSchema implements Schema {
         }
     }
 
+    @Override
     public PropertyMap getProperties() {
         return properties;
     }

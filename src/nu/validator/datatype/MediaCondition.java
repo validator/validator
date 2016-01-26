@@ -30,6 +30,7 @@ public class MediaCondition extends MediaQuery {
         super();
     }
 
+    @Override
     protected boolean isMediaCondition() {
         return true;
     }

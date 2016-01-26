@@ -1458,6 +1458,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         return validator;
     }
 
+    @Override
     public Schema resolveSchema(String url, PropertyMap options)
             throws SAXException, IOException, IncorrectSchemaException {
         int i = Arrays.binarySearch(preloadedSchemaUrls, url);
@@ -1778,6 +1779,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
     }
 
+    @Override
     public void documentMode(DocumentMode mode, String publicIdentifier,
             String systemIdentifier, boolean html4SpecificAdditionalErrorChecks)
             throws SAXException {

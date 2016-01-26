@@ -41,22 +41,27 @@ public class JsonMessageTextHandler implements MessageTextHandler {
         this.handler = handler;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         handler.characters(ch, start, length);
     }
 
+    @Override
     public void endCode() throws SAXException {
         handler.characters(RIGHT, 0, 1);
     }
 
+    @Override
     public void endLink() throws SAXException {
     }
 
+    @Override
     public void startCode() throws SAXException {
         handler.characters(LEFT, 0, 1);
     }
 
+    @Override
     public void startLink(String href, String title) throws SAXException {
     }
 

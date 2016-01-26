@@ -61,80 +61,98 @@ final class LocationRecorder implements ContentHandler, LexicalHandler {
     /**
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
         addLocatorLocation();
     }
 
 
+    @Override
     public void endDocument() throws SAXException {
         locator = null;
     }
 
+    @Override
     public void endElement(String arg0, String arg1, String arg2)
             throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
     }
 
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void processingInstruction(String arg0, String arg1)
             throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
         log4j.debug(locator);
     }
 
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void startDocument() throws SAXException {
         uri = owner.getUri();
     }
 
+    @Override
     public void startElement(String arg0, String arg1, String arg2,
             Attributes arg3) throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
     }
 
+    @Override
     public void comment(char[] arg0, int arg1, int arg2) throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void endCDATA() throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void endDTD() throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void endEntity(String arg0) throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void startCDATA() throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void startDTD(String arg0, String arg1, String arg2)
             throws SAXException {
         addLocatorLocation();
     }
 
+    @Override
     public void startEntity(String arg0) throws SAXException {
         addLocatorLocation();
     }

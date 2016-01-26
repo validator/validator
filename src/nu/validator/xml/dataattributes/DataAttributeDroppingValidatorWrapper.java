@@ -49,6 +49,7 @@ public class DataAttributeDroppingValidatorWrapper implements Validator {
      * @return
      * @see com.thaiopensource.validate.Validator#getContentHandler()
      */
+    @Override
     public ContentHandler getContentHandler() {
         return new DataAttributeDroppingContentHandlerWrapper(delegate.getContentHandler(), (ErrorHandler) properties.get(ValidateProperty.ERROR_HANDLER));
     }
@@ -57,6 +58,7 @@ public class DataAttributeDroppingValidatorWrapper implements Validator {
      * @return
      * @see com.thaiopensource.validate.Validator#getDTDHandler()
      */
+    @Override
     public DTDHandler getDTDHandler() {
         return delegate.getDTDHandler();
     }
@@ -65,6 +67,7 @@ public class DataAttributeDroppingValidatorWrapper implements Validator {
      * 
      * @see com.thaiopensource.validate.Validator#reset()
      */
+    @Override
     public void reset() {
         delegate.reset();
     }

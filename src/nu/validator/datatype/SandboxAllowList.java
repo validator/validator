@@ -51,6 +51,7 @@ public final class SandboxAllowList extends AbstractDatatype {
         allowedKeywords.add("allow-top-navigation");
     }
 
+    @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         Set<String> tokensSeen = new HashSet<>();
         StringBuilder builder = new StringBuilder();

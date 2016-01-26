@@ -104,6 +104,7 @@ public final class SourceCode implements CharacterHandler {
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      * @see java.lang.StringBuffer#append(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         int s = start;
@@ -153,6 +154,7 @@ public final class SourceCode implements CharacterHandler {
         lines.add(currentLine);
     }
 
+    @Override
     public void end() throws SAXException {
         if (currentLine != null && currentLine.getBufferLength() == 0) {
             // Theoretical impurity with line separators vs. terminators
@@ -161,6 +163,7 @@ public final class SourceCode implements CharacterHandler {
         }
     }
 
+    @Override
     public void start() throws SAXException {
         reverseSortedLocations.clear();
         lines.clear();

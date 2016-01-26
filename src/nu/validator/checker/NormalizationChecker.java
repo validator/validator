@@ -186,6 +186,7 @@ public final class NormalizationChecker extends Checker {
     /**
      * @see nu.validator.checker.Checker#reset()
      */
+    @Override
     public void reset() {
         atStartOfRun = true;
         alreadyComplainedAboutThisRun = false;
@@ -204,6 +205,7 @@ public final class NormalizationChecker extends Checker {
      * 
      * @see nu.validator.checker.Checker#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         if (alreadyComplainedAboutThisRun) {
@@ -312,6 +314,7 @@ public final class NormalizationChecker extends Checker {
      * @see nu.validator.checker.Checker#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         flush();
@@ -321,6 +324,7 @@ public final class NormalizationChecker extends Checker {
      * @see nu.validator.checker.Checker#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
         flush();
@@ -340,6 +344,7 @@ public final class NormalizationChecker extends Checker {
      * @see nu.validator.checker.Checker#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         flush();
@@ -384,6 +389,7 @@ public final class NormalizationChecker extends Checker {
     /**
      * @see nu.validator.checker.Checker#startPrefixMapping(java.lang.String, java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
         if (startsWithComposingChar(prefix)) {

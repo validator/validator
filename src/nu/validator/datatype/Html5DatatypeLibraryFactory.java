@@ -53,6 +53,7 @@ public class Html5DatatypeLibraryFactory implements
      * @return a <code>DatatypeLibrary</code> or <code>null</code>
      * @see org.relaxng.datatype.DatatypeLibraryFactory#createDatatypeLibrary(java.lang.String)
      */
+    @Override
     public DatatypeLibrary createDatatypeLibrary(String namespaceURI) {
         if (NAMESPACE.equals(namespaceURI)) {
             return new Html5DatatypeLibrary();

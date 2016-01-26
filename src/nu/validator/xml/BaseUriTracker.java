@@ -265,6 +265,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
     /**
      * @see nu.validator.xml.UriLangContext#currentLanguage()
      */
+    @Override
     public String currentLanguage() {
         return stack.getLast().lang;
     }
@@ -272,6 +273,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
     /**
      * @see nu.validator.xml.UriLangContext#isCurrentRtl()
      */
+    @Override
     public boolean isCurrentRtl() {
         return stack.getLast().rtl;
     }
@@ -279,6 +281,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
     /**
      * @see nu.validator.xml.UriLangContext#toAbsoluteUriWithCurrentBase(java.lang.String)
      */
+    @Override
     public String toAbsoluteUriWithCurrentBase(String uri) {
         try {
             URL relUrl = URL.parse(uri);
@@ -302,13 +305,16 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         }
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
     }
 
+    @Override
     public void endDocument() throws SAXException {
     }
 
+    @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
         if (inHeadDepth > 0) {
@@ -323,28 +329,35 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         pop();
     }
 
+    @Override
     public void endPrefixMapping(String prefix) throws SAXException {
     }
 
+    @Override
     public void ignorableWhitespace(char[] ch, int start, int length)
             throws SAXException {
     }
 
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
     }
 
+    @Override
     public void setDocumentLocator(Locator locator) {
     }
 
+    @Override
     public void skippedEntity(String name) throws SAXException {
     }
 
+    @Override
     public void startDocument() throws SAXException {
         inHeadDepth = -1;
         inCruftDepth = 0;
     }
 
+    @Override
     public void startElement(String uri, String localName, String n,
             Attributes atts) throws SAXException {
         if (inHeadDepth >= 1) {
@@ -409,6 +422,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         push(base, lang, dir);
     }
 
+    @Override
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
     }

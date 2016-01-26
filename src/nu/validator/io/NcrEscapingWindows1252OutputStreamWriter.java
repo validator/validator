@@ -101,6 +101,7 @@ public class NcrEscapingWindows1252OutputStreamWriter extends Writer {
         this.prev = 0;
     }
 
+    @Override
     public void write(char[] buf, int offset, int count) throws IOException {
         int end = offset + count;
         for (int i = offset; i < end; i++) {
@@ -108,10 +109,12 @@ public class NcrEscapingWindows1252OutputStreamWriter extends Writer {
         }
     }
 
+    @Override
     public void flush() throws IOException {
         out.flush();
     }
 
+    @Override
     public void close() throws IOException {
         out.close();
     }
@@ -119,6 +122,7 @@ public class NcrEscapingWindows1252OutputStreamWriter extends Writer {
     /**
      * @see java.io.Writer#write(int)
      */
+    @Override
     public void write(int c) throws IOException {
         int i = -1;
         c &= 0xFFFF; // per API contract

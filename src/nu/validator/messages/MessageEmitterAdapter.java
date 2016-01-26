@@ -483,6 +483,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
+    @Override
     public void warning(SAXParseException e) throws SAXException {
         warning(e, false);
     }
@@ -504,6 +505,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
+    @Override
     public void error(SAXParseException e) throws SAXException {
         error(e, false);
     }
@@ -549,6 +551,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
+    @Override
     public void fatalError(SAXParseException e) throws SAXException {
         fatalError(e, false);
     }
@@ -1573,14 +1576,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             this.owner = owner;
         }
 
+        @Override
         public void error(SAXParseException exception) throws SAXException {
             owner.error(exception, true);
         }
 
+        @Override
         public void fatalError(SAXParseException exception) throws SAXException {
             owner.fatalError(exception, true);
         }
 
+        @Override
         public void warning(SAXParseException exception) throws SAXException {
             owner.warning(exception, true);
         }

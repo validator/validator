@@ -493,6 +493,7 @@ public class TestRunner implements ErrorHandler {
         err.flush();
     }
 
+    @Override
     public void warning(SAXParseException e) throws SAXException {
         if (emitMessages) {
             emitMessage(e, "warning");
@@ -502,6 +503,7 @@ public class TestRunner implements ErrorHandler {
         }
     }
 
+    @Override
     public void error(SAXParseException e) throws SAXException {
         if (emitMessages) {
             emitMessage(e, "error");
@@ -525,6 +527,7 @@ public class TestRunner implements ErrorHandler {
         inError = true;
     }
 
+    @Override
     public void fatalError(SAXParseException e) throws SAXException {
         inError = true;
         if (emitMessages) {

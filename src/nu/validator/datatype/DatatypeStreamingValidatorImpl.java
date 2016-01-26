@@ -38,10 +38,12 @@ public final class DatatypeStreamingValidatorImpl implements
         this.buffer = new StringBuilder();
     }
 
+    @Override
     public void addCharacters(char[] buf, int start, int len) {
         buffer.append(buf, start, len);
     }
 
+    @Override
     public boolean isValid() {
         try {
             datatype.checkValid(buffer);
@@ -51,6 +53,7 @@ public final class DatatypeStreamingValidatorImpl implements
         return true;
    }
 
+    @Override
     public void checkValid() throws DatatypeException {
         datatype.checkValid(buffer);
     }

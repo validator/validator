@@ -1359,6 +1359,7 @@ public class Assertions extends Checker {
         hasTopLevelH1 = false;
     }
 
+    @Override
     public void reset() {
         openSingleSelects.clear();
         openLabels.clear();

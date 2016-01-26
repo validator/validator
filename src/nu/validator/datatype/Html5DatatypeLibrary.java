@@ -47,6 +47,7 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
      * @return a <code>ParameterlessDatatypeBuilder</code> for the local name
      * @see org.relaxng.datatype.DatatypeLibrary#createDatatypeBuilder(java.lang.String)
      */
+    @Override
     public DatatypeBuilder createDatatypeBuilder(String baseTypeLocalName)
             throws DatatypeException {
         return new ParameterlessDatatypeBuilder(createDatatype(baseTypeLocalName));
@@ -58,6 +59,7 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
      * @return a <code>Datatype</code> instance for the local name
      * @see org.relaxng.datatype.DatatypeLibrary#createDatatype(java.lang.String)
      */
+    @Override
     public Datatype createDatatype(String typeLocalName)
             throws DatatypeException {
         if ("ID".equals(typeLocalName)) {

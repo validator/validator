@@ -63,6 +63,7 @@ public final class CheckerValidator implements Validator {
      * @return the wrapped <code>Checker</code>
      * @see com.thaiopensource.validate.Validator#getContentHandler()
      */
+    @Override
     public ContentHandler getContentHandler() {
         return checker;
     }
@@ -72,6 +73,7 @@ public final class CheckerValidator implements Validator {
      * @return <code>null</code>
      * @see com.thaiopensource.validate.Validator#getDTDHandler()
      */
+    @Override
     public DTDHandler getDTDHandler() {
         return null;
     }
@@ -80,6 +82,7 @@ public final class CheckerValidator implements Validator {
      * Resets the wrapped <code>Checker</code>.
      * @see com.thaiopensource.validate.Validator#reset()
      */
+    @Override
     public void reset() {
         this.checker.reset();
     }

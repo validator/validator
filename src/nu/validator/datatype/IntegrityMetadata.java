@@ -46,6 +46,7 @@ public final class IntegrityMetadata extends AbstractDatatype {
     private final static boolean WARN = System.getProperty(
             "nu.validator.datatype.warn", "").equals("true") ? true : false;
 
+    @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         StringBuilder builder = new StringBuilder();
         int len = literal.length();

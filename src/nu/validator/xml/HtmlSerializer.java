@@ -148,6 +148,7 @@ public class HtmlSerializer implements ContentHandler {
      * @throws SAXException
      *             if there are IO problems
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         try {
@@ -178,6 +179,7 @@ public class HtmlSerializer implements ContentHandler {
      * @throws SAXException
      *             if there are IO problems
      */
+    @Override
     public void endDocument() throws SAXException {
         try {
             this.writer.close();
@@ -200,6 +202,7 @@ public class HtmlSerializer implements ContentHandler {
      * @throws SAXException
      *             if there are IO problems
      */
+    @Override
     public void endElement(String namespaceURI, String localName, String qName)
             throws SAXException {
         try {
@@ -217,6 +220,7 @@ public class HtmlSerializer implements ContentHandler {
     /**
      * Must be called first.
      */
+    @Override
     public void startDocument() throws SAXException {
         try {
             switch (doctype) {
@@ -252,6 +256,7 @@ public class HtmlSerializer implements ContentHandler {
      * @throws SAXException
      *             if there are IO problems
      */
+    @Override
     public void startElement(String namespaceURI, String localName,
             String qName, Attributes atts) throws SAXException {
         try {
@@ -344,28 +349,34 @@ public class HtmlSerializer implements ContentHandler {
     }
 
     /** Does nothing. */
+    @Override
     public void endPrefixMapping(String str) throws SAXException {
     }
 
     /** Does nothing. */
+    @Override
     public void ignorableWhitespace(char[] values, int param, int param2)
             throws SAXException {
     }
 
     /** Does nothing. */
+    @Override
     public void processingInstruction(String str, String str1)
             throws SAXException {
     }
 
     /** Does nothing. */
+    @Override
     public void setDocumentLocator(Locator locator) {
     }
 
     /** Does nothing. */
+    @Override
     public void skippedEntity(String str) throws SAXException {
     }
 
     /** Does nothing. */
+    @Override
     public void startPrefixMapping(String str, String str1) throws SAXException {
     }
 }

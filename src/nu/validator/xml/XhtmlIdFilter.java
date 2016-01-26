@@ -41,6 +41,7 @@ public class XhtmlIdFilter extends XMLFilterImpl {
     /**
      * @see org.xml.sax.helpers.XMLFilterImpl#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == uri) {
             int index = atts.getIndex("", "id");

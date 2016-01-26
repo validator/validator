@@ -38,6 +38,7 @@ final class HorizontalCellComparator implements Comparator<Cell> {
         super();
     }
 
+    @Override
     public int compare(Cell cell0, Cell cell1) {
         if (cell0.getLeft() < cell1.getLeft()) {
             return -1;

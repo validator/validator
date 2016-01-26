@@ -55,6 +55,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return <code>true</code> if valid and <code>false</code> if not
      * @see org.relaxng.datatype.Datatype#isValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
+    @Override
     public final boolean isValid(String literal, ValidationContext context) {
         try {
             checkValid(literal);
@@ -71,6 +72,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @throws DatatypeException if the literal does not conform to the datatype definition
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
+    @Override
     public void checkValid(String literal, ValidationContext context) throws DatatypeException {
         checkValid(literal);
     }
@@ -83,6 +85,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return An unoptimized <code>DatatypeStreamingValidator</code>
      * @see org.relaxng.datatype.Datatype#createStreamingValidator(org.relaxng.datatype.ValidationContext)
      */
+    @Override
     public DatatypeStreamingValidator createStreamingValidator(
             ValidationContext context) {
         return new DatatypeStreamingValidatorImpl(this);
@@ -96,6 +99,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return the <code>literal</code> that was passed in
      * @see org.relaxng.datatype.Datatype#createValue(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
+    @Override
     public Object createValue(String literal, ValidationContext context) {
         return literal;
     }
@@ -108,6 +112,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return <code>true</code> if the values are equal, <code>false</code> otherwise
      * @see org.relaxng.datatype.Datatype#sameValue(java.lang.Object, java.lang.Object)
      */
+    @Override
     public final boolean sameValue(Object value1, Object value2) {
         if (value1 == null) {
             return (value2 == null);
@@ -123,6 +128,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return the hash code
      * @see org.relaxng.datatype.Datatype#valueHashCode(java.lang.Object)
      */
+    @Override
     public final int valueHashCode(Object value) {
         return value.hashCode();
     }
@@ -132,6 +138,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return <code>Datatype.ID_TYPE_NULL</code>
      * @see org.relaxng.datatype.Datatype#getIdType()
      */
+    @Override
     public final int getIdType() {
         return Datatype.ID_TYPE_NULL;
     }
@@ -141,6 +148,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return <code>false</code>
      * @see org.relaxng.datatype.Datatype#isContextDependent()
      */
+    @Override
     public boolean isContextDependent() {
         return false;
     }

@@ -60,6 +60,7 @@ public class ContentSecurityPolicy extends AbstractDatatype {
     private final static boolean WARN = System.getProperty(
             "nu.validator.datatype.warn", "").equals("true") ? true : false;
 
+    @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
             List<Warning> warnings = new ArrayList<>();

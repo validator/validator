@@ -71,6 +71,7 @@ public class DataUriEntityResolver implements EntityResolver {
         this(null, false ,null);
     }
     
+    @Override
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {
         if (DataUri.startsWithData(systemId)) {

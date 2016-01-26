@@ -90,6 +90,7 @@ public final class TableChecker extends Checker {
      * @see nu.validator.checker.Checker#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         if ("http://www.w3.org/1999/xhtml".equals(uri)) {
@@ -121,6 +122,7 @@ public final class TableChecker extends Checker {
      * @see nu.validator.checker.Checker#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         if ("http://www.w3.org/1999/xhtml".equals(uri)) {
@@ -149,6 +151,7 @@ public final class TableChecker extends Checker {
     /**
      * @see nu.validator.checker.Checker#reset()
      */
+    @Override
     public void reset() {
         stack.clear();
         current = null;

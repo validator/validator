@@ -33,6 +33,7 @@ public class ImageCandidateStringsWidthRequired extends ImageCandidateStrings {
         super();
     }
 
+    @Override
     protected boolean widthRequired() {
         return true;
     }

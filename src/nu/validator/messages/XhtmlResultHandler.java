@@ -39,15 +39,18 @@ public class XhtmlResultHandler implements ResultHandler {
         this.emitter = emitter;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         emitter.characters(ch, start, length);
     }
 
+    @Override
     public void endResult() throws SAXException {
         emitter.endElement("p");
     }
 
+    @Override
     public void startResult(Result result) throws SAXException {
         switch(result) {
             case SUCCESS:

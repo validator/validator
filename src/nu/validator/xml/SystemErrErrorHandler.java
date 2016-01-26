@@ -73,6 +73,7 @@ public class SystemErrErrorHandler implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
+    @Override
     public void warning(SAXParseException e) throws SAXException {
         emitMessage(e, "warning");
     }
@@ -80,6 +81,7 @@ public class SystemErrErrorHandler implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
+    @Override
     public void error(SAXParseException e) throws SAXException {
         inError = true;
         emitMessage(e, "error");
@@ -88,6 +90,7 @@ public class SystemErrErrorHandler implements ErrorHandler {
     /**
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
+    @Override
     public void fatalError(SAXParseException e) throws SAXException {
         inError = true;
         emitMessage(e, "fatal error");

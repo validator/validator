@@ -42,6 +42,7 @@ public class RoleAttributeFilteringSchemaWrapper implements Schema {
      * @return
      * @see com.thaiopensource.validate.Schema#createValidator(com.thaiopensource.util.PropertyMap)
      */
+    @Override
     public Validator createValidator(PropertyMap properties) {
         return new RoleAttributeFilteringValidatorWrapper(
                 delegate.createValidator(properties), properties);
@@ -51,6 +52,7 @@ public class RoleAttributeFilteringSchemaWrapper implements Schema {
      * @return
      * @see com.thaiopensource.validate.Schema#getProperties()
      */
+    @Override
     public PropertyMap getProperties() {
         return delegate.getProperties();
     }

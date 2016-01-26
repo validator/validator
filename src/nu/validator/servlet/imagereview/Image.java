@@ -120,18 +120,22 @@ public class Image implements Locator {
         return linked;
     }
 
+    @Override
     public int getColumnNumber() {
         return column;
     }
 
+    @Override
     public int getLineNumber() {
         return line;
     }
 
+    @Override
     public String getPublicId() {
         return publicId;
     }
 
+    @Override
     public String getSystemId() {
         return systemId;
     }

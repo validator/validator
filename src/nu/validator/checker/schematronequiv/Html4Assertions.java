@@ -320,6 +320,7 @@ public class Html4Assertions extends Checker {
         stack[0] = null;
     }
 
+    @Override
     public void reset() {
         openSingleSelects.clear();
         formControlReferences.clear();

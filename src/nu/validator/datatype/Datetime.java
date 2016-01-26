@@ -58,6 +58,7 @@ public final class Datetime extends AbstractDatetime {
      * @return the regexp for this datatype
      * @see nu.validator.datatype.AbstractDatetime#getPattern()
      */
+    @Override
     protected Pattern getPattern() {
         return THE_PATTERN;
     }

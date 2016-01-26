@@ -92,6 +92,7 @@ public class IriRef extends AbstractDatatype {
         return null;
     }
 
+    @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         String messagePrologue = "";
         int length = literal.length();

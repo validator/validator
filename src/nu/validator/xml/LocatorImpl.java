@@ -38,18 +38,22 @@ public final class LocatorImpl implements Locator {
         this.line = locator.getLineNumber();
     }
     
+    @Override
     public int getColumnNumber() {
         return column;
     }
 
+    @Override
     public int getLineNumber() {
         return line;
     }
 
+    @Override
     public String getPublicId() {
         return publicId;
     }
 
+    @Override
     public String getSystemId() {
         return systemId;
     }

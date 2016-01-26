@@ -51,6 +51,7 @@ public final class Idrefs extends AbstractDatatype {
      * @throws DatatypeException if the value isn't valid
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
+    @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);

@@ -242,6 +242,7 @@ public class VerifierServlet extends HttpServlet {
      * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
+    @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();

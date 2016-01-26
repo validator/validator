@@ -50,6 +50,7 @@ public class RoleAttributeFilteringValidatorWrapper implements Validator {
      * @return
      * @see com.thaiopensource.validate.Validator#getContentHandler()
      */
+    @Override
     public ContentHandler getContentHandler() {
         return new RoleAttributeFilteringContentHandlerWrapper(
                 delegate.getContentHandler(),
@@ -60,6 +61,7 @@ public class RoleAttributeFilteringValidatorWrapper implements Validator {
      * @return
      * @see com.thaiopensource.validate.Validator#getDTDHandler()
      */
+    @Override
     public DTDHandler getDTDHandler() {
         return delegate.getDTDHandler();
     }
@@ -68,6 +70,7 @@ public class RoleAttributeFilteringValidatorWrapper implements Validator {
      * 
      * @see com.thaiopensource.validate.Validator#reset()
      */
+    @Override
     public void reset() {
         delegate.reset();
     }

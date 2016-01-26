@@ -103,6 +103,7 @@ public final class TextContentChecker extends Checker {
     /**
      * @see nu.validator.checker.Checker#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         for (int i = start; i < start + length; i++) {
@@ -128,6 +129,7 @@ public final class TextContentChecker extends Checker {
      * @see nu.validator.checker.Checker#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         if (inEmptyTitleOrOption && XHTML_URL.equals(uri)
@@ -237,6 +239,7 @@ public final class TextContentChecker extends Checker {
      * @see nu.validator.checker.Checker#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         stack.addLast(streamingValidatorFor(uri, localName, atts));
@@ -250,6 +253,7 @@ public final class TextContentChecker extends Checker {
     /**
      * @see nu.validator.checker.Checker#reset()
      */
+    @Override
     public void reset() {
         stack.clear();
     }

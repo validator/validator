@@ -60,6 +60,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
         delegate.characters(arg0, arg1, arg2);
     }
@@ -68,6 +69,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         delegate.endDocument();
     }
@@ -80,6 +82,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String arg0, String arg1, String arg2)
             throws SAXException {
         delegate.endElement(arg0, arg1, arg2);
@@ -90,6 +93,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
         delegate.endPrefixMapping(arg0);
     }
@@ -101,6 +105,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
         delegate.ignorableWhitespace(arg0, arg1, arg2);
@@ -113,6 +118,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void processingInstruction(String arg0, String arg1)
             throws SAXException {
         delegate.processingInstruction(arg0, arg1);
@@ -122,6 +128,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @param arg0
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator arg0) {
         locator = arg0;
         delegate.setDocumentLocator(arg0);
@@ -132,6 +139,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
         delegate.skippedEntity(arg0);
     }
@@ -140,6 +148,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         delegate.startDocument();
     }
@@ -153,6 +162,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String ns, String arg1, String arg2,
             Attributes attributes) throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == ns) {
@@ -283,6 +293,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
         delegate.startPrefixMapping(arg0, arg1);

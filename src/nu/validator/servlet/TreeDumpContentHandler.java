@@ -70,6 +70,7 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
     /**
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         try {
@@ -84,6 +85,7 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         }
     }
 
+    @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         try {
@@ -97,6 +99,7 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         }
     }
 
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         try {
@@ -142,6 +145,7 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         }
     }
 
+    @Override
     public void comment(char[] ch, int offset, int len) throws SAXException {
         try {
             printLead();
@@ -153,6 +157,7 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         }
     }
 
+    @Override
     public void startDTD(String name, String publicIdentifier,
             String systemIdentifier) throws SAXException {
         try {
@@ -175,6 +180,7 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         }
     }
 
+    @Override
     public void endDocument() throws SAXException {
         try {
             if (inCharacters) {
@@ -190,42 +196,54 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         }
     }
 
+    @Override
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
     }
 
+    @Override
     public void startEntity(String arg0) throws SAXException {
     }
 
+    @Override
     public void endCDATA() throws SAXException {
     }
 
+    @Override
     public void endDTD() throws SAXException {
     }
 
+    @Override
     public void endEntity(String arg0) throws SAXException {
     }
 
+    @Override
     public void startCDATA() throws SAXException {
     }
 
+    @Override
     public void endPrefixMapping(String prefix) throws SAXException {
     }
 
+    @Override
     public void ignorableWhitespace(char[] ch, int start, int length)
             throws SAXException {
     }
 
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
     }
 
+    @Override
     public void setDocumentLocator(Locator locator) {
     }
 
+    @Override
     public void skippedEntity(String name) throws SAXException {
     }
 
+    @Override
     public void startDocument() throws SAXException {
     }
 

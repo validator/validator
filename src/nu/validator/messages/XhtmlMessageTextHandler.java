@@ -65,6 +65,7 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
         this.emitter = emitter;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         String str = new String(ch);
@@ -118,18 +119,22 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
         }
     }
 
+    @Override
     public void endCode() throws SAXException {
         emitter.endElement("code");
     }
 
+    @Override
     public void endLink() throws SAXException {
         emitter.endElement("a");        
     }
 
+    @Override
     public void startCode() throws SAXException {
         emitter.startElement("code");
     }
 
+    @Override
     public void startLink(String href, String title) throws SAXException {
         assert href != null;
         attrs.clear();

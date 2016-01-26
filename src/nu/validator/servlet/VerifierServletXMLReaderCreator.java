@@ -55,6 +55,7 @@ public class VerifierServletXMLReaderCreator implements XMLReaderCreator {
     /**
      * @see com.thaiopensource.xml.sax.XMLReaderCreator#createXMLReader()
      */
+    @Override
     public XMLReader createXMLReader() throws SAXException {
         XMLReader r = new SAXDriver();
         r.setFeature("http://xml.org/sax/features/external-general-entities",

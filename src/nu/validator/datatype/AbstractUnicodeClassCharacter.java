@@ -87,6 +87,7 @@ public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
                 }
             }
             
+            @Override
             public void addCharacters(char[] buf, int start, int len) {
                 if (codepoint == -1) {
                     return;
@@ -97,6 +98,7 @@ public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
                 }
             }
 
+            @Override
             public void checkValid() throws DatatypeException {
                 if (codepoint == -2) {
                     throw newDatatypeException("The empty string is not a " + getName() + ".");
@@ -107,6 +109,7 @@ public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
                 }
             }
 
+            @Override
             public boolean isValid() {
                 try {
                     checkValid();

@@ -254,6 +254,7 @@ final class Cell implements Locator {
      * 
      * @return the columnNumber
      */
+    @Override
     public int getColumnNumber() {
         return columnNumber;
     }
@@ -263,6 +264,7 @@ final class Cell implements Locator {
      * 
      * @return the lineNumber
      */
+    @Override
     public int getLineNumber() {
         return lineNumber;
     }
@@ -272,6 +274,7 @@ final class Cell implements Locator {
      * 
      * @return the publicId
      */
+    @Override
     public String getPublicId() {
         return publicId;
     }
@@ -281,6 +284,7 @@ final class Cell implements Locator {
      * 
      * @return the systemId
      */
+    @Override
     public String getSystemId() {
         return systemId;
     }

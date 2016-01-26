@@ -34,14 +34,17 @@ public class ListErrorHandler implements ErrorHandler {
     
     private LinkedList<String> errors = new LinkedList<>();
     
+    @Override
     public void error(SAXParseException spe) throws SAXException {
         errors.add(Integer.toString(spe.getColumnNumber()) + ": " + spe.getMessage());
     }
 
+    @Override
     public void fatalError(SAXParseException arg0) throws SAXException {
         fatal = true;
     }
 
+    @Override
     public void warning(SAXParseException arg0) throws SAXException {
     }
 

@@ -51,6 +51,7 @@ public class Id extends AbstractDatatype {
      * @throws DatatypeException if the value isn't valid
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
+    @Override
     public void checkValid(CharSequence literal)
             throws DatatypeException {
         int len = literal.length();

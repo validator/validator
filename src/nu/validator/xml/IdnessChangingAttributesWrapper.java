@@ -66,6 +66,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getIndex(java.lang.String, java.lang.String)
      */
+    @Override
     public int getIndex(String arg0, String arg1) {
         return delegate.getIndex(arg0, arg1);
     }
@@ -75,6 +76,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getIndex(java.lang.String)
      */
+    @Override
     public int getIndex(String arg0) {
         return delegate.getIndex(arg0);
     }
@@ -83,6 +85,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getLength()
      */
+    @Override
     public int getLength() {
         return delegate.getLength();
     }
@@ -92,6 +95,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getLocalName(int)
      */
+    @Override
     public String getLocalName(int arg0) {
         return delegate.getLocalName(arg0);
     }
@@ -101,6 +105,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getQName(int)
      */
+    @Override
     public String getQName(int arg0) {
         return delegate.getQName(arg0);
     }
@@ -110,6 +115,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getType(int)
      */
+    @Override
     public String getType(int index) {
         if (idIndex == index || xmlIdIndex == index) {
             return "ID";
@@ -124,6 +130,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getType(java.lang.String, java.lang.String)
      */
+    @Override
     public String getType(String uri, String localName) {
         int index = getIndex(uri, localName);
         if (index >= 0) {
@@ -138,6 +145,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getType(java.lang.String)
      */
+    @Override
     public String getType(String qName) {
         int index = getIndex(qName);
         if (index >= 0) {
@@ -152,6 +160,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getURI(int)
      */
+    @Override
     public String getURI(int arg0) {
         return delegate.getURI(arg0);
     }
@@ -161,6 +170,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getValue(int)
      */
+    @Override
     public String getValue(int index) {
         if (xmlIdValue == null) {
             return delegate.getValue(index);            
@@ -179,6 +189,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getValue(java.lang.String, java.lang.String)
      */
+    @Override
     public String getValue(String uri, String localName) {
         if (xmlIdValue == null) {
             return delegate.getValue(uri, localName);            
@@ -199,6 +210,7 @@ public final class IdnessChangingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getValue(java.lang.String)
      */
+    @Override
     public String getValue(String qName) {
         if (xmlIdValue == null) {
             return delegate.getValue(qName);            

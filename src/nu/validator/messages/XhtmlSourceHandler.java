@@ -67,6 +67,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         this.lineOffset = lineOffset;
     }
     
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         maybeOpen();
@@ -101,6 +102,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         }
     }
 
+    @Override
     public void endCharHilite() throws SAXException {
         if (!charOpen) {
             return;
@@ -109,12 +111,14 @@ public class XhtmlSourceHandler implements SourceHandler {
         charOpen = false;
     }
 
+    @Override
     public void endRange() throws SAXException {
         assert rangeOpen != null;
         emitter.endElement("b");
         rangeOpen = null;
     }
 
+    @Override
     public void endSource() throws SAXException {
         if (charOpen) {
             endCharHilite();
@@ -129,6 +133,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         }
     }
 
+    @Override
     public void newLine() throws SAXException {
         maybeOpen();
         if (charOpen) {
@@ -145,6 +150,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         lineOpen = false;
     }
 
+    @Override
     public void startCharHilite(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
         maybeOpen();
@@ -156,6 +162,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         charOpen = true;
     }
 
+    @Override
     public void startRange(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
         maybeOpen();
@@ -167,6 +174,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         emitter.startElement("b", attrs);
     }
 
+    @Override
     public void startSource(String type, String encoding) throws SAXException {
         listOpen = false;
         lineOpen = false;
@@ -176,6 +184,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         oneBasedLineErrors = null;
     }
 
+    @Override
     public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
         this.oneBasedLineErrors = oneBasedLineErrors;
     }

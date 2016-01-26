@@ -76,6 +76,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getIndex(java.lang.String, java.lang.String)
      */
+    @Override
     public int getIndex(String uri, String localName) {
         return findIndex(delegate.getIndex(uri, localName));
     }
@@ -85,6 +86,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getIndex(java.lang.String)
      */
+    @Override
     public int getIndex(String qName) {
         return findIndex(delegate.getIndex(qName));
     }
@@ -93,6 +95,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getLength()
      */
+    @Override
     public int getLength() {
         return permutation.length;
     }
@@ -102,6 +105,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getLocalName(int)
      */
+    @Override
     public String getLocalName(int index) {
         if (index < 0 && index >= permutation.length) {
             return null;
@@ -114,6 +118,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getQName(int)
      */
+    @Override
     public String getQName(int index) {
         if (index < 0 && index >= permutation.length) {
             return null;
@@ -126,6 +131,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getType(int)
      */
+    @Override
     public String getType(int index) {
         if (index < 0 && index >= permutation.length) {
             return null;
@@ -139,6 +145,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getType(java.lang.String, java.lang.String)
      */
+    @Override
     public String getType(String uri, String localName) {
         return delegate.getType(uri, localName);
     }
@@ -148,6 +155,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getType(java.lang.String)
      */
+    @Override
     public String getType(String qName) {
         return delegate.getType(qName);
     }
@@ -157,6 +165,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getURI(int)
      */
+    @Override
     public String getURI(int index) {
         if (index < 0 && index >= permutation.length) {
             return null;
@@ -169,6 +178,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getValue(int)
      */
+    @Override
     public String getValue(int index) {
         if (index < 0 && index >= permutation.length) {
             return null;
@@ -182,6 +192,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getValue(java.lang.String, java.lang.String)
      */
+    @Override
     public String getValue(String uri, String localName) {
         return delegate.getValue(uri, localName);
     }
@@ -191,6 +202,7 @@ public final class PermutingAttributesWrapper implements Attributes {
      * @return
      * @see org.xml.sax.Attributes#getValue(java.lang.String)
      */
+    @Override
     public String getValue(String qName) {
         return delegate.getValue(qName);
     }

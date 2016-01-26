@@ -43,6 +43,7 @@ public class FunctionBody extends AbstractDatatype {
         super();
     }
 
+    @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
             Reader reader = new BufferedReader((new StringReader(

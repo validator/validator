@@ -35,6 +35,7 @@ public class Iri extends IriRef {
         super();
     }
 
+    @Override
     protected boolean isAbsolute() {
         return true;
     }

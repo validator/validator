@@ -146,6 +146,7 @@ public abstract class Checker implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
     }
@@ -154,6 +155,7 @@ public abstract class Checker implements ContentHandler {
      * Calls <code>reset()</code>.
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         reset();
     }
@@ -162,6 +164,7 @@ public abstract class Checker implements ContentHandler {
      * Calls <code>reset()</code>.
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         reset();
     }
@@ -171,6 +174,7 @@ public abstract class Checker implements ContentHandler {
      * 
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public final void ignorableWhitespace(char[] ch, int start, int length)
             throws SAXException {
         characters(ch, start, length);
@@ -179,6 +183,7 @@ public abstract class Checker implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
     }
@@ -187,6 +192,7 @@ public abstract class Checker implements ContentHandler {
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
     }
@@ -194,6 +200,7 @@ public abstract class Checker implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String prefix) throws SAXException {
     }
 
@@ -201,6 +208,7 @@ public abstract class Checker implements ContentHandler {
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
     }
@@ -208,6 +216,7 @@ public abstract class Checker implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String name) throws SAXException {
     }
 
@@ -215,6 +224,7 @@ public abstract class Checker implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
     }
@@ -223,6 +233,7 @@ public abstract class Checker implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
     }

@@ -39,34 +39,42 @@ public class JsonSourceHandler implements SourceHandler {
         this.handler = handler;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         handler.characters(ch, start, length);
     }
 
+    @Override
     public void endCharHilite() throws SAXException {
     }
 
+    @Override
     public void endRange() throws SAXException {
     }
 
+    @Override
     public void endSource() throws SAXException {
         handler.endString();
         handler.endObject();
     }
 
+    @Override
     public void newLine() throws SAXException {
         handler.characters(NEWLINE, 0, 1);
     }
 
+    @Override
     public void startCharHilite(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
     }
 
+    @Override
     public void startRange(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
     }
 
+    @Override
     public void startSource(String type, String encoding) throws SAXException {
         handler.startObject();
         if (type != null) {
@@ -81,6 +89,7 @@ public class JsonSourceHandler implements SourceHandler {
         handler.startString();
     }
     
+    @Override
     public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
         
     }

@@ -63,6 +63,7 @@ public class LocalCacheEntityResolver implements EntityResolver {
      * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {
         String path = PATH_MAP.get(systemId);

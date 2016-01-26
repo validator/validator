@@ -30,6 +30,7 @@ public class ImageCandidateURL extends IriRef {
         super();
     }
 
+    @Override
     protected boolean reportValue() {
         return true;
     }

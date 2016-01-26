@@ -61,27 +61,33 @@ public class ImageCollector implements Validator, ContentHandler, Iterable<Image
         this.context = c;
     }
     
+    @Override
     public ContentHandler getContentHandler() {
         return this;
     }
 
+    @Override
     public DTDHandler getDTDHandler() {
         return null;
     }
 
+    @Override
     public void reset() {
     }
 
     /**
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
     }
 
+    @Override
     public void endDocument() throws SAXException {
     }
 
+    @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
         if (depthInLink > 0) {
@@ -89,27 +95,34 @@ public class ImageCollector implements Validator, ContentHandler, Iterable<Image
         }
     }
 
+    @Override
     public void endPrefixMapping(String prefix) throws SAXException {
     }
 
+    @Override
     public void ignorableWhitespace(char[] ch, int start, int length)
             throws SAXException {
     }
 
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
     }
 
+    @Override
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
     }
 
+    @Override
     public void skippedEntity(String name) throws SAXException {
     }
 
+    @Override
     public void startDocument() throws SAXException {
     }
 
+    @Override
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
         if (depthInLink > 0) {
@@ -148,10 +161,12 @@ public class ImageCollector implements Validator, ContentHandler, Iterable<Image
     }
     
 
+    @Override
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
     }
 
+    @Override
     public Iterator<Image> iterator() {
         return images.iterator();
     }

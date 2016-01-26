@@ -46,6 +46,7 @@ public class CombineLexicalHandler implements LexicalHandler {
      * @throws SAXException
      * @see org.xml.sax.ext.LexicalHandler#comment(char[], int, int)
      */
+    @Override
     public void comment(char[] ch, int start, int length) throws SAXException {
         first.comment(ch, start, length);
         second.comment(ch, start, length);
@@ -55,6 +56,7 @@ public class CombineLexicalHandler implements LexicalHandler {
      * @throws SAXException
      * @see org.xml.sax.ext.LexicalHandler#endCDATA()
      */
+    @Override
     public void endCDATA() throws SAXException {
         first.endCDATA();
         second.endCDATA();
@@ -64,6 +66,7 @@ public class CombineLexicalHandler implements LexicalHandler {
      * @throws SAXException
      * @see org.xml.sax.ext.LexicalHandler#endDTD()
      */
+    @Override
     public void endDTD() throws SAXException {
         first.endDTD();
         second.endDTD();
@@ -74,6 +77,7 @@ public class CombineLexicalHandler implements LexicalHandler {
      * @throws SAXException
      * @see org.xml.sax.ext.LexicalHandler#endEntity(java.lang.String)
      */
+    @Override
     public void endEntity(String name) throws SAXException {
         first.endEntity(name);
         second.endEntity(name);
@@ -83,6 +87,7 @@ public class CombineLexicalHandler implements LexicalHandler {
      * @throws SAXException
      * @see org.xml.sax.ext.LexicalHandler#startCDATA()
      */
+    @Override
     public void startCDATA() throws SAXException {
         first.startCDATA();
         second.startCDATA();
@@ -95,6 +100,7 @@ public class CombineLexicalHandler implements LexicalHandler {
      * @throws SAXException
      * @see org.xml.sax.ext.LexicalHandler#startDTD(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void startDTD(String name, String publicId, String systemId) throws SAXException {
         first.startDTD(name, publicId, systemId);
         second.startDTD(name, publicId, systemId);
@@ -105,6 +111,7 @@ public class CombineLexicalHandler implements LexicalHandler {
      * @throws SAXException
      * @see org.xml.sax.ext.LexicalHandler#startEntity(java.lang.String)
      */
+    @Override
     public void startEntity(String name) throws SAXException {
         first.startEntity(name);
         second.startEntity(name);

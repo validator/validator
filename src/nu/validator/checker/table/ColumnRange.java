@@ -165,6 +165,7 @@ final class ColumnRange {
     /**
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
         if (isSingleCol()) {
             return Integer.toString(right);

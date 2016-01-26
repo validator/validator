@@ -57,6 +57,7 @@ public final class Location implements Comparable<Location>, Cloneable {
         this.column = column;
     }
 
+    @Override
     public int compareTo(Location o) {
         if (this.line < o.line) {
             return -1;

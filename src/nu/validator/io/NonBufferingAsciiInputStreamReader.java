@@ -44,12 +44,14 @@ public class NonBufferingAsciiInputStreamReader extends Reader {
     /**
      * @throws java.io.IOException
      */
+    @Override
     public void close() throws IOException {
         stream.close();
     }
     /**
      * @see java.io.Reader#read()
      */
+    @Override
     public int read() throws IOException {
         int rv = stream.read();
         if (rv < 0x80) {
@@ -62,6 +64,7 @@ public class NonBufferingAsciiInputStreamReader extends Reader {
     /**
      * @see java.io.Reader#read(char[], int, int)
      */
+    @Override
     public int read(char[] buf, int off, int len) throws IOException {
         int val = read();
         if(val == -1) {

@@ -50,6 +50,7 @@ public class CombineContentHandler implements ContentHandler {
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
         first.characters(arg0, arg1, arg2);
         second.characters(arg0, arg1, arg2);
@@ -59,6 +60,7 @@ public class CombineContentHandler implements ContentHandler {
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         first.endDocument();
         second.endDocument();
@@ -72,6 +74,7 @@ public class CombineContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String arg0, String arg1, String arg2)
             throws SAXException {
         first.endElement(arg0, arg1, arg2);
@@ -83,6 +86,7 @@ public class CombineContentHandler implements ContentHandler {
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
         first.endPrefixMapping(arg0);
         second.endPrefixMapping(arg0);
@@ -95,6 +99,7 @@ public class CombineContentHandler implements ContentHandler {
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
         first.ignorableWhitespace(arg0, arg1, arg2);
@@ -108,6 +113,7 @@ public class CombineContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void processingInstruction(String arg0, String arg1)
             throws SAXException {
         first.processingInstruction(arg0, arg1);
@@ -118,6 +124,7 @@ public class CombineContentHandler implements ContentHandler {
      * @param arg0
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator arg0) {
         first.setDocumentLocator(arg0);
         second.setDocumentLocator(arg0);
@@ -128,6 +135,7 @@ public class CombineContentHandler implements ContentHandler {
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
         first.skippedEntity(arg0);
         second.skippedEntity(arg0);
@@ -137,6 +145,7 @@ public class CombineContentHandler implements ContentHandler {
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         first.startDocument();
         second.startDocument();
@@ -151,6 +160,7 @@ public class CombineContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String arg0, String arg1, String arg2,
             Attributes arg3) throws SAXException {
         first.startElement(arg0, arg1, arg2, arg3);
@@ -164,6 +174,7 @@ public class CombineContentHandler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
         first.startPrefixMapping(arg0, arg1);

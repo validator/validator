@@ -76,12 +76,14 @@ public class SaxCompiler implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator arg0) {
     }
 
     /**
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         try {
             w.write("/"
@@ -95,6 +97,7 @@ public class SaxCompiler implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         try {
             if (!omitRoot) {
@@ -115,6 +118,7 @@ public class SaxCompiler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
         ensureState();
@@ -132,6 +136,7 @@ public class SaxCompiler implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
         try {
             w.write("contentHandler.endPrefixMapping(");
@@ -146,6 +151,7 @@ public class SaxCompiler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String arg0, String arg1, String arg2,
             Attributes attrs) throws SAXException {
         ensureState();
@@ -184,6 +190,7 @@ public class SaxCompiler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String arg0, String arg1, String arg2)
             throws SAXException {
         if (omitRoot && level == 1) {
@@ -206,6 +213,7 @@ public class SaxCompiler implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] buf, int offset, int length)
             throws SAXException {
         sb.append(buf, offset, length);
@@ -224,6 +232,7 @@ public class SaxCompiler implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
     }
@@ -232,6 +241,7 @@ public class SaxCompiler implements ContentHandler {
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
         try {
@@ -280,6 +290,7 @@ public class SaxCompiler implements ContentHandler {
     /**
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
         throw new SAXException("skippedEntity not supported");
     }

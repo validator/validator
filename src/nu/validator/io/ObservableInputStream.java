@@ -47,6 +47,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#available()
      */
+    @Override
     public int available() throws IOException {
         try {
             return delegate.available();
@@ -62,6 +63,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#close()
      */
+    @Override
     public void close() throws IOException {
         try {
             observer.closeCalled();
@@ -78,6 +80,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#mark(int)
      */
+    @Override
     public void mark(int arg0) {
         try {
             delegate.mark(arg0);
@@ -94,6 +97,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#markSupported()
      */
+    @Override
     public boolean markSupported() {
         try {
             return delegate.markSupported();
@@ -111,6 +115,7 @@ public class ObservableInputStream extends InputStream {
      * @return
      * @throws java.io.IOException
      */
+    @Override
     public int read() throws IOException {
         try {
             return delegate.read();
@@ -126,6 +131,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#read(byte[])
      */
+    @Override
     public int read(byte[] arg0) throws IOException {
         try {
             return delegate.read(arg0);
@@ -141,6 +147,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#read(byte[], int, int)
      */
+    @Override
     public int read(byte[] arg0, int arg1, int arg2) throws IOException {
         try {
             return delegate.read(arg0, arg1, arg2);
@@ -156,6 +163,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#reset()
      */
+    @Override
     public void reset() throws IOException {
         try {
             delegate.reset();
@@ -171,6 +179,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.io.InputStream#skip(long)
      */
+    @Override
     public long skip(long arg0) throws IOException {
         try {
             return delegate.skip(arg0);
@@ -187,6 +196,7 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.lang.Object#finalize()
      */
+    @Override
     protected void finalize() throws Throwable {
         observer.finalizerCalled();
         super.finalize();

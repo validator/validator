@@ -94,6 +94,7 @@ public final class Week extends AbstractDatatype {
         }
     }
 
+    @Override
     public void checkValid(CharSequence literal)
             throws DatatypeException {
         Matcher m = THE_PATTERN.matcher(literal);

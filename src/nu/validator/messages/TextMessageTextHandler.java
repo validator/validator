@@ -41,6 +41,7 @@ public class TextMessageTextHandler implements MessageTextHandler {
         this.asciiQuotes = asciiQuotes;
     }
 
+    @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         try {
@@ -76,6 +77,7 @@ public class TextMessageTextHandler implements MessageTextHandler {
         }
     }
 
+    @Override
     public void endCode() throws SAXException {
         try {
             if (asciiQuotes) {
@@ -88,9 +90,11 @@ public class TextMessageTextHandler implements MessageTextHandler {
         }
     }
 
+    @Override
     public void endLink() throws SAXException {
     }
 
+    @Override
     public void startCode() throws SAXException {
         try {
             if (asciiQuotes) {
@@ -103,6 +107,7 @@ public class TextMessageTextHandler implements MessageTextHandler {
         }
     }
 
+    @Override
     public void startLink(String href, String title) throws SAXException {
     }
 
