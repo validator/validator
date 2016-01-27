@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 2007-2008 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -31,19 +31,22 @@ import com.ibm.icu.text.UnicodeSet;
 
 public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
 
-    private static final int SURROGATE_OFFSET = 0x10000 - (0xD800 << 10) - 0xDC00;
-    
+    private static final int SURROGATE_OFFSET = 0x10000 - (0xD800 << 10)
+            - 0xDC00;
+
     protected abstract UnicodeSet getUnicodeSet();
-    
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         switch (literal.length()) {
             case 0:
-                throw newDatatypeException("The empty string is not a " + getName() + ".");            
+                throw newDatatypeException(
+                        "The empty string is not a " + getName() + ".");
             case 1:
                 char c = literal.charAt(0);
                 if (!getUnicodeSet().contains(c)) {
-                    throw newDatatypeException(0, "The character ", c, " is not a " + getName() + ".");
+                    throw newDatatypeException(0, "The character ", c,
+                            " is not a " + getName() + ".");
                 }
                 return;
             case 2:
@@ -52,25 +55,28 @@ public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
                 if ((lo & 0xFC00) == 0xDC00 && (hi & 0xFC00) == 0xD800) {
                     int codepoint = (hi << 10) + lo + SURROGATE_OFFSET;
                     if (!getUnicodeSet().contains(codepoint)) {
-                        throw newDatatypeException(0, "The character ", "" + hi + lo, " is not a " + getName() + ".");
+                        throw newDatatypeException(0, "The character ",
+                                "" + hi + lo, " is not a " + getName() + ".");
                     }
-                    return;                    
+                    return;
                 }
                 // else fall through.
             default:
-                throw newDatatypeException("A " + getName() + " must be a single character.");
+                throw newDatatypeException(
+                        "A " + getName() + " must be a single character.");
         }
     }
 
     /**
      * @see nu.validator.datatype.AbstractDatatype#createStreamingValidator(org.relaxng.datatype.ValidationContext)
      */
-    @Override public DatatypeStreamingValidator createStreamingValidator(
+    @Override
+    public DatatypeStreamingValidator createStreamingValidator(
             ValidationContext context) {
-        return new DatatypeStreamingValidator () {
+        return new DatatypeStreamingValidator() {
 
             int codepoint = -2;
-            
+
             private void addCharacter(char c) {
                 if (codepoint == -1) {
                     return;
@@ -86,7 +92,7 @@ public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
                     codepoint = -1;
                 }
             }
-            
+
             @Override
             public void addCharacters(char[] buf, int start, int len) {
                 if (codepoint == -1) {
@@ -101,11 +107,15 @@ public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
             @Override
             public void checkValid() throws DatatypeException {
                 if (codepoint == -2) {
-                    throw newDatatypeException("The empty string is not a " + getName() + ".");
+                    throw newDatatypeException(
+                            "The empty string is not a " + getName() + ".");
                 } else if (codepoint == -1) {
-                    throw newDatatypeException("A " + getName() + " must be a single character.");                    
+                    throw newDatatypeException(
+                            "A " + getName() + " must be a single character.");
                 } else if (!getUnicodeSet().contains(codepoint)) {
-                    throw newDatatypeException(0, "The character ", UCharacter.toString(codepoint), " is not a " + getName() + ".");
+                    throw newDatatypeException(0, "The character ",
+                            UCharacter.toString(codepoint),
+                            " is not a " + getName() + ".");
                 }
             }
 
@@ -118,7 +128,7 @@ public abstract class AbstractUnicodeClassCharacter extends AbstractDatatype {
                     return false;
                 }
             }
-            
+
         };
     }
 

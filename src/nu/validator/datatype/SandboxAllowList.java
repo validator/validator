@@ -74,8 +74,8 @@ public final class SandboxAllowList extends AbstractDatatype {
             Set<String> tokensSeen) throws DatatypeException {
         String token = builder.toString();
         if (tokensSeen.contains(token)) {
-            throw newDatatypeException(i - 1, "Duplicate keyword \u201c"
-                    + token + "\u201d.");
+            throw newDatatypeException(i - 1,
+                    "Duplicate keyword \u201c" + token + "\u201d.");
         }
         tokensSeen.add(token);
         if (!allowedKeywords.contains(token)) {
@@ -84,7 +84,8 @@ public final class SandboxAllowList extends AbstractDatatype {
         }
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "sandbox allow list";
     }
 }

@@ -79,8 +79,8 @@ public class SourceSizeList extends AbstractDatatype {
         super();
     }
 
-    @Override public void checkValid(CharSequence literal)
-            throws DatatypeException {
+    @Override
+    public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {
             err("Must not be empty.");
         }
@@ -112,7 +112,7 @@ public class SourceSizeList extends AbstractDatatype {
 
     private void checkSize(StringBuilder unparsedSize, CharSequence literal,
             StringBuilder extract, boolean isFirst, boolean isLast)
-            throws DatatypeException {
+                    throws DatatypeException {
         String size;
         trimWhitespace(unparsedSize);
         if (unparsedSize.length() == 0) {
@@ -122,11 +122,11 @@ public class SourceSizeList extends AbstractDatatype {
         try {
             cssParser.tokenize(unparsedSize.toString());
             if ('(' == unparsedSize.codePointAt(0)) {
-                cssParser.parseARule("@media " + unparsedSize.toString()
-                        + " {}");
+                cssParser.parseARule(
+                        "@media " + unparsedSize.toString() + " {}");
             } else {
-                cssParser.parseARule(".foo { width: " + unparsedSize.toString()
-                        + " }");
+                cssParser.parseARule(
+                        ".foo { width: " + unparsedSize.toString() + " }");
             }
         } catch (ParseException e) {
             errCssParseError(e.getMessage(), unparsedSize, extract);
@@ -194,9 +194,8 @@ public class SourceSizeList extends AbstractDatatype {
             }
         }
         int CALC_START = firstParenPosition - "calc".length(); // readability
-        boolean hasCalc = CALC_START > -1
-                && "calc".equals(toAsciiLowerCase(sb.subSequence(CALC_START,
-                        firstParenPosition)));
+        boolean hasCalc = CALC_START > -1 && "calc".equals(toAsciiLowerCase(
+                sb.subSequence(CALC_START, firstParenPosition)));
         boolean startsWithCalc = hasCalc && CALC_START == 0;
         boolean hasWhitespaceThenCalc = hasCalc && CALC_START > 0
                 && isWhitespace(sb.charAt(CALC_START - 1));
@@ -328,12 +327,14 @@ public class SourceSizeList extends AbstractDatatype {
 
     private void errCssParseError(CharSequence msg, CharSequence sourceSize,
             CharSequence extract) throws DatatypeException {
-        err(msg + " while parsing " + code(sourceSize) + " at " + clip(extract));
+        err(msg + " while parsing " + code(sourceSize) + " at "
+                + clip(extract));
     }
 
     private void errFromOtherDatatype(CharSequence msg, CharSequence extract)
             throws DatatypeException {
-        err(msg.subSequence(0, msg.length() - 1) + " at " + clip(extract) + ".");
+        err(msg.subSequence(0, msg.length() - 1) + " at " + clip(extract)
+                + ".");
     }
 
     private void errEmpty(boolean isFirst, boolean isLast, CharSequence extract)
@@ -401,7 +402,8 @@ public class SourceSizeList extends AbstractDatatype {
         return "\u201c" + cs + "\u201d";
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "source size list";
     }
 }

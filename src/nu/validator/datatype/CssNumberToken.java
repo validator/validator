@@ -35,7 +35,8 @@ public class CssNumberToken extends FloatingPointExponent {
         return true;
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "CSS number token";
     }
 

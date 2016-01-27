@@ -92,7 +92,8 @@ public final class IntegrityMetadata extends AbstractDatatype {
         return THE_PATTERN;
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "integrity-metadata";
     }
 }

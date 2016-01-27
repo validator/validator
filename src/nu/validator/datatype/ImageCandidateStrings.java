@@ -54,8 +54,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
         super();
     }
 
-    @Override public void checkValid(CharSequence literal)
-            throws DatatypeException {
+    @Override
+    public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {
             err("Must contain one or more image candidate strings.");
         }
@@ -195,7 +195,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private void checkToken(StringBuilder tok, CharSequence extract,
             List<String> urls, List<Integer> widths, List<Float> denses, int ix)
-            throws DatatypeException {
+                    throws DatatypeException {
         if (tok.length() > 0) {
             if (widths.size() > ix || denses.size() > ix) {
                 errExtraDescriptor(tok, extract);
@@ -217,7 +217,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
             }
             if ('w' == last) {
                 // see nu.validator.checker.schematronequiv.Assertions
-                System.setProperty("nu.validator.checker.imageCandidateString.hasWidth", "1");
+                System.setProperty(
+                        "nu.validator.checker.imageCandidateString.hasWidth",
+                        "1");
                 try {
                     int width = Integer.parseInt(num, 10);
                     if (width <= 0) {
@@ -290,7 +292,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private void errFromOtherDatatype(CharSequence msg, CharSequence extract)
             throws DatatypeException {
-        err(msg.subSequence(0, msg.length() - 1) + " at " + clip(extract) + ".");
+        err(msg.subSequence(0, msg.length() - 1) + " at " + clip(extract)
+                + ".");
     }
 
     private void errEmpty(CharSequence extract) throws DatatypeException {
@@ -406,7 +409,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
         return false;
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "image candidate strings";
     }
 

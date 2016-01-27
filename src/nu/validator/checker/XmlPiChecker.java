@@ -1,24 +1,24 @@
 /*
  * Copyright (c) 2010 Mozilla Foundation
- * Portions of comments Copyright 2004-2010 Apple Computer, Inc., Mozilla 
+ * Portions of comments Copyright 2004-2010 Apple Computer, Inc., Mozilla
  * Foundation, and Opera Software ASA.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -181,18 +181,21 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     public void comment(char[] ch, int start, int len) throws SAXException {
     }
 
-    @Override public void startDocument() throws SAXException {
+    @Override
+    public void startDocument() throws SAXException {
         inDoctype = false;
         hasXsltPi = false;
         alreadyHasElement = false;
     }
 
-    @Override public void startElement(String uri, String localName,
-            String qName, Attributes atts) throws SAXException {
+    @Override
+    public void startElement(String uri, String localName, String qName,
+            Attributes atts) throws SAXException {
         alreadyHasElement = true;
     }
 
-    @Override public void processingInstruction(String target, String data)
+    @Override
+    public void processingInstruction(String target, String data)
             throws SAXException {
         piTarget = target;
         if ("xml-stylesheet".equals(piTarget)) {
@@ -202,15 +205,14 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
 
     private void errBadPseudoAttrDatatype(DatatypeException e,
             Class<?> datatypeClass, String attrName, String attrValue)
-            throws SAXException, ClassNotFoundException {
+                    throws SAXException, ClassNotFoundException {
         if (getErrorHandler() != null) {
             Html5DatatypeException ex5 = (Html5DatatypeException) e;
             boolean warning = ex5.isWarning() ? true : false;
             DatatypeMismatchException bpe = new DatatypeMismatchException(
                     "Bad value \u201c" + attrValue + "\u201d for \u201c"
                             + piTarget + "\u201d pseudo-attribute \u201c"
-                            + attrName + "\u201d. "
-                            + e.getMessage(),
+                            + attrName + "\u201d. " + e.getMessage(),
                     getDocumentLocator(), datatypeClass, warning);
             getErrorHandler().error(bpe);
         }
@@ -224,18 +226,18 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errAttributeValueContainsLt() throws SAXException {
-        err("Found \u201c"
-                + piTarget
-                + "\u201d pseudo-attribute \u201c"
+        err("Found \u201c" + piTarget + "\u201d pseudo-attribute \u201c"
                 + attributeName
-                + "\u201d with the character \u201c<\u201d in its value. All pseudo-attribute values in \u201c"
-                + piTarget
-                + "\u201d instructions must not contain the character \u201c<\u201d.");
+                + "\u201d with the character \u201c<\u201d in its value."
+                + " All pseudo-attribute values in \u201c" + piTarget
+                + "\u201d instructions must not contain the character"
+                + " \u201c<\u201d.");
     }
 
     private void errUpperCaseXinHexNcr() throws SAXException {
-        err("In XML documents, a hexadecimal character reference must begin with "
-                + "\u201c&#x\u201d (lowercase \u201cx\u201d), not \u201c&#X\u201d (uppercase \u201cX\u201d).");
+        err("In XML documents, a hexadecimal character reference must begin"
+                + " with \u201c&#x\u201d (lowercase \u201cx\u201d), not"
+                + " \u201c&#X\u201d (uppercase \u201cX\u201d).");
     }
 
     private void checkXmlStylesheetPiData(String data) throws SAXException {
@@ -248,11 +250,14 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
         boolean alternateIsYes = false;
         boolean badDatatype = false;
         if (inDoctype) {
-            warn("An \u201cxml-stylesheet\u201d instruction should not be used within a \u201cDOCTYPE\u201d declaration.");
+            warn("An \u201cxml-stylesheet\u201d instruction should not be used"
+                    + " within a \u201cDOCTYPE\u201d declaration.");
         }
         if (alreadyHasElement) {
-            err("Any \u201cxml-stylesheet\u201d instruction in a document must occur before any elements in the document. "
-                    + "Suppressing any further errors for this \u201cxml-stylesheet\u201d instruction.");
+            err("Any \u201cxml-stylesheet\u201d instruction in a document must"
+                    + " occur before any elements in the document."
+                    + " Suppressing any further errors for this"
+                    + " \u201cxml-stylesheet\u201d instruction.");
             return;
         }
         if (!"".equals(data)) {
@@ -285,9 +290,11 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                             break;
                         }
                         try {
-                            MimeType mt = (MimeType) dl.createDatatype("mime-type");
+                            MimeType mt = (MimeType) dl.createDatatype(
+                                    "mime-type");
                             mt.checkValid(attrValue);
-                            attrValue = newAsciiLowerCaseStringFromString(attrValue);
+                            attrValue = newAsciiLowerCaseStringFromString(
+                                    attrValue);
                         } catch (DatatypeException e) {
                             badDatatype = true;
                             try {
@@ -299,21 +306,33 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                         if (!badDatatype) {
                             if (attrValue.matches("application/xml(;.*)?")
                                     || attrValue.matches("text/xml(;.*)?")
-                                    || attrValue.matches("application/xslt+xml(;.*)?")
+                                    || attrValue.matches(
+                                            "application/xslt+xml(;.*)?")
                                     || attrValue.matches("text/xsl(;.*)?")
                                     || attrValue.matches("text/xslt(;.*)?")) {
                                 if (!attrValue.matches("text/xsl(;.*)?")) {
-                                    warn("For indicating XSLT, \u201ctext/xsl\u201d is the only MIME type for the "
-                                            + "\u201cxml-stylesheet\u201d pseudo-attribute \u201ctype\u201d that is supported across browsers.");
+                                    warn("For indicating XSLT,"
+                                            + " \u201ctext/xsl\u201d is the only"
+                                            + " MIME type for the"
+                                            + " \u201cxml-stylesheet\u201d"
+                                            + " pseudo-attribute \u201ctype\u201d"
+                                            + " that is supported across browsers.");
                                 }
                                 if (hasXsltPi) {
-                                    warn("Browsers do not support multiple \u201cxml-stylesheet\u201d instructions with a "
-                                            + "\u201ctype\u201d value that indicates XSLT.");
+                                    warn("Browsers do not support multiple"
+                                            + " \u201cxml-stylesheet\u201d"
+                                            + " instructions with a"
+                                            + " \u201ctype\u201d value that"
+                                            + " indicates XSLT.");
                                 }
                                 hasXsltPi = true;
                             } else if (!attrValue.matches("^text/css(;.*)?$")) {
-                                warn("\u201ctext/css\u201d and \u201ctext/xsl\u201d are the only MIME types for the "
-                                        + "\u201cxml-stylesheet\u201d pseudo-attribute \u201ctype\u201d that are supported across browsers.");
+                                warn("\u201ctext/css\u201d and"
+                                        + " \u201ctext/xsl\u201d are the only"
+                                        + " MIME types for the"
+                                        + " \u201cxml-stylesheet\u201d"
+                                        + " pseudo-attribute \u201ctype\u201d"
+                                        + " that are supported across browsers.");
                             }
                         }
                         break;
@@ -332,7 +351,8 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                             break;
                         }
                         try {
-                            MediaQuery mq = (MediaQuery) dl.createDatatype("media-query");
+                            MediaQuery mq = (MediaQuery) dl.createDatatype(
+                                    "media-query");
                             mq.checkValid(attrValue);
                         } catch (DatatypeException e) {
                             try {
@@ -366,46 +386,56 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                         if ("yes".equals(attrValue)) {
                             alternateIsYes = true;
                         } else if (!"no".equals(attrValue)) {
-                            err("The value of the \u201cxml-stylesheet\u201d pseudo-attribute \u201calternate\u201d "
-                                    + "must be either \u201cyes\u201d or \u201cno\u201d.");
+                            err("The value of the \u201cxml-stylesheet\u201d"
+                                    + " pseudo-attribute \u201calternate\u201d"
+                                    + " must be either \u201cyes\u201d or"
+                                    + " \u201cno\u201d.");
                         }
                         break;
                     default:
-                        err("Pseudo-attribute \u201c"
-                                + attrName
-                                + "\u201D not allowed in \u201cxml-stylesheet\u201d instruction.");
+                        err("Pseudo-attribute \u201c" + attrName
+                                + "\u201d not allowed in"
+                                + " \u201cxml-stylesheet\u201d instruction.");
                         break;
                 }
             }
             if (alternateIsYes && !hasNonEmptyTitle) {
-                err("An \u201cxml-stylesheet\u201d instruction with an \u201calternate\u201d pseudo-attribute "
-                        + "whose value is \u201cyes\u201d must also have a \u201ctitle\u201d pseudo-attribute with a non-empty value.");
+                err("An \u201cxml-stylesheet\u201d instruction with an"
+                        + " \u201calternate\u201d pseudo-attribute whose value is"
+                        + " \u201cyes\u201d must also have a \u201ctitle\u201d"
+                        + " pseudo-attribute with a non-empty value.");
             }
         }
         if (!hasHref) {
-            err("\u201cxml-stylesheet\u201d instruction lacks \u201chref\u201d pseudo-attribute. "
-                    + "The \u201chref\u201d pseudo-attribute is required in all \u201cxml-stylesheet\u201d instructions.");
+            err("\u201cxml-stylesheet\u201d instruction lacks \u201chref\u201d"
+                    + " pseudo-attribute."
+                    + " The \u201chref\u201d pseudo-attribute is required in all"
+                    + " \u201cxml-stylesheet\u201d instructions.");
         }
         if (hasXsltPi && (hasTitle || hasMedia || hasCharset || hasAlternate)) {
-            warn("When processing \u201cxml-stylesheet\u201d instructions, browsers ignore the pseudo-attributes "
-                    + "\u201ctitle\u201d, \u201cmedia\u201d, \u201ccharset\u201d, and \u201calternate\u201d.");
+            warn("When processing \u201cxml-stylesheet\u201d instructions,"
+                    + " browsers ignore the pseudo-attributes \u201ctitle\u201d,"
+                    + " \u201cmedia\u201d, \u201ccharset\u201d, and"
+                    + " \u201calternate\u201d.");
         } else if (hasCharset) {
-            warn("Some browsers ignore the value of the \u201cxml-stylesheet\u201d pseudo-attribute \u201ccharset\u201d.");
+            warn("Some browsers ignore the value of the"
+                    + " \u201cxml-stylesheet\u201d pseudo-attribute"
+                    + " \u201ccharset\u201d.");
         }
     }
 
     /**
      * Collect a set of attribues and values from the data part of a PI.
-     * 
+     *
      * <p>
      * The bulk of this method and associated methods that follow it here are
      * copied from the nu.validator.htmlparser.impl.Tokenizer class, with
      * appropriate modifications.
      * </p>
-     * 
+     *
      * @see nu.validator.htmlparser.impl.Tokenizer
      * @see nu.validator.htmlparser.impl.ErrorReportingTokenizer
-     * 
+     *
      */
     private AttributesImpl getPseudoAttributesFromPiData(String buf)
             throws SAXException {
@@ -578,7 +608,8 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                                  * U+003C LESS-THAN SIGN (<) U+003D EQUALS SIGN
                                  * (=) U+0060 GRAVE ACCENT (`)
                                  */
-                                errLtOrEqualsOrGraveInUnquotedAttributeOrNull(c);
+                                errLtOrEqualsOrGraveInUnquotedAttributeOrNull(
+                                        c);
                                 /*
                                  * Treat it as per the "anything else" entry
                                  * below.
@@ -880,7 +911,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                      * This section defines how to consume a character
                      * reference. This definition is used when parsing character
                      * references in text and in attributes.
-                     * 
+                     *
                      * The behavior depends on the identity of the next
                      * character (the one immediately after the U+0026 AMPERSAND
                      * character):
@@ -1083,14 +1114,14 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                             /*
                              * U+0078 LATIN SMALL LETTER X U+0058 LATIN CAPITAL
                              * LETTER X Consume the X.
-                             * 
+                             *
                              * Follow the steps below, but using the range of
                              * characters U+0030 DIGIT ZERO through to U+0039
                              * DIGIT NINE, U+0061 LATIN SMALL LETTER A through
                              * to U+0066 LATIN SMALL LETTER F, and U+0041 LATIN
                              * CAPITAL LETTER A, through to U+0046 LATIN CAPITAL
                              * LETTER F (in other words, 0-9, A-F, a-f).
-                             * 
+                             *
                              * When it comes to interpreting the number,
                              * interpret it as a hexadecimal number.
                              */
@@ -1111,7 +1142,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                              * Anything else Follow the steps below, but using
                              * the range of characters U+0030 DIGIT ZERO through
                              * to U+0039 DIGIT NINE (i.e. just 0-9).
-                             * 
+                             *
                              * When it comes to interpreting the number,
                              * interpret it as a decimal number.
                              */
@@ -1165,7 +1196,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                              * NUMBER SIGN character and, if appropriate, the X
                              * character). This is a parse error; nothing is
                              * returned.
-                             * 
+                             *
                              * Otherwise, if the next character is a U+003B
                              * SEMICOLON, consume that too. If it isn't, there
                              * is a parse error.
@@ -1242,7 +1273,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                              * NUMBER SIGN character and, if appropriate, the X
                              * character). This is a parse error; nothing is
                              * returned.
-                             * 
+                             *
                              * Otherwise, if the next character is a U+003B
                              * SEMICOLON, consume that too. If it isn't, there
                              * is a parse error.
@@ -1463,10 +1494,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
             } else {
                 errNcrOutOfRange();
                 emitOrAppendOne(REPLACEMENT_CHARACTER, returnState);
-    }
-
-
-
+            }
 
             if ((value & 0xF800) == 0xD800) {
                 errNcrSurrogate();
@@ -1503,10 +1531,6 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                 errNcrOutOfRange();
                 emitOrAppendOne(REPLACEMENT_CHARACTER, returnState);
             }
-
-
-
-
 
         }
     }
@@ -1545,7 +1569,9 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
 
     private void warnAboutPrivateUseChar() throws SAXException {
         if (!alreadyWarnedAboutPrivateUseCharacters) {
-            warn("Document uses the Unicode Private Use Area(s), which should not be used in publicly exchanged documents. (Charmod C073)");
+            warn("Document uses the Unicode Private Use Area(s), which should"
+                    + " not be used in publicly exchanged documents."
+                    + " (Charmod C073)");
             alreadyWarnedAboutPrivateUseCharacters = true;
         }
     }
@@ -1572,9 +1598,9 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errEqualsSignBeforeAttributeName() throws SAXException {
-        err("Saw \u201C=\u201D when expecting \u201C"
-                + piTarget
-                + "\u201D pseudo-attribute name. Probable cause: Pseudo-attribute name missing.");
+        err("Saw \u201C=\u201D when expecting \u201C" + piTarget
+                + "\u201D pseudo-attribute name. Probable cause:"
+                + " Pseudo-attribute name missing.");
     }
 
     private void errLtOrEqualsOrGraveInUnquotedAttributeOrNull(char c)
@@ -1583,19 +1609,23 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
             case '=':
                 err("\u201C=\u201D at the start of an unquoted \u201C"
                         + piTarget
-                        + "\u201D pseudo-attribute value. Probable cause: Stray duplicate equals sign.");
+                        + "\u201D pseudo-attribute value. Probable cause:"
+                        + " Stray duplicate equals sign.");
                 return;
             case '<':
                 /*
                  * we deal with this case in the attribute-value error- checking
                  * code in the getPseudoAttributesFromPiData method
                  */
-                // err("\u201C<\u201D at the start of an unquoted attribute value. Probable cause: Missing \u201C>\u201D immediately before.");
+                // err("\u201C<\u201D at the start of an unquoted attribute
+                // value. Probable cause: Missing \u201C>\u201D immediately
+                // before.");
                 return;
             case '`':
                 err("\u201C`\u201D at the start of an unquoted \u201C"
                         + piTarget
-                        + "\u201D pseudo-attribute value. Probable cause: Using the wrong character as a quote.");
+                        + "\u201D pseudo-attribute value. Probable cause:"
+                        + " Using the wrong character as a quote.");
                 return;
         }
     }
@@ -1606,16 +1636,16 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errQuoteBeforeAttributeName(char c) throws SAXException {
-        err("Saw \u201C"
-                + c
-                + "\u201D when expecting a pseudo-attribute name. Probable cause: \u201C=\u201D missing immediately before.");
+        err("Saw \u201C" + c
+                + "\u201D when expecting a pseudo-attribute name. Probable cause:"
+                + " \u201C=\u201D missing immediately before.");
     }
 
     private void errQuoteOrLtInAttributeNameOrNull(char c) throws SAXException {
         if (c != '\uFFFD') {
-            err("Quote \u201C"
-                    + c
-                    + "\u201D in pseudo-attribute name. Probable cause: Matching quote missing somewhere earlier.");
+            err("Quote \u201C" + c
+                    + "\u201D in pseudo-attribute name. Probable cause:"
+                    + " Matching quote missing somewhere earlier.");
         }
     }
 
@@ -1631,7 +1661,9 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
             return;
         }
         SAXParseException spe = new SAXParseException(
-                "\u201C&\u201D did not start a character reference. (\u201C&\u201D probably should have been escaped as \u201C&amp;\u201D.)",
+                "\u201C&\u201D did not start a character reference."
+                        + " (\u201C&\u201D probably should have been escaped as"
+                        + " \u201C&amp;\u201D.)",
                 getDocumentLocator());
         getErrorHandler().error(spe);
     }
@@ -1646,8 +1678,8 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errNcrIllegalValueForXml() throws SAXException {
-        err("Character reference expands to a character that is not legal in XML ("
-                + toUPlusString((char) value) + ").");
+        err("Character reference expands to a character that is not legal"
+                + " in XML (" + toUPlusString((char) value) + ").");
     }
 
     private void errNcrSurrogate() throws SAXException {
@@ -1655,7 +1687,8 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errNcrUnassigned() throws SAXException {
-        err("Character reference expands to a permanently unassigned code point.");
+        err("Character reference expands to a permanently unassigned"
+                + " code point.");
     }
 
     private char errNcrNonCharacter(char ch) throws SAXException {
@@ -1679,7 +1712,9 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
             return;
         }
         SAXParseException spe = new SAXParseException(
-                "The string following \u201C&\u201D was interpreted as a character reference. (\u201C&\u201D probably should have been escaped as \u201C&amp;\u201D.)",
+                "The string following \u201C&\u201D was interpreted as"
+                        + " a character reference. (\u201C&\u201D probably"
+                        + " should have been escaped as \u201C&amp;\u201D.)",
                 getDocumentLocator());
         getErrorHandler().error(spe);
     }
@@ -1696,7 +1731,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
         }
     }
 
-    private  void errAstralNonCharacter(int ch) throws SAXException {
+    private void errAstralNonCharacter(int ch) throws SAXException {
         err("Character reference expands to an astral non-character ("
                 + toUPlusString((char) value) + ").");
     }

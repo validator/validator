@@ -35,7 +35,8 @@ public class ImageCandidateURL extends IriRef {
         return true;
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "image-candidate URL";
     }
 }

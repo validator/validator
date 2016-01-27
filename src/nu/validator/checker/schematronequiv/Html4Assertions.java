@@ -106,8 +106,8 @@ public class Html4Assertions extends Checker {
             String descendant) {
         int number = specialAncestorNumber(ancestor);
         if (number == -1) {
-            throw new IllegalStateException("Ancestor not found in array: "
-                    + ancestor);
+            throw new IllegalStateException(
+                    "Ancestor not found in array: " + ancestor);
         }
         Integer maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(descendant);
         int mask = 0;
@@ -142,7 +142,8 @@ public class Html4Assertions extends Checker {
         registerProhibitedAncestor("pre", "font");
     }
 
-    private static final int BUTTON_MASK = (1 << specialAncestorNumber("button"));
+    private static final int BUTTON_MASK = (1 << specialAncestorNumber(
+            "button"));
 
     private static final int LABEL_FOR_MASK = (1 << 28);
 
@@ -281,7 +282,8 @@ public class Html4Assertions extends Checker {
     /**
      * @see nu.validator.checker.Checker#endDocument()
      */
-    @Override public void endDocument() throws SAXException {
+    @Override
+    public void endDocument() throws SAXException {
         // label for
         for (IdrefLocator idrefLocator : formControlReferences) {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
@@ -299,7 +301,8 @@ public class Html4Assertions extends Checker {
      * @see nu.validator.checker.Checker#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
-    @Override public void endElement(String uri, String localName, String name)
+    @Override
+    public void endElement(String uri, String localName, String name)
             throws SAXException {
         StackNode node = pop();
         openSingleSelects.remove(node);
@@ -313,7 +316,8 @@ public class Html4Assertions extends Checker {
     /**
      * @see nu.validator.checker.Checker#startDocument()
      */
-    @Override public void startDocument() throws SAXException {
+    @Override
+    public void startDocument() throws SAXException {
         reset();
         stack = new StackNode[32];
         currentPtr = 0;
@@ -334,8 +338,9 @@ public class Html4Assertions extends Checker {
      * @see nu.validator.checker.Checker#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    @Override public void startElement(String uri, String localName,
-            String name, Attributes atts) throws SAXException {
+    @Override
+    public void startElement(String uri, String localName, String name,
+            Attributes atts) throws SAXException {
         Set<String> ids = new HashSet<>();
         String role = null;
         String activeDescendant = null;
@@ -392,7 +397,8 @@ public class Html4Assertions extends Checker {
             Integer maskAsObject;
             int mask = 0;
             String descendantUiString = "";
-            if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(localName)) != null) {
+            if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(
+                    localName)) != null) {
                 mask = maskAsObject.intValue();
                 descendantUiString = localName;
             } else if ("img" == localName && usemap) {
@@ -404,8 +410,7 @@ public class Html4Assertions extends Checker {
                 if (maskHit != 0) {
                     for (int j = 0; j < SPECIAL_ANCESTORS.length; j++) {
                         if ((maskHit & 1) != 0) {
-                            err("The element \u201C"
-                                    + descendantUiString
+                            err("The element \u201C" + descendantUiString
                                     + "\u201D must not appear as a descendant "
                                     + "of the element \u201C"
                                     + SPECIAL_ANCESTORS[j] + "\u201D.");
@@ -416,8 +421,8 @@ public class Html4Assertions extends Checker {
             }
 
             // lang and xml:lang
-            if (lang != null
-                    && (xmlLang == null || !equalsIgnoreAsciiCase(lang, xmlLang))) {
+            if (lang != null && (xmlLang == null
+                    || !equalsIgnoreAsciiCase(lang, xmlLang))) {
                 err("When attribute \u201Clang\u201D in no namespace "
                         + "is specified, attribute \u201Clang\u201D in the XML "
                         + "namespace must also be specified, and both "
@@ -428,8 +433,8 @@ public class Html4Assertions extends Checker {
             if ("label" == localName) {
                 String forVal = atts.getValue("", "for");
                 if (forVal != null) {
-                    formControlReferences.add(new IdrefLocator(new LocatorImpl(
-                            getDocumentLocator()), forVal));
+                    formControlReferences.add(new IdrefLocator(
+                            new LocatorImpl(getDocumentLocator()), forVal));
                 }
             }
             if (("input" == localName && !hidden) || "textarea" == localName
@@ -440,8 +445,9 @@ public class Html4Assertions extends Checker {
             // input@type=radio or input@type=checkbox
             if ("input" == localName
                     && (lowerCaseLiteralEqualsIgnoreAsciiCaseString("radio",
-                            atts.getValue("", "type")) || lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                            "checkbox", atts.getValue("", "type")))) {
+                            atts.getValue("", "type"))
+                            || lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                    "checkbox", atts.getValue("", "type")))) {
                 if (atts.getValue("", "value") == null
                         || "".equals(atts.getValue("", "value"))) {
                     err("Element \u201Cinput\u201D with attribute "
@@ -457,8 +463,8 @@ public class Html4Assertions extends Checker {
                     StackNode node = entry.getKey();
                     if (node.isSelectedOptions()) {
                         err("The \u201Cselect\u201D element must not have more "
-                            + "than one selected \u201Coption\u201D descendant "
-                            + "unless the \u201Cmultiple\u201D attribute is specified.");
+                                + "than one selected \u201Coption\u201D descendant "
+                                + "unless the \u201Cmultiple\u201D attribute is specified.");
                     } else {
                         node.setSelectedOptions();
                     }
@@ -473,8 +479,8 @@ public class Html4Assertions extends Checker {
             }
             if ("a" == localName && hreflang && !href) {
                 err("Element \u201Ca\u201D with attribute "
-                    + "\u201Chreflang\u201D must have "
-                    + "\u201Chref\u201D attribute.");
+                        + "\u201Chreflang\u201D must have "
+                        + "\u201Chref\u201D attribute.");
             }
             StackNode child = new StackNode(ancestorMask, localName, role,
                     activeDescendant, forAttr);

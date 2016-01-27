@@ -41,9 +41,11 @@ public class ContentSecurityPolicy extends AbstractDatatype {
      */
     public static final ContentSecurityPolicy THE_INSTANCE = new ContentSecurityPolicy();
 
-    private static final Pattern UNRECOGNISED_DIRECTIVE_NAME_PATTERN = Pattern.compile("^(Unrecognised directive name: )(.+)$");
+    private static final Pattern UNRECOGNISED_DIRECTIVE_NAME_PATTERN = Pattern.compile(
+            "^(Unrecognised directive name: )(.+)$");
 
-    private static final Pattern BUT_FOUND_PATTERN = Pattern.compile("^(.+ but found )(.+)$");
+    private static final Pattern BUT_FOUND_PATTERN = Pattern.compile(
+            "^(.+ but found )(.+)$");
 
     private static final Pattern BAD_CODE_POINT_PATTERN = Pattern.compile("^("
             + "expecting directive-value but found )(U\\+[^ ]+) \\((.)\\)\\."
@@ -69,8 +71,7 @@ public class ContentSecurityPolicy extends AbstractDatatype {
                 StringBuilder sb = new StringBuilder();
                 for (Warning w : warnings) {
                     sb.append(w.show().replaceAll(DIRECTIVE_NAME,
-                            " \u201c$1\u201d ")
-                            + " ");
+                            " \u201c$1\u201d ") + " ");
                 }
                 throw newDatatypeException(sb.toString().trim(), WARN);
             }
@@ -88,14 +89,14 @@ public class ContentSecurityPolicy extends AbstractDatatype {
             String msg = e.getMessage();
             Matcher m = BAD_CODE_POINT_PATTERN.matcher(msg);
             if (m.matches()) {
-                throw newDatatypeException(String.format(
-                        "%s\u201c%s\u201d (%s). %s", m.group(1), m.group(3),
-                        m.group(2), m.group(4)));
+                throw newDatatypeException(
+                        String.format("%s\u201c%s\u201d (%s). %s", m.group(1),
+                                m.group(3), m.group(2), m.group(4)));
             } else {
                 Matcher n = BUT_FOUND_PATTERN.matcher(msg);
                 if (n.matches()) {
-                    throw newDatatypeException(String.format(
-                            "%s\u201c%s\u201d", n.group(1), n.group(2)));
+                    throw newDatatypeException(String.format("%s\u201c%s\u201d",
+                            n.group(1), n.group(2)));
                 } else {
                     throw newDatatypeException(msg);
                 }
@@ -112,7 +113,8 @@ public class ContentSecurityPolicy extends AbstractDatatype {
         }
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "content security policy";
     }
 

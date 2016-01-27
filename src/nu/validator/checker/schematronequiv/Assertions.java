@@ -49,8 +49,9 @@ import org.xml.sax.SAXException;
 
 public class Assertions extends Checker {
 
-    private static boolean followW3Cspec = "1".equals(System.getProperty("nu.validator.servlet.follow-w3c-spec")) ? true
-            : false;
+    private static boolean followW3Cspec = "1".equals(
+            System.getProperty("nu.validator.servlet.follow-w3c-spec")) ? true
+                    : false;
 
     private static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(
             String lowerCaseLiteral, String string) {
@@ -106,7 +107,8 @@ public class Assertions extends Checker {
         }
         for (int i = str.length(); i > 0; --i) {
             char c = str.charAt(str.length() - i);
-            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c
+                    || '\r' == c)) {
                 return str.substring(str.length() - i, str.length());
             }
         }
@@ -119,7 +121,8 @@ public class Assertions extends Checker {
         }
         for (int i = str.length() - 1; i >= 0; --i) {
             char c = str.charAt(i);
-            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c
+                    || '\r' == c)) {
                 return str.substring(0, i + 1);
             }
         }
@@ -129,12 +132,14 @@ public class Assertions extends Checker {
     private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
     static {
-        INPUT_ATTRIBUTES.put("autocomplete", new String[] { "text", "search",
-                "url", "tel", "email", "password", "datetime", "date", "month",
-                "week", "time", "datetime-local", "number", "range", "color" });
-        INPUT_ATTRIBUTES.put("list", new String[] { "text", "search", "url",
-                "tel", "email", "datetime", "date", "month", "week", "time",
-                "datetime-local", "number", "range", "color" });
+        INPUT_ATTRIBUTES.put("autocomplete",
+                new String[] { "text", "search", "url", "tel", "email",
+                        "password", "datetime", "date", "month", "week", "time",
+                        "datetime-local", "number", "range", "color" });
+        INPUT_ATTRIBUTES.put("list",
+                new String[] { "text", "search", "url", "tel", "email",
+                        "datetime", "date", "month", "week", "time",
+                        "datetime-local", "number", "range", "color" });
         INPUT_ATTRIBUTES.put("maxlength", new String[] { "text", "search",
                 "url", "tel", "email", "password" });
         INPUT_ATTRIBUTES.put("minlength", new String[] { "text", "search",
@@ -143,13 +148,15 @@ public class Assertions extends Checker {
                 "tel", "email", "password" });
         INPUT_ATTRIBUTES.put("placeholder", new String[] { "text", "search",
                 "url", "tel", "email", "password", "number" });
-        INPUT_ATTRIBUTES.put("readonly", new String[] { "text", "search",
-                "url", "tel", "email", "password", "datetime", "date", "month",
-                "week", "time", "datetime-local", "number" });
-        INPUT_ATTRIBUTES.put("required", new String[] { "text", "search",
-                "url", "tel", "email", "password", "datetime", "date", "month",
-                "week", "time", "datetime-local", "number", "checkbox",
-                "radio", "file" });
+        INPUT_ATTRIBUTES.put("readonly",
+                new String[] { "text", "search", "url", "tel", "email",
+                        "password", "datetime", "date", "month", "week", "time",
+                        "datetime-local", "number" });
+        INPUT_ATTRIBUTES.put("required",
+                new String[] { "text", "search", "url", "tel", "email",
+                        "password", "datetime", "date", "month", "week", "time",
+                        "datetime-local", "number", "checkbox", "radio",
+                        "file" });
         INPUT_ATTRIBUTES.put("size", new String[] { "text", "search", "url",
                 "tel", "email", "password" });
     }
@@ -168,15 +175,12 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("applet",
                 "Use the \u201Cobject\u201D element instead.");
         OBSOLETE_ELEMENTS.put("basefont", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put(
-                "frameset",
+        OBSOLETE_ELEMENTS.put("frameset",
                 "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
-        OBSOLETE_ELEMENTS.put(
-                "noframes",
+        OBSOLETE_ELEMENTS.put("noframes",
                 "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
         if (followW3Cspec) {
-            OBSOLETE_ELEMENTS.put(
-                    "hgroup",
+            OBSOLETE_ELEMENTS.put("hgroup",
                     "To mark up subheadings, consider either just putting the "
                             + "subheading into a \u201Cp\u201D element after the "
                             + "\u201Ch1\u201D-\u201Ch6\u201D element containing the "
@@ -239,46 +243,36 @@ public class Assertions extends Checker {
     private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<>();
 
     static {
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "abbr",
+        OBSOLETE_ATTRIBUTES_MSG.put("abbr",
                 "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "archive",
+        OBSOLETE_ATTRIBUTES_MSG.put("archive",
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Carchive\u201D, use the \u201Cparam\u201D element.");
         OBSOLETE_ATTRIBUTES_MSG.put("axis",
                 "Use the \u201Cscope\u201D attribute.");
         OBSOLETE_ATTRIBUTES_MSG.put("charset",
                 "Use an HTTP Content-Type header on the linked resource instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "classid",
+        OBSOLETE_ATTRIBUTES_MSG.put("classid",
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Cclassid\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "code",
+        OBSOLETE_ATTRIBUTES_MSG.put("code",
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccode\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "codebase",
+        OBSOLETE_ATTRIBUTES_MSG.put("codebase",
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodebase\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "codetype",
+        OBSOLETE_ATTRIBUTES_MSG.put("codetype",
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
         OBSOLETE_ATTRIBUTES_MSG.put("coords",
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
         OBSOLETE_ATTRIBUTES_MSG.put("datapagesize", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "datafld",
+        OBSOLETE_ATTRIBUTES_MSG.put("datafld",
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "dataformatas",
+        OBSOLETE_ATTRIBUTES_MSG.put("dataformatas",
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "datasrc",
+        OBSOLETE_ATTRIBUTES_MSG.put("datasrc",
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
         OBSOLETE_ATTRIBUTES_MSG.put("for",
                 "Use DOM Events mechanisms to register event listeners.");
         OBSOLETE_ATTRIBUTES_MSG.put("event",
                 "Use DOM Events mechanisms to register event listeners.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "declare",
+        OBSOLETE_ATTRIBUTES_MSG.put("declare",
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
         OBSOLETE_ATTRIBUTES_MSG.put("language",
                 "Use the \u201Ctype\u201D attribute instead.");
@@ -292,31 +286,24 @@ public class Assertions extends Checker {
                 "Use the \u201Cid\u201D attribute instead.");
         OBSOLETE_ATTRIBUTES_MSG.put("nohref",
                 "Omitting the \u201Chref\u201D attribute is sufficient.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "profile",
+        OBSOLETE_ATTRIBUTES_MSG.put("profile",
                 "To declare which \u201Cmeta\u201D terms are used in the document, instead register the names as meta extensions. To trigger specific UA behaviors, use a \u201Clink\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "scheme",
+        OBSOLETE_ATTRIBUTES_MSG.put("scheme",
                 "Use only one scheme per field, or make the scheme declaration part of the value.");
         OBSOLETE_ATTRIBUTES_MSG.put("scope",
                 "Use the \u201Cscope\u201D attribute on a \u201Cth\u201D element instead.");
         OBSOLETE_ATTRIBUTES_MSG.put("shape",
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "standby",
+        OBSOLETE_ATTRIBUTES_MSG.put("standby",
                 "Optimise the linked resource so that it loads quickly or, at least, incrementally.");
         OBSOLETE_ATTRIBUTES_MSG.put("target", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "type",
+        OBSOLETE_ATTRIBUTES_MSG.put("type",
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "urn",
+        OBSOLETE_ATTRIBUTES_MSG.put("urn",
                 "Specify the preferred persistent identifier using the \u201Chref\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "usemap",
+        OBSOLETE_ATTRIBUTES_MSG.put("usemap",
                 "Use the \u201Cimg\u201D element instead of the \u201Cinput\u201D element for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "valuetype",
+        OBSOLETE_ATTRIBUTES_MSG.put("valuetype",
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
         OBSOLETE_ATTRIBUTES_MSG.put("version", "You can safely omit it.");
     }
@@ -324,15 +311,17 @@ public class Assertions extends Checker {
     private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<>();
 
     static {
-        OBSOLETE_STYLE_ATTRS.put("align", new String[] { "caption", "iframe",
-                "img", "input", "object", "embed", "legend", "table", "hr",
-                "div", "h1", "h2", "h3", "h4", "h5", "h6", "p", "col",
-                "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr" });
+        OBSOLETE_STYLE_ATTRS.put("align",
+                new String[] { "caption", "iframe", "img", "input", "object",
+                        "embed", "legend", "table", "hr", "div", "h1", "h2",
+                        "h3", "h4", "h5", "h6", "p", "col", "colgroup", "tbody",
+                        "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("alink", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("allowtransparency", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("allowtransparency",
+                new String[] { "iframe" });
         OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("bgcolor", new String[] { "table", "tr", "td",
-                "th", "body" });
+        OBSOLETE_STYLE_ATTRS.put("bgcolor",
+                new String[] { "table", "tr", "td", "th", "body" });
         OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("char", new String[] { "col", "colgroup",
@@ -341,17 +330,17 @@ public class Assertions extends Checker {
                 "tbody", "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("clear", new String[] { "br" });
         OBSOLETE_STYLE_ATTRS.put("color", new String[] { "hr" });
-        OBSOLETE_STYLE_ATTRS.put("compact", new String[] { "dl", "menu", "ol",
-                "ul" });
+        OBSOLETE_STYLE_ATTRS.put("compact",
+                new String[] { "dl", "menu", "ol", "ul" });
         OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] { "iframe" });
         OBSOLETE_STYLE_ATTRS.put("frame", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("height", new String[] { "td", "th" });
-        OBSOLETE_STYLE_ATTRS.put("hspace", new String[] { "img", "object",
-                "embed" });
+        OBSOLETE_STYLE_ATTRS.put("hspace",
+                new String[] { "img", "object", "embed" });
         OBSOLETE_STYLE_ATTRS.put("link", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("marginbottom", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] { "iframe",
-                "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginheight",
+                new String[] { "iframe", "body" });
         OBSOLETE_STYLE_ATTRS.put("marginleft", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("marginright", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("margintop", new String[] { "body" });
@@ -367,8 +356,8 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("valign", new String[] { "col", "colgroup",
                 "tbody", "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("vlink", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("vspace", new String[] { "img", "object",
-                "embed" });
+        OBSOLETE_STYLE_ATTRS.put("vspace",
+                new String[] { "img", "object", "embed" });
         OBSOLETE_STYLE_ATTRS.put("width", new String[] { "hr", "table", "td",
                 "th", "col", "colgroup", "pre" });
     }
@@ -394,8 +383,8 @@ public class Assertions extends Checker {
             String descendant) {
         int number = specialAncestorNumber(ancestor);
         if (number == -1) {
-            throw new IllegalStateException("Ancestor not found in array: "
-                    + ancestor);
+            throw new IllegalStateException(
+                    "Ancestor not found in array: " + ancestor);
         }
         Integer maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(descendant);
         int mask = 0;
@@ -487,9 +476,11 @@ public class Assertions extends Checker {
     private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
             | (1 << specialAncestorNumber("button"));
 
-    private static final int FIGCAPTION_MASK = (1 << specialAncestorNumber("figcaption"));
+    private static final int FIGCAPTION_MASK = (1 << specialAncestorNumber(
+            "figcaption"));
 
-    private static final int FIGURE_MASK = (1 << specialAncestorNumber("figure"));
+    private static final int FIGURE_MASK = (1 << specialAncestorNumber(
+            "figure"));
 
     private static final int H1_MASK = (1 << specialAncestorNumber("h1"));
 
@@ -513,7 +504,8 @@ public class Assertions extends Checker {
 
     private static final Map<String, Set<String>> ariaOwnsIdsByRole = new HashMap<>();
 
-    private static void registerRequiredAncestorRole(String parent, String child) {
+    private static void registerRequiredAncestorRole(String parent,
+            String child) {
         Set<String> parents = REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(child);
         if (parents == null) {
             parents = new HashSet<>();
@@ -1175,7 +1167,8 @@ public class Assertions extends Checker {
     /**
      * @see nu.validator.checker.Checker#endDocument()
      */
-    @Override public void endDocument() throws SAXException {
+    @Override
+    public void endDocument() throws SAXException {
         // contextmenu
         for (IdrefLocator idrefLocator : contextmenuReferences) {
             if (!menuIds.contains(idrefLocator.getIdref())) {
@@ -1211,8 +1204,7 @@ public class Assertions extends Checker {
         // ARIA idrefs
         for (IdrefLocator idrefLocator : ariaReferences) {
             if (!allIds.contains(idrefLocator.getIdref())) {
-                err("The \u201C"
-                        + idrefLocator.getAdditional()
+                err("The \u201C" + idrefLocator.getAdditional()
                         + "\u201D attribute must point to an element in the same document.",
                         idrefLocator.getLocator());
             }
@@ -1222,7 +1214,8 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : needsAriaOwner) {
             boolean foundOwner = false;
             String role = idrefLocator.getAdditional();
-            for (String ownerRole : REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(role)) {
+            for (String ownerRole : REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(
+                    role)) {
                 if (ariaOwnsIdsByRole.size() != 0
                         && ariaOwnsIdsByRole.get(ownerRole) != null
                         && ariaOwnsIdsByRole.get(ownerRole).contains(
@@ -1263,7 +1256,8 @@ public class Assertions extends Checker {
      * @see nu.validator.checker.Checker#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
-    @Override public void endElement(String uri, String localName, String name)
+    @Override
+    public void endElement(String uri, String localName, String name)
             throws SAXException {
         StackNode node = pop();
         Locator locator = null;
@@ -1326,7 +1320,8 @@ public class Assertions extends Checker {
                     || "h5" == localName || "h6" == localName)
                     && !node.hasTextNode() && !node.hasImg()) {
                 warn("Empty heading.", node.locator());
-            } else if ("option" == localName && !stack[currentPtr].hasOption()) {
+            } else if ("option" == localName
+                    && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
             }
             if ("article" == localName || "aside" == localName
@@ -1346,7 +1341,8 @@ public class Assertions extends Checker {
     /**
      * @see nu.validator.checker.Checker#startDocument()
      */
-    @Override public void startDocument() throws SAXException {
+    @Override
+    public void startDocument() throws SAXException {
         reset();
         stack = new StackNode[32];
         currentPtr = 0;
@@ -1384,8 +1380,9 @@ public class Assertions extends Checker {
      * @see nu.validator.checker.Checker#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    @Override public void startElement(String uri, String localName,
-            String name, Attributes atts) throws SAXException {
+    @Override
+    public void startElement(String uri, String localName, String name,
+            Attributes atts) throws SAXException {
         Set<String> ids = new HashSet<>();
         String role = null;
         String inputTypeVal = null;
@@ -1396,8 +1393,8 @@ public class Assertions extends Checker {
         boolean href = false;
         boolean activeDescendantWithAriaOwns = false;
         // see nu.validator.datatype.ImageCandidateStrings
-        System.setProperty(
-                "nu.validator.checker.imageCandidateString.hasWidth", "0");
+        System.setProperty("nu.validator.checker.imageCandidateString.hasWidth",
+                "0");
 
         StackNode parent = peek();
         int ancestorMask = 0;
@@ -1493,26 +1490,29 @@ public class Assertions extends Checker {
                                     "javascript", atts.getValue(i))) {
                         languageJavaScript = true;
                     } else if ("rev" == attLocal
-                            && !("1".equals(System.getProperty("nu.validator.schema.rdfa-full")))) {
-                        errObsoleteAttribute(
-                                "rev",
-                                localName,
+                            && !("1".equals(System.getProperty(
+                                    "nu.validator.schema.rdfa-full")))) {
+                        errObsoleteAttribute("rev", localName,
                                 " Use the \u201Crel\u201D attribute instead,"
                                         + " with a term having the opposite meaning.");
                     } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
                             && "ol" != localName && "ul" != localName
                             && "li" != localName) {
-                        String[] elementNames = OBSOLETE_ATTRIBUTES.get(attLocal);
+                        String[] elementNames = OBSOLETE_ATTRIBUTES.get(
+                                attLocal);
                         Arrays.sort(elementNames);
                         if (Arrays.binarySearch(elementNames, localName) >= 0) {
-                            String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(attLocal) ? " "
-                                    + OBSOLETE_ATTRIBUTES_MSG.get(attLocal)
-                                    : "";
+                            String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(
+                                    attLocal)
+                                            ? " " + OBSOLETE_ATTRIBUTES_MSG.get(
+                                                    attLocal)
+                                            : "";
                             errObsoleteAttribute(attLocal, localName,
                                     suggestion);
                         }
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
-                        String[] elementNames = OBSOLETE_STYLE_ATTRS.get(attLocal);
+                        String[] elementNames = OBSOLETE_STYLE_ATTRS.get(
+                                attLocal);
                         Arrays.sort(elementNames);
                         if (Arrays.binarySearch(elementNames, localName) >= 0) {
                             errObsoleteAttribute(attLocal, localName,
@@ -1524,11 +1524,12 @@ public class Assertions extends Checker {
                         Arrays.sort(allowedTypes);
                         inputTypeVal = inputTypeVal == null ? "text"
                                 : inputTypeVal;
-                        if (Arrays.binarySearch(allowedTypes, inputTypeVal) < 0) {
+                        if (Arrays.binarySearch(allowedTypes,
+                                inputTypeVal) < 0) {
                             err("Attribute \u201c" + attLocal
                                     + "\u201d is only allowed when the input"
-                                    + " type is "
-                                    + renderTypeList(allowedTypes) + ".");
+                                    + " type is " + renderTypeList(allowedTypes)
+                                    + ".");
                         }
                     } else if ("dropzone" == attLocal) {
                         String[] tokens = atts.getValue(i).toString().split(
@@ -1547,11 +1548,12 @@ public class Assertions extends Checker {
                                     + " \u201Cautofocus\u201D attribute.");
                         }
                         hasAutofocus = true;
-                    } else if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(attLocal)) {
+                    } else if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(
+                            attLocal)) {
                         String stateOrProperty = "aria-" + attLocal;
                         if (atts.getIndex("", stateOrProperty) > -1
-                                && "true".equals(atts.getValue("",
-                                        stateOrProperty))) {
+                                && "true".equals(
+                                        atts.getValue("", stateOrProperty))) {
                             warn("Attribute \u201C" + stateOrProperty
                                     + "\u201D is unnecessary for elements that"
                                     + " have attribute \u201C" + attLocal
@@ -1577,12 +1579,15 @@ public class Assertions extends Checker {
                     String srcsetVal = atts.getValue("", "srcset");
                     try {
                         if (atts.getIndex("", "sizes") > -1) {
-                            ImageCandidateStringsWidthRequired.THE_INSTANCE.checkValid(srcsetVal);
+                            ImageCandidateStringsWidthRequired.THE_INSTANCE.checkValid(
+                                    srcsetVal);
                         } else {
-                            ImageCandidateStrings.THE_INSTANCE.checkValid(srcsetVal);
+                            ImageCandidateStrings.THE_INSTANCE.checkValid(
+                                    srcsetVal);
                         }
                         // see nu.validator.datatype.ImageCandidateStrings
-                        if ("1".equals(System.getProperty("nu.validator.checker.imageCandidateString.hasWidth"))) {
+                        if ("1".equals(System.getProperty(
+                                "nu.validator.checker.imageCandidateString.hasWidth"))) {
                             if (atts.getIndex("", "sizes") < 0) {
                                 err("When the \u201csrcset\u201d attribute has"
                                         + " any image candidate string with a"
@@ -1603,7 +1608,8 @@ public class Assertions extends Checker {
                                     Html5DatatypeException ex5 = (Html5DatatypeException) e;
                                     if (!ex5.getDatatypeClass().equals(
                                             ImageCandidateURL.class)) {
-                                        msg = msg.substring(msg.indexOf(": ") + 2);
+                                        msg = msg.substring(
+                                                msg.indexOf(": ") + 2);
                                     }
                                 }
                                 VnuBadAttrValueException ex = new VnuBadAttrValueException(
@@ -1621,7 +1627,8 @@ public class Assertions extends Checker {
                             Locator locator = entry.getKey();
                             Map<String, String> sourceAtts = entry.getValue();
                             String media = sourceAtts.get("media");
-                            if (media == null && sourceAtts.get("type") == null) {
+                            if (media == null
+                                    && sourceAtts.get("type") == null) {
                                 err("A \u201csource\u201d element that has a"
                                         + " following sibling"
                                         + " \u201csource\u201d element or"
@@ -1690,8 +1697,8 @@ public class Assertions extends Checker {
             if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
                     || (ancestorMask & H3_MASK) != 0
                     || (ancestorMask & H4_MASK) != 0
-                    || (ancestorMask & H5_MASK) != 0 || (ancestorMask & H6_MASK) != 0)
-                    && "img" == localName
+                    || (ancestorMask & H5_MASK) != 0
+                    || (ancestorMask & H6_MASK) != 0) && "img" == localName
                     && atts.getIndex("", "alt") > -1
                     && !"".equals(atts.getValue("", "alt"))) {
                 stack[currentHeadingPtr].setImgFound();
@@ -1704,8 +1711,8 @@ public class Assertions extends Checker {
                         && "".equals(atts.getValue("", "value"))) {
                     parent.setEmptyValueOptionFound();
                 } else {
-                    parent.setNonEmptyOption((new LocatorImpl(
-                            getDocumentLocator())));
+                    parent.setNonEmptyOption(
+                            (new LocatorImpl(getDocumentLocator())));
                 }
             }
 
@@ -1719,7 +1726,8 @@ public class Assertions extends Checker {
             Integer maskAsObject;
             int mask = 0;
             String descendantUiString = "";
-            if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(localName)) != null) {
+            if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(
+                    localName)) != null) {
                 mask = maskAsObject.intValue();
                 descendantUiString = localName;
             } else if ("video" == localName && controls) {
@@ -1746,8 +1754,7 @@ public class Assertions extends Checker {
                 if (maskHit != 0) {
                     for (int j = 0; j < SPECIAL_ANCESTORS.length; j++) {
                         if ((maskHit & 1) != 0) {
-                            err("The element \u201C"
-                                    + descendantUiString
+                            err("The element \u201C" + descendantUiString
                                     + "\u201D must not appear as a descendant of the \u201C"
                                     + SPECIAL_ANCESTORS[j] + "\u201D element.");
                         }
@@ -1778,14 +1785,15 @@ public class Assertions extends Checker {
                                     + " for images.");
                         } else {
                             stack[currentFigurePtr].setFigcaptionNeeded();
-                            stack[currentFigurePtr].addImageLackingAlt(new LocatorImpl(
-                                    getDocumentLocator()));
+                            stack[currentFigurePtr].addImageLackingAlt(
+                                    new LocatorImpl(getDocumentLocator()));
                         }
                     }
                 } else {
                     if ("".equals(atts.getValue("", "alt"))
                             && atts.getIndex("", "role") > -1
-                            && !"presentation".equals(atts.getValue("", "role"))) {
+                            && !"presentation".equals(
+                                    atts.getValue("", "role"))) {
                         err("An \u201Cimg\u201D element which has an"
                                 + " \u201Calt\u201D attribute whose value"
                                 + " is the empty string must not have a"
@@ -1796,9 +1804,7 @@ public class Assertions extends Checker {
                 }
             } else if ("table" == localName) {
                 if (atts.getIndex("", "summary") >= 0) {
-                    errObsoleteAttribute(
-                            "summary",
-                            "table",
+                    errObsoleteAttribute("summary", "table",
                             " Consider describing the structure of the"
                                     + " \u201Ctable\u201D in a \u201Ccaption\u201D "
                                     + " element or in a \u201Cfigure\u201D element "
@@ -1809,9 +1815,9 @@ public class Assertions extends Checker {
                 }
                 if (atts.getIndex("", "border") > -1) {
                     if (followW3Cspec) {
-                        if (atts.getIndex("", "border") > -1
-                                && (!("".equals(atts.getValue("", "border")) || "1".equals(atts.getValue(
-                                        "", "border"))))) {
+                        if (atts.getIndex("", "border") > -1 && (!("".equals(
+                                atts.getValue("", "border"))
+                                || "1".equals(atts.getValue("", "border"))))) {
                             errObsoleteAttribute("border", "table",
                                     " Use CSS instead.");
                         } else {
@@ -1890,14 +1896,16 @@ public class Assertions extends Checker {
                         && !(min <= value)) {
                     err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Cvalue\u201D attribute.");
                 }
-                if (Double.isNaN(min) && !Double.isNaN(value) && !(0 <= value)) {
+                if (Double.isNaN(min) && !Double.isNaN(value)
+                        && !(0 <= value)) {
                     err("The value of the \u201Cvalue\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(value) && !Double.isNaN(max)
                         && !(value <= max)) {
                     err("The value of the \u201Cvalue\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                 }
-                if (!Double.isNaN(value) && Double.isNaN(max) && !(value <= 1)) {
+                if (!Double.isNaN(value) && Double.isNaN(max)
+                        && !(value <= 1)) {
                     err("The value of the \u201Cvalue\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(min) && !Double.isNaN(max) && !(min <= max)) {
@@ -1915,16 +1923,19 @@ public class Assertions extends Checker {
                 if (Double.isNaN(min) && !Double.isNaN(low) && !(0 <= low)) {
                     err("The value of the \u201Clow\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
-                if (!Double.isNaN(min) && !Double.isNaN(high) && !(min <= high)) {
+                if (!Double.isNaN(min) && !Double.isNaN(high)
+                        && !(min <= high)) {
                     err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Chigh\u201D attribute.");
                 }
                 if (Double.isNaN(min) && !Double.isNaN(high) && !(0 <= high)) {
                     err("The value of the \u201Chigh\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
-                if (!Double.isNaN(low) && !Double.isNaN(high) && !(low <= high)) {
+                if (!Double.isNaN(low) && !Double.isNaN(high)
+                        && !(low <= high)) {
                     err("The value of the \u201Clow\u201D attribute must be less than or equal to the value of the \u201Chigh\u201D attribute.");
                 }
-                if (!Double.isNaN(high) && !Double.isNaN(max) && !(high <= max)) {
+                if (!Double.isNaN(high) && !Double.isNaN(max)
+                        && !(high <= max)) {
                     err("The value of the \u201Chigh\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                 }
                 if (!Double.isNaN(high) && Double.isNaN(max) && !(high <= 1)) {
@@ -2003,7 +2014,9 @@ public class Assertions extends Checker {
 
             // labelable elements
             if ("button" == localName
-                    || ("input" == localName && !lowerCaseLiteralEqualsIgnoreAsciiCaseString("hidden", atts.getValue("", "type")))
+                    || ("input" == localName
+                            && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                    "hidden", atts.getValue("", "type")))
                     || "keygen" == localName || "meter" == localName
                     || "output" == localName || "progress" == localName
                     || "select" == localName || "textarea" == localName) {
@@ -2025,7 +2038,8 @@ public class Assertions extends Checker {
                 }
                 if ((ancestorMask & LABEL_FOR_MASK) != 0) {
                     boolean hasMatchingFor = false;
-                    for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
+                    for (int i = 0; (stack[currentPtr - i].getAncestorMask()
+                            & LABEL_FOR_MASK) != 0; i++) {
                         String forVal = stack[currentPtr - i].getForAttr();
                         if (forVal != null && forVal.equals(id)) {
                             hasMatchingFor = true;
@@ -2050,8 +2064,8 @@ public class Assertions extends Checker {
 
             // contextmenu
             if (contextmenu != null) {
-                contextmenuReferences.add(new IdrefLocator(new LocatorImpl(
-                        getDocumentLocator()), contextmenu));
+                contextmenuReferences.add(new IdrefLocator(
+                        new LocatorImpl(getDocumentLocator()), contextmenu));
             }
             if ("menu" == localName) {
                 menuIds.addAll(ids);
@@ -2061,7 +2075,8 @@ public class Assertions extends Checker {
                     if (value.contains(role)) {
                         String[] ownedIds = AttributeUtil.split(owns);
                         for (int i = 0; i < ownedIds.length; i++) {
-                            Set<String> ownedIdsForThisRole = ariaOwnsIdsByRole.get(role);
+                            Set<String> ownedIdsForThisRole = ariaOwnsIdsByRole.get(
+                                    role);
                             if (ownedIdsForThisRole == null) {
                                 ownedIdsForThisRole = new HashSet<>();
                             }
@@ -2080,8 +2095,8 @@ public class Assertions extends Checker {
             if ("label" == localName) {
                 String forVal = atts.getValue("", "for");
                 if (forVal != null) {
-                    formControlReferences.add(new IdrefLocator(new LocatorImpl(
-                            getDocumentLocator()), forVal));
+                    formControlReferences.add(new IdrefLocator(
+                            new LocatorImpl(getDocumentLocator()), forVal));
                 }
             }
 
@@ -2102,15 +2117,15 @@ public class Assertions extends Checker {
                     || "select" == localName || "textarea" == localName) {
                 String formVal = atts.getValue("", "form");
                 if (formVal != null) {
-                    formElementReferences.add(new IdrefLocator(new LocatorImpl(
-                            getDocumentLocator()), formVal));
+                    formElementReferences.add(new IdrefLocator(
+                            new LocatorImpl(getDocumentLocator()), formVal));
                 }
             }
 
             // input list
             if ("input" == localName && list != null) {
-                listReferences.add(new IdrefLocator(new LocatorImpl(
-                        getDocumentLocator()), list));
+                listReferences.add(new IdrefLocator(
+                        new LocatorImpl(getDocumentLocator()), list));
             }
 
             // input@type=button
@@ -2174,18 +2189,20 @@ public class Assertions extends Checker {
             // Warnings for use of ARIA attributes with markup already
             // having implicit ARIA semantics.
             if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
-                    && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(role)) {
+                    && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(
+                            role)) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element" + " \u201C" + localName + "\u201D.");
             } else if (ELEMENTS_THAT_NEVER_NEED_ROLE.containsKey(localName)
-                    && ELEMENTS_THAT_NEVER_NEED_ROLE.get(localName).equals(role)) {
+                    && ELEMENTS_THAT_NEVER_NEED_ROLE.get(localName).equals(
+                            role)) {
                 warn("Element \u201C" + localName + "\u201D does not need a"
                         + " \u201Crole\u201D attribute.");
             } else if ("input" == localName) {
                 inputTypeVal = inputTypeVal == null ? "text" : inputTypeVal;
                 if (INPUT_TYPES_WITH_IMPLICIT_ROLE.containsKey(inputTypeVal)
-                        && INPUT_TYPES_WITH_IMPLICIT_ROLE.get(inputTypeVal).equals(
-                                role)) {
+                        && INPUT_TYPES_WITH_IMPLICIT_ROLE.get(
+                                inputTypeVal).equals(role)) {
                     warnExplicitRoleUnnecessaryForType("input", role,
                             inputTypeVal);
                 } else if ("email".equals(inputTypeVal)
@@ -2215,24 +2232,25 @@ public class Assertions extends Checker {
             } else if ("menuitem" == localName) {
                 menuitemTypeVal = menuitemTypeVal == null ? "command"
                         : menuitemTypeVal;
-                if (MENUITEM_TYPES_WITH_IMPLICIT_ROLE.containsKey(menuitemTypeVal)
+                if (MENUITEM_TYPES_WITH_IMPLICIT_ROLE.containsKey(
+                        menuitemTypeVal)
                         && MENUITEM_TYPES_WITH_IMPLICIT_ROLE.get(
                                 menuitemTypeVal).equals(role)) {
                     warnExplicitRoleUnnecessaryForType("menuitem", role,
                             menuitemTypeVal);
                 }
-            } else if (atts.getIndex("", "href") > -1
-                    && "link".equals(role)
-                    && ("a".equals(localName) || "area".equals(localName) || "link".equals(localName))) {
+            } else if (atts.getIndex("", "href") > -1 && "link".equals(role)
+                    && ("a".equals(localName) || "area".equals(localName)
+                            || "link".equals(localName))) {
                 warn("The \u201Clink\u201D role is unnecessary for element"
                         + " \u201C" + localName + "\u201D with attribute"
                         + " \u201Chref\u201D.");
-            } else if (("tbody".equals(localName) || "tfoot".equals(localName) || "thead".equals(localName))
-                    && "rowgroup".equals(role)) {
+            } else if (("tbody".equals(localName) || "tfoot".equals(localName)
+                    || "thead".equals(localName)) && "rowgroup".equals(role)) {
                 warn("The \u201Crowgroup\u201D role is unnecessary for element"
                         + " \u201C" + localName + "\u201D.");
-            } else if ("th" == localName
-                    && ("columnheader".equals(role) || "columnheader".equals(role))) {
+            } else if ("th" == localName && ("columnheader".equals(role)
+                    || "columnheader".equals(role))) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element \u201Cth\u201D.");
             } else if ("li" == localName && "listitem".equals(role)
@@ -2246,7 +2264,8 @@ public class Assertions extends Checker {
                 warnExplicitRoleUnnecessaryForType("button", "button", "menu");
             } else if ("menu" == localName && "toolbar".equals(role)
                     && "toolbar".equals(atts.getValue("", "type"))) {
-                warnExplicitRoleUnnecessaryForType("menu", "toolbar", "toolbar");
+                warnExplicitRoleUnnecessaryForType("menu", "toolbar",
+                        "toolbar");
             } else if ("li" == localName && "listitem".equals(role)
                     && !"menu".equals(parentName)) {
                 warn("The \u201Clistitem\u201D role is unnecessary for an"
@@ -2279,16 +2298,17 @@ public class Assertions extends Checker {
         }
 
         // ARIA required owner/ancestors
-        Set<String> requiredAncestorRoles = REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(role);
+        Set<String> requiredAncestorRoles = REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(
+                role);
         if (requiredAncestorRoles != null && !"presentation".equals(parentRole)
                 && !"tbody".equals(localName) && !"tfoot".equals(localName)
                 && !"thead".equals(localName)) {
             if (!currentElementHasRequiredAncestorRole(requiredAncestorRoles)) {
                 if (atts.getIndex("", "id") > -1
                         && !"".equals(atts.getValue("", "id"))) {
-                    needsAriaOwner.add(new IdrefLocator(new LocatorImpl(
-                            getDocumentLocator()), atts.getValue("", "id"),
-                            role));
+                    needsAriaOwner.add(new IdrefLocator(
+                            new LocatorImpl(getDocumentLocator()),
+                            atts.getValue("", "id"), role));
                 } else {
                     errContainedInOrOwnedBy(role, getDocumentLocator());
                 }
@@ -2302,8 +2322,8 @@ public class Assertions extends Checker {
                 String[] tokens = AttributeUtil.split(attVal);
                 for (int i = 0; i < tokens.length; i++) {
                     String token = tokens[i];
-                    ariaReferences.add(new IdrefLocator(getDocumentLocator(),
-                            token, att));
+                    ariaReferences.add(
+                            new IdrefLocator(getDocumentLocator(), token, att));
                 }
             }
         }
@@ -2344,16 +2364,16 @@ public class Assertions extends Checker {
             StackNode child = new StackNode(ancestorMask, localName, role,
                     activeDescendant, forAttr);
             if (activeDescendant != null && !activeDescendantWithAriaOwns) {
-                openActiveDescendants.put(child, new LocatorImpl(
-                        getDocumentLocator()));
+                openActiveDescendants.put(child,
+                        new LocatorImpl(getDocumentLocator()));
             }
             if ("select" == localName && atts.getIndex("", "multiple") == -1) {
                 openSingleSelects.put(child, getDocumentLocator());
             } else if ("label" == localName) {
                 openLabels.put(child, new LocatorImpl(getDocumentLocator()));
             } else if ("video" == localName || "audio" == localName) {
-                openMediaElements.put(child, new TaintableLocatorImpl(
-                        getDocumentLocator()));
+                openMediaElements.put(child,
+                        new TaintableLocatorImpl(getDocumentLocator()));
             }
             push(child);
             if ("article" == localName || "aside" == localName
@@ -2369,7 +2389,8 @@ public class Assertions extends Checker {
                     String size = trimSpaces(atts.getValue("", "size"));
                     if (!"".equals(size)) {
                         try {
-                            if ((size.length() > 1 && size.charAt(0) == '+' && Integer.parseInt(size.substring(1)) == 1)
+                            if ((size.length() > 1 && size.charAt(0) == '+'
+                                    && Integer.parseInt(size.substring(1)) == 1)
                                     || Integer.parseInt(size) == 1) {
                                 child.setOptionNeeded();
                             } else {
@@ -2387,8 +2408,8 @@ public class Assertions extends Checker {
             StackNode child = new StackNode(ancestorMask, null, role,
                     activeDescendant, forAttr);
             if (activeDescendant != null) {
-                openActiveDescendants.put(child, new LocatorImpl(
-                        getDocumentLocator()));
+                openActiveDescendants.put(child,
+                        new LocatorImpl(getDocumentLocator()));
             }
             push(child);
         }
@@ -2398,7 +2419,8 @@ public class Assertions extends Checker {
     /**
      * @see nu.validator.checker.Checker#characters(char[], int, int)
      */
-    @Override public void characters(char[] ch, int start, int length)
+    @Override
+    public void characters(char[] ch, int start, int length)
             throws SAXException {
         StackNode node = peek();
         for (int i = start; i < start + length; i++) {
@@ -2429,7 +2451,8 @@ public class Assertions extends Checker {
                         // of this figcaption, the content of this
                         // figcaption counts as a text node descendant
                         for (int j = 1; j < currentFigurePtr; j++) {
-                            if ("figure".equals(stack[currentFigurePtr - j].getName())) {
+                            if ("figure".equals(
+                                    stack[currentFigurePtr - j].getName())) {
                                 stack[currentFigurePtr - j].setTextNodeFound();
                             }
                         }
@@ -2439,16 +2462,19 @@ public class Assertions extends Checker {
                         // for any ancestor figures of this figure, this
                         // also counts as a text node descendant
                         for (int k = 1; k < currentFigurePtr; k++) {
-                            if ("figure".equals(stack[currentFigurePtr - k].getName())) {
+                            if ("figure".equals(
+                                    stack[currentFigurePtr - k].getName())) {
                                 stack[currentFigurePtr - k].setTextNodeFound();
                             }
                         }
                     } else if ("option".equals(node.name)
                             && !stack[currentPtr - 1].hasOption()
-                            && (!stack[currentPtr - 1].hasEmptyValueOption() || stack[currentPtr - 1].hasNoValueOption())
-                            && stack[currentPtr - 1].nonEmptyOptionLocator() == null) {
-                        stack[currentPtr - 1].setNonEmptyOption((new LocatorImpl(
-                                getDocumentLocator())));
+                            && (!stack[currentPtr - 1].hasEmptyValueOption()
+                                    || stack[currentPtr - 1].hasNoValueOption())
+                            && stack[currentPtr
+                                    - 1].nonEmptyOptionLocator() == null) {
+                        stack[currentPtr - 1].setNonEmptyOption(
+                                (new LocatorImpl(getDocumentLocator())));
                     }
                     return;
             }

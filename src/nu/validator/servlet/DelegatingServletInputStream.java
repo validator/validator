@@ -158,21 +158,24 @@ public final class DelegatingServletInputStream extends ServletInputStream {
     /**
      * @return
      */
-    @Override public boolean isFinished() {
+    @Override
+    public boolean isFinished() {
         return false;
     }
 
     /**
      * @return
      */
-    @Override public boolean isReady() {
+    @Override
+    public boolean isReady() {
         return false;
     }
 
     /**
      * @param arg0
      */
-    @Override public void setReadListener(ReadListener arg0) {
+    @Override
+    public void setReadListener(ReadListener arg0) {
     }
 
 }

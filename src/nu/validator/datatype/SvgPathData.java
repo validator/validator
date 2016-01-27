@@ -53,8 +53,8 @@ public class SvgPathData extends AbstractDatatype {
      */
     private int current;
 
-    @Override public void checkValid(CharSequence literal)
-            throws DatatypeException {
+    @Override
+    public void checkValid(CharSequence literal) throws DatatypeException {
 
         reader = new StringReader(literal.toString());
         context = new StringBuilder(MAX_CONTEXT_LENGTH);
@@ -140,8 +140,8 @@ public class SvgPathData extends AbstractDatatype {
                     default:
                         throw newDatatypeException("Expected command but "
                                 + "found \u201c" + (char) current
-                                + "\u201d (context: \u201c"
-                                + context.toString() + "\u201d).");
+                                + "\u201d (context: \u201c" + context.toString()
+                                + "\u201d).");
                 }
             } catch (IOException e) {
                 try {
@@ -877,8 +877,8 @@ public class SvgPathData extends AbstractDatatype {
             switch (current) {
                 default:
                     reportUnexpected("\u201c0\u201d or \u201c1\u201d "
-                            + "for large-arc-flag for \u201ca\u201d command",
-                            current);
+                            + "for large-arc-flag for \u201ca\u201d"
+                            + " command", current);
                     skipSubPath();
                     return;
                 case '0':
@@ -892,8 +892,8 @@ public class SvgPathData extends AbstractDatatype {
 
             switch (current) {
                 default:
-                    reportUnexpected("\u201c0\u201d or \u201c1\u201d "
-                            + "for sweep-flag for \u201ca\u201d command",
+                    reportUnexpected("\u201c0\u201d or \u201c1\u201d for"
+                            + " sweep-flag for \u201ca\u201d" + " command",
                             current);
                     skipSubPath();
                     return;
@@ -958,8 +958,8 @@ public class SvgPathData extends AbstractDatatype {
 
             switch (current) {
                 default:
-                    reportUnexpected("\u201c0\u201d or \u201c1\u201d "
-                            + "for large-arc-flag for \u201cA\u201d command",
+                    reportUnexpected("\u201c0\u201d or \u201c1\u201d for"
+                            + " large-arc-flag for \u201cA\u201d" + " command",
                             current);
                     skipSubPath();
                     return;
@@ -974,8 +974,8 @@ public class SvgPathData extends AbstractDatatype {
 
             switch (current) {
                 default:
-                    reportUnexpected("\u201c0\u201d or \u201c1\u201d "
-                            + "for sweep-flag for \u201cA\u201d command",
+                    reportUnexpected("\u201c0\u201d or \u201c1\u201d for"
+                            + " sweep-flag for \u201cA\u201d" + " command",
                             current);
                     skipSubPath();
                     return;
@@ -999,8 +999,8 @@ public class SvgPathData extends AbstractDatatype {
     /**
      * Checks a command argument.
      */
-    private void checkArg(char command, String arg) throws DatatypeException,
-            IOException {
+    private void checkArg(char command, String arg)
+            throws DatatypeException, IOException {
         int mant = 0;
         int mantDig = 0;
         boolean mantPos = true;
@@ -1021,8 +1021,9 @@ public class SvgPathData extends AbstractDatatype {
 
         m1: switch (current) {
             default:
-                reportUnexpected(arg + " for \u201c" + command
-                        + "\u201d command", current);
+                reportUnexpected(
+                        arg + " for \u201c" + command + "\u201d command",
+                        current);
                 skipSubPath();
                 return;
 
@@ -1342,7 +1343,7 @@ public class SvgPathData extends AbstractDatatype {
 
     /**
      * Skips the whitespaces and an optional comma.
-     * 
+     *
      * @returns true if comma was skipped.
      */
     private boolean skipCommaSpaces2() throws IOException {
@@ -1406,7 +1407,8 @@ public class SvgPathData extends AbstractDatatype {
         }
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "SVG path data";
     }
 

@@ -39,8 +39,8 @@ public class MimeTypeList extends AbstractDatatype {
         super();
     }
 
-    @Override public void checkValid(CharSequence literal)
-            throws DatatypeException {
+    @Override
+    public void checkValid(CharSequence literal) throws DatatypeException {
         State state = State.WS_BEFORE_TYPE;
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
@@ -57,9 +57,9 @@ public class MimeTypeList extends AbstractDatatype {
                         state = State.IN_TYPE;
                         continue;
                     } else {
-                        throw newDatatypeException(
-                                i,
-                                "Expected whitespace, a token character or \u201C*\u201D but saw ",
+                        throw newDatatypeException(i,
+                                "Expected whitespace, a token character or"
+                                        + " \u201C*\u201D but saw ",
                                 c, " instead.");
                     }
                 case ASTERISK_TYPE_SEEN:
@@ -87,9 +87,9 @@ public class MimeTypeList extends AbstractDatatype {
                     } else if (isTokenChar(c)) {
                         continue;
                     } else {
-                        throw newDatatypeException(
-                                i,
-                                "Expected a token character or \u201C/\u201D but saw ",
+                        throw newDatatypeException(i,
+                                "Expected a token character or \u201C/\u201D"
+                                        + " but saw ",
                                 c, " instead.");
                     }
                 case BEFORE_EXTENSION:
@@ -97,10 +97,9 @@ public class MimeTypeList extends AbstractDatatype {
                         state = State.IN_EXTENSION;
                         continue;
                     } else {
-                        throw newDatatypeException(
-                                i,
-                                "Expected a token character but saw ",
-                                c, " instead.");
+                        throw newDatatypeException(i,
+                                "Expected a token character but saw ", c,
+                                " instead.");
                     }
                 case IN_EXTENSION:
                     if (isWhitespace(c)) {
@@ -112,9 +111,9 @@ public class MimeTypeList extends AbstractDatatype {
                     } else if (isTokenChar(c)) {
                         continue;
                     } else {
-                        throw newDatatypeException(
-                                i,
-                                "Expected a token character, whitespace or a comma but saw ",
+                        throw newDatatypeException(i,
+                                "Expected a token character, whitespace or a"
+                                        + " comma but saw ",
                                 c, " instead.");
                     }
                 case SLASH_SEEN:
@@ -125,9 +124,9 @@ public class MimeTypeList extends AbstractDatatype {
                         state = State.IN_SUBTYPE;
                         continue;
                     } else {
-                        throw newDatatypeException(
-                                i,
-                                "Expected a token character or \u201C*\u201D but saw ",
+                        throw newDatatypeException(i,
+                                "Expected a token character or \u201C*\u201D"
+                                        + " but saw ",
                                 c, " instead.");
                     }
                 case IN_SUBTYPE:
@@ -140,9 +139,9 @@ public class MimeTypeList extends AbstractDatatype {
                     } else if (isTokenChar(c)) {
                         continue;
                     } else {
-                        throw newDatatypeException(
-                                i,
-                                "Expected a token character, whitespace or a comma but saw ",
+                        throw newDatatypeException(i,
+                                "Expected a token character, whitespace or a"
+                                        + " comma but saw ",
                                 c, " instead.");
                     }
                 case WS_BEFORE_COMMA:
@@ -164,29 +163,35 @@ public class MimeTypeList extends AbstractDatatype {
             case WS_BEFORE_COMMA:
                 return;
             case ASTERISK_AND_SLASH_SEEN:
-                throw newDatatypeException("Expected \u201C*\u201D but the literal ended.");
+                throw newDatatypeException(
+                        "Expected \u201C*\u201D but the literal ended.");
             case ASTERISK_TYPE_SEEN:
-                throw newDatatypeException("Expected \u201C/\u201D but the literal ended.");
+                throw newDatatypeException(
+                        "Expected \u201C/\u201D but the literal ended.");
             case IN_TYPE:
-                throw newDatatypeException("Expected \u201C/\u201D but the literal ended.");
+                throw newDatatypeException(
+                        "Expected \u201C/\u201D but the literal ended.");
             case SLASH_SEEN:
-                throw newDatatypeException("Expected subtype but the literal ended.");
+                throw newDatatypeException(
+                        "Expected subtype but the literal ended.");
             case WS_BEFORE_TYPE:
-                throw newDatatypeException("Expected a MIME type but the literal ended.");
+                throw newDatatypeException(
+                        "Expected a MIME type but the literal ended.");
             case BEFORE_EXTENSION:
-                throw newDatatypeException("Expected a file extension but the literal ended.");
+                throw newDatatypeException(
+                        "Expected a file extension but the literal ended.");
         }
     }
 
     private boolean isTokenChar(char c) {
-        return (c >= 33 && c <= 126)
-                && !(c == '(' || c == ')' || c == '<' || c == '>' || c == '@'
-                        || c == ',' || c == ';' || c == ':' || c == '\\'
-                        || c == '\"' || c == '/' || c == '[' || c == ']'
-                        || c == '?' || c == '=' || c == '{' || c == '}');
+        return (c >= 33 && c <= 126) && !(c == '(' || c == ')' || c == '<'
+                || c == '>' || c == '@' || c == ',' || c == ';' || c == ':'
+                || c == '\\' || c == '\"' || c == '/' || c == '[' || c == ']'
+                || c == '?' || c == '=' || c == '{' || c == '}');
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "MIME type list";
     }
 

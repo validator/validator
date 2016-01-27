@@ -35,7 +35,8 @@ public class MediaCondition extends MediaQuery {
         return true;
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "media condition";
     }
 

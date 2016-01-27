@@ -56,16 +56,18 @@ public class XmlMessageEmitter extends MessageEmitter {
         this.extractHandler = new XmlExtractHandler(emitter);
     }
 
-    @Override public void endMessage() throws SAXException {
+    @Override
+    public void endMessage() throws SAXException {
         assert openMessage != null;
         emitter.endElement(openMessage);
         openMessage = null;
     }
 
-    @Override public void startMessage(MessageType type, String systemId,
+    @Override
+    public void startMessage(MessageType type, String systemId,
             int oneBasedFirstLine, int oneBasedFirstColumn,
             int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
-            throws SAXException {
+                    throws SAXException {
         assert openMessage == null;
         openMessage = type.getSuperType();
         attrs.clear();
@@ -98,13 +100,15 @@ public class XmlMessageEmitter extends MessageEmitter {
     /**
      * @see nu.validator.messages.MessageEmitter#endFullSource()
      */
-    @Override public void endFullSource() throws SAXException {
+    @Override
+    public void endFullSource() throws SAXException {
     }
 
     /**
      * @see nu.validator.messages.MessageEmitter#endMessages()
      */
-    @Override public void endMessages() throws SAXException {
+    @Override
+    public void endMessages() throws SAXException {
         emitter.endElement("messages");
         emitter.characters("\n");
         contentHandler.endPrefixMapping("");
@@ -115,22 +119,24 @@ public class XmlMessageEmitter extends MessageEmitter {
     /**
      * @see nu.validator.messages.MessageEmitter#endSource()
      */
-    @Override public void endSource() throws SAXException {
+    @Override
+    public void endSource() throws SAXException {
         emitter.endElement("extract");
     }
 
     /**
      * @see nu.validator.messages.MessageEmitter#endText()
      */
-    @Override public void endText() throws SAXException {
+    @Override
+    public void endText() throws SAXException {
         emitter.endElement("message");
     }
 
     /**
      * @see nu.validator.messages.MessageEmitter#startFullSource(int)
      */
-    @Override public SourceHandler startFullSource(int lineOffset)
-            throws SAXException {
+    @Override
+    public SourceHandler startFullSource(int lineOffset) throws SAXException {
         return new XmlSourceHandler(emitter);
     }
 
@@ -138,8 +144,9 @@ public class XmlMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String,
      *      boolean)
      */
-    @Override public void startMessages(String documentUri,
-            boolean willShowSource) throws SAXException {
+    @Override
+    public void startMessages(String documentUri, boolean willShowSource)
+            throws SAXException {
         contentHandler.startDocument();
         attrs.clear();
         if (documentUri != null) {
@@ -153,7 +160,8 @@ public class XmlMessageEmitter extends MessageEmitter {
     /**
      * @see nu.validator.messages.MessageEmitter#startSource()
      */
-    @Override public SourceHandler startSource() throws SAXException {
+    @Override
+    public SourceHandler startSource() throws SAXException {
         emitter.startElement("extract");
         return extractHandler;
     }
@@ -161,7 +169,8 @@ public class XmlMessageEmitter extends MessageEmitter {
     /**
      * @see nu.validator.messages.MessageEmitter#startText()
      */
-    @Override public MessageTextHandler startText() throws SAXException {
+    @Override
+    public MessageTextHandler startText() throws SAXException {
         emitter.startElement("message");
         return messageTextHandler;
     }
@@ -169,14 +178,16 @@ public class XmlMessageEmitter extends MessageEmitter {
     /**
      * @see nu.validator.messages.MessageEmitter#endElaboration()
      */
-    @Override public void endElaboration() throws SAXException {
+    @Override
+    public void endElaboration() throws SAXException {
         emitter.endElement("elaboration");
     }
 
     /**
      * @see nu.validator.messages.MessageEmitter#startElaboration()
      */
-    @Override public ContentHandler startElaboration() throws SAXException {
+    @Override
+    public ContentHandler startElaboration() throws SAXException {
         emitter.startElement("elaboration");
         return contentHandler;
     }

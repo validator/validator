@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 2011 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -76,8 +76,11 @@ public class MicrodataChecker extends Checker {
      */
     class Element {
         public final Locator locator;
+
         public final String[] itemProp;
+
         public final String[] itemRef;
+
         public final boolean itemScope;
 
         public final List<Element> children;
@@ -85,7 +88,8 @@ public class MicrodataChecker extends Checker {
         // tree order of the element, for cheap sorting and hashing
         private final int order;
 
-        public Element(Locator locator, String[] itemProp, String[] itemRef, boolean itemScope) {
+        public Element(Locator locator, String[] itemProp, String[] itemRef,
+                boolean itemScope) {
             this.locator = locator;
             this.itemProp = itemProp;
             this.itemRef = itemRef;
@@ -94,11 +98,13 @@ public class MicrodataChecker extends Checker {
             this.order = counter++;
         }
 
-        @Override public boolean equals(Object that) {
+        @Override
+        public boolean equals(Object that) {
             return this == that;
         }
 
-        @Override public int hashCode() {
+        @Override
+        public int hashCode() {
             return order;
         }
 
@@ -107,6 +113,7 @@ public class MicrodataChecker extends Checker {
          */
         class Builder {
             public final Builder parent;
+
             public final int depth; // nesting depth in the input
 
             public Builder(Builder parent, int depth) {
@@ -121,13 +128,17 @@ public class MicrodataChecker extends Checker {
     }
 
     private int depth; // nesting depth in the input
+
     private Element.Builder builder;
+
     private static int counter;
 
     // top-level items (itemscope but not itemprop)
     private List<Element> items;
+
     // property elements (itemprop)
     private Set<Element> properties;
+
     // mapping from id to Element (like getElementById)
     private Map<String, Element> idmap;
 
@@ -146,11 +157,13 @@ public class MicrodataChecker extends Checker {
         idmap = new HashMap<>();
     }
 
-     /**
-     * @see nu.validator.checker.Checker#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+    /**
+     * @see nu.validator.checker.Checker#startElement(java.lang.String,
+     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
+    public void startElement(String uri, String localName, String qName,
+            Attributes atts) throws SAXException {
         depth++;
 
         if ("http://www.w3.org/1999/xhtml" != uri) {
@@ -180,7 +193,8 @@ public class MicrodataChecker extends Checker {
         }
 
         if (id != null || itemProp != null || itemScope == true) {
-            Element elm = new Element(new LocatorImpl(locator), itemProp, itemRef, itemScope);
+            Element elm = new Element(new LocatorImpl(locator), itemProp,
+                    itemRef, itemScope);
 
             if (itemProp != null) {
                 properties.add(elm);
@@ -199,10 +213,12 @@ public class MicrodataChecker extends Checker {
     }
 
     /**
-     * @see nu.validator.checker.Checker#endElement(java.lang.String, java.lang.String, java.lang.String)
+     * @see nu.validator.checker.Checker#endElement(java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(String uri, String localName, String qName)
+            throws SAXException {
         if (builder != null && builder.depth == depth) {
             builder = builder.parent;
         }
@@ -221,19 +237,22 @@ public class MicrodataChecker extends Checker {
 
         // emit errors for unreferenced properties
         for (Element prop : properties) {
-            err("The \u201Citemprop\u201D attribute was specified, but the element is not a property of any item.", prop.locator);
+            err("The \u201Citemprop\u201D attribute was specified,"
+                + " but the element is not a property of any item.",
+                    prop.locator);
         }
     }
 
     /**
      * Check itemref constraints.
      *
-     * This mirrors the "the properties of an item" algorithm,
-     * modified to recursively check sub-items.
+     * This mirrors the "the properties of an item" algorithm, modified to
+     * recursively check sub-items.
      *
      * http://www.whatwg.org/specs/web-apps/current-work/multipage/microdata.html#the-properties-of-an-item
      */
-    private void checkItem(Element root, Deque<Element> parents) throws SAXException {
+    private void checkItem(Element root, Deque<Element> parents)
+            throws SAXException {
         Deque<Element> pending = new ArrayDeque<>();
         Set<Element> memory = new HashSet<>();
         memory.add(root);
@@ -246,7 +265,11 @@ public class MicrodataChecker extends Checker {
                 if (refElm != null) {
                     pending.push(refElm);
                 } else {
-                    err("The \u201Citemref\u201D attribute referenced \u201C" + id + "\u201D, but there is no element with an \u201Cid\u201D attribute with that value.", root.locator);
+                    err("The \u201Citemref\u201D attribute referenced \u201C"
+                            + id
+                            + "\u201D, but there is no element with an"
+                            + " \u201Cid\u201D attribute with that value.",
+                            root.locator);
                 }
             }
         }
@@ -271,13 +294,16 @@ public class MicrodataChecker extends Checker {
                         checkItem(current, parents);
                         parents.pop();
                     } else {
-                        err("The \u201Citemref\u201D attribute created a circular reference with another item.", current.locator);
+                        err("The \u201Citemref\u201D attribute created a"
+                            + " circular reference with another item.",
+                                current.locator);
                     }
                 }
             }
         }
         if (memoryError) {
-            err("The \u201Citemref\u201D attribute contained redundant references.", root.locator);
+            err("The \u201Citemref\u201D attribute contained redundant references.",
+                    root.locator);
         }
     }
 

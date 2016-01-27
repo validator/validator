@@ -38,7 +38,8 @@ public class ImageCandidateStringsWidthRequired extends ImageCandidateStrings {
         return true;
     }
 
-    @Override public String getName() {
+    @Override
+    public String getName() {
         return "image candidate strings with width descriptors";
     }
 
