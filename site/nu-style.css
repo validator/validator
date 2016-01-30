@@ -158,7 +158,7 @@ p.disclaimer {
 	font: caption;
 	margin-left: 3%;
 	margin-right: 3%;
-	color: #aaa;
+	color: #747474;
 }
 
 .alert {
@@ -631,7 +631,7 @@ dl.inputattrs .highlight {
 }
 
 #xnote {
-	color: #aaa;
+	color: #747474;
 	margin-left: 2px;
 	margin-top: 6px;
 }
@@ -699,7 +699,7 @@ dl.inputattrs .highlight {
 
 #filters > div {
 	font: caption;
-	color: #aaa;
+	color: #747474;
 	background-color: #FFFFCC;
 	padding: 4px;
 }
