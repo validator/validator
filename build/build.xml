@@ -45,7 +45,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="jetty-version" value="9.2.9.v20150224" />
   <property name="log4j-version" value="1.2.17" />
   <property name="rhino-version" value="1.7R5" />
-  <property name="salvation-version" value="1.0.3" />
+  <property name="salvation-version" value="2.0.1" />
   <target name="build" depends="jar"/>
   <target name="clean">
     <delete dir="${dist}"/>

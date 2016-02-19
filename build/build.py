@@ -126,7 +126,7 @@ miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
   ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/54.1.1/icu4j-54.1.1.jar", "d75417a813c37b958be2be0a766f0a65"),
-  ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/1.0.3/salvation-1.0.3.jar", "32d44c3a5810bc74dc2b87509f9e76a2"),
+  ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.0.1/salvation-2.0.1.jar", "db89fd75ce6d02a609b852bdfcf40f56"),
   ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),
   ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),
   ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),
@@ -166,7 +166,7 @@ runDependencyJars = [
   "httpcore-4.4.jar",
   "httpclient-4.4.jar",
   "icu4j-54.1.1.jar",
-  "salvation-1.0.3.jar",
+  "salvation-2.0.1.jar",
   "javax.servlet-api-3.1.0.jar",
   "jchardet-1.0.jar",
   "jetty-http-9.2.9.v20150224.jar",

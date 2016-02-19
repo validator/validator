@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Mozilla Foundation
+ * Copyright (c) 2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -24,15 +24,11 @@ package nu.validator.datatype;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
 
 import com.shapesecurity.salvation.Parser;
-import com.shapesecurity.salvation.Parser.ParseException;
-import com.shapesecurity.salvation.Tokeniser.TokeniserException;
-import com.shapesecurity.salvation.data.Warning;
+import com.shapesecurity.salvation.data.Notice;
 
 public class ContentSecurityPolicy extends AbstractDatatype {
 
@@ -41,19 +37,15 @@ public class ContentSecurityPolicy extends AbstractDatatype {
      */
     public static final ContentSecurityPolicy THE_INSTANCE = new ContentSecurityPolicy();
 
-    private static final Pattern UNRECOGNISED_DIRECTIVE_NAME_PATTERN = Pattern.compile(
-            "^(Unrecognised directive name: )(.+)$");
-
-    private static final Pattern BUT_FOUND_PATTERN = Pattern.compile(
-            "^(.+ but found )(.+)$");
-
-    private static final Pattern BAD_CODE_POINT_PATTERN = Pattern.compile("^("
-            + "expecting directive-value but found )(U\\+[^ ]+) \\((.)\\)\\."
-            + " (Non-ASCII and non-printable characters must be percent-encoded)$");
-
     private static final String DIRECTIVE_NAME = " ("
             + "frame-src|child-src|default-src|allow|options|referrer"
-            + "|upgrade-insecure-requests|block-all-mixed-content) ";
+            + "|upgrade-insecure-requests|block-all-mixed-content"
+            + "|report-to|report-uri) ";
+
+    private static final String SANDBOX_KEYWORDS = "("
+            + "allow-forms|allow-modals|allow-pointer-lock"
+            + "|allow-popups-to-escape-sandbox|allow-popups|allow-same-origin"
+            + "|allow-scripts|allow-top-navigation)";
 
     protected ContentSecurityPolicy() {
         super();
@@ -64,51 +56,34 @@ public class ContentSecurityPolicy extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        try {
-            List<Warning> warnings = new ArrayList<>();
-            Parser.parse(literal.toString(), "http://example.org", warnings);
-            if (!warnings.isEmpty() && WARN) {
-                StringBuilder sb = new StringBuilder();
-                for (Warning w : warnings) {
-                    sb.append(w.show().replaceAll(DIRECTIVE_NAME,
-                            " \u201c$1\u201d ") + " ");
+        List<Notice> notices = new ArrayList<>();
+        StringBuilder errors = new StringBuilder();
+        StringBuilder warnings = new StringBuilder();
+        StringBuilder others = new StringBuilder();
+        Parser.parse(literal.toString(), "http://example.org", notices);
+        if (!notices.isEmpty()) {
+            for (Notice notice : notices) {
+                if (notice.show().contains("experimental directive")) {
+                    continue;
                 }
-                throw newDatatypeException(sb.toString().trim(), WARN);
-            }
-        } catch (ParseException e) {
-            String msg = e.getMessage().replaceAll(DIRECTIVE_NAME,
-                    " \u201c$1\u201d ");
-            Matcher m = BUT_FOUND_PATTERN.matcher(msg);
-            if (m.matches()) {
-                throw newDatatypeException(String.format("%s\u201c%s\u201d",
-                        m.group(1), m.group(2)));
-            } else {
-                throw newDatatypeException(msg);
-            }
-        } catch (TokeniserException e) {
-            String msg = e.getMessage();
-            Matcher m = BAD_CODE_POINT_PATTERN.matcher(msg);
-            if (m.matches()) {
-                throw newDatatypeException(
-                        String.format("%s\u201c%s\u201d (%s). %s", m.group(1),
-                                m.group(3), m.group(2), m.group(4)));
-            } else {
-                Matcher n = BUT_FOUND_PATTERN.matcher(msg);
-                if (n.matches()) {
-                    throw newDatatypeException(String.format("%s\u201c%s\u201d",
-                            n.group(1), n.group(2)));
-                } else {
-                    throw newDatatypeException(msg);
+                String message = notice.show().replaceAll(DIRECTIVE_NAME,
+                        " \u201c$1\u201d ").replaceAll(SANDBOX_KEYWORDS,
+                                "\u201c$1\u201d")
+                        + " ";
+                if (notice.isError()) {
+                    errors.append(message);
+                } else if (notice.isWarning()) {
+                    warnings.append(message);
+                } else if (notice.isInfo()) {
+                    others.append(message);
                 }
             }
-        } catch (IllegalArgumentException e) {
-            String msg = e.getMessage();
-            Matcher m = UNRECOGNISED_DIRECTIVE_NAME_PATTERN.matcher(msg);
-            if (m.matches()) {
-                throw newDatatypeException(String.format("%s\u201c%s\u201d",
-                        m.group(1), m.group(2)));
-            } else {
-                throw newDatatypeException(msg);
+            if (errors.length() > 0) {
+                throw newDatatypeException(errors.toString());
+            } else if (warnings.length() > 0) {
+                throw newDatatypeException(warnings.toString(), WARN);
+            } else if (others.length() > 0) {
+                throw newDatatypeException(others.toString(), WARN);
             }
         }
     }
