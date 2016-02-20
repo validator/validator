@@ -537,7 +537,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	form.attrs.accept-charset?
 		&	(	common.attrs.aria.implicit.form
 			|	common.attrs.aria.landmark.form
-			|	common.attrs.aria.role.search
+			|	common.attrs.aria.landmark.search
 			|	common.attrs.aria.role.presentation
 			)?
 		)
