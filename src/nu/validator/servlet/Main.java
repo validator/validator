@@ -91,29 +91,21 @@ public class Main {
             stopPort = Integer.parseInt(args[1]);
         }
         if (stopPort != -1) {
-            try {
-                Socket clientSocket = new Socket(
-                        InetAddress.getByName("127.0.0.1"), stopPort);
-                InputStream in = clientSocket.getInputStream();
+            try (Socket clientSocket = new Socket(InetAddress.getByName("127.0.0.1"), stopPort);
+                 InputStream in = clientSocket.getInputStream()) {
                 in.read();
-                in.close();
-                clientSocket.close();
             } catch (ConnectException e) {
 
             }
 
             server.start();
 
-            ServerSocket serverSocket = new ServerSocket(stopPort, 0,
-                    InetAddress.getByName("127.0.0.1"));
-            Socket s = serverSocket.accept();
+            try (ServerSocket serverSocket = new ServerSocket(stopPort, 0, InetAddress.getByName("127.0.0.1"));
+                 Socket s = serverSocket.accept()) {
+                server.stop();
 
-            server.stop();
-
-            OutputStream out = s.getOutputStream();
-            out.close();
-            s.close();
-            serverSocket.close();
+                s.getOutputStream().close();
+            }
         } else {
             server.start();
         }

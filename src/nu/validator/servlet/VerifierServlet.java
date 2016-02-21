@@ -127,14 +127,11 @@ public class VerifierServlet extends HttpServlet {
 
     private static byte[] readFromClassLoaderIntoByteArray(String name)
             throws IOException {
-        InputStream ios = VerifierServlet.class.getClassLoader().getResourceAsStream(
-                name);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
+        try (InputStream ios = VerifierServlet.class.getClassLoader().getResourceAsStream(name)) {
             for (int b = ios.read(); b != -1; b = ios.read()) {
                 baos.write(b);
             }
-            ios.close();
             baos.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -149,10 +146,10 @@ public class VerifierServlet extends HttpServlet {
             response.setContentLength(buffer.length);
             response.setDateHeader("Expires",
                     System.currentTimeMillis() + 43200000); // 12 hours
-            OutputStream out = response.getOutputStream();
-            out.write(buffer);
-            out.flush();
-            out.close();
+            try (OutputStream out = response.getOutputStream()) {
+                out.write(buffer);
+                out.flush();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
