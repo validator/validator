@@ -83,14 +83,14 @@ public class ParseTreePrinter {
         String content = null;
         String document = scrubUrl(request.getParameter("doc"));
         document = ("".equals(document)) ? null : document;
-        Writer writer = new OutputStreamWriter(response.getOutputStream(), "UTF-8");
-        if (document == null && methodIsGet() && (content = request.getParameter("content")) == null) {
-            response.setContentType("text/html; charset=utf-8");
-            writer.write(FORM_HTML);
-            writer.flush();
-            writer.close();
-            return;
-        } else {
+        try (Writer writer = new OutputStreamWriter(response.getOutputStream(), "UTF-8")) {
+            if (document == null && methodIsGet() && (content = request.getParameter("content")) == null) {
+                response.setContentType("text/html; charset=utf-8");
+                writer.write(FORM_HTML);
+                writer.flush();
+                return;
+            }
+
             response.setContentType("text/plain; charset=utf-8");
             try {
             PrudentHttpEntityResolver entityResolver = new PrudentHttpEntityResolver(
@@ -161,7 +161,6 @@ public class ParseTreePrinter {
             } else {
                 writer.write("Unsupported content type.\n");
                 writer.flush();
-                writer.close();
                 return;
             }
             TreeDumpContentHandler treeDumpContentHandler = new TreeDumpContentHandler(writer, false);
@@ -185,7 +184,6 @@ public class ParseTreePrinter {
                 writer.write("\n");
             } finally {
                 writer.flush();
-                writer.close();
             }
         }
     }

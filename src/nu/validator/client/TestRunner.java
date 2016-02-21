@@ -438,9 +438,9 @@ public class TestRunner implements ErrorHandler {
         if (writeMessages) {
             OutputStreamWriter out = new OutputStreamWriter(
                     new FileOutputStream(messagesFile), "utf-8");
-            BufferedWriter bw = new BufferedWriter(out);
-            bw.write(JSON.toString(reportedMessages));
-            bw.close();
+            try (BufferedWriter bw = new BufferedWriter(out)) {
+                bw.write(JSON.toString(reportedMessages));
+            }
         }
     }
 
