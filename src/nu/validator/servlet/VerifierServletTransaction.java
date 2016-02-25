@@ -1611,6 +1611,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         attrs.addAttribute("pattern", "(?:(?:https?://.+)|(?:data:.+))?");
         attrs.addAttribute("title",
                 "Absolute IRI (http, https or data only) of the document to be checked.");
+        attrs.addAttribute("tabindex", "0");
+        attrs.addAttribute("autofocus", "autofocus");
         if (document != null) {
             attrs.addAttribute("value", scrub(document));
         }
