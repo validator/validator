@@ -77,6 +77,8 @@ function initFieldHolders() {
 	urlInput.setAttribute('required', '')
 	textareaHidden = createHtmlElement('input')
 	textarea = createHtmlElement('textarea')
+	textarea.setAttribute('autofocus', '')
+	textarea.setAttribute('tabindex', '0')
 	if (textarea && textareaHidden) {
 		textareaHidden.type = 'hidden'
 		textareaHidden.name = 'content'
@@ -96,6 +98,8 @@ function initFieldHolders() {
 		fileInput.name = 'file'
 		fileInput.setAttribute('aria-labelledby', 'docselect')
 		fileInput.setAttribute('required','')
+		fileInput.setAttribute('autofocus','')
+		fileInput.setAttribute('tabindex','0')
 	}
 	var label = document.getElementById("inputlabel");
 	label.removeAttribute("for")
