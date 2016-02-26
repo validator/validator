@@ -286,7 +286,7 @@ textarea, #doc[type="url"] {
 	font-size: 0.85em;	
 }
 
-.success, .failure {
+.success, .failure, .fatalfailure {
 	border-radius: 4px;
 	padding: 0.5em;
 	font-weight: bold;
@@ -302,6 +302,11 @@ textarea, #doc[type="url"] {
 .failure {
 	color: white;
 	background-color: #365D95;
+}
+
+.fatalfailure {
+	color: white;
+	background-color: red;
 }
 
 ol {

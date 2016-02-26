@@ -282,7 +282,11 @@ function injectHyperlinks() {
 function replaceSuccessFailure() {
 	successfailure = document.querySelector(".success, .failure")
 	if (successfailure === null) return
-	if (document.querySelector(".error:not(.hidden), .warning:not(.hidden), .non-document-error") !== null) {
+	if (document.querySelector(".non-document-error") !== null) {
+		successfailure.className = "fatalfailure"
+		successfailure.textContent = "Document checking not completed."
+		successfailure.textContent += " The result cannot be determined due to a non-document-error."
+	} else if (document.querySelector(".error:not(.hidden), .warning:not(.hidden)") !== null) {
 		successfailure.className = "failure"
 		successfailure.textContent = "Document checking completed."
 	} else {
@@ -496,6 +500,10 @@ function initFilters() {
 	if (!document.getElementsByClassName || !document.querySelectorAll) {
 		return
 	}
+	if (document.getElementsByClassName('non-document-error').length > 0) {
+		replaceSuccessFailure()
+		return
+	}
 	if (document.getElementsByTagName('ol').length < 1) {
 		// If there's no <ol> on the page, then we have no
 		// messages to filter.
@@ -503,7 +511,7 @@ function initFilters() {
 	}
 
 	helptext = document.querySelector("#filters > div")
-	errors = document.querySelectorAll(".error, .non-document-error")
+	errors = document.getElementsByClassName("error")
 	warnings = document.getElementsByClassName('warning')
 	info = document.querySelectorAll('[class=info]')
 	filters = document.createElement("section")
