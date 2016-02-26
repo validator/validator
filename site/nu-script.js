@@ -282,7 +282,7 @@ function injectHyperlinks() {
 function replaceSuccessFailure() {
 	successfailure = document.querySelector(".success, .failure")
 	if (successfailure === null) return
-	if (document.querySelector(".error:not(.hidden), .warning:not(.hidden)") !== null) {
+	if (document.querySelector(".error:not(.hidden), .warning:not(.hidden), .non-document-error") !== null) {
 		successfailure.className = "failure"
 		successfailure.textContent = "Document checking completed."
 	} else {
@@ -503,7 +503,7 @@ function initFilters() {
 	}
 
 	helptext = document.querySelector("#filters > div")
-	errors = document.getElementsByClassName('error')
+	errors = document.querySelectorAll(".error, .non-document-error")
 	warnings = document.getElementsByClassName('warning')
 	info = document.querySelectorAll('[class=info]')
 	filters = document.createElement("section")
