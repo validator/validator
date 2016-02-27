@@ -8,7 +8,7 @@
 The Nu Html Checker (v.Nu) is a name for the backend of [checker.html5.org][5],
 [html5.validator.nu][6], and [validator.w3.org/nu][7]. Its [source code is
 available][8], as are [instructions on how to build, test, and run the code][9].
-The checker is released as two separate packages:
+It is released as two packages:
 
    [5]: https://checker.html5.org/
    [6]: https://html5.validator.nu
