@@ -343,6 +343,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean showOutline;
 
+    private boolean schemaIsDefault;
+
     private String userAgent;
 
     private BaseUriTracker baseUriTracker = null;
@@ -1168,11 +1170,29 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      * @throws SAXException
      */
     protected String successMessage() throws SAXException {
-        return "The document validates according to the specified schema(s) and to additional constraints checked by the validator.";
+        return String.format("The document validates according to the"
+            + " specified schema(s). %s", emitDetails());
     }
 
     protected String failureMessage() throws SAXException {
-        return "There were errors.";
+        return String.format("There were errors. %s", emitDetails());
+    }
+
+    protected String emitDetails() throws SAXException {
+        String type = documentInput.getType();
+        String schemaMessage = schemaIsDefault
+                ? " and the schema for " + getPresetLabel(HTML5_SCHEMA) : "";
+        if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
+            if (isHtmlUnsafePreset()) {
+                return String.format("(The Content-Type was %s.)", type);
+            } else {
+                return String.format(
+                        "(The Content-Type was %s. Used the HTML parser%s.)",
+                        type, schemaMessage);
+            }
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -1282,7 +1302,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         errorHandler.schemaError(se);
                         throw se;
                     }
-                    errorHandler.info("The Content-Type was \u201C" + type + "\u201D. Using the HTML parser.");
                     newHtmlParser();
                     if (useHtml5Schema()) {
                         htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
@@ -1832,11 +1851,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                     }
                 } else {
-                    errorHandler.info("Using the schema for "
-                            + getPresetLabel(HTML5_SCHEMA)
-                            + "."
-                            + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled."
-                                    : ""));
+                    schemaIsDefault = true;
+                    if (html4SpecificAdditionalErrorChecks) {
+                        errorHandler.info("HTML4-specific tokenization errors are enabled.");
+                    }
                     validator = validatorByDoctype(HTML5_SCHEMA);
                 }
             } catch (IOException ioe) {
