@@ -14,7 +14,7 @@
 					></th
 					><td><?SaxCompiler-code t.emitDocField(); ?></td
 				></tr
-				><?SaxCompiler-code t.maybeEmitCharsetField(); ?><tr title="Space-separated list of schema IRIs. (Leave blank to let the service guess.)"
+				><?SaxCompiler-code t.maybeEmitCharsetField(); ?><tr title="Space-separated list of schema URLs. (Leave blank to let the service guess.)"
 					><th
 						><label for="schema">Schemas</label
 					></th

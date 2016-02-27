@@ -54,7 +54,7 @@
 </UL>
 <H2 id="usage">Basic Usage</H2>
 <p>Validator.nu has two facets: <a href='http://validator.nu/'>generic</a> (complex UI) and <a href='http://html5.validator.nu/'>(X)HTML5</a> (simple UI).</p>
-<P>Enter the URL (<CODE>http</CODE>, <CODE>https</CODE> or <code>data</code> IRI to be
+<P>Enter the URL (<CODE>http</CODE>, <CODE>https</CODE> or <code>data</code> URL to be
 exact) of the document you want to validate in the field labeled
 “Document” and submit the form. That’s all it takes in most
 cases. 
@@ -86,7 +86,7 @@ files for checking.</P>
 	choose a schema on its own. If you are not happy with the guessed
 	preset, you can specify a schema either by selecting a preset or by
 	entering a space-separated list of schema URLs (<CODE>http</CODE>,
-	<CODE>https</CODE> or <code>data</code> IRIs). In addition to actual schemas, you may use 
+	<CODE>https</CODE> or <code>data</code> URLs). In addition to actual schemas, you may use
 	certain special URLs to invoke <A HREF="#checkers">checkers
 	that seem like special schemas but aren’t actually implemented as
 	schemas</A>.</P></DD>
@@ -141,27 +141,27 @@ XML, JSON, GNU error format and plain text.</P>
 <dt>HTML5+ARIA (experimental)</dt>
 <dd><p>HTML5 with ARIA (<a href="http://hsivonen.iki.fi/aria-html5-bis/">unendorsed integration prototype</a>)</p>
 <p>Mike(tm) Smith has <a href="http://www.w3.org/html/wg/markup-spec/">generated documentation for this schema</a>.</p></dd>
-<dt>HTML 4.01 Strict + IRI / XHTML 1.0 Strict + IRI</dt>
-<dd><p>XHTML 1.0 Strict with IRI support. Generally suitable for use HTML 4.01 Strict checking
+<dt>HTML 4.01 Strict + URL / XHTML 1.0 Strict + URL</dt>
+<dd><p>XHTML 1.0 Strict with URL support. Generally suitable for use HTML 4.01 Strict checking
 as well, although there are theoretically wrong corner cases. Uses backported HTML5 datatypes.</p></dd>
-<dt>HTML 4.01 Transitional + IRI / XHTML 1.0 Transitional + IRI</dt>
-<dd><p>XHTML 1.0 Transitional with IRI support. Generally suitable for use HTML 4.01 Transitional checking
+<dt>HTML 4.01 Transitional + URL / XHTML 1.0 Transitional + URL</dt>
+<dd><p>XHTML 1.0 Transitional with URL support. Generally suitable for use HTML 4.01 Transitional checking
 as well, although there are theoretically wrong corner cases. Uses backported HTML5 datatypes.</p></dd>
-<dt>HTML 4.01 Frameset + IRI / XHTML 1.0 Frameset + IRI</dt>
-<dd><p>XHTML 1.0 Frameset with IRI support. Generally suitable for use HTML 4.01 Frameset checking
+<dt>HTML 4.01 Frameset + URL / XHTML 1.0 Frameset + URL</dt>
+<dd><p>XHTML 1.0 Frameset with URL support. Generally suitable for use HTML 4.01 Frameset checking
 as well, although there are theoretically wrong corner cases. Uses backported HTML5 datatypes. Do not use. :-)</p></dd>
 <dt>XHTML5 (experimental)</dt>
 <dd><p>XHTML5 (XML-compatible content models)</p></dd>
 <dt>XHTML5+ARIA, SVG 1.1 plus MathML 2.0 (experimental)</dt>
 <dd><p>XHTML5 with ARIA (<a href="http://hsivonen.iki.fi/aria-html5-bis/">unendorsed integration prototype</a>), SVG 1.1, MathML 2.0 and holes for OpenMath, RDF and Inkscape cruft.</p></dd>
-<dt>XHTML 1.0 Strict, SVG 1.1, MathML 2.0 + IRI</dt>
-<dd><p>XHTML 1.0 (<em>not 1.1</em>), SVG 1.1 and MathML 2.0 with IRI support.</p></dd>
-<dt>XHTML 1.0 Strict, Ruby, SVG 1.1, MathML 2.0 + IRI</dt>
-<dd><p>XHTML 1.0 (<em>not 1.1</em>), Ruby, SVG 1.1 and MathML 2.0 with IRI support.</p></dd>
-<dt>XHTML Basic + IRI</dt>
-<dd><p>A schema for XHTML Basic with IRI support. Suitable for use with the HTML parser.</p></dd>
-<dt>SVG 1.1 + IRI</dt>
-<dd><p>SVG 1.1 Full with IRI support (Inkscape cruft not permitted).</p></dd>
+<dt>XHTML 1.0 Strict, SVG 1.1, MathML 2.0 + URL</dt>
+<dd><p>XHTML 1.0 (<em>not 1.1</em>), SVG 1.1 and MathML 2.0 with URL support.</p></dd>
+<dt>XHTML 1.0 Strict, Ruby, SVG 1.1, MathML 2.0 + URL</dt>
+<dd><p>XHTML 1.0 (<em>not 1.1</em>), Ruby, SVG 1.1 and MathML 2.0 with URL support.</p></dd>
+<dt>XHTML Basic + URL</dt>
+<dd><p>A schema for XHTML Basic with URL support. Suitable for use with the HTML parser.</p></dd>
+<dt>SVG 1.1 + URL</dt>
+<dd><p>SVG 1.1 Full with URL support (Inkscape cruft not permitted).</p></dd>
 </dl>
 <H2 id="checkers">Non-Schema Checkers</H2>
 <P>The service supports a few special pseudo-schema URIs that map to
