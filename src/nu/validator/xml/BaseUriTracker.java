@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2015 Mozilla Foundation
+ * Copyright (c) 2008-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -284,23 +284,10 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
     @Override
     public String toAbsoluteUriWithCurrentBase(String uri) {
         try {
-            URL relUrl = URL.parse(uri);
-            String ascii;
-            ascii = relUrl.toString();
-
             URL base = stack.getLast().currentAbsolute;
-            URL rv;
-            try {
-                if (base == null) {
-                    rv = URL.parse(ascii);
-                } else {
-                    rv = base.resolve(ascii);
-                }
-            } catch (GalimatiasParseException e) {
-                return null;
-            }
-            return rv.toString();
-        } catch (Exception e) {
+            return URL.parse(base, uri).toString();
+        } catch (GalimatiasParseException e) {
+            e.printStackTrace();
             return null;
         }
     }
