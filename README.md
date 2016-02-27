@@ -1,8 +1,8 @@
-# The Nu Html Checker (v.Nu) [![Chat room][1]][2] [![Download][3]][4]
+# The Nu Html Checker (v.Nu) [![Chat room][1]][2] [![Download latest][3]][4]
 
    [1]: https://goo.gl/1kHqwI
    [2]: https://gitter.im/validator/validator
-   [3]: https://goo.gl/Pu1w69
+   [3]: https://goo.gl/3PC2Qn
    [4]: https://github.com/validator/validator/releases/latest
 
 The Nu Html Checker (v.Nu) is a name for the backend of [html5.validator.nu][5],
