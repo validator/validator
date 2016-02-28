@@ -100,7 +100,7 @@ final class XmlParser {
 
     private static final int SURROGATE_OFFSET = 0x10000 - (0xD800 << 10) - 0xDC00;
 
-    @SuppressWarnings("unused") private static final char[] NEW_LINE_ARR = {'\n'};
+    //private static final char[] NEW_LINE_ARR = {'\n'};
 
     //
     // Constants for element content type.
@@ -316,7 +316,7 @@ final class XmlParser {
 //    private final static int READ_BUFFER_MAX = 16384;
     private final static int READ_BUFFER_MAX = 60;
 
-    @SuppressWarnings("unused") private byte[] rawReadBuffer;
+    //private byte[] rawReadBuffer;
 
     //
     // Buffer for attribute values, char refs, DTD stuff.
@@ -4625,7 +4625,7 @@ final class XmlParser {
         entityStack = new LinkedList<>();
         tagAttributePos = 0;
         tagAttributes = new String[100];
-        rawReadBuffer = new byte[READ_BUFFER_MAX];
+        //rawReadBuffer = new byte[READ_BUFFER_MAX];
         readBufferOverflow = -1;
 
         inLiteral = false;
