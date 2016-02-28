@@ -3407,7 +3407,7 @@ final class XmlParser {
         // Create a new hashtable if necessary.
         attlist = getElementAttributes(elName);
         if (attlist == null) {
-            attlist = new HashMap<String, AttributeDecl>();
+            attlist = new HashMap<>();
         }
 
         // ignore multiple attribute declarations!
@@ -4609,9 +4609,9 @@ final class XmlParser {
         nameBuffer = new char[NAME_BUFFER_INITIAL];
 
         // Set up the DTD hash tables
-        elementInfo = new HashMap<String, ElementDecl>();
-        entityInfo = new HashMap<String, EntityInfo>();
-        notationInfo = new HashMap<String, String>();
+        elementInfo = new HashMap<>();
+        entityInfo = new HashMap<>();
+        notationInfo = new HashMap<>();
         skippedPE = false;
 
         // Set up the variables for the current
@@ -4621,8 +4621,8 @@ final class XmlParser {
 
         // Set up the input variables
         sourceType = INPUT_NONE;
-        inputStack = new LinkedList<Input>();
-        entityStack = new LinkedList<String>();
+        inputStack = new LinkedList<>();
+        entityStack = new LinkedList<>();
         tagAttributePos = 0;
         tagAttributes = new String[100];
         rawReadBuffer = new byte[READ_BUFFER_MAX];

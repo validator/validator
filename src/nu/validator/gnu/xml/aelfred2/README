@@ -115,3 +115,5 @@ December 2007
 February 2016
 
  * Added @Override and @Deprecated annotations
+
+ * Removed redundant type arguments
