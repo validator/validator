@@ -116,4 +116,4 @@ February 2016
 
  * Added @Override and @Deprecated annotations
 
- * Removed redundant type arguments
+ * Removed redundant casts and type arguments

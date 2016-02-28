@@ -4450,7 +4450,7 @@ final class XmlParser {
             ch = is.read();
             readBuffer[readBufferLength++] = (char) ch;
             switch (ch) {
-                case (int) '>':
+                case '>':
                     return;
                 case -1:
                     fatal(
