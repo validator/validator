@@ -1179,7 +1179,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     protected String emitDetails() throws SAXException {
-        String type = documentInput.getType();
+        String type = documentInput != null ? documentInput.getType() : "";
         String schemaMessage = schemaIsDefault
                 ? " and the schema for " + getPresetLabel(HTML5_SCHEMA) : "";
         if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
