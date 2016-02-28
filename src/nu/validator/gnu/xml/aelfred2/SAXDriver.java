@@ -251,7 +251,7 @@ import org.xml.sax.helpers.NamespaceSupport;
 
     private void reset() {
         elementName = null;
-        entityStack = new Stack<String>();
+        entityStack = new Stack<>();
         attributesList = Collections.synchronizedList(new ArrayList<Attribute>());
         attributeCount = 0;
         attributes = false;
