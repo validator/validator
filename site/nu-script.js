@@ -465,6 +465,8 @@ if (document.getElementById) {
 				var helptext = document.querySelector("#filters > div")
 				if (filtersbutton) {
 					filtersbutton.className = "message_filtering"
+					filtersbutton.focus()
+					filtersbutton.setAttribute('tabindex', '0')
 				}
 				if (helptext) {
 					helptext.className = "message_filtering"
@@ -700,6 +702,8 @@ function initFilters() {
 
 	mainForm = document.getElementsByTagName("form")[0]
 	mainForm.parentNode.insertBefore(filters, mainForm.nextSibling)
+	document.querySelector("*[autofocus]").removeAttribute("autofocus")
+	document.querySelector("*[tabindex]").removeAttribute("tabindex")
 	fieldsets = filters.getElementsByTagName("fieldset")
 
 	toggleFilters = function() {
