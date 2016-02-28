@@ -340,6 +340,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @param handler
      *            The object to receive document events.
      */
+    @Deprecated
     @Override
     public void setDocumentHandler(DocumentHandler handler) {
         contentHandler = new Adapter(handler);
