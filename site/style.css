@@ -96,7 +96,7 @@ textarea, #doc[type="url"], #schema, #nsfilter {
 	font-family: Monaco, Consolas, Andale Mono, monospace;
 }
 
-.stats {
+.stats, .details {
 	font-size: 0.85em;
 }
 
@@ -180,7 +180,7 @@ li p {
 	margin: 0;
 }
 
-.stats {
+.stats, .details {
 	margin-top: 0.75em;
 }
 

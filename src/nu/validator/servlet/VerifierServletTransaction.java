@@ -1018,6 +1018,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             XhtmlOutlineEmitter outlineEmitter = new XhtmlOutlineEmitter(
                     contentHandler, outline);
             outlineEmitter.emit();
+            emitDetails();
             StatsEmitter.emit(contentHandler, this);
         }
     }
@@ -1170,28 +1171,30 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      * @throws SAXException
      */
     protected String successMessage() throws SAXException {
-        return String.format("The document validates according to the"
-            + " specified schema(s). %s", emitDetails());
+        return "The document validates according to the specified schema(s).";
     }
 
     protected String failureMessage() throws SAXException {
-        return String.format("There were errors. %s", emitDetails());
+        return "There were errors.";
     }
 
-    protected String emitDetails() throws SAXException {
+    void emitDetails() throws SAXException {
         String type = documentInput != null ? documentInput.getType() : "";
         String schemaMessage = schemaIsDefault
                 ? " and the schema for " + getPresetLabel(HTML5_SCHEMA) : "";
         if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
+            attrs.clear();
+            attrs.addAttribute("class", "details");
+            emitter.startElement("p", attrs);
             if (isHtmlUnsafePreset()) {
-                return String.format("(The Content-Type was %s.)", type);
+                emitter.characters(
+                        String.format("The Content-Type was %s.", type));
             } else {
-                return String.format(
-                        "(The Content-Type was %s. Used the HTML parser%s.)",
-                        type, schemaMessage);
+                emitter.characters(String.format(
+                        "The Content-Type was %s. Used the HTML parser%s.",
+                        type, schemaMessage));
             }
-        } else {
-            return "";
+            emitter.endElement("p");
         }
     }
 

@@ -286,6 +286,10 @@ textarea, #doc[type="url"] {
 	font-size: 0.85em;	
 }
 
+.details {
+	display: none;
+}
+
 .success, .failure, .fatalfailure {
 	border-radius: 4px;
 	padding: 0.5em;
