@@ -270,6 +270,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @param locale
      *            The locale for which diagnostics will be generated
      */
+    @Override
     public void setLocale(Locale locale) throws SAXException {
         if ("en".equals(locale.getLanguage())) {
             return;
@@ -281,6 +282,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX2</b>: Returns the object used when resolving external entities
      * during parsing (both general and parameter entities).
      */
+    @Override
     public EntityResolver getEntityResolver() {
         return (entityResolver == base) ? null : entityResolver;
     }
@@ -290,6 +292,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      *
      * @param resolver
      */
+    @Override
     public void setEntityResolver(EntityResolver resolver) {
         if (resolver instanceof EntityResolver2) {
             resolver2 = (EntityResolver2) resolver;
@@ -306,6 +309,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX2</b>: Returns the object used to process declarations related to
      * notations and unparsed entities.
      */
+    @Override
     public DTDHandler getDTDHandler() {
         return (dtdHandler == base) ? null : dtdHandler;
     }
@@ -316,6 +320,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @param handler
      *            The object to receive DTD events.
      */
+    @Override
     public void setDTDHandler(DTDHandler handler) {
         if (handler == null) {
             handler = base;
@@ -335,6 +340,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @param handler
      *            The object to receive document events.
      */
+    @Override
     public void setDocumentHandler(DocumentHandler handler) {
         contentHandler = new Adapter(handler);
         xmlNames = true;
@@ -344,6 +350,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX2</b>: Returns the object used to report the logical content of an
      * XML document.
      */
+    @Override
     public ContentHandler getContentHandler() {
         return (contentHandler == base) ? null : contentHandler;
     }
@@ -353,6 +360,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * XML document. If a document handler was set, this content handler will
      * supplant it (but XML 1.0 style name reporting may remain enabled).
      */
+    @Override
     public void setContentHandler(ContentHandler handler) {
         if (handler == null) {
             handler = base;
@@ -370,6 +378,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @param handler
      *            The object to receive error events.
      */
+    @Override
     public void setErrorHandler(ErrorHandler handler) {
         if (errorHandlerLocked) {
             return;
@@ -384,6 +393,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX2</b>: Returns the object used to receive callbacks for XML errors
      * of all levels (fatal, nonfatal, warning); this is never null;
      */
+    @Override
     public ErrorHandler getErrorHandler() {
         return (errorHandler == base) ? null : errorHandler;
     }
@@ -407,6 +417,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      *                IOExceptions are normally through through the parser if
      *                there are problems reading the source document.
      */
+    @Override
     public void parse(InputSource source) throws SAXException, IOException {
         synchronized (base) {
             parser = new XmlParser();
@@ -442,6 +453,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX1, SAX2</b>: Preferred API to parse an XML document, using a
      * system identifier (URI).
      */
+    @Override
     public void parse(String systemId) throws SAXException, IOException {
         parse(new InputSource(systemId));
     }
@@ -460,6 +472,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      *                thrown if the feature flag is neither built in, nor yet
      *                assigned.
      */
+    @Override
     public boolean getFeature(String featureId)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         if ((FEATURE + "validation").equals(featureId)) {
@@ -543,6 +556,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      *                thrown if the property value is neither built in, nor yet
      *                stored.
      */
+    @Override
     public Object getProperty(String propertyId)
             throws SAXNotRecognizedException {
         if ((PROPERTY + "declaration-handler").equals(propertyId)) {
@@ -561,6 +575,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX2</b>: Sets the state of feature flags in this parser. Some
      * built-in feature flags are mutable.
      */
+    @Override
     public void setFeature(String featureId, boolean value)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         boolean state;
@@ -624,6 +639,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX2</b>: Assigns the specified property. Like SAX1 handlers, these
      * may be changed at any time.
      */
+    @Override
     public void setProperty(String propertyId, Object value)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         // see if the property is recognized
@@ -1139,6 +1155,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX1 AttributeList, SAX2 Attributes</b> method (don't invoke on
      * parser);
      */
+    @Override
     public int getLength() {
         return attributesList.size();
     }
@@ -1146,6 +1163,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX2 Attributes</b> method (don't invoke on parser);
      */
+    @Override
     public String getURI(int index) {
         if (index < 0 || index >= attributesList.size()) {
             return null;
@@ -1156,6 +1174,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX2 Attributes</b> method (don't invoke on parser);
      */
+    @Override
     public String getLocalName(int index) {
         if (index < 0 || index >= attributesList.size()) {
             return null;
@@ -1174,6 +1193,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX2 Attributes</b> method (don't invoke on parser);
      */
+    @Override
     public String getQName(int index) {
         if (index < 0 || index >= attributesList.size()) {
             return null;
@@ -1185,6 +1205,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX1 AttributeList</b> method (don't invoke on parser);
      */
+    @Override
     public String getName(int index) {
         return getQName(index);
     }
@@ -1193,6 +1214,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX1 AttributeList, SAX2 Attributes</b> method (don't invoke on
      * parser);
      */
+    @Override
     public String getType(int index) {
         if (index < 0 || index >= attributesList.size()) {
             return null;
@@ -1212,6 +1234,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX1 AttributeList, SAX2 Attributes</b> method (don't invoke on
      * parser);
      */
+    @Override
     public String getValue(int index) {
         if (index < 0 || index >= attributesList.size()) {
             return null;
@@ -1222,6 +1245,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX2 Attributes</b> method (don't invoke on parser);
      */
+    @Override
     public int getIndex(String uri, String local) {
         int length = getLength();
 
@@ -1239,6 +1263,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX2 Attributes</b> method (don't invoke on parser);
      */
+    @Override
     public int getIndex(String xmlName) {
         int length = getLength();
 
@@ -1253,6 +1278,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX2 Attributes</b> method (don't invoke on parser);
      */
+    @Override
     public String getType(String uri, String local) {
         int index = getIndex(uri, local);
 
@@ -1266,6 +1292,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX1 AttributeList, SAX2 Attributes</b> method (don't invoke on
      * parser);
      */
+    @Override
     public String getType(String xmlName) {
         int index = getIndex(xmlName);
 
@@ -1278,6 +1305,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX Attributes</b> method (don't invoke on parser);
      */
+    @Override
     public String getValue(String uri, String local) {
         int index = getIndex(uri, local);
 
@@ -1291,6 +1319,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * <b>SAX1 AttributeList, SAX2 Attributes</b> method (don't invoke on
      * parser);
      */
+    @Override
     public String getValue(String xmlName) {
         int index = getIndex(xmlName);
 
@@ -1309,6 +1338,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @throws java.lang.ArrayIndexOutOfBoundsException
      *             When the supplied index does not identify an attribute.
      */
+    @Override
     public boolean isDeclared(int index) {
         if (index < 0 || index >= attributeCount) {
             throw new ArrayIndexOutOfBoundsException();
@@ -1322,6 +1352,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @throws java.lang.IllegalArgumentException
      *             When the supplied names do not identify an attribute.
      */
+    @Override
     public boolean isDeclared(String qName) {
         int index = getIndex(qName);
         if (index < 0) {
@@ -1336,6 +1367,7 @@ import org.xml.sax.helpers.NamespaceSupport;
      * @throws java.lang.IllegalArgumentException
      *             When the supplied names do not identify an attribute.
      */
+    @Override
     public boolean isDeclared(String uri, String localName) {
         int index = getIndex(uri, localName);
         return isDeclared(index);
@@ -1344,6 +1376,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX-ext Attributes2</b> method (don't invoke on parser);
      */
+    @Override
     public boolean isSpecified(int index) {
         return attributesList.get(index).specified;
     }
@@ -1351,6 +1384,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX-ext Attributes2</b> method (don't invoke on parser);
      */
+    @Override
     public boolean isSpecified(String uri, String local) {
         int index = getIndex(uri, local);
         return isSpecified(index);
@@ -1359,6 +1393,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX-ext Attributes2</b> method (don't invoke on parser);
      */
+    @Override
     public boolean isSpecified(String xmlName) {
         int index = getIndex(xmlName);
         return isSpecified(index);
@@ -1371,6 +1406,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX Locator</b> method (don't invoke on parser);
      */
+    @Override
     public String getPublicId() {
         return null; // FIXME track public IDs too
     }
@@ -1378,6 +1414,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX Locator</b> method (don't invoke on parser);
      */
+    @Override
     public String getSystemId() {
         if (entityStack.empty()) {
             return null;
@@ -1389,6 +1426,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX Locator</b> method (don't invoke on parser);
      */
+    @Override
     public int getLineNumber() {
         return parser.getLineNumber();
     }
@@ -1396,6 +1434,7 @@ import org.xml.sax.helpers.NamespaceSupport;
     /**
      * <b>SAX Locator</b> method (don't invoke on parser);
      */
+    @Override
     public int getColumnNumber() {
         return parser.getColumnNumber();
     }
@@ -1409,51 +1448,62 @@ import org.xml.sax.helpers.NamespaceSupport;
             docHandler = dh;
         }
 
+        @Override
         public void setDocumentLocator(Locator l) {
             docHandler.setDocumentLocator(l);
         }
 
+        @Override
         public void startDocument() throws SAXException {
             docHandler.startDocument();
         }
 
+        @Override
         public void processingInstruction(String target, String data)
                 throws SAXException {
             docHandler.processingInstruction(target, data);
         }
 
+        @Override
         public void startPrefixMapping(String prefix, String uri) {
             /* ignored */
         }
 
+        @Override
         public void startElement(String namespace, String local, String name,
                 Attributes attrs) throws SAXException {
             docHandler.startElement(name, (AttributeList) attrs);
         }
 
+        @Override
         public void characters(char[] buf, int offset, int len)
                 throws SAXException {
             docHandler.characters(buf, offset, len);
         }
 
+        @Override
         public void ignorableWhitespace(char[] buf, int offset, int len)
                 throws SAXException {
             docHandler.ignorableWhitespace(buf, offset, len);
         }
 
+        @Override
         public void skippedEntity(String name) {
             /* ignored */
         }
 
+        @Override
         public void endElement(String u, String l, String name)
                 throws SAXException {
             docHandler.endElement(name);
         }
 
+        @Override
         public void endPrefixMapping(String prefix) {
             /* ignored */
         }
 
+        @Override
         public void endDocument() throws SAXException {
             docHandler.endDocument();
         }
@@ -1489,10 +1539,12 @@ import org.xml.sax.helpers.NamespaceSupport;
         this.characterHandler = characterHandler;
     }
 
+    @Override
     public String getEncoding() {
         return parser.getEncoding();
     }
 
+    @Override
     public String getXMLVersion() {
         return "1.0";
     }
