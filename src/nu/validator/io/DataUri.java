@@ -49,6 +49,8 @@ public class DataUri {
 
     private InputStream inputStream;
 
+    private InputStream is;
+
     /**
      * @param url
      * @throws MalformedURLException
@@ -64,7 +66,7 @@ public class DataUri {
                     "Fragment is not allowed for data: URIs according to RFC 2397.");
         }
 
-        InputStream is = new PercentDecodingReaderInputStream(new StringReader(url.schemeData()));
+        is = new PercentDecodingReaderInputStream(new StringReader(url.schemeData()));
         StringBuilder sb = new StringBuilder();
         State state = State.AT_START;
         int i = 0; // string counter
