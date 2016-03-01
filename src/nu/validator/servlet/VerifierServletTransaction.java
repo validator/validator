@@ -1023,7 +1023,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
     }
 
-    @SuppressWarnings("incomplete-switch") private void gatherStatistics() {
+    private void gatherStatistics() {
         Statistics stats = Statistics.STATISTICS;
         if (stats == null) {
             return;
@@ -1040,6 +1040,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     break;
                 case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
                     stats.incrementField(Statistics.Field.PARSER_XML_EXTERNAL);
+                    break;
+                case AUTO:
+                case HTML:
+                case HTML_AUTO:
+                case XML_NO_EXTERNAL_ENTITIES:
+                default:
                     break;
             }
             if (!filteredNamespaces.isEmpty()) {
@@ -1094,6 +1100,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     break;
                 case XML:
                     stats.incrementField(Statistics.Field.OUTPUT_XML);
+                    break;
+                case RELAXED:
+                case SOAP:
+                case UNICORN:
+                default:
                     break;
             }
             if (schemaListForStats == null) {

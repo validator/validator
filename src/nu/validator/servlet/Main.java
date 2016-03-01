@@ -24,7 +24,6 @@
 package nu.validator.servlet;
 
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -91,8 +90,9 @@ public class Main {
             stopPort = Integer.parseInt(args[1]);
         }
         if (stopPort != -1) {
-            try (Socket clientSocket = new Socket(InetAddress.getByName("127.0.0.1"), stopPort);
-                 InputStream in = clientSocket.getInputStream()) {
+            try (Socket clientSocket = new Socket(
+                    InetAddress.getByName("127.0.0.1"), stopPort);
+                    InputStream in = clientSocket.getInputStream()) {
                 in.read();
             } catch (ConnectException e) {
 
@@ -100,8 +100,9 @@ public class Main {
 
             server.start();
 
-            try (ServerSocket serverSocket = new ServerSocket(stopPort, 0, InetAddress.getByName("127.0.0.1"));
-                 Socket s = serverSocket.accept()) {
+            try (ServerSocket serverSocket = new ServerSocket(stopPort, 0,
+                    InetAddress.getByName("127.0.0.1"));
+                    Socket s = serverSocket.accept()) {
                 server.stop();
 
                 s.getOutputStream().close();

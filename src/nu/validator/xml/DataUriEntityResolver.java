@@ -40,8 +40,6 @@ public class DataUriEntityResolver implements EntityResolver {
     
     private final ErrorHandler errorHandler;
 
-    @SuppressWarnings("unused") private boolean laxContentType;
-
     private boolean allowRnc = false;
 
     private boolean allowHtml = false;
@@ -59,7 +57,6 @@ public class DataUriEntityResolver implements EntityResolver {
      */
     public DataUriEntityResolver(EntityResolver delegate, boolean laxContentType,
             ErrorHandler errorHandler) {
-        this.laxContentType = laxContentType;
         this.errorHandler = errorHandler;
         this.contentTypeParser = new ContentTypeParser(errorHandler,
                 laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml,

@@ -127,16 +127,17 @@ public class VerifierServlet extends HttpServlet {
 
     private static byte[] readFromClassLoaderIntoByteArray(String name)
             throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (InputStream ios = VerifierServlet.class.getClassLoader().getResourceAsStream(name)) {
-            for (int b = ios.read(); b != -1; b = ios.read()) {
-                baos.write(b);
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            try (InputStream ios = VerifierServlet.class.getClassLoader().getResourceAsStream(
+                    name)) {
+                for (int b = ios.read(); b != -1; b = ios.read()) {
+                    baos.write(b);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            baos.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            return baos.toByteArray();
         }
-        return baos.toByteArray();
     }
 
     private void writeResponse(byte[] buffer, String type,
