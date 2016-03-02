@@ -16,108 +16,84 @@ public class UnsupportedFeatureChecker extends Checker {
             return;
         }
         if (atts.getIndex("", "contextmenu") > -1) {
-            warn("The \u201Ccontextmenu\u201D attribute is not supported by"
-                    + " browsers yet. It would probably be better to wait for"
-                    + " implementations.");
+            warnAboutAttribute("contextmenu");
         }
         if (atts.getIndex("", "dropzone") > -1) {
-            warn("The \u201Cdropzone\u201D attribute is not supported by"
-                    + " browsers yet. It would probably be better to wait for"
-                    + " implementations.");
+            warnAboutAttribute("dropzone");
         }
-        if ("menu" == localName) {
-            warn("The \u201Cmenu\u201D element is not supported by"
-                    + " browsers yet. It would probably be better to wait for"
-                    + " implementations.");
-        } else if ("dialog" == localName) {
-            warn("The \u201Cdialog\u201D element is not supported by"
-                    + " browsers yet. It would probably be better to wait for"
-                    + " implementations.");
-        } else if ("details" == localName) {
-            warn("The \u201Cdetails\u201D element is not supported properly by"
-                    + " browsers yet. It would probably be better to wait for"
-                    + " implementations.");
-        } else if ("bdi" == localName) {
-            warn("The \u201Cbdi\u201D element is not supported by browsers yet.");
-        } else if ("video" == localName) {
+        if ("menu" == localName || "dialog" == localName || "details" == localName || "bdi" == localName) {
+            warnAboutElement(localName);
+        } else if ("video" == localName || "audio" == localName) {
             if (atts.getIndex("", "mediagroup") > -1) {
-                warn("The \u201Cmediagroup\u201D attribute on the"
-                        + " \u201Cvideo\u201D element is not supported by"
-                        + " browsers yet. It would probably be better to wait for"
-                        + " implementations.");
-            }
-        } else if ("audio" == localName) {
-            if (atts.getIndex("", "mediagroup") > -1) {
-                warn("The \u201Cmediagroup\u201D attribute on the"
-                        + " \u201Caudio\u201D element is not supported by"
-                        + " browsers yet. It would probably be better to wait for"
-                        + " implementations.");
+                warnAboutAttributeOnElement("mediagroup", localName);
             }
         } else if ("iframe" == localName) {
             if (atts.getIndex("", "seamless") > -1) {
-                warn("The \u201Cseamless\u201D attribute on the"
-                        + " \u201Ciframe\u201D element is not supported by"
-                        + " browsers yet. It would probably be better to wait for"
-                        + " implementations.");
+                warnAboutAttributeOnElement("seamless", "iframe");
             }
         } else if ("textarea" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
-                warn("The \u201Cdirname\u201D attribute on the"
-                        + " \u201Ctextarea\u201D element is not supported by"
-                        + " browsers yet.");
+                warnAboutAttributeOnElement("dirname", "textarea");
             }
             if (atts.getIndex("", "inputmode") > -1) {
-                warn("The \u201Cinputmode\u201D attribute is not widely"
-                        + " supported in browsers.");
+                warnAboutAttribute("inputmode");
             }
         } else if ("input" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
-                warn("The \u201Cdirname\u201D attribute on the"
-                        + " \u201Cinput\u201D element is not supported by"
-                        + " browsers yet.");
+                warnAboutAttributeOnElement("dirname", "input");
             }
             if (atts.getIndex("", "inputmode") > -1) {
-                warn("The \u201Cinputmode\u201D attribute is not widely"
-                        + " supported in browsers.");
+                warnAboutAttribute("inputmode");
             }
             String type = atts.getValue("", "type");
             if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "datetime", type)) {
-                warn("The \u201Cdatetime\u201D input type is not supported in"
-                        + " all browsers. Please be sure to test, and consider"
-                        + " using a polyfill.");
+                warnAboutInputType("datetime");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "date", type)) {
-                warn("The \u201Cdate\u201D input type is not supported in"
-                        + " all browsers. Please be sure to test, and consider"
-                        + " using a polyfill.");
+                warnAboutInputType("date");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "month", type)) {
-                warn("The \u201Cmonth\u201D input type is not supported in"
-                        + " all browsers. Please be sure to test, and consider"
-                        + " using a polyfill.");
+                warnAboutInputType("month");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "week", type)) {
-                warn("The \u201Cweek\u201D input type is not supported in"
-                        + " all browsers. Please be sure to test, and consider"
-                        + " using a polyfill.");
+                warnAboutInputType("week");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "time", type)) {
-                warn("The \u201Ctime\u201D input type is not supported in"
-                        + " all browsers. Please be sure to test, and consider"
-                        + " using a polyfill.");
+                warnAboutInputType("time");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "datetime-local", type)) {
-                warn("The \u201Cdatetime-local\u201D input type is not supported in"
-                        + " all browsers. Please be sure to test, and consider"
-                        + " using a polyfill.");
+                warnAboutInputType("datetime-local");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "color", type)) {
-                warn("The \u201Ccolor\u201D input type is not supported in"
-                        + " all browsers. Please be sure to test, and consider"
-                        + " using a polyfill.");
+                warnAboutInputType("color");
             }
         }
+    }
+
+    private void warnAboutInputType(String name) throws SAXException {
+        warn("The \u201C" + name + "\u201D input type is not supported in"
+                + " all browsers. Please be sure to test, and consider"
+                + " using a polyfill.");
+    }
+
+    private void warnAboutAttribute(String name) throws SAXException {
+        warn("The \u201C" + name + "\u201D attribute is not supported in"
+                + " all browsers. Please be sure to test, and consider"
+                + " using a polyfill.");
+    }
+
+    private void warnAboutElement(String name) throws SAXException {
+        warn("The \u201C" + name + "\u201D element is not supported in"
+                + " all browsers. Please be sure to test, and consider"
+                + " using a polyfill.");
+    }
+
+    private void warnAboutAttributeOnElement(String attributeName, String elementName) throws SAXException {
+      warn("The \u201C" + attributeName + "\u201D attribute on the"
+          + " \u201C" + elementName + "\u201D element is not supported"
+          + " all browsers. Please be sure to test, and consider"
+          + " using a polyfill.");
     }
 
 }
