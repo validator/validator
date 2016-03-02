@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Mozilla Foundation
+ * Copyright (c) 2015-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -26,63 +26,58 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
+import java.util.Map;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.Function;
-import org.mozilla.javascript.JavaScriptException;
-import org.mozilla.javascript.ScriptableObject;
+import javax.script.*;
 
 public class CssParser {
 
-    private static ScriptableObject scope;
-
-    private static Function tokenizer;
-
-    private static Function ruleParser;
+    private static Invocable invocable;
 
     static {
+
         try {
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(
-                            CssParser.class.getClassLoader().getResourceAsStream(
-                                    "nu/validator/localentities/files/parse-css-js")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    CssParser.class.getClassLoader().getResourceAsStream(
+                            "nu/validator/localentities/files/parse-css-js")));
             br.mark(1);
-            Context context = ContextFactory.getGlobal().enterContext();
-            context.setOptimizationLevel(1);
-            context.setLanguageVersion(Context.VERSION_1_6);
-            scope = context.initStandardObjects();
-            context.evaluateReader(scope, br, null, -1, null);
-            tokenizer = (Function) scope.get("tokenize", scope);
-            ruleParser = (Function) scope.get("parseARule", scope);
+            try {
+                ScriptEngine engine = new ScriptEngineManager().getEngineByName(
+                        "nashorn");
+                engine.eval(br);
+                invocable = (Invocable) engine;
+            } catch (ScriptException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
         }
     }
 
-    public String[] tokenize(CharSequence cs) throws ParseException {
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> tokenize(CharSequence cs) throws ParseException {
         try {
-            Context context = ContextFactory.getGlobal().enterContext();
-            context.setOptimizationLevel(0);
-            context.setLanguageVersion(Context.VERSION_1_6);
-            return (String[]) Context.jsToJava(
-                    tokenizer.call(context, scope, scope, new Object[] { cs }),
-                    String[].class);
-        } catch (JavaScriptException e) {
-            throw new ParseException(e.details(), -1);
+            return (Map<String, Object>) invocable.invokeFunction("tokenize",
+                    cs.toString());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ScriptException e) {
+            throw new ParseException(e.getMessage(), -1);
         }
+        return null;
     }
 
-    public String parseARule(CharSequence cs) throws ParseException {
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> parseARule(CharSequence cs)
+            throws ParseException {
         try {
-            Context context = ContextFactory.getGlobal().enterContext();
-            context.setOptimizationLevel(0);
-            context.setLanguageVersion(Context.VERSION_1_6);
-            return (String) Context.jsToJava(ruleParser.call(context, scope, scope,
-                    new Object[] { tokenizer.call(context, scope, scope,
-                            new Object[] { cs }) }), String.class);
-        } catch (JavaScriptException e) {
-            throw new ParseException(e.details(), -1);
+            return (Map<String, Object>) invocable.invokeFunction("parseARule",
+                    cs.toString());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ScriptException e) {
+            throw new ParseException(e.getMessage(), -1);
         }
+        return null;
     }
 
 }
