@@ -1191,21 +1191,35 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     void emitDetails() throws SAXException {
         String type = documentInput != null ? documentInput.getType() : "";
-        String schemaMessage = schemaIsDefault
-                ? " and the schema for " + getPresetLabel(HTML5_SCHEMA) : "";
+        String charsetMsg = "";
         if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
             attrs.clear();
-            attrs.addAttribute("class", "details");
-            emitter.startElement("p", attrs);
+            emitter.startElementWithClass("div", "details");
+            if (schemaIsDefault) {
+                emitter.startElementWithClass("p", "msgschema");
+                emitter.characters(String.format("Used the schema for %s.",
+                        getPresetLabel(HTML5_SCHEMA)));
+                emitter.endElement("p");
+            }
+            if (methodIsGet) {
+                String charset = documentInput.getEncoding();
+                if (charset == null) {
+                    charsetMsg = " with no charset specified";
+                } else {
+                    charsetMsg = String.format(
+                            " with %s specified as the charset", charset);
+                }
+            }
+            emitter.startElementWithClass("p", "msgmediatype");
             if (isHtmlUnsafePreset()) {
-                emitter.characters(
-                        String.format("The Content-Type was %s.", type));
+                emitter.characters(String.format("The Content-Type was %s%s.",
+                        type, charsetMsg));
             } else {
                 emitter.characters(String.format(
-                        "The Content-Type was %s. Used the HTML parser%s.",
-                        type, schemaMessage));
+                        "The Content-Type was %s%s. Used the HTML parser.",
+                        type, charsetMsg));
             }
-            emitter.endElement("p");
+            emitter.endElement("div");
         }
     }
 

@@ -184,6 +184,10 @@ li p {
 	margin-top: 0.75em;
 }
 
+.details p {
+ 	margin: 0;
+}
+
 .lf {
 	color: #222222;
 }

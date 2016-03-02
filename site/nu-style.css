@@ -282,12 +282,16 @@ textarea, #doc[type="url"] {
 	font-family: Monaco, Consolas, Andale Mono, monospace;
 }
 
-.stats {
-	font-size: 0.85em;	
+.stats, .details {
+	font-size: 0.85em;
 }
 
-.details {
+.details .msgschema {
 	display: none;
+}
+
+.details p {
+ 	margin: 0;
 }
 
 .success, .failure, .fatalfailure {
@@ -420,7 +424,7 @@ li p {
 	margin: 0;
 }
 
-.stats {
+.stats, .details {
 	margin-top: 0.75em;
 }
 
