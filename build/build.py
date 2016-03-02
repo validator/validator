@@ -70,7 +70,10 @@ nightliesPath = "/var/www/nightlies"
 releasesPath = "/var/www/releases"
 
 releaseDate = time.strftime('%d %B %Y')
-validatorVersion = time.strftime('%y.%-m.%-e')
+year = time.strftime('%y')
+month = time.strftime('%m').lstrip('0')
+day = time.strftime('%e').lstrip(' ')
+validatorVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20150629VNU"
 htmlparserVersion = "1.4.3"
 galimatiasVersion = "0.1.1"
@@ -645,7 +648,10 @@ def buildHtmlParser():
 
 def buildJing():
   os.chdir("jing-trang")
-  runCmd([os.path.join(".", "ant")])
+  if os.name == 'nt':
+    runCmd([os.path.join(".", "ant.bat")])
+  else:
+    runCmd([os.path.join(".", "ant")])
   os.chdir("..")
 
 def buildEmitters():
