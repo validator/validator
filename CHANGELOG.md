@@ -2,6 +2,20 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 16.3.3
+3 March 2016
+  - Made `minlength` a non-error for `input[type=password]`/`input[type=text]`
+  - Made multiple values in `integrity` a non-error
+  - Made `<time>` with element children an error if no `datetime` specified
+  - Improved CSP checking (now using Salvation 2.0.1)
+  - [WebUI] Dropped “Using the schema…”/“The Content-Type was…” Info msgs
+  - [WebUI] Added some autofocus of URL field and Message Filtering button
+  - [WebUI] Footer now tells whether document was served w/ charset param
+  - [WebUI] Fixed bug/regression in Image Report image display
+  - [build] Fixed bug caused by Rhino team building their jar with Java6
+  - [build] Fixed some problems with running build script on Windows
+  - [build] Made build script work with Python 3 (not just Python 2)
+
 # 16.1.1
 1 January 2016
   - Java8 is now required to run the checker (and to build it).
