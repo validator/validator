@@ -32,7 +32,7 @@ import javax.script.*;
 
 public class CssParser {
 
-    private static Invocable invocable;
+    private static Invocable cssparser;
 
     static {
 
@@ -45,7 +45,7 @@ public class CssParser {
                 ScriptEngine engine = new ScriptEngineManager().getEngineByName(
                         "nashorn");
                 engine.eval(br);
-                invocable = (Invocable) engine;
+                cssparser = (Invocable) engine;
             } catch (ScriptException e) {
                 e.printStackTrace();
             }
@@ -56,7 +56,7 @@ public class CssParser {
     @SuppressWarnings("unchecked")
     public Map<String, Object> tokenize(CharSequence cs) throws ParseException {
         try {
-            return (Map<String, Object>) invocable.invokeFunction("tokenize",
+            return (Map<String, Object>) cssparser.invokeFunction("tokenize",
                     cs.toString());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class CssParser {
     public Map<String, Object> parseARule(CharSequence cs)
             throws ParseException {
         try {
-            return (Map<String, Object>) invocable.invokeFunction("parseARule",
+            return (Map<String, Object>) cssparser.invokeFunction("parseARule",
                     cs.toString());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
