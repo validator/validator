@@ -156,7 +156,6 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),
   ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/a878df1503af3bfb63493a63685a117a24988959/parse-css.js", "adbb69f7c71c8d5703f8b9d770bfc71f"),
-  ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
 ]
 
 runDependencyJars = [
@@ -1145,7 +1144,7 @@ def preparePropertiesFile():
 def prepareLocalEntityJar():
   ensureDirExists(filesDir)
   preparePropertiesFile()
-  createCssParserJS(filesDir)
+  shutil.copyfile(os.path.join(dependencyDir, "parse-css.js"), os.path.join(filesDir, "parse-css-js"))
   shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
   shutil.copyfile(os.path.join(buildRoot, stylesheetFile), os.path.join(filesDir, "style.css"))
@@ -1181,25 +1180,6 @@ def prepareLocalEntityJar():
     removeIfExists(os.path.join(schemaDir, "html5", file))
   removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
   removeIfDirExists(os.path.join(schemaDir, "rdf"))
-
-def createCssParserJS(filesDir):
-  p = open(os.path.join(dependencyDir, "parse-css.js"), 'rb')
-  j = open(os.path.join(dependencyDir, "json.js"), 'rb')
-  o = open(os.path.join(filesDir, "parse-css-js"), 'wb')
-  shutil.copyfileobj(p, o)
-  shutil.copyfileobj(j, o)
-  p.close()
-  j.close()
-  consoleLogForRhino = b'''\
-  var console = {
-    log: function (msg) {
-      throw msg;
-      return true;
-    }
-  }
-  '''
-  o.write(consoleLogForRhino)
-  o.close()
 
 def zipExtract(zipArch, targetDir):
   z = zipfile.ZipFile(zipArch)
