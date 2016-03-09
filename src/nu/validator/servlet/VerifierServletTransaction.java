@@ -1204,19 +1204,19 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             if (methodIsGet) {
                 String charset = documentInput.getEncoding();
                 if (charset == null) {
-                    charsetMsg = " with no charset specified";
+                    charsetMsg = " but no charset";
                 } else {
                     charsetMsg = String.format(
-                            " with %s specified as the charset", charset);
+                            " and the charset %s", charset);
                 }
             }
             emitter.startElementWithClass("p", "msgmediatype");
             if (isHtmlUnsafePreset()) {
-                emitter.characters(String.format("The Content-Type was %s%s.",
+                emitter.characters(String.format("The Content-Type header specified %s%s.",
                         type, charsetMsg));
             } else {
                 emitter.characters(String.format(
-                        "The Content-Type was %s%s. Used the HTML parser.",
+                        "The Content-Type header specified %s%s. Used the HTML parser.",
                         type, charsetMsg));
             }
             emitter.endElement("div");
