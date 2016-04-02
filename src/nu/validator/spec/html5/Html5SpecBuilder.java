@@ -52,11 +52,11 @@ public final class Html5SpecBuilder implements ContentHandler {
 
     private static final String SPEC_LINK_URI = System.getProperty(
             "nu.validator.spec.html5-link",
-            "http://www.whatwg.org/specs/web-apps/current-work/");
+            "https://html.spec.whatwg.org/multipage/");
 
     private static final String SPEC_LOAD_URI = System.getProperty(
             "nu.validator.spec.html5-load",
-            "http://www.whatwg.org/specs/web-apps/current-work/");
+            "https://html.spec.whatwg.org/");
 
     private static final Pattern THE = Pattern.compile("^.*The.*$", Pattern.DOTALL);
 

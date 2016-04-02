@@ -168,7 +168,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final String SPEC_LINK_URI = System.getProperty(
             "nu.validator.spec.html5-link",
-            "http://www.whatwg.org/specs/web-apps/current-work/");
+            "https://html.spec.whatwg.org/multipage/");
 
     private static final long MAX_MESSAGES = Integer.parseInt(System.getProperty(
             "nu.validator.messages.limit", "1000"));
