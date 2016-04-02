@@ -575,6 +575,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	fieldset.attrs =
 		(	common.attrs
 		&	(	common.attrs.aria.implicit.group
+			|	common.attrs.aria.role.presentation
 			|	common.attrs.aria
 			)?
 		)
