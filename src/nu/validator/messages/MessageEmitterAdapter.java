@@ -257,33 +257,33 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private static final Map<String, String> fragmentIdByInputType = new TreeMap<>();
 
     static {
-        fragmentIdByInputType.put("hidden", "#hidden-state-type-hidden");
+        fragmentIdByInputType.put("hidden", "#hidden-state-(type=hidden)");
         fragmentIdByInputType.put("text",
-                "#text-type-text-state-and-search-state-type-search");
+                "#text-(type=text)-state-and-search-state-(type=search)");
         fragmentIdByInputType.put("search",
-                "#text-type-text-state-and-search-state-type-search");
-        fragmentIdByInputType.put("url", "#url-state-type-url");
-        fragmentIdByInputType.put("tel", "#telephone-state-type-tel");
-        fragmentIdByInputType.put("email", "#e-mail-state-type-email");
-        fragmentIdByInputType.put("password", "#password-state-type-password");
+                "#text-(type=text)-state-and-search-state-(type=search)");
+        fragmentIdByInputType.put("tel", "#telephone-state-(type=tel)");
+        fragmentIdByInputType.put("url", "#url-state-(type=url)");
+        fragmentIdByInputType.put("email", "#e-mail-state-(type=email)");
+        fragmentIdByInputType.put("password", "#password-state-(type=password)");
         fragmentIdByInputType.put("datetime",
-                "#date-and-time-state-type-datetime");
-        fragmentIdByInputType.put("date", "#date-state-type-date");
-        fragmentIdByInputType.put("month", "#month-state-type-month");
-        fragmentIdByInputType.put("week", "#week-state-type-week");
-        fragmentIdByInputType.put("time", "#time-state-type-time");
+                "#date-and-time-state-(type=datetime)");
+        fragmentIdByInputType.put("date", "#date-state-(type=date)");
+        fragmentIdByInputType.put("month", "#month-state-(type=month)");
+        fragmentIdByInputType.put("week", "#week-state-(type=week)");
+        fragmentIdByInputType.put("time", "#time-state-(type=time)");
         fragmentIdByInputType.put("datetime-local",
-                "#local-date-and-time-state-type-datetime-local");
-        fragmentIdByInputType.put("number", "#number-state-type-number");
-        fragmentIdByInputType.put("range", "#range-state-type-range");
-        fragmentIdByInputType.put("color", "#color-state-type-color");
-        fragmentIdByInputType.put("checkbox", "#checkbox-state-type-checkbox");
-        fragmentIdByInputType.put("radio", "#radio-button-state-type-radio");
-        fragmentIdByInputType.put("file", "#file-upload-state-type-file");
-        fragmentIdByInputType.put("submit", "#submit-button-state-type-submit");
-        fragmentIdByInputType.put("image", "#image-button-state-type-image");
-        fragmentIdByInputType.put("reset", "#reset-button-state-type-reset");
-        fragmentIdByInputType.put("button", "#button-state-type-button");
+                "#local-date-and-time-state-(type=datetime-local)");
+        fragmentIdByInputType.put("number", "#number-state-(type=number)");
+        fragmentIdByInputType.put("range", "#range-state-(type=range)");
+        fragmentIdByInputType.put("color", "#color-state-(type=color)");
+        fragmentIdByInputType.put("checkbox", "#checkbox-state-(type=checkbox)");
+        fragmentIdByInputType.put("radio", "#radio-button-state-(type=radio)");
+        fragmentIdByInputType.put("file", "#file-upload-state-(type=file)");
+        fragmentIdByInputType.put("submit", "#submit-button-state-(type=submit)");
+        fragmentIdByInputType.put("image", "#image-button-state-(type=image)");
+        fragmentIdByInputType.put("reset", "#reset-button-state-(type=reset)");
+        fragmentIdByInputType.put("button", "#button-state-(type=button)");
     }
 
     static {
