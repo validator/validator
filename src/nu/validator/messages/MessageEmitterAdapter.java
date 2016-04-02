@@ -182,7 +182,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "#attr-input-alt", "image" });
         validInputTypesByAttributeName.put("autocomplete", new String[] {
                 "#attr-input-autocomplete", "text", "search", "url", "tel",
-                "e-mail", "password", "datetime", "date", "month", "week",
+                "email", "password", "datetime", "date", "month", "week",
                 "time", "datetime-local", "number", "range", "color" });
         validInputTypesByAttributeName.put("autofocus",
                 new String[] { "#attr-fe-autofocus" });
@@ -207,7 +207,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         validInputTypesByAttributeName.put("height", new String[] {
                 "#attr-dim-height", "image" });
         validInputTypesByAttributeName.put("list", new String[] {
-                "#attr-input-list", "text", "search", "url", "tel", "e-mail",
+                "#attr-input-list", "text", "search", "url", "tel", "email",
                 "datetime", "date", "month", "week", "time", "datetime-local",
                 "number", "range", "color" });
         validInputTypesByAttributeName.put("max", new String[] {
@@ -215,7 +215,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "datetime-local", "number", "range", });
         validInputTypesByAttributeName.put("maxlength", new String[] {
                 "#attr-input-maxlength", "text", "search", "url", "tel",
-                "e-mail", "password" });
+                "email", "password" });
         validInputTypesByAttributeName.put("min", new String[] {
                 "#attr-input-min", "datetime", "date", "month", "week", "time",
                 "datetime-local", "number", "range", });
@@ -225,21 +225,21 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 new String[] { "#attr-fe-name" });
         validInputTypesByAttributeName.put("pattern", new String[] {
                 "#attr-input-pattern", "text", "search", "url", "tel",
-                "e-mail", "password" });
+                "email", "password" });
         validInputTypesByAttributeName.put("placeholder", new String[] {
                 "#attr-input-placeholder", "text", "search", "url", "tel",
-                "e-mail", "password", "number" });
+                "email", "password", "number" });
         validInputTypesByAttributeName.put("readonly", new String[] {
                 "#attr-input-readonly", "text", "search", "url", "tel",
-                "e-mail", "password", "datetime", "date", "month", "week",
+                "email", "password", "datetime", "date", "month", "week",
                 "time", "datetime-local", "number" });
         validInputTypesByAttributeName.put("required",
                 new String[] { "#attr-input-required", "text", "search", "url",
-                        "tel", "e-mail", "password", "datetime", "date",
+                        "tel", "email", "password", "datetime", "date",
                         "month", "week", "time", "datetime-local", "number",
                         "checkbox", "radio", "file" });
         validInputTypesByAttributeName.put("size", new String[] {
-                "#attr-input-size", "text", "search", "url", "tel", "e-mail",
+                "#attr-input-size", "text", "search", "url", "tel", "email",
                 "password" });
         validInputTypesByAttributeName.put("src", new String[] {
                 "#attr-input-src", "image" });
