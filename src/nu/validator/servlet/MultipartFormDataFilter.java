@@ -104,8 +104,7 @@ public final class MultipartFormDataFilter implements Filter {
             arr[0] = value;
             params.put(key, arr);
         } else {
-            for (int i = 0; i < oldVal.length; i++) {
-                String string = oldVal[i];
+            for (String string : oldVal) {
                 if (string.equals(value)) {
                     return;
                 }

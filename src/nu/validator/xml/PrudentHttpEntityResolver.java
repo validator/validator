@@ -385,15 +385,13 @@ import io.mola.galimatias.GalimatiasParseException;
                                 }
                             }
                             if (ex instanceof SystemIdIOException) {
-                                SystemIdIOException siie = (SystemIdIOException) ex;
-                                throw siie;
+                                throw (SystemIdIOException) ex;
                             } else if (ex instanceof IOException) {
                                 IOException ioe = (IOException) ex;
                                 throw new SystemIdIOException(baseUri,
                                         ioe.getMessage(), ioe);
                             } else if (ex instanceof RuntimeException) {
-                                RuntimeException re = (RuntimeException) ex;
-                                throw re;
+                                throw (RuntimeException) ex;
                             } else {
                                 throw new RuntimeException(
                                         "API contract violation. Wrong exception type.",

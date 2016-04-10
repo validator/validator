@@ -38,8 +38,7 @@ public class MediaQuery extends AbstractDatatype {
      */
     public static final MediaQuery THE_INSTANCE = new MediaQuery();
 
-    private static final boolean WARN = System.getProperty(
-            "nu.validator.datatype.warn", "").equals("true") ? true : false;
+    private static final boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
 
     private enum State {
         INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_MEDIA_FEATURE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, BEFORE_CALC_OPEN_PAREN, IN_CALC, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
@@ -165,7 +164,7 @@ public class MediaQuery extends AbstractDatatype {
         if (!warnings.isEmpty() && WARN) {
             StringBuilder sb = new StringBuilder();
             for (String s : warnings) {
-                sb.append(s + " ");
+                sb.append(s).append(" ");
             }
             throw newDatatypeException(sb.toString().trim(), WARN);
         }

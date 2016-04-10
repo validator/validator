@@ -238,12 +238,10 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void recurseDirectory(File directory) throws SAXException,
-            IOException {
+    private static void recurseDirectory(File directory) throws IOException {
         if (directory.canRead()) {
             File[] files = directory.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
+            for (File file : files) {
                 if (file.isDirectory()) {
                     recurseDirectory(file);
                 } else {

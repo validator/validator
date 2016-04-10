@@ -23,7 +23,6 @@
 package nu.validator.checker.table;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -480,11 +479,8 @@ final class Table {
         }
 
         // Check referential integrity
-        for (Iterator<Cell> iter = cellsReferringToHeaders.iterator(); iter.hasNext();) {
-            Cell cell = iter.next();
-            String[] headings = cell.getHeadings();
-            for (int i = 0; i < headings.length; i++) {
-                String heading = headings[i];
+        for (Cell cell : cellsReferringToHeaders) {
+            for (String heading : cell.getHeadings()) {
                 if (!headerIds.contains(heading)) {
                     cell.err("The \u201Cheaders\u201D attribute on the element \u201C"
                             + cell.elementName()

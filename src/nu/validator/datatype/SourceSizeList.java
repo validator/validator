@@ -64,7 +64,7 @@ public class SourceSizeList extends AbstractDatatype {
         LENGTH_UNITS.add("px");
 
         for (CharSequence units : LENGTH_UNITS) {
-            VALID_UNITS.append(" \u201c" + units + "\u201d,");
+            VALID_UNITS.append(" \u201c").append(units).append("\u201d,");
         }
         VALID_UNITS.setLength(VALID_UNITS.length() - 1);
     }

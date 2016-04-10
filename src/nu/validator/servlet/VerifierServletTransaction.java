@@ -495,10 +495,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             schemaMap.put("http://c.validator.nu/rdfalite/",
                     CheckerSchema.RDFALITE_CHECKER);
 
-            for (int i = 0; i < presetUrls.length; i++) {
-                String[] urls1 = SPACE.split(presetUrls[i]);
-                for (int j = 0; j < urls1.length; j++) {
-                    String url = urls1[j];
+            for (String presetUrl : presetUrls) {
+                for (String url : SPACE.split(presetUrl)) {
                     if (schemaMap.get(url) == null && !isCheckerUrl(url)) {
                         Schema sch = schemaByUrl(url, er, pMap);
                         schemaMap.put(url, sch);
@@ -588,8 +586,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } else if ("http://c.validator.nu/rdfalite/".equals(url)) {
             return true;
         }
-        for (int i = 0; i < ALL_CHECKERS.length; i++) {
-            if (ALL_CHECKERS[i].equals(url)) {
+        for (String checker : ALL_CHECKERS) {
+            if (checker.equals(url)) {
                 return true;
             }
         }
@@ -732,9 +730,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         String nsfilter = request.getParameter("nsfilter");
         if (nsfilter != null) {
-            String[] nsfilterArr = SPACE.split(nsfilter);
-            for (int i = 0; i < nsfilterArr.length; i++) {
-                String ns = nsfilterArr[i];
+            for (String ns : SPACE.split(nsfilter)) {
                 if (ns.length() > 0) {
                     filteredNamespaces.add(ns);
                 }
@@ -858,8 +854,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return false;
         }
         boolean preset = false;
-        for (int i = 0; i < presetUrls.length; i++) {
-            if (presetUrls[i].equals(schemaUrls)) {
+        for (String presetUrl : presetUrls) {
+            if (presetUrl.equals(schemaUrls)) {
                 preset = true;
                 break;
             }
@@ -1436,13 +1432,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
             if ("http://c.validator.nu/all/".equals(url)
                     || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
-                for (int j = 0; j < ALL_CHECKERS.length; j++) {
-                    v = combineValidatorByUrl(v, ALL_CHECKERS[j]);
+                for (String checker : ALL_CHECKERS) {
+                    v = combineValidatorByUrl(v, checker);
                 }
             } else if ("http://c.validator.nu/all-html4/".equals(url)
                     || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
-                for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
-                    v = combineValidatorByUrl(v, ALL_CHECKERS_HTML4[j]);
+                for (String checker : ALL_CHECKERS_HTML4) {
+                    v = combineValidatorByUrl(v, checker);
                 }
             } else {
                 v = combineValidatorByUrl(v, url);

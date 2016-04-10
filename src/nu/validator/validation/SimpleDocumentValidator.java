@@ -93,8 +93,6 @@ public class SimpleDocumentValidator {
 
     private SourceCode sourceCode = new SourceCode();
 
-    private HtmlParser htmlParser = null;
-
     private XMLReader htmlReader;
 
     private SAXDriver xmlParser;
@@ -239,7 +237,7 @@ public class SimpleDocumentValidator {
                     new XmlPiChecker(), jingPropertyMap));
         }
 
-        htmlParser = new HtmlParser();
+        HtmlParser htmlParser = new HtmlParser();
         htmlParser.addCharacterHandler(sourceCode);
         htmlParser.setCommentPolicy(XmlViolationPolicy.ALLOW);
         htmlParser.setContentNonXmlCharPolicy(XmlViolationPolicy.ALLOW);
