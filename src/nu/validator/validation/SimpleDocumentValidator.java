@@ -76,6 +76,8 @@ import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 
 import org.apache.log4j.PropertyConfigurator;
 
+import java.net.*;
+
 /**
  * Simple validation interface.
  */
@@ -348,6 +350,7 @@ public class SimpleDocumentValidator {
      * @throws IOException if loading of the URL fails for some reason
      */
     public void checkHttpURL(URL url) throws IOException, SAXException {
+        CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
         String address = url.toString();
         validator.reset();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
