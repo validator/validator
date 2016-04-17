@@ -104,7 +104,7 @@ public final class Html5SpecBuilder implements ContentHandler {
 
     private boolean ignoreTextNodes = false;
 
-    public static Spec parseSpec(InputSource in) throws IOException, SAXException {
+    private static Spec parseSpec(InputSource in) throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         Html5SpecBuilder handler = new Html5SpecBuilder();
         parser.setContentHandler(handler);
@@ -112,7 +112,7 @@ public final class Html5SpecBuilder implements ContentHandler {
         return handler.buildSpec();
     }
 
-    public static Spec parseSpec() throws IOException, SAXException {
+    private static Spec parseSpec() throws IOException, SAXException {
         return parseSpec(new InputSource(SPEC_LOAD_URI));
     }
     
