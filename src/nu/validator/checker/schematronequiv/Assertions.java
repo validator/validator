@@ -2112,7 +2112,7 @@ public class Assertions extends Checker {
 
             if ("button" == localName || "fieldset" == localName
                     || ("input" == localName && !hidden)
-                    || "keygen" == localName || "label" == localName
+                    || "keygen" == localName
                     || "object" == localName || "output" == localName
                     || "select" == localName || "textarea" == localName) {
                 String formVal = atts.getValue("", "form");
