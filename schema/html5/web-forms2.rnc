@@ -749,11 +749,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	fieldset.attrs &=
 		( common-form.attrs )
 
-## Label: <label>, extensions
-
-	label.attrs &=
-		( common-form.attrs.form? )
-
 ## Key-pair generator/input control: <keygen>
 
 	keygen.elem =
