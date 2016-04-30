@@ -10,3 +10,11 @@ Use following command to test whether HTML spec copies can be parsed by Nu Html 
 ```sh
 make
 ```
+
+## Updating HTML spec copies
+
+Use following command to update HTML spec copies:
+
+```sh
+make update
+```
