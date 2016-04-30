@@ -115,9 +115,18 @@ public final class Html5SpecBuilder implements ContentHandler {
             System.exit(1);
         }
         
+        InputSource is;
+        final String url = args[0];
+
+        System.err.println(url);
+        if ("-".equals(url)) {
+            is = new InputSource(System.in);
+        } else {
+            is = new InputSource(url);
+        }
+        
         try {
-            final String url = args[0];
-            parseSpec(new InputSource(url));
+            parseSpec(is);
         } catch (SAXParseException e) {
             System.err.printf("Line: %d Col: %d\n", e.getLineNumber(), e.getColumnNumber());
             e.printStackTrace();
