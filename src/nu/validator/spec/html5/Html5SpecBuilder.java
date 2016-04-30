@@ -54,10 +54,6 @@ public final class Html5SpecBuilder implements ContentHandler {
             "nu.validator.spec.html5-link",
             "https://html.spec.whatwg.org/multipage/");
 
-    private static final String SPEC_LOAD_URI = System.getProperty(
-            "nu.validator.spec.html5-load",
-            "https://html.spec.whatwg.org/");
-
     private static final Pattern THE = Pattern.compile("^.*The.*$", Pattern.DOTALL);
 
     private static final Pattern ELEMENT = Pattern.compile("^.*The.*element\\s*$", Pattern.DOTALL);
@@ -112,13 +108,16 @@ public final class Html5SpecBuilder implements ContentHandler {
         return handler.buildSpec();
     }
 
-    private static Spec parseSpec() throws IOException, SAXException {
-        return parseSpec(new InputSource(SPEC_LOAD_URI));
-    }
-    
+   
     public static void main(String[] args) throws IOException, SAXException {
+        if (args == null || args.length < 1)  {
+            System.err.printf("Usage: java -cp ~/vnu.jar nu.validator.spec.html5.Html5SpecBuilder URL_OF_HTML_SPEC\n");
+            System.exit(1);
+        }
+        
         try {
-            parseSpec();            
+            final String url = args[0];
+            parseSpec(new InputSource(url));
         } catch (SAXParseException e) {
             System.err.printf("Line: %d Col: %d\n", e.getLineNumber(), e.getColumnNumber());
             e.printStackTrace();
