@@ -148,6 +148,10 @@ li > ul {
     <a href="https://validator.github.io/validator/#servlet">deploying the checker service through a servlet container such as Tomcat</a>
     </ul>
 
+    <p class=note><b>Note:</b> The <var>vnu.jar</var> and <var>vnu.war</var>
+    packages require a Java 8 environment; they won’t run in Java 7 or
+    older environment.
+
     <p>
     To use the Nu Html Checker on your own,
     <a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
@@ -558,15 +562,14 @@ Follow the steps below to build, test, and run the checker such that you can ope
 
 <div class=set>
 <ol>
-<li>Make sure you have git, python, and JDK 5 or later installed.
+<li>Make sure you have git, python, and JDK 8 installed.
 
 <li>Set the <code>JAVA_HOME</code> environment variable:
 <pre>export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@</pre>
 For example:
 <ul>
-<li>export JAVA_HOME=/usr/lib/jvm/java-6-openjdk (older Ubuntu)
-<li>export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 (newer Ubuntu)
-<li>export JAVA_HOME=$(/usr/libexec/java_home) (Mac OS X)
+<li><code>export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</code>
+<li><code>export JAVA_HOME=$(/usr/libexec/java_home)</code> (Mac OS X)
 </ul>
 
 <li>Create a working directory:

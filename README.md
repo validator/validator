@@ -27,6 +27,9 @@ It is released as two packages:
    [11]: https://validator.github.io/validator/#standalone
    [12]: https://validator.github.io/validator/#servlet
 
+**Note:** The _vnu.jar_ and _vnu.war_ packages require a Java 8 environment;
+they won’t run in Java 7 or older environment.
+
 To use the Nu Html Checker on your own, [get the latest release][13] and see the
 **Usage** and **Web-based checking** sections belowーor alternatively, consider
 automating your HTML checking with a frontend such as:
@@ -356,7 +359,7 @@ parameters documented at
 Follow the steps below to build, test, and run the checker such that you can
 open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
-  1. Make sure you have git, python, and JDK 5 or later installed.
+  1. Make sure you have git, python, and JDK 8 installed.
 
   2. Set the `JAVA_HOME` environment variable:
 
@@ -364,11 +367,8 @@ open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
 For example:
 
-    * export JAVA_HOME=/usr/lib/jvm/java-6-openjdk (older Ubuntu)
-
-    * export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 (newer Ubuntu)
-
-    * export JAVA_HOME=$(/usr/libexec/java_home) (Mac OS X)
+    * `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64` * `export
+    JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
 
   3. Create a working directory:
 
