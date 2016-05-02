@@ -112,10 +112,10 @@ public class Html4Assertions extends Checker {
         Integer maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(descendant);
         int mask = 0;
         if (maskAsObject != null) {
-            mask = maskAsObject.intValue();
+            mask = maskAsObject;
         }
         mask |= (1 << number);
-        ANCESTOR_MASK_BY_DESCENDANT.put(descendant, new Integer(mask));
+        ANCESTOR_MASK_BY_DESCENDANT.put(descendant, mask);
     }
 
     static {
@@ -399,7 +399,7 @@ public class Html4Assertions extends Checker {
             String descendantUiString = "";
             if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(
                     localName)) != null) {
-                mask = maskAsObject.intValue();
+                mask = maskAsObject;
                 descendantUiString = localName;
             } else if ("img" == localName && usemap) {
                 mask = BUTTON_MASK;
@@ -408,12 +408,12 @@ public class Html4Assertions extends Checker {
             if (mask != 0) {
                 int maskHit = ancestorMask & mask;
                 if (maskHit != 0) {
-                    for (int j = 0; j < SPECIAL_ANCESTORS.length; j++) {
+                    for (String ancestor : SPECIAL_ANCESTORS) {
                         if ((maskHit & 1) != 0) {
                             err("The element \u201C" + descendantUiString
                                     + "\u201D must not appear as a descendant "
                                     + "of the element \u201C"
-                                    + SPECIAL_ANCESTORS[j] + "\u201D.");
+                                    + ancestor + "\u201D.");
                         }
                         maskHit >>= 1;
                     }

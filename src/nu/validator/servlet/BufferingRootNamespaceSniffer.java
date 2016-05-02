@@ -52,8 +52,7 @@ public class BufferingRootNamespaceSniffer implements ContentHandler {
             ch.setDocumentLocator(locator);
         }
         ch.startDocument();
-        for (Iterator<String[]> iter = namespaces.iterator(); iter.hasNext();) {
-            String[] element = iter.next();
+        for (String[] element : namespaces) {
             ch.startPrefixMapping(element[0], element[1]);
         }
     }

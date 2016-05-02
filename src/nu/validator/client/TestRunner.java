@@ -148,8 +148,7 @@ public class TestRunner implements ErrorHandler {
     private void recurseDirectory(File directory) throws SAXException,
             IOException {
         File[] files = directory.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
+        for (File file : files) {
             if (file.isDirectory()) {
                 recurseDirectory(file);
             } else {
@@ -397,8 +396,7 @@ public class TestRunner implements ErrorHandler {
             }
             return;
         }
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
+        for (File file : files) {
             if (file.isDirectory()) {
                 if (state != State.EXPECTING_ANYTHING) {
                     checkTestFiles(file, state);
@@ -553,23 +551,23 @@ public class TestRunner implements ErrorHandler {
         verbose = false;
         String messagesFilename = null;
         System.setProperty("nu.validator.datatype.warn", "true");
-        for (int i = 0; i < args.length; i++) {
-            if ("--verbose".equals(args[i])) {
+        for (String arg : args) {
+            if ("--verbose".equals(arg)) {
                 verbose = true;
-            } else if ("--errors-only".equals(args[i])) {
+            } else if ("--errors-only".equals(arg)) {
                 System.setProperty("nu.validator.datatype.warn", "false");
-            } else if ("--write-messages".equals(args[i])) {
+            } else if ("--write-messages".equals(arg)) {
                 writeMessages = true;
-            } else if (args[i].startsWith("--ignore=")) {
-                ignoreList = args[i].substring(9, args[i].length()).split(",");
-            } else if (args[i].startsWith("--")) {
+            } else if (arg.startsWith("--ignore=")) {
+                ignoreList = arg.substring(9, arg.length()).split(",");
+            } else if (arg.startsWith("--")) {
                 System.out.println(String.format(
-                        "\nError: There is no option \"%s\".", args[i]));
+                        "\nError: There is no option \"%s\".", arg));
                 usage();
                 System.exit(1);
             } else {
-                if (args[i].endsWith(".json")) {
-                    messagesFilename = args[i];
+                if (arg.endsWith(".json")) {
+                    messagesFilename = arg;
                 } else {
                     System.out.println("\nError: Expected the name of a messages"
                             + " file with a .json extension.");

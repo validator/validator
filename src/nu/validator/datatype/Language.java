@@ -49,7 +49,7 @@ public final class Language extends AbstractDatatype {
     private static final Pattern HYPHEN = Pattern.compile("-");
 
     private static final boolean WARN = System.getProperty(
-            "nu.validator.datatype.warn", "").equals("true") ? true : false;
+            "nu.validator.datatype.warn", "").equals("true");
 
     private static String[] languages = null;
 
@@ -145,8 +145,8 @@ public final class Language extends AbstractDatatype {
 
         String[] subtags = HYPHEN.split(literal);
 
-        for (int j = 0; j < subtags.length; j++) {
-            int len = subtags[j].length();
+        for (String subtag : subtags) {
+            int len = subtag.length();
             if (len == 0) {
                 throw newDatatypeException("Zero-length subtag.");
             } else if (len > 8) {
@@ -332,12 +332,9 @@ public final class Language extends AbstractDatatype {
             return;
         }
         List<String> recommendedPrefixes = new ArrayList<>();
-        for (int j = 0; j < prefixes.length; j++) {
-            String[] prefix = prefixes[j];
-            for (int k = 0; k < prefix.length; k++) {
-                String prefixComponent = prefix[k];
-                if (!subtagsContainPrefixComponent(prefixComponent, subtags,
-                        i)) {
+        for (String[] prefix : prefixes) {
+            for (String prefixComponent : prefix) {
+                if (!subtagsContainPrefixComponent(prefixComponent, subtags, i)) {
                     recommendedPrefixes.add(prefixComponent);
                 }
             }
@@ -371,10 +368,8 @@ public final class Language extends AbstractDatatype {
 
     private boolean prefixMatches(String[] prefix, String[] subtags,
             int limit) {
-        for (int i = 0; i < prefix.length; i++) {
-            String prefixComponent = prefix[i];
-            if (!subtagsContainPrefixComponent(prefixComponent, subtags,
-                    limit)) {
+        for (String prefixComponent : prefix) {
+            if (!subtagsContainPrefixComponent(prefixComponent, subtags, limit)) {
                 return false;
             }
         }

@@ -196,8 +196,8 @@ public final class NamespaceDroppingXMLReaderWrapper implements XMLReader, Conte
     }
 
     private boolean isInNamespacesToRemove(String uri) {
-        for (int i = 0; i < namespacesToRemove.length; i++) {
-            if (uri == namespacesToRemove[i]) {
+        for (String namespace : namespacesToRemove) {
+            if (uri == namespace) {
                 return true;
             }
         }

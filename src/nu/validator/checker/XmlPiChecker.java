@@ -208,12 +208,11 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                     throws SAXException, ClassNotFoundException {
         if (getErrorHandler() != null) {
             Html5DatatypeException ex5 = (Html5DatatypeException) e;
-            boolean warning = ex5.isWarning() ? true : false;
             DatatypeMismatchException bpe = new DatatypeMismatchException(
                     "Bad value \u201c" + attrValue + "\u201d for \u201c"
                             + piTarget + "\u201d pseudo-attribute \u201c"
                             + attrName + "\u201d. " + e.getMessage(),
-                    getDocumentLocator(), datatypeClass, warning);
+                    getDocumentLocator(), datatypeClass, ex5.isWarning());
             getErrorHandler().error(bpe);
         }
     }

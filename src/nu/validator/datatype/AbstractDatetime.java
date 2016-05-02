@@ -48,7 +48,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
         super();
     }
 
-    private final static boolean WARN = System.getProperty("nu.validator.datatype.warn","").equals("true") ? true : false;
+    private final static boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
 
     private void checkMonth(String year, String month)
             throws DatatypeException {

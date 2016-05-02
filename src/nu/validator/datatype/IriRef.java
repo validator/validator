@@ -55,10 +55,9 @@ public class IriRef extends AbstractDatatype {
         super();
     }
 
-    private final static boolean WARN = System.getProperty("nu.validator.datatype.warn","").equals("true") ? true : false;
+    private final static boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
 
-    private final CharSequencePair splitScheme(CharSequence iri)
-            throws DatatypeException {
+    private final CharSequencePair splitScheme(CharSequence iri) {
         StringBuilder sb = new StringBuilder();
         Boolean atSchemeBeginning = true;
         for (int i = 0; i < iri.length(); i++) {

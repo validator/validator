@@ -50,8 +50,7 @@ import org.xml.sax.SAXException;
 public class Assertions extends Checker {
 
     private static boolean followW3Cspec = "1".equals(
-            System.getProperty("nu.validator.servlet.follow-w3c-spec")) ? true
-                    : false;
+            System.getProperty("nu.validator.servlet.follow-w3c-spec"));
 
     private static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(
             String lowerCaseLiteral, String string) {
@@ -1752,11 +1751,11 @@ public class Assertions extends Checker {
             if (mask != 0) {
                 int maskHit = ancestorMask & mask;
                 if (maskHit != 0) {
-                    for (int j = 0; j < SPECIAL_ANCESTORS.length; j++) {
+                    for (String ancestor : SPECIAL_ANCESTORS) {
                         if ((maskHit & 1) != 0) {
                             err("The element \u201C" + descendantUiString
                                     + "\u201D must not appear as a descendant of the \u201C"
-                                    + SPECIAL_ANCESTORS[j] + "\u201D element.");
+                                    + ancestor + "\u201D element.");
                         }
                         maskHit >>= 1;
                     }
@@ -2074,13 +2073,13 @@ public class Assertions extends Checker {
                 for (Set<String> value : REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.values()) {
                     if (value.contains(role)) {
                         String[] ownedIds = AttributeUtil.split(owns);
-                        for (int i = 0; i < ownedIds.length; i++) {
+                        for (String ownedId : ownedIds) {
                             Set<String> ownedIdsForThisRole = ariaOwnsIdsByRole.get(
                                     role);
                             if (ownedIdsForThisRole == null) {
                                 ownedIdsForThisRole = new HashSet<>();
                             }
-                            ownedIdsForThisRole.add(ownedIds[i]);
+                            ownedIdsForThisRole.add(ownedId);
                             ariaOwnsIdsByRole.put(role, ownedIdsForThisRole);
                         }
                         break;
@@ -2320,8 +2319,7 @@ public class Assertions extends Checker {
             String attVal = atts.getValue("", att);
             if (attVal != null) {
                 String[] tokens = AttributeUtil.split(attVal);
-                for (int i = 0; i < tokens.length; i++) {
-                    String token = tokens[i];
+                for (String token : tokens) {
                     ariaReferences.add(
                             new IdrefLocator(getDocumentLocator(), token, att));
                 }

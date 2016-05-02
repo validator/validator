@@ -210,13 +210,12 @@ public final class TextContentChecker extends Checker {
             ClassNotFoundException {
         if (getErrorHandler() != null) {
             Html5DatatypeException ex5 = (Html5DatatypeException) e;
-            boolean warning = ex5.isWarning() ? true : false;
             DatatypeMismatchException dme = new DatatypeMismatchException(
                     "The text content of element \u201c" + localName
                             // + "\u201D from namespace \u201C" + uri
                             + "\u201d was not in the required format: "
                             + e.getMessage().split(": ")[1],
-                    getDocumentLocator(), datatypeClass, warning);
+                    getDocumentLocator(), datatypeClass, ex5.isWarning());
             getErrorHandler().error(dme);
         }
     }

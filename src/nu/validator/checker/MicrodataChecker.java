@@ -192,7 +192,7 @@ public class MicrodataChecker extends Checker {
             }
         }
 
-        if (id != null || itemProp != null || itemScope == true) {
+        if (id != null || itemProp != null || itemScope) {
             Element elm = new Element(new LocatorImpl(locator), itemProp,
                     itemRef, itemScope);
 

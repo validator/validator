@@ -1381,7 +1381,7 @@ public class SvgPathData extends AbstractDatatype {
     }
 
     private void reportUnexpected(String expected, int ch)
-            throws DatatypeException, IOException {
+            throws DatatypeException {
         if (ch != -1) {
             throw newDatatypeException("Expected " + expected
                     + " but found \u201c" + (char) ch + "\u201d instead "
@@ -1394,7 +1394,7 @@ public class SvgPathData extends AbstractDatatype {
     }
 
     private void reportNonNumber(char command, int ch)
-            throws DatatypeException, IOException {
+            throws DatatypeException {
         if (ch != -1) {
             throw newDatatypeException("Expected number for \u201c" + command
                     + "\u201d command but found " + "\u201c" + (char) ch
