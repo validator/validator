@@ -102,7 +102,6 @@ log4jProps = 'resources/log4j.properties'
 heapSize = '128'
 stackSize = ''
 html5specLink = 'https://html.spec.whatwg.org/multipage/'
-html5specLoad = 'https://html.spec.whatwg.org/'
 aboutPage = 'https://about.validator.nu/'
 userAgent = 'Validator.nu/LV'
 icon = None
@@ -728,7 +727,6 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.style-sheet=' + stylesheet,
     '-Dnu.validator.servlet.user-agent=' + userAgent,
     '-Dnu.validator.servlet.version=' + validatorVersion,
-    '-Dnu.validator.spec.html5-load=' + html5specLoad,
     '-Dnu.validator.spec.html5-link=' + html5specLink,
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
   ]
@@ -1329,8 +1327,6 @@ else:
       javaVersion = arg[14:]
     elif arg.startswith("--html5link="):
       html5specLink = arg[12:]
-    elif arg.startswith("--html5load="):
-      html5specLoad = arg[12:]
     elif arg.startswith("--about="):
       aboutPage = arg[8:]
     elif arg.startswith("--stylesheet="):

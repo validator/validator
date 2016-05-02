@@ -54,10 +54,6 @@ public final class Html5SpecBuilder implements ContentHandler {
             "nu.validator.spec.html5-link",
             "https://html.spec.whatwg.org/multipage/");
 
-    private static final String SPEC_LOAD_URI = System.getProperty(
-            "nu.validator.spec.html5-load",
-            "https://html.spec.whatwg.org/");
-
     private static final Pattern THE = Pattern.compile("^.*The.*$", Pattern.DOTALL);
 
     private static final Pattern ELEMENT = Pattern.compile("^.*The.*element\\s*$", Pattern.DOTALL);
@@ -68,10 +64,12 @@ public final class Html5SpecBuilder implements ContentHandler {
 
     private static final Pattern CONTENT_MODEL = Pattern.compile("^\\s*Content\\s+model:?\\s*$");
 
+    private static final Pattern TAG_OMISSION = Pattern.compile("^\\s*Tag omission\\s+in\\s+text/html:?\\s*$");
+
     private static final Pattern ATTRIBUTES = Pattern.compile("^\\s*Content\\s+attributes:?\\s*$");
 
     private enum State {
-        AWAITING_HEADING, IN_H4, IN_CODE_IN_H4, AWAITING_ELEMENT_DL, IN_ELEMENT_DL_START, IN_CATEGORIES_DT, CAPTURING_CATEGORIES_DDS, IN_CONTEXT_DT, CAPTURING_CONTEXT_DDS, IN_CONTENT_MODEL_DT, CAPTURING_CONTENT_MODEL_DDS, IN_ATTRIBUTES_DT, CAPTURING_ATTRIBUTES_DDS
+        AWAITING_HEADING, IN_H4, IN_CODE_IN_H4, AWAITING_ELEMENT_DL, IN_ELEMENT_DL_START, IN_CATEGORIES_DT, CAPTURING_CATEGORIES_DDS, IN_CONTEXT_DT, CAPTURING_CONTEXT_DDS, IN_CONTENT_MODEL_DT, CAPTURING_CONTENT_MODEL_DDS, IN_TAG_OMISSION_DT, CAPTURING_TAG_OMISSION_DDS, IN_ATTRIBUTES_DT, CAPTURING_ATTRIBUTES_DDS
     }
 
     private Locator locator;
@@ -102,7 +100,7 @@ public final class Html5SpecBuilder implements ContentHandler {
 
     private boolean ignoreTextNodes = false;
 
-    public static Spec parseSpec(InputSource in) throws IOException, SAXException {
+    private static Spec parseSpec(InputSource in) throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         Html5SpecBuilder handler = new Html5SpecBuilder();
         parser.setContentHandler(handler);
@@ -110,13 +108,25 @@ public final class Html5SpecBuilder implements ContentHandler {
         return handler.buildSpec();
     }
 
-    public static Spec parseSpec() throws IOException, SAXException {
-        return parseSpec(new InputSource(SPEC_LOAD_URI));
-    }
-    
+   
     public static void main(String[] args) throws IOException, SAXException {
+        if (args == null || args.length < 1)  {
+            System.err.printf("Usage: java -cp ~/vnu.jar nu.validator.spec.html5.Html5SpecBuilder URL_OF_HTML_SPEC\n");
+            System.exit(1);
+        }
+        
+        InputSource is;
+        final String url = args[0];
+
+        System.err.println(url);
+        if ("-".equals(url)) {
+            is = new InputSource(System.in);
+        } else {
+            is = new InputSource(url);
+        }
+        
         try {
-            parseSpec();            
+            parseSpec(is);
         } catch (SAXParseException e) {
             System.err.printf("Line: %d Col: %d\n", e.getLineNumber(), e.getColumnNumber());
             e.printStackTrace();
@@ -181,12 +191,14 @@ public final class Html5SpecBuilder implements ContentHandler {
             case IN_CATEGORIES_DT:
             case IN_CONTEXT_DT:
             case IN_CONTENT_MODEL_DT:
+            case IN_TAG_OMISSION_DT:
             case IN_ATTRIBUTES_DT:
                 referenceText.append(ch, start, length);
                 break;
             case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
+            case CAPTURING_TAG_OMISSION_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
                 if (ignoreTextNodes) {
                     ignoreTextNodes = false;
@@ -210,10 +222,12 @@ public final class Html5SpecBuilder implements ContentHandler {
             case IN_CATEGORIES_DT:
             case IN_CONTEXT_DT:
             case IN_CONTENT_MODEL_DT:
+            case IN_TAG_OMISSION_DT:
             case IN_ATTRIBUTES_DT:
             case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
+            case CAPTURING_TAG_OMISSION_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
                 throw new SAXException(
                         "Malformed spec: Wrong state for document end.");
@@ -298,6 +312,19 @@ public final class Html5SpecBuilder implements ContentHandler {
                     }
                 }
                 break;
+            case IN_TAG_OMISSION_DT:
+                if ("a" == localName && NS == uri) {
+                    Matcher m = TAG_OMISSION.matcher(referenceText);
+                    if (m.matches()) {
+                        state = State.CAPTURING_TAG_OMISSION_DDS;
+                        captureDepth = 0;
+                        fragmentBuilder = new TreeBuilder(true, true);
+                    } else {
+                        throw new SAXParseException(
+                                "Malformed spec: Expected dt to be tag-omission dt but it was not.", locator);
+                    }
+                }
+                break;
             case IN_ATTRIBUTES_DT:
                 if ("a" == localName && NS == uri) {
                     Matcher m = ATTRIBUTES.matcher(referenceText);
@@ -314,6 +341,7 @@ public final class Html5SpecBuilder implements ContentHandler {
             case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
+            case CAPTURING_TAG_OMISSION_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
                 if ("dt" == localName) {
                     break;
@@ -406,6 +434,11 @@ public final class Html5SpecBuilder implements ContentHandler {
                     state = State.IN_CONTENT_MODEL_DT;
                     break;
                 }
+            case IN_TAG_OMISSION_DT:
+                if ("a" == localName && NS == uri) {
+                    state = State.IN_TAG_OMISSION_DT;
+                    break;
+                }
             case IN_ATTRIBUTES_DT:
                 if ("a" == localName && NS == uri) {
                     state = State.IN_ATTRIBUTES_DT;
@@ -416,6 +449,7 @@ public final class Html5SpecBuilder implements ContentHandler {
             case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
+            case CAPTURING_TAG_OMISSION_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
                 if ("dt" == localName && NS == uri && captureDepth == 0) {
                     ignoreTextNodes = true;
@@ -430,6 +464,8 @@ public final class Html5SpecBuilder implements ContentHandler {
                         state = State.IN_CONTENT_MODEL_DT;
                     } else if (state == State.CAPTURING_CONTENT_MODEL_DDS) {
                         contentModelsByElement.put(currentName, fragment);
+                        state = State.IN_TAG_OMISSION_DT;
+                    } else if (state == State.CAPTURING_TAG_OMISSION_DDS) {
                         state = State.IN_ATTRIBUTES_DT;
                     } else {
                         attributesByElement.put(currentName, fragment);
