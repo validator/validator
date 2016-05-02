@@ -71,12 +71,10 @@ public class LocalCacheEntityResolver implements EntityResolver {
             InputStream stream = LOADER.getResourceAsStream(path);
             if (stream != null) {
                 TypedInputSource is = new TypedInputSource();
-                is.setByteStream(stream);
-                is.setSystemId(systemId);
-                is.setPublicId(publicId);
                 if (systemId.endsWith(".rnc")) {
                     is.setType("application/relax-ng-compact-syntax");
                     if (!allowRnc) {
+                        stream.close();
                         throw new IOException("Not an XML resource: "
                                 + systemId);
                     }
@@ -87,6 +85,9 @@ public class LocalCacheEntityResolver implements EntityResolver {
                 } else {
                     is.setType("application/xml");
                 }
+                is.setByteStream(stream);
+                is.setSystemId(systemId);
+                is.setPublicId(publicId);
                 return is;
             }
         }

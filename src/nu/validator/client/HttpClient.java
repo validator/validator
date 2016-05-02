@@ -39,8 +39,6 @@ public class HttpClient {
     public static void main(String[] args) {
         URLConnection connection = null;
         InputStream input  = null;
-        OutputStream output = null;
-        BufferedReader responseReader = null;
         String host = System.getProperty("nu.validator.client.host",
                 "127.0.0.1");
         String port = System.getProperty("nu.validator.client.port", "8888");
@@ -96,22 +94,22 @@ public class HttpClient {
                 connection.setRequestProperty("Content-Type", contentType);
                 connection.setDoOutput(true);
                 connection.setReadTimeout(10000);
-                output = connection.getOutputStream();
                 byte buffer[] = new byte[4096];
                 int len = 4096;
-                while ((len = input.read(buffer, 0, 4096)) != -1) {
-                    output.write(buffer, 0, len);
+                try (OutputStream output = connection.getOutputStream()) {
+                    while ((len = input.read(buffer, 0, 4096)) != -1) {
+                        output.write(buffer, 0, len);
+                    }
                 }
                 input.close();
-                output.close();
-                responseReader = new BufferedReader(new InputStreamReader(
-                        connection.getInputStream()));
-                int c;
-                while ((c = responseReader.read()) != -1) {
-                    System.out.print((char) c);
-                    hasErrors = true;
+                try (BufferedReader responseReader = new BufferedReader(new InputStreamReader(
+                        connection.getInputStream()))) {
+                    int c;
+                    while ((c = responseReader.read()) != -1) {
+                        System.out.print((char) c);
+                        hasErrors = true;
+                    }
                 }
-                responseReader.close();
             }
             System.exit(hasErrors ? 1 : 0);
         } catch (MalformedURLException e) {
@@ -134,7 +132,6 @@ public class HttpClient {
         } finally {
             connection = null;
             input = null;
-            output = null;
         }
     }
 
