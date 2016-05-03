@@ -1186,6 +1186,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     void emitDetails() throws SAXException {
+        Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
         String type = documentInput != null ? documentInput.getType() : "";
         String charsetMsg = "";
         if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
@@ -1207,13 +1208,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             }
             emitter.startElementWithClass("p", "msgmediatype");
-            if (isHtmlUnsafePreset()) {
+            if (!"textarea".equals(inputType) && !"file".equals(inputType)) {
                 emitter.characters(String.format("The Content-Type header specified %s%s.",
                         type, charsetMsg));
-            } else {
-                emitter.characters(String.format(
-                        "The Content-Type header specified %s%s. Used the HTML parser.",
-                        type, charsetMsg));
+            }
+            if (!isHtmlUnsafePreset()) {
+                emitter.characters(" Used the HTML parser.");
             }
             emitter.endElement("div");
         }
