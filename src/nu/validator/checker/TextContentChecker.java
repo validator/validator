@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2010-2013 Mozilla Foundation
+ * Copyright (c) 2010-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -56,6 +56,8 @@ public final class TextContentChecker extends Checker {
      * tail.
      */
     private final LinkedList<DatatypeStreamingValidator> stack = new LinkedList<>();
+    private final LinkedList<String[]> openElements = new LinkedList<>();
+    private String[] parent = null;
     private boolean inEmptyTitleOrOption = false;
 
     /**
@@ -137,11 +139,14 @@ public final class TextContentChecker extends Checker {
             err("Element \u201Ctitle\u201d must not be empty.");
             inEmptyTitleOrOption = false;
         } else if (inEmptyTitleOrOption && XHTML_URL.equals(uri)
-                && "option".equals(localName)) {
+                && "option".equals(localName)
+                && !(parent != null && XHTML_URL.equals(parent[0])
+                        && "datalist".equals(parent[1]))) {
             err("Element \u201Coption\u201d without "
                     + "attribute \u201clabel\u201d must not be empty.");
             inEmptyTitleOrOption = false;
         }
+        openElements.pop();
         DatatypeStreamingValidator dsv = stack.removeLast();
         if (dsv != null) {
             try {
@@ -242,6 +247,9 @@ public final class TextContentChecker extends Checker {
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         stack.addLast(streamingValidatorFor(uri, localName, atts));
+        String[] uriAndName = {uri, localName};
+        parent = openElements.peek();
+        openElements.push(uriAndName);
         if (XHTML_URL.equals(uri)
                 && ("title".equals(localName))
                 || ("option".equals(localName) && atts.getIndex("", "label") < 0)) {
@@ -255,6 +263,7 @@ public final class TextContentChecker extends Checker {
     @Override
     public void reset() {
         stack.clear();
+        openElements.clear();
     }
 
 }
