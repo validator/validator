@@ -43,6 +43,7 @@ public final class LinkRel extends AbstractRel {
         registeredValues.add("next");
         registeredValues.add("pingback");
         registeredValues.add("prefetch");
+        registeredValues.add("preload");
         registeredValues.add("prev");
         registeredValues.add("prev");
         registeredValues.add("search");

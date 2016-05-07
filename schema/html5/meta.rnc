@@ -158,6 +158,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.other
 		&	link.attrs.href
 		&	link.attrs.rel
+		&	link.attrs.as?
 		&	link.attrs.integrity?
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
@@ -177,6 +178,24 @@ datatypes w = "http://whattf.org/datatype-draft"
 		link.attrs.rel =
 			attribute rel {
 				w:link-rel
+			}
+		link.attrs.as =
+			attribute as {
+				string ""
+			|	string "document"
+			|	string "embed"
+			|	string "font"
+			|	string "image"
+			|	string "manifest"
+			|	string "media"
+			|	string "object"
+			|	string "report"
+			|	string "script"
+			|	string "serviceworker"
+			|	string "sharedworker"
+			|	string "style"
+			|	string "worker"
+			|	string "xslt"
 			}
 		link.attrs.integrity =
 			attribute integrity {

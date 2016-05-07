@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2015 Mozilla Foundation
+ * Copyright (c) 2008-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -2171,6 +2171,17 @@ public class Assertions extends Checker {
                             + " \u201CX-UA-Compatible\u201D" + " must have a"
                             + " \u201Ccontent\u201D attribute with the value"
                             + " \u201CIE=edge\u201D.");
+                }
+            }
+            if ("link" == localName) {
+                if (atts.getIndex("", "as") > -1
+                        && atts.getIndex("", "rel") > -1
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "preload", atts.getValue("", "rel"))) {
+                    err("A \u201Clink\u201D element with an"
+                            + " \u201Cas\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute with the value"
+                            + " \u201Cpreload\u201D.");
                 }
             }
 
