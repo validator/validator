@@ -361,7 +361,7 @@ public class Assertions extends Checker {
                 "th", "col", "colgroup", "pre" });
     }
 
-    private static final String[] SPECIAL_ANCESTORS = { "a", "address",
+    private static final String[] SPECIAL_ANCESTORS = { "a", "address", "body",
             "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
             "form", "header", "label", "map", "noscript", "th", "time",
             "progress", "meter", "article", "section", "aside", "nav", "h1",
@@ -471,6 +471,8 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("footer", "main");
         registerProhibitedAncestor("nav", "main");
     }
+
+    private static final int BODY_MASK = (1 << specialAncestorNumber("body"));
 
     private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
             | (1 << specialAncestorNumber("button"));
@@ -2174,6 +2176,7 @@ public class Assertions extends Checker {
                 }
             }
             if ("link" == localName) {
+                String relVal = atts.getValue("", "rel");
                 if (atts.getIndex("", "as") > -1
                         && atts.getIndex("", "rel") > -1
                         && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
@@ -2182,6 +2185,33 @@ public class Assertions extends Checker {
                             + " \u201Cas\u201D attribute must have a"
                             + " \u201Crel\u201D attribute with the value"
                             + " \u201Cpreload\u201D.");
+                }
+                if ((ancestorMask & BODY_MASK) != 0
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "dns-prefetch", relVal)
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "pingback", relVal)
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "preconnect", relVal)
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "prefetch", relVal)
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "prerender", relVal)
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "stylesheet", relVal)
+                        && atts.getIndex("", "itemprop") < 0
+                        && atts.getIndex("", "property") < 0) {
+                    err("A \u201Clink\u201D element must not appear"
+                            + " as a descendant of a \u201Cbody\u201D element"
+                            + " unless the \u201Clink\u201D element has an"
+                            + " \u201Citemprop\u201D attribute or has a"
+                            + " \u201Crel\u201D attribute whose value is one of"
+                            + " \u201Cdns-prefetch\u201D,"
+                            + " \u201Cpingback\u201D,"
+                            + " \u201Cpreconnect\u201D,"
+                            + " \u201Cprefetch\u201D,"
+                            + " \u201Cprerender\u201D, or"
+                            + " \u201Cstylesheet\u201D.");
                 }
             }
 

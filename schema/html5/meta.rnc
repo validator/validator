@@ -209,6 +209,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( empty )
 		
 	common.elem.metadata |= link.elem
+	common.elem.phrasing |= link.elem
+	common.elem.flow |= link.elem
 
 ## Global Style: <style>
 
