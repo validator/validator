@@ -499,7 +499,7 @@ public class Assertions extends Checker {
 
     private static final int HREF_MASK = (1 << 30);
 
-    private static final int LABEL_FOR_MASK = (1 << 28);
+    private static final int LABEL_FOR_MASK = (1 << 29);
 
     private static final Map<String, Set<String>> REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT = new HashMap<>();
 
