@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Mozilla Foundation
+ * Copyright (c) 2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -43,9 +43,11 @@ public final class SandboxAllowList extends AbstractDatatype {
     static {
         allowedKeywords.add("allow-forms");
         allowedKeywords.add("allow-modals");
+        allowedKeywords.add("allow-orientation-lock");
         allowedKeywords.add("allow-pointer-lock");
         allowedKeywords.add("allow-popups");
         allowedKeywords.add("allow-popups-to-escape-sandbox");
+        allowedKeywords.add("allow-presentation");
         allowedKeywords.add("allow-same-origin");
         allowedKeywords.add("allow-scripts");
         allowedKeywords.add("allow-top-navigation");
