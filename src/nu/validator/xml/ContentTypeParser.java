@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2015 Mozilla Foundation
+ * Copyright (c) 2007-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -283,6 +283,11 @@ public class ContentTypeParser {
                             malformedContentTypeError(contentType,
                                 "Expected an \u201c=\u201d sign but saw \u201c" + c + "\u201d instead.");
                             break inCharset;
+                    }
+                    if (offset == param.length()) {
+                        malformedContentTypeError(contentType,
+                                "The empty string is not a valid encoding name.");
+                        break inCharset;
                     }
                     c = param.charAt(offset);
                     switch (c) {
