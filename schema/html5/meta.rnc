@@ -243,25 +243,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		
 	common.elem.metadata |= style.elem
 
-## Scoped Style: <style scoped>
-
-	style.elem.scoped =
-		element style { style.inner & style.scoped.attrs }
-	style.scoped.attrs =
-		(	common.attrs
-		&	style.attrs.type?
-		&	style.attrs.media?
-		&	style.attrs.scoped
-		#	style.attrs.title included in common.attrs
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
-		)
-		style.attrs.scoped =
-			attribute scoped {
-				w:string "scoped" | w:string ""
-			}
-
 ## Name-Value Metadata: <meta name>
 
 	meta.name.elem =
