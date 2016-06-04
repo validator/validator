@@ -36,6 +36,15 @@ import nu.validator.checker.Checker;
 import nu.validator.checker.LocatorImpl;
 import nu.validator.checker.TaintableLocatorImpl;
 import nu.validator.checker.VnuBadAttrValueException;
+import nu.validator.datatype.AutocompleteDetailsAny;
+import nu.validator.datatype.AutocompleteDetailsDate;
+import nu.validator.datatype.AutocompleteDetailsEmail;
+import nu.validator.datatype.AutocompleteDetailsMonth;
+import nu.validator.datatype.AutocompleteDetailsNumeric;
+import nu.validator.datatype.AutocompleteDetailsPassword;
+import nu.validator.datatype.AutocompleteDetailsTel;
+import nu.validator.datatype.AutocompleteDetailsText;
+import nu.validator.datatype.AutocompleteDetailsUrl;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.datatype.ImageCandidateStringsWidthRequired;
 import nu.validator.datatype.ImageCandidateStrings;
@@ -132,7 +141,7 @@ public class Assertions extends Checker {
 
     static {
         INPUT_ATTRIBUTES.put("autocomplete",
-                new String[] { "text", "search", "url", "tel", "email",
+                new String[] { "hidden", "text", "search", "url", "tel", "email",
                         "password", "datetime", "date", "month", "week", "time",
                         "datetime-local", "number", "range", "color" });
         INPUT_ATTRIBUTES.put("list",
@@ -1575,6 +1584,70 @@ public class Assertions extends Checker {
                 }
             }
 
+            if ("input".equals(localName)) {
+                inputTypeVal = inputTypeVal == null ? "text" : inputTypeVal;
+                if (atts.getIndex("", "autocomplete") > -1) {
+                    Class<?> datatypeClass = null;
+                    String autocompleteVal = atts.getValue("", "autocomplete");
+                    try {
+                        if (!"on".equals(autocompleteVal)
+                                && !"off".equals(autocompleteVal)) {
+                            if ("hidden".equals(inputTypeVal)) {
+                                AutocompleteDetailsAny.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsAny.class;
+                            } else if ("text".equals(inputTypeVal)
+                                    || "search".equals(autocompleteVal)) {
+                                AutocompleteDetailsText.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsText.class;
+                            } else if ("password".equals(inputTypeVal)) {
+                                AutocompleteDetailsPassword.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsPassword.class;
+                            } else if ("url".equals(inputTypeVal)) {
+                                AutocompleteDetailsUrl.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsUrl.class;
+                            } else if ("email".equals(inputTypeVal)) {
+                                AutocompleteDetailsEmail.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsEmail.class;
+                            } else if ("tel".equals(inputTypeVal)) {
+                                AutocompleteDetailsTel.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsTel.class;
+                            } else if ("number".equals(inputTypeVal)) {
+                                AutocompleteDetailsNumeric.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsNumeric.class;
+                            } else if ("month".equals(inputTypeVal)) {
+                                AutocompleteDetailsMonth.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsMonth.class;
+                            } else if ("date".equals(inputTypeVal)) {
+                                AutocompleteDetailsDate.THE_INSTANCE.checkValid(
+                                        autocompleteVal);
+                                datatypeClass = AutocompleteDetailsDate.class;
+                            }
+                        }
+                    } catch (DatatypeException e) {
+                        try {
+                            if (getErrorHandler() != null) {
+                                String msg = e.getMessage();
+                                msg = msg.substring(msg.indexOf(": ") + 2);
+                                VnuBadAttrValueException ex = new VnuBadAttrValueException(
+                                        localName, uri, "autocomplete",
+                                        autocompleteVal, msg,
+                                        getDocumentLocator(), datatypeClass,
+                                        false);
+                                getErrorHandler().error(ex);
+                            }
+                        } catch (ClassNotFoundException ce) {
+                        }
+                    }
+                }
+            }
             if ("img".equals(localName) || "source".equals(localName)) {
                 if (atts.getIndex("", "srcset") > -1) {
                     String srcsetVal = atts.getValue("", "srcset");

@@ -412,6 +412,11 @@ common.attrs.other =
   common.data.functionbody =
     w:functionbody
 
+## autocomplete
+
+	common.data.autocomplete.any =
+		w:autocomplete-any
+
 # #####################################################################
 ##  WF2 Module Hook                                                   #
 # #####################################################################

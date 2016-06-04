@@ -186,6 +186,24 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return SandboxAllowList.THE_INSTANCE;
         } else if ("content-security-policy".equals(typeLocalName)) {
             return ContentSecurityPolicy.THE_INSTANCE;
+        } else if ("autocomplete-any".equals(typeLocalName)) {
+            return AutocompleteDetailsAny.THE_INSTANCE;
+        } else if ("autocomplete-text".equals(typeLocalName)) {
+            return AutocompleteDetailsText.THE_INSTANCE;
+        } else if ("autocomplete-password".equals(typeLocalName)) {
+            return AutocompleteDetailsPassword.THE_INSTANCE;
+        } else if ("autocomplete-url".equals(typeLocalName)) {
+            return AutocompleteDetailsUrl.THE_INSTANCE;
+        } else if ("autocomplete-email".equals(typeLocalName)) {
+            return AutocompleteDetailsEmail.THE_INSTANCE;
+        } else if ("autocomplete-tel".equals(typeLocalName)) {
+            return AutocompleteDetailsTel.THE_INSTANCE;
+        } else if ("autocomplete-numeric".equals(typeLocalName)) {
+            return AutocompleteDetailsNumeric.THE_INSTANCE;
+        } else if ("autocomplete-month".equals(typeLocalName)) {
+            return AutocompleteDetailsMonth.THE_INSTANCE;
+        } else if ("autocomplete-date".equals(typeLocalName)) {
+            return AutocompleteDetailsDate.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
