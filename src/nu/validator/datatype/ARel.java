@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Mozilla Foundation
+ * Copyright (c) 2013-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -42,10 +42,9 @@ public final class ARel extends AbstractRel {
         registeredValues.add("next");
         registeredValues.add("nofollow");
         registeredValues.add("noreferrer");
-        registeredValues.add("prefetch");
+        registeredValues.add("noopener");
         registeredValues.add("prev");
         registeredValues.add("search");
-        registeredValues.add("sidebar");
         registeredValues.add("tag");
 
         BufferedReader br = new BufferedReader(new InputStreamReader(

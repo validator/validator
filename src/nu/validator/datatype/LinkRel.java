@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Mozilla Foundation
+ * Copyright (c) 2013-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -37,14 +37,16 @@ public final class LinkRel extends AbstractRel {
         // Standard rel values for <link> from the spec
         registeredValues.add("alternate");
         registeredValues.add("author");
+        registeredValues.add("dns-prefetch");
         registeredValues.add("help");
         registeredValues.add("icon");
         registeredValues.add("license");
         registeredValues.add("next");
         registeredValues.add("pingback");
+        registeredValues.add("preconnect");
         registeredValues.add("prefetch");
+        registeredValues.add("prerender");
         registeredValues.add("preload");
-        registeredValues.add("prev");
         registeredValues.add("prev");
         registeredValues.add("search");
         registeredValues.add("stylesheet");
