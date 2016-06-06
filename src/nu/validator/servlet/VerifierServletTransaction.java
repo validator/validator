@@ -1188,7 +1188,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     void emitDetails() throws SAXException {
         Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
         String type = documentInput != null ? documentInput.getType() : "";
-        String charsetMsg = "";
         if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
             attrs.clear();
             emitter.startElementWithClass("div", "details");
@@ -1198,22 +1197,17 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         getPresetLabel(HTML5_SCHEMA)));
                 emitter.endElement("p");
             }
-            if (methodIsGet) {
-                String charset = documentInput.getEncoding();
-                if (charset == null) {
-                    charsetMsg = " but no charset";
-                } else {
-                    charsetMsg = String.format(
-                            " and the charset %s", charset);
-                }
-            }
             emitter.startElementWithClass("p", "msgmediatype");
-            if (!"textarea".equals(inputType) && !"file".equals(inputType)) {
-                emitter.characters(String.format("The Content-Type header specified %s%s.",
-                        type, charsetMsg));
-            }
             if (!isHtmlUnsafePreset()) {
-                emitter.characters(" Used the HTML parser.");
+                emitter.characters("Used the HTML parser.");
+            }
+            if (methodIsGet && !"textarea".equals(inputType)
+                    && !"file".equals(inputType)) {
+                String charset = documentInput.getEncoding();
+                if (charset != null) {
+                    emitter.characters(String.format(
+                            " Externally specified character encoding was %s.", charset));
+                }
             }
             emitter.endElement("div");
         }
