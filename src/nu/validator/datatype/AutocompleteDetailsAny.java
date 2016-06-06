@@ -52,6 +52,7 @@ public final class AutocompleteDetailsAny extends AbstractAutocompleteDetails {
         allowedFieldnames.add("new-password");
         allowedFieldnames.add("current-password");
         allowedFieldnames.add("organization");
+        allowedFieldnames.add("street-address");
         allowedFieldnames.add("address-line1");
         allowedFieldnames.add("address-line2");
         allowedFieldnames.add("address-line3");
