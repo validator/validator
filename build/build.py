@@ -975,7 +975,7 @@ class Release():
     os.chdir("..")
 
   def createOrUpdateGithubData(self):
-    runCmd([gitCmd, 'tag', '-f', ('v%s' % validatorVersion)])
+    runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
     args = [
       "-u",
       "validator",
