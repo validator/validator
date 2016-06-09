@@ -1126,6 +1126,10 @@ public class Assertions extends Checker {
 
     private boolean hasMain;
 
+    private boolean hasMetaCharset;
+
+    private boolean hasContentTypePragma;
+
     private boolean hasAutofocus;
 
     private boolean hasTopLevelH1;
@@ -1362,6 +1366,8 @@ public class Assertions extends Checker {
         currentSectioningDepth = 0;
         stack[0] = null;
         hasMain = false;
+        hasMetaCharset = false;
+        hasContentTypePragma = false;
         hasTopLevelH1 = false;
     }
 
@@ -2246,6 +2252,42 @@ public class Assertions extends Checker {
                             + " \u201CX-UA-Compatible\u201D" + " must have a"
                             + " \u201Ccontent\u201D attribute with the value"
                             + " \u201CIE=edge\u201D.");
+                }
+                if (atts.getIndex("", "charset") > -1) {
+                    if (hasMetaCharset) {
+                        err("A document must not include more than one"
+                                + " \u201Cmeta\u201D element with a"
+                                + " \u201Ccharset\u201D attribute.");
+                    }
+                    if (hasContentTypePragma) {
+                        err("A document must not include both a"
+                                + " \u201Cmeta\u201D element with an"
+                                + " \u201Chttp-equiv\u201D attribute"
+                                + " whose value is \u201Ccontent-type\u201D,"
+                                + " and a \u201Cmeta\u201D element with a"
+                                + " \u201Ccharset\u201D attribute.");
+                    }
+                    hasMetaCharset = true;
+                }
+                if (atts.getIndex("", "http-equiv") > -1
+                        && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "content-type",
+                                atts.getValue("", "http-equiv"))) {
+                    if (hasMetaCharset) {
+                        err("A document must not include both a"
+                                + " \u201Cmeta\u201D element with an"
+                                + " \u201Chttp-equiv\u201D attribute"
+                                + " whose value is \u201Ccontent-type\u201D,"
+                                + " and a \u201Cmeta\u201D element with a"
+                                + " \u201Ccharset\u201D attribute.");
+                    }
+                    if (hasContentTypePragma) {
+                        err("A document must not include more than one"
+                                + " \u201Cmeta\u201D element with a"
+                                + " \u201Chttp-equiv\u201D attribute"
+                                + " whose value is \u201Ccontent-type\u201D.");
+                    }
+                    hasContentTypePragma = true;
                 }
             }
             if ("link" == localName) {
