@@ -2,6 +2,23 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 16.6.nn
+NN June 2016
+  - Made `--` (consecutive hyphens) within a comment a non-error
+  - Made new specific error for `--!>` at end of a comment
+  - Made new specific error for `<!--` within a comment
+  - Made multiple meta[charset] an error
+  - Made `autocomplete` checking align with current spec
+  - Made style[scoped] an error
+  - Made iframe[seamless] an error
+  - Made label[form] an error
+  - Made rel=dns-prefetch/noopener/preconnect/prerender non-error
+  - Made rel=stylesheet/prerender/prefetch/preconnect/pingback in body non-error
+  - Made rel=preload non-error
+  - Made allow-presentation/allow-orientation-lock in iframe[sandbox] non-error
+  - Made label-less empty option non-error if datalist child
+  - Made section[role=navigation|complementary|banner] non-error
+
 # 16.3.3
 3 March 2016
   - Made `minlength` a non-error for `input[type=password]`/`input[type=text]`
