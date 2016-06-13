@@ -1782,10 +1782,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     + " based on the root namespace.");
             try {
                 validator = validatorByUrls(urls);
-            } catch (IOException ioe) {
-                // At this point the schema comes from memory.
-                throw new RuntimeException(ioe);
-            } catch (IncorrectSchemaException e) {
+            } catch (IncorrectSchemaException | IOException e) {
                 // At this point the schema comes from memory.
                 throw new RuntimeException(e);
             }
@@ -1875,10 +1872,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     }
                     validator = validatorByDoctype(HTML5_SCHEMA);
                 }
-            } catch (IOException ioe) {
-                // At this point the schema comes from memory.
-                throw new RuntimeException(ioe);
-            } catch (IncorrectSchemaException e) {
+            } catch (IncorrectSchemaException | IOException e) {
                 // At this point the schema comes from memory.
                 throw new RuntimeException(e);
             }

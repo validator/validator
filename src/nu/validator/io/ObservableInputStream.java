@@ -51,10 +51,7 @@ public class ObservableInputStream extends InputStream {
     public int available() throws IOException {
         try {
             return delegate.available();
-        } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             observer.exceptionOccurred(e);
             throw new RuntimeException("The observer failed to throw per API contract.");
         }
@@ -68,10 +65,7 @@ public class ObservableInputStream extends InputStream {
         try {
             observer.closeCalled();
             delegate.close();
-        } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             observer.exceptionOccurred(e);
             throw new RuntimeException("The observer failed to throw per API contract.");
         }
@@ -119,10 +113,7 @@ public class ObservableInputStream extends InputStream {
     public int read() throws IOException {
         try {
             return delegate.read();
-        } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             observer.exceptionOccurred(e);
             throw new RuntimeException("The observer failed to throw per API contract.");
         }
@@ -135,10 +126,7 @@ public class ObservableInputStream extends InputStream {
     public int read(byte[] arg0) throws IOException {
         try {
             return delegate.read(arg0);
-        } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             observer.exceptionOccurred(e);
             throw new RuntimeException("The observer failed to throw per API contract.");
         }
@@ -151,10 +139,7 @@ public class ObservableInputStream extends InputStream {
     public int read(byte[] arg0, int arg1, int arg2) throws IOException {
         try {
             return delegate.read(arg0, arg1, arg2);
-        } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             observer.exceptionOccurred(e);
             throw new RuntimeException("The observer failed to throw per API contract.");
         }
@@ -167,10 +152,7 @@ public class ObservableInputStream extends InputStream {
     public void reset() throws IOException {
         try {
             delegate.reset();
-        } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             observer.exceptionOccurred(e);
             throw new RuntimeException("The observer failed to throw per API contract.");
         }
@@ -183,10 +165,7 @@ public class ObservableInputStream extends InputStream {
     public long skip(long arg0) throws IOException {
         try {
             return delegate.skip(arg0);
-        } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             observer.exceptionOccurred(e);
             throw new RuntimeException("The observer failed to throw per API contract.");
         }

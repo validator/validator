@@ -59,9 +59,7 @@ public class FunctionBody extends AbstractDatatype {
             } finally {
                 Context.exit();
             }
-        } catch (IOException e) {
-            throw newDatatypeException(e.getMessage());
-        } catch (RhinoException e) {
+        } catch (IOException | RhinoException e) {
             throw newDatatypeException(e.getMessage());
         }
     }

@@ -112,10 +112,7 @@ public class HttpClient {
                 }
             }
             System.exit(hasErrors ? 1 : 0);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (ProtocolException e) {
+        } catch (MalformedURLException | ProtocolException e) {
             e.printStackTrace();
             System.exit(1);
         } catch (IOException e) {

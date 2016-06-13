@@ -184,9 +184,7 @@ public final class MultipartFormDataFilter implements Filter {
                 }
                 chain.doFilter(new RequestWrapper(request, params, contentType,
                         utf8, fileStream), response);
-            } catch (FileUploadException e) {
-                response.sendError(415, e.getMessage());
-            } catch (CharacterCodingException e) {
+            } catch (CharacterCodingException | FileUploadException e) {
                 response.sendError(415, e.getMessage());
             } catch (IOException e) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,

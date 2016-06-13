@@ -86,9 +86,7 @@ public class CheckerSchema implements Schema {
     public Validator createValidator(PropertyMap props) {
         try {
             return new CheckerValidator(klazz.newInstance(), props);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             throw new RuntimeException(e);
         }
     }

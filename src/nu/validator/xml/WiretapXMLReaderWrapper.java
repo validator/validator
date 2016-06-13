@@ -55,8 +55,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
         contentHandler = wrappedReader.getContentHandler();
         try {
             lexicalHandler = (LexicalHandler) wrappedReader.getProperty("http://xml.org/sax/properties/lexical-handler");
-        } catch (SAXNotRecognizedException e) {
-        } catch (SAXNotSupportedException e) {
+        } catch (SAXNotRecognizedException | SAXNotSupportedException e) {
         }
     }
 
@@ -268,8 +267,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
                         "http://xml.org/sax/properties/lexical-handler",
                         wiretapLexicalHandler);
             }
-        } catch (SAXNotRecognizedException e) {
-        } catch (SAXNotSupportedException e) {
+        } catch (SAXNotRecognizedException | SAXNotSupportedException e) {
         }
     }
 

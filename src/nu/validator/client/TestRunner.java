@@ -189,8 +189,7 @@ public class TestRunner implements ErrorHandler {
                 } else {
                     checkHtmlFile(file);
                 }
-            } catch (IOException e) {
-            } catch (SAXException e) {
+            } catch (IOException | SAXException e) {
             }
             if (inError) {
                 failed = true;
@@ -232,8 +231,7 @@ public class TestRunner implements ErrorHandler {
                 } else {
                     checkHtmlFile(file);
                 }
-            } catch (IOException e) {
-            } catch (SAXException e) {
+            } catch (IOException | SAXException e) {
             }
             if (exception != null) {
                 testFilename = file.getAbsolutePath().substring(
@@ -296,8 +294,7 @@ public class TestRunner implements ErrorHandler {
                 } else {
                     checkHtmlFile(file);
                 }
-            } catch (IOException e) {
-            } catch (SAXException e) {
+            } catch (IOException | SAXException e) {
             }
             if (exception != null) {
                 testFilename = file.getAbsolutePath().substring(
