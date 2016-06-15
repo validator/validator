@@ -1,13 +1,21 @@
 
-3 March 2016.
-This release fixes the checker behavior such that no error is incorrectly
-emitted any longer for `minlength` attributes on `input[type=text]` and
-`input[type=password]`, and no error is incorrectly emitted any longer for
-`integrity` attributes containing multiple values. Also added in this
-release is a new error for the case where a `<time>` element has children
-but no `datetime` attribute. The CSP-checking behavior was also improved.
+nn June 2016.
+This release makes `<link rel=stylesheet>` within the body a non-error, as
+well as also making the `link` `rel` values `dns-prefetch`, `preconnect`,
+`prefetch`, `preload`, and `prerender` non-errors (including in the body),
+and making a[rel=noopener] and area[rel=noopener] non-errors. Also in this
+release: `<style scoped>` and `<iframe seamless>` are now errors (because
+they’ve been dropped from the HTML spec), using multiple `<meta charset>`
+elements is now an error, `allow-presentation` & `allow-orientation-lock`
+are now allowed values for iframe[sandbox], and complete checking for the
+(complicated) microsyntax of the `autocomplete` attribute is now performed.
+Finally, comment checking has been **experimentally** changed in this
+release (to match a recent change to the HTML spec) such that the checker
+no longer emits errors for `--` (consecutive hyphens) in a comment but does
+now emit specific error messages for `<!--` (nested comment) within a
+comment, and `--!>` at the end of a comment (which should be just `-->`).
 
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1633
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#16nn
 
 The files in this release provide a portable standalone version of the Nu Html
 Checker in two different forms: as a Java jar file, and as a Java war file.
