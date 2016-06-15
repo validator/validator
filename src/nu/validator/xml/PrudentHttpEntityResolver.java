@@ -153,13 +153,7 @@ import io.mola.galimatias.GalimatiasParseException;
                 .register("http",
                         PlainConnectionSocketFactory.getSocketFactory()) //
                 .build();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyStoreException e) {
+            } catch (KeyManagementException | KeyStoreException | NoSuchAlgorithmException | NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -421,37 +415,7 @@ import io.mola.galimatias.GalimatiasParseException;
 
                     }));
             return is;
-        } catch (IOException e) {
-            if (m != null) {
-                try {
-                    m.abort();
-                } catch (Exception ex) {
-                    log4j.debug("abort", ex);
-                } finally {
-                    try {
-                        m.releaseConnection();
-                    } catch (Exception ex) {
-                        log4j.debug("releaseConnection", ex);
-                    }
-                }
-            }
-            throw e;
-        } catch (SAXException e) {
-            if (m != null) {
-                try {
-                    m.abort();
-                } catch (Exception ex) {
-                    log4j.debug("abort", ex);
-                } finally {
-                    try {
-                        m.releaseConnection();
-                    } catch (Exception ex) {
-                        log4j.debug("releaseConnection", ex);
-                    }
-                }
-            }
-            throw e;
-        } catch (RuntimeException e) {
+        } catch (IOException | RuntimeException | SAXException e) {
             if (m != null) {
                 try {
                     m.abort();

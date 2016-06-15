@@ -297,9 +297,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             HAS_ALT_ADVICE = list.get(4);
             IMAGE_REPORT_EMPTY = list.get(5);
             IMAGE_REPORT_FATAL = list.get(6);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SAXException e) {
+        } catch (IOException | SAXException e) {
             throw new RuntimeException(e);
         }
     }
