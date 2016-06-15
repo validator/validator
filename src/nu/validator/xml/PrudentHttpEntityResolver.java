@@ -153,7 +153,8 @@ import io.mola.galimatias.GalimatiasParseException;
                 .register("http",
                         PlainConnectionSocketFactory.getSocketFactory()) //
                 .build();
-            } catch (KeyManagementException | KeyStoreException | NoSuchAlgorithmException | NumberFormatException e) {
+            } catch (KeyManagementException | KeyStoreException
+                    | NoSuchAlgorithmException | NumberFormatException e) {
                 e.printStackTrace();
             }
         }
