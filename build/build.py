@@ -75,7 +75,7 @@ month = time.strftime('%m').lstrip('0')
 day = time.strftime('%e').lstrip(' ')
 validatorVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20150629VNU"
-htmlparserVersion = "1.4.3"
+htmlparserVersion = "1.4.4"
 galimatiasVersion = "0.1.1"
 
 buildRoot = '.'
