@@ -2,8 +2,8 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 16.6.nn
-NN June 2016
+# 16.6.18
+18 June 2016
   - link[rel=stylesheet] in body now non-error (body-OK)
   - rel=dns-prefetch|preconnect|prefetch|preload|prerender non-error+body-OK
   - style[scoped] now error
