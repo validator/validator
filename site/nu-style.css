@@ -345,7 +345,7 @@ li li {
 	padding-top: 0.2em;
 }
 
-#results ol:first-child {
+#results > ol:first-child {
 	padding-top: 35px;
 	padding-bottom: 25px;
 	background-color: #efefef;
@@ -650,6 +650,7 @@ dl.inputattrs .highlight {
 }
 
 #outline h2 {
+	margin-top: 24px;
 	margin-bottom: 0;
 }
 
@@ -664,7 +665,7 @@ dl.inputattrs .highlight {
 }
 
 #outline li {
-	padding: 3px 0 3px 0;
+	padding: 5px 0 5px 0;
 	margin: 0;
 	list-style: none;
 	position: relative;
@@ -942,4 +943,50 @@ input[list=useragents] {
 	div#about {
 		font-size: 13px;
 	}
+}
+
+#a11youtline p {
+	margin: 10px;
+	font-weight: bold;
+	color: #BF4F00;
+}
+
+.h2 {
+	padding-left: 24px;
+}
+
+.h3 {
+	padding-left: 48px;
+}
+
+.h4 {
+	padding-left: 72px;
+}
+
+.h5 {
+	padding-left: 96px;
+}
+
+.h6 {
+	padding-left: 120px;
+}
+
+.headinglevel, .missingheadinglevel {
+	border-radius: 4px;
+	padding: 1px 3px 1px 4px;
+	font-size: 80%;
+	font-weight: normal;
+	color: white;
+}
+
+.headinglevel {
+	background-color: green;
+}
+
+.missingheadinglevel {
+	background-color: orange;
+}
+
+.missingheading {
+	color: #747474;
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Vadim Zaslawski, Ontos AG
- * Copyright (c) 2012-2014 Mozilla Foundation
+ * Copyright (c) 2012-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -159,6 +159,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // isn't required by the spec, but it's nonetheless useful.
         private boolean hasEmptyHeading;
 
+        private String headingElementName;
+
         // MAX_VALUE for an implied heading, 1-6 for a heading content element
         private int headingRank = Integer.MAX_VALUE;
 
@@ -199,6 +201,13 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         }
 
         /**
+         * @return the heading element name
+         */
+        public String getHeadingElementName() {
+            return headingElementName;
+        }
+
+        /**
          * @return the heading rank
          */
         public int getHeadingRank() {
@@ -210,6 +219,10 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
          */
         public Deque<Section> getSections() {
             return sections;
+        }
+
+        public void setHeadingElementName(String elementName) {
+            this.headingElementName = elementName;
         }
 
         public void setHeadingRank(int headingRank) {
@@ -619,6 +632,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // element.)
             outlineStack.push(new Element(currentWalkDepth, localName, hidden));
             inHeadingContentOrHiddenElement = true;
+            currentSection.setHeadingElementName(localName);
         }
         contentHandler.startElement(uri, localName, qName, atts);
     }

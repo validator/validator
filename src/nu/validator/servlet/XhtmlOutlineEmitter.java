@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Vadim Zaslawski, Ontos AG
- * Copyright (c) 2012 Mozilla Foundation
+ * Copyright (c) 2012-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -35,7 +35,9 @@ import org.xml.sax.SAXException;
 
 public class XhtmlOutlineEmitter {
 
-    private static final char[] OUTLINE = "Outline".toCharArray();
+    private static final char[] OUTLINE = "Structural outline".toCharArray();
+
+    private static final char[] A11YOUTLINE = "Screen-reader outline".toCharArray();
 
     private final Deque<Section> outline;
 
@@ -59,6 +61,53 @@ public class XhtmlOutlineEmitter {
             emitter.endElement("h2");
             try {
                 emitOutline(outline, 0);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            emitter.endElement("section");
+        }
+    }
+
+    boolean hasH1 = false;
+
+    boolean hasH2 = false;
+
+    boolean hasH3 = false;
+
+    boolean hasH4 = false;
+
+    boolean hasH5 = false;
+
+    boolean emittedDummyH1 = false;
+
+    boolean emittedDummyH2 = false;
+
+    boolean emittedDummyH3 = false;
+
+    boolean emittedDummyH4 = false;
+
+    boolean emittedDummyH5 = false;
+
+    public void emitA11y() throws SAXException {
+        hasH1 = false;
+        hasH2 = false;
+        hasH3 = false;
+        hasH4 = false;
+        hasH5 = false;
+        emittedDummyH1 = false;
+        emittedDummyH2 = false;
+        emittedDummyH3 = false;
+        emittedDummyH4 = false;
+        emittedDummyH5 = false;
+        if (outline != null) {
+            attrs.clear();
+            attrs.addAttribute("id", "a11youtline");
+            emitter.startElement("section", attrs);
+            emitter.startElement("h2");
+            emitter.characters(A11YOUTLINE);
+            emitter.endElement("h2");
+            try {
+                emitA11yOutline(outline, 0);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -98,4 +147,80 @@ public class XhtmlOutlineEmitter {
         emitter.endElement("ol");
     }
 
+    protected void emitA11yOutline(Deque<Section> outline, int currentDepth)
+            throws IOException, SAXException {
+        for (Section section : outline) {
+            String headingName = section.getHeadingElementName();
+            if ("h1".equals(headingName)) {
+                hasH1 = true;
+            } else if ("h2".equals(headingName)) {
+                hasH2 = true;
+            } else if ("h3".equals(headingName)) {
+                hasH3 = true;
+            } else if ("h4".equals(headingName)) {
+                hasH4 = true;
+            } else if ("h5".equals(headingName)) {
+                hasH5 = true;
+            }
+            if ("h1".equals(headingName) || "h2".equals(headingName)
+                    || "h3".equals(headingName) || "h4".equals(headingName)
+                    || "h5".equals(headingName) || "h6".equals(headingName)) {
+                StringBuilder headingText = section.getHeadingTextBuilder();
+                if (!"h1".equals(headingName) && !hasH1 && !emittedDummyH1) {
+                    emitMissingHeading("h1");
+                    emittedDummyH1 = true;
+                }
+                if (!"h1".equals(headingName) && !"h2".equals(headingName)
+                        && !hasH2 && !emittedDummyH2) {
+                    emitMissingHeading("h2");
+                    emittedDummyH2 = true;
+                }
+                if (!"h1".equals(headingName) && !"h2".equals(headingName)
+                        && !"h3".equals(headingName) && !hasH3
+                        && !emittedDummyH3) {
+                    emitMissingHeading("h3");
+                    emittedDummyH3 = true;
+                }
+                if (!"h1".equals(headingName) && !"h2".equals(headingName)
+                        && !"h3".equals(headingName)
+                        && !"h4".equals(headingName) && !hasH4
+                        && !emittedDummyH4) {
+                    emitMissingHeading("h4");
+                    emittedDummyH4 = true;
+                }
+                if ("h6".equals(headingName) && !hasH5 && !emittedDummyH5) {
+                    emitMissingHeading("h5");
+                    emittedDummyH5 = true;
+                }
+                emitter.startElementWithClass("p", headingName);
+                emitter.startElementWithClass("span", "headinglevel");
+                emitter.characters(("<" + headingName + ">").toCharArray());
+                emitter.endElement("span");
+                if (headingText.length() > 0) {
+                    emitter.characters(
+                            (" " + headingText.toString()).toCharArray());
+                } else {
+                    emitter.startElementWithClass("span", "missingheading");
+                    emitter.characters((" [empty]").toCharArray());
+                    emitter.endElement("span");
+                }
+                emitter.endElement("p");
+            }
+            Deque<Section> sections = section.sections;
+            if (!sections.isEmpty()) {
+                emitA11yOutline(sections, currentDepth + 1);
+            }
+        }
+    }
+
+    private void emitMissingHeading(String headingName) throws SAXException {
+        emitter.startElementWithClass("p", headingName);
+        emitter.startElementWithClass("span", "missingheadinglevel");
+        emitter.characters(("<" + headingName + ">").toCharArray());
+        emitter.endElement("span");
+        emitter.startElementWithClass("span", "missingheading");
+        emitter.characters((" [missing]").toCharArray());
+        emitter.endElement("span");
+        emitter.endElement("p");
+    }
 }
