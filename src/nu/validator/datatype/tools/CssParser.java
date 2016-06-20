@@ -23,7 +23,6 @@
 package nu.validator.datatype.tools;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.Map;
@@ -35,21 +34,16 @@ public class CssParser {
     private static Invocable cssparser;
 
     static {
-
+        BufferedReader br = new BufferedReader(new InputStreamReader(
+                CssParser.class.getClassLoader().getResourceAsStream(
+                        "nu/validator/localentities/files/parse-css-js")));
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    CssParser.class.getClassLoader().getResourceAsStream(
-                            "nu/validator/localentities/files/parse-css-js")));
-            br.mark(1);
-            try {
-                ScriptEngine engine = new ScriptEngineManager().getEngineByName(
-                        "nashorn");
-                engine.eval(br);
-                cssparser = (Invocable) engine;
-            } catch (ScriptException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
+            ScriptEngine engine = new ScriptEngineManager(null).getEngineByName(
+                    "nashorn");
+            engine.eval(br);
+            cssparser = (Invocable) engine;
+        } catch (ScriptException e) {
+            e.printStackTrace();
         }
     }
 
