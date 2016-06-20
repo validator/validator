@@ -2,6 +2,11 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 16.6.20
+20 June 2016
+  - fixes build bug in the 16.6.18 release
+  - adds “Screen-reader outline” in Web UI; shows simple h1-h6 hierarchy
+
 # 16.6.18
 18 June 2016
   - link[rel=stylesheet] in body now non-error (body-OK)
