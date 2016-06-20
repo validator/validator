@@ -153,12 +153,32 @@ public class XhtmlOutlineEmitter {
             String headingName = section.getHeadingElementName();
             if ("h1".equals(headingName)) {
                 hasH1 = true;
+                hasH2 = false;
+                hasH3 = false;
+                hasH4 = false;
+                hasH5 = false;
+                emittedDummyH2 = false;
+                emittedDummyH3 = false;
+                emittedDummyH4 = false;
+                emittedDummyH5 = false;
             } else if ("h2".equals(headingName)) {
                 hasH2 = true;
+                hasH3 = false;
+                hasH4 = false;
+                hasH5 = false;
+                emittedDummyH3 = false;
+                emittedDummyH4 = false;
+                emittedDummyH5 = false;
             } else if ("h3".equals(headingName)) {
                 hasH3 = true;
+                hasH4 = false;
+                hasH5 = false;
+                emittedDummyH4 = false;
+                emittedDummyH5 = false;
             } else if ("h4".equals(headingName)) {
                 hasH4 = true;
+                hasH5 = false;
+                emittedDummyH5 = false;
             } else if ("h5".equals(headingName)) {
                 hasH5 = true;
             }
