@@ -1013,7 +1013,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (isHtmlOrXhtml) {
             XhtmlOutlineEmitter outlineEmitter = new XhtmlOutlineEmitter(
                     contentHandler, outline);
-            outlineEmitter.emitA11y();
+            outlineEmitter.emitHeadings();
             outlineEmitter.emit();
             emitDetails();
             StatsEmitter.emit(contentHandler, this);

@@ -2,7 +2,7 @@
 20 June 2016.
 This release fixes a problem introduced in the 16.3.3 release that made the release jars unusable with Scala `sbt test`.
 
-The release also adds a new “Screen-reader outline” in the checker Web UI. That outline shows the heading hierarchy as screen-reader users will experience it (which is to say, strictly by heading level), and flags any heading levels missing from that hierarchy.
+The release also adds a new “Heading-level outline” in the checker Web UI. That outline shows the heading hierarchy as it will be experienced by users of tools (such screen readers) which do not support the outline algorithm in the HTML spec. That is, it shows the document heading hierarchy strictly just by heading level (and flags any heading levels missing from that hierarchy).
 
 The list of substantive changes otherwise remains the same as in the 16.6.18 release:
 

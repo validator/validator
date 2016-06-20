@@ -37,7 +37,7 @@ public class XhtmlOutlineEmitter {
 
     private static final char[] OUTLINE = "Structural outline".toCharArray();
 
-    private static final char[] A11YOUTLINE = "Screen-reader outline".toCharArray();
+    private static final char[] HEADINGOUTLINE = "Heading-level outline".toCharArray();
 
     private final Deque<Section> outline;
 
@@ -88,7 +88,7 @@ public class XhtmlOutlineEmitter {
 
     boolean emittedDummyH5 = false;
 
-    public void emitA11y() throws SAXException {
+    public void emitHeadings() throws SAXException {
         hasH1 = false;
         hasH2 = false;
         hasH3 = false;
@@ -101,13 +101,13 @@ public class XhtmlOutlineEmitter {
         emittedDummyH5 = false;
         if (outline != null) {
             attrs.clear();
-            attrs.addAttribute("id", "a11youtline");
+            attrs.addAttribute("id", "headingoutline");
             emitter.startElement("section", attrs);
             emitter.startElement("h2");
-            emitter.characters(A11YOUTLINE);
+            emitter.characters(HEADINGOUTLINE);
             emitter.endElement("h2");
             try {
-                emitA11yOutline(outline, 0);
+                emitHeadingOutline(outline, 0);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -147,7 +147,7 @@ public class XhtmlOutlineEmitter {
         emitter.endElement("ol");
     }
 
-    protected void emitA11yOutline(Deque<Section> outline, int currentDepth)
+    protected void emitHeadingOutline(Deque<Section> outline, int currentDepth)
             throws IOException, SAXException {
         for (Section section : outline) {
             String headingName = section.getHeadingElementName();
@@ -228,7 +228,7 @@ public class XhtmlOutlineEmitter {
             }
             Deque<Section> sections = section.sections;
             if (!sections.isEmpty()) {
-                emitA11yOutline(sections, currentDepth + 1);
+                emitHeadingOutline(sections, currentDepth + 1);
             }
         }
     }
