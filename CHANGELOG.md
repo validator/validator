@@ -4,7 +4,7 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 16.6.20
 20 June 2016
-  - fixes build bug in the 16.6.18 release
+  - fixes problem that made the release jars unusable with Scala `sbt test`
   - adds “Screen-reader outline” in Web UI; shows simple h1-h6 hierarchy
 
 # 16.6.18

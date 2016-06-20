@@ -1,6 +1,6 @@
 
 20 June 2016.
-This release fixes a build bug in the 16.6.18 release that made the 16.6.18 release jar unusable.
+This release fixes a problem introduced in the 16.3.3 release that made the release jars unusable with Scala `sbt test`.
 
 The release also adds a new “Screen-reader outline” in the checker Web UI. That outline shows the heading hierarchy as screen-reader users will experience it (which is to say, strictly by heading level), and flags any heading levels missing from that hierarchy.
 
