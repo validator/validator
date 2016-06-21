@@ -150,6 +150,9 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // each section can have one heading associated with it
         final private StringBuilder headingTextBuilder = new StringBuilder();
 
+        // a string builder to collect any img alt text found in a heading
+        final private StringBuilder headingImgAltTextBuilder = new StringBuilder();
+
         // we generate an "implied heading" for some sections that lack headings
         private boolean hasImpliedHeading;
 
@@ -198,6 +201,13 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
          */
         public StringBuilder getHeadingTextBuilder() {
             return headingTextBuilder;
+        }
+
+        /**
+         * @return the heading img alt text builder
+         */
+        public StringBuilder getHeadingImgAltTextBuilder() {
+            return headingImgAltTextBuilder;
         }
 
         /**
@@ -360,6 +370,14 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
                             whitespacePattern.matcher(headingTextBuilder).replaceAll(
                                     " ").trim(), MAX_EXCERPT);
                     headingTextBuilder.setLength(0);
+                    if (heading.length() == 0) {
+                        StringBuilder headingImgAltTextBuilder = currentSection.getHeadingImgAltTextBuilder();
+                        heading = excerpt(whitespacePattern.matcher(
+                                headingImgAltTextBuilder).replaceAll(
+                                        " ").trim(),
+                                MAX_EXCERPT);
+                        headingImgAltTextBuilder.setLength(0);
+                    }
                     if (heading.length() > 0) {
                         headingTextBuilder.append(heading);
                     } else {
@@ -497,7 +515,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         if (inHeadingContentOrHiddenElement) {
             if (!inHiddenSubtree() && "img".equals(localName)
                     && atts.getIndex("", "alt") >= 0) {
-                currentSection.getHeadingTextBuilder().append(
+                currentSection.getHeadingImgAltTextBuilder().append(
                         atts.getValue("", "alt"));
             }
             // Do nothing.
