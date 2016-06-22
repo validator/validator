@@ -507,7 +507,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         ++currentWalkDepth;
 
-        boolean hidden = atts.getIndex("", "hidden") >= 0;
+        boolean hidden = atts.getIndex("", "hidden") >= 0
+                || "template".equals(localName);
         elementStack.push(new Element(currentWalkDepth, localName, hidden));
 
         // If the top of the stack is a heading content element or an element
