@@ -836,6 +836,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void messageWithoutExtract(MessageType type, Exception message,
             String systemId, int oneBasedLine, int oneBasedColumn)
             throws SAXException {
+        if (systemId == null) {
+            systemId = sourceCode.getUri();
+        }
         startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine,
                 oneBasedColumn, oneBasedLine, oneBasedColumn, false);
         messageText(message);
