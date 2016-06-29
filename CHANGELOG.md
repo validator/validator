@@ -2,6 +2,12 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 16.6.29
+29 June 2016
+  - JSON/gnu message formats updated to ensure doc URL is always included
+  - `<!-->` (IE conditional comment end) is now (again) a non-error
+  - `<template>` contents are now hidden from outline views
+
 # 16.6.20
 20 June 2016
   - fixes problem that made the release jars unusable with Scala `sbt test`
