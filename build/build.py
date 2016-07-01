@@ -99,7 +99,7 @@ scriptFile = os.path.join("site", "script.js")
 portNumber = '8888'
 controlPort = None
 log4jProps = 'resources/log4j.properties'
-heapSize = '128'
+heapSize = '512'
 stackSize = ''
 html5specLink = 'https://html.spec.whatwg.org/multipage/'
 aboutPage = 'https://about.validator.nu/'
@@ -1245,7 +1245,7 @@ def printHelp():
   print("                                Sets the server control port number")
   print("                                (necessary for daemonizing)")
   print("  --git=/usr/bin/git         -- Sets the path to the git binary")
-  print("  --heap=64                  -- Sets the Java heap size in MB")
+  print("  --heap=512                 -- Sets the Java heap size in MB")
   print("  --html5link=http://www.whatwg.org/specs/web-apps/current-work/")
   print("                                Sets the link URL of the HTML5 spec")
   print("  --html5load=http://www.whatwg.org/specs/web-apps/current-work/")
