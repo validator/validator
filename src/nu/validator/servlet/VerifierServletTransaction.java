@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -238,6 +238,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final String[] ALL_CHECKERS = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
             "http://c.validator.nu/text-content/",
+            "http://c.validator.nu/language-detection/",
             "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
             "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
@@ -494,6 +495,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.MICRODATA_CHECKER);
             schemaMap.put("http://c.validator.nu/rdfalite/",
                     CheckerSchema.RDFALITE_CHECKER);
+            schemaMap.put("http://c.validator.nu/language-detection/",
+                    CheckerSchema.LANGUAGE_DETECTING_CHECKER);
 
             for (String presetUrl : presetUrls) {
                 for (String url : SPACE.split(presetUrl)) {
