@@ -120,6 +120,8 @@ import com.thaiopensource.validate.rng.CompactSchemaReader;
 import org.apache.log4j.Logger;
 import com.ibm.icu.text.Normalizer;
 
+import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
+
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
  *          hsivonen Exp $
@@ -224,6 +226,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static String[] presetNamespaces;
 
+    private static LanguageIdentifier languageIdentifier;
+
     // XXX SVG!!!
 
     private static final String[] KNOWN_CONTENT_TYPES = {
@@ -238,7 +242,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final String[] ALL_CHECKERS = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
             "http://c.validator.nu/text-content/",
-            "http://c.validator.nu/language-detection/",
             "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
             "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
@@ -495,8 +498,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.MICRODATA_CHECKER);
             schemaMap.put("http://c.validator.nu/rdfalite/",
                     CheckerSchema.RDFALITE_CHECKER);
-            schemaMap.put("http://c.validator.nu/language-detection/",
-                    CheckerSchema.LANGUAGE_DETECTING_CHECKER);
 
             for (String presetUrl : presetUrls) {
                 for (String url : SPACE.split(presetUrl)) {
@@ -535,6 +536,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             html5spec = Html5SpecBuilder.parseSpec(LocalCacheEntityResolver.getHtml5SpecAsStream());
 
             log4j.debug("Spec read.");
+
+            log4j.debug("Initializing language identifier.");
+
+            languageIdentifier = new LanguageIdentifier();
 
             log4j.debug("Initialization complete.");
         } catch (Exception e) {
@@ -978,10 +983,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
             if (showOutline) {
                 reader = new OutlineBuildingXMLReaderWrapper(reader, request);
-                reader.parse(documentInput);
-                outline = (Deque<Section>) request.getAttribute("http://validator.nu/properties/document-outline");
-            } else {
-                reader.parse(documentInput);
+            }
+            reader = new LanguageDetectingXMLReaderWrapper(reader,
+                    languageIdentifier);
+            reader.setContentHandler(reader.getContentHandler());
+            reader.parse(documentInput);
+            if (showOutline) {
+                outline = (Deque<Section>) request.getAttribute(
+                        "http://validator.nu/properties/document-outline");
             }
         } catch (TooManyErrorsException e) {
             log4j.debug("TooManyErrorsException", e);
