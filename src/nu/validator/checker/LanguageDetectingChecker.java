@@ -145,7 +145,6 @@ public final class LanguageDetectingChecker extends Checker {
      */
     @Override
     public void endDocument() throws SAXException {
-        System.out.println(documentContent.toString());
         if (characterCount < MIN_CHARS) {
             return;
         }
