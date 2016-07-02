@@ -240,8 +240,6 @@ public final class LanguageDetectingXMLReaderWrapper
                 }
             }
         } catch (LangDetectException e) {
-            System.out.println(documentContent.toString());
-            e.printStackTrace();
         }
         contentHandler.endDocument();
     }
