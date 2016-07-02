@@ -168,6 +168,7 @@ import io.mola.galimatias.GalimatiasParseException;
         config.setConnectTimeout(connectionTimeout);
         config.setCookieSpec(CookieSpecs.BEST_MATCH);
         config.setSocketTimeout(socketTimeout);
+        config.setCookieSpec(CookieSpecs.IGNORE_COOKIES);
         client = builder.setDefaultRequestConfig(config.build()).build();
     }
 
