@@ -1796,7 +1796,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         + namespace + "\u201D.";
                 SAXException se = new SAXException(message);
                 errorHandler.schemaError(se);
-                throw se;
+                return;
             }
             String label = presetLabels[index];
             String urls = presetUrls[index];
