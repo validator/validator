@@ -126,6 +126,7 @@ import org.apache.log4j.Logger;
 import com.ibm.icu.text.Normalizer;
 
 import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
+import org.eclipse.jetty.io.EofException;
 
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
@@ -1000,6 +1001,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (CannotRecoverException e) {
         } catch (ChangingEncodingException e) {
         } catch (CannotFindPresetSchemaException e) {
+        } catch (EofException e) {
         } catch (SocketTimeoutException e) {
             errorHandler.ioError(new IOException(e.getMessage(), null));
         } catch (ConnectTimeoutException e) {
