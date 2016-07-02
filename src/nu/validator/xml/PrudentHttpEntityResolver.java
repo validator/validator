@@ -261,7 +261,6 @@ import io.mola.galimatias.GalimatiasParseException;
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
-                throw spe;
             }
             HttpEntity entity = response.getEntity();
             long len = entity.getContentLength();
