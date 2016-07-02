@@ -208,7 +208,7 @@ import io.mola.galimatias.GalimatiasParseException;
         }
         HttpGet m = null;
         try {
-            URL url;
+            URL url = null;
             try {
                 url = URL.parse(systemId);
             } catch (GalimatiasParseException e) {
@@ -218,7 +218,6 @@ import io.mola.galimatias.GalimatiasParseException;
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
-                throw spe;
             }
             String scheme = url.scheme();
             if (!("http".equals(scheme) || "https".equals(scheme))) {
