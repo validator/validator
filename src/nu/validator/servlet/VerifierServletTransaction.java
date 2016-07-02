@@ -27,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
@@ -119,7 +120,9 @@ import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.log4j.Logger;
+
 import com.ibm.icu.text.Normalizer;
 
 import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
@@ -996,6 +999,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         } catch (CannotRecoverException e) {
         } catch (ChangingEncodingException e) {
+        } catch (SocketTimeoutException e) {
+            errorHandler.ioError(new IOException(e.getMessage(), null));
+        } catch (ConnectTimeoutException e) {
+            errorHandler.ioError(new IOException(e.getMessage(), null));
         } catch (TooManyErrorsException e) {
             errorHandler.fatalError(e);
         } catch (SAXException e) {
