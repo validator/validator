@@ -1802,10 +1802,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             }
             if (index == -1) {
-                String message = "Cannot find preset schema for namespace: \u201C"
-                        + namespace + "\u201D.";
-                SAXException se = new SAXException(message);
-                errorHandler.schemaError(se);
+                if ("".equals(namespace)) {
+                    errorHandler.ioError(
+                            new IOException("Document lacks content-type."));
+                } else {
+                    errorHandler.schemaError(new SAXException(
+                            "Cannot find preset schema for namespace: \u201C"
+                                    + namespace + "\u201D."));
+                }
                 throw new CannotFindPresetSchemaException();
             }
             String label = presetLabels[index];
