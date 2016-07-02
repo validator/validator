@@ -218,6 +218,7 @@ import io.mola.galimatias.GalimatiasParseException;
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
+                throw ioe;
             }
             String scheme = url.scheme();
             if (!("http".equals(scheme) || "https".equals(scheme))) {
