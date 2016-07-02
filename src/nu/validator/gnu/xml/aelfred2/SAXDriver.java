@@ -1101,9 +1101,6 @@ import org.xml.sax.helpers.NamespaceSupport;
 
         fatal = new SAXParseException(message, this);
         errorHandler.fatalError(fatal);
-
-        // Even if the application can continue ... we can't!
-        throw fatal;
     }
 
     // We can safely report a few validity errors that
