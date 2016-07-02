@@ -999,6 +999,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         } catch (CannotRecoverException e) {
         } catch (ChangingEncodingException e) {
+        } catch (CannotFindPresetSchemaException e) {
         } catch (SocketTimeoutException e) {
             errorHandler.ioError(new IOException(e.getMessage(), null));
         } catch (ConnectTimeoutException e) {
@@ -1354,9 +1355,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         reader.setContentHandler(validator.getContentHandler());
                     }
                 } else {
-                    errorHandler.info("The Content-Type was \u201C"
-                            + type
-                            + "\u201D. Using the XML parser (not resolving external entities).");
+                    if (contentType != null) {
+                        if ((Arrays.binarySearch(KNOWN_CONTENT_TYPES,
+                                contentType)) > -1) {
+                            errorHandler.info("The Content-Type was \u201C"
+                                    + type
+                                    + "\u201D. Using the XML parser (not resolving external entities).");
+                        }
+                    }
                     setupXmlParser();
                 }
                 break;
@@ -1796,7 +1802,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         + namespace + "\u201D.";
                 SAXException se = new SAXException(message);
                 errorHandler.schemaError(se);
-                return;
+                throw new CannotFindPresetSchemaException();
             }
             String label = presetLabels[index];
             String urls = presetUrls[index];
@@ -2097,4 +2103,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         CharsetEmitter.emit(contentHandler, this);
     }
 
+    class CannotFindPresetSchemaException extends SAXException {
+        CannotFindPresetSchemaException() {
+            super();
+        }
+    }
 }

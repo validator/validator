@@ -236,10 +236,8 @@ public class ContentTypeParser {
                         if (errorHandler != null) {
                             errorHandler.fatalError(spe);
                         }
-                        throw spe;
-                    } else {
-                        is.setType(type);
                     }
+                    is.setType(type);
                 }
             }
             String charset = null;
