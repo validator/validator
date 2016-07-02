@@ -54,6 +54,7 @@ import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.Heuristics;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
+import nu.validator.htmlparser.sax.CannotRecoverException;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.htmlparser.sax.HtmlSerializer;
 import nu.validator.htmlparser.sax.XmlSerializer;
@@ -992,6 +993,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 outline = (Deque<Section>) request.getAttribute(
                         "http://validator.nu/properties/document-outline");
             }
+        } catch (CannotRecoverException e) {
         } catch (TooManyErrorsException e) {
             log4j.debug("TooManyErrorsException", e);
             errorHandler.fatalError(e);
