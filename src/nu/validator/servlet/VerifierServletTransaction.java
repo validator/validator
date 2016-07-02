@@ -1356,7 +1356,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     }
                 } else {
                     if (contentType != null) {
-                        if ((Arrays.binarySearch(KNOWN_CONTENT_TYPES,
+                        if ("application/xml".equals(contentType) ||
+                            "text/xml".equals(contentType) ||
+                            (Arrays.binarySearch(KNOWN_CONTENT_TYPES,
                                 contentType)) > -1) {
                             errorHandler.info("The Content-Type was \u201C"
                                     + type
