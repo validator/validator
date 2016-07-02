@@ -25,7 +25,6 @@ package nu.validator.checker.jing;
 import nu.validator.checker.Checker;
 import nu.validator.checker.ConformingButObsoleteWarner;
 import nu.validator.checker.DebugChecker;
-import nu.validator.checker.LanguageDetectingChecker;
 import nu.validator.checker.MicrodataChecker;
 import nu.validator.checker.RdfaLiteChecker;
 import nu.validator.checker.NormalizationChecker;
@@ -69,8 +68,6 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema MICRODATA_CHECKER = new CheckerSchema(PropertyMap.EMPTY, MicrodataChecker.class);
 
     public static final CheckerSchema RDFALITE_CHECKER = new CheckerSchema(PropertyMap.EMPTY, RdfaLiteChecker.class);
-
-    public static final CheckerSchema LANGUAGE_DETECTING_CHECKER = new CheckerSchema(PropertyMap.EMPTY, LanguageDetectingChecker.class);
 
     private final PropertyMap properties;
     
