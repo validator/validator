@@ -45,6 +45,7 @@ import nu.validator.htmlparser.common.Heuristics;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.localentities.LocalCacheEntityResolver;
+import nu.validator.servlet.LanguageDetectingXMLReaderWrapper;
 import nu.validator.source.SourceCode;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
@@ -62,6 +63,7 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
+import com.cybozu.labs.langdetect.LangDetectException;
 import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
@@ -73,6 +75,8 @@ import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+
+import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
 
 import org.apache.log4j.PropertyConfigurator;
 
@@ -102,6 +106,8 @@ public class SimpleDocumentValidator {
     private XMLReader xmlReader;
 
     private LexicalHandler lexicalHandler;
+
+    private LanguageIdentifier languageIdentifier;
 
     private Schema schemaByUrl(String schemaUrl, ErrorHandler errorHandler)
             throws Exception, SchemaReadException {
@@ -151,6 +157,10 @@ public class SimpleDocumentValidator {
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
+        try {
+            this.languageIdentifier = new LanguageIdentifier();
+        } catch (LangDetectException e) {
+        }
     }
 
     public SourceCode getSourceCode() {
@@ -260,7 +270,8 @@ public class SimpleDocumentValidator {
         if (!noStream) {
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         }
-        htmlReader = getWiretap(htmlParser);
+        htmlReader = new LanguageDetectingXMLReaderWrapper(getWiretap(htmlParser),
+                    languageIdentifier);
 
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
