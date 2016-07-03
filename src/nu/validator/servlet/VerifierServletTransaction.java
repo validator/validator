@@ -687,6 +687,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         document = ("".equals(document)) ? null : document;
 
+        if (document.contains("www.metaescort.com")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                    "No input document");
+            return;
+        }
+
         String callback = null;
         if (outputFormat == OutputFormat.JSON) {
             callback = request.getParameter("callback");
