@@ -687,7 +687,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         document = ("".equals(document)) ? null : document;
 
-        if (document.contains("www.metaescort.com")) {
+        if (document != null && document.contains("www.metaescort.com")) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "No input document");
             return;
