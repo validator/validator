@@ -562,6 +562,9 @@ final class XmlParser {
             message = message + " (expected \u201C" + textExpected + "\u201D)";
         }
         handler.fatal(message);
+
+        // "can't happen"
+        throw new FatalSAXException(message);
     }
 
     /**

@@ -49,6 +49,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import nu.validator.checker.XmlPiChecker;
 import nu.validator.checker.jing.CheckerSchema;
+import nu.validator.gnu.xml.aelfred2.FatalSAXException;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.DocumentMode;
@@ -1018,6 +1019,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (ResourceNotRetrievableException e) {
             log4j.debug(e.getMessage());
         } catch (NonXmlContentTypeException e) {
+            log4j.debug(e.getMessage());
+        } catch (FatalSAXException e) {
             log4j.debug(e.getMessage());
         } catch (SocketTimeoutException e) {
             errorHandler.ioError(new IOException(e.getMessage(), null));

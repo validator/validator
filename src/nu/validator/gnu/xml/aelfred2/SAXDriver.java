@@ -1,7 +1,7 @@
 /* SAXDriver.java -- 
  Copyright (C) 1999,2000,2001,2004 Free Software Foundation, Inc.
  Portions Copyright 2006-2007 Henri Sivonen
- Portions Copyright 2007-2008 Mozilla Foundation
+ Portions Copyright 2007-2016 Mozilla Foundation
 
  This file is part of GNU JAXP.
 
@@ -1101,6 +1101,9 @@ import org.xml.sax.helpers.NamespaceSupport;
 
         fatal = new SAXParseException(message, this);
         errorHandler.fatalError(fatal);
+
+        // Even if the application can continue ... we can't!
+        throw new FatalSAXException(message);
     }
 
     // We can safely report a few validity errors that
