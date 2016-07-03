@@ -692,7 +692,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         if (document != null) {
             for (String domain : DENY_LIST) {
-                if (document.contains(domain)) {
+                if (!"".equals(domain) && document.contains(domain)) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                             "No input document");
                     return;
