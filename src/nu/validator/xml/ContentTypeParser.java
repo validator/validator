@@ -236,8 +236,11 @@ public class ContentTypeParser {
                         if (errorHandler != null) {
                             errorHandler.fatalError(spe);
                         }
+                        throw new NonXmlContentTypeException(
+                                String.format("%s: %s", baseUri, msg));
+                    } else {
+                        is.setType(type);
                     }
-                    is.setType(type);
                 }
             }
             String charset = null;
@@ -523,4 +526,9 @@ public class ContentTypeParser {
         return !isAllowGenericXml() && !isAllowRnc() && !isAllowXhtml();
     }
 
+    public class NonXmlContentTypeException extends SAXException {
+        public NonXmlContentTypeException (String message) {
+            super(message);
+        }
+    }
 }

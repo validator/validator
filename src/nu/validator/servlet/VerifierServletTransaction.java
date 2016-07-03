@@ -82,6 +82,7 @@ import nu.validator.xml.BaseUriTracker;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.CombineContentHandler;
 import nu.validator.xml.ContentTypeParser;
+import nu.validator.xml.ContentTypeParser.NonXmlContentTypeException;
 import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
@@ -828,6 +829,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 validate();
             }
         } catch (SAXException e) {
+            log4j.debug("SAXException: " + e.getMessage());
         }
     }
 
@@ -1014,6 +1016,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (ChangingEncodingException e) {
         } catch (CannotFindPresetSchemaException e) {
         } catch (ResourceNotRetrievableException e) {
+            log4j.debug(e.getMessage());
+        } catch (NonXmlContentTypeException e) {
             log4j.debug(e.getMessage());
         } catch (SocketTimeoutException e) {
             errorHandler.ioError(new IOException(e.getMessage(), null));
@@ -1815,14 +1819,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             }
             if (index == -1) {
-                if ("".equals(namespace)) {
-                    errorHandler.ioError(
-                            new IOException("Document lacks content-type."));
-                } else {
-                    errorHandler.schemaError(new SAXException(
-                            "Cannot find preset schema for namespace: \u201C"
-                                    + namespace + "\u201D."));
-                }
+                String message = "Cannot find preset schema for namespace: \u201C"
+                        + namespace + "\u201D.";
+                SAXException se = new SAXException(message);
+                errorHandler.schemaError(se);
                 throw new CannotFindPresetSchemaException();
             }
             String label = presetLabels[index];
