@@ -1006,7 +1006,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (TooManyErrorsException e) {
             errorHandler.fatalError(e);
         } catch (SAXException e) {
-            log4j.debug("SAXException", e);
+            log4j.debug("SAXException: " + e.getMessage());
         } catch (IOException e) {
             isHtmlOrXhtml = false;
             errorHandler.ioError(e);
