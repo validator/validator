@@ -290,6 +290,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static Schema[] preloadedSchemas;
 
+    private final static String[] DENY_LIST = System.getProperty(
+            "nu.validator.servlet.deny-list", "").split("\\s+");
+
     private final static String ABOUT_PAGE = System.getProperty(
             "nu.validator.servlet.about-page", "https://about.validator.nu/");
 
@@ -687,10 +690,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         document = ("".equals(document)) ? null : document;
 
-        if (document != null && document.contains("www.metaescort.com")) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                    "No input document");
-            return;
+        if (document != null) {
+            for (String domain : DENY_LIST) {
+                if (document.contains(domain)) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                            "No input document");
+                    return;
+                }
+            }
         }
 
         String callback = null;
