@@ -87,6 +87,7 @@ import nu.validator.xml.IdFilter;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
+import nu.validator.xml.PrudentHttpEntityResolver.ResourceNotRetrievableException;
 import nu.validator.xml.SystemErrErrorHandler;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
@@ -1012,6 +1013,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (CannotRecoverException e) {
         } catch (ChangingEncodingException e) {
         } catch (CannotFindPresetSchemaException e) {
+        } catch (ResourceNotRetrievableException e) {
+            log4j.debug(e.getMessage());
         } catch (SocketTimeoutException e) {
             errorHandler.ioError(new IOException(e.getMessage(), null));
         } catch (ConnectTimeoutException e) {

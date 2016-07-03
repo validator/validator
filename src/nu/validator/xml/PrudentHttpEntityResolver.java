@@ -261,6 +261,8 @@ import io.mola.galimatias.GalimatiasParseException;
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
+                throw new ResourceNotRetrievableException(
+                        String.format("%s: %s", m.getURI().toString(), msg));
             }
             HttpEntity entity = response.getEntity();
             long len = entity.getContentLength();
@@ -533,5 +535,11 @@ import io.mola.galimatias.GalimatiasParseException;
 
     public boolean isOnlyHtmlAllowed() {
         return !isAllowGenericXml() && !isAllowRnc() && !isAllowXhtml();
+    }
+
+    public class ResourceNotRetrievableException extends SAXException {
+        public ResourceNotRetrievableException(String message) {
+            super(message);
+        }
     }
 }
