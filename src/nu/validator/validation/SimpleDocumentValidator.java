@@ -109,6 +109,8 @@ public class SimpleDocumentValidator {
 
     private LanguageIdentifier languageIdentifier;
 
+    private boolean enableLanguageDetection;
+
     private Schema schemaByUrl(String schemaUrl, ErrorHandler errorHandler)
             throws Exception, SchemaReadException {
         PropertyMapBuilder pmb = new PropertyMapBuilder();
@@ -136,7 +138,7 @@ public class SimpleDocumentValidator {
     }
 
     public SimpleDocumentValidator() {
-        this(true);
+        this(true, true);
     }
 
     /* *
@@ -149,22 +151,43 @@ public class SimpleDocumentValidator {
      * application that already has log4j configured.
      */
     public SimpleDocumentValidator(boolean initializeLog4j) {
-        if (initializeLog4j) {
-            PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
-                    "nu/validator/localentities/files/log4j.properties"));
-        }
-
-        this.entityResolver = new LocalCacheEntityResolver(
-                new NullEntityResolver());
-        this.entityResolver.setAllowRnc(true);
-        try {
-            this.languageIdentifier = new LanguageIdentifier();
-        } catch (LangDetectException e) {
-        }
+        this(initializeLog4j, true);
     }
 
     public SourceCode getSourceCode() {
         return this.sourceCode;
+    }
+
+    /* *
+     * Constructs a <code>SimpleDocumentValidator</code>.
+     *
+     * @param initializeLog4j <code>true</code> to initialize log4j,
+     * <code>false</code> to not initialize log4j. Use this parameter to prevent
+     * <code>SimpleDocumentValidator</code> from overwriting an existing log4j
+     * configuration when calling <code>SimpleDocumentValidator</code> from an
+     * application that already has log4j configured.
+     *
+     * @param enableLanguageDetection <code>true</code> to enable language
+     * detection, <code>false</code> to disable language detection. Use this
+     * parameter to prevent <code>SimpleDocumentValidator</code> from
+     * performing language detection.
+     */
+    public SimpleDocumentValidator(boolean initializeLog4j,
+            boolean enableLanguageDetection) {
+        this.enableLanguageDetection = enableLanguageDetection;
+        if (initializeLog4j) {
+            PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
+                    "nu/validator/localentities/files/log4j.properties"));
+        }
+        this.entityResolver = new LocalCacheEntityResolver(
+                new NullEntityResolver());
+        this.entityResolver.setAllowRnc(true);
+        if (enableLanguageDetection) {
+            try {
+                this.languageIdentifier = new LanguageIdentifier();
+            } catch (LangDetectException e) {
+            }
+        }
     }
 
     /* *
@@ -270,9 +293,12 @@ public class SimpleDocumentValidator {
         if (!noStream) {
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         }
-        htmlReader = new LanguageDetectingXMLReaderWrapper(getWiretap(htmlParser),
-                    languageIdentifier);
-
+        if (enableLanguageDetection) {
+            htmlReader = new LanguageDetectingXMLReaderWrapper(
+                    getWiretap(htmlParser), languageIdentifier);
+        } else {
+            htmlReader = getWiretap(htmlParser);
+        }
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
         if (lexicalHandler != null) {
@@ -280,7 +306,12 @@ public class SimpleDocumentValidator {
                     "http://xml.org/sax/properties/lexical-handler",
                     lexicalHandler);
         }
-        xmlReader = new IdFilter(xmlParser);
+        if (enableLanguageDetection) {
+            xmlReader = new LanguageDetectingXMLReaderWrapper(
+                    new IdFilter(xmlParser), languageIdentifier);
+        } else {
+            xmlReader = new IdFilter(xmlParser);
+        }
         xmlReader.setFeature("http://xml.org/sax/features/string-interning", true);
         xmlReader.setContentHandler(validator.getContentHandler());
         xmlReader.setFeature(

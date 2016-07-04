@@ -56,9 +56,9 @@ automating your HTML checking with a frontend such as:
 You can use the `vnu.jar` HTML checker as an executable for command-line
 checking of documents by invoking it like this:
 
-      java -jar ~/vnu.jar [--errors-only] [--no-stream]
-           [--format gnu|xml|json|text] [--help] [--html] [--skip-non-html]
-           [--verbose] [--version] FILES
+      java -jar vnu.jar [--errors-only] [--no-stream]
+           [--format gnu|xml|json|text] [--help] [--html] [--no-langdetect]
+           [--skip-non-html] [--verbose] [--version] FILES
 
 **Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
 the file on your system.
@@ -130,6 +130,13 @@ executable provides the following options:
     Forces any *.xhtml or *.xht documents to be parsed using the HTML parser.
 
     default: [unset; XML parser is used for *.xhtml and *.xht documents]
+
+#### --no-langdetect
+
+    Disables language detection, so that documents are not checked for missing
+    or mislabeled html[lang] attributes.
+
+    default: [unset; language detection & html[lang] checking are performed]
 
 #### --no-stream
 

@@ -66,6 +66,8 @@ public class SimpleCommandLineValidator {
 
     private static boolean loadEntities;
 
+    private static boolean noLangDetect;
+
     private static boolean noStream;
 
     private static boolean skipNonHTML;
@@ -89,6 +91,7 @@ public class SimpleCommandLineValidator {
         skipNonHTML = false;
         forceHTML = false;
         loadEntities = false;
+        noLangDetect = false;
         noStream = false;
         lineOffset = 0;
         asciiQuotes = false;
@@ -135,6 +138,8 @@ public class SimpleCommandLineValidator {
                     forceHTML = true;
                 } else if ("--entities".equals(args[i])) {
                     loadEntities = true;
+                } else if ("--no-langdetect".equals(args[i])) {
+                    noLangDetect = true;
                 } else if ("--no-stream".equals(args[i])) {
                     noStream = true;
                 } else if ("--schema".equals(args[i])) {
@@ -170,12 +175,20 @@ public class SimpleCommandLineValidator {
         }
         if (readFromStdIn) {
             InputSource is = new InputSource(System.in);
-            validator = new SimpleDocumentValidator();
+            if (noLangDetect) {
+                validator = new SimpleDocumentValidator(true, false);
+            } else {
+                validator = new SimpleDocumentValidator();
+            }
             setup(schemaUrl);
             validator.checkHtmlInputSource(is);
             end();
         } else if (hasFileArgs) {
-            validator = new SimpleDocumentValidator();
+            if (noLangDetect) {
+                validator = new SimpleDocumentValidator(true, false);
+            } else {
+                validator = new SimpleDocumentValidator();
+            }
             setup(schemaUrl);
             checkFiles(args, fileArgsStart);
             end();
@@ -334,8 +347,9 @@ public class SimpleCommandLineValidator {
         System.out.println("Usage:");
         System.out.println("");
         System.out.println("    java -jar vnu.jar [--errors-only] [--no-stream]");
-        System.out.println("         [--format gnu|xml|json|text] [--help] [--html]");
-        System.out.println("         [--skip-non-html] [--verbose] [--version] FILES");
+        System.out.println("         [--format gnu|xml|json|text] [--help]");
+        System.out.println("         [--html] [--no-langdetect] [--skip-non-html]");
+        System.out.println("         [--verbose] [--version] FILES");
         System.out.println("");
         System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
         System.out.println("");

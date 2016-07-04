@@ -186,9 +186,10 @@ li > ul {
 <p>You can use the <code>vnu.jar</code> HTML checker as an executable for
 command-line checking of documents by invoking it like this:
 <pre>
-  java -jar ~/vnu.jar [--errors-only] [--no-stream]
-       [--format gnu|xml|json|text] [--help] [--html]
-       [--skip-non-html] [--verbose] [--version] FILES
+  java -jar vnu.jar [--errors-only] [--no-stream]
+       [--format gnu|xml|json|text] [--help]
+       [--html] [--no-langdetect] [--skip-non-html]
+       [--verbose] [--version] FILES
 </pre>
 
 <p class=note><b>Note:</b> In these instructions, replace
@@ -276,6 +277,14 @@ default: [unset; all documents found are checked, regardless of extension]
 Forces any *.xhtml or *.xht documents to be parsed using the HTML parser.
 
 default: [unset; XML parser is used for *.xhtml and *.xht documents]
+</pre>
+
+<h4 id="no-langdetect">--no-langdetect</h4>
+<pre>
+Disables language detection, so that documents are not checked for missing
+or mislabeled <code>html[lang]</code> attributes.
+
+default: [unset; language detection &amp; <code>html[lang]</code> checking are performed]
 </pre>
 
 <h4 id="no-stream">--no-stream</h4>
