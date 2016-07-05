@@ -24,9 +24,12 @@
 package nu.validator.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.cybozu.labs.langdetect.LangDetectException;
+import com.cybozu.labs.langdetect.Language;
 import com.ibm.icu.util.ULocale;
+
 import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
 
 import org.xml.sax.Attributes;
@@ -74,6 +77,8 @@ public final class LanguageDetectingXMLReaderWrapper
     private int MAX_CHARS = 35840;
 
     private int MIN_CHARS = 512;
+
+    private double MIN_PROBABILITY= .90;
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             LanguageIdentifier languageIdentifier) {
@@ -194,50 +199,61 @@ public final class LanguageDetectingXMLReaderWrapper
             return;
         }
         try {
-            if (characterCount > MIN_CHARS) {
-                String textContent = documentContent.toString();
-                String language = languageIdentifier.getLanguage(textContent);
-                String detectedLanguageName = "";
-                String preferredLanguageCode = "";
-                ULocale locale = new ULocale(language);
-                String detectedLanguageCode = locale.getLanguage();
-                if ("zh-cn".equals(language)) {
-                    detectedLanguageName = "Simplified Chinese";
-                    preferredLanguageCode = "zh-Hans";
-                } else if ("zh-tw".equals(language)) {
-                    detectedLanguageName = "Traditional Chinese";
-                    preferredLanguageCode = "zh-Hant";
-                } else {
-                    detectedLanguageName = locale.getDisplayName();
-                    preferredLanguageCode = detectedLanguageCode;
+            if (characterCount < MIN_CHARS) {
+                contentHandler.endDocument();
+                return;
+            }
+            String textContent = documentContent.toString();
+            String detectedLanguage = "";
+            ArrayList<Language> possibleLanguages = languageIdentifier.getLanguages(
+                    textContent);
+            for (Language possibility: possibleLanguages) {
+                if (possibility.prob > MIN_PROBABILITY) {
+                    detectedLanguage = possibility.lang;
                 }
-                if ("".equals(langAttrValue) && "".equals(xmlLangAttrValue)) {
-                    warn(String.format(
-                            "This document appears to be written in %s."
-                                    + " Consider adding \u201Clang=\"%s\"\u201D"
-                                    + " (or variant) to the \u201Chtml\u201D element"
-                                    + " start tag.",
-                            detectedLanguageName, preferredLanguageCode));
-                }
-                String message = "This document appears to be written in %s but the"
-                        + " \u201Chtml\u201D element start tag has %s"
-                        + " \u201C%s\u201D attribute with the value \u201C%s\u201D."
-                        + " Consider changing the \u201C%s\u201D value to"
-                        + " \u201C%s\u201D (or variant) instead.";
-                if (hasLang
-                        && !(new ULocale(langAttrValue).getLanguage()).equals(
-                                detectedLanguageCode)) {
-                    warn(String.format(message, detectedLanguageName, "a",
-                            "lang", langAttrValue, "lang",
-                            preferredLanguageCode));
-                }
-                if (hasXmlLang && !(new ULocale(
-                        xmlLangAttrValue).getLanguage()).equals(
-                                detectedLanguageCode)) {
-                    warn(String.format(message, detectedLanguageName, "an",
-                            "xml:lang", xmlLangAttrValue, "xml:lang",
-                            preferredLanguageCode));
-                }
+            }
+            if ("".equals(detectedLanguage)) {
+                contentHandler.endDocument();
+                return;
+            }
+            String detectedLanguageName = "";
+            String preferredLanguageCode = "";
+            ULocale locale = new ULocale(detectedLanguage);
+            String detectedLanguageCode = locale.getLanguage();
+            if ("zh-cn".equals(detectedLanguage)) {
+                detectedLanguageName = "Simplified Chinese";
+                preferredLanguageCode = "zh-Hans";
+            } else if ("zh-tw".equals(detectedLanguage)) {
+                detectedLanguageName = "Traditional Chinese";
+                preferredLanguageCode = "zh-Hant";
+            } else {
+                detectedLanguageName = locale.getDisplayName();
+                preferredLanguageCode = detectedLanguageCode;
+            }
+            if ("".equals(langAttrValue) && "".equals(xmlLangAttrValue)) {
+                warn(String.format(
+                        "This document appears to be written in %s."
+                                + " Consider adding \u201Clang=\"%s\"\u201D"
+                                + " (or variant) to the \u201Chtml\u201D element"
+                                + " start tag.",
+                        detectedLanguageName, preferredLanguageCode));
+            }
+            String message = "This document appears to be written in %s but the"
+                    + " \u201Chtml\u201D element start tag has %s"
+                    + " \u201C%s\u201D attribute with the value \u201C%s\u201D."
+                    + " Consider changing the \u201C%s\u201D value to"
+                    + " \u201C%s\u201D (or variant) instead.";
+            if (hasLang && !(new ULocale(langAttrValue).getLanguage()).equals(
+                    detectedLanguageCode)) {
+                warn(String.format(message, detectedLanguageName, "a", "lang",
+                        langAttrValue, "lang", preferredLanguageCode));
+            }
+            if (hasXmlLang
+                    && !(new ULocale(xmlLangAttrValue).getLanguage()).equals(
+                            detectedLanguageCode)) {
+                warn(String.format(message, detectedLanguageName, "an",
+                        "xml:lang", xmlLangAttrValue, "xml:lang",
+                        preferredLanguageCode));
             }
         } catch (LangDetectException e) {
         }
