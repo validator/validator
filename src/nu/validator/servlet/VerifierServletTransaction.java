@@ -696,8 +696,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (document != null) {
             for (String domain : DENY_LIST) {
                 if (!"".equals(domain) && document.contains(domain)) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                            "No input document");
+                    response.sendError(429, "Too many requests");
                     return;
                 }
             }
