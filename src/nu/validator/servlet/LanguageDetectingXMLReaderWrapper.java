@@ -44,6 +44,7 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.LocatorImpl;
 
 public final class LanguageDetectingXMLReaderWrapper
         implements XMLReader, ContentHandler {
@@ -53,6 +54,10 @@ public final class LanguageDetectingXMLReaderWrapper
     private ContentHandler contentHandler;
 
     private ErrorHandler errorHandler;
+
+    private Locator locator = null;
+
+    private Locator htmlStartTagLocator;
 
     private StringBuilder elementContent;
 
@@ -81,10 +86,11 @@ public final class LanguageDetectingXMLReaderWrapper
     private double MIN_PROBABILITY= .90;
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
-            LanguageIdentifier languageIdentifier) {
+            ErrorHandler errorHandler, LanguageIdentifier languageIdentifier) {
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
-        this.errorHandler = wrappedReader.getErrorHandler();
+        this.errorHandler = errorHandler;
+        this.htmlStartTagLocator = null;
         this.languageIdentifier = languageIdentifier;
         this.inBody = false;
         this.collectingCharacters = false;
@@ -153,6 +159,7 @@ public final class LanguageDetectingXMLReaderWrapper
             return;
         }
         if ("html".equals(localName)) {
+            htmlStartTagLocator = new LocatorImpl(locator);
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("lang".equals(atts.getLocalName(i))) {
                     hasLang = true;
@@ -181,6 +188,7 @@ public final class LanguageDetectingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
+        this.locator = locator;
         contentHandler.setDocumentLocator(locator);
     }
 
@@ -220,6 +228,7 @@ public final class LanguageDetectingXMLReaderWrapper
             String preferredLanguageCode = "";
             ULocale locale = new ULocale(detectedLanguage);
             String detectedLanguageCode = locale.getLanguage();
+            String langWarning = "";
             if ("zh-cn".equals(detectedLanguage)) {
                 detectedLanguageName = "Simplified Chinese";
                 preferredLanguageCode = "zh-Hans";
@@ -231,12 +240,12 @@ public final class LanguageDetectingXMLReaderWrapper
                 preferredLanguageCode = detectedLanguageCode;
             }
             if ("".equals(langAttrValue) && "".equals(xmlLangAttrValue)) {
-                warn(String.format(
+                langWarning = String.format(
                         "This document appears to be written in %s."
                                 + " Consider adding \u201Clang=\"%s\"\u201D"
                                 + " (or variant) to the \u201Chtml\u201D element"
                                 + " start tag.",
-                        detectedLanguageName, preferredLanguageCode));
+                        detectedLanguageName, preferredLanguageCode);
             }
             String message = "This document appears to be written in %s but the"
                     + " \u201Chtml\u201D element start tag has %s"
@@ -245,15 +254,18 @@ public final class LanguageDetectingXMLReaderWrapper
                     + " \u201C%s\u201D (or variant) instead.";
             if (hasLang && !(new ULocale(langAttrValue).getLanguage()).equals(
                     detectedLanguageCode)) {
-                warn(String.format(message, detectedLanguageName, "a", "lang",
-                        langAttrValue, "lang", preferredLanguageCode));
+                langWarning = String.format(message, detectedLanguageName, "a",
+                        "lang", langAttrValue, "lang", preferredLanguageCode);
             }
             if (hasXmlLang
                     && !(new ULocale(xmlLangAttrValue).getLanguage()).equals(
                             detectedLanguageCode)) {
-                warn(String.format(message, detectedLanguageName, "an",
+                langWarning = String.format(message, detectedLanguageName, "an",
                         "xml:lang", xmlLangAttrValue, "xml:lang",
-                        preferredLanguageCode));
+                        preferredLanguageCode);
+            }
+            if (!"".equals(message)) {
+                warn(langWarning, htmlStartTagLocator);
             }
         } catch (LangDetectException e) {
         }
@@ -358,7 +370,7 @@ public final class LanguageDetectingXMLReaderWrapper
      */
     @Override
     public ErrorHandler getErrorHandler() {
-        return wrappedReader.getErrorHandler();
+        return errorHandler;
     }
 
     /**
@@ -472,9 +484,9 @@ public final class LanguageDetectingXMLReaderWrapper
         wrappedReader.setProperty(name, value);
     }
 
-    private void warn(String message) throws SAXException {
+    private void warn(String message, Locator locator) throws SAXException {
         if (errorHandler != null) {
-            SAXParseException spe = new SAXParseException(message, null);
+            SAXParseException spe = new SAXParseException(message, locator);
             errorHandler.warning(spe);
         }
     }

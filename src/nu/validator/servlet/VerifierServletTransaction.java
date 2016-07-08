@@ -1004,9 +1004,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             if (showOutline) {
                 reader = new OutlineBuildingXMLReaderWrapper(reader, request);
             }
-            reader = new LanguageDetectingXMLReaderWrapper(reader,
-                    languageIdentifier);
-            reader.setContentHandler(reader.getContentHandler());
             reader.parse(documentInput);
             if (showOutline) {
                 outline = (Deque<Section>) request.getAttribute(
@@ -1340,6 +1337,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if (validator != null) {
                     reader.setContentHandler(validator.getContentHandler());
                 }
+                reader = new LanguageDetectingXMLReaderWrapper(reader,
+                        errorHandler, languageIdentifier);
                 break;
             case XML_NO_EXTERNAL_ENTITIES:
             case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
@@ -1375,6 +1374,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     if (validator != null) {
                         reader.setContentHandler(validator.getContentHandler());
                     }
+                    reader = new LanguageDetectingXMLReaderWrapper(reader,
+                            errorHandler, languageIdentifier);
                 } else {
                     if (contentType != null) {
                         if ("application/xml".equals(contentType) ||
@@ -1455,6 +1456,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     validator.getContentHandler()));
             reader.setDTDHandler(validator.getDTDHandler());
         }
+        reader = new LanguageDetectingXMLReaderWrapper(reader, errorHandler,
+                languageIdentifier);
     }
 
     /**

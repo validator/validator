@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Mozilla Foundation
+ * Copyright (c) 2013-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -295,7 +295,7 @@ public class SimpleDocumentValidator {
         }
         if (enableLanguageDetection) {
             htmlReader = new LanguageDetectingXMLReaderWrapper(
-                    getWiretap(htmlParser), languageIdentifier);
+                    getWiretap(htmlParser), docValidationErrHandler, languageIdentifier);
         } else {
             htmlReader = getWiretap(htmlParser);
         }
@@ -306,12 +306,7 @@ public class SimpleDocumentValidator {
                     "http://xml.org/sax/properties/lexical-handler",
                     lexicalHandler);
         }
-        if (enableLanguageDetection) {
-            xmlReader = new LanguageDetectingXMLReaderWrapper(
-                    new IdFilter(xmlParser), languageIdentifier);
-        } else {
-            xmlReader = new IdFilter(xmlParser);
-        }
+        xmlReader = new IdFilter(xmlParser);
         xmlReader.setFeature("http://xml.org/sax/features/string-interning", true);
         xmlReader.setContentHandler(validator.getContentHandler());
         xmlReader.setFeature(
@@ -329,6 +324,10 @@ public class SimpleDocumentValidator {
             xmlReader.setEntityResolver(new NullEntityResolver());
         }
         xmlReader = getWiretap(xmlParser);
+        if (enableLanguageDetection) {
+            xmlReader = new LanguageDetectingXMLReaderWrapper(xmlReader,
+                    docValidationErrHandler, languageIdentifier);
+        }
         xmlParser.setErrorHandler(docValidationErrHandler);
         xmlParser.lockErrorHandler();
     }
