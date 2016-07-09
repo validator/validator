@@ -83,7 +83,7 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private int MIN_CHARS = 512;
 
-    private double MIN_PROBABILITY= .90;
+    private double MIN_PROBABILITY = .90;
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             ErrorHandler errorHandler, LanguageIdentifier languageIdentifier) {
@@ -215,7 +215,7 @@ public final class LanguageDetectingXMLReaderWrapper
             String detectedLanguage = "";
             ArrayList<Language> possibleLanguages = languageIdentifier.getLanguages(
                     textContent);
-            for (Language possibility: possibleLanguages) {
+            for (Language possibility : possibleLanguages) {
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
                 }
