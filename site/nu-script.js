@@ -57,7 +57,7 @@ function reboot() {
 	replaceYearWarning()
 	initFilters()
 	injectHyperlinks()
-	moveLangWarning()
+	moveLangWarningAndAddLinks()
 	replaceSuccessFailure()
 }
 
@@ -319,13 +319,19 @@ function linkify(messages, text, target, title) {
 	}
 }
 
-function moveLangWarning() {
+function moveLangWarningAndAddLinks() {
 	var warnings = document.getElementsByClassName("warning")
+	var langWarning
 	var langWarningText = "This document appears to be written in"
 	var messagesContainer = document.querySelector("#results ol:first-child")
+	var langLinks
 	for (var i = 0; i < warnings.length; ++i) {
 		if (warnings[i].firstChild.lastChild.textContent.indexOf(langWarningText) != -1) {
-			messagesContainer.insertBefore(warnings[i], messagesContainer.firstChild)
+			langWarning = warnings[i]
+			langLinks = document.createElement("p")
+			langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
+			langWarning.appendChild(langLinks)
+			messagesContainer.insertBefore(langWarning, messagesContainer.firstChild)
 		}
 	}
 }
