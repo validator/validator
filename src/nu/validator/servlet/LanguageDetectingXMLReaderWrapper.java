@@ -224,6 +224,7 @@ public final class LanguageDetectingXMLReaderWrapper
                 contentHandler.endDocument();
                 return;
             }
+            String declaredLanguageCode = "";
             String detectedLanguageName = "";
             String preferredLanguageCode = "";
             ULocale locale = new ULocale(detectedLanguage);
@@ -239,32 +240,61 @@ public final class LanguageDetectingXMLReaderWrapper
                 detectedLanguageName = locale.getDisplayName();
                 preferredLanguageCode = detectedLanguageCode;
             }
-            if ("".equals(langAttrValue) && "".equals(xmlLangAttrValue)) {
+            if (!hasLang && !hasXmlLang) {
                 langWarning = String.format(
                         "This document appears to be written in %s."
                                 + " Consider adding \u201Clang=\"%s\"\u201D"
-                                + " (or variant) to the \u201Chtml\u201D element"
+                                + " (or variant) to the \u201Chtml\u201D"
                                 + " start tag.",
                         detectedLanguageName, preferredLanguageCode);
+            } else {
+                String attValueExpression = "";
+                String message = "This document appears to be written in %s"
+                        + " but the \u201Chtml\u201D start tag has %s."
+                        + " Consider changing the \u201C%s\u201D value to"
+                        + " \u201C%s\u201D (or variant) instead.";
+                String lowerCaseLangValue = "";
+                String attName = "";
+                String attValue = "";
+                String aOrAn = "";
+                if (hasLang) {
+                    declaredLanguageCode = new ULocale(
+                            langAttrValue).getLanguage();
+                    lowerCaseLangValue = langAttrValue.toLowerCase();
+                    attName = "lang";
+                    attValue = langAttrValue;
+                    aOrAn = "a";
+                }
+                if (hasXmlLang) {
+                    declaredLanguageCode = new ULocale(
+                            xmlLangAttrValue).getLanguage();
+                    lowerCaseLangValue = xmlLangAttrValue.toLowerCase();
+                    attName = "xml:lang";
+                    attValue = xmlLangAttrValue;
+                    aOrAn = "an";
+                }
+                if (("zh-cn".equals(detectedLanguage)
+                        && (lowerCaseLangValue.contains("zh-tw")
+                                || lowerCaseLangValue.contains("zh-hant")))
+                        || ("zh-tw".equals(detectedLanguage)
+                                && (lowerCaseLangValue.contains("zh-cn")
+                                        || lowerCaseLangValue.contains(
+                                                "zh-hans")))
+                        || !declaredLanguageCode.equals(detectedLanguageCode)) {
+                    if ("".equals(attValue)) {
+                        attValueExpression = "an empty \u201c" + attName
+                                + "\u201d attribute";
+                    } else {
+                        attValueExpression = String.format(
+                                "%s \u201C%s\u201D attribute with the value"
+                                        + " \u201C%s\u201D.",
+                                aOrAn, attName, attValue);
+                    }
+                    langWarning = String.format(message, detectedLanguageName,
+                            attValueExpression, attName, preferredLanguageCode);
+                }
             }
-            String message = "This document appears to be written in %s but the"
-                    + " \u201Chtml\u201D element start tag has %s"
-                    + " \u201C%s\u201D attribute with the value \u201C%s\u201D."
-                    + " Consider changing the \u201C%s\u201D value to"
-                    + " \u201C%s\u201D (or variant) instead.";
-            if (hasLang && !(new ULocale(langAttrValue).getLanguage()).equals(
-                    detectedLanguageCode)) {
-                langWarning = String.format(message, detectedLanguageName, "a",
-                        "lang", langAttrValue, "lang", preferredLanguageCode);
-            }
-            if (hasXmlLang
-                    && !(new ULocale(xmlLangAttrValue).getLanguage()).equals(
-                            detectedLanguageCode)) {
-                langWarning = String.format(message, detectedLanguageName, "an",
-                        "xml:lang", xmlLangAttrValue, "xml:lang",
-                        preferredLanguageCode);
-            }
-            if (!"".equals(message)) {
+            if (!"".equals(langWarning)) {
                 warn(langWarning, htmlStartTagLocator);
             }
         } catch (LangDetectException e) {
