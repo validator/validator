@@ -57,6 +57,7 @@ function reboot() {
 	replaceYearWarning()
 	initFilters()
 	injectHyperlinks()
+	moveLangWarning()
 	replaceSuccessFailure()
 }
 
@@ -315,6 +316,17 @@ function linkify(messages, text, target, title) {
 		messages[i].firstChild.lastChild.innerHTML =
 		messages[i].firstChild.lastChild.innerHTML.replace(text,
 		"<a href='" + target + "' title='" + title + "'>" + text + "</a>");
+	}
+}
+
+function moveLangWarning() {
+	var warnings = document.getElementsByClassName("warning")
+	var langWarningText = "This document appears to be written in"
+	var messagesContainer = document.querySelector("#results ol:first-child")
+	for (var i = 0; i < warnings.length; ++i) {
+		if (warnings[i].firstChild.lastChild.textContent.indexOf(langWarningText) != -1) {
+			messagesContainer.insertBefore(warnings[i], messagesContainer.firstChild)
+		}
 	}
 }
 
