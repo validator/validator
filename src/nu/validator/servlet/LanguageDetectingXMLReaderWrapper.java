@@ -63,13 +63,11 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private StringBuilder documentContent;
 
+    private String httpContentLangHeader;
+
     private String langAttrValue;
 
-    private String xmlLangAttrValue;
-
     private boolean hasLang;
-
-    private boolean hasXmlLang;
 
     private LanguageIdentifier languageIdentifier;
 
@@ -86,7 +84,8 @@ public final class LanguageDetectingXMLReaderWrapper
     private double MIN_PROBABILITY = .90;
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
-            ErrorHandler errorHandler, LanguageIdentifier languageIdentifier) {
+            ErrorHandler errorHandler, LanguageIdentifier languageIdentifier,
+            String httpContentLangHeader) {
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
         this.errorHandler = errorHandler;
@@ -97,10 +96,9 @@ public final class LanguageDetectingXMLReaderWrapper
         this.characterCount = 0;
         this.elementContent = new StringBuilder();
         this.documentContent = new StringBuilder();
+        this.httpContentLangHeader = httpContentLangHeader;
         this.hasLang = false;
-        this.hasXmlLang = false;
         this.langAttrValue = "";
-        this.xmlLangAttrValue = "";
         wrappedReader.setContentHandler(this);
     }
 
@@ -164,9 +162,6 @@ public final class LanguageDetectingXMLReaderWrapper
                 if ("lang".equals(atts.getLocalName(i))) {
                     hasLang = true;
                     langAttrValue = atts.getValue(i);
-                } else if ("xml:lang".equals(atts.getLocalName(i))) {
-                    hasXmlLang = true;
-                    xmlLangAttrValue = atts.getValue(i);
                 }
             }
         } else if ("body".equals(localName)) {
@@ -206,6 +201,12 @@ public final class LanguageDetectingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
+        detectLanguageAndCheckAgainstDeclaredLanguage();
+        contentHandler.endDocument();
+    }
+
+    public void detectLanguageAndCheckAgainstDeclaredLanguage()
+            throws SAXException {
         try {
             if (characterCount < MIN_CHARS) {
                 contentHandler.endDocument();
@@ -224,12 +225,10 @@ public final class LanguageDetectingXMLReaderWrapper
                 contentHandler.endDocument();
                 return;
             }
-            String declaredLanguageCode = "";
             String detectedLanguageName = "";
             String preferredLanguageCode = "";
             ULocale locale = new ULocale(detectedLanguage);
             String detectedLanguageCode = locale.getLanguage();
-            String langWarning = "";
             if ("zh-cn".equals(detectedLanguage)) {
                 detectedLanguageName = "Simplified Chinese";
                 preferredLanguageCode = "zh-Hans";
@@ -240,66 +239,107 @@ public final class LanguageDetectingXMLReaderWrapper
                 detectedLanguageName = locale.getDisplayName();
                 preferredLanguageCode = detectedLanguageCode;
             }
-            if (!hasLang && !hasXmlLang) {
-                langWarning = String.format(
-                        "This document appears to be written in %s."
-                                + " Consider adding \u201Clang=\"%s\"\u201D"
-                                + " (or variant) to the \u201Chtml\u201D"
-                                + " start tag.",
-                        detectedLanguageName, preferredLanguageCode);
-            } else {
-                String attValueExpression = "";
-                String message = "This document appears to be written in %s"
-                        + " but the \u201Chtml\u201D start tag has %s."
-                        + " Consider changing the \u201C%s\u201D value to"
-                        + " \u201C%s\u201D (or variant) instead.";
-                String lowerCaseLangValue = "";
-                String attName = "";
-                String attValue = "";
-                String aOrAn = "";
-                if (hasLang) {
-                    declaredLanguageCode = new ULocale(
-                            langAttrValue).getLanguage();
-                    lowerCaseLangValue = langAttrValue.toLowerCase();
-                    attName = "lang";
-                    attValue = langAttrValue;
-                    aOrAn = "a";
-                }
-                if (hasXmlLang) {
-                    declaredLanguageCode = new ULocale(
-                            xmlLangAttrValue).getLanguage();
-                    lowerCaseLangValue = xmlLangAttrValue.toLowerCase();
-                    attName = "xml:lang";
-                    attValue = xmlLangAttrValue;
-                    aOrAn = "an";
-                }
-                if (("zh-cn".equals(detectedLanguage)
-                        && (lowerCaseLangValue.contains("zh-tw")
-                                || lowerCaseLangValue.contains("zh-hant")))
-                        || ("zh-tw".equals(detectedLanguage)
-                                && (lowerCaseLangValue.contains("zh-cn")
-                                        || lowerCaseLangValue.contains(
-                                                "zh-hans")))
-                        || !declaredLanguageCode.equals(detectedLanguageCode)) {
-                    if ("".equals(attValue)) {
-                        attValueExpression = "an empty \u201c" + attName
-                                + "\u201d attribute";
-                    } else {
-                        attValueExpression = String.format(
-                                "%s \u201C%s\u201D attribute with the value"
-                                        + " \u201C%s\u201D.",
-                                aOrAn, attName, attValue);
-                    }
-                    langWarning = String.format(message, detectedLanguageName,
-                            attValueExpression, attName, preferredLanguageCode);
-                }
-            }
-            if (!"".equals(langWarning)) {
-                warn(langWarning, htmlStartTagLocator);
-            }
+            checkLangAttribute(detectedLanguage, detectedLanguageName,
+                    detectedLanguageCode, preferredLanguageCode);
+            checkContentLanguageHeader(detectedLanguage, detectedLanguageName,
+                    detectedLanguageCode, preferredLanguageCode);
         } catch (LangDetectException e) {
         }
-        contentHandler.endDocument();
+    }
+
+    public void checkLangAttribute(String detectedLanguage,
+            String detectedLanguageName, String detectedLanguageCode,
+            String preferredLanguageCode) throws SAXException {
+        String langWarning = "";
+        String lowerCaseLang = langAttrValue.toLowerCase();
+        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
+        if (!hasLang) {
+            langWarning = String.format(
+                    "This document appears to be written in %s."
+                            + " Consider adding \u201Clang=\"%s\"\u201D"
+                            + " (or variant) to the \u201Chtml\u201D"
+                            + " start tag.",
+                    detectedLanguageName, preferredLanguageCode);
+        } else {
+            String message = "This document appears to be written in %s"
+                    + " but the \u201Chtml\u201D start tag has %s."
+                    + " Consider changing the \u201Clang\u201D value to"
+                    + " \u201C%s\u201D (or variant) instead.";
+            if (zhSubtagMismatch(detectedLanguage, lowerCaseLang)
+                    || !declaredLangCode.equals(detectedLanguageCode)) {
+                langWarning = String.format(message, detectedLanguageName,
+                        getAttValueExpr(), preferredLanguageCode);
+            }
+        }
+        if (!"".equals(langWarning)) {
+            warn(langWarning);
+        }
+    }
+
+    public void checkContentLanguageHeader(String detectedLanguage,
+            String detectedLanguageName, String detectedLanguageCode,
+            String preferredLanguageCode) throws SAXException {
+        if ("".equals(httpContentLangHeader)
+                || httpContentLangHeader.contains(",")) {
+            return;
+        }
+        String message = "";
+        String lowerCaseContentLang = httpContentLangHeader.toLowerCase();
+        String contentLangCode = new ULocale(
+                lowerCaseContentLang).getLanguage();
+        if (zhSubtagMismatch(detectedLanguage, lowerCaseContentLang)
+                || !contentLangCode.equals(detectedLanguageCode)) {
+            message = "This document appears to be written in %s but the value"
+                    + " of the HTTP \u201CContent-Language\u201D header is"
+                    + " \u201C%s\u201D. Consider changing the value to"
+                    + " \u201C%s\u201D.";
+            warn(String.format(message, detectedLanguageName,
+                    lowerCaseContentLang, preferredLanguageCode,
+                    preferredLanguageCode));
+        }
+        if (hasLang) {
+            message = "The value of the HTTP \u201CContent-Language\u201D"
+                    + " header is \u201C%s\u201D but it will be ignored because"
+                    + " the \u201Chtml\u201D start tag has %s.";
+            String lowerCaseLang = langAttrValue.toLowerCase();
+            String declaredLangCode = new ULocale(langAttrValue).getLanguage();
+            if (hasLang) {
+                if (zhSubtagMismatch(lowerCaseContentLang, lowerCaseLang)
+                        || !contentLangCode.equals(declaredLangCode)) {
+                    warn(String.format(message, httpContentLangHeader,
+                            getAttValueExpr()));
+                }
+            }
+        }
+    }
+
+    private boolean zhSubtagMismatch(String expectedLanguage,
+            String declaredLanguage) {
+        return ((("zh-cn".equals(expectedLanguage)
+                || "zh-hans".equals(expectedLanguage))
+                && (declaredLanguage.contains("zh-tw")
+                        || declaredLanguage.contains("zh-hant")))
+                || (("zh-tw".equals(expectedLanguage)
+                        || "zh-hant".equals(expectedLanguage))
+                        && (declaredLanguage.contains("zh-cn")
+                                || declaredLanguage.contains("zh-hans"))));
+    }
+
+    private String getAttValueExpr() {
+        if ("".equals(langAttrValue)) {
+            return "an empty \u201clang\u201d attribute";
+        } else {
+            return String.format("a \u201Clang\u201D attribute with the value"
+                    + " \u201C%s\u201D", langAttrValue);
+        }
+    }
+
+    private void warn(String message) throws SAXException {
+        if (errorHandler != null) {
+            SAXParseException spe = new SAXParseException(message,
+                    htmlStartTagLocator);
+            errorHandler.warning(spe);
+        }
     }
 
     /**
@@ -512,12 +552,5 @@ public final class LanguageDetectingXMLReaderWrapper
     public void setProperty(String name, Object value)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         wrappedReader.setProperty(name, value);
-    }
-
-    private void warn(String message, Locator locator) throws SAXException {
-        if (errorHandler != null) {
-            SAXParseException spe = new SAXParseException(message, locator);
-            errorHandler.warning(spe);
-        }
     }
 }

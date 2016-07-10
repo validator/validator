@@ -293,11 +293,10 @@ public class SimpleDocumentValidator {
         if (!noStream) {
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         }
+        htmlReader = getWiretap(htmlParser);
         if (enableLanguageDetection) {
-            htmlReader = new LanguageDetectingXMLReaderWrapper(
-                    getWiretap(htmlParser), docValidationErrHandler, languageIdentifier);
-        } else {
-            htmlReader = getWiretap(htmlParser);
+            htmlReader = new LanguageDetectingXMLReaderWrapper(htmlReader,
+                    docValidationErrHandler, languageIdentifier, "");
         }
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
@@ -326,7 +325,7 @@ public class SimpleDocumentValidator {
         xmlReader = getWiretap(xmlParser);
         if (enableLanguageDetection) {
             xmlReader = new LanguageDetectingXMLReaderWrapper(xmlReader,
-                    docValidationErrHandler, languageIdentifier);
+                    docValidationErrHandler, languageIdentifier, "");
         }
         xmlParser.setErrorHandler(docValidationErrHandler);
         xmlParser.lockErrorHandler();
