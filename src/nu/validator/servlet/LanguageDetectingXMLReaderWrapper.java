@@ -25,6 +25,7 @@ package nu.validator.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
@@ -71,17 +72,24 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private LanguageIdentifier languageIdentifier;
 
+    private String dirAttrValue;
+
+    private boolean hasDir;
+
     private boolean inBody;
 
     private boolean collectingCharacters;
 
     private int characterCount;
 
-    private int MAX_CHARS = 35840;
+    private static final int MAX_CHARS = 35840;
 
-    private int MIN_CHARS = 512;
+    private static final int MIN_CHARS = 512;
 
-    private double MIN_PROBABILITY = .90;
+    private static final double MIN_PROBABILITY = .90;
+
+    private static final String[] RTL_LANGS = { "ar", "fa", "he", "ml", "pa",
+            "so", "ur" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             ErrorHandler errorHandler, LanguageIdentifier languageIdentifier,
@@ -99,6 +107,8 @@ public final class LanguageDetectingXMLReaderWrapper
         this.httpContentLangHeader = httpContentLangHeader;
         this.hasLang = false;
         this.langAttrValue = "";
+        this.hasDir = false;
+        this.dirAttrValue = "";
         wrappedReader.setContentHandler(this);
     }
 
@@ -162,6 +172,9 @@ public final class LanguageDetectingXMLReaderWrapper
                 if ("lang".equals(atts.getLocalName(i))) {
                     hasLang = true;
                     langAttrValue = atts.getValue(i);
+                } else if ("dir".equals(atts.getLocalName(i))) {
+                    hasDir = true;
+                    dirAttrValue = atts.getValue(i);
                 }
             }
         } else if ("body".equals(localName)) {
@@ -241,6 +254,8 @@ public final class LanguageDetectingXMLReaderWrapper
             }
             checkLangAttribute(detectedLanguage, detectedLanguageName,
                     detectedLanguageCode, preferredLanguageCode);
+            checkDirAttribute(detectedLanguage, detectedLanguageName,
+                    detectedLanguageCode, preferredLanguageCode);
             checkContentLanguageHeader(detectedLanguage, detectedLanguageName,
                     detectedLanguageCode, preferredLanguageCode);
         } catch (LangDetectException e) {
@@ -267,7 +282,8 @@ public final class LanguageDetectingXMLReaderWrapper
             if (zhSubtagMismatch(detectedLanguage, lowerCaseLang)
                     || !declaredLangCode.equals(detectedLanguageCode)) {
                 langWarning = String.format(message, detectedLanguageName,
-                        getAttValueExpr(), preferredLanguageCode);
+                        getAttValueExpr("lang", langAttrValue),
+                        preferredLanguageCode);
             }
         }
         if (!"".equals(langWarning)) {
@@ -295,10 +311,10 @@ public final class LanguageDetectingXMLReaderWrapper
             String warning = String.format(message, detectedLanguageName,
                     lowerCaseContentLang, preferredLanguageCode,
                     preferredLanguageCode);
-        if (errorHandler != null) {
-            SAXParseException spe = new SAXParseException(warning, null);
-            errorHandler.warning(spe);
-        }
+            if (errorHandler != null) {
+                SAXParseException spe = new SAXParseException(warning, null);
+                errorHandler.warning(spe);
+            }
         }
         if (hasLang) {
             message = "The value of the HTTP \u201CContent-Language\u201D"
@@ -310,9 +326,34 @@ public final class LanguageDetectingXMLReaderWrapper
                 if (zhSubtagMismatch(lowerCaseContentLang, lowerCaseLang)
                         || !contentLangCode.equals(declaredLangCode)) {
                     warn(String.format(message, httpContentLangHeader,
-                            getAttValueExpr()));
+                            getAttValueExpr("lang", langAttrValue)));
                 }
             }
+        }
+    }
+
+    public void checkDirAttribute(String detectedLanguage,
+            String detectedLanguageName, String detectedLanguageCode,
+            String preferredLanguageCode) throws SAXException {
+        if (Arrays.binarySearch(RTL_LANGS, detectedLanguageCode) < 0) {
+            return;
+        }
+        String dirWarning = "";
+        if (!hasDir) {
+            dirWarning = String.format(
+                    "This document appears to be written in %s."
+                            + " Consider adding \u201Cdir=\"rtl\"\u201D"
+                            + " to the \u201Chtml\u201D start tag.",
+                    detectedLanguageName, preferredLanguageCode);
+        } else if (!"rtl".equals(dirAttrValue)) {
+            String message = "This document appears to be written in %s"
+                    + " but the \u201Chtml\u201D start tag has %s."
+                    + " Consider using \u201Cdir=\"rtl\"\u201D instead.";
+            dirWarning = String.format(message, detectedLanguageName,
+                    getAttValueExpr("dir", dirAttrValue));
+        }
+        if (!"".equals(dirWarning)) {
+            warn(dirWarning);
         }
     }
 
@@ -328,11 +369,11 @@ public final class LanguageDetectingXMLReaderWrapper
                                 || declaredLanguage.contains("zh-hans"))));
     }
 
-    private String getAttValueExpr() {
-        if ("".equals(langAttrValue)) {
-            return "an empty \u201clang\u201d attribute";
+    private String getAttValueExpr(String attName, String attValue) {
+        if ("".equals(attValue)) {
+            return String.format("an empty \u201c%s\u201d attribute", attName);
         } else {
-            return String.format("\u201Clang=\"%s\"\u201D", langAttrValue);
+            return String.format("\u201C%s=\"%s\"\u201D", attName, attValue);
         }
     }
 

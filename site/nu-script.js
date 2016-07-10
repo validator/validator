@@ -57,7 +57,7 @@ function reboot() {
 	replaceYearWarning()
 	initFilters()
 	injectHyperlinks()
-	moveLangWarningsAndAddLinks()
+	moveLangAndDirWarningsAndAddLinks()
 	replaceSuccessFailure()
 }
 
@@ -319,32 +319,34 @@ function linkify(messages, text, target, title) {
 	}
 }
 
-function moveLangWarningsAndAddLinks() {
+function moveLangAndDirWarningsAndAddLinks() {
 	var warnings = document.getElementsByClassName("warning")
 	var messagesContainer = document.querySelector("#results ol:first-child")
-	var langWarningText = "This document appears to be written in"
+	var langOrDirWarningText = "This document appears to be written in"
 	var contentLanguageText = "The value of the HTTP Content-Language header is"
-	var langWarning
-	var langLinks
+	var langOrDirWarning
+	var langOrDirLinks
 	var warningText
 	for (var i = 0; i < warnings.length; ++i) {
 		warningText = warnings[i].firstChild.lastChild.textContent
-		if (warningText.indexOf(langWarningText) != -1) {
-			langWarning = warnings[i]
-			langLinks = document.createElement("p")
-			if (warningText.indexOf("start tag") != -1) {
-				langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
+		if (warningText.indexOf(langOrDirWarningText) != -1) {
+			langOrDirWarning = warnings[i]
+			langOrDirLinks = document.createElement("p")
+			if (warningText.indexOf("lang=") != -1) {
+				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
 			} else if (warningText.indexOf("Content-Language") != 1) {
-				langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
+				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
+			} else if (warningText.indexOf("dir=") != 1) {
+				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-html-dir">Structural markup and right-to-left text in HTML</a>.'
 			}
-			langWarning.appendChild(langLinks)
-			messagesContainer.insertBefore(langWarning, messagesContainer.firstChild)
+			langOrDirWarning.appendChild(langOrDirLinks)
+			messagesContainer.insertBefore(langOrDirWarning, messagesContainer.firstChild)
 		} else if (warningText.indexOf(contentLanguageText) != -1) {
-			langWarning = warnings[i]
-			langLinks = document.createElement("p")
-			langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
-			langWarning.appendChild(langLinks)
-			messagesContainer.insertBefore(langWarning, messagesContainer.firstChild)
+			langOrDirWarning = warnings[i]
+			langOrDirLinks = document.createElement("p")
+			langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
+			langOrDirWarning.appendChild(langOrDirLinks)
+			messagesContainer.insertBefore(langOrDirWarning, messagesContainer.firstChild)
 		}
 	}
 }
