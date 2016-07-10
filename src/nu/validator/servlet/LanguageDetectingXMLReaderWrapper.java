@@ -262,9 +262,8 @@ public final class LanguageDetectingXMLReaderWrapper
                     detectedLanguageName, preferredLanguageCode);
         } else {
             String message = "This document appears to be written in %s"
-                    + " but the \u201Chtml\u201D start tag has %s."
-                    + " Consider changing the \u201Clang\u201D value to"
-                    + " \u201C%s\u201D (or variant) instead.";
+                    + " but the \u201Chtml\u201D start tag has %s. Consider"
+                    + " using \u201Clang=\"%s\"\u201D (or variant) instead.";
             if (zhSubtagMismatch(detectedLanguage, lowerCaseLang)
                     || !declaredLangCode.equals(detectedLanguageCode)) {
                 langWarning = String.format(message, detectedLanguageName,
@@ -291,11 +290,15 @@ public final class LanguageDetectingXMLReaderWrapper
                 || !contentLangCode.equals(detectedLanguageCode)) {
             message = "This document appears to be written in %s but the value"
                     + " of the HTTP \u201CContent-Language\u201D header is"
-                    + " \u201C%s\u201D. Consider changing the value to"
-                    + " \u201C%s\u201D.";
-            warn(String.format(message, detectedLanguageName,
+                    + " \u201C%s\u201D. Consider changing it to"
+                    + " \u201C%s\u201D (or variant).";
+            String warning = String.format(message, detectedLanguageName,
                     lowerCaseContentLang, preferredLanguageCode,
-                    preferredLanguageCode));
+                    preferredLanguageCode);
+        if (errorHandler != null) {
+            SAXParseException spe = new SAXParseException(warning, null);
+            errorHandler.warning(spe);
+        }
         }
         if (hasLang) {
             message = "The value of the HTTP \u201CContent-Language\u201D"
@@ -329,8 +332,7 @@ public final class LanguageDetectingXMLReaderWrapper
         if ("".equals(langAttrValue)) {
             return "an empty \u201clang\u201d attribute";
         } else {
-            return String.format("a \u201Clang\u201D attribute with the value"
-                    + " \u201C%s\u201D", langAttrValue);
+            return String.format("\u201Clang=\"%s\"\u201D", langAttrValue);
         }
     }
 

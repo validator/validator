@@ -57,7 +57,7 @@ function reboot() {
 	replaceYearWarning()
 	initFilters()
 	injectHyperlinks()
-	moveLangWarningAndAddLinks()
+	moveLangWarningsAndAddLinks()
 	replaceSuccessFailure()
 }
 
@@ -319,17 +319,30 @@ function linkify(messages, text, target, title) {
 	}
 }
 
-function moveLangWarningAndAddLinks() {
+function moveLangWarningsAndAddLinks() {
 	var warnings = document.getElementsByClassName("warning")
-	var langWarning
-	var langWarningText = "This document appears to be written in"
 	var messagesContainer = document.querySelector("#results ol:first-child")
+	var langWarningText = "This document appears to be written in"
+	var contentLanguageText = "The value of the HTTP Content-Language header is"
+	var langWarning
 	var langLinks
+	var warningText
 	for (var i = 0; i < warnings.length; ++i) {
-		if (warnings[i].firstChild.lastChild.textContent.indexOf(langWarningText) != -1) {
+		warningText = warnings[i].firstChild.lastChild.textContent
+		if (warningText.indexOf(langWarningText) != -1) {
 			langWarning = warnings[i]
 			langLinks = document.createElement("p")
-			langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
+			if (warningText.indexOf("start tag") != -1) {
+				langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
+			} else if (warningText.indexOf("Content-Language") != 1) {
+				langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
+			}
+			langWarning.appendChild(langLinks)
+			messagesContainer.insertBefore(langWarning, messagesContainer.firstChild)
+		} else if (warningText.indexOf(contentLanguageText) != -1) {
+			langWarning = warnings[i]
+			langLinks = document.createElement("p")
+			langLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
 			langWarning.appendChild(langLinks)
 			messagesContainer.insertBefore(langWarning, messagesContainer.firstChild)
 		}
