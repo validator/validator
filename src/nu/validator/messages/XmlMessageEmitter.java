@@ -59,6 +59,7 @@ public class XmlMessageEmitter extends MessageEmitter {
     @Override
     public void endMessage() throws SAXException {
         assert openMessage != null;
+        emitter.characters("\n");
         emitter.endElement(openMessage);
         openMessage = null;
     }
@@ -94,6 +95,7 @@ public class XmlMessageEmitter extends MessageEmitter {
         if (subType != null) {
             attrs.addAttribute("type", subType);
         }
+        emitter.characters("\n");
         emitter.startElement(openMessage, attrs);
     }
 
@@ -130,6 +132,7 @@ public class XmlMessageEmitter extends MessageEmitter {
     @Override
     public void endText() throws SAXException {
         emitter.endElement("message");
+        emitter.characters("\n");
     }
 
     /**
@@ -171,6 +174,7 @@ public class XmlMessageEmitter extends MessageEmitter {
      */
     @Override
     public MessageTextHandler startText() throws SAXException {
+        emitter.characters("\n");
         emitter.startElement("message");
         return messageTextHandler;
     }
