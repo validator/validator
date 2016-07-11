@@ -223,7 +223,7 @@ public class SimpleCommandLineValidator {
 
     private static void end() throws SAXException {
         errorHandler.end("Document checking completed. No errors found.",
-                "Document checking completed.");
+                "Document checking completed.", "");
         if (errorHandler.getErrors() > 0 || errorHandler.getFatalErrors() > 0) {
             System.exit(1);
         }

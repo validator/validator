@@ -1047,7 +1047,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     e,
                     "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
         } finally {
-            errorHandler.end(successMessage(), failureMessage());
+            errorHandler.end(successMessage(), failureMessage(),
+                    (String) request.getAttribute(
+                            "http://validator.nu/properties/document-language"));
             gatherStatistics();
         }
         if (isHtmlOrXhtml) {
@@ -1337,7 +1339,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if (validator != null) {
                     reader.setContentHandler(validator.getContentHandler());
                 }
-                reader = new LanguageDetectingXMLReaderWrapper(reader,
+                reader = new LanguageDetectingXMLReaderWrapper(reader, request,
                         errorHandler, languageIdentifier,
                         documentInput.getLanguage());
                 break;
@@ -1375,7 +1377,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     if (validator != null) {
                         reader.setContentHandler(validator.getContentHandler());
                     }
-                    reader = new LanguageDetectingXMLReaderWrapper(reader,
+                    reader = new LanguageDetectingXMLReaderWrapper(reader, request,
                             errorHandler, languageIdentifier,
                             documentInput.getLanguage());
                 } else {
@@ -1458,7 +1460,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     validator.getContentHandler()));
             reader.setDTDHandler(validator.getDTDHandler());
         }
-        reader = new LanguageDetectingXMLReaderWrapper(reader, errorHandler,
+        reader = new LanguageDetectingXMLReaderWrapper(reader, request, errorHandler,
                 languageIdentifier, documentInput.getLanguage());
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Mozilla Foundation
+ * Copyright (c) 2007-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -110,7 +110,14 @@ public class XmlMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#endMessages()
      */
     @Override
-    public void endMessages() throws SAXException {
+    public void endMessages(String language) throws SAXException {
+        emitter.characters("\n");
+        if (!"".equals(language)) {
+            emitter.startElement("language");
+            emitter.characters(language);
+            emitter.endElement("language");
+        }
+        emitter.characters("\n");
         emitter.endElement("messages");
         emitter.characters("\n");
         contentHandler.endPrefixMapping("");

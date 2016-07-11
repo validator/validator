@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
 import com.ibm.icu.util.ULocale;
@@ -55,6 +57,8 @@ public final class LanguageDetectingXMLReaderWrapper
     private ContentHandler contentHandler;
 
     private ErrorHandler errorHandler;
+
+    private HttpServletRequest request;
 
     private Locator locator = null;
 
@@ -92,11 +96,13 @@ public final class LanguageDetectingXMLReaderWrapper
             "so", "ur" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
-            ErrorHandler errorHandler, LanguageIdentifier languageIdentifier,
+            HttpServletRequest request, ErrorHandler errorHandler,
+            LanguageIdentifier languageIdentifier,
             String httpContentLangHeader) {
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
         this.errorHandler = errorHandler;
+        this.request = request;
         this.htmlStartTagLocator = null;
         this.languageIdentifier = languageIdentifier;
         this.inBody = false;
@@ -232,6 +238,11 @@ public final class LanguageDetectingXMLReaderWrapper
             for (Language possibility : possibleLanguages) {
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
+                    if (request != null) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/document-language",
+                                detectedLanguage);
+                    }
                 }
             }
             if ("".equals(detectedLanguage)) {

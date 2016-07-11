@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -39,7 +39,7 @@ public abstract class MessageEmitter {
 
     }
 
-    public void endMessages() throws SAXException {
+    public void endMessages(String language) throws SAXException {
 
     }
 

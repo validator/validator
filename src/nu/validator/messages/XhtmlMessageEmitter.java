@@ -268,7 +268,7 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
      * @see nu.validator.messages.MessageEmitter#endMessages()
      */
     @Override
-    public void endMessages() throws SAXException {
+    public void endMessages(String language) throws SAXException {
         maybeCloseList();
     }
 

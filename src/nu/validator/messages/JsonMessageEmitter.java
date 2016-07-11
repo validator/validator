@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -102,8 +102,12 @@ public class JsonMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#endMessages()
      */
     @Override
-    public void endMessages() throws SAXException {
+    public void endMessages(String language) throws SAXException {
         maybeCloseArray();
+        if (!"".equals(language)) {
+            handler.key("language");
+            handler.string(language);
+        }
         handler.endObject();
         handler.endDocument();
     }
