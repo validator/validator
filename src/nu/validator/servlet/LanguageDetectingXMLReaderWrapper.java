@@ -92,8 +92,7 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final double MIN_PROBABILITY = .90;
 
-    private static final String[] RTL_LANGS = { "ar", "fa", "he", "ml", "pa",
-            "so", "ur" };
+    private static final String[] RTL_LANGS = { "ar", "fa", "he", "pa", "ur" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
