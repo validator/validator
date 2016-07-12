@@ -104,7 +104,7 @@ public class JsonMessageEmitter extends MessageEmitter {
     @Override
     public void endMessages(String language) throws SAXException {
         maybeCloseArray();
-        if (!"".equals(language)) {
+        if (!"".equals(language) && language != null) {
             handler.key("language");
             handler.string(language);
         }

@@ -112,7 +112,7 @@ public class XmlMessageEmitter extends MessageEmitter {
     @Override
     public void endMessages(String language) throws SAXException {
         emitter.characters("\n");
-        if (!"".equals(language)) {
+        if (!"".equals(language) && language != null) {
             emitter.startElement("language");
             emitter.characters(language);
             emitter.endElement("language");
