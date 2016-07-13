@@ -334,7 +334,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 			langOrDirLinks = document.createElement("p")
 			if (warningText.indexOf("lang=") != -1) {
 				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
-			} else if (warningText.indexOf("Content-Language") != 1) {
+			} else if (warningText.indexOf("Content-Language") != -1) {
 				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
 			} else if (warningText.indexOf("dir=") != 1) {
 				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-html-dir">Structural markup and right-to-left text in HTML</a> and <a href="https://www.w3.org/International/techniques/authoring-html#using">Setting up a right-to-left page</a>.'
