@@ -80,6 +80,11 @@ public class TextMessageEmitter extends MessageEmitter {
         this.messageTextHandler = new TextMessageTextHandler(writer, asciiQuotes);
     }
 
+    public TextMessageEmitter(Writer writer, boolean asciiQuotes) {
+        this.writer = writer;
+        this.messageTextHandler = new TextMessageTextHandler(writer, asciiQuotes);
+    }
+
     private void emitErrorLevel(char[] level) throws IOException {
         writer.write(level, 0, level.length);
     }
