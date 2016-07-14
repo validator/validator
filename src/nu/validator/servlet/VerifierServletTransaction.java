@@ -86,6 +86,7 @@ import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.ContentTypeParser.NonXmlContentTypeException;
 import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.IdFilter;
+import nu.validator.xml.LanguageDetectingXMLReaderWrapper;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;

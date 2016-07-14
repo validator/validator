@@ -21,7 +21,7 @@
  *
  */
 
-package nu.validator.servlet;
+package nu.validator.xml;
 
 import java.io.BufferedReader;
 import java.io.IOException;
