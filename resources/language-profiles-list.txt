@@ -7,6 +7,7 @@ bg
 bn
 br
 ca
+chr
 cs
 cy
 da
@@ -31,11 +32,13 @@ hy
 id
 is
 it
+iu
 ja
 ka
 km
 kn
 ko
+lo
 lt
 lv
 mk
@@ -47,11 +50,13 @@ ne
 nl
 no
 oc
+or
 pa
 pl
 pt
 ro
 ru
+si
 sk
 sl
 so
