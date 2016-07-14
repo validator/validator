@@ -48,7 +48,6 @@ DEALINGS IN THE SOFTWARE.
   <property name="log4j-version" value="1.2.17" />
   <property name="rhino-version" value="1.7R5" />
   <property name="salvation-version" value="2.0.1" />
-  <property name="stanbol-langdetect-version" value="0.12.0" />
   <target name="build" depends="jar"/>
   <target name="clean">
     <delete dir="${dist}"/>
@@ -82,7 +81,6 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jsonic-${jsonic-version}.jar"/>
       <zipfileset src="../dependencies/langdetect-${langdetect-version}.jar"/>
       <zipfileset src="../dependencies/log4j-${log4j-version}.jar"/>
-      <zipfileset src="../dependencies/org.apache.stanbol.enhancer.engines.langdetect-${stanbol-langdetect-version}.jar"/>
       <zipfileset src="../dependencies/rhino-${rhino-version}.jar"/>
       <zipfileset src="../dependencies/salvation-${salvation-version}.jar"/>
       <manifest>
@@ -202,7 +200,6 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/jetty-util-${jetty-version}.jar"/> <!-- GzipFilter dependency -->
       <fileset file="../dependencies/jsonic-${jsonic-version}.jar"/>
       <fileset file="../dependencies/log4j-${log4j-version}.jar"/>
-      <fileset file="../dependencies/org.apache.stanbol.enhancer.engines.langdetect-${stanbol-langdetect-version}.jar"/>
       <fileset file="../dependencies/rhino-${rhino-version}.jar"/>
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
@@ -285,7 +282,6 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="nu.validator" artifactId="jing" version="20150629VNU"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="${httpclient-version}"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="${httpcore-version}"/>
-      <dependency groupId="org.apache.stanbol" artifactId="org.apache.stanbol.enhancer.engines.langdetect" version="${stanbol-langdetect-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-io" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-security" version="${jetty-version}"/>

@@ -128,8 +128,6 @@ import org.apache.log4j.Logger;
 
 import com.ibm.icu.text.Normalizer;
 
-import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
-
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
  *          hsivonen Exp $
@@ -233,8 +231,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static String[] presetUrls;
 
     private static String[] presetNamespaces;
-
-    private static LanguageIdentifier languageIdentifier;
 
     // XXX SVG!!!
 
@@ -548,9 +544,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
             log4j.debug("Spec read.");
 
-            log4j.debug("Initializing language identifier.");
+            log4j.debug("Initializing language detector.");
 
-            languageIdentifier = new LanguageIdentifier();
+            LanguageDetectingXMLReaderWrapper.initialize();
 
             log4j.debug("Initialization complete.");
         } catch (Exception e) {
@@ -1340,8 +1336,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     reader.setContentHandler(validator.getContentHandler());
                 }
                 reader = new LanguageDetectingXMLReaderWrapper(reader, request,
-                        errorHandler, languageIdentifier,
-                        documentInput.getLanguage());
+                        errorHandler, documentInput.getLanguage());
                 break;
             case XML_NO_EXTERNAL_ENTITIES:
             case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
@@ -1377,9 +1372,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     if (validator != null) {
                         reader.setContentHandler(validator.getContentHandler());
                     }
-                    reader = new LanguageDetectingXMLReaderWrapper(reader, request,
-                            errorHandler, languageIdentifier,
-                            documentInput.getLanguage());
+                    reader = new LanguageDetectingXMLReaderWrapper(reader,
+                            request, errorHandler, documentInput.getLanguage());
                 } else {
                     if (contentType != null) {
                         if ("application/xml".equals(contentType) ||
@@ -1460,8 +1454,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     validator.getContentHandler()));
             reader.setDTDHandler(validator.getDTDHandler());
         }
-        reader = new LanguageDetectingXMLReaderWrapper(reader, request, errorHandler,
-                languageIdentifier, documentInput.getLanguage());
+        reader = new LanguageDetectingXMLReaderWrapper(reader, request,
+                errorHandler, documentInput.getLanguage());
     }
 
     /**

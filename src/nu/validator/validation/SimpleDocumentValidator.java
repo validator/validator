@@ -76,8 +76,6 @@ import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 
-import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
-
 import org.apache.log4j.PropertyConfigurator;
 
 import java.net.*;
@@ -106,8 +104,6 @@ public class SimpleDocumentValidator {
     private XMLReader xmlReader;
 
     private LexicalHandler lexicalHandler;
-
-    private LanguageIdentifier languageIdentifier;
 
     private boolean enableLanguageDetection;
 
@@ -184,7 +180,7 @@ public class SimpleDocumentValidator {
         this.entityResolver.setAllowRnc(true);
         if (enableLanguageDetection) {
             try {
-                this.languageIdentifier = new LanguageIdentifier();
+                LanguageDetectingXMLReaderWrapper.initialize();
             } catch (LangDetectException e) {
             }
         }
@@ -296,7 +292,7 @@ public class SimpleDocumentValidator {
         htmlReader = getWiretap(htmlParser);
         if (enableLanguageDetection) {
             htmlReader = new LanguageDetectingXMLReaderWrapper(htmlReader, null,
-                    docValidationErrHandler, languageIdentifier, "");
+                    docValidationErrHandler, "");
         }
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
@@ -325,7 +321,7 @@ public class SimpleDocumentValidator {
         xmlReader = getWiretap(xmlParser);
         if (enableLanguageDetection) {
             xmlReader = new LanguageDetectingXMLReaderWrapper(xmlReader, null,
-                    docValidationErrHandler, languageIdentifier, "");
+                    docValidationErrHandler, "");
         }
         xmlParser.setErrorHandler(docValidationErrHandler);
         xmlParser.lockErrorHandler();

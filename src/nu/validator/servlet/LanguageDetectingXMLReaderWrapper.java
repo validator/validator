@@ -23,17 +23,20 @@
 
 package nu.validator.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.cybozu.labs.langdetect.Detector;
+import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
 import com.ibm.icu.util.ULocale;
-
-import org.apache.stanbol.enhancer.engines.langdetect.LanguageIdentifier;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -51,6 +54,38 @@ import org.xml.sax.helpers.LocatorImpl;
 
 public final class LanguageDetectingXMLReaderWrapper
         implements XMLReader, ContentHandler {
+
+    private static final String languageList = "nu/validator/localentities/files/"
+            + "language-profiles-list.txt";
+
+    private static final String profilesDir = "nu/validator/localentities/files/"
+            + "language-profiles/";
+
+    private static List<String> profiles = new ArrayList<>();
+
+    private static List<String> languages = new ArrayList<>();
+
+    public static void initialize() throws LangDetectException {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    LanguageDetectingXMLReaderWrapper.class.getClassLoader().getResourceAsStream(
+                            languageList)));
+            String language = br.readLine();
+            while (language != null) {
+                languages.add(language);
+                language = br.readLine();
+            }
+            for (String lang : languages) {
+                profiles.add((new BufferedReader(new InputStreamReader(
+                        LanguageDetectingXMLReaderWrapper.class.getClassLoader().getResourceAsStream(
+                                profilesDir + lang)))).readLine());
+            }
+            DetectorFactory.clear();
+            DetectorFactory.loadProfile(profiles);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private final XMLReader wrappedReader;
 
@@ -74,8 +109,6 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private boolean hasLang;
 
-    private LanguageIdentifier languageIdentifier;
-
     private String dirAttrValue;
 
     private boolean hasDir;
@@ -96,14 +129,12 @@ public final class LanguageDetectingXMLReaderWrapper
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
-            LanguageIdentifier languageIdentifier,
             String httpContentLangHeader) {
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
         this.errorHandler = errorHandler;
         this.request = request;
         this.htmlStartTagLocator = null;
-        this.languageIdentifier = languageIdentifier;
         this.inBody = false;
         this.collectingCharacters = false;
         this.characterCount = 0;
@@ -232,8 +263,10 @@ public final class LanguageDetectingXMLReaderWrapper
             }
             String textContent = documentContent.toString();
             String detectedLanguage = "";
-            ArrayList<Language> possibleLanguages = languageIdentifier.getLanguages(
-                    textContent);
+            Detector detector = DetectorFactory.create();
+            detector.append(textContent);
+            detector.getProbabilities();
+            ArrayList<Language> possibleLanguages = detector.getProbabilities();
             for (Language possibility : possibleLanguages) {
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;

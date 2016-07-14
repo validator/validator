@@ -86,7 +86,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="dependencies/jsonic-1.3.9.jar"/>
-	<classpathentry kind="lib" path="dependencies/org.apache.stanbol.enhancer.engines.langdetect-0.12.0.jar"/>
 	<classpathentry kind="lib" path="jing-trang/build/jing.jar" sourcepath="jing-trang/mod/validate/src/main"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

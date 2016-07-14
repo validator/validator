@@ -156,7 +156,6 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),
   ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),
   ("https://repo1.maven.org/maven2/com/cybozu/labs/langdetect/1.1-20120112/langdetect-1.1-20120112.jar", "34e260feaf7d69d5fb1ad8fabff114f3"),
-  ("https://repo1.maven.org/maven2/org/apache/stanbol/org.apache.stanbol.enhancer.engines.langdetect/0.12.0/org.apache.stanbol.enhancer.engines.langdetect-0.12.0.jar", "d24ec832d7dedb6644ca5959c3aa94c5"),
   ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/a878df1503af3bfb63493a63685a117a24988959/parse-css.js", "adbb69f7c71c8d5703f8b9d770bfc71f"),
 ]
