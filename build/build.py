@@ -1157,6 +1157,10 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, scriptFile), os.path.join(filesDir, "script.js"))
   shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "resources", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
+  shutil.copyfile(os.path.join(buildRoot, "resources", "language-profiles-list.txt"), os.path.join(filesDir, "language-profiles-list.txt"))
+  languageProfilesTargetDir = os.path.join(filesDir, "language-profiles")
+  removeIfDirExists(languageProfilesTargetDir)
+  shutil.copytree(os.path.join(buildRoot, "resources", "language-profiles"), languageProfilesTargetDir)
   if followW3Cspec:
     shutil.copyfile(os.path.join(buildRoot, "resources", "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))

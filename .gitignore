@@ -18,6 +18,8 @@ src/nu/validator/localentities/files/cli-help
 src/nu/validator/localentities/files/entitymap
 src/nu/validator/localentities/files/html5spec
 src/nu/validator/localentities/files/icon.png
+src/nu/validator/localentities/files/language-profiles
+src/nu/validator/localentities/files/language-profiles-list.txt
 src/nu/validator/localentities/files/language-subtag-registry
 src/nu/validator/localentities/files/link-rel-extensions
 src/nu/validator/localentities/files/log4j.properties
