@@ -105,6 +105,9 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
+        if (literal.length() == 0) {
+            throw newDatatypeException("Must not be empty.");
+        }
         StringBuilder builder = new StringBuilder();
         ArrayList<String> detailTokens = new ArrayList<>();
         int len = literal.length();
