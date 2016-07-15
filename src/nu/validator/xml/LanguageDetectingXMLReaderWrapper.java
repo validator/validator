@@ -63,22 +63,22 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static List<String> profiles = new ArrayList<>();
 
-    private static List<String> languages = new ArrayList<>();
+    private static List<String> languageTags = new ArrayList<>();
 
     public static void initialize() throws LangDetectException {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     LanguageDetectingXMLReaderWrapper.class.getClassLoader().getResourceAsStream(
                             languageList)));
-            String language = br.readLine();
-            while (language != null) {
-                languages.add(language);
-                language = br.readLine();
+            String languageTagAndName = br.readLine();
+            while (languageTagAndName != null) {
+                languageTags.add(languageTagAndName.split("\t")[0]);
+                languageTagAndName = br.readLine();
             }
-            for (String lang : languages) {
+            for (String languageTag : languageTags) {
                 profiles.add((new BufferedReader(new InputStreamReader(
                         LanguageDetectingXMLReaderWrapper.class.getClassLoader().getResourceAsStream(
-                                profilesDir + lang)))).readLine());
+                                profilesDir + languageTag)))).readLine());
             }
             DetectorFactory.clear();
             DetectorFactory.loadProfile(profiles);

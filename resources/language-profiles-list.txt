@@ -1,111 +1,111 @@
-af
-am
-an
-ar
-ast
-az
-be
-bg
-bn
-br
-bs
-ca
-ceb
-chr
-co
-cs
-cy
-da
-de
-el
-en
-eo
-es
-et
-eu
-fa
-fi
-fr
-fy
-ga
-gd
-gl
-gu
-ha
-haw
-he
-hi
-hr
-ht
-hu
-hy
-id
-ig
-is
-it
-iu
-ja
-jv
-ka
-km
-kk
-kn
-ko
-ku
-ky
-la
-lg
-lo
-lt
-lv
-mg
-mi
-mk
-mn
-my
-ml
-mr
-ms
-mt
-ne
-nl
-no
-ny
-oc
-or
-pa
-pl
-ps
-pt
-ro
-ru
-rw
-sd
-si
-sk
-sl
-sm
-sn
-so
-sq
-sr
-st
-su
-sv
-sw
-ta
-te
-tg
-th
-tl
-tr
-uk
-ur
-uz
-vi
-xh
-yi
-yo
-zh-cn
-zh-tw
-zu
+af	Afrikaans
+am	Amharic
+an	Aragonese
+ar	Arabic
+ast	Asturian
+az	Azerbaijani
+be	Belarusian
+bg	Bulgarian
+bn	Bengali
+br	Breton
+bs	Bosnian
+ca	Catalan
+ceb	Cebuano
+chr	Cherokee
+co	Corsican
+cs	Czech
+cy	Welsh
+da	Danish
+de	German
+el	Greek
+en	English
+eo	Esperanto
+es	Spanish
+et	Estonian
+eu	Basque
+fa	Persian
+fi	Finnish
+fr	French
+fy	Western Frisian
+ga	Irish
+gd	Scottish Gaelic
+gl	Galician
+gu	Gujarati
+ha	Hausa
+haw	Hawaiian
+he	Hebrew
+hi	Hindi
+hr	Croatian
+ht	Haitian
+hu	Hungarian
+hy	Armenian
+id	Indonesian
+ig	Igbo
+is	Icelandic
+it	Italian
+iu	Inuktitut
+ja	Japanese
+jv	Javanese
+ka	Georgian
+km	Khmer
+kk	Kazakh
+kn	Kannada
+ko	Korean
+ku	Kurdish
+ky	Kyrgyz
+la	Latin
+lg	Ganda
+lo	Lao
+lt	Lithuanian
+lv	Latvian
+mg	Malagasy
+mi	Maori
+mk	Macedonian
+mn	Mongolian
+my	Burmese
+ml	Malayalam
+mr	Marathi
+ms	Malay
+mt	Maltese
+ne	Nepali
+nl	Dutch
+no	Norwegian
+ny	Nyanja
+oc	Occitan
+or	Oriya
+pa	Punjabi
+pl	Polish
+ps	Pashto
+pt	Portuguese
+ro	Romanian
+ru	Russian
+rw	Kinyarwanda
+sd	Sindhi
+si	Sinhala
+sk	Slovak
+sl	Slovenian
+sm	Samoan
+sn	Shona
+so	Somali
+sq	Albanian
+sr	Serbian
+st	Southern Sotho
+su	Sundanese
+sv	Swedish
+sw	Swahili
+ta	Tamil
+te	Telugu
+tg	Tajik
+th	Thai
+tl	Tagalog
+tr	Turkish
+uk	Ukrainian
+ur	Urdu
+uz	Uzbek
+vi	Vietnamese
+xh	Xhosa
+yi	Yiddish
+yo	Yoruba
+zh-cn	Chinese (China)
+zh-tw	Chinese (Taiwan)
+zu	Zulu
