@@ -95,6 +95,7 @@ import nu.validator.xml.SystemErrErrorHandler;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
 import nu.validator.xml.XhtmlSaxEmitter;
+import nu.validator.xml.templateelement.TemplateElementDroppingSchemaWrapper;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
@@ -535,6 +536,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if (isRoleAttributeFilteringSchema(u)) {
                     s = new RoleAttributeFilteringSchemaWrapper(s);
                 }
+                if (isTemplateElementDroppingSchema(u)) {
+                    s = new TemplateElementDroppingSchemaWrapper(s);
+                }
                 preloadedSchemas[i] = s;
                 i++;
             }
@@ -581,6 +585,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     private static boolean isRoleAttributeFilteringSchema(String key) {
+        return ("http://s.validator.nu/xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/html5.rnc".equals(key)
+                || "http://s.validator.nu/html5-all.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-all.rnc".equals(key)
+                || "http://s.validator.nu/html5-its.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/html5-rdfalite.rnc".equals(key));
+    }
+
+    private static boolean isTemplateElementDroppingSchema(String key) {
         return ("http://s.validator.nu/xhtml5.rnc".equals(key)
                 || "http://s.validator.nu/html5.rnc".equals(key)
                 || "http://s.validator.nu/html5-all.rnc".equals(key)

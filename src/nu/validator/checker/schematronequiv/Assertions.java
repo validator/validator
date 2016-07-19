@@ -1134,6 +1134,8 @@ public class Assertions extends Checker {
 
     private boolean hasTopLevelH1;
 
+    private int numberOfTemplatesDeep = 0;
+
     private Set<Locator> secondLevelH1s = new HashSet<>();
 
     private Map<Locator, Map<String, String>> siblingSources = new ConcurrentHashMap<>();
@@ -1273,6 +1275,15 @@ public class Assertions extends Checker {
     @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
+        if ("http://www.w3.org/1999/xhtml" == uri
+                && "template".equals(localName)) {
+            numberOfTemplatesDeep--;
+            if (numberOfTemplatesDeep != 0) {
+                return;
+            }
+        } else if (numberOfTemplatesDeep > 0) {
+            return;
+        }
         StackNode node = pop();
         Locator locator = null;
         openSingleSelects.remove(node);
@@ -1369,6 +1380,7 @@ public class Assertions extends Checker {
         hasMetaCharset = false;
         hasContentTypePragma = false;
         hasTopLevelH1 = false;
+        numberOfTemplatesDeep = 0;
     }
 
     @Override
@@ -1399,6 +1411,15 @@ public class Assertions extends Checker {
     @Override
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
+        if ("http://www.w3.org/1999/xhtml" == uri
+                && "template".equals(localName)) {
+            numberOfTemplatesDeep++;
+            if (numberOfTemplatesDeep != 1) {
+                return;
+            }
+        } else if (numberOfTemplatesDeep > 0) {
+            return;
+        }
         Set<String> ids = new HashSet<>();
         String role = null;
         String inputTypeVal = null;
@@ -2576,6 +2597,9 @@ public class Assertions extends Checker {
     @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
+        if (numberOfTemplatesDeep > 0) {
+            return;
+        }
         StackNode node = peek();
         for (int i = start; i < start + length; i++) {
             char c = ch[i];
