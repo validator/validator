@@ -61,7 +61,6 @@ kn	Kannada
 ko	Korean
 ku	Kurdish
 ky	Kyrgyz
-la	Latin
 lg	Ganda
 li	Limburgish
 lmo	Lombard
