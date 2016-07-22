@@ -147,5 +147,4 @@ yi	Yiddish
 yo	Yoruba
 zh-hans	Simplied Chinese
 zh-hant	Traditional Chinese
-zh-yue	Cantonese
 zu	Zulu

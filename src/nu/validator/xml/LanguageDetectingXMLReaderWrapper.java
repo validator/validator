@@ -294,9 +294,6 @@ public final class LanguageDetectingXMLReaderWrapper
             } else if ("zh-hant".equals(detectedLanguage)) {
                 detectedLanguageName = "Traditional Chinese";
                 preferredLanguageCode = "zh-hant";
-            } else if ("zh-yue".equals(detectedLanguage)) {
-                detectedLanguageName = "Cantonese";
-                preferredLanguageCode = "yue";
             } else if ("bcl".equals(detectedLanguage)) {
                 detectedLanguageName = "Central Bikol";
                 preferredLanguageCode = "bcl";
@@ -356,7 +353,8 @@ public final class LanguageDetectingXMLReaderWrapper
                     && "sh".equals(declaredLangCode)) {
                 return;
             }
-            if (isCorrectlyDeclaredYue(detectedLanguage, lowerCaseLang)) {
+            if ("zh".equals(detectedLanguageCode)
+                    && "yue".equals(lowerCaseLang)) {
                 return;
             }
             String message = "This document appears to be written in %s"
@@ -396,7 +394,8 @@ public final class LanguageDetectingXMLReaderWrapper
         if ("hr".equals(detectedLanguageCode) && "sh".equals(contentLangCode)) {
             return;
         }
-        if (isCorrectlyDeclaredYue(detectedLanguage, lowerCaseContentLang)) {
+        if ("zh".equals(detectedLanguageCode)
+                && "yue".equals(lowerCaseContentLang)) {
             return;
         }
         if (zhSubtagMismatch(detectedLanguage, lowerCaseContentLang)
@@ -454,31 +453,14 @@ public final class LanguageDetectingXMLReaderWrapper
         }
     }
 
-    private boolean isCorrectlyDeclaredYue(String expectedLanguage,
-            String declaredLanguage) {
-        return ("zh-yue".equals(expectedLanguage)
-                && ("yue".equals(declaredLanguage)
-                        || "zh-yue".equals(declaredLanguage)
-                        || "zh-hk".equals(declaredLanguage)));
-    }
-
     private boolean zhSubtagMismatch(String expectedLanguage,
             String declaredLanguage) {
         return (("zh-hans".equals(expectedLanguage)
                 && (declaredLanguage.contains("zh-tw")
-                        || declaredLanguage.contains("zh-hant")
-                        || declaredLanguage.contains("zh-hk")
-                        || declaredLanguage.contains("yue")))
+                        || declaredLanguage.contains("zh-hant")))
                 || ("zh-hant".equals(expectedLanguage)
                         && (declaredLanguage.contains("zh-cn")
-                                || declaredLanguage.contains("zh-hans")
-                                || declaredLanguage.contains("zh-hk")
-                                || declaredLanguage.contains("yue")))
-                || ("zh-yue".equals(expectedLanguage)
-                        && (declaredLanguage.contains("zh-cn")
-                                || declaredLanguage.contains("zh-hans")
-                                || declaredLanguage.contains("zh-tw")
-                                || declaredLanguage.contains("zh-hant"))));
+                                || declaredLanguage.contains("zh-hans"))));
     }
 
     private String getAttValueExpr(String attName, String attValue) {
