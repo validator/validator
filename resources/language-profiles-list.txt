@@ -11,7 +11,6 @@ be	Belarusian
 bg	Bulgarian
 bn	Bengali
 br	Breton
-bs	Bosnian
 ca	Catalan
 ce	Chechen
 ceb	Cebuano
@@ -43,7 +42,6 @@ gu	Gujarati
 ha	Hausa
 he	Hebrew
 hi	Hindi
-hr	Croatian
 hsb	Upper Sorbian
 ht	Haitian
 hu	Hungarian
@@ -110,6 +108,7 @@ rw	Kinyarwanda
 sah	Sakha
 scn	Sicilian
 sd	Sindhi
+sh	Serbo-Croatian
 si	Sinhala
 sk	Slovak
 sl	Slovenian

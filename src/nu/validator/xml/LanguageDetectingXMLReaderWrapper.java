@@ -363,6 +363,12 @@ public final class LanguageDetectingXMLReaderWrapper
                     && "yue".equals(lowerCaseLang)) {
                 return;
             }
+            if ("sh".equals(detectedLanguageCode)
+                    && ("sr".equals(declaredLangCode)
+                            || "hr".equals(declaredLangCode)
+                            || "bs".equals(declaredLangCode))) {
+                return;
+            }
             String message = "This document appears to be written in %s"
                     + " but the \u201Chtml\u201D start tag has %s. Consider"
                     + " using \u201Clang=\"%s\"\u201D (or variant) instead.";
@@ -402,6 +408,12 @@ public final class LanguageDetectingXMLReaderWrapper
         }
         if ("zh".equals(detectedLanguageCode)
                 && "yue".equals(lowerCaseContentLang)) {
+            return;
+        }
+        if ("sh".equals(detectedLanguageCode)
+                && ("sr".equals(lowerCaseContentLang)
+                        || "hr".equals(lowerCaseContentLang)
+                        || "bs".equals(lowerCaseContentLang))) {
             return;
         }
         if (zhSubtagMismatch(detectedLanguage, lowerCaseContentLang)
