@@ -358,7 +358,8 @@ public final class LanguageDetectingXMLReaderWrapper
                 return;
             }
             if ("de".equals(detectedLanguageCode)
-                    && "lb".equals(declaredLangCode)) {
+                    && ("bar".equals(declaredLangCode)
+                            || "lb".equals(declaredLangCode))) {
                 return;
             }
             if ("zh".equals(detectedLanguageCode)

@@ -6,7 +6,6 @@ arz	Egyptian Arabic
 ast	Asturian
 az	Azerbaijani
 ba	Bashkir
-bar	Bavarian
 bcl	Central Bikol
 be	Belarusian
 bg	Bulgarian
