@@ -13,7 +13,6 @@ bn	Bengali
 br	Breton
 bs	Bosnian
 ca	Catalan
-cbk	Chavacano
 ce	Chechen
 ceb	Cebuano
 chr	Cherokee

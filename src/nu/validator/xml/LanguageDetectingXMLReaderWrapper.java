@@ -301,9 +301,6 @@ public final class LanguageDetectingXMLReaderWrapper
             } else if ("bcl".equals(detectedLanguage)) {
                 detectedLanguageName = "Central Bikol";
                 preferredLanguageCode = "bcl";
-            } else if ("cbk".equals(detectedLanguage)) {
-                detectedLanguageName = "Chavacano";
-                preferredLanguageCode = "cbk";
             } else if ("mhr".equals(detectedLanguage)) {
                 detectedLanguageName = "Meadow Mari";
                 preferredLanguageCode = "mhr";
