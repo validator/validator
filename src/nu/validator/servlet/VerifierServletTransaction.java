@@ -1351,7 +1351,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     reader.setContentHandler(validator.getContentHandler());
                 }
                 reader = new LanguageDetectingXMLReaderWrapper(reader, request,
-                        errorHandler, documentInput.getLanguage());
+                        errorHandler, documentInput.getLanguage(),
+                        documentInput.getSystemId());
                 break;
             case XML_NO_EXTERNAL_ENTITIES:
             case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
@@ -1388,7 +1389,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         reader.setContentHandler(validator.getContentHandler());
                     }
                     reader = new LanguageDetectingXMLReaderWrapper(reader,
-                            request, errorHandler, documentInput.getLanguage());
+                            request, errorHandler, documentInput.getLanguage(),
+                            documentInput.getSystemId());
                 } else {
                     if (contentType != null) {
                         if ("application/xml".equals(contentType) ||
@@ -1470,7 +1472,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             reader.setDTDHandler(validator.getDTDHandler());
         }
         reader = new LanguageDetectingXMLReaderWrapper(reader, request,
-                errorHandler, documentInput.getLanguage());
+                errorHandler, documentInput.getLanguage(),
+                documentInput.getSystemId());
     }
 
     /**

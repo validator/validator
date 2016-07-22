@@ -95,6 +95,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private HttpServletRequest request;
 
+    private String systemId;
+
     private Locator locator = null;
 
     private Locator htmlStartTagLocator;
@@ -130,11 +132,12 @@ public final class LanguageDetectingXMLReaderWrapper
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
-            String httpContentLangHeader) {
+            String httpContentLangHeader, String systemId) {
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
         this.errorHandler = errorHandler;
         this.request = request;
+        this.systemId = systemId;
         this.htmlStartTagLocator = null;
         this.inBody = false;
         this.collectingCharacters = false;
@@ -270,7 +273,8 @@ public final class LanguageDetectingXMLReaderWrapper
             ArrayList<Language> possibleLanguages = detector.getProbabilities();
             for (Language possibility : possibleLanguages) {
                 ULocale plocale = new ULocale(possibility.lang);
-                System.out.println(String.format("%s %s", plocale.getDisplayName(), possibility.prob));
+                System.out.println(String.format("%s %s %s",
+                        plocale.getDisplayName(), possibility.prob, systemId));
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
                     if (request != null) {

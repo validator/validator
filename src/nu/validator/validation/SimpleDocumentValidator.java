@@ -292,7 +292,7 @@ public class SimpleDocumentValidator {
         htmlReader = getWiretap(htmlParser);
         if (enableLanguageDetection) {
             htmlReader = new LanguageDetectingXMLReaderWrapper(htmlReader, null,
-                    docValidationErrHandler, "");
+                    docValidationErrHandler, "", "");
         }
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
@@ -321,7 +321,7 @@ public class SimpleDocumentValidator {
         xmlReader = getWiretap(xmlParser);
         if (enableLanguageDetection) {
             xmlReader = new LanguageDetectingXMLReaderWrapper(xmlReader, null,
-                    docValidationErrHandler, "");
+                    docValidationErrHandler, "", "");
         }
         xmlParser.setErrorHandler(docValidationErrHandler);
         xmlParser.lockErrorHandler();
