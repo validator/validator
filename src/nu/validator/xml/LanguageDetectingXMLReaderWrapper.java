@@ -353,6 +353,10 @@ public final class LanguageDetectingXMLReaderWrapper
                     && "sh".equals(declaredLangCode)) {
                 return;
             }
+            if ("de".equals(detectedLanguageCode)
+                    && "lb".equals(declaredLangCode)) {
+                return;
+            }
             if ("zh".equals(detectedLanguageCode)
                     && "yue".equals(lowerCaseLang)) {
                 return;
