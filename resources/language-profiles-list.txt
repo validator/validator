@@ -43,7 +43,6 @@ gl	Galician
 gsw	Swiss German
 gu	Gujarati
 ha	Hausa
-haw	Hawaiian
 he	Hebrew
 hi	Hindi
 hr	Croatian
@@ -113,7 +112,6 @@ ru	Russian
 rw	Kinyarwanda
 sah	Sakha
 scn	Sicilian
-sco	Scots
 sd	Sindhi
 si	Sinhala
 sk	Slovak
