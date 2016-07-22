@@ -2,18 +2,27 @@ af	Afrikaans
 am	Amharic
 an	Aragonese
 ar	Arabic
+arz	Egyptian Arabic
 ast	Asturian
 az	Azerbaijani
+ba	Bashkir
+bar	Bavarian
+bcl	Central Bikol
 be	Belarusian
 bg	Bulgarian
 bn	Bengali
 br	Breton
 bs	Bosnian
 ca	Catalan
+cbk	Chavacano
+ce	Chechen
 ceb	Cebuano
 chr	Cherokee
+ckb	Sorani Kurdish
 co	Corsican
+cr	Cree
 cs	Czech
+cv	Chuvash
 cy	Welsh
 da	Danish
 de	German
@@ -25,22 +34,26 @@ et	Estonian
 eu	Basque
 fa	Persian
 fi	Finnish
+fo	Faroese
 fr	French
 fy	Western Frisian
 ga	Irish
 gd	Scottish Gaelic
 gl	Galician
+gsw	Swiss German
 gu	Gujarati
 ha	Hausa
 haw	Hawaiian
 he	Hebrew
 hi	Hindi
 hr	Croatian
+hsb	Upper Sorbian
 ht	Haitian
 hu	Hungarian
 hy	Armenian
 id	Indonesian
 ig	Igbo
+ilo	Iloko
 is	Icelandic
 it	Italian
 iu	Inuktitut
@@ -54,19 +67,30 @@ ko	Korean
 ku	Kurdish
 ky	Kyrgyz
 la	Latin
+lb	Luxembourgish
 lg	Ganda
+li	Limburgish
+lmo	Lombard
 lo	Lao
 lt	Lithuanian
 lv	Latvian
 mg	Malagasy
+mhr	Meadow Mari
 mi	Maori
+min	Minangkabau
 mk	Macedonian
-mn	Mongolian
-my	Burmese
 ml	Malayalam
+mn	Mongolian
 mr	Marathi
+mrj	Hill Mari
 ms	Malay
 mt	Maltese
+my	Burmese
+mzn	Mazanderani
+nah	Nahuatl
+nan	Min Nan Chinese
+nap	Neapolitan
+nds	Low German
 ne	Nepali
 nl	Dutch
 nn	Norwegian Nynorsk
@@ -74,13 +98,22 @@ no	Norwegian
 ny	Nyanja
 oc	Occitan
 or	Oriya
+os	Ossetian
 pa	Punjabi
+pag	Pangasinan
+pam	Pampanga
 pl	Polish
+pms	Piedmontese
+pnb	Western Panjabi
 ps	Pashto
 pt	Portuguese
+qu	Quechua
 ro	Romanian
 ru	Russian
 rw	Kinyarwanda
+sah	Sakha
+scn	Sicilian
+sco	Scots
 sd	Sindhi
 si	Sinhala
 sk	Slovak
@@ -100,14 +133,19 @@ tg	Tajik
 th	Thai
 tl	Tagalog
 tr	Turkish
+tt	Tatar
 ug	Uyghur
 uk	Ukrainian
 ur	Urdu
 uz	Uzbek
+vec	Venetian
 vi	Vietnamese
+wa	Walloon
+war	Waray
 xh	Xhosa
 yi	Yiddish
 yo	Yoruba
-zh-cn	Chinese (China)
-zh-tw	Chinese (Taiwan)
+zh-hans	Simplied Chinese
+zh-hant	Traditional Chinese
+zh-yue	Cantonese
 zu	Zulu

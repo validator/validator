@@ -125,8 +125,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final double MIN_PROBABILITY = .90;
 
-    private static final String[] RTL_LANGS = { "ar", "fa", "he", "ps", "sd",
-            "ug", "ur" };
+    private static final String[] RTL_LANGS = { "ar", "arz", "ckb", "fa", "he",
+            "pnb", "ps", "sd", "ug", "ur" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
@@ -269,6 +269,8 @@ public final class LanguageDetectingXMLReaderWrapper
             detector.getProbabilities();
             ArrayList<Language> possibleLanguages = detector.getProbabilities();
             for (Language possibility : possibleLanguages) {
+                ULocale plocale = new ULocale(possibility.lang);
+                System.out.println(String.format("%s %s", plocale.getDisplayName(), possibility.prob));
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
                     if (request != null) {
@@ -286,12 +288,33 @@ public final class LanguageDetectingXMLReaderWrapper
             String preferredLanguageCode = "";
             ULocale locale = new ULocale(detectedLanguage);
             String detectedLanguageCode = locale.getLanguage();
-            if ("zh-cn".equals(detectedLanguage)) {
+            if ("zh-hans".equals(detectedLanguage)) {
                 detectedLanguageName = "Simplified Chinese";
-                preferredLanguageCode = "zh-Hans";
-            } else if ("zh-tw".equals(detectedLanguage)) {
+                preferredLanguageCode = "zh-hans";
+            } else if ("zh-hant".equals(detectedLanguage)) {
                 detectedLanguageName = "Traditional Chinese";
-                preferredLanguageCode = "zh-Hant";
+                preferredLanguageCode = "zh-hant";
+            } else if ("zh-yue".equals(detectedLanguage)) {
+                detectedLanguageName = "Cantonese";
+                preferredLanguageCode = "yue";
+            } else if ("bcl".equals(detectedLanguage)) {
+                detectedLanguageName = "Central Bikol";
+                preferredLanguageCode = "bcl";
+            } else if ("cbk".equals(detectedLanguage)) {
+                detectedLanguageName = "Chavacano";
+                preferredLanguageCode = "cbk";
+            } else if ("mhr".equals(detectedLanguage)) {
+                detectedLanguageName = "Meadow Mari";
+                preferredLanguageCode = "mhr";
+            } else if ("mrj".equals(detectedLanguage)) {
+                detectedLanguageName = "Hill Mari";
+                preferredLanguageCode = "mrj";
+            } else if ("nah".equals(detectedLanguage)) {
+                detectedLanguageName = "Nahuatl";
+                preferredLanguageCode = "nah";
+            } else if ("pnb".equals(detectedLanguage)) {
+                detectedLanguageName = "Western Panjabi";
+                preferredLanguageCode = "pnb";
             } else {
                 detectedLanguageName = locale.getDisplayName();
                 preferredLanguageCode = detectedLanguageCode;
@@ -320,6 +343,22 @@ public final class LanguageDetectingXMLReaderWrapper
                             + " start tag.",
                     detectedLanguageName, preferredLanguageCode);
         } else {
+            if ("tl".equals(detectedLanguageCode)
+                    && ("ceb".equals(declaredLangCode)
+                            || "war".equals(declaredLangCode))) {
+                return;
+            }
+            if ("id".equals(detectedLanguageCode)
+                    && "min".equals(declaredLangCode)) {
+                return;
+            }
+            if ("hr".equals(detectedLanguageCode)
+                    && "sh".equals(declaredLangCode)) {
+                return;
+            }
+            if (isCorrectlyDeclaredYue(detectedLanguage, lowerCaseLang)) {
+                return;
+            }
             String message = "This document appears to be written in %s"
                     + " but the \u201Chtml\u201D start tag has %s. Consider"
                     + " using \u201Clang=\"%s\"\u201D (or variant) instead.";
@@ -346,6 +385,20 @@ public final class LanguageDetectingXMLReaderWrapper
         String lowerCaseContentLang = httpContentLangHeader.toLowerCase();
         String contentLangCode = new ULocale(
                 lowerCaseContentLang).getLanguage();
+        if ("tl".equals(detectedLanguageCode) && ("ceb".equals(contentLangCode)
+                || "war".equals(contentLangCode))) {
+            return;
+        }
+        if ("id".equals(detectedLanguageCode)
+                && "min".equals(contentLangCode)) {
+            return;
+        }
+        if ("hr".equals(detectedLanguageCode) && "sh".equals(contentLangCode)) {
+            return;
+        }
+        if (isCorrectlyDeclaredYue(detectedLanguage, lowerCaseContentLang)) {
+            return;
+        }
         if (zhSubtagMismatch(detectedLanguage, lowerCaseContentLang)
                 || !contentLangCode.equals(detectedLanguageCode)) {
             message = "This document appears to be written in %s but the value"
@@ -401,16 +454,31 @@ public final class LanguageDetectingXMLReaderWrapper
         }
     }
 
+    private boolean isCorrectlyDeclaredYue(String expectedLanguage,
+            String declaredLanguage) {
+        return ("zh-yue".equals(expectedLanguage)
+                && ("yue".equals(declaredLanguage)
+                        || "zh-yue".equals(declaredLanguage)
+                        || "zh-hk".equals(declaredLanguage)));
+    }
+
     private boolean zhSubtagMismatch(String expectedLanguage,
             String declaredLanguage) {
-        return ((("zh-cn".equals(expectedLanguage)
-                || "zh-hans".equals(expectedLanguage))
+        return (("zh-hans".equals(expectedLanguage)
                 && (declaredLanguage.contains("zh-tw")
-                        || declaredLanguage.contains("zh-hant")))
-                || (("zh-tw".equals(expectedLanguage)
-                        || "zh-hant".equals(expectedLanguage))
+                        || declaredLanguage.contains("zh-hant")
+                        || declaredLanguage.contains("zh-hk")
+                        || declaredLanguage.contains("yue")))
+                || ("zh-hant".equals(expectedLanguage)
                         && (declaredLanguage.contains("zh-cn")
-                                || declaredLanguage.contains("zh-hans"))));
+                                || declaredLanguage.contains("zh-hans")
+                                || declaredLanguage.contains("zh-hk")
+                                || declaredLanguage.contains("yue")))
+                || ("zh-yue".equals(expectedLanguage)
+                        && (declaredLanguage.contains("zh-cn")
+                                || declaredLanguage.contains("zh-hans")
+                                || declaredLanguage.contains("zh-tw")
+                                || declaredLanguage.contains("zh-hant"))));
     }
 
     private String getAttValueExpr(String attName, String attValue) {
