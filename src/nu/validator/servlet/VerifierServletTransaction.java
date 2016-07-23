@@ -1226,7 +1226,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
             String language = (String) request.getAttribute(
                     "http://validator.nu/properties/document-language");
-            if (!"".equals(language)) {
+            if (!"".equals(language) && language != null) {
                 String langFieldName = "LANG_" + language.toUpperCase();
                 if ("zh-hans".equals(language)) {
                     langFieldName = "LANG_ZH_HANS";
