@@ -1224,6 +1224,17 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             } else if (externalSchematron) {
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
             }
+            String language = (String) request.getAttribute(
+                    "http://validator.nu/properties/document-language");
+            if (!"".equals(language)) {
+                String langFieldName = "LANG_" + language.toUpperCase();
+                if ("zh-hans".equals(language)) {
+                    langFieldName = "LANG_ZH_HANS";
+                } else if ("zh-hant".equals(language)) {
+                    langFieldName = "LANG_ZH_HANT";
+                }
+                stats.incrementField(stats.getFieldFromName(langFieldName));
+            }
         }
     }
 
