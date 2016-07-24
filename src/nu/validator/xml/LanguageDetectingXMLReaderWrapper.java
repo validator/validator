@@ -64,11 +64,6 @@ public final class LanguageDetectingXMLReaderWrapper
     private static final String profilesDir = "nu/validator/localentities/files/"
             + "language-profiles/";
 
-    private static final String[] COMMON_LANGS = { "en", "ru", "ja", "de", "fr",
-            "he", "pl", "es", "zh-hans", "vi", "ko", "it", "fa", "nl", "no",
-            "ar", "pt", "cs", "id", "tr", "zh-hant", "el", "hu", "sv", "ca",
-            "th", "ro", "sk", "da", "bg", "lt", "uk", "ms", "fi", "et" };
-
     private static List<String> profiles = new ArrayList<>();
 
     private static List<String> languageTags = new ArrayList<>();
@@ -137,6 +132,11 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final String[] RTL_LANGS = { "ar", "arz", "ckb", "fa", "he",
             "pnb", "ps", "sd", "ug", "ur" };
+
+    private static final String[] COMMON_LANGS = { "ar", "bg", "ca", "cs", "da",
+            "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hu", "id",
+            "it", "ja", "ko", "lt", "ms", "nl", "no", "pl", "pt", "ro", "ru",
+            "sk", "sv", "th", "tr", "uk", "vi", "zh-hans", "zh-hant" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
