@@ -175,7 +175,6 @@ public class Statistics {
                 LANG_MY("Detected language: Burmese"),
                 LANG_MZN("Detected language: Mazanderani"),
                 LANG_NAH("Detected language: Nahuatl"),
-                LANG_NAN("Detected language: Min Nan Chinese"),
                 LANG_NAP("Detected language: Neapolitan"),
                 LANG_NDS("Detected language: Low German"),
                 LANG_NE("Detected language: Nepali"),
