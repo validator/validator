@@ -51,6 +51,21 @@ public class Statistics {
 
     private static final char[] VALIDATIONS_PER_SECOND = "Validations per second".toCharArray();
 
+    private static final char[] SORT_LANGS_SCRIPT = (""
+            + " var langRows = new Array();"
+            + " var rows = document.querySelectorAll('tr');"
+            + " for (var i=0; i < rows.length; i++) { var row = rows[i];"
+            + "   if (row.textContent.indexOf('Detected language') > -1) {"
+            + "       var sortnr = parseInt(row.cells[1].textContent"
+            + "         || row.cells[0].innerText);"
+            + "       if (!isNaN(sortnr)) langRows.push([sortnr, row]);"
+            + "   }"
+            + " } langRows.sort(function(x,y) { return x[0] - y[0]; });"
+            + " langRows.reverse();"
+            + " for (var i=0; i<langRows.length; i++) {"
+            + "   document.querySelector('tbody').appendChild(langRows[i][1]);"
+            + " }").toCharArray();
+
     public enum Field {
         // Sigh. Eclipse's formatting of the following code is sad.
         CUSTOM_ENC("Manually set character encoding"), AUTO_SCHEMA(
@@ -358,6 +373,9 @@ public class Statistics {
                 }
                 endElement(ch, "tbody");
                 endElement(ch, "table");
+                startElement(ch, "script");
+                characters(ch, SORT_LANGS_SCRIPT);
+                endElement(ch, "script");
                 endElement(ch, "body");
                 endElement(ch, "html");
             } finally {
