@@ -184,7 +184,6 @@ runDependencyJars = [
   "log4j-1.2.17.jar",
   "rhino-1.7R5.jar",
   "langdetect-1.1-20120112.jar",
-  "org.apache.stanbol.enhancer.engines.langdetect-0.12.0.jar",
   "jsonic-1.3.9.jar",
 ]
 
