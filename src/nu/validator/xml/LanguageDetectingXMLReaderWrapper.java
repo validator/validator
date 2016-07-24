@@ -24,8 +24,11 @@
 package nu.validator.xml;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +63,11 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final String profilesDir = "nu/validator/localentities/files/"
             + "language-profiles/";
+
+    private static final String[] COMMON_LANGS = { "en", "ru", "ja", "de", "fr",
+            "he", "pl", "es", "zh-hans", "vi", "ko", "it", "fa", "nl", "no",
+            "ar", "pt", "cs", "id", "tr", "zh-hant", "el", "hu", "sv", "ca",
+            "th", "ro", "sk", "da", "bg", "lt", "uk", "ms", "fi", "et" };
 
     private static List<String> profiles = new ArrayList<>();
 
@@ -273,8 +281,22 @@ public final class LanguageDetectingXMLReaderWrapper
             ArrayList<Language> possibleLanguages = detector.getProbabilities();
             for (Language possibility : possibleLanguages) {
                 ULocale plocale = new ULocale(possibility.lang);
-                System.out.println(String.format("%s %s %s",
-                        plocale.getDisplayName(), possibility.prob, systemId));
+                if (Arrays.binarySearch(COMMON_LANGS, possibility.lang) < 0
+                        && systemId != null) {
+                    System.out.println(
+                            String.format("%s %s %s", plocale.getDisplayName(),
+                                    possibility.prob, systemId));
+                    try (FileWriter fw = new FileWriter("language-log.txt",
+                            true);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            PrintWriter out = new PrintWriter(bw)) {
+                        out.println(String.format("%s %s %s",
+                                plocale.getDisplayName(), possibility.prob,
+                                systemId));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
                     if (request != null) {
