@@ -33,7 +33,6 @@ fr	French
 fy	Western Frisian
 ga	Irish
 gd	Scottish Gaelic
-gl	Galician
 gu	Gujarati
 ha	Hausa
 he	Hebrew
@@ -123,7 +122,6 @@ ur	Urdu
 uz	Uzbek
 vec	Venetian
 vi	Vietnamese
-wa	Walloon
 war	Waray
 xh	Xhosa
 yi	Yiddish
