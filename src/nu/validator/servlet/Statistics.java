@@ -149,7 +149,6 @@ public class Statistics {
                 LANG_KO("Detected language: Korean"),
                 LANG_KU("Detected language: Kurdish"),
                 LANG_KY("Detected language: Kyrgyz"),
-                LANG_LI("Detected language: Limburgish"),
                 LANG_LMO("Detected language: Lombard"),
                 LANG_LO("Detected language: Lao"),
                 LANG_LT("Detected language: Lithuanian"),

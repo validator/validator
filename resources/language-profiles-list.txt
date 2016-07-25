@@ -55,7 +55,6 @@ kn	Kannada
 ko	Korean
 ku	Kurdish
 ky	Kyrgyz
-li	Limburgish
 lmo	Lombard
 lo	Lao
 lt	Lithuanian
