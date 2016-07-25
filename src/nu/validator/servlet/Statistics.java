@@ -212,7 +212,6 @@ public class Statistics {
                 LANG_VI("Detected language: Vietnamese"),
                 LANG_WAR("Detected language: Waray"),
                 LANG_XH("Detected language: Xhosa"),
-                LANG_YI("Detected language: Yiddish"),
                 LANG_ZH_HANS("Detected language: Simplied Chinese"),
                 LANG_ZH_HANT("Detected language: Traditional Chinese"),
                 LANG_ZU("Detected language: Zulu");

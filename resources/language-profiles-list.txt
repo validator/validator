@@ -118,7 +118,6 @@ vec	Venetian
 vi	Vietnamese
 war	Waray
 xh	Xhosa
-yi	Yiddish
 zh-hans	Simplied Chinese
 zh-hant	Traditional Chinese
 zu	Zulu
