@@ -31,7 +31,6 @@ fo	Faroese
 fr	French
 fy	Western Frisian
 ga	Irish
-gd	Scottish Gaelic
 gu	Gujarati
 he	Hebrew
 hi	Hindi
@@ -72,7 +71,6 @@ my	Burmese
 nah	Nahuatl
 ne	Nepali
 nl	Dutch
-nn	Norwegian Nynorsk
 no	Norwegian
 ny	Nyanja
 oc	Occitan
