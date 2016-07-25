@@ -307,6 +307,15 @@ public final class LanguageDetectingXMLReaderWrapper
                 }
             }
             if ("".equals(detectedLanguage)) {
+                if (!hasLang && errorHandler != null) {
+                    String message = "Consider adding a \u201Clang\u201D"
+                            + " attribute to the \u201Chtml\u201D"
+                            + " start tag to declare the language"
+                            + " of this document.";
+                    SAXParseException spe = new SAXParseException(message,
+                            htmlStartTagLocator);
+                    errorHandler.warning(spe);
+                }
                 contentHandler.endDocument();
                 return;
             }
