@@ -70,7 +70,6 @@ mrj	Hill Mari
 ms	Malay
 mt	Maltese
 my	Burmese
-mzn	Mazanderani
 nah	Nahuatl
 ne	Nepali
 nl	Dutch
