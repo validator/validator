@@ -34,7 +34,6 @@ fy	Western Frisian
 ga	Irish
 gd	Scottish Gaelic
 gu	Gujarati
-ha	Hausa
 he	Hebrew
 hi	Hindi
 ht	Haitian
@@ -100,7 +99,6 @@ sk	Slovak
 sl	Slovenian
 sm	Samoan
 sn	Shona
-so	Somali
 sq	Albanian
 sr	Serbian
 st	Southern Sotho
