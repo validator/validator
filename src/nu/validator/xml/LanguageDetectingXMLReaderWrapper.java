@@ -320,9 +320,6 @@ public final class LanguageDetectingXMLReaderWrapper
             } else if ("zh-hant".equals(detectedLanguage)) {
                 detectedLanguageName = "Traditional Chinese";
                 preferredLanguageCode = "zh-hant";
-            } else if ("bcl".equals(detectedLanguage)) {
-                detectedLanguageName = "Central Bikol";
-                preferredLanguageCode = "bcl";
             } else if ("mhr".equals(detectedLanguage)) {
                 detectedLanguageName = "Meadow Mari";
                 preferredLanguageCode = "mhr";

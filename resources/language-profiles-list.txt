@@ -4,7 +4,6 @@ ar	Arabic
 arz	Egyptian Arabic
 az	Azerbaijani
 ba	Bashkir
-bcl	Central Bikol
 be	Belarusian
 bg	Bulgarian
 bn	Bengali
@@ -80,7 +79,6 @@ my	Burmese
 mzn	Mazanderani
 nah	Nahuatl
 nap	Neapolitan
-nds	Low German
 ne	Nepali
 nl	Dutch
 nn	Norwegian Nynorsk
@@ -91,7 +89,6 @@ or	Oriya
 os	Ossetian
 pa	Punjabi
 pag	Pangasinan
-pam	Pampanga
 pl	Polish
 pms	Piedmontese
 pnb	Western Panjabi
@@ -133,7 +130,6 @@ wa	Walloon
 war	Waray
 xh	Xhosa
 yi	Yiddish
-yo	Yoruba
 zh-hans	Simplied Chinese
 zh-hant	Traditional Chinese
 zu	Zulu
