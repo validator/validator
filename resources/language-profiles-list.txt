@@ -39,7 +39,6 @@ gu	Gujarati
 ha	Hausa
 he	Hebrew
 hi	Hindi
-hsb	Upper Sorbian
 ht	Haitian
 hu	Hungarian
 hy	Armenian

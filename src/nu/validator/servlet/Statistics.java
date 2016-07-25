@@ -133,7 +133,6 @@ public class Statistics {
                 LANG_HA("Detected language: Hausa"),
                 LANG_HE("Detected language: Hebrew"),
                 LANG_HI("Detected language: Hindi"),
-                LANG_HSB("Detected language: Upper Sorbian"),
                 LANG_HT("Detected language: Haitian"),
                 LANG_HU("Detected language: Hungarian"),
                 LANG_HY("Detected language: Armenian"),
