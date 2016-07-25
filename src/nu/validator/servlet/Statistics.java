@@ -95,7 +95,6 @@ public class Statistics {
                 LANG_AF("Detected language: Afrikaans"),
                 LANG_AM("Detected language: Amharic"),
                 LANG_AR("Detected language: Arabic"),
-                LANG_ARZ("Detected language: Egyptian Arabic"),
                 LANG_AZ("Detected language: Azerbaijani"),
                 LANG_BA("Detected language: Bashkir"),
                 LANG_BE("Detected language: Belarusian"),

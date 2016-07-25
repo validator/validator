@@ -1,7 +1,6 @@
 af	Afrikaans
 am	Amharic
 ar	Arabic
-arz	Egyptian Arabic
 az	Azerbaijani
 ba	Bashkir
 be	Belarusian
