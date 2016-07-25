@@ -74,7 +74,6 @@ mt	Maltese
 my	Burmese
 mzn	Mazanderani
 nah	Nahuatl
-nap	Neapolitan
 ne	Nepali
 nl	Dutch
 nn	Norwegian Nynorsk
