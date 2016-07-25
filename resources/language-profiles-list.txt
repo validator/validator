@@ -100,7 +100,6 @@ pt	Portuguese
 qu	Quechua
 ro	Romanian
 ru	Russian
-rw	Kinyarwanda
 sah	Sakha
 scn	Sicilian
 sd	Sindhi
