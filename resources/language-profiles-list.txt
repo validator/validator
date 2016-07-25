@@ -1,9 +1,7 @@
 af	Afrikaans
 am	Amharic
-an	Aragonese
 ar	Arabic
 arz	Egyptian Arabic
-ast	Asturian
 az	Azerbaijani
 ba	Bashkir
 bcl	Central Bikol
