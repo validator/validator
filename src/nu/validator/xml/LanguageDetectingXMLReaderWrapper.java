@@ -375,6 +375,7 @@ public final class LanguageDetectingXMLReaderWrapper
             }
             if ("de".equals(detectedLanguageCode)
                     && ("bar".equals(declaredLangCode)
+                            || "gsw".equals(declaredLangCode)
                             || "lb".equals(declaredLangCode))) {
                 return;
             }

@@ -34,7 +34,6 @@ fy	Western Frisian
 ga	Irish
 gd	Scottish Gaelic
 gl	Galician
-gsw	Swiss German
 gu	Gujarati
 ha	Hausa
 he	Hebrew
@@ -57,7 +56,6 @@ kn	Kannada
 ko	Korean
 ku	Kurdish
 ky	Kyrgyz
-lg	Ganda
 li	Limburgish
 lmo	Lombard
 lo	Lao
