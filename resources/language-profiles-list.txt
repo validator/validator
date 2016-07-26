@@ -75,7 +75,6 @@ pt	Portuguese
 ro	Romanian
 ru	Russian
 sah	Sakha
-scn	Sicilian
 sd	Sindhi
 sh	Serbo-Croatian
 si	Sinhala

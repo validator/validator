@@ -406,6 +406,7 @@ public final class LanguageDetectingXMLReaderWrapper
                             || "pms".equals(declaredLangCode)
                             || "vec".equals(declaredLangCode)
                             || "lmo".equals(declaredLangCode)
+                            || "scn".equals(declaredLangCode)
                             || "nap".equals(declaredLangCode))) {
                 return;
             }

@@ -169,7 +169,6 @@ public class Statistics {
                 LANG_RO("Detected language: Romanian"),
                 LANG_RU("Detected language: Russian"),
                 LANG_SAH("Detected language: Sakha"),
-                LANG_SCN("Detected language: Sicilian"),
                 LANG_SD("Detected language: Sindhi"),
                 LANG_SH("Detected language: Serbo-Croatian"),
                 LANG_SI("Detected language: Sinhala"),
