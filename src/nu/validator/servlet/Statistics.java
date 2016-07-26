@@ -106,7 +106,6 @@ public class Statistics {
                 LANG_CKB("Detected language: Sorani Kurdish"),
                 LANG_CR("Detected language: Cree"),
                 LANG_CS("Detected language: Czech"),
-                LANG_CV("Detected language: Chuvash"),
                 LANG_CY("Detected language: Welsh"),
                 LANG_DA("Detected language: Danish"),
                 LANG_DE("Detected language: German"),

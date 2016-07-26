@@ -12,7 +12,6 @@ chr	Cherokee
 ckb	Sorani Kurdish
 cr	Cree
 cs	Czech
-cv	Chuvash
 cy	Welsh
 da	Danish
 de	German
