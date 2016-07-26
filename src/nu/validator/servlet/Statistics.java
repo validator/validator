@@ -144,7 +144,6 @@ public class Statistics {
                 LANG_MG("Detected language: Malagasy"),
                 LANG_MHR("Detected language: Meadow Mari"),
                 LANG_MI("Detected language: Maori"),
-                LANG_MIN("Detected language: Minangkabau"),
                 LANG_MK("Detected language: Macedonian"),
                 LANG_ML("Detected language: Malayalam"),
                 LANG_MN("Detected language: Mongolian"),

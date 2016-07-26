@@ -50,7 +50,6 @@ lv	Latvian
 mg	Malagasy
 mhr	Meadow Mari
 mi	Maori
-min	Minangkabau
 mk	Macedonian
 ml	Malayalam
 mn	Mongolian

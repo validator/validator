@@ -444,6 +444,10 @@ public final class LanguageDetectingXMLReaderWrapper
                 && "min".equals(contentLangCode)) {
             return;
         }
+        if ("ms".equals(detectedLanguageCode)
+                && "min".equals(contentLangCode)) {
+            return;
+        }
         if ("hr".equals(detectedLanguageCode) && "sh".equals(contentLangCode)) {
             return;
         }
