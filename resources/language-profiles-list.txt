@@ -8,10 +8,8 @@ bg	Bulgarian
 bn	Bengali
 ca	Catalan
 ce	Chechen
-ceb	Cebuano
 chr	Cherokee
 ckb	Sorani Kurdish
-co	Corsican
 cr	Cree
 cs	Czech
 cv	Chuvash
@@ -27,17 +25,14 @@ fa	Persian
 fi	Finnish
 fo	Faroese
 fr	French
-fy	Western Frisian
 ga	Irish
 gu	Gujarati
 he	Hebrew
 hi	Hindi
-ht	Haitian
 hu	Hungarian
 hy	Armenian
 id	Indonesian
 ig	Igbo
-ilo	Iloko
 is	Icelandic
 it	Italian
 iu	Inuktitut
@@ -50,7 +45,6 @@ kn	Kannada
 ko	Korean
 ku	Kurdish
 ky	Kyrgyz
-lmo	Lombard
 lo	Lao
 lt	Lithuanian
 lv	Latvian
@@ -75,13 +69,11 @@ oc	Occitan
 or	Oriya
 os	Ossetian
 pa	Punjabi
-pag	Pangasinan
 pl	Polish
 pms	Piedmontese
 pnb	Western Panjabi
 ps	Pashto
 pt	Portuguese
-qu	Quechua
 ro	Romanian
 ru	Russian
 sah	Sakha
@@ -91,7 +83,6 @@ sh	Serbo-Croatian
 si	Sinhala
 sk	Slovak
 sl	Slovenian
-sm	Samoan
 sn	Shona
 sq	Albanian
 sr	Serbian
@@ -110,9 +101,7 @@ ug	Uyghur
 uk	Ukrainian
 ur	Urdu
 uz	Uzbek
-vec	Venetian
 vi	Vietnamese
-war	Waray
 xh	Xhosa
 zh-hans	Simplied Chinese
 zh-hant	Traditional Chinese

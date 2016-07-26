@@ -368,6 +368,8 @@ public final class LanguageDetectingXMLReaderWrapper
         } else {
             if ("tl".equals(detectedLanguageCode)
                     && ("ceb".equals(declaredLangCode)
+                            || "ilo".equals(declaredLangCode)
+                            || "pag".equals(declaredLangCode)
                             || "war".equals(declaredLangCode))) {
                 return;
             }
@@ -400,7 +402,11 @@ public final class LanguageDetectingXMLReaderWrapper
                 return;
             }
             if ("it".equals(detectedLanguageCode)
-                    && "nap".equals(declaredLangCode)) {
+                    && ("co".equals(declaredLangCode)
+                            || "pms".equals(declaredLangCode)
+                            || "vec".equals(declaredLangCode)
+                            || "lmo".equals(declaredLangCode)
+                            || "nap".equals(declaredLangCode))) {
                 return;
             }
             String message = "This document appears to be written in %s"
