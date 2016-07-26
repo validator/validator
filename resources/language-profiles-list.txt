@@ -6,7 +6,6 @@ ba	Bashkir
 be	Belarusian
 bg	Bulgarian
 bn	Bengali
-br	Breton
 ca	Catalan
 ce	Chechen
 ceb	Cebuano
@@ -21,7 +20,6 @@ da	Danish
 de	German
 el	Greek
 en	English
-eo	Esperanto
 es	Spanish
 et	Estonian
 eu	Basque
