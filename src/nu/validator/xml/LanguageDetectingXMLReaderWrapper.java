@@ -218,6 +218,8 @@ public final class LanguageDetectingXMLReaderWrapper
             htmlStartTagLocator = new LocatorImpl(locator);
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("lang".equals(atts.getLocalName(i))) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/has-lang", true);
                     hasLang = true;
                     langAttrValue = atts.getValue(i);
                 } else if ("dir".equals(atts.getLocalName(i))) {
