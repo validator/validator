@@ -164,7 +164,6 @@ public class Statistics {
                 LANG_OS("Detected language: Ossetian"),
                 LANG_PA("Detected language: Punjabi"),
                 LANG_PL("Detected language: Polish"),
-                LANG_PMS("Detected language: Piedmontese"),
                 LANG_PNB("Detected language: Western Panjabi"),
                 LANG_PS("Detected language: Pashto"),
                 LANG_PT("Detected language: Portuguese"),

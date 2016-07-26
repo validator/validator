@@ -70,7 +70,6 @@ or	Oriya
 os	Ossetian
 pa	Punjabi
 pl	Polish
-pms	Piedmontese
 pnb	Western Panjabi
 ps	Pashto
 pt	Portuguese
