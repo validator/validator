@@ -136,7 +136,7 @@ public final class LanguageDetectingXMLReaderWrapper
     private static final String[] COMMON_LANGS = { "ar", "bg", "ca", "cs", "da",
             "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hu", "id",
             "it", "ja", "ko", "lt", "ms", "nl", "no", "pl", "pt", "ro", "ru",
-            "sk", "sv", "th", "tr", "uk", "vi", "zh-hans", "zh-hant" };
+            "sh", "sk", "sv", "th", "tr", "uk", "vi", "zh-hans", "zh-hant" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
@@ -283,9 +283,6 @@ public final class LanguageDetectingXMLReaderWrapper
                 ULocale plocale = new ULocale(possibility.lang);
                 if (Arrays.binarySearch(COMMON_LANGS, possibility.lang) < 0
                         && systemId != null) {
-                    System.out.println(
-                            String.format("%s %s %s", plocale.getDisplayName(),
-                                    possibility.prob, systemId));
                     try (FileWriter fw = new FileWriter("language-log.txt",
                             true);
                             BufferedWriter bw = new BufferedWriter(fw);
