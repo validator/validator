@@ -363,16 +363,6 @@ public final class LanguageDetectingXMLReaderWrapper
         String langWarning = "";
         String lowerCaseLang = langAttrValue.toLowerCase();
         String declaredLangCode = new ULocale(langAttrValue).getLanguage();
-        if (request != null) {
-            if ("".equals(lowerCaseLang)) {
-                request.setAttribute(
-                        "http://validator.nu/properties/lang-empty", true);
-            } else {
-                request.setAttribute(
-                        "http://validator.nu/properties/lang-value",
-                        lowerCaseLang);
-            }
-        }
         if (!hasLang) {
             langWarning = String.format(
                     "This document appears to be written in %s."
@@ -381,6 +371,16 @@ public final class LanguageDetectingXMLReaderWrapper
                             + " start tag.",
                     detectedLanguageName, preferredLanguageCode);
         } else {
+            if (request != null) {
+                if ("".equals(lowerCaseLang)) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/lang-empty", true);
+                } else {
+                    request.setAttribute(
+                            "http://validator.nu/properties/lang-value",
+                            lowerCaseLang);
+                }
+            }
             if ("tl".equals(detectedLanguageCode)
                     && ("ceb".equals(declaredLangCode)
                             || "ilo".equals(declaredLangCode)
