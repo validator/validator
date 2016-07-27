@@ -1612,6 +1612,12 @@ public class Assertions extends Checker {
             }
 
             if ("input".equals(localName)) {
+                if (atts.getIndex("", "name") > -1
+                        && "isindex".equals(atts.getValue("", "name"))) {
+                    err("The value \u201cisindex\u201d for the \u201cname\u201d"
+                            + " attribute of the \u201cinput\u201d element is"
+                            + " not allowed.");
+                }
                 inputTypeVal = inputTypeVal == null ? "text" : inputTypeVal;
                 if (atts.getIndex("", "autocomplete") > -1) {
                     Class<?> datatypeClass = null;
