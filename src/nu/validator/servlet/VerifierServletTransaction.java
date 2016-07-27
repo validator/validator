@@ -1236,6 +1236,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             "http://validator.nu/properties/lang-wrong")) {
                 stats.incrementField(Statistics.Field.LANG_WRONG);
             }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/lang-empty") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/lang-empty")) {
+                stats.incrementField(Statistics.Field.LANG_EMPTY);
+            }
             String fieldName;
             String language = (String) request.getAttribute(
                     "http://validator.nu/properties/document-language");

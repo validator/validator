@@ -360,8 +360,13 @@ public final class LanguageDetectingXMLReaderWrapper
         String langWarning = "";
         String lowerCaseLang = langAttrValue.toLowerCase();
         String declaredLangCode = new ULocale(langAttrValue).getLanguage();
-        request.setAttribute("http://validator.nu/properties/lang-value",
-                lowerCaseLang);
+        if ("".equals(lowerCaseLang)) {
+            request.setAttribute("http://validator.nu/properties/lang-empty",
+                    true);
+        } else {
+            request.setAttribute("http://validator.nu/properties/lang-value",
+                    lowerCaseLang);
+        }
         if (!hasLang) {
             langWarning = String.format(
                     "This document appears to be written in %s."
