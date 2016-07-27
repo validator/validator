@@ -134,9 +134,10 @@ public final class LanguageDetectingXMLReaderWrapper
             "ps", "sd", "ug", "ur" };
 
     private static final String[] COMMON_LANGS = { "ar", "bg", "ca", "cs", "da",
-            "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hu", "id",
-            "it", "ja", "ko", "lt", "ms", "nl", "no", "pl", "pt", "ro", "ru",
-            "sh", "sk", "sv", "th", "tr", "uk", "vi", "zh-hans", "zh-hant" };
+            "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hi", "hu",
+            "id", "it", "ja", "ka", "ko", "lt", "lv", "ms", "nl", "no", "pl",
+            "pt", "ro", "ru", "sh", "sk", "sq", "sv", "th", "tr", "uk", "vi",
+            "zh-hans", "zh-hant" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
