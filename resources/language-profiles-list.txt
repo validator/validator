@@ -73,6 +73,7 @@ ps	Pashto
 pt	Portuguese
 ro	Romanian
 ru	Russian
+rw	Kinyarwanda
 sah	Sakha
 sd	Sindhi
 sh	Serbo-Croatian

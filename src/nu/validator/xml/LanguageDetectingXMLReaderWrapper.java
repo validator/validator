@@ -425,6 +425,10 @@ public final class LanguageDetectingXMLReaderWrapper
                             || "nap".equals(declaredLangCode))) {
                 return;
             }
+            if ("rw".equals(detectedLanguageCode)
+                    && "rn".equals(declaredLangCode)) {
+                return;
+            }
             String message = "This document appears to be written in %s"
                     + " but the \u201Chtml\u201D start tag has %s. Consider"
                     + " using \u201Clang=\"%s\"\u201D (or variant) instead.";
