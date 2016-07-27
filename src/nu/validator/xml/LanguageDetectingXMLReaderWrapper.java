@@ -218,8 +218,11 @@ public final class LanguageDetectingXMLReaderWrapper
             htmlStartTagLocator = new LocatorImpl(locator);
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("lang".equals(atts.getLocalName(i))) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/lang-found", true);
+                    if (request != null) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/lang-found",
+                                true);
+                    }
                     hasLang = true;
                     langAttrValue = atts.getValue(i);
                 } else if ("dir".equals(atts.getLocalName(i))) {
@@ -360,12 +363,15 @@ public final class LanguageDetectingXMLReaderWrapper
         String langWarning = "";
         String lowerCaseLang = langAttrValue.toLowerCase();
         String declaredLangCode = new ULocale(langAttrValue).getLanguage();
-        if ("".equals(lowerCaseLang)) {
-            request.setAttribute("http://validator.nu/properties/lang-empty",
-                    true);
-        } else {
-            request.setAttribute("http://validator.nu/properties/lang-value",
-                    lowerCaseLang);
+        if (request != null) {
+            if ("".equals(lowerCaseLang)) {
+                request.setAttribute(
+                        "http://validator.nu/properties/lang-empty", true);
+            } else {
+                request.setAttribute(
+                        "http://validator.nu/properties/lang-value",
+                        lowerCaseLang);
+            }
         }
         if (!hasLang) {
             langWarning = String.format(
@@ -424,8 +430,10 @@ public final class LanguageDetectingXMLReaderWrapper
                     + " using \u201Clang=\"%s\"\u201D (or variant) instead.";
             if (zhSubtagMismatch(detectedLanguage, lowerCaseLang)
                     || !declaredLangCode.equals(detectedLanguageCode)) {
+                if (request != null) {
                     request.setAttribute(
                             "http://validator.nu/properties/lang-wrong", true);
+                }
                 langWarning = String.format(message, detectedLanguageName,
                         getAttValueExpr("lang", langAttrValue),
                         preferredLanguageCode);
