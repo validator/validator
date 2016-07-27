@@ -1225,27 +1225,48 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/has-lang") != null
+                    "http://validator.nu/properties/lang-found") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/has-lang")) {
-                stats.incrementField(Statistics.Field.HAS_LANG);
+                            "http://validator.nu/properties/lang-found")) {
+                stats.incrementField(Statistics.Field.LANG_FOUND);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/has-wrong-lang") != null
+                    "http://validator.nu/properties/lang-wrong") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/has-wrong-lang")) {
-                stats.incrementField(Statistics.Field.HAS_WRONG_LANG);
+                            "http://validator.nu/properties/lang-wrong")) {
+                stats.incrementField(Statistics.Field.LANG_WRONG);
             }
+            String fieldName;
             String language = (String) request.getAttribute(
                     "http://validator.nu/properties/document-language");
             if (!"".equals(language) && language != null) {
-                String langFieldName = "LANG_" + language.toUpperCase();
+                fieldName = "DETECTEDLANG_" + language.toUpperCase();
                 if ("zh-hans".equals(language)) {
-                    langFieldName = "LANG_ZH_HANS";
+                    fieldName = "DETECTEDLANG_ZH_HANS";
                 } else if ("zh-hant".equals(language)) {
-                    langFieldName = "LANG_ZH_HANT";
+                    fieldName = "DETECTEDLANG_ZH_HANT";
                 }
-                stats.incrementField(stats.getFieldFromName(langFieldName));
+                stats.incrementField(stats.getFieldFromName(fieldName));
+            }
+            String langVal = (String) request.getAttribute(
+                    "http://validator.nu/properties/lang-value");
+            if (langVal != null) {
+                if ("".equals(langVal)) {
+                    stats.incrementField(Statistics.Field.LANG_EMPTY);
+                } else {
+                    try {
+                        if (langVal.contains("_")) {
+                            fieldName = "LANG_"
+                                    + langVal.replace("_", "__").toUpperCase();
+                        } else {
+                            fieldName = "LANG_"
+                                    + langVal.replace("-", "_").toUpperCase();
+                        }
+                        stats.incrementField(stats.getFieldFromName(fieldName));
+                    } catch (IllegalArgumentException e) {
+                        stats.incrementField(Statistics.Field.LANG_OTHER);
+                    }
+                }
             }
         }
     }
