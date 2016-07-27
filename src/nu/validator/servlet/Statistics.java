@@ -93,6 +93,7 @@ public class Statistics {
                 "JSON output"), OUTPUT_GNU("GNU output"), OUTPUT_TEXT(
                 "Text output"), INPUT_HTML("HTML input"), INPUT_XML("XML input"),
                 HAS_LANG("Has <html lang>"),
+                HAS_WRONG_LANG("<html lang> does not match detected language"),
                 LANG_AF("Detected language: Afrikaans"),
                 LANG_AM("Detected language: Amharic"),
                 LANG_AR("Detected language: Arabic"),

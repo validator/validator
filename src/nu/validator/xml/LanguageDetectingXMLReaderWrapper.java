@@ -417,6 +417,8 @@ public final class LanguageDetectingXMLReaderWrapper
                     + " using \u201Clang=\"%s\"\u201D (or variant) instead.";
             if (zhSubtagMismatch(detectedLanguage, lowerCaseLang)
                     || !declaredLangCode.equals(detectedLanguageCode)) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/has-wrong-lang", true);
                 langWarning = String.format(message, detectedLanguageName,
                         getAttValueExpr("lang", langAttrValue),
                         preferredLanguageCode);
