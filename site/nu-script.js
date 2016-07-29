@@ -327,6 +327,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 	var contentLanguageText = "The value of the HTTP Content-Language header is"
 	var langOrDirWarning
 	var langOrDirLinks
+	var ifMisidentifiedLinks
 	var warningText
 	for (var i = 0; i < warnings.length; ++i) {
 		warningText = warnings[i].firstChild.lastChild.textContent
@@ -341,6 +342,10 @@ function moveLangAndDirWarningsAndAddLinks() {
 				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-html-dir">Structural markup and right-to-left text in HTML</a> and <a href="https://www.w3.org/International/techniques/authoring-html#using">Setting up a right-to-left page</a>.'
 			}
 			langOrDirWarning.appendChild(langOrDirLinks)
+			ifMisidentifiedLinks = document.createElement("p")
+			ifMisidentifiedLinks.setAttribute("class", "reportbug")
+			ifMisidentifiedLinks.innerHTML = 'If the HTML checker has misidentified the language of this document, please <a href="https://github.com/validator/validator/issues/new">file an issue report</a> or <a href="mailto:www-validator@w3.org">send e-mail to report the problem</a>.'
+			langOrDirWarning.appendChild(ifMisidentifiedLinks)
 			messagesContainer.insertBefore(langOrDirWarning, messagesContainer.firstChild)
 		} else if (warningText.indexOf(contentLanguageText) != -1) {
 			langOrDirWarning = warnings[i]
