@@ -238,6 +238,7 @@ public final class LanguageDetectingXMLReaderWrapper
                 }
             }
         } else if (inBody && "style".equals(localName) && !loggedStyleInBody) {
+            loggedStyleInBody = true;
             if (request != null) {
                 request.setAttribute(
                         "http://validator.nu/properties/style-in-body-found",
