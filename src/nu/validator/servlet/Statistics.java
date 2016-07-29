@@ -117,6 +117,7 @@ public class Statistics {
                 "XHTML output"), OUTPUT_XML("XML output"), OUTPUT_JSON(
                 "JSON output"), OUTPUT_GNU("GNU output"), OUTPUT_TEXT(
                 "Text output"), INPUT_HTML("HTML input"), INPUT_XML("XML input"),
+                STYLE_IN_BODY_FOUND("<style> in <body> found"),
                 LANG_FOUND("<html lang> found"),
                 LANG_WRONG("<html lang> does not match detected language"),
                 LANG_EMPTY("<html lang>: empty (lang=\"\")"),

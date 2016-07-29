@@ -191,6 +191,9 @@ public final class LanguageDetectingXMLReaderWrapper
             documentContent.append(elementContent);
             elementContent.setLength(0);
         }
+        if ("body".equals(localName)) {
+            inBody = true;
+        }
         contentHandler.endElement(uri, localName, qName);
     }
 
@@ -230,6 +233,12 @@ public final class LanguageDetectingXMLReaderWrapper
                     hasDir = true;
                     dirAttrValue = atts.getValue(i);
                 }
+            }
+        } else if ("style".equals(localName)) {
+            if (inBody && request != null) {
+                request.setAttribute(
+                        "http://validator.nu/properties/style-in-body-found",
+                        true);
             }
         } else if ("body".equals(localName)) {
             inBody = true;
