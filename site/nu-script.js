@@ -325,6 +325,10 @@ function moveLangAndDirWarningsAndAddLinks() {
 	var langOrDirWarningText = "This document appears to be written in"
 	var undetectedMissingLang= "Consider adding a lang attribute"
 	var contentLanguageText = "The value of the HTTP Content-Language header is"
+	var langGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
+	var contentLangGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
+	var dirGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-html-dir">Structural markup and right-to-left text in HTML</a> and <a href="https://www.w3.org/International/techniques/authoring-html#using">Setting up a right-to-left page</a>.'
+	var ifMisidentifiedGuidance = 'If the HTML checker has misidentified the language of this document, please <a href="https://github.com/validator/validator/issues/new">file an issue report</a> or <a href="mailto:www-validator@w3.org">send e-mail to report the problem</a>.'
 	var langOrDirWarning
 	var langOrDirLinks
 	var ifMisidentifiedLinks
@@ -335,22 +339,22 @@ function moveLangAndDirWarningsAndAddLinks() {
 			langOrDirWarning = warnings[i]
 			langOrDirLinks = document.createElement("p")
 			if (warningText.indexOf("lang=") != -1 || warningText.indexOf(undetectedMissingLang) != -1) {
-				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
+				langOrDirLinks.innerHTML = langGuidance
 			} else if (warningText.indexOf("Content-Language") != -1) {
-				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
+				langOrDirLinks.innerHTML = contentLangGuidance
 			} else if (warningText.indexOf("dir=") != 1) {
-				langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-html-dir">Structural markup and right-to-left text in HTML</a> and <a href="https://www.w3.org/International/techniques/authoring-html#using">Setting up a right-to-left page</a>.'
+				langOrDirLinks.innerHTML = dirGuidance
 			}
 			langOrDirWarning.appendChild(langOrDirLinks)
 			ifMisidentifiedLinks = document.createElement("p")
 			ifMisidentifiedLinks.setAttribute("class", "reportbug")
-			ifMisidentifiedLinks.innerHTML = 'If the HTML checker has misidentified the language of this document, please <a href="https://github.com/validator/validator/issues/new">file an issue report</a> or <a href="mailto:www-validator@w3.org">send e-mail to report the problem</a>.'
+			ifMisidentifiedLinks.innerHTML = ifMisidentifiedGuidance
 			langOrDirWarning.appendChild(ifMisidentifiedLinks)
 			messagesContainer.insertBefore(langOrDirWarning, messagesContainer.firstChild)
 		} else if (warningText.indexOf(contentLanguageText) != -1) {
 			langOrDirWarning = warnings[i]
 			langOrDirLinks = document.createElement("p")
-			langOrDirLinks.innerHTML = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
+			langOrDirLinks.innerHTML = contentLangGuidance
 			langOrDirWarning.appendChild(langOrDirLinks)
 			messagesContainer.insertBefore(langOrDirWarning, messagesContainer.firstChild)
 		}
