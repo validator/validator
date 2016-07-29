@@ -234,8 +234,8 @@ public final class LanguageDetectingXMLReaderWrapper
                     dirAttrValue = atts.getValue(i);
                 }
             }
-        } else if ("style".equals(localName)) {
-            if (inBody && request != null) {
+        } else if (inBody && "style".equals(localName)) {
+            if (request != null) {
                 request.setAttribute(
                         "http://validator.nu/properties/style-in-body-found",
                         true);
