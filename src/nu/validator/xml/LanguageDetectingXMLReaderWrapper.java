@@ -120,6 +120,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private boolean inBody;
 
+    private boolean loggedStyleInBody;
+
     private boolean collectingCharacters;
 
     private int characterCount;
@@ -149,6 +151,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.systemId = systemId;
         this.htmlStartTagLocator = null;
         this.inBody = false;
+        this.loggedStyleInBody = false;
         this.collectingCharacters = false;
         this.characterCount = 0;
         this.elementContent = new StringBuilder();
@@ -234,7 +237,7 @@ public final class LanguageDetectingXMLReaderWrapper
                     dirAttrValue = atts.getValue(i);
                 }
             }
-        } else if (inBody && "style".equals(localName)) {
+        } else if (inBody && "style".equals(localName) && !loggedStyleInBody) {
             if (request != null) {
                 request.setAttribute(
                         "http://validator.nu/properties/style-in-body-found",
