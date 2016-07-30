@@ -661,14 +661,18 @@ dl.inputattrs .highlight {
 
 #outline ol {
 	margin-top: 0;
-	padding-top: 3px;
+	padding-top: 8px;
 }
 
 #outline li {
-	padding: 5px 0 5px 0;
+	padding: 0px 0 10px 0;
 	margin: 0;
 	list-style: none;
 	position: relative;
+}
+
+#outline li:first-child {
+	padding-top: 8px;
 }
 
 #outline li li {
@@ -677,8 +681,8 @@ dl.inputattrs .highlight {
 
 #outline li:first-child::before {
 	position: absolute;
-	top: 0;
-	height: 0.6em;
+	top: 2px;
+	height: 13px;
 	left: -0.75em;
 	width: 0.5em;
 	border-color: #bbb;
@@ -687,9 +691,9 @@ dl.inputattrs .highlight {
 	border-width: 0.1em;
 }
 
-#outline li:not(:last-child)::after {
+#outline li:not(.hgroup):not(:last-child)::after {
 	position: absolute;
-	top: 0;
+	top: 2px;
 	bottom: -0.6em;
 	left: -0.75em;
 	width: 0.5em;
@@ -697,6 +701,52 @@ dl.inputattrs .highlight {
 	border-style: none none solid solid;
 	content: '';
 	border-width: 0.1em;
+}
+
+#outline li.hgroup ol {
+	display: inline;
+	padding: 0;
+}
+
+#outline li.hgroup ol li.hgroup {
+	padding-left: 10px;
+}
+
+#outline li.hgroup ol li:not(.hgroup) {
+	margin-left: 2.5em;
+}
+
+#outline li.hgroup + li:not(.hgroup) {
+	padding-top: 10px;
+}
+
+#outline li.hgroup + li:not(.hgroup)::before {
+	position: absolute;
+	top: 5px;
+	height: 13px;
+	left: -0.75em;
+	width: 0.5em;
+	border-color: #bbb;
+	border-style: none none solid solid;
+	content: '';
+	border-width: 0.1em;
+}
+
+#outline li.hgroup ol li.hgroup::before {
+	position: absolute;
+	top: 9px;
+	left: 0;
+	font-weight: bold;
+	color: #BF4F00;
+	content: ': ';
+}
+
+#outline li.hgroup {
+	display: inline;
+}
+
+#outline li.hgroup ol li.hgroup::before {
+	border: none;
 }
 
 #results .hidden {
