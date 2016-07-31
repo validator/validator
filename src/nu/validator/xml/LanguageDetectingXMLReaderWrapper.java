@@ -417,6 +417,10 @@ public final class LanguageDetectingXMLReaderWrapper
                     && "min".equals(declaredLangCode)) {
                 return;
             }
+            if ("ms".equals(detectedLanguageCode)
+                    && "min".equals(declaredLangCode)) {
+                return;
+            }
             if ("hr".equals(detectedLanguageCode)
                     && ("sr".equals(declaredLangCode)
                             || "bs".equals(declaredLangCode)
@@ -446,7 +450,8 @@ public final class LanguageDetectingXMLReaderWrapper
                 return;
             }
             if ("es".equals(detectedLanguageCode)
-                    && "ar".equals(declaredLangCode)) {
+                    && ("an".equals(declaredLangCode)
+                            || "ast".equals(declaredLangCode))) {
                 return;
             }
             if ("it".equals(detectedLanguageCode)
@@ -493,6 +498,8 @@ public final class LanguageDetectingXMLReaderWrapper
         String contentLangCode = new ULocale(
                 lowerCaseContentLang).getLanguage();
         if ("tl".equals(detectedLanguageCode) && ("ceb".equals(contentLangCode)
+                || "ilo".equals(contentLangCode)
+                || "pag".equals(contentLangCode)
                 || "war".equals(contentLangCode))) {
             return;
         }
@@ -519,8 +526,29 @@ public final class LanguageDetectingXMLReaderWrapper
                 || "sh".equals(contentLangCode))) {
             return;
         }
+        if ("de".equals(detectedLanguageCode) && ("bar".equals(contentLangCode)
+                || "gsw".equals(contentLangCode)
+                || "lb".equals(contentLangCode))) {
+            return;
+        }
         if ("zh".equals(detectedLanguageCode)
                 && "yue".equals(lowerCaseContentLang)) {
+            return;
+        }
+        if ("es".equals(detectedLanguageCode) && ("an".equals(contentLangCode)
+                || "ast".equals(contentLangCode))) {
+            return;
+        }
+        if ("it".equals(detectedLanguageCode) && ("co".equals(contentLangCode)
+                || "pms".equals(contentLangCode)
+                || "vec".equals(contentLangCode)
+                || "lmo".equals(contentLangCode)
+                || "scn".equals(contentLangCode)
+                || "nap".equals(contentLangCode))) {
+            return;
+        }
+        if ("rw".equals(detectedLanguageCode)
+                && "rn".equals(contentLangCode)) {
             return;
         }
         if (zhSubtagMismatch(detectedLanguage, lowerCaseContentLang)
