@@ -285,7 +285,7 @@ public final class LanguageDetectingXMLReaderWrapper
         contentHandler.endDocument();
     }
 
-    public void detectLanguageAndCheckAgainstDeclaredLanguage()
+    private void detectLanguageAndCheckAgainstDeclaredLanguage()
             throws SAXException {
         try {
             if (characterCount < MIN_CHARS) {
@@ -393,7 +393,7 @@ public final class LanguageDetectingXMLReaderWrapper
         }
     }
 
-    public void checkLangAttributeSerboCroatian() throws SAXException {
+    private void checkLangAttributeSerboCroatian() throws SAXException {
         String lowerCaseLang = langAttrValue.toLowerCase();
         String langWarning = "";
         if (!hasLang) {
@@ -418,7 +418,7 @@ public final class LanguageDetectingXMLReaderWrapper
         }
     }
 
-    public void checkLangAttribute(String detectedLanguage,
+    private void checkLangAttribute(String detectedLanguage,
             String detectedLanguageName, String detectedLanguageCode,
             String preferredLanguageCode) throws SAXException {
         String langWarning = "";
@@ -533,7 +533,7 @@ public final class LanguageDetectingXMLReaderWrapper
         }
     }
 
-    public void checkContentLanguageHeader(String detectedLanguage,
+    private void checkContentLanguageHeader(String detectedLanguage,
             String detectedLanguageName, String detectedLanguageCode,
             String preferredLanguageCode) throws SAXException {
         if ("".equals(httpContentLangHeader)
@@ -628,7 +628,7 @@ public final class LanguageDetectingXMLReaderWrapper
         }
     }
 
-    public void checkDirAttribute(String detectedLanguage,
+    private void checkDirAttribute(String detectedLanguage,
             String detectedLanguageName, String detectedLanguageCode,
             String preferredLanguageCode) throws SAXException {
         if (Arrays.binarySearch(RTL_LANGS, detectedLanguageCode) < 0) {
