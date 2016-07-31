@@ -1257,6 +1257,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     fieldName = "DETECTEDLANG_ZH_HANS";
                 } else if ("zh-hant".equals(language)) {
                     fieldName = "DETECTEDLANG_ZH_HANT";
+                } else if ("sr-latn".equals(language)) {
+                    fieldName = "DETECTEDLANG_SR_LATN";
                 }
                 stats.incrementField(stats.getFieldFromName(fieldName));
             }

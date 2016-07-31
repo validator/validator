@@ -297,8 +297,10 @@ public final class LanguageDetectingXMLReaderWrapper
             Detector detector = DetectorFactory.create();
             detector.append(textContent);
             detector.getProbabilities();
-            ArrayList<Language> possibleLanguages = detector.getProbabilities();
-            for (Language possibility : possibleLanguages) {
+            ArrayList<String> possibileLanguages = new ArrayList<>();
+            ArrayList<Language> possibilities = detector.getProbabilities();
+            for (Language possibility : possibilities) {
+                possibileLanguages.add(possibility.lang);
                 ULocale plocale = new ULocale(possibility.lang);
                 if (Arrays.binarySearch(COMMON_LANGS, possibility.lang) < 0
                         && systemId != null) {
@@ -315,11 +317,20 @@ public final class LanguageDetectingXMLReaderWrapper
                 }
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
-                    if (request != null) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/document-language",
-                                detectedLanguage);
-                    }
+                    setDocumentLanguage(detectedLanguage);
+                } else if ((possibileLanguages.contains("hr")
+                        && (possibileLanguages.contains("sr-latn")
+                                || possibileLanguages.contains("bs")))
+                        || (possibileLanguages.contains("sr-latn")
+                                && (possibileLanguages.contains("hr")
+                                        || possibileLanguages.contains("bs")))
+                        || (possibileLanguages.contains("bs")
+                                && (possibileLanguages.contains("hr")
+                                        || possibileLanguages.contains(
+                                                "sr-latn")))) {
+                    setDocumentLanguage("sh");
+                    checkLangAttributeSerboCroatian();
+                    return;
                 }
             }
             if ("".equals(detectedLanguage)) {
@@ -357,6 +368,9 @@ public final class LanguageDetectingXMLReaderWrapper
             } else if ("pnb".equals(detectedLanguage)) {
                 detectedLanguageName = "Western Panjabi";
                 preferredLanguageCode = "pnb";
+            } else if ("sr-latn".equals(detectedLanguage)) {
+                detectedLanguageName = "Serbian";
+                preferredLanguageCode = "sr";
             } else {
                 detectedLanguageName = locale.getDisplayName();
                 preferredLanguageCode = detectedLanguageCode;
@@ -368,6 +382,39 @@ public final class LanguageDetectingXMLReaderWrapper
             checkContentLanguageHeader(detectedLanguage, detectedLanguageName,
                     detectedLanguageCode, preferredLanguageCode);
         } catch (LangDetectException e) {
+        }
+    }
+
+    private void setDocumentLanguage(String languageTag) {
+        if (request != null) {
+            request.setAttribute(
+                    "http://validator.nu/properties/document-language",
+                    languageTag);
+        }
+    }
+
+    public void checkLangAttributeSerboCroatian() throws SAXException {
+        String lowerCaseLang = langAttrValue.toLowerCase();
+        String langWarning = "";
+        if (!hasLang) {
+            langWarning = "This document appears to be written in either"
+                    + " Croatian, Serbian, or Bosnian. Consider adding either"
+                    + " \u201Clang=\"hr\"\u201D, \u201Clang=\"sr\"\u201D, or"
+                    + " \u201Clang=\"bs\"\u201D to the"
+                    + " \u201Chtml\u201D start tag.";
+        } else if (!("hr".equals(lowerCaseLang) || "sr".equals(lowerCaseLang)
+                || "bs".equals(lowerCaseLang))) {
+            langWarning = String.format(
+                    "This document appears to be written in either Croatian,"
+                            + " Serbian, or Bosnian, but the \u201Chtml\u201D"
+                            + " start tag has %s. Consider using either"
+                            + " \u201Clang=\"hr\"\u201D,"
+                            + " \u201Clang=\"sr\"\u201D, or"
+                            + " \u201Clang=\"bs\"\u201D instead.",
+                    getAttValueExpr("lang", lowerCaseLang));
+        }
+        if (!"".equals(langWarning)) {
+            warn(langWarning);
         }
     }
 

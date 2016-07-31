@@ -481,6 +481,7 @@ public class Statistics {
                 DETECTEDLANG_RW("Detected language: Kinyarwanda"),
                 DETECTEDLANG_SAH("Detected language: Sakha"),
                 DETECTEDLANG_SD("Detected language: Sindhi"),
+                DETECTEDLANG_SH("Detected language: Croatian, Serbian, or Bosnian (indeterminate)"),
                 DETECTEDLANG_SI("Detected language: Sinhala"),
                 DETECTEDLANG_SK("Detected language: Slovak"),
                 DETECTEDLANG_SL("Detected language: Slovenian"),
