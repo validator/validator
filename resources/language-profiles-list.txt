@@ -27,6 +27,7 @@ fo	Faroese
 fr	French
 ga	Irish
 gu	Gujarati
+ha	Hausa
 he	Hebrew
 hi	Hindi
 hr	Croatian
@@ -82,6 +83,7 @@ si	Sinhala
 sk	Slovak
 sl	Slovenian
 sn	Shona
+so	Somali
 sq	Albanian
 sr	Serbian
 sr-latn	Serbian
