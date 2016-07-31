@@ -138,7 +138,7 @@ public final class LanguageDetectingXMLReaderWrapper
     private static final String[] COMMON_LANGS = { "ar", "bg", "ca", "cs", "da",
             "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hi", "hu",
             "id", "it", "ja", "ka", "ko", "lt", "lv", "ms", "nl", "no", "pl",
-            "pt", "ro", "ru", "sh", "sk", "sq", "sv", "th", "tr", "uk", "vi",
+            "pt", "ro", "ru", "sk", "sq", "sv", "th", "tr", "uk", "vi",
             "zh-hans", "zh-hant" };
 
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
@@ -418,7 +418,21 @@ public final class LanguageDetectingXMLReaderWrapper
                 return;
             }
             if ("hr".equals(detectedLanguageCode)
-                    && "sh".equals(declaredLangCode)) {
+                    && ("sr".equals(declaredLangCode)
+                            || "bs".equals(declaredLangCode)
+                            || "sh".equals(declaredLangCode))) {
+                return;
+            }
+            if ("sr".equals(detectedLanguageCode)
+                    && ("hr".equals(declaredLangCode)
+                            || "bs".equals(declaredLangCode)
+                            || "sh".equals(declaredLangCode))) {
+                return;
+            }
+            if ("bs".equals(detectedLanguageCode)
+                    && ("hr".equals(declaredLangCode)
+                            || "sr".equals(declaredLangCode)
+                            || "sh".equals(declaredLangCode))) {
                 return;
             }
             if ("de".equals(detectedLanguageCode)
@@ -429,12 +443,6 @@ public final class LanguageDetectingXMLReaderWrapper
             }
             if ("zh".equals(detectedLanguageCode)
                     && "yue".equals(lowerCaseLang)) {
-                return;
-            }
-            if ("sh".equals(detectedLanguageCode)
-                    && ("sr".equals(declaredLangCode)
-                            || "hr".equals(declaredLangCode)
-                            || "bs".equals(declaredLangCode))) {
                 return;
             }
             if ("es".equals(detectedLanguageCode)
@@ -496,17 +504,23 @@ public final class LanguageDetectingXMLReaderWrapper
                 && "min".equals(contentLangCode)) {
             return;
         }
-        if ("hr".equals(detectedLanguageCode) && "sh".equals(contentLangCode)) {
+        if ("hr".equals(detectedLanguageCode) && ("sr".equals(contentLangCode)
+                || "bs".equals(contentLangCode)
+                || "sh".equals(contentLangCode))) {
+            return;
+        }
+        if ("sr".equals(detectedLanguageCode) && ("hr".equals(contentLangCode)
+                || "bs".equals(contentLangCode)
+                || "sh".equals(contentLangCode))) {
+            return;
+        }
+        if ("bs".equals(detectedLanguageCode) && ("hr".equals(contentLangCode)
+                || "sr".equals(contentLangCode)
+                || "sh".equals(contentLangCode))) {
             return;
         }
         if ("zh".equals(detectedLanguageCode)
                 && "yue".equals(lowerCaseContentLang)) {
-            return;
-        }
-        if ("sh".equals(detectedLanguageCode)
-                && ("sr".equals(lowerCaseContentLang)
-                        || "hr".equals(lowerCaseContentLang)
-                        || "bs".equals(lowerCaseContentLang))) {
             return;
         }
         if (zhSubtagMismatch(detectedLanguage, lowerCaseContentLang)

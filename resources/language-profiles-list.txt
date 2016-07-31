@@ -6,6 +6,7 @@ ba	Bashkir
 be	Belarusian
 bg	Bulgarian
 bn	Bengali
+bs	Bosnian
 ca	Catalan
 ce	Chechen
 chr	Cherokee
@@ -28,6 +29,7 @@ ga	Irish
 gu	Gujarati
 he	Hebrew
 hi	Hindi
+hr	Croatian
 hu	Hungarian
 hy	Armenian
 id	Indonesian
@@ -76,13 +78,13 @@ ru	Russian
 rw	Kinyarwanda
 sah	Sakha
 sd	Sindhi
-sh	Serbo-Croatian
 si	Sinhala
 sk	Slovak
 sl	Slovenian
 sn	Shona
 sq	Albanian
 sr	Serbian
+sr-latn	Serbian
 st	Southern Sotho
 su	Sundanese
 sv	Swedish
