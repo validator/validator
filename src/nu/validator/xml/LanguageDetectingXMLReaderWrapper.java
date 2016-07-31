@@ -244,16 +244,6 @@ public final class LanguageDetectingXMLReaderWrapper
                         "http://validator.nu/properties/style-in-body-found",
                         true);
             }
-            if (systemId != null) {
-                try (FileWriter fw = new FileWriter("language-log.txt", true);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        PrintWriter out = new PrintWriter(bw)) {
-                    out.println(
-                            String.format("*** STYLE in BODY %s", systemId));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         } else if ("body".equals(localName)) {
             inBody = true;
         }
