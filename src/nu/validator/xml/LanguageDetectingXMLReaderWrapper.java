@@ -328,9 +328,14 @@ public final class LanguageDetectingXMLReaderWrapper
                                 && (possibileLanguages.contains("hr")
                                         || possibileLanguages.contains(
                                                 "sr-latn")))) {
-                    setDocumentLanguage("sh");
-                    checkLangAttributeSerboCroatian();
-                    return;
+                    if (hasLang || systemId != null) {
+                        detectedLanguage = getDetectedLanguageSerboCroatian();
+                        setDocumentLanguage(detectedLanguage);
+                    }
+                    if ("sh".equals(detectedLanguage)) {
+                        checkLangAttributeSerboCroatian();
+                        return;
+                    }
                 }
             }
             if ("".equals(detectedLanguage)) {
@@ -391,6 +396,23 @@ public final class LanguageDetectingXMLReaderWrapper
                     "http://validator.nu/properties/document-language",
                     languageTag);
         }
+    }
+
+    private String getDetectedLanguageSerboCroatian() throws SAXException {
+        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
+        if ("hr".equals(declaredLangCode)
+                || (systemId != null && systemId.endsWith(".hr"))) {
+            return "hr";
+        }
+        if ("sr".equals(declaredLangCode)
+                || (systemId != null && systemId.endsWith(".rs"))) {
+            return "sr-latn";
+        }
+        if ("bs".equals(declaredLangCode)
+                || (systemId != null && systemId.endsWith(".ba"))) {
+            return "bs";
+        }
+        return "sh";
     }
 
     private void checkLangAttributeSerboCroatian() throws SAXException {
