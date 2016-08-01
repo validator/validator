@@ -67,6 +67,7 @@ nl	Dutch
 no	Norwegian
 ny	Nyanja
 oc	Occitan
+om	Oromo
 or	Oriya
 os	Ossetian
 pa	Punjabi

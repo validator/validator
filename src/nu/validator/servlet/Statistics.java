@@ -469,6 +469,7 @@ public class Statistics {
                 DETECTEDLANG_NO("Detected language: Norwegian"),
                 DETECTEDLANG_NY("Detected language: Nyanja"),
                 DETECTEDLANG_OC("Detected language: Occitan"),
+                DETECTEDLANG_OM("Detected language: Oromo"),
                 DETECTEDLANG_OR("Detected language: Oriya"),
                 DETECTEDLANG_OS("Detected language: Ossetian"),
                 DETECTEDLANG_PA("Detected language: Punjabi"),
