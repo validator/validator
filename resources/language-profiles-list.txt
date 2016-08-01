@@ -96,6 +96,7 @@ ta	Tamil
 te	Telugu
 tg	Tajik
 th	Thai
+ti	Tigrinya
 tl	Tagalog
 tr	Turkish
 tt	Tatar

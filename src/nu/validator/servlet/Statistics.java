@@ -499,6 +499,7 @@ public class Statistics {
                 DETECTEDLANG_TE("Detected language: Telugu"),
                 DETECTEDLANG_TG("Detected language: Tajik"),
                 DETECTEDLANG_TH("Detected language: Thai"),
+                DETECTEDLANG_TI("Detected language: Tigrinya"),
                 DETECTEDLANG_TL("Detected language: Tagalog"),
                 DETECTEDLANG_TR("Detected language: Turkish"),
                 DETECTEDLANG_TT("Detected language: Tatar"),
