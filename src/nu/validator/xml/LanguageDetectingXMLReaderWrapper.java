@@ -395,6 +395,7 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private void checkLangAttributeSerboCroatian() throws SAXException {
         String lowerCaseLang = langAttrValue.toLowerCase();
+        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
         String langWarning = "";
         if (!hasLang) {
             langWarning = "This document appears to be written in either"
@@ -402,8 +403,9 @@ public final class LanguageDetectingXMLReaderWrapper
                     + " \u201Clang=\"hr\"\u201D, \u201Clang=\"sr\"\u201D, or"
                     + " \u201Clang=\"bs\"\u201D to the"
                     + " \u201Chtml\u201D start tag.";
-        } else if (!("hr".equals(lowerCaseLang) || "sr".equals(lowerCaseLang)
-                || "bs".equals(lowerCaseLang))) {
+        } else if (!("hr".equals(declaredLangCode)
+                || "sr".equals(declaredLangCode)
+                || "bs".equals(declaredLangCode))) {
             langWarning = String.format(
                     "This document appears to be written in either Croatian,"
                             + " Serbian, or Bosnian, but the \u201Chtml\u201D"
