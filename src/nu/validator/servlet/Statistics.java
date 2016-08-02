@@ -507,6 +507,7 @@ public class Statistics {
                 DETECTEDLANG_UK("Detected language: Ukrainian"),
                 DETECTEDLANG_UR("Detected language: Urdu"),
                 DETECTEDLANG_UZ("Detected language: Uzbek"),
+                DETECTEDLANG_UZ_CYRL("Detected language: Uzbek (Cyrillic)"),
                 DETECTEDLANG_VI("Detected language: Vietnamese"),
                 DETECTEDLANG_XH("Detected language: Xhosa"),
                 DETECTEDLANG_ZH_HANS("Detected language: Simplied Chinese"),

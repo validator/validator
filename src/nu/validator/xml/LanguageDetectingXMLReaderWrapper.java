@@ -376,6 +376,9 @@ public final class LanguageDetectingXMLReaderWrapper
             } else if ("sr-latn".equals(detectedLanguage)) {
                 detectedLanguageName = "Serbian";
                 preferredLanguageCode = "sr";
+            } else if ("uz-cyrl".equals(detectedLanguage)) {
+                detectedLanguageName = "Uzbek";
+                preferredLanguageCode = "uz";
             } else {
                 detectedLanguageName = locale.getDisplayName();
                 preferredLanguageCode = detectedLanguageCode;

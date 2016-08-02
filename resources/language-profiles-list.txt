@@ -104,6 +104,7 @@ ug	Uyghur
 uk	Ukrainian
 ur	Urdu
 uz	Uzbek
+uz-cyrl	Uzbek
 vi	Vietnamese
 xh	Xhosa
 zh-hans	Simplied Chinese
