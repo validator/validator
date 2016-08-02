@@ -510,7 +510,7 @@ public class Statistics {
                 DETECTEDLANG_UZ_CYRL("Detected language: Uzbek (Cyrillic)"),
                 DETECTEDLANG_VI("Detected language: Vietnamese"),
                 DETECTEDLANG_XH("Detected language: Xhosa"),
-                DETECTEDLANG_ZH_HANS("Detected language: Simplied Chinese"),
+                DETECTEDLANG_ZH_HANS("Detected language: Simplified Chinese"),
                 DETECTEDLANG_ZH_HANT("Detected language: Traditional Chinese"),
                 DETECTEDLANG_ZU("Detected language: Zulu");
 
