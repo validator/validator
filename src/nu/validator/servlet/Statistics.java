@@ -401,6 +401,7 @@ public class Statistics {
                 LANG_ZH__TW("<html lang>: zh_tw"),
                 LANG_ZU("<html lang>: zu"),
                 DETECTEDLANG_AF("Detected language: Afrikaans"),
+                DETECTEDLANG_AZB("Detected language: South Azerbaijani"),
                 DETECTEDLANG_AM("Detected language: Amharic"),
                 DETECTEDLANG_AR("Detected language: Arabic"),
                 DETECTEDLANG_AZ("Detected language: Azerbaijani"),

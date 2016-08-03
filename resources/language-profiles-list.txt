@@ -2,6 +2,7 @@ af	Afrikaans
 am	Amharic
 ar	Arabic
 az	Azerbaijani
+azb	South Azerbaijani
 ba	Bashkir
 be	Belarusian
 bg	Bulgarian
