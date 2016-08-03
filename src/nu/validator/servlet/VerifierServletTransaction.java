@@ -888,6 +888,17 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || schemaUrls.contains("http://s.validator.nu/html5-rdfalite.rnc"));
     }
 
+    private boolean useXhtml5Schema() {
+        if ("".equals(schemaUrls)) {
+            return false;
+        }
+        return (schemaUrls.contains("http://s.validator.nu/xhtml5.rnc")
+                || schemaUrls.contains("http://s.validator.nu/xhtml5-all.rnc")
+                || schemaUrls.contains("http://s.validator.nu/xhtml5-its.rnc")
+                || schemaUrls.contains(
+                        "http://s.validator.nu/xhtml5-rdfalite.rnc"));
+    }
+
     private boolean isHtmlUnsafePreset() {
         if ("".equals(schemaUrls)) {
             return false;
@@ -1531,9 +1542,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     validator.getContentHandler()));
             reader.setDTDHandler(validator.getDTDHandler());
         }
-        reader = new LanguageDetectingXMLReaderWrapper(reader, request,
-                errorHandler, documentInput.getLanguage(),
-                documentInput.getSystemId());
+        if (useXhtml5Schema()) {
+            reader = new LanguageDetectingXMLReaderWrapper(reader, request,
+                    errorHandler, documentInput.getLanguage(),
+                    documentInput.getSystemId());
+        }
     }
 
     /**
