@@ -409,6 +409,7 @@ public class Statistics {
                 DETECTEDLANG_BE("Detected language: Belarusian"),
                 DETECTEDLANG_BG("Detected language: Bulgarian"),
                 DETECTEDLANG_BN("Detected language: Bengali"),
+                DETECTEDLANG_BO("Detected language: Tibetan"),
                 DETECTEDLANG_BS("Detected language: Bosnian"),
                 DETECTEDLANG_CA("Detected language: Catalan"),
                 DETECTEDLANG_CE("Detected language: Chechen"),
