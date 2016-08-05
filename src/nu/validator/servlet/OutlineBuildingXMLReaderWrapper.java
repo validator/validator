@@ -60,14 +60,11 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
     private ContentHandler contentHandler;
 
-    private boolean inHgroup;
-
     public OutlineBuildingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request) {
         this.request = request;
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
-        this.inHgroup = false;
         wrappedReader.setContentHandler(this);
     }
 
@@ -80,7 +77,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             "body", "details", "fieldset", "figure", "td" };
 
     private static final String[] HEADING_CONTENT_ELEMENTS = { "h1", "h2",
-            "h3", "h4", "h5", "h6" };
+            "h3", "h4", "h5", "h6", "hgroup", };
 
     private Deque<Section> outline;
 
@@ -167,8 +164,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         private String headingElementName;
 
-        private boolean isInHgroup;
-
         // MAX_VALUE for an implied heading, 1-6 for a heading content element
         private int headingRank = Integer.MAX_VALUE;
 
@@ -222,10 +217,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return headingElementName;
         }
 
-        public boolean getIsInHgroup() {
-            return isInHgroup;
-        }
-
         /**
          * @return the heading rank
          */
@@ -242,10 +233,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         public void setHeadingElementName(String elementName) {
             this.headingElementName = elementName;
-        }
-
-        public void setIsInHgroup(boolean isInHgroup) {
-            this.isInHgroup = isInHgroup;
         }
 
         public void setHeadingRank(int headingRank) {
@@ -354,13 +341,13 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return;
         }
         elementStack.pop();
+        if ("hgroup".equals(localName)) {
+            needHeading = false;
+            skipHeading = false;
+        }
         if (isWalkOver) {
             contentHandler.endElement(uri, localName, qName);
             return;
-        }
-
-        if ("hgroup".equals(localName)) {
-            inHgroup = false;
         }
 
         int depth = currentWalkDepth--;
@@ -518,10 +505,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return;
         }
 
-        if ("hgroup".equals(localName)) {
-            inHgroup = true;
-        }
-
         ++currentWalkDepth;
 
         boolean hidden = atts.getIndex("", "hidden") >= 0
@@ -590,7 +573,12 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // rank.
         if (Arrays.binarySearch(HEADING_CONTENT_ELEMENTS, localName) > -1
                 && currentOutlinee != null) {
-            if (skipHeading) {
+            if ("hgroup".equals(localName)) {
+                needHeading = true;
+                skipHeading = false;
+                contentHandler.startElement(uri, localName, qName, atts);
+                return;
+            } else if (skipHeading) {
                 contentHandler.startElement(uri, localName, qName, atts);
                 return;
             } else if (needHeading) {
@@ -664,9 +652,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             outlineStack.push(new Element(currentWalkDepth, localName, hidden));
             inHeadingContentOrHiddenElement = true;
             currentSection.setHeadingElementName(localName);
-            if (inHgroup) {
-                currentSection.setIsInHgroup(true);
-            }
         }
         contentHandler.startElement(uri, localName, qName, atts);
     }

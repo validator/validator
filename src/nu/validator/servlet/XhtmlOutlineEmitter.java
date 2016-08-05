@@ -119,11 +119,7 @@ public class XhtmlOutlineEmitter {
             throws IOException, SAXException {
         emitter.startElement("ol");
         for (Section section : outline) {
-            if (section.getIsInHgroup()) {
-                emitter.startElementWithClass("li", "hgroup");
-            } else {
-                emitter.startElement("li");
-            }
+            emitter.startElement("li");
             StringBuilder headingText = section.getHeadingTextBuilder();
             if (headingText.length() > 0) {
                 emitter.startElementWithClass("span", "heading");
