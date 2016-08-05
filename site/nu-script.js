@@ -294,11 +294,19 @@ function replaceSuccessFailure() {
 		successfailure.className = "success"
 		successfailure.textContent = "Document checking completed. No errors or warnings to show."
 	}
-	if (document.querySelector("#results ol:first-child li:not(.hidden)") === null) {
-		document.querySelector("#results ol:first-child").className = "hidden"
-	} else {
-		document.querySelector("#results ol:first-child").className = ""
+	if (document.querySelector("#results > ol:first-child") !== null) {
+		if (document.querySelector("#results > ol:first-child li:not(.hidden)") === null) {
+			document.querySelector("#results > ol:first-child").className = "hidden"
+		} else {
+			document.querySelector("#results > ol:first-child").className = ""
+		}
 	}
+	// replace empty <ol> artifacts in the outline caused by <hgroup>
+	var emptyOls = document.querySelectorAll("#outline ol:empty")
+	for (var i = 0; i < emptyOls.length; i++) {
+		emptyOls[i].remove()
+	}
+
 }
 
 function replaceYearWarning() {
@@ -321,7 +329,7 @@ function linkify(messages, text, target, title) {
 
 function moveLangAndDirWarningsAndAddLinks() {
 	var warnings = document.getElementsByClassName("warning")
-	var messagesContainer = document.querySelector("#results ol:first-child")
+	var messagesContainer = document.querySelector("#results > ol:first-child")
 	var langOrDirWarningText = "This document appears to be written in"
 	var undetectedMissingLang= "Consider adding a lang attribute"
 	var contentLanguageText = "The value of the HTTP Content-Language header is"

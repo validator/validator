@@ -661,14 +661,22 @@ dl.inputattrs .highlight {
 
 #outline ol {
 	margin-top: 0;
-	padding-top: 3px;
+	padding-top: 1px;
+}
+
+#outline > h2 + ol {
+	margin-top: 0;
 }
 
 #outline li {
-	padding: 5px 0 5px 0;
+	padding: 0px 0 9px 0;
 	margin: 0;
 	list-style: none;
 	position: relative;
+}
+
+#outline li:first-child {
+	padding-top: 7px;
 }
 
 #outline li li {
@@ -677,8 +685,8 @@ dl.inputattrs .highlight {
 
 #outline li:first-child::before {
 	position: absolute;
-	top: 0;
-	height: 0.6em;
+	top: 1px;
+	height: 13px;
 	left: -0.75em;
 	width: 0.5em;
 	border-color: #bbb;
@@ -689,7 +697,7 @@ dl.inputattrs .highlight {
 
 #outline li:not(:last-child)::after {
 	position: absolute;
-	top: 0;
+	top: 1px;
 	bottom: -0.6em;
 	left: -0.75em;
 	width: 0.5em;

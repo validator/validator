@@ -119,30 +119,45 @@ public class XhtmlOutlineEmitter {
             throws IOException, SAXException {
         emitter.startElement("ol");
         for (Section section : outline) {
-            emitter.startElement("li");
-            StringBuilder headingText = section.getHeadingTextBuilder();
-            if (headingText.length() > 0) {
-                emitter.startElementWithClass("span", "heading");
-                emitter.characters(headingText.toString().toCharArray());
-                emitter.endElement("span");
-            } else if (section.hasEmptyHeading()) {
-                emitter.characters(("[" + section.getElementName() + " element with empty heading]").toCharArray());
-            } else if ("h1".equals(section.getElementName())
-                    || "h2".equals(section.getElementName())
-                    || "h3".equals(section.getElementName())
-                    || "h4".equals(section.getElementName())
-                    || "h5".equals(section.getElementName())
-                    || "h6".equals(section.getElementName())) {
-                emitter.characters(("[section implied by empty "
-                        + section.getElementName() + " element]").toCharArray());
-            } else {
-                emitter.characters(("[" + section.getElementName() + " element with no heading]").toCharArray());
+            if (!section.getIsMasked()) {
+                emitter.startElement("li");
+                StringBuilder headingText = section.getHeadingTextBuilder();
+                if (headingText.length() > 0) {
+                    emitter.startElementWithClass("span", "heading");
+                    emitter.characters(headingText.toString().toCharArray());
+                    if (section.getSubheadSections() != null) {
+                        for (Section subhead : section.getSubheadSections()) {
+                            emitter.characters(": ".toCharArray());
+                            StringBuilder subheadText = subhead.getHeadingTextBuilder();
+                            emitter.characters(
+                                    subheadText.toString().toCharArray());
+                        }
+                    }
+                    emitter.endElement("span");
+                } else if (section.hasEmptyHeading()) {
+                    emitter.characters(("[" + section.getElementName()
+                            + " element with empty heading]").toCharArray());
+                } else if ("h1".equals(section.getElementName())
+                        || "h2".equals(section.getElementName())
+                        || "h3".equals(section.getElementName())
+                        || "h4".equals(section.getElementName())
+                        || "h5".equals(section.getElementName())
+                        || "h6".equals(section.getElementName())) {
+                    emitter.characters(("[section implied by empty "
+                            + section.getElementName()
+                            + " element]").toCharArray());
+                } else {
+                    emitter.characters(("[" + section.getElementName()
+                            + " element with no heading]").toCharArray());
+                }
             }
             Deque<Section> sections = section.sections;
             if (!sections.isEmpty()) {
                 emitOutline(sections, currentDepth + 1);
             }
-            emitter.endElement("li");
+            if (!section.getIsMasked()) {
+                emitter.endElement("li");
+            }
         }
         emitter.endElement("ol");
     }

@@ -65,6 +65,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         this.request = request;
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
+        this.inHgroup = false;
         wrappedReader.setContentHandler(this);
     }
 
@@ -77,7 +78,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             "body", "details", "fieldset", "figure", "td" };
 
     private static final String[] HEADING_CONTENT_ELEMENTS = { "h1", "h2",
-            "h3", "h4", "h5", "h6", "hgroup", };
+            "h3", "h4", "h5", "h6" };
 
     private Deque<Section> outline;
 
@@ -150,6 +151,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // each section can have one heading associated with it
         final private StringBuilder headingTextBuilder = new StringBuilder();
 
+        private LinkedList<Section> subheadSections;
+
         // a string builder to collect any img alt text found in a heading
         final private StringBuilder headingImgAltTextBuilder = new StringBuilder();
 
@@ -163,6 +166,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         private boolean hasEmptyHeading;
 
         private String headingElementName;
+
+        private boolean isMasked;
 
         // MAX_VALUE for an implied heading, 1-6 for a heading content element
         private int headingRank = Integer.MAX_VALUE;
@@ -235,6 +240,18 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             this.headingElementName = elementName;
         }
 
+        public void setIsMasked() {
+            this.isMasked = true;
+        }
+
+        public boolean getIsMasked() {
+            return this.isMasked;
+        }
+
+        public LinkedList<Section> getSubheadSections() {
+            return this.subheadSections;
+        }
+
         public void setHeadingRank(int headingRank) {
             this.headingRank = headingRank;
         }
@@ -288,13 +305,15 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     // heading content element or an element with a hidden attribute.
     private boolean inHeadingContentOrHiddenElement;
 
-    private boolean needHeading;
-
-    private boolean skipHeading;
-
     // holds a pointer to a section, so that elements in the DOM can all be
     // associated with a section
     private Section currentSection;
+
+    private Section currentHgroupSection;
+
+    private boolean inHgroup;
+
+    private boolean skipHeading = false;
 
     private boolean isWalkOver;
 
@@ -341,13 +360,22 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return;
         }
         elementStack.pop();
-        if ("hgroup".equals(localName)) {
-            needHeading = false;
-            skipHeading = false;
-        }
         if (isWalkOver) {
             contentHandler.endElement(uri, localName, qName);
             return;
+        }
+
+        if ("hgroup".equals(localName)) {
+            inHgroup = false;
+            skipHeading = false;
+        } else if (Arrays.binarySearch(HEADING_CONTENT_ELEMENTS, localName) > -1
+                && inHgroup) {
+            if (skipHeading) {
+                currentHgroupSection.subheadSections.add(currentSection);
+            } else {
+                skipHeading = true;
+                currentHgroupSection.subheadSections = new LinkedList<>();
+            }
         }
 
         int depth = currentWalkDepth--;
@@ -505,6 +533,10 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return;
         }
 
+        if ("hgroup".equals(localName)) {
+            inHgroup = true;
+        }
+
         ++currentWalkDepth;
 
         boolean hidden = atts.getIndex("", "hidden") >= 0
@@ -573,18 +605,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // rank.
         if (Arrays.binarySearch(HEADING_CONTENT_ELEMENTS, localName) > -1
                 && currentOutlinee != null) {
-            if ("hgroup".equals(localName)) {
-                needHeading = true;
-                skipHeading = false;
-                contentHandler.startElement(uri, localName, qName, atts);
-                return;
-            } else if (skipHeading) {
-                contentHandler.startElement(uri, localName, qName, atts);
-                return;
-            } else if (needHeading) {
-                skipHeading = true;
-                needHeading = false;
-            }
             int rank = localName.charAt(1) - '0';
 
             // If the current section has no heading,
@@ -651,6 +671,11 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // element.)
             outlineStack.push(new Element(currentWalkDepth, localName, hidden));
             inHeadingContentOrHiddenElement = true;
+            if (skipHeading) {
+                currentSection.setIsMasked();
+            } else if (inHgroup) {
+                currentHgroupSection = currentSection;
+            }
             currentSection.setHeadingElementName(localName);
         }
         contentHandler.startElement(uri, localName, qName, atts);
