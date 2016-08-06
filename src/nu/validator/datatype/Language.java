@@ -172,7 +172,7 @@ public final class Language extends AbstractDatatype {
             if (isDeprecatedLang(subtag) && WARN) {
                 throw newDatatypeException("The language subtag ", subtag,
                         " is deprecated." + " Use \u201C"
-                                + preferredValueByLanguageMap.get(literal)
+                                + preferredValueByLanguageMap.get(subtag)
                                 + "\u201D instead.",
                         WARN);
             }
@@ -193,7 +193,7 @@ public final class Language extends AbstractDatatype {
             if (isDeprecatedLang(subtag) && WARN) {
                 throw newDatatypeException("The language subtag ", subtag,
                         " is deprecated." + " Use \u201C"
-                                + preferredValueByLanguageMap.get(literal)
+                                + preferredValueByLanguageMap.get(subtag)
                                 + "\u201D instead.",
                         WARN);
             }
@@ -244,7 +244,7 @@ public final class Language extends AbstractDatatype {
             if (isDeprecated(subtag) && WARN) {
                 throw newDatatypeException("The script subtag ", subtag,
                         " is deprecated." + " Use \u201C"
-                                + preferredValueByLanguageMap.get(literal)
+                                + preferredValueByLanguageMap.get(subtag)
                                 + "\u201D instead.",
                         WARN);
             }
@@ -271,7 +271,7 @@ public final class Language extends AbstractDatatype {
             if (isDeprecated(subtag) && WARN) {
                 throw newDatatypeException("The region subtag ", subtag,
                         " is deprecated." + " Use \u201C"
-                                + preferredValueByLanguageMap.get(literal)
+                                + preferredValueByLanguageMap.get(subtag)
                                 + "\u201D instead.",
                         WARN);
             }
@@ -304,7 +304,7 @@ public final class Language extends AbstractDatatype {
                 if (isDeprecated(subtag) && WARN) {
                     throw newDatatypeException("The variant subtag ", subtag,
                             " is deprecated." + " Use \u201C"
-                                    + preferredValueByLanguageMap.get(literal)
+                                    + preferredValueByLanguageMap.get(subtag)
                                     + "\u201D instead.",
                             WARN);
                 }
