@@ -541,6 +541,16 @@ public final class LanguageDetectingXMLReaderWrapper
                     && "rn".equals(declaredLangCode)) {
                 return;
             }
+            if ("mhr".equals(detectedLanguageCode)
+                    && ("chm".equals(declaredLangCode)
+                            || "mrj".equals(declaredLangCode))) {
+                return;
+            }
+            if ("mrj".equals(detectedLanguageCode)
+                    && ("chm".equals(declaredLangCode)
+                            || "mhr".equals(declaredLangCode))) {
+                return;
+            }
             String message = "This document appears to be written in %s"
                     + " but the \u201Chtml\u201D start tag has %s. Consider"
                     + " using \u201Clang=\"%s\"\u201D (or variant) instead.";
@@ -623,6 +633,14 @@ public final class LanguageDetectingXMLReaderWrapper
         }
         if ("rw".equals(detectedLanguageCode)
                 && "rn".equals(contentLangCode)) {
+            return;
+        }
+        if ("mhr".equals(detectedLanguageCode) && ("chm".equals(contentLangCode)
+                || "mrj".equals(contentLangCode))) {
+            return;
+        }
+        if ("mrj".equals(detectedLanguageCode) && ("chm".equals(contentLangCode)
+                || "mhr".equals(contentLangCode))) {
             return;
         }
         if (zhSubtagMismatch(detectedLanguage, lowerCaseContentLang)
