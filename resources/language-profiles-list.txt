@@ -17,6 +17,7 @@ cs	Czech
 cy	Welsh
 da	Danish
 de	German
+dv	Divehi
 el	Greek
 en	English
 es	Spanish

@@ -421,6 +421,7 @@ public class Statistics {
                 DETECTEDLANG_CY("Detected language: Welsh"),
                 DETECTEDLANG_DA("Detected language: Danish"),
                 DETECTEDLANG_DE("Detected language: German"),
+                DETECTEDLANG_DV("Detected language: Divehi"),
                 DETECTEDLANG_EL("Detected language: Greek"),
                 DETECTEDLANG_EN("Detected language: English"),
                 DETECTEDLANG_ES("Detected language: Spanish"),
