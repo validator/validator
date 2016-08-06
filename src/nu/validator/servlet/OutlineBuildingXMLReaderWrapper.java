@@ -77,8 +77,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     private static final String[] SECTIONING_ROOT_ELEMENTS = { "blockquote",
             "body", "details", "fieldset", "figure", "td" };
 
-    private static final String[] HEADING_CONTENT_ELEMENTS = { "h1", "h2",
-            "h3", "h4", "h5", "h6" };
+    private static final String[] H1_TO_H6_ELEMENTS = { "h1", "h2", "h3", "h4",
+            "h5", "h6" };
 
     private Deque<Section> outline;
 
@@ -151,6 +151,9 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // each section can have one heading associated with it
         final private StringBuilder headingTextBuilder = new StringBuilder();
 
+        // list of h1-h6 sections that serve as subheads; only used in the
+        // hgroup case, we make the list of subheads a property of the
+        // first h1-h6 descendant of hgroup
         private LinkedList<Section> subheadSections;
 
         // a string builder to collect any img alt text found in a heading
@@ -309,6 +312,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     // associated with a section
     private Section currentSection;
 
+    // h1-h6 section that is the first h1-h6 descendant of current hgroup
     private Section currentHgroupSection;
 
     private boolean inHgroup;
@@ -368,12 +372,21 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         if ("hgroup".equals(localName)) {
             inHgroup = false;
             skipHeading = false;
-        } else if (Arrays.binarySearch(HEADING_CONTENT_ELEMENTS, localName) > -1
+        } else if (Arrays.binarySearch(H1_TO_H6_ELEMENTS, localName) > -1
                 && inHgroup) {
             if (skipHeading) {
+                // if skipHeading is true, we're in an hgroup subtree and
+                // have reached the end tag of an h1-h6 that is not the
+                // first descendant of the hgroup, so it provides a subhead
+                currentSection.setIsMasked();
                 currentHgroupSection.subheadSections.add(currentSection);
             } else {
+                // otherwise, we're in an hgroup subtree & have reached the
+                // end tag of the first descendant h1-h6  of the hgroup, so
+                // we need make this the currentHgroupSectionto and treat
+                // any subsequent h1-h6 as subheads associated with it
                 skipHeading = true;
+                currentHgroupSection = currentSection;
                 currentHgroupSection.subheadSections = new LinkedList<>();
             }
         }
@@ -600,10 +613,11 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return;
         }
 
-        // When entering a heading content element
-        // Note: Recall that h1 has the highest rank, and h6 has the lowest
-        // rank.
-        if (Arrays.binarySearch(HEADING_CONTENT_ELEMENTS, localName) > -1
+        // The following implements the "When entering a heading content
+        // element" part of the outline algorithm in the spec, but note
+        // that in the internals of our implementation, we don't handle the
+        // case of hgroup here, but instead just the h1-h6 case.
+        if (Arrays.binarySearch(H1_TO_H6_ELEMENTS, localName) > -1
                 && currentOutlinee != null) {
             int rank = localName.charAt(1) - '0';
 
@@ -671,11 +685,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // element.)
             outlineStack.push(new Element(currentWalkDepth, localName, hidden));
             inHeadingContentOrHiddenElement = true;
-            if (skipHeading) {
-                currentSection.setIsMasked();
-            } else if (inHgroup) {
-                currentHgroupSection = currentSection;
-            }
             currentSection.setHeadingElementName(localName);
         }
         contentHandler.startElement(uri, localName, qName, atts);
