@@ -400,6 +400,7 @@ public class Statistics {
                 LANG_ZH_TW("<html lang>: zh-tw"),
                 LANG_ZH__TW("<html lang>: zh_tw"),
                 LANG_ZU("<html lang>: zu"),
+                LANG_ZXX("<html lang>: zxx"),
                 DETECTEDLANG_AF("Detected language: Afrikaans"),
                 DETECTEDLANG_AZB("Detected language: South Azerbaijani"),
                 DETECTEDLANG_AM("Detected language: Amharic"),
@@ -514,7 +515,8 @@ public class Statistics {
                 DETECTEDLANG_XH("Detected language: Xhosa"),
                 DETECTEDLANG_ZH_HANS("Detected language: Simplified Chinese"),
                 DETECTEDLANG_ZH_HANT("Detected language: Traditional Chinese"),
-                DETECTEDLANG_ZU("Detected language: Zulu");
+                DETECTEDLANG_ZU("Detected language: Zulu"),
+                DETECTEDLANG_ZXX("Detected language: Lorem ipsum text");
 
         Field(String description) {
             this.description = description;

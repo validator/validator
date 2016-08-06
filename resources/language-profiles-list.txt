@@ -112,3 +112,4 @@ xh	Xhosa
 zh-hans	Simplied Chinese
 zh-hant	Traditional Chinese
 zu	Zulu
+zxx	Lorem ipsum text

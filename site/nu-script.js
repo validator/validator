@@ -333,6 +333,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 	var langOrDirWarningText = "This document appears to be written in"
 	var undetectedMissingLang= "Consider adding a lang attribute"
 	var contentLanguageText = "The value of the HTTP Content-Language header is"
+	var langTextWithNoLangGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-no-language#nonlinguistic">Tagging text with no language</a>, <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
 	var langGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html#langvalues">Choosing language tags</a>.'
 	var contentLangGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
 	var dirGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-html-dir">Structural markup and right-to-left text in HTML</a> and <a href="https://www.w3.org/International/techniques/authoring-html#using">Setting up a right-to-left page</a>.'
@@ -346,7 +347,13 @@ function moveLangAndDirWarningsAndAddLinks() {
 		if (warningText.indexOf(langOrDirWarningText) != -1 || warningText.indexOf(undetectedMissingLang) != -1) {
 			langOrDirWarning = warnings[i]
 			langOrDirLinks = document.createElement("p")
-			if (warningText.indexOf("lang=") != -1 || warningText.indexOf(undetectedMissingLang) != -1) {
+			if (warningText.indexOf("written in Lorem ipsum text") != -1) {
+				warnings[i].firstChild.lastChild.innerHTML
+					= warnings[i].firstChild.lastChild.innerHTML.replace(/written in/, "")
+				warnings[i].firstChild.lastChild.innerHTML
+					= warnings[i].firstChild.lastChild.innerHTML.replace(/Lorem ipsum/, "<i>Lorem ipsum</i>")
+				langOrDirLinks.innerHTML = langTextWithNoLangGuidance
+			} else if (warningText.indexOf("lang=") != -1 || warningText.indexOf(undetectedMissingLang) != -1) {
 				langOrDirLinks.innerHTML = langGuidance
 			} else if (warningText.indexOf("Content-Language") != -1) {
 				langOrDirLinks.innerHTML = contentLangGuidance

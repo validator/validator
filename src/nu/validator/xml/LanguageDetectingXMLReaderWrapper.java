@@ -292,6 +292,9 @@ public final class LanguageDetectingXMLReaderWrapper
                 contentHandler.endDocument();
                 return;
             }
+            if ("zxx".equals(new ULocale(langAttrValue).getLanguage())) {
+                return;
+            }
             String textContent = documentContent.toString();
             String detectedLanguage = "";
             Detector detector = DetectorFactory.create();
@@ -379,6 +382,9 @@ public final class LanguageDetectingXMLReaderWrapper
             } else if ("uz-cyrl".equals(detectedLanguage)) {
                 detectedLanguageName = "Uzbek";
                 preferredLanguageCode = "uz";
+            } else if ("zxx".equals(detectedLanguage)) {
+                detectedLanguageName = "Lorem ipsum text";
+                preferredLanguageCode = "zxx";
             } else {
                 detectedLanguageName = locale.getDisplayName();
                 preferredLanguageCode = detectedLanguageCode;
