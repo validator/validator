@@ -88,7 +88,7 @@ sl	Slovenian
 sn	Shona
 so	Somali
 sq	Albanian
-sr	Serbian
+sr-cyrl	Serbian
 sr-latn	Serbian
 st	Southern Sotho
 su	Sundanese
@@ -106,8 +106,8 @@ tt	Tatar
 ug	Uyghur
 uk	Ukrainian
 ur	Urdu
-uz	Uzbek
 uz-cyrl	Uzbek
+uz-latn	Uzbek
 vi	Vietnamese
 xh	Xhosa
 zh-hans	Simplied Chinese

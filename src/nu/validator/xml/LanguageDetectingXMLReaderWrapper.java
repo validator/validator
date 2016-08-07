@@ -376,10 +376,16 @@ public final class LanguageDetectingXMLReaderWrapper
             } else if ("pnb".equals(detectedLanguage)) {
                 detectedLanguageName = "Western Panjabi";
                 preferredLanguageCode = "pnb";
+            } else if ("sr-cyrl".equals(detectedLanguage)) {
+                detectedLanguageName = "Serbian";
+                preferredLanguageCode = "sr";
             } else if ("sr-latn".equals(detectedLanguage)) {
                 detectedLanguageName = "Serbian";
                 preferredLanguageCode = "sr";
             } else if ("uz-cyrl".equals(detectedLanguage)) {
+                detectedLanguageName = "Uzbek";
+                preferredLanguageCode = "uz";
+            } else if ("uz-latn".equals(detectedLanguage)) {
                 detectedLanguageName = "Uzbek";
                 preferredLanguageCode = "uz";
             } else if ("zxx".equals(detectedLanguage)) {
