@@ -469,17 +469,6 @@ public final class LanguageDetectingXMLReaderWrapper
                 if ("".equals(lowerCaseLang)) {
                     request.setAttribute(
                             "http://validator.nu/properties/lang-empty", true);
-                    if (systemId != null) {
-                        try (FileWriter fw = new FileWriter("language-log.txt",
-                                true);
-                                BufferedWriter bw = new BufferedWriter(fw);
-                                PrintWriter out = new PrintWriter(bw)) {
-                            out.println(String.format("*** EMPTY LANG %s",
-                                    systemId));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
                 } else {
                     request.setAttribute(
                             "http://validator.nu/properties/lang-value",
