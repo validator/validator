@@ -126,7 +126,7 @@ public class SimpleCommandLineValidator {
                     if (version != null) {
                         System.out.println(version);
                     } else {
-                        System.out.println("[uknown version]");
+                        System.out.println("[unknown version]");
                     }
                     System.exit(0);
                 } else if ("--help".equals(args[i])) {
