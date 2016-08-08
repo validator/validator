@@ -137,7 +137,7 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final String[] COMMON_LANGS = { "ar", "bg", "ca", "cs", "da",
             "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hi", "hu",
-            "id", "it", "ja", "ka", "ko", "lt", "lv", "ms", "nl", "no", "pl",
+            "id", "it", "ja", "ka", "ko", "lt", "lv", "ms", "nl", "no",
             "pt", "ro", "ru", "sk", "sq", "sv", "th", "tr", "uk", "vi",
             "zh-hans", "zh-hant" };
 
