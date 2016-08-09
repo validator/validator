@@ -1379,6 +1379,7 @@ public class Assertions extends Checker {
         hasMain = false;
         hasMetaCharset = false;
         hasContentTypePragma = false;
+        hasAutofocus = false;
         hasTopLevelH1 = false;
         numberOfTemplatesDeep = 0;
     }
@@ -1402,6 +1403,7 @@ public class Assertions extends Checker {
         ariaReferences.clear();
         allIds.clear();
         siblingSources.clear();
+        secondLevelH1s.clear();
     }
 
     /**
