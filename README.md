@@ -361,6 +361,28 @@ parameters documented at
 
     possible values: "yes" or "no"
 
+### HTTP servlet options
+
+#### nu.validator.servlet.connection-timeout
+
+    Specifies the connection timeout.
+
+    default: 5000
+
+    possible values: number of milliseconds
+
+    example: -Dnu.validator.servlet.connection-timeout=5000
+
+#### nu.validator.servlet.socket-timeout
+
+    Specifies the socket timeout.
+
+    default: 5000
+
+    possible values: number of milliseconds
+
+    example: -Dnu.validator.servlet.socket-timeout=5000
+
 ## Build instructions
 
 Follow the steps below to build, test, and run the checker such that you can
