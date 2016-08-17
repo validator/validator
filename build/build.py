@@ -139,6 +139,7 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),
   ("https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar", "5b38c40c97fbd0adee29f91e60405584"),
   ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),
+  ("https://repo1.maven.org/maven2/log4j/apache-log4j-extras/1.2.17/apache-log4j-extras-1.2.17.jar", "f32ed7ae770c83a4ac6fe6714f98f1bd"),
   ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
   ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),
   ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),
@@ -156,10 +157,12 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),
   ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),
   ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),
+  ("https://repo1.maven.org/maven2/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar", "7b56e34995f7f1cb55d7806b935f90a4"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/a878df1503af3bfb63493a63685a117a24988959/parse-css.js", "adbb69f7c71c8d5703f8b9d770bfc71f"),
 ]
 
 runDependencyJars = [
+  "apache-log4j-extras-1.2.17.jar",
   "commons-codec-1.10.jar",
   "commons-fileupload-1.3.1.jar",
   "commons-io-2.4.jar",
@@ -181,6 +184,7 @@ runDependencyJars = [
   "jetty-util-9.2.9.v20150224.jar",
   "jetty-util-ajax-9.2.9.v20150224.jar",
   "log4j-1.2.17.jar",
+  "mail-1.5.0-b01.jar",
   "rhino-1.7R5.jar",
   "langdetect-1.1-20120112.jar",
   "jsonic-1.3.9.jar",
