@@ -124,11 +124,11 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private boolean collectingCharacters;
 
-    private int characterCount;
+    private int nonWhitespaceCharacterCount;
 
-    private static final int MAX_CHARS = 35840;
+    private static final int MAX_CHARS = 30720;
 
-    private static final int MIN_CHARS = 512;
+    private static final int MIN_CHARS = 256;
 
     private static final double MIN_PROBABILITY = .90;
 
@@ -153,7 +153,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.inBody = false;
         this.loggedStyleInBody = false;
         this.collectingCharacters = false;
-        this.characterCount = 0;
+        this.nonWhitespaceCharacterCount = 0;
         this.elementContent = new StringBuilder();
         this.documentContent = new StringBuilder();
         this.httpContentLangHeader = httpContentLangHeader;
@@ -173,8 +173,18 @@ public final class LanguageDetectingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
-        if (collectingCharacters && characterCount < MAX_CHARS) {
-            characterCount += length;
+        if (collectingCharacters && nonWhitespaceCharacterCount < MAX_CHARS) {
+            for (int i = start; i < start + length; i++) {
+                switch (ch[i]) {
+                    case ' ':
+                    case '\t':
+                    case '\r':
+                    case '\n':
+                        continue;
+                    default:
+                        nonWhitespaceCharacterCount++;
+                }
+            }
             elementContent.append(ch, start, length);
         }
         contentHandler.characters(ch, start, length);
@@ -190,7 +200,7 @@ public final class LanguageDetectingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
-        if (characterCount < MAX_CHARS) {
+        if (nonWhitespaceCharacterCount < MAX_CHARS) {
             documentContent.append(elementContent);
             elementContent.setLength(0);
         }
@@ -288,7 +298,7 @@ public final class LanguageDetectingXMLReaderWrapper
     private void detectLanguageAndCheckAgainstDeclaredLanguage()
             throws SAXException {
         try {
-            if (characterCount < MIN_CHARS) {
+            if (nonWhitespaceCharacterCount < MIN_CHARS) {
                 contentHandler.endDocument();
                 return;
             }
