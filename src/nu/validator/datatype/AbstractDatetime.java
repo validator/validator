@@ -52,7 +52,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkMonth(String year, String month)
             throws DatatypeException {
-        checkMonth(Integer.parseInt(year), Integer.parseInt(month));
+        try {
+            checkMonth(Integer.parseInt(year), Integer.parseInt(month));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Year or month out of range.");
+        }
     }
 
     private void checkYear(int year) throws DatatypeException {
@@ -76,8 +80,12 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkDate(String year, String month, String day)
             throws DatatypeException {
-        checkDate(Integer.parseInt(year), Integer.parseInt(month),
-                Integer.parseInt(day));
+        try {
+            checkDate(Integer.parseInt(year), Integer.parseInt(month),
+                    Integer.parseInt(day));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Year, month, or day out of range.");
+        }
     }
 
     private void checkDate(int year, int month, int day)
@@ -106,7 +114,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkYearlessDate(String month, String day)
             throws DatatypeException {
-        checkYearlessDate(Integer.parseInt(month), Integer.parseInt(day));
+        try {
+            checkYearlessDate(Integer.parseInt(month), Integer.parseInt(day));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Month or day out of range.");
+        }
     }
 
     private void checkYearlessDate(int month, int day)
@@ -124,7 +136,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkWeek(String year, String week)
             throws DatatypeException {
-        checkWeek(Integer.parseInt(year), Integer.parseInt(week));
+        try {
+            checkWeek(Integer.parseInt(year), Integer.parseInt(week));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Year or week out of range.");
+        }
     }
 
     private void checkWeek(int year, int week)
@@ -139,7 +155,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
     }
 
     protected final void checkHour(String hour) throws DatatypeException {
-        checkHour(Integer.parseInt(hour));
+        try {
+            checkHour(Integer.parseInt(hour));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Hour out of range.");
+        }
     }
 
     private void checkHour(int hour) throws DatatypeException {
@@ -149,7 +169,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
     }
 
     protected final void checkMinute(String minute) throws DatatypeException {
-        checkMinute(Integer.parseInt(minute));
+        try {
+            checkMinute(Integer.parseInt(minute));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Minute out of range.");
+        }
     }
 
     private void checkMinute(int minute) throws DatatypeException {
@@ -159,7 +183,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
     }
 
     protected final void checkSecond(String second) throws DatatypeException {
-        checkSecond(Integer.parseInt(second));
+        try {
+            checkSecond(Integer.parseInt(second));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Seconds out of range.");
+        }
     }
 
     private void checkSecond(int second) throws DatatypeException {
@@ -178,7 +206,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
         if (hours.charAt(0) == '+') {
             hours = hours.substring(1);
         }
-        checkTzd(Integer.parseInt(hours), Integer.parseInt(minutes));
+        try {
+            checkTzd(Integer.parseInt(hours), Integer.parseInt(minutes));
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Hours or minutes out of range.");
+        }
     }
 
     private void checkTzd(int hours, int minutes) throws DatatypeException {
@@ -317,7 +349,11 @@ abstract class AbstractDatetime extends AbstractDatatype {
             //  valid year (valid non-negative integer)
             year = m.group(32);
             if (year != null) {
-                checkYear(Integer.parseInt(year));
+                try {
+                    checkYear(Integer.parseInt(year));
+                } catch (NumberFormatException e) {
+                    throw newDatatypeException("Year out of range.");
+                }
             }
             // valid duration string
             milliseconds = m.group(33);
