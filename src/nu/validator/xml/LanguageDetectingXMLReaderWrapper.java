@@ -24,11 +24,8 @@
 package nu.validator.xml;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,8 +52,13 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.LocatorImpl;
 
+import org.apache.log4j.Logger;
+
 public final class LanguageDetectingXMLReaderWrapper
         implements XMLReader, ContentHandler {
+
+    private static final Logger log4j = Logger.getLogger(
+            LanguageDetectingXMLReaderWrapper.class);
 
     private static final String languageList = "nu/validator/localentities/files/"
             + "language-profiles-list.txt";
@@ -317,16 +319,9 @@ public final class LanguageDetectingXMLReaderWrapper
                 ULocale plocale = new ULocale(possibility.lang);
                 if (Arrays.binarySearch(COMMON_LANGS, possibility.lang) < 0
                         && systemId != null) {
-                    try (FileWriter fw = new FileWriter("language-log.txt",
-                            true);
-                            BufferedWriter bw = new BufferedWriter(fw);
-                            PrintWriter out = new PrintWriter(bw)) {
-                        out.println(String.format("%s %s %s",
-                                plocale.getDisplayName(), possibility.prob,
-                                systemId));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    log4j.info(
+                            String.format("%s %s %s", plocale.getDisplayName(),
+                                    possibility.prob, systemId));
                 }
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;

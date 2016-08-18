@@ -1277,7 +1277,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 } else if ("uz-cyrl".equals(language)) {
                     fieldName = "DETECTEDLANG_UZ_CYRL";
                 }
-                stats.incrementField(stats.getFieldFromName(fieldName));
+                try {
+                    stats.incrementField(stats.getFieldFromName(fieldName));
+                } catch (IllegalArgumentException e) {
+                    log4j.error(e.getMessage(), e);
+                }
             }
             String langVal = (String) request.getAttribute(
                     "http://validator.nu/properties/lang-value");
@@ -1285,14 +1289,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if ("".equals(langVal)) {
                     stats.incrementField(Statistics.Field.LANG_EMPTY);
                 } else {
+                    if (langVal.contains("_")) {
+                        fieldName = "LANG_"
+                                + langVal.replace("_", "__").toUpperCase();
+                    } else {
+                        fieldName = "LANG_"
+                                + langVal.replace("-", "_").toUpperCase();
+                    }
                     try {
-                        if (langVal.contains("_")) {
-                            fieldName = "LANG_"
-                                    + langVal.replace("_", "__").toUpperCase();
-                        } else {
-                            fieldName = "LANG_"
-                                    + langVal.replace("-", "_").toUpperCase();
-                        }
                         stats.incrementField(stats.getFieldFromName(fieldName));
                     } catch (IllegalArgumentException e) {
                         stats.incrementField(Statistics.Field.LANG_OTHER);
