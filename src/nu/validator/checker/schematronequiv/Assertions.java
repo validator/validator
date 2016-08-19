@@ -1351,7 +1351,7 @@ public class Assertions extends Checker {
             }
             if ("article" == localName || "aside" == localName
                     || "nav" == localName || "section" == localName) {
-                currentSectioningElementPtr = -1;
+                currentSectioningElementPtr--;
                 currentSectioningDepth--;
             }
         }
