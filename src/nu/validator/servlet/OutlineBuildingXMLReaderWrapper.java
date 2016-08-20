@@ -264,6 +264,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         }
 
         public void createImpliedHeading() {
+            // see https://www.w3.org/Bugs/Public/show_bug.cgi?id=20068#c4
             hasImpliedHeading = true;
         }
 
@@ -625,6 +626,10 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // let the element being entered be the heading for the current
             // section.
             if (currentSection != null && !currentSection.hasHeading()) {
+                // Because we do the following even if the section only has
+                // an _implied_ heading, it can cause some non-intuitive
+                // outlines. But the spec very intentionally requires it.
+                // See https://www.w3.org/Bugs/Public/show_bug.cgi?id=20068#c4
                 currentSection.setHeadingRank(rank);
             }
             // Otherwise, if the element being entered has a rank equal to
