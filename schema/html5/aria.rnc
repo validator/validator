@@ -45,6 +45,7 @@ common.attrs.aria.implicit.combobox |=
 	&	aria.prop.autocomplete?
 	&	aria.prop.required?
 	&	aria.prop.activedescendant?
+	&	aria.prop.readonly?
 	)
 
 common.attrs.aria.implicit.dialog |=
@@ -598,6 +599,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.state.expanded #required!
 		&	aria.prop.autocomplete?
 		&	aria.prop.required?
+		&	aria.prop.readonly?
 		)
 		aria.role.combobox = 
 			attribute role { string "combobox" }
