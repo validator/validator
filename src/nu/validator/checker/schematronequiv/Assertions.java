@@ -1128,6 +1128,8 @@ public class Assertions extends Checker {
 
     private boolean hasMetaCharset;
 
+    private boolean hasMetaDescription;
+
     private boolean hasContentTypePragma;
 
     private boolean hasAutofocus;
@@ -1378,6 +1380,7 @@ public class Assertions extends Checker {
         stack[0] = null;
         hasMain = false;
         hasMetaCharset = false;
+        hasMetaDescription = false;
         hasContentTypePragma = false;
         hasAutofocus = false;
         hasTopLevelH1 = false;
@@ -2297,6 +2300,16 @@ public class Assertions extends Checker {
                                 + " \u201Ccharset\u201D attribute.");
                     }
                     hasMetaCharset = true;
+                }
+                if (atts.getIndex("", "name") > -1
+                        && "description".equals(atts.getValue("", "name"))) {
+                    if (hasMetaDescription) {
+                        err("A document must not include more than one"
+                                + " \u201Cmeta\u201D element with its"
+                                + " \u201Cname\u201D attribute set to the value"
+                                + " \u201Cdescription\u201D.");
+                    }
+                    hasMetaDescription = true;
                 }
                 if (atts.getIndex("", "http-equiv") > -1
                         && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
