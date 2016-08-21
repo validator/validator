@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -245,7 +246,12 @@ public class VerifierServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
 
         if ("POST".equals(request.getMethod())) {
-            log4j.info(request.getHeader("User-Agent"));
+            Enumeration<String> e = request.getHeaderNames();
+            while (e.hasMoreElements()) {
+                String headerName = e.nextElement();
+                log4j.info(String.format("%s: %s", headerName,
+                        request.getHeader(headerName)));
+            }
         }
 
         String pathInfo = request.getPathInfo();
