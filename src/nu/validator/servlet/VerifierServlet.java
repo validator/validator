@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -244,15 +243,6 @@ public class VerifierServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-
-        if ("POST".equals(request.getMethod())) {
-            Enumeration<String> e = request.getHeaderNames();
-            while (e.hasMoreElements()) {
-                String headerName = e.nextElement();
-                log4j.info(String.format("%s: %s", headerName,
-                        request.getHeader(headerName)));
-            }
-        }
 
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
