@@ -243,6 +243,11 @@ public class VerifierServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+
+        if ("POST".equals(request.getMethod())) {
+            log4j.info(request.getHeader("User-Agent"));
+        }
+
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
             pathInfo = "/"; // Fix for Jigsaw
