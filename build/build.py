@@ -162,6 +162,7 @@ dependencyPackages = [
 ]
 
 runDependencyJars = [
+  "activation-1.1.1.jar",
   "apache-log4j-extras-1.2.17.jar",
   "commons-codec-1.10.jar",
   "commons-fileupload-1.3.1.jar",
