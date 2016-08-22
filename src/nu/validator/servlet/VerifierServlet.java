@@ -250,7 +250,8 @@ public class VerifierServlet extends HttpServlet {
         String serverName = request.getServerName();
         String ua = request.getHeader("User-Agent");
         boolean isOptions = "OPTIONS".equals(method);
-        if (referer.contains("http://validator.w3.org/check?uri=")
+        if (referer != null
+                && referer.contains("http://validator.w3.org/check?uri=")
                 && !referer.startsWith("http://validator.w3.org/check?uri=")) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
