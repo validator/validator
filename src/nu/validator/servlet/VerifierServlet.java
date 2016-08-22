@@ -256,6 +256,10 @@ public class VerifierServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
+        if (ua == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
         if (!isOptions) {
             Object[] fields = new String[] { method, ua, query, referer };
             log4j.info(String.format("%s\t%s\t%s\t%s", fields));
