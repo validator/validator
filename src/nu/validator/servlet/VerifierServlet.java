@@ -257,7 +257,6 @@ public class VerifierServlet extends HttpServlet {
             return;
         }
         if (ua == null) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
         if (!isOptions) {
