@@ -243,14 +243,20 @@ public class VerifierServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        log4j.info(String.format("%s\t%s\t%s\t%s", request.getMethod(),
-                request.getHeader("User-Agent"), request.getQueryString(),
-                request.getHeader("Referer")));
+        String method = request.getMethod();
         String pathInfo = request.getPathInfo();
+        String referer = request.getHeader("Referer");
+        String query = request.getQueryString();
+        String serverName = request.getServerName();
+        String ua = request.getHeader("User-Agent");
+        boolean isOptions = "OPTIONS".equals(method);
+        if (!isOptions) {
+            Object[] fields = new String[] { method, ua, query, referer };
+            log4j.info(String.format("%s\t%s\t%s\t%s", fields));
+        }
         if (pathInfo == null) {
             pathInfo = "/"; // Fix for Jigsaw
         }
-        String serverName = request.getServerName();
         if ("/robots.txt".equals(pathInfo)) {
             // if we get here, we've got a POST
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -258,12 +264,10 @@ public class VerifierServlet extends HttpServlet {
         }
         log4j.debug("pathInfo: " + pathInfo);
         log4j.debug("serverName: " + serverName);
-        boolean isOptions = "OPTIONS".equals(request.getMethod());
 
         if ("validator.nu".equals(serverName) && "/html5/".equals(pathInfo)) {
                 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                String queryString = request.getQueryString();
-                response.setHeader("Location", "http://html5.validator.nu/" + (queryString == null ? "" : "?" + queryString));
+                response.setHeader("Location", "http://html5.validator.nu/" + (query == null ? "" : "?" + query));
         } else if (hostMatch(GENERIC_HOST, serverName) && GENERIC_PATH.equals(pathInfo)) {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "content-type");
