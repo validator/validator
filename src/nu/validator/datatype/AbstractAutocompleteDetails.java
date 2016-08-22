@@ -123,7 +123,9 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
         if (builder.length() > 0) {
             detailTokens.add(builder.toString());
         }
-        checkTokens(detailTokens);
+        if (detailTokens.size() > 0) {
+            checkTokens(detailTokens);
+        }
     }
 
     private void checkTokens(ArrayList<String> detailTokens)
