@@ -1050,16 +1050,21 @@ class Release():
     vnu = os.path.join(distDir, "vnu.jar")
     if not os.path.exists(vnu):
       return
+
+    minDocPath = os.path.join(buildRoot, 'minDoc.html')
+    with open(minDocPath, 'w') as f:
+      f.write(miniDoc)
+
     formats = ["gnu", "xml", "json", "text"]
     for _format in formats:
-      if runShell('echo \'%s\' | "%s" -jar %s --format %s -'
-          % (miniDoc, javaCmd, vnu, _format)):
+      if runCmd([javaCmd, '-jar', vnu, '--format', _format, minDocPath]):
         sys.exit(1)
     # to also make sure it works even w/o --format value given; returns gnu output
-    if runShell('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
+    if runCmd([javaCmd, '-jar', vnu, minDocPath]):
       sys.exit(1)
     if runCmd([javaCmd, '-jar', vnu, '--version']):
       sys.exit(1)
+    os.remove(minDocPath)
 
 def createTarball():
   args = [
