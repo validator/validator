@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -82,7 +83,7 @@ public class TestRunner implements ErrorHandler {
 
     private static boolean verbose;
 
-    private String baseDir = null;
+    private File baseDir = null;
 
     private Map<String, String> expectedMessages;
 
@@ -102,11 +103,29 @@ public class TestRunner implements ErrorHandler {
         }
     }
 
+    private URL getFileURL(File file) throws MalformedURLException {
+        return file.toURI().toURL();
+    }
+
+    private String getRelativePathname(File file, File baseDir) throws MalformedURLException {
+        String filePath = this.getFileURL(file).getPath();
+
+        // Note: baseDirPath endswith "/"
+        //
+        // https://docs.oracle.com/javase/8/docs/api/java/io/File.html#toURI--
+        // > If it can be determined that the file denoted by this abstract
+        // > pathname is a directory, then the resulting URI will end with
+        // > a slash.
+        String baseDirPath = this.getFileURL(baseDir).getPath();
+
+        return filePath.substring(baseDirPath.length());
+    }
+
     private void checkHtmlFile(File file) throws IOException, SAXException {
         if (!file.exists()) {
             if (verbose) {
                 out.println(String.format("\"%s\": warning: File not found.",
-                        file.toURI().toURL().toString()));
+                        this.getFileURL(file)));
                 out.flush();
             }
             return;
@@ -125,7 +144,7 @@ public class TestRunner implements ErrorHandler {
                         "\"%s\": warning: File was not checked."
                                 + " Files must have a .html, .xhtml, .htm,"
                                 + " or .xht extension.",
-                        file.toURI().toURL().toString()));
+                        this.getFileURL(file)));
                 out.flush();
             }
         }
@@ -158,15 +177,14 @@ public class TestRunner implements ErrorHandler {
     }
 
     private boolean isIgnorable(File file) throws IOException {
-        String testPathname = file.getAbsolutePath().substring(
-                baseDir.length() + 1);
+        String testPathname = this.getRelativePathname(file, baseDir);
         if (ignoreList != null) {
             for (String substring : ignoreList) {
                 if (testPathname.contains(substring)) {
                     if (verbose) {
                         out.println(String.format(
                                 "\"%s\": warning: File ignored.",
-                                file.toURI().toURL().toString()));
+                                this.getFileURL(file)));
                         out.flush();
                     }
                     return true;
@@ -234,8 +252,7 @@ public class TestRunner implements ErrorHandler {
             } catch (IOException | SAXException e) {
             }
             if (exception != null) {
-                testFilename = file.getAbsolutePath().substring(
-                        baseDir.length() + 1);
+                testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
                     reportedMessages.put(testFilename, exception.getMessage());
                 } else if (expectedMessages != null
@@ -244,7 +261,7 @@ public class TestRunner implements ErrorHandler {
                         err.println(String.format(
                                 "\"%s\": warning: No expected message in"
                                         + " messages file.",
-                                file.toURI().toURL().toString()));
+                                this.getFileURL(file)));
                         err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
@@ -256,7 +273,7 @@ public class TestRunner implements ErrorHandler {
                         err.println(String.format(
                                 "\"%s\": error: Expected \"%s\""
                                         + " but instead encountered \"%s\".",
-                                file.toURI().toURL().toString(),
+                                this.getFileURL(file),
                                 expectedMessages.get(testFilename),
                                 exception.getMessage()));
                         err.flush();
@@ -271,7 +288,7 @@ public class TestRunner implements ErrorHandler {
                     err.println(String.format(
                             "\"%s\": error: Expected an error but did not"
                                     + " encounter any.",
-                            file.toURI().toURL().toString()));
+                            this.getFileURL(file)));
                     err.flush();
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
@@ -297,8 +314,7 @@ public class TestRunner implements ErrorHandler {
             } catch (IOException | SAXException e) {
             }
             if (exception != null) {
-                testFilename = file.getAbsolutePath().substring(
-                        baseDir.length() + 1);
+                testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
                     reportedMessages.put(testFilename, exception.getMessage());
                 } else if (expectedMessages != null
@@ -307,7 +323,7 @@ public class TestRunner implements ErrorHandler {
                         err.println(String.format(
                                 "\"%s\": warning: No expected message in"
                                         + " messages file.",
-                                file.toURI().toURL().toString()));
+                                this.getFileURL(file)));
                         err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
@@ -318,7 +334,7 @@ public class TestRunner implements ErrorHandler {
                         err.println(String.format(
                                 "\"%s\": error: Expected \"%s\""
                                         + " but instead encountered \"%s\".",
-                                file.toURI().toURL().toString(),
+                                this.getFileURL(file),
                                 expectedMessages.get(testFilename),
                                 exception.getMessage()));
                         err.flush();
@@ -333,7 +349,7 @@ public class TestRunner implements ErrorHandler {
                     err.println(String.format(
                             "\"%s\": error: Expected a warning but encountered"
                                     + " an error first.",
-                            file.toURI().toURL().toString()));
+                            this.getFileURL(file)));
                     err.flush();
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
@@ -343,7 +359,7 @@ public class TestRunner implements ErrorHandler {
                     err.println(String.format(
                             "\"%s\": error: Expected a warning but did not"
                                     + " encounter any.",
-                            file.toURI().toURL().toString()));
+                            this.getFileURL(file)));
                     err.flush();
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
@@ -355,7 +371,7 @@ public class TestRunner implements ErrorHandler {
                     err.println(String.format(
                             "\"%s\": error: Expected a warning only but"
                                     + " encountered at least one error.",
-                            file.toURI().toURL().toString()));
+                            this.getFileURL(file)));
                     err.flush();
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
@@ -385,7 +401,7 @@ public class TestRunner implements ErrorHandler {
                 try {
                     out.println(String.format(
                             "\"%s\": warning: No files found in directory.",
-                            directory.toURI().toURL().toString()));
+                            this.getFileURL(directory)));
                     out.flush();
                 } catch (MalformedURLException mue) {
                     throw new RuntimeException(mue);
@@ -441,14 +457,14 @@ public class TestRunner implements ErrorHandler {
 
     public boolean runTestSuite() throws SAXException, Exception {
         if (messagesFile != null) {
-            baseDir = messagesFile.getAbsoluteFile().getParent();
+            baseDir = messagesFile.getParentFile();
             FileInputStream fis = new FileInputStream(messagesFile);
             InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
             expectedMessages = (HashMap<String, String>) JSON.parse(reader);
         } else {
-            baseDir = System.getProperty("user.dir");
+            baseDir = new File(System.getProperty("user.dir"));
         }
-        for (File directory : new File(baseDir).listFiles()) {
+        for (File directory : baseDir.listFiles()) {
             if (directory.isDirectory()) {
                 if (directory.getName().contains("rdfalite")) {
                     checkTestDirectoryAgainstSchema(directory,
