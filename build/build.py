@@ -47,7 +47,15 @@ try:
 except ImportError:
   from HTMLParser import HTMLParser
 import subprocess
+from ssl import SSLError
 import time
+# Use newer https certifications from certifi package if avaiable
+try:
+  import certifi
+  CAFILE = certifi.where()
+except ImportError:
+  CAFILE = None
+
 
 javaVersion = '1.8'
 javacCmd = 'javac'
@@ -1093,10 +1101,13 @@ def fetchUrlTo(url, path, md5sum=None):
   while not completed:
    try:
     socket.setdefaulttimeout(httpTimeoutSeconds)
-    f = urlopen(url)
+    f = urlopen(url, cafile=CAFILE)
     data = f.read()
     f.close()
     completed = True
+   except SSLError as e:
+    print(e.reason)
+    print("If you encounter [SSL: CERTIFICATE_VERIFY_FAILED] error, try `pip install certifi` to use newer certifications")
    except BadStatusLine:
     print("received error, retrying")
    finally:
