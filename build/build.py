@@ -47,7 +47,15 @@ try:
 except ImportError:
   from HTMLParser import HTMLParser
 import subprocess
+from ssl import SSLError
 import time
+# Use newer https certifications from certifi package if avaiable
+try:
+  import certifi
+  CAFILE = certifi.where()
+except ImportError:
+  CAFILE = None
+
 
 javaVersion = '1.8'
 javacCmd = 'javac'
@@ -72,7 +80,7 @@ releasesPath = "/var/www/releases"
 releaseDate = time.strftime('%d %B %Y')
 year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
-day = time.strftime('%e').lstrip(' ')
+day = time.strftime('%d').lstrip('0')
 validatorVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20150629VNU"
 htmlparserVersion = "1.4.4"
@@ -1042,16 +1050,21 @@ class Release():
     vnu = os.path.join(distDir, "vnu.jar")
     if not os.path.exists(vnu):
       return
+
+    minDocPath = os.path.join(buildRoot, 'minDoc.html')
+    with open(minDocPath, 'w') as f:
+      f.write(miniDoc)
+
     formats = ["gnu", "xml", "json", "text"]
     for _format in formats:
-      if runShell('echo \'%s\' | "%s" -jar %s --format %s -'
-          % (miniDoc, javaCmd, vnu, _format)):
+      if runCmd([javaCmd, '-jar', vnu, '--format', _format, minDocPath]):
         sys.exit(1)
     # to also make sure it works even w/o --format value given; returns gnu output
-    if runShell('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
+    if runCmd([javaCmd, '-jar', vnu, minDocPath]):
       sys.exit(1)
     if runCmd([javaCmd, '-jar', vnu, '--version']):
       sys.exit(1)
+    os.remove(minDocPath)
 
 def createTarball():
   args = [
@@ -1093,10 +1106,13 @@ def fetchUrlTo(url, path, md5sum=None):
   while not completed:
    try:
     socket.setdefaulttimeout(httpTimeoutSeconds)
-    f = urlopen(url)
+    f = urlopen(url, cafile=CAFILE)
     data = f.read()
     f.close()
     completed = True
+   except SSLError as e:
+    print(e.reason)
+    print("If you encounter [SSL: CERTIFICATE_VERIFY_FAILED] error, try `pip install certifi` to use newer certifications")
    except BadStatusLine:
     print("received error, retrying")
    finally:
