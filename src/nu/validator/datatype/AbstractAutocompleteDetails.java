@@ -138,7 +138,8 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
             contactType = detailTokens.get(0);
             detailTokens.remove(0);
         }
-        if (detailTokens.get(0).startsWith("section-")) {
+        if (detailTokens.size() > 0
+                && detailTokens.get(0).startsWith("section-")) {
             if (isContactDetails) {
                 throw newDatatypeException(
                         "A \u201csection-*\u201d indicator is not allowed"
