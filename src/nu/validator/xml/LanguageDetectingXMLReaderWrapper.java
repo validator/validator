@@ -134,8 +134,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final double MIN_PROBABILITY = .90;
 
-    private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "fa", "he",
-            "pnb", "ps", "sd", "ug", "ur" };
+    private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
+            "he", "pnb", "ps", "sd", "ug", "ur" };
 
     private static final String[] COMMON_LANGS = { "ar", "bg", "ca", "cs", "da",
             "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hi", "hu",
