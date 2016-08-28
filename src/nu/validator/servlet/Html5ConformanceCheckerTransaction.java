@@ -126,7 +126,7 @@ public class Html5ConformanceCheckerTransaction extends
      */
     @Override
     protected void setup() throws ServletException {
-        // No-op
+        schemaUrls = "";
     }
 
     /**
