@@ -314,7 +314,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
-    private String schemaUrls = null;
+    protected String schemaUrls = null;
 
     protected Validator validator = null;
 
