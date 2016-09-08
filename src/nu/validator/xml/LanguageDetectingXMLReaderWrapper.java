@@ -349,6 +349,10 @@ public final class LanguageDetectingXMLReaderWrapper
                         checkLangAttributeSerboCroatian();
                         return;
                     }
+                    if ("no".equals(detectedLanguage)) {
+                        checkLangAttributeNorwegian();
+                        return;
+                    }
                 }
             }
             if ("".equals(detectedLanguage)) {
@@ -460,6 +464,30 @@ public final class LanguageDetectingXMLReaderWrapper
                             + " \u201Clang=\"hr\"\u201D,"
                             + " \u201Clang=\"sr\"\u201D, or"
                             + " \u201Clang=\"bs\"\u201D instead.",
+                    getAttValueExpr("lang", lowerCaseLang));
+        }
+        if (!"".equals(langWarning)) {
+            warn(langWarning);
+        }
+    }
+
+    private void checkLangAttributeNorwegian() throws SAXException {
+        String lowerCaseLang = langAttrValue.toLowerCase();
+        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
+        String langWarning = "";
+        if (!hasLang) {
+            langWarning = "This document appears to be written in Norwegian"
+                    + " Consider adding either"
+                    + " \u201Clang=\"nn\"\u201D or \u201Clang=\"nb\"\u201D"
+                    + " (or variant) to the \u201Chtml\u201D start tag.";
+        } else if (!("no".equals(declaredLangCode)
+                || "nn".equals(declaredLangCode)
+                || "nb".equals(declaredLangCode))) {
+            langWarning = String.format(
+                    "This document appears to be written in Norwegian, but the"
+                            + " \u201Chtml\u201D start tag has %s. Consider"
+                            + " using either \u201Clang=\"nn\"\u201D or"
+                            + " \u201Clang=\"nb\"\u201D (or variant) instead.",
                     getAttValueExpr("lang", lowerCaseLang));
         }
         if (!"".equals(langWarning)) {
