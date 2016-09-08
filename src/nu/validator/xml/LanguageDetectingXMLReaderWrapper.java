@@ -349,10 +349,6 @@ public final class LanguageDetectingXMLReaderWrapper
                         checkLangAttributeSerboCroatian();
                         return;
                     }
-                    if ("no".equals(detectedLanguage)) {
-                        checkLangAttributeNorwegian();
-                        return;
-                    }
                 }
             }
             if ("".equals(detectedLanguage)) {
@@ -372,6 +368,12 @@ public final class LanguageDetectingXMLReaderWrapper
             String preferredLanguageCode = "";
             ULocale locale = new ULocale(detectedLanguage);
             String detectedLanguageCode = locale.getLanguage();
+            if ("no".equals(detectedLanguage)) {
+                checkLangAttributeNorwegian();
+                checkContentLanguageHeaderNorwegian(detectedLanguage,
+                        detectedLanguageName, detectedLanguageCode);
+                return;
+            }
             if ("zh-hans".equals(detectedLanguage)) {
                 detectedLanguageName = "Simplified Chinese";
                 preferredLanguageCode = "zh-hans";
@@ -492,6 +494,26 @@ public final class LanguageDetectingXMLReaderWrapper
         }
         if (!"".equals(langWarning)) {
             warn(langWarning);
+        }
+    }
+
+    private void checkContentLanguageHeaderNorwegian(String detectedLanguage,
+            String detectedLanguageName, String detectedLanguageCode)
+                    throws SAXException {
+        if ("".equals(httpContentLangHeader)
+                || httpContentLangHeader.contains(",")) {
+            return;
+        }
+        String lowerCaseContentLang = httpContentLangHeader.toLowerCase();
+        String contentLangCode = new ULocale(
+                lowerCaseContentLang).getLanguage();
+        if (!("no".equals(contentLangCode) || "nn".equals(contentLangCode)
+                || "nb".equals(contentLangCode))) {
+            warn("This document appears to be written in Norwegian but the"
+                    + " value of the HTTP \u201CContent-Language\u201D header"
+                    + " is \u201C" + lowerCaseContentLang + "\u201D. Consider"
+                    + " changing it to \u201Cnn\u201D or \u201Cnn\u201D"
+                    + " (or variant) instead.");
         }
     }
 
