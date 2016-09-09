@@ -149,6 +149,9 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
             }
             detailTokens.remove(0);
         }
+        if (detailTokens.size() < 1) {
+            return;
+        }
         firstRemainingToken = detailTokens.get(0);
         if (firstRemainingToken.equals("shipping")
                 || firstRemainingToken.equals("billing")) {
