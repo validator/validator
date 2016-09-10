@@ -457,7 +457,7 @@ public class TestRunner implements ErrorHandler {
 
     public boolean runTestSuite() throws SAXException, Exception {
         if (messagesFile != null) {
-            baseDir = messagesFile.getParentFile();
+            baseDir = messagesFile.getCanonicalFile().getParentFile();
             FileInputStream fis = new FileInputStream(messagesFile);
             InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
             expectedMessages = (HashMap<String, String>) JSON.parse(reader);
