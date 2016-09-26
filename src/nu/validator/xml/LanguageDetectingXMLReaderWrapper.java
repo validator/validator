@@ -130,7 +130,7 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final int MAX_CHARS = 30720;
 
-    private static final int MIN_CHARS = 256;
+    private static final int MIN_CHARS = 512;
 
     private static final double MIN_PROBABILITY = .90;
 
