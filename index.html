@@ -598,12 +598,8 @@ Follow the steps below to build, test, and run the checker such that you can ope
 <li>Make sure you have git, python, and JDK 8 installed.
 
 <li>Set the <code>JAVA_HOME</code> environment variable:
-<pre>export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@</pre>
-For example:
-<ul>
-<li><code>export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</code>
-<li><code>export JAVA_HOME=$(/usr/libexec/java_home)</code> (Mac OS X)
-</ul>
+<pre>export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64    &lt;-- Ubuntu, etc.</pre>
+<pre>export JAVA_HOME=$(/usr/libexec/java_home)            &lt;-- MacOS</pre>
 
 <li>Create a working directory:
 <pre>git clone https://github.com/validator/validator.git</pre>
