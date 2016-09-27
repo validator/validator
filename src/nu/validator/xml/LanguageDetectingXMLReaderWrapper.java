@@ -130,7 +130,7 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static final int MAX_CHARS = 30720;
 
-    private static final int MIN_CHARS = 256;
+    private static final int MIN_CHARS = 512;
 
     private static final double MIN_PROBABILITY = .90;
 
@@ -211,7 +211,7 @@ public final class LanguageDetectingXMLReaderWrapper
             collectingCharacters = false;
         }
         if (inBody && ("script".equals(localName) || "style".equals(localName)
-                || "pre".equals(localName))) {
+                || "pre".equals(localName) || "a".equals(localName))) {
             collectingCharacters = true;
         }
         contentHandler.endElement(uri, localName, qName);
@@ -266,7 +266,7 @@ public final class LanguageDetectingXMLReaderWrapper
             collectingCharacters = true;
         }
         if ("script".equals(localName) || "style".equals(localName)
-                || "pre".equals(localName)) {
+                || "pre".equals(localName) || "a".equals(localName)) {
             collectingCharacters = false;
         }
         contentHandler.startElement(uri, localName, qName, atts);
