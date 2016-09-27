@@ -392,29 +392,24 @@ open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
   2. Set the `JAVA_HOME` environment variable:
 
-    `export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@`
+    export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@
 
 For example:
 
-```bash
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-```
-
-```bash
-export JAVA_HOME=$(/usr/libexec/java_home)    # Mac OS X
-```
+    * `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64` * `export
+    JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
 
   3. Create a working directory:
 
-    `git clone https://github.com/validator/validator.git`
+    git clone https://github.com/validator/validator.git
 
   4. Change into your working directory:
 
-    `cd validator`
+    cd validator
 
   5. Start the build script:
 
-    `python ./build/build.py all`
+    python ./build/build.py all
 
 The first time you run the build script, you’ll need to be online and the build
 will need time to download several megabytes of dependencies.
