@@ -23,4 +23,9 @@ all: ../README.md
 	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/(\n\n\n)+/\n\n/g' \
 	    | $(PERL) $(PERLFLAGS) -pe 's|(# The Nu Markup Checker \(v.Nu\))|$$1 $(BUILDSTATUS)|g' \
 	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/\s+(\[1\]:)\s+/\n   $$1 /' \
+	    | $(PERL) $(PERLFLAGS) -pe 's|      java -cp|        java -cp|' \
+	    | $(PERL) $(PERLFLAGS) -pe 's|    export|        export|' \
+	    | $(PERL) $(PERLFLAGS) -pe 's|    git clone|        git clone|' \
+	    | $(PERL) $(PERLFLAGS) -pe 's|    cd validator|        cd validator|' \
+	    | $(PERL) $(PERLFLAGS) -pe 's|    python|        python|' \
 	    | $(EXPAND) $(EXPANDFLAGS) > $@
