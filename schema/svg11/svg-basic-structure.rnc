@@ -264,7 +264,8 @@ grammar {
         "    desc: Description Element\x{a}" ~
         "  "
     ]
-    SVG.desc.content = text
+    any_element = element * { (attribute * { text } | any_element * | text)* }
+    SVG.desc.content = any_element* & text
     desc = element desc { attlist.desc, SVG.desc.content }
     attlist.desc &= SVG.Core.attrib, SVG.Style.attrib
     a:documentation [ "\x{a}" ~ "    title: Title Element\x{a}" ~ "  " ]
