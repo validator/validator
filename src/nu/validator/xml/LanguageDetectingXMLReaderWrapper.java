@@ -211,7 +211,8 @@ public final class LanguageDetectingXMLReaderWrapper
             collectingCharacters = false;
         }
         if (inBody && ("script".equals(localName) || "style".equals(localName)
-                || "pre".equals(localName) || "a".equals(localName))) {
+                || "pre".equals(localName) || "a".equals(localName)
+                || "td".equals(localName))) {
             collectingCharacters = true;
         }
         contentHandler.endElement(uri, localName, qName);
@@ -266,7 +267,8 @@ public final class LanguageDetectingXMLReaderWrapper
             collectingCharacters = true;
         }
         if ("script".equals(localName) || "style".equals(localName)
-                || "pre".equals(localName) || "a".equals(localName)) {
+                || "pre".equals(localName) || "a".equals(localName)
+                || "td".equals(localName)) {
             collectingCharacters = false;
         }
         contentHandler.startElement(uri, localName, qName, atts);
