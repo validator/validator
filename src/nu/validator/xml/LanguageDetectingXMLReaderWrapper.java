@@ -212,7 +212,9 @@ public final class LanguageDetectingXMLReaderWrapper
         }
         if (inBody && ("script".equals(localName) || "style".equals(localName)
                 || "pre".equals(localName) || "a".equals(localName)
-                || "td".equals(localName))) {
+                || "td".equals(localName) || "select".equals(localName)
+                || "ul".equals(localName) || "nav".equals(localName)
+                || "form".equals(localName))) {
             collectingCharacters = true;
         }
         contentHandler.endElement(uri, localName, qName);
@@ -268,7 +270,9 @@ public final class LanguageDetectingXMLReaderWrapper
         }
         if ("script".equals(localName) || "style".equals(localName)
                 || "pre".equals(localName) || "a".equals(localName)
-                || "td".equals(localName)) {
+                || "td".equals(localName) || "select".equals(localName)
+                || "ul".equals(localName) || "nav".equals(localName)
+                || "form".equals(localName)) {
             collectingCharacters = false;
         }
         contentHandler.startElement(uri, localName, qName, atts);
