@@ -1963,7 +1963,7 @@ public class Assertions extends Checker {
                     }
                 }
             } else if ("main" == localName) {
-                if (hasMain) {
+                if (followW3Cspec && hasMain) {
                     err("A document must not include more than one"
                             + " \u201Cmain\u201D element.");
                 }
