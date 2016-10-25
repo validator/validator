@@ -84,7 +84,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	li.elem =
 		element li { li.inner & li.attrs }
 	li.attrs =
-		(	common.attrs 
+		(	common.attrs
 		&	(	common.attrs.aria.implicit.listitem
 			|	common.attrs.aria.role.listitem
 			|	common.attrs.aria.role.menuitem
@@ -190,6 +190,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 				&	common.elem.script-supporting*
 				)+
 			)*
+			|
+			(	dldiv.elem
+			&	common.elem.script-supporting*
+			)+
+			|	common.elem.script-supporting*
 		)
 
 	common.elem.flow |= dl.elem
@@ -236,12 +241,24 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.flow |= div.elem
 
+	dldiv.elem =
+		element div { dldiv.inner & div.attrs }
+	dldiv.inner =
+		(	(	dt.elem
+			&	common.elem.script-supporting*
+			)+
+		,
+			(	dd.elem
+			&	common.elem.script-supporting*
+			)+
+		)
+
 ## Title or Explanatory Caption: <legend>
 
 	legend.elem =
 		element legend { legend.inner & legend.attrs }
 	legend.attrs =
 		(	common.attrs
-		)	
+		)
 	legend.inner =
 		( common.inner.phrasing )
