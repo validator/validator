@@ -14,5 +14,14 @@
   "bugs": {
     "url": "https://github.com/validator/validator/issues"
   },
-  "homepage": "https://github.com/validator/validator#readme"
+  "homepage": "https://github.com/validator/validator#readme",
+  "keywords": [
+    "checker",
+    "html",
+    "jar",
+    "nu",
+    "validator",
+    "vnu",
+    "w3c"
+  ]
 }
