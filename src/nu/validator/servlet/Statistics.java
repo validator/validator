@@ -106,8 +106,9 @@ public class Statistics {
                 "Schematron custom schema"), LOGIC_ERROR(
                 "Logic errors in schema stats"), PARSER_XML_EXTERNAL(
                 "Parser set to XML with external entities"), PARSER_HTML4(
-                "Parser set to explicit HTML4 mode"), XMLNS_FILTER(
-                "XMLNS filter set"), LAX_TYPE(
+                "Parser set to explicit HTML4 mode"),
+                ABOUT_LEGACY_COMPAT("Doctype with\u300cSYSTEM \"about:legacy-compat\"\u300dfound"),
+                XMLNS_FILTER( "XMLNS filter set"), LAX_TYPE(
                 "Being lax about HTTP content type"), IMAGE_REPORT(
                 "Image report"), SHOW_SOURCE("Show source"), SHOW_OUTLINE(
                 "Show outline"), INPUT_GET("GET-based input"), INPUT_POST(

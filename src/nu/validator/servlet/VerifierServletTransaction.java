@@ -271,6 +271,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean laxType = false;
 
+    private boolean aboutLegacyCompat = false;
+
     protected ContentHandler contentHandler;
 
     protected XhtmlSaxEmitter emitter;
@@ -1114,6 +1116,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
             if (laxType) {
                 stats.incrementField(Statistics.Field.LAX_TYPE);
+            }
+            if (aboutLegacyCompat) {
+                stats.incrementField(Statistics.Field.ABOUT_LEGACY_COMPAT);
             }
             if (imageCollector != null) {
                 stats.incrementField(Statistics.Field.IMAGE_REPORT);
@@ -1970,6 +1975,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     public void documentMode(DocumentMode mode, String publicIdentifier,
             String systemIdentifier, boolean html4SpecificAdditionalErrorChecks)
             throws SAXException {
+            if ("about:legacy-compat".equals(systemIdentifier)) {
+                aboutLegacyCompat = true;
+            }
         if (validator == null) {
             try {
                 if ("yes".equals(request.getParameter("sniffdoctype"))) {
