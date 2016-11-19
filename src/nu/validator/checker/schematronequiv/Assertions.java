@@ -207,7 +207,7 @@ public class Assertions extends Checker {
     private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<>();
 
     static {
-        OBSOLETE_ATTRIBUTES.put("abbr", new String[] { "td", "th" });
+        OBSOLETE_ATTRIBUTES.put("abbr", new String[] { "td" });
         OBSOLETE_ATTRIBUTES.put("archive", new String[] { "object" });
         OBSOLETE_ATTRIBUTES.put("axis", new String[] { "td", "th" });
         OBSOLETE_ATTRIBUTES.put("charset", new String[] { "link", "a" });
