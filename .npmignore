@@ -1,0 +1,6 @@
+# All
+*
+
+# But not
+!/build/dist/vnu.jar
+!vnu-jar.js

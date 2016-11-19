@@ -1,7 +1,11 @@
 {
-  "name": "validator",
+  "name": "vnu-jar",
   "version": "16.6.29",
-  "description": "The Nu Html Checker",
+  "description": "Provides the Nu Html Checker «vnu.jar» file",
+  "main": "vnu-jar.js",
+  "engines": {
+    "node": ">=0.10"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/validator/validator.git"
@@ -10,5 +14,14 @@
   "bugs": {
     "url": "https://github.com/validator/validator/issues"
   },
-  "homepage": "https://github.com/validator/validator#readme"
+  "homepage": "https://github.com/validator/validator#readme",
+  "keywords": [
+    "checker",
+    "html",
+    "jar",
+    "nu",
+    "validator",
+    "vnu",
+    "w3c"
+  ]
 }
