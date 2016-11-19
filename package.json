@@ -1,7 +1,11 @@
 {
-  "name": "validator",
+  "name": "vnu-jar",
   "version": "16.6.29",
-  "description": "The Nu Html Checker",
+  "description": "Provides the Nu Html Checker «vnu.jar» file",
+  "main": "vnu-jar.js",
+  "engines": {
+    "node": ">=0.10"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/validator/validator.git"
