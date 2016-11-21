@@ -151,21 +151,21 @@ namespace local = ""
 				common.data.integer.non-negative
 			}
 		embed.attrs.other = # REVISIT common.attrs
-			attribute local:* - ( src 
-			                    | type 
-			                    | height 
-			                    | width 
-			                    | id 
+			attribute local:* - ( src
+			                    | type
+			                    | height
+			                    | width
+			                    | id
 			                    | class
-			                    | title 
-			                    | dir 
-			                    | lang 
-			                    | translate 
-			                    | style 
-			                    | tabindex 
-			                    | contextmenu 
-			                    | contenteditable 
-			                    | draggable 
+			                    | title
+			                    | dir
+			                    | lang
+			                    | translate
+			                    | style
+			                    | tabindex
+			                    | contextmenu
+			                    | contenteditable
+			                    | draggable
 			                    | dropzone
 			                    | hidden
 			                    | onabort
@@ -317,7 +317,7 @@ namespace local = ""
                                             | its-storage-encoding
                                             | its-line-break-type
                                             | its-annotators-ref
-			                    ) 
+			                    )
 			{
 				string
 			}
@@ -465,7 +465,7 @@ namespace local = ""
 				w:string "allowfullscreen" | w:string ""
 			} & v5only
 	iframe.inner =
-		( ( text & HTMLonly ) | empty )
+		empty
 
 	common.elem.phrasing |= iframe.elem
 
