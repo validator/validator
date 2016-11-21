@@ -108,6 +108,7 @@ public class Statistics {
                 "Parser set to XML with external entities"), PARSER_HTML4(
                 "Parser set to explicit HTML4 mode"),
                 ABOUT_LEGACY_COMPAT("Doctype with\u300cSYSTEM \"about:legacy-compat\"\u300dfound"),
+                XHTML1_SYSTEM_ID("Doctype with XHTML1 system ID found"),
                 XMLNS_FILTER( "XMLNS filter set"), LAX_TYPE(
                 "Being lax about HTTP content type"), IMAGE_REPORT(
                 "Image report"), SHOW_SOURCE("Show source"), SHOW_OUTLINE(

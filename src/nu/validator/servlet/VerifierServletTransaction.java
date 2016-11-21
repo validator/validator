@@ -273,6 +273,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean aboutLegacyCompat = false;
 
+    private boolean xhtml1SystemId = false;
+
     protected ContentHandler contentHandler;
 
     protected XhtmlSaxEmitter emitter;
@@ -1119,6 +1121,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
             if (aboutLegacyCompat) {
                 stats.incrementField(Statistics.Field.ABOUT_LEGACY_COMPAT);
+            }
+            if (xhtml1SystemId) {
+                stats.incrementField(Statistics.Field.XHTML1_SYSTEM_ID);
             }
             if (imageCollector != null) {
                 stats.incrementField(Statistics.Field.IMAGE_REPORT);
@@ -1975,9 +1980,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     public void documentMode(DocumentMode mode, String publicIdentifier,
             String systemIdentifier, boolean html4SpecificAdditionalErrorChecks)
             throws SAXException {
-            if ("about:legacy-compat".equals(systemIdentifier)) {
-                aboutLegacyCompat = true;
-            }
+        if ("about:legacy-compat".equals(systemIdentifier)) {
+            aboutLegacyCompat = true;
+        } else if (systemIdentifier.contains("http://www.w3.org/TR/xhtml1")) {
+            xhtml1SystemId = true;
+        }
         if (validator == null) {
             try {
                 if ("yes".equals(request.getParameter("sniffdoctype"))) {
