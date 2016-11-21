@@ -1980,9 +1980,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     public void documentMode(DocumentMode mode, String publicIdentifier,
             String systemIdentifier, boolean html4SpecificAdditionalErrorChecks)
             throws SAXException {
-        if ("about:legacy-compat".equals(systemIdentifier)) {
+        if (systemIdentifier != null
+                && "about:legacy-compat".equals(systemIdentifier)) {
             aboutLegacyCompat = true;
-        } else if (systemIdentifier.contains("http://www.w3.org/TR/xhtml1")) {
+        } else if (systemIdentifier != null
+                && systemIdentifier.contains("http://www.w3.org/TR/xhtml1")) {
             xhtml1SystemId = true;
         }
         if (validator == null) {
