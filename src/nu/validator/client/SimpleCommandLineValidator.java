@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Mozilla Foundation
+ * Copyright (c) 2013-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -84,6 +84,10 @@ public class SimpleCommandLineValidator {
 
     private static OutputFormat outputFormat;
 
+    private static String schemaUrl;
+
+    private static boolean hasSchemaOption;
+
     public static void main(String[] args) throws SAXException, Exception {
         out = System.err;
         System.setProperty("nu.validator.datatype.warn", "true");
@@ -98,7 +102,8 @@ public class SimpleCommandLineValidator {
         verbose = false;
 
         String outFormat = null;
-        String schemaUrl = null;
+        schemaUrl = null;
+        hasSchemaOption = false;
         boolean hasFileArgs = false;
         boolean readFromStdIn = false;
         int fileArgsStart = 0;
@@ -143,6 +148,7 @@ public class SimpleCommandLineValidator {
                 } else if ("--no-stream".equals(args[i])) {
                     noStream = true;
                 } else if ("--schema".equals(args[i])) {
+                    hasSchemaOption = true;
                     schemaUrl = args[++i];
                     if (!schemaUrl.startsWith("http:")) {
                         System.err.println("error: The \"--schema\" option"
@@ -230,7 +236,7 @@ public class SimpleCommandLineValidator {
     }
 
     private static void checkFiles(String[] args, int fileArgsStart)
-            throws IOException, SAXException {
+            throws IOException, Exception, SAXException {
         for (int i = fileArgsStart; i < args.length; i++) {
             if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
                 emitFilename(args[i]);
@@ -251,7 +257,8 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void recurseDirectory(File directory) throws IOException {
+    private static void recurseDirectory(File directory)
+            throws IOException, Exception {
         if (directory.canRead()) {
             File[] files = directory.listFiles();
             for (File file : files) {
@@ -264,7 +271,7 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void checkHtmlFile(File file) throws IOException {
+    private static void checkHtmlFile(File file) throws IOException, Exception {
         try {
             String path = file.getPath();
             if (!file.exists()) {
@@ -279,10 +286,18 @@ public class SimpleCommandLineValidator {
                 if (forceHTML) {
                     validator.checkHtmlFile(file, true);
                 } else {
+                    if (!"http://s.validator.nu/xhtml5-rdfalite.rnc".equals(
+                            schemaUrl) && !hasSchemaOption) {
+                        setup("http://s.validator.nu/xhtml5-rdfalite.rnc");
+                    }
                     validator.checkXmlFile(file);
                 }
             } else if (isHtml(file)) {
                 emitFilename(path);
+                if (!"http://s.validator.nu/html5-rdfalite.rnc".equals(
+                        schemaUrl) && !hasSchemaOption) {
+                    setup("http://s.validator.nu/html5-rdfalite.rnc");
+                }
                 validator.checkHtmlFile(file, true);
             } else {
                 if (verbose) {
