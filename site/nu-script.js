@@ -420,9 +420,9 @@ function installFileUpload() {
 				var xnote = document.createElement("div")
 				xnote.setAttribute('id', 'xnote')
 				xnote.appendChild(document.createTextNode(
-					"Uploaded files with xhtml or .xht"
-					+ " extensions are automatically"
-					+ " processed as XHTML."))
+					"Uploaded files with .xhtml or .xht"
+					+ " extensions are parsed using"
+					+ " the XML parser."))
 				document.getElementById("inputregion")
 					.appendChild(xnote)
 			}
