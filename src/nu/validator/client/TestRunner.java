@@ -91,7 +91,7 @@ public class TestRunner implements ErrorHandler {
 
     public TestRunner() throws IOException {
         reportedMessages = new LinkedHashMap<>();
-        validator = new SimpleDocumentValidator(true, false);
+        validator = new SimpleDocumentValidator(true, false, false);
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
                     "UTF-8"));

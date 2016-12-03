@@ -25,8 +25,6 @@ package nu.validator.validation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.net.HttpURLConnection;
 
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
@@ -52,6 +50,7 @@ import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LanguageDetectingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
+import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
 
@@ -79,6 +78,7 @@ import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.net.*;
+import java.util.Properties;
 
 /**
  * Simple validation interface.
@@ -97,6 +97,10 @@ public class SimpleDocumentValidator {
 
     private SourceCode sourceCode = new SourceCode();
 
+    private TypedInputSource documentInput;
+
+    private PrudentHttpEntityResolver httpRes;
+
     private XMLReader htmlReader;
 
     private SAXDriver xmlParser;
@@ -106,6 +110,15 @@ public class SimpleDocumentValidator {
     private LexicalHandler lexicalHandler;
 
     private boolean enableLanguageDetection;
+
+    static {
+        PrudentHttpEntityResolver.setParams(
+                Integer.parseInt(System.getProperty(
+                        "nu.validator.servlet.connection-timeout", "5000")),
+                Integer.parseInt(System.getProperty(
+                        "nu.validator.servlet.socket-timeout", "5000")),
+                100);
+    }
 
     private Schema schemaByUrl(String schemaUrl, ErrorHandler errorHandler)
             throws Exception, SchemaReadException {
@@ -134,7 +147,7 @@ public class SimpleDocumentValidator {
     }
 
     public SimpleDocumentValidator() {
-        this(true, true);
+        this(true, true, true);
     }
 
     /* *
@@ -147,7 +160,7 @@ public class SimpleDocumentValidator {
      * application that already has log4j configured.
      */
     public SimpleDocumentValidator(boolean initializeLog4j) {
-        this(initializeLog4j, true);
+        this(initializeLog4j, true, true);
     }
 
     public SourceCode getSourceCode() {
@@ -163,17 +176,35 @@ public class SimpleDocumentValidator {
      * configuration when calling <code>SimpleDocumentValidator</code> from an
      * application that already has log4j configured.
      *
+     * @param logUrls <code>true</code> to log the URLs of http/https input
+     * documents, <code>false</code> to not log the URLs. Use this
+     * parameter to prevent <code>SimpleDocumentValidator</code> from
+     * logging URLs when, for example, called from a command-line client
+     * like <code>nu.validator.client.SimpleCommandLineValidator</code>.
+     *
      * @param enableLanguageDetection <code>true</code> to enable language
      * detection, <code>false</code> to disable language detection. Use this
      * parameter to prevent <code>SimpleDocumentValidator</code> from
      * performing language detection.
      */
-    public SimpleDocumentValidator(boolean initializeLog4j,
+    public SimpleDocumentValidator(boolean initializeLog4j, boolean logUrls,
             boolean enableLanguageDetection) {
         this.enableLanguageDetection = enableLanguageDetection;
         if (initializeLog4j) {
-            PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
-                    "nu/validator/localentities/files/log4j.properties"));
+            Properties properties = new Properties();
+            try {
+                properties.load(
+                        SimpleDocumentValidator.class.getClassLoader().getResourceAsStream(
+                                "nu/validator/localentities/files/log4j.properties"));
+                if (!logUrls) {
+                    properties.setProperty(
+                            "log4j.logger.nu.validator.xml.PrudentHttpEntityResolver",
+                            "FATAL");
+                }
+                PropertyConfigurator.configure(properties);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
@@ -383,24 +414,28 @@ public class SimpleDocumentValidator {
      * 
      * @throws IOException if loading of the URL fails for some reason
      */
-    public void checkHttpURL(URL url) throws IOException, SAXException {
-        CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
-        String address = url.toString();
+    public void checkHttpURL(String document, ErrorHandler errorHandler)
+            throws IOException, SAXException {
+        CookieHandler.setDefault(
+                new CookieManager(null, CookiePolicy.ACCEPT_ALL));
         validator.reset();
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        String contentType = connection.getContentType();
-        InputSource is = new InputSource(url.openStream());
-        is.setSystemId(address);
+        httpRes = new PrudentHttpEntityResolver(-1, true, errorHandler);
+        httpRes.setAllowHtml(true);
+        httpRes.setUserAgent("Validator.nu/LV");
+        documentInput = (TypedInputSource) httpRes.resolveEntity(null,
+                document);
+        String contentType = documentInput.getType();
+        documentInput.setSystemId(document);
         for (String param : contentType.replace(" ", "").split(";")) {
             if (param.startsWith("charset=")) {
-                is.setEncoding(param.split("=", 2)[1]);
+                documentInput.setEncoding(param.split("=", 2)[1]);
                 break;
             }
         }
-        if (connection.getContentType().startsWith("text/html")) {
-            checkAsHTML(is);
+        if (documentInput.getType().startsWith("text/html")) {
+            checkAsHTML(documentInput);
         } else {
-            checkAsXML(is);
+            checkAsXML(documentInput);
         }
     }
 

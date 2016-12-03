@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
 
 import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.messages.GnuMessageEmitter;
@@ -91,6 +90,7 @@ public class SimpleCommandLineValidator {
     public static void main(String[] args) throws SAXException, Exception {
         out = System.err;
         System.setProperty("nu.validator.datatype.warn", "true");
+        System.setProperty("nu.validator.xml.promiscuous-ssl", "true");
         errorsOnly = false;
         skipNonHTML = false;
         forceHTML = false;
@@ -182,7 +182,7 @@ public class SimpleCommandLineValidator {
         if (readFromStdIn) {
             InputSource is = new InputSource(System.in);
             if (noLangDetect) {
-                validator = new SimpleDocumentValidator(true, false);
+                validator = new SimpleDocumentValidator(true, false, false);
             } else {
                 validator = new SimpleDocumentValidator();
             }
@@ -191,9 +191,9 @@ public class SimpleCommandLineValidator {
             end();
         } else if (hasFileArgs) {
             if (noLangDetect) {
-                validator = new SimpleDocumentValidator(true, false);
+                validator = new SimpleDocumentValidator(true, false, false);
             } else {
-                validator = new SimpleDocumentValidator();
+                validator = new SimpleDocumentValidator(true, false, true);
             }
             setup(schemaUrl);
             checkFiles(args, fileArgsStart);
@@ -241,7 +241,7 @@ public class SimpleCommandLineValidator {
             if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
                 emitFilename(args[i]);
                 try {
-                    validator.checkHttpURL(new URL(args[i]));
+                    validator.checkHttpURL(args[i], errorHandler);
                 } catch (IOException e) {
                     errorHandler.error(new SAXParseException(e.toString(),
                             null, args[i], -1, -1));
