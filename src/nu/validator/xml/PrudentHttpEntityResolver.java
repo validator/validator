@@ -133,7 +133,7 @@ import io.mola.galimatias.GalimatiasParseException;
         builder.setMaxConnPerRoute(maxRequests);
         builder.setMaxConnTotal(200);
         if ("true".equals(System.getProperty(
-                "nu.validator.xml.promiscuous-ssl", "false"))) { //
+                "nu.validator.xml.promiscuous-ssl", "true"))) { //
             try {
                 SSLContext promiscuousSSLContext = new SSLContextBuilder() //
                 .loadTrustMaterial(null, new TrustStrategy() {

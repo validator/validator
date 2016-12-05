@@ -120,7 +120,7 @@ serviceName = 'Validator.nu'
 resultsTitle = 'Validation results'
 messagesLimit=1000
 maxFileSize = 9216
-usePromiscuousSsl = 0
+disablePromiscuousSsl = 0
 genericHost = ''
 html5Host = ''
 parsetreeHost = ''
@@ -752,8 +752,8 @@ def getRunArgs(heap="$((HEAP))"):
     args.append('-Xss' + stackSize + 'k')
     args.append('-XX:ThreadStackSize=' + stackSize + 'k')
 
-  if usePromiscuousSsl:
-    args.append('-Dnu.validator.xml.promiscuous-ssl=true')
+  if disablePromiscuousSsl:
+    args.append('-Dnu.validator.xml.promiscuous-ssl=false')
 
   args.append('nu.validator.servlet.Main')
 
@@ -1396,9 +1396,9 @@ else:
     elif arg.startswith("--script-file="):
       scriptFile = arg[14:]
     elif arg == '--promiscuous-ssl=on':
-      usePromiscuousSsl = 1
+      disablePromiscuousSsl = 0
     elif arg == '--promiscuous-ssl=off':
-      usePromiscuousSsl = 0
+      disablePromiscuousSsl = 1
     elif arg == '--no-self-update':
       pass
     elif arg == '--local':

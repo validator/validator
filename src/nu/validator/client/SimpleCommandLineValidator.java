@@ -90,7 +90,6 @@ public class SimpleCommandLineValidator {
     public static void main(String[] args) throws SAXException, Exception {
         out = System.err;
         System.setProperty("nu.validator.datatype.warn", "true");
-        System.setProperty("nu.validator.xml.promiscuous-ssl", "true");
         errorsOnly = false;
         skipNonHTML = false;
         forceHTML = false;
