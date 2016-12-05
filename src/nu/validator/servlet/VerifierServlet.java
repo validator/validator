@@ -257,6 +257,7 @@ public class VerifierServlet extends HttpServlet {
             return;
         }
         if (ua == null) {
+            response.sendError(400, "Bad Request. User-Agent header is missing.");
             return;
         }
         if (!isOptions) {
