@@ -68,6 +68,7 @@ public class LocalCacheEntityResolver implements EntityResolver {
             throws SAXException, IOException {
         String path = PATH_MAP.get(systemId);
         if (path != null) {
+            @SuppressWarnings("resource")
             InputStream stream = LOADER.getResourceAsStream(path);
             if (stream != null) {
                 TypedInputSource is = new TypedInputSource();
