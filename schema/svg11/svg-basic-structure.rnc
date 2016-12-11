@@ -175,6 +175,7 @@ grammar {
         SVG.DocumentEvents.attrib,
         SVG.GraphicalEvents.attrib,
         SVG.External.attrib,
+        common.attrs.aria?,
         attribute x { Coordinate.datatype }?,
         attribute y { Coordinate.datatype }?,
         attribute width { Length.datatype }?,
@@ -223,6 +224,7 @@ grammar {
         SVG.Presentation.attrib,
         SVG.GraphicalEvents.attrib,
         SVG.External.attrib,
+        (common.attrs.aria.implicit.group | common.attrs.aria)?,
         attribute transform { TransformList.datatype }?
     a:documentation [
         "\x{a}" ~
@@ -292,6 +294,7 @@ grammar {
         SVG.GraphicalEvents.attrib,
         SVG.XLinkEmbed.attrib,
         SVG.External.attrib,
+        common.attrs.aria?,
         attribute x { Coordinate.datatype }?,
         attribute y { Coordinate.datatype }?,
         attribute width { Length.datatype }?,

@@ -895,6 +895,30 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	common.attrs.aria |= aria.group
 	common.attrs.aria.role.group |= aria.group
 
+## graphics-document
+	aria.graphics-document =
+		(	aria.role.graphics-document )
+		aria.role.graphics-document =
+			attribute role { string "graphics-document" }
+	common.attrs.aria |= aria.graphics-document
+	common.attrs.aria.role.graphics-document |= aria.graphics-document
+
+## graphics-object
+	aria.graphics-object =
+		(	aria.role.graphics-object )
+		aria.role.graphics-object =
+			attribute role { string "graphics-object" }
+	common.attrs.aria |= aria.graphics-object
+	common.attrs.aria.role.graphics-object |= aria.graphics-object
+
+## graphics-symbol
+	aria.graphics-symbol =
+		(	aria.role.graphics-symbol )
+		aria.role.graphics-symbol =
+			attribute role { string "graphics-symbol" }
+	common.attrs.aria |= aria.graphics-symbol
+	common.attrs.aria.role.graphics-symbol |= aria.graphics-symbol
+
 ## heading
 	aria.heading =
 		(	aria.role.heading
