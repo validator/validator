@@ -386,7 +386,7 @@ public final class LanguageDetectingXMLReaderWrapper
                 || "pre".equals(localName) || "a".equals(localName)
                 || "td".equals(localName) || "select".equals(localName)
                 || "ul".equals(localName) || "nav".equals(localName)
-                || "form".equals(localName)) {
+                || "textarea".equals(localName) || "form".equals(localName)) {
             collectingCharacters = false;
         }
         contentHandler.startElement(uri, localName, qName, atts);
