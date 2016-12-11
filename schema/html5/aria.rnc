@@ -37,6 +37,12 @@ common.attrs.aria.implicit.button |=
 	&	aria.state.pressed?
 	)
 
+common.attrs.aria.implicit.cell |=
+	(	aria.prop.colspan?
+	&	aria.prop.rowspan?
+	&	aria.prop.rowindex?
+	)
+
 common.attrs.aria.implicit.checkbox |=
 	(	aria.state.checked? )
 
@@ -52,6 +58,9 @@ common.attrs.aria.implicit.dialog |=
 	(	aria.state.expanded? )
 
 common.attrs.aria.implicit.document |=
+	(	aria.state.expanded? )
+
+common.attrs.aria.implicit.figure |=
 	(	aria.state.expanded? )
 
 common.attrs.aria.implicit.form |=
@@ -108,6 +117,27 @@ common.attrs.aria.implicit.radio |=
 	&	aria.state.selected?
 	)
 
+common.attrs.aria.implicit.row |=
+	(	aria.prop.level? # not inherited
+	&	aria.state.selected? # not inherited
+	&	aria.prop.activedescendant?
+	&	aria.state.expanded?
+	)
+
+common.attrs.aria.implicit.rowgroup |=
+	(	aria.prop.activedescendant?
+	&	aria.state.expanded?
+	)
+
+common.attrs.aria.implicit.searchbox |=
+	(	aria.prop.activedescendant?
+	&	aria.prop.autocomplete?
+	&	aria.prop.multiline?
+	&	aria.prop.placeholder?
+	&	aria.prop.readonly?
+	&	aria.prop.required?
+	)
+
 common.attrs.aria.implicit.slider |=
 	(	aria.prop.valuemax?
 	&	aria.prop.valuemin?
@@ -122,6 +152,11 @@ common.attrs.aria.implicit.spinbutton |=
 	&	aria.prop.valuenow?
 	&	aria.prop.valuetext?
 	&	aria.prop.required?
+	)
+
+common.attrs.aria.implicit.table |=
+	(	aria.prop.colcount?
+	&	aria.prop.rowcount?
 	)
 
 common.attrs.aria.implicit.textbox |=
@@ -323,6 +358,18 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			|	string "none" #default
 			}
 
+## colcount
+	aria.prop.colcount =
+		attribute aria-colcount {
+			common.data.integer.positive
+		}
+
+## colspan
+	aria.prop.colspan =
+		attribute aria-colspan {
+			common.data.integer.positive
+		}
+
 ## controls
 	aria.prop.controls =
 		attribute aria-controls {
@@ -401,6 +448,12 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			common.data.idrefs #REVISIT add Schematron check
 		}
 
+## placeholder
+	aria.prop.placeholder =
+		attribute aria-placeholder {
+			string
+		}
+
 ## posinset
 	aria.prop.posinset =
 		attribute aria-posinset {
@@ -457,6 +510,24 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			{	string "true"
 			|	string "false" #default
 			}	
+
+## rowcount
+	aria.prop.rowcount =
+		attribute aria-rowcount {
+			common.data.integer.positive
+		}
+
+## rowindex
+	aria.prop.rowindex =
+		attribute aria-rowindex {
+			common.data.integer.positive
+		}
+
+## rowspan
+	aria.prop.rowspan =
+		attribute aria-rowspan {
+			common.data.integer.positive
+		}
 
 ## setsize
 	aria.prop.setsize =
@@ -567,6 +638,18 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	common.attrs.aria |= aria.button
 	common.attrs.aria.role.button |= aria.button
 
+## cell
+	aria.cell =
+		(	aria.role.cell
+		&	aria.prop.colspan?
+		&	aria.prop.rowspan?
+		&	aria.prop.rowindex?
+		)
+		aria.role.cell =
+			attribute role { string "cell" }
+	common.attrs.aria |= aria.cell
+	common.attrs.aria.role.cell |= aria.cell
+
 ## checkbox
 	aria.checkbox =
 		(	aria.role.checkbox
@@ -671,6 +754,28 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 
 	common.attrs.aria |= aria.document
 	common.attrs.aria.landmark.document |= aria.document
+
+## feed
+	aria.feed =
+		(	aria.role.feed
+		&	aria.state.expanded?
+		)
+		aria.role.feed =
+			attribute role { string "feed" }
+
+	common.attrs.aria |= aria.feed
+	common.attrs.aria.role.feed |= aria.feed
+
+## figure
+	aria.figure =
+		(	aria.role.figure
+		&	aria.state.expanded?
+		)
+		aria.role.figure =
+			attribute role { string "figure" }
+
+	common.attrs.aria |= aria.figure
+	common.attrs.aria.role.figure |= aria.figure
 
 ## form
 	aria.form =
@@ -985,6 +1090,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			attribute role { string "radiogroup" }
 	
 	common.attrs.aria |= aria.radiogroup
+	common.attrs.aria.role.radiogroup |= aria.radiogroup
 
 ## region
 	aria.region =
@@ -1020,6 +1126,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			attribute role { string "rowgroup" }
 
 	common.attrs.aria |= aria.rowgroup
+	common.attrs.aria.role.rowgroup |= aria.rowgroup
 
 # rowheader
 	aria.rowheader =
@@ -1034,6 +1141,21 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			attribute role { string "rowheader" }
 	
 	common.attrs.aria |= aria.rowheader
+
+## searchbox
+	aria.searchbox =
+		(	aria.role.searchbox
+		&	aria.prop.activedescendant?
+		&	aria.prop.autocomplete?
+		&	aria.prop.multiline?
+		&	aria.prop.placeholder?
+		&	aria.prop.readonly?
+		&	aria.prop.required?
+		)
+		aria.role.searchbox =
+			attribute role { string "searchbox" }
+	common.attrs.aria |= aria.searchbox
+	common.attrs.aria.role.searchbox |= aria.searchbox
 
 ## scrollbar
 	aria.scrollbar =
@@ -1135,6 +1257,17 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.tab
 	common.attrs.aria.role.tab |= aria.tab
+
+## table
+	aria.table =
+		(	aria.role.table
+		&	aria.prop.colcount?
+		&	aria.prop.rowcount?
+		)
+		aria.role.table =
+			attribute role { string "table" }
+	common.attrs.aria |= aria.table
+	common.attrs.aria.role.table |= aria.table
 
 ## tablist
 	aria.tablist =

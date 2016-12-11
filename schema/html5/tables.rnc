@@ -50,7 +50,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element table { table.inner & table.attrs }
 	table.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.table
+			|	common.attrs.aria
+			)?
 		)
 	table.inner =
 		(	caption.elem?
@@ -128,7 +130,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element thead { thead.inner & thead.attrs }
 	thead.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.rowgroup
+			|	common.attrs.aria
+			)?
 		)
 	thead.inner =
 		(	tr.elem*
@@ -141,7 +145,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element tfoot { tfoot.inner & tfoot.attrs }
 	tfoot.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.rowgroup
+			|	common.attrs.aria
+			)?
 		)
 	tfoot.inner =
 		(	tr.elem*
@@ -154,7 +160,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element tbody { tbody.inner & tbody.attrs }
 	tbody.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.rowgroup
+			|	common.attrs.aria
+			)?
 		)
 	tbody.inner =
 		(	tr.elem*
@@ -170,7 +178,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element tr { tr.inner & tr.attrs }
 	tr.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.row
+			|	common.attrs.aria
+			)?
 		)
 	tr.inner =
 		( ( td.elem | th.elem | common.elem.script-supporting )* )
@@ -221,7 +231,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	tables.attrs.cell-structure
 		&	tables.attrs.headers?
 #		&	tables.attrs.alignment
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.cell
+			|	common.attrs.aria
+			)?
 		)
 	td.inner =
 		( common.inner.flow )

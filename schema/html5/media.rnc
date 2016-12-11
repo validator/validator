@@ -187,7 +187,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element figure { figure.inner & figure.attrs }
 	figure.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.figure
+			|	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.group
+			)?
 		)
 	figure.inner =
 		(	( figcaption.elem?, common.inner.flow )

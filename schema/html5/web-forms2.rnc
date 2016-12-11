@@ -576,10 +576,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.search.attrs.type
 		&	input.search.attrs.value?
 		&	shared-form.attrs.dirname?
-		&	(	common.attrs.aria.implicit.textbox
-			|	common.attrs.aria.implicit.combobox
-			|	common.attrs.aria.role.textbox
-			|	common.attrs.aria.role.combobox
+		&	(	common.attrs.aria.implicit.searchbox
+			|	common.attrs.aria.role.searchbox
 			)?
 		)	
 		input.search.attrs.type = 
