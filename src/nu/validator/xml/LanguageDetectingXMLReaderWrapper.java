@@ -270,7 +270,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.hasDir = false;
         this.dirAttrValue = "";
         try {
-            if (systemId != null) {
+            if (systemId != null && systemId.startsWith("http")) {
                 String host = URL.parse(systemId).host().toString();
                 this.tld = host.substring(host.lastIndexOf(".") + 1);
             }
