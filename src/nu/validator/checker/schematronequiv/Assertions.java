@@ -2301,15 +2301,25 @@ public class Assertions extends Checker {
                     }
                     hasMetaCharset = true;
                 }
-                if (atts.getIndex("", "name") > -1
-                        && "description".equals(atts.getValue("", "name"))) {
-                    if (hasMetaDescription) {
-                        err("A document must not include more than one"
-                                + " \u201Cmeta\u201D element with its"
-                                + " \u201Cname\u201D attribute set to the value"
-                                + " \u201Cdescription\u201D.");
+                if (atts.getIndex("", "name") > -1) {
+                    if ("description".equals(atts.getValue("", "name"))) {
+                        if (hasMetaDescription) {
+                            err("A document must not include more than one"
+                                    + " \u201Cmeta\u201D element with its"
+                                    + " \u201Cname\u201D attribute set to the"
+                                    + " value \u201Cdescription\u201D.");
+                        }
+                        hasMetaDescription = true;
                     }
-                    hasMetaDescription = true;
+                    if ("viewport".equals(atts.getValue("", "name"))) {
+                        String contentVal = atts.getValue("",
+                                "content").toLowerCase();
+                        if (contentVal.contains("user-scalable=no")
+                                || contentVal.contains("maximum-scale=1.0")) {
+                            warn("Consider avoiding viewport values that"
+                                    + " prevent users from resizing documents.");
+                        }
+                    }
                 }
                 if (atts.getIndex("", "http-equiv") > -1
                         && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
