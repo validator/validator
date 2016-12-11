@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,9 @@ import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
 import com.ibm.icu.util.ULocale;
+import io.mola.galimatias.URL;
+import io.mola.galimatias.Domain;
+import io.mola.galimatias.GalimatiasParseException;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -70,6 +75,102 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private static List<String> languageTags = new ArrayList<>();
 
+    private static final Map<String, String[]> LANG_TAGS_BY_TLD = new HashMap<>();
+
+    static {
+      LANG_TAGS_BY_TLD.put("ae", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("af", new String[] { "ps" });
+      LANG_TAGS_BY_TLD.put("am", new String[] { "hy" });
+      LANG_TAGS_BY_TLD.put("ar", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("at", new String[] { "de" });
+      LANG_TAGS_BY_TLD.put("az", new String[] { "az" });
+      LANG_TAGS_BY_TLD.put("ba", new String[] { "bs", "hr", "sr" });
+      LANG_TAGS_BY_TLD.put("bd", new String[] { "bn" });
+      LANG_TAGS_BY_TLD.put("be", new String[] { "de", "fr", "nl" });
+      LANG_TAGS_BY_TLD.put("bg", new String[] { "bg" });
+      LANG_TAGS_BY_TLD.put("bh", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("bo", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("br", new String[] { "pt" });
+      LANG_TAGS_BY_TLD.put("by", new String[] { "be" });
+      LANG_TAGS_BY_TLD.put("bz", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("ch", new String[] { "de", "fr", "it", "rm" });
+      LANG_TAGS_BY_TLD.put("cl", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("co", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("cu", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("cr", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("cz", new String[] { "cs" });
+      LANG_TAGS_BY_TLD.put("de", new String[] { "de" });
+      LANG_TAGS_BY_TLD.put("dk", new String[] { "da" });
+      LANG_TAGS_BY_TLD.put("do", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("ec", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("ee", new String[] { "et" });
+      LANG_TAGS_BY_TLD.put("eg", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("es", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("fi", new String[] { "fi" });
+      LANG_TAGS_BY_TLD.put("fr", new String[] { "fr" });
+      LANG_TAGS_BY_TLD.put("ge", new String[] { "ka" });
+      LANG_TAGS_BY_TLD.put("gr", new String[] { "el" });
+      LANG_TAGS_BY_TLD.put("gt", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("hn", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("hr", new String[] { "hr" });
+      LANG_TAGS_BY_TLD.put("hu", new String[] { "hu" });
+      LANG_TAGS_BY_TLD.put("id", new String[] { "id" });
+      LANG_TAGS_BY_TLD.put("is", new String[] { "is" });
+      LANG_TAGS_BY_TLD.put("it", new String[] { "it" });
+      LANG_TAGS_BY_TLD.put("il", new String[] { "iw" });
+      LANG_TAGS_BY_TLD.put("in", new String[] { "bn", "gu", "hi", "kn", "ml", "mr", "pa", "ta", "te" });
+      LANG_TAGS_BY_TLD.put("ja", new String[] { "jp" });
+      LANG_TAGS_BY_TLD.put("jo", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("ke", new String[] { "sw" });
+      LANG_TAGS_BY_TLD.put("kg", new String[] { "ky" });
+      LANG_TAGS_BY_TLD.put("kh", new String[] { "km" });
+      LANG_TAGS_BY_TLD.put("kr", new String[] { "ko" });
+      LANG_TAGS_BY_TLD.put("kw", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("kz", new String[] { "kk" });
+      LANG_TAGS_BY_TLD.put("la", new String[] { "lo" });
+      LANG_TAGS_BY_TLD.put("li", new String[] { "de" });
+      LANG_TAGS_BY_TLD.put("lb", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("lk", new String[] { "si", "ta" });
+      LANG_TAGS_BY_TLD.put("lt", new String[] { "lt" });
+      LANG_TAGS_BY_TLD.put("lu", new String[] { "de" });
+      LANG_TAGS_BY_TLD.put("lv", new String[] { "lv" });
+      LANG_TAGS_BY_TLD.put("md", new String[] { "mo" });
+      LANG_TAGS_BY_TLD.put("mk", new String[] { "mk" });
+      LANG_TAGS_BY_TLD.put("mn", new String[] { "mn" });
+      LANG_TAGS_BY_TLD.put("mx", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("my", new String[] { "ms" });
+      LANG_TAGS_BY_TLD.put("ni", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("nl", new String[] { "nl" });
+      LANG_TAGS_BY_TLD.put("no", new String[] { "nn", "no" });
+      LANG_TAGS_BY_TLD.put("np", new String[] { "ne" });
+      LANG_TAGS_BY_TLD.put("pa", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("pe", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("ph", new String[] { "tl" });
+      LANG_TAGS_BY_TLD.put("pl", new String[] { "pl" });
+      LANG_TAGS_BY_TLD.put("pk", new String[] { "ur" });
+      LANG_TAGS_BY_TLD.put("pr", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("pt", new String[] { "pt" });
+      LANG_TAGS_BY_TLD.put("py", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("qa", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("ro", new String[] { "ro" });
+      LANG_TAGS_BY_TLD.put("rs", new String[] { "sr" });
+      LANG_TAGS_BY_TLD.put("ru", new String[] { "ru" });
+      LANG_TAGS_BY_TLD.put("sa", new String[] { "ar" });
+      LANG_TAGS_BY_TLD.put("se", new String[] { "sv" });
+      LANG_TAGS_BY_TLD.put("si", new String[] { "sl" });
+      LANG_TAGS_BY_TLD.put("sk", new String[] { "sk" });
+      LANG_TAGS_BY_TLD.put("sv", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("th", new String[] { "th" });
+      LANG_TAGS_BY_TLD.put("tj", new String[] { "tg" });
+      LANG_TAGS_BY_TLD.put("tm", new String[] { "tk" });
+      LANG_TAGS_BY_TLD.put("ua", new String[] { "uk" });
+      LANG_TAGS_BY_TLD.put("uy", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("uz", new String[] { "uz" });
+      LANG_TAGS_BY_TLD.put("ve", new String[] { "es" });
+      LANG_TAGS_BY_TLD.put("vn", new String[] { "vi" });
+      LANG_TAGS_BY_TLD.put("za", new String[] { "af" });
+    }
+
     public static void initialize() throws LangDetectException {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -102,6 +203,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private String systemId;
 
+    private String tld;
+
     private Locator locator = null;
 
     private Locator htmlStartTagLocator;
@@ -113,6 +216,8 @@ public final class LanguageDetectingXMLReaderWrapper
     private String httpContentLangHeader;
 
     private String langAttrValue;
+
+    private String declaredLangCode;
 
     private boolean hasLang;
 
@@ -151,6 +256,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.errorHandler = errorHandler;
         this.request = request;
         this.systemId = systemId;
+        this.tld = "";
         this.htmlStartTagLocator = null;
         this.inBody = false;
         this.loggedStyleInBody = false;
@@ -161,8 +267,15 @@ public final class LanguageDetectingXMLReaderWrapper
         this.httpContentLangHeader = httpContentLangHeader;
         this.hasLang = false;
         this.langAttrValue = "";
+        this.declaredLangCode = "";
         this.hasDir = false;
         this.dirAttrValue = "";
+        try {
+            String domain = ((Domain) URL.parse(systemId).host()).toHumanString();
+            this.tld = domain.substring(domain.lastIndexOf(".") + 1);
+        } catch (GalimatiasParseException e) {
+            throw new RuntimeException(e);
+        }
         wrappedReader.setContentHandler(this);
     }
 
@@ -252,6 +365,7 @@ public final class LanguageDetectingXMLReaderWrapper
                     }
                     hasLang = true;
                     langAttrValue = atts.getValue(i);
+                    declaredLangCode = new ULocale(langAttrValue).getLanguage();
                 } else if ("dir".equals(atts.getLocalName(i))) {
                     hasDir = true;
                     dirAttrValue = atts.getValue(i);
@@ -310,12 +424,17 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private void detectLanguageAndCheckAgainstDeclaredLanguage()
             throws SAXException {
+        if (LANG_TAGS_BY_TLD.containsKey(tld)
+                && Arrays.binarySearch(LANG_TAGS_BY_TLD.get(tld),
+                        declaredLangCode) >= 0) {
+            return;
+        }
         try {
             if (nonWhitespaceCharacterCount < MIN_CHARS) {
                 contentHandler.endDocument();
                 return;
             }
-            if ("zxx".equals(new ULocale(langAttrValue).getLanguage())) {
+            if ("zxx".equals(declaredLangCode)) {
                 return;
             }
             String textContent = documentContent.toString();
@@ -436,17 +555,13 @@ public final class LanguageDetectingXMLReaderWrapper
     }
 
     private String getDetectedLanguageSerboCroatian() throws SAXException {
-        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
-        if ("hr".equals(declaredLangCode)
-                || (systemId != null && systemId.endsWith(".hr"))) {
+        if ("hr".equals(declaredLangCode) || "hr".equals(tld)) {
             return "hr";
         }
-        if ("sr".equals(declaredLangCode)
-                || (systemId != null && systemId.endsWith(".rs"))) {
+        if ("sr".equals(declaredLangCode) || ".rs".equals(tld)) {
             return "sr-latn";
         }
-        if ("bs".equals(declaredLangCode)
-                || (systemId != null && systemId.endsWith(".ba"))) {
+        if ("bs".equals(declaredLangCode) || ".ba".equals(tld)) {
             return "bs";
         }
         return "sh";
@@ -454,7 +569,6 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private void checkLangAttributeSerboCroatian() throws SAXException {
         String lowerCaseLang = langAttrValue.toLowerCase();
-        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
         String langWarning = "";
         if (!hasLang) {
             langWarning = "This document appears to be written in either"
@@ -481,7 +595,6 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private void checkLangAttributeNorwegian() throws SAXException {
         String lowerCaseLang = langAttrValue.toLowerCase();
-        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
         String langWarning = "";
         if (!hasLang) {
             langWarning = "This document appears to be written in Norwegian"
@@ -528,7 +641,6 @@ public final class LanguageDetectingXMLReaderWrapper
             String preferredLanguageCode) throws SAXException {
         String langWarning = "";
         String lowerCaseLang = langAttrValue.toLowerCase();
-        String declaredLangCode = new ULocale(langAttrValue).getLanguage();
         if (!hasLang) {
             langWarning = String.format(
                     "This document appears to be written in %s."
@@ -729,7 +841,6 @@ public final class LanguageDetectingXMLReaderWrapper
                     + " header is \u201C%s\u201D but it will be ignored because"
                     + " the \u201Chtml\u201D start tag has %s.";
             String lowerCaseLang = langAttrValue.toLowerCase();
-            String declaredLangCode = new ULocale(langAttrValue).getLanguage();
             if (hasLang) {
                 if (zhSubtagMismatch(lowerCaseContentLang, lowerCaseLang)
                         || !contentLangCode.equals(declaredLangCode)) {
