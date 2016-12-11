@@ -31,25 +31,27 @@ It is released as two packages:
 they won’t run in Java 7 or older environment.
 
 To use the checker on your own: [get the latest release][13] or run
-`npm install vnu-jar` or `brew install vnu`, and see the **Usage** and
-**Web-based checking** sections below. Or automate your HTML checking with a
+[`npm install vnu-jar`][14] or [`brew install vnu`][15], and see the **Usage**
+and **Web-based checking** sections below. Or automate your HTML checking with a
 frontend such as:
 
    [13]: https://github.com/validator/validator/releases/latest
+   [14]: https://www.npmjs.com/package/vnu-jar
+   [15]: https://libraries.io/homebrew/vnu
 
-  * [Grunt plugin for HTML validation][14] or [Gulp plugin for HTML
-  validation][15]
+  * [Grunt plugin for HTML validation][16] or [Gulp plugin for HTML
+  validation][17]
 
-  * [HTML5 Validator Integration for Travis CI][16] (auto-check documents pushed
+  * [HTML5 Validator Integration for Travis CI][18] (auto-check documents pushed
   to a github repo)
 
-  * [LMVTFY: Let Me Validate That For You][17] (auto-check HTML of
+  * [LMVTFY: Let Me Validate That For You][19] (auto-check HTML of
   JSFiddle/JSBin etc. links in github issue comments)
 
-   [14]: https://github.com/jzaefferer/grunt-html
-   [15]: https://github.com/watilde/gulp-html
-   [16]: https://github.com/svenkreiss/html5validator
-   [17]: https://github.com/cvrebert/lmvtfy/
+   [16]: https://github.com/jzaefferer/grunt-html
+   [17]: https://github.com/watilde/gulp-html
+   [18]: https://github.com/svenkreiss/html5validator
+   [19]: https://github.com/cvrebert/lmvtfy/
 
 ## Usage
 
@@ -160,15 +162,15 @@ executable provides the following options:
 ## Web-based checking with vnu.war or vnu.jar
 
 The Nu Html Checkerーalong with being usable as [a standalone command-line
-client][18]ーcan be run as an HTTP service, similar to [checker.html5.org][19],
-[html5.validator.nu][20], and [validator.w3.org/nu][21], for browser-based
+client][20]ーcan be run as an HTTP service, similar to [checker.html5.org][21],
+[html5.validator.nu][22], and [validator.w3.org/nu][23], for browser-based
 checking of HTML documents over the Web. To that end, the checker is released as
 two separate packages:
 
-   [18]: https://validator.github.io/validator/#usage
-   [19]: https://checker.html5.org/
-   [20]: https://html5.validator.nu/
-   [21]: http://validator.w3.org/nu/
+   [20]: https://validator.github.io/validator/#usage
+   [21]: https://checker.html5.org/
+   [22]: https://html5.validator.nu/
+   [23]: http://validator.w3.org/nu/
 
   * `vnu.jar` for deploying the checker as a simple self-contained service
   * `vnu.war` for deploying the checker to a servlet container such as Tomcat
@@ -180,11 +182,11 @@ locally-running instance of the checker HTTP serviceーfor fast command-line
 checkingーor to any remote instance of the checker HTTP service running anywhere
 on the Web.
 
-The [latest releases of the vnu.jar and vnu.war packages][22] are available from
+The [latest releases of the vnu.jar and vnu.war packages][24] are available from
 the `validator` project at github. The following are detailed instructions on
 using them.
 
-   [22]: https://github.com/validator/validator/releases/latest
+   [24]: https://github.com/validator/validator/releases/latest
 
 **Note:** Replace _"~/vnu.jar"_ or _"~/vnu.war"_ below with the actual paths to
 those files on your system.
@@ -196,16 +198,16 @@ a new terminal window and invoke `vnu.jar` like this:
 
         java -cp ~/vnu.jar nu.validator.servlet.Main 8888
 
-Then open [http://localhost:8888][23] in a browser. (To have the checker listen
+Then open [http://localhost:8888][25] in a browser. (To have the checker listen
 on a different port, replace `8888` with the port number.)
 
-   [23]: http://localhost:8888
+   [25]: http://localhost:8888
 
-You’ll see a form similar to [validator.w3.org/nu][24] that allows you to enter
+You’ll see a form similar to [validator.w3.org/nu][26] that allows you to enter
 the URL of an HTML document and have the results for that document displayed in
 the browser.
 
-   [24]: http://validator.w3.org/nu/
+   [26]: http://validator.w3.org/nu/
 
 **Note:** If you get a `StackOverflowError` error when using the vnu.jar file,
 try adjusting the thread stack size by providing the `-Xss` option to java:
@@ -217,11 +219,11 @@ try adjusting the thread stack size by providing the `-Xss` option to java:
 To run the checker inside of an existing servlet container such as Apache Tomcat
 you will need to deploy the `vnu.war` file to that server following its
 documentation. For example, on Apache Tomcat you could do this using the
-[Manager][25] application or simply by copying the file to the `webapps`
+[Manager][27] application or simply by copying the file to the `webapps`
 directory (since that is the default `appBase` setting). Typically you would see
 a message similar to the following in the `catalina.out` log file.
 
-   [25]: http://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
+   [27]: http://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
 
     May 7, 2014 4:42:04 PM org.apache.catalina.startup.HostConfig deployWAR
     INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
@@ -230,9 +232,9 @@ Assuming your servlet container is configured to receive HTTP requests sent to
 `localhost` on port `80` and the context root of this application is `vnu`
 (often the default behavior is to use the WAR file's filename as the context
 root unless one is explicitly specified) you should be able to access the
-application by connecting to [http://localhost/vnu/][26].
+application by connecting to [http://localhost/vnu/][28].
 
-   [26]: http://localhost/vnu/
+   [28]: http://localhost/vnu/
 
 **Note:** You may want to customize the `/WEB-INF/web.xml` file inside the WAR
 file (you can use any ZIP-handling program) to modify the servlet filter
@@ -264,10 +266,10 @@ To check documents locally, do this:
         java -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
 
 To send documents to an instance of the checker on the Web, such as
-[html5.validator.nu/][27], use the nu.validator.client.host and
+[html5.validator.nu/][29], use the nu.validator.client.host and
 nu.validator.client.port options, like this:
 
-   [27]: http://html5.validator.nu/
+   [29]: http://html5.validator.nu/
 
         java -cp ~/vnu.jar -Dnu.validator.client.port=80 \
          -Dnu.validator.client.host=html5.validator.nu \
@@ -290,9 +292,9 @@ ones by setting the value of the `nu.validator.client.level` system property to
 
 Most of the properties listed below map to the validator.nu common input
 parameters documented at
-[github.com/validator/validator/wiki/Service:-Common-parameters][28].
+[github.com/validator/validator/wiki/Service:-Common-parameters][30].
 
-   [28]: https://github.com/validator/validator/wiki/Service:-Common-parameters
+   [30]: https://github.com/validator/validator/wiki/Service:-Common-parameters
 
 #### nu.validator.client.host
 
