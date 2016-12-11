@@ -40,7 +40,6 @@ import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
 import com.ibm.icu.util.ULocale;
 import io.mola.galimatias.URL;
-import io.mola.galimatias.Domain;
 import io.mola.galimatias.GalimatiasParseException;
 
 import org.xml.sax.Attributes;
@@ -272,9 +271,8 @@ public final class LanguageDetectingXMLReaderWrapper
         this.dirAttrValue = "";
         try {
             if (systemId != null) {
-                String domain = ((Domain) URL.parse(
-                        systemId).host()).toHumanString();
-                this.tld = domain.substring(domain.lastIndexOf(".") + 1);
+                String host = URL.parse(systemId).host().toString();
+                this.tld = host.substring(host.lastIndexOf(".") + 1);
             }
         } catch (GalimatiasParseException e) {
             throw new RuntimeException(e);
