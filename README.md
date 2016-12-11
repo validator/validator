@@ -5,7 +5,7 @@
    [3]: https://goo.gl/3PC2Qn
    [4]: https://github.com/validator/validator/releases/latest
 
-The Nu Html Checker (v.Nu) is a name for the backend of [checker.html5.org][5],
+The Nu Html Checker (v.Nu) is the backend of [checker.html5.org][5],
 [html5.validator.nu][6], and [validator.w3.org/nu][7]. Its [source code is
 available][8], as are [instructions on how to build, test, and run the code][9].
 It is released as two packages:
@@ -30,15 +30,15 @@ It is released as two packages:
 **Note:** The _vnu.jar_ and _vnu.war_ packages require a Java 8 environment;
 they won’t run in Java 7 or older environment.
 
-To use the Nu Html Checker on your own, [get the latest release][13] and see the
-**Usage** and **Web-based checking** sections belowーor alternatively, consider
-automating your HTML checking with a frontend such as:
+To use the checker on your own: [get the latest release][13] or run
+`npm install vnu-jar` or `brew install vnu`, and see the **Usage** and
+**Web-based checking** sections below. Or automate your HTML checking with a
+frontend such as:
 
    [13]: https://github.com/validator/validator/releases/latest
 
-  * [Grunt plugin for HTML validation][14]
-
-  * [Gulp plugin for HTML validation][15]
+  * [Grunt plugin for HTML validation][14] or [Gulp plugin for HTML
+  validation][15]
 
   * [HTML5 Validator Integration for Travis CI][16] (auto-check documents pushed
   to a github repo)
@@ -53,8 +53,8 @@ automating your HTML checking with a frontend such as:
 
 ## Usage
 
-You can use the `vnu.jar` HTML checker as an executable for command-line
-checking of documents by invoking it like this:
+Use the `vnu.jar` HTML checker as an executable for command-line checking of
+documents by invoking it like this:
 
       java -jar vnu.jar [--errors-only] [--no-stream]
            [--format gnu|xml|json|text] [--help] [--html] [--no-langdetect]

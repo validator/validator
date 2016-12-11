@@ -127,7 +127,7 @@ li > ul {
     ><img src="https://goo.gl/3PC2Qn" alt="Download latest"></a>
   </h1>
     <p>
-    The Nu Html Checker (v.Nu) is a name for the backend of
+    The Nu Html Checker (v.Nu) is the backend of
     <a href="https://checker.html5.org/">checker.html5.org</a>,
     <a href="https://html5.validator.nu">html5.validator.nu</a>,
     and
@@ -153,18 +153,22 @@ li > ul {
     older environment.
 
     <p>
-    To use the Nu Html Checker on your own,
+    To use the checker on your own:
     <a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
+    or run
+    <code>npm install vnu-jar</code>
+    or
+    <code>brew install vnu</code>,
     and see the
     <a href="#usage"><b>Usage</b></a>
     and
     <a href="#web-based-checking"><b>Web-based checking</b></a>
-    sections belowーor alternatively, consider automating your HTML
-    checking with a frontend such as:
+    sections below.
+    Or automate your HTML checking with a frontend such as:
 <ul>
 <li>
 <a href="https://github.com/jzaefferer/grunt-html">Grunt plugin for HTML validation</a>
-<li>
+or
 <a href="https://github.com/watilde/gulp-html">Gulp plugin for HTML validation</a>
 <li>
 <a href="https://github.com/svenkreiss/html5validator">HTML5 Validator Integration for Travis CI</a>
@@ -183,7 +187,7 @@ li > ul {
   <section id=usage>
   <h2>Usage</h2>
 
-<p>You can use the <code>vnu.jar</code> HTML checker as an executable for
+<p>Use the <code>vnu.jar</code> HTML checker as an executable for
 command-line checking of documents by invoking it like this:
 <pre>
   java -jar vnu.jar [--errors-only] [--no-stream]
