@@ -271,8 +271,11 @@ public final class LanguageDetectingXMLReaderWrapper
         this.hasDir = false;
         this.dirAttrValue = "";
         try {
-            String domain = ((Domain) URL.parse(systemId).host()).toHumanString();
-            this.tld = domain.substring(domain.lastIndexOf(".") + 1);
+            if (systemId != null) {
+                String domain = ((Domain) URL.parse(
+                        systemId).host()).toHumanString();
+                this.tld = domain.substring(domain.lastIndexOf(".") + 1);
+            }
         } catch (GalimatiasParseException e) {
             throw new RuntimeException(e);
         }
