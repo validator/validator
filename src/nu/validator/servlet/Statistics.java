@@ -96,8 +96,8 @@ public class Statistics {
         INPUT_GET("Input: GET-based"), //
         INPUT_POST("Input: POST-based"), //
         INPUT_TEXT_FIELD("\u2514 Text-field input"), //
-        INPUT_FILE_UPLOAD("\u2514 File-upload input"), //
         INPUT_ENTITY_BODY("\u2514 Entity-body input"), //
+        INPUT_FILE_UPLOAD("\u2514 File-upload input"), //
         INPUT_HTML("Input: text/html"), //
         INPUT_UNSUPPORTED("Input: unsupported content type (error)"), //
         INPUT_XML("Input: application/xhtml+xml or other XML content type"), //
