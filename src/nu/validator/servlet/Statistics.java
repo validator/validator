@@ -111,8 +111,9 @@ public class Statistics {
         IMAGE_REPORT("Show: image report"), //
         HTML5_SCHEMA("Schema: HTML5 schema"), //
         HTML5_RDFA_LITE_SCHEMA("Schema: HTML5+RDFa Lite schema"), //
+        XHTML1_DOCTYPE("Doctype: XHTML1"), //
+        HTML4_DOCTYPE("Doctype: HTML4"), //
         ABOUT_LEGACY_COMPAT("Doctype: about:legacy-compat"), //
-        XHTML1_SYSTEM_ID("Doctype: XHTML1"), //
         AUTO_SCHEMA("Schema: automatically chosen"), //
         PRESET_SCHEMA("Schema: preset"), //
         HTML4_STRICT_SCHEMA("Schema: legacy Strict"), //

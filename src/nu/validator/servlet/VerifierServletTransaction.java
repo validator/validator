@@ -273,7 +273,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean aboutLegacyCompat = false;
 
-    private boolean xhtml1SystemId = false;
+    private boolean xhtml1Doctype = false;
+
+    private boolean html4Doctype = false;
 
     protected ContentHandler contentHandler;
 
@@ -1122,8 +1124,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             if (aboutLegacyCompat) {
                 stats.incrementField(Statistics.Field.ABOUT_LEGACY_COMPAT);
             }
-            if (xhtml1SystemId) {
-                stats.incrementField(Statistics.Field.XHTML1_SYSTEM_ID);
+            if (xhtml1Doctype) {
+                stats.incrementField(Statistics.Field.XHTML1_DOCTYPE);
+            }
+            if (html4Doctype) {
+                stats.incrementField(Statistics.Field.HTML4_DOCTYPE);
             }
             if (imageCollector != null) {
                 stats.incrementField(Statistics.Field.IMAGE_REPORT);
@@ -1980,12 +1985,21 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     public void documentMode(DocumentMode mode, String publicIdentifier,
             String systemIdentifier, boolean html4SpecificAdditionalErrorChecks)
             throws SAXException {
-        if (systemIdentifier != null
-                && "about:legacy-compat".equals(systemIdentifier)) {
-            aboutLegacyCompat = true;
-        } else if (systemIdentifier != null
-                && systemIdentifier.contains("http://www.w3.org/TR/xhtml1")) {
-            xhtml1SystemId = true;
+        if (systemIdentifier != null) {
+            if ("about:legacy-compat".equals(systemIdentifier)) {
+                aboutLegacyCompat = true;
+            }
+            if (systemIdentifier.contains("http://www.w3.org/TR/xhtml1")) {
+                xhtml1Doctype = true;
+            }
+            if (systemIdentifier.contains("http://www.w3.org/TR/html4")) {
+                html4Doctype = true;
+            }
+        }
+        if (publicIdentifier != null) {
+            if (publicIdentifier.contains("-//W3C//DTD HTML 4")) {
+                html4Doctype = true;
+            }
         }
         if (validator == null) {
             try {
