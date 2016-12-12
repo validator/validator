@@ -100,6 +100,7 @@ public class Statistics {
         INPUT_ENTITY_BODY("\u2514 Entity-body input"), //
         INPUT_HTML("Input: text/html"), //
         INPUT_XML("Input: application/xhtml+xml or other XML content type"), //
+        INPUT_UNSUPPORTED("Input: unsupported content type (error)"), //
         OUTPUT_XML("Output: XML"), //
         OUTPUT_HTML("Output: HTML"), //
         OUTPUT_JSON("Output: JSON"), //

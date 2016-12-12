@@ -1154,9 +1154,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
             if (htmlParser != null) {
                 stats.incrementField(Statistics.Field.INPUT_HTML);
-            }
-            if (xmlParser != null) {
+            } else if (xmlParser != null) {
                 stats.incrementField(Statistics.Field.INPUT_XML);
+            } else {
+                stats.incrementField(Statistics.Field.INPUT_UNSUPPORTED);
             }
             switch (outputFormat) {
                 case GNU:
