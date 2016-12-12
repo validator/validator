@@ -101,9 +101,9 @@ public class Statistics {
         INPUT_HTML("Input: text/html"), //
         INPUT_XML("Input: application/xhtml+xml or other XML content type"), //
         OUTPUT_XML("Output: XML"), //
+        OUTPUT_HTML("Output: HTML"), //
         OUTPUT_JSON("Output: JSON"), //
         OUTPUT_GNU("Output: GNU"), //
-        OUTPUT_HTML("Output: HTML"), //
         OUTPUT_TEXT("Output: Text"), //
         OUTPUT_XHTML("Output: XHTML"), //
         SHOW_SOURCE("Show: source"), //
