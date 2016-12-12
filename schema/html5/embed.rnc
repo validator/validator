@@ -23,6 +23,7 @@ namespace local = ""
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
 		&	img.attrs.border? # obsolete
+		&	referrerpolicy?
 		&	embedded.content.attrs.crossorigin?
 		&	(	common.attrs.aria.implicit.img
 			|	common.attrs.aria
@@ -435,6 +436,7 @@ namespace local = ""
 		&	iframe.attrs.height?
 		&	iframe.attrs.sandbox?
 		&	iframe.attrs.allowfullscreen?
+		&	referrerpolicy?
 		&	(	common.attrs.aria.landmark.application
 			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img

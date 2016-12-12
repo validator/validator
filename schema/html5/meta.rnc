@@ -163,6 +163,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
+		&	referrerpolicy?
 		&	link.attrs.sizes?
 		#	link.attrs.title included in common.attrs
 		&	embedded.content.attrs.crossorigin?

@@ -23,6 +23,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.type?
 		&	shared-hyperlink.attrs.ping?
+		&	referrerpolicy?
 		&	(	common.attrs.aria.implicit.link
 			|	common.attrs.aria.role.button
 			|	common.attrs.aria.role.checkbox
@@ -83,6 +84,19 @@ datatypes w = "http://whattf.org/datatype-draft"
     attribute ping {
       common.data.uris
     } & v5only
+
+referrerpolicy =
+	attribute referrerpolicy {
+		string ""
+	|	string "no-referrer"
+	|	string "no-referrer-when-downgrade"
+	|	string "same-origin"
+	|	string "origin"
+	|	string "strict-origin"
+	|	string "origin-when-cross-origin"
+	|	string "strict-origin-when-cross-origin"
+	|	string "unsafe-url"
+	} & v5only
 
 ## Emphatic Stress: <em>
 
