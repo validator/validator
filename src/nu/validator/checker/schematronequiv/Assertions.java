@@ -172,6 +172,7 @@ public class Assertions extends Checker {
     private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<>();
 
     static {
+        OBSOLETE_ELEMENTS.put("keygen", "");
         OBSOLETE_ELEMENTS.put("center", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("font", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("big", "Use CSS instead.");
