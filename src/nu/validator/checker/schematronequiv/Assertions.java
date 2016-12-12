@@ -2311,7 +2311,8 @@ public class Assertions extends Checker {
                         }
                         hasMetaDescription = true;
                     }
-                    if ("viewport".equals(atts.getValue("", "name"))) {
+                    if ("viewport".equals(atts.getValue("", "name"))
+                            && atts.getIndex("", "content") > -1) {
                         String contentVal = atts.getValue("",
                                 "content").toLowerCase();
                         if (contentVal.contains("user-scalable=no")
