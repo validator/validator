@@ -59,6 +59,11 @@ public class ConformingButObsoleteWarner extends Checker {
                         + " Consider putting an \u201Cid\u201D attribute"
                         + " on the nearest container instead.");
                 }
+            } else if ("html" == localName) {
+                if (atts.getIndex("", "manifest") > -1) {
+                    warn("The manifest-based application cache feature is"
+                        + " obsolete. Consider using service workers instead.");
+                }
             }
         }
     }
