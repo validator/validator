@@ -33,7 +33,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		|	fieldset.inner
 		|	select.inner
 		|	details.inner
-		|	menu.popup.inner
+		|	menu.context.inner
 		)
 	common.elem.metadata |= template.elem
 	common.elem.phrasing |= template.elem
