@@ -82,7 +82,7 @@ datatypes w = "http://whattf.org/datatype-draft"
     }
   shared-hyperlink.attrs.ping =
     attribute ping {
-      common.data.uris
+      common.data.uris.http.or.https
     } & v5only
 
 referrerpolicy =

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -130,6 +130,10 @@ public class IriRef extends AbstractDatatype {
             } else {
                 CharSequence scheme = pair.getHead();
                 CharSequence tail = pair.getTail();
+                if (mustBeHttpOrHttps() && !isHttpOrHttps(scheme)) {
+                    throw newDatatypeException("Must contain only"
+                            + " \u201chttp\u201d or \u201chttps\u201d URLs.");
+                }
                 if (isWellKnown(scheme)) {
                     url = URL.parse(settings, literal.toString());
                 } else if ("javascript".contentEquals(scheme)) {
@@ -201,6 +205,10 @@ public class IriRef extends AbstractDatatype {
         }
     }
 
+    private final boolean isHttpOrHttps(CharSequence scheme) {
+        return "http".contentEquals(scheme) || "https".contentEquals(scheme);
+    }
+
     private final boolean isHttpAlias(CharSequence scheme) {
         return "feed".contentEquals(scheme) || "webcal".contentEquals(scheme);
     }
@@ -248,6 +256,10 @@ public class IriRef extends AbstractDatatype {
             }
         }
         return "";
+    }
+
+    protected boolean mustBeHttpOrHttps() {
+        return false;
     }
 
     @Override
