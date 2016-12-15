@@ -674,7 +674,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.minlength?
 		&	shared-form.attrs.autofocus? 
 		&	shared-form.attrs.required? 
-		&	shared-form.attrs.placeholder?
+		&	textarea.attrs.placeholder?
 		&	shared-form.attrs.dirname?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
@@ -694,6 +694,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		textarea.attrs.wrap.soft =
 			attribute wrap {
 				w:string "soft"
+			}
+		textarea.attrs.placeholder =
+			attribute placeholder {
+				string
 			}
 
 ## List of Prefill Data: <datalist>
