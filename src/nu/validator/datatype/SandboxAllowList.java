@@ -40,6 +40,13 @@ public final class SandboxAllowList extends AbstractDatatype {
 
     private static final HashSet<String> allowedKeywords = new HashSet<>();
 
+    private static final boolean WARN = System.getProperty(
+            "nu.validator.datatype.warn", "").equals("true");
+
+    private boolean hasAllowScripts;
+
+    private boolean hasAllowSameOrigin;
+
     static {
         allowedKeywords.add("allow-forms");
         allowedKeywords.add("allow-modals");
@@ -55,6 +62,8 @@ public final class SandboxAllowList extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
+        hasAllowScripts = false;
+        hasAllowSameOrigin= false;
         Set<String> tokensSeen = new HashSet<>();
         StringBuilder builder = new StringBuilder();
         int len = literal.length();
@@ -70,6 +79,14 @@ public final class SandboxAllowList extends AbstractDatatype {
         if (builder.length() > 0) {
             checkToken(literal, builder, len, tokensSeen);
         }
+        if (hasAllowScripts && hasAllowSameOrigin) {
+            throw newDatatypeException(
+                    "Setting both \u201callow-scripts\u201d and"
+                            + " \u201callow-same-origin\u201d is not"
+                            + " recommended, because it effectively enables an"
+                            + " embedded page to break out of all sandboxing.",
+                    WARN);
+        }
     }
 
     private void checkToken(CharSequence literal, StringBuilder builder, int i,
@@ -83,6 +100,12 @@ public final class SandboxAllowList extends AbstractDatatype {
         if (!allowedKeywords.contains(token)) {
             throw newDatatypeException(i - 1, "The string \u201c" + token
                     + "\u201d is not a valid keyword.");
+        }
+        if ("allow-scripts".equals(token)) {
+            hasAllowScripts = true;
+        }
+        if ("allow-same-origin".equals(token)) {
+            hasAllowSameOrigin = true;
         }
     }
 
