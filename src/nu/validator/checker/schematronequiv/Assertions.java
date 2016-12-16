@@ -2612,6 +2612,12 @@ public class Assertions extends Checker {
                     child.setOptionNeeded();
                 }
             }
+            if (localName.contains("-")) {
+                if (atts.getIndex("", "is") > -1) {
+                    err("Autonomous custom elements must not specify the"
+                            + " \u201cis\u201d attribute.");
+                }
+            }
         } else {
             StackNode child = new StackNode(ancestorMask, null, role,
                     activeDescendant, forAttr);

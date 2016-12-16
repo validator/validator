@@ -403,6 +403,11 @@ common.attrs.other =
 	common.data.sandbox-allow-list =
 		w:string "" | w:sandbox-allow-list
 
+## Custom element name
+	common.data.custom.element.name =
+		# FIXME: add a real datatype checker for this
+		string
+
 ## Microdata Properties
   common.data.microdata-properties =
     list { w:microdata-property+ }
