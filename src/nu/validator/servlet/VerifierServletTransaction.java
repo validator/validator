@@ -95,7 +95,7 @@ import nu.validator.xml.SystemErrErrorHandler;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
 import nu.validator.xml.XhtmlSaxEmitter;
-import nu.validator.xml.customelements.CustomElementDroppingSchemaWrapper;
+import nu.validator.xml.customelements.NamespaceChangingSchemaWrapper;
 import nu.validator.xml.templateelement.TemplateElementDroppingSchemaWrapper;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
@@ -546,8 +546,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if (isTemplateElementDroppingSchema(u)) {
                     s = new TemplateElementDroppingSchemaWrapper(s);
                 }
-                if (isCustomElementDroppingSchema(u)) {
-                    s = new CustomElementDroppingSchemaWrapper(s);
+                if (isCustomElementNamespaceChangingSchema(u)) {
+                    s = new NamespaceChangingSchemaWrapper(s);
                 }
                 preloadedSchemas[i] = s;
                 i++;
@@ -614,7 +614,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "http://s.validator.nu/html5-rdfalite.rnc".equals(key));
     }
 
-    private static boolean isCustomElementDroppingSchema(String key) {
+    private static boolean isCustomElementNamespaceChangingSchema(String key) {
         return ("http://s.validator.nu/xhtml5.rnc".equals(key)
                 || "http://s.validator.nu/html5.rnc".equals(key)
                 || "http://s.validator.nu/html5-all.rnc".equals(key)

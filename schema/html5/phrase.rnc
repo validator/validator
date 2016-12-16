@@ -1,4 +1,5 @@
 datatypes w = "http://whattf.org/datatype-draft"
+namespace c = "http://n.validator.nu/custom-elements/"
 
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Phrase Markup                         #
@@ -414,3 +415,10 @@ referrerpolicy =
 		( empty )
 
 	common.elem.phrasing |= wbr.elem
+
+## Custom elements: <foo-bar>
+
+	common.elem.flow |= element c:* { common.inner.transparent.flow & attr.any* }
+	common.elem.phrasing |= element c:* { common.inner.phrasing & attr.any* }
+	attr.any = attribute * { text }
+

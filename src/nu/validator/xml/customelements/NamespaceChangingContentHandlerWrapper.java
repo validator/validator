@@ -28,17 +28,16 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-public class CustomElementDroppingContentHandlerWrapper
-        implements ContentHandler {
+public class NamespaceChangingContentHandlerWrapper implements ContentHandler {
 
     private final ContentHandler delegate;
 
-    private int numberOfCustomElementsDeep = 0;
+    private String customElementNs = "http://n.validator.nu/custom-elements/";
 
     /**
      * @param delegate
      */
-    public CustomElementDroppingContentHandlerWrapper(ContentHandler delegate,
+    public NamespaceChangingContentHandlerWrapper(ContentHandler delegate,
             ErrorHandler errorHandler) {
         this.delegate = delegate;
     }
@@ -69,10 +68,7 @@ public class CustomElementDroppingContentHandlerWrapper
     public void endElement(String ns, String localName, String qName)
             throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == ns && localName.contains("-")) {
-            numberOfCustomElementsDeep--;
-            return;
-        } else if (numberOfCustomElementsDeep > 0) {
-            return;
+            ns = customElementNs;
         }
         delegate.endElement(ns, localName, qName);
     }
@@ -145,10 +141,7 @@ public class CustomElementDroppingContentHandlerWrapper
     public void startElement(String ns, String localName, String qName,
             Attributes attributes) throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == ns && localName.contains("-")) {
-            numberOfCustomElementsDeep++;
-            return;
-        } else if (numberOfCustomElementsDeep > 0) {
-            return;
+            ns = customElementNs;
         }
         delegate.startElement(ns, localName, qName, attributes);
     }

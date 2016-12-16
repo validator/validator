@@ -22,39 +22,57 @@
 
 package nu.validator.xml.customelements;
 
+import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
+import org.xml.sax.ErrorHandler;
+
 import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
 
-public class CustomElementDroppingSchemaWrapper implements Schema {
+public class NamespaceChangingValidatorWrapper implements Validator {
 
-    private final Schema delegate;
+    private final Validator delegate;
+
+    private final PropertyMap properties;
 
     /**
      * @param delegate
-     */
-    public CustomElementDroppingSchemaWrapper(Schema delegate) {
-        this.delegate = delegate;
-    }
-
-    /**
      * @param properties
-     * @return
-     * @see com.thaiopensource.validate.Schema#createValidator(com.thaiopensource.util.PropertyMap)
      */
-    @Override
-    public Validator createValidator(PropertyMap properties) {
-        return new CustomElementDroppingValidatorWrapper(
-                delegate.createValidator(properties), properties);
+    public NamespaceChangingValidatorWrapper(Validator delegate,
+            PropertyMap properties) {
+        this.delegate = delegate;
+        this.properties = properties;
     }
 
     /**
      * @return
-     * @see com.thaiopensource.validate.Schema#getProperties()
+     * @see com.thaiopensource.validate.Validator#getContentHandler()
      */
     @Override
-    public PropertyMap getProperties() {
-        return delegate.getProperties();
+    public ContentHandler getContentHandler() {
+        return new NamespaceChangingContentHandlerWrapper(
+                delegate.getContentHandler(),
+                (ErrorHandler) properties.get(ValidateProperty.ERROR_HANDLER));
+    }
+
+    /**
+     * @return
+     * @see com.thaiopensource.validate.Validator#getDTDHandler()
+     */
+    @Override
+    public DTDHandler getDTDHandler() {
+        return delegate.getDTDHandler();
+    }
+
+    /**
+     *
+     * @see com.thaiopensource.validate.Validator#reset()
+     */
+    @Override
+    public void reset() {
+        delegate.reset();
     }
 
 }
