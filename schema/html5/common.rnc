@@ -296,9 +296,6 @@ common.attrs.other =
 	common.data.datetime =
 		w:datetime-tz
 
-	common.data.date-or-time =
-		w:date-or-time
-
 	common.data.date =
 		w:date
 
