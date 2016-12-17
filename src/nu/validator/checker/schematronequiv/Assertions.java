@@ -2618,6 +2618,23 @@ public class Assertions extends Checker {
                             + " \u201cis\u201d attribute.");
                 }
             }
+        } else if ("http://n.validator.nu/custom-elements/" == uri) {
+            /*
+             * For elements with names containing "-" (custom elements), the
+             * customelements/NamespaceChanging* code exposes them to jing as
+             * elements in the http://n.validator.nu/custom-elements/ namespace.
+             * Therefore our RelaxNG schema allows those elements. However,
+             * schematronequiv.Assertions still sees those elements as being in
+             * the HTML namespace, so here we need to emit an error for the case
+             * where, in source transmitted with an XML content type, somebody
+             * (for whatever reason) has elements in their markup which they
+             * have explicitly placed in that namespace (otherwise, due to
+             * allowing those elements in our RelaxNG schema, Jing on its own
+             * won't emit any error for them).
+             */
+            err("Element \u201c" + localName + "\u201d from namespace"
+                    + " \u201chttp://n.validator.nu/custom-elements/\u201d"
+                    + " not allowed.");
         } else {
             StackNode child = new StackNode(ancestorMask, null, role,
                     activeDescendant, forAttr);
