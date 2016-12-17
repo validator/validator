@@ -95,6 +95,7 @@ public class IriRef extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         String messagePrologue = "";
         int length = literal.length();
+        String urlString = literal.toString();
         if (reportValue()) {
             if (length < ELIDE_LIMIT) {
                 messagePrologue = "\u201c" + literal + "\u201d: ";
@@ -106,7 +107,7 @@ public class IriRef extends AbstractDatatype {
                 messagePrologue = "\u201c" + sb.toString() + "\u201d: ";
             }
         }
-        if ("".equals(trimHtmlSpaces(literal.toString()))) {
+        if ("".equals(trimHtmlSpaces(urlString))) {
             throw newDatatypeException("Must be non-empty.");
         }
         URL url = null;
@@ -121,11 +122,14 @@ public class IriRef extends AbstractDatatype {
                     throw newDatatypeException("The string \u201c" + literal
                             + "\u201d is not an absolute URL.");
                 } else {
+                    if (mustBeHttpOrHttps()) {
+                        throw newDatatypeException("Must contain only"
+                                + " \u201chttp\u201d or \u201chttps\u201d URLs.");
+                    }
                     // in this case, doc's actual base URL isn't relevant,
                     // so just use http://example.org/foo/bar as base
                     url = URL.parse(settings,
-                            URL.parse("http://example.org/foo/bar"),
-                            literal.toString());
+                            URL.parse("http://example.org/foo/bar"), urlString);
                 }
             } else {
                 CharSequence scheme = pair.getHead();
@@ -135,7 +139,7 @@ public class IriRef extends AbstractDatatype {
                             + " \u201chttp\u201d or \u201chttps\u201d URLs.");
                 }
                 if (isWellKnown(scheme)) {
-                    url = URL.parse(settings, literal.toString());
+                    url = URL.parse(settings, urlString);
                 } else if ("javascript".contentEquals(scheme)) {
                     // StringBuilder sb = new StringBuilder(2 +
                     // literal.length());
@@ -163,7 +167,7 @@ public class IriRef extends AbstractDatatype {
                     }
                 } else if ("data".contentEquals(scheme)) {
                     data = true;
-                    url = URL.parse(settings, literal.toString());
+                    url = URL.parse(settings, urlString);
                 } else if (isHttpAlias(scheme)) {
                     StringBuilder sb = new StringBuilder(5 + tail.length());
                     sb.append("http:").append(tail);
