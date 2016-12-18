@@ -36,6 +36,7 @@ import java.util.Set;
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.DatatypeMismatchException;
 import nu.validator.checker.VnuBadAttrValueException;
+import nu.validator.checker.VnuBadElementNameException;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.io.DataUri;
 import nu.validator.io.SystemIdIOException;
@@ -320,6 +321,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private final static char[] POTENTIALLY_BAD_VALUE = "Potentially bad value ".toCharArray();
 
+    private final static char[] BAD_ELEMENT_NAME = "Bad element name".toCharArray();
+
+    private final static char[] POTENTIALLY_BAD_ELEMENT_NAME = "Potentially bad element name".toCharArray();
+
     private final static char[] FOR = " for ".toCharArray();
 
     private final static char[] ATTRIBUTE = "attribute ".toCharArray();
@@ -522,6 +527,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         if (e instanceof VnuBadAttrValueException) {
             datatypeErrors = ((VnuBadAttrValueException) e).getExceptions();
+        }
+        if (e instanceof VnuBadElementNameException) {
+            datatypeErrors = ((VnuBadElementNameException) e).getExceptions();
         }
         if (e instanceof DatatypeMismatchException) {
             datatypeErrors = ((DatatypeMismatchException) e).getExceptions();
@@ -857,6 +865,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         } else if (message instanceof VnuBadAttrValueException) {
             VnuBadAttrValueException e = (VnuBadAttrValueException) message;
             vnuBadAttrValueMessageText(e);
+        } else if (message instanceof VnuBadElementNameException) {
+            VnuBadElementNameException e = (VnuBadElementNameException) message;
+            vnuElementNameMessageText(e);
         } else {
             String msg = message.getMessage();
             if (msg != null) {
@@ -898,6 +909,34 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                     e.getCurrentElement(), false);
             messageTextString(messageTextHandler, ON, false);
             element(messageTextHandler, e.getCurrentElement(), false);
+            emitDatatypeErrors(messageTextHandler, e.getExceptions());
+        }
+        emitter.endText();
+    }
+
+    private void vnuElementNameMessageText(VnuBadElementNameException e)
+            throws SAXException {
+        MessageTextHandler messageTextHandler = emitter.startText();
+        if (messageTextHandler != null) {
+            boolean isWarning = false;
+            Map<String, DatatypeException> datatypeErrors = e.getExceptions();
+            for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
+                DatatypeException dex = entry.getValue();
+                if (dex instanceof Html5DatatypeException) {
+                    Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+                    if (ex5.isWarning()) {
+                        isWarning = true;
+                    }
+                }
+            }
+            if (isWarning) {
+                messageTextString(messageTextHandler,
+                        POTENTIALLY_BAD_ELEMENT_NAME, false);
+            } else {
+                messageTextString(messageTextHandler, BAD_ELEMENT_NAME, false);
+            }
+            messageTextString(messageTextHandler, SPACE, false);
+            codeString(messageTextHandler, e.getElementName());
             emitDatatypeErrors(messageTextHandler, e.getExceptions());
         }
         emitter.endText();
@@ -1240,7 +1279,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void elaboration(Exception e)
             throws SAXException {
         if (!(e instanceof AbstractValidationException
-                || e instanceof VnuBadAttrValueException || e instanceof DatatypeMismatchException)) {
+                || e instanceof VnuBadAttrValueException
+                || e instanceof VnuBadElementNameException
+                || e instanceof DatatypeMismatchException)) {
             return;
         }
 
@@ -1299,6 +1340,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             elaborateDatatypes(map);
         } else if (e instanceof VnuBadAttrValueException) {
             VnuBadAttrValueException ex = (VnuBadAttrValueException) e;
+            Map<String, DatatypeException> map = ex.getExceptions();
+            elaborateDatatypes(map);
+        } else if (e instanceof VnuBadElementNameException) {
+            VnuBadElementNameException ex = (VnuBadElementNameException) e;
             Map<String, DatatypeException> map = ex.getExceptions();
             elaborateDatatypes(map);
         } else if (e instanceof DatatypeMismatchException) {

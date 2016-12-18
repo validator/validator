@@ -206,6 +206,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return AutocompleteDetailsMonth.THE_INSTANCE;
         } else if ("autocomplete-date".equals(typeLocalName)) {
             return AutocompleteDetailsDate.THE_INSTANCE;
+        } else if ("custom-element-name".equals(typeLocalName)) {
+            return CustomElementName.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

@@ -402,8 +402,7 @@ common.attrs.other =
 
 ## Custom element name
 	common.data.custom.element.name =
-		# FIXME: add a real datatype checker for this
-		string
+		w:custom-element-name
 
 ## Microdata Properties
   common.data.microdata-properties =

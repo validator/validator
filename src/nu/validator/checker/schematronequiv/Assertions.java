@@ -36,6 +36,7 @@ import nu.validator.checker.Checker;
 import nu.validator.checker.LocatorImpl;
 import nu.validator.checker.TaintableLocatorImpl;
 import nu.validator.checker.VnuBadAttrValueException;
+import nu.validator.checker.VnuBadElementNameException;
 import nu.validator.datatype.AutocompleteDetailsAny;
 import nu.validator.datatype.AutocompleteDetailsDate;
 import nu.validator.datatype.AutocompleteDetailsEmail;
@@ -45,6 +46,7 @@ import nu.validator.datatype.AutocompleteDetailsPassword;
 import nu.validator.datatype.AutocompleteDetailsTel;
 import nu.validator.datatype.AutocompleteDetailsText;
 import nu.validator.datatype.AutocompleteDetailsUrl;
+import nu.validator.datatype.CustomElementName;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.datatype.ImageCandidateStringsWidthRequired;
 import nu.validator.datatype.ImageCandidateStrings;
@@ -2616,6 +2618,23 @@ public class Assertions extends Checker {
                 if (atts.getIndex("", "is") > -1) {
                     err("Autonomous custom elements must not specify the"
                             + " \u201cis\u201d attribute.");
+                }
+                try {
+                    CustomElementName.THE_INSTANCE.checkValid(localName);
+                } catch (DatatypeException e) {
+                    try {
+                        if (getErrorHandler() != null) {
+                            String msg = e.getMessage();
+                            if (e instanceof Html5DatatypeException) {
+                                msg = msg.substring(msg.indexOf(": ") + 2);
+                            }
+                            VnuBadElementNameException ex = new VnuBadElementNameException(
+                                    localName, uri, msg, getDocumentLocator(),
+                                    CustomElementName.class, false);
+                            getErrorHandler().error(ex);
+                        }
+                    } catch (ClassNotFoundException ce) {
+                    }
                 }
             }
         } else if ("http://n.validator.nu/custom-elements/" == uri) {
