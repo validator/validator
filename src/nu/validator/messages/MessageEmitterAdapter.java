@@ -183,7 +183,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "#attr-input-alt", "image" });
         validInputTypesByAttributeName.put("autocomplete", new String[] {
                 "#attr-input-autocomplete", "text", "search", "url", "tel",
-                "email", "password", "datetime", "date", "month", "week",
+                "email", "password", "date", "month", "week",
                 "time", "datetime-local", "number", "range", "color" });
         validInputTypesByAttributeName.put("autofocus",
                 new String[] { "#attr-fe-autofocus" });
@@ -209,16 +209,16 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "#attr-dim-height", "image" });
         validInputTypesByAttributeName.put("list", new String[] {
                 "#attr-input-list", "text", "search", "url", "tel", "email",
-                "datetime", "date", "month", "week", "time", "datetime-local",
+                "date", "month", "week", "time", "datetime-local",
                 "number", "range", "color" });
         validInputTypesByAttributeName.put("max", new String[] {
-                "#attr-input-max", "datetime", "date", "month", "week", "time",
+                "#attr-input-max", "date", "month", "week", "time",
                 "datetime-local", "number", "range", });
         validInputTypesByAttributeName.put("maxlength", new String[] {
                 "#attr-input-maxlength", "text", "search", "url", "tel",
                 "email", "password" });
         validInputTypesByAttributeName.put("min", new String[] {
-                "#attr-input-min", "datetime", "date", "month", "week", "time",
+                "#attr-input-min", "date", "month", "week", "time",
                 "datetime-local", "number", "range", });
         validInputTypesByAttributeName.put("multiple", new String[] {
                 "#attr-input-multiple", "email", "file" });
@@ -232,11 +232,11 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 "email", "password", "number" });
         validInputTypesByAttributeName.put("readonly", new String[] {
                 "#attr-input-readonly", "text", "search", "url", "tel",
-                "email", "password", "datetime", "date", "month", "week",
+                "email", "password", "date", "month", "week",
                 "time", "datetime-local", "number" });
         validInputTypesByAttributeName.put("required",
                 new String[] { "#attr-input-required", "text", "search", "url",
-                        "tel", "email", "password", "datetime", "date",
+                        "tel", "email", "password", "date",
                         "month", "week", "time", "datetime-local", "number",
                         "checkbox", "radio", "file" });
         validInputTypesByAttributeName.put("size", new String[] {
@@ -245,7 +245,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         validInputTypesByAttributeName.put("src", new String[] {
                 "#attr-input-src", "image" });
         validInputTypesByAttributeName.put("step", new String[] {
-                "#attr-input-step", "datetime", "date", "month", "week",
+                "#attr-input-step", "date", "month", "week",
                 "time", "datetime-local", "number", "range", });
         validInputTypesByAttributeName.put("type",
                 new String[] { "#attr-input-type" });
@@ -267,8 +267,6 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         fragmentIdByInputType.put("url", "#url-state-(type=url)");
         fragmentIdByInputType.put("email", "#e-mail-state-(type=email)");
         fragmentIdByInputType.put("password", "#password-state-(type=password)");
-        fragmentIdByInputType.put("datetime",
-                "#date-and-time-state-(type=datetime)");
         fragmentIdByInputType.put("date", "#date-state-(type=date)");
         fragmentIdByInputType.put("month", "#month-state-(type=month)");
         fragmentIdByInputType.put("week", "#week-state-(type=week)");

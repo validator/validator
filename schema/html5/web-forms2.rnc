@@ -227,40 +227,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.integer.non-negative
 			}
 
-## Global Date and Time: <input type='datetime'>
-
-	input.datetime.elem = 
-		element input { input.datetime.attrs }
-	input.datetime.attrs = 
-		(	common.attrs
-		&	common-form.attrs
-		&	shared-input.attrs
-		&	input.datetime.attrs.type
-		&	input.datetime.attrs.min?
-		&	input.datetime.attrs.max?
-		&	input.attrs.step.float?
-		&	input.datetime.attrs.value?
-		&	common.attrs.aria?
-		)	
-		input.datetime.attrs.type = 
-			attribute type {
-				w:string "datetime"
-			}
-		input.datetime.attrs.min =
-			attribute min {
-				common.data.datetime
-			}
-		input.datetime.attrs.max =
-			attribute max {
-				common.data.datetime
-			}	
-		input.datetime.attrs.value =
-			attribute value {
-				w:string "" | common.data.datetime
-			}
-		
-	input.elem |= input.datetime.elem
-
 ## Date and Time with No Time Zone Information: <input type='datetime-local'>
 
 	input.datetime-local.elem = 

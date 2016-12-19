@@ -23,10 +23,6 @@ public class UnsupportedFeatureChecker extends Checker {
         }
         if ("menu" == localName || "dialog" == localName || "details" == localName || "bdi" == localName) {
             warnAboutElement(localName);
-        } else if ("iframe" == localName) {
-            if (atts.getIndex("", "seamless") > -1) {
-                warnAboutAttributeOnElement("seamless", "iframe");
-            }
         } else if ("textarea" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
                 warnAboutAttributeOnElement("dirname", "textarea");
@@ -43,9 +39,6 @@ public class UnsupportedFeatureChecker extends Checker {
             }
             String type = atts.getValue("", "type");
             if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                    "datetime", type)) {
-                warnAboutInputType("datetime");
-            } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                     "date", type)) {
                 warnAboutInputType("date");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(

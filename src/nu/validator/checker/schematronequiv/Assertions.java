@@ -144,11 +144,11 @@ public class Assertions extends Checker {
     static {
         INPUT_ATTRIBUTES.put("autocomplete",
                 new String[] { "hidden", "text", "search", "url", "tel", "email",
-                        "password", "datetime", "date", "month", "week", "time",
+                        "password", "date", "month", "week", "time",
                         "datetime-local", "number", "range", "color" });
         INPUT_ATTRIBUTES.put("list",
                 new String[] { "text", "search", "url", "tel", "email",
-                        "datetime", "date", "month", "week", "time",
+                        "date", "month", "week", "time",
                         "datetime-local", "number", "range", "color" });
         INPUT_ATTRIBUTES.put("maxlength", new String[] { "text", "search",
                 "url", "tel", "email", "password" });
@@ -160,11 +160,11 @@ public class Assertions extends Checker {
                 "url", "tel", "email", "password", "number" });
         INPUT_ATTRIBUTES.put("readonly",
                 new String[] { "text", "search", "url", "tel", "email",
-                        "password", "datetime", "date", "month", "week", "time",
+                        "password", "date", "month", "week", "time",
                         "datetime-local", "number" });
         INPUT_ATTRIBUTES.put("required",
                 new String[] { "text", "search", "url", "tel", "email",
-                        "password", "datetime", "date", "month", "week", "time",
+                        "password", "date", "month", "week", "time",
                         "datetime-local", "number", "checkbox", "radio",
                         "file" });
         INPUT_ATTRIBUTES.put("size", new String[] { "text", "search", "url",
