@@ -1106,7 +1106,7 @@ def fetchUrlTo(url, path, md5sum=None):
   while not completed:
    try:
     socket.setdefaulttimeout(httpTimeoutSeconds)
-    f = urlopen(url, cafile=CAFILE)
+    f = urlopen(url)
     data = f.read()
     f.close()
     completed = True
