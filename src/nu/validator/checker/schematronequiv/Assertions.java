@@ -2144,6 +2144,20 @@ public class Assertions extends Checker {
                     if (atts.getIndex("", "async") >= 0) {
                         err("Element \u201Cscript\u201D must not have attribute \u201Casync\u201D unless attribute \u201Csrc\u201D is also specified.");
                     }
+                    if (atts.getIndex("", "integrity") >= 0) {
+                        err("Element \u201Cscript\u201D must not have attribute"
+                                + " \u201Cintegrity\u201D unless attribute"
+                                + " \u201Csrc\u201D is also specified.");
+                    }
+                }
+                if (atts.getIndex("", "integrity") > -1
+                        && atts.getIndex("", "type") > -1
+                        && lowerCaseLiteralEqualsIgnoreAsciiCaseString("module",
+                                atts.getValue("", "type"))) {
+                    err("A \u201Cscript\u201D element with an"
+                            + " \u201Cintegrity\u201D attribute must not have a"
+                            + " \u201Ctype\u201D attribute with the value"
+                            + " \u201Cmodule\u201D.");
                 }
             }
 
@@ -2376,11 +2390,22 @@ public class Assertions extends Checker {
                 if (atts.getIndex("", "as") > -1
                         && atts.getIndex("", "rel") > -1
                         && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "preload", atts.getValue("", "rel"))) {
+                                "preload", relVal)) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cas\u201D attribute must have a"
                             + " \u201Crel\u201D attribute with the value"
                             + " \u201Cpreload\u201D.");
+                }
+                if (atts.getIndex("", "integrity") > -1) {
+                    if ((atts.getIndex("", "rel") > -1
+                            && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                    "stylesheet", relVal))
+                            || atts.getIndex("", "rel") < 0) {
+                        err("A \u201Clink\u201D element with an"
+                                + " \u201Cintegrity\u201D attribute must have a"
+                                + " \u201Crel\u201D attribute with the value"
+                                + " \u201Cstylesheet\u201D.");
+                    }
                 }
                 if ((ancestorMask & BODY_MASK) != 0
                         && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
