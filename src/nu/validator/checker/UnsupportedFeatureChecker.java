@@ -21,7 +21,7 @@ public class UnsupportedFeatureChecker extends Checker {
         if (atts.getIndex("", "dropzone") > -1) {
             warnAboutAttribute("dropzone");
         }
-        if ("menu" == localName || "dialog" == localName || "details" == localName || "bdi" == localName) {
+        if ("menu" == localName || "dialog" == localName || "bdi" == localName) {
             warnAboutElement(localName);
         } else if ("textarea" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
