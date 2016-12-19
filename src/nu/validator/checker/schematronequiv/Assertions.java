@@ -567,10 +567,21 @@ public class Assertions extends Checker {
     private static final Map<String, String> ELEMENTS_WITH_IMPLICIT_ROLE = new HashMap<>();
 
     static {
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("a", "link");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("address", "contentinfo");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("area", "link");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("article", "article");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("aside", "complementary");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("body", "document");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("button", "button");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("datalist", "listbox");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("dd", "definition");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("details", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("dl", "list");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("dt", "listitem");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("figure", "figure");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("form", "form");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("footer", "contentinfo");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h1", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h2", "heading");
@@ -580,12 +591,27 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h6", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("header", "banner");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("img", "img");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("li", "listitem");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("link", "link");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("main", "main");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("math", "math");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("menu", "menu");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("nav", "navigation");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("optgroup", "group");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("option", "option");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("progress", "progressbar");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("section", "region");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("select", "listbox");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("summary", "button");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("table", "table");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tbody", "rowgroup");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("textarea", "textbox");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tfoot", "rowgroup");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("thead", "rowgroup");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("td", "cell");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("tr", "row");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ul", "list");
     }
 
@@ -616,7 +642,6 @@ public class Assertions extends Checker {
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("checkbox", "checkbox");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("image", "button");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("number", "spinbutton");
-        INPUT_TYPES_WITH_IMPLICIT_ROLE.put("password", "textbox");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("radio", "radio");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("range", "slider");
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("reset", "button");
