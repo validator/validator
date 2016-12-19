@@ -2407,6 +2407,17 @@ public class Assertions extends Checker {
                                 + " \u201Cstylesheet\u201D.");
                     }
                 }
+                if (atts.getIndex("", "sizes") > -1) {
+                    if ((atts.getIndex("", "rel") > -1
+                            && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                    "icon", relVal))
+                            || atts.getIndex("", "rel") < 0) {
+                        err("A \u201Clink\u201D element with a"
+                                + " \u201Csizes\u201D attribute must have a"
+                                + " \u201Crel\u201D attribute with the value"
+                                + " \u201Cicon\u201D.");
+                    }
+                }
                 if ((ancestorMask & BODY_MASK) != 0
                         && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "dns-prefetch", relVal)
