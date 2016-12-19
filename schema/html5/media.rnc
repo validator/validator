@@ -12,7 +12,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	media.attrs.preload?
 		&	media.attrs.controls?
 		&	media.attrs.loop?
-		&	media.attrs.mediagroup?
 		&	media.attrs.muted?
 		&	embedded.content.attrs.crossorigin?
 		)
@@ -31,10 +30,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		media.attrs.loop =
 			attribute loop {
 				w:string "loop" | w:string ""
-			}
-		media.attrs.mediagroup =
-			attribute mediagroup {
-				string
 			}
 		media.attrs.muted =
 			attribute muted {

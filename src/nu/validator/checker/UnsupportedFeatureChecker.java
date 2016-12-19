@@ -23,10 +23,6 @@ public class UnsupportedFeatureChecker extends Checker {
         }
         if ("menu" == localName || "dialog" == localName || "details" == localName || "bdi" == localName) {
             warnAboutElement(localName);
-        } else if ("video" == localName || "audio" == localName) {
-            if (atts.getIndex("", "mediagroup") > -1) {
-                warnAboutAttributeOnElement("mediagroup", localName);
-            }
         } else if ("iframe" == localName) {
             if (atts.getIndex("", "seamless") > -1) {
                 warnAboutAttributeOnElement("seamless", "iframe");
