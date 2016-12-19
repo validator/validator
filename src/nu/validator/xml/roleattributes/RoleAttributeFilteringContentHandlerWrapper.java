@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Mozilla Foundation
+ * Copyright (c) 2013-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -35,8 +35,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RoleAttributeFilteringContentHandlerWrapper implements
-        ContentHandler {
+public class RoleAttributeFilteringContentHandlerWrapper
+        implements ContentHandler {
 
     private final ContentHandler delegate;
 
@@ -61,7 +61,8 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
     @Override
-    public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
+    public void characters(char[] arg0, int arg1, int arg2)
+            throws SAXException {
         delegate.characters(arg0, arg1, arg2);
     }
 
@@ -180,25 +181,24 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
             "listitem", "log", "main", "marquee", "math", "menu", "menubar",
             "menuitem", "menuitemcheckbox", "menuitemradio", "navigation",
             "note", "option", "presentation", "progressbar", "radio",
-            "radiogroup", "region", "row", "rowgroup", "rowheader",
-            "scrollbar", "search", "separator", "slider", "spinbutton",
-            "status", "tab", "tablist", "tabpanel", "textbox", "timer",
-            "toolbar", "tooltip", "tree", "treegrid", "treeitem",
+            "radiogroup", "region", "row", "rowgroup", "rowheader", "scrollbar",
+            "search", "separator", "slider", "spinbutton", "status", "tab",
+            "tablist", "tabpanel", "textbox", "timer", "toolbar", "tooltip",
+            "tree", "treegrid", "treeitem",
             /* New non-abstract roles from ARIA 1.1 */
             "cell", "feed", "figure", "none", "radiogroup", "searchbox",
             "switch", "table", "term",
             /* New non-abstract roles from ARIA-DPUB */
-            "doc-abstract", "doc-acknowledgments", "doc-afterword", "doc-appendix",
-            "doc-backlink", "doc-biblioentry", "doc-bibliography", "doc-biblioref",
-            "doc-chapter", "doc-colophon", "doc-conclusion", "doc-cover",
-            "doc-credit", "doc-credits", "doc-dedication", "doc-endnote",
-            "doc-endnotes", "doc-epigraph", "doc-epilogue", "doc-errata",
-            "doc-example", "doc-footnote", "doc-foreword", "doc-glossary",
-            "doc-glossref", "doc-index", "doc-introduction", "doc-noteref",
-            "doc-notice", "doc-pagebreak", "doc-pagelist", "doc-part", "doc-preface",
-            "doc-prologue", "doc-pullquote", "doc-qna", "doc-subtitle",
-            "doc-tip", "doc-toc"
-    };
+            "doc-abstract", "doc-acknowledgments", "doc-afterword",
+            "doc-appendix", "doc-backlink", "doc-biblioentry",
+            "doc-bibliography", "doc-biblioref", "doc-chapter", "doc-colophon",
+            "doc-conclusion", "doc-cover", "doc-credit", "doc-credits",
+            "doc-dedication", "doc-endnote", "doc-endnotes", "doc-epigraph",
+            "doc-epilogue", "doc-errata", "doc-example", "doc-footnote",
+            "doc-foreword", "doc-glossary", "doc-glossref", "doc-index",
+            "doc-introduction", "doc-noteref", "doc-notice", "doc-pagebreak",
+            "doc-pagelist", "doc-part", "doc-preface", "doc-prologue",
+            "doc-pullquote", "doc-qna", "doc-subtitle", "doc-tip", "doc-toc" };
 
     private Attributes filterAttributes(Attributes attributes)
             throws SAXException {
@@ -206,12 +206,11 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
         for (int i = 0; i < attributes.getLength(); i++) {
             if ("role".equals(attributes.getLocalName(i))
                     && "".equals(attributes.getURI(i))) {
-                attributesImpl.addAttribute(
-                        attributes.getURI(i),
-                        attributes.getLocalName(i),
-                        attributes.getQName(i),
+                attributesImpl.addAttribute(attributes.getURI(i),
+                        attributes.getLocalName(i), attributes.getQName(i),
                         attributes.getType(i),
-                        getFirstMatchingAriaRoleFromTokenList(attributes.getValue(i)));
+                        getFirstMatchingAriaRoleFromTokenList(
+                                attributes.getValue(i)));
             } else {
                 attributesImpl.addAttribute(attributes.getURI(i),
                         attributes.getLocalName(i), attributes.getQName(i),
@@ -263,18 +262,20 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
                 && unrecognizedTokens.size() > 0) {
             errorHandler.error(new SAXParseException("Discarding unrecognized"
                     + renderTokenList(unrecognizedTokens)
-                    + " from value of attribute \u201Crole\u201D."
-                    + " Browsers ignore any token that is not a"
-                    + " defined ARIA non-abstract role.", locator));
+                    + " from value of attribute"
+                    + " \u201Crole\u201D. Browsers ignore any"
+                    + " token that is not a defined ARIA"
+                    + " non-abstract role.", locator));
 
         }
         if (errorHandler != null && roleValue != null
                 && superfluousTokens.size() > 0) {
             errorHandler.error(new SAXParseException("Discarding superfluous"
                     + renderTokenList(superfluousTokens)
-                    + " from value of attribute \u201Crole\u201D."
-                    + " Browsers only process the first token found that is a"
-                    + " defined ARIA non-abstract role.", locator));
+                    + " from value of attribute"
+                    + " \u201Crole\u201D. Browsers only process"
+                    + " the first token found that is a defined"
+                    + " ARIA non-abstract role.", locator));
 
         }
         return roleValue != null ? roleValue : tokenList;
