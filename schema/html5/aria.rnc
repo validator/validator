@@ -1505,3 +1505,201 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.treeitem
 	common.attrs.aria.role.treeitem |= aria.treeitem
+
+# #####################################################################
+## https://w3c.github.io/aria/aria/dpub.html
+
+	aria.doc-abstract = aria.role.doc-abstract
+	aria.role.doc-abstract = attribute role { string "doc-abstract" }
+	common.attrs.aria |= aria.doc-abstract
+	common.attrs.aria.role.doc-abstract |= aria.doc-abstract
+
+	aria.doc-acknowledgments = aria.role.doc-acknowledgments
+	aria.role.doc-acknowledgments = attribute role { string "doc-acknowledgments" }
+	common.attrs.aria |= aria.doc-acknowledgments
+	common.attrs.aria.role.doc-acknowledgments |= aria.doc-acknowledgments
+
+	aria.doc-afterword = aria.role.doc-afterword
+	aria.role.doc-afterword = attribute role { string "doc-afterword" }
+	common.attrs.aria |= aria.doc-afterword
+	common.attrs.aria.role.doc-afterword |= aria.doc-afterword
+
+	aria.doc-appendix = aria.role.doc-appendix
+	aria.role.doc-appendix = attribute role { string "doc-appendix" }
+	common.attrs.aria |= aria.doc-appendix
+	common.attrs.aria.role.doc-appendix |= aria.doc-appendix
+
+	aria.doc-backlink = aria.role.doc-backlink
+	aria.role.doc-backlink = attribute role { string "doc-backlink" }
+	common.attrs.aria |= aria.doc-backlink
+	common.attrs.aria.role.doc-backlink |= aria.doc-backlink
+
+	aria.doc-biblioentry = aria.role.doc-biblioentry
+	aria.role.doc-biblioentry = attribute role { string "doc-biblioentry" }
+	common.attrs.aria |= aria.doc-biblioentry
+	common.attrs.aria.role.doc-biblioentry |= aria.doc-biblioentry
+
+	aria.doc-bibliography = aria.role.doc-bibliography
+	aria.role.doc-bibliography = attribute role { string "doc-bibliography" }
+	common.attrs.aria |= aria.doc-bibliography
+	common.attrs.aria.role.doc-bibliography |= aria.doc-bibliography
+
+	aria.doc-biblioref = aria.role.doc-biblioref
+	aria.role.doc-biblioref = attribute role { string "doc-biblioref" }
+	common.attrs.aria |= aria.doc-biblioref
+	common.attrs.aria.role.doc-biblioref |= aria.doc-biblioref
+
+	aria.doc-chapter = aria.role.doc-chapter
+	aria.role.doc-chapter = attribute role { string "doc-chapter" }
+	common.attrs.aria |= aria.doc-chapter
+	common.attrs.aria.role.doc-chapter |= aria.doc-chapter
+
+	aria.doc-colophon = aria.role.doc-colophon
+	aria.role.doc-colophon = attribute role { string "doc-colophon" }
+	common.attrs.aria |= aria.doc-colophon
+	common.attrs.aria.role.doc-colophon |= aria.doc-colophon
+
+	aria.doc-conclusion = aria.role.doc-conclusion
+	aria.role.doc-conclusion = attribute role { string "doc-conclusion" }
+	common.attrs.aria |= aria.doc-conclusion
+	common.attrs.aria.role.doc-conclusion |= aria.doc-conclusion
+
+	aria.doc-cover = aria.role.doc-cover
+	aria.role.doc-cover = attribute role { string "doc-cover" }
+	common.attrs.aria |= aria.doc-cover
+	common.attrs.aria.role.doc-cover |= aria.doc-cover
+
+	aria.doc-credit = aria.role.doc-credit
+	aria.role.doc-credit = attribute role { string "doc-credit" }
+	common.attrs.aria |= aria.doc-credit
+	common.attrs.aria.role.doc-credit |= aria.doc-credit
+
+	aria.doc-credits = aria.role.doc-credits
+	aria.role.doc-credits = attribute role { string "doc-credits" }
+	common.attrs.aria |= aria.doc-credits
+	common.attrs.aria.role.doc-credits |= aria.doc-credits
+
+	aria.doc-dedication = aria.role.doc-dedication
+	aria.role.doc-dedication = attribute role { string "doc-dedication" }
+	common.attrs.aria |= aria.doc-dedication
+	common.attrs.aria.role.doc-dedication |= aria.doc-dedication
+
+	aria.doc-endnote = aria.role.doc-endnote
+	aria.role.doc-endnote = attribute role { string "doc-endnote" }
+	common.attrs.aria |= aria.doc-endnote
+	common.attrs.aria.role.doc-endnote |= aria.doc-endnote
+
+	aria.doc-endnotes = aria.role.doc-endnotes
+	aria.role.doc-endnotes = attribute role { string "doc-endnotes" }
+	common.attrs.aria |= aria.doc-endnotes
+	common.attrs.aria.role.doc-endnotes |= aria.doc-endnotes
+
+	aria.doc-epigraph = aria.role.doc-epigraph
+	aria.role.doc-epigraph = attribute role { string "doc-epigraph" }
+	common.attrs.aria |= aria.doc-epigraph
+	common.attrs.aria.role.doc-epigraph |= aria.doc-epigraph
+
+	aria.doc-epilogue = aria.role.doc-epilogue
+	aria.role.doc-epilogue = attribute role { string "doc-epilogue" }
+	common.attrs.aria |= aria.doc-epilogue
+	common.attrs.aria.role.doc-epilogue |= aria.doc-epilogue
+
+	aria.doc-errata = aria.role.doc-errata
+	aria.role.doc-errata = attribute role { string "doc-errata" }
+	common.attrs.aria |= aria.doc-errata
+	common.attrs.aria.role.doc-errata |= aria.doc-errata
+
+	aria.doc-example = aria.role.doc-example
+	aria.role.doc-example = attribute role { string "doc-example" }
+	common.attrs.aria |= aria.doc-example
+	common.attrs.aria.role.doc-example |= aria.doc-example
+
+	aria.doc-footnote = aria.role.doc-footnote
+	aria.role.doc-footnote = attribute role { string "doc-footnote" }
+	common.attrs.aria |= aria.doc-footnote
+	common.attrs.aria.role.doc-footnote |= aria.doc-footnote
+
+	aria.doc-foreword = aria.role.doc-foreword
+	aria.role.doc-foreword = attribute role { string "doc-foreword" }
+	common.attrs.aria |= aria.doc-foreword
+	common.attrs.aria.role.doc-foreword |= aria.doc-foreword
+
+	aria.doc-glossary = aria.role.doc-glossary
+	aria.role.doc-glossary = attribute role { string "doc-glossary" }
+	common.attrs.aria |= aria.doc-glossary
+	common.attrs.aria.role.doc-glossary |= aria.doc-glossary
+
+	aria.doc-glossref = aria.role.doc-glossref
+	aria.role.doc-glossref = attribute role { string "doc-glossref" }
+	common.attrs.aria |= aria.doc-glossref
+	common.attrs.aria.role.doc-glossref |= aria.doc-glossref
+
+	aria.doc-index = aria.role.doc-index
+	aria.role.doc-index = attribute role { string "doc-index" }
+	common.attrs.aria |= aria.doc-index
+	common.attrs.aria.role.doc-index |= aria.doc-index
+
+	aria.doc-introduction = aria.role.doc-introduction
+	aria.role.doc-introduction = attribute role { string "doc-introduction" }
+	common.attrs.aria |= aria.doc-introduction
+	common.attrs.aria.role.doc-introduction |= aria.doc-introduction
+
+	aria.doc-noteref = aria.role.doc-noteref
+	aria.role.doc-noteref = attribute role { string "doc-noteref" }
+	common.attrs.aria |= aria.doc-noteref
+	common.attrs.aria.role.doc-noteref |= aria.doc-noteref
+
+	aria.doc-notice = aria.role.doc-notice
+	aria.role.doc-notice = attribute role { string "doc-notice" }
+	common.attrs.aria |= aria.doc-notice
+	common.attrs.aria.role.doc-notice |= aria.doc-notice
+
+	aria.doc-pagebreak = aria.role.doc-pagebreak
+	aria.role.doc-pagebreak = attribute role { string "doc-pagebreak" }
+	common.attrs.aria |= aria.doc-pagebreak
+	common.attrs.aria.role.doc-pagebreak |= aria.doc-pagebreak
+
+	aria.doc-pagelist = aria.role.doc-pagelist
+	aria.role.doc-pagelist = attribute role { string "doc-pagelist" }
+	common.attrs.aria |= aria.doc-pagelist
+	common.attrs.aria.role.doc-pagelist |= aria.doc-pagelist
+
+	aria.doc-part = aria.role.doc-part
+	aria.role.doc-part = attribute role { string "doc-part" }
+	common.attrs.aria |= aria.doc-part
+	common.attrs.aria.role.doc-part |= aria.doc-part
+
+	aria.doc-preface = aria.role.doc-preface
+	aria.role.doc-preface = attribute role { string "doc-preface" }
+	common.attrs.aria |= aria.doc-preface
+	common.attrs.aria.role.doc-preface |= aria.doc-preface
+
+	aria.doc-prologue = aria.role.doc-prologue
+	aria.role.doc-prologue = attribute role { string "doc-prologue" }
+	common.attrs.aria |= aria.doc-prologue
+	common.attrs.aria.role.doc-prologue |= aria.doc-prologue
+
+	aria.doc-pullquote = aria.role.doc-pullquote
+	aria.role.doc-pullquote = attribute role { string "doc-pullquote" }
+	common.attrs.aria |= aria.doc-pullquote
+	common.attrs.aria.role.doc-pullquote |= aria.doc-pullquote
+
+	aria.doc-qna = aria.role.doc-qna
+	aria.role.doc-qna = attribute role { string "doc-qna" }
+	common.attrs.aria |= aria.doc-qna
+	common.attrs.aria.role.doc-qna |= aria.doc-qna
+
+	aria.doc-subtitle = aria.role.doc-subtitle
+	aria.role.doc-subtitle = attribute role { string "doc-subtitle" }
+	common.attrs.aria |= aria.doc-subtitle
+	common.attrs.aria.role.doc-subtitle |= aria.doc-subtitle
+
+	aria.doc-tip = aria.role.doc-tip
+	aria.role.doc-tip = attribute role { string "doc-tip" }
+	common.attrs.aria |= aria.doc-tip
+	common.attrs.aria.role.doc-tip |= aria.doc-tip
+
+	aria.doc-toc = aria.role.doc-toc
+	aria.role.doc-toc = attribute role { string "doc-toc" }
+	common.attrs.aria |= aria.doc-toc
+	common.attrs.aria.role.doc-toc |= aria.doc-toc
