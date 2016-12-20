@@ -54,6 +54,7 @@ import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.datatype.ImageCandidateStringsWidthRequired;
 import nu.validator.datatype.ImageCandidateStrings;
 import nu.validator.datatype.ImageCandidateURL;
+import nu.validator.htmlparser.impl.NCName;
 
 import org.relaxng.datatype.DatatypeException;
 
@@ -1502,6 +1503,23 @@ public class Assertions extends Checker {
                 String attUri = atts.getURI(i);
                 if (attUri.length() == 0) {
                     String attLocal = atts.getLocalName(i);
+                    if ("embed".equals(localName)) {
+                        for (int j = 0; j < attLocal.length(); j++) {
+                            char c = attLocal.charAt(j);
+                            if (c >= 'A' && c <= 'Z') {
+                                err("Bad attribute name \u201c" + attLocal
+                                        + "\u201d. Attribute names for the"
+                                        + " \u201cembed\u201d element must not"
+                                        + " contain uppercase ASCII letters.");
+                            }
+                        }
+                        if (!NCName.isNCName(attLocal)) {
+                            err("Bad attribute name \u201c" + attLocal
+                                    + "\u201d. Attribute names for the"
+                                    + " \u201cembed\u201d element must be"
+                                    + " XML-compatible.");
+                        }
+                    }
                     if ("href" == attLocal) {
                         href = true;
                     } else if ("controls" == attLocal) {
