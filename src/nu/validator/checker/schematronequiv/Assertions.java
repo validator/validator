@@ -23,13 +23,16 @@
 package nu.validator.checker.schematronequiv;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Arrays;
+import java.util.Collections;
 
 import nu.validator.checker.AttributeUtil;
 import nu.validator.checker.Checker;
@@ -2386,58 +2389,54 @@ public class Assertions extends Checker {
                 }
             }
             if ("link" == localName) {
-                String relVal = atts.getValue("", "rel");
+                boolean hasRel = false;
+                String relVal = "";
+                List<String> relList = new ArrayList<>();
+                if (atts.getIndex("", "rel") > -1) {
+                    hasRel = true;
+                    relVal = atts.getValue("", "rel");
+                    Collections.addAll(relList,
+                            relVal.toLowerCase().split("\\s+"));
+                }
                 if (atts.getIndex("", "as") > -1
-                        && atts.getIndex("", "rel") > -1
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "preload", relVal)) {
+                        && ((relList != null && !relList.contains("preload")
+                                || !hasRel))) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cas\u201D attribute must have a"
-                            + " \u201Crel\u201D attribute with the value"
-                            + " \u201Cpreload\u201D.");
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cpreload\u201D.");
                 }
-                if (atts.getIndex("", "integrity") > -1) {
-                    if ((atts.getIndex("", "rel") > -1
-                            && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                    "stylesheet", relVal))
-                            || atts.getIndex("", "rel") < 0) {
-                        err("A \u201Clink\u201D element with an"
-                                + " \u201Cintegrity\u201D attribute must have a"
-                                + " \u201Crel\u201D attribute with the value"
-                                + " \u201Cstylesheet\u201D.");
-                    }
+                if (atts.getIndex("", "integrity") > -1
+                        && ((relList != null && !relList.contains("stylesheet")
+                                || !hasRel))) {
+                    err("A \u201Clink\u201D element with an"
+                            + " \u201Cintegrity\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cstylesheet\u201D.");
                 }
-                if (atts.getIndex("", "sizes") > -1) {
-                    if ((atts.getIndex("", "rel") > -1
-                            && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                    "icon", relVal))
-                            || atts.getIndex("", "rel") < 0) {
-                        err("A \u201Clink\u201D element with a"
-                                + " \u201Csizes\u201D attribute must have a"
-                                + " \u201Crel\u201D attribute with the value"
-                                + " \u201Cicon\u201D.");
-                    }
+                if (atts.getIndex("", "sizes") > -1
+                        && ((relList != null && !relList.contains("icon")
+                                || !hasRel))) {
+                    err("A \u201Clink\u201D element with a"
+                            + " \u201Csizes\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cicon\u201D.");
                 }
                 if ((ancestorMask & BODY_MASK) != 0
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "dns-prefetch", relVal)
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "pingback", relVal)
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "preconnect", relVal)
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "prefetch", relVal)
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "prerender", relVal)
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "stylesheet", relVal)
+                        && (relList != null
+                                && !(relList.contains("dns-prefetch")
+                                        || relList.contains("pingback")
+                                        || relList.contains("preconnect")
+                                        || relList.contains("prefetch")
+                                        || relList.contains("prerender")
+                                        || relList.contains("stylesheet")))
                         && atts.getIndex("", "itemprop") < 0
                         && atts.getIndex("", "property") < 0) {
                     err("A \u201Clink\u201D element must not appear"
                             + " as a descendant of a \u201Cbody\u201D element"
                             + " unless the \u201Clink\u201D element has an"
                             + " \u201Citemprop\u201D attribute or has a"
-                            + " \u201Crel\u201D attribute whose value is one of"
+                            + " \u201Crel\u201D attribute whose value contains"
                             + " \u201Cdns-prefetch\u201D,"
                             + " \u201Cpingback\u201D,"
                             + " \u201Cpreconnect\u201D,"
