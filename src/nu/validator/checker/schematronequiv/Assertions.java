@@ -2390,13 +2390,12 @@ public class Assertions extends Checker {
             }
             if ("link" == localName) {
                 boolean hasRel = false;
-                String relVal = "";
                 List<String> relList = new ArrayList<>();
                 if (atts.getIndex("", "rel") > -1) {
                     hasRel = true;
-                    relVal = atts.getValue("", "rel");
-                    Collections.addAll(relList,
-                            relVal.toLowerCase().split("\\s+"));
+                    Collections.addAll(relList, //
+                            atts.getValue("", "rel") //
+                            .toLowerCase().split("\\s+"));
                 }
                 if (atts.getIndex("", "as") > -1
                         && ((relList != null && !relList.contains("preload")
