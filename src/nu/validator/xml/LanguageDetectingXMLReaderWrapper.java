@@ -376,6 +376,23 @@ public final class LanguageDetectingXMLReaderWrapper
                     dirAttrValue = atts.getValue(i);
                 }
             }
+        } else if ("link".equals(localName)) {
+            boolean hasAppleTouchIcon = false;
+            boolean hasSizes = false;
+            for (int i = 0; i < atts.getLength(); i++) {
+                if ("rel".equals(atts.getLocalName(i))) {
+                    if (atts.getValue(i).contains("apple-touch-icon")) {
+                        hasAppleTouchIcon = true;
+                    }
+                } else if ("sizes".equals(atts.getLocalName(i))) {
+                    hasSizes = true;
+                }
+            }
+            if (request != null && hasAppleTouchIcon && hasSizes) {
+                request.setAttribute(
+                        "http://validator.nu/properties/apple-touch-icon-with-sizes-found",
+                        true);
+            }
         } else if (inBody && "style".equals(localName) && !loggedStyleInBody) {
             loggedStyleInBody = true;
             if (request != null) {

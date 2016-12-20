@@ -132,6 +132,7 @@ public class Statistics {
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
         STYLE_IN_BODY_FOUND("<style> in <body> found"), //
+        APPLE_TOUCH_ICON_WITH_SIZES_FOUND("<link rel=\"apple-touch-icon\" sizes=\"\u2026\"> found"), //
         LANG_FOUND("<html lang> found"), //
         LANG_WRONG("<html lang> does not match detected language"), //
         LANG_EMPTY("<html lang>: empty (lang=\"\")"), //

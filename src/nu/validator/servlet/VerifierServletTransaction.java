@@ -1289,6 +1289,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             "http://validator.nu/properties/lang-empty")) {
                 stats.incrementField(Statistics.Field.LANG_EMPTY);
             }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/apple-touch-icon-with-sizes-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/apple-touch-icon-with-sizes-found")) {
+                stats.incrementField(Statistics.Field.APPLE_TOUCH_ICON_WITH_SIZES_FOUND);
+            }
             String fieldName;
             String language = (String) request.getAttribute(
                     "http://validator.nu/properties/document-language");
