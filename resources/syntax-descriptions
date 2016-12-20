@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8" />
+<title>MicrosyntaxDescriptions - WHATWG Wiki</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<meta name="generator" content="MediaWiki 1.23.5" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="WHATWG Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.whatwg.org/api.php?action=rsd" />
+<link rel="copyright" href="/wiki/WHATWG_Wiki:Copyrights" />
+<link rel="alternate" type="application/atom+xml" title="WHATWG Wiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="https://wiki.whatwg.org/load.php?debug=false&amp;lang=en&amp;modules=ext.gadget.HotCat%2CReferenceTooltips%2CUTCLiveClock%2CWatchlistChangesBold%2Ccharinsert%2Cexlinks%2Cwidensearch%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.skinning.interface%7Cmediawiki.ui.button%7Cskins.vector.styles&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="https://wiki.whatwg.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<style>a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: whatwikidb:resourceloader:filter:minify-css:7:7594f99a2bc0afcf293df8b8af576d04 */</style>
+<script src="https://wiki.whatwg.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"MicrosyntaxDescriptions","wgTitle":"MicrosyntaxDescriptions","wgCurRevisionId":10125,"wgRevisionId":10125,"wgArticleId":1743,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Validator.nu Documentation"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"MicrosyntaxDescriptions","wgIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($,jQuery){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"editfont":"default","editondblclick":0,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":1,"extendwatchlist":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"imagesize":2,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nickname":"","norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"rcdays":7,"rclimit":50,"rows":25,"showhiddencats":0,"shownumberswatching":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":1,"watchdefault":1,"watchdeletion":0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,
+"useeditwarning":1,"prefershttps":1,"language":"en","variant-gan":"gan","variant-iu":"iu","variant-kk":"kk","variant-ku":"ku","variant-shi":"shi","variant-sr":"sr","variant-tg":"tg","variant-uz":"uz","variant-zh":"zh","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"gadget-WatchlistChangesBold":1,"gadget-exlinks":1,"gadget-ReferenceTooltips":1,"gadget-HotCat":1,"gadget-charinsert":1,"gadget-edittop":1,"gadget-UTCLiveClock":1,"gadget-PrettyLog":1,"gadget-widensearch":1,"variant":"en"});},{},{});mw.loader.implement("user.tokens",function($,jQuery){mw.user.tokens.set({"editToken":"+\\","patrolToken":false,"watchToken":false});},{},{});
+/* cache key: whatwikidb:resourceloader:filter:minify-js:7:aec5e246a925ead7a423977580ea32ac */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax","skins.vector.js"]);
+}</script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-MicrosyntaxDescriptions skin-vector action-view vector-animateLayout">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<div id="siteNotice"><div id="localNotice" lang="en" dir="ltr"><div id="anonNotice">
+<div style="margin: 0.5em auto; border: 1px solid #333333; background-color: #EEEEEE; padding: 0.5em; font-size: larger; text-align: center;">
+<p>A user account is required in order to edit this wiki, but we've had to disable public user registrations due to spam.
+</p><p>To request an account, ask an autoconfirmed user on <a href="/wiki/IRC" title="IRC">IRC</a> (such as one of <span class="plainlinks"><a rel="nofollow" class="external text" href="https://wiki.whatwg.org/index.php?title=Special:ListUsers&amp;group=autoconfirmed">these permanent autoconfirmed members</a></span>) or send an e-mail to <a rel="nofollow" class="external text" href="mailto:admin@wiki.whatwg.org">admin@wiki.whatwg.org</a> with your desired username and an explanation of the first edit you'd like to make. (Do not use this e-mail address for any other inquiries, as they will be ignored or politely declined.)
+</p>
+</div>
+</div>
+</div></div>
+						<h1 id="firstHeading" class="firstHeading" lang="en"><span dir="auto">MicrosyntaxDescriptions</span></h1>
+						<div id="bodyContent">
+								<div id="siteSub">From WHATWG Wiki</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-navigation">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p>The purpose of this page is to enable collaborative creation of brief advisory text for each HTML microsyntax so that when the content of an attribute value or the text content of an element does not conform to a given microsyntax, a validator can display the advisory text about the syntax to guide the author to fix the content. Note that like the rest of this wiki, editing requires you to agree to release your contributions under the MIT license (see wiki footer). Please note that while copying text from the <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/">WHATWG version of HTML</a> is OK, copying text from RFCs or W3C specs is not OK.
+</p><p>Note that some formats pertain to Web Forms 2.0 (e.g. <code>datetime-local</code>).
+</p><p>Please keep descriptions short: one paragraph in length.
+</p>
+<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#a-rel"><span class="tocnumber">1</span> <span class="toctext">a-rel</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#autocomplete-any"><span class="tocnumber">2</span> <span class="toctext">autocomplete-any</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#browsing-context"><span class="tocnumber">3</span> <span class="toctext">browsing-context</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#browsing-context-or-keyword"><span class="tocnumber">4</span> <span class="toctext">browsing-context-or-keyword</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#cdo-cdc-pair"><span class="tocnumber">5</span> <span class="toctext">cdo-cdc-pair</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#charset"><span class="tocnumber">6</span> <span class="toctext">charset</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#charset-list"><span class="tocnumber">7</span> <span class="toctext">charset-list</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#circle"><span class="tocnumber">8</span> <span class="toctext">circle</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#content-security-policy"><span class="tocnumber">9</span> <span class="toctext">content-security-policy</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#custom-element-name"><span class="tocnumber">10</span> <span class="toctext">custom-element-name</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#date"><span class="tocnumber">11</span> <span class="toctext">date</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#datetime"><span class="tocnumber">12</span> <span class="toctext">datetime</span></a></li>
+<li class="toclevel-1 tocsection-13"><a href="#datetime-local"><span class="tocnumber">13</span> <span class="toctext">datetime-local</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="#datetime-tz"><span class="tocnumber">14</span> <span class="toctext">datetime-tz</span></a></li>
+<li class="toclevel-1 tocsection-15"><a href="#email"><span class="tocnumber">15</span> <span class="toctext">email</span></a></li>
+<li class="toclevel-1 tocsection-16"><a href="#float"><span class="tocnumber">16</span> <span class="toctext">float</span></a></li>
+<li class="toclevel-1 tocsection-17"><a href="#float-non-negative"><span class="tocnumber">17</span> <span class="toctext">float-non-negative</span></a></li>
+<li class="toclevel-1 tocsection-18"><a href="#float-positive"><span class="tocnumber">18</span> <span class="toctext">float-positive</span></a></li>
+<li class="toclevel-1 tocsection-19"><a href="#hash-name"><span class="tocnumber">19</span> <span class="toctext">hash-name</span></a></li>
+<li class="toclevel-1 tocsection-20"><a href="#ID"><span class="tocnumber">20</span> <span class="toctext">ID</span></a></li>
+<li class="toclevel-1 tocsection-21"><a href="#image-candidate-strings"><span class="tocnumber">21</span> <span class="toctext">image-candidate-strings</span></a></li>
+<li class="toclevel-1 tocsection-22"><a href="#image-candidate-strings-width-required"><span class="tocnumber">22</span> <span class="toctext">image-candidate-strings-width-required</span></a></li>
+<li class="toclevel-1 tocsection-23"><a href="#integer"><span class="tocnumber">23</span> <span class="toctext">integer</span></a></li>
+<li class="toclevel-1 tocsection-24"><a href="#integer-non-negative"><span class="tocnumber">24</span> <span class="toctext">integer-non-negative</span></a></li>
+<li class="toclevel-1 tocsection-25"><a href="#integer-positive"><span class="tocnumber">25</span> <span class="toctext">integer-positive</span></a></li>
+<li class="toclevel-1 tocsection-26"><a href="#integrity-metadata"><span class="tocnumber">26</span> <span class="toctext">integrity-metadata</span></a></li>
+<li class="toclevel-1 tocsection-27"><a href="#iri"><span class="tocnumber">27</span> <span class="toctext">iri</span></a></li>
+<li class="toclevel-1 tocsection-28"><a href="#iri-ref"><span class="tocnumber">28</span> <span class="toctext">iri-ref</span></a></li>
+<li class="toclevel-1 tocsection-29"><a href="#iri-ref-http-or-https"><span class="tocnumber">29</span> <span class="toctext">iri-ref-http-or-https</span></a></li>
+<li class="toclevel-1 tocsection-30"><a href="#language"><span class="tocnumber">30</span> <span class="toctext">language</span></a></li>
+<li class="toclevel-1 tocsection-31"><a href="#link-rel"><span class="tocnumber">31</span> <span class="toctext">link-rel</span></a></li>
+<li class="toclevel-1 tocsection-32"><a href="#media-query"><span class="tocnumber">32</span> <span class="toctext">media-query</span></a></li>
+<li class="toclevel-1 tocsection-33"><a href="#meta-charset"><span class="tocnumber">33</span> <span class="toctext">meta-charset</span></a></li>
+<li class="toclevel-1 tocsection-34"><a href="#meta-name"><span class="tocnumber">34</span> <span class="toctext">meta-name</span></a></li>
+<li class="toclevel-1 tocsection-35"><a href="#mime-type"><span class="tocnumber">35</span> <span class="toctext">mime-type</span></a></li>
+<li class="toclevel-1 tocsection-36"><a href="#mime-type-list"><span class="tocnumber">36</span> <span class="toctext">mime-type-list</span></a></li>
+<li class="toclevel-1 tocsection-37"><a href="#month"><span class="tocnumber">37</span> <span class="toctext">month</span></a></li>
+<li class="toclevel-1 tocsection-38"><a href="#non-empty-string"><span class="tocnumber">38</span> <span class="toctext">non-empty-string</span></a></li>
+<li class="toclevel-1 tocsection-39"><a href="#pattern"><span class="tocnumber">39</span> <span class="toctext">pattern</span></a></li>
+<li class="toclevel-1 tocsection-40"><a href="#polyline"><span class="tocnumber">40</span> <span class="toctext">polyline</span></a></li>
+<li class="toclevel-1 tocsection-41"><a href="#ratio"><span class="tocnumber">41</span> <span class="toctext">ratio</span></a></li>
+<li class="toclevel-1 tocsection-42"><a href="#rectangle"><span class="tocnumber">42</span> <span class="toctext">rectangle</span></a></li>
+<li class="toclevel-1 tocsection-43"><a href="#sandbox-allow-list"><span class="tocnumber">43</span> <span class="toctext">sandbox-allow-list</span></a></li>
+<li class="toclevel-1 tocsection-44"><a href="#script"><span class="tocnumber">44</span> <span class="toctext">script</span></a></li>
+<li class="toclevel-1 tocsection-45"><a href="#script-documentation"><span class="tocnumber">45</span> <span class="toctext">script-documentation</span></a></li>
+<li class="toclevel-1 tocsection-46"><a href="#simple-color"><span class="tocnumber">46</span> <span class="toctext">simple-color</span></a></li>
+<li class="toclevel-1 tocsection-47"><a href="#source-size-list"><span class="tocnumber">47</span> <span class="toctext">source-size-list</span></a></li>
+<li class="toclevel-1 tocsection-48"><a href="#string-without-line-breaks"><span class="tocnumber">48</span> <span class="toctext">string-without-line-breaks</span></a></li>
+<li class="toclevel-1 tocsection-49"><a href="#svg-pathdata"><span class="tocnumber">49</span> <span class="toctext">svg-pathdata</span></a></li>
+<li class="toclevel-1 tocsection-50"><a href="#time"><span class="tocnumber">50</span> <span class="toctext">time</span></a></li>
+<li class="toclevel-1 tocsection-51"><a href="#time-datetime"><span class="tocnumber">51</span> <span class="toctext">time-datetime</span></a></li>
+<li class="toclevel-1 tocsection-52"><a href="#week"><span class="tocnumber">52</span> <span class="toctext">week</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="a-rel">a-rel</span></h2>
+<p>A whitespace-separated list of link types, with no duplicate keywords in the list. Each link type must be listed as allowed on <code>&lt;a&gt;</code> and <code>&lt;area&gt;</code> in the <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/semantics.html#linkTypes">HTML specification</a>, or must be listed as allowed on <code>&lt;a&gt;</code> and <code>&lt;area&gt;</code> on the <a rel="nofollow" class="external text" href="http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions">Microformats wiki</a>. <strong>You can register link types on the <a rel="nofollow" class="external text" href="http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions">Microformats wiki</a> yourself.</strong>
+</p>
+<h2><span class="mw-headline" id="autocomplete-any">autocomplete-any</span></h2>
+<p>A list of <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/forms.html#autofill-detail-tokens">autofill detail tokens</a>.
+</p>
+<h2><span class="mw-headline" id="browsing-context">browsing-context</span></h2>
+<p>A browsing context name is any string that does not start with an underscore (<code>_</code>).
+</p>
+<h2><span class="mw-headline" id="browsing-context-or-keyword">browsing-context-or-keyword</span></h2>
+<p>A browsing context name or keyword is either any string that does not start with an underscore (<code>_</code>) or a string that case-insensitively matches one of: <code>_blank</code>, <code>_self</code>, <code>_parent</code>, or <code>_top</code>.
+</p>
+<h2><span class="mw-headline" id="cdo-cdc-pair">cdo-cdc-pair</span></h2>
+<p>Any text content that does not contain the character sequence "<code>&lt;!--</code>" without a later occurrence of the character sequence "<code>--&gt;</code>".
+</p>
+<h2><span class="mw-headline" id="charset">charset</span></h2>
+<p>An preferred encoding name according to the <a rel="nofollow" class="external text" href="https://encoding.spec.whatwg.org/">Encoding Standard</a>. Example: <code>utf-8</code>
+</p>
+<h2><span class="mw-headline" id="charset-list">charset-list</span></h2>
+<p>A whitespace-separated list of preferred encoding names according to the <a rel="nofollow" class="external text" href="https://encoding.spec.whatwg.org/">Encoding Standard</a>. Example: <code>utf-8 windows-1252</code>
+</p>
+<h2><span class="mw-headline" id="circle">circle</span></h2>
+<p>A circle is specified as three comma-separated (no spaces allowed) integers the last one of which is non-negative. An integer consists of one or more digits (<code>0</code>–<code>9</code>), optionally preceded by a hyphen (<code>-</code>). Examples of circles: <code>5,5,10</code> and <code>-5,0,20</code>
+</p>
+<h2><span class="mw-headline" id="content-security-policy">content-security-policy</span></h2>
+<p>A valid <a rel="nofollow" class="external text" href="https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy#Writing_a_policy">Content Security Policy</a>.
+</p>
+<h2><span class="mw-headline" id="custom-element-name">custom-element-name</span></h2>
+<p>A <a rel="nofollow" class="external text"
+href="https://html.spec.whatwg.org/multipage/scripting.html#valid-custom-element-name">valid
+custom element name</a>. Must contain a hyphen, must (after parsing) begin
+with a lowercase letter, and must not (after parsing) contain any uppercase
+letters. (Remember that HTML parsers lowercase element names but don't
+lowercase attribute values.)
+</p>
+<h2><span class="mw-headline" id="date">date</span></h2>
+<p>A date in the form <code><i>YYYY</i>-<i>MM</i>-<i>DD</i></code>. Example: <code>2002-09-29</code>.
+</p>
+<h2><span class="mw-headline" id="datetime">datetime</span></h2>
+<p>An ISO 8601 date and time in the UTC time zone, i.e. <code><i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>hh</i>:<i>mm</i></code> optionally followed by <code>:<i>ss</i></code> for the seconds, optionally followed by <code>.</code> and one, two, or three digits for the fraction of a second, and finally followed by <code>Z</code>. Examples: <code>1996-01-01T12:05Z</code>, <code>1996-01-01T12:05:25.6Z</code>.
+</p>
+<h2><span class="mw-headline" id="datetime-local">datetime-local</span></h2>
+<p>An ISO 8601 date and time with no time zone information, i.e. <code><i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>hh</i>:<i>mm</i></code> optionally followed by <code>:<i>ss</i></code> for the seconds, optionally followed by <code>.</code> and one or more digits for the fraction of a second. Examples: <code>1996-01-01T12:05</code>, <code>1996-01-01T12:05:25.6</code>.
+</p>
+<h2><span class="mw-headline" id="datetime-tz">datetime-tz</span></h2>
+<p>A <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-global-date-and-time-string">global date and time string</a>; that is, a <b>date</b>, followed by a “<code>T</code>” or a single space, followed by a <b>time</b>, followed by <b>time-zone information</b>, where:  the <b>date</b> must be in the form <code><i>YYYY</i>-<i>MM</i>-<i>DD</i></code> • the <b>time</b> must begin in the form <code><i>hh</i>:<i>mm</i></code>, followed by <code>:<i>ss</i></code>, optionally followed by “<code>.</code>” and one, two, or three or digits • the <b>time-zone information</b> must be either “<code>Z</code>” or in the form <code>+<i>hh</i>:<i>mm</i></code> or the form <code>-<i>hh</i>:<i>mm</i></code> • Examples: <code>1996-01-01T12:05:25-02:00</code>, <code>1996-01-01T12:05:25Z</code>
+</p>
+<h2><span class="mw-headline" id="email">email</span></h2>
+<p>An e-mail address must match the <code>addr-spec</code> production defined in <a rel="nofollow" class="external text" href="https://tools.ietf.org/html/rfc2822#section-3.4.1">RFC 2822 section 3.4.1</a> excluding the <code>CFWS</code> production everywhere and excluding the <code>FWS</code> production everywhere except in the <code>quoted-string</code> production.
+</p>
+<h2><span class="mw-headline" id="float">float</span></h2>
+<p>First, optionally, <code>-</code> (U+002D). Then, a series of one or more characters in the range <code>0</code>…<code>9</code>. Then, optionally, a single <code>.</code> (U+002E) followed by a series of one or more characters in the range <code>0</code>…<code>9</code>. Then, optionally, either <code>e</code> or <code>E</code>, optionally followed by <code>-</code> (U+002D) or <code>+</code> (U+002B), followed by a series of one or more characters in the range <code>0</code>…<code>9</code>. For example, <code>-42.42E+42</code> is valid but <code>.5</code> or <code>+2</code> are not.
+</p>
+<h2><span class="mw-headline" id="float-non-negative">float-non-negative</span></h2>
+<p>A series of one or more characters in the range <code>0</code>…<code>9</code>. Then, optionally, a single <code>.</code> (U+002E) followed by a series of one or more characters in the range <code>0</code>…<code>9</code>. Then, optionally, either <code>e</code> or <code>E</code>, optionally followed by <code>-</code> (U+002D) or <code>+</code> (U+002B), followed by a series of one or more characters in the range <code>0</code>…<code>9</code>. Or, alternatively to the foregoing: First, <code>-</code> (U+002D). Then, a series of one or more zeros. Then, optionally, a single <code>.</code> (U+002E) followed by one or more zeros. Then, optionally, either <code>e</code> or <code>E</code>, optionally followed by <code>-</code> (U+002D) or <code>+</code> (U+002B), followed by a series of one or more characters in the range <code>0</code>…<code>9</code>. For example, <code>42.42E+42</code> and <code>-000.000</code> are valid but <code>.5</code> or <code>-0.01</code> are not.
+</p>
+<h2><span class="mw-headline" id="float-positive">float-positive</span></h2>
+<p>A series of one or more characters in the range <code>0</code>…<code>9</code>. Then, optionally, a single <code>.</code> (U+002E) followed by a series of one or more characters in the range <code>0</code>…<code>9</code>. One of the digits so far has to be non-zero. Then, optionally, either <code>e</code> or <code>E</code>, optionally followed by <code>-</code> (U+002D) or <code>+</code> (U+002B), followed by a series of one or more characters in the range <code>0</code>…<code>9</code>. For example, <code>42.42E+42</code> is valid but <code>0.0</code> or <code>-2</code> are not.
+</p>
+<h2><span class="mw-headline" id="hash-name">hash-name</span></h2>
+<p>A <code>#</code> (number sign) character followed by any string.
+</p>
+<h2><span class="mw-headline" id="ID">ID</span></h2>
+<p>An ID consists of at least one character but must not contain any whitespace.
+</p>
+<h2><span class="mw-headline" id="image-candidate-strings">image-candidate-strings</span></h2>
+<p>A comma-separated list of strings, each of which consists of a URL optionally followed by either a pixel density descriptor or a width descriptor.
+</p>
+<h2><span class="mw-headline" id="image-candidate-strings-width-required">image-candidate-strings-width-required</span></h2>
+<p>A comma-separated list of strings, each of which must consist of a URL followed by a width descriptor.
+</p>
+<h2><span class="mw-headline" id="integer">integer</span></h2>
+<p>One or more digits (<code>0</code>–<code>9</code>), optionally preceded by a hyphen (<code>-</code>). For example: <code>42</code> and <code>-273</code> are valid, but <code>+42</code> is not.
+</p>
+<h2><span class="mw-headline" id="integer-non-negative">integer-non-negative</span></h2>
+<p>One or more digits (<code>0</code>–<code>9</code>). For example: <code>42</code> and <code>0</code> are valid, but <code>-273</code> is not.
+</p>
+<h2><span class="mw-headline" id="integer-positive">integer-positive</span></h2>
+<p>One or more digits (<code>0</code>–<code>9</code>), with at least one which is non-zero. For example: <code>42</code> is valid, but <code>00</code> is not.
+</p>
+<h2><span class="mw-headline" id="integrity-metadata">integrity-metadata</span></h2>
+<p>A whitespace-separated list of values, where each value is consists of one of <code>sha256</code> or <code>sha384</code> or  <code>sha512</code>, followed by a hyphen (<code>-</code>), followed by a base64-encoded cryptographic hash.
+</p>
+<h2><span class="mw-headline" id="iri">iri</span></h2>
+<p>An absolute URL. For example: <code>http://example.org/hello</code>, but not <code>/hello</code>. Spaces should be escaped as <code>%20</code>.
+</p>
+<h2><span class="mw-headline" id="iri-ref">iri-ref</span></h2>
+<p>Any URL. For example: <code>/hello</code>, <code>#canvas</code>, or <code>http://example.org/</code>. Characters should be represented in <a rel="nofollow" class="external text" href="http://www.macchiato.com/unicode/nfc-faq">NFC</a> and spaces should be escaped as <code>%20</code>. Common non-alphanumeric characters other than <code>! $ &amp; ' ( ) * +  - . /&#160;:&#160;; =&#160;? @ _ ~</code> generally must be <a rel="nofollow" class="external text" href="https://en.wikipedia.org/wiki/Percent-encoding">percent-encoded</a>. For example, the pipe character (<code>|</code>) must be encoded as <code>%7C</code>.
+</p>
+<h2><span class="mw-headline" id="iri-ref-http-or-https">iri-ref-http-or-https</span></h2>
+<p>Any <a rel="nofollow" class="external text" href="https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions#iri-ref">URL</a> whose scheme is <code>http</code> or <code>https</code>.
+</p>
+<h2><span class="mw-headline" id="language">language</span></h2>
+<p>An <a rel="nofollow" class="external text" href="https://tools.ietf.org/html/rfc5646">RFC 5646</a> language tag consists of hyphen-separated ASCII-alphanumeric subtags. There is a primary tag identifying a natural language by its shortest ISO 639 language code (e.g. <code>en</code> for English) and zero or more additional subtags adding precision. The most common additional subtag type is a region subtag which most commonly is a two-letter ISO 3166 country code (e.g. <code>GB</code> for the United Kingdom). IANA maintains a <a rel="nofollow" class="external text" href="https://www.iana.org/assignments/language-subtag-registry">registry of permissible subtags</a>.
+</p>
+<h2><span class="mw-headline" id="link-rel">link-rel</span></h2>
+<p>A whitespace-separated list of link types listed as allowed on <code>&lt;link&gt;</code> in the <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/semantics.html#linkTypes">HTML specification</a> or listed as an allowed on <code>&lt;link&gt;</code> on the <a rel="nofollow" class="external text" href="http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions">Microformats wiki</a> without duplicate keywords in the list. <strong>You can register link types on the <a rel="nofollow" class="external text" href="http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions">Microformats wiki</a> yourself.</strong>
+</p>
+<h2><span class="mw-headline" id="media-query">media-query</span></h2>
+<p>One or more media queries, combined in a comma-separated list. Each media query consists of a optional <strong>media type</strong> and zero or more expressions that check for the conditions of particular <strong>media features</strong>. A media type is one of the following: <code>all</code>, <code>print</code>, <code>screen</code>, or <code>speech</code>. The following media types are deprecated: <code>braille</code>, <code>embossed</code>, <code>handheld</code>, <code>projection</code>, <code>tty</code>, and <code>tv</code>. For information about valid media features and about the exact syntax of media queries, see the <a rel="nofollow" class="external text" href="https://drafts.csswg.org/mediaqueries/">Media Queries</a> specification.
+</p>
+<h2><span class="mw-headline" id="meta-charset">meta-charset</span></h2>
+<p>The string <code>text/html;</code>, optionally followed by whitespace, followed by <code>charset=</code>, followed by a preferred encoding name according to the <a rel="nofollow" class="external text" href="https://encoding.spec.whatwg.org/">Encoding Standard</a>. Example: <code>text/html; charset=utf-8</code>
+</p>
+<h2><span class="mw-headline" id="meta-name">meta-name</span></h2>
+<p>A metadata name listed in the <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names">HTML specification</a> or listed in the <a rel="nofollow" class="external text" href="https://wiki.whatwg.org/wiki/MetaExtensions">WHATWG wiki</a>. <strong>You can register metadata names on the <a rel="nofollow" class="external text" href="https://wiki.whatwg.org/wiki/MetaExtensions">WHATWG wiki</a> yourself.</strong>
+</p>
+<h2><span class="mw-headline" id="mime-type">mime-type</span></h2>
+<p>A <a rel="nofollow" class="external text" href="https://tools.ietf.org/html/rfc2616#section-3.7">media-type as defined in RFC 2616</a>; that is, typically, a required <i>type</i>, followed by a "<code>/</code>" character, followed by a required <i>subtype</i>, optionally followed by one or more instances of a "<code>;</code>" character followed by a <i>parameter</i>. Examples: <code>text/css</code>, <code>text/css;charset=utf-8</code>.
+</p>
+<h2><span class="mw-headline" id="mime-type-list">mime-type-list</span></h2>
+<p>(WF2)
+</p>
+<h2><span class="mw-headline" id="month">month</span></h2>
+<p>An ISO 8601 date with year and month, i.e. <code><i>YYYY</i>-<i>MM</i></code>. Example: <code>2007-11</code>.
+</p>
+<h2><span class="mw-headline" id="non-empty-string">non-empty-string</span></h2>
+<p>Any string that is not the empty string.
+</p>
+<h2><span class="mw-headline" id="pattern">pattern</span></h2>
+<p>(WF2)
+</p>
+<h2><span class="mw-headline" id="polyline">polyline</span></h2>
+<p>...
+</p>
+<h2><span class="mw-headline" id="ratio">ratio</span></h2>
+<p>(progress content)
+</p>
+<h2><span class="mw-headline" id="rectangle">rectangle</span></h2>
+<p>...
+</p>
+<h2><span class="mw-headline" id="sandbox-allow-list">sandbox-allow-list</span></h2>
+<p>An unordered set of unique space-separated keywords; the allowed keywords are <code>allow-forms</code>, <code>allow-modals</code>, <code>allow-pointer-lock</code>, <code>allow-popups</code>, <code>allow-popups-to-escape-sandbox</code>, <code>allow-same-origin</code>,<code> allow-scripts</code>, and <code>allow-top-navigation</code>.
+</p>
+<h2><span class="mw-headline" id="script">script</span></h2>
+<p>Any text content that does not contain the character sequence "<code>&lt;!--</code>" without a later occurrence of the character sequence "<code>--&gt;</code>" and that does not contain any occurrence of the string "<code>&lt;/script</code>" followed by a space character, "<code>&gt;</code>", or "<code>/</code>".  For further details, see <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/scripting.html#restrictions-for-contents-of-script-elements">Restrictions for contents of script elements</a>.
+</p>
+<h2><span class="mw-headline" id="script-documentation">script-documentation</span></h2>
+<p>Zero or more <i>code comments</i>, each of which is either a single-line comment starting with "<code>//</code>" or a multi-line comment starting with "<code>/*</code>" and ending with "<code>*/</code>". The content must also meet the constraints of the <a rel="nofollow" class="external text" href="https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions#script">script</a> microsyntax. For further details, see <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/scripting.html#inline-documentation-for-external-scripts">Inline documentation for external scripts</a>.
+</p>
+<h2><span class="mw-headline" id="simple-color">simple-color</span></h2>
+<p>A string of seven characters that starts with <code>#</code> and ends with six characters each of which is <code>0</code>…<code>9</code>, <code>a</code>…<code>f</code> or <code>A</code>…<code>F</code>.
+</p>
+<h2><span class="mw-headline" id="source-size-list">source-size-list</span></h2>
+<p>A comma-separated list of zero or more source sizes (&lt;media-condition&gt; &lt;length&gt;) optionally followed by a default size (&lt;length&gt;) but at least one of them.
+</p>
+<h2><span class="mw-headline" id="string-without-line-breaks">string-without-line-breaks</span></h2>
+<p>Any string that does not contain the carriage return character or the line feed character.
+</p>
+<h2><span class="mw-headline" id="svg-pathdata">svg-pathdata</span></h2>
+<p>A list of zero or more path-data expressions, where each expression consists of a one-letter command followed by numbers that serve as arguments for the command (in most cases, pairs of coordinates). Commas and/or whitespace must be used to separate the arguments for a command from one another—but <strong>commas must not be used to separate commands</strong>, though whitespace can optionally be used to do so. Examples: "<code>M 100 100 L 300 100 L 200 300 z</code>" or "<code>M100,100L300,100,200,300z</code>". For more information, see the <a rel="nofollow" class="external text" href="http://www.w3.org/TR/SVG11/paths.html#PathData">section on path data in the SVG 1.1 specification</a>.
+</p>
+<h2><span class="mw-headline" id="time">time</span></h2>
+<p>A time (hour, minute, seconds, fractional seconds) is encoded according to ISO 8601 with no time zone: two digits (<code>0</code>–<code>9</code>) for the hour, a colon, two digits for the minute, optionally a colon and two digits for the second, and optionally (if the seconds are present) a period (<code>.</code>) and one, two, or three digits for the fraction of a second. All the numbers must be in base ten and zero-padded if necessary. For instance: <code>23:59:00.000</code> or <code>00:00:05</code>.
+</p>
+<h2><span class="mw-headline" id="time-datetime">time-datetime</span></h2>
+<p>One of the following: <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-month-string">month</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-date-string">date</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-yearless-date-string">yearless date</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-time-string">time</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-local-date-and-time-string">local date and time</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-time-zone-offset-string">time-zone offset</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-global-date-and-time-string">global date and time</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-week-string">week</a>, <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-non-negative-integer">non-negative integer</a>, or <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/infrastructure.html#valid-duration-string">duration</a>. For more information and examples, see the <a rel="nofollow" class="external text" href="https://html.spec.whatwg.org/multipage/semantics.html#datetime-value">section on the datetime value in the HTML specification</a>.
+</p>
+<h2><span class="mw-headline" id="week">week</span></h2>
+<p>A week consists of a year and a week number encoded according to ISO 8601: four or more digits (<code>0</code>–<code>9</code>) representing the year, a hyphen (<code>-</code>), a literal <code>W</code>, and two digits for the week, zero-padded if necessary. The week number must be a number greater than or equal to <code>01</code>. Week <code>01</code> of a given year is the week containing the 4<sup>th</sup> of January; weeks start on Monday. For instance: <code>2005-W52</code> is the week that ended on Sunday the first of January, 2006.
+</p>
+<!-- 
+NewPP limit report
+CPU time usage: 0.072 seconds
+Real time usage: 0.070 seconds
+Preprocessor visited node count: 228/1000000
+Preprocessor generated node count: 260/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key whatwikidb:pcache:idhash:1743-0!*!*!!en!*!* and timestamp 20161219110940 and revision id 10125
+ -->
+</div>								<div class="printfooter">
+				Retrieved from "<a href="https://wiki.whatwg.org/index.php?title=MicrosyntaxDescriptions&amp;oldid=10125">https://wiki.whatwg.org/index.php?title=MicrosyntaxDescriptions&amp;oldid=10125</a>"				</div>
+												<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Validator.nu_Documentation" title="Category:Validator.nu Documentation">Validator.nu Documentation</a></li></ul></div></div>												<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+			<div id="mw-head">
+				<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+	<h3 id="p-personal-label">Personal tools</h3>
+	<ul>
+<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=MicrosyntaxDescriptions" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>	</ul>
+</div>
+				<div id="left-navigation">
+					<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+	<h3 id="p-namespaces-label">Namespaces</h3>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/MicrosyntaxDescriptions"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="/index.php?title=Talk:MicrosyntaxDescriptions&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+	<h3 id="mw-vector-current-variant">
+		</h3>
+	<h3 id="p-variants-label"><span>Variants</span><a href="#"></a></h3>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+				</div>
+				<div id="right-navigation">
+					<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+	<h3 id="p-views-label">Views</h3>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="/wiki/MicrosyntaxDescriptions" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="/index.php?title=MicrosyntaxDescriptions&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible"><span><a href="/index.php?title=MicrosyntaxDescriptions&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+	<h3 id="p-cactions-label"><span>Actions</span><a href="#"></a></h3>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+<div id="p-search" role="search">
+	<h3><label for="searchInput">Search</label></h3>
+	<form action="/index.php" id="searchform">
+					<div id="simpleSearch">
+					<input type="search" name="search" placeholder="Search" title="Search WHATWG Wiki [f]" accesskey="f" id="searchInput" /><input type="hidden" value="Special:Search" name="title" /><input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton" /><input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchButton" class="searchButton" />		</div>
+	</form>
+</div>
+				</div>
+			</div>
+			<div id="mw-panel">
+					<div id="p-logo" role="banner"><a style="background-image: url(//www.whatwg.org/images/logo);" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+				<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+	<h3 id='p-navigation-label'>Navigation</h3>
+	<div class="body">
+		<ul>
+			<li id="n-mainpage"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li>
+			<li id="n-popularpages"><a href="/wiki/Special:PopularPages">Popular pages</a></li>
+			<li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+			<li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+		</ul>
+	</div>
+</div>
+<div class="portal" role="navigation" id='p-WHATWG' aria-labelledby='p-WHATWG-label'>
+	<h3 id='p-WHATWG-label'>WHATWG</h3>
+	<div class="body">
+		<ul>
+			<li id="n-Standards"><a href="http://spec.whatwg.org/" rel="nofollow">Standards</a></li>
+			<li id="n-FAQ"><a href="/wiki/FAQ">FAQ</a></li>
+			<li id="n-IRC"><a href="/wiki/IRC">IRC</a></li>
+			<li id="n-Code-of-Conduct"><a href="/wiki/Code_of_Conduct">Code of Conduct</a></li>
+			<li id="n-GitHub"><a href="/wiki/GitHub">GitHub</a></li>
+			<li id="n-What-you-can-do"><a href="/wiki/What_you_can_do">What you can do</a></li>
+			<li id="n-To-do-list"><a href="/wiki/Specs_todo">To-do list</a></li>
+			<li id="n-Mailing-lists"><a href="http://www.whatwg.org/mailing-list" rel="nofollow">Mailing lists</a></li>
+		</ul>
+	</div>
+</div>
+<div class="portal" role="navigation" id='p-Registries' aria-labelledby='p-Registries-label'>
+	<h3 id='p-Registries-label'>Registries</h3>
+	<div class="body">
+		<ul>
+			<li id="n-.3Cmeta-name.3E"><a href="/wiki/MetaExtensions">&lt;meta name&gt;</a></li>
+			<li id="n-.3Cmeta-http-equiv.3E"><a href="/wiki/PragmaExtensions">&lt;meta http-equiv&gt;</a></li>
+			<li id="n-canvas.getContext.28.29"><a href="/wiki/CanvasContexts">canvas.getContext()</a></li>
+			<li id="n-rel.3D.22.22"><a href="http://microformats.org/wiki/existing-rel-values" rel="nofollow">rel=&quot;&quot;</a></li>
+		</ul>
+	</div>
+</div>
+<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+	<h3 id='p-tb-label'>Tools</h3>
+	<div class="body">
+		<ul>
+			<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/MicrosyntaxDescriptions" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+			<li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/MicrosyntaxDescriptions" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+			<li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+			<li id="t-print"><a href="/index.php?title=MicrosyntaxDescriptions&amp;printable=yes" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>
+			<li id="t-permalink"><a href="/index.php?title=MicrosyntaxDescriptions&amp;oldid=10125" title="Permanent link to this revision of the page">Permanent link</a></li>
+			<li id="t-info"><a href="/index.php?title=MicrosyntaxDescriptions&amp;action=info">Page information</a></li>
+		</ul>
+	</div>
+</div>
+			</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 19 December 2016, at 11:09.</li>
+											<li id="footer-info-viewcount">This page has been accessed 117,885 times.</li>
+											<li id="footer-info-copyright">Content is available under <a href="/wiki/WHATWG_Wiki:Copyrights" title="WHATWG Wiki:Copyrights">a CC0 Universal Public Domain Declaration, with some restrictions</a> unless otherwise noted.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-about"><a href="/wiki/WHATWG_Wiki:About" title="WHATWG Wiki:About">About WHATWG Wiki</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+					<li id="footer-copyrightico">
+						<img src="/skins/common/images/mit.svg" alt="a CC0 Universal Public Domain Declaration, with some restrictions" width="88" height="31" />
+					</li>
+					<li id="footer-poweredbyico">
+						<a href="//www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>/*<![CDATA[*/window.jQuery && jQuery.ready();/*]]>*/</script><script>if(window.mw){
+mw.loader.state({"site":"loading","user":"ready","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.action.view.postEdit","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.gadget.WatchlistChangesBold","ext.gadget.exlinks","ext.gadget.ReferenceTooltips","ext.gadget.HotCat","ext.gadget.charinsert","ext.gadget.UTCLiveClock","ext.gadget.widensearch","skins.vector.collapsibleNav"],null,true);
+}</script>
+<script src="/index.php?title=MediaWiki:Gadget-ReferenceTooltips.js&amp;action=raw&amp;ctype=text/javascript&amp;8636"></script>
+<script src="/index.php?title=MediaWiki:Gadget-edittop.js&amp;action=raw&amp;ctype=text/javascript&amp;8652"></script>
+<script src="/index.php?title=MediaWiki:Gadget-PrettyLog.js&amp;action=raw&amp;ctype=text/javascript&amp;8660"></script>
+<script src="https://wiki.whatwg.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgBackendResponseTime":126});
+}</script>
+	</body>
+<!-- Cached 20161219111004 -->
+</html>

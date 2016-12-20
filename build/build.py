@@ -1144,7 +1144,7 @@ def downloadLocalEntities():
   removeIfDirExists(os.path.join(buildRoot, "local-entities"))
   fileMap = {
     "subtag-registry": "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry",
-    "syntax-descriptions": "https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions",
+#    "syntax-descriptions": "https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions",
     "vnu-alt-advice": "https://wiki.whatwg.org/wiki/Validator.nu_alt_advice",
     "link-rel-extensions": "https://help.whatwg.org/extensions/link-rel/",
     "a-rel-extensions": "https://help.whatwg.org/extensions/a-rel/",
@@ -1175,6 +1175,7 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "resources", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "resources", "language-profiles-list.txt"), os.path.join(filesDir, "language-profiles-list.txt"))
+  shutil.copyfile(os.path.join(buildRoot, "resources", "syntax-descriptions"), os.path.join(filesDir, "syntax-descriptions"))
   languageProfilesTargetDir = os.path.join(filesDir, "language-profiles")
   removeIfDirExists(languageProfilesTargetDir)
   shutil.copytree(os.path.join(buildRoot, "resources", "language-profiles"), languageProfilesTargetDir)
