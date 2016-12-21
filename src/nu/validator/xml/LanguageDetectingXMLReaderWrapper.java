@@ -446,19 +446,21 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private void detectLanguageAndCheckAgainstDeclaredLanguage()
             throws SAXException {
+        if (nonWhitespaceCharacterCount < MIN_CHARS) {
+            return;
+        }
+        if ("zxx".equals(declaredLangCode) // "No Linguistic Content"
+                || "eo".equals(declaredLangCode) // Esperanto
+                || "la".equals(declaredLangCode) // Latin
+        ) {
+            return;
+        }
         if (LANG_TAGS_BY_TLD.containsKey(tld)
                 && Arrays.binarySearch(LANG_TAGS_BY_TLD.get(tld),
                         declaredLangCode) >= 0) {
             return;
         }
         try {
-            if (nonWhitespaceCharacterCount < MIN_CHARS) {
-                contentHandler.endDocument();
-                return;
-            }
-            if ("zxx".equals(declaredLangCode)) {
-                return;
-            }
             String textContent = documentContent.toString();
             String detectedLanguage = "";
             Detector detector = DetectorFactory.create();
