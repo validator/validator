@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012 Mozilla Foundation
+ * Copyright (c) 2007-2016 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -48,11 +48,11 @@ public final class Html5AttributeDatatypeBuilder implements ContentHandler {
     private static final String NS = "http://www.w3.org/1999/xhtml";
 
     private enum State {
-        AWAITING_H2, AWAITING_HEADLINE, IN_HEADLINE, AWAITING_H2_END, AWAITING_P, IN_P
+        AWAITING_WIKI_BODY, AWAITING_H3, IN_HEADLINE, AWAITING_P, IN_P
 
     }
 
-    private State state = State.AWAITING_H2;
+    private State state = State.AWAITING_WIKI_BODY;
 
     private Class currentClass = null;
 
@@ -87,32 +87,26 @@ public final class Html5AttributeDatatypeBuilder implements ContentHandler {
     
     @Override
     public void startDocument() throws SAXException {
-        state = State.AWAITING_H2;
+        state = State.AWAITING_WIKI_BODY;
     }
 
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         switch (state) {
-            case AWAITING_H2:
-                if ("h2" == localName && NS == uri) {
-                    depth = 0;
-                    state = State.AWAITING_HEADLINE;
+            case AWAITING_WIKI_BODY:
+                if ("wiki-body".equals(atts.getValue("", "id"))) {
+                    state = State.AWAITING_H3;
                 }
                 return;
-            case AWAITING_HEADLINE:
-                if (depth == 0 && "span" == localName && NS == uri
-                        && "mw-headline".equals(atts.getValue("", "class"))) {
-                    stringBuilder.setLength(0);
+            case AWAITING_H3:
+                if ("h3" == localName && NS == uri) {
+                    depth = 0;
                     state = State.IN_HEADLINE;
-                } else {
-                    depth++;
                 }
                 return;
             case IN_HEADLINE:
-                depth++;
-                return;
-            case AWAITING_H2_END:
+                stringBuilder.setLength(0);
                 depth++;
                 return;
             case AWAITING_P:
@@ -121,7 +115,7 @@ public final class Html5AttributeDatatypeBuilder implements ContentHandler {
                             EmptyAttributes.EMPTY_ATTRIBUTES);
                     state = State.IN_P;
                 } else {
-                    state = State.AWAITING_H2;
+                    state = State.AWAITING_H3;
                 }
                 return;
             case IN_P:
@@ -143,14 +137,8 @@ public final class Html5AttributeDatatypeBuilder implements ContentHandler {
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         switch (state) {
-            case AWAITING_H2:
-                return;
-            case AWAITING_HEADLINE:
-                if (depth == 0) {
-                    state = State.AWAITING_H2;
-                } else {
-                    depth--;
-                }
+            case AWAITING_WIKI_BODY:
+            case AWAITING_H3:
                 return;
             case IN_HEADLINE:
                 if (depth == 0) {
@@ -164,31 +152,27 @@ public final class Html5AttributeDatatypeBuilder implements ContentHandler {
                         String dt = "Syntax of " + datatype.getName() + ":";
                         treeBuilder.characters(dt.toCharArray(), 0, dt.length());
                         treeBuilder.endElement(NS, "dt", "dt");
-                        state = State.AWAITING_H2_END;
+                        state = State.AWAITING_P;
                     } catch (DatatypeException e) {
-                        state = State.AWAITING_H2;
+                        System.out.println(String.format(
+                                "Warning: No datatype class for \"%s\".",
+                                stringBuilder.toString().trim()));
+                        state = State.AWAITING_H3;
                     }
-                } else {
-                    depth--;
-                }
-                return;
-            case AWAITING_H2_END:
-                if (depth == 0) {
-                    state = State.AWAITING_P;
                 } else {
                     depth--;
                 }
                 return;
             case AWAITING_P:
                 // should be impossible
-                state = State.AWAITING_H2;
+                state = State.AWAITING_H3;
                 return;
             case IN_P:
                 if (depth == 0) {
                     treeBuilder.endElement(NS, "dt", "dt");
                     adviceByClass.put(currentClass,
                             (DocumentFragment) treeBuilder.getRoot());
-                    state = State.AWAITING_H2;
+                    state = State.AWAITING_H3;
                 } else {
                     depth--;
                     treeBuilder.endElement(uri, localName, qName);

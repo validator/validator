@@ -1144,7 +1144,7 @@ def downloadLocalEntities():
   removeIfDirExists(os.path.join(buildRoot, "local-entities"))
   fileMap = {
     "subtag-registry": "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry",
-    "syntax-descriptions": "https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions",
+    "syntax-descriptions": "https://github.com/validator/validator/wiki/Microsyntax-descriptions",
     "vnu-alt-advice": "https://wiki.whatwg.org/wiki/Validator.nu_alt_advice",
     "link-rel-extensions": "https://help.whatwg.org/extensions/link-rel/",
     "a-rel-extensions": "https://help.whatwg.org/extensions/a-rel/",
