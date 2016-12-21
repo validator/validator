@@ -366,8 +366,7 @@ li li {
 	font-weight: bold;
 }
 
-#results > ol:first-child > li > p:first-child code,
-#results > ol:first-child > li > p:first-child a {
+#results > ol:first-child > li > p:first-child code {
 	font-weight: normal;
 }
 
