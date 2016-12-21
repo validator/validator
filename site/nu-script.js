@@ -278,6 +278,9 @@ function injectHyperlinks() {
 	linkify(errors, "the Deprecated Media Features section in the current Media Queries specification",
 		"http://drafts.csswg.org/mediaqueries/#mf-deprecated",
 		"Deprecated Media Features section in the current Media Queries specification")
+	linkify(errors, "all image candidate strings must specify a width",
+		"https://ericportis.com/posts/2014/srcset-sizes/",
+		"srcset and sizes overview")
 	}
 
 function replaceSuccessFailure() {
