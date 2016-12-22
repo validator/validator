@@ -160,6 +160,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	link.attrs.rel
 		&	link.attrs.as?
 		&	link.attrs.integrity?
+		&	link.attrs.nonce?
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
@@ -201,6 +202,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		link.attrs.integrity =
 			attribute integrity {
 				common.data.integrity
+			}
+		link.attrs.nonce =
+			attribute nonce{
+				string
 			}
 		link.attrs.sizes =
 			attribute sizes {
