@@ -2171,14 +2171,21 @@ public class Assertions extends Checker {
                                 + " \u201Csrc\u201D is also specified.");
                     }
                 }
-                if (atts.getIndex("", "integrity") > -1
-                        && atts.getIndex("", "type") > -1
+                if (atts.getIndex("", "type") > -1
                         && lowerCaseLiteralEqualsIgnoreAsciiCaseString("module",
                                 atts.getValue("", "type"))) {
-                    err("A \u201Cscript\u201D element with an"
-                            + " \u201Cintegrity\u201D attribute must not have a"
-                            + " \u201Ctype\u201D attribute with the value"
-                            + " \u201Cmodule\u201D.");
+                    if (atts.getIndex("", "integrity") > -1) {
+                        err("A \u201Cscript\u201D element with an"
+                                + " \u201Cintegrity\u201D attribute must not have a"
+                                + " \u201Ctype\u201D attribute with the value"
+                                + " \u201Cmodule\u201D.");
+                    }
+                    if (atts.getIndex("", "defer") > -1) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Cdefer\u201D attribute must not have a"
+                                + " \u201Ctype\u201D attribute with the value"
+                                + " \u201Cmodule\u201D.");
+                    }
                 }
             }
 

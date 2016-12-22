@@ -30,6 +30,12 @@ public class UnsupportedFeatureChecker extends Checker {
             if (atts.getIndex("", "inputmode") > -1) {
                 warnAboutAttribute("inputmode");
             }
+        } else if ("script" == localName) {
+            if (atts.getIndex("", "type") > -1
+                    && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                            "module", atts.getValue("", "type"))) {
+                warn("Module scripts are not supported in most browsers yet.");
+            }
         } else if ("input" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
                 warnAboutAttributeOnElement("dirname", "input");
@@ -81,7 +87,7 @@ public class UnsupportedFeatureChecker extends Checker {
     private void warnAboutAttributeOnElement(String attributeName, String elementName) throws SAXException {
       warn("The \u201C" + attributeName + "\u201D attribute on the"
           + " \u201C" + elementName + "\u201D element is not supported"
-          + " all browsers. Please be sure to test, and consider"
+          + " in all browsers. Please be sure to test, and consider"
           + " using a polyfill.");
     }
 
