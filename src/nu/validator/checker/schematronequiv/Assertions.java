@@ -67,27 +67,6 @@ public class Assertions extends Checker {
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
 
-    private static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-            String lowerCaseLiteral, String string) {
-        if (string == null) {
-            return false;
-        }
-        if (lowerCaseLiteral.length() != string.length()) {
-            return false;
-        }
-        for (int i = 0; i < lowerCaseLiteral.length(); i++) {
-            char c0 = lowerCaseLiteral.charAt(i);
-            char c1 = string.charAt(i);
-            if (c1 >= 'A' && c1 <= 'Z') {
-                c1 += 0x20;
-            }
-            if (c0 != c1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private static boolean equalsIgnoreAsciiCase(String one, String other) {
         if (other == null) {
             return one == null;
@@ -1533,15 +1512,15 @@ public class Assertions extends Checker {
                             menuitemTypeVal = atts.getValue(i);
                         }
                         String attValue = atts.getValue(i);
-                        if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "hidden", attValue)) {
                             hidden = true;
-                        } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "toolbar", attValue)) {
                             toolbar = true;
                         }
 
-                        if (!lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        if (!AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "text/javascript", attValue)) {
                             typeNotTextJavaScript = true;
                         }
@@ -1577,7 +1556,7 @@ public class Assertions extends Checker {
                     } else if ("itemtype" == attLocal) {
                         itemtype = true;
                     } else if ("language" == attLocal
-                            && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                            && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                     "javascript", atts.getValue(i))) {
                         languageJavaScript = true;
                     } else if ("rev" == attLocal
@@ -1801,7 +1780,7 @@ public class Assertions extends Checker {
                                         locator);
                                 siblingSources.remove(locator);
                             } else if (media != null
-                                    && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                    && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                             "all", trimSpaces(media))) {
                                 err("Value of \u201cmedia\u201d attribute here"
                                         + " must not be \u201call\u201d.",
@@ -2172,8 +2151,8 @@ public class Assertions extends Checker {
                     }
                 }
                 if (atts.getIndex("", "type") > -1
-                        && lowerCaseLiteralEqualsIgnoreAsciiCaseString("module",
-                                atts.getValue("", "type"))) {
+                        && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "module", atts.getValue("", "type"))) {
                     if (atts.getIndex("", "integrity") > -1) {
                         err("A \u201Cscript\u201D element with an"
                                 + " \u201Cintegrity\u201D attribute must not have a"
@@ -2197,7 +2176,7 @@ public class Assertions extends Checker {
             // labelable elements
             if ("button" == localName
                     || ("input" == localName
-                            && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                            && !AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                     "hidden", atts.getValue("", "type")))
                     || "keygen" == localName || "meter" == localName
                     || "output" == localName || "progress" == localName
@@ -2312,8 +2291,8 @@ public class Assertions extends Checker {
 
             // input@type=button
             if ("input" == localName
-                    && lowerCaseLiteralEqualsIgnoreAsciiCaseString("button",
-                            atts.getValue("", "type"))) {
+                    && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                            "button", atts.getValue("", "type"))) {
                 if (atts.getValue("", "value") == null
                         || "".equals(atts.getValue("", "value"))) {
                     err("Element \u201Cinput\u201D with attribute \u201Ctype\u201D whose value is \u201Cbutton\u201D must have non-empty attribute \u201Cvalue\u201D.");
@@ -2339,15 +2318,15 @@ public class Assertions extends Checker {
                 }
             }
             if ("meta" == localName) {
-                if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                         "content-language", atts.getValue("", "http-equiv"))) {
                     err("Using the \u201Cmeta\u201D element to specify the"
                             + " document-wide default language is obsolete."
                             + " Consider specifying the language on the root"
                             + " element instead.");
-                } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                         "x-ua-compatible", atts.getValue("", "http-equiv"))
-                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        && !AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "ie=edge", atts.getValue("", "content"))) {
                     err("A \u201Cmeta\u201D element with an"
                             + " \u201Chttp-equiv\u201D attribute whose value is"
@@ -2393,7 +2372,7 @@ public class Assertions extends Checker {
                     }
                 }
                 if (atts.getIndex("", "http-equiv") > -1
-                        && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "content-type",
                                 atts.getValue("", "http-equiv"))) {
                     if (hasMetaCharset) {
