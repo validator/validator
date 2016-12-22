@@ -22,46 +22,39 @@
 
 package nu.validator.datatype;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import nu.validator.datatype.tools.RegisteredRelValuesBuilder;
+
 import java.io.IOException;
 import java.util.HashSet;
 
 import org.relaxng.datatype.DatatypeException;
+import org.xml.sax.SAXException;
 
 public final class LinkRel extends AbstractRel {
 
-    private static final HashSet<String> registeredValues = new HashSet<>();
+    private static final HashSet<String> registeredValues;
 
     static {
-        // Standard rel values for <link> from the spec
-        registeredValues.add("alternate");
-        registeredValues.add("author");
-        registeredValues.add("dns-prefetch");
-        registeredValues.add("help");
-        registeredValues.add("icon");
-        registeredValues.add("license");
-        registeredValues.add("next");
-        registeredValues.add("pingback");
-        registeredValues.add("preconnect");
-        registeredValues.add("prefetch");
-        registeredValues.add("prerender");
-        registeredValues.add("preload");
-        registeredValues.add("prev");
-        registeredValues.add("search");
-        registeredValues.add("stylesheet");
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                LinkRel.class.getClassLoader().getResourceAsStream(
-                        "nu/validator/localentities/files/link-rel-extensions")));
-        // Read in registered rel values from cached copy of the registry
         try {
-            String read = br.readLine();
-            while (read != null) {
-                registeredValues.add(read);
-                read = br.readLine();
-            }
-        } catch (IOException e) {
+            RegisteredRelValuesBuilder.parseRegistry();
+            registeredValues = RegisteredRelValuesBuilder.getLinkRelValues();
+            // Standard rel values for <link> from the spec
+            registeredValues.add("alternate");
+            registeredValues.add("author");
+            registeredValues.add("dns-prefetch");
+            registeredValues.add("help");
+            registeredValues.add("icon");
+            registeredValues.add("license");
+            registeredValues.add("next");
+            registeredValues.add("pingback");
+            registeredValues.add("preconnect");
+            registeredValues.add("prefetch");
+            registeredValues.add("prerender");
+            registeredValues.add("preload");
+            registeredValues.add("prev");
+            registeredValues.add("search");
+            registeredValues.add("stylesheet");
+        } catch (IOException | SAXException e) {
             throw new RuntimeException(e);
         }
     }

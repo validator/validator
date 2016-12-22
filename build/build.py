@@ -1143,9 +1143,8 @@ def spiderApacheDirectories(baseUrl, baseDir):
 def downloadLocalEntities():
   removeIfDirExists(os.path.join(buildRoot, "local-entities"))
   fileMap = {
+    "existing-rel-values": "http://microformats.org/wiki/existing-rel-values",
     "syntax-descriptions": "https://github.com/validator/validator/wiki/Microsyntax-descriptions",
-    "link-rel-extensions": "https://help.whatwg.org/extensions/link-rel/",
-    "a-rel-extensions": "https://help.whatwg.org/extensions/a-rel/",
   }
   ensureDirExists(filesDir)
   for filename in fileMap:

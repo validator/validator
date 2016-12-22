@@ -22,42 +22,36 @@
 
 package nu.validator.datatype;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import nu.validator.datatype.tools.RegisteredRelValuesBuilder;
+
 import java.io.IOException;
 import java.util.HashSet;
 
+import org.xml.sax.SAXException;
+
 public final class ARel extends AbstractRel {
 
-    private static final HashSet<String> registeredValues = new HashSet<>();
+    private static final HashSet<String> registeredValues;
 
     static {
-        // Standard rel values for <a> and <area> from the spec
-        registeredValues.add("alternate");
-        registeredValues.add("author");
-        registeredValues.add("bookmark");
-        registeredValues.add("external");
-        registeredValues.add("help");
-        registeredValues.add("license");
-        registeredValues.add("next");
-        registeredValues.add("nofollow");
-        registeredValues.add("noreferrer");
-        registeredValues.add("noopener");
-        registeredValues.add("prev");
-        registeredValues.add("search");
-        registeredValues.add("tag");
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                ARel.class.getClassLoader().getResourceAsStream(
-                        "nu/validator/localentities/files/a-rel-extensions")));
-        // Read in registered rel values from cached copy of the registry
         try {
-            String read = br.readLine();
-            while (read != null) {
-                registeredValues.add(read);
-                read = br.readLine();
-            }
-        } catch (IOException e) {
+            RegisteredRelValuesBuilder.parseRegistry();
+            registeredValues = RegisteredRelValuesBuilder.getARelValues();
+            // Standard rel values for <a> and <area> from the spec
+            registeredValues.add("alternate");
+            registeredValues.add("author");
+            registeredValues.add("bookmark");
+            registeredValues.add("external");
+            registeredValues.add("help");
+            registeredValues.add("license");
+            registeredValues.add("next");
+            registeredValues.add("nofollow");
+            registeredValues.add("noreferrer");
+            registeredValues.add("noopener");
+            registeredValues.add("prev");
+            registeredValues.add("search");
+            registeredValues.add("tag");
+        } catch (IOException | SAXException e) {
             throw new RuntimeException(e);
         }
     }

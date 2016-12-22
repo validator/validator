@@ -16,6 +16,7 @@ src/nu/validator/localentities/files/about.html
 src/nu/validator/localentities/files/css-parser-js
 src/nu/validator/localentities/files/cli-help
 src/nu/validator/localentities/files/entitymap
+src/nu/validator/localentities/files/existing-rel-values
 src/nu/validator/localentities/files/html5spec
 src/nu/validator/localentities/files/icon.png
 src/nu/validator/localentities/files/language-profiles
