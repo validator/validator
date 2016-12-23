@@ -2419,11 +2419,13 @@ public class Assertions extends Checker {
                 }
                 if (atts.getIndex("", "sizes") > -1
                         && ((relList != null && !relList.contains("icon")
-                                || !hasRel))) {
+                                && !relList.contains("apple-touch-icon"))
+                                || !hasRel)) {
                     err("A \u201Clink\u201D element with a"
                             + " \u201Csizes\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
-                            + " value \u201Cicon\u201D.");
+                            + " value \u201Cicon\u201D or the value"
+                            + " value \u201Capple-touch-icon\u201D.");
                 }
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
