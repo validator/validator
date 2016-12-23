@@ -466,6 +466,9 @@ function copySourceIntoTextArea() {
 		var li = source.firstChild
 		while (li) {
 			var code = li.firstChild
+			if (code == null) {
+				return
+			}
 			if (hasTextContent) {
 				strings.push(code.textContent)
 			}
