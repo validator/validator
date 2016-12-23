@@ -34,8 +34,10 @@ import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.relaxng.datatype.DatatypeException;
+
 import nu.validator.datatype.ContentSecurityPolicy;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.io.BoundedInputStream;
@@ -107,6 +109,8 @@ import io.mola.galimatias.GalimatiasParseException;
 
     private String userAgent;
 
+    private HttpServletRequest request;
+
     /**
      * Sets the timeouts of the HTTP client.
      *
@@ -176,19 +180,20 @@ import io.mola.galimatias.GalimatiasParseException;
         userAgent = ua;
     }
 
-    /**
-     * @param sizeLimit
-     * @param laxContentType
-     * @param errorHandler
-     */
     public PrudentHttpEntityResolver(long sizeLimit, boolean laxContentType,
-            ErrorHandler errorHandler) {
+            ErrorHandler errorHandler, HttpServletRequest request) {
+        this.request = request;
         this.sizeLimit = sizeLimit;
         this.requestsLeft = maxRequests;
         this.errorHandler = errorHandler;
         this.contentTypeParser = new ContentTypeParser(errorHandler,
                 laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml,
                 this.acceptAllKnownXmlTypes, this.allowGenericXml);
+    }
+
+    public PrudentHttpEntityResolver(long sizeLimit, boolean laxContentType,
+            ErrorHandler errorHandler) {
+        this(sizeLimit, laxContentType, errorHandler, null);
     }
 
     /**
@@ -252,8 +257,14 @@ import io.mola.galimatias.GalimatiasParseException;
             m.setHeader("Accept-Encoding", "gzip");
             log4j.info(systemId);
             HttpResponse response = client.execute(m);
+            boolean ignoreResponseStatus = false;
+            if (request.getAttribute(
+                    "http://validator.nu/properties/ignore-response-status") != null) {
+                ignoreResponseStatus = (boolean) request.getAttribute(
+                        "http://validator.nu/properties/ignore-response-status");
+            }
             int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != 200) {
+            if (statusCode != 200 && !ignoreResponseStatus) {
                 String msg = "HTTP resource not retrievable. The HTTP status from the remote server was: "
                         + statusCode + ".";
                 SAXParseException spe = new SAXParseException(msg, publicId,

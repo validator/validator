@@ -776,7 +776,7 @@ dl.inputattrs .highlight {
 
 #filters fieldset.hidden,
 .checkboxes input.hidden,
-.checkboxes .useragent.hidden {
+.checkboxes .extraoptions.hidden {
 	-o-transition: all .8s ease-out;
 	-moz-transition: all .8s ease-out;
 	-ms-transition: all .8s ease-out;
@@ -789,13 +789,17 @@ dl.inputattrs .highlight {
 
 #filters fieldset.unhidden,
 .checkboxes input.unhidden,
-.checkboxes .useragent.unhidden {
+.checkboxes .extraoptions.unhidden {
 	-o-transition: all .8s ease-out;
 	-moz-transition: all .8s ease-out;
 	-ms-transition: all .8s ease-out;
 	-webkit-transition: all .8s ease-out;
 	opacity: 1;
 	visibility: visible;
+}
+
+.checkboxes .extraoptions label {
+	margin-right: 0px;
 }
 
 #filters fieldset.unhidden,
@@ -883,7 +887,7 @@ dl.inputattrs .highlight {
 	margin-right: 16px;
 }
 
-.showwhat {
+.checkboxgroup {
 	padding: 3px 6px 2px 2px;
 	border-radius: 6px;
 	border: solid #ccc 1px;
@@ -891,7 +895,7 @@ dl.inputattrs .highlight {
 	margin-right: 10px;
 }
 
-.showwhat label {
+.checkboxgroup label {
 	font-size: 11px;
 }
 
@@ -900,20 +904,20 @@ label[for=showimagereport] {
 }
 
 input[list=useragents] {
-	width: 45.5%;
+	width: 30.5%;
 	padding: 2px 4px 3px 4px;
 	border-radius: 6px;
 	border: solid #ccc 1px;
 }
 
 @media (min-width: 925px) {
-	.checkboxes .useragent {
+	.checkboxes .extraoptions {
 		padding-left: 8px;
 	}
 }
 
 @media (max-width: 924px) {
-	.useragent {
+	.extraoptions {
 		display: block;
 		margin-top: 8px;
 		padding-left: 0px;
@@ -924,11 +928,11 @@ input[list=useragents] {
 	#inputregion {
 		margin-top: 76px;
 	}
-	.useragent.unhidden {
+	.extraoptions.unhidden {
 		margin-bottom: -68px;
 	}
 	input[list=useragents] {
-		width: 76.9%;
+		width: 57.7%;
 	}
 }
 
@@ -941,14 +945,21 @@ input[list=useragents] {
 	#inputregion {
 		margin-top: 100px;
 	}
-	.useragent.unhidden {
+	.extraoptions.unhidden {
 		margin-bottom: -90px;
 	}
+	#user-agent-label {
+		display: block;
+		margin-top: 8px;
+	}
 	input[list=useragents] {
-		width: 96.8%;
+		width: 96.9%
 	}
 	div#about {
-		font-size: 13px;
+		font-size: 11px;
+	}
+	.checkboxes {
+		font-size: 12px;
 	}
 }
 

@@ -7,7 +7,7 @@
 	><fieldset
 		><legend>Checker Input</legend
 		><p class="checkboxes"
-			>Show <span class="showwhat"
+			>Show <span class="checkboxgroup"
 			><label title="Display the markup source of the input document." for='showsource'
 			><?SaxCompiler-code t.emitShowSourceField();
 			?>source</label
@@ -19,8 +19,13 @@
 			?>image report</label
 			></span
 			><input id="show_options" type="button" value="Options…"></input
-			><span class="useragent hidden"
-				><label title="Specify the user-agent string to send in the document request"
+			><span class="extraoptions hidden"
+				><span class="checkboxgroup"
+					><label title="Check the content of all responses, including (non-200) error responses"
+					><?SaxCompiler-code t.emitCheckErrorPagesField();
+					?>check error pages</label
+				></span
+				><label id="user-agent-label" title="Specify the user-agent string to send in the document request"
 				>User-Agent <?SaxCompiler-code t.emitUserAgentInput(); ?></label
 				><datalist id="useragents"></datalist
 			></span

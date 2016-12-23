@@ -363,6 +363,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean showOutline;
 
+    private boolean checkErrorPages;
+
     private boolean schemaIsDefault;
 
     private String userAgent;
@@ -775,6 +777,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         showSource = (request.getParameter("showsource") != null);
         showSource = (showSource || "textarea".equals(inputType));
         showOutline = (request.getParameter("showoutline") != null);
+        if (request.getParameter("checkerrorpages") != null) {
+            request.setAttribute(
+                    "http://validator.nu/properties/ignore-response-status",
+                    true);
+        }
         if (request.getParameter("showimagereport") != null) {
             imageCollector = new ImageCollector(sourceCode);
         }
@@ -961,7 +968,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         }
         httpRes = new PrudentHttpEntityResolver(SIZE_LIMIT, laxType,
-                errorHandler);
+                errorHandler, request);
         httpRes.setUserAgent(userAgent);
         dataRes = new DataUriEntityResolver(httpRes, laxType, errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
@@ -1945,6 +1952,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     void emitShowImageReportField() throws SAXException {
         emitter.checkbox("showimagereport", "yes", imageCollector != null);
+    }
+
+    void emitCheckErrorPagesField() throws SAXException {
+        emitter.checkbox("checkerrorpages", "yes", checkErrorPages);
     }
 
     void rootNamespace(String namespace, Locator locator) throws SAXException {

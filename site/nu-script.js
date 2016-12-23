@@ -136,7 +136,7 @@ function initFieldHolders() {
 	}
 	document.querySelector('#show_options')
 		.addEventListener('click', function (e) {
-			toggleUserAgent()
+			toggleExtraOptions()
 		}, false)
 	if (location.hash == '#file') {
 		installFileUpload()
@@ -152,15 +152,15 @@ function initFieldHolders() {
 	}
 }
 
-function toggleUserAgent() {
-	var useragent = document.querySelector('.useragent'),
-		useragent_input = document.querySelector('.useragent input')
-	if (useragent.className.indexOf("unhidden") != -1) {
-		useragent.className = useragent.className.replace(/unhidden/, 'hidden')
-		useragent_input.setAttribute("disabled", "")
+function toggleExtraOptions() {
+	var extraoptions = document.querySelector('.extraoptions'),
+		extraoptions_input = document.querySelector('input[name=useragent]')
+	if (extraoptions.className.indexOf("unhidden") != -1) {
+		extraoptions.className = extraoptions.className.replace(/unhidden/, 'hidden')
+		extraoptions_input.setAttribute("disabled", "")
 	} else {
-		useragent.className = useragent.className.replace(/hidden/, 'unhidden')
-		useragent_input.removeAttribute("disabled")
+		extraoptions.className = extraoptions.className.replace(/hidden/, 'unhidden')
+		extraoptions_input.removeAttribute("disabled")
 	}
 }
 
@@ -190,7 +190,7 @@ function initUserAgents() {
 	userAgents.appendChild(createLabeledOption(
 		'Validator.nu/LV',
 		'default'))
-	document.querySelector("span.useragent").appendChild(userAgents)
+	document.querySelector("span.extraoptions").appendChild(userAgents)
 	document.querySelector("input[list=useragents]").setAttribute("disabled", "")
 }
 
