@@ -1254,7 +1254,7 @@ def prepareLocalEntityJar():
                     os.path.join(filesDir, "script.js"))
     shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"),
                     os.path.join(filesDir, "icon.png"))
-    shutil.copyfile(os.path.join(buildRoot, "wiki", "Microsyntax-descriptions.md"),  # nopep8
+    shutil.copyfile(os.path.join(buildRoot, "docs", "Microsyntax-descriptions.md"),  # nopep8
                     os.path.join(filesDir, "syntax-descriptions"))
     shutil.copyfile(os.path.join(buildRoot, "resources", "language-profiles-list.txt"),  # nopep8
                     os.path.join(filesDir, "language-profiles-list.txt"))
