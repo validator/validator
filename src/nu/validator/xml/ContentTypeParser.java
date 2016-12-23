@@ -338,7 +338,7 @@ public class ContentTypeParser {
                         sb.append(c);
                     }
                     if (quoted) {
-                        if ( '"' == param.charAt(offset)) {
+                        if (param.length() > offset && '"' == param.charAt(offset)) {
                             offset++;
                         } else {
                             malformedContentTypeError(contentType,
