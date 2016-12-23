@@ -12,6 +12,6 @@
 [submodule "galimatias"]
 	path = galimatias
 	url = https://github.com/validator/galimatias.git
-[submodule "wiki"]
-	path = wiki
+[submodule "docs"]
+	path = docs
 	url = https://github.com/validator/validator.wiki.git
