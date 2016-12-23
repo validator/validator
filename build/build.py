@@ -1320,7 +1320,7 @@ def downloadDependency(url, md5sum):
 
 
 def updateSubmodules():
-    runCmd([gitCmd, 'submodule', 'update', '--init'])
+    runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge', '--init'])
 
 
 def downloadDependencies():
