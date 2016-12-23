@@ -1216,10 +1216,7 @@ def spiderApacheDirectories(baseUrl, baseDir):
 
 def downloadLocalEntities():
     removeIfDirExists(os.path.join(buildRoot, "local-entities"))
-    fileMap = {
-        "existing-rel-values": "http://microformats.org/wiki/existing-rel-values",  # nopep8
-        "syntax-descriptions": "https://github.com/validator/validator/wiki/Microsyntax-descriptions",  # nopep8
-    }
+    fileMap = {"existing-rel-values": "http://microformats.org/wiki/existing-rel-values"}  # nopep8
     if followW3Cspec:
         fileMap["html5spec"] = "https://w3c.github.io/html/single-page.html"
     else:
@@ -1257,6 +1254,8 @@ def prepareLocalEntityJar():
                     os.path.join(filesDir, "script.js"))
     shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"),
                     os.path.join(filesDir, "icon.png"))
+    shutil.copyfile(os.path.join(buildRoot, "wiki", "Microsyntax-descriptions.md"),  # nopep8
+                    os.path.join(filesDir, "syntax-descriptions"))
     shutil.copyfile(os.path.join(buildRoot, "resources", "language-profiles-list.txt"),  # nopep8
                     os.path.join(filesDir, "language-profiles-list.txt"))
     shutil.copyfile(os.path.join(buildRoot, "resources", "alt_advice.html"),
