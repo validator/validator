@@ -1176,7 +1176,10 @@ def fetchUrlTo(url, path, md5sum=None):
     while not completed:
         try:
             socket.setdefaulttimeout(httpTimeoutSeconds)
-            f = urlopen(url, cafile=CAFILE)
+            try:
+                f = urlopen(url, cafile=CAFILE)  # Python 2.7.9+
+            except TypeError:
+                f = urlopen(url)
             data = f.read()
             f.close()
             completed = True
