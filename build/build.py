@@ -1220,6 +1220,10 @@ def downloadLocalEntities():
         "existing-rel-values": "http://microformats.org/wiki/existing-rel-values",  # nopep8
         "syntax-descriptions": "https://github.com/validator/validator/wiki/Microsyntax-descriptions",  # nopep8
     }
+    if followW3Cspec:
+        fileMap["html5spec"] = "https://w3c.github.io/html/single-page.html"
+    else:
+        fileMap["html5spec"] = "https://html.spec.whatwg.org/"
     ensureDirExists(filesDir)
     for filename in fileMap:
         fetchUrlTo(fileMap[filename], os.path.join(filesDir, filename))
@@ -1253,8 +1257,6 @@ def prepareLocalEntityJar():
                     os.path.join(filesDir, "script.js"))
     shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"),
                     os.path.join(filesDir, "icon.png"))
-    shutil.copyfile(os.path.join(buildRoot, "resources", "spec", "html5.html"),
-                    os.path.join(filesDir, "html5spec"))
     shutil.copyfile(os.path.join(buildRoot, "resources", "language-profiles-list.txt"),  # nopep8
                     os.path.join(filesDir, "language-profiles-list.txt"))
     shutil.copyfile(os.path.join(buildRoot, "resources", "alt_advice.html"),
@@ -1264,9 +1266,6 @@ def prepareLocalEntityJar():
     languageProfilesTargetDir = os.path.join(filesDir, "language-profiles")
     removeIfDirExists(languageProfilesTargetDir)
     shutil.copytree(os.path.join(buildRoot, "resources", "language-profiles"), languageProfilesTargetDir)  # nopep8
-    if followW3Cspec:
-        shutil.copyfile(os.path.join(buildRoot, "resources", "spec", "w3c-html5.html"),  # nopep8
-                        os.path.join(filesDir, "html5spec"))
     shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"),
                     os.path.join(filesDir, "log4j.properties"))
     shutil.copyfile(os.path.join(buildRoot, "README.md"),
