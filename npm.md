@@ -1,17 +1,19 @@
-## vnu.jar in NPM
+`vnu.jar` is a packaged version of the Nu Html Checker for batch-checking
+documents from the command line and from other scripts/apps.
+
 You can work with `vnu.jar` in CommonJS modules.
 
-### Install latest release version
+## Install latest release version
 ```sh
 $ npm install --save vnu-jar
 ```
 
-### Install latest dev version
+## Install latest dev version
 ```sh
 $ npm install --save vnu-jar@dev
 ```
 
-### Example
+## Example
 For Node.js 6+
 ```javascript
 'use strict';
@@ -36,4 +38,3 @@ exec ( `java -jar ${vnu} --version`, ( error, stdout ) => {
 } );
 
 ```
-

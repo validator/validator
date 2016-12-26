@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*- vim: set fileencoding=utf-8 :
 
 # Copyright (c) 2007 Henri Sivonen
 # Copyright (c) 2008-2016 Mozilla Foundation
@@ -56,19 +57,19 @@ try:
 except ImportError:
     CAFILE = None
 
-
 javaVersion = '1.8'
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
 javadocCmd = 'javadoc'
 herokuCmd = 'heroku'
-ghRelCmd = 'github-release'
+ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
 mvnCmd = 'mvn'
 gpgCmd = 'gpg2'
+npmCmd = 'npm'
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
@@ -134,6 +135,36 @@ socketTimeoutSeconds = 5
 followW3Cspec = 0
 statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
+
+packageJsonContent = '''\
+{
+  "name": "vnu-jar",
+  "version": "%s",
+  "description": "Provides the Nu Html Checker «vnu.jar» file",
+  "main": "vnu-jar.js",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/validator/validator.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/validator/validator/issues"
+  },
+  "homepage": "https://github.com/validator/validator#readme",
+  "keywords": [
+    "checker",
+    "html",
+    "jar",
+    "nu",
+    "validator",
+    "vnu",
+    "w3c"
+  ]
+}
+'''
 
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/54.1.1/icu4j-54.1.1.jar", "d75417a813c37b958be2be0a766f0a65"),  # nopep8
@@ -922,6 +953,11 @@ class Release():
                 continue
             runCmd([gpgCmd, '--yes', '-ab', filename])
 
+    def cleanAndCreateAdditional(self):
+        self.removeExtras()
+        self.writeHashes()
+        self.sign()
+
     def createArtifacts(self, url=None):
         self.reInitDistDir()
         self.setVersion(url)
@@ -939,7 +975,110 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
-    def deployToCentral(self, url):
+    def createExecutable(self, jarOrWar):
+        self.reInitDistDir()
+        self.setVersion()
+        if jarOrWar == "war":
+            os.mkdir(os.path.join(distDir, "war"))
+        runCmd([javaCmd,
+                '-cp', self.classpath, 'org.apache.tools.ant.Main',
+                '-f', self.buildXml, jarOrWar])
+        if jarOrWar == "jar":
+            release.check()
+
+    def createDistribution(self, jarOrWar, isNightly=False):
+        self.setVersion()
+        if isNightly:
+            self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
+        self.createExecutable(jarOrWar)
+        self.cleanAndCreateAdditional()
+        self.prepareDist(jarOrWar)
+        self.cleanAndCreateAdditional()
+
+    def prepareDist(self, jarOrWar):
+        print("Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version))
+        if "nightly" not in self.version:
+            for filename in self.docs:
+                shutil.copy(os.path.join(buildRoot, filename), distDir)
+        os.chdir("build")
+        distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar, self.version))
+        removeIfExists(distroFile)
+        zf = zipfile.ZipFile(distroFile, "w")
+        for dirname, subdirs, files in os.walk("dist"):
+            zf.write(dirname)
+        for filename in files:
+            zf.write(os.path.join(dirname, filename))
+        zf.close()
+        shutil.move(distroFile, "dist")
+        os.chdir("..")
+
+    def createOrUpdateGithubData(self):
+        runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
+        args = [
+            "-u",
+            "validator",
+            "-r",
+            "validator",
+            "-t",
+            validatorVersion,
+        ]
+        devnull = open(os.devnull, 'wb')
+        infoArgs = [ghRelCmd, 'info'] + args
+        print(" ".join(infoArgs))
+        if subprocess.call(infoArgs, stdout=devnull, stderr=subprocess.STDOUT):
+            runCmd([ghRelCmd, 'release', '-p'] + args)
+        else:
+            runCmd([ghRelCmd, 'delete'] + args)
+            runCmd([ghRelCmd, 'release', '-p'] + args)
+        devnull.close()
+        args.append('-n')
+        args.append(releaseDate)
+        args.append('-d')
+        args.append(os.path.join(buildRoot, "WHATSNEW.md"))
+        runCmd([ghRelCmd, 'edit', '-p'] + args)
+
+    def createPackageJson(self, packageJson, packageJsonCopy):
+        shutil.move(packageJson, packageJsonCopy)
+        f = open(packageJson, 'w')
+        f.write(packageJsonContent % validatorVersion)
+        f.close
+
+    def createNpmReadme(self, readMe, readMeCopy):
+        drop = "It is released as two packages:"
+        splitAt = "is a portable standalone version for"
+        shutil.move(readMe, readMeCopy)
+        npmFragment = os.path.join(buildRoot, "npm.md")
+        npmReadme = open(readMe, 'w')
+        with open(readMeCopy, 'r') as original:
+            skip = False
+            for line in original:
+                if line.find(drop) != -1:
+                    npmReadme.write(line.replace(drop, ""))
+                elif line.find(splitAt) != -1:
+                    skip = True
+                    with open(npmFragment, 'r') as fragment:
+                        for line in fragment:
+                            npmReadme.write(line)
+                elif line.find("## Usage") != -1:
+                    skip = False
+                    npmReadme.write(line)
+                elif line.find("## Web-based checking") != -1:
+                    skip = True
+                elif skip:
+                    continue
+                else:
+                    npmReadme.write(line)
+        npmReadme.close()
+
+    def removeExtras(self):
+        removeIfExists(os.path.join(distDir, "VERSION"))
+        sigsums = re.compile("^.+\.asc$|^.+\.md5$|.+\.sha1$")
+        for filename in findFiles(distDir):
+            if (os.path.basename(filename) in self.docs or
+                    sigsums.match(filename)):
+                removeIfExists(filename)
+
+    def uploadToCentral(self, url):
         self.createArtifacts(url)
         basename = "%s-%s" % (self.artifactId, self.version)
         mvnArgs = [
@@ -991,98 +1130,11 @@ class Release():
                 ]
                 runCmd(mvnArgs)
 
-    def deployToHeroku(self):
+    def uploadToHeroku(self):
         self.createExecutable("war")
         runCmd([herokuCmd,
                 'deploy:war', '--war',
                 os.path.join(distDir, "vnu.war"), '--app', 'vnu'])
-
-    def createExecutable(self, jarOrWar):
-        self.reInitDistDir()
-        self.setVersion()
-        if jarOrWar == "war":
-            os.mkdir(os.path.join(distDir, "war"))
-        runCmd([javaCmd,
-                '-cp', self.classpath, 'org.apache.tools.ant.Main',
-                '-f', self.buildXml, jarOrWar])
-
-    def removeExtras(self):
-        removeIfExists(os.path.join(distDir, "VERSION"))
-        sigsums = re.compile("^.+\.asc$|^.+\.md5$|.+\.sha1$")
-        for filename in findFiles(distDir):
-            if (os.path.basename(filename) in self.docs or
-                    sigsums.match(filename)):
-                removeIfExists(filename)
-
-    def cleanAndCreateAdditional(self):
-        self.removeExtras()
-        self.writeHashes()
-        self.sign()
-
-    def createNightly(self, jarOrWar):
-        self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
-        self.createExecutable(jarOrWar)
-        self.cleanAndCreateAdditional()
-        self.createDist(jarOrWar)
-        self.cleanAndCreateAdditional()
-        self.uploadToReleasesHost("%s/%s" % (nightliesPath, jarOrWar))
-
-    def createAndUploadDist(self, jarOrWar):
-        self.setVersion()
-        self.createExecutable(jarOrWar)
-        self.cleanAndCreateAdditional()
-        self.createDist(jarOrWar)
-        self.cleanAndCreateAdditional()
-        self.uploadDist(jarOrWar)
-
-    def createAndUploadDistributions(self):
-        self.createAndUploadDist("jar")
-        self.createAndUploadDist("war")
-
-    def createDist(self, jarOrWar):
-        print("Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version))
-        if "nightly" not in self.version:
-            for filename in self.docs:
-                shutil.copy(os.path.join(buildRoot, filename), distDir)
-        os.chdir("build")
-        distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar, self.version))
-        removeIfExists(distroFile)
-        zf = zipfile.ZipFile(distroFile, "w")
-        for dirname, subdirs, files in os.walk("dist"):
-            zf.write(dirname)
-        for filename in files:
-            zf.write(os.path.join(dirname, filename))
-        zf.close()
-        shutil.move(distroFile, "dist")
-        os.chdir("..")
-
-    def createOrUpdateGithubData(self):
-        runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
-        args = [
-            "-u",
-            "validator",
-            "-r",
-            "validator",
-            "-t",
-            validatorVersion,
-        ]
-        devnull = open(os.devnull, 'wb')
-        infoArgs = [ghRelCmd, 'info'] + args
-        print(" ".join(infoArgs))
-        if subprocess.call(infoArgs, stdout=devnull, stderr=subprocess.STDOUT):
-            runCmd([ghRelCmd, 'release', '-p'] + args)
-        else:
-            runCmd([ghRelCmd, 'delete'] + args)
-            runCmd([ghRelCmd, 'release', '-p'] + args)
-        devnull.close()
-        args.append('-n')
-        args.append(releaseDate)
-        f = open(os.path.join(buildRoot, "WHATSNEW.md"))
-        desc = f.read().replace('"', '\\"')
-        desc = f.read().replace('`', '\\`')
-        args.append('-d')
-        args.append(desc)
-        runCmd([ghRelCmd, 'edit', '-p'] + args)
 
     def uploadToGithub(self):
         for filename in findFiles(distDir):
@@ -1103,13 +1155,26 @@ class Release():
                 ]
                 runCmd(args)
 
-    def uploadToReleasesHost(self, path):
+    def uploadNpm(self, tag=None):
+        readMe = os.path.join(buildRoot, "README.md")
+        readMeCopy = readMe + ".GOOD"
+        packageJson = os.path.join(buildRoot, "package.json")
+        packageJsonCopy = packageJson + ".GOOD"
+        self.createNpmReadme(readMe, readMeCopy)
+        self.createPackageJson(packageJson, packageJsonCopy)
+        if tag:
+            runCmd([npmCmd, 'publish', '--tag', tag])
+        else:
+            runCmd([npmCmd, 'publish'])
+        shutil.move(readMeCopy, readMe)
+        shutil.move(packageJsonCopy, packageJson)
+
+    def uploadToReleasesHost(self, jarOrWar, isNightly=False):
+        path = "%s/%s" % (releasesPath, jarOrWar)
+        if isNightly:
+            path = "%s/%s" % (nightliesPath, jarOrWar)
         for filename in findFiles(distDir):
             runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
-
-    def uploadDist(self, jarOrWar):
-        self.uploadToReleasesHost("%s/%s" % (releasesPath, jarOrWar))
-        self.uploadToGithub()
 
     def check(self):
         vnu = os.path.join(distDir, "vnu.jar")
@@ -1529,53 +1594,80 @@ else:
             release.createBundle()
         elif arg == 'snapshot':
             release = Release()
-            release.deployToCentral(snapshotsRepoUrl)
+            release.uploadToCentral(snapshotsRepoUrl)
         elif arg == 'release':
             release = Release()
-            release.deployToCentral(stagingRepoUrl)
+            release.uploadToCentral(stagingRepoUrl)
             release.createOrUpdateGithubData()
-            release.createAndUploadDistributions()
+            release.createDistribution("war")
+            release.uploadToReleasesHost("war")
+            release.uploadToGithub()
+            release.createDistribution("jar")
+            release.uploadToReleasesHost("jar")
+            release.uploadToGithub()
+            release.uploadNpm()
+        elif arg == 'npm-snapshot':
+            release = Release()
+            release.createExecutable("jar")
+            release.uploadNpm("dev")
+        elif arg == 'npm-release':
+            release = Release()
+            release.createExecutable("jar")
+            release.uploadNpm()
+        elif arg == 'github-release':
+            isNightly = True
+            release = Release()
+            release.createOrUpdateGithubData()
+            release.createDistribution("war", isNightly)
+            release.uploadToReleasesHost("war", isNightly)
+            release.uploadToGithub()
+            release.createDistribution("jar", isNightly)
+            release.uploadToReleasesHost("jar", isNightly)
+            release.uploadToGithub()
+        elif arg == 'nightly':
+            isNightly = True
+            release = Release()
+            release.createDistribution("war", isNightly)
+            release.uploadToReleasesHost("war", isNightly)
+            release.createDistribution("jar", isNightly)
+            release.uploadToReleasesHost("jar", isNightly)
+            release.uploadNpm("dev")
+        elif arg == 'heroku':
+            release = Release()
+            release.uploadToHeroku()
         elif arg == 'galimatias-bundle':
             release = Release("galimatias")
             release.createBundle()
         elif arg == 'galimatias-snapshot':
             release = Release("galimatias")
-            release.deployToCentral(snapshotsRepoUrl)
+            release.uploadToCentral(snapshotsRepoUrl)
         elif arg == 'galimatias-release':
             release = Release("galimatias")
-            release.deployToCentral(stagingRepoUrl)
+            release.uploadToCentral(stagingRepoUrl)
         elif arg == 'htmlparser-bundle':
             release = Release("htmlparser")
             release.createBundle()
         elif arg == 'htmlparser-snapshot':
             release = Release("htmlparser")
-            release.deployToCentral(snapshotsRepoUrl)
+            release.uploadToCentral(snapshotsRepoUrl)
         elif arg == 'htmlparser-release':
             release = Release("htmlparser")
-            release.deployToCentral(stagingRepoUrl)
+            release.uploadToCentral(stagingRepoUrl)
         elif arg == 'jing-bundle':
             release = Release("jing")
             release.createBundle()
         elif arg == 'jing-snapshot':
             release = Release("jing")
-            release.deployToCentral(snapshotsRepoUrl)
+            release.uploadToCentral(snapshotsRepoUrl)
         elif arg == 'jing-release':
             release = Release("jing")
-            release.deployToCentral(stagingRepoUrl)
+            release.uploadToCentral(stagingRepoUrl)
         elif arg == 'jar':
             release = Release()
             release.createExecutable("jar")
-            release.check()
         elif arg == 'war':
             release = Release()
             release.createExecutable("war")
-        elif arg == 'nightly':
-            release = Release()
-            release.createNightly("jar")
-            release.createNightly("war")
-        elif arg == 'heroku':
-            release = Release()
-            release.deployToHeroku()
         elif arg == 'localent':
             prepareLocalEntityJar()
         elif arg == 'deploy':
