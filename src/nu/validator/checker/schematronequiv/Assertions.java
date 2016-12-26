@@ -2433,6 +2433,7 @@ public class Assertions extends Checker {
                                         || relList.contains("pingback")
                                         || relList.contains("preconnect")
                                         || relList.contains("prefetch")
+                                        || relList.contains("preload")
                                         || relList.contains("prerender")
                                         || relList.contains("stylesheet")))
                         && atts.getIndex("", "itemprop") < 0
@@ -2446,6 +2447,7 @@ public class Assertions extends Checker {
                             + " \u201Cpingback\u201D,"
                             + " \u201Cpreconnect\u201D,"
                             + " \u201Cprefetch\u201D,"
+                            + " \u201Cpreload\u201D,"
                             + " \u201Cprerender\u201D, or"
                             + " \u201Cstylesheet\u201D.");
                 }
