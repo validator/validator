@@ -23,5 +23,9 @@
     "validator",
     "vnu",
     "w3c"
+  ],
+  "files": [
+    "build/dist/vnu.jar",
+    "vnu-jar.js"
   ]
 }
