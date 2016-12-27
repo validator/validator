@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = __dirname + '/build/dist/vnu.jar';
+module.exports = require('path').join( __dirname, 'build/dist/vnu.jar' );
