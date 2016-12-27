@@ -84,7 +84,7 @@ public final class LinkRel extends AbstractRel {
                         + " \u201cshortcut icon\u201d.");
             }
         } else {
-            return registeredValues.contains(token);
+            return registeredValues.contains(token.toLowerCase());
         }
     }
 

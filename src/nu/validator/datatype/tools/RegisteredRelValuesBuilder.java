@@ -138,11 +138,13 @@ public final class RegisteredRelValuesBuilder implements ContentHandler {
                 if ("td" == localName && NS == uri) {
                     if (!"not allowed".equals(
                             linkEffect.toString().trim().toLowerCase())) {
-                        registeredLinkRelValues.add(keyword.toString().trim());
+                        registeredLinkRelValues.add(keyword.toString().trim() //
+                                .toLowerCase());
                     }
                     if (!"not allowed".equals(
                             aEffect.toString().trim().toLowerCase())) {
-                        registeredARelValues.add(keyword.toString().trim());
+                        registeredARelValues.add(keyword.toString().trim() //
+                                .toLowerCase());
                     }
                     state = State.AWAITING_TR;
                 }

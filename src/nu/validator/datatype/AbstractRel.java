@@ -47,7 +47,7 @@ abstract class AbstractRel extends AbstractDatatype {
                 checkToken(literal, builder, i, tokensSeen);
                 builder.setLength(0);
             } else if (!isWhitespace(c)) {
-                builder.append(toAsciiLowerCase(c));
+                builder.append(c);
             }
         }
         if (builder.length() > 0) {

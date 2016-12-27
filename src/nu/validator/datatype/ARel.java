@@ -70,7 +70,7 @@ public final class ARel extends AbstractRel {
 
     @Override
     protected boolean isRegistered(CharSequence literal, String token) {
-        return registeredValues.contains(token);
+        return registeredValues.contains(token.toLowerCase());
     }
 
     @Override
