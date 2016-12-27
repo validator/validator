@@ -2,6 +2,51 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 17.0.0
+NN December 2016
+  - New language-detection feature; warns for missing/wrong `html[lang]`
+  - New option `--no-langdetect` for `vnu.jar` disables language detection
+  - Allow **custom elements** (names containing “-”; e.g., `<foo-bar>`)
+  - Allow the `is` attribute (for custom elements)
+  - Allow **ARIA 1.1** roles/states/properties
+  - Warn for viewport values that restrict resizing
+  - Allow `div` in `dl`, to group `dt`+`dd` sets
+  - Allow anything in `template` element subtrees (exclude from checking)
+  - Allow `link[rel=preload]` in body
+  - Disallow `sizes` attribute on non-icon `link`
+  - Allow `<link rel=apple-touch-icon sizes=…>`
+  - Allow comments before doctype (warning dropped)
+  - Allow `<video playsinline>`
+  - Allow `<iframe allowusermedia>`
+  - Warn for `sandbox="allow-scripts allow-same-origin"`
+  - New option to check error pages (404s and other non-200 responses)
+  - Allow `link[nonce]`
+  - Disallow `input[datetime]`
+  - Disallow `mediagroup` attribute
+  - Allow `menu[type=popup]`, disallow `menu[type=context]`
+  - Disallow non-http/https URLs in `a[ping]`
+  - Allow `referrerpolicy` attribute
+  - Warn for `html[manifest]` (obsolete)
+  - Disallow `keygen` (obsolete)
+  - Warn for `about:legacy-compat` in doctype
+  - Align SVG+ARIA checking with ARIA requirements in current SVG spec
+  - Allow `h1`-`h6` & `hgroup` in `legend`
+  - Ignore SSL errors when checking remote documents
+  - Allow `script[type=module]` (supported in Edge but not in other UAs yet)
+  - Disallow content in `iframe` (must be empty)
+  - Make `vnu.jar` check `.xhtml` files using XML-specific RelaxNG grammar
+  - Allow `th[abbr]`
+  - Allow any value in SVG `class` attribute (not just XML-compatible names)
+  - Disallow HTML4/XHTML1 Transitional doctype
+  - Allow CSP `require-sri-for` directive (updated to Salvation 2.2.0)
+  - Allow any element or text as content of SVG `desc`
+  - Allow SVG `vector-effect=non-scaling-stroke`
+  - Allow only text in `rp`
+  - Disallow multiple `meta[name=description]`
+  - Disallow URLs with port values greater than 65535
+  - Disallow `<input name=isindex>`
+  - Disallow empty `autocomplete` attribute
+
 # 16.6.29
 29 June 2016
   - JSON/gnu message formats updated to ensure doc URL is always included
