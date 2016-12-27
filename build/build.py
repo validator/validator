@@ -85,7 +85,7 @@ day = time.strftime('%d').lstrip('0')
 validatorVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20150629VNU"
 htmlparserVersion = "1.4.4"
-galimatiasVersion = "0.1.1"
+galimatiasVersion = "0.1.2"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
