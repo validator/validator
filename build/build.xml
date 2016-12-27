@@ -278,7 +278,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="net.arnx" artifactId="jsonic" version="${jsonic-version}"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="nu.validator" artifactId="galimatias" version="0.1.2"/>
-      <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.4"/>
+      <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.5"/>
       <dependency groupId="nu.validator" artifactId="jing" version="20150629VNU"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="${httpclient-version}"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="${httpcore-version}"/>
