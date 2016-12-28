@@ -461,7 +461,8 @@ public final class LanguageDetectingXMLReaderWrapper
             return;
         }
         try {
-            String textContent = documentContent.toString();
+            String textContent = documentContent.toString() //
+                    .replaceAll("\\s+", " ");
             String detectedLanguage = "";
             Detector detector = DetectorFactory.create();
             detector.append(textContent);
