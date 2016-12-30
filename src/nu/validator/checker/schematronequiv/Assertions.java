@@ -2425,7 +2425,7 @@ public class Assertions extends Checker {
                             + " \u201Csizes\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
                             + " value \u201Cicon\u201D or the value"
-                            + " value \u201Capple-touch-icon\u201D.");
+                            + " \u201Capple-touch-icon\u201D.");
                 }
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
