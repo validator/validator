@@ -9,11 +9,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	html.elem =
 		element html { html.inner & html.attrs }
 	html.attrs =
-		(	common.attrs
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
-		)
+		( common.attrs )
 	html.inner =
 		(	head.elem
 		,	body.elem
