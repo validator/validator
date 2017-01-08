@@ -3,7 +3,7 @@ changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
 # 17.0.0
-NN December 2016
+08 January 2016
   - New language-detection feature; warns for missing/wrong `html[lang]`
   - New option `--no-langdetect` for `vnu.jar` disables language detection
   - Allow **custom elements** (names containing “-”; e.g., `<foo-bar>`)
