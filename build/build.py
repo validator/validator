@@ -83,7 +83,7 @@ year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
 day = time.strftime('%d').lstrip('0')
 validatorVersion = "%s.%s.%s" % (year, month, day)
-validatorVersion = "17.0.0"
+validatorVersion = "17.0.1"
 jingVersion = "20150629VNU"
 htmlparserVersion = "1.4.5"
 galimatiasVersion = "0.1.2"
@@ -140,7 +140,7 @@ miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 packageJsonContent = '''\
 {
   "name": "vnu-jar",
-  "version": "%s",
+  "version": "17.0.1",
   "description": "Provides the Nu Html Checker «vnu.jar» file",
   "main": "vnu-jar.js",
   "engines": {
@@ -163,6 +163,10 @@ packageJsonContent = '''\
     "validator",
     "vnu",
     "w3c"
+  ],
+  "files": [
+    "build/dist/vnu.jar",
+    "vnu-jar.js"
   ]
 }
 '''

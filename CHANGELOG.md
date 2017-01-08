@@ -2,7 +2,7 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 17.0.0
+# 17.0.1
 08 January 2017
   - New language-detection feature; warns for missing/wrong `html[lang]`
   - New option `--no-langdetect` for `vnu.jar` disables language detection
