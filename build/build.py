@@ -137,40 +137,6 @@ followW3Cspec = 0
 statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
-packageJsonContent = '''\
-{
-  "name": "vnu-jar",
-  "version": "17.0.1",
-  "description": "Provides the Nu Html Checker «vnu.jar» file",
-  "main": "vnu-jar.js",
-  "engines": {
-    "node": ">=0.10"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/validator/validator.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/validator/validator/issues"
-  },
-  "homepage": "https://github.com/validator/validator#readme",
-  "keywords": [
-    "checker",
-    "html",
-    "jar",
-    "nu",
-    "validator",
-    "vnu",
-    "w3c"
-  ],
-  "files": [
-    "build/dist/vnu.jar",
-    "vnu-jar.js"
-  ]
-}
-'''
-
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/54.1.1/icu4j-54.1.1.jar", "d75417a813c37b958be2be0a766f0a65"),  # nopep8
     ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.2.0/salvation-2.2.0.jar", "243988393b711ff1917cb232744c1563"),  # nopep8
@@ -1045,7 +1011,12 @@ class Release():
     def createPackageJson(self, packageJson, packageJsonCopy):
         shutil.move(packageJson, packageJsonCopy)
         f = open(packageJson, 'w')
-        f.write(packageJsonContent % validatorVersion)
+        with open(packageJsonCopy, 'r') as original:
+            for line in original:
+                if line.find('  "version":') != -1:
+                    f.write('  "version": "%s",\n' % validatorVersion)
+                else:
+                    f.write(line)
         f.close
 
     def createNpmReadme(self, readMe, readMeCopy):
@@ -1161,6 +1132,8 @@ class Release():
                 runCmd(args)
 
     def uploadNpm(self, tag=None):
+        removeIfExists(os.path.join(buildRoot, "README.md~"))
+        removeIfExists(os.path.join(buildRoot, "CHANGELOG.md~"))
         readMe = os.path.join(buildRoot, "README.md")
         readMeCopy = readMe + ".GOOD"
         packageJson = os.path.join(buildRoot, "package.json")
