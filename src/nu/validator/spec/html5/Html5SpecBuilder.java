@@ -237,6 +237,9 @@ public final class Html5SpecBuilder implements ContentHandler {
     @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
+        if ("p" == localName && NS == uri) {
+            return;
+        }
         switch (state) {
             case AWAITING_HEADING:
                 break;
@@ -388,6 +391,9 @@ public final class Html5SpecBuilder implements ContentHandler {
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
+        if ("p" == localName && NS == uri) {
+            return;
+        }
         switch (state) {
             case AWAITING_HEADING:
                 if ("h4" == localName && NS == uri) {
