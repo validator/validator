@@ -118,7 +118,7 @@ executable provides the following options:
 
     possible values: "gnu", "xml", "json", "text" [see information at URL below]
 
-    https://github.com/validator/validator/wiki/Service:-Common-parameters#out
+    https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params#out
 
 #### --help
 
@@ -297,7 +297,7 @@ Most of the properties listed below map to the validator.nu common input
 parameters documented at
 [github.com/validator/validator/wiki/Service:-Common-parameters][33].
 
-   [33]: https://github.com/validator/validator/wiki/Service:-Common-parameters
+   [33]: https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params
 
 #### nu.validator.client.host
 
@@ -333,7 +333,7 @@ parameters documented at
 
     possible values: [see information at URL below]
 
-    https://github.com/validator/validator/wiki/Service:-Common-parameters#parser
+    https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params#parser
 
 #### nu.validator.client.charset
 
@@ -355,7 +355,7 @@ parameters documented at
 
     possible values: [see information at URL below]
 
-    https://github.com/validator/validator/wiki/Service:-Common-parameters#out
+    https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params#out
 
 #### nu.validator.client.asciiquotes
 
