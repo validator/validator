@@ -44,9 +44,11 @@ import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.source.SourceCode;
+import nu.validator.xml.customelements.NamespaceChangingSchemaWrapper;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
+import nu.validator.xml.templateelement.TemplateElementDroppingSchemaWrapper;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LanguageDetectingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
@@ -243,6 +245,8 @@ public class SimpleDocumentValidator {
             schema = new DataAttributeDroppingSchemaWrapper(schema);
             schema = new XmlLangAttributeDroppingSchemaWrapper(schema);
             schema = new RoleAttributeFilteringSchemaWrapper(schema);
+            schema = new TemplateElementDroppingSchemaWrapper(schema);
+            schema = new NamespaceChangingSchemaWrapper(schema);
             this.hasHtml5Schema = true;
             if ("http://s.validator.nu/html5-all.rnc".equals(schemaUrl)) {
                 System.setProperty("nu.validator.schema.rdfa-full", "1");
