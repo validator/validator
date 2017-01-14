@@ -12,7 +12,7 @@ It is released as two packages:
 
    [5]: https://checker.html5.org/
    [6]: https://html5.validator.nu
-   [7]: http://validator.w3.org/nu/
+   [7]: https://validator.w3.org/nu/
    [8]: https://github.com/validator/validator
    [9]: https://validator.github.io/validator/#build-instructions
 
@@ -52,8 +52,8 @@ frontend such as:
    [17]: https://github.com/jzaefferer/grunt-html
    [18]: https://github.com/watilde/gulp-html
    [19]: https://github.com/svenkreiss/html5validator
-   [20]: http://jekyllrb.com/
-   [21]: http://blog.getpelican.com/
+   [20]: https://jekyllrb.com/
+   [21]: https://blog.getpelican.com/
    [22]: https://github.com/cvrebert/lmvtfy/
 
 ## Usage
@@ -173,7 +173,7 @@ two separate packages:
    [23]: https://validator.github.io/validator/#usage
    [24]: https://checker.html5.org/
    [25]: https://html5.validator.nu/
-   [26]: http://validator.w3.org/nu/
+   [26]: https://validator.w3.org/nu/
 
   * `vnu.jar` for deploying the checker as a simple self-contained service
   * `vnu.war` for deploying the checker to a servlet container such as Tomcat
@@ -210,7 +210,7 @@ You’ll see a form similar to [validator.w3.org/nu][29] that allows you to ente
 the URL of an HTML document and have the results for that document displayed in
 the browser.
 
-   [29]: http://validator.w3.org/nu/
+   [29]: https://validator.w3.org/nu/
 
 **Note:** If you get a `StackOverflowError` error when using the vnu.jar file,
 try adjusting the thread stack size by providing the `-Xss` option to java:
@@ -226,7 +226,7 @@ documentation. For example, on Apache Tomcat you could do this using the
 directory (since that is the default `appBase` setting). Typically you would see
 a message similar to the following in the `catalina.out` log file.
 
-   [30]: http://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
+   [30]: https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
 
     May 7, 2014 4:42:04 PM org.apache.catalina.startup.HostConfig deployWAR
     INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
@@ -272,7 +272,7 @@ To send documents to an instance of the checker on the Web, such as
 [html5.validator.nu/][32], use the nu.validator.client.host and
 nu.validator.client.port options, like this:
 
-   [32]: http://html5.validator.nu/
+   [32]: https://html5.validator.nu/
 
         java -cp ~/vnu.jar -Dnu.validator.client.port=80 \
          -Dnu.validator.client.host=html5.validator.nu \
