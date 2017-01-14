@@ -53,6 +53,7 @@ frontend such as:
    [18]: https://github.com/watilde/gulp-html
    [19]: https://github.com/svenkreiss/html5validator
    [20]: https://jekyllrb.com/
+
    [21]: https://blog.getpelican.com/
    [22]: https://github.com/cvrebert/lmvtfy/
 
@@ -61,7 +62,7 @@ frontend such as:
 Use the `vnu.jar` HTML checker as an executable for command-line checking of
 documents by invoking it like this:
 
-      java -jar vnu.jar [--errors-only] [--no-stream]
+      java -jar ~/vnu.jar [--errors-only] [--no-stream]
            [--format gnu|xml|json|text] [--help] [--html] [--no-langdetect]
            [--skip-non-html] [--verbose] [--version] FILES
 
