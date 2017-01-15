@@ -868,6 +868,10 @@ class Release():
         self.artifactId = artifactId
         self.version = validatorVersion
         self.buildXml = os.path.join(buildRoot, "build", "build.xml")
+        self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
+        self.setClasspath()
+
+    def setClasspath(self):
         self.classpath = os.pathsep.join([
             antJar, antLauncherJar,
             os.pathsep.join(dependencyJarPaths()),
@@ -875,7 +879,6 @@ class Release():
             os.path.join(jarsDir, "htmlparser.jar"),
             os.path.join(jarsDir, "galimatias.jar"),
         ])
-        self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
 
     def reInitDistDir(self):
         removeIfDirExists(distDir)
@@ -929,6 +932,16 @@ class Release():
         self.writeHashes()
         self.sign()
 
+    def downloadMavenAntTasksJar(self):
+        url = "https://repo1.maven.org/maven2/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar"  # nopep8
+        md5sum = "7ce48382d1aa4138027a58ec2f29beda"
+        extrasDir = os.path.join(buildRoot, "extras")
+        ensureDirExists(extrasDir)
+        path = os.path.join(extrasDir, url[url.rfind("/") + 1:])
+        if not os.path.exists(path):
+            fetchUrlTo(url, path, md5sum)
+        self.setClasspath()
+
     def createArtifacts(self, url=None):
         self.reInitDistDir()
         self.setVersion(url)
@@ -937,6 +950,7 @@ class Release():
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
     def createBundle(self):
+        self.downloadMavenAntTasksJar()
         self.createArtifacts()
         print("Building %s/%s-%s-bundle.jar" %
               (distDir, self.artifactId, self.version))
@@ -1055,6 +1069,7 @@ class Release():
                 removeIfExists(filename)
 
     def uploadToCentral(self, url):
+        self.downloadMavenAntTasksJar()
         self.createArtifacts(url)
         basename = "%s-%s" % (self.artifactId, self.version)
         mvnArgs = [
