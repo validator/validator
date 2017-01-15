@@ -2,6 +2,14 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 17.1.0
+15 January 2017
+  This release adds the following changes to the vnu.jar command-line
+  checker that had already been made available in the Web-based checker in
+  the 17.0.1 release.
+  - Allow **custom elements** (names containing “-”; e.g., `<foo-bar>`)
+  - Allow anything in `template` element subtrees (exclude from checking)
+
 # 17.0.1
 08 January 2017
   - New language-detection feature; warns for missing/wrong `html[lang]`
