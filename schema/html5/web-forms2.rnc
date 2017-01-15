@@ -732,33 +732,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	fieldset.attrs &=
 		( common-form.attrs )
 
-## Key-pair generator/input control: <keygen>
-
-	keygen.elem =
-		element keygen { keygen.inner & keygen.attrs }
-	keygen.attrs =
-		(	common.attrs
-		&	keygen.attrs.challenge?
-		&	keygen.attrs.keytype?
-		&	shared-form.attrs.autofocus? 
-		&	common-form.attrs?
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
-		)
-		keygen.attrs.challenge =
-			attribute challenge {
-				string
-			}
-		keygen.attrs.keytype = 
-			attribute keytype {
-				w:string "rsa"
-			}
-	keygen.inner =
-		( empty )
-
-	common.elem.phrasing |= keygen.elem
-
 ## Selection Menu: <select>, Extensions
 
 	select.attrs &=

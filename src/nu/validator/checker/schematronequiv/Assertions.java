@@ -451,8 +451,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("button", "textarea");
         registerProhibitedAncestor("a", "select");
         registerProhibitedAncestor("button", "select");
-        registerProhibitedAncestor("a", "keygen");
-        registerProhibitedAncestor("button", "keygen");
         registerProhibitedAncestor("a", "embed");
         registerProhibitedAncestor("button", "embed");
         registerProhibitedAncestor("a", "iframe");
@@ -2178,19 +2176,18 @@ public class Assertions extends Checker {
                     || ("input" == localName
                             && !AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                     "hidden", atts.getValue("", "type")))
-                    || "keygen" == localName || "meter" == localName
-                    || "output" == localName || "progress" == localName
-                    || "select" == localName || "textarea" == localName) {
+                    || "meter" == localName || "output" == localName
+                    || "progress" == localName || "select" == localName
+                    || "textarea" == localName) {
                 for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
                     StackNode node = entry.getKey();
                     Locator locator = entry.getValue();
                     if (node.isLabeledDescendants()) {
                         err("The \u201Clabel\u201D element may contain at most"
                                 + " one \u201Cbutton\u201D, \u201Cinput\u201D,"
-                                + " \u201Ckeygen\u201D, \u201Cmeter\u201D,"
-                                + " \u201Coutput\u201D, \u201Cprogress\u201D,"
-                                + " \u201Cselect\u201D, or \u201Ctextarea\u201D"
-                                + " descendant.");
+                                + " \u201Cmeter\u201D, \u201Coutput\u201D,"
+                                + " \u201Cprogress\u201D, \u201Cselect\u201D,"
+                                + " or \u201Ctextarea\u201D descendant.");
                         warn("\u201Clabel\u201D element with multiple labelable"
                                 + " descendants.", locator);
                     } else {
@@ -2267,13 +2264,12 @@ public class Assertions extends Checker {
 
             if (("input" == localName && !hidden) || "textarea" == localName
                     || "select" == localName || "button" == localName
-                    || "keygen" == localName || "output" == localName) {
+                    || "output" == localName) {
                 formControlIds.addAll(ids);
             }
 
             if ("button" == localName || "fieldset" == localName
                     || ("input" == localName && !hidden)
-                    || "keygen" == localName
                     || "object" == localName || "output" == localName
                     || "select" == localName || "textarea" == localName) {
                 String formVal = atts.getValue("", "form");
