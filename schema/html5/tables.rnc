@@ -61,17 +61,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		,	common.elem.script-supporting*
 		,	thead.elem?
 		,	common.elem.script-supporting*
-		,	(	(	tfoot.elem
-				,	common.elem.script-supporting*
-				,	( tbody.elem* | tr.elem+ )
-				,	common.elem.script-supporting*
-				)
-			|	(	( tbody.elem* | tr.elem+ )
-				,	common.elem.script-supporting*
-				,	tfoot.elem?
-				)
+		,	(	( tbody.elem* | tr.elem+ )
+			,	common.elem.script-supporting*
+			,	tfoot.elem?
 			)
-		) 
+		)
 
 	common.elem.flow |= table.elem
 
