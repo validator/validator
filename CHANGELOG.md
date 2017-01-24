@@ -2,6 +2,10 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# NN.N.N
+  - Added `nu.client.EmbeddedValidator` for use as library by other Java apps
+  - Disallow `tfoot` before `tbody`
+
 # 17.1.0
 15 January 2017
   This release adds the following changes to the vnu.jar command-line
