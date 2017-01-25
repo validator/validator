@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Mozilla Foundation
+ * Copyright (c) 2013-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -74,7 +74,7 @@ public final class LinkRel extends AbstractRel {
     @Override
     protected boolean isRegistered(CharSequence literal, String token)
             throws DatatypeException {
-        if ("shortcut".equals(token)) {
+        if ("shortcut".equals(toAsciiLowerCase(token))) {
             if ("shortcut icon".equals(toAsciiLowerCase(literal))) {
                 return true;
             } else {

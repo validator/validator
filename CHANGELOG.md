@@ -3,6 +3,7 @@ changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
 # NN.N.N
+  - Fixed bug in `rel="shortcut icon"` checking
   - Added `nu.client.EmbeddedValidator` for use as library by other Java apps
   - Disallow `tfoot` before `tbody`
 
