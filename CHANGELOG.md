@@ -2,6 +2,12 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 17.2.N
+NN February 2017
+  - Fix longstanding bug around code for identifying overlapping cells in
+    table-integrity checker (the bug somewhat frequently gets hit when checking
+    Wikipedia pages but otherwise in the wild gets hit only extremely rarely)
+
 # 17.2.0
 30 January 2017
   - Fix bug that broke vnu.jar command-line checking of URLs
