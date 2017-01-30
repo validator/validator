@@ -4,6 +4,7 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 17.2.N
 NN February 2017
+  - Add `--exit-zero-always` option to vnu.jar command-line checker
   - Fix longstanding bug around code for identifying overlapping cells in
     table-integrity checker (the bug somewhat frequently gets hit when checking
     Wikipedia pages but otherwise in the wild gets hit only extremely rarely)

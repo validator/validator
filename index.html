@@ -193,10 +193,10 @@ or
 <p>Use the <code>vnu.jar</code> HTML checker as an executable for
 command-line checking of documents by invoking it like this:
 <pre>
-  java -jar ~/vnu.jar [--errors-only] [--no-stream]
-       [--format gnu|xml|json|text] [--help]
-       [--html] [--no-langdetect] [--skip-non-html]
-       [--verbose] [--version] FILES
+  java -jar ~/vnu.jar [--errors-only] [--exit-zero-always]
+       [--no-stream] [--format gnu|xml|json|text]
+       [--html] [--skip-non-html] [--no-langdetect]
+       [--help] [--verbose] [--version] FILES
 </pre>
 
 <p class=note><b>Note:</b> In these instructions, replace
@@ -254,6 +254,13 @@ Specifies that only error-level messages and non-document-error messages
 are reported (so that warnings and info messages are not reported).
 
 default: [unset; all message reported, including warnings & info messages]
+</pre>
+
+<h4 id="exit-zero-always">--exit-zero-always</h4>
+<pre>
+Makes the checker exit zero even if errors are reported for any documents.
+
+default: [unset; checker exits 1 if errors are reported for any documents]
 </pre>
 
 <h4 id="format">--format <var>format</var></h4>

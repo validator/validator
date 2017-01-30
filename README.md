@@ -62,9 +62,9 @@ frontend such as:
 Use the `vnu.jar` HTML checker as an executable for command-line checking of
 documents by invoking it like this:
 
-      java -jar ~/vnu.jar [--errors-only] [--no-stream]
-           [--format gnu|xml|json|text] [--help] [--html] [--no-langdetect]
-           [--skip-non-html] [--verbose] [--version] FILES
+      java -jar ~/vnu.jar [--errors-only] [--exit-zero-always]
+           [--no-stream] [--format gnu|xml|json|text] [--html] [--skip-non-html]
+           [--no-langdetect] [--help] [--verbose] [--version] FILES
 
 **Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
 the file on your system.
@@ -110,6 +110,12 @@ executable provides the following options:
     reported (so that warnings and info messages are not reported).
 
     default: [unset; all message reported, including warnings & info messages]
+
+#### --exit-zero-always
+
+    Makes the checker exit zero even if errors are reported for any documents.
+
+    default: [unset; checker exits 1 if errors are reported for any documents]
 
 #### --format _format_
 
