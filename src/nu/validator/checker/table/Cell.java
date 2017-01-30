@@ -1,22 +1,23 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2017 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -29,7 +30,7 @@ import org.xml.sax.SAXParseException;
 
 /**
  * A table cell for table integrity checking.
- * 
+ *
  * @version $Id$
  * @author hsivonen
  */
@@ -57,14 +58,14 @@ final class Cell implements Locator {
     /**
      * The first row in the row group onto which this cell does not span.
      * (rowspan before positioning)
-     * 
-     * <p>However, <code>Integen.MAX_VALUE</code> is a magic value that means 
+     *
+     * <p>However, <code>Integen.MAX_VALUE</code> is a magic value that means
      * <code>rowspan=0</code>.
      */
     private int bottom;
 
     /**
-     * The first column into which this cell does not span. 
+     * The first column into which this cell does not span.
      * (colspan before positioning.)
      */
     private int right;
@@ -142,7 +143,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the headers.
-     * 
+     *
      * @return the headers
      */
     public String[] getHeadings() {
@@ -151,7 +152,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the header.
-     * 
+     *
      * @return the header
      */
     public boolean isHeader() {
@@ -204,17 +205,9 @@ final class Cell implements Locator {
         return row >= bottom;
     }
 
-    public int freeSlot(int potentialSlot) {
-        if (potentialSlot < left || potentialSlot >= right) {
-            return potentialSlot;
-        } else {
-            return right;
-        }
-    }
-
     /**
      * Returns the bottom.
-     * 
+     *
      * @return the bottom
      */
     public int getBottom() {
@@ -223,7 +216,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the left.
-     * 
+     *
      * @return the left
      */
     int getLeft() {
@@ -232,7 +225,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the right.
-     * 
+     *
      * @return the right
      */
     int getRight() {
@@ -251,7 +244,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the columnNumber.
-     * 
+     *
      * @return the columnNumber
      */
     @Override
@@ -261,7 +254,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the lineNumber.
-     * 
+     *
      * @return the lineNumber
      */
     @Override
@@ -271,7 +264,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the publicId.
-     * 
+     *
      * @return the publicId
      */
     @Override
@@ -281,7 +274,7 @@ final class Cell implements Locator {
 
     /**
      * Returns the systemId.
-     * 
+     *
      * @return the systemId
      */
     @Override
