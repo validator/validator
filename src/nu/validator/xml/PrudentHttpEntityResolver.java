@@ -258,7 +258,7 @@ import io.mola.galimatias.GalimatiasParseException;
             log4j.info(systemId);
             HttpResponse response = client.execute(m);
             boolean ignoreResponseStatus = false;
-            if (request.getAttribute(
+            if (request != null && request.getAttribute(
                     "http://validator.nu/properties/ignore-response-status") != null) {
                 ignoreResponseStatus = (boolean) request.getAttribute(
                         "http://validator.nu/properties/ignore-response-status");

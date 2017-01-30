@@ -2,9 +2,11 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# NN.N.N
-  - Fixed bug in `rel="shortcut icon"` checking
-  - Added `nu.client.EmbeddedValidator` for use as library by other Java apps
+# 17.2.0
+30 January 2017
+  - Fix bug that broke vnu.jar command-line checking of URLs
+  - Fix bug in `rel="shortcut icon"` checking
+  - Add `nu.client.EmbeddedValidator` for use as library by other Java apps
   - Disallow `tfoot` before `tbody`
 
 # 17.1.0
