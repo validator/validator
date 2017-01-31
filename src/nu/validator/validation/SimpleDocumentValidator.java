@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Mozilla Foundation
+ * Copyright (c) 2013-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -53,6 +53,7 @@ import nu.validator.xml.IdFilter;
 import nu.validator.xml.LanguageDetectingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
+import nu.validator.xml.PrudentHttpEntityResolver.ResourceNotRetrievableException;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
 
@@ -426,20 +427,23 @@ public class SimpleDocumentValidator {
         httpRes = new PrudentHttpEntityResolver(-1, true, errorHandler);
         httpRes.setAllowHtml(true);
         httpRes.setUserAgent("Validator.nu/LV");
-        documentInput = (TypedInputSource) httpRes.resolveEntity(null,
-                document);
-        String contentType = documentInput.getType();
-        documentInput.setSystemId(document);
-        for (String param : contentType.replace(" ", "").split(";")) {
-            if (param.startsWith("charset=")) {
-                documentInput.setEncoding(param.split("=", 2)[1]);
-                break;
+        try {
+            documentInput = (TypedInputSource) httpRes.resolveEntity(null,
+                    document);
+            String contentType = documentInput.getType();
+            documentInput.setSystemId(document);
+            for (String param : contentType.replace(" ", "").split(";")) {
+                if (param.startsWith("charset=")) {
+                    documentInput.setEncoding(param.split("=", 2)[1]);
+                    break;
+                }
             }
-        }
-        if (documentInput.getType().startsWith("text/html")) {
-            checkAsHTML(documentInput);
-        } else {
-            checkAsXML(documentInput);
+            if (documentInput.getType().startsWith("text/html")) {
+                checkAsHTML(documentInput);
+            } else {
+                checkAsXML(documentInput);
+            }
+        } catch (ResourceNotRetrievableException e) {
         }
     }
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2015 Mozilla Foundation
+ * Copyright (c) 2007-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -265,10 +265,12 @@ import io.mola.galimatias.GalimatiasParseException;
             }
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200 && !ignoreResponseStatus) {
-                String msg = "HTTP resource not retrievable. The HTTP status from the remote server was: "
+                String msg = "HTTP resource not retrievable."
+                        + " The HTTP status from the remote server was: "
                         + statusCode + ".";
                 SAXParseException spe = new SAXParseException(msg, publicId,
-                        m.getURI().toString(), -1, -1, new IOException(msg));
+                        m.getURI().toString(), -1, -1,
+                        new SystemIdIOException(m.getURI().toString(), msg));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
