@@ -918,19 +918,14 @@ class Release():
         for filename in findFiles(distDir):
             if os.path.basename(filename) in self.docs:
                 continue
-        self.writeHash(filename, "md5")
-        self.writeHash(filename, "sha1")
+            self.writeHash(filename, "md5")
+            self.writeHash(filename, "sha1")
 
     def sign(self):
         for filename in findFiles(distDir):
             if os.path.basename(filename) in self.docs:
                 continue
             runCmd([gpgCmd, '--yes', '-ab', filename])
-
-    def cleanAndCreateAdditional(self):
-        self.removeExtras()
-        self.writeHashes()
-        self.sign()
 
     def downloadMavenAntTasksJar(self):
         url = "https://repo1.maven.org/maven2/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar"  # nopep8
@@ -976,11 +971,10 @@ class Release():
         if isNightly:
             self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
         self.createExecutable(jarOrWar)
-        self.cleanAndCreateAdditional()
         self.prepareDist(jarOrWar)
-        self.cleanAndCreateAdditional()
 
     def prepareDist(self, jarOrWar):
+        self.removeExtras()
         print("Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version))
         if "nightly" not in self.version:
             for filename in self.docs:
@@ -996,6 +990,8 @@ class Release():
         zf.close()
         shutil.move(distroFile, "dist")
         os.chdir("..")
+        self.writeHashes()
+        self.sign()
 
     def createOrUpdateGithubData(self):
         runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
