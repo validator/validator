@@ -165,18 +165,23 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.pattern?
 		&	shared-form.attrs.placeholder?
 		&	shared-form.attrs.required?
+		&	aria.prop.required?
 		&	shared-form.attrs.minlength?
 		)
 
 ## Checkbox <input type='checkbox'>, Extensions
 
 	input.checkbox.attrs &=
-		(	shared-input.attrs	)
+		(	shared-input.attrs
+		&	aria.prop.required?
+		)
 
 ## Radiobutton: <input type='radio'>, Extensions
 
 	input.radio.attrs &=
-		(	shared-input.attrs	)
+		(	shared-input.attrs
+		&	aria.prop.required?
+		)
 
 ## Scripting Hook Button: <input type='button'>, Extensions
 
@@ -240,7 +245,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.datetime-local.attrs.max?
 		&	input.attrs.step.float?
 		&	input.datetime-local.attrs.value?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria?
+			|	aria.prop.required?
+			)
 		)	
 		input.datetime-local.attrs.type = 
 			attribute type {
@@ -274,7 +281,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.date.attrs.max?
 		&	input.attrs.step.integer?
 		&	input.date.attrs.value?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria?
+			|	aria.prop.required?
+			)
 		)	
 		input.date.attrs.type = 
 			attribute type {
@@ -308,7 +317,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.month.attrs.max?
 		&	input.attrs.step.integer?
 		&	input.month.attrs.value?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria?
+			|	aria.prop.required?
+			)
 		)	
 		input.month.attrs.type = 
 			attribute type {
@@ -342,7 +353,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.time.attrs.max?
 		&	input.attrs.step.float?
 		&	input.time.attrs.value?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria?
+			|	aria.prop.required?
+			)
 		)	
 		input.time.attrs.type = 
 			attribute type {
@@ -376,7 +389,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.week.attrs.max?
 		&	input.attrs.step.integer?
 		&	input.week.attrs.value?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria?
+			|	aria.prop.required?
+			)
 		)	
 		input.week.attrs.type = 
 			attribute type {

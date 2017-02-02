@@ -242,7 +242,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.file.attrs.type
 		&	input.file.attrs.accept?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria?
+			|	aria.prop.required?
+			)
 		)
 		input.file.attrs.type = 
 			attribute type {
