@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import nu.validator.htmlparser.sax.XmlSerializer;
+import nu.validator.io.SystemIdIOException;
 import nu.validator.messages.GnuMessageEmitter;
 import nu.validator.messages.JsonMessageEmitter;
 import nu.validator.messages.MessageEmitterAdapter;
@@ -247,8 +248,9 @@ public class SimpleCommandLineValidator {
                 try {
                     validator.checkHttpURL(args[i], errorHandler);
                 } catch (IOException e) {
-                    errorHandler.error(new SAXParseException(e.toString(),
-                            null, args[i], -1, -1));
+                    errorHandler.fatalError(new SAXParseException(e.getMessage(),
+                            null, args[i], -1, -1,
+                            new SystemIdIOException(args[i], e.getMessage())));
                 }
             } else {
                 File file = new File(args[i]);
