@@ -37,6 +37,7 @@ import nu.validator.checker.UncheckedSubtreeWarner;
 import nu.validator.checker.UnsupportedFeatureChecker;
 import nu.validator.checker.UsemapChecker;
 import nu.validator.checker.XmlPiChecker;
+import nu.validator.gnu.xml.aelfred2.FatalSAXException;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.Heuristics;
@@ -467,6 +468,7 @@ public class SimpleDocumentValidator {
         try {
             xmlReader.parse(is);
         } catch (SAXParseException e) {
+        } catch (FatalSAXException e) {
         }
     }
 
