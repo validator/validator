@@ -346,6 +346,7 @@ public final class LanguageDetectingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
+        documentContent.setLength(0);
         contentHandler.startDocument();
     }
 

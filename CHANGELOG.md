@@ -4,6 +4,10 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 17.2.N
 NN February 2017
+  - Fix bug in language detector that when running the vnu.jar command-line
+    checker on a list of documents caused it to sometimes misidentify the
+    language of the 2nd, 3rd, 4th, etc., documents.
+  - Allow `aria-required` attribute everywhere `required` attribute is allowed
   - Add `--exit-zero-always` option to vnu.jar command-line checker
   - Fix longstanding bug around code for identifying overlapping cells in
     table-integrity checker (the bug somewhat frequently gets hit when checking
