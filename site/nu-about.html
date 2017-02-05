@@ -113,13 +113,13 @@ certification mechanism.
 has created the following bookmarklets you can use in conjunction with the Nu Html Checker.
 <ul>
 <li>
-<a href='javascript:(function(){function%20c(a,b){var%20c=document.createElement("textarea");c.name=a;c.value=b;d.appendChild(c)}var%20e=function(a){for(var%20b="",a=a.firstChild;a;){switch(a.nodeType){case%20Node.ELEMENT_NODE:b+=a.outerHTML;break;case%20Node.TEXT_NODE:b+=a.nodeValue;break;case%20Node.CDATA_SECTION_NODE:b+="<![CDATA["+a.nodeValue+"]]\>";break;case%20Node.COMMENT_NODE:b+="<\!--"+a.nodeValue+"--\>";break;case%20Node.DOCUMENT_TYPE_NODE:b+="<!DOCTYPE%20"+a.name+">\n"}a=a.nextSibling}return%20b}(document),d=document.createElement("form");d.method="POST";d.action="http://validator.w3.org/nu/";d.enctype="multipart/form-data";d.target="_blank";d.acceptCharset="utf-8";c("showsource","yes");c("content",e);document.body.appendChild(d);d.submit()})();'>Check serialized DOM of current page</a>: grabs the serialized DOM of whatever page you’re currently browsing and sends it to the checker</li>
+<a href='javascript:(function(){function%20c(a,b){var%20c=document.createElement("textarea");c.name=a;c.value=b;d.appendChild(c)}var%20e=function(a){for(var%20b="",a=a.firstChild;a;){switch(a.nodeType){case%20Node.ELEMENT_NODE:b+=a.outerHTML;break;case%20Node.TEXT_NODE:b+=a.nodeValue;break;case%20Node.CDATA_SECTION_NODE:b+="<![CDATA["+a.nodeValue+"]]\>";break;case%20Node.COMMENT_NODE:b+="<\!--"+a.nodeValue+"--\>";break;case%20Node.DOCUMENT_TYPE_NODE:b+="<!DOCTYPE%20"+a.name+">\n"}a=a.nextSibling}return%20b}(document),d=document.createElement("form");d.method="POST";d.action="https://validator.w3.org/nu/";d.enctype="multipart/form-data";d.target="_blank";d.acceptCharset="utf-8";c("showsource","yes");c("content",e);document.body.appendChild(d);d.submit()})();'>Check serialized DOM of current page</a>: grabs the serialized DOM of whatever page you’re currently browsing and sends it to the checker</li>
 <li>
-<a href='javascript:(function(){function%20c(a,b){var%20c=document.createElement("textarea");c.name=a;c.value=b;d.appendChild(c)}var%20e=function(a){for(var%20b="",a=a.firstChild;a;){switch(a.nodeType){case%20Node.ELEMENT_NODE:b+=a.outerHTML;break;case%20Node.TEXT_NODE:b+=a.nodeValue;break;case%20Node.CDATA_SECTION_NODE:b+="<![CDATA["+a.nodeValue+"]]\>";break;case%20Node.COMMENT_NODE:b+="<\!--"+a.nodeValue+"--\>";break;case%20Node.DOCUMENT_TYPE_NODE:b+="<!DOCTYPE%20"+a.name+">\n"}a=a.nextSibling}return%20b}(document),d=document.createElement("form");d.method="POST";d.action="http://validator.w3.org/nu/";d.enctype="multipart/form-data";d.target="_blank";d.acceptCharset="utf-8";c("showsource","yes");c("out","json");c("content",e);document.body.appendChild(d);d.submit()})();'>Check serialized DOM of current page (results as JSON)</a>: same as above but returns the results from the checker as JSON</li>
+<a href='javascript:(function(){function%20c(a,b){var%20c=document.createElement("textarea");c.name=a;c.value=b;d.appendChild(c)}var%20e=function(a){for(var%20b="",a=a.firstChild;a;){switch(a.nodeType){case%20Node.ELEMENT_NODE:b+=a.outerHTML;break;case%20Node.TEXT_NODE:b+=a.nodeValue;break;case%20Node.CDATA_SECTION_NODE:b+="<![CDATA["+a.nodeValue+"]]\>";break;case%20Node.COMMENT_NODE:b+="<\!--"+a.nodeValue+"--\>";break;case%20Node.DOCUMENT_TYPE_NODE:b+="<!DOCTYPE%20"+a.name+">\n"}a=a.nextSibling}return%20b}(document),d=document.createElement("form");d.method="POST";d.action="https://validator.w3.org/nu/";d.enctype="multipart/form-data";d.target="_blank";d.acceptCharset="utf-8";c("showsource","yes");c("out","json");c("content",e);document.body.appendChild(d);d.submit()})();'>Check serialized DOM of current page (results as JSON)</a>: same as above but returns the results from the checker as JSON</li>
 <li>
 <a href='javascript:(function(){var filterStrings=["tag seen","Stray end tag","Bad start tag","violates nesting rules","Duplicate ID","first occurrence of ID","Unclosed element","not allowed as child of element","unclosed elements","not allowed on element","unquoted attribute value","Duplicate attribute"];var filterRE=filterStrings.join("|");var root=document.getElementById("results");if(!root){return;} var results=root.getElementsByTagName("li");var result,resultText;for(var i=0;i<results.length;i++){result=results[i];if(results[i].className!==""){resultText=(result.innerText!==undefined?result.innerText:result.textContent)+"";if(resultText.match(filterRE)===null){result.style.display="none";result.className=result.className+" steveNoLike";}}}})();'>Check for WCAG 2.0 parsing compliance</a>:
 filters checker results to just show messages relevant to
-<a href="http://www.paciellogroup.com/blog/2012/02/wcag-2-0-parsing-error-bookmarklet/">requirements in the WCAG 2.0 spec</a>
+<a href="https://www.paciellogroup.com/blog/2012/02/wcag-2-0-parsing-error-bookmarklet/">requirements in the WCAG 2.0 spec</a>
 </ul>
 </section>
 
@@ -139,8 +139,8 @@ To run your own copy of the Nu Html Checker,
 <a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
 and read the following instructions on how you can use it both for:
 <ul>
-<li><a href="http://validator.github.io/validator/#web-based-checking">web-based checking of documents</a>
-<li><a href="http://validator.github.io/validator/#usage">batch-checking of documents from the command line and from other scripts/apps</a>
+<li><a href="https://validator.github.io/validator/#web-based-checking">web-based checking of documents</a>
+<li><a href="https://validator.github.io/validator/#usage">batch-checking of documents from the command line and from other scripts/apps</a>
 </ul>
 <p>
 Alternatively, consider automating your HTML checking with a frontend such as:
@@ -170,9 +170,9 @@ certain kinds of potential problems. To explain the rationale behind those
 requirements, the HTML spec contains these two sections:
 <ul>
 <li>
-<a href="http://www.w3.org/TR/html/introduction.html#syntax-errors">rationale for syntax-level errors</a>
+<a href="https://www.w3.org/TR/html/introduction.html#syntax-errors">rationale for syntax-level errors</a>
 <li>
-<a href="http://www.w3.org/TR/html/introduction.html#restrictions-on-content-models-and-on-attribute-values">rationale for restrictions on content models and on attribute values</a>
+<a href="https://www.w3.org/TR/html/introduction.html#restrictions-on-content-models-and-on-attribute-values">rationale for restrictions on content models and on attribute values</a>
 </ul>
 <p>
 To summarize what’s stated in those two sections:
