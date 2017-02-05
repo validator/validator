@@ -2,11 +2,13 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 17.2.N
-NN February 2017
+# 17.2.1
+06 February 2017
   - Fix bug in language detector that when running the vnu.jar command-line
     checker on a list of documents caused it to sometimes misidentify the
-    language of the 2nd, 3rd, 4th, etc., documents.
+    language of the 2nd, 3rd, 4th, etc., documents. The bug also caused the
+    memory used by the checker to increase as the number of documents
+    checked at the same time increased, and caused performance to degrade.
   - Allow `aria-required` attribute everywhere `required` attribute is allowed
   - Add `--exit-zero-always` option to vnu.jar command-line checker
   - Fix longstanding bug around code for identifying overlapping cells in

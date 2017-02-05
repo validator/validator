@@ -1,15 +1,9 @@
 
-30 January 2017.
+06 February 2017.
 
-This release fixes a bug in the 17.1.0 and 17.0.1 releases that broke command-line checking of URLs with `vnu.jar`. It also fixes a bug in `rel="shortcut icon"` checking, adds a new `nu.client.EmbeddedValidator` class for use as a library by other Java apps, and changes the checker behavior to disallow `tfoot` before `tbody` (as required by the current HTML spec).
+This is an important bug-fix follow-up to the 17.2.0 release. It fixes a bug in the language detector that when running the vnu.jar command-line checker on a list of documents caused it to sometimes misidentify the language of the 2nd, 3rd, 4th, etc., documents. The bug also caused the memory used by the checker to increase as the number of documents checked at the same time increased, and caused performance to degrade. The release also fixes a longstanding bug around code for identifying overlapping cells in the table-integrity checker. Along with those bug fixes this release also adds an `--exit-zero-always` option to the vnu.jar command-line checker, and changes the checker behavior to allow the `aria-required` attribute everywhere the `required` attribute is allowed.
 
-This release otherwise adds no substantive changes beyond those in the 17.0.1 release, the notes for which follow.
-
------
-
-This is a major release which adds two important new features: **language detection** and support for **custom elements**. The custom-elements feature makes the checker allow element names containing hyphens (e.g., `<foo-bar>`). The language-detection feature guesses the language of a document by analyzing its content, compares the detected language to the value of the `lang` attribute of the `html` element, and then reports a warning if the `lang` value doesn’t match the detected language (or if the `lang` attribute is missing). For `vnu.jar`, a new `--no-langdetect` option has been added to disable that language-detection feature. An option has also been added to allow checking of remote error pages (404s and other non-200 responses). Other important changes in this release include: ARIA 1.1 roles/states/properties are now allowed, as well as `div` in `dl` (to group `dt`+`dd` sets), `link[rel=preload]` and `link[nonce]` and `referrerpolicy`, `h1`-`h6` & `hgroup` in `legend`, `script[type=module]`, `<video playsinline>`, and `<iframe allowusermedia>`.  Also with the release, any content is now allowed in `template` subtrees (they are now excluded from checking), viewport values that restrict resizing now cause a warning, comments before the doctype no longer cause a warning, and `vnu.jar` now by default ignores any SSL certificate errors when checking remote documents (use the `-Dnu.validator.xml.promiscuous-ssl=false` Java system property to override that default).
-
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1720
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1721
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 
