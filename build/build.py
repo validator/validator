@@ -138,7 +138,7 @@ statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
-    ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/54.1.1/icu4j-54.1.1.jar", "d75417a813c37b958be2be0a766f0a65"),  # nopep8
+    ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8
     ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.2.0/salvation-2.2.0.jar", "243988393b711ff1917cb232744c1563"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),  # nopep8
@@ -181,7 +181,7 @@ runDependencyJars = [
     "commons-logging-1.2-api.jar",
     "httpcore-4.4.jar",
     "httpclient-4.4.jar",
-    "icu4j-54.1.1.jar",
+    "icu4j-58.2.jar",
     "salvation-2.2.0.jar",
     "javax.servlet-api-3.1.0.jar",
     "jchardet-1.0.jar",

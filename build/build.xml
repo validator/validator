@@ -39,7 +39,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="commons-logging-version" value="1.2" />
   <property name="httpclient-version" value="4.4" />
   <property name="httpcore-version" value="4.4" />
-  <property name="icu4j-version" value="54.1.1" />
+  <property name="icu4j-version" value="58.2" />
   <property name="javax.servlet-api-version" value="3.1.0" />
   <property name="jchardet-version" value="1.0" />
   <property name="jetty-version" value="9.2.9.v20150224" />
