@@ -63,8 +63,9 @@ Use the `vnu.jar` HTML checker as an executable for command-line checking of
 documents by invoking it like this:
 
       java -jar ~/vnu.jar [--errors-only] [--exit-zero-always]
-           [--no-stream] [--format gnu|xml|json|text] [--html] [--skip-non-html]
-           [--no-langdetect] [--help] [--verbose] [--version] FILES
+           [--asciiquotes] [--no-stream] [--format gnu|xml|json|text] [--html]
+           [--skip-non-html] [--no-langdetect] [--help] [--verbose] [--version]
+           FILES
 
 **Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
 the file on your system.
@@ -103,6 +104,15 @@ To check standard input:
 
 When used from the command line as described in this section, the `vnu.jar`
 executable provides the following options:
+
+#### --asciiquotes
+
+    Specifies whether ASCII quotation marks are substituted for Unicode smart
+    quotation marks in messages.
+
+    default: "no"
+
+    possible values: "yes" or "no"
 
 #### --errors-only
 

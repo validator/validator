@@ -130,6 +130,8 @@ public class SimpleCommandLineValidator {
                     System.setProperty("nu.validator.datatype.warn", "false");
                 } else if ("--exit-zero-always".equals(args[i])) {
                     exitZeroAlways = true;
+                } else if ("--asciiquotes".equals(args[i])) {
+                    asciiQuotes = true;
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
                 } else if ("--version".equals(args[i])) {
@@ -368,7 +370,7 @@ public class SimpleCommandLineValidator {
         System.out.println("Usage:");
         System.out.println("");
         System.out.println("    java -jar vnu.jar [--errors-only] [--exit-zero-always]");
-        System.out.println("         [--no-stream] [--format gnu|xml|json|text]");
+        System.out.println("         [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]");
         System.out.println("         [--html] [--skip-non-html] [--no-langdetect]");
         System.out.println("         [--help] [--verbose] [--version] FILES");
         System.out.println("");

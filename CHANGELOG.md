@@ -2,6 +2,12 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 17.N.N
+NN March 2017
+  - Add `--asciiquotes` option to vnu.jar command-line checker
+  - Update Estonian/Catalan lang profiles to prevent Russian misidentification
+  - Update ICU4J to 58.2
+
 # 17.2.1
 06 February 2017
   - Fix bug in language detector that when running the vnu.jar command-line

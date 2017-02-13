@@ -194,7 +194,7 @@ or
 command-line checking of documents by invoking it like this:
 <pre>
   java -jar ~/vnu.jar [--errors-only] [--exit-zero-always]
-       [--no-stream] [--format gnu|xml|json|text]
+       [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]
        [--html] [--skip-non-html] [--no-langdetect]
        [--help] [--verbose] [--version] FILES
 </pre>
@@ -247,6 +247,16 @@ whose names don’t end with the extensions <code>.html</code>,
 <h3 id="options">Options</h3>
 <p>When used from the command line as described in this section, the
 <code>vnu.jar</code> executable provides the following options:
+
+<h4 id="errors-only">--asciiquotes</h4>
+<pre>
+Specifies whether ASCII quotation marks are substituted for Unicode
+smart quotation marks in messages.
+
+default: "no"
+
+possible values: "yes" or "no"
+</pre>
 
 <h4 id="errors-only">--errors-only</h4>
 <pre>
