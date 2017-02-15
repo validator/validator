@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2008 Mozilla Foundation
+ * Copyright (c) 2008-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -140,8 +140,12 @@ public class ObservableInputStream extends InputStream {
         try {
             return delegate.read(arg0, arg1, arg2);
         } catch (IOException | RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw new RuntimeException("The observer failed to throw per API contract.");
+            if ("Corrupt GZIP trailer".equals(e.getMessage())) {
+                return -1;
+            } else {
+                observer.exceptionOccurred(e);
+                throw new RuntimeException("The observer failed to throw per API contract.");
+            }
         }
     }
 
