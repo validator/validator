@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Vadim Zaslawski, Ontos AG
- * Copyright (c) 2012-2016 Mozilla Foundation
+ * Copyright (c) 2012-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -74,8 +74,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     private static final String[] SECTIONING_CONTENT_ELEMENTS = { "article",
             "aside", "nav", "section" };
 
-    private static final String[] SECTIONING_ROOT_ELEMENTS = { "blockquote",
-            "body", "details", "fieldset", "figure", "td" };
+    private static final String[] SECTIONING_ROOT_ELEMENTS = { "body" };
 
     private static final String[] H1_TO_H6_ELEMENTS = { "h1", "h2", "h3", "h4",
             "h5", "h6" };
