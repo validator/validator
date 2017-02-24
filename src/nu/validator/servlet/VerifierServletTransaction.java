@@ -359,6 +359,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private Deque<Section> outline;
 
+    private Deque<Section> headingOutline;
+
     private boolean showSource;
 
     private boolean showOutline;
@@ -1051,12 +1053,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 documentInput.setEncoding(charsetOverride);
             }
             if (showOutline) {
-                reader = new OutlineBuildingXMLReaderWrapper(reader, request);
+                reader = new OutlineBuildingXMLReaderWrapper(reader, request, false);
+                reader = new OutlineBuildingXMLReaderWrapper(reader, request, true);
             }
             reader.parse(documentInput);
             if (showOutline) {
                 outline = (Deque<Section>) request.getAttribute(
                         "http://validator.nu/properties/document-outline");
+                headingOutline = (Deque<Section>) request.getAttribute(
+                        "http://validator.nu/properties/heading-outline");
             }
         } catch (CannotRecoverException e) {
         } catch (ChangingEncodingException e) {
@@ -1103,7 +1108,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         if (isHtmlOrXhtml) {
             XhtmlOutlineEmitter outlineEmitter = new XhtmlOutlineEmitter(
-                    contentHandler, outline);
+                    contentHandler, outline, headingOutline);
             outlineEmitter.emitHeadings();
             outlineEmitter.emit();
             emitDetails();

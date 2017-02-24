@@ -4,7 +4,7 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 17.N.N
 NN March 2017
-  - Stop hiding “sectioning roots” headings in outline
+  - Stop hiding “sectioning roots” headings in “Heading-level outline”
   - Make “Corrupt GZIP trailer” a non-error
   - Add `--asciiquotes` option to vnu.jar command-line checker
   - Update Estonian/Catalan lang profiles to prevent Russian misidentification

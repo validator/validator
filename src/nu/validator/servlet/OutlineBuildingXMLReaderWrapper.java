@@ -33,6 +33,7 @@ package nu.validator.servlet;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
@@ -60,12 +61,27 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
     private ContentHandler contentHandler;
 
+    private final ArrayList<String> SECTIONING_ROOT_ELEMENTS = new ArrayList<>();
+
+    private boolean isHeadingOutline = false;
+
     public OutlineBuildingXMLReaderWrapper(XMLReader wrappedReader,
-            HttpServletRequest request) {
+            HttpServletRequest request, boolean isHeadingOutline) {
         this.request = request;
+        this.isHeadingOutline = isHeadingOutline;
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
         this.inHgroup = false;
+        if (isHeadingOutline) {
+            this.SECTIONING_ROOT_ELEMENTS.add("body");
+        } else {
+            this.SECTIONING_ROOT_ELEMENTS.add("blockquote");
+            this.SECTIONING_ROOT_ELEMENTS.add("body");
+            this.SECTIONING_ROOT_ELEMENTS.add("details");
+            this.SECTIONING_ROOT_ELEMENTS.add("fieldset");
+            this.SECTIONING_ROOT_ELEMENTS.add("figure");
+            this.SECTIONING_ROOT_ELEMENTS.add("td");
+        }
         wrappedReader.setContentHandler(this);
     }
 
@@ -73,8 +89,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
     private static final String[] SECTIONING_CONTENT_ELEMENTS = { "article",
             "aside", "nav", "section" };
-
-    private static final String[] SECTIONING_ROOT_ELEMENTS = { "body" };
 
     private static final String[] H1_TO_H6_ELEMENTS = { "h1", "h2", "h3", "h4",
             "h5", "h6" };
@@ -465,7 +479,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
                     currentSection.sections.add(section);
                 }
             }
-        } else if (Arrays.binarySearch(SECTIONING_ROOT_ELEMENTS, localName) > -1) {
+        } else if (Arrays.binarySearch(SECTIONING_ROOT_ELEMENTS.toArray(),
+                localName) > -1) {
             // When exiting a sectioning root element, if the stack is not empty
             if (!outlineStack.isEmpty()) {
                 // Run these steps:
@@ -583,7 +598,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // When entering a sectioning content element or a sectioning root
         // element
         if (Arrays.binarySearch(SECTIONING_CONTENT_ELEMENTS, localName) > -1
-                || Arrays.binarySearch(SECTIONING_ROOT_ELEMENTS, localName) > -1) {
+                || Arrays.binarySearch(SECTIONING_ROOT_ELEMENTS.toArray(),
+                        localName) > -1) {
             if (currentOutlinee != null) {
                 // If current outlinee is not null, and the current section has
                 // no heading,
@@ -720,9 +736,15 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return;
         }
         if (currentOutlinee != null) {
-            request.setAttribute(
-                    "http://validator.nu/properties/document-outline",
-                    currentOutlinee.outline);
+            if (isHeadingOutline) {
+                request.setAttribute(
+                        "http://validator.nu/properties/heading-outline",
+                        currentOutlinee.outline);
+            } else {
+                request.setAttribute(
+                        "http://validator.nu/properties/document-outline",
+                        currentOutlinee.outline);
+            }
             setOutline(currentOutlinee.outline);
         }
         contentHandler.endDocument();

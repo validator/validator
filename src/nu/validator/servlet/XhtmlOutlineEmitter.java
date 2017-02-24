@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Vadim Zaslawski, Ontos AG
- * Copyright (c) 2012-2016 Mozilla Foundation
+ * Copyright (c) 2012-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -35,20 +35,25 @@ import org.xml.sax.SAXException;
 
 public class XhtmlOutlineEmitter {
 
-    private static final char[] OUTLINE = "Structural outline".toCharArray();
+    private static final char[] OUTLINE = //
+            "Structural outline".toCharArray();
 
-    private static final char[] HEADINGOUTLINE = "Heading-level outline".toCharArray();
+    private static final char[] HEADINGOUTLINE = //
+            "Heading-level outline".toCharArray();
 
     private final Deque<Section> outline;
+
+    private final Deque<Section> headingOutline;
 
     private final XhtmlSaxEmitter emitter;
 
     private final AttributesImpl attrs = new AttributesImpl();
 
     public XhtmlOutlineEmitter(final ContentHandler contentHandler,
-            final Deque<Section> outline) {
+            final Deque<Section> outline, final Deque<Section> headingOutline) {
         this.emitter = new XhtmlSaxEmitter(contentHandler);
         this.outline = outline;
+        this.headingOutline = headingOutline;
     }
 
     public void emit() throws SAXException {
@@ -99,7 +104,7 @@ public class XhtmlOutlineEmitter {
         emittedDummyH3 = false;
         emittedDummyH4 = false;
         emittedDummyH5 = false;
-        if (outline != null) {
+        if (headingOutline != null) {
             attrs.clear();
             attrs.addAttribute("id", "headingoutline");
             emitter.startElement("section", attrs);
@@ -107,7 +112,7 @@ public class XhtmlOutlineEmitter {
             emitter.characters(HEADINGOUTLINE);
             emitter.endElement("h2");
             try {
-                emitHeadingOutline(outline, 0);
+                emitHeadingOutline(headingOutline, 0);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -162,9 +167,9 @@ public class XhtmlOutlineEmitter {
         emitter.endElement("ol");
     }
 
-    protected void emitHeadingOutline(Deque<Section> outline, int currentDepth)
-            throws IOException, SAXException {
-        for (Section section : outline) {
+    protected void emitHeadingOutline(Deque<Section> headingOutline,
+            int currentDepth) throws IOException, SAXException {
+        for (Section section : headingOutline) {
             String headingName = section.getHeadingElementName();
             if ("h1".equals(headingName)) {
                 hasH1 = true;
