@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Mozilla Foundation
+ * Copyright (c) 2012-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -423,7 +423,6 @@ public class Statistics {
         DETECTEDLANG_AZ("Detected language: Azerbaijani"), //
         DETECTEDLANG_BA("Detected language: Bashkir"), //
         DETECTEDLANG_BE("Detected language: Belarusian"), //
-        DETECTEDLANG_BG("Detected language: Bulgarian"), //
         DETECTEDLANG_BN("Detected language: Bengali"), //
         DETECTEDLANG_BO("Detected language: Tibetan"), //
         DETECTEDLANG_BS("Detected language: Bosnian"), //

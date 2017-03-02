@@ -7,7 +7,8 @@ NN March 2017
   - Stop hiding “sectioning roots” headings in “Heading-level outline”
   - Make “Corrupt GZIP trailer” a non-error
   - Add `--asciiquotes` option to vnu.jar command-line checker
-  - Update Estonian/Catalan lang profiles to prevent Russian misidentification
+  - Drop Bulgarian language detection, to prevent Russian misidentification
+  - Update Estonian/Catalan lang profiles, to prevent Russian misidentification
   - Update ICU4J to 58.2
 
 # 17.2.1

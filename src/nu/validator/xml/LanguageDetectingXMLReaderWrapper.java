@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Mozilla Foundation
+ * Copyright (c) 2016-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -242,7 +242,7 @@ public final class LanguageDetectingXMLReaderWrapper
     private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
             "he", "pnb", "ps", "sd", "ug", "ur" };
 
-    private static final String[] COMMON_LANGS = { "ar", "bg", "ca", "cs", "da",
+    private static final String[] COMMON_LANGS = { "ar", "ca", "cs", "da",
             "de", "el", "en", "es", "et", "fa", "fi", "fr", "he", "hi", "hu",
             "id", "it", "ja", "ka", "ko", "lt", "lv", "ms", "nl", "no", "pl",
             "pt", "ro", "ru", "sk", "sq", "sv", "th", "tr", "uk", "vi",
