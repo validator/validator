@@ -215,17 +215,19 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private String httpContentLangHeader;
 
-    private String langAttrValue;
+    private String htmlElementLangAttrValue;
 
     private String declaredLangCode;
 
-    private boolean hasLang;
+    private boolean htmlElementHasLang;
 
     private String dirAttrValue;
 
     private boolean hasDir;
 
     private boolean inBody;
+
+    private int currentOpenElementsInDifferentLang;
 
     private boolean loggedStyleInBody;
 
@@ -259,14 +261,15 @@ public final class LanguageDetectingXMLReaderWrapper
         this.tld = "";
         this.htmlStartTagLocator = null;
         this.inBody = false;
+        this.currentOpenElementsInDifferentLang = 0;
         this.loggedStyleInBody = false;
         this.collectingCharacters = false;
         this.nonWhitespaceCharacterCount = 0;
         this.elementContent = new StringBuilder();
         this.documentContent = new StringBuilder();
         this.httpContentLangHeader = httpContentLangHeader;
-        this.hasLang = false;
-        this.langAttrValue = "";
+        this.htmlElementHasLang = false;
+        this.htmlElementLangAttrValue = "";
         this.declaredLangCode = "";
         this.hasDir = false;
         this.dirAttrValue = "";
@@ -328,12 +331,23 @@ public final class LanguageDetectingXMLReaderWrapper
             inBody = false;
             collectingCharacters = false;
         }
-        if (inBody && ("script".equals(localName) || "style".equals(localName)
-                || "pre".equals(localName) || "a".equals(localName)
-                || "td".equals(localName) || "select".equals(localName)
-                || "ul".equals(localName) || "nav".equals(localName)
-                || "form".equals(localName))) {
-            collectingCharacters = true;
+        if (currentOpenElementsInDifferentLang > 0) {
+            currentOpenElementsInDifferentLang--;
+            if (currentOpenElementsInDifferentLang == 0) {
+                collectingCharacters = true;
+            }
+        } else {
+            if (inBody && ("script".equals(localName) //
+                    || "style".equals(localName) //
+                    || "pre".equals(localName) //
+                    || "a".equals(localName) //
+                    || "td".equals(localName) //
+                    || "select".equals(localName) //
+                    || "ul".equals(localName) //
+                    || "nav".equals(localName) //
+                    || "form".equals(localName))) {
+                collectingCharacters = true;
+            }
         }
         contentHandler.endElement(uri, localName, qName);
     }
@@ -369,9 +383,10 @@ public final class LanguageDetectingXMLReaderWrapper
                                 "http://validator.nu/properties/lang-found",
                                 true);
                     }
-                    hasLang = true;
-                    langAttrValue = atts.getValue(i);
-                    declaredLangCode = new ULocale(langAttrValue).getLanguage();
+                    htmlElementHasLang = true;
+                    htmlElementLangAttrValue = atts.getValue(i);
+                    declaredLangCode = new ULocale(
+                            htmlElementLangAttrValue).getLanguage();
                 } else if ("dir".equals(atts.getLocalName(i))) {
                     hasDir = true;
                     dirAttrValue = atts.getValue(i);
@@ -404,12 +419,32 @@ public final class LanguageDetectingXMLReaderWrapper
         } else if ("body".equals(localName)) {
             inBody = true;
             collectingCharacters = true;
+        } else if (inBody) {
+            if (currentOpenElementsInDifferentLang > 0) {
+                currentOpenElementsInDifferentLang++;
+            } else {
+                for (int i = 0; i < atts.getLength(); i++) {
+                    if ("lang".equals(atts.getLocalName(i))) {
+                        if (!"".equals(htmlElementLangAttrValue)
+                                && !htmlElementLangAttrValue.equals(
+                                        atts.getValue(i))) {
+                            currentOpenElementsInDifferentLang++;
+                            collectingCharacters = false;
+                        }
+                    }
+                }
+            }
         }
-        if ("script".equals(localName) || "style".equals(localName)
-                || "pre".equals(localName) || "a".equals(localName)
-                || "td".equals(localName) || "select".equals(localName)
-                || "ul".equals(localName) || "nav".equals(localName)
-                || "textarea".equals(localName) || "form".equals(localName)) {
+        if ("script".equals(localName) //
+                || "style".equals(localName) //
+                || "pre".equals(localName) //
+                || "a".equals(localName) //
+                || "td".equals(localName) //
+                || "select".equals(localName) //
+                || "ul".equals(localName) //
+                || "nav".equals(localName) //
+                || "textarea".equals(localName) //
+                || "form".equals(localName)) {
             collectingCharacters = false;
         }
         contentHandler.startElement(uri, localName, qName, atts);
@@ -492,7 +527,7 @@ public final class LanguageDetectingXMLReaderWrapper
                                 && (possibileLanguages.contains("hr")
                                         || possibileLanguages.contains(
                                                 "sr-latn")))) {
-                    if (hasLang || systemId != null) {
+                    if (htmlElementHasLang || systemId != null) {
                         detectedLanguage = getDetectedLanguageSerboCroatian();
                         setDocumentLanguage(detectedLanguage);
                     }
@@ -503,7 +538,7 @@ public final class LanguageDetectingXMLReaderWrapper
                 }
             }
             if ("".equals(detectedLanguage)) {
-                if (!hasLang && errorHandler != null) {
+                if (!htmlElementHasLang && errorHandler != null) {
                     String message = "Consider adding a \u201Clang\u201D"
                             + " attribute to the \u201Chtml\u201D"
                             + " start tag to declare the language"
@@ -594,9 +629,9 @@ public final class LanguageDetectingXMLReaderWrapper
     }
 
     private void checkLangAttributeSerboCroatian() throws SAXException {
-        String lowerCaseLang = langAttrValue.toLowerCase();
+        String lowerCaseLang = htmlElementLangAttrValue.toLowerCase();
         String langWarning = "";
-        if (!hasLang) {
+        if (!htmlElementHasLang) {
             langWarning = "This document appears to be written in either"
                     + " Croatian, Serbian, or Bosnian. Consider adding either"
                     + " \u201Clang=\"hr\"\u201D, \u201Clang=\"sr\"\u201D, or"
@@ -620,9 +655,9 @@ public final class LanguageDetectingXMLReaderWrapper
     }
 
     private void checkLangAttributeNorwegian() throws SAXException {
-        String lowerCaseLang = langAttrValue.toLowerCase();
+        String lowerCaseLang = htmlElementLangAttrValue.toLowerCase();
         String langWarning = "";
-        if (!hasLang) {
+        if (!htmlElementHasLang) {
             langWarning = "This document appears to be written in Norwegian"
                     + " Consider adding either"
                     + " \u201Clang=\"nn\"\u201D or \u201Clang=\"nb\"\u201D"
@@ -666,8 +701,8 @@ public final class LanguageDetectingXMLReaderWrapper
             String detectedLanguageName, String detectedLanguageCode,
             String preferredLanguageCode) throws SAXException {
         String langWarning = "";
-        String lowerCaseLang = langAttrValue.toLowerCase();
-        if (!hasLang) {
+        String lowerCaseLang = htmlElementLangAttrValue.toLowerCase();
+        if (!htmlElementHasLang) {
             langWarning = String.format(
                     "This document appears to be written in %s."
                             + " Consider adding \u201Clang=\"%s\"\u201D"
@@ -766,7 +801,7 @@ public final class LanguageDetectingXMLReaderWrapper
                             "http://validator.nu/properties/lang-wrong", true);
                 }
                 langWarning = String.format(message, detectedLanguageName,
-                        getAttValueExpr("lang", langAttrValue),
+                        getAttValueExpr("lang", htmlElementLangAttrValue),
                         preferredLanguageCode);
             }
         }
@@ -862,16 +897,17 @@ public final class LanguageDetectingXMLReaderWrapper
                 errorHandler.warning(spe);
             }
         }
-        if (hasLang) {
+        if (htmlElementHasLang) {
             message = "The value of the HTTP \u201CContent-Language\u201D"
                     + " header is \u201C%s\u201D but it will be ignored because"
                     + " the \u201Chtml\u201D start tag has %s.";
-            String lowerCaseLang = langAttrValue.toLowerCase();
-            if (hasLang) {
+            String lowerCaseLang = htmlElementLangAttrValue.toLowerCase();
+            if (htmlElementHasLang) {
                 if (zhSubtagMismatch(lowerCaseContentLang, lowerCaseLang)
                         || !contentLangCode.equals(declaredLangCode)) {
                     warn(String.format(message, httpContentLangHeader,
-                            getAttValueExpr("lang", langAttrValue)));
+                            getAttValueExpr("lang", //
+                                    htmlElementLangAttrValue)));
                 }
             }
         }
