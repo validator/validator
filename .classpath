@@ -39,7 +39,7 @@
 			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-logging/javadocs/api-release/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/icu4j-54.1.1.jar">
+	<classpathentry kind="lib" path="dependencies/icu4j-58.2.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://icu-project.org/apiref/icu4j/"/>
 		</attributes>
