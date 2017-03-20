@@ -777,7 +777,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
         showSource = (request.getParameter("showsource") != null);
-        showSource = (showSource || "textarea".equals(inputType));
         showOutline = (request.getParameter("showoutline") != null);
         if (request.getParameter("checkerrorpages") != null) {
             request.setAttribute(
