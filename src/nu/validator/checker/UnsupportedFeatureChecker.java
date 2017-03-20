@@ -21,7 +21,7 @@ public class UnsupportedFeatureChecker extends Checker {
         if (atts.getIndex("", "dropzone") > -1) {
             warnAboutAttribute("dropzone");
         }
-        if ("menu" == localName || "dialog" == localName || "bdi" == localName) {
+        if ("dialog" == localName || "bdi" == localName) {
             warnAboutElement(localName);
         } else if ("textarea" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
@@ -29,6 +29,13 @@ public class UnsupportedFeatureChecker extends Checker {
             }
             if (atts.getIndex("", "inputmode") > -1) {
                 warnAboutAttribute("inputmode");
+            }
+        } else if ("menu" == localName) {
+            if (atts.getIndex("", "type") > -1
+                    && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                            "context", atts.getValue("", "type"))) {
+                warn("Context menus are not supported in all browsers."
+                        + " Please be sure to test, and consider using a polyfill.");
             }
         } else if ("script" == localName) {
             if (atts.getIndex("", "type") > -1
