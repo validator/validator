@@ -132,6 +132,9 @@ deploymentTarget = None
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
+maxConnPerRoute = 100
+maxTotalConnections = 200
+maxRedirects = 20 # Gecko default
 followW3Cspec = 0
 statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
@@ -787,6 +790,9 @@ def getRunArgs(heap="$((HEAP))"):
         '-Dnu.validator.servlet.results-title=' + resultsTitle,
         '-Dnu.validator.servlet.script=' + script,
         '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),  # nopep8
+        '-Dnu.validator.servlet.max-requests=%d' % maxConnPerRoute,
+        '-Dnu.validator.servlet.max-total-connections=%d' % maxTotalConnections,  # nopep8
+        '-Dnu.validator.servlet.max-redirects=%d' % maxRedirects,
         '-Dnu.validator.servlet.statistics=%d' % statistics,
         '-Dnu.validator.servlet.style-sheet=' + stylesheet,
         '-Dnu.validator.servlet.user-agent=' + userAgent,
@@ -1562,6 +1568,12 @@ else:
             connectionTimeoutSeconds = int(arg[21:])
         elif arg.startswith("--socket-timeout="):
             socketTimeoutSeconds = int(arg[17:])
+        elif arg.startswith("--max-requests="):
+            maxConnPerRoute = int(arg[15:])
+        elif arg.startswith("--max-total-connections="):
+            maxTotalConnections = int(arg[24:])
+        elif arg.startswith("--max-redirects="):
+            maxConnPerRoute = int(arg[16:])
         elif arg == '--follow-w3c-spec':
             followW3Cspec = 1
         elif arg == '--statistics':

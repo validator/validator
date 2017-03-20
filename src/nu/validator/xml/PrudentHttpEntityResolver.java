@@ -121,7 +121,7 @@ import io.mola.galimatias.GalimatiasParseException;
      *            timeout for waiting for data in milliseconds. Zero means no
      *            timeout.
      * @param maxRequests
-     *            maximum number of connections to a particuar host
+     *            maximum number of connections to a particular host
      */
     public static void setParams(int connectionTimeout, int socketTimeout,
             int maxRequests) {
@@ -135,7 +135,8 @@ import io.mola.galimatias.GalimatiasParseException;
         HttpClientBuilder builder = HttpClients.custom();
         builder.setRedirectStrategy(new LaxRedirectStrategy());
         builder.setMaxConnPerRoute(maxRequests);
-        builder.setMaxConnTotal(200);
+        builder.setMaxConnTotal(
+                Integer.parseInt(System.getProperty("nu.validator.servlet.max-total-connections","200")));
         if ("true".equals(System.getProperty(
                 "nu.validator.xml.promiscuous-ssl", "true"))) { //
             try {
@@ -168,7 +169,8 @@ import io.mola.galimatias.GalimatiasParseException;
         builder.setConnectionManager(phcConnMgr);
         RequestConfig.Builder config = RequestConfig.custom();
         config.setCircularRedirectsAllowed(true);
-        config.setMaxRedirects(20); // Gecko default
+        config.setMaxRedirects(
+                Integer.parseInt(System.getProperty("nu.validator.servlet.max-redirects","20")));
         config.setConnectTimeout(connectionTimeout);
         config.setCookieSpec(CookieSpecs.BEST_MATCH);
         config.setSocketTimeout(socketTimeout);

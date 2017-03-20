@@ -121,7 +121,8 @@ public class SimpleDocumentValidator {
                         "nu.validator.servlet.connection-timeout", "5000")),
                 Integer.parseInt(System.getProperty(
                         "nu.validator.servlet.socket-timeout", "5000")),
-                100);
+                Integer.parseInt(System.getProperty(
+                        "nu.validator.servlet.max-requests", "100")));
     }
 
     private Schema schemaByUrl(String schemaUrl, ErrorHandler errorHandler)
