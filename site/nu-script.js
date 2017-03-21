@@ -273,10 +273,10 @@ function injectHyperlinks() {
 		"https://www.w3.org/wiki/HTML/Usage/Headings/Missing",
 		"Identifying article elements with headings")
 	linkify(errors, "the Media Types section in the current Media Queries specification",
-		"http://drafts.csswg.org/mediaqueries/#media-types",
+		"https://drafts.csswg.org/mediaqueries/#media-types",
 		"Media Types sections in the Media Queries specification")
 	linkify(errors, "the Deprecated Media Features section in the current Media Queries specification",
-		"http://drafts.csswg.org/mediaqueries/#mf-deprecated",
+		"https://drafts.csswg.org/mediaqueries/#mf-deprecated",
 		"Deprecated Media Features section in the current Media Queries specification")
 	linkify(errors, "all image candidate strings must specify a width",
 		"https://ericportis.com/posts/2014/srcset-sizes/",
