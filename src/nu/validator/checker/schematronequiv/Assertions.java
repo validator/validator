@@ -49,6 +49,7 @@ import nu.validator.datatype.AutocompleteDetailsPassword;
 import nu.validator.datatype.AutocompleteDetailsTel;
 import nu.validator.datatype.AutocompleteDetailsText;
 import nu.validator.datatype.AutocompleteDetailsUrl;
+import nu.validator.datatype.Color;
 import nu.validator.datatype.CustomElementName;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.datatype.ImageCandidateStringsWidthRequired;
@@ -2366,6 +2367,32 @@ public class Assertions extends Checker {
                                 || contentVal.contains("maximum-scale=1.0")) {
                             warn("Consider avoiding viewport values that"
                                     + " prevent users from resizing documents.");
+                        }
+                    }
+                    if ("theme-color".equals(atts.getValue("", "name"))
+                            && atts.getIndex("", "content") > -1) {
+                        String contentVal = atts.getValue("",
+                                "content").toLowerCase();
+                        try {
+                            Color.THE_INSTANCE.checkValid(contentVal);
+                        } catch (DatatypeException e) {
+                            try {
+                                if (getErrorHandler() != null) {
+                                    String msg = e.getMessage();
+                                    if (e instanceof Html5DatatypeException) {
+                                        msg = msg.substring(
+                                                msg.indexOf(": ") + 2);
+                                    }
+                                    VnuBadAttrValueException ex = //
+                                            new VnuBadAttrValueException(
+                                                    localName, uri, "content",
+                                                    contentVal, msg,
+                                                    getDocumentLocator(),
+                                                    Color.class, false);
+                                    getErrorHandler().error(ex);
+                                }
+                            } catch (ClassNotFoundException ce) {
+                            }
                         }
                     }
                 }
