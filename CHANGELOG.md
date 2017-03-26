@@ -2,11 +2,15 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 17.N.N
-NN March 2017
+# 17.3.0
+26 March 2017
   - Allow `meta[name]` to have `itemref`/`itemscope`/`itemtype`/`itemid`
   - Allow `allow-top-navigation-by-user-activation` in `iframe[sandbox]`
   - Stop hiding “sectioning roots” headings in “Heading-level outline”
+  - Change error for `role=none` with `img[alt=""]` to warning
+  - Fix from @xfq for longstanding bug in “Show source” behavior in Web UI
+  - Fix from @xfq for controlling some runtime params for HTTP behavior
+  - Fix from @zcorpan to drop unneeded warning for `<menu type=toolbar>`
   - Make “Corrupt GZIP trailer” a non-error
   - Add `--asciiquotes` option to vnu.jar command-line checker
   - Skip lang detection of elements w/ lang attributes not matching `html[lang]`

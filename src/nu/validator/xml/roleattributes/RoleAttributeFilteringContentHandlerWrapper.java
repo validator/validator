@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Mozilla Foundation
+ * Copyright (c) 2013-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -173,32 +173,117 @@ public class RoleAttributeFilteringContentHandlerWrapper
         }
     }
 
-    private static String[] nonAbstractAriaRoles = { "alert", "alertdialog",
-            "application", "article", "banner", "button", "checkbox",
-            "columnheader", "combobox", "complementary", "contentinfo",
-            "definition", "dialog", "directory", "document", "form", "grid",
-            "gridcell", "group", "heading", "img", "link", "list", "listbox",
-            "listitem", "log", "main", "marquee", "math", "menu", "menubar",
-            "menuitem", "menuitemcheckbox", "menuitemradio", "navigation",
-            "note", "option", "presentation", "progressbar", "radio",
-            "radiogroup", "region", "row", "rowgroup", "rowheader", "scrollbar",
-            "search", "separator", "slider", "spinbutton", "status", "tab",
-            "tablist", "tabpanel", "textbox", "timer", "toolbar", "tooltip",
-            "tree", "treegrid", "treeitem",
-            /* New non-abstract roles from ARIA 1.1 */
-            "cell", "feed", "figure", "none", "radiogroup", "searchbox",
-            "switch", "table", "term",
-            /* New non-abstract roles from ARIA-DPUB */
-            "doc-abstract", "doc-acknowledgments", "doc-afterword",
-            "doc-appendix", "doc-backlink", "doc-biblioentry",
-            "doc-bibliography", "doc-biblioref", "doc-chapter", "doc-colophon",
-            "doc-conclusion", "doc-cover", "doc-credit", "doc-credits",
-            "doc-dedication", "doc-endnote", "doc-endnotes", "doc-epigraph",
-            "doc-epilogue", "doc-errata", "doc-example", "doc-footnote",
-            "doc-foreword", "doc-glossary", "doc-glossref", "doc-index",
-            "doc-introduction", "doc-noteref", "doc-notice", "doc-pagebreak",
-            "doc-pagelist", "doc-part", "doc-preface", "doc-prologue",
-            "doc-pullquote", "doc-qna", "doc-subtitle", "doc-tip", "doc-toc" };
+    private static String[] nonAbstractAriaRoles = { //
+            "alert", //
+            "alertdialog", //
+            "application", //
+            "article", //
+            "banner", //
+            "button", //
+            "cell", //
+            "checkbox", //
+            "columnheader", //
+            "combobox", //
+            "complementary", //
+            "contentinfo", //
+            "definition", //
+            "dialog", //
+            "directory", //
+            "doc-abstract", //
+            "doc-acknowledgments", //
+            "doc-afterword", //
+            "doc-appendix", //
+            "doc-backlink", //
+            "doc-biblioentry", //
+            "doc-bibliography", //
+            "doc-biblioref", //
+            "doc-chapter", //
+            "doc-colophon", //
+            "doc-conclusion", //
+            "doc-cover", //
+            "doc-credit", //
+            "doc-credits", //
+            "doc-dedication", //
+            "doc-endnote", //
+            "doc-endnotes", //
+            "doc-epigraph", //
+            "doc-epilogue", //
+            "doc-errata", //
+            "doc-example", //
+            "doc-footnote", //
+            "doc-foreword", //
+            "doc-glossary", //
+            "doc-glossref", //
+            "doc-index", //
+            "doc-introduction", //
+            "doc-noteref", //
+            "doc-notice", //
+            "doc-pagebreak", //
+            "doc-pagelist", //
+            "doc-part", //
+            "doc-preface", //
+            "doc-prologue", //
+            "doc-pullquote", //
+            "doc-qna", //
+            "doc-subtitle", //
+            "doc-tip", //
+            "doc-toc", //
+            "document", //
+            "feed", //
+            "figure", //
+            "form", //
+            "grid", //
+            "gridcell", //
+            "group", //
+            "heading", //
+            "img", //
+            "link", //
+            "list", //
+            "listbox", //
+            "listitem", //
+            "log", //
+            "main", //
+            "marquee", //
+            "math", //
+            "menu", //
+            "menubar", //
+            "menuitem", //
+            "menuitemcheckbox", //
+            "menuitemradio", //
+            "navigation", //
+            "none", //
+            "note", //
+            "option", //
+            "presentation", //
+            "progressbar", //
+            "radio", //
+            "radiogroup", //
+            "radiogroup", //
+            "region", //
+            "row", //
+            "rowgroup", //
+            "rowheader", //
+            "scrollbar", //
+            "search", //
+            "searchbox", //
+            "separator", //
+            "slider", //
+            "spinbutton", //
+            "status", //
+            "switch", //
+            "tab", //
+            "table", //
+            "tablist", //
+            "tabpanel", //
+            "term", //
+            "textbox", //
+            "timer", //
+            "toolbar", //
+            "tooltip", //
+            "tree", //
+            "treegrid", //
+            "treeitem" //
+    };
 
     private Attributes filterAttributes(Attributes attributes)
             throws SAXException {
@@ -255,7 +340,9 @@ public class RoleAttributeFilteringContentHandlerWrapper
             } else if (roleValue == null) {
                 roleValue = token;
             } else {
-                superfluousTokens.add(token);
+                if (!"presentation".equals(token)) {
+                    superfluousTokens.add(token);
+                }
             }
         }
         if (errorHandler != null && roleValue != null
@@ -276,6 +363,18 @@ public class RoleAttributeFilteringContentHandlerWrapper
                     + " \u201Crole\u201D. Browsers only process"
                     + " the first token found that is a defined"
                     + " ARIA non-abstract role.", locator));
+
+        }
+        if (errorHandler != null && roleValue != null
+                && (tokens.contains("none")
+                        && !tokens.contains("presentation"))) {
+            errorHandler.warning(new SAXParseException(//
+                    "\u201crole=\"none\"\u201d is not yet"
+                            + " supported in all browsers."
+                            + " Consider instead either using"
+                            + " \u201crole=\"presentation\"\u201d or"
+                            + " \u201crole=\"none presentation\"\u201d.",
+                    locator));
 
         }
         return roleValue != null ? roleValue : tokenList;

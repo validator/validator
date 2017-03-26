@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2016 Mozilla Foundation
+ * Copyright (c) 2008-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -1928,16 +1928,18 @@ public class Assertions extends Checker {
                         }
                     }
                 } else {
-                    if ("".equals(atts.getValue("", "alt"))
-                            && atts.getIndex("", "role") > -1
-                            && !"presentation".equals(
-                                    atts.getValue("", "role"))) {
-                        err("An \u201Cimg\u201D element which has an"
-                                + " \u201Calt\u201D attribute whose value"
-                                + " is the empty string must not have a"
-                                + " \u201Crole\u201D attribute with any"
-                                + " value other than"
-                                + " \u201Cpresentation\u201D");
+                    if ("".equals(atts.getValue("", "alt")) && role != null) {
+                        List<String> roles = Arrays.asList(role.trim() //
+                                .toLowerCase().split("\\s+"));
+                        if (!roles.contains("none")
+                                && !roles.contains("presentation")) {
+                            err("An \u201Cimg\u201D element which has an"
+                                    + " \u201Calt\u201D attribute whose value"
+                                    + " is the empty string must not have a"
+                                    + " \u201Crole\u201D attribute with any"
+                                    + " value other than \u201Cnone\u201D or"
+                                    + " \u201Cpresentation\u201D");
+                        }
                     }
                 }
             } else if ("table" == localName) {
