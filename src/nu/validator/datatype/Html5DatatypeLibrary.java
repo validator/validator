@@ -170,6 +170,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return StringWithoutLineBreaks.THE_INSTANCE;
         } else if ("simple-color".equals(typeLocalName)) {
             return SimpleColor.THE_INSTANCE;
+        } else if ("color".equals(typeLocalName)) {
+            return Color.THE_INSTANCE;
         } else if ("time-datetime".equals(typeLocalName)) {
             return TimeDatetime.THE_INSTANCE;
         } else if ("svg-pathdata".equals(typeLocalName)) {

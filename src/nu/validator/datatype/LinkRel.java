@@ -45,6 +45,7 @@ public final class LinkRel extends AbstractRel {
             registeredValues.add("help");
             registeredValues.add("icon");
             registeredValues.add("license");
+            registeredValues.add("mask-icon");
             registeredValues.add("next");
             registeredValues.add("pingback");
             registeredValues.add("preconnect");

@@ -2425,6 +2425,14 @@ public class Assertions extends Checker {
                             + " value \u201Cicon\u201D or the value"
                             + " \u201Capple-touch-icon\u201D.");
                 }
+                if (atts.getIndex("", "color") > -1 //
+                        && (!hasRel || (relList != null
+                                && !relList.contains("mask-icon")))) {
+                    err("A \u201Clink\u201D element with a"
+                            + " \u201Ccolor\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute that contains"
+                            + " the value \u201Cmask-icon\u201D.");
+                }
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
                                 && !(relList.contains("dns-prefetch")
