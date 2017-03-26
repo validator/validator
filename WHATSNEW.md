@@ -1,9 +1,9 @@
 
-06 February 2017.
+26 March 2017.
 
-This is an important bug-fix follow-up to the 17.2.0 release. It fixes a bug in the language detector that when running the vnu.jar command-line checker on a list of documents caused it to sometimes misidentify the language of the 2nd, 3rd, 4th, etc., documents. The bug also caused the memory used by the checker to increase as the number of documents checked at the same time increased, and caused performance to degrade. The release also fixes a longstanding bug around code for identifying overlapping cells in the table-integrity checker. Along with those bug fixes this release also adds an `--exit-zero-always` option to the vnu.jar command-line checker, and changes the checker behavior to allow the `aria-required` attribute everywhere the `required` attribute is allowed.
+This release makes the “color” attribute allowed with `link[rel="mask-icon"]`, adds an `--asciiquotes` option to the vnu.jar command-line checker, improves the language detector to help prevent language misidentifications (especially for Russian and Chinese documents), adds better support for IDNs (by updating to ICU4J 58.2), changes the checker behavior to not fail for “Corrupt GZIP trailer” cases, fixes a bug that disallowed Microdata global attributes for `meta[name]`, and makes `allow-top-navigation-by-user-activation` an allowed value for `iframe[sandbox]` (while adding a new error if that value is used at the same time as `allow-top-navigation`).
 
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1721
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1730
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 
