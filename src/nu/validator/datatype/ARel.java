@@ -25,8 +25,11 @@ package nu.validator.datatype;
 import nu.validator.datatype.tools.RegisteredRelValuesBuilder;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
+import org.relaxng.datatype.DatatypeException;
 import org.xml.sax.SAXException;
 
 public final class ARel extends AbstractRel {
@@ -68,8 +71,26 @@ public final class ARel extends AbstractRel {
         super();
     }
 
+    private final static boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
+
     @Override
-    protected boolean isRegistered(CharSequence literal, String token) {
+    protected boolean isRegistered(CharSequence literal, String token)
+            throws DatatypeException {
+        if (WARN) {
+            // Synonyms for current keywords
+            Map<String, String> map = new HashMap<>();
+            map.put("copyright", "license");
+            map.put("previous", "prev");
+            for (Map.Entry m : map.entrySet()) {
+                if (token.toLowerCase().equals(m.getKey())) {
+                    throw newDatatypeException("The keyword \u201c"
+                            + m.getKey() + "\u201d for the \u201crel\u201d"
+                            + " attribute should not be used."
+                            + " Consider using \u201c" + m.getValue()
+                            + "\u201d instead.", WARN);
+                }
+            }
+        }
         return registeredValues.contains(token.toLowerCase());
     }
 
