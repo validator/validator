@@ -486,10 +486,8 @@ function installTextarea() {
 	  }
 	}
 	var showSource = document.getElementById("showsource")
-	var source = document.getElementById('source')
-	if (source && textarea && showSource.checked === false) {
-		source.parentNode.removeChild(source.nextSibling)
-		source.parentNode.removeChild(source)
+	if (showSource) {
+		showSource.checked = true
 	}
 }
 
