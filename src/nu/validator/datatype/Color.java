@@ -22,14 +22,29 @@
 
 package nu.validator.datatype;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.relaxng.datatype.DatatypeException;
 
 public class Color extends AbstractDatatype {
 
     public static final Color THE_INSTANCE = new Color();
 
+    private static final String HEX_COLOR = "^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$";
+
     public Color() {
         super();
+    }
+
+    private final static boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
+    
+    private boolean checkHexColor(CharSequence color) {
+        Pattern pattern;
+        Matcher matcher;
+        pattern = Pattern.compile(HEX_COLOR);
+        matcher = pattern.matcher(color);
+        return matcher.lookingAt();
     }
 
     /**
@@ -37,7 +52,9 @@ public class Color extends AbstractDatatype {
      */
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        // TODO Auto-generated method stub
+        if (checkHexColor(literal)) {
+            return;
+        } // else if <rgb()> | <rgba()> | <hsl()> | <hsla()> | etc.
     }
 
     /**
