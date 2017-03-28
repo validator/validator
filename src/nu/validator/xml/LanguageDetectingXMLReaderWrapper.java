@@ -231,6 +231,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private boolean loggedStyleInBody;
 
+    private boolean loggedRelCanonical;
+
     private boolean collectingCharacters;
 
     private int nonWhitespaceCharacterCount;
@@ -263,6 +265,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.inBody = false;
         this.currentOpenElementsInDifferentLang = 0;
         this.loggedStyleInBody = false;
+        this.loggedRelCanonical = false;
         this.collectingCharacters = false;
         this.nonWhitespaceCharacterCount = 0;
         this.elementContent = new StringBuilder();
@@ -432,6 +435,20 @@ public final class LanguageDetectingXMLReaderWrapper
                             collectingCharacters = false;
                         }
                     }
+                }
+            }
+        }
+        if (atts.getIndex("", "rel") > -1
+                && ("link".equals(localName) || "a".equals(localName))) {
+            List<String> relValues = Arrays.asList(
+                    atts.getValue("", "rel").trim().toLowerCase() //
+                            .split("\\s+"));
+            if (relValues.contains("canonical") && !loggedRelCanonical) {
+                loggedRelCanonical = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-canonical-found",
+                            true);
                 }
             }
         }
