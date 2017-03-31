@@ -2265,9 +2265,13 @@ public class Assertions extends Checker {
                 formElementIds.addAll(ids);
             }
 
-            if (("input" == localName && !hidden) || "textarea" == localName
-                    || "select" == localName || "button" == localName
-                    || "output" == localName) {
+            if (("button" == localName //
+                    || "input" == localName && !hidden) //
+                    || "meter" == localName //
+                    || "output" == localName //
+                    || "progress" == localName //
+                    || "select" == localName //
+                    || "textarea" == localName) {
                 formControlIds.addAll(ids);
             }
 
