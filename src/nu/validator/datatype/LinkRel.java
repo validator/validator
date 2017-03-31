@@ -50,10 +50,11 @@ public final class LinkRel extends AbstractRel {
             registeredValues.add("pingback");
             registeredValues.add("preconnect");
             registeredValues.add("prefetch");
-            registeredValues.add("prerender");
             registeredValues.add("preload");
+            registeredValues.add("prerender");
             registeredValues.add("prev");
             registeredValues.add("search");
+            registeredValues.add("serviceworker");
             registeredValues.add("stylesheet");
         } catch (IOException | SAXException e) {
             throw new RuntimeException(e);
