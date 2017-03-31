@@ -132,7 +132,29 @@ public class Statistics {
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
         STYLE_IN_BODY_FOUND("<style> in <body> found"), //
+        REL_ALTERNATE_FOUND("rel=alternate found"), //
+        REL_AUTHOR_FOUND("rel=author found"), //
+        REL_BOOKMARK_FOUND("rel=bookmark found"), //
         REL_CANONICAL_FOUND("rel=canonical found"), //
+        REL_DNS_PREFETCH_FOUND("rel=dns-prefetch found"), //
+        REL_EXTERNAL_FOUND("rel=external found"), //
+        REL_HELP_FOUND("rel=help found"), //
+        REL_ICON_FOUND("rel=icon found"), //
+        REL_LICENSE_FOUND("rel=license found"), //
+        REL_NEXT_FOUND("rel=next found"), //
+        REL_NOFOLLOW_FOUND("rel=nofollow found"), //
+        REL_NOOPENER_FOUND("rel=noopener found"), //
+        REL_NOREFERRER_FOUND("rel=noreferrer found"), //
+        REL_PINGBACK_FOUND("rel=pingback found"), //
+        REL_PRECONNECT_FOUND("rel=preconnect found"), //
+        REL_PREFETCH_FOUND("rel=prefetch found"), //
+        REL_PRELOAD_FOUND("rel=preload found"), //
+        REL_PRERENDER_FOUND("rel=prerender found"), //
+        REL_PREV_FOUND("rel=prev found"), //
+        REL_SEARCH_FOUND("rel=search found"), //
+        REL_SERVICEWORKER_FOUND("rel=serviceworker found"), //
+        REL_STYLESHEET_FOUND("rel=stylesheet found"), //
+        REL_TAG_FOUND("rel=tag found"), //
         APPLE_TOUCH_ICON_WITH_SIZES_FOUND("<link rel=\"apple-touch-icon\" sizes=\"\u2026\"> found"), //
         LANG_FOUND("<html lang> found"), //
         LANG_WRONG("<html lang> does not match detected language"), //

@@ -231,7 +231,51 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private boolean loggedStyleInBody;
 
+    private boolean loggedRelAlternate;
+
+    private boolean loggedRelAuthor;
+
+    private boolean loggedRelBookmark;
+
     private boolean loggedRelCanonical;
+
+    private boolean loggedRelDnsPrefetch;
+
+    private boolean loggedRelExternal;
+
+    private boolean loggedRelHelp;
+
+    private boolean loggedRelIcon;
+
+    private boolean loggedRelLicense;
+
+    private boolean loggedRelNext;
+
+    private boolean loggedRelNofollow;
+
+    private boolean loggedRelNoopener;
+
+    private boolean loggedRelNoreferrer;
+
+    private boolean loggedRelPingback;
+
+    private boolean loggedRelPreconnect;
+
+    private boolean loggedRelPrefetch;
+
+    private boolean loggedRelPreload;
+
+    private boolean loggedRelPrerender;
+
+    private boolean loggedRelPrev;
+
+    private boolean loggedRelSearch;
+
+    private boolean loggedRelServiceworker;
+
+    private boolean loggedRelStylesheet;
+
+    private boolean loggedRelTag;
 
     private boolean collectingCharacters;
 
@@ -265,7 +309,34 @@ public final class LanguageDetectingXMLReaderWrapper
         this.inBody = false;
         this.currentOpenElementsInDifferentLang = 0;
         this.loggedStyleInBody = false;
+        this.loggedRelAlternate = false;
+        this.loggedRelAuthor = false;
+        this.loggedRelBookmark = false;
         this.loggedRelCanonical = false;
+        this.loggedStyleInBody = false;
+        this.loggedRelAlternate = false;
+        this.loggedRelAuthor = false;
+        this.loggedRelBookmark = false;
+        this.loggedRelCanonical = false;
+        this.loggedRelDnsPrefetch = false;
+        this.loggedRelExternal = false;
+        this.loggedRelHelp = false;
+        this.loggedRelIcon = false;
+        this.loggedRelLicense = false;
+        this.loggedRelNext = false;
+        this.loggedRelNofollow = false;
+        this.loggedRelNoopener = false;
+        this.loggedRelNoreferrer = false;
+        this.loggedRelPingback = false;
+        this.loggedRelPreconnect = false;
+        this.loggedRelPrefetch = false;
+        this.loggedRelPreload = false;
+        this.loggedRelPrerender = false;
+        this.loggedRelPrev = false;
+        this.loggedRelSearch = false;
+        this.loggedRelServiceworker = false;
+        this.loggedRelStylesheet = false;
+        this.loggedRelTag = false;
         this.collectingCharacters = false;
         this.nonWhitespaceCharacterCount = 0;
         this.elementContent = new StringBuilder();
@@ -443,11 +514,187 @@ public final class LanguageDetectingXMLReaderWrapper
             List<String> relValues = Arrays.asList(
                     atts.getValue("", "rel").trim().toLowerCase() //
                             .split("\\s+"));
+            if (relValues.contains("alternate") && !loggedRelAlternate) {
+                loggedRelAlternate = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-alternate-found",
+                            true);
+                }
+            }
+            if (relValues.contains("author") && !loggedRelAuthor) {
+                loggedRelAuthor = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-author-found",
+                            true);
+                }
+            }
+            if (relValues.contains("bookmark") && !loggedRelBookmark) {
+                loggedRelBookmark = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-bookmark-found",
+                            true);
+                }
+            }
             if (relValues.contains("canonical") && !loggedRelCanonical) {
                 loggedRelCanonical = true;
                 if (request != null) {
                     request.setAttribute(
                             "http://validator.nu/properties/rel-canonical-found",
+                            true);
+                }
+            }
+            if (relValues.contains("dns-prefetch") && !loggedRelDnsPrefetch) {
+                loggedRelDnsPrefetch = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-dns-prefetch-found",
+                            true);
+                }
+            }
+            if (relValues.contains("external") && !loggedRelExternal) {
+                loggedRelExternal = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-external-found",
+                            true);
+                }
+            }
+            if (relValues.contains("help") && !loggedRelHelp) {
+                loggedRelHelp = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-help-found",
+                            true);
+                }
+            }
+            if (relValues.contains("icon") && !loggedRelIcon) {
+                loggedRelIcon = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-icon-found",
+                            true);
+                }
+            }
+            if (relValues.contains("license") && !loggedRelLicense) {
+                loggedRelLicense = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-license-found",
+                            true);
+                }
+            }
+            if (relValues.contains("next") && !loggedRelNext) {
+                loggedRelNext = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-next-found",
+                            true);
+                }
+            }
+            if (relValues.contains("nofollow") && !loggedRelNofollow) {
+                loggedRelNofollow = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-nofollow-found",
+                            true);
+                }
+            }
+            if (relValues.contains("noopener") && !loggedRelNoopener) {
+                loggedRelNoopener = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-noopener-found",
+                            true);
+                }
+            }
+            if (relValues.contains("noreferrer") && !loggedRelNoreferrer) {
+                loggedRelNoreferrer = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-noreferrer-found",
+                            true);
+                }
+            }
+            if (relValues.contains("pingback") && !loggedRelPingback) {
+                loggedRelPingback = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-pingback-found",
+                            true);
+                }
+            }
+            if (relValues.contains("preconnect") && !loggedRelPreconnect) {
+                loggedRelPreconnect = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-preconnect-found",
+                            true);
+                }
+            }
+            if (relValues.contains("prefetch") && !loggedRelPrefetch) {
+                loggedRelPrefetch = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-prefetch-found",
+                            true);
+                }
+            }
+            if (relValues.contains("preload") && !loggedRelPreload) {
+                loggedRelPreload = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-preload-found",
+                            true);
+                }
+            }
+            if (relValues.contains("prerender") && !loggedRelPrerender) {
+                loggedRelPrerender = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-prerender-found",
+                            true);
+                }
+            }
+            if (relValues.contains("prev") && !loggedRelPrev) {
+                loggedRelPrev = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-prev-found",
+                            true);
+                }
+            }
+            if (relValues.contains("search") && !loggedRelSearch) {
+                loggedRelSearch = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-search-found",
+                            true);
+                }
+            }
+            if (relValues.contains("serviceworker") && !loggedRelServiceworker) {
+                loggedRelServiceworker = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-serviceworker-found",
+                            true);
+                }
+            }
+            if (relValues.contains("stylesheet") && !loggedRelStylesheet) {
+                loggedRelStylesheet = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-stylesheet-found",
+                            true);
+                }
+            }
+            if (relValues.contains("tag") && !loggedRelTag) {
+                loggedRelTag = true;
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/rel-tag-found",
                             true);
                 }
             }

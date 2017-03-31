@@ -1278,10 +1278,142 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
             }
             if (request.getAttribute(
+                    "http://validator.nu/properties/rel-alternate-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-alternate-found")) {
+                stats.incrementField(Statistics.Field.REL_ALTERNATE_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-author-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-author-found")) {
+                stats.incrementField(Statistics.Field.REL_AUTHOR_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-bookmark-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-bookmark-found")) {
+                stats.incrementField(Statistics.Field.REL_BOOKMARK_FOUND);
+            }
+            if (request.getAttribute(
                     "http://validator.nu/properties/rel-canonical-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/rel-canonical-found")) {
                 stats.incrementField(Statistics.Field.REL_CANONICAL_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-dns-prefetch-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-dns-prefetch-found")) {
+                stats.incrementField(Statistics.Field.REL_DNS_PREFETCH_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-external-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-external-found")) {
+                stats.incrementField(Statistics.Field.REL_EXTERNAL_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-help-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-help-found")) {
+                stats.incrementField(Statistics.Field.REL_HELP_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-icon-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-icon-found")) {
+                stats.incrementField(Statistics.Field.REL_ICON_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-license-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-license-found")) {
+                stats.incrementField(Statistics.Field.REL_LICENSE_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-next-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-next-found")) {
+                stats.incrementField(Statistics.Field.REL_NEXT_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-nofollow-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-nofollow-found")) {
+                stats.incrementField(Statistics.Field.REL_NOFOLLOW_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-noopener-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-noopener-found")) {
+                stats.incrementField(Statistics.Field.REL_NOOPENER_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-noreferrer-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-noreferrer-found")) {
+                stats.incrementField(Statistics.Field.REL_NOREFERRER_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-pingback-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-pingback-found")) {
+                stats.incrementField(Statistics.Field.REL_PINGBACK_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-preconnect-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-preconnect-found")) {
+                stats.incrementField(Statistics.Field.REL_PRECONNECT_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-prefetch-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-prefetch-found")) {
+                stats.incrementField(Statistics.Field.REL_PREFETCH_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-preload-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-preload-found")) {
+                stats.incrementField(Statistics.Field.REL_PRELOAD_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-prerender-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-prerender-found")) {
+                stats.incrementField(Statistics.Field.REL_PRERENDER_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-prev-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-prev-found")) {
+                stats.incrementField(Statistics.Field.REL_PREV_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-search-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-search-found")) {
+                stats.incrementField(Statistics.Field.REL_SEARCH_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-serviceworker-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-serviceworker-found")) {
+                stats.incrementField(Statistics.Field.REL_SERVICEWORKER_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-stylesheet-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-stylesheet-found")) {
+                stats.incrementField(Statistics.Field.REL_STYLESHEET_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/rel-tag-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/rel-tag-found")) {
+                stats.incrementField(Statistics.Field.REL_TAG_FOUND);
             }
             if (request.getAttribute(
                     "http://validator.nu/properties/style-in-body-found") != null
