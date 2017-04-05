@@ -2,6 +2,12 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 17.N.N
+XX Foo 2017
+  - Prevent Bulgarian ➡ Russian misidentifications in language detector
+  - Allow link[rel=serviceworker]
+  - Fix bug that disallowed `progress` & `meteri` as label[for] targets
+
 # 17.3.0
 26 March 2017
   - Allow “color” attribute with link[rel="mask-icon"]
