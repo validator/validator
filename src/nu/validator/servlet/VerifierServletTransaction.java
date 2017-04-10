@@ -770,6 +770,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         setup();
 
+        Pattern filterPattern = null;
+        if (request.getParameter("filterpattern") != null) {
+            filterPattern = Pattern.compile(
+                    scrub(request.getParameter("filterpattern")));
+        }
         if (request.getParameter("useragent") != null) {
             userAgent = scrub(request.getParameter("useragent"));
         } else {
@@ -831,25 +836,25 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             new XmlSerializer(out);
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new MessageEmitterAdapter(sourceCode,
-                        showSource, imageCollector, lineOffset, false,
-                        new XhtmlMessageEmitter(contentHandler));
+                errorHandler = new MessageEmitterAdapter(filterPattern,
+                        sourceCode, showSource, imageCollector, lineOffset,
+                        false, new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(filterPattern,
+                            sourceCode, showSource, null, lineOffset, false,
                             new TextMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.GNU) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(filterPattern,
+                            sourceCode, showSource, null, lineOffset, false,
                             new GnuMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
-                    errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(filterPattern,
+                            sourceCode, showSource, null, lineOffset, false,
                             new XmlMessageEmitter(new XmlSerializer(out)));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
@@ -857,8 +862,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     } else {
                         response.setContentType("application/javascript; charset=utf-8");
                     }
-                    errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(filterPattern,
+                            sourceCode, showSource, null, lineOffset, false,
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));

@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import java.util.Set;
 
 import nu.validator.checker.NormalizationChecker;
@@ -395,6 +396,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private int nonDocumentErrors = 0;
 
+    private final Pattern filterPattern;
+
     private final SourceCode sourceCode;
 
     private final MessageEmitter emitter;
@@ -443,10 +446,11 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource,
-            ImageCollector imageCollector, int lineOffset, boolean batchMode,
-            MessageEmitter messageEmitter) {
+    public MessageEmitterAdapter(Pattern filterPattern, SourceCode sourceCode,
+            boolean showSource, ImageCollector imageCollector, int lineOffset,
+            boolean batchMode, MessageEmitter messageEmitter) {
         super();
+        this.filterPattern = filterPattern;
         this.sourceCode = sourceCode;
         this.emitter = messageEmitter;
         this.exactErrorHandler = new ExactErrorHandler(this);
@@ -743,6 +747,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void message(MessageType type, Exception message, String systemId,
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
+        if (filterPattern != null
+                && filterPattern.matcher(message.getMessage()).matches()) {
+            return;
+        }
         if (loggingOk
                 && (type.getSuperType() == "error")
                 && spec != EmptySpec.THE_INSTANCE

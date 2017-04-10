@@ -247,7 +247,7 @@ public class EmbeddedValidator {
         public MessageEmitterAdapter newErrorHandler(int lineOffset, boolean asciiQuotes, OutputFormat outputFormat) throws SAXException {
             boolean showSource = true;
             boolean batchMode = true;
-            MessageEmitterAdapter adapter = new MessageEmitterAdapter(this.validator.getSourceCode(), showSource,
+            MessageEmitterAdapter adapter = new MessageEmitterAdapter(null, this.validator.getSourceCode(), showSource,
                     new ImageCollector(this.validator.getSourceCode()), lineOffset, batchMode, newEmitter(asciiQuotes, outputFormat));
             adapter.setErrorsOnly(false);
             adapter.setHtml(true);

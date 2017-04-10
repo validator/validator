@@ -344,21 +344,22 @@ public class SimpleCommandLineValidator {
         ImageCollector imageCollector = new ImageCollector(sourceCode);
         boolean showSource = false;
         if (outputFormat == OutputFormat.TEXT) {
-            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, true, new TextMessageEmitter(
-                            out, asciiQuotes));
+            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+                    showSource, imageCollector, lineOffset, true,
+                    new TextMessageEmitter(out, asciiQuotes));
         } else if (outputFormat == OutputFormat.GNU) {
-            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, true, new GnuMessageEmitter(
-                            out, asciiQuotes));
+            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+                    showSource, imageCollector, lineOffset, true,
+                    new GnuMessageEmitter(out, asciiQuotes));
         } else if (outputFormat == OutputFormat.XML) {
-            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, true, new XmlMessageEmitter(
-                            new XmlSerializer(out)));
+            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+                    showSource, imageCollector, lineOffset, true,
+                    new XmlMessageEmitter(new XmlSerializer(out)));
         } else if (outputFormat == OutputFormat.JSON) {
             String callback = null;
-            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, true, new JsonMessageEmitter(
+            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+                    showSource, imageCollector, lineOffset, true,
+                    new JsonMessageEmitter(
                             new nu.validator.json.Serializer(out), callback));
         } else {
             throw new RuntimeException("Bug. Should be unreachable.");

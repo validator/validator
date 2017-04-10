@@ -100,7 +100,7 @@ public class VerifierServlet extends HttpServlet {
             Integer.parseInt(System.getProperty("nu.validator.servlet.max-requests","100")));
         // force some class loading
         new VerifierServletTransaction(null, null);
-        new MessageEmitterAdapter(null, false, null, 0, false, null);
+        new MessageEmitterAdapter(null, null, false, null, 0, false, null);
     }
 
     /**
