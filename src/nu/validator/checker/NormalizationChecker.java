@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -205,6 +205,7 @@ public final class NormalizationChecker extends Checker {
      * 
      * @see nu.validator.checker.Checker#characters(char[], int, int)
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
@@ -324,6 +325,7 @@ public final class NormalizationChecker extends Checker {
      * @see nu.validator.checker.Checker#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void processingInstruction(String target, String data)
             throws SAXException {
@@ -344,6 +346,7 @@ public final class NormalizationChecker extends Checker {
      * @see nu.validator.checker.Checker#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
@@ -409,6 +412,7 @@ public final class NormalizationChecker extends Checker {
      * 
      * @throws SAXException if the <code>ErrorHandler</code> throws.
      */
+    @SuppressWarnings("deprecation")
     public void flush() throws SAXException {
         if (!alreadyComplainedAboutThisRun
                 && !Normalizer.isNormalized(buf, 0, pos, Normalizer.NFC, 0)) {

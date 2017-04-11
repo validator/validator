@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2016 Mozilla Foundation
+ * Copyright (c) 2007-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -573,6 +573,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
     }
 
+    @SuppressWarnings("deprecation")
     protected static String scrub(CharSequence s) {
         return Normalizer.normalize(
                 CharacterUtil.prudentlyScrubCharacterData(s), Normalizer.NFC);

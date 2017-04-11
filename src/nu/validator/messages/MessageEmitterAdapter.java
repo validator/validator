@@ -418,6 +418,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private boolean errorsOnly = false;
 
+    @SuppressWarnings("deprecation")
     protected static String scrub(String s) throws SAXException {
         if (s == null) {
             return null;
