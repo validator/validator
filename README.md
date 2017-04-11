@@ -63,7 +63,8 @@ Use the `vnu.jar` HTML checker as an executable for command-line checking of
 documents by invoking it like this:
 
       java -jar ~/vnu.jar [--errors-only] [--exit-zero-always]
-           [--asciiquotes] [--no-stream] [--format gnu|xml|json|text] [--html]
+           [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]
+           [--filterfile FILENAME] [--filterpattern PATTERN] [--html]
            [--skip-non-html] [--no-langdetect] [--help] [--verbose] [--version]
            FILES
 
@@ -126,6 +127,22 @@ executable provides the following options:
     Makes the checker exit zero even if errors are reported for any documents.
 
     default: [unset; checker exits 1 if errors are reported for any documents]
+
+#### --filterfile _FILENAME_
+
+    Specifies a filename. Each line of the file contains either a regular
+    expression or starts with "#" to indicate the line is a comment. Any error
+    message or warning message that matches a regular expression in the file is
+    filtered out (dropped/suppressed).
+
+    default: [unset; checker does no message filtering]
+
+#### --filterpattern _PATTERN_
+
+    Specifies a regular-expression pattern. Any error message or warning message
+    that matches the pattern is filtered out (dropped/suppressed).
+
+    default: [unset; checker does no message filtering]
 
 #### --format _format_
 

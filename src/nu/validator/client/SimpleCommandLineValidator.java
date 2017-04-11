@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Mozilla Foundation
+ * Copyright (c) 2013-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -22,10 +22,14 @@
 
 package nu.validator.client;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.regex.Pattern;
 
 import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.io.SystemIdIOException;
@@ -57,6 +61,8 @@ public class SimpleCommandLineValidator {
     private static SimpleDocumentValidator validator;
 
     private static OutputStream out;
+
+    private static Pattern filterPattern;
 
     private static MessageEmitterAdapter errorHandler;
 
@@ -104,6 +110,8 @@ public class SimpleCommandLineValidator {
         asciiQuotes = false;
         verbose = false;
 
+        filterPattern = null;
+        String filterString = "";
         String outFormat = null;
         schemaUrl = null;
         hasSchemaOption = false;
@@ -132,6 +140,39 @@ public class SimpleCommandLineValidator {
                     exitZeroAlways = true;
                 } else if ("--asciiquotes".equals(args[i])) {
                     asciiQuotes = true;
+                } else if ("--filterfile".equals(args[i])) {
+                    File filterFile = new File(args[++i]);
+                    StringBuilder sb = new StringBuilder();
+                    try (BufferedReader reader = //
+                            new BufferedReader(new FileReader(filterFile))) {
+                        String line;
+                        String pipe = "";
+                        while ((line = reader.readLine()) != null) {
+                            if (line.startsWith("#")) {
+                                continue;
+                            }
+                            sb.append(pipe);
+                            sb.append(line);
+                            pipe = "|";
+                        }
+                        if ("".equals(filterString)) {
+                            filterString = sb.toString();
+                        } else {
+                            filterString += "|" + sb.toString();
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.err.println("error: File not found: "
+                                + filterFile.getPath());
+                        System.exit(1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if ("--filterpattern".equals(args[i])) {
+                    if ("".equals(filterString)) {
+                        filterString = args[++i];
+                    } else {
+                        filterString += "|" + args[++i];
+                    }
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
                 } else if ("--version".equals(args[i])) {
@@ -164,6 +205,10 @@ public class SimpleCommandLineValidator {
                     }
                 }
             }
+        }
+        System.out.println(filterString);
+        if (!"".equals(filterString)) {
+            filterPattern = Pattern.compile(filterString);
         }
         if (schemaUrl == null) {
             schemaUrl = "http://s.validator.nu/html5-rdfalite.rnc";
@@ -344,20 +389,20 @@ public class SimpleCommandLineValidator {
         ImageCollector imageCollector = new ImageCollector(sourceCode);
         boolean showSource = false;
         if (outputFormat == OutputFormat.TEXT) {
-            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+            errorHandler = new MessageEmitterAdapter(filterPattern, sourceCode,
                     showSource, imageCollector, lineOffset, true,
                     new TextMessageEmitter(out, asciiQuotes));
         } else if (outputFormat == OutputFormat.GNU) {
-            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+            errorHandler = new MessageEmitterAdapter(filterPattern, sourceCode,
                     showSource, imageCollector, lineOffset, true,
                     new GnuMessageEmitter(out, asciiQuotes));
         } else if (outputFormat == OutputFormat.XML) {
-            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+            errorHandler = new MessageEmitterAdapter(filterPattern, sourceCode,
                     showSource, imageCollector, lineOffset, true,
                     new XmlMessageEmitter(new XmlSerializer(out)));
         } else if (outputFormat == OutputFormat.JSON) {
             String callback = null;
-            errorHandler = new MessageEmitterAdapter(null, sourceCode,
+            errorHandler = new MessageEmitterAdapter(filterPattern, sourceCode,
                     showSource, imageCollector, lineOffset, true,
                     new JsonMessageEmitter(
                             new nu.validator.json.Serializer(out), callback));
@@ -372,6 +417,7 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("    java -jar vnu.jar [--errors-only] [--exit-zero-always]");
         System.out.println("         [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]");
+        System.out.println("         [--filterfile FILENAME] [--filterpattern PATTERN]");
         System.out.println("         [--html] [--skip-non-html] [--no-langdetect]");
         System.out.println("         [--help] [--verbose] [--version] FILES");
         System.out.println("");

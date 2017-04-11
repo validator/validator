@@ -4,9 +4,10 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 17.N.N
 XX Foo 2017
-  - Prevent Bulgarian ➡ Russian misidentifications in language detector
+  - Add new major feature for filtering out errors/warnings by regex
   - Allow link[rel=serviceworker]
-  - Fix bug that disallowed `progress` & `meteri` as label[for] targets
+  - Prevent Bulgarian ➡ Russian misidentifications in language detector
+  - Fix bug that disallowed `progress` & `meter` as label[for] targets
 
 # 17.3.0
 26 March 2017
