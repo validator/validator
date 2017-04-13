@@ -1134,7 +1134,7 @@ public class Assertions extends Checker {
 
     private int currentSectioningElementPtr;
 
-    private boolean hasMain;
+    private boolean hasVisibleMain;
 
     private boolean hasMetaCharset;
 
@@ -1388,7 +1388,7 @@ public class Assertions extends Checker {
         currentSectioningElementPtr = -1;
         currentSectioningDepth = 0;
         stack[0] = null;
-        hasMain = false;
+        hasVisibleMain = false;
         hasMetaCharset = false;
         hasMetaDescription = false;
         hasContentTypePragma = false;
@@ -1992,11 +1992,14 @@ public class Assertions extends Checker {
                     }
                 }
             } else if ("main" == localName) {
-                if (followW3Cspec && hasMain) {
-                    err("A document must not include more than one"
-                            + " \u201Cmain\u201D element.");
+                if (followW3Cspec && hasVisibleMain) {
+                    if (atts.getIndex("", "hidden") < 0) {
+                        err("A document must not include more than one visible"
+                                + " \u201Cmain\u201D element.");
+                    } else {
+                        hasVisibleMain = true;
+                    }
                 }
-                hasMain = true;
             } else if ("h1" == localName) {
                 if (currentSectioningDepth > 1) {
                     warn(h1WarningMessage);
