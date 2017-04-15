@@ -155,10 +155,12 @@ public class SimpleCommandLineValidator {
                             sb.append(line);
                             pipe = "|";
                         }
-                        if ("".equals(filterString)) {
-                            filterString = sb.toString();
-                        } else {
-                            filterString += "|" + sb.toString();
+                        if (sb.length() != 0) {
+                            if ("".equals(filterString)) {
+                                filterString = sb.toString();
+                            } else {
+                                filterString += "|" + sb.toString();
+                            }
                         }
                     } catch (FileNotFoundException e) {
                         System.err.println("error: File not found: "
@@ -206,7 +208,6 @@ public class SimpleCommandLineValidator {
                 }
             }
         }
-        System.out.println(filterString);
         if (!"".equals(filterString)) {
             filterPattern = Pattern.compile(filterString);
         }
