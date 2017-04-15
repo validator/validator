@@ -136,7 +136,7 @@ connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 maxConnPerRoute = 100
 maxTotalConnections = 200
-maxRedirects = 20 # Gecko default
+maxRedirects = 20  # Gecko default
 followW3Cspec = 0
 statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'

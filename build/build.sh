@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ "$1" != "" ]; then
-  args=$@;
+  args=$*;
 else
   args="run";
 fi
