@@ -104,6 +104,7 @@ import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -771,10 +772,51 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         setup();
 
+        String filterString = "";
+
+        String filterPatternParam = request.getParameter("filterpattern");
+        if (filterPatternParam != null && !"".equals(filterPatternParam)) {
+            if ("".equals(filterString)) {
+                filterString = scrub(filterPatternParam);
+            } else {
+                filterString += "|" + scrub(filterPatternParam);
+            }
+        }
+
+        String filterUrl = request.getParameter("filterurl");
+        if (filterUrl != null && !"".equals(filterUrl)) {
+            try {
+                InputSource filterFile = //
+                        (new PrudentHttpEntityResolver(-1, true, null)) //
+                                .resolveEntity(null, filterUrl);
+                StringBuilder sb = new StringBuilder();
+                BufferedReader reader = //
+                        new BufferedReader(new InputStreamReader(
+                                filterFile.getByteStream()));
+                String line;
+                String pipe = "";
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("#")) {
+                        continue;
+                    }
+                    sb.append(pipe);
+                    sb.append(line);
+                    pipe = "|";
+                }
+                if (sb.length() != 0) {
+                    if (!"".equals(filterString)) {
+                        filterString = scrub(sb.toString());
+                    } else {
+                        filterString += "|" + scrub(sb.toString());
+                    }
+                }
+            } catch (Exception e) {
+                response.sendError(500, e.getMessage());
+            }
+        }
         Pattern filterPattern = null;
-        if (request.getParameter("filterpattern") != null) {
-            filterPattern = Pattern.compile(
-                    scrub(request.getParameter("filterpattern")));
+        if (!"".equals(filterString)) {
+            filterPattern = Pattern.compile(filterString);
         }
         if (request.getParameter("useragent") != null) {
             userAgent = scrub(request.getParameter("useragent"));
