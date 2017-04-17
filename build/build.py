@@ -1563,7 +1563,6 @@ else:
             scriptFile = arg[14:]
         elif arg.startswith("--filter-file="):
             filterFile = arg[14:]
-            print "filterFile: " + filterFile
         elif arg == '--promiscuous-ssl=on':
             disablePromiscuousSsl = 0
         elif arg == '--promiscuous-ssl=off':
