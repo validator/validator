@@ -1,0 +1,16 @@
+# Use this file to filter out (drop/ignore/suppress) errors and warnings you
+# don’t care about/don’t want to see/don’t consider to be a problem.
+#
+# For any error message or warning you want to filter out, add to this file a
+# line containing a regular expression that matches the message. Examples:
+#
+#    .*Text run is not in Unicode Normalization Form C\..*
+#    .*appears to be written in.*
+#
+# The checker automatically reads this file at startup; that is, each time you
+# use "./build/build.py run" to (re)start the checker service.
+#
+# The filters in this file are applied globally to all requests the checker
+# receives, from all users of the checker service.
+#
+# Lines that start with "#" (like this and the above) are ignored.

@@ -24,6 +24,7 @@
 package nu.validator.servlet;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -322,6 +323,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
+    private static String systemFilterString = "";
+
+    private final static String FILTER_FILE = System.getProperty(
+            "nu.validator.servlet.filterfile", "resources/message-filters.txt");
+
     protected String schemaUrls = null;
 
     protected Validator validator = null;
@@ -564,6 +570,35 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
             log4j.debug("Spec read.");
 
+            log4j.debug("Reading filter file.");
+
+            log4j.debug(FILTER_FILE);
+
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(new FileInputStream(FILTER_FILE),
+                            "UTF-8"))) {
+                StringBuilder sb = new StringBuilder();
+                String filterline;
+                String pipe = "";
+                while ((filterline = reader.readLine()) != null) {
+                    if (filterline.startsWith("#")) {
+                        continue;
+                    }
+                    sb.append(pipe);
+                    sb.append(filterline);
+                    pipe = "|";
+                }
+                if (sb.length() != 0) {
+                    if ("".equals(systemFilterString)) {
+                        systemFilterString = sb.toString();
+                    } else {
+                        systemFilterString += "|" + sb.toString();
+                    }
+                }
+            }
+
+            log4j.debug("Filter file read.");
+
             log4j.debug("Initializing language detector.");
 
             LanguageDetectingXMLReaderWrapper.initialize();
@@ -772,7 +807,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         setup();
 
-        String filterString = "";
+        String filterString = systemFilterString;
 
         String filterPatternParam = request.getParameter("filterpattern");
         if (filterPatternParam != null && !"".equals(filterPatternParam)) {

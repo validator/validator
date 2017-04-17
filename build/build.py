@@ -105,6 +105,7 @@ presetsFile = os.path.join("resources", "presets.txt")
 aboutFile = os.path.join("site", "about.html")
 stylesheetFile = os.path.join("site", "style.css")
 scriptFile = os.path.join("site", "script.js")
+filterFile = os.path.join("resources", "message-filters.txt")
 
 portNumber = '8888'
 controlPort = None
@@ -776,6 +777,7 @@ def getRunArgs(heap="$((HEAP))"):
         '-Dnu.validator.servlet.about-page=' + aboutPage,
         '-Dnu.validator.servlet.deny-list=' + denyList,
         '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),  # nopep8
+        '-Dnu.validator.servlet.filterfile=' + filterFile,
         '-Dnu.validator.servlet.follow-w3c-spec=%d' % followW3Cspec,
         '-Dnu.validator.servlet.host.generic=' + genericHost,
         '-Dnu.validator.servlet.host.html5=' + html5Host,
@@ -1436,6 +1438,8 @@ def printHelp():
     print("  --control-port=-1")
     print("                                Sets server control port number")
     print("                                (necessary for daemonizing)")
+    print("  --filter-file=resources/message-filters.text")
+    print("                                Sets path to the filter file")
     print("  --git=/usr/bin/git         -- Sets path to the git binary")
     print("  --heap=512                 -- Sets Java heap size in MB")
     print("  --html5link=http://www.whatwg.org/specs/web-apps/current-work/")
@@ -1557,6 +1561,9 @@ else:
             stylesheetFile = arg[18:]
         elif arg.startswith("--script-file="):
             scriptFile = arg[14:]
+        elif arg.startswith("--filter-file="):
+            filterFile = arg[14:]
+            print "filterFile: " + filterFile
         elif arg == '--promiscuous-ssl=on':
             disablePromiscuousSsl = 0
         elif arg == '--promiscuous-ssl=off':
