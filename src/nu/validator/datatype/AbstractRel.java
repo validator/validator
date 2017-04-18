@@ -26,6 +26,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.relaxng.datatype.DatatypeException;
 
 abstract class AbstractRel extends AbstractDatatype {
@@ -70,6 +73,20 @@ abstract class AbstractRel extends AbstractDatatype {
                 }
             } else {
                 errNotRegistered(i - 1, token);
+            }
+        }
+    }
+
+    protected void errSynonym(String token, Map<String, String> map)
+            throws DatatypeException {
+        // Synonyms for current keywords
+        for (Map.Entry m : map.entrySet()) {
+            if (token.toLowerCase().equals(m.getKey())) {
+                throw newDatatypeException("The keyword \u201c" + m.getKey()
+                        + "\u201d for the \u201crel\u201d"
+                        + " attribute should not be used."
+                        + " Consider using \u201c" + m.getValue()
+                        + "\u201d instead.", true);
             }
         }
     }

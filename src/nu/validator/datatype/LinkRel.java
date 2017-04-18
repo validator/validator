@@ -73,7 +73,8 @@ public final class LinkRel extends AbstractRel {
         super();
     }
 
-    private final static boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
+    private final static boolean WARN = System.getProperty(
+            "nu.validator.datatype.warn", "").equals("true");
 
     @Override
     protected boolean isRegistered(CharSequence literal, String token)
@@ -90,19 +91,10 @@ public final class LinkRel extends AbstractRel {
         } else {
             if (WARN) {
                 // Synonyms for current keywords
-                Map<String,String> map = new HashMap<>();
+                Map<String, String> map = new HashMap<>();
                 map.put("copyright", "license");
                 map.put("previous", "prev");
-                for (Map.Entry m:map.entrySet()) {
-                    if (token.toLowerCase().equals(m.getKey())) {
-                        throw newDatatypeException("The keyword \u201c"
-                            + m.getKey() + "\u201d for the \u201crel\u201d"
-                            + " attribute" // of the \u201clink\u201d element"
-                            + " should not be used."
-                            + " Consider using \u201c"
-                            + m.getValue() + "\u201d instead.", WARN);
-                    }
-                }
+                errSynonym(token, map);
             }
             return registeredValues.contains(token.toLowerCase());
         }
