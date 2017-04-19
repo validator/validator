@@ -169,7 +169,7 @@ public final class MultipartFormDataFilter implements Filter {
                             }
                         }
                         if (contentType == null) {
-                            contentType = fileItemStream.getContentType();
+                            contentType = "text/html";
                         }
                         request.setAttribute("nu.validator.servlet.MultipartFormDataFilter.type", "file");
                         fileStream = fileItemStream.openStream();
@@ -180,7 +180,7 @@ public final class MultipartFormDataFilter implements Filter {
                     fileStream = new ByteArrayInputStream(new byte[0]);
                 }
                 if (contentType == null) {
-                    contentType = "application/octet-stream";
+                    contentType = "text/html";
                 }
                 chain.doFilter(new RequestWrapper(request, params, contentType,
                         utf8, fileStream), response);
