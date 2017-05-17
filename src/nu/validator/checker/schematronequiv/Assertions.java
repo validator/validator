@@ -1992,10 +1992,12 @@ public class Assertions extends Checker {
                     }
                 }
             } else if ("main" == localName) {
-                if (followW3Cspec && hasVisibleMain) {
-                    if (atts.getIndex("", "hidden") < 0) {
-                        err("A document must not include more than one visible"
-                                + " \u201Cmain\u201D element.");
+                if (followW3Cspec) {
+                    if (hasVisibleMain) {
+                        if (atts.getIndex("", "hidden") < 0) {
+                            err("A document must not include more than one visible"
+                                    + " \u201Cmain\u201D element.");
+                        }
                     } else {
                         hasVisibleMain = true;
                     }
