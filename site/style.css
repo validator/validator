@@ -67,10 +67,10 @@ h3 {
 }
 
 h1 span {
-	color: #AAAAAA;
+	color: #aaaaaa;
 }
 
-fieldeset td, fieldeset th {
+fieldset td, fieldset th {
 	padding-top: 0.4em;
 	padding-bottom: 0.4em;
 }
@@ -111,14 +111,8 @@ textarea, #doc[type="url"], #schema, #nsfilter {
 }
 
 ol {
-	margin-left: 0;
-	margin-right: 0;
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
-	padding-left: 2.5em;
-	padding-right: 2.5em;
-	padding-top: 0;
-	padding-bottom: 0;
+	margin: 1.5em 0;
+	padding: 0 2.5em;
 }
 
 li {
@@ -140,27 +134,27 @@ li li {
 
 .info {
 	color: black;
-	background-color: #CCFFFF;
+	background-color: #ccffff;
 }
 
 .warning {
 	color: black;
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 }
 
 .error {
 	color: black;
-	background-color: #FFCCCC;
+	background-color: #ffcccc;
 }
 
 .io, .fatal, .schema {
 	color: black;
-	background-color: #FF9999;
+	background-color: #ff9999;
 }
 
 .internal {
 	color: black;
-	background-color: #FF6666;
+	background-color: #ff6666;
 }
 
 
@@ -173,7 +167,7 @@ hr {
 }
 
 p {
-	margin: 0.5em 0 0.5em 0;
+	margin: 0.5em 0;
 }
 
 li p {
@@ -194,7 +188,7 @@ li p {
 
 b {
 	color: black;
-	background-color: #FF6666;
+	background-color: #ff6666;
 }
 
 ol.source li {
@@ -204,7 +198,7 @@ ol.source li {
 
 ol.source b, ol.source .b {
 	color: black;
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 	font-weight: bold;
 }
 
@@ -240,12 +234,12 @@ col.img {
 
 col.alt {
 	color: black;
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 }
 
 td.alt span {
 	color: black;
-	background-color: #FFFFAA;
+	background-color: #ffffaa;
 }
 
 .imagereview th {
@@ -259,10 +253,7 @@ td.alt span {
 }
 
 td.img {
-	padding-right: 0.5em;
-	padding-left: 0;
-	padding-top: 0;
-	padding-bottom: 0.5em;
+	padding: 0 0.5em 0.5em 0;
 	text-align: right;
 }
 
@@ -273,27 +264,18 @@ img {
 }
 
 th.img {
-	padding-right: 0.5em;
-	padding-left: 0;
-	padding-top: 0;
-	padding-bottom: 0.5em;
+	padding: 0 0.5em 0.5em 0;
 	vertical-align: bottom;
 	text-align: right;
 }
 
 td.alt, td.location {
 	text-align: left;
-	padding-right: 0.5em;
-	padding-left: 0.5em;
-	padding-top: 0;
-	padding-bottom: 0.5em;
+	padding: 0 0.5em 0.5em 0.5em;
 }
 
 th.alt, th.location {
-	padding-right: 0.5em;
-	padding-left: 0.5em;
-	padding-top: 0;
-	padding-bottom: 0.5em;
+	padding: 0 0.5em 0.5em 0.5em;
 	vertical-align: bottom;
 }
 
@@ -333,7 +315,7 @@ dl.inputattrs .inputattrtypes {
 }
 
 dl.inputattrs .highlight {
-	background-color: #FFC;
+	background-color: #ffc;
 	padding-bottom: 2px;
 	font-weight: normal;
 	color: #666;
@@ -363,7 +345,7 @@ dl.inputattrs .highlight {
 }
 
 #outline .heading {
-	color: #BF4F00;
+	color: #bf4f00;
 	font-weight: bold;
 }
 
@@ -373,14 +355,14 @@ dl.inputattrs .highlight {
 }
 
 #outline li {
-	padding: 3px 0 3px 0;
+	padding: 3px 0;
 	margin: 0;
-	list-style: none;
+	list-style-type: none;
 	position: relative;
 }
 
 #outline li li {
-	list-style: none;
+	list-style-type: none;
 }
 
 #outline li:first-child::before {
