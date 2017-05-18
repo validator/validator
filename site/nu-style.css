@@ -2,26 +2,26 @@
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
  * Copyright (c) 2007-2014 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
-html, body, h1, div#banner, div#banner a {
+html, body, h1, #banner, #banner a {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -70,38 +70,38 @@ textarea {
 
 label {
 	font-size: 0.9em;
-	padding-left: .2em;
-	padding-right: .2em;
+	padding-left: 0.2em;
+	padding-right: 0.2em;
 }
 
-h1#title {
+#title {
 	font-family: "Myriad Web", "Myriad Pro", "Gill Sans", Helvetica, Arial, Sans-Serif;
-	background-color: #365D95;
+	background-color: #365d95;
 	color: #fdfdfd;
 	font-size: 1.6em;
-	padding: 0.430em;
+	padding: 0.43em;
 	border-radius: 6px;
 }
-h1#title a, h1#title a img {
-	background-color: #365D95;
+#title a, #title a img {
+	background-color: #365d95;
 }
 
-h1#title a:link, h1#title a:hover, h1#title a:visited, h1#title a:active {
+#title a:link, #title a:hover, #title a:visited, #title a:active {
 	color: #fdfdfd !important;
 	text-decoration: none;
 }
 
-h1#title img {
+#title img {
 	vertical-align: middle;
 	margin-right: 0.7em;
 }
 
-div#banner {
+#banner {
 	margin: 1.5em 2em;
 }
 
 fieldset {
-	background: #EAEBEE;
+	background-color: #eaebee;
 }
 
 legend {
@@ -121,14 +121,14 @@ h2 {
 	font-size: 16px;
 }
 
-h2#top {
+#top {
 	margin-left: 3%
 }
 
 th, td {
 	padding-top: 1px;
 	padding-bottom: 1px;
-	margin: 0px;
+	margin: 0;
 }
 
 hr {
@@ -136,21 +136,21 @@ hr {
 	margin-right: 3%;
 }
 
-div#banner {
+#banner {
 	margin-left: 3%;
 	margin-right: 3%;
 	margin-bottom: 18px
 }
 
-div#results,
-div#about {
+#results,
+#about {
 	font-size: 14px;
 	margin-top: 50px;
 	padding-left: 3%;
 	margin-right: 3%;
 }
 
-div#about {
+#about {
 	margin-bottom: 12px;
 }
 
@@ -176,8 +176,8 @@ form {
 	font-family: inherit;
 	font-size: inherit;
 	font: caption;
-	background-color: #ffffff;
-	margin-bottom: .5em;
+	background-color: white;
+	margin-bottom: 0.5em;
 	padding: 3%;
 	padding-top: 0;
 	padding-bottom: 0;
@@ -198,14 +198,14 @@ fieldset {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	margin: 0;
-	background-color: #ffffff;
+	background-color: white;
 	vertical-align: inherit;
 }
 
 label {
 	font: caption;
 	vertical-align: baseline;
-	padding: 0px;
+	padding: 0;
 }
 
 select {
@@ -214,9 +214,9 @@ select {
 
 textarea {
 	font: caption;
-	font-size: .85em;
+	font-size: 0.85em;
 	border: 1px solid;
-	margin: 2px 2px 2px 2px;
+	margin: 2px;
 	padding: 2px;
 }
 
@@ -309,7 +309,7 @@ textarea, #doc[type="url"] {
 
 .failure {
 	color: white;
-	background-color: #365D95;
+	background-color: #365d95;
 }
 
 .fatalfailure {
@@ -318,14 +318,8 @@ textarea, #doc[type="url"] {
 }
 
 ol {
-	margin-left: 0;
-	margin-right: 0;
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
-	padding-left: 2.5em;
-	padding-right: 2.5em;
-	padding-top: 0;
-	padding-bottom: 0;
+	margin: 1.5em 0;
+	padding: 0 2.5em;
 }
 
 li {
@@ -380,7 +374,7 @@ li li {
 }
 
 #results > ol:first-child > li > p:first-child > strong:first-child {
-	padding: 1px 6px 1px 6px;
+	padding: 1px 6px;
 	border-radius: 6px;
 	border: 1px solid #ccc;
 	font: caption;
@@ -519,12 +513,12 @@ col.img {
 
 col.alt {
 	color: black;
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 }
 
 td.alt span {
 	color: black;
-	background-color: #FFFFAA;	
+	background-color: #ffffaa;
 }
 
 .imagereview th {
@@ -538,10 +532,7 @@ td.alt span {
 }
 
 td.img {
-	padding-right: 0.5em;
-	padding-left: 0;
-	padding-top: 0;
-	padding-bottom: 0.5em;
+	padding: 0 0.5em 0.5em 0;
 	text-align: right;
 }
 
@@ -552,27 +543,18 @@ img {
 }
 
 th.img {
-	padding-right: 0.5em;
-	padding-left: 0;
-	padding-top: 0;
-	padding-bottom: 0.5em;	
+	padding: 0 0.5em 0.5em 0;
 	vertical-align: bottom;
 	text-align: right;
 }
 
 td.alt, td.location {
 	text-align: left;
-	padding-right: 0.5em;
-	padding-left: 0.5em;
-	padding-top: 0;
-	padding-bottom: 0.5em;
+	padding: 0 0.5em 0.5em 0.5em;
 }
 
 th.alt, th.location {
-	padding-right: 0.5em;
-	padding-left: 0.5em;
-	padding-top: 0;
-	padding-bottom: 0.5em;
+	padding: 0 0.5em 0.5em 0.5em;
 	vertical-align: bottom;
 }
 
@@ -617,7 +599,7 @@ dl.inputattrs .inputattrtypes {
 }
 
 dl.inputattrs .highlight {
-	background-color: #FFC;
+	background-color: #ffc;
 	padding-bottom: 2px;
 	font-weight: normal;
 	color: #666;
@@ -654,7 +636,7 @@ dl.inputattrs .highlight {
 }
 
 #outline .heading {
-	color: #BF4F00;
+	color: #bf4f00;
 	font-weight: bold;
 }
 
@@ -668,9 +650,9 @@ dl.inputattrs .highlight {
 }
 
 #outline li {
-	padding: 0px 0 9px 0;
+	padding: 0 0 9px 0;
 	margin: 0;
-	list-style: none;
+	list-style-type: none;
 	position: relative;
 }
 
@@ -679,7 +661,7 @@ dl.inputattrs .highlight {
 }
 
 #outline li li {
-	list-style: none;
+	list-style-type: none;
 }
 
 #outline li:first-child::before {
@@ -721,7 +703,7 @@ dl.inputattrs .highlight {
 #filters > div {
 	font: caption;
 	color: #747474;
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 	padding: 4px;
 }
 
@@ -729,7 +711,7 @@ dl.inputattrs .highlight {
 	min-height: 18px;
 	border-radius: 6px;
 	border: solid #ccc 1px;
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 }
 
 .message_filtering {
@@ -738,6 +720,7 @@ dl.inputattrs .highlight {
 	-moz-transition: all 1.5s ease-out;
 	-ms-transition: all 1.5s ease-out;
 	-webkit-transition: all 1.5s ease-out;
+	transition: all 1.5s ease-out;
 }
 
 #filters .filtercount {
@@ -748,20 +731,22 @@ dl.inputattrs .highlight {
 }
 
 #filters.expanded {
-	background-color: #FFFFCC;
-	-o-transition: all .8s ease-out;
-	-moz-transition: all .8s ease-out;
-	-ms-transition: all .8s ease-out;
-	-webkit-transition: all .8s ease-out;
+	background-color: #ffffcc;
+	-o-transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-ms-transition: all 0.8s ease-out;
+	-webkit-transition: all 0.8s ease-out;
+	transition: all 0.8s ease-out;
 	opacity: 1;
 	visibility: visible;
 }
 
 #filters.unexpanded {
-	-o-transition: all .8s ease-out;
-	-moz-transition: all .8s ease-out;
-	-ms-transition: all .8s ease-out;
-	-webkit-transition: all .8s ease-out;
+	-o-transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-ms-transition: all 0.8s ease-out;
+	-webkit-transition: all 0.8s ease-out;
+	transition: all 0.8s ease-out;
 }
 
 #filters h2 {
@@ -777,10 +762,11 @@ dl.inputattrs .highlight {
 #filters fieldset.hidden,
 .checkboxes input.hidden,
 .checkboxes .extraoptions.hidden {
-	-o-transition: all .8s ease-out;
-	-moz-transition: all .8s ease-out;
-	-ms-transition: all .8s ease-out;
-	-webkit-transition: all .8s ease-out;
+	-o-transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-ms-transition: all 0.8s ease-out;
+	-webkit-transition: all 0.8s ease-out;
+	transition: all 0.8s ease-out;
 	opacity: 0;
 	visibility: hidden;
 	height: 0;
@@ -790,21 +776,22 @@ dl.inputattrs .highlight {
 #filters fieldset.unhidden,
 .checkboxes input.unhidden,
 .checkboxes .extraoptions.unhidden {
-	-o-transition: all .8s ease-out;
-	-moz-transition: all .8s ease-out;
-	-ms-transition: all .8s ease-out;
-	-webkit-transition: all .8s ease-out;
+	-o-transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-ms-transition: all 0.8s ease-out;
+	-webkit-transition: all 0.8s ease-out;
+	transition: all 0.8s ease-out;
 	opacity: 1;
 	visibility: visible;
 }
 
 .checkboxes .extraoptions label {
-	margin-right: 0px;
+	margin-right: 0;
 }
 
 #filters fieldset.unhidden,
 .checkboxes input.unhidden {
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 }
 
 #filters fieldset legend {
@@ -860,7 +847,6 @@ dl.inputattrs .highlight {
 }
 
 #filters code {
-	background: #6F6;
 	white-space: pre;
 	white-space: -pre-wrap;
 	white-space: -o-pre-wrap;
@@ -870,9 +856,7 @@ dl.inputattrs .highlight {
 	word-wrap: break-word;
 	border: 1px dashed #999;
 	background-color: #ffd;
-	padding: 2px;
-	padding-left: 4px;
-	padding-right: 4px;
+	padding: 2px 4px;
 }
 
 #filters .hide, #filters .show {
@@ -900,7 +884,7 @@ dl.inputattrs .highlight {
 }
 
 label[for=showimagereport] {
-	margin-right: 0px;
+	margin-right: 0;
 }
 
 input[list=useragents] {
@@ -920,7 +904,7 @@ input[list=useragents] {
 	.extraoptions {
 		display: block;
 		margin-top: 8px;
-		padding-left: 0px;
+		padding-left: 0;
 	}
 	.checkboxes {
 		margin-bottom: -43px;
@@ -940,7 +924,7 @@ input[list=useragents] {
 	#show_options {
 		display: block;
 		margin-top: 8px;
-		padding-left: 0px;
+		padding-left: 0;
 	}
 	#inputregion {
 		margin-top: 100px;
@@ -955,7 +939,7 @@ input[list=useragents] {
 	input[list=useragents] {
 		width: 96.9%
 	}
-	div#about {
+	#about {
 		font-size: 11px;
 	}
 	.checkboxes {
@@ -966,7 +950,7 @@ input[list=useragents] {
 #headingoutline p {
 	margin: 10px;
 	font-weight: bold;
-	color: #BF4F00;
+	color: #bf4f00;
 }
 
 .h2 {
