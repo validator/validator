@@ -333,7 +333,7 @@ def runJavac(sourceDir, classDir, classPath):
 def copyFiles(sourceDir, classDir):
     files = findFiles(sourceDir)
     for f in files:
-        destFile = os.path.join(classDir, f[len(sourceDir)+1:])
+        destFile = os.path.join(classDir, f[len(sourceDir) + 1:])
         head, tail = os.path.split(destFile)
         if not os.path.exists(head):
             os.makedirs(head)
@@ -346,7 +346,7 @@ def runJar(classDir, jarFile, sourceDir):
         if file.endswith(".java"):
             continue
         classFiles.append(file)
-    classList = ["-C " + classDir + " " + x[len(classDir)+1:] + "" for x in classFiles]  # nopep8
+    classList = ["-C " + classDir + " " + x[len(classDir) + 1:] + "" for x in classFiles]   # nopep8
     f = open("temp-jar-list", "w")
     f.write("\n".join(classList))
     f.close()
@@ -426,6 +426,7 @@ def buildSchemaDrivers():
 #################################################################
 # data and functions for building schema drivers
 #################################################################
+
 
 coreSchemaDriverFiles = [
     "html5-all.rnc",
@@ -1104,24 +1105,24 @@ class Release():
                 stagingRepositoryId = "nuvalidator-" + line[19:23]
                 mvnArgs = [
                     mvnCmd,
-                        "-f",
-                        "%s.pom" % os.path.join(distDir, basename),
-                        "org.sonatype.plugins:nexus-staging-maven-plugin:rc-close",   # nopep8
-                        "-DnexusUrl=https://oss.sonatype.org/",
-                        "-DserverId=ossrh",
-                        "-DautoReleaseAfterClose=true",
-                        "-DstagingRepositoryId=" + stagingRepositoryId
-                    ]
+                    "-f",
+                    "%s.pom" % os.path.join(distDir, basename),
+                    "org.sonatype.plugins:nexus-staging-maven-plugin:rc-close",     # nopep8
+                    "-DnexusUrl=https://oss.sonatype.org/",
+                    "-DserverId=ossrh",
+                    "-DautoReleaseAfterClose=true",
+                    "-DstagingRepositoryId=" + stagingRepositoryId
+                ]
                 runCmd(mvnArgs)
                 mvnArgs = [
                     mvnCmd,
-                        "-f",
-                        "%s.pom" % os.path.join(distDir, basename),
-                        "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",  # nopep8
-                        "-DnexusUrl=https://oss.sonatype.org/",
-                        "-DserverId=ossrh",
-                        "-DautoReleaseAfterClose=true",
-                        "-DstagingRepositoryId=" + stagingRepositoryId
+                    "-f",
+                    "%s.pom" % os.path.join(distDir, basename),
+                    "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",   # nopep8
+                    "-DnexusUrl=https://oss.sonatype.org/",
+                    "-DserverId=ossrh",
+                    "-DautoReleaseAfterClose=true",
+                    "-DstagingRepositoryId=" + stagingRepositoryId
                 ]
                 runCmd(mvnArgs)
 
@@ -1486,6 +1487,7 @@ def printHelp():
     print("  war      -- Create a WAR file containing a release distribution")
     print("  checkjar -- Run tests with the build jar file")
     print("  script   -- Make run-validator.sh script for running the system")
+
 
 buildScript = sys.argv[0]
 argv = sys.argv[1:]
