@@ -29,7 +29,7 @@ grammar {
         [ a:defaultValue = "simple" ]
         attribute xlink:type { string "simple" }?,
         (
-        attribute xlink:href { URI.datatype }?
+        attribute xlink:href { URI.datatype }
         |
         attribute href { URI.datatype }
         )?,
@@ -45,7 +45,7 @@ grammar {
         [ a:defaultValue = "simple" ]
         attribute xlink:type { string "simple" }?,
         (
-        attribute xlink:href { URI.datatype }?
+        attribute xlink:href { URI.datatype }
         |
         attribute href { URI.datatype }
         )?,
@@ -61,7 +61,7 @@ grammar {
         [ a:defaultValue = "simple" ]
         attribute xlink:type { string "simple" }?,
         (
-        attribute xlink:href { URI.datatype }?
+        attribute xlink:href { URI.datatype }
         |
         attribute href { URI.datatype }
         )?,
@@ -77,7 +77,7 @@ grammar {
         [ a:defaultValue = "simple" ]
         attribute xlink:type { string "simple" }?,
         (
-        attribute xlink:href { URI.datatype }?
+        attribute xlink:href { URI.datatype }
         |
         attribute href { URI.datatype }
         )?,
