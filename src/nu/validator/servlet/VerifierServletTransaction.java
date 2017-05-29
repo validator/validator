@@ -2052,7 +2052,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 "pattern",
                 "(?:(?:(?:https?://\\S+)|(?:data:\\S+))(?:\\s+(?:(?:https?://\\S+)|(?:data:\\S+)))*)?");
         attrs.addAttribute("title",
-                "Space-separated list of schema IRIs. (Leave blank to let the service guess.)");
+                "Space-separated list of schema URLs. (Leave blank to let the service guess.)");
         if (schemaUrls != null) {
             attrs.addAttribute("value", scrub(schemaUrls));
         }
@@ -2067,7 +2067,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         attrs.addAttribute("id", "doc");
         attrs.addAttribute("pattern", "(?:(?:https?://.+)|(?:data:.+))?");
         attrs.addAttribute("title",
-                "Absolute IRI (http, https or data only) of the document to be checked.");
+                "Absolute URL (http, https or data only) of the document to be checked.");
         attrs.addAttribute("tabindex", "0");
         attrs.addAttribute("autofocus", "autofocus");
         if (document != null) {
