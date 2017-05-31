@@ -50,7 +50,7 @@ except ImportError:
 import subprocess
 from ssl import SSLError
 import time
-# Use newer https certifications from certifi package if avaiable
+# Use newer https certifications from certifi package if available
 try:
     import certifi
     CAFILE = certifi.where()
