@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
 public final class DebugChecker extends Checker {
 
     /**
-     * Contructor.
+     * Constructor.
      */
     public DebugChecker() {
         super();

@@ -36,7 +36,7 @@ import org.relaxng.datatype.DatatypeException;
  */
 abstract class AbstractDatetime extends AbstractDatatype {
     /**
-     * Days in monts on non-leap years.
+     * Days in months on non-leap years.
      */
     private static int[] DAYS_IN_MONTHS = { 31, 28, 31, 30, 31, 30, 31, 31, 30,
             31, 30, 31 };
