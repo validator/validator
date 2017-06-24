@@ -56,7 +56,7 @@ public class FloatingPointExponent extends AbstractDatatype {
                     } else if (isCSS() && c == '+') {
                         state = State.AT_START_PLUS_SEEN;
                         continue;
-                    } else if (isCSS() && c == '.') {
+                    } else if (c == '.') {
                         state = State.DOT_SEEN;
                         continue;
                     } else if (isAsciiDigit(c)) {

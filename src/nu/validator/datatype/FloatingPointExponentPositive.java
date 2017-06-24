@@ -53,6 +53,9 @@ public final class FloatingPointExponentPositive extends AbstractDatatype {
                 case AT_START:
                     if (c == '-') {
                         throw newDatatypeException(i, "A positive floating point number cannot start with the minus sign.");
+                    } else if (c == '.') {
+                        state = State.DOT_SEEN;
+                        continue;
                     } else if (isAsciiDigit(c)) {
                         if (c != '0') {
                             zero = false;

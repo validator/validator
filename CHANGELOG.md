@@ -6,12 +6,13 @@ changes to any options/interfaces the checker exposes for developers.
 XX June 2017
   - Add new major feature for filtering out errors/warnings by regex
   - Allow link[rel=serviceworker]
-  - Prevent Bulgarian ➡ Russian misidentifications in language detector
-  - Fix bug that disallowed `progress` & `meter` as label[for] targets
+  - Allow floating-point numbers to start with dot
   - Allow a[href] in SVG wherever a[xlink:href] is allowed
   - Allow the "focusable" and "tabindex" attributes on SVG elements
+  - Fix bug that disallowed `progress` & `meter` as label[for] targets
   - Default to text/html for checking file uploads
   - Emit warnings for use of rel={copyright,previous}
+  - Prevent Bulgarian ➡ Russian misidentifications in language detector
 
 # 17.3.0
 26 March 2017

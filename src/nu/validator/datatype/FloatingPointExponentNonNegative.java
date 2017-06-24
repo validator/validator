@@ -53,6 +53,9 @@ public final class FloatingPointExponentNonNegative extends AbstractDatatype {
                     if (c == '-') {
                         state = State.AT_START_MINUS_SEEN;
                         continue;
+                    } else if (c == '.') {
+                        state = State.DOT_SEEN;
+                        continue;
                     } else if (isAsciiDigit(c)) {
                         state = State.IN_INTEGER_PART_DIGITS_SEEN;
                         continue;
