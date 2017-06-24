@@ -593,7 +593,6 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tfoot", "rowgroup");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("thead", "rowgroup");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("td", "cell");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("tr", "row");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ul", "list");
     }
 
