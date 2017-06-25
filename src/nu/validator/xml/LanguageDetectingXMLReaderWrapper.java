@@ -708,6 +708,7 @@ public final class LanguageDetectingXMLReaderWrapper
                 || "ul".equals(localName) //
                 || "nav".equals(localName) //
                 || "textarea".equals(localName) //
+                || "figcaption".equals(localName) //
                 || "form".equals(localName)) {
             collectingCharacters = false;
         }
