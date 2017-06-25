@@ -2,9 +2,16 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 17.6.0
-XX June 2017
+# 17.7.0
+XX July 2017
   - Add new major feature for filtering out errors/warnings by regex
+  - Replace a case of “Attribute "foo" not allowed on element "param" **in this
+    context**” wording in error message with “Attribute "foo" not allowed on
+    element "param" **at this point**”. This change brings the wording of the
+    messages the command-line checker emits for this case into alignment with
+    the messages the web-based checker emits.
+  - Disallow the "contextmenu" attribute and type=contextmenu and type=toolbar
+    for the `menu` element.
   - Allow link[rel=serviceworker]
   - Allow floating-point numbers to start with dot
   - Allow a[href] in SVG wherever a[xlink:href] is allowed

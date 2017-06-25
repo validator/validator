@@ -1105,10 +1105,6 @@ public class Assertions extends Checker {
 
     private Map<StackNode, Locator> openActiveDescendants = new HashMap<>();
 
-    private LinkedHashSet<IdrefLocator> contextmenuReferences = new LinkedHashSet<>();
-
-    private Set<String> menuIds = new HashSet<>();
-
     private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<>();
 
     private LinkedHashSet<IdrefLocator> formElementReferences = new LinkedHashSet<>();
@@ -1196,14 +1192,6 @@ public class Assertions extends Checker {
      */
     @Override
     public void endDocument() throws SAXException {
-        // contextmenu
-        for (IdrefLocator idrefLocator : contextmenuReferences) {
-            if (!menuIds.contains(idrefLocator.getIdref())) {
-                err("The \u201Ccontextmenu\u201D attribute must refer to a \u201Cmenu\u201D element.",
-                        idrefLocator.getLocator());
-            }
-        }
-
         // label for
         for (IdrefLocator idrefLocator : formControlReferences) {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
@@ -1402,8 +1390,6 @@ public class Assertions extends Checker {
         openLabels.clear();
         openMediaElements.clear();
         openActiveDescendants.clear();
-        contextmenuReferences.clear();
-        menuIds.clear();
         ariaOwnsIdsByRole.clear();
         needsAriaOwner.clear();
         formControlReferences.clear();
@@ -1472,7 +1458,6 @@ public class Assertions extends Checker {
             String xmlLang = null;
             String lang = null;
             String id = null;
-            String contextmenu = null;
             String list = null;
 
             int len = atts.getLength();
@@ -1537,8 +1522,6 @@ public class Assertions extends Checker {
                     } else if ("for" == attLocal && "label" == localName) {
                         forAttr = atts.getValue(i);
                         ancestorMask |= LABEL_FOR_MASK;
-                    } else if ("contextmenu" == attLocal) {
-                        contextmenu = atts.getValue(i);
                     } else if ("ismap" == attLocal) {
                         ismap = true;
                     } else if ("selected" == attLocal) {
@@ -2227,14 +2210,6 @@ public class Assertions extends Checker {
                 err("When the attribute \u201Clang\u201D in no namespace and the attribute \u201Clang\u201D in the XML namespace are both present, they must have the same value.");
             }
 
-            // contextmenu
-            if (contextmenu != null) {
-                contextmenuReferences.add(new IdrefLocator(
-                        new LocatorImpl(getDocumentLocator()), contextmenu));
-            }
-            if ("menu" == localName) {
-                menuIds.addAll(ids);
-            }
             if (role != null && owns != null) {
                 for (Set<String> value : REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.values()) {
                     if (value.contains(role)) {

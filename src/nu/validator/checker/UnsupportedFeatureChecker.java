@@ -15,9 +15,6 @@ public class UnsupportedFeatureChecker extends Checker {
         if ("http://www.w3.org/1999/xhtml" != uri) {
             return;
         }
-        if (atts.getIndex("", "contextmenu") > -1) {
-            warnAboutAttribute("contextmenu");
-        }
         if (atts.getIndex("", "dropzone") > -1) {
             warnAboutAttribute("dropzone");
         }
@@ -29,13 +26,6 @@ public class UnsupportedFeatureChecker extends Checker {
             }
             if (atts.getIndex("", "inputmode") > -1) {
                 warnAboutAttribute("inputmode");
-            }
-        } else if ("menu" == localName) {
-            if (atts.getIndex("", "type") > -1
-                    && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                            "context", atts.getValue("", "type"))) {
-                warn("Context menus are not supported in all browsers."
-                        + " Please be sure to test, and consider using a polyfill.");
             }
         } else if ("script" == localName) {
             if (atts.getIndex("", "type") > -1
