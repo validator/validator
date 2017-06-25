@@ -1,9 +1,9 @@
 
-26 March 2017.
+26 June 2017.
 
-This release makes the “color” attribute allowed with `link[rel="mask-icon"]`, adds an `--asciiquotes` option to the vnu.jar command-line checker, improves the language detector to help prevent language misidentifications (especially for Russian and Chinese documents), adds better support for IDNs (by updating to ICU4J 58.2), changes the checker behavior to not fail for “Corrupt GZIP trailer” cases, fixes a bug that disallowed Microdata global attributes for `meta[name]`, and makes `allow-top-navigation-by-user-activation` an allowed value for `iframe[sandbox]` (while adding a new error if that value is used at the same time as `allow-top-navigation`).
+This release adds a new major feature to filter out (drop/ignore/suppress) errors/warnings by regex (details at https://github.com/validator/validator/wiki/Message-filtering), replaces a case of _“Attribute "foo" not allowed on element "param" **in this context**”_ wording in error messages with _“Attribute "foo" not allowed on element "param" **at this point**”_ (for consistent wording between the command-line checker and the web-based checker), disallows the "contextmenu" attribute and `type=contextmenu` and `type=toolbar` for the `menu` element, allows `link[rel=serviceworker]`, allows all floating-point numbers in attribute values to start with a decimal point, allows `a[href]` in SVG wherever `a[xlink:href]` is allowed, and allows the "focusable" and "tabindex" attributes on SVG elements.
 
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1730
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1770
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 
