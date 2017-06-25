@@ -36,19 +36,9 @@ import org.xml.sax.SAXParseException;
  */
 final class Cell implements Locator {
 
-    // See
-    // http://mxr-test.landfill.bugzilla.org/mxr-test/seamonkey/source/content/html/content/src/nsHTMLTableCellElement.cpp
-    // for the source of these magic numbers.
-
-    /**
-     * Magic number from Gecko.
-     */
     private static final int MAX_COLSPAN = 1000;
 
-    /**
-     * Magic number from Gecko.
-     */
-    private static final int MAX_ROWSPAN = 8190;
+    private static final int MAX_ROWSPAN = 65534;
 
     /**
      * The column in which this cell starts. (Zero before positioning.)
@@ -59,7 +49,7 @@ final class Cell implements Locator {
      * The first row in the row group onto which this cell does not span.
      * (rowspan before positioning)
      *
-     * <p>However, <code>Integen.MAX_VALUE</code> is a magic value that means
+     * <p>However, <code>MAX_ROWSPAN</code> is a magic value that means
      * <code>rowspan=0</code>.
      */
     private int bottom;
@@ -121,22 +111,18 @@ final class Cell implements Locator {
             this.systemId = locator.getSystemId();
         }
         if (rowspan > MAX_ROWSPAN) {
-            warn("A rowspan attribute has the value " + rowspan
-                    + ", which exceeds the magic Gecko limit of " + MAX_ROWSPAN
-                    + ".");
+            err("The value of the \u201Crowspan\u201D attribute must be less"
+                    + " than or equal to " + MAX_ROWSPAN + ".");
+            rowspan = MAX_ROWSPAN;
         }
         if (colspan > MAX_COLSPAN) {
-            warn("A colspan attribute has the value " + colspan
-                    + ", which exceeds the magic browser limit of "
-                    + MAX_COLSPAN + ".");
-        }
-        if (rowspan == Integer.MAX_VALUE) {
-            throw new SAXException(
-                    "Implementation limit reached. Table row counter overflowed.");
+            err("The value of the \u201Ccolspan\u201D attribute must be less"
+                    + " than or equal to " + MAX_COLSPAN + ".");
+            colspan = MAX_COLSPAN;
         }
         this.left = 0;
         this.right = colspan;
-        this.bottom = (rowspan == 0 ? Integer.MAX_VALUE : rowspan);
+        this.bottom = (rowspan == 0 ? MAX_ROWSPAN: rowspan);
         this.headers = headers;
         this.header = header;
     }
@@ -192,7 +178,7 @@ final class Cell implements Locator {
             throw new SAXException(
                     "Implementation limit reached. Table column counter overflowed.");
         }
-        if (this.bottom != Integer.MAX_VALUE) {
+        if (this.bottom != MAX_ROWSPAN) {
             this.bottom += top;
             if (this.bottom < 1) {
                 throw new SAXException(
@@ -233,7 +219,7 @@ final class Cell implements Locator {
     }
 
     public void errIfNotRowspanZero(String rowGroupType) throws SAXException {
-        if (this.bottom != Integer.MAX_VALUE) {
+        if (this.bottom != MAX_ROWSPAN) {
             err("Table cell spans past the end of its "
                     + (rowGroupType == null ? "implicit row group"
                             : "row group established by a \u201C" + rowGroupType

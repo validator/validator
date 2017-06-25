@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -38,6 +39,8 @@ import org.xml.sax.SAXException;
  * @author hsivonen
  */
 public final class TableChecker extends Checker {
+
+    private static final int MAX_COLSPAN = 1000;
 
     /**
      * Constructor.
@@ -108,14 +111,23 @@ public final class TableChecker extends Checker {
                         || "tfoot".equals(localName)) {
                     current.startRowGroup(localName);
                 } else if ("col".equals(localName)) {
-                    current.startCol(AttributeUtil.parseNonNegativeInteger(atts.getValue(
-                            "", "span")));
+                    current.startCol(clampSpan(atts));
                 } else if ("colgroup".equals(localName)) {
-                    current.startColGroup(AttributeUtil.parseNonNegativeInteger(atts.getValue(
-                            "", "span")));
+                    current.startColGroup(clampSpan(atts));
                 }
             }
         }
+    }
+
+    public int clampSpan(Attributes atts) throws SAXException {
+        int span = AttributeUtil.parseNonNegativeInteger(
+                atts.getValue("", "span"));
+        if (span > MAX_COLSPAN) {
+            err("The value of the \u201Cspan\u201D attribute must be less than"
+                    + " or equal to " + MAX_COLSPAN + ".");
+            span = MAX_COLSPAN;
+        }
+        return span;
     }
 
     /**
