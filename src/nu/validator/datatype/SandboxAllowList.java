@@ -69,6 +69,8 @@ public final class SandboxAllowList extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         hasAllowScripts = false;
         hasAllowSameOrigin= false;
+        hasAllowTopNavigation = false;
+        hasAllowTopNavigationByUserActivation = false;
         Set<String> tokensSeen = new HashSet<>();
         StringBuilder builder = new StringBuilder();
         int len = literal.length();
