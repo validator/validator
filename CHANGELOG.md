@@ -2,6 +2,10 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 17.N.N
+NN XXX 2017
+  - Allow `&;` (don’t report it as “`&` did not start a character reference”)
+
 # 17.7.0
 26 June 2017
   - Add new major feature to filter out (drop/ignore/suppress) errors/warnings
