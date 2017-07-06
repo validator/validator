@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- vim: set fileencoding=utf-8 :
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2016 Mozilla Foundation
+# Copyright (c) 2008-2017 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -143,7 +143,7 @@ miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8
-    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.2.0/salvation-2.2.0.jar", "243988393b711ff1917cb232744c1563"),  # nopep8
+    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.3.0/salvation-2.3.0.jar", "18137575ef72f160352ff0c395243ed6"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),  # nopep8
@@ -186,7 +186,7 @@ runDependencyJars = [
     "httpcore-4.4.jar",
     "httpclient-4.4.jar",
     "icu4j-58.2.jar",
-    "salvation-2.2.0.jar",
+    "salvation-2.3.0.jar",
     "javax.servlet-api-3.1.0.jar",
     "jchardet-1.0.jar",
     "jetty-http-9.2.9.v20150224.jar",

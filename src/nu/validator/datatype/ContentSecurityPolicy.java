@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Mozilla Foundation
+ * Copyright (c) 2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -38,9 +38,10 @@ public class ContentSecurityPolicy extends AbstractDatatype {
     public static final ContentSecurityPolicy THE_INSTANCE = new ContentSecurityPolicy();
 
     private static final String DIRECTIVE_NAME = " ("
-            + "frame-src|child-src|default-src|allow|options|referrer"
-            + "|upgrade-insecure-requests|block-all-mixed-content"
-            + "|report-to|report-uri) ";
+            + "child-src|connect-src|default-src|font-src|img-src|manifest-src"
+            + "|media-src|object-src|script-src|style-src|worker-src|frame-src"
+            + "|allow|options|referrer|upgrade-insecure-requests"
+            + "|block-all-mixed-content|report-to|report-uri) ";
 
     private static final String SANDBOX_KEYWORDS = "("
             + "allow-forms|allow-modals|allow-pointer-lock"
