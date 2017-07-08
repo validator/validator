@@ -33,9 +33,9 @@ public class SvgPathData extends AbstractDatatype {
         super();
     }
 
-    private static StringReader reader;
+    private StringReader reader;
 
-    private static StringBuilder context;
+    private StringBuilder context;
 
     private static final int MAX_CONTEXT_LENGTH = 20;
 
