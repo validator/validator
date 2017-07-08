@@ -267,8 +267,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private void adjustWidths(List<String> urls, List<Integer> widths, int ix)
             throws DatatypeException {
-        if (widths.size() == ix
-                || (widths.size() != 0 && widths.get(ix) == NO_WIDTH)) {
+        if (widths.size() == ix || (widths.size() != 0 && widths.size() > ix
+                && widths.get(ix) == NO_WIDTH)) {
             if (widthRequired()) {
                 errNoWidth(urls.get(ix), null);
             } else if (widths.size() == ix) {
