@@ -894,13 +894,13 @@ input[list=useragents] {
 	border: solid #ccc 1px;
 }
 
-@media (min-width: 925px) {
+@media (min-width: 938px) {
 	.checkboxes .extraoptions {
 		padding-left: 8px;
 	}
 }
 
-@media (max-width: 924px) {
+@media (max-width: 937px) {
 	.extraoptions {
 		display: block;
 		margin-top: 8px;
@@ -920,7 +920,7 @@ input[list=useragents] {
 	}
 }
 
-@media (max-width: 479px) {
+@media (max-width: 572px) {
 	#show_options {
 		display: block;
 		margin-top: 8px;
