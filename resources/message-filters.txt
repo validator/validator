@@ -14,3 +14,4 @@
 # receives, from all users of the checker service.
 #
 # Lines that start with "#" (like this and the above) are ignored.
+.*Authors who wish to regulate nested browsing contexts.*
