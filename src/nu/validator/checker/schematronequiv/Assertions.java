@@ -2443,6 +2443,33 @@ public class Assertions extends Checker {
                             + " \u201Crel\u201D attribute that contains"
                             + " the value \u201Cmask-icon\u201D.");
                 }
+                if (atts.getIndex("", "scope") > -1 //
+                        && ((relList != null
+                                && !relList.contains("serviceworker"))
+                                || !hasRel)) {
+                    err("A \u201Clink\u201D element with a"
+                            + " \u201Cscope\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cserviceworker\u201D.");
+                }
+                if (atts.getIndex("", "updateviacache") > -1 //
+                        && ((relList != null
+                                && !relList.contains("serviceworker"))
+                                || !hasRel)) {
+                    err("A \u201Clink\u201D element with an"
+                            + " \u201Cupdateviacache\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cserviceworker\u201D.");
+                }
+                if (atts.getIndex("", "workertype") > -1 //
+                        && ((relList != null
+                                && !relList.contains("serviceworker"))
+                                || !hasRel)) {
+                    err("A \u201Clink\u201D element with a"
+                            + " \u201Cworkertype\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cserviceworker\u201D.");
+                }
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
                                 && !(relList.contains("dns-prefetch")

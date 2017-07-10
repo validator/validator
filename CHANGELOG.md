@@ -4,6 +4,7 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 17.N.N
 NN XXX 2017
+  - Allow @scope, @updateviacache, @workertype for link[rel=serviceworker]
   - Allow `&;` (don’t report it as “`&` did not start a character reference”)
   - Update CSP checking to Salvation 2.3.0
     https://github.com/shapesecurity/salvation/releases/tag/v2.3.0
