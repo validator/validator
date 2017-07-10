@@ -425,7 +425,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             VERSION = (System.getProperty("nu.validator.servlet.version",
                     props.getProperty("nu.validator.servlet.version",
                             "Living Validator"))).toCharArray();
-            USER_AGENT= (System.getProperty("nu.validator.servlet.user-agent",
+            USER_AGENT = (System.getProperty("nu.validator.servlet.user-agent",
                     props.getProperty("nu.validator.servlet.user-agent",
                             "Validator.nu/LV")));
 
