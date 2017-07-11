@@ -887,20 +887,35 @@ label[for=showimagereport] {
 	margin-right: 0;
 }
 
-input[list=useragents] {
-	width: 30.5%;
+input[list=useragents], input#acceptlanguage {
 	padding: 2px 4px 3px 4px;
 	border-radius: 6px;
 	border: solid #ccc 1px;
 }
 
-@media (min-width: 938px) {
+input[list=useragents] {
+	width: 30.5%;
+	margin-right: 10px;
+}
+
+input#acceptlanguage {
+	width: 55px;
+}
+
+@media (max-width: 1234px) {
+	#accept-language-label {
+		display: block;
+		margin-top: 8px;
+	}
+}
+
+@media (min-width: 954px) {
 	.checkboxes .extraoptions {
 		padding-left: 8px;
 	}
 }
 
-@media (max-width: 937px) {
+@media (max-width: 953px) {
 	.extraoptions {
 		display: block;
 		margin-top: 8px;
@@ -916,11 +931,21 @@ input[list=useragents] {
 		margin-bottom: -68px;
 	}
 	input[list=useragents] {
-		width: 57.7%;
+		width: 350px;
+	}
+	#accept-language-label {
+		display: inline;
 	}
 }
 
-@media (max-width: 572px) {
+@media (max-width: 836px) {
+	#accept-language-label {
+		display: block;
+		margin-top: 8px;
+	}
+}
+
+@media (max-width: 640px) {
 	#show_options {
 		display: block;
 		margin-top: 8px;

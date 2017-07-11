@@ -257,6 +257,11 @@ import io.mola.galimatias.GalimatiasParseException;
             m.setHeader("User-Agent", userAgent);
             m.setHeader("Accept", buildAccept());
             m.setHeader("Accept-Encoding", "gzip");
+            if (request != null && request.getAttribute(
+                    "http://validator.nu/properties/accept-language") != null) {
+                m.setHeader("Accept-Language", (String) request.getAttribute(
+                        "http://validator.nu/properties/accept-language"));
+            }
             log4j.info(systemId);
             HttpResponse response = client.execute(m);
             boolean ignoreResponseStatus = false;

@@ -28,6 +28,8 @@
 				><label id="user-agent-label" title="Specify the user-agent string to send in the document request"
 				>User-Agent <?SaxCompiler-code t.emitUserAgentInput(); ?></label
 				><datalist id="useragents"></datalist
+				><label id="accept-language-label" title="Specify the accept-language header to send in the document request"
+				>Accept-Language <?SaxCompiler-code t.emitAcceptLanguageInput(); ?></label
 			></span
 		></p
 		><div id="inputregion"

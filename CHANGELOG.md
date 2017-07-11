@@ -6,6 +6,8 @@ changes to any options/interfaces the checker exposes for developers.
 NN XXX 2017
   - Allow @scope, @updateviacache, @workertype for link[rel=serviceworker]
   - Allow `&;` (don’t report it as “`&` did not start a character reference”)
+  - Add `acceptlanguage` query parameter, to specify an Accept-Language
+    request-header value for checker to send when fetching remote documents
   - Update CSP checking to Salvation 2.3.0
     https://github.com/shapesecurity/salvation/releases/tag/v2.3.0
 

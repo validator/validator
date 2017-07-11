@@ -855,6 +855,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } else {
             userAgent = USER_AGENT;
         }
+        if (request.getParameter("acceptlanguage") != null) {
+            request.setAttribute(
+                    "http://validator.nu/properties/accept-language",
+                    scrub(request.getParameter("acceptlanguage")));
+        }
         Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
         showSource = (request.getParameter("showsource") != null);
         showSource = (showSource || "textarea".equals(inputType));
@@ -2457,6 +2462,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         attrs.addAttribute("name", "useragent");
         attrs.addAttribute("list", "useragents");
         attrs.addAttribute("value", userAgent);
+        emitter.startElement("input", attrs);
+        emitter.endElement("input");
+    }
+
+    void emitAcceptLanguageInput() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("id", "acceptlanguage");
+        attrs.addAttribute("name", "acceptlanguage");
         emitter.startElement("input", attrs);
         emitter.endElement("input");
     }
