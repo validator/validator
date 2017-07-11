@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -50,7 +50,11 @@ public final class Location implements Comparable<Location>, Cloneable {
                 line = 0;
                 column = 0;                
             } else {
-                column = owner.getLine(line).getBufferLength();
+                try {
+                    column = owner.getLine(line).getBufferLength();
+                } catch (IndexOutOfBoundsException e) {
+                    column = 0;
+                }
             }
         }
         this.line = line;
