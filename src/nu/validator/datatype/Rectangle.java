@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -49,13 +49,20 @@ public final class Rectangle extends AbstractInt {
         for (CharSequenceWithOffset item : list) {
             checkInt(item.getSequence(), item.getOffset());
         }
-        if (Integer.parseInt(list.get(0).getSequence().toString()) >= 
+        try {
+            if (Integer.parseInt(list.get(0).getSequence().toString()) >= //
             Integer.parseInt(list.get(2).getSequence().toString())) {
-            throw newDatatypeException("The first integer must be less than the third.");
-        }
-        if (Integer.parseInt(list.get(1).getSequence().toString()) >= 
+                throw newDatatypeException(
+                        "The first integer must be less than the third.");
+            }
+            if (Integer.parseInt(list.get(1).getSequence().toString()) >= //
             Integer.parseInt(list.get(3).getSequence().toString())) {
-            throw newDatatypeException("The second integer must be less than the fourth.");
+                throw newDatatypeException(
+                        "The second integer must be less than the fourth.");
+            }
+        } catch (NumberFormatException e) {
+            throw newDatatypeException("Expected integer less than \u201C" //
+                    + Integer.MAX_VALUE + "\u201D.");
         }
     }
 
