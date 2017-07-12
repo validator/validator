@@ -154,13 +154,16 @@ function initFieldHolders() {
 
 function toggleExtraOptions() {
 	var extraoptions = document.querySelector('.extraoptions'),
-		extraoptions_input = document.querySelector('input[name=useragent]')
+		extraoptions_useragent = document.querySelector('input[name=useragent]'),
+		extraoptions_acceptlanguage = document.querySelector('input[name=acceptlanguage]')
 	if (extraoptions.className.indexOf("unhidden") != -1) {
 		extraoptions.className = extraoptions.className.replace(/unhidden/, 'hidden')
-		extraoptions_input.setAttribute("disabled", "")
+		extraoptions_useragent.setAttribute("disabled", "")
+		extraoptions_acceptlanguage.setAttribute("disabled", "")
 	} else {
 		extraoptions.className = extraoptions.className.replace(/hidden/, 'unhidden')
-		extraoptions_input.removeAttribute("disabled")
+		extraoptions_useragent.removeAttribute("disabled")
+		extraoptions_acceptlanguage.removeAttribute("disabled")
 	}
 }
 
