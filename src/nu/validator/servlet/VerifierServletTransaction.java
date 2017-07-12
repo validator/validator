@@ -299,6 +299,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static Schema[] preloadedSchemas;
 
+    private final static String cannotRecover = "Cannot recover after last"
+            + " error. Any further errors will be ignored.";
+
+    private final static String changingEncoding = "Changing encoding at this"
+            + " point would need non-streamable behavior.";
+
     private final static String[] DENY_LIST = System.getProperty(
             "nu.validator.servlet.deny-list", "").split("\\s+");
 
@@ -1162,7 +1168,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (TooManyErrorsException e) {
             errorHandler.fatalError(e);
         } catch (SAXException e) {
-            log4j.debug("SAXException: " + e.getMessage());
+            String msg = e.getMessage();
+            if (!cannotRecover.equals(msg) && !changingEncoding.equals(msg)) {
+                log4j.debug("SAXException: " + e.getMessage());
+            }
         } catch (IOException e) {
             isHtmlOrXhtml = false;
             errorHandler.ioError(e);
