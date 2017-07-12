@@ -748,17 +748,19 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void message(MessageType type, Exception message, String systemId,
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
-        if (filterPattern != null
-                && filterPattern.matcher(message.getMessage()).matches()) {
+        String msg = message.getMessage();
+        if (filterPattern != null && msg != null
+                && filterPattern.matcher(msg).matches()) {
             return;
         }
         if (loggingOk
                 && (type.getSuperType() == "error")
                 && spec != EmptySpec.THE_INSTANCE
                 && systemId != null
+                && msg != null
                 && (systemId.startsWith("http:") || systemId.startsWith("https:"))) {
-            log4j.info(zapLf(new StringBuilder().append(systemId).append('\t').append(
-                    message.getMessage())));
+            log4j.info(zapLf(new StringBuilder() //
+                    .append(systemId).append('\t').append(msg)));
         }
         if (errorsOnly && type.getSuperType() == "info") {
             return;
