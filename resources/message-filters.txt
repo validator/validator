@@ -15,3 +15,4 @@
 #
 # Lines that start with "#" (like this and the above) are ignored.
 .*Authors who wish to regulate nested browsing contexts.*
+.*deprecates “report-uri” in favour of a new “report-to” directive.*
