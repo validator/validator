@@ -195,6 +195,7 @@ function initUserAgents() {
 		'default'))
 	document.querySelector("span.extraoptions").appendChild(userAgents)
 	document.querySelector("input[list=useragents]").setAttribute("disabled", "")
+	document.querySelector('input[name=acceptlanguage]').setAttribute("disabled", "")
 }
 
 function createLabeledOption(value, label) {
