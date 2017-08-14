@@ -2153,6 +2153,12 @@ public class Assertions extends Checker {
                                 + " \u201Ctype\u201D attribute with the value"
                                 + " \u201Cmodule\u201D.");
                     }
+                    if (atts.getIndex("", "nomodule") > -1) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Cnomodule\u201D attribute must not have a"
+                                + " \u201Ctype\u201D attribute with the value"
+                                + " \u201Cmodule\u201D.");
+                    }
                 }
             }
 
