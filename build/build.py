@@ -68,7 +68,7 @@ tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
 mvnCmd = 'mvn'
-gpgCmd = 'gpg2'
+gpgCmd = 'gpg'
 npmCmd = 'npm'
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
