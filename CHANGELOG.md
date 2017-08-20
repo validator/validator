@@ -2,8 +2,8 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 17.N.N
-NN XXX 2017
+# 17.9.0
+20 August 2017
   - Allow script[nomodule]
   - Allow the hover, any-hover, pointer, and any-pointer media features
   - Allow @scope, @updateviacache, @workertype for link[rel=serviceworker]

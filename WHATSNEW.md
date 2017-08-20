@@ -1,9 +1,9 @@
 
-26 June 2017.
+20 August 2017.
 
-This release adds a new major feature to filter out (drop/ignore/suppress) errors/warnings by regex (details at https://github.com/validator/validator/wiki/Message-filtering), replaces a case of _“Attribute "foo" not allowed on element "param" **in this context**”_ wording in error messages with _“Attribute "foo" not allowed on element "param" **at this point**”_ (for consistent wording between the command-line checker and the web-based checker), disallows the "contextmenu" attribute and `type=contextmenu` and `type=toolbar` for the `menu` element, allows `link[rel=serviceworker]`, allows all floating-point numbers in attribute values to start with a decimal point, allows `a[href]` in SVG wherever `a[xlink:href]` is allowed, and allows the "focusable" and "tabindex" attributes on SVG elements.
+This release adds a new feature to the checker network API to allow you to specify an `Accept-Language` request-header value for the checker to send when fetching remote documents to check. This release also allows `script[nomodule]`, allows the `hover`, `any-hover`, `pointer`, and `any-pointer` media features, allows the `scope`, `updateviacache`, `workertype` attributes for `link[rel=serviceworker]`, allows the string "`&;`" in content (that is, doesn’t report it as an “`&` did not start a character reference” error), and updates CSP checking to [Salvation 2.3.0](https://github.com/shapesecurity/salvation/releases/tag/v2.3.0).
 
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1770
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1790
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 
