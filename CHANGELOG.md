@@ -5,6 +5,7 @@ changes to any options/interfaces the checker exposes for developers.
 # 17.N.N
 NN XXX 2017
   - Allow script[nomodule]
+  - Allow the hover, any-hover, pointer, and any-pointer media features
   - Allow @scope, @updateviacache, @workertype for link[rel=serviceworker]
   - Allow `&;` (don’t report it as “`&` did not start a character reference”)
   - Add `acceptlanguage` query parameter, to specify an Accept-Language

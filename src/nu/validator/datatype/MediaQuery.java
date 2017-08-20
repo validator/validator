@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2015 Mozilla Foundation
+ * Copyright (c) 2007-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -41,11 +41,13 @@ public class MediaQuery extends AbstractDatatype {
     private static final boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
 
     private enum State {
-        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_MEDIA_FEATURE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, BEFORE_CALC_OPEN_PAREN, IN_CALC, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
+        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_MEDIA_FEATURE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, BEFORE_CALC_OPEN_PAREN, IN_CALC, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO, //
+        IN_VALUE_HOVER, IN_VALUE_ANYHOVER, IN_VALUE_POINTER, IN_VALUE_ANYPOINTER
     }
 
     private enum ValueType {
-        LENGTH, RATIO, INTEGER, RESOLUTION, SCAN, ORIENTATION, NONZEROINTEGER, ONEORZERO
+        LENGTH, RATIO, INTEGER, RESOLUTION, SCAN, ORIENTATION, NONZEROINTEGER, ONEORZERO, //
+        HOVER, ANYHOVER, POINTER, ANYPOINTER
     }
 
     private static final Set<String> LENGTH_UNITS = new HashSet<>();
@@ -140,6 +142,10 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("scan", ValueType.SCAN);
         FEATURES_TO_VALUE_TYPES.put("orientation", ValueType.ORIENTATION);
         FEATURES_TO_VALUE_TYPES.put("grid", ValueType.ONEORZERO);
+        FEATURES_TO_VALUE_TYPES.put("hover", ValueType.HOVER);
+        FEATURES_TO_VALUE_TYPES.put("any-hover", ValueType.ANYHOVER);
+        FEATURES_TO_VALUE_TYPES.put("pointer", ValueType.POINTER);
+        FEATURES_TO_VALUE_TYPES.put("any-pointer", ValueType.ANYPOINTER);
     }
 
     private static final Map<String, ValueType> NONSTANDARD_FEATURES_TO_VALUE_TYPES = new HashMap<>();
@@ -453,6 +459,46 @@ public class MediaQuery extends AbstractDatatype {
                                                     + " \u201C" + c
                                                     + "\u201D instead.");
                                 }
+                            case HOVER:
+                                if ('a' <= c && 'z' >= c) {
+                                    sb.append(c);
+                                    state = State.IN_VALUE_HOVER;
+                                    continue;
+                                } else {
+                                    throw newDatatypeException(offset + i,
+                                            "Expected a letter but saw \u201C"
+                                                    + c + "\u201D instead.");
+                                }
+                            case ANYHOVER:
+                                if ('a' <= c && 'z' >= c) {
+                                    sb.append(c);
+                                    state = State.IN_VALUE_ANYHOVER;
+                                    continue;
+                                } else {
+                                    throw newDatatypeException(offset + i,
+                                            "Expected a letter but saw \u201C"
+                                                    + c + "\u201D instead.");
+                                }
+                            case POINTER:
+                                if ('a' <= c && 'z' >= c) {
+                                    sb.append(c);
+                                    state = State.IN_VALUE_POINTER;
+                                    continue;
+                                } else {
+                                    throw newDatatypeException(offset + i,
+                                            "Expected a letter but saw \u201C"
+                                                    + c + "\u201D instead.");
+                                }
+                            case ANYPOINTER:
+                                if ('a' <= c && 'z' >= c) {
+                                    sb.append(c);
+                                    state = State.IN_VALUE_ANYPOINTER;
+                                    continue;
+                                } else {
+                                    throw newDatatypeException(offset + i,
+                                            "Expected a letter but saw \u201C"
+                                                    + c + "\u201D instead.");
+                                }
                             default:
                                 if ('1' <= c && '9' >= c) {
                                     zero = false;
@@ -559,6 +605,130 @@ public class MediaQuery extends AbstractDatatype {
                                 "Expected \u201C0\u201D or \u201C1\u201D as"
                                         + " \u201c" + feature
                                         + "\u201d value but saw \u201C" + kw
+                                        + "\u201D instead.");
+                    }
+                case IN_VALUE_HOVER:
+                    if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        continue;
+                    } else if (isWhitespace(c) || c == ')') {
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if (!("none".equals(kw) //
+                                || "hover".equals(kw))) {
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201Cnone\u201D or"
+                                            + " \u201Chover\u201D as the"
+                                            + " \u201chover\u201d value"
+                                            + " but saw" + " \u201C" + kw
+                                            + "\u201D instead.");
+
+                        }
+                        if (c == ')') {
+                            state = State.AFTER_CLOSE_PAREN;
+                            continue;
+                        } else {
+                            state = State.WS_BEFORE_CLOSE_PAREN;
+                            continue;
+                        }
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected a letter, whitespace or \u201C)\u201D"
+                                        + " but saw \u201C" + c
+                                        + "\u201D instead.");
+                    }
+                case IN_VALUE_ANYHOVER:
+                    if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        continue;
+                    } else if (isWhitespace(c) || c == ')') {
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if (!("none".equals(kw) //
+                                || "hover".equals(kw))) {
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201Cnone\u201D or"
+                                            + " \u201Chover\u201D as the"
+                                            + " \u201cany-hover\u201d value"
+                                            + " but saw" + " \u201C" + kw
+                                            + "\u201D instead.");
+
+                        }
+                        if (c == ')') {
+                            state = State.AFTER_CLOSE_PAREN;
+                            continue;
+                        } else {
+                            state = State.WS_BEFORE_CLOSE_PAREN;
+                            continue;
+                        }
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected a letter, whitespace or \u201C)\u201D"
+                                        + " but saw \u201C" + c
+                                        + "\u201D instead.");
+                    }
+                case IN_VALUE_POINTER:
+                    if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        continue;
+                    } else if (isWhitespace(c) || c == ')') {
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if (!("none".equals(kw) //
+                                || "coarse".equals(kw) //
+                                || "fine".equals(kw))) {
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201Cnone\u201D or"
+                                            + " \u201Ccoarse\u201D or"
+                                            + " \u201Cfine\u201D as the"
+                                            + " \u201cpointer\u201d value"
+                                            + " but saw" + " \u201C" + kw
+                                            + "\u201D instead.");
+
+                        }
+                        if (c == ')') {
+                            state = State.AFTER_CLOSE_PAREN;
+                            continue;
+                        } else {
+                            state = State.WS_BEFORE_CLOSE_PAREN;
+                            continue;
+                        }
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected a letter, whitespace or \u201C)\u201D"
+                                        + " but saw \u201C" + c
+                                        + "\u201D instead.");
+                    }
+                case IN_VALUE_ANYPOINTER:
+                    if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        continue;
+                    } else if (isWhitespace(c) || c == ')') {
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if (!("none".equals(kw) //
+                                || "coarse".equals(kw) //
+                                || "fine".equals(kw))) {
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201Cnone\u201D or"
+                                            + " \u201Ccoarse\u201D or"
+                                            + " \u201Cfine\u201D as the"
+                                            + " \u201cany-pointer\u201d value"
+                                            + " but saw" + " \u201C" + kw
+                                            + "\u201D instead.");
+
+                        }
+                        if (c == ')') {
+                            state = State.AFTER_CLOSE_PAREN;
+                            continue;
+                        } else {
+                            state = State.WS_BEFORE_CLOSE_PAREN;
+                            continue;
+                        }
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected a letter, whitespace or \u201C)\u201D"
+                                        + " but saw \u201C" + c
                                         + "\u201D instead.");
                     }
                 case IN_VALUE_BEFORE_DIGITS:
