@@ -263,6 +263,15 @@ import io.mola.galimatias.GalimatiasParseException;
                         "http://validator.nu/properties/accept-language"));
             }
             log4j.info(systemId);
+            try {
+                if (url.port() > 65535) {
+                    throw new IOException(
+                            "Port number must be less than 65536.");
+                }
+            } catch (NumberFormatException e) {
+                    throw new IOException(
+                            "Port number must be less than 65536.");
+            }
             HttpResponse response = client.execute(m);
             boolean ignoreResponseStatus = false;
             if (request != null && request.getAttribute(
