@@ -2,6 +2,10 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 17.N.N
+NN XXX 2017
+  - Allow DPUB roles on more elements (per ARIA in HTML spec updates)
+
 # 17.9.0
 20 August 2017
   - Allow script[nomodule]
