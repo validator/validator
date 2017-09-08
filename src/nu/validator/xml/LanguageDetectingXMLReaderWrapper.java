@@ -229,6 +229,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private int currentOpenElementsInDifferentLang;
 
+    private boolean loggedScriptWithCharset;
+
     private boolean loggedStyleInBody;
 
     private boolean loggedRelAlternate;
@@ -308,6 +310,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.htmlStartTagLocator = null;
         this.inBody = false;
         this.currentOpenElementsInDifferentLang = 0;
+        this.loggedScriptWithCharset = false;
         this.loggedStyleInBody = false;
         this.loggedRelAlternate = false;
         this.loggedRelAuthor = false;
@@ -481,6 +484,13 @@ public final class LanguageDetectingXMLReaderWrapper
             if (request != null && hasAppleTouchIcon && hasSizes) {
                 request.setAttribute(
                         "http://validator.nu/properties/apple-touch-icon-with-sizes-found",
+                        true);
+            }
+        } else if ("script".equals(localName) && !loggedScriptWithCharset) {
+            loggedScriptWithCharset = true;
+            if (request != null) {
+                request.setAttribute(
+                        "http://validator.nu/properties/script-with-charset-found",
                         true);
             }
         } else if (inBody && "style".equals(localName) && !loggedStyleInBody) {

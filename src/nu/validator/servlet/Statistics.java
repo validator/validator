@@ -131,6 +131,7 @@ public class Statistics {
         PARSER_HTML4("Parser: set to explicit HTML4 mode"), //
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
+        SCRIPT_WITH_CHARSET_FOUND("<script charset> found"), //
         STYLE_IN_BODY_FOUND("<style> in <body> found"), //
         REL_ALTERNATE_FOUND("rel=alternate found"), //
         REL_AUTHOR_FOUND("rel=author found"), //
