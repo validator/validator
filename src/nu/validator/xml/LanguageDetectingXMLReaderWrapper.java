@@ -487,11 +487,15 @@ public final class LanguageDetectingXMLReaderWrapper
                         true);
             }
         } else if ("script".equals(localName) && !loggedScriptWithCharset) {
-            loggedScriptWithCharset = true;
-            if (request != null) {
-                request.setAttribute(
-                        "http://validator.nu/properties/script-with-charset-found",
-                        true);
+            for (int i = 0; i < atts.getLength(); i++) {
+                if ("charset".equals(atts.getLocalName(i))) {
+                    loggedScriptWithCharset = true;
+                    if (request != null) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/script-with-charset-found",
+                                true);
+                    }
+                }
             }
         } else if (inBody && "style".equals(localName) && !loggedStyleInBody) {
             loggedStyleInBody = true;
