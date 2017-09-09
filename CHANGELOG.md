@@ -5,6 +5,9 @@ changes to any options/interfaces the checker exposes for developers.
 # 17.N.N
 NN XXX 2017
   - Allow DPUB roles on more elements (per ARIA in HTML spec updates)
+  - Add --Werror option to the vnu.jar command-line checker. The option
+    causes the checker to exit non-zero if any warnings are encountered
+    (even if there are no errors).
 
 # 17.9.0
 20 August 2017

@@ -70,6 +70,8 @@ public class SimpleCommandLineValidator {
 
     private static boolean errorsOnly;
 
+    private static boolean wErrors;
+
     private static boolean exitZeroAlways;
 
     private static boolean loadEntities;
@@ -100,6 +102,7 @@ public class SimpleCommandLineValidator {
         out = System.err;
         System.setProperty("nu.validator.datatype.warn", "true");
         errorsOnly = false;
+        wErrors = false;
         skipNonHTML = false;
         forceHTML = false;
         loadEntities = false;
@@ -136,6 +139,8 @@ public class SimpleCommandLineValidator {
                 } else if ("--errors-only".equals(args[i])) {
                     errorsOnly = true;
                     System.setProperty("nu.validator.datatype.warn", "false");
+                } else if ("--Werrors".equals(args[i])) {
+                    wErrors = true;
                 } else if ("--exit-zero-always".equals(args[i])) {
                     exitZeroAlways = true;
                 } else if ("--asciiquotes".equals(args[i])) {
@@ -283,7 +288,8 @@ public class SimpleCommandLineValidator {
     private static void end() throws SAXException {
         errorHandler.end("Document checking completed. No errors found.",
                 "Document checking completed.", "");
-        if (errorHandler.getErrors() > 0 || errorHandler.getFatalErrors() > 0) {
+        if (errorHandler.getErrors() > 0 || errorHandler.getFatalErrors() > 0
+                || (wErrors && errorHandler.getWarnings() > 0)) {
             System.exit(exitZeroAlways ? 0 : 1);
         }
     }
@@ -416,7 +422,7 @@ public class SimpleCommandLineValidator {
     private static void usage() {
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("    java -jar vnu.jar [--errors-only] [--exit-zero-always]");
+        System.out.println("    java -jar vnu.jar [--errors-only] [--Werror] [--exit-zero-always]");
         System.out.println("         [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]");
         System.out.println("         [--filterfile FILENAME] [--filterpattern PATTERN]");
         System.out.println("         [--html] [--skip-non-html] [--no-langdetect]");

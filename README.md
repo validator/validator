@@ -62,7 +62,7 @@ frontend such as:
 Use the `vnu.jar` HTML checker as an executable for command-line checking of
 documents by invoking it like this:
 
-      java -jar ~/vnu.jar [--errors-only] [--exit-zero-always]
+      java -jar ~/vnu.jar [--errors-only] [--Werrors] [--exit-zero-always]
            [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]
            [--filterfile FILENAME] [--filterpattern PATTERN] [--html]
            [--skip-non-html] [--no-langdetect] [--help] [--verbose] [--version]
@@ -106,7 +106,7 @@ To check standard input:
 When used from the command line as described in this section, the `vnu.jar`
 executable provides the following options:
 
-#### --asciiquotes
+#### --asciiquotes _yes_ | _no_
 
     Specifies whether ASCII quotation marks are substituted for Unicode smart
     quotation marks in messages.
@@ -121,6 +121,13 @@ executable provides the following options:
     reported (so that warnings and info messages are not reported).
 
     default: [unset; all message reported, including warnings & info messages]
+
+#### --Werrors
+
+    Makes the checker exit non-zero if any warnings are encountered (even if
+    there are no errors).
+
+    default: [unset; checker exits zero if only warnings are encountered]
 
 #### --exit-zero-always
 

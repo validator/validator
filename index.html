@@ -193,7 +193,7 @@ or
 <p>Use the <code>vnu.jar</code> HTML checker as an executable for
 command-line checking of documents by invoking it like this:
 <pre>
-  java -jar ~/vnu.jar [--errors-only] [--exit-zero-always]
+  java -jar ~/vnu.jar [--errors-only] [--Werrors] [--exit-zero-always]
        [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]
        [--filterfile FILENAME] [--filterpattern PATTERN]
        [--html] [--skip-non-html] [--no-langdetect]
@@ -249,7 +249,7 @@ whose names don’t end with the extensions <code>.html</code>,
 <p>When used from the command line as described in this section, the
 <code>vnu.jar</code> executable provides the following options:
 
-<h4 id="errors-only">--asciiquotes</h4>
+<h4 id="asciiquotes">--asciiquotes <var>yes</var> | <var>no</var></h4>
 <pre>
 Specifies whether ASCII quotation marks are substituted for Unicode
 smart quotation marks in messages.
@@ -265,6 +265,14 @@ Specifies that only error-level messages and non-document-error messages
 are reported (so that warnings and info messages are not reported).
 
 default: [unset; all message reported, including warnings & info messages]
+</pre>
+
+<h4 id="Werrors">--Werrors</h4>
+<pre>
+Makes the checker exit non-zero if any warnings are encountered (even if
+there are no errors).
+
+default: [unset; checker exits zero if only warnings are encountered]
 </pre>
 
 <h4 id="exit-zero-always">--exit-zero-always</h4>
