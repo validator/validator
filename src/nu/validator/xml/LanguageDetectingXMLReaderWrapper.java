@@ -319,7 +319,6 @@ public final class LanguageDetectingXMLReaderWrapper
         this.loggedRelAuthor = false;
         this.loggedRelBookmark = false;
         this.loggedRelCanonical = false;
-        this.loggedStyleInBody = false;
         this.loggedRelAlternate = false;
         this.loggedRelAuthor = false;
         this.loggedRelBookmark = false;
