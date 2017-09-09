@@ -1508,6 +1508,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.REL_TAG_FOUND);
             }
             if (request.getAttribute(
+                    "http://validator.nu/properties/link-with-charset-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/link-with-charset-found")) {
+                stats.incrementField(Statistics.Field.LINK_WITH_CHARSET_FOUND);
+            }
+            if (request.getAttribute(
                     "http://validator.nu/properties/script-with-charset-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/script-with-charset-found")) {

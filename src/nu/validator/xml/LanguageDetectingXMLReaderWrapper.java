@@ -229,6 +229,8 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private int currentOpenElementsInDifferentLang;
 
+    private boolean loggedLinkWithCharset;
+
     private boolean loggedScriptWithCharset;
 
     private boolean loggedStyleInBody;
@@ -310,6 +312,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.htmlStartTagLocator = null;
         this.inBody = false;
         this.currentOpenElementsInDifferentLang = 0;
+        this.loggedLinkWithCharset = false;
         this.loggedScriptWithCharset = false;
         this.loggedStyleInBody = false;
         this.loggedRelAlternate = false;
@@ -479,6 +482,14 @@ public final class LanguageDetectingXMLReaderWrapper
                     }
                 } else if ("sizes".equals(atts.getLocalName(i))) {
                     hasSizes = true;
+                } else if ("charset".equals(atts.getLocalName(i))
+                        && !loggedLinkWithCharset) {
+                    loggedLinkWithCharset = true;
+                    if (request != null) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/link-with-charset-found",
+                                true);
+                    }
                 }
             }
             if (request != null && hasAppleTouchIcon && hasSizes) {
