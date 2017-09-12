@@ -8,6 +8,7 @@ NN XXX 2017
   - Add --Werror option to the vnu.jar command-line checker. The option
     causes the checker to exit non-zero if any warnings are encountered
     (even if there are no errors).
+  - Stop reporting HTML4-specific parse errors for HTML4-doctype docs
 
 # 17.9.0
 20 August 2017

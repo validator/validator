@@ -39,7 +39,6 @@ import nu.validator.checker.UsemapChecker;
 import nu.validator.checker.XmlPiChecker;
 import nu.validator.gnu.xml.aelfred2.FatalSAXException;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
-import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.Heuristics;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
@@ -314,8 +313,6 @@ public class SimpleDocumentValidator {
         htmlParser.setNamePolicy(XmlViolationPolicy.ALLOW);
         htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
         htmlParser.setMappingLangToXmlLang(true);
-        htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
-        htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
         htmlParser.setHeuristics(Heuristics.ALL);
         htmlParser.setContentHandler(validator.getContentHandler());
         htmlParser.setErrorHandler(docValidationErrHandler);

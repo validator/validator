@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2010 Mozilla Foundation
+ * Copyright (c) 2007-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -28,8 +28,6 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import nu.validator.htmlparser.common.DoctypeExpectation;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -105,7 +103,6 @@ public class Html5ConformanceCheckerTransaction extends
             validator = validatorByDoctype(HTML5_SCHEMA);
             usingHtml = true;
             newHtmlParser();
-            htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
             htmlParser.setDocumentModeHandler(this);
             htmlParser.setContentHandler(validator.getContentHandler());
             reader = htmlParser;

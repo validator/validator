@@ -53,7 +53,6 @@ import nu.validator.checker.XmlPiChecker;
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.gnu.xml.aelfred2.FatalSAXException;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
-import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.Heuristics;
@@ -998,16 +997,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         laxType = (request.getParameter("laxtype") != null);
     }
 
-    private boolean useHtml5Schema() {
-        if ("".equals(schemaUrls)) {
-            return false;
-        }
-        return (schemaUrls.contains("http://s.validator.nu/html5.rnc")
-                || schemaUrls.contains("http://s.validator.nu/html5-all.rnc")
-                || schemaUrls.contains("http://s.validator.nu/html5-its.rnc")
-                || schemaUrls.contains("http://s.validator.nu/html5-rdfalite.rnc"));
-    }
-
     private boolean useXhtml5Schema() {
         if ("".equals(schemaUrls)) {
             return false;
@@ -1690,27 +1679,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 setAllowXhtml(false);
                 loadDocumentInput();
                 newHtmlParser();
-                DoctypeExpectation doctypeExpectation;
                 int schemaId;
-                switch (parser) {
-                    case HTML:
-                        doctypeExpectation = DoctypeExpectation.HTML;
-                        schemaId = HTML5_SCHEMA;
-                        break;
-                    case HTML401_STRICT:
-                        doctypeExpectation = DoctypeExpectation.HTML401_STRICT;
-                        schemaId = XHTML1STRICT_SCHEMA;
-                        break;
-                    case HTML401_TRANSITIONAL:
-                        doctypeExpectation = DoctypeExpectation.HTML401_TRANSITIONAL;
-                        schemaId = XHTML1TRANSITIONAL_SCHEMA;
-                        break;
-                    default:
-                        doctypeExpectation = DoctypeExpectation.AUTO;
-                        schemaId = 0;
-                        break;
-                }
-                htmlParser.setDoctypeExpectation(doctypeExpectation);
+                schemaId = HTML5_SCHEMA;
                 htmlParser.setDocumentModeHandler(this);
                 reader = htmlParser;
                 if (validator == null) {
@@ -1747,11 +1717,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         throw se;
                     }
                     newHtmlParser();
-                    if (useHtml5Schema()) {
-                        htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
-                    } else {
-                        htmlParser.setDoctypeExpectation(DoctypeExpectation.AUTO);
-                    }
                     htmlParser.setDocumentModeHandler(this);
                     reader = htmlParser;
                     if (validator != null) {
@@ -1789,7 +1754,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
         htmlParser.setMappingLangToXmlLang(true);
-        htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
         htmlParser.setHeuristics(Heuristics.ALL);
     }
 
@@ -2262,7 +2226,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     @Override
     public void documentMode(DocumentMode mode, String publicIdentifier,
-            String systemIdentifier, boolean html4SpecificAdditionalErrorChecks)
+            String systemIdentifier)
             throws SAXException {
         if (systemIdentifier != null) {
             if ("about:legacy-compat".equals(systemIdentifier)) {
@@ -2293,51 +2257,36 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     if ("-//W3C//DTD XHTML 1.0 Transitional//EN".equals(publicIdentifier)) {
                         errorHandler.info("XHTML 1.0 Transitional doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for "
                                 + getPresetLabel(XHTML1TRANSITIONAL_SCHEMA)
-                                + "."
-                                + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled."
-                                        : ""));
+                                + ".");
                         validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
                     } else if ("-//W3C//DTD XHTML 1.0 Strict//EN".equals(publicIdentifier)) {
                         errorHandler.info("XHTML 1.0 Strict doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for "
                                 + getPresetLabel(XHTML1STRICT_SCHEMA)
-                                + "."
-                                + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled."
-                                        : ""));
+                                + ".");
                         validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                     } else if ("-//W3C//DTD HTML 4.01 Transitional//EN".equals(publicIdentifier)) {
                         errorHandler.info("HTML 4.01 Transitional doctype seen. Using the schema for "
                                 + getPresetLabel(XHTML1TRANSITIONAL_SCHEMA)
-                                + "."
-                                + (html4SpecificAdditionalErrorChecks ? ""
-                                        : " HTML4-specific tokenization errors are not enabled."));
+                                + ".");
                         validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
                     } else if ("-//W3C//DTD HTML 4.01//EN".equals(publicIdentifier)) {
                         errorHandler.info("HTML 4.01 Strict doctype seen. Using the schema for "
                                 + getPresetLabel(XHTML1STRICT_SCHEMA)
-                                + "."
-                                + (html4SpecificAdditionalErrorChecks ? ""
-                                        : " HTML4-specific tokenization errors are not enabled."));
+                                + ".");
                         validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                     } else if ("-//W3C//DTD HTML 4.0 Transitional//EN".equals(publicIdentifier)) {
                         errorHandler.info("Legacy HTML 4.0 Transitional doctype seen.  Please consider using HTML 4.01 Transitional instead. Proceeding anyway for your convenience with the schema for "
                                 + getPresetLabel(XHTML1TRANSITIONAL_SCHEMA)
-                                + "."
-                                + (html4SpecificAdditionalErrorChecks ? ""
-                                        : " HTML4-specific tokenization errors are not enabled."));
+                                + ".");
                         validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
                     } else if ("-//W3C//DTD HTML 4.0//EN".equals(publicIdentifier)) {
                         errorHandler.info("Legacy HTML 4.0 Strict doctype seen. Please consider using HTML 4.01 instead. Proceeding anyway for your convenience with the schema for "
                                 + getPresetLabel(XHTML1STRICT_SCHEMA)
-                                + "."
-                                + (html4SpecificAdditionalErrorChecks ? ""
-                                        : " HTML4-specific tokenization errors are not enabled."));
+                                + ".");
                         validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                     }
                 } else {
                     schemaIsDefault = true;
-                    if (html4SpecificAdditionalErrorChecks) {
-                        errorHandler.info("HTML4-specific tokenization errors are enabled.");
-                    }
                     validator = validatorByDoctype(HTML5_SCHEMA);
                 }
             } catch (IncorrectSchemaException | IOException e) {
@@ -2348,10 +2297,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             ch.setDocumentLocator(htmlParser.getDocumentLocator());
             ch.startDocument();
             reader.setContentHandler(ch);
-        } else {
-            if (html4SpecificAdditionalErrorChecks) {
-                errorHandler.info("HTML4-specific tokenization errors are enabled.");
-            }
         }
     }
 
