@@ -86,6 +86,7 @@ import nu.validator.xml.ContentTypeParser.NonXmlContentTypeException;
 import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LanguageDetectingXMLReaderWrapper;
+import nu.validator.xml.UseCountingXMLReaderWrapper;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
@@ -1692,6 +1693,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 reader = new LanguageDetectingXMLReaderWrapper(reader, request,
                         errorHandler, documentInput.getLanguage(),
                         documentInput.getSystemId());
+                if (Statistics.STATISTICS != null) {
+                    reader = new UseCountingXMLReaderWrapper(reader, request);
+                }
                 break;
             case XML_NO_EXTERNAL_ENTITIES:
             case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
@@ -1725,6 +1729,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     reader = new LanguageDetectingXMLReaderWrapper(reader,
                             request, errorHandler, documentInput.getLanguage(),
                             documentInput.getSystemId());
+                    if (Statistics.STATISTICS != null) {
+                        reader = new UseCountingXMLReaderWrapper(reader,
+                                request);
+                    }
                 } else {
                     if (contentType != null) {
                         if ("application/xml".equals(contentType) ||
@@ -1808,6 +1816,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             reader = new LanguageDetectingXMLReaderWrapper(reader, request,
                     errorHandler, documentInput.getLanguage(),
                     documentInput.getSystemId());
+            if (Statistics.STATISTICS != null) {
+                reader = new UseCountingXMLReaderWrapper(reader, request);
+            }
         }
     }
 
