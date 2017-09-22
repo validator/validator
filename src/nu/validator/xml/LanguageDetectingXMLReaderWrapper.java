@@ -71,10 +71,6 @@ public final class LanguageDetectingXMLReaderWrapper
     private static final String profilesDir = "nu/validator/localentities/files/"
             + "language-profiles/";
 
-    private static List<String> profiles = new ArrayList<>();
-
-    private static List<String> languageTags = new ArrayList<>();
-
     private static final Map<String, String[]> LANG_TAGS_BY_TLD = new HashMap<>();
 
     static {
@@ -176,11 +172,13 @@ public final class LanguageDetectingXMLReaderWrapper
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     LanguageDetectingXMLReaderWrapper.class.getClassLoader().getResourceAsStream(
                             languageList)));
+            List<String> languageTags = new ArrayList<>();
             String languageTagAndName = br.readLine();
             while (languageTagAndName != null) {
                 languageTags.add(languageTagAndName.split("\t")[0]);
                 languageTagAndName = br.readLine();
             }
+            List<String> profiles = new ArrayList<>();
             for (String languageTag : languageTags) {
                 profiles.add((new BufferedReader(new InputStreamReader(
                         LanguageDetectingXMLReaderWrapper.class.getClassLoader().getResourceAsStream(
