@@ -266,6 +266,13 @@ public class ContentTypeParser {
                     }
                 }
                 inCharset: if (hasCharset(param, offset)) {
+                    if (param.length() == 8) {
+                        malformedContentTypeError(contentType,
+                                "Expected an \u201c=\u201d sign but"
+                                        + " \u201ccharset\u201d parameter"
+                                        + " ended.");
+                        break inCharset;
+                    }
                     offset += 7;
                     c = param.charAt(offset);
                     switch (c) {
