@@ -4,6 +4,7 @@ environment:
 
 install:
   # test
+  - git submodule
   - git submodule -q update --init --recursive
   # Nu Html Checker uses utf-8 for output
   # so that change code page here
@@ -12,6 +13,7 @@ install:
   - python .\build\build.py update
 
 build_script:
+  - git submodule
   - python .\build\build.py dldeps
   - python .\build\build.py build
 
