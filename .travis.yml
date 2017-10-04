@@ -19,6 +19,11 @@ install:
   - pyenv install 2.7.12
   - pyenv global 2.7.12
   - python --version
+
+before_script:
+  # Undo `_JAVA_OPTIONS` environment variable;
+  # see https://github.com/travis-ci/travis-ci/issues/8408
+  - _JAVA_OPTIONS=
 script:
 - python ./build/build.py dldeps
 - python ./build/build.py build
