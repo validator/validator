@@ -5,16 +5,18 @@ changes to any options/interfaces the checker exposes for developers.
 # 17.N.N
 NN XXX 2017
   - Allow DPUB roles on more elements (per ARIA in HTML spec updates)
-  - Add --Werror option to the vnu.jar command-line checker. The option
+  - Add `--Werror` option to the vnu.jar command-line checker. The option
     causes the checker to exit non-zero if any warnings are encountered
     (even if there are no errors).
+  - Fix mismatch that caused message-filtering failures
+  - Fix memory leak in language detector (patch from @tgyurci)
   - Stop reporting HTML4-specific parse errors for HTML4-doctype docs
 
 # 17.9.0
 20 August 2017
-  - Allow script[nomodule]
-  - Allow the hover, any-hover, pointer, and any-pointer media features
-  - Allow @scope, @updateviacache, @workertype for link[rel=serviceworker]
+  - Allow `script[nomodule]`
+  - Allow `hover`, `any-hover`, `pointer`, and `any-pointer` media features
+  - Allow `@scope`, `@updateviacache`, `@workertype` for `link[rel=serviceworker]`
   - Allow `&;` (don’t report it as “`&` did not start a character reference”)
   - Add `acceptlanguage` query parameter, to specify an Accept-Language
     request-header value for checker to send when fetching remote documents
@@ -29,21 +31,21 @@ NN XXX 2017
     context**” wording in error message with “Attribute "foo" not allowed on
     element "param" **at this point**” (for consistent working for that error
     between the command-line checker and the web-based checker).
-  - Disallow the "contextmenu" attribute and type=contextmenu and type=toolbar
+  - Disallow the `contextmenu` attribute and `type=contextmenu` and `type=toolbar`
     for the `menu` element.
-  - Allow link[rel=serviceworker]
+  - Allow `link[rel=serviceworker]`
   - Allow floating-point numbers in attribute values to start with decimal point
-  - Allow a[href] in SVG wherever a[xlink:href] is allowed
-  - Allow the "focusable" and "tabindex" attributes on SVG elements
-  - Fix bug that disallowed `progress` & `meter` as label[for] targets
+  - Allow `a[href]` in SVG wherever `a[xlink:href]` is allowed
+  - Allow the `focusable` and `tabindex` attributes on SVG elements
+  - Fix bug that disallowed `progress` & `meter` as `label[for]` targets
   - Default to text/html for checking file uploads
-  - Emit warnings for use of rel={copyright,previous}
+  - Emit warnings for use of `rel={copyright,previous}`
   - Prevent Bulgarian ➡ Russian misidentifications in language detector
   - Skip figcaption elements when running the language detector
 
 # 17.3.0
 26 March 2017
-  - Allow “color” attribute with link[rel="mask-icon"]
+  - Allow `color` attribute with `link[rel="mask-icon"]`
   - Allow `meta[name]` to have `itemref`/`itemscope`/`itemtype`/`itemid`
   - Allow `allow-top-navigation-by-user-activation` in `iframe[sandbox]`
   - Stop hiding “sectioning roots” headings in “Heading-level outline”
