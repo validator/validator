@@ -3,6 +3,7 @@ environment:
   JAVA_HOME: C:\Program Files\Java\jdk1.8.0
 
 install:
+  - git submodule -q update --init --recursive
   # Nu Html Checker uses utf-8 for output
   # so that change code page here
   - chcp 65001
