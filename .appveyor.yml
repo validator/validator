@@ -5,7 +5,7 @@ environment:
 install:
   # test
   - git submodule
-  - git submodule -q update --init --recursive
+  #- git submodule -q update --init --recursive
   # Nu Html Checker uses utf-8 for output
   # so that change code page here
   - chcp 65001
