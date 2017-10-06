@@ -982,17 +982,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         String parserStr = request.getParameter("parser");
 
         if ("html".equals(parserStr)) {
-            parser = ParserMode.HTML_AUTO;
+            parser = ParserMode.HTML;
         } else if ("xmldtd".equals(parserStr)) {
             parser = ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION;
         } else if ("xml".equals(parserStr)) {
             parser = ParserMode.XML_NO_EXTERNAL_ENTITIES;
         } else if ("html5".equals(parserStr)) {
             parser = ParserMode.HTML;
-        } else if ("html4".equals(parserStr)) {
-            parser = ParserMode.HTML401_STRICT;
-        } else if ("html4tr".equals(parserStr)) {
-            parser = ParserMode.HTML401_TRANSITIONAL;
         } // else auto
 
         laxType = (request.getParameter("laxtype") != null);
@@ -1209,16 +1205,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.CUSTOM_ENC);
             }
             switch (parser) {
-                case HTML401_STRICT:
-                case HTML401_TRANSITIONAL:
-                    stats.incrementField(Statistics.Field.PARSER_HTML4);
-                    break;
                 case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
                     stats.incrementField(Statistics.Field.PARSER_XML_EXTERNAL);
                     break;
                 case AUTO:
                 case HTML:
-                case HTML_AUTO:
                 case XML_NO_EXTERNAL_ENTITIES:
                 default:
                     break;
@@ -1664,10 +1655,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             IncorrectSchemaException, SAXNotRecognizedException,
             SAXNotSupportedException {
         switch (parser) {
-            case HTML_AUTO:
             case HTML:
-            case HTML401_STRICT:
-            case HTML401_TRANSITIONAL:
                 if (isHtmlUnsafePreset()) {
                     String message = "The chosen preset schema is not appropriate for HTML.";
                     SAXException se = new SAXException(message);
@@ -2116,17 +2104,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     void emitParserOptions() throws SAXException {
         emitter.option("Automatically from Content-Type", "",
                 (parser == ParserMode.AUTO));
+        emitter.option("HTML", "html", (parser == ParserMode.HTML));
         emitter.option("XML; don\u2019t load external entities", "xml",
                 (parser == ParserMode.XML_NO_EXTERNAL_ENTITIES));
         emitter.option("XML; load external entities", "xmldtd",
                 (parser == ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION));
-        emitter.option("HTML; flavor from doctype", "html",
-                (parser == ParserMode.HTML_AUTO));
-        emitter.option("HTML5", "html5", (parser == ParserMode.HTML));
-        emitter.option("HTML 4.01 Strict", "html4",
-                (parser == ParserMode.HTML401_STRICT));
-        emitter.option("HTML 4.01 Transitional", "html4tr",
-                (parser == ParserMode.HTML401_TRANSITIONAL));
     }
 
     /**

@@ -128,7 +128,6 @@ public class Statistics {
         LAX_TYPE("Content type: being lax"), //
         CUSTOM_ENC("Encoding: manually set"), //
         PARSER_XML_EXTERNAL("Parser: set to XML with external entities"), //
-        PARSER_HTML4("Parser: set to explicit HTML4 mode"), //
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
         LINK_WITH_CHARSET_FOUND("<link charset> found"), //
