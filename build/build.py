@@ -82,10 +82,10 @@ releaseDate = time.strftime('%d %B %Y')
 year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
 day = time.strftime('%d').lstrip('0')
-validatorVersion = "%s.%s.%s" % (year, month, day)
-#validatorVersion = "17.9.0"
-jingVersion = "20150629VNU"
-htmlparserVersion = "1.4.6"
+# validatorVersion = "%s.%s.%s" % (year, month, day)
+validatorVersion = "17.11.0"
+jingVersion = "20171006VNU"
+htmlparserVersion = "1.4.7"
 galimatiasVersion = "0.1.2"
 
 buildRoot = '.'

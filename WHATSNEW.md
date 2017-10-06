@@ -1,9 +1,9 @@
 
-20 August 2017.
+06 October 2017.
 
-This release adds a new feature to the checker network API to allow you to specify an `Accept-Language` request-header value for the checker to send when fetching remote documents to check. This release also allows `script[nomodule]`, allows the `hover`, `any-hover`, `pointer`, and `any-pointer` media features, allows the `scope`, `updateviacache`, `workertype` attributes for `link[rel=serviceworker]`, allows the string "`&;`" in content (that is, doesn’t report it as an “`&` did not start a character reference” error), and updates CSP checking to [Salvation 2.3.0](https://github.com/shapesecurity/salvation/releases/tag/v2.3.0).
+This release add a `--Werror` option to the vnu.jar command-line checker, which when set causes the checker to exit non-zero if any warnings are encountered (even if there are no errors). The release also fixes an internal code mismatch that caused message-filtering failures, fixes a memory leak in the language detector, drops reporting of HTML4-specific parse errors for HTML4-doctype docs, and allows DPUB `role` attributes on more elements.
 
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1790
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#17110
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 
