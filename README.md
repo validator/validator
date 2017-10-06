@@ -106,14 +106,12 @@ To check standard input:
 When used from the command line as described in this section, the `vnu.jar`
 executable provides the following options:
 
-#### --asciiquotes _yes_ | _no_
+#### --asciiquotes
 
     Specifies whether ASCII quotation marks are substituted for Unicode smart
     quotation marks in messages.
 
-    default: "no"
-
-    possible values: "yes" or "no"
+    default: [unset; Unicode smart quotation marks are used in messages]
 
 #### --errors-only
 
