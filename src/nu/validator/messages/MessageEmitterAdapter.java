@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2016 Mozilla Foundation
+ * Copyright (c) 2007-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -751,6 +751,11 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         String msg = message.getMessage();
         if (filterPattern != null && msg != null
                 && filterPattern.matcher(msg).matches()) {
+            if (type.getSuperType() == "error" && this.errors > 0) {
+                this.errors--;
+            } else if (type.getSubType() == "warning" && this.warnings > 0) {
+                this.warnings--;
+            }
             return;
         }
         if (loggingOk
