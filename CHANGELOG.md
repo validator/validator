@@ -2,6 +2,10 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# NN.NN.NN
+NN XX 20NN
+  - Emit error (not warning) for HTML4/XHTML1 strict doctypes
+
 # 17.11.1
 07 October 2017
   - Fix bug that made the vnu.jar `--Werror` option not work as expected
