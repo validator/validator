@@ -142,10 +142,16 @@ executable provides the following options:
 
     default: [unset; checker does no message filtering]
 
-#### --filterpattern _PATTERN_
+#### --filterpattern _REGEXP_
 
-    Specifies a regular-expression pattern. Any error message or warning message
-    that matches the pattern is filtered out (dropped/suppressed).
+    Specifies a regular expression. Any error message or warning message that
+    matches the regular expression is filtered out (dropped/suppressed).
+
+    As with all other vnu.jar options, this option may only be specified once.
+    So to filter multiple error messages or warning messages, you must provide a
+    single regular expression that will match all the messages. The typical way
+    to do that for regular expressions is to OR multiple patterns together using
+    the "|" character.
 
     default: [unset; checker does no message filtering]
 
