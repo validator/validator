@@ -1490,7 +1490,7 @@ public class Assertions extends Checker {
                             && "ol" != localName && "ul" != localName
                             && "li" != localName) {
                         if ("input" == localName) {
-                            inputTypeVal = atts.getValue(i);
+                            inputTypeVal = atts.getValue(i).toLowerCase();
                         } else if ("menuitem" == localName) {
                             menuitemTypeVal = atts.getValue(i);
                         }

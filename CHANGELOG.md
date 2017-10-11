@@ -5,6 +5,8 @@ changes to any options/interfaces the checker exposes for developers.
 # NN.NN.NN
 NN XX 20NN
   - Emit error (not warning) for HTML4/XHTML1 strict doctypes
+  - Fix bug that caused the checker to incorrectly treat `input[type]`
+    values case-sensitively when doing particular checks.
 
 # 17.11.1
 07 October 2017
