@@ -238,6 +238,8 @@ public final class UseCountingXMLReaderWrapper
                         "http://validator.nu/properties/style-in-body-found",
                         true);
             }
+        } else if ("body".equals(localName)) {
+            inBody = true;
         }
         if (atts.getIndex("", "rel") > -1
                 && ("link".equals(localName) || "a".equals(localName))) {
