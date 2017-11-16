@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,9 +22,11 @@
 
 package nu.validator.datatype;
 
+import java.util.HashSet;
+
 import org.relaxng.datatype.DatatypeException;
 
-public final class MimeType extends AbstractDatatype {
+public class MimeType extends AbstractDatatype {
 
     /**
      * The singleton instance.
@@ -35,8 +37,29 @@ public final class MimeType extends AbstractDatatype {
         AT_START, IN_SUPERTYPE, AT_SUBTYPE_START, IN_SUBTYPE, SEMICOLON_SEEN, WS_BEFORE_SEMICOLON, IN_PARAM_NAME, EQUALS_SEEN, IN_QUOTED_STRING, IN_UNQUOTED_STRING, IN_QUOTED_PAIR, CLOSE_QUOTE_SEEN
     }
 
-    private MimeType() {
+    protected MimeType() {
         super();
+    }
+
+    private static final HashSet<String> JAVASCRIPT_MIME_TYPES = new HashSet<>();
+
+    static {
+        JAVASCRIPT_MIME_TYPES.add("application/ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("application/javascript");
+        JAVASCRIPT_MIME_TYPES.add("application/x-ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("application/x-javascript");
+        JAVASCRIPT_MIME_TYPES.add("text/ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.0");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.1");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.2");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.3");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.4");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.5");
+        JAVASCRIPT_MIME_TYPES.add("text/jscript");
+        JAVASCRIPT_MIME_TYPES.add("text/livescript");
+        JAVASCRIPT_MIME_TYPES.add("text/x-ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("text/x-javascript");
     }
 
     @Override
@@ -77,6 +100,11 @@ public final class MimeType extends AbstractDatatype {
                 case IN_SUBTYPE:
                     if (isTokenChar(c)) {
                         continue;
+                    } else if (isScriptType() && JAVASCRIPT_MIME_TYPES.contains(
+                            literal.subSequence(0, i).toString())) {
+                        throw newDatatypeException(
+                                "A JavaScript MIME type must not contain"
+                                        + " any characters after the subtype.");
                     } else if (c == ';') {
                         state = State.SEMICOLON_SEEN;
                         continue;
@@ -220,6 +248,10 @@ public final class MimeType extends AbstractDatatype {
                         || c == ',' || c == ';' || c == ':' || c == '\\'
                         || c == '\"' || c == '/' || c == '[' || c == ']'
                         || c == '?' || c == '=' || c == '{' || c == '}');
+    }
+
+    protected boolean isScriptType() {
+        return false;
     }
 
     @Override

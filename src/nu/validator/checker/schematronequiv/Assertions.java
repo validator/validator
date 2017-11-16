@@ -357,6 +357,27 @@ public class Assertions extends Checker {
                 "th", "col", "colgroup", "pre" });
     }
 
+    private static final HashSet<String> JAVASCRIPT_MIME_TYPES = new HashSet<>();
+
+    static {
+        JAVASCRIPT_MIME_TYPES.add("application/ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("application/javascript");
+        JAVASCRIPT_MIME_TYPES.add("application/x-ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("application/x-javascript");
+        JAVASCRIPT_MIME_TYPES.add("text/ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.0");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.1");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.2");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.3");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.4");
+        JAVASCRIPT_MIME_TYPES.add("text/javascript1.5");
+        JAVASCRIPT_MIME_TYPES.add("text/jscript");
+        JAVASCRIPT_MIME_TYPES.add("text/livescript");
+        JAVASCRIPT_MIME_TYPES.add("text/x-ecmascript");
+        JAVASCRIPT_MIME_TYPES.add("text/x-javascript");
+    }
+
     private static final String[] SPECIAL_ANCESTORS = { "a", "address", "body",
             "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
             "form", "header", "label", "map", "noscript", "th", "time",
@@ -2138,26 +2159,33 @@ public class Assertions extends Checker {
                                 + " \u201Csrc\u201D is also specified.");
                     }
                 }
-                if (atts.getIndex("", "type") > -1
-                        && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "module", atts.getValue("", "type"))) {
-                    if (atts.getIndex("", "integrity") > -1) {
-                        err("A \u201Cscript\u201D element with an"
-                                + " \u201Cintegrity\u201D attribute must not have a"
-                                + " \u201Ctype\u201D attribute with the value"
-                                + " \u201Cmodule\u201D.");
+                if (atts.getIndex("", "type") > -1) {
+                  String scriptType = atts.getValue("", "type").toLowerCase();
+                    if (JAVASCRIPT_MIME_TYPES.contains(scriptType)
+                            || "".equals(scriptType)) {
+                        warn("The \u201Ctype\u201D attribute is unnecessary for"
+                                + " JavaScript resources.");
                     }
-                    if (atts.getIndex("", "defer") > -1) {
-                        err("A \u201Cscript\u201D element with a"
-                                + " \u201Cdefer\u201D attribute must not have a"
-                                + " \u201Ctype\u201D attribute with the value"
-                                + " \u201Cmodule\u201D.");
-                    }
-                    if (atts.getIndex("", "nomodule") > -1) {
-                        err("A \u201Cscript\u201D element with a"
-                                + " \u201Cnomodule\u201D attribute must not have a"
-                                + " \u201Ctype\u201D attribute with the value"
-                                + " \u201Cmodule\u201D.");
+                    if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                            "module", scriptType)) {
+                        if (atts.getIndex("", "integrity") > -1) {
+                            err("A \u201Cscript\u201D element with an"
+                                    + " \u201Cintegrity\u201D attribute must not have a"
+                                    + " \u201Ctype\u201D attribute with the value"
+                                    + " \u201Cmodule\u201D.");
+                        }
+                        if (atts.getIndex("", "defer") > -1) {
+                            err("A \u201Cscript\u201D element with a"
+                                    + " \u201Cdefer\u201D attribute must not have a"
+                                    + " \u201Ctype\u201D attribute with the value"
+                                    + " \u201Cmodule\u201D.");
+                        }
+                        if (atts.getIndex("", "nomodule") > -1) {
+                            err("A \u201Cscript\u201D element with a"
+                                    + " \u201Cnomodule\u201D attribute must not have a"
+                                    + " \u201Ctype\u201D attribute with the value"
+                                    + " \u201Cmodule\u201D.");
+                        }
                     }
                 }
             }
