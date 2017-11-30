@@ -8,6 +8,7 @@ NN XX 20NN
   - Fix bug that caused the checker to incorrectly treat `input[type]`
     values case-sensitively when doing particular checks
   - Allow the `slot` attribute (for Shadow DOM interaction)
+  - Further restrict script[type] and style[type]
 
 # 17.11.1
 07 October 2017
