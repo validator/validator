@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2010-2016 Mozilla Foundation
+ * Copyright (c) 2010-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -28,7 +28,6 @@ import java.util.LinkedList;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeStreamingValidator;
 import nu.validator.datatype.Html5DatatypeException;
-import nu.validator.datatype.CdoCdcPair;
 import nu.validator.datatype.TimeDatetime;
 import nu.validator.datatype.ScriptDocumentation;
 import nu.validator.datatype.Script;
@@ -93,10 +92,6 @@ public final class TextContentChecker extends Checker {
                 } else {
                     return ScriptDocumentation.THE_INSTANCE.createStreamingValidator(null);
                 }
-            } else if ("style".equals(localName)
-                    || "textarea".equals(localName)
-                    || "title".equals(localName)) {
-                return CdoCdcPair.THE_INSTANCE.createStreamingValidator(null);
             }
         }
         return null;
@@ -184,21 +179,6 @@ public final class TextContentChecker extends Checker {
                             } catch (ClassNotFoundException ce) {
                             }
                         }
-                    } else if ("style".equals(localName)) {
-                        try {
-                            errBadTextContent(e,
-                                    CdoCdcPair.class,
-                                    localName, uri);
-                        } catch (ClassNotFoundException ce) {
-                        }
-                    } else if ("textarea".equals(localName)
-                            || "title".equals(localName)) {
-                        try {
-                            warnBadTextContent(e,
-                                    CdoCdcPair.class,
-                                    localName, uri);
-                        } catch (ClassNotFoundException ce) {
-                        }
                     } else {
                         err("The text content of element \u201C" + localName
                                 // + "\u201D from namespace \u201C" + uri
@@ -221,20 +201,6 @@ public final class TextContentChecker extends Checker {
                             + "\u201d was not in the required format: "
                             + e.getMessage().split(": ")[1],
                     getDocumentLocator(), datatypeClass, ex5.isWarning());
-            getErrorHandler().error(dme);
-        }
-    }
-
-    private void warnBadTextContent(DatatypeException e, Class<?> datatypeClass,
-            String localName, String uri) throws SAXException,
-            ClassNotFoundException {
-        if (getErrorHandler() != null) {
-            DatatypeMismatchException dme = new DatatypeMismatchException(
-                    "Possible problem in text content of element \u201c"
-                            + localName
-                            // + "\u201D from namespace \u201C" + uri
-                            + "\u201d: " + e.getMessage().split(": ")[1],
-                    getDocumentLocator(), datatypeClass, true);
             getErrorHandler().error(dme);
         }
     }

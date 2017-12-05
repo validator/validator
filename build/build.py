@@ -93,6 +93,7 @@ distDir = os.path.join(buildRoot, "build", "dist")
 dependencyDir = os.path.join(buildRoot, "dependencies")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
+cssValidatorDir = os.path.join(buildRoot, "css-validator")
 vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
 filesDir = os.path.join(vnuSrc, "localentities", "files")
 antRoot = os.path.join(jingTrangDir, "lib")
@@ -157,6 +158,7 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/apache/velocity/velocity/1.7/velocity-1.7.jar", "3692dd72f8367cb35fb6280dc2916725"),  # nopep8
     ("https://repo1.maven.org/maven2/org/easytesting/fest-assert/1.4/fest-assert-1.4.jar", "05b9012baeccce4379d125a2050c6574"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),  # nopep8
@@ -200,6 +202,7 @@ runDependencyJars = [
     "log4j-1.2.17.jar",
     "mail-1.5.0-b01.jar",
     "rhino-1.7R5.jar",
+    "velocity-1.7.jar",
     "langdetect-1.1-20120112.jar",
     "jsonic-1.3.9.jar",
 ]
@@ -298,6 +301,10 @@ def jarNamesToPaths(names):
 
 def jingJarPath():
     return [os.path.join(buildRoot, "jing-trang", "build", "jing.jar"), ]
+
+
+def cssValidatorJarPath():
+    return [os.path.join(buildRoot, "css-validator", "css-validator.jar"), ]
 
 
 def runJavac(sourceDir, classDir, classPath):
@@ -716,6 +723,14 @@ def buildJing():
     os.chdir("..")
 
 
+def buildCssValidator():
+    os.chdir("css-validator")
+    runCmd([javaCmd, "-jar",
+            os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
+            "jar-without-dependencies"])
+    os.chdir("..")
+
+
 def buildEmitters():
     compilerFile = os.path.join(vnuSrc, "xml", "SaxCompiler.java")
     compilerClass = "nu.validator.xml.SaxCompiler"
@@ -751,13 +766,14 @@ def buildValidator():
     classPath = os.pathsep.join(
         dependencyJarPaths() +
         jarNamesToPaths(["galimatias", "htmlparser"]) +
+        cssValidatorJarPath() +
         jingJarPath())
     buildEmitters()
     buildModule(buildRoot, "validator", classPath)
 
 
 def ownJarList():
-    return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + jingJarPath()  # nopep8
+    return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + cssValidatorJarPath() + jingJarPath()  # nopep8
 
 
 def buildRunJarPathList():
@@ -887,6 +903,7 @@ class Release():
             os.path.join(jingTrangDir, "build", "jing.jar"),
             os.path.join(jarsDir, "htmlparser.jar"),
             os.path.join(jarsDir, "galimatias.jar"),
+            os.path.join(cssValidatorDir, "css-validator.jar"),
         ])
 
     def reInitDistDir(self):
@@ -1403,6 +1420,7 @@ def buildAll():
         print("Set the JAVA_HOME environment variable to the pathname" +
               " of the directory where your JDK is installed.")
         sys.exit(1)
+    buildCssValidator()
     buildJing()
     buildSchemaDrivers()
     prepareLocalEntityJar()
@@ -1420,6 +1438,7 @@ def runTests():
     classPath = os.pathsep.join(
         buildRunJarPathList() +
         jarNamesToPaths(["galimatias", "htmlparser", "validator"]) +
+        cssValidatorJarPath() +
         jingJarPath())
     if runCmd([javaCmd, '-classpath', classPath, className] + args):
         sys.exit(1)

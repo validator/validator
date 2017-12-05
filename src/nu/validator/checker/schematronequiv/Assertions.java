@@ -22,6 +22,7 @@
 
 package nu.validator.checker.schematronequiv;
 
+import java.io.StringReader;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,9 +60,17 @@ import nu.validator.htmlparser.impl.NCName;
 
 import org.relaxng.datatype.DatatypeException;
 
+import org.w3c.css.css.StyleSheetParser;
+import org.w3c.css.parser.CssError;
+import org.w3c.css.parser.CssParseException;
+import org.w3c.css.parser.Errors;
+import org.w3c.css.parser.analyzer.ParseException;
+import org.w3c.css.util.ApplContext;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 public class Assertions extends Checker {
 
@@ -728,6 +737,8 @@ public class Assertions extends Checker {
 
         private final String name; // null if not HTML
 
+        private final StringBuilder textContent;
+
         private final String role;
 
         private final String activeDescendant;
@@ -766,6 +777,8 @@ public class Assertions extends Checker {
 
         private boolean emptyValueOptionFound = false;
 
+        private boolean isCollectingCharacters = false;
+
         /**
          * @param ancestorMask
          */
@@ -776,6 +789,7 @@ public class Assertions extends Checker {
             this.role = role;
             this.activeDescendant = activeDescendant;
             this.forAttr = forAttr;
+            this.textContent = new StringBuilder();
         }
 
         /**
@@ -1070,6 +1084,34 @@ public class Assertions extends Checker {
          */
         public void setNonEmptyOption(Locator locator) {
             this.nonEmptyOption = locator;
+        }
+
+        /**
+         * Sets the collectingCharacters.
+         */
+        public void setIsCollectingCharacters(boolean isCollectingCharacters) {
+            this.isCollectingCharacters = isCollectingCharacters;
+        }
+
+        /**
+         * Gets the collectingCharacters.
+         */
+        public boolean getIsCollectingCharacters() {
+            return this.isCollectingCharacters;
+        }
+
+        /**
+         * Appends to the textContent.
+         */
+        public void appendToTextContent(char ch[], int start, int length) {
+            this.textContent.append(ch, start, length);
+        }
+
+        /**
+         * Gets the textContent.
+         */
+        public StringBuilder getTextContent() {
+            return this.textContent;
         }
 
         /**
@@ -1368,6 +1410,71 @@ public class Assertions extends Checker {
             } else if ("option" == localName
                     && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
+            } else if ("style" == localName) {
+                ApplContext ac = new ApplContext("en");
+                ac.setCssVersionAndProfile("css3");
+                ac.setMedium("all");
+                ac.setTreatVendorExtensionsAsWarnings(true);
+                ac.setWarningLevel(-1);
+                ac.setFakeURL("file://localhost/StyleElement");
+                StyleSheetParser styleSheetParser = new StyleSheetParser();
+                styleSheetParser.parseStyleSheet(ac,
+                        new StringReader(node.getTextContent().toString()),
+                        null);
+                styleSheetParser.getStyleSheet().findConflicts(ac);
+                Errors errors = styleSheetParser.getStyleSheet().getErrors();
+                for (int i = 0; i < errors.getErrorCount(); i++) {
+                    String message = "";
+                    String cssProperty = "";
+                    String cssMessage = "";
+                    String cssSkippedString = "";
+                    CssError error = errors.getErrorAt(i);
+                    int lineNumber = error.getLine();
+                    Throwable ex = error.getException();
+                    if (ex instanceof CssParseException) {
+                        CssParseException cpe = (CssParseException) ex;
+                        Throwable cpex = cpe.getException();
+                        if (cpex instanceof ParseException) {
+                            ParseException pe = (ParseException) cpex;
+                            if (pe.getLine() != -1) {
+                                lineNumber = pe.getLine();
+                            }
+                        }
+                        if (cpe.getProperty() != null) {
+                            cssProperty = String.format("\u201c%s\u201D: ",
+                                    cpe.getProperty());
+                        }
+                        if (cpe.getMessage() != null) {
+                            cssMessage = cpe.getMessage() + ": ";
+                            if (cssMessage.contains("Lexical error")) {
+                                cssMessage = cssMessage.replaceAll(
+                                        "Lexical error(.+)Encountered",
+                                        "Encountered");
+                            }
+                        }
+                        if (cpe.getSkippedString() != null) {
+                            cssSkippedString = cpe.getSkippedString();
+                            if (cssSkippedString.contains("Lexical error")) {
+                                cssSkippedString = cssSkippedString.replaceAll(
+                                        "Lexical error(.+)Encountered",
+                                        "Encountered");
+                            } else {
+                                cssSkippedString = String.format(
+                                        " \u201c%s\u201D", cssSkippedString);
+                            }
+                        }
+                        message = String.format("CSS error: %s%s%s", //
+                                cssProperty, //
+                                cssMessage, //
+                                cssSkippedString);
+                    } else {
+                        message = ex.getMessage();
+                    }
+                    SAXParseException spe = new SAXParseException(message, null,
+                            null, node.locator.getLineNumber() + lineNumber - 1,
+                            -1);
+                    getErrorHandler().error(spe);
+                }
             }
             if ("article" == localName || "aside" == localName
                     || "nav" == localName || "section" == localName) {
@@ -2733,6 +2840,9 @@ public class Assertions extends Checker {
             }
             StackNode child = new StackNode(ancestorMask, localName, role,
                     activeDescendant, forAttr);
+            if ("style" == localName) {
+                child.setIsCollectingCharacters(true);
+            }
             if (activeDescendant != null && !activeDescendantWithAriaOwns) {
                 openActiveDescendants.put(child,
                         new LocatorImpl(getDocumentLocator()));
@@ -2834,6 +2944,9 @@ public class Assertions extends Checker {
             throws SAXException {
         if (numberOfTemplatesDeep > 0) {
             return;
+        }
+        if (stack[currentPtr].getIsCollectingCharacters()) {
+            stack[currentPtr].appendToTextContent(ch, start, length);
         }
         StackNode node = peek();
         for (int i = start; i < start + length; i++) {

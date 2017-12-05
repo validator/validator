@@ -1,3 +1,7 @@
+[submodule "css-validator"]
+	path = css-validator
+	url = https://github.com/w3c/css-validator.git
+	branch = validator-nu
 [submodule "htmlparser"]
 	path = htmlparser
 	url = https://github.com/validator/htmlparser.git

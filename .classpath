@@ -85,6 +85,7 @@
 			<attribute name="javadoc_location" value="https://cdn.rawgit.com/shuyo/language-detection/master/doc/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="css-validator/css-validator.jar"/>
 	<classpathentry kind="lib" path="dependencies/jsonic-1.3.9.jar"/>
 	<classpathentry kind="lib" path="jing-trang/build/jing.jar" sourcepath="jing-trang/mod/validate/src/main"/>
 	<classpathentry kind="output" path="classes"/>
