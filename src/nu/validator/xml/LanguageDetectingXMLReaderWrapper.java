@@ -338,6 +338,7 @@ public final class LanguageDetectingXMLReaderWrapper
                     || "a".equals(localName) //
                     || "td".equals(localName) //
                     || "select".equals(localName) //
+                    || "li".equals(localName) //
                     || "ul".equals(localName) //
                     || "nav".equals(localName) //
                     || "form".equals(localName))) {
@@ -413,6 +414,7 @@ public final class LanguageDetectingXMLReaderWrapper
                 || "td".equals(localName) //
                 || "select".equals(localName) //
                 || "ul".equals(localName) //
+                || "li".equals(localName) //
                 || "nav".equals(localName) //
                 || "textarea".equals(localName) //
                 || "figcaption".equals(localName) //
