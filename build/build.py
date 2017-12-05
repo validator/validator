@@ -297,7 +297,7 @@ def jarNamesToPaths(names):
 
 
 def jingJarPath():
-    return [os.path.join("jing-trang", "build", "jing.jar"), ]
+    return [os.path.join(buildRoot, "jing-trang", "build", "jing.jar"), ]
 
 
 def runJavac(sourceDir, classDir, classPath):
