@@ -1433,11 +1433,23 @@ public class Assertions extends Checker {
                     Throwable ex = error.getException();
                     if (ex instanceof CssParseException) {
                         CssParseException cpe = (CssParseException) ex;
+                        if ("generator.unrecognize" //
+                                .equals(cpe.getErrorType())) {
+                            cssMessage = "Parse Error: ";
+                        }
                         Throwable cpex = cpe.getException();
                         if (cpex instanceof ParseException) {
                             ParseException pe = (ParseException) cpex;
+                            String peMessage = pe.getMessage();
                             if (pe.getLine() != -1) {
                                 lineNumber = pe.getLine();
+                            }
+                            if (peMessage.contains("Encountered")) {
+                                cssMessage += peMessage //
+                                        .replace('\n', ' ') //
+                                        .replaceAll(
+                                                " at line [0-9]+, column [0-9]+",
+                                                "");
                             }
                         }
                         if (cpe.getProperty() != null) {
@@ -1460,7 +1472,9 @@ public class Assertions extends Checker {
                                         "Encountered");
                             } else {
                                 cssSkippedString = String.format(
-                                        " \u201c%s\u201D", cssSkippedString);
+                                        " \u201c%s\u201D", cssSkippedString) //
+                                        .replace('\n', '\u21A9');
+                                // U+21A9 = LEFTWARDS ARROW WITH HOOK
                             }
                         }
                         message = String.format("CSS error: %s%s%s", //
@@ -1470,9 +1484,10 @@ public class Assertions extends Checker {
                     } else {
                         message = ex.getMessage();
                     }
-                    SAXParseException spe = new SAXParseException(message, null,
-                            null, node.locator.getLineNumber() + lineNumber - 1,
-                            -1);
+                    SAXParseException spe = new SAXParseException(message,
+                            node.locator.getPublicId(),
+                            node.locator.getSystemId(),
+                            node.locator.getLineNumber() + lineNumber - 1, -1);
                     getErrorHandler().error(spe);
                 }
             }
