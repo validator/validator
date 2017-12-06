@@ -158,7 +158,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/velocity/velocity/1.7/velocity-1.7.jar", "3692dd72f8367cb35fb6280dc2916725"),  # nopep8
     ("https://repo1.maven.org/maven2/org/easytesting/fest-assert/1.4/fest-assert-1.4.jar", "05b9012baeccce4379d125a2050c6574"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),  # nopep8
@@ -202,7 +201,6 @@ runDependencyJars = [
     "log4j-1.2.17.jar",
     "mail-1.5.0-b01.jar",
     "rhino-1.7R5.jar",
-    "velocity-1.7.jar",
     "langdetect-1.1-20120112.jar",
     "jsonic-1.3.9.jar",
 ]
