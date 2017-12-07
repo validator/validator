@@ -1412,7 +1412,7 @@ public class Assertions extends Checker {
                 stack[currentPtr].setOptionFound();
             } else if ("style" == localName) {
                 ApplContext ac = new ApplContext("en");
-                ac.setCssVersionAndProfile("css3");
+                ac.setCssVersionAndProfile("css3svg");
                 ac.setMedium("all");
                 ac.setTreatVendorExtensionsAsWarnings(true);
                 ac.setWarningLevel(-1);
