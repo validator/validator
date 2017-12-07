@@ -14,5 +14,8 @@
 # receives, from all users of the checker service.
 #
 # Lines that start with "#" (like this and the above) are ignored.
-.*Authors who wish to regulate nested browsing contexts.*
-.*deprecates “report-uri” in favour of a new “report-to” directive.*
+#
+#.*Authors who wish to regulate nested browsing contexts.*
+#.*deprecates “report-uri” in favour of a new “report-to” directive.*
+#.*Unknown pseudo-element or pseudo-class :focus-within.*
+#.*leader(.+)is not a content value.*

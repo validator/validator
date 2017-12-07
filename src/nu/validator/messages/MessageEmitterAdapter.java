@@ -382,6 +382,18 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final char[] HAS_ALT = "Images with textual alternative".toCharArray();
 
+    private final static String[] DEFAULT_FILTER_STRINGS = { //
+            // Salvation messages that are a little bit ahead of their time yet
+            ".*Authors who wish to regulate nested browsing contexts.*", //
+            ".*deprecates “report-uri” in favour of a new “report-to” directive.*", //
+            // (non-)errors for features the CSS checker doesn’t support yet
+            ".*Unknown pseudo-element or pseudo-class :focus-within.*", //
+            ".*leader(.+)is not a content value.*",
+    };
+
+    private static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
+            String.join("|", DEFAULT_FILTER_STRINGS));
+
     private final AttributesImpl attributesImpl = new AttributesImpl();
 
     private final char[] oneChar = { '\u0000' };
@@ -749,8 +761,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
         String msg = message.getMessage();
-        if (filterPattern != null && msg != null
-                && filterPattern.matcher(msg).matches()) {
+        if (msg != null && ((filterPattern != null
+                && filterPattern.matcher(msg).matches())
+                || DEFAULT_FILTER_PATTERN.matcher(msg).matches())) {
             if (type.getSuperType() == "error" && this.errors > 0) {
                 this.errors--;
             } else if (type.getSubType() == "warning" && this.warnings > 0) {
