@@ -1477,16 +1477,14 @@ public class Assertions extends Checker {
                                 // U+21A9 = LEFTWARDS ARROW WITH HOOK
                             }
                         }
-                        message = String.format("CSS error: %s%s%s", //
-                                cssProperty, //
-                                cssMessage, //
-                                cssSkippedString);
+                        message = cssProperty + cssMessage + cssSkippedString;
                     } else {
                         message = ex.getMessage();
                     }
-                    SAXParseException spe = new SAXParseException(message,
-                            node.locator.getPublicId(),
-                            node.locator.getSystemId(),
+                    SAXParseException spe = new SAXParseException( //
+                            "CSS: " + message, //
+                            node.locator.getPublicId(), //
+                            node.locator.getSystemId(), //
                             node.locator.getLineNumber() + lineNumber - 1, -1);
                     getErrorHandler().error(spe);
                 }
