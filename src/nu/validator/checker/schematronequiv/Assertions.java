@@ -1440,7 +1440,7 @@ public class Assertions extends Checker {
                         Throwable cpex = cpe.getException();
                         if (cpex instanceof ParseException) {
                             ParseException pe = (ParseException) cpex;
-                            if (pe.getLine() != -1) {
+                            if (pe.getLine() > 0) {
                                 lineNumber = pe.getLine();
                             }
                             String peMessage = pe.getMessage();

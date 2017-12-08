@@ -753,8 +753,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private void messageFromSAXParseException(MessageType type,
             SAXParseException spe, boolean exact) throws SAXException {
-        message(type, spe, spe.getSystemId(), spe.getLineNumber(),
-                spe.getColumnNumber(), exact);
+        int lineNumber = spe.getLineNumber() == 0 ? -1 : spe.getLineNumber();
+        message(type, spe, spe.getSystemId(), lineNumber, spe.getColumnNumber(),
+                exact);
     }
 
     private void message(MessageType type, Exception message, String systemId,
