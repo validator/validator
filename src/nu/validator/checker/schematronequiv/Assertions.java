@@ -1440,11 +1440,12 @@ public class Assertions extends Checker {
                         Throwable cpex = cpe.getException();
                         if (cpex instanceof ParseException) {
                             ParseException pe = (ParseException) cpex;
-                            String peMessage = pe.getMessage();
                             if (pe.getLine() != -1) {
                                 lineNumber = pe.getLine();
                             }
-                            if (peMessage.contains("Encountered")) {
+                            String peMessage = pe.getMessage();
+                            if (peMessage != null
+                                    && peMessage.contains("Encountered")) {
                                 cssMessage += peMessage //
                                         .replace('\n', ' ') //
                                         .replaceAll(
@@ -1477,16 +1478,24 @@ public class Assertions extends Checker {
                                 // U+21A9 = LEFTWARDS ARROW WITH HOOK
                             }
                         }
-                        message = cssProperty + cssMessage + cssSkippedString;
+                        if (!"".equals(cssMessage)) {
+                            message = cssProperty //
+                                    + cssMessage //
+                                    + cssSkippedString;
+                        }
                     } else {
                         message = ex.getMessage();
                     }
-                    SAXParseException spe = new SAXParseException( //
-                            "CSS: " + message, //
-                            node.locator.getPublicId(), //
-                            node.locator.getSystemId(), //
-                            node.locator.getLineNumber() + lineNumber - 1, -1);
-                    getErrorHandler().error(spe);
+                    if (!"".equals(message)) {
+                        SAXParseException spe = new SAXParseException( //
+                                "CSS: " + message, //
+                                node.locator.getPublicId(), //
+                                node.locator.getSystemId(), //
+                                node.locator.getLineNumber() //
+                                        + lineNumber - 1,
+                                -1);
+                        getErrorHandler().error(spe);
+                    }
                 }
             }
             if ("article" == localName || "aside" == localName
