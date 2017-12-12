@@ -63,6 +63,7 @@ import org.relaxng.datatype.DatatypeException;
 import org.w3c.css.css.StyleSheetParser;
 import org.w3c.css.parser.CssError;
 import org.w3c.css.parser.CssParseException;
+import org.w3c.css.parser.CssSelectors;
 import org.w3c.css.parser.Errors;
 import org.w3c.css.parser.analyzer.ParseException;
 import org.w3c.css.util.ApplContext;
@@ -73,6 +74,21 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class Assertions extends Checker {
+
+    private static final int ELIDE_LIMIT = 50;
+
+    private static String elide(String s) {
+        int len = s.length();
+        if (len < ELIDE_LIMIT) {
+            return "\u201c" + s + "\u201d";
+        } else {
+            StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
+            sb.append(s, 0, ELIDE_LIMIT / 2);
+            sb.append('\u2026');
+            sb.append(s, len - ELIDE_LIMIT / 2, len);
+            return "\u201c" + sb.toString() + "\u201d";
+        }
+    }
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -1428,6 +1444,7 @@ public class Assertions extends Checker {
                     String cssProperty = "";
                     String cssMessage = "";
                     String cssSkippedString = "";
+                    String cssContext = "";
                     CssError error = errors.getErrorAt(i);
                     int lineNumber = error.getLine();
                     Throwable ex = error.getException();
@@ -1444,13 +1461,8 @@ public class Assertions extends Checker {
                                 lineNumber = pe.getLine();
                             }
                             String peMessage = pe.getMessage();
-                            if (peMessage != null
-                                    && peMessage.contains("Encountered")) {
-                                cssMessage += peMessage //
-                                        .replace('\n', ' ') //
-                                        .replaceAll(
-                                                " at line [0-9]+, column [0-9]+",
-                                                "");
+                            if (peMessage != null) {
+                                cssMessage += peMessage;
                             }
                         }
                         if (cpe.getProperty() != null) {
@@ -1458,30 +1470,44 @@ public class Assertions extends Checker {
                                     cpe.getProperty());
                         }
                         if (cpe.getMessage() != null) {
-                            cssMessage = cpe.getMessage() + ": ";
-                            if (cssMessage.contains("Lexical error")) {
-                                cssMessage = cssMessage.replaceAll(
-                                        "Lexical error(.+)Encountered",
-                                        "Encountered");
-                            }
+                            cssMessage = cpe.getMessage();
                         }
-                        if (cpe.getSkippedString() != null) {
+                        if (cpe.getSkippedString() != null
+                                && !"".equals(cpe.getSkippedString().trim())) {
                             cssSkippedString = cpe.getSkippedString();
-                            if (cssSkippedString.contains("Lexical error")) {
-                                cssSkippedString = cssSkippedString.replaceAll(
-                                        "Lexical error(.+)Encountered",
-                                        "Encountered");
-                            } else {
+                            if (!cssSkippedString.contains("Encountered")) {
                                 cssSkippedString = String.format(
-                                        " \u201c%s\u201D", cssSkippedString) //
+                                        " in %s",
+                                        elide(cssSkippedString)) //
                                         .replace('\n', '\u21A9');
                                 // U+21A9 = LEFTWARDS ARROW WITH HOOK
+                            }
+                        }
+                        if (cpe.getContexts() != null
+                                && cpe.getContexts().size() != 0) {
+                            StringBuilder buf = new StringBuilder();
+                            Iterator<CssSelectors> li = //
+                                    cpe.getContexts().iterator();
+                            while (li.hasNext()) {
+                                Object t = li.next();
+                                if (t != null) {
+                                    buf.append(t);
+                                    if (li.hasNext()) {
+                                        buf.append(", ");
+                                    }
+                                }
+                            }
+                            if (buf.length() != 0) {
+                                cssContext = String.format(" in %s",
+                                        elide(String.valueOf(buf)));
                             }
                         }
                         if (!"".equals(cssMessage)) {
                             message = cssProperty //
                                     + cssMessage //
-                                    + cssSkippedString;
+                                    + cssSkippedString //
+                                    + cssContext //
+                                    + ".";
                         }
                     } else {
                         message = ex.getMessage();
