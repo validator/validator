@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Mozilla Foundation
+ * Copyright (c) 2013-2017 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -39,21 +39,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import org.eclipse.jetty.util.ajax.JSON;
 
 import org.relaxng.datatype.DatatypeException;
+
 import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
 
 import nu.validator.datatype.Html5DatatypeException;
-
+import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.validation.SimpleDocumentValidator;
 
 @SuppressWarnings("unchecked")
-public class TestRunner implements ErrorHandler {
+public class TestRunner extends MessageEmitterAdapter {
 
     private boolean inError = false;
 
@@ -506,6 +506,9 @@ public class TestRunner implements ErrorHandler {
 
     @Override
     public void warning(SAXParseException e) throws SAXException {
+        if (DEFAULT_FILTER_PATTERN.matcher(e.getMessage()).matches()) {
+            return;
+        }
         if (emitMessages) {
             emitMessage(e, "warning");
         } else if (exception == null && !expectingError) {
@@ -516,6 +519,9 @@ public class TestRunner implements ErrorHandler {
 
     @Override
     public void error(SAXParseException e) throws SAXException {
+        if (DEFAULT_FILTER_PATTERN.matcher(e.getMessage()).matches()) {
+            return;
+        }
         if (emitMessages) {
             emitMessage(e, "error");
         } else if (exception == null) {

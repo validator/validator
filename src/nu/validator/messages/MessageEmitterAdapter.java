@@ -84,7 +84,7 @@ import org.apache.log4j.Logger;
 import com.ibm.icu.text.Normalizer;
 
 @SuppressWarnings("unchecked")
-public final class MessageEmitterAdapter implements ErrorHandler {
+public class MessageEmitterAdapter implements ErrorHandler {
 
     private static final Logger log4j = Logger.getLogger(MessageEmitterAdapter.class);
 
@@ -382,7 +382,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final char[] HAS_ALT = "Images with textual alternative".toCharArray();
 
-    private final static String[] DEFAULT_FILTER_STRINGS = { //
+    private static final String[] DEFAULT_FILTER_STRINGS = { //
             // Salvation messages that are a little bit ahead of their time yet
             ".*Authors who wish to regulate nested browsing contexts.*", //
             ".*deprecates “report-uri” in favour of a new “report-to” directive.*", //
@@ -391,7 +391,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             ".*leader(.+)is not a \u201Ccontent\u201D value.*",
     };
 
-    private static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
+    protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
             String.join("|", DEFAULT_FILTER_STRINGS));
 
     private final AttributesImpl attributesImpl = new AttributesImpl();
@@ -471,6 +471,21 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         this.lineOffset = lineOffset;
         this.batchMode = batchMode;
         this.imageCollector = imageCollector;
+    }
+
+    /**
+     * For nu.validator.client.TestRunner
+     */
+    public MessageEmitterAdapter() {
+        super();
+        this.filterPattern = null;
+        this.sourceCode = null;
+        this.emitter = null;
+        this.exactErrorHandler = null;
+        this.showSource = false;
+        this.lineOffset = 0;
+        this.batchMode = false;
+        this.imageCollector = null;
     }
 
     /**
