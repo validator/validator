@@ -49,7 +49,7 @@ DEALINGS IN THE SOFTWARE.
       version="${version}"
       name="htmlparser"
       description="The Validator.nu HTML Parser is an implementation of the HTML5 parsing algorithm in Java for applications. The parser is designed to work as a drop-in replacement for the XML parser in applications that already support XHTML 1.x content with an XML parser and use SAX, DOM or XOM to interface with the parser."
-      url="http://www.thaiopensource.com/relaxng/htmlparser.html"
+      url="https://about.validator.nu/htmlparser/"
       packaging="jar">
       <license
         name="The MIT License"
