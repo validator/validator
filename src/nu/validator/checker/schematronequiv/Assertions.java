@@ -2633,12 +2633,14 @@ public class Assertions extends Checker {
                 if (atts.getIndex("", "sizes") > -1
                         && ((relList != null && !relList.contains("icon")
                                 && !relList.contains("apple-touch-icon"))
+                                && !relList.contains("apple-touch-icon-precomposed")
                                 || !hasRel)) {
                     err("A \u201Clink\u201D element with a"
                             + " \u201Csizes\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
                             + " value \u201Cicon\u201D or the value"
-                            + " \u201Capple-touch-icon\u201D.");
+                            + " \u201Capple-touch-icon\u201D or the value"
+                            + " \u201Capple-touch-icon-precomposed\u201D.");
                 }
                 if (atts.getIndex("", "color") > -1 //
                         && (!hasRel || (relList != null
