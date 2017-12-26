@@ -1443,6 +1443,7 @@ public class Assertions extends Checker {
                     String message = "";
                     String cssProperty = "";
                     String cssMessage = "";
+                    String cssExpression = "";
                     String cssSkippedString = "";
                     String cssContext = "";
                     CssError error = errors.getErrorAt(i);
@@ -1471,6 +1472,13 @@ public class Assertions extends Checker {
                         }
                         if (cpe.getMessage() != null) {
                             cssMessage = cpe.getMessage();
+                        }
+                        if (cpe.getExp() != null
+                                && !"".equals(cpe.getExp().toString().trim())) {
+                            cssExpression = String.format(" in %s",
+                                    elide(cpe.getExp().toString())) //
+                                    .replace('\n', '\u21A9');
+                            // U+21A9 = LEFTWARDS ARROW WITH HOOK
                         }
                         if (cpe.getSkippedString() != null
                                 && !"".equals(cpe.getSkippedString().trim())) {
@@ -1505,6 +1513,7 @@ public class Assertions extends Checker {
                         if (!"".equals(cssMessage)) {
                             message = cssProperty //
                                     + cssMessage //
+                                    + cssExpression //
                                     + cssSkippedString //
                                     + cssContext //
                                     + ".";
