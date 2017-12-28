@@ -1473,12 +1473,22 @@ public class Assertions extends Checker {
                         if (cpe.getMessage() != null) {
                             cssMessage = cpe.getMessage();
                         }
-                        if (cpe.getExp() != null
-                                && !"".equals(cpe.getExp().toString().trim())) {
-                            cssExpression = String.format(" in %s",
-                                    elide(cpe.getExp().toString())) //
-                                    .replace('\n', '\u21A9');
-                            // U+21A9 = LEFTWARDS ARROW WITH HOOK
+                        if (cpe.getExp() != null) {
+                            try {
+                                if (!"".equals(
+                                        cpe.getExp().toString().trim())) {
+                                    cssExpression = String.format(" in %s",
+                                            elide(cpe.getExp().toString())) //
+                                            .replace('\n', '\u21A9');
+                                    // U+21A9 = LEFTWARDS ARROW WITH HOOK
+                                }
+                            } catch (StringIndexOutOfBoundsException e) {
+                                // Can get here due to CssExpression.toString()
+                                // bug. But if so, it just means cssExpression
+                                // doesn't get set. And that's no big deal,
+                                // because it's only supplemental info. So we
+                                // just ignore the bug/exception and move on.
+                            }
                         }
                         if (cpe.getSkippedString() != null
                                 && !"".equals(cpe.getSkippedString().trim())) {
