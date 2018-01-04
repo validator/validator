@@ -1065,7 +1065,11 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 
 ## menuitem
 	aria.menuitem =
-		(	aria.role.menuitem )
+		(	aria.role.menuitem
+		&	aria.state.expanded?
+		&	aria.prop.posinset?
+		&	aria.prop.setsize?
+		)
 		aria.role.menuitem = 
 			attribute role { string "menuitem" }
 	
