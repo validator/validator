@@ -10,6 +10,7 @@ NN XX 20NN
     values case-sensitively when doing particular checks
   - Allow the `slot` attribute (for Shadow DOM interaction)
   - Further restrict script[type] and style[type]
+  - Allow `role=none` where `role=presentation` is allowed
 
 # 17.11.1
 07 October 2017
