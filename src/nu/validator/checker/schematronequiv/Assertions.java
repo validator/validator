@@ -580,6 +580,8 @@ public class Assertions extends Checker {
         registerRequiredAncestorRole("grid", "rowgroup");
         registerRequiredAncestorRole("rowgroup", "row");
         registerRequiredAncestorRole("treegrid", "row");
+        registerRequiredAncestorRole("treegrid", "rowgroup");
+        registerRequiredAncestorRole("table", "rowgroup");
     }
 
     private static final Set<String> MUST_NOT_DANGLE_IDREFS = new HashSet<>();

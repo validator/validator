@@ -11,6 +11,7 @@ NN XX 20NN
   - Allow the `slot` attribute (for Shadow DOM interaction)
   - Further restrict script[type] and style[type]
   - Allow `role=none` where `role=presentation` is allowed
+  - Allow `role=rowgroup` element to be contained in `role=table` element
   - Allow more ARIA states & properties for `role=menuitem`
 
 # 17.11.1
