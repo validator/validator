@@ -227,7 +227,7 @@ public final class LanguageDetectingXMLReaderWrapper
 
     private int currentOpenElementsInDifferentLang;
 
-    private boolean collectingCharacters;
+    private int currentOpenElementsWithSkipName = 0;
 
     private int nonWhitespaceCharacterCount;
 
@@ -246,6 +246,9 @@ public final class LanguageDetectingXMLReaderWrapper
             "pt", "ro", "ru", "sk", "sq", "sv", "th", "tr", "uk", "vi",
             "zh-hans", "zh-hant" };
 
+    private static final String[] SKIP_NAMES = { "a", "figcaption", "form",
+            "li", "nav", "pre", "script", "select", "style", "td", "textarea" };
+
     public LanguageDetectingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, ErrorHandler errorHandler,
             String httpContentLangHeader, String systemId) {
@@ -258,7 +261,7 @@ public final class LanguageDetectingXMLReaderWrapper
         this.htmlStartTagLocator = null;
         this.inBody = false;
         this.currentOpenElementsInDifferentLang = 0;
-        this.collectingCharacters = false;
+        this.currentOpenElementsWithSkipName = 0;
         this.nonWhitespaceCharacterCount = 0;
         this.elementContent = new StringBuilder();
         this.documentContent = new StringBuilder();
@@ -291,7 +294,9 @@ public final class LanguageDetectingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
-        if (collectingCharacters && nonWhitespaceCharacterCount < MAX_CHARS) {
+        if (inBody && currentOpenElementsWithSkipName < 1
+                && currentOpenElementsInDifferentLang < 1
+                && nonWhitespaceCharacterCount < MAX_CHARS) {
             for (int i = start; i < start + length; i++) {
                 switch (ch[i]) {
                     case ' ':
@@ -324,25 +329,19 @@ public final class LanguageDetectingXMLReaderWrapper
         }
         if ("body".equals(localName)) {
             inBody = false;
-            collectingCharacters = false;
+            currentOpenElementsWithSkipName = 0;
         }
         if (currentOpenElementsInDifferentLang > 0) {
             currentOpenElementsInDifferentLang--;
-            if (currentOpenElementsInDifferentLang == 0) {
-                collectingCharacters = true;
+            if (currentOpenElementsInDifferentLang < 0) {
+                currentOpenElementsInDifferentLang = 0;
             }
         } else {
-            if (inBody && ("script".equals(localName) //
-                    || "style".equals(localName) //
-                    || "pre".equals(localName) //
-                    || "a".equals(localName) //
-                    || "td".equals(localName) //
-                    || "select".equals(localName) //
-                    || "li".equals(localName) //
-                    || "ul".equals(localName) //
-                    || "nav".equals(localName) //
-                    || "form".equals(localName))) {
-                collectingCharacters = true;
+            if (Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
+                currentOpenElementsWithSkipName--;
+                if (currentOpenElementsWithSkipName < 0) {
+                    currentOpenElementsWithSkipName = 0;
+                }
             }
         }
         contentHandler.endElement(uri, localName, qName);
@@ -358,6 +357,7 @@ public final class LanguageDetectingXMLReaderWrapper
         }
         documentContent.setLength(0);
         contentHandler.startDocument();
+        currentOpenElementsWithSkipName = 0;
     }
 
     /**
@@ -390,7 +390,6 @@ public final class LanguageDetectingXMLReaderWrapper
             }
         } else if ("body".equals(localName)) {
             inBody = true;
-            collectingCharacters = true;
         } else if (inBody) {
             if (currentOpenElementsInDifferentLang > 0) {
                 currentOpenElementsInDifferentLang++;
@@ -401,25 +400,13 @@ public final class LanguageDetectingXMLReaderWrapper
                                 && !htmlElementLangAttrValue.equals(
                                         atts.getValue(i))) {
                             currentOpenElementsInDifferentLang++;
-                            collectingCharacters = false;
                         }
                     }
                 }
             }
         }
-        if ("script".equals(localName) //
-                || "style".equals(localName) //
-                || "pre".equals(localName) //
-                || "a".equals(localName) //
-                || "td".equals(localName) //
-                || "select".equals(localName) //
-                || "ul".equals(localName) //
-                || "li".equals(localName) //
-                || "nav".equals(localName) //
-                || "textarea".equals(localName) //
-                || "figcaption".equals(localName) //
-                || "form".equals(localName)) {
-            collectingCharacters = false;
+        if (Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
+            currentOpenElementsWithSkipName++;
         }
         contentHandler.startElement(uri, localName, qName, atts);
     }
