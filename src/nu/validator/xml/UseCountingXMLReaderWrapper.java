@@ -453,9 +453,6 @@ public final class UseCountingXMLReaderWrapper
                         true);
             }
             if (openDivElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <div> " + systemId);
-                }
                 request.setAttribute(
                         "http://validator.nu/properties/main-in-div-found",
                         true);
