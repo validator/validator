@@ -375,6 +375,8 @@ public final class UseCountingXMLReaderWrapper
         } else if ("li".equals(localName)) {
             openLiElements++;
         } else if ("main".equals(localName)) {
+            request.setAttribute("http://validator.nu/properties/main-found",
+                    true);
             if (atts.getIndex("", "hidden") < 0) {
                 if (hasVisibleMain) {
                     if (systemId != null) {
