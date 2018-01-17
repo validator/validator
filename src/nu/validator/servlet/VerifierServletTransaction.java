@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2017 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -1507,6 +1507,150 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.STYLE_IN_BODY_FOUND);
             }
             if (request.getAttribute(
+                    "http://validator.nu/properties/main-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-found")) {
+                stats.incrementField(Statistics.Field.MAIN_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-multiple-visible-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-multiple-visible-found")) {
+                stats.incrementField(Statistics.Field.MAIN_MULTIPLE_VISIBLE_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-address-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-address-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_ADDRESS_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-article-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-article-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_ARTICLE_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-aside-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-aside-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_ASIDE_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-blockquote-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-blockquote-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_BLOCKQUOTE_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-caption-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-caption-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_CAPTION_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-dd-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-dd-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_DD_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-details-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-details-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_DETAILS_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-dialog-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-dialog-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_DIALOG_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-div-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-div-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_DIV_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-dt-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-dt-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_DT_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-fieldset-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-fieldset-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_FIELDSET_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-figcaption-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-figcaption-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_FIGCAPTION_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-figure-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-figure-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_FIGURE_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-footer-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-footer-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_FOOTER_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-form-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-form-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_FORM_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-header-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-header-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_HEADER_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-li-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-li-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_LI_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-main-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-main-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_MAIN_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-nav-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-nav-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_NAV_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-section-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-section-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_SECTION_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-td-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-td-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_TD_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/main-in-th-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/main-in-th-found")) {
+                stats.incrementField(Statistics.Field.MAIN_IN_TH_FOUND);
+            }
+            if (request.getAttribute(
                     "http://validator.nu/properties/lang-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/lang-found")) {
@@ -1682,7 +1826,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         errorHandler, documentInput.getLanguage(),
                         documentInput.getSystemId());
                 if (Statistics.STATISTICS != null) {
-                    reader = new UseCountingXMLReaderWrapper(reader, request);
+                    reader = new UseCountingXMLReaderWrapper(reader, request,
+                            documentInput.getSystemId());
                 }
                 break;
             case XML_NO_EXTERNAL_ENTITIES:
@@ -1719,7 +1864,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             documentInput.getSystemId());
                     if (Statistics.STATISTICS != null) {
                         reader = new UseCountingXMLReaderWrapper(reader,
-                                request);
+                                request, documentInput.getSystemId());
                     }
                 } else {
                     if (contentType != null) {
@@ -1805,7 +1950,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     errorHandler, documentInput.getLanguage(),
                     documentInput.getSystemId());
             if (Statistics.STATISTICS != null) {
-                reader = new UseCountingXMLReaderWrapper(reader, request);
+                reader = new UseCountingXMLReaderWrapper(reader, request,
+                        documentInput.getSystemId());
             }
         }
     }

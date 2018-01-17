@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Mozilla Foundation
+ * Copyright (c) 2016-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -29,6 +29,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
@@ -44,6 +46,9 @@ import org.xml.sax.XMLReader;
 public final class UseCountingXMLReaderWrapper
         implements XMLReader, ContentHandler {
 
+    private static final Logger log4j = Logger.getLogger(
+            UseCountingXMLReaderWrapper.class);
+
     private final XMLReader wrappedReader;
 
     private ContentHandler contentHandler;
@@ -52,7 +57,11 @@ public final class UseCountingXMLReaderWrapper
 
     private HttpServletRequest request;
 
+    private String systemId;
+
     private StringBuilder documentContent;
+
+    private boolean hasVisibleMain;
 
     private boolean inBody;
 
@@ -108,11 +117,56 @@ public final class UseCountingXMLReaderWrapper
 
     private boolean loggedRelTag;
 
+    private int openAddressElements = 0;
+
+    private int openArticleElements = 0;
+
+    private int openAsideElements = 0;
+
+    private int openBlockquoteElements = 0;
+
+    private int openCaptionElements = 0;
+
+    private int openDdElements = 0;
+
+    private int openDetailsElements = 0;
+
+    private int openDialogElements = 0;
+
+    private int openDivElements = 0;
+
+    private int openDtElements = 0;
+
+    private int openFieldsetElements = 0;
+
+    private int openFigcaptionElements = 0;
+
+    private int openFigureElements = 0;
+
+    private int openFooterElements = 0;
+
+    private int openFormElements = 0;
+
+    private int openHeaderElements = 0;
+
+    private int openLiElements = 0;
+
+    private int openMainElements = 0;
+
+    private int openNavElements = 0;
+
+    private int openSectionElements = 0;
+
+    private int openTdElements = 0;
+
+    private int openThElements = 0;
+
     public UseCountingXMLReaderWrapper(XMLReader wrappedReader,
-            HttpServletRequest request) {
+            HttpServletRequest request, String systemId) {
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
         this.request = request;
+        this.systemId = systemId;
         this.inBody = false;
         this.loggedLinkWithCharset = false;
         this.loggedScriptWithCharset = false;
@@ -144,6 +198,7 @@ public final class UseCountingXMLReaderWrapper
         this.loggedRelServiceworker = false;
         this.loggedRelStylesheet = false;
         this.loggedRelTag = false;
+        this.openSectionElements = 0;
         this.documentContent = new StringBuilder();
         wrappedReader.setContentHandler(this);
     }
@@ -169,6 +224,51 @@ public final class UseCountingXMLReaderWrapper
             throws SAXException {
         if (contentHandler == null) {
             return;
+        }
+        if ("address".equals(localName)) {
+            openAddressElements--;
+        } else if ("article".equals(localName)) {
+            openArticleElements--;
+        } else if ("aside".equals(localName)) {
+            openAsideElements--;
+        } else if ("blockquote".equals(localName)) {
+            openBlockquoteElements--;
+        } else if ("caption".equals(localName)) {
+            openCaptionElements--;
+        } else if ("dd".equals(localName)) {
+            openDdElements--;
+        } else if ("details".equals(localName)) {
+            openDetailsElements--;
+        } else if ("dialog".equals(localName)) {
+            openDialogElements--;
+        } else if ("div".equals(localName)) {
+            openDivElements--;
+        } else if ("dt".equals(localName)) {
+            openDtElements--;
+        } else if ("fieldset".equals(localName)) {
+            openFieldsetElements--;
+        } else if ("figcaption".equals(localName)) {
+            openFigcaptionElements--;
+        } else if ("figure".equals(localName)) {
+            openFigureElements--;
+        } else if ("footer".equals(localName)) {
+            openFooterElements--;
+        } else if ("form".equals(localName)) {
+            openFormElements--;
+        } else if ("header".equals(localName)) {
+            openHeaderElements--;
+        } else if ("li".equals(localName)) {
+            openLiElements--;
+        } else if ("main".equals(localName)) {
+            openMainElements--;
+        } else if ("nav".equals(localName)) {
+            openNavElements--;
+        } else if ("section".equals(localName)) {
+            openSectionElements--;
+        } else if ("td".equals(localName)) {
+            openTdElements--;
+        } else if ("th".equals(localName)) {
+            openThElements--;
         }
         contentHandler.endElement(uri, localName, qName);
     }
@@ -240,6 +340,237 @@ public final class UseCountingXMLReaderWrapper
             }
         } else if ("body".equals(localName)) {
             inBody = true;
+        } else if ("address".equals(localName)) {
+            openAddressElements++;
+        } else if ("article".equals(localName)) {
+            openArticleElements++;
+        } else if ("aside".equals(localName)) {
+            openAsideElements++;
+        } else if ("blockquote".equals(localName)) {
+            openBlockquoteElements++;
+        } else if ("caption".equals(localName)) {
+            openCaptionElements++;
+        } else if ("dd".equals(localName)) {
+            openDdElements++;
+        } else if ("details".equals(localName)) {
+            openDetailsElements++;
+        } else if ("dialog".equals(localName)) {
+            openDialogElements++;
+        } else if ("div".equals(localName)) {
+            openDivElements++;
+        } else if ("dt".equals(localName)) {
+            openDtElements++;
+        } else if ("fieldset".equals(localName)) {
+            openFieldsetElements++;
+        } else if ("figcaption".equals(localName)) {
+            openFigcaptionElements++;
+        } else if ("figure".equals(localName)) {
+            openFigureElements++;
+        } else if ("footer".equals(localName)) {
+            openFooterElements++;
+        } else if ("form".equals(localName)) {
+            openFormElements++;
+        } else if ("header".equals(localName)) {
+            openHeaderElements++;
+        } else if ("li".equals(localName)) {
+            openLiElements++;
+        } else if ("main".equals(localName)) {
+            if (atts.getIndex("", "hidden") < 0) {
+                if (hasVisibleMain) {
+                    if (systemId != null) {
+                        log4j.info("<main> multiple visible " + systemId);
+                    }
+                    request.setAttribute(
+                            "http://validator.nu/properties/main-multiple-visible-found",
+                            true);
+                }
+                hasVisibleMain = true;
+            }
+            if (openAddressElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <address> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-address-found",
+                        true);
+            }
+            if (openArticleElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <article> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-article-found",
+                        true);
+            }
+            if (openAsideElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <aside> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-aside-found",
+                        true);
+            }
+            if (openBlockquoteElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <blockquote> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-blockquote-found",
+                        true);
+            }
+            if (openCaptionElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <caption> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-caption-found",
+                        true);
+            }
+            if (openDdElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <dd> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-dd-found",
+                        true);
+            }
+            if (openDetailsElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <details> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-details-found",
+                        true);
+            }
+            if (openDialogElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <dialog> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-dialog-found",
+                        true);
+            }
+            if (openDivElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <div> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-div-found",
+                        true);
+            }
+            if (openDtElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <dt> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-dt-found",
+                        true);
+            }
+            if (openFieldsetElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <fieldset> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-fieldset-found",
+                        true);
+            }
+            if (openFigcaptionElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <figcaption> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-figcaption-found",
+                        true);
+            }
+            if (openFigureElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <figure> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-figure-found",
+                        true);
+            }
+            if (openFooterElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <footer> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-footer-found",
+                        true);
+            }
+            if (openFormElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <form> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-form-found",
+                        true);
+            }
+            if (openHeaderElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <header> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-header-found",
+                        true);
+            }
+            if (openLiElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <li> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-li-found",
+                        true);
+            }
+            if (openMainElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <main> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-main-found",
+                        true);
+            }
+            if (openNavElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <nav> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-nav-found",
+                        true);
+            }
+            if (openSectionElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <section> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-section-found",
+                        true);
+            }
+            if (openTdElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <td> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-td-found",
+                        true);
+            }
+            if (openThElements > 0 && request != null) {
+                if (systemId != null) {
+                    log4j.info("<main> in <th> " + systemId);
+                }
+                request.setAttribute(
+                        "http://validator.nu/properties/main-in-th-found",
+                        true);
+            }
+            openMainElements++;
+        } else if ("nav".equals(localName)) {
+            openNavElements++;
+        } else if ("section".equals(localName)) {
+            openSectionElements++;
+        } else if ("td".equals(localName)) {
+            openTdElements++;
+        } else if ("th".equals(localName)) {
+            openThElements++;
         }
         if (atts.getIndex("", "rel") > -1
                 && ("link".equals(localName) || "a".equals(localName))) {
