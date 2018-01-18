@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2010-2017 Mozilla Foundation
+ * Copyright (c) 2010-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -191,15 +191,18 @@ public final class TextContentChecker extends Checker {
     }
 
     private void errBadTextContent(DatatypeException e, Class<?> datatypeClass,
-            String localName, String uri) throws SAXException,
-            ClassNotFoundException {
+            String localName, String uri)
+            throws SAXException, ClassNotFoundException {
         if (getErrorHandler() != null) {
             Html5DatatypeException ex5 = (Html5DatatypeException) e;
+            String message = "The text content of element \u201c" + localName
+                    + "\u201d was not in the required format: ";
+            if (ex5.isWarning()) {
+                message = "Double-check the text content of element \u201c"
+                        + localName + "\u201d: ";
+            }
             DatatypeMismatchException dme = new DatatypeMismatchException(
-                    "The text content of element \u201c" + localName
-                            // + "\u201D from namespace \u201C" + uri
-                            + "\u201d was not in the required format: "
-                            + e.getMessage().split(": ")[1],
+                    message + e.getMessage().split(": ")[1],
                     getDocumentLocator(), datatypeClass, ex5.isWarning());
             getErrorHandler().error(dme);
         }
