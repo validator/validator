@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2017 Mozilla Foundation
+ * Copyright (c) 2008-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -41,6 +41,7 @@ import nu.validator.checker.LocatorImpl;
 import nu.validator.checker.TaintableLocatorImpl;
 import nu.validator.checker.VnuBadAttrValueException;
 import nu.validator.checker.VnuBadElementNameException;
+import nu.validator.client.TestRunner;
 import nu.validator.datatype.AutocompleteDetailsAny;
 import nu.validator.datatype.AutocompleteDetailsDate;
 import nu.validator.datatype.AutocompleteDetailsEmail;
@@ -57,15 +58,14 @@ import nu.validator.datatype.ImageCandidateStringsWidthRequired;
 import nu.validator.datatype.ImageCandidateStrings;
 import nu.validator.datatype.ImageCandidateURL;
 import nu.validator.htmlparser.impl.NCName;
+import nu.validator.messages.MessageEmitterAdapter;
 
 import org.relaxng.datatype.DatatypeException;
 
 import org.w3c.css.css.StyleSheetParser;
 import org.w3c.css.parser.CssError;
 import org.w3c.css.parser.CssParseException;
-import org.w3c.css.parser.CssSelectors;
 import org.w3c.css.parser.Errors;
-import org.w3c.css.parser.analyzer.ParseException;
 import org.w3c.css.util.ApplContext;
 
 import org.xml.sax.Attributes;
@@ -74,21 +74,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class Assertions extends Checker {
-
-    private static final int ELIDE_LIMIT = 50;
-
-    private static String elide(String s) {
-        int len = s.length();
-        if (len < ELIDE_LIMIT) {
-            return "\u201c" + s + "\u201d";
-        } else {
-            StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
-            sb.append(s, 0, ELIDE_LIMIT / 2);
-            sb.append('\u2026');
-            sb.append(s, len - ELIDE_LIMIT / 2, len);
-            return "\u201c" + sb.toString() + "\u201d";
-        }
-    }
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -1429,44 +1414,41 @@ public class Assertions extends Checker {
                     && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
             } else if ("style" == localName) {
+                String styleContents = node.getTextContent().toString();
+                boolean styleHasNewline = false;
+                if (styleContents.indexOf('\n') > -1) {
+                    styleHasNewline = true;
+                }
                 ApplContext ac = new ApplContext("en");
                 ac.setCssVersionAndProfile("css3svg");
                 ac.setMedium("all");
                 ac.setTreatVendorExtensionsAsWarnings(true);
+                ac.setTreatCssHacksAsWarnings(true);
                 ac.setWarningLevel(-1);
                 ac.setFakeURL("file://localhost/StyleElement");
                 StyleSheetParser styleSheetParser = new StyleSheetParser();
                 styleSheetParser.parseStyleSheet(ac,
-                        new StringReader(node.getTextContent().toString()),
-                        null);
+                        new StringReader(styleContents), null);
                 styleSheetParser.getStyleSheet().findConflicts(ac);
                 Errors errors = styleSheetParser.getStyleSheet().getErrors();
                 for (int i = 0; i < errors.getErrorCount(); i++) {
                     String message = "";
                     String cssProperty = "";
                     String cssMessage = "";
-                    String cssExpression = "";
-                    String cssSkippedString = "";
-                    String cssContext = "";
                     CssError error = errors.getErrorAt(i);
-                    int lineNumber = error.getLine();
+                    int beginLine = error.getBeginLine();
+                    int beginColumn = error.getBeginColumn();
+                    int endLine = error.getEndLine();
+                    int endColumn = error.getEndColumn();
+                    if (beginLine == 0) {
+                        continue;
+                    }
                     Throwable ex = error.getException();
                     if (ex instanceof CssParseException) {
                         CssParseException cpe = (CssParseException) ex;
                         if ("generator.unrecognize" //
                                 .equals(cpe.getErrorType())) {
-                            cssMessage = "Parse Error: ";
-                        }
-                        Throwable cpex = cpe.getException();
-                        if (cpex instanceof ParseException) {
-                            ParseException pe = (ParseException) cpex;
-                            if (pe.getLine() > 0) {
-                                lineNumber = pe.getLine();
-                            }
-                            String peMessage = pe.getMessage();
-                            if (peMessage != null) {
-                                cssMessage += peMessage;
-                            }
+                            cssMessage = "Parse Error";
                         }
                         if (cpe.getProperty() != null) {
                             cssProperty = String.format("\u201c%s\u201D: ",
@@ -1475,73 +1457,35 @@ public class Assertions extends Checker {
                         if (cpe.getMessage() != null) {
                             cssMessage = cpe.getMessage();
                         }
-                        if (cpe.getExp() != null) {
-                            try {
-                                if (!"".equals(
-                                        cpe.getExp().toString().trim())) {
-                                    cssExpression = String.format(" in %s",
-                                            elide(cpe.getExp().toString())) //
-                                            .replace('\n', '\u21A9');
-                                    // U+21A9 = LEFTWARDS ARROW WITH HOOK
-                                }
-                            } catch (StringIndexOutOfBoundsException e) {
-                                // Can get here due to CssExpression.toString()
-                                // bug. But if so, it just means cssExpression
-                                // doesn't get set. And that's no big deal,
-                                // because it's only supplemental info. So we
-                                // just ignore the bug/exception and move on.
-                            }
-                        }
-                        if (cpe.getSkippedString() != null
-                                && !"".equals(cpe.getSkippedString().trim())) {
-                            cssSkippedString = cpe.getSkippedString();
-                            if (!cssSkippedString.contains("Encountered")) {
-                                cssSkippedString = String.format(
-                                        " in %s",
-                                        elide(cssSkippedString)) //
-                                        .replace('\n', '\u21A9');
-                                // U+21A9 = LEFTWARDS ARROW WITH HOOK
-                            }
-                        }
-                        if (cpe.getContexts() != null
-                                && cpe.getContexts().size() != 0) {
-                            StringBuilder buf = new StringBuilder();
-                            Iterator<CssSelectors> li = //
-                                    cpe.getContexts().iterator();
-                            while (li.hasNext()) {
-                                Object t = li.next();
-                                if (t != null) {
-                                    buf.append(t);
-                                    if (li.hasNext()) {
-                                        buf.append(", ");
-                                    }
-                                }
-                            }
-                            if (buf.length() != 0) {
-                                cssContext = String.format(" in %s",
-                                        elide(String.valueOf(buf)));
-                            }
-                        }
                         if (!"".equals(cssMessage)) {
-                            message = cssProperty //
-                                    + cssMessage //
-                                    + cssExpression //
-                                    + cssSkippedString //
-                                    + cssContext //
-                                    + ".";
+                            message = cssProperty + cssMessage + ".";
                         }
                     } else {
                         message = ex.getMessage();
                     }
                     if (!"".equals(message)) {
+                        int lastLine = node.locator.getLineNumber() //
+                                + endLine - 1;
+                        int lastColumn = endColumn;
+                        int columnOffset = node.locator.getColumnNumber();
+                        if (styleHasNewline) {
+                            columnOffset = 0;
+                        }
                         SAXParseException spe = new SAXParseException( //
-                                "CSS: " + message, //
+                                message, //
                                 node.locator.getPublicId(), //
                                 node.locator.getSystemId(), //
-                                node.locator.getLineNumber() //
-                                        + lineNumber - 1,
-                                -1);
-                        getErrorHandler().error(spe);
+                                lastLine, lastColumn);
+                        int[] start = {
+                                node.locator.getLineNumber() + beginLine - 1,
+                                beginColumn, columnOffset };
+                        if ((getErrorHandler() instanceof MessageEmitterAdapter)
+                                && !(getErrorHandler() instanceof TestRunner)) {
+                            ((MessageEmitterAdapter) getErrorHandler()) //
+                                    .cssError(spe, start);
+                        } else {
+                            getErrorHandler().error(spe);
+                        }
                     }
                 }
             }

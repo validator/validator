@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2005-2007 Henri Sivonen
  * Copyright (c) 2007 Simon Pieters
- * Copyright (c) 2007-2015 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -42,6 +42,7 @@ var hasTextContent = (createHtmlElement('code').textContent != undefined)
 var linePattern = /^#l-?[0-9]+$/
 var rangePattern = /^#l-?[0-9]+c[0-9]+$/
 var exactPattern = /^#cl-?[0-9]+c[0-9]+$/
+var htmlBoilerplate = '<!DOCTYPE html>\n<html>\n<head>\n<title>Test</title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
 
 function boot() {
 	installHandlers()
@@ -89,7 +90,10 @@ function initFieldHolders() {
 		textarea.setAttribute('aria-labelledby', 'docselect')
 		copySourceIntoTextArea()
 		if (textarea.value == '') {
-			textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title>Test</title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
+			textarea.value = htmlBoilerplate
+			if (supportsLocalStorage() && localStorage["inputWasCss"] == "yes") {
+				textarea.value = ""
+			}
 		}
 	}
 	fileInput = createHtmlElement('input')
@@ -391,6 +395,7 @@ function reflow(element) {
 
 function installTextarea() {
 	var input = document.getElementById('doc')
+	var inputRegion = document.getElementById("inputregion")
 	if (input && textarea) {
 		var form = document.forms[0]
 		if (form) {
@@ -399,7 +404,42 @@ function installTextarea() {
 			if (document.getElementById("xnote")) {
 				input.parentNode.removeChild(document.getElementById("xnote"))
 			}
-			input.parentNode.replaceChild(textarea, input)
+			inputRegion.removeChild(input)
+			if (!document.getElementById("csslabel")) {
+				var cssLabel = document.createElement("label")
+				cssLabel.setAttribute("id", "csslabel")
+				cssLabel.setAttribute("title", "Treat the input as CSS.")
+				cssLabel.setAttribute("for", "css")
+				var cssCheckbox = document.createElement("input")
+				cssCheckbox.setAttribute("type", "checkbox")
+				cssCheckbox.setAttribute("name", "css")
+				cssCheckbox.setAttribute("id", "css")
+				cssCheckbox.setAttribute("value", "yes")
+				if (supportsLocalStorage() && localStorage["inputWasCss"] == "yes") {
+					cssCheckbox.checked = true
+				}
+				cssCheckbox.addEventListener("change", function(e) {
+					if (document.getElementById('doc').value == htmlBoilerplate
+							&& e.target.checked) {
+						document.getElementById('doc').value = ""
+					}
+					if (document.getElementById('doc').value == ""
+							&& !e.target.checked) {
+						document.getElementById('doc').value = htmlBoilerplate
+					}
+					if (supportsLocalStorage()) {
+						if (e.target.checked) {
+							localStorage["inputWasCss"] = "yes"
+						} else {
+							localStorage["inputWasCss"] = "no"
+						}
+					}
+				}, false)
+				cssLabel.appendChild(cssCheckbox)
+				cssLabel.append("CSS")
+				inputRegion.appendChild(cssLabel)
+			}
+			inputRegion.appendChild(textarea)
 			reflow(textarea)
 		}
 	}
@@ -420,6 +460,9 @@ function installFileUpload() {
 	if (input && fileInput) {
 		var form = document.forms[0]
 		if (form) {
+			if (document.getElementById("csslabel")) {
+				input.parentNode.removeChild(document.getElementById("csslabel"))
+			}
 			form.method = 'post'
 			form.enctype = 'multipart/form-data'
 			input.parentNode.replaceChild(fileInput, input)
@@ -450,6 +493,9 @@ function installUrlInput() {
 			form.enctype = ''
 			if (document.getElementById("xnote")) {
 				input.parentNode.removeChild(document.getElementById("xnote"))
+			}
+			if (document.getElementById("csslabel")) {
+				input.parentNode.removeChild(document.getElementById("csslabel"))
 			}
 			input.parentNode.replaceChild(urlInput, input)
 			reflow(urlInput)

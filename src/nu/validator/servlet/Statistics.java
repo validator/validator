@@ -99,6 +99,7 @@ public class Statistics {
         INPUT_TEXT_FIELD("\u2514 Text-field input"), //
         INPUT_FILE_UPLOAD("\u2514 File-upload input"), //
         INPUT_HTML("Input: text/html"), //
+        INPUT_CSS("Input: text/css"), //
         INPUT_UNSUPPORTED("Input: unsupported content type (error)"), //
         INPUT_XML("Input: application/xhtml+xml or other XML content type"), //
         OUTPUT_XML("Output: XML"), //

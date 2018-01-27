@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2015 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -69,6 +69,7 @@ public final class MultipartFormDataFilter implements Filter {
         EXTENSION_TO_TYPE.put("htm", "text/html");
         EXTENSION_TO_TYPE.put("xhtml", "application/xhtml+xml");
         EXTENSION_TO_TYPE.put("xht", "application/xhtml+xml");
+        EXTENSION_TO_TYPE.put("css", "text/css");
         EXTENSION_TO_TYPE.put("atom", "application/atom+xml");
         EXTENSION_TO_TYPE.put("rng", "application/xml");
         EXTENSION_TO_TYPE.put("xsl", "application/xml");
@@ -145,6 +146,10 @@ public final class MultipartFormDataFilter implements Filter {
                                 contentType = "application/xml";
                             } else {
                                 contentType = "text/html";
+                            }
+                            String[] css = params.get("css");
+                            if (css != null && "yes".equals(css[0])) {
+                                contentType = "text/css";
                             }
                             request.setAttribute("nu.validator.servlet.MultipartFormDataFilter.type", "textarea");
                             fileStream = fileItemStream.openStream();

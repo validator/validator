@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2015 Mozilla Foundation
+ * Copyright (c) 2008-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -41,6 +41,8 @@ public class DataUriEntityResolver implements EntityResolver {
     private final ErrorHandler errorHandler;
 
     private boolean allowRnc = false;
+
+    private boolean allowCss= false;
 
     private boolean allowHtml = false;
 
@@ -111,6 +113,22 @@ public class DataUriEntityResolver implements EntityResolver {
     public void setAllowRnc(boolean allowRnc) {
         this.allowRnc = allowRnc;
         this.contentTypeParser.setAllowRnc(allowRnc);
+    }
+
+    /**
+     * @return Returns the allowCss.
+     */
+    public boolean isAllowCss() {
+        return allowCss;
+    }
+
+    /**
+     * @param allowCss
+     *            The allowCss to set.
+     */
+    public void setAllowCss(boolean allowCss) {
+        this.allowCss = allowCss;
+        this.contentTypeParser.setAllowCss(allowCss);
     }
 
     /**
@@ -191,6 +209,7 @@ public class DataUriEntityResolver implements EntityResolver {
     }
 
     public boolean isOnlyHtmlAllowed() {
-        return !isAllowGenericXml() && !isAllowRnc() && !isAllowXhtml();
+        return !isAllowGenericXml() && !isAllowRnc() && !isAllowCss()
+                && !isAllowXhtml();
     }
 }

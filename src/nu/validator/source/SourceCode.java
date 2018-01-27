@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -78,8 +78,18 @@ public final class SourceCode implements CharacterHandler {
 
     private final LocationRecorder locationRecorder;
 
+    private boolean isCss = false;
+
     public SourceCode() {
         this.locationRecorder = new LocationRecorder(this);
+    }
+
+    public void setIsCss() {
+        this.isCss = true;
+    }
+
+    public boolean getIsCss() {
+        return this.isCss;
     }
 
     public void initialize(InputSource inputSource) {
@@ -172,7 +182,7 @@ public final class SourceCode implements CharacterHandler {
         prevWasCr = false;
     }
 
-    void addLocatorLocation(int oneBasedLine, int oneBasedColumn) {
+    public void addLocatorLocation(int oneBasedLine, int oneBasedColumn) {
         log4j.debug(oneBasedLine + ", " + oneBasedColumn);
         reverseSortedLocations.add(new Location(this, oneBasedLine - 1,
                 oneBasedColumn - 1));
@@ -214,6 +224,9 @@ public final class SourceCode implements CharacterHandler {
         rangeLasts.add(rangeLast);
         Location endRange = rangeLast.next();
         Location start = rangeStart.step(-10);
+        if (this.isCss) {
+            start = rangeStart.step(-30);
+        }
         Location end = endRange.step(6);
         extractHandler.startSource(type, encoding);
         emitContent(start, rangeStart, extractHandler);
@@ -304,11 +317,15 @@ public final class SourceCode implements CharacterHandler {
             // first line
             int length = line.getBufferLength() - from.getColumn();
             if (length > 0) {
-                handler.characters(line.getBuffer(), line.getOffset()
-                        + from.getColumn(), length);
+                if (!(fromLine == 0 && this.isCss)) {
+                    handler.characters(line.getBuffer(),
+                            line.getOffset() + from.getColumn(), length);
+                }
             }
             if (fromLine + 1 != lines.size()) {
-                handler.newLine();
+                if (!(fromLine == 0 && this.isCss)) {
+                    handler.newLine();
+                }
             }
             // lines in between
             int wholeLine = fromLine + 1;
@@ -325,7 +342,10 @@ public final class SourceCode implements CharacterHandler {
             int untilCol = until.getColumn();
             if (untilCol > 0) {
                 line = getLine(untilLine);
-                handler.characters(line.getBuffer(), line.getOffset(), untilCol);
+                if (!(untilLine == lines.size() - 1 && this.isCss)) {
+                    handler.characters(line.getBuffer(), line.getOffset(),
+                            untilCol);
+                }
             }
         }
     }
@@ -404,8 +424,13 @@ public final class SourceCode implements CharacterHandler {
                     }
                 }
             }
-            emitContent(previousLocation, new Location(this, lines.size(), 0),
-                    handler);
+            if (this.isCss) {
+                emitContent(previousLocation,
+                        new Location(this, lines.size() - 1, 0), handler);
+            } else {
+                emitContent(previousLocation,
+                        new Location(this, lines.size(), 0), handler);
+            }
         } finally {
             handler.endSource();
         }

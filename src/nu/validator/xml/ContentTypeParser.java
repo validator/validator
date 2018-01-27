@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2016 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -66,6 +66,8 @@ public class ContentTypeParser {
     private boolean laxContentType;
 
     private boolean allowRnc = false;
+
+    private boolean allowCss = false;
 
     private boolean allowHtml = false;
 
@@ -187,6 +189,7 @@ public class ContentTypeParser {
             String[] params = contentType.split(";");
             String type = params[0].trim().toLowerCase();
             boolean wasRnc = false;
+            boolean wasCss = false;
             boolean wasHtml = false;
             if (isAllowRnc()) {
                 if (rncContentType(type, is)) {
@@ -194,7 +197,13 @@ public class ContentTypeParser {
                     is.setType("application/relax-ng-compact-syntax");
                 }
             }
-            if (!wasRnc) {
+            if (isAllowCss()) {
+                if ("text/css".equals(type)) {
+                    wasCss = true;
+                    is.setType("text/css");
+                }
+            }
+            if (!wasRnc && !wasCss) {
                 if (isAllowHtml()) {
                     if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
                         is.setType(type);
@@ -388,7 +397,7 @@ public class ContentTypeParser {
             }
             if (charset != null) {
                 is.setEncoding(charset);
-            } else if (type.startsWith("text/") && !wasHtml) {
+            } else if (type.startsWith("text/") && !wasHtml && !wasCss) {
                 if (laxContentType) {
                     if (errorHandler != null) {
                         errorHandler.warning(new SAXParseException(
@@ -470,6 +479,26 @@ public class ContentTypeParser {
 
 
     /**
+     * Returns the allowCss.
+     * 
+     * @return the allowCss
+     */
+    public boolean isAllowCss() {
+        return allowCss;
+    }
+
+
+    /**
+     * Sets the allowCss.
+     * 
+     * @param allowCss the allowCss to set
+     */
+    public void setAllowCss(boolean allowCss) {
+        this.allowCss = allowCss;
+    }
+
+
+    /**
      * Returns the allowRnc.
      * 
      * @return the allowRnc
@@ -530,7 +559,8 @@ public class ContentTypeParser {
 
 
     public boolean isOnlyHtmlAllowed() {
-        return !isAllowGenericXml() && !isAllowRnc() && !isAllowXhtml();
+        return !isAllowGenericXml() && !isAllowRnc() && !isAllowCss()
+                && !isAllowXhtml();
     }
 
     public class NonXmlContentTypeException extends SAXException {

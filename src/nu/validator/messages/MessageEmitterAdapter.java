@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2017 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -420,7 +420,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
 
     private final ImageCollector imageCollector;
 
-    private final int lineOffset;
+    private int lineOffset;
 
     private Spec spec = EmptySpec.THE_INSTANCE;
 
@@ -532,7 +532,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
         }
         this.warnings++;
         throwIfTooManyMessages();
-        messageFromSAXParseException(MessageType.WARNING, e, exact);
+        messageFromSAXParseException(MessageType.WARNING, e, exact, null);
     }
 
     /**
@@ -573,7 +573,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
                         this.warnings++;
                         throwIfTooManyMessages();
                         messageFromSAXParseException(MessageType.WARNING, e,
-                                exact);
+                                exact, null);
                         return;
                     }
                 }
@@ -581,7 +581,26 @@ public class MessageEmitterAdapter implements ErrorHandler {
         }
         this.errors++;
         throwIfTooManyMessages();
-        messageFromSAXParseException(MessageType.ERROR, e, exact);
+        messageFromSAXParseException(MessageType.ERROR, e, exact, null);
+    }
+
+    public void cssError(SAXParseException e, int[] start)
+            throws SAXException {
+        if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
+            return;
+        }
+        this.errors++;
+        throwIfTooManyMessages();
+        int startLine = start[0];
+        int startColumn = start[1];
+        int lastLine = e.getLineNumber();
+        int lastColumn = e.getColumnNumber();
+        if (!sourceCode.getIsCss()) {
+            e = new SAXParseException("CSS: " + e.getMessage(), e.getPublicId(),
+                    e.getSystemId(), lastLine, lastColumn);
+        }
+        boolean exact = (startLine == lastLine && startColumn == lastColumn);
+        messageFromSAXParseException(MessageType.ERROR, e, exact, start);
     }
 
     /**
@@ -609,16 +628,17 @@ public class MessageEmitterAdapter implements ErrorHandler {
             systemId = siie.getSystemId();
         }
         if (wrapped instanceof IOException) {
-            message(MessageType.IO, wrapped, systemId, -1, -1, false);
+            message(MessageType.IO, wrapped, systemId, -1, -1, false, null);
         } else {
-            messageFromSAXParseException(MessageType.FATAL, e, exact);
+            messageFromSAXParseException(MessageType.FATAL, e, exact, null);
         }
     }
 
     public void info(String str) throws SAXException {
         if (emitter instanceof GnuMessageEmitter)
             return;
-        message(MessageType.INFO, new Exception(str), null, -1, -1, false);
+        message(MessageType.INFO, new Exception(str), null, -1, -1, false,
+                null);
     }
 
     public void ioError(IOException e) throws SAXException {
@@ -628,18 +648,18 @@ public class MessageEmitterAdapter implements ErrorHandler {
             SystemIdIOException siie = (SystemIdIOException) e;
             systemId = siie.getSystemId();
         }
-        message(MessageType.IO, e, systemId, -1, -1, false);
+        message(MessageType.IO, e, systemId, -1, -1, false, null);
     }
 
     public void internalError(Throwable e, String message) throws SAXException {
         this.nonDocumentErrors++;
         message(MessageType.INTERNAL, new Exception(message), null, -1, -1,
-                false);
+                false, null);
     }
 
     public void schemaError(Exception e) throws SAXException {
         this.nonDocumentErrors++;
-        message(MessageType.SCHEMA, e, null, -1, -1, false);
+        message(MessageType.SCHEMA, e, null, -1, -1, false, null);
     }
 
     public void start(String documentUri) throws SAXException {
@@ -767,14 +787,15 @@ public class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void messageFromSAXParseException(MessageType type,
-            SAXParseException spe, boolean exact) throws SAXException {
+            SAXParseException spe, boolean exact, int[] start)
+            throws SAXException {
         int lineNumber = spe.getLineNumber() == 0 ? -1 : spe.getLineNumber();
         message(type, spe, spe.getSystemId(), lineNumber, spe.getColumnNumber(),
-                exact);
+                exact, start);
     }
 
     private void message(MessageType type, Exception message, String systemId,
-            int oneBasedLine, int oneBasedColumn, boolean exact)
+            int oneBasedLine, int oneBasedColumn, boolean exact, int[] start)
             throws SAXException {
         String msg = message.getMessage();
         if (msg != null && ((filterPattern != null
@@ -805,10 +826,10 @@ public class MessageEmitterAdapter implements ErrorHandler {
             if (oneBasedColumn > -1) {
                 if (exact) {
                     messageWithExact(type, message, systemId, oneBasedLine,
-                            oneBasedColumn);
+                            oneBasedColumn, start);
                 } else {
                     messageWithRange(type, message, systemId, oneBasedLine,
-                            oneBasedColumn);
+                            oneBasedColumn, start);
                 }
             } else {
                 messageWithLine(type, message, systemId, oneBasedLine);
@@ -820,8 +841,11 @@ public class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void messageWithRange(MessageType type, Exception message,
-            String systemId, int oneBasedLine, int oneBasedColumn)
+            String systemId, int oneBasedLine, int oneBasedColumn, int[] start)
             throws SAXException {
+        if (start != null && !sourceCode.getIsCss()) {
+            oneBasedColumn = oneBasedColumn + start[2];
+        }
         systemId = batchMode ? systemId : null;
         Location rangeLast = sourceCode.newLocatorLocation(oneBasedLine,
                 oneBasedColumn);
@@ -831,12 +855,24 @@ public class MessageEmitterAdapter implements ErrorHandler {
             return;
         }
         Location rangeStart = sourceCode.rangeStartForRangeLast(rangeLast);
+        if (start != null) {
+            if (sourceCode.getIsCss()) {
+                rangeStart = sourceCode.newLocatorLocation(start[0], start[1]);
+            } else {
+                rangeStart = sourceCode.newLocatorLocation(start[0],
+                        start[1] + start[2]);
+            }
+        }
         startMessage(type, scrub(shortenDataUri(systemId)),
                 rangeStart.getLine() + 1, rangeStart.getColumn() + 1,
                 oneBasedLine, oneBasedColumn, false);
         messageText(message);
         SourceHandler sourceHandler = emitter.startSource();
         if (sourceHandler != null) {
+            if (start != null) {
+                sourceCode.addLocatorLocation(rangeStart.getLine() + 1,
+                        rangeStart.getColumn());
+            }
             sourceCode.rangeEndError(rangeStart, rangeLast, sourceHandler);
         }
         emitter.endSource();
@@ -845,8 +881,11 @@ public class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void messageWithExact(MessageType type, Exception message,
-            String systemId, int oneBasedLine, int oneBasedColumn)
+            String systemId, int oneBasedLine, int oneBasedColumn, int[] start)
             throws SAXException {
+        if (start != null && !sourceCode.getIsCss()) {
+            oneBasedColumn = oneBasedColumn + start[2];
+        }
         systemId = batchMode ? systemId : null;
         startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine,
                 oneBasedColumn, oneBasedLine, oneBasedColumn, true);
@@ -1689,6 +1728,16 @@ public class MessageEmitterAdapter implements ErrorHandler {
      */
     public ErrorHandler getExactErrorHandler() {
         return exactErrorHandler;
+    }
+
+    /**
+     * Sets the lineOffset.
+     *
+     * @param lineOffset
+     *            the lineOffset to set
+     */
+    public void setLineOffset(int lineOffset) {
+        this.lineOffset = lineOffset;
     }
 
     /**

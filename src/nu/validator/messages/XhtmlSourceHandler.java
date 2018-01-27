@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -80,7 +80,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         if (!listOpen) {
             attrs.clear();
             attrs.addAttribute("class", "source");
-            if (lineOffset != 0) {
+            if (lineOffset > 0) {
                 attrs.addAttribute("start", Integer.toString(1 + lineOffset));                
             }
             emitter.startElement("ol", attrs);

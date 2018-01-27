@@ -24,14 +24,20 @@
 package nu.validator.servlet;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.SequenceInputStream;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -223,6 +229,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final char[] ABOUT_THIS_SERVICE = "About this Service".toCharArray();
 
     private static final char[] SIMPLE_UI = "Simplified Interface".toCharArray();
+
+    private static final byte[] CSS_CHECKING_PROLOG = //
+                    "<!DOCTYPE html><title>s</title><style>\n".getBytes();
+
+    private static final byte[] CSS_CHECKING_EPILOG = "\n</style>".getBytes();
 
     private static final String USER_AGENT;
 
@@ -1053,6 +1064,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
         entityResolver = new LocalCacheEntityResolver(dataRes);
         setAllowRnc(true);
+        setAllowCss(true);
         try {
             this.errorHandler.start(document);
             PropertyMapBuilder pmb = new PropertyMapBuilder();
@@ -1072,8 +1084,25 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             loadDocAndSetupParser();
             setErrorProfile();
 
-            reader.setErrorHandler(errorHandler);
             contentType = documentInput.getType();
+            if ("text/css".equals(contentType)) {
+                String charset = "UTF-8";
+                if (documentInput.getEncoding() != null) {
+                    charset = documentInput.getEncoding();
+                }
+                List<InputStream> streams = new ArrayList<>();
+                streams.add(new ByteArrayInputStream(CSS_CHECKING_PROLOG));
+                streams.add(documentInput.getByteStream());
+                streams.add(new ByteArrayInputStream(CSS_CHECKING_EPILOG));
+                Enumeration<InputStream> e = Collections.enumeration(streams);
+                documentInput.setByteStream(new SequenceInputStream(e));
+                documentInput.setEncoding(charset);
+                errorHandler.setLineOffset(-1);
+                sourceCode.setIsCss();
+                parser = ParserMode.HTML;
+                loadDocAndSetupParser();
+            }
+            reader.setErrorHandler(errorHandler);
             sourceCode.initialize(documentInput);
             if (validator == null) {
                 checkNormalization = true;
@@ -1251,7 +1280,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     stats.incrementField(Statistics.Field.INPUT_ENTITY_BODY);
                 }
             }
-            if (htmlParser != null) {
+            if ("text/css".equals(documentInput.getType())) {
+                stats.incrementField(Statistics.Field.INPUT_CSS);
+            } else if (htmlParser != null) {
                 stats.incrementField(Statistics.Field.INPUT_HTML);
             } else if (xmlParser != null) {
                 stats.incrementField(Statistics.Field.INPUT_XML);
@@ -1846,7 +1877,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 setAllowXhtml(true);
                 loadDocumentInput();
                 String type = documentInput.getType();
-                if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
+                if ("text/css".equals(type)) {
+                    break;
+                } else if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
                     if (isHtmlUnsafePreset()) {
                         String message = "The Content-Type was \u201C" + type + "\u201D, but the chosen preset schema is not appropriate for HTML.";
                         SAXException se = new SAXException(message);
@@ -2479,6 +2512,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     /**
+     * @param allowCss
+     * @see nu.validator.xml.ContentTypeParser#setAllowCss(boolean)
+     */
+    protected void setAllowCss(boolean allowCss) {
+        contentTypeParser.setAllowCss(allowCss);
+        httpRes.setAllowCss(allowCss);
+        dataRes.setAllowCss(allowCss);
+    }
+
+    /**
      * @param allowRnc
      * @see nu.validator.xml.ContentTypeParser#setAllowRnc(boolean)
      */
@@ -2504,6 +2547,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      * @throws IOException
      */
     protected void loadDocumentInput() throws SAXException, IOException {
+        if (documentInput != null) {
+            return;
+        }
         if (methodIsGet) {
             documentInput = (TypedInputSource) entityResolver.resolveEntity(
                     null, document);

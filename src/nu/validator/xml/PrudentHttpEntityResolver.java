@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2017 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -96,6 +96,8 @@ import io.mola.galimatias.GalimatiasParseException;
     private int requestsLeft;
 
     private boolean allowRnc = false;
+
+    private boolean allowCss = false;
 
     private boolean allowHtml = false;
 
@@ -482,6 +484,22 @@ import io.mola.galimatias.GalimatiasParseException;
     }
 
     /**
+     * @return Returns the allowCss.
+     */
+    public boolean isAllowCss() {
+        return allowCss;
+    }
+
+    /**
+     * @param allowCss
+     *            The allowCss to set.
+     */
+    public void setAllowCss(boolean allowCss) {
+        this.allowCss = allowCss;
+        this.contentTypeParser.setAllowCss(allowCss);
+    }
+
+    /**
      * @param allowHtml
      */
     public void setAllowHtml(boolean allowHtml) {
@@ -563,7 +581,8 @@ import io.mola.galimatias.GalimatiasParseException;
     }
 
     public boolean isOnlyHtmlAllowed() {
-        return !isAllowGenericXml() && !isAllowRnc() && !isAllowXhtml();
+        return !isAllowGenericXml() && !isAllowRnc() && !isAllowCss()
+                && !isAllowXhtml();
     }
 
     public class ResourceNotRetrievableException extends SAXException {
