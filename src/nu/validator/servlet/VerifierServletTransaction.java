@@ -1280,7 +1280,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     stats.incrementField(Statistics.Field.INPUT_ENTITY_BODY);
                 }
             }
-            if ("text/css".equals(documentInput.getType())) {
+            if (documentInput != null
+                    && "text/css".equals(documentInput.getType())) {
                 stats.incrementField(Statistics.Field.INPUT_CSS);
             } else if (htmlParser != null) {
                 stats.incrementField(Statistics.Field.INPUT_HTML);
