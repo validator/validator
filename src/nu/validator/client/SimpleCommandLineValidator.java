@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Mozilla Foundation
+ * Copyright (c) 2013-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -80,6 +80,12 @@ public class SimpleCommandLineValidator {
 
     private static boolean noStream;
 
+    private static boolean alsoCheckCSS;
+
+    private static boolean skipNonCSS;
+
+    private static boolean forceCSS;
+
     private static boolean skipNonHTML;
 
     private static boolean forceHTML;
@@ -103,6 +109,9 @@ public class SimpleCommandLineValidator {
         System.setProperty("nu.validator.datatype.warn", "true");
         errorsOnly = false;
         wError = false;
+        alsoCheckCSS = false;
+        skipNonCSS = false;
+        forceCSS = false;
         skipNonHTML = false;
         forceHTML = false;
         loadEntities = false;
@@ -192,6 +201,12 @@ public class SimpleCommandLineValidator {
                 } else if ("--help".equals(args[i])) {
                     help();
                     System.exit(0);
+                } else if ("--also-check-css".equals(args[i])) {
+                    alsoCheckCSS = true;
+                } else if ("--skip-non-css".equals(args[i])) {
+                    skipNonCSS = true;
+                } else if ("--css".equals(args[i])) {
+                    forceCSS = true;
                 } else if ("--skip-non-html".equals(args[i])) {
                     skipNonHTML = true;
                 } else if ("--html".equals(args[i])) {
@@ -265,8 +280,12 @@ public class SimpleCommandLineValidator {
 
     private static void setup(String schemaUrl) throws SAXException, Exception {
         setErrorHandler();
+        if (cssCheckingEnabled()) {
+            errorHandler.setLineOffset(-1);
+        }
         errorHandler.setHtml(true);
         errorHandler.start(null);
+        validator.setAllowCss(cssCheckingEnabled());
         try {
             validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
         } catch (SchemaReadException e) {
@@ -310,6 +329,14 @@ public class SimpleCommandLineValidator {
                 File file = new File(args[i]);
                 if (file.isDirectory()) {
                     recurseDirectory(file);
+                } else if (forceCSS) {
+                    checkCssFile(file);
+                } else if (skipNonCSS) {
+                    if (isCss(file)) {
+                        checkCssFile(file);
+                    }
+                } else if (alsoCheckCSS && isCss(file)) {
+                    checkCssFile(file);
                 } else {
                     checkHtmlFile(file);
                 }
@@ -324,9 +351,39 @@ public class SimpleCommandLineValidator {
             for (File file : files) {
                 if (file.isDirectory()) {
                     recurseDirectory(file);
+                } else if (forceCSS) {
+                    checkCssFile(file);
+                } else if (skipNonCSS) {
+                    if (isCss(file)) {
+                        checkCssFile(file);
+                    }
+                } else if (alsoCheckCSS && isCss(file)) {
+                    checkCssFile(file);
                 } else {
                     checkHtmlFile(file);
                 }
+            }
+        }
+    }
+
+    private static void checkCssFile(File file) throws IOException, Exception {
+        try {
+            String path = file.getPath();
+            if (!file.exists()) {
+                if (verbose) {
+                    errorHandler.warning(new SAXParseException(
+                            "File not found.", null,
+                            file.toURI().toURL().toString(), -1, -1));
+                }
+                return;
+            } else {
+                emitFilename(path);
+                validator.checkCssFile(file, true);
+            }
+        } catch (SAXException e) {
+            if (!errorsOnly) {
+                System.err.printf("\"%s\":-1:-1: warning: %s\n",
+                        file.toURI().toURL().toString(), e.getMessage());
             }
         }
     }
@@ -373,6 +430,15 @@ public class SimpleCommandLineValidator {
                         file.toURI().toURL().toString(), e.getMessage());
             }
         }
+    }
+
+    private static boolean cssCheckingEnabled() {
+        return forceCSS || alsoCheckCSS;
+    }
+
+    private static boolean isCss(File file) {
+        String name = file.getName();
+        return (name.endsWith(".css"));
     }
 
     private static boolean isXhtml(File file) {
@@ -425,6 +491,7 @@ public class SimpleCommandLineValidator {
         System.out.println("    java -jar vnu.jar [--errors-only] [--Werror] [--exit-zero-always]");
         System.out.println("         [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]");
         System.out.println("         [--filterfile FILENAME] [--filterpattern PATTERN]");
+        System.out.println("         [--css] [--skip-non-css] [--also-check-css]");
         System.out.println("         [--html] [--skip-non-html] [--no-langdetect]");
         System.out.println("         [--help] [--verbose] [--version] FILES");
         System.out.println("");

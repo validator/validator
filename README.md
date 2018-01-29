@@ -32,8 +32,8 @@ they won’t run in Java 7 or older environment.
 
 You can [get the latest release][13] or run [`npm install vnu-jar`][14], [`pip
 install html5validator`][15] or [`brew install vnu`][16], and see the **Usage**
-and **Web-based checking** sections below. Or automate your HTML checking with a
-frontend such as:
+and **Web-based checking** sections below. Or automate your document checking
+with a frontend such as:
 
    [13]: https://github.com/validator/validator/releases/latest
    [14]: https://www.npmjs.com/package/vnu-jar
@@ -59,14 +59,14 @@ frontend such as:
 
 ## Usage
 
-Use the `vnu.jar` HTML checker as an executable for command-line checking of
+Use the `vnu.jar` checker as an executable for command-line checking of
 documents by invoking it like this:
 
       java -jar ~/vnu.jar [--errors-only] [--Werror] [--exit-zero-always]
            [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]
-           [--filterfile FILENAME] [--filterpattern PATTERN] [--html]
-           [--skip-non-html] [--no-langdetect] [--help] [--verbose] [--version]
-           FILES
+           [--filterfile FILENAME] [--filterpattern PATTERN] [--css]
+           [--skip-non-css] [--also-check-css] [--html] [--skip-non-html]
+           [--no-langdetect] [--help] [--verbose] [--version] FILES
 
 **Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
 the file on your system.
@@ -80,14 +80,29 @@ try adjusting the thread stack size by providing the `-Xss` option to java:
 
       java -Xss512k -jar ~/vnu.jar FILE.html...
 
-To check all documents in a particular directory:
+To check all documents in a particular directory as HTML:
 
       java -jar ~/vnu.jar some-directory-name/
 
-To check all documents in a particular directory, skipping any documents whose
-names don’t end with the extensions `.html`, `.htm`, `.xhtml`, or `.xht`:
+To check all documents in a particular directory as HTML, but skip any documents
+whose names don’t end with the extensions `.html`, `.htm`, `.xhtml`, or `.xht`:
 
       java -jar ~/vnu.jar --skip-non-html some-directory-name/
+
+To check all documents in a particular directory as CSS:
+
+      java -jar ~/vnu.jar --force-css some-directory-name/
+
+To check all documents in a particular directory as CSS, but skip any documents
+whose names don’t end with the extension `.css`:
+
+      java -jar ~/vnu.jar --skip-non-css some-directory-name/
+
+To check all documents in a particular directory, with documents whose names end
+in the extension `.css` being checked as CSS, and all other documents being
+checked as HTML:
+
+      java -jar ~/vnu.jar --also-check-css some-directory-name/
 
 To check a Web document:
 
@@ -169,6 +184,18 @@ executable provides the following options:
 
     Shows detailed usage information.
 
+#### --skip-non-css
+
+    Check documents as CSS but skip documents that don’t have *.css extensions.
+
+    default: [unset; all documents found are checked]
+
+#### --css
+
+    Force all documents to be checked as CSS, regardless of extension.
+
+    default: [unset]
+
 #### --skip-non-html
 
     Skip documents that don’t have *.html, *.htm, *.xhtml, or *.xht extensions.
@@ -180,6 +207,12 @@ executable provides the following options:
     Forces any *.xhtml or *.xht documents to be parsed using the HTML parser.
 
     default: [unset; XML parser is used for *.xhtml and *.xht documents]
+
+#### --also-check-css
+
+    Check CSS documents (in addition to checking HTML documents).
+
+    default: [unset; no documents are checked as CSS]
 
 #### --no-langdetect
 

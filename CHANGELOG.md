@@ -4,7 +4,10 @@ changes to any options/interfaces the checker exposes for developers.
 
 # NN.NN.NN
 NN XX 20NN
-  - Add new major feature to check that `style` element contents are valid CSS
+  - Add new major (optional) feature to command-line checker, Web-based checker,
+    and network API to check CSS documents (in addition to HTML documents)
+  - Add new major feature to check that `style` element contents in HTML
+    documents are valid CSS
   - Emit error (not warning) for HTML4/XHTML1 strict doctypes
   - Fix bug that caused the checker to incorrectly treat `input[type]`
     values case-sensitively when doing particular checks

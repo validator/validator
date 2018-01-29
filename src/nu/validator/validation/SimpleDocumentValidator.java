@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Mozilla Foundation
+ * Copyright (c) 2013-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -22,9 +22,12 @@
 
 package nu.validator.validation;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.SequenceInputStream;
 
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
@@ -81,6 +84,10 @@ import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -149,6 +156,13 @@ public class SimpleDocumentValidator {
                     "Failed to resolve schema URL \"%s\".", schemaUrl));
         }
     }
+
+    private boolean allowCss = false;
+
+    private static final byte[] CSS_CHECKING_PROLOG = //
+                    "<!DOCTYPE html><title>s</title><style>\n".getBytes();
+
+    private static final byte[] CSS_CHECKING_EPILOG = "\n</style>".getBytes();
 
     public SimpleDocumentValidator() {
         this(true, true, true);
@@ -370,6 +384,14 @@ public class SimpleDocumentValidator {
         return wiretap;
     }
 
+    /**
+     * @param allowCss
+     *            The allowCss to set.
+     */
+    public void setAllowCss(boolean allowCss) {
+        this.allowCss = allowCss;
+    }
+
     /* *
      * Checks an InputSource as a text/html HTML document.
      */
@@ -387,6 +409,20 @@ public class SimpleDocumentValidator {
             SAXException {
         validator.reset();
         checkAsXML(is);
+    }
+
+    /* *
+     * Checks a CSS document.
+     */
+    public void checkCssFile(File file, boolean asUTF8) throws IOException,
+            SAXException {
+        validator.reset();
+        InputSource is = new InputSource(new FileInputStream(file));
+        is.setSystemId(file.toURI().toURL().toString());
+        if (asUTF8) {
+            is.setEncoding("UTF-8");
+        }
+        checkAsCss(is);
     }
 
     /* *
@@ -424,6 +460,9 @@ public class SimpleDocumentValidator {
                 new CookieManager(null, CookiePolicy.ACCEPT_ALL));
         validator.reset();
         httpRes = new PrudentHttpEntityResolver(-1, true, errorHandler);
+        if (this.allowCss) {
+            httpRes.setAllowCss(true);
+        }
         httpRes.setAllowHtml(true);
         httpRes.setUserAgent("Validator.nu/LV");
         try {
@@ -437,12 +476,37 @@ public class SimpleDocumentValidator {
                     break;
                 }
             }
-            if (documentInput.getType().startsWith("text/html")) {
+            if (documentInput.getType().startsWith("text/css")) {
+                checkAsCss(documentInput);
+            } else if (documentInput.getType().startsWith("text/html")) {
                 checkAsHTML(documentInput);
             } else {
                 checkAsXML(documentInput);
             }
         } catch (ResourceNotRetrievableException e) {
+        }
+    }
+
+    /* *
+     * Packs a CSS document into an HTML wrapper and validates it.
+     */
+    private void checkAsCss(InputSource is) throws IOException, SAXException {
+        String charset = "UTF-8";
+        if (is.getEncoding() != null) {
+            charset = is.getEncoding();
+        }
+        List<InputStream> streamsList = new ArrayList<>();
+        streamsList.add(new ByteArrayInputStream(CSS_CHECKING_PROLOG));
+        streamsList.add(is.getByteStream());
+        streamsList.add(new ByteArrayInputStream(CSS_CHECKING_EPILOG));
+        Enumeration<InputStream> streams = Collections.enumeration(streamsList);
+        is.setByteStream(new SequenceInputStream(streams));
+        is.setEncoding(charset);
+        sourceCode.setIsCss();
+        sourceCode.initialize(is);
+        try {
+            htmlReader.parse(is);
+        } catch (SAXParseException e) {
         }
     }
 
