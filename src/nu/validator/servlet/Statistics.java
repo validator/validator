@@ -135,6 +135,7 @@ public class Statistics {
         HGROUP_FOUND("<hgroup> found"), //
         SECTION_NO_HEADING_FOUND("<section> with no heading found"), //
         ARTICLE_NO_HEADING_FOUND("<article> with no heading found"), //
+        STYLE_ATTRIBUTE_FOUND("style attribute found"), //
         STYLE_IN_BODY_FOUND("<style> in <body> found"), //
         MAIN_FOUND("<main> found"), //
         MAIN_MULTIPLE_VISIBLE_FOUND("<main> multiple visible found"), //

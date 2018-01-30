@@ -1383,6 +1383,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
             }
             if (request.getAttribute(
+                    "http://validator.nu/properties/style-attribute-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/style-attribute-found")) {
+                stats.incrementField(Statistics.Field.STYLE_ATTRIBUTE_FOUND);
+            }
+            if (request.getAttribute(
                     "http://validator.nu/properties/style-in-body-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/style-in-body-found")) {

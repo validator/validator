@@ -258,6 +258,13 @@ public final class UseCountingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
+        if (atts.getIndex("", "style") > -1) {
+            if (request != null) {
+                request.setAttribute(
+                        "http://validator.nu/properties/style-attribute-found",
+                        true);
+            }
+        }
         if (inBody && "style".equals(localName) && !loggedStyleInBody) {
             loggedStyleInBody = true;
             if (request != null) {
