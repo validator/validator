@@ -317,7 +317,8 @@ public final class SourceCode implements CharacterHandler {
             // first line
             int length = line.getBufferLength() - from.getColumn();
             if (length > 0) {
-                if (!(fromLine == 0 && this.isCss)) {
+                if (!((fromLine == 0 || fromLine == lines.size() - 1)
+                        && this.isCss)) {
                     handler.characters(line.getBuffer(),
                             line.getOffset() + from.getColumn(), length);
                 }
