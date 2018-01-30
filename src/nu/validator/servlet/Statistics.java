@@ -132,6 +132,10 @@ public class Statistics {
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
         H1_MULTIPLE_FOUND("<h1> multiple found"), //
+        H1_MULTIPLE_WITH_SECTION_PARENT_FOUND("<h1> multiple with <section> parent found"), //
+        H1_MULTIPLE_WITH_ARTICLE_PARENT_FOUND("<h1> multiple with <article> parent found"), //
+        H1_MULTIPLE_WITH_ASIDE_PARENT_FOUND("<h1> multiple with <aside> parent found"), //
+        H1_MULTIPLE_WITH_NAV_PARENT_FOUND("<h1> multiple with <nav> parent found"), //
         HGROUP_FOUND("<hgroup> found"), //
         SECTION_NO_HEADING_FOUND("<section> with no heading found"), //
         ARTICLE_NO_HEADING_FOUND("<article> with no heading found"), //

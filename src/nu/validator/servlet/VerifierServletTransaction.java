@@ -1401,6 +1401,30 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.H1_MULTIPLE_FOUND);
             }
             if (request.getAttribute(
+                    "http://validator.nu/properties/h1-multiple-with-section-parent") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-section-parent")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_SECTION_PARENT_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/h1-multiple-with-article-parent") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-article-parent")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_ARTICLE_PARENT_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/h1-multiple-with-aside-parent") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-aside-parent")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_ASIDE_PARENT_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/h1-multiple-with-nav-parent") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-nav-parent")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_NAV_PARENT_FOUND);
+            }
+            if (request.getAttribute(
                     "http://validator.nu/properties/hgroup-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/hgroup-found")) {

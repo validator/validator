@@ -107,14 +107,21 @@ public final class UseCountingXMLReaderWrapper
 
     private class StackNode {
 
+        private final String name;
+
         private final int ancestorMask;
 
         private boolean headingFound = false;
 
         private boolean imgFound = false;
 
-        public StackNode(int ancestorMask) {
+        public StackNode(int ancestorMask, String name) {
+            this.name = name;
             this.ancestorMask = ancestorMask;
+        }
+
+        public String getName() {
+            return name;
         }
 
         public int getAncestorMask() {
@@ -252,7 +259,9 @@ public final class UseCountingXMLReaderWrapper
             Attributes atts) throws SAXException {
         int ancestorMask = 0;
         StackNode parent = peek();
+        String parentName = null;
         if (parent != null) {
+            parentName = parent.getName();
             ancestorMask = parent.getAncestorMask();
         }
         if (contentHandler == null) {
@@ -296,6 +305,26 @@ public final class UseCountingXMLReaderWrapper
                 if (request != null) {
                     request.setAttribute(
                             "http://validator.nu/properties/h1-multiple", true);
+                    if ("section".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-section-parent",
+                                true);
+                    }
+                    if ("article".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-article-parent",
+                                true);
+                    }
+                    if ("aside".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-aside-parent",
+                                true);
+                    }
+                    if ("nav".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-nav-parent",
+                                true);
+                    }
                 }
             } else if (currentSectioningDepth == 1) {
                 secondLevelH1 = true;
@@ -345,7 +374,7 @@ public final class UseCountingXMLReaderWrapper
                 && !"".equals(atts.getValue("", "alt"))) {
             stack[currentHeadingPtr].setImgFound();
         }
-        StackNode child = new StackNode(ancestorMask);
+        StackNode child = new StackNode(ancestorMask, localName);
         push(child);
         if ("article" == localName || "aside" == localName || "nav" == localName
                 || "section" == localName) {
