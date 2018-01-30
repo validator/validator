@@ -24,8 +24,6 @@
 package nu.validator.xml;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,103 +61,107 @@ public final class UseCountingXMLReaderWrapper
 
     private boolean hasVisibleMain;
 
+    private int currentFigurePtr;
+
+    private int currentHeadingPtr;
+
+    private int currentSectioningElementPtr;
+
     private boolean inBody;
-
-    private boolean loggedLinkWithCharset;
-
-    private boolean loggedScriptWithCharset;
 
     private boolean loggedStyleInBody;
 
-    private boolean loggedRelAlternate;
+    private static final String[] SPECIAL_ANCESTORS = { "a", "address", "body",
+            "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
+            "form", "header", "label", "map", "noscript", "th", "time",
+            "progress", "meter", "article", "section", "aside", "nav", "h1",
+            "h2", "h3", "h4", "h5", "h6" };
 
-    private boolean loggedRelAuthor;
+    private static int specialAncestorNumber(String name) {
+        for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
+            if (name == SPECIAL_ANCESTORS[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-    private boolean loggedRelBookmark;
+    private static final int FIGURE_MASK = (1 << specialAncestorNumber(
+            "figure"));
 
-    private boolean loggedRelCanonical;
+    private boolean hasTopLevelH1;
 
-    private boolean loggedRelDnsPrefetch;
+    private static final int H1_MASK = (1 << specialAncestorNumber("h1"));
 
-    private boolean loggedRelExternal;
+    private static final int H2_MASK = (1 << specialAncestorNumber("h2"));
 
-    private boolean loggedRelHelp;
+    private static final int H3_MASK = (1 << specialAncestorNumber("h3"));
 
-    private boolean loggedRelIcon;
+    private static final int H4_MASK = (1 << specialAncestorNumber("h4"));
 
-    private boolean loggedRelLicense;
+    private static final int H5_MASK = (1 << specialAncestorNumber("h5"));
 
-    private boolean loggedRelNext;
+    private static final int H6_MASK = (1 << specialAncestorNumber("h6"));
 
-    private boolean loggedRelNofollow;
+    private boolean secondLevelH1 = false;
 
-    private boolean loggedRelNoopener;
+    private class StackNode {
 
-    private boolean loggedRelNoreferrer;
+        private final int ancestorMask;
 
-    private boolean loggedRelPingback;
+        private boolean headingFound = false;
 
-    private boolean loggedRelPreconnect;
+        private boolean imgFound = false;
 
-    private boolean loggedRelPrefetch;
+        public StackNode(int ancestorMask) {
+            this.ancestorMask = ancestorMask;
+        }
 
-    private boolean loggedRelPreload;
+        public int getAncestorMask() {
+            return ancestorMask;
+        }
 
-    private boolean loggedRelPrerender;
+        public boolean hasHeading() {
+            return headingFound;
+        }
 
-    private boolean loggedRelPrev;
+        public void setHeadingFound() {
+            this.headingFound = true;
+        }
 
-    private boolean loggedRelSearch;
+        public boolean hasImg() {
+            return imgFound;
+        }
 
-    private boolean loggedRelServiceworker;
+        public void setImgFound() {
+            this.imgFound = true;
+        }
 
-    private boolean loggedRelStylesheet;
+    }
 
-    private boolean loggedRelTag;
+    private StackNode[] stack;
 
-    private int openAddressElements = 0;
+    private int currentPtr;
 
-    private int openArticleElements = 0;
+    private int currentSectioningDepth;
 
-    private int openAsideElements = 0;
+    private void push(StackNode node) {
+        currentPtr++;
+        if (currentPtr == stack.length) {
+            StackNode[] newStack = new StackNode[stack.length + 64];
+            System.arraycopy(stack, 0, newStack, 0, stack.length);
+            stack = newStack;
+        }
+        stack[currentPtr] = node;
+    }
 
-    private int openBlockquoteElements = 0;
+    private StackNode pop() {
+        return stack[currentPtr--];
+    }
 
-    private int openCaptionElements = 0;
-
-    private int openDdElements = 0;
-
-    private int openDetailsElements = 0;
-
-    private int openDialogElements = 0;
-
-    private int openDivElements = 0;
-
-    private int openDtElements = 0;
-
-    private int openFieldsetElements = 0;
-
-    private int openFigcaptionElements = 0;
-
-    private int openFigureElements = 0;
-
-    private int openFooterElements = 0;
-
-    private int openFormElements = 0;
-
-    private int openHeaderElements = 0;
-
-    private int openLiElements = 0;
-
-    private int openMainElements = 0;
-
-    private int openNavElements = 0;
-
-    private int openSectionElements = 0;
-
-    private int openTdElements = 0;
-
-    private int openThElements = 0;
+    private StackNode peek() {
+        return stack[currentPtr];
+    }
 
     public UseCountingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, String systemId) {
@@ -168,37 +170,7 @@ public final class UseCountingXMLReaderWrapper
         this.request = request;
         this.systemId = systemId;
         this.inBody = false;
-        this.loggedLinkWithCharset = false;
-        this.loggedScriptWithCharset = false;
         this.loggedStyleInBody = false;
-        this.loggedRelAlternate = false;
-        this.loggedRelAuthor = false;
-        this.loggedRelBookmark = false;
-        this.loggedRelCanonical = false;
-        this.loggedRelAlternate = false;
-        this.loggedRelAuthor = false;
-        this.loggedRelBookmark = false;
-        this.loggedRelCanonical = false;
-        this.loggedRelDnsPrefetch = false;
-        this.loggedRelExternal = false;
-        this.loggedRelHelp = false;
-        this.loggedRelIcon = false;
-        this.loggedRelLicense = false;
-        this.loggedRelNext = false;
-        this.loggedRelNofollow = false;
-        this.loggedRelNoopener = false;
-        this.loggedRelNoreferrer = false;
-        this.loggedRelPingback = false;
-        this.loggedRelPreconnect = false;
-        this.loggedRelPrefetch = false;
-        this.loggedRelPreload = false;
-        this.loggedRelPrerender = false;
-        this.loggedRelPrev = false;
-        this.loggedRelSearch = false;
-        this.loggedRelServiceworker = false;
-        this.loggedRelStylesheet = false;
-        this.loggedRelTag = false;
-        this.openSectionElements = 0;
         this.documentContent = new StringBuilder();
         wrappedReader.setContentHandler(this);
     }
@@ -225,50 +197,24 @@ public final class UseCountingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
-        if ("address".equals(localName)) {
-            openAddressElements--;
-        } else if ("article".equals(localName)) {
-            openArticleElements--;
-        } else if ("aside".equals(localName)) {
-            openAsideElements--;
-        } else if ("blockquote".equals(localName)) {
-            openBlockquoteElements--;
-        } else if ("caption".equals(localName)) {
-            openCaptionElements--;
-        } else if ("dd".equals(localName)) {
-            openDdElements--;
-        } else if ("details".equals(localName)) {
-            openDetailsElements--;
-        } else if ("dialog".equals(localName)) {
-            openDialogElements--;
-        } else if ("div".equals(localName)) {
-            openDivElements--;
-        } else if ("dt".equals(localName)) {
-            openDtElements--;
-        } else if ("fieldset".equals(localName)) {
-            openFieldsetElements--;
-        } else if ("figcaption".equals(localName)) {
-            openFigcaptionElements--;
-        } else if ("figure".equals(localName)) {
-            openFigureElements--;
-        } else if ("footer".equals(localName)) {
-            openFooterElements--;
-        } else if ("form".equals(localName)) {
-            openFormElements--;
-        } else if ("header".equals(localName)) {
-            openHeaderElements--;
-        } else if ("li".equals(localName)) {
-            openLiElements--;
-        } else if ("main".equals(localName)) {
-            openMainElements--;
-        } else if ("nav".equals(localName)) {
-            openNavElements--;
-        } else if ("section".equals(localName)) {
-            openSectionElements--;
-        } else if ("td".equals(localName)) {
-            openTdElements--;
-        } else if ("th".equals(localName)) {
-            openThElements--;
+        StackNode node = pop();
+        if ("section" == localName && !node.hasHeading()) {
+            if (request != null) {
+                request.setAttribute(
+                        "http://validator.nu/properties/section-no-heading",
+                        true);
+            }
+        } else if ("article" == localName && !node.hasHeading()) {
+            if (request != null) {
+                request.setAttribute(
+                        "http://validator.nu/properties/article-no-heading",
+                        true);
+            }
+        }
+        if ("article" == localName || "aside" == localName || "nav" == localName
+                || "section" == localName) {
+            currentSectioningElementPtr = currentPtr - 1;
+            currentSectioningDepth--;
         }
         contentHandler.endElement(uri, localName, qName);
     }
@@ -282,9 +228,21 @@ public final class UseCountingXMLReaderWrapper
             return;
         }
         documentContent.setLength(0);
+        reset();
+        stack = new StackNode[32];
+        currentPtr = 0;
+        currentHeadingPtr = -1;
+        currentSectioningElementPtr = -1;
+        currentSectioningDepth = 0;
+        stack[0] = null;
+        hasVisibleMain = false;
+        hasTopLevelH1 = false;
         contentHandler.startDocument();
     }
 
+    public void reset() {
+        secondLevelH1 = false;
+    }
     /**
      * @see org.xml.sax.helpers.XMLFilterImpl#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
@@ -292,46 +250,15 @@ public final class UseCountingXMLReaderWrapper
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
+        int ancestorMask = 0;
+        StackNode parent = peek();
+        if (parent != null) {
+            ancestorMask = parent.getAncestorMask();
+        }
         if (contentHandler == null) {
             return;
         }
-        if ("link".equals(localName)) {
-            boolean hasAppleTouchIcon = false;
-            boolean hasSizes = false;
-            for (int i = 0; i < atts.getLength(); i++) {
-                if ("rel".equals(atts.getLocalName(i))) {
-                    if (atts.getValue(i).contains("apple-touch-icon")) {
-                        hasAppleTouchIcon = true;
-                    }
-                } else if ("sizes".equals(atts.getLocalName(i))) {
-                    hasSizes = true;
-                } else if ("charset".equals(atts.getLocalName(i))
-                        && !loggedLinkWithCharset) {
-                    loggedLinkWithCharset = true;
-                    if (request != null) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/link-with-charset-found",
-                                true);
-                    }
-                }
-            }
-            if (request != null && hasAppleTouchIcon && hasSizes) {
-                request.setAttribute(
-                        "http://validator.nu/properties/apple-touch-icon-with-sizes-found",
-                        true);
-            }
-        } else if ("script".equals(localName) && !loggedScriptWithCharset) {
-            for (int i = 0; i < atts.getLength(); i++) {
-                if ("charset".equals(atts.getLocalName(i))) {
-                    loggedScriptWithCharset = true;
-                    if (request != null) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/script-with-charset-found",
-                                true);
-                    }
-                }
-            }
-        } else if (inBody && "style".equals(localName) && !loggedStyleInBody) {
+        if (inBody && "style".equals(localName) && !loggedStyleInBody) {
             loggedStyleInBody = true;
             if (request != null) {
                 request.setAttribute(
@@ -340,40 +267,9 @@ public final class UseCountingXMLReaderWrapper
             }
         } else if ("body".equals(localName)) {
             inBody = true;
-        } else if ("address".equals(localName)) {
-            openAddressElements++;
-        } else if ("article".equals(localName)) {
-            openArticleElements++;
-        } else if ("aside".equals(localName)) {
-            openAsideElements++;
-        } else if ("blockquote".equals(localName)) {
-            openBlockquoteElements++;
-        } else if ("caption".equals(localName)) {
-            openCaptionElements++;
-        } else if ("dd".equals(localName)) {
-            openDdElements++;
-        } else if ("details".equals(localName)) {
-            openDetailsElements++;
-        } else if ("dialog".equals(localName)) {
-            openDialogElements++;
-        } else if ("div".equals(localName)) {
-            openDivElements++;
-        } else if ("dt".equals(localName)) {
-            openDtElements++;
-        } else if ("fieldset".equals(localName)) {
-            openFieldsetElements++;
-        } else if ("figcaption".equals(localName)) {
-            openFigcaptionElements++;
-        } else if ("figure".equals(localName)) {
-            openFigureElements++;
-        } else if ("footer".equals(localName)) {
-            openFooterElements++;
-        } else if ("form".equals(localName)) {
-            openFormElements++;
-        } else if ("header".equals(localName)) {
-            openHeaderElements++;
-        } else if ("li".equals(localName)) {
-            openLiElements++;
+        } else if ("hgroup".equals(localName)) {
+            request.setAttribute("http://validator.nu/properties/hgroup-found",
+                    true);
         } else if ("main".equals(localName)) {
             request.setAttribute("http://validator.nu/properties/main-found",
                     true);
@@ -388,378 +284,67 @@ public final class UseCountingXMLReaderWrapper
                 }
                 hasVisibleMain = true;
             }
-            if (openAddressElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <address> " + systemId);
+        } else if ("h1" == localName) {
+            if (currentSectioningDepth > 1) {
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/h1-multiple", true);
                 }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-address-found",
-                        true);
+            } else if (currentSectioningDepth == 1) {
+                secondLevelH1 = true;
+            } else {
+                hasTopLevelH1 = true;
             }
-            if (openArticleElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <article> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-article-found",
-                        true);
-            }
-            if (openAsideElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <aside> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-aside-found",
-                        true);
-            }
-            if (openBlockquoteElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <blockquote> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-blockquote-found",
-                        true);
-            }
-            if (openCaptionElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <caption> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-caption-found",
-                        true);
-            }
-            if (openDdElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <dd> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-dd-found",
-                        true);
-            }
-            if (openDetailsElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <details> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-details-found",
-                        true);
-            }
-            if (openDialogElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <dialog> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-dialog-found",
-                        true);
-            }
-            if (openDivElements > 0 && request != null) {
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-div-found",
-                        true);
-            }
-            if (openDtElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <dt> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-dt-found",
-                        true);
-            }
-            if (openFieldsetElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <fieldset> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-fieldset-found",
-                        true);
-            }
-            if (openFigcaptionElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <figcaption> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-figcaption-found",
-                        true);
-            }
-            if (openFigureElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <figure> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-figure-found",
-                        true);
-            }
-            if (openFooterElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <footer> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-footer-found",
-                        true);
-            }
-            if (openFormElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <form> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-form-found",
-                        true);
-            }
-            if (openHeaderElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <header> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-header-found",
-                        true);
-            }
-            if (openLiElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <li> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-li-found",
-                        true);
-            }
-            if (openMainElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <main> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-main-found",
-                        true);
-            }
-            if (openNavElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <nav> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-nav-found",
-                        true);
-            }
-            if (openSectionElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <section> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-section-found",
-                        true);
-            }
-            if (openTdElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <td> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-td-found",
-                        true);
-            }
-            if (openThElements > 0 && request != null) {
-                if (systemId != null) {
-                    log4j.info("<main> in <th> " + systemId);
-                }
-                request.setAttribute(
-                        "http://validator.nu/properties/main-in-th-found",
-                        true);
-            }
-            openMainElements++;
-        } else if ("nav".equals(localName)) {
-            openNavElements++;
-        } else if ("section".equals(localName)) {
-            openSectionElements++;
-        } else if ("td".equals(localName)) {
-            openTdElements++;
-        } else if ("th".equals(localName)) {
-            openThElements++;
         }
-        if (atts.getIndex("", "rel") > -1
-                && ("link".equals(localName) || "a".equals(localName))) {
-            List<String> relValues = Arrays.asList(
-                    atts.getValue("", "rel").trim().toLowerCase() //
-                            .split("\\s+"));
-            if (relValues.contains("alternate") && !loggedRelAlternate) {
-                loggedRelAlternate = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-alternate-found",
-                            true);
+        if ("article" == localName || "aside" == localName
+                || "nav" == localName || "section" == localName) {
+            currentSectioningElementPtr = currentPtr + 1;
+            currentSectioningDepth++;
+        }
+        if ("h1" == localName || "h2" == localName || "h3" == localName
+                || "h4" == localName || "h5" == localName
+                || "h6" == localName) {
+            currentHeadingPtr = currentPtr + 1;
+            if (currentSectioningElementPtr > -1) {
+                stack[currentSectioningElementPtr].setHeadingFound();
+            }
+        }
+        if ((ancestorMask & FIGURE_MASK) != 0) {
+            if ("img" == localName) {
+                if (!stack[currentFigurePtr].hasImg()) {
+                    stack[currentFigurePtr].setImgFound();
                 }
             }
-            if (relValues.contains("author") && !loggedRelAuthor) {
-                loggedRelAuthor = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-author-found",
-                            true);
-                }
+        }
+        if ("article" == localName || "aside" == localName || "nav" == localName
+                || "section" == localName) {
+            currentSectioningElementPtr = currentPtr + 1;
+            currentSectioningDepth++;
+        }
+        if ("h1" == localName || "h2" == localName || "h3" == localName
+                || "h4" == localName || "h5" == localName
+                || "h6" == localName) {
+            currentHeadingPtr = currentPtr + 1;
+            if (currentSectioningElementPtr > -1) {
+                stack[currentSectioningElementPtr].setHeadingFound();
             }
-            if (relValues.contains("bookmark") && !loggedRelBookmark) {
-                loggedRelBookmark = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-bookmark-found",
-                            true);
-                }
-            }
-            if (relValues.contains("canonical") && !loggedRelCanonical) {
-                loggedRelCanonical = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-canonical-found",
-                            true);
-                }
-            }
-            if (relValues.contains("dns-prefetch") && !loggedRelDnsPrefetch) {
-                loggedRelDnsPrefetch = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-dns-prefetch-found",
-                            true);
-                }
-            }
-            if (relValues.contains("external") && !loggedRelExternal) {
-                loggedRelExternal = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-external-found",
-                            true);
-                }
-            }
-            if (relValues.contains("help") && !loggedRelHelp) {
-                loggedRelHelp = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-help-found",
-                            true);
-                }
-            }
-            if (relValues.contains("icon") && !loggedRelIcon) {
-                loggedRelIcon = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-icon-found",
-                            true);
-                }
-            }
-            if (relValues.contains("license") && !loggedRelLicense) {
-                loggedRelLicense = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-license-found",
-                            true);
-                }
-            }
-            if (relValues.contains("next") && !loggedRelNext) {
-                loggedRelNext = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-next-found",
-                            true);
-                }
-            }
-            if (relValues.contains("nofollow") && !loggedRelNofollow) {
-                loggedRelNofollow = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-nofollow-found",
-                            true);
-                }
-            }
-            if (relValues.contains("noopener") && !loggedRelNoopener) {
-                loggedRelNoopener = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-noopener-found",
-                            true);
-                }
-            }
-            if (relValues.contains("noreferrer") && !loggedRelNoreferrer) {
-                loggedRelNoreferrer = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-noreferrer-found",
-                            true);
-                }
-            }
-            if (relValues.contains("pingback") && !loggedRelPingback) {
-                loggedRelPingback = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-pingback-found",
-                            true);
-                }
-            }
-            if (relValues.contains("preconnect") && !loggedRelPreconnect) {
-                loggedRelPreconnect = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-preconnect-found",
-                            true);
-                }
-            }
-            if (relValues.contains("prefetch") && !loggedRelPrefetch) {
-                loggedRelPrefetch = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-prefetch-found",
-                            true);
-                }
-            }
-            if (relValues.contains("preload") && !loggedRelPreload) {
-                loggedRelPreload = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-preload-found",
-                            true);
-                }
-            }
-            if (relValues.contains("prerender") && !loggedRelPrerender) {
-                loggedRelPrerender = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-prerender-found",
-                            true);
-                }
-            }
-            if (relValues.contains("prev") && !loggedRelPrev) {
-                loggedRelPrev = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-prev-found",
-                            true);
-                }
-            }
-            if (relValues.contains("search") && !loggedRelSearch) {
-                loggedRelSearch = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-search-found",
-                            true);
-                }
-            }
-            if (relValues.contains("serviceworker")
-                    && !loggedRelServiceworker) {
-                loggedRelServiceworker = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-serviceworker-found",
-                            true);
-                }
-            }
-            if (relValues.contains("stylesheet") && !loggedRelStylesheet) {
-                loggedRelStylesheet = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-stylesheet-found",
-                            true);
-                }
-            }
-            if (relValues.contains("tag") && !loggedRelTag) {
-                loggedRelTag = true;
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/rel-tag-found",
-                            true);
-                }
+        }
+        if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
+                || (ancestorMask & H3_MASK) != 0
+                || (ancestorMask & H4_MASK) != 0
+                || (ancestorMask & H5_MASK) != 0
+                || (ancestorMask & H6_MASK) != 0) && "img" == localName
+                && atts.getIndex("", "alt") > -1
+                && !"".equals(atts.getValue("", "alt"))) {
+            stack[currentHeadingPtr].setImgFound();
+        }
+        StackNode child = new StackNode(ancestorMask);
+        push(child);
+        if ("article" == localName || "aside" == localName || "nav" == localName
+                || "section" == localName) {
+            if (atts.getIndex("", "aria-label") > -1
+                    && !"".equals(atts.getValue("", "aria-label"))) {
+                child.setHeadingFound();
             }
         }
         contentHandler.startElement(uri, localName, qName, atts);
@@ -790,6 +375,16 @@ public final class UseCountingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
+
+        if (hasTopLevelH1) {
+            if (secondLevelH1) {
+                if (request != null) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/h1-multiple", true);
+                }
+            }
+        }
+
         contentHandler.endDocument();
     }
 

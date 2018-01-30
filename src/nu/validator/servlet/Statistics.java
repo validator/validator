@@ -131,57 +131,13 @@ public class Statistics {
         PARSER_XML_EXTERNAL("Parser: set to XML with external entities"), //
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
-        LINK_WITH_CHARSET_FOUND("<link charset> found"), //
-        SCRIPT_WITH_CHARSET_FOUND("<script charset> found"), //
+        H1_MULTIPLE_FOUND("<h1> multiple found"), //
+        HGROUP_FOUND("<hgroup> found"), //
+        SECTION_NO_HEADING_FOUND("<section> with no heading found"), //
+        ARTICLE_NO_HEADING_FOUND("<article> with no heading found"), //
         STYLE_IN_BODY_FOUND("<style> in <body> found"), //
         MAIN_FOUND("<main> found"), //
         MAIN_MULTIPLE_VISIBLE_FOUND("<main> multiple visible found"), //
-        MAIN_IN_ADDRESS_FOUND("<main> in <address> found"), //
-        MAIN_IN_ARTICLE_FOUND("<main> in <article> found"), //
-        MAIN_IN_ASIDE_FOUND("<main> in <aside> found"), //
-        MAIN_IN_BLOCKQUOTE_FOUND("<main> in <blockquote> found"), //
-        MAIN_IN_CAPTION_FOUND("<main> in <caption> found"), //
-        MAIN_IN_DD_FOUND("<main> in <dd> found"), //
-        MAIN_IN_DETAILS_FOUND("<main> in <details> found"), //
-        MAIN_IN_DIALOG_FOUND("<main> in <dialog> found"), //
-        MAIN_IN_DIV_FOUND("<main> in <div> found"), //
-        MAIN_IN_DT_FOUND("<main> in <dt> found"), //
-        MAIN_IN_FIELDSET_FOUND("<main> in <fieldset> found"), //
-        MAIN_IN_FIGCAPTION_FOUND("<main> in <figcaption> found"), //
-        MAIN_IN_FIGURE_FOUND("<main> in <figure> found"), //
-        MAIN_IN_FOOTER_FOUND("<main> in <footer> found"), //
-        MAIN_IN_FORM_FOUND("<main> in <form> found"), //
-        MAIN_IN_HEADER_FOUND("<main> in <header> found"), //
-        MAIN_IN_LI_FOUND("<main> in <li> found"), //
-        MAIN_IN_MAIN_FOUND("<main> in <main> found"), //
-        MAIN_IN_NAV_FOUND("<main> in <nav> found"), //
-        MAIN_IN_SECTION_FOUND("<main> in <section> found"), //
-        MAIN_IN_TD_FOUND("<main> in <td> found"), //
-        MAIN_IN_TH_FOUND("<main> in <th> found"), //
-        REL_ALTERNATE_FOUND("rel=alternate found"), //
-        REL_AUTHOR_FOUND("rel=author found"), //
-        REL_BOOKMARK_FOUND("rel=bookmark found"), //
-        REL_CANONICAL_FOUND("rel=canonical found"), //
-        REL_DNS_PREFETCH_FOUND("rel=dns-prefetch found"), //
-        REL_EXTERNAL_FOUND("rel=external found"), //
-        REL_HELP_FOUND("rel=help found"), //
-        REL_ICON_FOUND("rel=icon found"), //
-        REL_LICENSE_FOUND("rel=license found"), //
-        REL_NEXT_FOUND("rel=next found"), //
-        REL_NOFOLLOW_FOUND("rel=nofollow found"), //
-        REL_NOOPENER_FOUND("rel=noopener found"), //
-        REL_NOREFERRER_FOUND("rel=noreferrer found"), //
-        REL_PINGBACK_FOUND("rel=pingback found"), //
-        REL_PRECONNECT_FOUND("rel=preconnect found"), //
-        REL_PREFETCH_FOUND("rel=prefetch found"), //
-        REL_PRELOAD_FOUND("rel=preload found"), //
-        REL_PRERENDER_FOUND("rel=prerender found"), //
-        REL_PREV_FOUND("rel=prev found"), //
-        REL_SEARCH_FOUND("rel=search found"), //
-        REL_SERVICEWORKER_FOUND("rel=serviceworker found"), //
-        REL_STYLESHEET_FOUND("rel=stylesheet found"), //
-        REL_TAG_FOUND("rel=tag found"), //
-        APPLE_TOUCH_ICON_WITH_SIZES_FOUND("<link rel=\"apple-touch-icon\" sizes=\"\u2026\"> found"), //
         LANG_FOUND("<html lang> found"), //
         LANG_WRONG("<html lang> does not match detected language"), //
         LANG_EMPTY("<html lang>: empty (lang=\"\")"), //
