@@ -328,6 +328,26 @@ public final class UseCountingXMLReaderWrapper
                 }
             } else if (currentSectioningDepth == 1) {
                 secondLevelH1 = true;
+                if ("section".equals(parentName)) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-section-parent",
+                            true);
+                }
+                if ("article".equals(parentName)) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-article-parent",
+                            true);
+                }
+                if ("aside".equals(parentName)) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-aside-parent",
+                            true);
+                }
+                if ("nav".equals(parentName)) {
+                    request.setAttribute(
+                            "http://validator.nu/properties/h1-multiple-with-nav-parent",
+                            true);
+                }
             } else {
                 hasTopLevelH1 = true;
             }
