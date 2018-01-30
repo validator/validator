@@ -89,6 +89,8 @@ public final class UseCountingXMLReaderWrapper
     private static final int FIGURE_MASK = (1 << specialAncestorNumber(
             "figure"));
 
+    private boolean hasH1;
+
     private boolean hasTopLevelH1;
 
     private static final int H1_MASK = (1 << specialAncestorNumber("h1"));
@@ -243,6 +245,7 @@ public final class UseCountingXMLReaderWrapper
         currentSectioningDepth = 0;
         stack[0] = null;
         hasVisibleMain = false;
+        hasH1 = false;
         hasTopLevelH1 = false;
         contentHandler.startDocument();
     }
@@ -301,7 +304,7 @@ public final class UseCountingXMLReaderWrapper
                 hasVisibleMain = true;
             }
         } else if ("h1" == localName) {
-            if (currentSectioningDepth > 1) {
+            if (hasH1 && currentSectioningDepth > 1) {
                 if (request != null) {
                     request.setAttribute(
                             "http://validator.nu/properties/h1-multiple", true);
@@ -326,7 +329,7 @@ public final class UseCountingXMLReaderWrapper
                                 true);
                     }
                 }
-            } else if (currentSectioningDepth == 1) {
+            } else if (hasH1 && currentSectioningDepth == 1) {
                 secondLevelH1 = true;
                 if ("section".equals(parentName)) {
                     request.setAttribute(
@@ -351,6 +354,7 @@ public final class UseCountingXMLReaderWrapper
             } else {
                 hasTopLevelH1 = true;
             }
+            hasH1 = true;
         }
         if ("article" == localName || "aside" == localName
                 || "nav" == localName || "section" == localName) {
@@ -370,19 +374,6 @@ public final class UseCountingXMLReaderWrapper
                 if (!stack[currentFigurePtr].hasImg()) {
                     stack[currentFigurePtr].setImgFound();
                 }
-            }
-        }
-        if ("article" == localName || "aside" == localName || "nav" == localName
-                || "section" == localName) {
-            currentSectioningElementPtr = currentPtr + 1;
-            currentSectioningDepth++;
-        }
-        if ("h1" == localName || "h2" == localName || "h3" == localName
-                || "h4" == localName || "h5" == localName
-                || "h6" == localName) {
-            currentHeadingPtr = currentPtr + 1;
-            if (currentSectioningElementPtr > -1) {
-                stack[currentSectioningElementPtr].setHeadingFound();
             }
         }
         if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
