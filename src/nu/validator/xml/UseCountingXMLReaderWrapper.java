@@ -312,44 +312,44 @@ public final class UseCountingXMLReaderWrapper
                         request.setAttribute(
                                 "http://validator.nu/properties/h1-multiple-with-section-parent",
                                 true);
-                    }
-                    if ("article".equals(parentName)) {
+                    } else if ("article".equals(parentName)) {
                         request.setAttribute(
                                 "http://validator.nu/properties/h1-multiple-with-article-parent",
                                 true);
-                    }
-                    if ("aside".equals(parentName)) {
+                    } else if ("aside".equals(parentName)) {
                         request.setAttribute(
                                 "http://validator.nu/properties/h1-multiple-with-aside-parent",
                                 true);
-                    }
-                    if ("nav".equals(parentName)) {
+                    } else if ("nav".equals(parentName)) {
                         request.setAttribute(
                                 "http://validator.nu/properties/h1-multiple-with-nav-parent",
                                 true);
+                    } else if (systemId != null) {
+                        log4j.info("<h1> multiple not nested in section/article/aside/nav " + systemId);
                     }
                 }
             } else if (hasH1 && currentSectioningDepth == 1) {
                 secondLevelH1 = true;
-                if ("section".equals(parentName)) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-section-parent",
-                            true);
-                }
-                if ("article".equals(parentName)) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-article-parent",
-                            true);
-                }
-                if ("aside".equals(parentName)) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-aside-parent",
-                            true);
-                }
-                if ("nav".equals(parentName)) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-nav-parent",
-                            true);
+                if (request != null) {
+                    if ("section".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-section-parent",
+                                true);
+                    } else if ("article".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-article-parent",
+                                true);
+                    } else if ("aside".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-aside-parent",
+                                true);
+                    } else if ("nav".equals(parentName)) {
+                        request.setAttribute(
+                                "http://validator.nu/properties/h1-multiple-with-nav-parent",
+                                true);
+                    } else if (systemId != null) {
+                        log4j.info("<h1> multiple not nested in section/article/aside/nav " + systemId);
+                    }
                 }
             } else {
                 hasTopLevelH1 = true;
