@@ -13,6 +13,8 @@ NN XX 20NN
     values case-sensitively when doing particular checks
   - Allow the `slot` attribute (for Shadow DOM interaction)
   - Further restrict script[type] and style[type]
+  - Allow only one non-hidden `main` element per document
+  - Allow only `html`, `body`, `div`, `form`, custom elements as `main` ancestor
   - Allow `role=none` where `role=presentation` is allowed
   - Allow `role=rowgroup` element to be contained in `role=table` element
   - Allow more ARIA states & properties for `role=menuitem`

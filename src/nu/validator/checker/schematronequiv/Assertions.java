@@ -396,6 +396,12 @@ public class Assertions extends Checker {
         JAVASCRIPT_MIME_TYPES.add("text/x-javascript");
     }
 
+    private static final String[] PROHIBITED_MAIN_ANCESTORS = { "a", "address",
+            "article", "aside", "audio", "blockquote", "canvas", "caption",
+            "dd", "del", "details", "dialog", "dt", "fieldset", "figure",
+            "footer", "header", "ins", "li", "main", "map", "nav", "noscript",
+            "object", "section", "slot", "td", "th", "video" };
+
     private static final String[] SPECIAL_ANCESTORS = { "a", "address", "body",
             "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
             "form", "header", "label", "map", "noscript", "th", "time",
@@ -498,11 +504,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("a", "label");
         registerProhibitedAncestor("button", "label");
         registerProhibitedAncestor("caption", "table");
-        registerProhibitedAncestor("article", "main");
-        registerProhibitedAncestor("aside", "main");
-        registerProhibitedAncestor("header", "main");
-        registerProhibitedAncestor("footer", "main");
-        registerProhibitedAncestor("nav", "main");
     }
 
     private static final int BODY_MASK = (1 << specialAncestorNumber("body"));
@@ -2127,6 +2128,15 @@ public class Assertions extends Checker {
                     }
                 }
             } else if ("main" == localName) {
+                for (int i = 0; i < currentPtr; i++) {
+                    String ancestorName = stack[currentPtr - i].getName();
+                    if (Arrays.binarySearch(PROHIBITED_MAIN_ANCESTORS,
+                            ancestorName) >= 0) {
+                        err("The \u201Cmain\u201D element must not appear as a"
+                                + " descendant of the \u201C" + ancestorName
+                                + "\u201D element.");
+                    }
+                }
                 if (atts.getIndex("", "hidden") < 0) {
                     if (hasVisibleMain) {
                         err("A document must not include more than one visible"
