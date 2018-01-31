@@ -2280,7 +2280,16 @@ public class Assertions extends Checker {
                         err("Element \u201Cscript\u201D must not have attribute \u201Cdefer\u201D unless attribute \u201Csrc\u201D is also specified.");
                     }
                     if (atts.getIndex("", "async") >= 0) {
-                        err("Element \u201Cscript\u201D must not have attribute \u201Casync\u201D unless attribute \u201Csrc\u201D is also specified.");
+                        if (!(atts.getIndex("", "type") > -1 && //
+                                "module".equals(atts.getValue("", "type") //
+                                        .toLowerCase()))) {
+                            err("Element \u201Cscript\u201D must not have"
+                                    + " attribute \u201Casync\u201D unless"
+                                    + " attribute \u201Csrc\u201D is also"
+                                    + " specified or unless attribute"
+                                    + " \u201Ctype\u201D is specified with"
+                                    + " value \u201Cmodule\u201D.");
+                        }
                     }
                     if (atts.getIndex("", "integrity") >= 0) {
                         err("Element \u201Cscript\u201D must not have attribute"
@@ -2289,14 +2298,13 @@ public class Assertions extends Checker {
                     }
                 }
                 if (atts.getIndex("", "type") > -1) {
-                  String scriptType = atts.getValue("", "type").toLowerCase();
+                    String scriptType = atts.getValue("", "type").toLowerCase();
                     if (JAVASCRIPT_MIME_TYPES.contains(scriptType)
                             || "".equals(scriptType)) {
                         warn("The \u201Ctype\u201D attribute is unnecessary for"
                                 + " JavaScript resources.");
                     }
-                    if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                            "module", scriptType)) {
+                    if ("module".equals(scriptType)) {
                         if (atts.getIndex("", "integrity") > -1) {
                             err("A \u201Cscript\u201D element with an"
                                     + " \u201Cintegrity\u201D attribute must not have a"
