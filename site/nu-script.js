@@ -436,7 +436,7 @@ function installTextarea() {
 					}
 				}, false)
 				cssLabel.appendChild(cssCheckbox)
-				cssLabel.append("CSS")
+				cssLabel.appendChild(document.createTextNode("CSS"))
 				inputRegion.appendChild(cssLabel)
 			}
 			inputRegion.appendChild(textarea)
