@@ -19,6 +19,7 @@ NN XX 20NN
   - Allow `role=rowgroup` element to be contained in `role=table` element
   - Allow more ARIA states & properties for `role=menuitem`
   - Disallow the `dropzone` attribute
+  - Disallow the `menuitem` element
 
 # 17.11.1
 07 October 2017

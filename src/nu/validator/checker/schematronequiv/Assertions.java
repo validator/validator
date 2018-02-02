@@ -671,14 +671,6 @@ public class Assertions extends Checker {
         INPUT_TYPES_WITH_IMPLICIT_ROLE.put("submit", "button");
     }
 
-    private static final Map<String, String> MENUITEM_TYPES_WITH_IMPLICIT_ROLE = new HashMap<>();
-
-    static {
-        MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("checkbox", "menuitemcheckbox");
-        MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("command", "menuitem");
-        MENUITEM_TYPES_WITH_IMPLICIT_ROLE.put("radio", "menuitemcheckbox");
-    }
-
     private static final Set<String> ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY = new HashSet<>();
 
     static {
@@ -1577,7 +1569,6 @@ public class Assertions extends Checker {
         Set<String> ids = new HashSet<>();
         String role = null;
         String inputTypeVal = null;
-        String menuitemTypeVal = null;
         String activeDescendant = null;
         String owns = null;
         String forAttr = null;
@@ -1645,8 +1636,6 @@ public class Assertions extends Checker {
                             && "li" != localName) {
                         if ("input" == localName) {
                             inputTypeVal = atts.getValue(i).toLowerCase();
-                        } else if ("menuitem" == localName) {
-                            menuitemTypeVal = atts.getValue(i);
                         }
                         String attValue = atts.getValue(i);
                         if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
@@ -2744,16 +2733,6 @@ public class Assertions extends Checker {
                         }
 
                     }
-                }
-            } else if ("menuitem" == localName) {
-                menuitemTypeVal = menuitemTypeVal == null ? "command"
-                        : menuitemTypeVal;
-                if (MENUITEM_TYPES_WITH_IMPLICIT_ROLE.containsKey(
-                        menuitemTypeVal)
-                        && MENUITEM_TYPES_WITH_IMPLICIT_ROLE.get(
-                                menuitemTypeVal).equals(role)) {
-                    warnExplicitRoleUnnecessaryForType("menuitem", role,
-                            menuitemTypeVal);
                 }
             } else if (atts.getIndex("", "href") > -1 && "link".equals(role)
                     && ("a".equals(localName) || "area".equals(localName)
