@@ -578,6 +578,7 @@ def openDriver(schemaDir, driverName, sourceName=""):
 def writeW3CToggle(f):
     if followW3Cspec:
         f.write("\t\tnonW3C = notAllowed\n")
+        f.write("\t\tW3Conly = empty\n")
     f.write("}\n")
 
 
