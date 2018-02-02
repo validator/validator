@@ -202,10 +202,11 @@ public final class UseCountingXMLReaderWrapper
                     }
                 }
                 if (openArticleElements + openAsideElements + openNavElements
-                        + openSectionElements < 1)
+                        + openSectionElements < 1 && systemId != null) {
                     log4j.info(
                             "<h1> multiple without section/article/aside/nav ancestor: "
                                     + systemId);
+                }
             }
             hasH1 = true;
         } else if ("article" == localName) {
