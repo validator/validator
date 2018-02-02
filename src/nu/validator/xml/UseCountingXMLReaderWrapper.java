@@ -61,116 +61,19 @@ public final class UseCountingXMLReaderWrapper
 
     private boolean hasVisibleMain;
 
-    private int currentFigurePtr;
-
-    private int currentHeadingPtr;
-
-    private int currentSectioningElementPtr;
-
     private boolean inBody;
 
     private boolean loggedStyleInBody;
 
-    private static final String[] SPECIAL_ANCESTORS = { "a", "address", "body",
-            "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
-            "form", "header", "label", "map", "noscript", "th", "time",
-            "progress", "meter", "article", "section", "aside", "nav", "h1",
-            "h2", "h3", "h4", "h5", "h6" };
+    private int openArticleElements = 0;
 
-    private static int specialAncestorNumber(String name) {
-        for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
-            if (name == SPECIAL_ANCESTORS[i]) {
-                return i;
-            }
-        }
-        return -1;
-    }
+    private int openAsideElements = 0;
 
-    private static final int FIGURE_MASK = (1 << specialAncestorNumber(
-            "figure"));
+    private int openNavElements = 0;
+
+    private int openSectionElements = 0;
 
     private boolean hasH1;
-
-    private boolean hasTopLevelH1;
-
-    private static final int H1_MASK = (1 << specialAncestorNumber("h1"));
-
-    private static final int H2_MASK = (1 << specialAncestorNumber("h2"));
-
-    private static final int H3_MASK = (1 << specialAncestorNumber("h3"));
-
-    private static final int H4_MASK = (1 << specialAncestorNumber("h4"));
-
-    private static final int H5_MASK = (1 << specialAncestorNumber("h5"));
-
-    private static final int H6_MASK = (1 << specialAncestorNumber("h6"));
-
-    private boolean secondLevelH1 = false;
-
-    private class StackNode {
-
-        private final String name;
-
-        private final int ancestorMask;
-
-        private boolean headingFound = false;
-
-        private boolean imgFound = false;
-
-        public StackNode(int ancestorMask, String name) {
-            this.name = name;
-            this.ancestorMask = ancestorMask;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getAncestorMask() {
-            return ancestorMask;
-        }
-
-        public boolean hasHeading() {
-            return headingFound;
-        }
-
-        public void setHeadingFound() {
-            this.headingFound = true;
-        }
-
-        public boolean hasImg() {
-            return imgFound;
-        }
-
-        public void setImgFound() {
-            this.imgFound = true;
-        }
-
-    }
-
-    private StackNode[] stack;
-
-    private int currentPtr;
-
-    private int currentSectioningDepth;
-
-    private void push(StackNode node) {
-        currentPtr++;
-        if (currentPtr == stack.length) {
-            StackNode[] newStack = new StackNode[stack.length + 64];
-            System.arraycopy(stack, 0, newStack, 0, stack.length);
-            stack = newStack;
-        }
-        stack[currentPtr] = node;
-    }
-
-    private StackNode pop() {
-        return stack[currentPtr--];
-    }
-
-    private StackNode peek() {
-        return stack[currentPtr];
-    }
 
     public UseCountingXMLReaderWrapper(XMLReader wrappedReader,
             HttpServletRequest request, String systemId) {
@@ -206,24 +109,14 @@ public final class UseCountingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
-        StackNode node = pop();
-        if ("section" == localName && !node.hasHeading()) {
-            if (request != null) {
-                request.setAttribute(
-                        "http://validator.nu/properties/section-no-heading",
-                        true);
-            }
-        } else if ("article" == localName && !node.hasHeading()) {
-            if (request != null) {
-                request.setAttribute(
-                        "http://validator.nu/properties/article-no-heading",
-                        true);
-            }
-        }
-        if ("article" == localName || "aside" == localName || "nav" == localName
-                || "section" == localName) {
-            currentSectioningElementPtr = currentPtr - 1;
-            currentSectioningDepth--;
+        if ("article" == localName) {
+            openArticleElements--;
+        } else if ("aside" == localName) {
+            openAsideElements--;
+        } else if ("nav" == localName) {
+            openNavElements--;
+        } else if ("section" == localName) {
+            openSectionElements--;
         }
         contentHandler.endElement(uri, localName, qName);
     }
@@ -237,22 +130,15 @@ public final class UseCountingXMLReaderWrapper
             return;
         }
         documentContent.setLength(0);
-        reset();
-        stack = new StackNode[32];
-        currentPtr = 0;
-        currentHeadingPtr = -1;
-        currentSectioningElementPtr = -1;
-        currentSectioningDepth = 0;
-        stack[0] = null;
         hasVisibleMain = false;
         hasH1 = false;
-        hasTopLevelH1 = false;
+        openArticleElements = 0;
+        openAsideElements = 0;
+        openNavElements = 0;
+        openSectionElements = 0;
         contentHandler.startDocument();
     }
 
-    public void reset() {
-        secondLevelH1 = false;
-    }
     /**
      * @see org.xml.sax.helpers.XMLFilterImpl#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
@@ -260,22 +146,8 @@ public final class UseCountingXMLReaderWrapper
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
-        int ancestorMask = 0;
-        StackNode parent = peek();
-        String parentName = null;
-        if (parent != null) {
-            parentName = parent.getName();
-            ancestorMask = parent.getAncestorMask();
-        }
         if (contentHandler == null) {
             return;
-        }
-        if (atts.getIndex("", "style") > -1) {
-            if (request != null) {
-                request.setAttribute(
-                        "http://validator.nu/properties/style-attribute-found",
-                        true);
-            }
         }
         if (inBody && "style".equals(localName) && !loggedStyleInBody) {
             loggedStyleInBody = true;
@@ -304,95 +176,46 @@ public final class UseCountingXMLReaderWrapper
                 hasVisibleMain = true;
             }
         } else if ("h1" == localName) {
-            if (hasH1 && currentSectioningDepth > 1) {
+            if (hasH1) {
                 if (request != null) {
                     request.setAttribute(
                             "http://validator.nu/properties/h1-multiple", true);
-                    if ("section".equals(parentName)) {
+                    if (openArticleElements > 0) {
                         request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-section-parent",
+                                "http://validator.nu/properties/h1-multiple-with-article-ancestor",
                                 true);
-                    } else if ("article".equals(parentName)) {
+                    }
+                    if (openAsideElements > 0) {
                         request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-article-parent",
+                                "http://validator.nu/properties/h1-multiple-with-aside-ancestor",
                                 true);
-                    } else if ("aside".equals(parentName)) {
+                    }
+                    if (openNavElements > 0) {
                         request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-aside-parent",
+                                "http://validator.nu/properties/h1-multiple-with-nav-ancestor",
                                 true);
-                    } else if ("nav".equals(parentName)) {
+                    }
+                    if (openSectionElements > 0) {
                         request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-nav-parent",
+                                "http://validator.nu/properties/h1-multiple-with-section-ancestor",
                                 true);
-                    } else if (systemId != null) {
-                        log4j.info("<h1> multiple not nested in section/article/aside/nav " + systemId);
                     }
                 }
-            } else if (hasH1 && currentSectioningDepth == 1) {
-                secondLevelH1 = true;
-                if (request != null) {
-                    if ("section".equals(parentName)) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-section-parent",
-                                true);
-                    } else if ("article".equals(parentName)) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-article-parent",
-                                true);
-                    } else if ("aside".equals(parentName)) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-aside-parent",
-                                true);
-                    } else if ("nav".equals(parentName)) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/h1-multiple-with-nav-parent",
-                                true);
-                    } else if (systemId != null) {
-                        log4j.info("<h1> multiple not nested in section/article/aside/nav " + systemId);
-                    }
-                }
-            } else {
-                hasTopLevelH1 = true;
+                if (openArticleElements + openAsideElements + openNavElements
+                        + openSectionElements < 1)
+                    log4j.info(
+                            "<h1> multiple without section/article/aside/nav ancestor: "
+                                    + systemId);
             }
             hasH1 = true;
-        }
-        if ("article" == localName || "aside" == localName
-                || "nav" == localName || "section" == localName) {
-            currentSectioningElementPtr = currentPtr + 1;
-            currentSectioningDepth++;
-        }
-        if ("h1" == localName || "h2" == localName || "h3" == localName
-                || "h4" == localName || "h5" == localName
-                || "h6" == localName) {
-            currentHeadingPtr = currentPtr + 1;
-            if (currentSectioningElementPtr > -1) {
-                stack[currentSectioningElementPtr].setHeadingFound();
-            }
-        }
-        if ((ancestorMask & FIGURE_MASK) != 0) {
-            if ("img" == localName) {
-                if (!stack[currentFigurePtr].hasImg()) {
-                    stack[currentFigurePtr].setImgFound();
-                }
-            }
-        }
-        if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
-                || (ancestorMask & H3_MASK) != 0
-                || (ancestorMask & H4_MASK) != 0
-                || (ancestorMask & H5_MASK) != 0
-                || (ancestorMask & H6_MASK) != 0) && "img" == localName
-                && atts.getIndex("", "alt") > -1
-                && !"".equals(atts.getValue("", "alt"))) {
-            stack[currentHeadingPtr].setImgFound();
-        }
-        StackNode child = new StackNode(ancestorMask, localName);
-        push(child);
-        if ("article" == localName || "aside" == localName || "nav" == localName
-                || "section" == localName) {
-            if (atts.getIndex("", "aria-label") > -1
-                    && !"".equals(atts.getValue("", "aria-label"))) {
-                child.setHeadingFound();
-            }
+        } else if ("article" == localName) {
+            openArticleElements++;
+        } else if ("aside" == localName) {
+            openAsideElements++;
+        } else if ("nav" == localName) {
+            openNavElements++;
+        } else if ("section" == localName) {
+            openSectionElements++;
         }
         contentHandler.startElement(uri, localName, qName, atts);
     }
@@ -422,16 +245,6 @@ public final class UseCountingXMLReaderWrapper
         if (contentHandler == null) {
             return;
         }
-
-        if (hasTopLevelH1) {
-            if (secondLevelH1) {
-                if (request != null) {
-                    request.setAttribute(
-                            "http://validator.nu/properties/h1-multiple", true);
-                }
-            }
-        }
-
         contentHandler.endDocument();
     }
 

@@ -1401,46 +1401,34 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.H1_MULTIPLE_FOUND);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/h1-multiple-with-section-parent") != null
+                    "http://validator.nu/properties/h1-multiple-with-section-ancestor") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-section-parent")) {
-                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_SECTION_PARENT_FOUND);
+                            "http://validator.nu/properties/h1-multiple-with-section-ancestor")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_SECTION_ANCESTOR_FOUND);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/h1-multiple-with-article-parent") != null
+                    "http://validator.nu/properties/h1-multiple-with-article-ancestor") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-article-parent")) {
-                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_ARTICLE_PARENT_FOUND);
+                            "http://validator.nu/properties/h1-multiple-with-article-ancestor")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_ARTICLE_ANCESTOR_FOUND);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/h1-multiple-with-aside-parent") != null
+                    "http://validator.nu/properties/h1-multiple-with-aside-ancestor") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-aside-parent")) {
-                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_ASIDE_PARENT_FOUND);
+                            "http://validator.nu/properties/h1-multiple-with-aside-ancestor")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_ASIDE_ANCESTOR_FOUND);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/h1-multiple-with-nav-parent") != null
+                    "http://validator.nu/properties/h1-multiple-with-nav-ancestor") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/h1-multiple-with-nav-parent")) {
-                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_NAV_PARENT_FOUND);
+                            "http://validator.nu/properties/h1-multiple-with-nav-ancestor")) {
+                stats.incrementField(Statistics.Field.H1_MULTIPLE_WITH_NAV_ANCESTOR_FOUND);
             }
             if (request.getAttribute(
                     "http://validator.nu/properties/hgroup-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/hgroup-found")) {
                 stats.incrementField(Statistics.Field.HGROUP_FOUND);
-            }
-            if (request.getAttribute(
-                    "http://validator.nu/properties/section-no-heading") != null
-                    && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/section-no-heading")) {
-                stats.incrementField(Statistics.Field.SECTION_NO_HEADING_FOUND);
-            }
-            if (request.getAttribute(
-                    "http://validator.nu/properties/article-no-heading") != null
-                    && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/article-no-heading")) {
-                stats.incrementField(Statistics.Field.ARTICLE_NO_HEADING_FOUND);
             }
             if (request.getAttribute(
                     "http://validator.nu/properties/main-found") != null
