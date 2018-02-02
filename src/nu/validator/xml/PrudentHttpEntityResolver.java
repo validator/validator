@@ -134,7 +134,7 @@ import io.mola.galimatias.GalimatiasParseException;
         .register("http", PlainConnectionSocketFactory.getSocketFactory()) //
         .register("https", SSLConnectionSocketFactory.getSocketFactory()) //
         .build();
-        HttpClientBuilder builder = HttpClients.custom();
+        HttpClientBuilder builder = HttpClients.custom().useSystemProperties();
         builder.setRedirectStrategy(new LaxRedirectStrategy());
         builder.setMaxConnPerRoute(maxRequests);
         builder.setMaxConnTotal(
