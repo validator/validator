@@ -1430,7 +1430,7 @@ def buildAll():
 
 def runTests():
     if followW3Cspec:
-        args = ["--ignore=hgroup", "tests/messages.json"]
+        args = ["--ignore=hgroup,menu,figure,style", "tests/messages.json"]
     else:
         args = ["--ignore=html-its", "tests/messages.json"]
     className = "nu.validator.client.TestRunner"
