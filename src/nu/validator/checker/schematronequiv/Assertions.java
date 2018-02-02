@@ -22,6 +22,7 @@
 
 package nu.validator.checker.schematronequiv;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayList;
@@ -1627,7 +1628,71 @@ public class Assertions extends Checker {
                                     + " XML-compatible.");
                         }
                     }
-                    if ("href" == attLocal) {
+                    if ("style" == attLocal) {
+                        String styleContents = atts.getValue(i);
+                        ApplContext ac = new ApplContext("en");
+                        ac.setCssVersionAndProfile("css3svg");
+                        ac.setMedium("all");
+                        ac.setTreatVendorExtensionsAsWarnings(true);
+                        ac.setTreatCssHacksAsWarnings(true);
+                        ac.setWarningLevel(-1);
+                        ac.setFakeURL("file://localhost/StyleAttribute");
+                        StyleSheetParser styleSheetParser = //
+                                new StyleSheetParser();
+                        styleSheetParser.parseStyleAttribute(ac,
+                                new ByteArrayInputStream(
+                                        styleContents.getBytes()),
+                                "", ac.getFakeURL(),
+                                getDocumentLocator().getLineNumber());
+                        styleSheetParser.getStyleSheet().findConflicts(ac);
+                        Errors errors = //
+                                styleSheetParser.getStyleSheet().getErrors();
+                        for (int j = 0; j < errors.getErrorCount(); j++) {
+                            String message = "";
+                            String cssProperty = "";
+                            String cssMessage = "";
+                            CssError error = errors.getErrorAt(j);
+                            Throwable ex = error.getException();
+                            if (ex instanceof CssParseException) {
+                                CssParseException cpe = (CssParseException) ex;
+                                if ("generator.unrecognize" //
+                                        .equals(cpe.getErrorType())) {
+                                    cssMessage = "Parse Error";
+                                }
+                                if (cpe.getProperty() != null) {
+                                    cssProperty = String.format(
+                                            "\u201c%s\u201D: ",
+                                            cpe.getProperty());
+                                }
+                                if (cpe.getMessage() != null) {
+                                    cssMessage = cpe.getMessage();
+                                }
+                                if (!"".equals(cssMessage)) {
+                                    message = cssProperty + cssMessage + ".";
+                                }
+                            } else {
+                                message = ex.getMessage();
+                            }
+                            if (!"".equals(message)) {
+                                SAXParseException spe = new SAXParseException(
+                                        message, //
+                                        getDocumentLocator().getPublicId(), //
+                                        getDocumentLocator().getSystemId(), //
+                                        getDocumentLocator().getLineNumber(),
+                                        -1);
+                                int[] start = { -1, -1, 0 };
+                                if ((getErrorHandler() //
+                                instanceof MessageEmitterAdapter)
+                                        && !(getErrorHandler() //
+                                        instanceof TestRunner)) {
+                                    ((MessageEmitterAdapter) //
+                                    getErrorHandler()).cssError(spe, start);
+                                } else {
+                                    getErrorHandler().error(spe);
+                                }
+                            }
+                        }
+                    } else if ("href" == attLocal) {
                         href = true;
                     } else if ("controls" == attLocal) {
                         controls = true;
