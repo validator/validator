@@ -137,8 +137,6 @@ public class Statistics {
         H1_MULTIPLE_WITH_ASIDE_ANCESTOR_FOUND("<h1> multiple with <aside> ancestor found"), //
         H1_MULTIPLE_WITH_NAV_ANCESTOR_FOUND("<h1> multiple with <nav> ancestor found"), //
         HGROUP_FOUND("<hgroup> found"), //
-        SECTION_NO_HEADING_FOUND("<section> with no heading found"), //
-        ARTICLE_NO_HEADING_FOUND("<article> with no heading found"), //
         STYLE_ATTRIBUTE_FOUND("style attribute found"), //
         STYLE_IN_BODY_FOUND("<style> in <body> found"), //
         MAIN_FOUND("<main> found"), //
