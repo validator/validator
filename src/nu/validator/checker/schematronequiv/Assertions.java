@@ -1768,6 +1768,13 @@ public class Assertions extends Checker {
                 }
             }
 
+            if (followW3Cspec) {
+                if (("input".equals(localName) || "textarea".equals(localName))
+                        && atts.getIndex("", "inputmode") > -1) {
+                  err("The \u201cinputmode\u201d attribute is not allowed by"
+                      + " the W3C HTML specification.");
+                }
+            }
             if ("input".equals(localName)) {
                 if (atts.getIndex("", "name") > -1
                         && "isindex".equals(atts.getValue("", "name"))) {
