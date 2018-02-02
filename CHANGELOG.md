@@ -13,6 +13,7 @@ NN XX 20NN
     values case-sensitively when doing particular checks
   - Further restrict script[type] and style[type]
   - Allow the `slot` attribute (for Shadow DOM interaction)
+  - Allow the `allowpaymentrequest` attribute for the `iframe` element
   - Allow only one non-hidden `main` element per document
   - Allow only `html`, `body`, `div`, `form`, custom elements as `main` ancestor
   - Allow `role=none` where `role=presentation` is allowed
