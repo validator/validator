@@ -168,7 +168,6 @@ namespace local = ""
 			                    | tabindex
 			                    | contenteditable
 			                    | draggable
-			                    | dropzone
 			                    | hidden
 			                    | onabort
 			                    | onautocomplete

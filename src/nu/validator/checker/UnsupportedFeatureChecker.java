@@ -15,9 +15,6 @@ public class UnsupportedFeatureChecker extends Checker {
         if ("http://www.w3.org/1999/xhtml" != uri) {
             return;
         }
-        if (atts.getIndex("", "dropzone") > -1) {
-            warnAboutAttribute("dropzone");
-        }
         if ("dialog" == localName || "bdi" == localName) {
             warnAboutElement(localName);
         } else if ("textarea" == localName) {

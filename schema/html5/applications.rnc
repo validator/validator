@@ -9,7 +9,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.attrs.interact &=
 		(	common.attrs.contenteditable?
 		&	common.attrs.draggable?
-		&	common.attrs.dropzone?
 		&	common.attrs.hidden?
 		&	common.attrs.spellcheck?
 		)
@@ -28,26 +27,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.attrs.draggable =
 		attribute draggable {
 			w:string "true" | w:string "false"
-		}
-
-## Dropzone: dropzone
-
-	common.attrs.dropzone =
-		attribute dropzone {
-			list {
-				(	xsd:string { pattern = "[sS][tT][rR][iI][nN][gG]:.+" }
-				|	xsd:string { pattern = "[fF][iI][lL][eE]:.+" }
-				)*
-				,
-				(	w:string "copy"
-				|	w:string "move"
-				|	w:string "link"
-				)?
-				,
-				(	xsd:string { pattern = "[sS][tT][rR][iI][nN][gG]:.+" }
-				|	xsd:string { pattern = "[fF][iI][lL][eE]:.+" }
-				)*
-			}
 		}
 
 ## Hidden Element: hidden

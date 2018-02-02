@@ -1736,17 +1736,6 @@ public class Assertions extends Checker {
                                     + " type is " + renderTypeList(allowedTypes)
                                     + ".");
                         }
-                    } else if ("dropzone" == attLocal) {
-                        String[] tokens = atts.getValue(i).toString().split(
-                                "[ \\t\\n\\f\\r]+");
-                        Arrays.sort(tokens);
-                        for (int j = 0; j < tokens.length; j++) {
-                            String keyword = tokens[j];
-                            if (j > 0 && keyword.equals(tokens[j - 1])) {
-                                err("Duplicate keyword " + keyword
-                                        + ". Each keyword must be unique.");
-                            }
-                        }
                     } else if ("autofocus" == attLocal) {
                         if (hasAutofocus) {
                             err("A document must not include more than one"
