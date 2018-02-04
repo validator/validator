@@ -434,6 +434,7 @@ namespace local = ""
 		&	iframe.attrs.width?
 		&	iframe.attrs.height?
 		&	iframe.attrs.sandbox?
+		&	iframe.attrs.allowfullscreen?
 		&	iframe.attrs.allowpaymentrequest?
 		&	iframe.attrs.allowusermedia?
 		&	referrerpolicy?
