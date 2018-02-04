@@ -8,6 +8,7 @@ NN XX 20NN
     and network API to check CSS documents (in addition to HTML documents)
   - Add new major feature to check that `style` element contents and
     `style` attribute values in HTML documents are valid CSS
+  - Add new option to command-line checker for specifying User-Agent string
   - Emit error (not warning) for HTML4/XHTML1 strict doctypes
   - Fix bug that caused the checker to incorrectly treat `input[type]`
     values case-sensitively when doing particular checks

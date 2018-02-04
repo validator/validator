@@ -194,10 +194,10 @@ or
 command-line checking of documents by invoking it like this:
 <pre>
   java -jar ~/vnu.jar [--errors-only] [--Werror] [--exit-zero-always]
-       [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]
-       [--filterfile FILENAME] [--filterpattern PATTERN]
+       [--asciiquotes] [--user-agent USER_AGENT] [--no-langdetect]
+       [--no-stream] [--filterfile FILENAME] [--filterpattern PATTERN]
        [--css] [--skip-non-css] [--also-check-css]
-       [--html] [--skip-non-html] [--no-langdetect]
+       [--html] [--skip-non-html] [--format gnu|xml|json|text]
        [--help] [--verbose] [--version] FILES
 </pre>
 
@@ -372,6 +372,14 @@ default: [unset; XML parser is used for *.xhtml and *.xht documents]
 Check CSS documents (in addition to checking HTML documents).
 
 default: [unset; no documents are checked as CSS]
+</pre>
+
+<h4 id="user-agent">--user-agent <var>USER_AGENT</var></h4>
+<pre>
+Specifies the value of the <code>User-Agent</code> request header to send when
+checking HTTPS/HTTP URLs.
+
+default: <span class=option-value>"Validator.nu/LV"</span>
 </pre>
 
 <h4 id="no-langdetect">--no-langdetect</h4>

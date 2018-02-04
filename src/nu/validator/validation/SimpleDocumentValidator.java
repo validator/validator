@@ -454,7 +454,8 @@ public class SimpleDocumentValidator {
      * 
      * @throws IOException if loading of the URL fails for some reason
      */
-    public void checkHttpURL(String document, ErrorHandler errorHandler)
+    public void checkHttpURL(String document, String userAgent,
+            ErrorHandler errorHandler)
             throws IOException, SAXException {
         CookieHandler.setDefault(
                 new CookieManager(null, CookiePolicy.ACCEPT_ALL));
@@ -464,7 +465,7 @@ public class SimpleDocumentValidator {
             httpRes.setAllowCss(true);
         }
         httpRes.setAllowHtml(true);
-        httpRes.setUserAgent("Validator.nu/LV");
+        httpRes.setUserAgent(userAgent);
         try {
             documentInput = (TypedInputSource) httpRes.resolveEntity(null,
                     document);

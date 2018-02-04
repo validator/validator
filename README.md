@@ -63,10 +63,11 @@ Use the `vnu.jar` checker as an executable for command-line checking of
 documents by invoking it like this:
 
       java -jar ~/vnu.jar [--errors-only] [--Werror] [--exit-zero-always]
-           [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]
-           [--filterfile FILENAME] [--filterpattern PATTERN] [--css]
-           [--skip-non-css] [--also-check-css] [--html] [--skip-non-html]
-           [--no-langdetect] [--help] [--verbose] [--version] FILES
+           [--asciiquotes] [--user-agent USER_AGENT] [--no-langdetect]
+           [--no-stream] [--filterfile FILENAME] [--filterpattern PATTERN]
+           [--css] [--skip-non-css] [--also-check-css] [--html]
+           [--skip-non-html] [--format gnu|xml|json|text] [--help] [--verbose]
+           [--version] FILES
 
 **Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
 the file on your system.
@@ -213,6 +214,13 @@ executable provides the following options:
     Check CSS documents (in addition to checking HTML documents).
 
     default: [unset; no documents are checked as CSS]
+
+#### --user-agent _USER_AGENT_
+
+    Specifies the value of the User-Agent request header to send when checking
+    HTTPS/HTTP URLs.
+
+    default: "Validator.nu/LV"
 
 #### --no-langdetect
 

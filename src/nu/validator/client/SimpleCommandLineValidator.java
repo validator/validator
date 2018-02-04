@@ -58,6 +58,8 @@ public class SimpleCommandLineValidator {
 
     private static String version = pkg.getImplementationVersion();
 
+    private static String userAgent;
+
     private static SimpleDocumentValidator validator;
 
     private static OutputStream out;
@@ -106,6 +108,7 @@ public class SimpleCommandLineValidator {
 
     public static void main(String[] args) throws SAXException, Exception {
         out = System.err;
+        userAgent = "Validator.nu/LV";
         System.setProperty("nu.validator.datatype.warn", "true");
         errorsOnly = false;
         wError = false;
@@ -191,6 +194,8 @@ public class SimpleCommandLineValidator {
                     }
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
+                } else if ("--user-agent".equals(args[i])) {
+                    userAgent = args[++i];
                 } else if ("--version".equals(args[i])) {
                     if (version != null) {
                         System.out.println(version);
@@ -319,7 +324,7 @@ public class SimpleCommandLineValidator {
             if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
                 emitFilename(args[i]);
                 try {
-                    validator.checkHttpURL(args[i], errorHandler);
+                    validator.checkHttpURL(args[i], userAgent, errorHandler);
                 } catch (IOException e) {
                     errorHandler.fatalError(new SAXParseException(e.getMessage(),
                             null, args[i], -1, -1,
@@ -489,10 +494,10 @@ public class SimpleCommandLineValidator {
         System.out.println("Usage:");
         System.out.println("");
         System.out.println("    java -jar vnu.jar [--errors-only] [--Werror] [--exit-zero-always]");
-        System.out.println("         [--asciiquotes] [--no-stream] [--format gnu|xml|json|text]");
-        System.out.println("         [--filterfile FILENAME] [--filterpattern PATTERN]");
+        System.out.println("         [--asciiquotes] [--user-agent USER_AGENT] [--no-langdetect]");
+        System.out.println("         [--no-stream] [--filterfile FILENAME] [--filterpattern PATTERN]");
         System.out.println("         [--css] [--skip-non-css] [--also-check-css]");
-        System.out.println("         [--html] [--skip-non-html] [--no-langdetect]");
+        System.out.println("         [--html] [--skip-non-html] [--format gnu|xml|json|text]");
         System.out.println("         [--help] [--verbose] [--version] FILES");
         System.out.println("");
         System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
