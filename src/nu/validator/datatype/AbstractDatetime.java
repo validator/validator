@@ -203,17 +203,26 @@ abstract class AbstractDatetime extends AbstractDatatype {
     }
 
     private void checkTzd(String hours, String minutes) throws DatatypeException {
+        boolean offsetIsNegative = false;
         if (hours.charAt(0) == '+') {
             hours = hours.substring(1);
+        } else if (hours.charAt(0) == '-') {
+            offsetIsNegative = true;
         }
         try {
-            checkTzd(Integer.parseInt(hours), Integer.parseInt(minutes));
+            checkTzd(Integer.parseInt(hours), Integer.parseInt(minutes),
+                    offsetIsNegative);
         } catch (NumberFormatException e) {
             throw newDatatypeException("Hours or minutes out of range.");
         }
     }
 
-    private void checkTzd(int hours, int minutes) throws DatatypeException {
+    private void checkTzd(int hours, int minutes, boolean offsetIsNegative)
+            throws DatatypeException {
+        if (offsetIsNegative && (hours == 0 && minutes == 0)) {
+            throw newDatatypeException("Minus sign not allowed in time zone"
+                    + " designator when offset is zero. Use plus sign instead.");
+        }
         if (hours < -23 || hours > 23) {
             throw newDatatypeException("Hours out of range in time zone designator.");
         }
