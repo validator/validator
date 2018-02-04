@@ -11,13 +11,14 @@ NN XX 20NN
   - Emit error (not warning) for HTML4/XHTML1 strict doctypes
   - Fix bug that caused the checker to incorrectly treat `input[type]`
     values case-sensitively when doing particular checks
-  - Further restrict script[type] and style[type]
+  - Further restrict `script[type]` and `style[type]`
   - Allow the `slot` attribute (for Shadow DOM interaction)
   - Allow the `allowpaymentrequest` attribute for the `iframe` element
   - Allow only one non-hidden `main` element per document
   - Allow only `html`, `body`, `div`, `form`, custom elements as `main` ancestor
   - Allow `role=none` where `role=presentation` is allowed
   - Allow `role=rowgroup` element to be contained in `role=table` element
+  - Allow more values for `aria-haspopup` per current ARIA spec
   - Allow more ARIA states & properties for `role=menuitem`
   - Disallow the `dropzone` attribute
   - Disallow the `menuitem` element
