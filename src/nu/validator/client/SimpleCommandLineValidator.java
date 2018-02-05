@@ -88,6 +88,12 @@ public class SimpleCommandLineValidator {
 
     private static boolean forceCSS;
 
+    private static boolean alsoCheckSVG;
+
+    private static boolean skipNonSVG;
+
+    private static boolean forceSVG;
+
     private static boolean skipNonHTML;
 
     private static boolean forceHTML;
@@ -115,6 +121,9 @@ public class SimpleCommandLineValidator {
         alsoCheckCSS = false;
         skipNonCSS = false;
         forceCSS = false;
+        alsoCheckSVG = false;
+        skipNonSVG = false;
+        forceSVG = false;
         skipNonHTML = false;
         forceHTML = false;
         loadEntities = false;
@@ -212,6 +221,12 @@ public class SimpleCommandLineValidator {
                     skipNonCSS = true;
                 } else if ("--css".equals(args[i])) {
                     forceCSS = true;
+                } else if ("--also-check-svg".equals(args[i])) {
+                    alsoCheckSVG = true;
+                } else if ("--skip-non-svg".equals(args[i])) {
+                    skipNonSVG = true;
+                } else if ("--svg".equals(args[i])) {
+                    forceSVG = true;
                 } else if ("--skip-non-html".equals(args[i])) {
                     skipNonHTML = true;
                 } else if ("--html".equals(args[i])) {
@@ -342,6 +357,14 @@ public class SimpleCommandLineValidator {
                     }
                 } else if (alsoCheckCSS && isCss(file)) {
                     checkCssFile(file);
+                } else if (forceSVG) {
+                    checkSvgFile(file);
+                } else if (skipNonSVG) {
+                    if (isSvg(file)) {
+                        checkSvgFile(file);
+                    }
+                } else if (alsoCheckSVG && isSvg(file)) {
+                    checkSvgFile(file);
                 } else {
                     checkHtmlFile(file);
                 }
@@ -364,9 +387,43 @@ public class SimpleCommandLineValidator {
                     }
                 } else if (alsoCheckCSS && isCss(file)) {
                     checkCssFile(file);
+                } else if (forceSVG) {
+                    checkSvgFile(file);
+                } else if (skipNonSVG) {
+                    if (isSvg(file)) {
+                        checkSvgFile(file);
+                    }
+                } else if (alsoCheckSVG && isSvg(file)) {
+                    checkSvgFile(file);
                 } else {
                     checkHtmlFile(file);
                 }
+            }
+        }
+    }
+
+    private static void checkSvgFile(File file) throws IOException, Exception {
+        try {
+            String path = file.getPath();
+            if (!file.exists()) {
+                if (verbose) {
+                    errorHandler.warning(new SAXParseException(
+                            "File not found.", null,
+                            file.toURI().toURL().toString(), -1, -1));
+                }
+                return;
+            } else {
+                emitFilename(path);
+                if (!"http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc".equals(
+                        validator.getMainSchemaUrl()) && !hasSchemaOption) {
+                    setup("http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc");
+                }
+                validator.checkXmlFile(file);
+            }
+        } catch (SAXException e) {
+            if (!errorsOnly) {
+                System.err.printf("\"%s\":-1:-1: warning: %s\n",
+                        file.toURI().toURL().toString(), e.getMessage());
             }
         }
     }
@@ -409,7 +466,7 @@ public class SimpleCommandLineValidator {
                     validator.checkHtmlFile(file, true);
                 } else {
                     if (!"http://s.validator.nu/xhtml5-rdfalite.rnc".equals(
-                            schemaUrl) && !hasSchemaOption) {
+                            validator.getMainSchemaUrl()) && !hasSchemaOption) {
                         setup("http://s.validator.nu/xhtml5-rdfalite.rnc");
                     }
                     validator.checkXmlFile(file);
@@ -417,7 +474,7 @@ public class SimpleCommandLineValidator {
             } else if (isHtml(file)) {
                 emitFilename(path);
                 if (!"http://s.validator.nu/html5-rdfalite.rnc".equals(
-                        schemaUrl) && !hasSchemaOption) {
+                        validator.getMainSchemaUrl()) && !hasSchemaOption) {
                     setup("http://s.validator.nu/html5-rdfalite.rnc");
                 }
                 validator.checkHtmlFile(file, true);
@@ -444,6 +501,11 @@ public class SimpleCommandLineValidator {
     private static boolean isCss(File file) {
         String name = file.getName();
         return (name.endsWith(".css"));
+    }
+
+    private static boolean isSvg(File file) {
+        String name = file.getName();
+        return (name.endsWith(".svg"));
     }
 
     private static boolean isXhtml(File file) {
@@ -497,6 +559,7 @@ public class SimpleCommandLineValidator {
         System.out.println("         [--asciiquotes] [--user-agent USER_AGENT] [--no-langdetect]");
         System.out.println("         [--no-stream] [--filterfile FILENAME] [--filterpattern PATTERN]");
         System.out.println("         [--css] [--skip-non-css] [--also-check-css]");
+        System.out.println("         [--svg] [--skip-non-svg] [--also-check-svg]");
         System.out.println("         [--html] [--skip-non-html] [--format gnu|xml|json|text]");
         System.out.println("         [--help] [--verbose] [--version] FILES");
         System.out.println("");

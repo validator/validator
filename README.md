@@ -65,9 +65,9 @@ documents by invoking it like this:
       java -jar ~/vnu.jar [--errors-only] [--Werror] [--exit-zero-always]
            [--asciiquotes] [--user-agent USER_AGENT] [--no-langdetect]
            [--no-stream] [--filterfile FILENAME] [--filterpattern PATTERN]
-           [--css] [--skip-non-css] [--also-check-css] [--html]
-           [--skip-non-html] [--format gnu|xml|json|text] [--help] [--verbose]
-           [--version] FILES
+           [--css] [--skip-non-css] [--also-check-css] [--svg] [--skip-non-svg]
+           [--also-check-svg] [--html] [--skip-non-html] [--format
+           gnu|xml|json|text] [--help] [--verbose] [--version] FILES
 
 **Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
 the file on your system.
@@ -104,6 +104,21 @@ in the extension `.css` being checked as CSS, and all other documents being
 checked as HTML:
 
       java -jar ~/vnu.jar --also-check-css some-directory-name/
+
+To check all documents in a particular directory as SVG:
+
+      java -jar ~/vnu.jar --force-svg some-directory-name/
+
+To check all documents in a particular directory as SVG, but skip any documents
+whose names don’t end with the extension `.svg`:
+
+      java -jar ~/vnu.jar --skip-non-svg some-directory-name/
+
+To check all documents in a particular directory, with documents whose names end
+in the extension `.svg` being checked as SVG, and all other documents being
+checked as HTML:
+
+      java -jar ~/vnu.jar --also-check-svg some-directory-name/
 
 To check a Web document:
 
@@ -197,6 +212,18 @@ executable provides the following options:
 
     default: [unset]
 
+#### --skip-non-svg
+
+    Check documents as SVG but skip documents that don’t have *.svg extensions.
+
+    default: [unset; all documents found are checked]
+
+#### --svg
+
+    Force all documents to be checked as SVG, regardless of extension.
+
+    default: [unset]
+
 #### --skip-non-html
 
     Skip documents that don’t have *.html, *.htm, *.xhtml, or *.xht extensions.
@@ -214,6 +241,12 @@ executable provides the following options:
     Check CSS documents (in addition to checking HTML documents).
 
     default: [unset; no documents are checked as CSS]
+
+#### --also-check-svg
+
+    Check SVG documents (in addition to checking HTML documents).
+
+    default: [unset; no documents are checked as SVG]
 
 #### --user-agent _USER_AGENT_
 

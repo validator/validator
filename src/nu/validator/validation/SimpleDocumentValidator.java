@@ -99,6 +99,8 @@ public class SimpleDocumentValidator {
 
     private Schema mainSchema;
 
+    private String mainSchemaUrl;
+
     private boolean hasHtml5Schema;
 
     private Schema assertionSchema;
@@ -183,6 +185,10 @@ public class SimpleDocumentValidator {
 
     public SourceCode getSourceCode() {
         return this.sourceCode;
+    }
+
+    public String getMainSchemaUrl() {
+        return this.mainSchemaUrl;
     }
 
     /* *
@@ -270,6 +276,7 @@ public class SimpleDocumentValidator {
                 System.setProperty("nu.validator.schema.rdfa-full", "0");
             }
         }
+        this.mainSchemaUrl = schemaUrl;
         this.mainSchema = schema;
     }
 

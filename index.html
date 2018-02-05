@@ -197,6 +197,7 @@ command-line checking of documents by invoking it like this:
        [--asciiquotes] [--user-agent USER_AGENT] [--no-langdetect]
        [--no-stream] [--filterfile FILENAME] [--filterpattern PATTERN]
        [--css] [--skip-non-css] [--also-check-css]
+       [--svg] [--skip-non-svg] [--also-check-svg]
        [--html] [--skip-non-html] [--format gnu|xml|json|text]
        [--help] [--verbose] [--version] FILES
 </pre>
@@ -248,6 +249,24 @@ names end in the extension <code>.css</code> being checked as CSS, and all
 other documents being checked as HTML:
 <pre>
   java -jar ~/vnu.jar <span class="option-value">--also-check-css</span> some-directory-name/
+</pre>
+
+<p>To check all documents in a particular directory as SVG:
+<pre>
+  java -jar ~/vnu.jar <span class="option-value">--force-svg</span> some-directory-name/
+</pre>
+
+<p>To check all documents in a particular directory as SVG, but skip any
+documents whose names don’t end with the extension <code>.svg</code>:
+<pre>
+  java -jar ~/vnu.jar <span class="option-value">--skip-non-svg</span> some-directory-name/
+</pre>
+
+<p>To check all documents in a particular directory, with documents whose
+names end in the extension <code>.svg</code> being checked as SVG, and all
+other documents being checked as HTML:
+<pre>
+  java -jar ~/vnu.jar <span class="option-value">--also-check-svg</span> some-directory-name/
 </pre>
 
 <p>To check a Web document:
@@ -353,6 +372,20 @@ Force all documents to be checked as CSS, regardless of extension.
 default: [unset]
 </pre>
 
+<h4 id="skip-non-svg">--skip-non-svg</h4>
+<pre>
+Check documents as SVG but skip documents that don’t have *.svg extensions.
+
+default: [unset; all documents found are checked]
+</pre>
+
+<h4 id="svg">--svg</h4>
+<pre>
+Force all documents to be checked as SVG, regardless of extension.
+
+default: [unset]
+</pre>
+
 <h4 id="skip-non-html">--skip-non-html</h4>
 <pre>
 Skip documents that don’t have *.html, *.htm, *.xhtml, or *.xht extensions.
@@ -372,6 +405,13 @@ default: [unset; XML parser is used for *.xhtml and *.xht documents]
 Check CSS documents (in addition to checking HTML documents).
 
 default: [unset; no documents are checked as CSS]
+</pre>
+
+<h4 id="also-check-svg">--also-check-svg</h4>
+<pre>
+Check SVG documents (in addition to checking HTML documents).
+
+default: [unset; no documents are checked as SVG]
 </pre>
 
 <h4 id="user-agent">--user-agent <var>USER_AGENT</var></h4>
