@@ -1599,6 +1599,7 @@ public class Assertions extends Checker {
             boolean itemref = false;
             boolean itemscope = false;
             boolean itemtype = false;
+            boolean tabindex = false;
             boolean languageJavaScript = false;
             boolean typeNotTextJavaScript = false;
             String xmlLang = null;
@@ -1692,6 +1693,8 @@ public class Assertions extends Checker {
                                 }
                             }
                         }
+                    } else if ("tabindex" == attLocal) {
+                        tabindex = true;
                     } else if ("href" == attLocal) {
                         href = true;
                     } else if ("controls" == attLocal) {
@@ -2050,38 +2053,46 @@ public class Assertions extends Checker {
             // Exclusions
             Integer maskAsObject;
             int mask = 0;
-            String descendantUiString = "";
+            String descendantUiString = "The element \u201C" + localName
+                    + "\u201D";
             if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(
                     localName)) != null) {
                 mask = maskAsObject.intValue();
-                descendantUiString = localName;
             } else if ("video" == localName && controls) {
                 mask = A_BUTTON_MASK;
-                descendantUiString = "video\u201D with the attribute \u201Ccontrols";
+                descendantUiString = "The element \u201Cvideo\u201D with the"
+                        + " attribute \u201Ccontrols\u201D";
             } else if ("audio" == localName && controls) {
                 mask = A_BUTTON_MASK;
-                descendantUiString = "audio\u201D with the attribute \u201Ccontrols";
+                descendantUiString = "The element \u201Caudio\u201D with the"
+                        + " attribute \u201Ccontrols\u201D";
             } else if ("menu" == localName && toolbar) {
                 mask = A_BUTTON_MASK;
-                descendantUiString = "menu\u201D with the attribute \u201Ctype=toolbar";
+                descendantUiString = "The element \u201Cmenu\u201D with the"
+                        + " attribute \u201Ctype=toolbar\u201D";
             } else if ("img" == localName && usemap) {
                 mask = A_BUTTON_MASK;
-                descendantUiString = "img\u201D with the attribute \u201Cusemap";
+                descendantUiString = "The element \u201Cimg\u201D with the"
+                        + " attribute \u201Cusemap\u201D";
             } else if ("object" == localName && usemap) {
                 mask = A_BUTTON_MASK;
-                descendantUiString = "object\u201D with the attribute \u201Cusemap";
+                descendantUiString = "The element \u201Cobject\u201D with the"
+                        + " attribute \u201Cusemap\u201D";
             } else if ("input" == localName && !hidden) {
                 mask = A_BUTTON_MASK;
-                descendantUiString = "input";
+            } else if (tabindex) {
+                mask = A_BUTTON_MASK;
+                descendantUiString = "An element with the attribute"
+                        + " \u201Ctabindex\u201D";
             }
             if (mask != 0) {
                 int maskHit = ancestorMask & mask;
                 if (maskHit != 0) {
                     for (String ancestor : SPECIAL_ANCESTORS) {
                         if ((maskHit & 1) != 0) {
-                            err("The element \u201C" + descendantUiString
-                                    + "\u201D must not appear as a descendant of the \u201C"
-                                    + ancestor + "\u201D element.");
+                            err(descendantUiString + " must not appear as a"
+                                    + " descendant of the \u201C" + ancestor
+                                    + "\u201D element.");
                         }
                         maskHit >>= 1;
                     }
