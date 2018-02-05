@@ -397,11 +397,17 @@ public class Assertions extends Checker {
         JAVASCRIPT_MIME_TYPES.add("text/x-javascript");
     }
 
+    private static final String[] INTERACTIVE_ELEMENTS = { "a", "button",
+            "details", "embed", "iframe", "label", "select", "textarea" };
+
     private static final String[] INTERACTIVE_ROLES = { "button", "checkbox",
             "combobox", "grid", "gridcell", "listbox", "menu", "menubar",
             "menuitem", "menuitemcheckbox", "menuitemradio", "option", "radio",
             "scrollbar", "searchbox", "slider", "spinbutton", "switch", "tab",
             "textbox", "treeitem" };
+
+    private static final String[] PROHIBITED_INTERACTIVE_ANCESTOR_ROLES = {
+            "button", "link" };
 
     private static final String[] PROHIBITED_MAIN_ANCESTORS = { "a", "address",
             "article", "aside", "audio", "blockquote", "canvas", "caption",
@@ -494,23 +500,12 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("address", "h4");
         registerProhibitedAncestor("address", "h5");
         registerProhibitedAncestor("address", "h6");
-        registerProhibitedAncestor("a", "a");
-        registerProhibitedAncestor("button", "a");
-        registerProhibitedAncestor("a", "details");
-        registerProhibitedAncestor("button", "details");
-        registerProhibitedAncestor("a", "button");
-        registerProhibitedAncestor("button", "button");
-        registerProhibitedAncestor("a", "textarea");
-        registerProhibitedAncestor("button", "textarea");
-        registerProhibitedAncestor("a", "select");
-        registerProhibitedAncestor("button", "select");
-        registerProhibitedAncestor("a", "embed");
-        registerProhibitedAncestor("button", "embed");
-        registerProhibitedAncestor("a", "iframe");
-        registerProhibitedAncestor("button", "iframe");
-        registerProhibitedAncestor("a", "label");
-        registerProhibitedAncestor("button", "label");
         registerProhibitedAncestor("caption", "table");
+
+        for (String elementName : INTERACTIVE_ELEMENTS) {
+            registerProhibitedAncestor("a", elementName);
+            registerProhibitedAncestor("button", elementName);
+        }
     }
 
     private static final int BODY_MASK = (1 << specialAncestorNumber("body"));
@@ -1259,6 +1254,21 @@ public class Assertions extends Checker {
             }
         }
         return false;
+    }
+
+    private void checkForInteractiveAncestorRole(String descendantUiString)
+            throws SAXException {
+        for (int i = 0; i < currentPtr; i++) {
+            String ancestorRole = stack[currentPtr - i].getRole();
+            if (ancestorRole != null && ancestorRole != ""
+                    && Arrays.binarySearch(
+                            PROHIBITED_INTERACTIVE_ANCESTOR_ROLES,
+                            ancestorRole) >= 0) {
+                err(descendantUiString + " must not appear as a"
+                        + " descendant of an element with the attribute"
+                        + " \u201Crole=" + ancestorRole + "\u201D.");
+            }
+        }
     }
 
     /**
@@ -2068,33 +2078,41 @@ public class Assertions extends Checker {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "The element \u201Cvideo\u201D with the"
                         + " attribute \u201Ccontrols\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
             } else if ("audio" == localName && controls) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "The element \u201Caudio\u201D with the"
                         + " attribute \u201Ccontrols\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
             } else if ("menu" == localName && toolbar) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "The element \u201Cmenu\u201D with the"
                         + " attribute \u201Ctype=toolbar\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
             } else if ("img" == localName && usemap) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "The element \u201Cimg\u201D with the"
                         + " attribute \u201Cusemap\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
             } else if ("object" == localName && usemap) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "The element \u201Cobject\u201D with the"
                         + " attribute \u201Cusemap\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
             } else if ("input" == localName && !hidden) {
                 mask = A_BUTTON_MASK;
+                checkForInteractiveAncestorRole(descendantUiString);
             } else if (tabindex) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "An element with the attribute"
                         + " \u201Ctabindex\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
             } else if (role != null && role != ""
                     && Arrays.binarySearch(INTERACTIVE_ROLES, role) >= 0) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "An element with the attribute \u201C"
                         + "role=" + role + "\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
             }
             if (mask != 0) {
                 int maskHit = ancestorMask & mask;
@@ -2108,6 +2126,10 @@ public class Assertions extends Checker {
                         maskHit >>= 1;
                     }
                 }
+            }
+            if (Arrays.binarySearch(INTERACTIVE_ELEMENTS, localName) >= 0) {
+                checkForInteractiveAncestorRole(
+                        "The element \u201C" + localName + "\u201D");
             }
 
             // Ancestor requirements/restrictions

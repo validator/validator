@@ -21,6 +21,7 @@ NN XX 20NN
   - Allow `role=rowgroup` element to be contained in `role=table` element
   - Allow more values for `aria-haspopup` per current ARIA spec
   - Allow more ARIA states & properties for `role=menuitem`
+  - Disallow nested interactive ARIA roles
   - Disallow the `dropzone` attribute
   - Disallow the `menuitem` element
 
