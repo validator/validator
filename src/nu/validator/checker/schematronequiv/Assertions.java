@@ -397,6 +397,12 @@ public class Assertions extends Checker {
         JAVASCRIPT_MIME_TYPES.add("text/x-javascript");
     }
 
+    private static final String[] INTERACTIVE_ROLES = { "button", "checkbox",
+            "combobox", "grid", "gridcell", "listbox", "menu", "menubar",
+            "menuitem", "menuitemcheckbox", "menuitemradio", "option", "radio",
+            "scrollbar", "searchbox", "slider", "spinbutton", "switch", "tab",
+            "textbox", "treeitem" };
+
     private static final String[] PROHIBITED_MAIN_ANCESTORS = { "a", "address",
             "article", "aside", "audio", "blockquote", "canvas", "caption",
             "dd", "del", "details", "dialog", "dt", "fieldset", "figure",
@@ -2084,6 +2090,11 @@ public class Assertions extends Checker {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "An element with the attribute"
                         + " \u201Ctabindex\u201D";
+            } else if (role != null && role != ""
+                    && Arrays.binarySearch(INTERACTIVE_ROLES, role) >= 0) {
+                mask = A_BUTTON_MASK;
+                descendantUiString = "An element with the attribute \u201C"
+                        + "role=" + role + "\u201D";
             }
             if (mask != 0) {
                 int maskHit = ancestorMask & mask;
