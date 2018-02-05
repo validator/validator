@@ -70,6 +70,7 @@ public final class MultipartFormDataFilter implements Filter {
         EXTENSION_TO_TYPE.put("xhtml", "application/xhtml+xml");
         EXTENSION_TO_TYPE.put("xht", "application/xhtml+xml");
         EXTENSION_TO_TYPE.put("css", "text/css");
+        EXTENSION_TO_TYPE.put("svg", "image/svg+xml");
         EXTENSION_TO_TYPE.put("atom", "application/atom+xml");
         EXTENSION_TO_TYPE.put("rng", "application/xml");
         EXTENSION_TO_TYPE.put("xsl", "application/xml");

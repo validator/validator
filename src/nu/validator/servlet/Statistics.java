@@ -100,6 +100,7 @@ public class Statistics {
         INPUT_FILE_UPLOAD("\u2514 File-upload input"), //
         INPUT_HTML("Input: text/html"), //
         INPUT_CSS("Input: text/css"), //
+        INPUT_SVG("Input: image/svg+xml"), //
         INPUT_UNSUPPORTED("Input: unsupported content type (error)"), //
         INPUT_XML("Input: application/xhtml+xml or other XML content type"), //
         OUTPUT_XML("Output: XML"), //
@@ -137,7 +138,6 @@ public class Statistics {
         H1_MULTIPLE_WITH_ASIDE_ANCESTOR_FOUND("<h1> multiple with <aside> ancestor found"), //
         H1_MULTIPLE_WITH_NAV_ANCESTOR_FOUND("<h1> multiple with <nav> ancestor found"), //
         HGROUP_FOUND("<hgroup> found"), //
-        STYLE_ATTRIBUTE_FOUND("style attribute found"), //
         STYLE_IN_BODY_FOUND("<style> in <body> found"), //
         MAIN_FOUND("<main> found"), //
         MAIN_MULTIPLE_VISIBLE_FOUND("<main> multiple visible found"), //

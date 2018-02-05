@@ -35,10 +35,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
 
 import nu.validator.checker.AttributeUtil;
 import nu.validator.checker.Checker;
@@ -79,10 +75,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class Assertions extends Checker {
-
-    private static final Logger log4j = Logger.getLogger(Assertions.class);
-
-    private static Pattern pattern = Pattern.compile("--[^ :]* *: *([^;]*);");
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -1433,10 +1425,6 @@ public class Assertions extends Checker {
                 stack[currentPtr].setOptionFound();
             } else if ("style" == localName) {
                 String styleContents = node.getTextContent().toString();
-                Matcher m = pattern.matcher(styleContents);
-                while (m.find()) {
-                    log4j.info(m.group(1));
-                }
                 boolean styleHasNewline = false;
                 if (styleContents.indexOf('\n') > -1) {
                     styleHasNewline = true;

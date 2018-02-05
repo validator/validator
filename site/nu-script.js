@@ -77,6 +77,7 @@ function initFieldHolders() {
 	urlInput = document.getElementById('doc')
 	urlInput.setAttribute('aria-labelledby', 'docselect')
 	urlInput.setAttribute('required', '')
+	urlInput.setAttribute('placeholder', 'Enter the URL for an HTML, CSS, or SVG document')
 	textareaHidden = createHtmlElement('input')
 	textarea = createHtmlElement('textarea')
 	textarea.setAttribute('autofocus', '')

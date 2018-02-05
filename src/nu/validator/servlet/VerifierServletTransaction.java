@@ -1283,6 +1283,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             if (documentInput != null
                     && "text/css".equals(documentInput.getType())) {
                 stats.incrementField(Statistics.Field.INPUT_CSS);
+            } else if (documentInput != null
+                    && "image/svg+xml".equals(documentInput.getType())) {
+                stats.incrementField(Statistics.Field.INPUT_SVG);
             } else if (htmlParser != null) {
                 stats.incrementField(Statistics.Field.INPUT_HTML);
             } else if (xmlParser != null) {
@@ -1381,12 +1384,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             } else if (externalSchematron) {
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
-            }
-            if (request.getAttribute(
-                    "http://validator.nu/properties/style-attribute-found") != null
-                    && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/style-attribute-found")) {
-                stats.incrementField(Statistics.Field.STYLE_ATTRIBUTE_FOUND);
             }
             if (request.getAttribute(
                     "http://validator.nu/properties/style-in-body-found") != null

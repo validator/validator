@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.relaxng.datatype.DatatypeException;
@@ -80,7 +79,7 @@ abstract class AbstractRel extends AbstractDatatype {
     protected void errSynonym(String token, Map<String, String> map)
             throws DatatypeException {
         // Synonyms for current keywords
-        for (Map.Entry m : map.entrySet()) {
+        for (Map.Entry<String, String> m : map.entrySet()) {
             if (token.toLowerCase().equals(m.getKey())) {
                 throw newDatatypeException("The keyword \u201c" + m.getKey()
                         + "\u201d for the \u201crel\u201d"

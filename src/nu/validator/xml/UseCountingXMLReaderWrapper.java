@@ -27,8 +27,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
@@ -44,9 +42,6 @@ import org.xml.sax.XMLReader;
 public final class UseCountingXMLReaderWrapper
         implements XMLReader, ContentHandler {
 
-    private static final Logger log4j = Logger.getLogger(
-            UseCountingXMLReaderWrapper.class);
-
     private final XMLReader wrappedReader;
 
     private ContentHandler contentHandler;
@@ -54,8 +49,6 @@ public final class UseCountingXMLReaderWrapper
     private ErrorHandler errorHandler;
 
     private HttpServletRequest request;
-
-    private String systemId;
 
     private StringBuilder documentContent;
 
@@ -80,7 +73,6 @@ public final class UseCountingXMLReaderWrapper
         this.wrappedReader = wrappedReader;
         this.contentHandler = wrappedReader.getContentHandler();
         this.request = request;
-        this.systemId = systemId;
         this.inBody = false;
         this.loggedStyleInBody = false;
         this.documentContent = new StringBuilder();
@@ -166,9 +158,6 @@ public final class UseCountingXMLReaderWrapper
                     true);
             if (atts.getIndex("", "hidden") < 0) {
                 if (hasVisibleMain) {
-                    if (systemId != null) {
-                        log4j.info("<main> multiple visible " + systemId);
-                    }
                     request.setAttribute(
                             "http://validator.nu/properties/main-multiple-visible-found",
                             true);
@@ -200,12 +189,6 @@ public final class UseCountingXMLReaderWrapper
                                 "http://validator.nu/properties/h1-multiple-with-section-ancestor",
                                 true);
                     }
-                }
-                if (openArticleElements + openAsideElements + openNavElements
-                        + openSectionElements < 1 && systemId != null) {
-                    log4j.info(
-                            "<h1> multiple without section/article/aside/nav ancestor: "
-                                    + systemId);
                 }
             }
             hasH1 = true;

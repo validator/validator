@@ -7,4 +7,4 @@
 -1	-	XHTML + SVG 1.1 + MathML 3.0	http://s.validator.nu/xhtml5.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
 7	http://www.w3.org/1999/xhtml	XHTML + SVG 1.1 + MathML 3.0 + RDFa Lite 1.1	http://s.validator.nu/xhtml5-rdfalite.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
 -1	-	XHTML 1.0 Strict + URL + Ruby + SVG 1.1 + MathML 3.0	http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc http://s.validator.nu/html4/assertions.sch http://c.validator.nu/all-html4/
--1	http://www.w3.org/2000/svg	SVG 1.1 + URL + XHTML + MathML 3.0	http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
+-1	http://www.w3.org/2000/svg	SVG 1.1 + URL + HTML + MathML 3.0	http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
