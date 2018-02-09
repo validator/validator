@@ -39,7 +39,7 @@ public class SvgPathData extends AbstractDatatype {
 
     private static final int MAX_CONTEXT_LENGTH = 20;
 
-    private void appendToContext(int i) {
+    private synchronized void appendToContext(int i) {
         if (i != -1) {
             if (context.length() == MAX_CONTEXT_LENGTH) {
                 context.deleteCharAt(0);
