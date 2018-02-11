@@ -11,6 +11,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.draggable?
 		&	common.attrs.hidden?
 		&	common.attrs.spellcheck?
+		&	common.attrs.autocapitalize?
 		)
 		
 	common.attrs.other &= common.attrs.interact
@@ -41,6 +42,19 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.attrs.spellcheck =
 		attribute spellcheck{
 			w:string "true" | w:string "false" | w:string ""
+		}
+
+## Autocapitalization
+
+	common.attrs.autocapitalize =
+		attribute autocapitalize {
+			(	w:string "off"
+			|	w:string "none"
+			|	w:string "on"
+			|	w:string "sentences"
+			|	w:string "words"
+			|	w:string "characters"
+			)
 		}
 
 ## Application Cache: manifest

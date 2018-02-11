@@ -11,6 +11,7 @@ NN XX 20NN
   - Add new (optional) feature to command-line checker to check SVG
     documents (in addition to HTML documents)
   - Add new option to command-line checker for specifying User-Agent string
+  - Add Dockerfile to Docker Hub https://hub.docker.com/r/validator/validator/
   - Add ability to Web-based checker to check SVG documents by file upload
   - Emit error (not warning) for HTML4/XHTML1 strict doctypes
   - Fix bug that caused the checker to incorrectly treat `input[type]`

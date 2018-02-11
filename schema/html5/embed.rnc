@@ -256,6 +256,7 @@ namespace local = ""
 			                    | aria-required
 			                    | aria-roledescription
 			                    | spellcheck
+			                    | autocapitalize
 			                    | accesskey
 			                    | itemref
 			                    | itemprop
