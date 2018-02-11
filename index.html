@@ -138,7 +138,16 @@ li > ul {
     as are
     <a href="https://validator.github.io/validator/#build-instructions">instructions on how to build, test, and run the code</a>.
 
-    It is released as two packages:
+    A
+    <a href="https://hub.docker.com/r/validator/validator/">Dockerfile</a>
+    (see the <a href="#dockerhub"><b>Pulling from Docker Hub</b></a>
+    section below) and
+    <a href="https://www.npmjs.com/package/vnu-jar">npm</a>,
+    <a href="https://github.com/svenkreiss/html5validator">pip</a>,
+    and
+    <a href="https://libraries.io/homebrew/vnu">brew</a>
+    packages of it are also available, and it’s released upstream in these
+    formats:
     <ul>
     <li><code>vnu.jar</code> is a portable standalone version for
     <a href="https://validator.github.io/validator/#usage">batch-checking documents from the command line</a>
@@ -149,17 +158,18 @@ li > ul {
     </ul>
 
     <p class=note><b>Note:</b> The <var>vnu.jar</var> and <var>vnu.war</var>
-    packages require a Java 8 environment; they won’t run in Java 7 or
+    files require a Java 8 environment; they won’t run in Java 7 or
     older environment.
 
     <p>
     You can
     <a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
     or run
+    <a href="https://hub.docker.com/r/validator/validator/"><code>docker run -p 8888:8888 validator/validator:latest</code></a>,
     <a href="https://www.npmjs.com/package/vnu-jar"><code>npm install vnu-jar</code></a>,
-    <a href="https://github.com/svenkreiss/html5validator"><code>pip install html5validator</code></a>
-    or
     <a href="https://libraries.io/homebrew/vnu"><code>brew install vnu</code></a>,
+    or
+    <a href="https://github.com/svenkreiss/html5validator"><code>pip install html5validator</code></a>
     and see the
     <a href="#usage"><b>Usage</b></a>
     and
@@ -730,6 +740,41 @@ example: -Dnu.validator.servlet.socket-timeout=5000
 
   </section>
 </div>
+<section id="dockerhub">
+<h2>Pulling from Docker Hub</h2>
+<p>
+You can pull the checker from the
+<a href="https://hub.docker.com/r/validator/validator/">https://hub.docker.com/r/validator/validator/</a>
+repo at Docker Hub.
+<div class=set>
+<p>To pull and run the latest version of the checker:</p>
+<pre>
+  docker run -p 8888:8888 validator/validator:latest
+</pre>
+
+<p>To pull and run a specific Docker-Hub tag/version of the checker —
+for example, the <code>17.11.1</code> version:</p>
+<pre>
+  docker run -p 8888:8888 validator/validator:17.11.1
+</pre>
+
+<p>
+To define a service named <code>vnu</code> for use with <code>docker
+compose</code>, create a Compose file named <code>docker-compose.yml</code>
+(for example), with contents such as the following:</p>
+
+<pre>
+  version: '2'
+  services:
+    vnu:
+      image: validator/validator
+      ports:
+        - "8888:8888"
+      network_mode: "host" #so "localhost" refers to the host machine.
+</pre>
+</div>
+</section>
+
 <section id="build-instructions">
 <h2>Build instructions</h2>
 <p>

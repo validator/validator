@@ -8,54 +8,63 @@
 The Nu Html Checker (v.Nu) is the backend of [checker.html5.org][5],
 [html5.validator.nu][6], and [validator.w3.org/nu][7]. Its [source code is
 available][8], as are [instructions on how to build, test, and run the code][9].
-It is released as two packages:
+A [Dockerfile][10] (see the **Pulling from Docker Hub** section below) and
+[npm][11], [pip][12], and [brew][13] packages of it are also available, and it’s
+released upstream in these formats:
 
    [5]: https://checker.html5.org/
    [6]: https://html5.validator.nu
    [7]: https://validator.w3.org/nu/
    [8]: https://github.com/validator/validator
    [9]: https://validator.github.io/validator/#build-instructions
+   [10]: https://hub.docker.com/r/validator/validator/
+   [11]: https://www.npmjs.com/package/vnu-jar
+   [12]: https://github.com/svenkreiss/html5validator
+   [13]: https://libraries.io/homebrew/vnu
 
   * `vnu.jar` is a portable standalone version for [batch-checking documents
-  from the command line][10] and from other scripts/apps, or for [deploying the
-  checker as a self-contained service][11]
+  from the command line][14] and from other scripts/apps, or for [deploying the
+  checker as a self-contained service][15]
 
   * `vnu.war` is for [deploying the checker service through a servlet container
-  such as Tomcat][12]
+  such as Tomcat][16]
 
-   [10]: https://validator.github.io/validator/#usage
-   [11]: https://validator.github.io/validator/#standalone
-   [12]: https://validator.github.io/validator/#servlet
+   [14]: https://validator.github.io/validator/#usage
+   [15]: https://validator.github.io/validator/#standalone
+   [16]: https://validator.github.io/validator/#servlet
 
-**Note:** The _vnu.jar_ and _vnu.war_ packages require a Java 8 environment;
-they won’t run in Java 7 or older environment.
+**Note:** The _vnu.jar_ and _vnu.war_ files require a Java 8 environment; they
+won’t run in Java 7 or older environment.
 
-You can [get the latest release][13] or run [`npm install vnu-jar`][14], [`pip
-install html5validator`][15] or [`brew install vnu`][16], and see the **Usage**
-and **Web-based checking** sections below. Or automate your document checking
-with a frontend such as:
+You can [get the latest release][17] or run [`docker run -p 8888:8888
+validator/validator:latest`][18], [`npm install vnu-jar`][19],
+[`brew install vnu`][20], or [`pip install html5validator`][21] and see the
+**Usage** and **Web-based checking** sections below. Or automate your document
+checking with a frontend such as:
 
-   [13]: https://github.com/validator/validator/releases/latest
-   [14]: https://www.npmjs.com/package/vnu-jar
-   [15]: https://github.com/svenkreiss/html5validator
-   [16]: https://libraries.io/homebrew/vnu
+   [17]: https://github.com/validator/validator/releases/latest
+   [18]: https://hub.docker.com/r/validator/validator/
+   [19]: https://www.npmjs.com/package/vnu-jar
+   [20]: https://libraries.io/homebrew/vnu
 
-  * [Grunt plugin for HTML validation][17] or [Gulp plugin for HTML
-  validation][18]
+   [21]: https://github.com/svenkreiss/html5validator
 
-  * [html5validator `pip` package][19] (for HTML checking integration in Travis
-  CI, CircleCI, CodeShip, [Jekyll][20], [Pelican][21] etc.)
+  * [Grunt plugin for HTML validation][22] or [Gulp plugin for HTML
+  validation][23]
 
-  * [LMVTFY: Let Me Validate That For You][22] (auto-check HTML of
+  * [html5validator `pip` package][24] (for HTML checking integration in Travis
+  CI, CircleCI, CodeShip, [Jekyll][25], [Pelican][26] etc.)
+
+  * [LMVTFY: Let Me Validate That For You][27] (auto-check HTML of
   JSFiddle/JSBin etc. links in github issue comments)
 
-   [17]: https://github.com/jzaefferer/grunt-html
-   [18]: https://github.com/watilde/gulp-html
-   [19]: https://github.com/svenkreiss/html5validator
-   [20]: https://jekyllrb.com/
+   [22]: https://github.com/jzaefferer/grunt-html
+   [23]: https://github.com/watilde/gulp-html
+   [24]: https://github.com/svenkreiss/html5validator
+   [25]: https://jekyllrb.com/
 
-   [21]: https://blog.getpelican.com/
-   [22]: https://github.com/cvrebert/lmvtfy/
+   [26]: https://blog.getpelican.com/
+   [27]: https://github.com/cvrebert/lmvtfy/
 
 ## Usage
 
@@ -284,15 +293,15 @@ executable provides the following options:
 ## Web-based checking with vnu.war or vnu.jar
 
 The Nu Html Checkerーalong with being usable as [a standalone command-line
-client][23]ーcan be run as an HTTP service, similar to [checker.html5.org][24],
-[html5.validator.nu][25], and [validator.w3.org/nu][26], for browser-based
+client][28]ーcan be run as an HTTP service, similar to [checker.html5.org][29],
+[html5.validator.nu][30], and [validator.w3.org/nu][31], for browser-based
 checking of HTML documents over the Web. To that end, the checker is released as
 two separate packages:
 
-   [23]: https://validator.github.io/validator/#usage
-   [24]: https://checker.html5.org/
-   [25]: https://html5.validator.nu/
-   [26]: https://validator.w3.org/nu/
+   [28]: https://validator.github.io/validator/#usage
+   [29]: https://checker.html5.org/
+   [30]: https://html5.validator.nu/
+   [31]: https://validator.w3.org/nu/
 
   * `vnu.jar` for deploying the checker as a simple self-contained service
   * `vnu.war` for deploying the checker to a servlet container such as Tomcat
@@ -304,11 +313,11 @@ locally-running instance of the checker HTTP serviceーfor fast command-line
 checkingーor to any remote instance of the checker HTTP service running anywhere
 on the Web.
 
-The [latest releases of the vnu.jar and vnu.war packages][27] are available from
+The [latest releases of the vnu.jar and vnu.war packages][32] are available from
 the `validator` project at github. The following are detailed instructions on
 using them.
 
-   [27]: https://github.com/validator/validator/releases/latest
+   [32]: https://github.com/validator/validator/releases/latest
 
 **Note:** Replace _"~/vnu.jar"_ or _"~/vnu.war"_ below with the actual paths to
 those files on your system.
@@ -320,16 +329,16 @@ a new terminal window and invoke `vnu.jar` like this:
 
         java -cp ~/vnu.jar nu.validator.servlet.Main 8888
 
-Then open [http://localhost:8888][28] in a browser. (To have the checker listen
+Then open [http://localhost:8888][33] in a browser. (To have the checker listen
 on a different port, replace `8888` with the port number.)
 
-   [28]: http://localhost:8888
+   [33]: http://localhost:8888
 
-You’ll see a form similar to [validator.w3.org/nu][29] that allows you to enter
+You’ll see a form similar to [validator.w3.org/nu][34] that allows you to enter
 the URL of an HTML document and have the results for that document displayed in
 the browser.
 
-   [29]: https://validator.w3.org/nu/
+   [34]: https://validator.w3.org/nu/
 
 **Note:** If you get a `StackOverflowError` error when using the vnu.jar file,
 try adjusting the thread stack size by providing the `-Xss` option to java:
@@ -341,11 +350,11 @@ try adjusting the thread stack size by providing the `-Xss` option to java:
 To run the checker inside of an existing servlet container such as Apache Tomcat
 you will need to deploy the `vnu.war` file to that server following its
 documentation. For example, on Apache Tomcat you could do this using the
-[Manager][30] application or simply by copying the file to the `webapps`
+[Manager][35] application or simply by copying the file to the `webapps`
 directory (since that is the default `appBase` setting). Typically you would see
 a message similar to the following in the `catalina.out` log file.
 
-   [30]: https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
+   [35]: https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
 
     May 7, 2014 4:42:04 PM org.apache.catalina.startup.HostConfig deployWAR
     INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
@@ -354,9 +363,9 @@ Assuming your servlet container is configured to receive HTTP requests sent to
 `localhost` on port `80` and the context root of this application is `vnu`
 (often the default behavior is to use the WAR file's filename as the context
 root unless one is explicitly specified) you should be able to access the
-application by connecting to [http://localhost/vnu/][31].
+application by connecting to [http://localhost/vnu/][36].
 
-   [31]: http://localhost/vnu/
+   [36]: http://localhost/vnu/
 
 **Note:** You may want to customize the `/WEB-INF/web.xml` file inside the WAR
 file (you can use any ZIP-handling program) to modify the servlet filter
@@ -388,10 +397,10 @@ To check documents locally, do this:
         java -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
 
 To send documents to an instance of the checker on the Web, such as
-[html5.validator.nu/][32], use the nu.validator.client.host and
+[html5.validator.nu/][37], use the nu.validator.client.host and
 nu.validator.client.port options, like this:
 
-   [32]: https://html5.validator.nu/
+   [37]: https://html5.validator.nu/
 
         java -cp ~/vnu.jar -Dnu.validator.client.port=80 \
          -Dnu.validator.client.host=html5.validator.nu \
@@ -414,9 +423,9 @@ ones by setting the value of the `nu.validator.client.level` system property to
 
 Most of the properties listed below map to the validator.nu common input
 parameters documented at
-[github.com/validator/validator/wiki/Service:-Common-parameters][33].
+[github.com/validator/validator/wiki/Service:-Common-parameters][38].
 
-   [33]: https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params
+   [38]: https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params
 
 #### nu.validator.client.host
 
@@ -506,6 +515,32 @@ parameters documented at
     possible values: number of milliseconds
 
     example: -Dnu.validator.servlet.socket-timeout=5000
+
+## Pulling from Docker Hub
+
+You can pull the checker from the
+[https://hub.docker.com/r/validator/validator/][39] repo at Docker Hub.
+
+   [39]: https://hub.docker.com/r/validator/validator/
+
+To pull and run the latest version of the checker:
+
+      docker run -p 8888:8888 validator/validator:latest
+
+To pull and run a specific Docker-Hub tag/version of the checker — for example,
+the `17.11.1` version:
+
+      docker run -p 8888:8888 validator/validator:17.11.1
+
+To define a service named `vnu` for use with `docker compose`, create a Compose
+file named `docker-compose.yml` (for example), with contents such as the
+following:
+
+      version: '2' services:
+        vnu:
+          image: validator/validator ports:
+            - "8888:8888"
+          network_mode: "host" #so "localhost" refers to the host machine.
 
 ## Build instructions
 
