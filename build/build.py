@@ -168,7 +168,7 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.9.v20150224/jetty-util-9.2.9.v20150224.jar", "cb039d6b03c838ea90748469fe928d60"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.9.v20150224/jetty-util-ajax-9.2.9.v20150224.jar", "e3f16ce949fa5103975a1c056d2cc9cb"),  # nopep8
     ("https://repo1.maven.org/maven2/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar", "1d04e4713e19ff23f9820f271e45c3be"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/mozilla/rhino/1.7R5/rhino-1.7R5.jar", "515233bd8a534c0468f6e397fc6b1925"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/mozilla/rhino/1.7.8/rhino-1.7.8.jar", "41ae467497e8f29e7cf2d7486a00c0cc"),  # nopep8
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),  # nopep8
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
     ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),  # nopep8
@@ -200,7 +200,7 @@ runDependencyJars = [
     "jetty-util-ajax-9.2.9.v20150224.jar",
     "log4j-1.2.17.jar",
     "mail-1.5.0-b01.jar",
-    "rhino-1.7R5.jar",
+    "rhino-1.7.8.jar",
     "langdetect-1.1-20120112.jar",
     "jsonic-1.3.9.jar",
 ]
