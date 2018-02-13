@@ -525,12 +525,20 @@ You can pull the checker from the
 
 To pull and run the latest version of the checker:
 
-      docker run -p 8888:8888 validator/validator:latest
+      docker run -it --rm -p 8888:8888 validator/validator:latest
 
 To pull and run a specific Docker-Hub tag/version of the checker — for example,
 the `17.11.1` version:
 
-      docker run -p 8888:8888 validator/validator:17.11.1
+      docker run -it --rm -p 8888:8888 validator/validator:17.11.1
+
+To run the checker with a connection timeout and socket timeout different than
+the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and
+`SOCKET_TIMEOUT_SECONDS` environment variables:
+
+      docker run -it --rm \
+         -e CONNECTION_TIMEOUT_SECONDS=15 \ -e SOCKET_TIMEOUT_SECONDS=15 \ -p
+         8888:8888 \ validator/validator
 
 To define a service named `vnu` for use with `docker compose`, create a Compose
 file named `docker-compose.yml` (for example), with contents such as the

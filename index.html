@@ -749,13 +749,25 @@ repo at Docker Hub.
 <div class=set>
 <p>To pull and run the latest version of the checker:</p>
 <pre>
-  docker run -p 8888:8888 validator/validator:latest
+  docker run -it --rm -p 8888:8888 validator/validator:latest
 </pre>
 
 <p>To pull and run a specific Docker-Hub tag/version of the checker —
 for example, the <code>17.11.1</code> version:</p>
 <pre>
-  docker run -p 8888:8888 validator/validator:17.11.1
+  docker run -it --rm -p 8888:8888 validator/validator:17.11.1
+</pre>
+
+<p>To run the checker with a connection timeout and socket timeout
+different than the default 5 seconds, use the
+<code>CONNECTION_TIMEOUT_SECONDS</code> and
+<code>SOCKET_TIMEOUT_SECONDS</code> environment variables:</p>
+<pre>
+  docker run -it --rm \
+     <span class=option-value>-e CONNECTION_TIMEOUT_SECONDS=15</span> \
+     <span class=option-value>-e SOCKET_TIMEOUT_SECONDS=15</span> \
+     -p 8888:8888 \
+     validator/validator
 </pre>
 
 <p>

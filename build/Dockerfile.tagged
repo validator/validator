@@ -1,6 +1,9 @@
 FROM java:8u111-jre-alpine
 # to use:
-# docker build --build-arg tag=17.11.1 -t validator/validator:17.11.1 -f Dockerfile.tagged .
+# docker build \
+#     --build-arg tag=17.11.1 \
+#     -t validator/validator:17.11.1 \
+#     -f Dockerfile.tagged .
 # docker push validator/validator
 ARG tag
 ENV TAG=$tag
@@ -19,5 +22,12 @@ RUN gpg --quiet --verify --trust-model always vnu.jar_${TAG}.zip.asc vnu.jar_${T
 RUN gpg --quiet --verify --trust-model always vnu.jar_${TAG}.zip.sha1.asc vnu.jar_${TAG}.zip.sha1
 RUN echo "$(cat vnu.jar_$TAG.zip.sha1)  vnu.jar_$TAG.zip" | sha1sum -c -
 RUN unzip -o vnu.jar_${TAG}.zip
+ENV CONNECTION_TIMEOUT_SECONDS 5
+ENV SOCKET_TIMEOUT_SECONDS 5
 EXPOSE 8888
-CMD ["java", "-cp", "dist/vnu.jar", "nu.validator.servlet.Main", "8888"]
+CMD CONNECTION_TIMEOUT=$((CONNECTION_TIMEOUT_SECONDS * 1000)); \
+    SOCKET_TIMEOUT=$((SOCKET_TIMEOUT_SECONDS * 1000)); \
+    java \
+    -Dnu.validator.servlet.connection-timeout=$CONNECTION_TIMEOUT \
+    -Dnu.validator.servlet.socket-timeout=$SOCKET_TIMEOUT \
+    -cp vnu.jar nu.validator.servlet.Main 8888
