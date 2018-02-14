@@ -75,7 +75,7 @@
 			<attribute name="javadoc_location" value="http://download.eclipse.org/jetty/9.2.14.v20151106/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/rhino-1.7R5.jar">
+	<classpathentry kind="lib" path="dependencies/rhino-1.7.8.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://mozilla.github.io/rhino/javadoc/"/>
 		</attributes>

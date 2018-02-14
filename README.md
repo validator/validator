@@ -537,8 +537,10 @@ the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and
 `SOCKET_TIMEOUT_SECONDS` environment variables:
 
       docker run -it --rm \
-         -e CONNECTION_TIMEOUT_SECONDS=15 \ -e SOCKET_TIMEOUT_SECONDS=15 \ -p
-         8888:8888 \ validator/validator
+         -e CONNECTION_TIMEOUT_SECONDS=15 \
+         -e SOCKET_TIMEOUT_SECONDS=15 \
+         -p 8888:8888 \
+         validator/validator
 
 To define a service named `vnu` for use with `docker compose`, create a Compose
 file named `docker-compose.yml` (for example), with contents such as the

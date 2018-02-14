@@ -28,4 +28,7 @@ all: ../README.md
 	    | $(PERL) $(PERLFLAGS) -pe 's|    git clone|        git clone|' \
 	    | $(PERL) $(PERLFLAGS) -pe 's|    cd validator|        cd validator|' \
 	    | $(PERL) $(PERLFLAGS) -pe 's|    python|        python|' \
+	    | $(PERL) $(PERLFLAGS) -pe 's| \\ | \\\n         |g' \
+	    | $(PERL) $(PERLFLAGS) -pe 's| \\ | \\\n         |g' \
+	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/-p\n(\s+)8888/-p 8888/' \
 	    | $(EXPAND) $(EXPANDFLAGS) > $@
