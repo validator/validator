@@ -388,7 +388,9 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*deprecates “report-uri” in favour of a new “report-to” directive.*", //
             // (non-)errors for features the CSS checker doesn’t support yet
             ".*Unknown pseudo-element or pseudo-class \u201C:focus-within\u201D.*", //
-            ".*leader(.+)is not a \u201Ccontent\u201D value.*",
+            ".*leader(.+)is not a \u201Ccontent\u201D value.*", //
+            ".*background-position-y.*", //
+            ".*background-position-x.*", //
     };
 
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
