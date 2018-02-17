@@ -1600,6 +1600,7 @@ public class Assertions extends Checker {
                     err("JS: " + message, locatorImpl);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
+                } catch (ArrayIndexOutOfBoundsException e) {
                 }
             }
             if ("article" == localName || "aside" == localName
