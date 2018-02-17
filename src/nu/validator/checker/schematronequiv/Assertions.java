@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Collections;
@@ -145,6 +147,11 @@ public class Assertions extends Checker {
         }
         return "";
     }
+
+    private static Pattern PATTERN_MISSING = Pattern.compile("missing (.) ");
+
+    private static Pattern PATTERN_MISSING_NAME = //
+            Pattern.compile("missing name after (.) operator");
 
     private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
@@ -1597,6 +1604,15 @@ public class Assertions extends Checker {
                         // Rhino doesn’t yet support template literals; when it
                         // runs into backticks, it emits “illegal character”.
                         reportError = false;
+                    }
+                    Matcher m1 = PATTERN_MISSING.matcher(message);
+                    while (m1.find()) {
+                        message = m1.replaceFirst("missing \u201C$1\u201D ");
+                    }
+                    Matcher m2 = PATTERN_MISSING_NAME.matcher(message);
+                    while (m2.find()) {
+                        message = m2.replaceFirst("missing name after"
+                                + " \u201C.\u201D operator");
                     }
                     if (reportError) {
                         incrementUseCounter("script-element-errors-found");
