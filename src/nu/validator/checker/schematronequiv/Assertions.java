@@ -1593,7 +1593,7 @@ public class Assertions extends Checker {
                     String message = e.getMessage();
                     message = message.substring(0,
                             message.indexOf(" (unnamed script#"));
-                    if (!"illegal character".equals(message)) {
+                    if ("illegal character".equals(message)) {
                         // Rhino doesn’t yet support template literals; when it
                         // runs into backticks, it emits “illegal character”.
                         reportError = false;
