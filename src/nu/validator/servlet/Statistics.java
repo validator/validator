@@ -132,6 +132,8 @@ public class Statistics {
         PARSER_XML_EXTERNAL("Parser: set to XML with external entities"), //
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
+        STYLE_ELEMENT_ERRORS_FOUND("<style> element with CSS errors found"), //
+        STYLE_ATTRIBUTE_ERRORS_FOUND("\"style\" attribute with CSS errors found"), //
         H1_MULTIPLE_FOUND("<h1> multiple found"), //
         H1_MULTIPLE_WITH_SECTION_ANCESTOR_FOUND("<h1> multiple with <section> ancestor found"), //
         H1_MULTIPLE_WITH_ARTICLE_ANCESTOR_FOUND("<h1> multiple with <article> ancestor found"), //

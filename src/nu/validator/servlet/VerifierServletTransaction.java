@@ -57,6 +57,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import nu.validator.checker.XmlPiChecker;
 import nu.validator.checker.jing.CheckerSchema;
+import nu.validator.checker.schematronequiv.Assertions;
 import nu.validator.gnu.xml.aelfred2.FatalSAXException;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DocumentMode;
@@ -1386,6 +1387,18 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
             }
             if (request.getAttribute(
+                    "http://validator.nu/properties/style-element-errors-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/style-element-errors-found")) {
+                stats.incrementField(Statistics.Field.STYLE_ELEMENT_ERRORS_FOUND);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/style-attribute-errors-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/style-attribute-errors-found")) {
+                stats.incrementField(Statistics.Field.STYLE_ATTRIBUTE_ERRORS_FOUND);
+            }
+            if (request.getAttribute(
                     "http://validator.nu/properties/style-in-body-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/style-in-body-found")) {
@@ -1826,6 +1839,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         Validator validator = sch.createValidator(jingPropertyMap);
         if (validator.getContentHandler() instanceof XmlPiChecker) {
           lexicalHandler = (LexicalHandler) validator.getContentHandler();
+        }
+        if (validator.getContentHandler() instanceof Assertions) {
+            ((Assertions) validator.getContentHandler()).setRequest(request);
         }
         return validator;
     }

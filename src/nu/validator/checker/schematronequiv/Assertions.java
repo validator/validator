@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Collections;
+import javax.servlet.http.HttpServletRequest;
 
 import nu.validator.checker.AttributeUtil;
 import nu.validator.checker.Checker;
@@ -1140,6 +1141,19 @@ public class Assertions extends Checker {
         super();
     }
 
+    private HttpServletRequest request;
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+
+    private void incrementUseCounter(String useCounterName) {
+        if (request != null) {
+            request.setAttribute(
+                    "http://validator.nu/properties/" + useCounterName, true);
+        }
+    }
+
     private void push(StackNode node) {
         currentPtr++;
         if (currentPtr == stack.length) {
@@ -1441,6 +1455,9 @@ public class Assertions extends Checker {
                         new StringReader(styleContents), null);
                 styleSheetParser.getStyleSheet().findConflicts(ac);
                 Errors errors = styleSheetParser.getStyleSheet().getErrors();
+                if (errors.getErrorCount() > 0) {
+                    incrementUseCounter("style-element-errors-found");
+                }
                 for (int i = 0; i < errors.getErrorCount(); i++) {
                     String message = "";
                     String cssProperty = "";
@@ -1652,6 +1669,9 @@ public class Assertions extends Checker {
                         styleSheetParser.getStyleSheet().findConflicts(ac);
                         Errors errors = //
                                 styleSheetParser.getStyleSheet().getErrors();
+                        if (errors.getErrorCount() > 0) {
+                            incrementUseCounter("style-attribute-errors-found");
+                        }
                         for (int j = 0; j < errors.getErrorCount(); j++) {
                             String message = "";
                             String cssProperty = "";
