@@ -30,7 +30,6 @@ import org.relaxng.datatype.DatatypeStreamingValidator;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.datatype.TimeDatetime;
 import nu.validator.datatype.ScriptDocumentation;
-import nu.validator.datatype.Script;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -86,12 +85,9 @@ public final class TextContentChecker extends Checker {
             if ("time".equals(localName) && (atts.getIndex("", "datetime") < 0)) {
                 return TimeDatetime.THE_INSTANCE.createStreamingValidator(null);
             }
-            if ("script".equals(localName)) {
-                if (atts.getIndex("", "src") < 0) {
-                    return Script.THE_INSTANCE.createStreamingValidator(null);
-                } else {
-                    return ScriptDocumentation.THE_INSTANCE.createStreamingValidator(null);
-                }
+            if ("script".equals(localName) && atts.getIndex("", "src") >= 0) {
+                return ScriptDocumentation //
+                        .THE_INSTANCE.createStreamingValidator(null);
             }
         }
         return null;
@@ -161,23 +157,10 @@ public final class TextContentChecker extends Checker {
                         } catch (ClassNotFoundException ce) {
                         }
                     } else if ("script".equals(localName)) {
-                        // need cast to Html5DatatypeException in order to check
-                        // what HTML5 datatype class this exception of for
-                        assert e instanceof Html5DatatypeException : "Not an Html5DatatypeException";
-                        Html5DatatypeException ex5 = (Html5DatatypeException) e;
-                        if (Script.class.equals(ex5.getDatatypeClass())) {
-                            try {
-                                errBadTextContent(e, Script.class, localName,
-                                        uri);
-                            } catch (ClassNotFoundException ce) {
-                                throw new RuntimeException(e);
-                            }
-                        } else {
-                            try {
-                                errBadTextContent(e, ScriptDocumentation.class,
-                                        localName, uri);
-                            } catch (ClassNotFoundException ce) {
-                            }
+                        try {
+                            errBadTextContent(e, ScriptDocumentation.class,
+                                    localName, uri);
+                        } catch (ClassNotFoundException ce) {
                         }
                     } else {
                         err("The text content of element \u201C" + localName

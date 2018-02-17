@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2011-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -52,7 +52,7 @@ public class FunctionBody extends AbstractDatatype {
             try {
                 Context context = ContextFactory.getGlobal().enterContext();
                 context.setOptimizationLevel(0);
-                context.setLanguageVersion(Context.VERSION_1_6);
+                context.setLanguageVersion(Context.VERSION_ES6);
                 // -1 for lineno arg prevents Rhino from appending
                 // "(unnamed script#1)" to all error messages
                 context.compileReader(reader, null, -1, null);

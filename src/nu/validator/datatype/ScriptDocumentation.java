@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2011-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public final class ScriptDocumentation extends Script {
+public final class ScriptDocumentation extends CdoCdcPair {
 
     private enum State {
         BEFORE_DOCUMENTATION, SLASH, IN_COMMENT, IN_LINE_COMMENT, STAR

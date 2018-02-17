@@ -22,7 +22,10 @@
 
 package nu.validator.checker.schematronequiv;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayList;
@@ -70,12 +73,20 @@ import org.w3c.css.parser.CssParseException;
 import org.w3c.css.parser.Errors;
 import org.w3c.css.util.ApplContext;
 
+import org.apache.log4j.Logger;
+
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
+import org.mozilla.javascript.RhinoException;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class Assertions extends Checker {
+
+    private static final Logger log4j = Logger.getLogger(Assertions.class);
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -778,6 +789,10 @@ public class Assertions extends Checker {
 
         private boolean isCollectingCharacters = false;
 
+        private boolean isEmbeddedScript = false;
+
+        private boolean isClassicScript = false;
+
         /**
          * @param ancestorMask
          */
@@ -1083,6 +1098,34 @@ public class Assertions extends Checker {
          */
         public void setNonEmptyOption(Locator locator) {
             this.nonEmptyOption = locator;
+        }
+
+        /**
+         * Sets the isEmbeddedScript.
+         */
+        public void setIsEmbeddedScript(boolean isEmbeddedScript) {
+            this.isEmbeddedScript = isEmbeddedScript;
+        }
+
+        /**
+         * Gets the isEmbeddedScript.
+         */
+        public boolean getIsEmbeddedScript() {
+            return this.isEmbeddedScript;
+        }
+
+        /**
+         * Sets the isClassicScript.
+         */
+        public void setIsClassicScript(boolean isClassicScript) {
+            this.isClassicScript = isClassicScript;
+        }
+
+        /**
+         * Gets the isClassicScript.
+         */
+        public boolean getIsClassicScript() {
+            return this.isClassicScript;
         }
 
         /**
@@ -1514,6 +1557,49 @@ public class Assertions extends Checker {
                             getErrorHandler().error(spe);
                         }
                     }
+                }
+            } else if ("script" == localName && node.getIsEmbeddedScript()
+                    && node.getIsClassicScript()) {
+                String scriptContents = node.getTextContent().toString();
+                boolean scriptHasNewline = false;
+                if (scriptContents.indexOf('\n') > -1) {
+                    scriptHasNewline = true;
+                }
+                try {
+                    Reader reader = new BufferedReader(
+                            (new StringReader(scriptContents)));
+                    reader.mark(1);
+                    try {
+                        Context context = //
+                                ContextFactory.getGlobal().enterContext();
+                        context.setOptimizationLevel(0);
+                        context.setLanguageVersion(Context.VERSION_ES6);
+                        context.compileReader(reader, null,
+                                node.locator.getLineNumber(), null);
+                    } finally {
+                        Context.exit();
+                    }
+                } catch (RhinoException e) {
+                    incrementUseCounter("script-element-errors-found");
+                    org.xml.sax.helpers.LocatorImpl locatorImpl = //
+                            new org.xml.sax.helpers.LocatorImpl(node.locator());
+                    int columnOffset = node.locator.getColumnNumber();
+                    if (scriptHasNewline) {
+                        columnOffset = 0;
+                    }
+                    int column = e.columnNumber() + columnOffset;
+                    locatorImpl.setLineNumber(e.lineNumber());
+                    locatorImpl.setColumnNumber(column);
+                    String message = e.getMessage();
+                    message = message.substring(0,
+                            message.indexOf(" (unnamed script#"));
+                    if (node.locator().getSystemId() != null) {
+                        log4j.info(
+                                message + " " + node.locator().getSystemId());
+                    }
+                    err("JS: " + message, locatorImpl);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
             if ("article" == localName || "aside" == localName
@@ -2976,6 +3062,21 @@ public class Assertions extends Checker {
                     activeDescendant, forAttr);
             if ("style" == localName) {
                 child.setIsCollectingCharacters(true);
+            }
+            if ("script" == localName) {
+                child.setIsCollectingCharacters(true);
+                if (atts.getIndex("", "src") < 0) {
+                    child.setIsEmbeddedScript(true);
+                }
+                if (atts.getIndex("", "type") < 0) {
+                    child.setIsClassicScript(true);
+                } else {
+                    String scriptType = atts.getValue("", "type").toLowerCase();
+                    if (JAVASCRIPT_MIME_TYPES.contains(scriptType)
+                            || "".equals(scriptType)) {
+                        child.setIsClassicScript(true);
+                    }
+                }
             }
             if (activeDescendant != null && !activeDescendantWithAriaOwns) {
                 openActiveDescendants.put(child,
