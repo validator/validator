@@ -1572,7 +1572,7 @@ public class Assertions extends Checker {
                     try {
                         Context context = //
                                 ContextFactory.getGlobal().enterContext();
-                        context.setOptimizationLevel(0);
+                        context.setOptimizationLevel(-1);
                         context.setLanguageVersion(Context.VERSION_ES6);
                         context.compileReader(reader, null,
                                 node.locator.getLineNumber(), null);
