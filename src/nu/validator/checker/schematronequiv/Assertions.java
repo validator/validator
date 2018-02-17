@@ -1580,7 +1580,7 @@ public class Assertions extends Checker {
                         Context.exit();
                     }
                 } catch (RhinoException e) {
-                    incrementUseCounter("script-element-errors-found");
+                    boolean reportError = true;
                     org.xml.sax.helpers.LocatorImpl locatorImpl = //
                             new org.xml.sax.helpers.LocatorImpl(node.locator());
                     int columnOffset = node.locator.getColumnNumber();
@@ -1593,11 +1593,19 @@ public class Assertions extends Checker {
                     String message = e.getMessage();
                     message = message.substring(0,
                             message.indexOf(" (unnamed script#"));
-                    if (node.locator().getSystemId() != null) {
-                        log4j.info(
-                                message + " " + node.locator().getSystemId());
+                    if (!"illegal character".equals(message)) {
+                        // Rhino doesn’t yet support template literals; when it
+                        // runs into backticks, it emits “illegal character”.
+                        reportError = false;
                     }
-                    err("JS: " + message, locatorImpl);
+                    if (reportError) {
+                        incrementUseCounter("script-element-errors-found");
+                        if (node.locator().getSystemId() != null) {
+                            log4j.info(message + " "
+                                    + node.locator().getSystemId());
+                        }
+                        err("JS: " + message, locatorImpl);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 } catch (ArrayIndexOutOfBoundsException e) {
