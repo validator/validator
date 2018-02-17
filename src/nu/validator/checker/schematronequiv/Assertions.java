@@ -1597,9 +1597,7 @@ public class Assertions extends Checker {
                     int column = e.columnNumber() + columnOffset;
                     locatorImpl.setLineNumber(e.lineNumber());
                     locatorImpl.setColumnNumber(column);
-                    String message = e.getMessage();
-                    message = message.substring(0,
-                            message.indexOf(" (unnamed script#"));
+                    String message = e.details();
                     if ("illegal character".equals(message)) {
                         // Rhino doesn’t yet support template literals; when it
                         // runs into backticks, it emits “illegal character”.
