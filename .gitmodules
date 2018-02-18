@@ -19,3 +19,7 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/validator/validator.wiki.git
+[submodule "rhino"]
+	path = rhino
+	url = https://github.com/validator/rhino.git
+	branch = validator-nu

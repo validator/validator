@@ -87,12 +87,14 @@ validatorVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20171006VNU"
 htmlparserVersion = "1.4.9"
 galimatiasVersion = "0.1.2"
+rhinoVersion = "1.7.8-1"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
 dependencyDir = os.path.join(buildRoot, "dependencies")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
+rhinoDir = os.path.join(buildRoot, "rhino")
 cssValidatorDir = os.path.join(buildRoot, "css-validator")
 vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
 filesDir = os.path.join(vnuSrc, "localentities", "files")
@@ -168,7 +170,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.9.v20150224/jetty-util-9.2.9.v20150224.jar", "cb039d6b03c838ea90748469fe928d60"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.9.v20150224/jetty-util-ajax-9.2.9.v20150224.jar", "e3f16ce949fa5103975a1c056d2cc9cb"),  # nopep8
     ("https://repo1.maven.org/maven2/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar", "1d04e4713e19ff23f9820f271e45c3be"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/mozilla/rhino/1.7.8/rhino-1.7.8.jar", "41ae467497e8f29e7cf2d7486a00c0cc"),  # nopep8
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),  # nopep8
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
     ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),  # nopep8
@@ -200,7 +201,6 @@ runDependencyJars = [
     "jetty-util-ajax-9.2.9.v20150224.jar",
     "log4j-1.2.17.jar",
     "mail-1.5.0-b01.jar",
-    "rhino-1.7.8.jar",
     "langdetect-1.1-20120112.jar",
     "jsonic-1.3.9.jar",
 ]
@@ -299,6 +299,10 @@ def jarNamesToPaths(names):
 
 def jingJarPath():
     return [os.path.join(buildRoot, "jing-trang", "build", "jing.jar"), ]
+
+
+def rhinoJarPath():
+    return [os.path.join(buildRoot, "rhino", "buildGradle", "libs", "rhino-" + rhinoVersion + ".jar"), ]  # nopep8
 
 
 def cssValidatorJarPath():
@@ -722,6 +726,15 @@ def buildJing():
     os.chdir("..")
 
 
+def buildRhino():
+    os.chdir("rhino")
+    if os.name == 'nt':
+        runCmd([os.path.join(".", "gradlew.bat"), "jar"])
+    else:
+        runCmd([os.path.join(".", "gradlew"), "jar"])
+    os.chdir("..")
+
+
 def buildCssValidator():
     os.chdir("css-validator")
     runCmd([javaCmd, "-jar",
@@ -766,13 +779,14 @@ def buildValidator():
         dependencyJarPaths() +
         jarNamesToPaths(["galimatias", "htmlparser"]) +
         cssValidatorJarPath() +
+        rhinoJarPath() +
         jingJarPath())
     buildEmitters()
     buildModule(buildRoot, "validator", classPath)
 
 
 def ownJarList():
-    return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + cssValidatorJarPath() + jingJarPath()  # nopep8
+    return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + cssValidatorJarPath() + rhinoJarPath() + jingJarPath()  # nopep8
 
 
 def buildRunJarPathList():
@@ -900,6 +914,7 @@ class Release():
             antJar, antLauncherJar,
             os.pathsep.join(dependencyJarPaths()),
             os.path.join(jingTrangDir, "build", "jing.jar"),
+            os.path.join(rhinoDir, "buildGradle", "libs", "rhino-" + rhinoVersion + ".jar"),  # nopep8
             os.path.join(jarsDir, "htmlparser.jar"),
             os.path.join(jarsDir, "galimatias.jar"),
             os.path.join(cssValidatorDir, "css-validator.jar"),
@@ -1420,6 +1435,7 @@ def buildAll():
               " of the directory where your JDK is installed.")
         sys.exit(1)
     buildCssValidator()
+    buildRhino()
     buildJing()
     buildSchemaDrivers()
     prepareLocalEntityJar()
@@ -1438,6 +1454,7 @@ def runTests():
         buildRunJarPathList() +
         jarNamesToPaths(["galimatias", "htmlparser", "validator"]) +
         cssValidatorJarPath() +
+        rhinoJarPath() +
         jingJarPath())
     if runCmd([javaCmd, '-classpath', classPath, className] + args):
         sys.exit(1)
