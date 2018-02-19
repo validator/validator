@@ -1279,6 +1279,12 @@ public class Assertions extends Checker {
                 + element + "\u201D element is obsolete." + suggestion);
     }
 
+    private final void warnObsoleteAttribute(String attribute, String element,
+            String suggestion) throws SAXException {
+        warn("The \u201C" + attribute + "\u201D attribute on the \u201C"
+                + element + "\u201D element is obsolete." + suggestion);
+    }
+
     private final void warnPresentationalAttribute(String attribute,
             String element, String suggestion) throws SAXException {
         warn("The \u201C" + attribute + "\u201D attribute on the \u201C"
@@ -2470,6 +2476,17 @@ public class Assertions extends Checker {
                 // script language
                 if (languageJavaScript && typeNotTextJavaScript) {
                     err("A \u201Cscript\u201D element with the \u201Clanguage=\"JavaScript\"\u201D attribute set must not have a \u201Ctype\u201D attribute whose value is not \u201Ctext/javascript\u201D.");
+                }
+                if (atts.getIndex("", "charset") >= 0) {
+                    warnObsoleteAttribute("charset", "script", "");
+                    if (!"utf-8".equals(
+                            atts.getValue("", "charset").toLowerCase())) {
+                        err("The only allowed value for the \u201Ccharset\u201D"
+                                + " attribute for the \u201Cscript\u201D"
+                                + " element is \u201Cutf-8\u201D. (But the"
+                                + " attribute is not needed and should be"
+                                + " omitted altogether.)");
+                    }
                 }
                 // src-less script
                 if (atts.getIndex("", "src") < 0) {

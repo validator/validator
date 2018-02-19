@@ -14,8 +14,6 @@ NN XX 20NN
   - Add Dockerfile to Docker Hub https://hub.docker.com/r/validator/validator/
   - Add ability to Web-based checker to check SVG documents by file upload
   - Emit error (not warning) for HTML4/XHTML1 strict doctypes
-  - Fix bug that caused the checker to incorrectly treat `input[type]` values
-    case-sensitively when doing particular checks
   - Further restrict `script[type]` and `style[type]`
   - Allow the `slot` attribute (for Shadow DOM interaction)
   - Allow the `allowpaymentrequest` attribute for the `iframe` element
@@ -26,10 +24,14 @@ NN XX 20NN
   - Allow `role=rowgroup` element to be contained in `role=table` element
   - Allow more values for `aria-haspopup` per current ARIA spec
   - Allow more ARIA states & properties for `role=menuitem`
+  - Disallow all character encodings other than UTF-8
+  - Disallow `script[charset]`
   - Disallow nested interactive ARIA roles
   - Disallow the `dropzone` attribute
   - Disallow the `menuitem` element
-  - Update Rhino to version 1.7.8
+  - Fork Rhino at v1.7.8 and use that fork in our integration going forward
+  - Fix bug that caused the checker to incorrectly treat `input[type]` values
+    case-sensitively when doing particular checks
 
 # 17.11.1
 07 October 2017
