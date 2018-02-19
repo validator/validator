@@ -22,7 +22,6 @@
 
 package nu.validator.datatype;
 
-import nu.validator.datatype.data.CharsetData;
 import org.relaxng.datatype.DatatypeException;
 
 public class MetaCharset extends AbstractDatatype {
@@ -90,17 +89,10 @@ public class MetaCharset extends AbstractDatatype {
             }
         }
         String encodingName = lower.substring(offset);
-        if ("replacement".equals(encodingName)
-                || !CharsetData.isPreferred(encodingName)) {
-            String preferred = CharsetData.preferredForLabel(encodingName);
-            if (preferred == null || "replacement".equals(preferred)) {
-                throw newDatatypeException("\u201c" + encodingName
-                        + "\u201d is not a valid character encoding name.");
-            }
-            throw newDatatypeException("\u201c" + encodingName
-                    + "\u201d is not a preferred encoding name."
-                    + " The preferred label for this encoding is \u201C"
-                    + preferred + "\u201D.");
+        if (!"utf-8".equals(encodingName)) {
+            throw newDatatypeException(
+                    "\u201Ccharset=\u201D must be followed by"
+                            + " \u201Cutf-8\u201D.");
         }
     }
 

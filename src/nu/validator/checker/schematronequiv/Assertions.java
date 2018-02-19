@@ -2704,6 +2704,12 @@ public class Assertions extends Checker {
                             + " \u201CIE=edge\u201D.");
                 }
                 if (atts.getIndex("", "charset") > -1) {
+                    if (!"utf-8".equals(
+                            atts.getValue("", "charset").toLowerCase())) {
+                        err("The only allowed value for the \u201Ccharset\u201D"
+                                + " attribute for the \u201Cmeta\u201D"
+                                + " element is \u201Cutf-8\u201D.");
+                    }
                     if (hasMetaCharset) {
                         err("A document must not include more than one"
                                 + " \u201Cmeta\u201D element with a"

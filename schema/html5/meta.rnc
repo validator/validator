@@ -428,7 +428,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		meta.charset.attrs.charset =
 			attribute charset {
-				(common.data.charset & HTMLonly)
+				(string & HTMLonly)
 				| (xsd:string {
 					pattern = "[uU][tT][fF]-8"
 				} & XMLonly )
