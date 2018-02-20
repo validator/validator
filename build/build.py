@@ -729,9 +729,13 @@ def buildJing():
 def buildRhino():
     os.chdir("rhino")
     if os.name == 'nt':
-        runCmd([os.path.join(".", "gradlew.bat"), "jar"])
+        runCmd([os.path.join(".", "gradlew.bat"),
+                "--gradle-user-home", os.path.join("..", "build", ".gradle"),
+                "jar"])
     else:
-        runCmd([os.path.join(".", "gradlew"), "jar"])
+        runCmd([os.path.join(".", "gradlew"),
+                "--gradle-user-home", os.path.join("..", "build", ".gradle"),
+                "jar"])
     os.chdir("..")
 
 
