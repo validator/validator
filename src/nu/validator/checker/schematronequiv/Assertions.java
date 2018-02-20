@@ -573,6 +573,7 @@ public class Assertions extends Checker {
         registerRequiredAncestorRole("group", "listitem");
         registerRequiredAncestorRole("group", "menuitemradio");
         registerRequiredAncestorRole("list", "listitem");
+        registerRequiredAncestorRole("row", "cell");
         registerRequiredAncestorRole("row", "gridcell");
         registerRequiredAncestorRole("row", "columnheader");
         registerRequiredAncestorRole("row", "rowheader");
@@ -582,6 +583,7 @@ public class Assertions extends Checker {
         registerRequiredAncestorRole("treegrid", "row");
         registerRequiredAncestorRole("treegrid", "rowgroup");
         registerRequiredAncestorRole("table", "rowgroup");
+        registerRequiredAncestorRole("table", "row");
     }
 
     private static final Set<String> MUST_NOT_DANGLE_IDREFS = new HashSet<>();
