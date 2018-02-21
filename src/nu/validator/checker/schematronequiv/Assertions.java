@@ -151,6 +151,8 @@ public class Assertions extends Checker {
     private static Pattern ASYNC_AWAIT = //
             Pattern.compile("(\\s)async|await(\\s)");
 
+    private static Pattern CONST = Pattern.compile("\\bconst\\b");
+
     private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
     static {
@@ -1577,6 +1579,10 @@ public class Assertions extends Checker {
                 Matcher a = ASYNC_AWAIT.matcher(scriptContents);
                 while (a.find()) {
                     scriptContents = a.replaceAll("$1" + "     " + "$2");
+                }
+                Matcher c = CONST.matcher(scriptContents);
+                while (c.find()) {
+                    scriptContents = c.replaceAll("var  ");
                 }
                 boolean scriptHasNewline = false;
                 if (scriptContents.indexOf('\n') > -1) {
