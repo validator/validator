@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Collections;
@@ -145,6 +147,9 @@ public class Assertions extends Checker {
         }
         return "";
     }
+
+    private static Pattern ASYNC_AWAIT = //
+            Pattern.compile("(\\s)async|await(\\s)");
 
     private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
@@ -1569,6 +1574,10 @@ public class Assertions extends Checker {
             } else if ("script" == localName && node.getIsEmbeddedScript()
                     && node.getIsClassicScript()) {
                 String scriptContents = node.getTextContent().toString();
+                Matcher a = ASYNC_AWAIT.matcher(scriptContents);
+                while (a.find()) {
+                    scriptContents = a.replaceAll("$1" + "     " + "$2");
+                }
                 boolean scriptHasNewline = false;
                 if (scriptContents.indexOf('\n') > -1) {
                     scriptHasNewline = true;
