@@ -1497,9 +1497,9 @@ public class Assertions extends Checker {
                 stack[currentPtr].setOptionFound();
             } else if ("style" == localName) {
                 String styleContents = node.getTextContent().toString();
-                boolean styleHasNewline = false;
-                if (styleContents.indexOf('\n') > -1) {
-                    styleHasNewline = true;
+                int lineOffset = 0;
+                if (styleContents.startsWith("\n")) {
+                    lineOffset = 1;
                 }
                 ApplContext ac = new ApplContext("en");
                 ac.setCssVersionAndProfile("css3svg");
@@ -1510,7 +1510,8 @@ public class Assertions extends Checker {
                 ac.setFakeURL("file://localhost/StyleElement");
                 StyleSheetParser styleSheetParser = new StyleSheetParser();
                 styleSheetParser.parseStyleSheet(ac,
-                        new StringReader(styleContents), null);
+                        new StringReader(styleContents.substring(lineOffset)),
+                        null);
                 styleSheetParser.getStyleSheet().findConflicts(ac);
                 Errors errors = styleSheetParser.getStyleSheet().getErrors();
                 if (errors.getErrorCount() > 0) {
@@ -1521,9 +1522,10 @@ public class Assertions extends Checker {
                     String cssProperty = "";
                     String cssMessage = "";
                     CssError error = errors.getErrorAt(i);
-                    int beginLine = error.getBeginLine();
+                    int styleStartTagLine = node.locator.getLineNumber();
+                    int beginLine = error.getBeginLine() + lineOffset;
                     int beginColumn = error.getBeginColumn();
-                    int endLine = error.getEndLine();
+                    int endLine = error.getEndLine() + lineOffset;
                     int endColumn = error.getEndColumn();
                     if (beginLine == 0) {
                         continue;
@@ -1553,7 +1555,7 @@ public class Assertions extends Checker {
                                 + endLine - 1;
                         int lastColumn = endColumn;
                         int columnOffset = node.locator.getColumnNumber();
-                        if (styleHasNewline) {
+                        if (error.getBeginLine() != styleStartTagLine) {
                             columnOffset = 0;
                         }
                         SAXParseException spe = new SAXParseException( //
