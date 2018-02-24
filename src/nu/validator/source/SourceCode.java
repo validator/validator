@@ -311,8 +311,12 @@ public final class SourceCode implements CharacterHandler {
         int untilLine = until.getLine();
         Line line = getLine(fromLine);
         if (fromLine == untilLine) {
-            handler.characters(line.getBuffer(), line.getOffset()
-                    + from.getColumn(), until.getColumn() - from.getColumn());
+            try {
+                handler.characters(line.getBuffer(),
+                        line.getOffset() + from.getColumn(),
+                        until.getColumn() - from.getColumn());
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
         } else {
             // first line
             int length = line.getBufferLength() - from.getColumn();
