@@ -26,6 +26,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
@@ -43,11 +45,20 @@ public class FunctionBody extends AbstractDatatype {
         super();
     }
 
+    private static Pattern TL = Pattern.compile("`([^`]*)`");
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
-            Reader reader = new BufferedReader((new StringReader(
-                    "function(event){" + literal.toString() + "}")));
+            String contents = literal.toString();
+            Matcher t = TL.matcher(contents);
+            while (t.find()) {
+                int n = t.group(1).length();
+                contents = t.replaceAll(
+                        "'" + String.format("%1$" + n + "s", "") + "'");
+            }
+            Reader reader = new BufferedReader(
+                    (new StringReader("function(event){" + contents + "}")));
             reader.mark(1);
             try {
                 Context context = ContextFactory.getGlobal().enterContext();

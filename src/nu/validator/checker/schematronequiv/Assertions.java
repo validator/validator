@@ -153,6 +153,8 @@ public class Assertions extends Checker {
 
     private static Pattern CONST = Pattern.compile("\\bconst\\b");
 
+    private static Pattern TL = Pattern.compile("`([^`]*)`");
+
     private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
     static {
@@ -1585,6 +1587,12 @@ public class Assertions extends Checker {
                 Matcher c = CONST.matcher(scriptContents);
                 while (c.find()) {
                     scriptContents = c.replaceAll("var  ");
+                }
+                Matcher t = TL.matcher(scriptContents);
+                while (t.find()) {
+                    int n = t.group(1).length();
+                    scriptContents = t.replaceAll(
+                            "'" + String.format("%1$" + n + "s", "") + "'");
                 }
                 boolean scriptHasNewline = false;
                 if (scriptContents.indexOf('\n') > -1) {
