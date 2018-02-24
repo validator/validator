@@ -290,9 +290,10 @@ public final class Language extends AbstractDatatype {
                 checkPrivateUse(i, subtags);
                 return;
             }
-            // cutting corners here a bit since there are no extensions at this
-            // time
             if (len == 1 && isLowerCaseAlphaNumeric(subtag)) {
+                if ("t".equals(subtag)) {
+                    return;
+                }
                 throw newDatatypeException("Unknown extension ", subtag, ".");
             } else if ((len == 4 && isDigit(subtag.charAt(0))
                     && isLowerCaseAlphaNumeric(subtag))
