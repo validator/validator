@@ -1636,7 +1636,9 @@ public class Assertions extends Checker {
                         err("JS: " + message, locatorImpl);
                     }
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    if (!"class".equals(e.getMessage())) {
+                        throw new RuntimeException(e);
+                    }
                 } catch (IllegalStateException e) {
                     incrementUseCounter("script-element-errors-found");
                     err("JS: Parse error.");
