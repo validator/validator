@@ -53,9 +53,12 @@ public class FunctionBody extends AbstractDatatype {
             String contents = literal.toString();
             Matcher t = TL.matcher(contents);
             while (t.find()) {
+                String tlContents = "";
                 int n = t.group(1).length();
-                contents = t.replaceAll(
-                        "'" + String.format("%1$" + n + "s", "") + "'");
+                if (n > 0) {
+                    tlContents = String.format("%1$" + n + "s", "");
+                }
+                contents = t.replaceAll("'" + tlContents + "'");
             }
             Reader reader = new BufferedReader(
                     (new StringReader("function(event){" + contents + "}")));
