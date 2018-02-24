@@ -1590,9 +1590,12 @@ public class Assertions extends Checker {
                 }
                 Matcher t = TL.matcher(scriptContents);
                 while (t.find()) {
+                    String tlContents = "";
                     int n = t.group(1).length();
-                    scriptContents = t.replaceAll(
-                            "'" + String.format("%1$" + n + "s", "") + "'");
+                    if (n > 0) {
+                        tlContents = String.format("%1$" + n + "s", "");
+                    }
+                    scriptContents = t.replaceAll("'" + tlContents + "'");
                 }
                 boolean scriptHasNewline = false;
                 if (scriptContents.indexOf('\n') > -1) {
