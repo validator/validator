@@ -1634,7 +1634,9 @@ public class Assertions extends Checker {
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (IllegalStateException e) {
+                    incrementUseCounter("script-element-errors-found");
+                    err("JS: Parse error.");
                 }
             }
             if ("article" == localName || "aside" == localName
