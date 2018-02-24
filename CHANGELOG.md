@@ -15,6 +15,7 @@ NN XX 20NN
   - Add ability to Web-based checker to check SVG documents by file upload
   - Emit error (not warning) for HTML4/XHTML1 strict doctypes
   - Further restrict `script[type]` and `style[type]`
+  - Allow the `autocapitalize` global attribute
   - Allow the `slot` attribute (for Shadow DOM interaction)
   - Allow the `allowpaymentrequest` attribute for the `iframe` element
   - Allow only one non-hidden `main` element per document
