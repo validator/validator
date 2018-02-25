@@ -1582,7 +1582,9 @@ public class Assertions extends Checker {
                 String scriptContents = node.getTextContent().toString();
                 Matcher a = ASYNC_AWAIT.matcher(scriptContents);
                 while (a.find()) {
-                    scriptContents = a.replaceAll("$1" + "     " + "$2");
+                    if (a.group(1) != null && a.group(2) != null) {
+                        scriptContents = a.replaceAll("$1" + "     " + "$2");
+                    }
                 }
                 Matcher c = CONST.matcher(scriptContents);
                 while (c.find()) {
