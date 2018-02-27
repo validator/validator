@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- vim: set fileencoding=utf-8 :
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2017 Mozilla Foundation
+# Copyright (c) 2008-2018 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -87,14 +87,12 @@ validatorVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20171006VNU"
 htmlparserVersion = "1.4.9"
 galimatiasVersion = "0.1.2"
-rhinoVersion = "1.7.8-1"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
 dependencyDir = os.path.join(buildRoot, "dependencies")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
-rhinoDir = os.path.join(buildRoot, "rhino")
 cssValidatorDir = os.path.join(buildRoot, "css-validator")
 vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
 filesDir = os.path.join(vnuSrc, "localentities", "files")
@@ -174,6 +172,7 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
     ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar", "7b56e34995f7f1cb55d7806b935f90a4"),  # nopep8
+    ("https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/acorn/5.5.0/acorn.min.js", "a250976ff8837c42c1ebf1758669f945"),  # nopep8
 ]
 
 runDependencyJars = [
@@ -298,10 +297,6 @@ def jarNamesToPaths(names):
 
 def jingJarPath():
     return [os.path.join(buildRoot, "jing-trang", "build", "jing.jar"), ]
-
-
-def rhinoJarPath():
-    return [os.path.join(buildRoot, "rhino", "buildGradle", "libs", "rhino-" + rhinoVersion + ".jar"), ]  # nopep8
 
 
 def cssValidatorJarPath():
@@ -725,19 +720,6 @@ def buildJing():
     os.chdir("..")
 
 
-def buildRhino():
-    os.chdir("rhino")
-    if os.name == 'nt':
-        runCmd([os.path.join(".", "gradlew.bat"),
-                "--gradle-user-home", os.path.join("..", "build", ".gradle"),
-                "jar"])
-    else:
-        runCmd([os.path.join(".", "gradlew"),
-                "--gradle-user-home", os.path.join("..", "build", ".gradle"),
-                "jar"])
-    os.chdir("..")
-
-
 def buildCssValidator():
     os.chdir("css-validator")
     runCmd([javaCmd, "-jar",
@@ -782,14 +764,13 @@ def buildValidator():
         dependencyJarPaths() +
         jarNamesToPaths(["galimatias", "htmlparser"]) +
         cssValidatorJarPath() +
-        rhinoJarPath() +
         jingJarPath())
     buildEmitters()
     buildModule(buildRoot, "validator", classPath)
 
 
 def ownJarList():
-    return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + cssValidatorJarPath() + rhinoJarPath() + jingJarPath()  # nopep8
+    return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + cssValidatorJarPath() + jingJarPath()  # nopep8
 
 
 def buildRunJarPathList():
@@ -917,7 +898,6 @@ class Release():
             antJar, antLauncherJar,
             os.pathsep.join(dependencyJarPaths()),
             os.path.join(jingTrangDir, "build", "jing.jar"),
-            os.path.join(rhinoDir, "buildGradle", "libs", "rhino-" + rhinoVersion + ".jar"),  # nopep8
             os.path.join(jarsDir, "htmlparser.jar"),
             os.path.join(jarsDir, "galimatias.jar"),
             os.path.join(cssValidatorDir, "css-validator.jar"),
@@ -1342,6 +1322,8 @@ def preparePropertiesFile():
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
     preparePropertiesFile()
+    shutil.copyfile(os.path.join(dependencyDir, "acorn.min.js"),
+                    os.path.join(filesDir, "acorn-js"))
     shutil.copyfile(os.path.join(buildRoot, presetsFile),
                     os.path.join(filesDir, "presets"))
     shutil.copyfile(os.path.join(buildRoot, aboutFile),
@@ -1436,7 +1418,6 @@ def buildAll():
               " of the directory where your JDK is installed.")
         sys.exit(1)
     buildCssValidator()
-    buildRhino()
     buildJing()
     buildSchemaDrivers()
     prepareLocalEntityJar()
@@ -1455,7 +1436,6 @@ def runTests():
         buildRunJarPathList() +
         jarNamesToPaths(["galimatias", "htmlparser", "validator"]) +
         cssValidatorJarPath() +
-        rhinoJarPath() +
         jingJarPath())
     if runCmd([javaCmd, '-classpath', classPath, className] + args):
         sys.exit(1)

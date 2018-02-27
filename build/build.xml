@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2013-2017 Mozilla Foundation
+Copyright (c) 2013-2018 Mozilla Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -46,7 +46,6 @@ DEALINGS IN THE SOFTWARE.
   <property name="jsonic-version" value="1.3.9" />
   <property name="langdetect-version" value="1.1-20120112" />
   <property name="log4j-version" value="1.2.17" />
-  <property name="rhino-version" value="1.7.8-1" />
   <property name="salvation-version" value="2.3.0" />
   <target name="build" depends="jar"/>
   <target name="clean">
@@ -56,7 +55,6 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="${dist}/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../css-validator/css-validator.jar"/>
-      <zipfileset src="../rhino/buildGradle/libs/rhino-${rhino-version}.jar"/>
       <zipfileset src="../jing-trang/build/jing.jar"/>
       <zipfileset src="../jing-trang/lib/saxon9.jar"/>
       <zipfileset src="../jing-trang/lib/xercesImpl.jar"/>
@@ -201,7 +199,6 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/jetty-util-${jetty-version}.jar"/> <!-- GzipFilter dependency -->
       <fileset file="../dependencies/jsonic-${jsonic-version}.jar"/>
       <fileset file="../dependencies/log4j-${log4j-version}.jar"/>
-      <fileset file="../dependencies/rhino-${rhino-version}.jar"/>
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
       <lib dir="${dist}/war/lib"/>
@@ -290,7 +287,6 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-servlets" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util-ajax" version="${jetty-version}"/>
-      <dependency groupId="org.mozilla" artifactId="rhino" version="${rhino-version}"/>
       <dependency groupId="xerces" artifactId="xercesImpl" version="2.9.1"/>
       <dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2"/>
     </artifact:pom>

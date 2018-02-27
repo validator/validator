@@ -1843,11 +1843,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         Schema sch = resolveSchema(url, jingPropertyMap);
         Validator validator = sch.createValidator(jingPropertyMap);
-        if (validator.getContentHandler() instanceof XmlPiChecker) {
-          lexicalHandler = (LexicalHandler) validator.getContentHandler();
+        ContentHandler validatorContentHandler = validator.getContentHandler();
+        if (validatorContentHandler instanceof XmlPiChecker) {
+            lexicalHandler = (LexicalHandler) validatorContentHandler;
         }
-        if (validator.getContentHandler() instanceof Assertions) {
-            ((Assertions) validator.getContentHandler()).setRequest(request);
+        if (validatorContentHandler instanceof Assertions) {
+            Assertions assertions = (Assertions) validatorContentHandler;
+            assertions.setRequest(request);
+            assertions.setSourceIsCss(sourceCode.getIsCss());
         }
         return validator;
     }

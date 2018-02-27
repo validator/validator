@@ -584,7 +584,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
         messageFromSAXParseException(MessageType.ERROR, e, exact, null);
     }
 
-    public void cssError(SAXParseException e, int[] start)
+    public void errorWithStart(SAXParseException e, int[] start)
             throws SAXException {
         if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
             return;
@@ -595,10 +595,6 @@ public class MessageEmitterAdapter implements ErrorHandler {
         int startColumn = start[1];
         int lastLine = e.getLineNumber();
         int lastColumn = e.getColumnNumber();
-        if (!sourceCode.getIsCss()) {
-            e = new SAXParseException("CSS: " + e.getMessage(), e.getPublicId(),
-                    e.getSystemId(), lastLine, lastColumn);
-        }
         boolean exact = (startLine == lastLine && startColumn == lastColumn);
         messageFromSAXParseException(MessageType.ERROR, e, exact, start);
     }

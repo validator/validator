@@ -22,17 +22,9 @@
 
 package nu.validator.datatype;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.RhinoException;
 import org.relaxng.datatype.DatatypeException;
+import nu.validator.javascript.JavaScriptParser;
+import nu.validator.javascript.JavaScriptParser.JavaScriptParseException;
 
 public class FunctionBody extends AbstractDatatype {
 
@@ -45,35 +37,15 @@ public class FunctionBody extends AbstractDatatype {
         super();
     }
 
-    private static Pattern TL = Pattern.compile("`([^`]*)`");
+    private static final JavaScriptParser javascriptParser = //
+            new JavaScriptParser();
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
-            String contents = literal.toString();
-            Matcher t = TL.matcher(contents);
-            while (t.find()) {
-                String tlContents = "";
-                int n = t.group(1).length();
-                if (n > 0) {
-                    tlContents = String.format("%1$" + n + "s", "");
-                }
-                contents = t.replaceAll("'" + tlContents + "'");
-            }
-            Reader reader = new BufferedReader(
-                    (new StringReader("function(event){" + contents + "}")));
-            reader.mark(1);
-            try {
-                Context context = ContextFactory.getGlobal().enterContext();
-                context.setOptimizationLevel(0);
-                context.setLanguageVersion(Context.VERSION_ES6);
-                // -1 for lineno arg prevents Rhino from appending
-                // "(unnamed script#1)" to all error messages
-                context.compileReader(reader, null, -1, null);
-            } finally {
-                Context.exit();
-            }
-        } catch (IOException | RhinoException e) {
+            String contents = "()=>{" + literal.toString() + "}";
+            javascriptParser.parse(contents, "script");
+        } catch (JavaScriptParseException e) {
             throw newDatatypeException(e.getMessage());
         }
     }

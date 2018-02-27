@@ -22,10 +22,7 @@
 
 package nu.validator.checker.schematronequiv;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayList;
@@ -35,11 +32,10 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 
 import nu.validator.checker.AttributeUtil;
@@ -65,6 +61,8 @@ import nu.validator.datatype.ImageCandidateStringsWidthRequired;
 import nu.validator.datatype.ImageCandidateStrings;
 import nu.validator.datatype.ImageCandidateURL;
 import nu.validator.htmlparser.impl.NCName;
+import nu.validator.javascript.JavaScriptParser;
+import nu.validator.javascript.JavaScriptParser.JavaScriptParseException;
 import nu.validator.messages.MessageEmitterAdapter;
 
 import org.relaxng.datatype.DatatypeException;
@@ -77,10 +75,6 @@ import org.w3c.css.util.ApplContext;
 
 import org.apache.log4j.Logger;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.RhinoException;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -89,6 +83,9 @@ import org.xml.sax.SAXParseException;
 public class Assertions extends Checker {
 
     private static final Logger log4j = Logger.getLogger(Assertions.class);
+
+    private static final JavaScriptParser javascriptParser = //
+            new JavaScriptParser();
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -147,13 +144,6 @@ public class Assertions extends Checker {
         }
         return "";
     }
-
-    private static Pattern ASYNC_AWAIT = //
-            Pattern.compile("(\\s)async|await(\\s)");
-
-    private static Pattern CONST = Pattern.compile("\\bconst\\b");
-
-    private static Pattern TL = Pattern.compile("`([^`]*)`");
 
     private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
@@ -804,6 +794,8 @@ public class Assertions extends Checker {
 
         private boolean isClassicScript = false;
 
+        private boolean isModuleScript = false;
+
         /**
          * @param ancestorMask
          */
@@ -1140,6 +1132,20 @@ public class Assertions extends Checker {
         }
 
         /**
+         * Sets the isModuleScript.
+         */
+        public void setIsModuleScript(boolean isModuleScript) {
+            this.isModuleScript = isModuleScript;
+        }
+
+        /**
+         * Gets the isModuleScript.
+         */
+        public boolean getIsModuleScript() {
+            return this.isModuleScript;
+        }
+
+        /**
          * Sets the collectingCharacters.
          */
         public void setIsCollectingCharacters(boolean isCollectingCharacters) {
@@ -1199,6 +1205,12 @@ public class Assertions extends Checker {
 
     public void setRequest(HttpServletRequest request) {
         this.request = request;
+    }
+
+    private boolean sourceIsCss;
+
+    public void setSourceIsCss(boolean sourceIsCss) {
+        this.sourceIsCss = sourceIsCss;
     }
 
     private void incrementUseCounter(String useCounterName) {
@@ -1524,7 +1536,6 @@ public class Assertions extends Checker {
                     String cssProperty = "";
                     String cssMessage = "";
                     CssError error = errors.getErrorAt(i);
-                    int styleStartTagLine = node.locator.getLineNumber();
                     int beginLine = error.getBeginLine() + lineOffset;
                     int beginColumn = error.getBeginColumn();
                     int endLine = error.getEndLine() + lineOffset;
@@ -1557,11 +1568,16 @@ public class Assertions extends Checker {
                                 + endLine - 1;
                         int lastColumn = endColumn;
                         int columnOffset = node.locator.getColumnNumber();
-                        if (error.getBeginLine() != styleStartTagLine) {
+                        if (error.getBeginLine() == 1) {
+                            if (lineOffset != 0) {
+                                columnOffset = 0;
+                            }
+                        } else {
                             columnOffset = 0;
                         }
+                        String prefix = sourceIsCss ? "" : "CSS: ";
                         SAXParseException spe = new SAXParseException( //
-                                message, //
+                                prefix + message, //
                                 node.locator.getPublicId(), //
                                 node.locator.getSystemId(), //
                                 lastLine, lastColumn);
@@ -1571,79 +1587,50 @@ public class Assertions extends Checker {
                         if ((getErrorHandler() instanceof MessageEmitterAdapter)
                                 && !(getErrorHandler() instanceof TestRunner)) {
                             ((MessageEmitterAdapter) getErrorHandler()) //
-                                    .cssError(spe, start);
+                                    .errorWithStart(spe, start);
                         } else {
                             getErrorHandler().error(spe);
                         }
                     }
                 }
-            } else if ("script" == localName && node.getIsEmbeddedScript()
-                    && node.getIsClassicScript()) {
+            } else if ("script" == localName && node.getIsEmbeddedScript() && //
+                    (node.getIsClassicScript() || node.getIsModuleScript())) {
                 String scriptContents = node.getTextContent().toString();
-                Matcher a = ASYNC_AWAIT.matcher(scriptContents);
-                while (a.find()) {
-                    if (a.group(1) != null && a.group(2) != null) {
-                        scriptContents = a.replaceAll("$1" + "     " + "$2");
-                    }
-                }
-                Matcher c = CONST.matcher(scriptContents);
-                while (c.find()) {
-                    scriptContents = c.replaceAll("var  ");
-                }
-                Matcher t = TL.matcher(scriptContents);
-                while (t.find()) {
-                    String tlContents = "";
-                    int n = t.group(1).length();
-                    if (n > 0) {
-                        tlContents = String.format("%1$" + n + "s", "");
-                    }
-                    scriptContents = t.replaceAll("'" + tlContents + "'");
-                }
-                boolean scriptHasNewline = false;
-                if (scriptContents.indexOf('\n') > -1) {
-                    scriptHasNewline = true;
-                }
+                String type = node.getIsModuleScript() ? "module" : "script";
                 try {
-                    Reader reader = new BufferedReader(
-                            (new StringReader(scriptContents)));
-                    reader.mark(1);
-                    try {
-                        Context context = //
-                                ContextFactory.getGlobal().enterContext();
-                        context.setOptimizationLevel(-1);
-                        context.setLanguageVersion(Context.VERSION_ES6);
-                        context.compileReader(reader, null,
-                                node.locator.getLineNumber(), null);
-                    } finally {
-                        Context.exit();
-                    }
-                } catch (RhinoException e) {
-                    boolean reportError = true;
-                    org.xml.sax.helpers.LocatorImpl locatorImpl = //
-                            new org.xml.sax.helpers.LocatorImpl(node.locator());
+                    javascriptParser.parse(scriptContents, type);
+                } catch (JavaScriptParseException e) {
+                    int beginLine = e.getBeginLine();
+                    int beginColumn = e.getBeginColumn();
+                    int endLine = e.getEndLine();
+                    int endColumn = e.getEndColumn();
+                    int lastLine = node.locator.getLineNumber() + endLine - 1;
+                    int lastColumn = endColumn;
                     int columnOffset = node.locator.getColumnNumber();
-                    if (scriptHasNewline) {
+                    String message = e.getMessage();
+                    if (e.getBeginLine() != 1) {
                         columnOffset = 0;
                     }
-                    int column = e.columnNumber() + columnOffset;
-                    locatorImpl.setLineNumber(e.lineNumber());
-                    locatorImpl.setColumnNumber(column);
-                    String message = e.details();
-                    if (reportError) {
-                        incrementUseCounter("script-element-errors-found");
-                        if (node.locator().getSystemId() != null) {
-                            log4j.info(message + " "
-                                    + node.locator().getSystemId());
-                        }
-                        err("JS: " + message, locatorImpl);
+                    SAXParseException spe = new SAXParseException( //
+                            "JS: " + message, //
+                            node.locator.getPublicId(), //
+                            node.locator.getSystemId(), //
+                            lastLine, lastColumn);
+                    int[] start = {
+                            node.locator.getLineNumber() + beginLine - 1,
+                            beginColumn, columnOffset };
+                    if ((getErrorHandler() instanceof MessageEmitterAdapter)
+                            && !(getErrorHandler() instanceof TestRunner)) {
+                        ((MessageEmitterAdapter) getErrorHandler()) //
+                                .errorWithStart(spe, start);
+                    } else {
+                        getErrorHandler().error(spe);
                     }
-                } catch (IOException e) {
-                    if (!"class".equals(e.getMessage())) {
-                        throw new RuntimeException(e);
-                    }
-                } catch (IllegalStateException e) {
                     incrementUseCounter("script-element-errors-found");
-                    err("JS: Parse error.");
+                    if (node.locator().getSystemId() != null) {
+                        log4j.info(
+                                message + " " + node.locator().getSystemId());
+                    }
                 }
             }
             if ("article" == localName || "aside" == localName
@@ -1829,8 +1816,9 @@ public class Assertions extends Checker {
                                 message = ex.getMessage();
                             }
                             if (!"".equals(message)) {
+                                String prefix = sourceIsCss ? "" : "CSS: ";
                                 SAXParseException spe = new SAXParseException(
-                                        message, //
+                                        prefix + message, //
                                         getDocumentLocator().getPublicId(), //
                                         getDocumentLocator().getSystemId(), //
                                         getDocumentLocator().getLineNumber(),
@@ -1841,7 +1829,7 @@ public class Assertions extends Checker {
                                         && !(getErrorHandler() //
                                         instanceof TestRunner)) {
                                     ((MessageEmitterAdapter) //
-                                    getErrorHandler()).cssError(spe, start);
+                                    getErrorHandler()).errorWithStart(spe, start);
                                 } else {
                                     getErrorHandler().error(spe);
                                 }
@@ -3136,6 +3124,8 @@ public class Assertions extends Checker {
                     if (JAVASCRIPT_MIME_TYPES.contains(scriptType)
                             || "".equals(scriptType)) {
                         child.setIsClassicScript(true);
+                    } else if ("module".equals(scriptType)) {
+                        child.setIsModuleScript(true);
                     }
                 }
             }

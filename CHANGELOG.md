@@ -31,7 +31,6 @@ NN XX 20NN
   - Disallow nested interactive ARIA roles
   - Disallow the `dropzone` attribute
   - Disallow the `menuitem` element
-  - Fork Rhino at v1.7.8 and use that fork in our integration going forward
   - Fix bug that caused the checker to incorrectly treat `input[type]` values
     case-sensitively when doing particular checks
 
