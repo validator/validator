@@ -35,7 +35,7 @@ public class SvgPathData extends AbstractDatatype {
 
     private StringReader reader;
 
-    private StringBuilder context;
+    private StringBuffer context;
 
     private static final int MAX_CONTEXT_LENGTH = 20;
 
@@ -57,7 +57,7 @@ public class SvgPathData extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
 
         reader = new StringReader(literal.toString());
-        context = new StringBuilder(MAX_CONTEXT_LENGTH);
+        context = new StringBuffer(MAX_CONTEXT_LENGTH);
 
         try {
             current = reader.read();
