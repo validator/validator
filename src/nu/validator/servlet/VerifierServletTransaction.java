@@ -1190,7 +1190,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         } catch (IOException e) {
             isHtmlOrXhtml = false;
-            errorHandler.ioError(e);
+            if (e.getCause() instanceof org.apache.http.TruncatedChunkException) {
+                log4j.debug("TruncatedChunkException", e.getCause());
+            } else {
+                errorHandler.ioError(e);
+            }
         } catch (IncorrectSchemaException e) {
             log4j.debug("IncorrectSchemaException", e);
             errorHandler.schemaError(e);
