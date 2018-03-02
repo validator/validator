@@ -44,7 +44,7 @@ public final class Pattern extends AbstractDatatype {
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
-            String contents = "/^(?:" + literal.toString() + ")$/u')";
+            String contents = "/^(?:" + literal.toString() + ")$/u";
             javascriptParser.parse(contents, "script");
         } catch (JavaScriptParseException e) {
             String message = e.getMessage();
