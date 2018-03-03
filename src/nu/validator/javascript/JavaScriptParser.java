@@ -24,6 +24,7 @@ package nu.validator.javascript;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,7 +51,8 @@ public class JavaScriptParser {
             engine = new ScriptEngineManager(null).getEngineByName("nashorn");
             engine.eval(new BufferedReader(new InputStreamReader(
                     JavaScriptParser.class.getClassLoader().getResourceAsStream(
-                            "nu/validator/localentities/files/acorn-js"))));
+                            "nu/validator/localentities/files/acorn-js"),
+                    StandardCharsets.UTF_8)));
             inv = (Invocable) engine;
             acorn = (ScriptObjectMirror) engine.get("acorn");
         } catch (ScriptException e) {
