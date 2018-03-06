@@ -1816,23 +1816,7 @@ public class Assertions extends Checker {
                                 message = ex.getMessage();
                             }
                             if (!"".equals(message)) {
-                                String prefix = sourceIsCss ? "" : "CSS: ";
-                                SAXParseException spe = new SAXParseException(
-                                        prefix + message, //
-                                        getDocumentLocator().getPublicId(), //
-                                        getDocumentLocator().getSystemId(), //
-                                        getDocumentLocator().getLineNumber(),
-                                        -1);
-                                int[] start = { -1, -1, 0 };
-                                if ((getErrorHandler() //
-                                instanceof MessageEmitterAdapter)
-                                        && !(getErrorHandler() //
-                                        instanceof TestRunner)) {
-                                    ((MessageEmitterAdapter) //
-                                    getErrorHandler()).errorWithStart(spe, start);
-                                } else {
-                                    getErrorHandler().error(spe);
-                                }
+                                err("CSS: " + message);
                             }
                         }
                     } else if ("tabindex" == attLocal) {
