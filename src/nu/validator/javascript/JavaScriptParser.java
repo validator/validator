@@ -46,6 +46,8 @@ public class JavaScriptParser {
     private static String OPTS = "\"ecmaVersion\":2018," //
             + "\"allowImportExportEverywhere\":true,";
 
+    private static final Object parseLock = new Object();
+
     static {
         try {
             engine = new ScriptEngineManager(null).getEngineByName("nashorn");
@@ -69,7 +71,9 @@ public class JavaScriptParser {
             String opts = "{" + OPTS + "\"sourceType\":\"" + type + "\"}";
             engine.put("options", opts);
             JSObject options = (JSObject) engine.eval("JSON.parse(options)");
-            inv.invokeMethod(acorn, "parse", script, options);
+            synchronized (parseLock) {
+                inv.invokeMethod(acorn, "parse", script, options);
+            }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ScriptException se) {
