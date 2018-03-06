@@ -62,7 +62,7 @@ import nu.validator.datatype.ImageCandidateStrings;
 import nu.validator.datatype.ImageCandidateURL;
 import nu.validator.htmlparser.impl.NCName;
 import nu.validator.javascript.JavaScriptParser;
-import nu.validator.javascript.JavaScriptParser.JavaScriptParseException;
+import nu.validator.javascript.JavaScriptSyntaxError;
 import nu.validator.messages.MessageEmitterAdapter;
 
 import org.relaxng.datatype.DatatypeException;
@@ -1446,6 +1446,8 @@ public class Assertions extends Checker {
             return;
         }
         StackNode node = pop();
+        String systemId = node.locator().getSystemId();
+        String publicId = node.locator().getPublicId();
         Locator locator = null;
         openSingleSelects.remove(node);
         openLabels.remove(node);
@@ -1577,9 +1579,7 @@ public class Assertions extends Checker {
                         }
                         String prefix = sourceIsCss ? "" : "CSS: ";
                         SAXParseException spe = new SAXParseException( //
-                                prefix + message, //
-                                node.locator.getPublicId(), //
-                                node.locator.getSystemId(), //
+                                prefix + message, publicId, systemId, //
                                 lastLine, lastColumn);
                         int[] start = {
                                 node.locator.getLineNumber() + beginLine - 1,
@@ -1599,7 +1599,7 @@ public class Assertions extends Checker {
                 String type = node.getIsModuleScript() ? "module" : "script";
                 try {
                     javascriptParser.parse(scriptContents, type);
-                } catch (JavaScriptParseException e) {
+                } catch (JavaScriptSyntaxError e) {
                     int beginLine = e.getBeginLine();
                     int beginColumn = e.getBeginColumn();
                     int endLine = e.getEndLine();
@@ -1612,9 +1612,7 @@ public class Assertions extends Checker {
                         columnOffset = 0;
                     }
                     SAXParseException spe = new SAXParseException( //
-                            "JS: " + message, //
-                            node.locator.getPublicId(), //
-                            node.locator.getSystemId(), //
+                            "JS: " + message, publicId, systemId, //
                             lastLine, lastColumn);
                     int[] start = {
                             node.locator.getLineNumber() + beginLine - 1,
@@ -1627,9 +1625,8 @@ public class Assertions extends Checker {
                         getErrorHandler().error(spe);
                     }
                     incrementUseCounter("script-element-errors-found");
-                    if (node.locator().getSystemId() != null) {
-                        log4j.info(
-                                message + " " + node.locator().getSystemId());
+                    if (systemId != null) {
+                        log4j.info(message + " " + systemId);
                     }
                 }
             }

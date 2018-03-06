@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2018 Mozilla Foundation
+ * Copyright (c) 2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -20,39 +20,40 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.datatype;
+package nu.validator.javascript;
 
-import org.relaxng.datatype.DatatypeException;
-import nu.validator.javascript.JavaScriptParser;
-import nu.validator.javascript.JavaScriptSyntaxError;
+public class JavaScriptSyntaxError extends Exception {
 
-public class FunctionBody extends AbstractDatatype {
+    private final int beginLine;
 
-    /**
-     * The singleton instance.
-     */
-    public static final FunctionBody THE_INSTANCE = new FunctionBody();
+    private final int beginColumn;
 
-    protected FunctionBody() {
-        super();
+    private final int endLine;
+
+    private final int endColumn;
+
+    public int getBeginLine() {
+        return beginLine;
     }
 
-    private static final JavaScriptParser javascriptParser = //
-            new JavaScriptParser();
-
-    @Override
-    public void checkValid(CharSequence literal) throws DatatypeException {
-        try {
-            String contents = "()=>{" + literal.toString() + "}";
-            javascriptParser.parse(contents, "script");
-        } catch (JavaScriptSyntaxError e) {
-            throw newDatatypeException(e.getMessage());
-        }
+    public int getBeginColumn() {
+        return beginColumn;
     }
 
-    @Override
-    public String getName() {
-        return "ECMAScript FunctionBody";
+    public int getEndLine() {
+        return endLine;
     }
 
+    public int getEndColumn() {
+        return endColumn;
+    }
+
+    public JavaScriptSyntaxError(String message, //
+            int beginLine, int beginColumn, int endLine, int endColumn) {
+        super(message);
+        this.beginLine = beginLine;
+        this.beginColumn = beginColumn;
+        this.endLine = endLine;
+        this.endColumn = endColumn;
+    }
 }

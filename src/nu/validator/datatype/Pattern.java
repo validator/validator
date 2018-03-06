@@ -25,7 +25,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 import nu.validator.javascript.JavaScriptParser;
-import nu.validator.javascript.JavaScriptParser.JavaScriptParseException;
+import nu.validator.javascript.JavaScriptSyntaxError;
 
 public final class Pattern extends AbstractDatatype {
 
@@ -46,7 +46,7 @@ public final class Pattern extends AbstractDatatype {
         try {
             String contents = "/^(?:" + literal.toString() + ")$/u";
             javascriptParser.parse(contents, "script");
-        } catch (JavaScriptParseException e) {
+        } catch (JavaScriptSyntaxError e) {
             String message = e.getMessage();
             if (message.startsWith("Invalid regular expression: ")) {
                 message = message //

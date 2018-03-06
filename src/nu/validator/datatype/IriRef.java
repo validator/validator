@@ -30,7 +30,7 @@ import org.relaxng.datatype.DatatypeException;
 import nu.validator.io.DataUri;
 import nu.validator.io.DataUriException;
 import nu.validator.javascript.JavaScriptParser;
-import nu.validator.javascript.JavaScriptParser.JavaScriptParseException;
+import nu.validator.javascript.JavaScriptSyntaxError;
 
 
 import io.mola.galimatias.URL;
@@ -158,7 +158,7 @@ public class IriRef extends AbstractDatatype {
         } catch (GalimatiasParseException e) {
             throw newDatatypeException(
                     messagePrologue + e.getMessage() + ".");
-        } catch (JavaScriptParseException e) {
+        } catch (JavaScriptSyntaxError e) {
             throw newDatatypeException(
                     messagePrologue + e.getMessage());
         }

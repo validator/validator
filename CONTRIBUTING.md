@@ -18,7 +18,7 @@ Along with using the [project issue tracker][1] you can get help in real time on
 Follow the steps below to build, test, and run the checker such that you can open
 http://localhost:8888/ in a Web browser to use the checker Web UI.
 
-1. Make sure you have git, python, and JDK 5 or later installed.
+1. Make sure you have git, python, and JDK 8 or later installed.
 
 2. Set the `JAVA_HOME` environment variable:
 
@@ -26,8 +26,7 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 
    For example:
 
-   * `export JAVA_HOME=/usr/lib/jvm/java-6-openjdk` (older Ubuntu)
-   * `export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64` (newer Ubuntu)
+   * `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64` (newer Ubuntu)
    * `export JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
 
 3. Create a working directory:
@@ -58,6 +57,9 @@ If you’d like to contribute a bug fix or feature enhancement but aren’t sure
 the code to get started, here’s a brief annotated overview of the repository contents:
 
 * `build` - scripts for building, testing, and running the checker
+* `css-validator` - (submodule) CSS validator source code
+* `docs` - (submodule) https://github.com/validator/validator/wiki sources
+* `galimatias` - (submodule) URL parser
 * `htmlparser` - (submodule) HTML parser
 * `jing-trang` - (submodule) RelaxNG engine
 * `resources` - config files, caching-related catalogs, and some example code
@@ -70,6 +72,7 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `datatype` - checking microsyntax of attribute values (datatype library)
   * `gnu/xml/aelfred2` - processing XML (XML parser)
   * `io` - variety of \*InputStream classes, `DataUri`, related exception classes
+  * `javascript` - parsing JavaScript; `JavaScriptParser`, related exception classes
   * `json` - SAX-inspired streaming interface for writing JSON (utility code)
   * `localentities` - fetching resources from local cache; `LocalCacheEntityResolver`
   * `messages` - handling/emitting validation messages; `MessageEmitterAdapter`, etc.

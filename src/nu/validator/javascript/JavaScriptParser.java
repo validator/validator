@@ -35,7 +35,11 @@ import jdk.nashorn.api.scripting.JSObject;
 import jdk.nashorn.api.scripting.NashornException;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
+import org.apache.log4j.Logger;
+
 public class JavaScriptParser {
+
+    private static final Logger log4j = Logger.getLogger(Pattern.class);
 
     private static ScriptEngine engine;
 
@@ -43,7 +47,7 @@ public class JavaScriptParser {
 
     private static ScriptObjectMirror acorn;
 
-    private static String OPTS = "\"ecmaVersion\":2018," //
+    private static final String OPTS = "\"ecmaVersion\":2018," //
             + "\"allowImportExportEverywhere\":true,";
 
     private static final Object parseLock = new Object();
@@ -65,8 +69,7 @@ public class JavaScriptParser {
     private static Pattern LINE_COLUMN = //
             Pattern.compile("^.*(\\([0-9]+:[0-9]+\\))$");
 
-    public void parse(String script, String type)
-            throws JavaScriptParseException {
+    public void parse(String script, String type) throws JavaScriptSyntaxError {
         try {
             String opts = "{" + OPTS + "\"sourceType\":\"" + type + "\"}";
             engine.put("options", opts);
@@ -75,82 +78,58 @@ public class JavaScriptParser {
                 inv.invokeMethod(acorn, "parse", script, options);
             }
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (ScriptException se) {
-            Throwable cause = se.getCause();
+            log4j.warn(e.getMessage());
+        } catch (ScriptException scriptException) {
+            Throwable cause = scriptException.getCause();
             if (cause instanceof NashornException) {
-                NashornException ne = (NashornException) cause;
-                Object obj = ne.getEcmaError();
-                if (obj instanceof JSObject) {
-                    error((JSObject) obj, script);
+                NashornException nashornException = (NashornException) cause;
+                Object ecmaError = nashornException.getEcmaError();
+                if (ecmaError instanceof ScriptObjectMirror) {
+                    JSObject error = (JSObject) ecmaError;
+                    String name = (String) error.getMember("name");
+                    if ("SyntaxError".equals(name) && error.hasMember("loc")) {
+                        handleSyntaxError(error, script);
+                    } else {
+                        handleScriptException(scriptException);
+                    }
                 } else {
-                    ne.printStackTrace();
+                    handleScriptException(scriptException);
                 }
             } else {
-                se.printStackTrace();
+                handleScriptException(scriptException);
             }
         }
     }
 
     @SuppressWarnings("unchecked")
-    private void error(JSObject error, String script)
-            throws JavaScriptParseException {
+    private void handleSyntaxError(JSObject error, String script)
+            throws JavaScriptSyntaxError {
+        JSObject loc = (JSObject) error.getMember("loc");
+        int beginLine = ((Number) loc.getMember("line")).intValue();
+        int beginColumn = ((Number) loc.getMember("column")).intValue() + 1;
+        int raisedAt = ((Number) error.getMember("raisedAt")).intValue();
         try {
-            JSObject loc = (JSObject) error.getMember("loc");
-            int beginLine = ((Double) loc.getMember("line")).intValue();
-            int beginColumn = ((Double) loc.getMember("column")).intValue() + 1;
-            int p = ((Double) error.getMember("raisedAt")).intValue();
-            Object endPos = inv.invokeMethod(acorn, "getLineInfo", script, p);
-            Map<String, Object> end = (Map<String, Object>) endPos;
-            int endLine = ((Double) end.get("line")).intValue();
-            int endColumn = ((Double) end.get("column")).intValue();
+            Map<String, Object> end = (Map<String, Object>) //
+            inv.invokeMethod(acorn, "getLineInfo", script, raisedAt);
+            int endLine = ((Number) end.get("line")).intValue();
+            int endColumn = ((Number) end.get("column")).intValue();
             String message = (String) error.getMember("message");
             Matcher m = LINE_COLUMN.matcher(message);
             if (m.matches()) {
                 message = message.substring(0, message.indexOf(m.group(1)));
             }
-            throw new JavaScriptParseException(message.trim() + ".", //
+            throw new JavaScriptSyntaxError(message.trim() + ".", //
                     beginLine, beginColumn, endLine, endColumn);
-        } catch (ScriptException se) {
-            se.printStackTrace();
+        } catch (ScriptException scriptException) {
+            handleScriptException(scriptException);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
 
-    public class JavaScriptParseException extends Exception {
-
-        private final int beginLine;
-
-        private final int beginColumn;
-
-        private final int endLine;
-
-        private final int endColumn;
-
-        public int getBeginLine() {
-            return beginLine;
-        }
-
-        public int getBeginColumn() {
-            return beginColumn;
-        }
-
-        public int getEndLine() {
-            return endLine;
-        }
-
-        public int getEndColumn() {
-            return endColumn;
-        }
-
-        public JavaScriptParseException(String message, //
-                int beginLine, int beginColumn, int endLine, int endColumn) {
-            super(message);
-            this.beginLine = beginLine;
-            this.beginColumn = beginColumn;
-            this.endLine = endLine;
-            this.endColumn = endColumn;
-        }
+    private void handleScriptException(ScriptException se) {
+        log4j.warn(se.getMessage());
+        log4j.warn(NashornException.getScriptStackString(se.getCause()));
     }
+
 }
