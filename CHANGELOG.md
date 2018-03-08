@@ -26,6 +26,7 @@ NN XX 20NN
   - Allow `role=row` element to be contained in `role=table` element
   - Allow more values for `aria-haspopup` per current ARIA spec
   - Allow more ARIA states & properties for `role=menuitem`
+  - Allow CSP `prefetch-src` directive (updated to Salvation 2.4.0)
   - Disallow all character encodings other than UTF-8
   - Disallow `script[charset]`
   - Disallow nested interactive ARIA roles

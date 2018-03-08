@@ -144,7 +144,7 @@ miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8
-    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.3.0/salvation-2.3.0.jar", "18137575ef72f160352ff0c395243ed6"),  # nopep8
+    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.4.0/salvation-2.4.0.jar", "41bf4aa35eee2ff74cb07a763ecba190"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),  # nopep8
@@ -172,7 +172,7 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
     ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar", "7b56e34995f7f1cb55d7806b935f90a4"),  # nopep8
-    ("https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/acorn/5.5.0/acorn.js", "ed408b797d19b0cf41309430a284b0f7"),  # nopep8
+    ("https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/acorn/5.5.1/acorn.js", "f0fdbfe95e949e58b5a7be3e4a498712"),  # nopep8
 ]
 
 runDependencyJars = [
@@ -186,7 +186,7 @@ runDependencyJars = [
     "httpcore-4.4.jar",
     "httpclient-4.4.jar",
     "icu4j-58.2.jar",
-    "salvation-2.3.0.jar",
+    "salvation-2.4.0.jar",
     "javax.servlet-api-3.1.0.jar",
     "jchardet-1.0.jar",
     "jetty-http-9.2.9.v20150224.jar",

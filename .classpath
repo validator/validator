@@ -44,7 +44,7 @@
 			<attribute name="javadoc_location" value="http://icu-project.org/apiref/icu4j/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/salvation-2.3.0.jar"/>
+	<classpathentry kind="lib" path="dependencies/salvation-2.4.0.jar"/>
 	<classpathentry kind="lib" path="dependencies/javax.servlet-api-3.1.0.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://docs.oracle.com/javaee/7/api/"/>
