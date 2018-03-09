@@ -448,7 +448,7 @@ public class Assertions extends Checker {
             mask = maskAsObject.intValue();
         }
         mask |= (1 << number);
-        ANCESTOR_MASK_BY_DESCENDANT.put(descendant, new Integer(mask));
+        ANCESTOR_MASK_BY_DESCENDANT.put(descendant, Integer.valueOf(mask));
     }
 
     static {

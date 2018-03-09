@@ -251,7 +251,6 @@ public final class SourceCode implements CharacterHandler {
         return new Location(this, 0, 0);
     }
 
-    @SuppressWarnings("boxing")
     public void lineError(int oneBasedLine, SourceHandler extractHandler)
             throws SAXException {
         oneBasedLineErrors.add(oneBasedLine);

@@ -577,7 +577,7 @@ final class XmlParser {
      */
     private void fatal(String message, char textFound, String textExpected)
             throws SAXException {
-        fatal(message, new Character(textFound).toString(), textExpected);
+        fatal(message, Character.valueOf(textFound).toString(), textExpected);
     }
 
     /**
@@ -2104,7 +2104,7 @@ final class XmlParser {
         if (value > 0x0010ffff) {
             // too big for surrogate
             fatal("character reference " + value + " is too large for UTF-16",
-                    new Integer(value).toString(), null);
+                    Integer.valueOf(value).toString(), null);
         }
 
     }
@@ -2186,7 +2186,7 @@ final class XmlParser {
         } else {
             // too big for surrogate
             fatal("character reference " + value + " is too large for UTF-16",
-                    new Integer(value).toString(), null);
+                    Integer.valueOf(value).toString(), null);
         }
         if (doFlush) {
             dataBufferFlush();
@@ -2803,7 +2803,7 @@ final class XmlParser {
             }
         } catch (EOFException e) {
             fatal("end of input while looking for delimiter (started on line "
-                    + startLine + ')', null, new Character(delim).toString());
+                    + startLine + ')', null, Character.valueOf(delim).toString());
         }
         inLiteral = false;
         expandPE = saved;
@@ -3050,7 +3050,7 @@ final class XmlParser {
         char c = readCh();
 
         if (c != delim) {
-            fatal("required character", c, new Character(delim).toString());
+            fatal("required character", c, Character.valueOf(delim).toString());
         }
     }
 
@@ -3709,7 +3709,7 @@ final class XmlParser {
         if (readBufferPos > 0) {
             readBuffer[--readBufferPos] = c;
         } else {
-            pushString(null, new Character(c).toString());
+            pushString(null, Character.valueOf(c).toString());
         }
     }
 

@@ -74,7 +74,6 @@ public class XhtmlSourceHandler implements SourceHandler {
         emitter.characters(ch, start, length);
     }
 
-    @SuppressWarnings("boxing")
     private void maybeOpen() throws SAXException {
         assert !(lineOpen && !listOpen);
         if (!listOpen) {
