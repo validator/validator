@@ -86,6 +86,7 @@ validatorVersion = "%s.%s.%s" % (year, month, day)
 # validatorVersion = "17.11.1"
 jingVersion = "20171006VNU"
 htmlparserVersion = "1.4.10"
+cssvalidatorVersion = "1.0.0"
 galimatiasVersion = "0.1.2"
 
 buildRoot = '.'
@@ -912,6 +913,8 @@ class Release():
             self.version = jingVersion
         if self.artifactId == "htmlparser":
             self.version = htmlparserVersion
+        if self.artifactId == "cssvalidator":
+            self.version = cssvalidatorVersion
         if self.artifactId == "galimatias":
             self.version = galimatiasVersion
         if url == snapshotsRepoUrl:
@@ -1676,6 +1679,15 @@ else:
             release.uploadToCentral(snapshotsRepoUrl)
         elif arg == 'htmlparser-release':
             release = Release("htmlparser")
+            release.uploadToCentral(stagingRepoUrl)
+        elif arg == 'cssvalidator-bundle':
+            release = Release("cssvalidator")
+            release.createBundle()
+        elif arg == 'cssvalidator-snapshot':
+            release = Release("cssvalidator")
+            release.uploadToCentral(snapshotsRepoUrl)
+        elif arg == 'cssvalidator-release':
+            release = Release("cssvalidator")
             release.uploadToCentral(stagingRepoUrl)
         elif arg == 'jing-bundle':
             release = Release("jing")

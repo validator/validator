@@ -177,6 +177,7 @@ DEALINGS IN THE SOFTWARE.
       </fileset>
     </unzip>
     <copy todir="${dist}/war/lib">
+      <fileset file="../css-validator/css-validator.jar"/>
       <fileset file="../jing-trang/build/jing.jar"/>
       <fileset file="../jing-trang/lib/saxon9.jar"/>
       <fileset file="../jing-trang/lib/xercesImpl.jar"/>
@@ -277,6 +278,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="nu.validator" artifactId="galimatias" version="0.1.2"/>
       <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.10"/>
+      <dependency groupId="nu.validator" artifactId="cssvalidator" version="1.0.0"/>
       <dependency groupId="nu.validator" artifactId="jing" version="20171006VNU"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="${httpclient-version}"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="${httpcore-version}"/>
@@ -309,5 +311,6 @@ DEALINGS IN THE SOFTWARE.
   </target>
   <import file=".ant/build-galimatias.xml"/>
   <import file=".ant/build-htmlparser.xml"/>
+  <import file=".ant/build-cssvalidator.xml"/>
   <import file=".ant/build-jing.xml"/>
 </project>
