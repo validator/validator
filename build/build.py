@@ -934,7 +934,7 @@ class Release():
                 hasher.update(buf)
                 buf = f.read(BLOCKSIZE)
         o = open("%s.%s" % (filename, md5OrSha1), 'wb')
-        o.write(hasher.hexdigest())
+        o.write(hasher.hexdigest().encode())
         o.close
 
     def writeHashes(self):
@@ -1114,7 +1114,7 @@ class Release():
             "-DserverId=ossrh",
         ]
         output = subprocess.check_output(mvnArgs)
-        for line in output.split('\n'):
+        for line in output.decode('utf-8').split('\n'):
             if "nuvalidator" in line:
                 stagingRepositoryId = "nuvalidator-" + line[19:23]
                 mvnArgs = [
