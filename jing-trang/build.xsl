@@ -334,16 +334,8 @@
 
 <xsl:template name="javac-attributes">
   <xsl:attribute name="includeAntRuntime">no</xsl:attribute>
-  <xsl:choose>
-    <xsl:when test="java5">
-      <xsl:attribute name="source">1.5</xsl:attribute>
-      <xsl:attribute name="target">1.5</xsl:attribute>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:attribute name="source">1.3</xsl:attribute>
-      <xsl:attribute name="target">1.1</xsl:attribute>
-    </xsl:otherwise>
-  </xsl:choose>
+  <xsl:attribute name="source">1.8</xsl:attribute>
+  <xsl:attribute name="target">1.8</xsl:attribute>
 </xsl:template>
 
 </xsl:stylesheet>
