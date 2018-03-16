@@ -427,7 +427,7 @@ common.attrs.other =
 
 ## ECMAScript FunctionBody
   common.data.functionbody =
-    w:functionbody
+    string
 
 ## autocomplete
 

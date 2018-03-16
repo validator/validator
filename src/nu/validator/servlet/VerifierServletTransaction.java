@@ -1391,12 +1391,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/script-element-errors-found") != null
-                    && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/script-element-errors-found")) {
-                stats.incrementField(Statistics.Field.SCRIPT_ELEMENT_ERRORS_FOUND);
-            }
-            if (request.getAttribute(
                     "http://validator.nu/properties/style-element-errors-found") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/style-element-errors-found")) {

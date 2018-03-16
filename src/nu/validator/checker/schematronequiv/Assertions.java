@@ -61,8 +61,6 @@ import nu.validator.datatype.ImageCandidateStringsWidthRequired;
 import nu.validator.datatype.ImageCandidateStrings;
 import nu.validator.datatype.ImageCandidateURL;
 import nu.validator.htmlparser.impl.NCName;
-import nu.validator.javascript.JavaScriptParser;
-import nu.validator.javascript.JavaScriptSyntaxError;
 import nu.validator.messages.MessageEmitterAdapter;
 
 import org.relaxng.datatype.DatatypeException;
@@ -73,19 +71,12 @@ import org.w3c.css.parser.CssParseException;
 import org.w3c.css.parser.Errors;
 import org.w3c.css.util.ApplContext;
 
-import org.apache.log4j.Logger;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class Assertions extends Checker {
-
-    private static final Logger log4j = Logger.getLogger(Assertions.class);
-
-    private static final JavaScriptParser javascriptParser = //
-            new JavaScriptParser();
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -790,12 +781,6 @@ public class Assertions extends Checker {
 
         private boolean isCollectingCharacters = false;
 
-        private boolean isEmbeddedScript = false;
-
-        private boolean isClassicScript = false;
-
-        private boolean isModuleScript = false;
-
         /**
          * @param ancestorMask
          */
@@ -1101,48 +1086,6 @@ public class Assertions extends Checker {
          */
         public void setNonEmptyOption(Locator locator) {
             this.nonEmptyOption = locator;
-        }
-
-        /**
-         * Sets the isEmbeddedScript.
-         */
-        public void setIsEmbeddedScript(boolean isEmbeddedScript) {
-            this.isEmbeddedScript = isEmbeddedScript;
-        }
-
-        /**
-         * Gets the isEmbeddedScript.
-         */
-        public boolean getIsEmbeddedScript() {
-            return this.isEmbeddedScript;
-        }
-
-        /**
-         * Sets the isClassicScript.
-         */
-        public void setIsClassicScript(boolean isClassicScript) {
-            this.isClassicScript = isClassicScript;
-        }
-
-        /**
-         * Gets the isClassicScript.
-         */
-        public boolean getIsClassicScript() {
-            return this.isClassicScript;
-        }
-
-        /**
-         * Sets the isModuleScript.
-         */
-        public void setIsModuleScript(boolean isModuleScript) {
-            this.isModuleScript = isModuleScript;
-        }
-
-        /**
-         * Gets the isModuleScript.
-         */
-        public boolean getIsModuleScript() {
-            return this.isModuleScript;
         }
 
         /**
@@ -1591,42 +1534,6 @@ public class Assertions extends Checker {
                         } else {
                             getErrorHandler().error(spe);
                         }
-                    }
-                }
-            } else if ("script" == localName && node.getIsEmbeddedScript() && //
-                    (node.getIsClassicScript() || node.getIsModuleScript())) {
-                String scriptContents = node.getTextContent().toString();
-                String type = node.getIsModuleScript() ? "module" : "script";
-                try {
-                    javascriptParser.parse(scriptContents, type);
-                } catch (JavaScriptSyntaxError e) {
-                    int beginLine = e.getBeginLine();
-                    int beginColumn = e.getBeginColumn();
-                    int endLine = e.getEndLine();
-                    int endColumn = e.getEndColumn();
-                    int lastLine = node.locator.getLineNumber() + endLine - 1;
-                    int lastColumn = endColumn;
-                    int columnOffset = node.locator.getColumnNumber();
-                    String message = e.getMessage();
-                    if (e.getBeginLine() != 1) {
-                        columnOffset = 0;
-                    }
-                    SAXParseException spe = new SAXParseException( //
-                            "JS: " + message, publicId, systemId, //
-                            lastLine, lastColumn);
-                    int[] start = {
-                            node.locator.getLineNumber() + beginLine - 1,
-                            beginColumn, columnOffset };
-                    if ((getErrorHandler() instanceof MessageEmitterAdapter)
-                            && !(getErrorHandler() instanceof TestRunner)) {
-                        ((MessageEmitterAdapter) getErrorHandler()) //
-                                .errorWithStart(spe, start);
-                    } else {
-                        getErrorHandler().error(spe);
-                    }
-                    incrementUseCounter("script-element-errors-found");
-                    if (systemId != null) {
-                        log4j.info(message + " " + systemId);
                     }
                 }
             }
@@ -3095,20 +3002,6 @@ public class Assertions extends Checker {
             }
             if ("script" == localName) {
                 child.setIsCollectingCharacters(true);
-                if (atts.getIndex("", "src") < 0) {
-                    child.setIsEmbeddedScript(true);
-                }
-                if (atts.getIndex("", "type") < 0) {
-                    child.setIsClassicScript(true);
-                } else {
-                    String scriptType = atts.getValue("", "type").toLowerCase();
-                    if (JAVASCRIPT_MIME_TYPES.contains(scriptType)
-                            || "".equals(scriptType)) {
-                        child.setIsClassicScript(true);
-                    } else if ("module".equals(scriptType)) {
-                        child.setIsModuleScript(true);
-                    }
-                }
             }
             if (activeDescendant != null && !activeDescendantWithAriaOwns) {
                 openActiveDescendants.put(child,

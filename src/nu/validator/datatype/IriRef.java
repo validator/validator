@@ -29,9 +29,6 @@ import java.io.InputStream;
 import org.relaxng.datatype.DatatypeException;
 import nu.validator.io.DataUri;
 import nu.validator.io.DataUriException;
-import nu.validator.javascript.JavaScriptParser;
-import nu.validator.javascript.JavaScriptSyntaxError;
-
 
 import io.mola.galimatias.URL;
 import io.mola.galimatias.URLParsingSettings;
@@ -50,9 +47,6 @@ public class IriRef extends AbstractDatatype {
     protected IriRef() {
         super();
     }
-
-    private final static JavaScriptParser javascriptParser = //
-            new JavaScriptParser();
 
     private final static boolean WARN = System.getProperty("nu.validator.datatype.warn", "").equals("true");
 
@@ -141,7 +135,6 @@ public class IriRef extends AbstractDatatype {
                     url = URL.parse(settings, urlString);
                 } else if ("javascript".contentEquals(scheme)) {
                     url = null; // Don't bother user with generic IRI syntax
-                    javascriptParser.parse(tail.toString(), "script");
                 } else if ("data".contentEquals(scheme)) {
                     data = true;
                     url = URL.parse(settings, urlString);
@@ -158,9 +151,6 @@ public class IriRef extends AbstractDatatype {
         } catch (GalimatiasParseException e) {
             throw newDatatypeException(
                     messagePrologue + e.getMessage() + ".");
-        } catch (JavaScriptSyntaxError e) {
-            throw newDatatypeException(
-                    messagePrologue + e.getMessage());
         }
         if (url != null) {
             if (data) {
