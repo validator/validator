@@ -1,13 +1,13 @@
 
-07 October 2017.
+24 March 2018.
 
-This release adds two changes for the vnu.jar command-line checker: It fixes a bug that caused the `--Werror` option to not work as expected, and adds a change that makes the checker exit 0 if all errors have been filtered out. (Prior to that change, the checker would exit non-zero if any errors were found, even if the `--filterfile` or `--filterpattern` option were used to filter them all out.)
+This release adds two new major features. The first is an optional feature in the command-line checker, Web-based checker, and network API to check CSS documents (in addition to the checking of HTML documents we already do). And the second is a (non-optional) feature to check that `style` element contents and `style` attribute values in HTML documents are valid CSS.
 
-This release otherwise adds no changes beyond those in the 17.11.0 release, the notes for which follow
+The release also adds a new optional feature to the command-line checker to check SVG documents, as well as a new option in command-line checker for specifying a User-Agent string.
 
-This release add a `--Werror` option to the vnu.jar command-line checker, which when set causes the checker to exit non-zero if any warnings are encountered (even if there are no errors). The release also fixes an internal code mismatch that caused message-filtering failures, fixes a memory leak in the language detector, drops reporting of HTML4-specific parse errors for HTML4-doctype docs, and allows DPUB `role` attributes on more elements.
+Along with those additions, some changes made in this release include support for the `autocapitalize` global attribute, the `slot` attribute (for Shadow DOM interaction), the `allowpaymentrequest` attribute for the `iframe` element, the CSP `prefetch-src` directive, and a variety of ARIA-related improvements. Also worth noting is that with this release, the checker now reports an error for documents in any character encoding other than UTF-8 and for all doctypes other than `<!DOCTYPE html>`.
 
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#17110
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#1830
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 

@@ -2,8 +2,8 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# NN.NN.NN
-NN XX 20NN
+# 18.3.0
+24 March 2018
   - Add new major (optional) feature to command-line checker, Web-based checker,
     and network API to check CSS documents (in addition to HTML documents)
   - Add new major feature to check that `style` element contents and `style`
