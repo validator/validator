@@ -23,9 +23,10 @@
 
 package nu.validator.datatype;
 
+import jdk.nashorn.internal.runtime.ParserException;
+import jdk.nashorn.internal.runtime.regexp.RegExpFactory;
+
 import org.relaxng.datatype.DatatypeException;
-import nu.validator.javascript.JavaScriptParser;
-import nu.validator.javascript.JavaScriptSyntaxError;
 
 public final class Pattern extends AbstractDatatype {
 
@@ -38,22 +39,12 @@ public final class Pattern extends AbstractDatatype {
         super();
     }
 
-    private static final JavaScriptParser javascriptParser = //
-            new JavaScriptParser();
-
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
-            String contents = "/^(?:" + literal.toString() + ")$/u";
-            javascriptParser.parse(contents, "script");
-        } catch (JavaScriptSyntaxError e) {
-            String message = e.getMessage();
-            if (message.startsWith("Invalid regular expression: ")) {
-                message = message //
-                        .replace(" /^(?:", " \u201C") //
-                        .replace(")$/: ", "\u201D: ");
-            }
-            throw newDatatypeException(message);
+            new RegExpFactory().compile(literal.toString(), "");
+        } catch (ParserException e) {
+            throw newDatatypeException(e.getMessage().split("\n")[0]);
         }
     }
 

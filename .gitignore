@@ -15,7 +15,6 @@ jars/
 local-entities/
 src/nu/validator/localentities/files/a-rel-extensions
 src/nu/validator/localentities/files/about.html
-src/nu/validator/localentities/files/acorn-js
 src/nu/validator/localentities/files/css-parser-js
 src/nu/validator/localentities/files/cli-help
 src/nu/validator/localentities/files/entitymap

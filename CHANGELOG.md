@@ -8,7 +8,6 @@ NN XX 20NN
     and network API to check CSS documents (in addition to HTML documents)
   - Add new major feature to check that `style` element contents and `style`
     attribute values in HTML documents are valid CSS
-  - Add new major feature to check `script` elements for JavaScript syntax errors
   - Add new (optional) feature to command-line checker to check SVG documents
   - Add new option to command-line checker for specifying User-Agent string
   - Add Dockerfile to Docker Hub https://hub.docker.com/r/validator/validator/

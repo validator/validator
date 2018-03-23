@@ -173,7 +173,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
     ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar", "7b56e34995f7f1cb55d7806b935f90a4"),  # nopep8
-    ("https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/acorn/5.5.1/acorn.js", "f0fdbfe95e949e58b5a7be3e4a498712"),  # nopep8
 ]
 
 runDependencyJars = [
@@ -1325,8 +1324,6 @@ def preparePropertiesFile():
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
     preparePropertiesFile()
-    shutil.copyfile(os.path.join(dependencyDir, "acorn.js"),
-                    os.path.join(filesDir, "acorn-js"))
     shutil.copyfile(os.path.join(buildRoot, presetsFile),
                     os.path.join(filesDir, "presets"))
     shutil.copyfile(os.path.join(buildRoot, aboutFile),
