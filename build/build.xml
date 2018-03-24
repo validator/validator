@@ -105,16 +105,6 @@ DEALINGS IN THE SOFTWARE.
       version="3.0">
     <display-name>validator.nu</display-name>
     <description>Mark-up validation service</description>
-
-    <filter>
-        <filter-name>gzip-filter</filter-name>
-        <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>gzip-filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
     <filter>
         <filter-name>inbound-size-limit-filter</filter-name>
         <filter-class>nu.validator.servlet.InboundSizeLimitFilter</filter-class>
@@ -194,10 +184,6 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/langdetect-${langdetect-version}.jar"/>
       <fileset file="../dependencies/salvation-${salvation-version}.jar"/>
       <fileset file="../dependencies/jchardet-${jchardet-version}.jar"/>
-      <fileset file="../dependencies/jetty-http-${jetty-version}.jar"/> <!-- GzipFilter dependency -->
-      <fileset file="../dependencies/jetty-server-${jetty-version}.jar"/> <!-- GzipFilter dependency -->
-      <fileset file="../dependencies/jetty-servlets-${jetty-version}.jar"/> <!-- GzipFilter provider -->
-      <fileset file="../dependencies/jetty-util-${jetty-version}.jar"/> <!-- GzipFilter dependency -->
       <fileset file="../dependencies/jsonic-${jsonic-version}.jar"/>
       <fileset file="../dependencies/log4j-${log4j-version}.jar"/>
     </copy>

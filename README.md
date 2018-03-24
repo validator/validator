@@ -369,15 +369,17 @@ application by connecting to [http://localhost/vnu/][36].
 
 **Note:** You may want to customize the `/WEB-INF/web.xml` file inside the WAR
 file (you can use any ZIP-handling program) to modify the servlet filter
-configuration. For example, if you wanted to disable gzip decompression you
-could comment out that filter like this:
+configuration. For example, if you wanted to disable the inbound size
+limit-filter, you could comment out that filter like this:
 
     <!--
       <filter>
-          <filter-name>gzip-filter</filter-name>
-          <filter-class>org.mortbay.servlet.GzipFilter</filter-class>
-      </filter> <filter-mapping>
-          <filter-name>gzip-filter</filter-name> <url-pattern>*</url-pattern>
+          <filter-name>inbound-size-limit-filter</filter-name>
+          <filter-class>nu.validator.servlet.InboundSizeLimitFilter</filter-class>
+      </filter>
+      <filter-mapping>
+          <filter-name>inbound-size-limit-filter</filter-name>
+          <url-pattern>/*</url-pattern>
       </filter-mapping>
     -->
 
