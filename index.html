@@ -564,21 +564,20 @@ INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
 
 <div class=note>
 <p>
-	<b>Note:</b> You may want to customize the <code>/WEB-INF/web.xml</code>
-	file inside the WAR file (you can use any ZIP-handling program)
-	to modify the servlet filter configuration.
-	For example, if you wanted to disable gzip decompression you
-	could comment out that filter like this:
-	
-	<pre>
+    <b>Note:</b> You may want to customize the
+    <code>/WEB-INF/web.xml</code> file inside the WAR file (you can use any
+    ZIP-handling program) to modify the servlet filter configuration.
+    For example, if you wanted to disable the inbound size limit filter,
+    you could comment out that filter like this:
+    <pre>
 &lt;!--
   &lt;filter>
-      &lt;filter-name>gzip-filter&lt;/filter-name>
-      &lt;filter-class>org.mortbay.servlet.GzipFilter&lt;/filter-class>
+      &lt;filter-name>inbound-size-limit-filter&lt;/filter-name>
+      &lt;filter-class>nu.validator.servlet.InboundSizeLimitFilter&lt;/filter-class>
   &lt;/filter>
   &lt;filter-mapping>
-      &lt;filter-name>gzip-filter&lt;/filter-name>
-      &lt;url-pattern>*&lt;/url-pattern>
+      &lt;filter-name>inbound-size-limit-filter&lt;/filter-name>
+      &lt;url-pattern>/*&lt;/url-pattern>
   &lt;/filter-mapping>
 --></pre>
 </div>

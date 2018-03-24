@@ -31,4 +31,5 @@ all: ../README.md
 	    | $(PERL) $(PERLFLAGS) -pe 's| \\ | \\\n         |g' \
 	    | $(PERL) $(PERLFLAGS) -pe 's| \\ | \\\n         |g' \
 	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/-p\n(\s+)8888/-p 8888/' \
+	    | $(PERL) $(PERLFLAGS) -pe 's|</filter> <filter-mapping>|</filter>\n      <filter-mapping>|' \
 	    | $(EXPAND) $(EXPANDFLAGS) > $@
