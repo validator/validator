@@ -44,6 +44,11 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${jing-nvdl-src}"/>
       <fileset dir="${jing-schematron-src}"/>
       <fileset dir="${jing-xerces-src}"/>
+      <classpath>
+        <fileset dir="../jing-trang/lib/">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
     </javadoc>
     <jar destfile="${jing-javadoc-jar}">
       <fileset dir="${javadoc-dir}" />

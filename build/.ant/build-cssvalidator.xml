@@ -29,6 +29,11 @@ DEALINGS IN THE SOFTWARE.
   <target name="cssvalidator-javadoc-jar">
     <javadoc destdir="${javadoc-dir}">
       <fileset dir="${cssvalidator-src}"/>
+      <classpath>
+        <fileset dir="../css-validator/lib/">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
     </javadoc>
     <jar destfile="${cssvalidator-javadoc-jar}">
       <fileset dir="${javadoc-dir}" />
