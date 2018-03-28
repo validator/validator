@@ -53,7 +53,6 @@ import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 import nu.validator.xml.templateelement.TemplateElementDroppingSchemaWrapper;
 import nu.validator.xml.IdFilter;
-import nu.validator.xml.LanguageDetectingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver.ResourceNotRetrievableException;
@@ -68,7 +67,6 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
-import com.cybozu.labs.langdetect.LangDetectException;
 import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
@@ -120,8 +118,6 @@ public class SimpleDocumentValidator {
     private XMLReader xmlReader;
 
     private LexicalHandler lexicalHandler;
-
-    private boolean enableLanguageDetection;
 
     static {
         PrudentHttpEntityResolver.setParams(
@@ -213,7 +209,9 @@ public class SimpleDocumentValidator {
      */
     public SimpleDocumentValidator(boolean initializeLog4j, boolean logUrls,
             boolean enableLanguageDetection) {
-        this.enableLanguageDetection = enableLanguageDetection;
+        if (enableLanguageDetection) {
+            System.setProperty("nu.validator.checker.enableLangDetection", "0");
+        }
         if (initializeLog4j) {
             Properties properties = new Properties();
             try {
@@ -233,12 +231,6 @@ public class SimpleDocumentValidator {
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
-        if (enableLanguageDetection) {
-            try {
-                LanguageDetectingXMLReaderWrapper.initialize();
-            } catch (LangDetectException e) {
-            }
-        }
     }
 
     /* *
@@ -346,10 +338,6 @@ public class SimpleDocumentValidator {
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         }
         htmlReader = getWiretap(htmlParser);
-        if (enableLanguageDetection) {
-            htmlReader = new LanguageDetectingXMLReaderWrapper(htmlReader, null,
-                    docValidationErrHandler, "", "");
-        }
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
         if (lexicalHandler != null) {
@@ -375,10 +363,6 @@ public class SimpleDocumentValidator {
             xmlReader.setEntityResolver(new NullEntityResolver());
         }
         xmlReader = getWiretap(xmlParser);
-        if (enableLanguageDetection) {
-            xmlReader = new LanguageDetectingXMLReaderWrapper(xmlReader, null,
-                    docValidationErrHandler, "", "");
-        }
         xmlParser.setErrorHandler(docValidationErrHandler);
         xmlParser.lockErrorHandler();
     }

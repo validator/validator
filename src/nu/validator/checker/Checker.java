@@ -44,7 +44,7 @@ import org.xml.sax.SAXParseException;
  */
 public abstract class Checker implements ContentHandler {
 
-    private ErrorHandler errorHandler;
+    protected ErrorHandler errorHandler;
 
     private Locator locator;
 

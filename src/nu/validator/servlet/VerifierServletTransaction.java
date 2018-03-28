@@ -92,8 +92,6 @@ import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.ContentTypeParser.NonXmlContentTypeException;
 import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.IdFilter;
-import nu.validator.xml.LanguageDetectingXMLReaderWrapper;
-import nu.validator.xml.UseCountingXMLReaderWrapper;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
@@ -613,12 +611,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
                 log4j.debug("Filter file read.");
             }
-
-            log4j.debug("Initializing language detector.");
-
-            LanguageDetectingXMLReaderWrapper.initialize();
-
-            log4j.debug("Initialization complete.");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -1004,17 +996,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } // else auto
 
         laxType = (request.getParameter("laxtype") != null);
-    }
-
-    private boolean useXhtml5Schema() {
-        if ("".equals(schemaUrls)) {
-            return false;
-        }
-        return (schemaUrls.contains("http://s.validator.nu/xhtml5.rnc")
-                || schemaUrls.contains("http://s.validator.nu/xhtml5-all.rnc")
-                || schemaUrls.contains("http://s.validator.nu/xhtml5-its.rnc")
-                || schemaUrls.contains(
-                        "http://s.validator.nu/xhtml5-rdfalite.rnc"));
     }
 
     private boolean isHtmlUnsafePreset() {
@@ -1568,13 +1549,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if (validator != null) {
                     reader.setContentHandler(validator.getContentHandler());
                 }
-                reader = new LanguageDetectingXMLReaderWrapper(reader, request,
-                        errorHandler, documentInput.getLanguage(),
-                        documentInput.getSystemId());
-                if (Statistics.STATISTICS != null) {
-                    reader = new UseCountingXMLReaderWrapper(reader, request,
-                            documentInput.getSystemId());
-                }
                 break;
             case XML_NO_EXTERNAL_ENTITIES:
             case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
@@ -1606,13 +1580,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     reader = htmlParser;
                     if (validator != null) {
                         reader.setContentHandler(validator.getContentHandler());
-                    }
-                    reader = new LanguageDetectingXMLReaderWrapper(reader,
-                            request, errorHandler, documentInput.getLanguage(),
-                            documentInput.getSystemId());
-                    if (Statistics.STATISTICS != null) {
-                        reader = new UseCountingXMLReaderWrapper(reader,
-                                request, documentInput.getSystemId());
                     }
                 } else {
                     if (contentType != null) {
@@ -1692,15 +1659,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             reader.setContentHandler(new RootNamespaceSniffer(this,
                     validator.getContentHandler()));
             reader.setDTDHandler(validator.getDTDHandler());
-        }
-        if (useXhtml5Schema()) {
-            reader = new LanguageDetectingXMLReaderWrapper(reader, request,
-                    errorHandler, documentInput.getLanguage(),
-                    documentInput.getSystemId());
-            if (Statistics.STATISTICS != null) {
-                reader = new UseCountingXMLReaderWrapper(reader, request,
-                        documentInput.getSystemId());
-            }
         }
     }
 
@@ -1794,6 +1752,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (validatorContentHandler instanceof Assertions) {
             Assertions assertions = (Assertions) validatorContentHandler;
             assertions.setRequest(request);
+            assertions.setHttpContentLanguageHeader(
+                    request.getHeader("Content-Language"));
             assertions.setSourceIsCss(sourceCode.getIsCss());
         }
         return validator;
