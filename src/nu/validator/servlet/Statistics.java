@@ -134,15 +134,6 @@ public class Statistics {
         LOGIC_ERROR("Logic errors in schema stats"), //
         STYLE_ELEMENT_ERRORS_FOUND("<style> element with CSS errors found"), //
         STYLE_ATTRIBUTE_ERRORS_FOUND("\"style\" attribute with CSS errors found"), //
-        H1_MULTIPLE_FOUND("<h1> multiple found"), //
-        H1_MULTIPLE_WITH_SECTION_ANCESTOR_FOUND("<h1> multiple with <section> ancestor found"), //
-        H1_MULTIPLE_WITH_ARTICLE_ANCESTOR_FOUND("<h1> multiple with <article> ancestor found"), //
-        H1_MULTIPLE_WITH_ASIDE_ANCESTOR_FOUND("<h1> multiple with <aside> ancestor found"), //
-        H1_MULTIPLE_WITH_NAV_ANCESTOR_FOUND("<h1> multiple with <nav> ancestor found"), //
-        HGROUP_FOUND("<hgroup> found"), //
-        STYLE_IN_BODY_FOUND("<style> in <body> found"), //
-        MAIN_FOUND("<main> found"), //
-        MAIN_MULTIPLE_VISIBLE_FOUND("<main> multiple visible found"), //
         LANG_FOUND("<html lang> found"), //
         LANG_WRONG("<html lang> does not match detected language"), //
         LANG_EMPTY("<html lang>: empty (lang=\"\")"), //
