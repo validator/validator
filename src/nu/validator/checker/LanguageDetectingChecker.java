@@ -611,9 +611,20 @@ public class LanguageDetectingChecker extends Checker {
         }
     }
 
+    private void warnIfMissingLang() throws SAXException {
+        if (!htmlElementHasLang) {
+            String message = "Consider adding a \u201Clang\u201D"
+                    + " attribute to the \u201Chtml\u201D"
+                    + " start tag to declare the language"
+                    + " of this document.";
+            warn(message, htmlStartTagLocator);
+        }
+    }
+
     private void detectLanguageAndCheckAgainstDeclaredLanguage()
             throws SAXException {
         if (nonWhitespaceCharacterCount < MIN_CHARS) {
+            warnIfMissingLang();
             return;
         }
         if ("zxx".equals(declaredLangCode) // "No Linguistic Content"
@@ -669,13 +680,7 @@ public class LanguageDetectingChecker extends Checker {
                 }
             }
             if ("".equals(detectedLanguage)) {
-                if (!htmlElementHasLang) {
-                    String message = "Consider adding a \u201Clang\u201D"
-                            + " attribute to the \u201Chtml\u201D"
-                            + " start tag to declare the language"
-                            + " of this document.";
-                    warn(message, htmlStartTagLocator);
-                }
+                warnIfMissingLang();
                 return;
             }
             String detectedLanguageName = "";
