@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -21,6 +22,8 @@
  */
 
 package nu.validator.checker;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -44,7 +47,7 @@ import org.xml.sax.SAXParseException;
  */
 public abstract class Checker implements ContentHandler {
 
-    protected ErrorHandler errorHandler;
+    private ErrorHandler errorHandler;
 
     private Locator locator;
 
@@ -105,6 +108,16 @@ public abstract class Checker implements ContentHandler {
             SAXParseException spe = new SAXParseException(message, locator);
             errorHandler.error(spe);
         }
+    }
+
+    private HttpServletRequest request;
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+
+    public HttpServletRequest getRequest() {
+        return this.request;
     }
 
     /**

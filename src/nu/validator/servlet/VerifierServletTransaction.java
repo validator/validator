@@ -53,8 +53,10 @@ import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
+import nu.validator.checker.LanguageDetectingChecker;
 import nu.validator.checker.XmlPiChecker;
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.schematronequiv.Assertions;
@@ -263,7 +265,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
             "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
-            "http://c.validator.nu/microdata/" };
+            "http://c.validator.nu/microdata/",
+            "http://c.validator.nu/langdetect/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
@@ -540,6 +543,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.MICRODATA_CHECKER);
             schemaMap.put("http://c.validator.nu/rdfalite/",
                     CheckerSchema.RDFALITE_CHECKER);
+            schemaMap.put("http://c.validator.nu/langdetect/",
+                    CheckerSchema.LANGUAGE_DETECTING_CHECKER);
 
             for (String presetUrl : presetUrls) {
                 for (String url : SPACE.split(presetUrl)) {
@@ -1752,9 +1757,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (validatorContentHandler instanceof Assertions) {
             Assertions assertions = (Assertions) validatorContentHandler;
             assertions.setRequest(request);
-            assertions.setHttpContentLanguageHeader(
-                    request.getHeader("Content-Language"));
             assertions.setSourceIsCss(sourceCode.getIsCss());
+        }
+        if (validatorContentHandler instanceof LanguageDetectingChecker) {
+            LanguageDetectingChecker langdetect = //
+                (LanguageDetectingChecker) validatorContentHandler;
+            langdetect.setRequest(request);
+            langdetect.setHttpContentLanguageHeader(
+                    request.getHeader("Content-Language"));
         }
         return validator;
     }
