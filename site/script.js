@@ -99,7 +99,7 @@ function initFieldHolders() {
 		textarea.setAttribute('aria-labelledby', 'docselect')
 		copySourceIntoTextArea()
 		if (textarea.value == '') {
-			textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title>Test</title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
+			textarea.value = '<!DOCTYPE html>\n<html lang="">\n<head>\n<title>Test</title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
     }
 	}
 	

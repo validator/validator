@@ -158,7 +158,8 @@ public class SimpleDocumentValidator {
     private boolean allowCss = false;
 
     private static final byte[] CSS_CHECKING_PROLOG = //
-                    "<!DOCTYPE html><title>s</title><style>\n".getBytes();
+            "<!DOCTYPE html><html lang=''><title>s</title><style>\n" //
+                    .getBytes();
 
     private static final byte[] CSS_CHECKING_EPILOG = "\n</style>".getBytes();
 

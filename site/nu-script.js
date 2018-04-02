@@ -42,7 +42,8 @@ var hasTextContent = (createHtmlElement('code').textContent != undefined)
 var linePattern = /^#l-?[0-9]+$/
 var rangePattern = /^#l-?[0-9]+c[0-9]+$/
 var exactPattern = /^#cl-?[0-9]+c[0-9]+$/
-var htmlBoilerplate = '<!DOCTYPE html>\n<html>\n<head>\n<title>Test</title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
+var htmlBoilerplate = '<!DOCTYPE html>\n<html lang="">\n<head>\n'
+  + '<title>Test</title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
 
 function boot() {
 	installHandlers()
