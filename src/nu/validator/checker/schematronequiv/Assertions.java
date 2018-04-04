@@ -1558,6 +1558,7 @@ public class Assertions extends Checker {
     @Override
     public void startDocument() throws SAXException {
         reset();
+        request = getRequest();
         stack = new StackNode[32];
         currentPtr = 0;
         currentFigurePtr = -1;

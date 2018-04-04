@@ -775,6 +775,7 @@ public class LanguageDetectingChecker extends Checker {
      */
     @Override
     public void startDocument() throws SAXException {
+        request = getRequest();
         httpContentLangHeader = "";
         tld = "";
         htmlStartTagLocator = null;
