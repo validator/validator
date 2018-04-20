@@ -1,4 +1,4 @@
-# The Nu Html Checker (v.Nu) [![Chat room][1]][2] [![Download latest][3]][4]
+# The Nu Html Checker (v.Nu) [![Build Status](https://travis-ci.org/validator/validator.svg?branch=master)](https://travis-ci.org/validator/validator) [![Chat room][1]][2] [![Download latest][3]][4]
 
    [1]: https://goo.gl/1kHqwI
    [2]: https://gitter.im/validator/validator
