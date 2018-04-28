@@ -2,6 +2,10 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 18.N.N
+NN XXX 2018
+  - Ensure vnu.jar is always runnable under Java8, even if built under Java9
+
 # 18.3.0
 24 March 2018
   - Add new major (optional) feature to command-line checker, Web-based checker,
