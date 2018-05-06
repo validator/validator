@@ -128,9 +128,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 				)
 			|	base.attrs.target
 			)
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
 		)
 	base.attrs.href =
 		attribute href {
