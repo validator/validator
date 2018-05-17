@@ -30,7 +30,7 @@ grammar {
         attribute xlink:type { string "simple" }?,
         (
         attribute xlink:href { URI.datatype }
-        |
+        &
         attribute href { URI.datatype }
         )?,
         attribute xlink:role { URI.datatype }?,
@@ -46,7 +46,7 @@ grammar {
         attribute xlink:type { string "simple" }?,
         (
         attribute xlink:href { URI.datatype }
-        |
+        &
         attribute href { URI.datatype }
         )?,
         attribute xlink:role { URI.datatype }?,
@@ -62,7 +62,7 @@ grammar {
         attribute xlink:type { string "simple" }?,
         (
         attribute xlink:href { URI.datatype }
-        |
+        &
         attribute href { URI.datatype }
         )?,
         attribute xlink:role { URI.datatype }?,
@@ -78,7 +78,7 @@ grammar {
         attribute xlink:type { string "simple" }?,
         (
         attribute xlink:href { URI.datatype }
-        |
+        &
         attribute href { URI.datatype }
         )?,
         attribute xlink:role { URI.datatype }?,
