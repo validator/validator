@@ -91,13 +91,6 @@ public final class LinkRel extends AbstractRel {
                         + " \u201cshortcut icon\u201d.");
             }
         } else {
-            if (WARN) {
-                // Synonyms for current keywords
-                Map<String, String> map = new HashMap<>();
-                map.put("copyright", "license");
-                map.put("previous", "prev");
-                errSynonym(token, map);
-            }
             return registeredValues.contains(token.toLowerCase());
         }
     }
