@@ -5,6 +5,7 @@ changes to any options/interfaces the checker exposes for developers.
 # 18.N.N
 NN XXX 2018
   - Ensure vnu.jar is always runnable under Java8, even if built under Java9
+  - Align ARIA checking further with ARIA in HTML spec requirements
 
 # 18.3.0
 24 March 2018
