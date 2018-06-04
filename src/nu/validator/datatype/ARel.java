@@ -77,13 +77,6 @@ public final class ARel extends AbstractRel {
     @Override
     protected boolean isRegistered(CharSequence literal, String token)
             throws DatatypeException {
-        if (WARN) {
-            // Synonyms for current keywords
-            Map<String, String> map = new HashMap<>();
-            map.put("copyright", "license");
-            map.put("previous", "prev");
-            errSynonym(token, map);
-        }
         return registeredValues.contains(token.toLowerCase());
     }
 
