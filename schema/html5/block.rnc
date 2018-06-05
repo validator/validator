@@ -216,7 +216,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element dt { dt.inner & dt.attrs }
 	dt.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.listitem
+			|	common.attrs.aria.role.listitem
+			)
 		)
 	dt.inner =
 		( common.inner.flow )
@@ -229,7 +231,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element dd { dd.inner.phrasing & dd.attrs }
 	dd.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.definition
+			|	common.attrs.aria.role.definition
+			)
 		)
 	dd.inner =
 		( common.inner.flow )
