@@ -1464,6 +1464,7 @@ public class Assertions extends Checker {
                 ApplContext ac = new ApplContext("en");
                 ac.setCssVersionAndProfile("css3svg");
                 ac.setMedium("all");
+                ac.setSuggestPropertyName(false);
                 ac.setTreatVendorExtensionsAsWarnings(true);
                 ac.setTreatCssHacksAsWarnings(true);
                 ac.setWarningLevel(-1);
@@ -1678,6 +1679,7 @@ public class Assertions extends Checker {
                         ApplContext ac = new ApplContext("en");
                         ac.setCssVersionAndProfile("css3svg");
                         ac.setMedium("all");
+                        ac.setSuggestPropertyName(false);
                         ac.setTreatVendorExtensionsAsWarnings(true);
                         ac.setTreatCssHacksAsWarnings(true);
                         ac.setWarningLevel(-1);
