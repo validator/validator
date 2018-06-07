@@ -8,9 +8,9 @@ You can work with `vnu.jar` in CommonJS modules.
 $ npm install --save vnu-jar
 ```
 
-## Install latest dev version
+## Install 'next' version
 ```sh
-$ npm install --save vnu-jar@dev
+$ npm install --save vnu-jar@next
 ```
 
 ## Example

@@ -1633,7 +1633,7 @@ else:
         elif arg == 'npm-snapshot':
             release = Release()
             release.createExecutable("jar")
-            release.uploadNpm("dev")
+            release.uploadNpm("next")
         elif arg == 'npm-release':
             release = Release()
             release.createExecutable("jar")
