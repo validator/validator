@@ -389,6 +389,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
             // (non-)errors for features the CSS checker doesn’t support yet
             ".*Unknown pseudo-element or pseudo-class \u201C:focus-within\u201D.*", //
             ".*leader(.+)is not a \u201Ccontent\u201D value.*", //
+            ".*Property \u201Cfont-display\u201D doesn't exist.*", //
     };
 
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
