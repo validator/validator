@@ -43,6 +43,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -740,6 +741,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE,
                         "application/x-www-form-urlencoded not supported. Please use multipart/form-data.");
                 return;
+            }
+        }
+
+        String outLang = request.getParameter("lang");
+        if (outLang == null) {
+            Locale.setDefault(new Locale("en", "US"));
+        } else {
+            if ("ptBR".equals(outLang)) {
+                Locale.setDefault(new Locale("pt", "BR"));
             }
         }
 
