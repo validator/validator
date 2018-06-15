@@ -83,6 +83,7 @@ public class Main {
                 new HttpConnectionFactory(new HttpConfiguration()));
         int port = args.length > 0 ? Integer.parseInt(args[0]) : 8888;
         serverConnector.setPort(port);
+        serverConnector.setIdleTimeout(300000);
         server.setConnectors(new Connector[] { serverConnector });
 
         int stopPort = -1;
