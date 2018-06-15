@@ -160,14 +160,14 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),  # nopep8
     ("https://repo1.maven.org/maven2/org/easytesting/fest-assert/1.4/fest-assert-1.4.jar", "05b9012baeccce4379d125a2050c6574"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.2.9.v20150224/jetty-security-9.2.9.v20150224.jar", "2bad0336376b71a5ec81bc3150b898a0"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.2.9.v20150224/jetty-server-9.2.9.v20150224.jar", "c8a746bc320459d16e8769485950cae1"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/9.2.9.v20150224/jetty-servlet-9.2.9.v20150224.jar", "b9686811e977ab4c0cc43cc5e0996c02"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.2.9.v20150224/jetty-servlets-9.2.9.v20150224.jar", "5ec4c25b552df1f7b6785b7b5bbbd54c"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.9.v20150224/jetty-util-9.2.9.v20150224.jar", "cb039d6b03c838ea90748469fe928d60"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.9.v20150224/jetty-util-ajax-9.2.9.v20150224.jar", "e3f16ce949fa5103975a1c056d2cc9cb"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.25.v20180606/jetty-http-9.2.25.v20180606.jar", "d65032c93330cc33f92ab3e9a74690bb"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.25.v20180606/jetty-io-9.2.25.v20180606.jar", "c0596d22696d73ee5919e82253596797"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.2.25.v20180606/jetty-security-9.2.25.v20180606.jar", "04d4d6f08166bffee9fba032b4976cef"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.2.25.v20180606/jetty-server-9.2.25.v20180606.jar", "fe8be4dcd7402177601bc5cb904f9014"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/9.2.25.v20180606/jetty-servlet-9.2.25.v20180606.jar", "14f656b4359dd7a945c41dcd1c80b281"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.2.25.v20180606/jetty-servlets-9.2.25.v20180606.jar", "e1885683a65213deb62eff2dddf5f2dd"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.25.v20180606/jetty-util-9.2.25.v20180606.jar", "40e16d5b86902bd7c3a440e2c3eac041"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.25.v20180606/jetty-util-ajax-9.2.25.v20180606.jar", "84eca54fd6b260f3ca2d87bbb0cdd4f9"),  # nopep8
     ("https://repo1.maven.org/maven2/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar", "1d04e4713e19ff23f9820f271e45c3be"),  # nopep8
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),  # nopep8
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
@@ -189,14 +189,14 @@ runDependencyJars = [
     "salvation-2.4.0.jar",
     "javax.servlet-api-3.1.0.jar",
     "jchardet-1.0.jar",
-    "jetty-http-9.2.9.v20150224.jar",
-    "jetty-io-9.2.9.v20150224.jar",
-    "jetty-security-9.2.9.v20150224.jar",
-    "jetty-server-9.2.9.v20150224.jar",
-    "jetty-servlet-9.2.9.v20150224.jar",
-    "jetty-servlets-9.2.9.v20150224.jar",
-    "jetty-util-9.2.9.v20150224.jar",
-    "jetty-util-ajax-9.2.9.v20150224.jar",
+    "jetty-http-9.2.25.v20180606.jar",
+    "jetty-io-9.2.25.v20180606.jar",
+    "jetty-security-9.2.25.v20180606.jar",
+    "jetty-server-9.2.25.v20180606.jar",
+    "jetty-servlet-9.2.25.v20180606.jar",
+    "jetty-servlets-9.2.25.v20180606.jar",
+    "jetty-util-9.2.25.v20180606.jar",
+    "jetty-util-ajax-9.2.25.v20180606.jar",
     "log4j-1.2.17.jar",
     "mail-1.5.0-b01.jar",
     "langdetect-1.1-20120112.jar",
