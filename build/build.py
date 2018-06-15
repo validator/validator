@@ -1657,7 +1657,7 @@ else:
             release.uploadToReleasesHost("war", isNightly)
             release.createDistribution("jar", isNightly)
             release.uploadToReleasesHost("jar", isNightly)
-            release.uploadNpm("dev")
+            release.uploadNpm("next")
         elif arg == 'heroku':
             release = Release()
             release.uploadToHeroku()
