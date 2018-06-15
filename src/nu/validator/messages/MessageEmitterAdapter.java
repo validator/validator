@@ -390,6 +390,8 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*Unknown pseudo-element or pseudo-class \u201C:focus-within\u201D.*", //
             ".*leader(.+)is not a \u201Ccontent\u201D value.*", //
             ".*Property \u201Cfont-display\u201D doesn't exist.*", //
+            ".*Property \u201Crow-gap\u201D doesn't exist.*", //
+            ".*\u201Cstart\u201D is not a \u201Calign-content\u201D value.*", //
     };
 
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
