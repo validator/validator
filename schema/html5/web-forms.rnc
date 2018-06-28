@@ -58,9 +58,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.size?
 		&	input.text.attrs.value? 
 		&	(	common.attrs.aria.implicit.textbox
-			|	common.attrs.aria.implicit.combobox
 			|	common.attrs.aria.role.textbox
 			|	common.attrs.aria.role.combobox
+			|	common.attrs.aria.role.searchbox
+			|	common.attrs.aria.role.spinbutton
 			)?
 		)
 		input.text.attrs.type = 
