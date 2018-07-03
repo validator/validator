@@ -35,7 +35,6 @@ import nu.validator.checker.UnsupportedFeatureChecker;
 import nu.validator.checker.UsemapChecker;
 import nu.validator.checker.XmlPiChecker;
 import nu.validator.checker.schematronequiv.Assertions;
-import nu.validator.checker.schematronequiv.Html4Assertions;
 import nu.validator.checker.table.TableChecker;
 
 import com.thaiopensource.util.PropertyMap;
@@ -58,8 +57,6 @@ public class CheckerSchema implements Schema {
 
     public static final CheckerSchema ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Assertions.class);
     
-    public static final CheckerSchema HTML4ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Html4Assertions.class);
-
     public static final CheckerSchema CONFORMING_BUT_OBSOLETE_WARNER = new CheckerSchema(PropertyMap.EMPTY, ConformingButObsoleteWarner.class);
     
     public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);
