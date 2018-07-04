@@ -607,6 +607,7 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dl", "list");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dt", "listitem");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("fieldset", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("figure", "figure");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("form", "form");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("footer", "contentinfo");
