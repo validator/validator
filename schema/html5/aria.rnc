@@ -167,6 +167,9 @@ common.attrs.aria.implicit.table |=
 	&	aria.prop.rowcount?
 	)
 
+common.attrs.aria.implicit.term |=
+	(	aria.state.expanded? )
+
 common.attrs.aria.implicit.textbox |=
 	(	aria.prop.activedescendant?
 	&	aria.prop.autocomplete?
@@ -1416,7 +1419,9 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 
 ## term
 	aria.term =
-		(	aria.role.term )
+		(	aria.role.term
+		&	aria.state.expanded?
+		)
 		aria.role.term =
 			attribute role { string "term" }
 	common.attrs.aria |= aria.term

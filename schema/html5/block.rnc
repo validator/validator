@@ -217,7 +217,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element dt { dt.inner & dt.attrs }
 	dt.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.implicit.listitem
+		&	(	common.attrs.aria.implicit.term
+			|	common.attrs.aria.role.term
 			|	common.attrs.aria.role.listitem
 			)
 		)
