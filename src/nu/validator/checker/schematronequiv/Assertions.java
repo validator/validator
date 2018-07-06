@@ -605,7 +605,6 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dd", "definition");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("details", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("dl", "list");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dt", "term");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("fieldset", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("figure", "figure");
@@ -648,7 +647,6 @@ public class Assertions extends Checker {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("body", "document");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("datalist", "listbox");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("details", "group");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.put("dl", "list");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("form", "form");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("hr", "separator");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("main", "main");

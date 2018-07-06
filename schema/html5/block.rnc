@@ -186,11 +186,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element dl { dl.inner & dl.attrs }
 	dl.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.implicit.list
-			|	common.attrs.aria.role.list
+		&	(	common.attrs.aria.role.list
 			|	common.attrs.aria.role.group
 			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.doc-glossary
 			)?
 		)
 	dl.inner =
