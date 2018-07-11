@@ -33,7 +33,7 @@ released upstream in these formats:
    [15]: https://validator.github.io/validator/#standalone
    [16]: https://validator.github.io/validator/#servlet
 
-**Note:** The _vnu.jar_ and _vnu.war_ files require a Java 8 environment; they
+**Note:** The _vnu.jar_ and _vnu.war_ files require a Java 8 environment or up; they
 won’t run in Java 7 or older environment.
 
 You can [get the latest release][17] or run [`docker run -p 8888:8888
