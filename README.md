@@ -369,8 +369,8 @@ application by connecting to [http://localhost/vnu/][36].
 
 **Note:** You may want to customize the `/WEB-INF/web.xml` file inside the WAR
 file (you can use any ZIP-handling program) to modify the servlet filter
-configuration. For example, if you wanted to disable the inbound size
-limit-filter, you could comment out that filter like this:
+configuration. For example, if you wanted to disable the inbound-size-limit
+filter, you could comment out that filter like this:
 
     <!--
       <filter>
