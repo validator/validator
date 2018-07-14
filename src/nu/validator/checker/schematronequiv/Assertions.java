@@ -1301,8 +1301,8 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : formControlReferences) {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
                 err("The value of the \u201Cfor\u201D attribute of the"
-                        " \u201Clabel\u201D element must the ID of a"
-                        " non-hidden form control.",
+                        + " \u201Clabel\u201D element must the ID of a"
+                        + " non-hidden form control.",
                         idrefLocator.getLocator());
             }
         }
