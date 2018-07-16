@@ -76,12 +76,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import org.apache.log4j.Logger;
-
 public class Assertions extends Checker {
-
-    private static final Logger log4j = //
-            Logger.getLogger(Assertions.class);
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -2242,10 +2237,6 @@ public class Assertions extends Checker {
                 }
             } else if ("hgroup" == localName) {
                 incrementUseCounter("hgroup-found");
-                String systemId = getDocumentLocator().getSystemId();
-                if (systemId != null) {
-                    log4j.info("hgroup " + systemId);
-                }
             } else if ("main" == localName) {
                 for (int i = 0; i < currentPtr; i++) {
                     String ancestorName = stack[currentPtr - i].getName();
