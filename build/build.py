@@ -141,7 +141,7 @@ maxTotalConnections = 200
 maxRedirects = 20  # Gecko default
 followW3Cspec = 0
 statistics = 0
-miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
+miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8

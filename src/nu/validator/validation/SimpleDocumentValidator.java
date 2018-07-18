@@ -103,6 +103,8 @@ public class SimpleDocumentValidator {
 
     private Schema assertionSchema;
 
+    private Schema langdetectSchema;
+
     private Validator validator;
 
     private SourceCode sourceCode = new SourceCode();
@@ -210,8 +212,9 @@ public class SimpleDocumentValidator {
      */
     public SimpleDocumentValidator(boolean initializeLog4j, boolean logUrls,
             boolean enableLanguageDetection) {
+        System.setProperty("nu.validator.checker.enableLangDetection", "0");
         if (enableLanguageDetection) {
-            System.setProperty("nu.validator.checker.enableLangDetection", "0");
+            System.setProperty("nu.validator.checker.enableLangDetection", "1");
         }
         if (initializeLog4j) {
             Properties properties = new Properties();
@@ -253,6 +256,12 @@ public class SimpleDocumentValidator {
         if (schemaUrl.contains("html5")) {
             try {
                 assertionSchema = CheckerSchema.ASSERTION_SCH;
+            } catch (Exception e) {
+                throw new SchemaReadException(
+                        "Failed to retrieve secondary schema.");
+            }
+            try {
+                langdetectSchema = CheckerSchema.LANGUAGE_DETECTING_CHECKER;
             } catch (Exception e) {
                 throw new SchemaReadException(
                         "Failed to retrieve secondary schema.");
@@ -299,6 +308,8 @@ public class SimpleDocumentValidator {
         if (this.hasHtml5Schema) {
             Validator assertionValidator = assertionSchema.createValidator(jingPropertyMap);
             validator = new CombineValidator(validator, assertionValidator);
+            Validator langdetectValidator = langdetectSchema.createValidator(jingPropertyMap);
+            validator = new CombineValidator(validator, langdetectValidator);
             validator = new CombineValidator(validator, new CheckerValidator(
                     new TableChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
