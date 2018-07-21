@@ -446,6 +446,7 @@ namespace local = ""
 		&	iframe.attrs.allowfullscreen?
 		&	iframe.attrs.allowpaymentrequest?
 		&	iframe.attrs.allowusermedia?
+		&	iframe.attrs.allow?
 		&	referrerpolicy?
 		&	(	common.attrs.aria.role.application
 			|	common.attrs.aria.landmark.document
@@ -489,6 +490,10 @@ namespace local = ""
 			attribute allowusermedia {
 				w:string "allowusermedia" | w:string ""
 			} & v5only
+		iframe.attrs.allow =
+			attribute allow {
+				string #FIXME
+			}
 	iframe.inner =
 		empty
 
