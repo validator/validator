@@ -22,6 +22,7 @@ namespace local = ""
 		&	img.attrs.width?
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
+		&	img.attrs.decoding?
 		&	img.attrs.border? # obsolete
 		&	referrerpolicy?
 		&	embedded.content.attrs.crossorigin?
@@ -60,6 +61,13 @@ namespace local = ""
 		img.attrs.ismap =
 			attribute ismap {
 				w:string "ismap" | w:string ""
+			}
+		img.attrs.decoding =
+			attribute decoding {
+				(	string "sync"
+				|	string "async"
+				|	string "auto"
+				)
 			}
 		img.attrs.border =
 			attribute border {

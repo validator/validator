@@ -4,9 +4,10 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 18.N.N
 NN XXX 2018
-  - Ensure vnu.jar is always runnable under Java8, even if built under Java9
+  - Allow the `decoding` attribute for the `img` element
   - Align ARIA checking further with ARIA in HTML spec requirements
   - Restore the language-detection feature to vnu.jar command-line checker
+  - Ensure vnu.jar is always runnable under Java8, even if built under Java9
 
 # 18.3.0
 24 March 2018
