@@ -50,12 +50,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-import org.apache.log4j.Logger;
-
 public class LanguageDetectingChecker extends Checker {
-
-    private static final Logger log4j = //
-            Logger.getLogger(LanguageDetectingChecker.class);
 
     private static final String languageList = //
             "nu/validator/localentities/files/language-profiles-list.txt";
@@ -650,12 +645,6 @@ public class LanguageDetectingChecker extends Checker {
             for (Language possibility : possibilities) {
                 possibileLanguages.add(possibility.lang);
                 ULocale plocale = new ULocale(possibility.lang);
-                if (Arrays.binarySearch(COMMON_LANGS, possibility.lang) < 0
-                        && systemId != null) {
-                    log4j.info(
-                            String.format("%s %s %s", plocale.getDisplayName(),
-                                    possibility.prob, systemId));
-                }
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
                     setDocumentLanguage(detectedLanguage);
