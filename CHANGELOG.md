@@ -2,8 +2,8 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 18.N.N
-NN XXX 2018
+# 18.7.22
+22 July 2018
   - Allow the `decoding` attribute for the `img` element
   - Allow the `allow` attribute for the `image` element (initial support)
   - Align ARIA checking further with ARIA in HTML spec requirements
