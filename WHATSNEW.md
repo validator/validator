@@ -1,5 +1,8 @@
+23 July 2018.
 
-22 July 2018.
+This release updates the vnu.jar behavior to prevent a stray logging message from being emitted by the language-detection backend.
+
+This release otherwise adds no changes beyond those in the 17.18.22 release, the release notes for which follow.
 
 This release updates the checker to allow the `decoding` attribute for the `img` element and the `allow` attribute for the `image` element. The release also includes a number of changes to align ARIA role checking with the current requirements in the **ARIA in HTML** spec. In addition, this release also ensures that the vnu.jar distribution is always runnable under Java9, even if built under Java9
 
