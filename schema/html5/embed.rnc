@@ -492,7 +492,7 @@ namespace local = ""
 			} & v5only
 		iframe.attrs.allow =
 			attribute allow {
-				string #FIXME
+				common.data.feature-policy
 			}
 	iframe.inner =
 		empty
