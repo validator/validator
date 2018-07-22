@@ -898,6 +898,7 @@ class Release():
             antJar, antLauncherJar,
             os.pathsep.join(dependencyJarPaths()),
             os.path.join(jingTrangDir, "build", "jing.jar"),
+            os.path.join(jarsDir, "validator.jar"),
             os.path.join(jarsDir, "htmlparser.jar"),
             os.path.join(jarsDir, "galimatias.jar"),
             os.path.join(cssValidatorDir, "css-validator.jar"),
