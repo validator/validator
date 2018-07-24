@@ -14,7 +14,7 @@ ADD https://sideshowbarker.net/nightlies/jar/vnu.jar.asc .
 ADD https://sideshowbarker.net/nightlies/jar/vnu.jar.sha1 .
 ADD https://sideshowbarker.net/nightlies/jar/vnu.jar.sha1.asc .
 RUN apk --no-cache add gnupg=2.1.12-r0
-RUN gpg --keyserver pgp.mit.edu --quiet --recv-keys 87D17477BC3A4B95
+RUN gpg --keyserver keys.gnupg.net --quiet --recv-keys 87D17477BC3A4B95
 RUN gpg --quiet --verify --trust-model always vnu.jar.asc vnu.jar
 RUN gpg --quiet --verify --trust-model always vnu.jar.sha1.asc vnu.jar.sha1
 RUN echo "$(cat vnu.jar.sha1)  vnu.jar" | sha1sum -c -
