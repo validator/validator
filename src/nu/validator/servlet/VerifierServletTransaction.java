@@ -2153,7 +2153,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                                 + ".");
                         validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                     }
-                } else {
+                }
+                if (validator == null) {
                     schemaIsDefault = true;
                     validator = validatorByDoctype(HTML5_SCHEMA);
                 }
