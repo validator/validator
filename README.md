@@ -36,7 +36,7 @@ released upstream in these formats:
 **Note:** The _vnu.jar_ and _vnu.war_ files require an environment with Java 8
 or above; they won’t run in Java 7 or older environment.
 
-You can [get the latest release][17] or run [`docker run -p 8888:8888
+You can [get the latest release][17] or run [`docker run -it --rm -p 8888:8888
 validator/validator:latest`][18], [`npm install vnu-jar`][19],
 [`brew install vnu`][20], or [`pip install html5validator`][21] and see the
 **Usage** and **Web-based checking** sections below. Or automate your document
