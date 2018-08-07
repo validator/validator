@@ -559,7 +559,7 @@ following:
 Follow the steps below to build, test, and run the checker such that you can
 open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
-  1. Make sure you have git, python, and JDK 8 installed.
+  1. Make sure you have git, python, and JDK 8 or above installed.
 
   2. Set the `JAVA_HOME` environment variable:
 
