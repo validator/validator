@@ -392,6 +392,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*Property \u201Cfont-display\u201D doesn't exist.*", //
             ".*Property \u201Crow-gap\u201D doesn't exist.*", //
             ".*\u201Cstart\u201D is not a \u201Calign-content\u201D value.*", //
+            ".*\u201Cjustify-content\u201D.*", //
     };
 
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
