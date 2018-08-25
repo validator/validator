@@ -9,7 +9,7 @@ changes to any options/interfaces the checker exposes for developers.
 # 18.7.22
 22 July 2018
   - Allow the `decoding` attribute for the `img` element
-  - Allow the `allow` attribute for the `image` element (initial support)
+  - Allow the `allow` attribute for the `iframe` element (initial support)
   - Align ARIA checking further with ARIA in HTML spec requirements
   - Restore the language-detection feature to vnu.jar command-line checker
   - Ensure vnu.jar is always runnable under Java8, even if built under Java9
