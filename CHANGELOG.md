@@ -5,6 +5,7 @@ changes to any options/interfaces the checker exposes for developers.
 # 18.7.23
 23 July 2018
   - Disable logging in the language detector
+  - CSS: Allow unit-less values for stroke-width and other from-SVG props
 
 # 18.7.22
 22 July 2018
