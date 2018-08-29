@@ -1,12 +1,8 @@
-23 July 2018.
+29 August 2018.
 
-This release updates the vnu.jar behavior to prevent a stray logging message from being emitted by the language-detection backend.
+This release brings the checking support in the CSS backend up to date with CSS Align3, adds checking support for the `font-display` property, and allows unit-less numbers in the CSS `stroke-width` property and other from-SVG properties.
 
-This release otherwise adds no changes beyond those in the 17.18.22 release, the release notes for which follow.
-
-This release updates the checker to allow the `decoding` attribute for the `img` element and the `allow` attribute for the `image` element. The release also includes a number of changes to align ARIA role checking with the current requirements in the **ARIA in HTML** spec. In addition, this release also ensures that the vnu.jar distribution is always runnable under Java9, even if built under Java9
-
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#18722
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#18829
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 
