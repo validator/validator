@@ -86,7 +86,7 @@ validatorVersion = "%s.%s.%s" % (year, month, day)
 # validatorVersion = "18.7.23"
 jingVersion = "20180722VNU"
 htmlparserVersion = "1.4.12"
-cssvalidatorVersion = "1.0.2"
+cssvalidatorVersion = "1.0.3"
 galimatiasVersion = "0.1.2"
 
 buildRoot = '.'
