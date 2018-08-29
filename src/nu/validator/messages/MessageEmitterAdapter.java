@@ -385,7 +385,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
     private static final String[] DEFAULT_FILTER_STRINGS = { //
             // Salvation messages that are a little bit ahead of their time yet
             ".*Authors who wish to regulate nested browsing contexts.*", //
-            ".*deprecates “report-uri” in favour of a new “report-to” directive.*", //
+            ".*\\s+“report-uri”\\s+in\\s+favour\\s+of\\s+a\\s+new\\s+“report-to”.*", //
             ".*is only used for backwards compatibility with older CSP.*", //
             // (non-)errors for features the CSS checker doesn’t support yet
             ".*Unknown pseudo-element or pseudo-class \u201C:focus-within\u201D.*", //
