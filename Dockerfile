@@ -16,6 +16,7 @@ ADD https://sideshowbarker.net/nightlies/jar/vnu.jar.sha1.asc .
 RUN apk --no-cache add gnupg
 RUN gpg --quiet --keyserver ha.pool.sks-keyservers.net --recv-keys 87D17477BC3A4B95 || \
     gpg --quiet --keyserver pgp.mit.edu --recv-keys 87D17477BC3A4B95 || \
+    gpg --quiet --keyserver ipv4.pool.sks-keyservers.net --recv-keys 87D17477BC3A4B95 || \
     gpg --quiet --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 87D17477BC3A4B95 || \
     gpg --quiet --keyserver keyserver.ubuntu.com --recv-keys 87D17477BC3A4B95 || \
     gpg --quiet --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 87D17477BC3A4B95 || \
