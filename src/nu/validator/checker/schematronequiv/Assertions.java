@@ -453,7 +453,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("address", "section");
         registerProhibitedAncestor("address", "nav");
         registerProhibitedAncestor("address", "article");
-        registerProhibitedAncestor("address", "aside");
         registerProhibitedAncestor("header", "header");
         registerProhibitedAncestor("footer", "header");
         registerProhibitedAncestor("address", "header");
@@ -462,7 +461,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("dt", "header");
         registerProhibitedAncestor("dt", "footer");
         registerProhibitedAncestor("dt", "article");
-        registerProhibitedAncestor("dt", "aside");
         registerProhibitedAncestor("dt", "nav");
         registerProhibitedAncestor("dt", "section");
         registerProhibitedAncestor("dt", "h1");
@@ -476,7 +474,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("th", "header");
         registerProhibitedAncestor("th", "footer");
         registerProhibitedAncestor("th", "article");
-        registerProhibitedAncestor("th", "aside");
         registerProhibitedAncestor("th", "nav");
         registerProhibitedAncestor("th", "section");
         registerProhibitedAncestor("th", "h1");
