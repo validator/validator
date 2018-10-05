@@ -58,7 +58,7 @@ checking with a frontend such as:
   * [LMVTFY: Let Me Validate That For You][27] (auto-check HTML of
   JSFiddle/JSBin etc. links in github issue comments)
 
-   [22]: https://github.com/jzaefferer/grunt-html
+   [22]: https://github.com/validator/grunt-html
    [23]: https://github.com/watilde/gulp-html
    [24]: https://github.com/svenkreiss/html5validator
    [25]: https://jekyllrb.com/
