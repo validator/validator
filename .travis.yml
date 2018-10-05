@@ -11,6 +11,10 @@ matrix:
       env: PYTHON=python2
     - jdk: oraclejdk9
       env: PYTHON=python3
+    - jdk: oraclejdk10
+      env: PYTHON=python2
+    - jdk: oraclejdk10
+      env: PYTHON=python3
 notifications:
   webhooks:
     urls:
