@@ -1,6 +1,8 @@
 dist: trusty
 sudo: false
 language: java
+git:
+  depth: 5
 
 matrix:
   include:
@@ -9,18 +11,15 @@ matrix:
     - jdk: oraclejdk8
       env: PYTHON=python3
     - jdk: oraclejdk9
-      env: PYTHON=python2
-    - jdk: oraclejdk9
       env: PYTHON=python3
-    - jdk: oraclejdk10
-      env: PYTHON=python2
     - jdk: oraclejdk10
       env: PYTHON=python3
 
 script:
+  - export TOMCAT_VERSION=8.5.29
   - $PYTHON --version
-  - $PYTHON ./build/build.py dldeps
-  - $PYTHON ./build/build.py build
+  - travis_retry $PYTHON ./build/build.py dldeps
+  - travis_retry $PYTHON ./build/build.py build
   - $PYTHON ./build/build.py check
   - $PYTHON ./build/build.py test
   - echo "test" | $PYTHON ./build/build.py jar
@@ -29,15 +28,19 @@ script:
   - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
   - echo "test" | $PYTHON ./build/build.py war
   - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
-  - curl -O http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.29/bin/apache-tomcat-8.5.29.zip
-  - unzip apache-tomcat-8.5.29.zip
-  - chmod a+x apache-tomcat-8.5.29/bin/*.sh
-  - apache-tomcat-8.5.29/bin/catalina.sh start
-  - cp ./build/dist/vnu.war apache-tomcat-8.5.29/webapps/
-  - timeout --preserve-status 15s tail -f apache-tomcat-8.5.29/logs/catalina.out || true
+  - curl -O http://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
+  - unzip apache-tomcat-$TOMCAT_VERSION.zip
+  - chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
+  - apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh start
+  - cp ./build/dist/vnu.war apache-tomcat-$TOMCAT_VERSION/webapps/
+  - timeout --preserve-status 15s tail -f apache-tomcat-$TOMCAT_VERSION/logs/catalina.out || true
   - curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
   - test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
   - if [ $? != 0 ]; then cat RESULTS; fi
+
+cache:
+  directories:
+    - dependencies
 
 notifications:
   webhooks:
