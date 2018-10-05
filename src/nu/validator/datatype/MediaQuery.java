@@ -973,7 +973,10 @@ public class MediaQuery extends AbstractDatatype {
                                                 + c + "\u201D instead.");
                             }
                         } else {
-                            if (!("dpi".equals(kw) || "dpcm".equals(kw))) {
+                            if (!("dpi".equals(kw)
+                                        || "dpcm".equals(kw)
+                                        || "dppx".equals(kw)
+                                        || "x".equals(kw))) {
                                 throw newDatatypeException(offset + i,
                                         "Expected a resolution unit but saw"
                                                 + " \u201C" + c

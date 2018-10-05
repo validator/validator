@@ -2,6 +2,10 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 18.N.NN
+NN XXX 2018
+  - Allow `dppx` and `x` and units in media queries
+
 # 18.8.29
 29 August 2018
   - CSS: Allow unit-less values for stroke-width and other from-SVG props
