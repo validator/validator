@@ -42,11 +42,13 @@ form {
 
 fieldset {
 	padding: 1.5%;
-	border: 1px dotted #666666;
+	border: 1px dotted #666;
 	margin: 0;
 }
 
-#schema, #doc, #nsfilter {
+#schema,
+#doc,
+#nsfilter {
 	width: 99%;
 }
 
@@ -55,27 +57,30 @@ table {
 	table-layout: fixed;
 }
 
-h1, h2 {
+h1,
+h2 {
 	font-size: 1.2em;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 h3 {
 	font-size: 1em;
-	font-weight: bold;
+	font-weight: 700;
 	margin-top: 2em;
 }
 
 h1 span {
-	color: #aaaaaa;
+	color: #aaa;
 }
 
-fieldset td, fieldset th {
+fieldset td,
+fieldset th {
 	padding-top: 0.4em;
 	padding-bottom: 0.4em;
 }
 
-tr:first-child td, tr:first-child th {
+tr:first-child td,
+tr:first-child th {
 	vertical-align: top;
 }
 
@@ -92,22 +97,26 @@ fieldset td {
 	padding-right: 0;
 }
 
-textarea, #doc[type="url"], #schema, #nsfilter {
-	font-family: Monaco, Consolas, Andale Mono, monospace;
+textarea,
+#doc[type="url"],
+#schema,
+#nsfilter {
+	font-family: Monaco, Consolas, "Andale Mono", monospace;
 }
 
-.stats, .details {
+.stats,
+.details {
 	font-size: 0.85em;
 }
 
 .success {
 	padding: 0.5em;
-	border: double 6px green;
+	border: double 6px #008000;
 }
 
 .failure {
 	padding: 0.5em;
-	border: double 6px red;
+	border: double 6px #f00;
 }
 
 ol {
@@ -133,33 +142,35 @@ li li {
 }
 
 .info {
-	color: black;
-	background-color: #ccffff;
+	color: #000;
+	background-color: #cff;
 }
 
 .warning {
-	color: black;
-	background-color: #ffffcc;
+	color: #000;
+	background-color: #ffc;
 }
 
 .error {
-	color: black;
-	background-color: #ffcccc;
+	color: #000;
+	background-color: #fcc;
 }
 
-.io, .fatal, .schema {
-	color: black;
-	background-color: #ff9999;
+.io,
+.fatal,
+.schema {
+	color: #000;
+	background-color: #f99;
 }
 
 .internal {
-	color: black;
-	background-color: #ff6666;
+	color: #000;
+	background-color: #f66;
 }
 
 
 hr {
-	border-top: 1px dotted #666666;
+	border-top: 1px dotted #666;
 	border-bottom: none;
 	border-left: none;
 	border-right: none;
@@ -174,21 +185,22 @@ li p {
 	margin: 0;
 }
 
-.stats, .details {
+.stats,
+.details {
 	margin-top: 0.75em;
 }
 
 .details p {
- 	margin: 0;
+	margin: 0;
 }
 
 .lf {
-	color: #222222;
+	color: #222;
 }
 
 b {
-	color: black;
-	background-color: #ff6666;
+	color: #000;
+	background-color: #f66;
 }
 
 ol.source li {
@@ -196,10 +208,11 @@ ol.source li {
 	padding-bottom: 0;
 }
 
-ol.source b, ol.source .b {
-	color: black;
-	background-color: #ffffcc;
-	font-weight: bold;
+ol.source b,
+ol.source .b {
+	color: #000;
+	background-color: #ffc;
+	font-weight: 700;
 }
 
 code {
@@ -233,17 +246,17 @@ col.img {
 }
 
 col.alt {
-	color: black;
-	background-color: #ffffcc;
+	color: #000;
+	background-color: #ffc;
 }
 
 td.alt span {
-	color: black;
-	background-color: #ffffaa;
+	color: #000;
+	background-color: #ffa;
 }
 
 .imagereview th {
-	font-weight: bold;
+	font-weight: 700;
 	text-align: left;
 	vertical-align: bottom;
 }
@@ -269,12 +282,14 @@ th.img {
 	text-align: right;
 }
 
-td.alt, td.location {
+td.alt,
+td.location {
 	text-align: left;
 	padding: 0 0.5em 0.5em 0.5em;
 }
 
-th.alt, th.location {
+th.alt,
+th.location {
 	padding: 0 0.5em 0.5em 0.5em;
 	vertical-align: bottom;
 }
@@ -317,11 +332,12 @@ dl.inputattrs .inputattrtypes {
 dl.inputattrs .highlight {
 	background-color: #ffc;
 	padding-bottom: 2px;
-	font-weight: normal;
+	font-weight: 400;
 	color: #666;
 }
 
-*[irrelevant], .irrelevant {
+*[irrelevant],
+.irrelevant {
 	display: none;
 }
 
@@ -329,10 +345,18 @@ dl.inputattrs .highlight {
 	body {
 		padding: 3px;
 	}
-	table, thead, tfoot, tbody, tr, th, td {
+
+	table,
+	thead,
+	tfoot,
+	tbody,
+	tr,
+	th,
+	td {
 		display: block;
 		width: 100%;
 	}
+
 	th {
 		text-align: left;
 		padding-bottom: 0;
@@ -346,7 +370,7 @@ dl.inputattrs .highlight {
 
 #outline .heading {
 	color: #bf4f00;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 #outline ol {
@@ -373,7 +397,7 @@ dl.inputattrs .highlight {
 	width: 0.5em;
 	border-color: #bbb;
 	border-style: none none solid solid;
-	content: '';
+	content: "";
 	border-width: 0.1em;
 }
 
@@ -385,6 +409,6 @@ dl.inputattrs .highlight {
 	width: 0.5em;
 	border-color: #bbb;
 	border-style: none none solid solid;
-	content: '';
+	content: "";
 	border-width: 0.1em;
 }
