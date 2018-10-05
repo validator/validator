@@ -16,7 +16,6 @@ install:
   - python --version
   # Nu Html Checker uses utf-8 for output so change code page here
   - chcp 65001
-  - pip install certifi
   - python %BUILD_PY% update
   - python %BUILD_PY% dldeps
 
