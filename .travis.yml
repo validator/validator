@@ -3,6 +3,7 @@ sudo: false
 language: java
 git:
   depth: 5
+  submodules: false # we do this ourselves later with `build.py update`
 
 matrix:
   include:
@@ -15,18 +16,22 @@ matrix:
     - jdk: oraclejdk10
       env: PYTHON=python3
 
-script:
+install:
   - export TOMCAT_VERSION=8.5.29
+  - export BUILD_PY=./build/build.py
+  - $PYTHON $BUILD_PY update
+  - travis_retry $PYTHON $BUILD_PY dldeps
+
+script:
   - $PYTHON --version
-  - travis_retry $PYTHON ./build/build.py dldeps
-  - travis_retry $PYTHON ./build/build.py build
-  - $PYTHON ./build/build.py check
-  - $PYTHON ./build/build.py test
-  - echo "test" | $PYTHON ./build/build.py jar
+  - travis_retry $PYTHON $BUILD_PY build
+  - $PYTHON $BUILD_PY check
+  - $PYTHON $BUILD_PY test
+  - $PYTHON $BUILD_PY jar
   - java -jar ./build/dist/vnu.jar ./build/dist/index.html
   - java -jar ./build/dist/vnu.jar ./site/nu-about.html
   - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
-  - echo "test" | $PYTHON ./build/build.py war
+  - $PYTHON $BUILD_PY war
   - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
   - curl -O http://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
   - unzip apache-tomcat-$TOMCAT_VERSION.zip
