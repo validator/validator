@@ -14,8 +14,6 @@ install:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%JAVA_HOME%\bin;%PATH%
   - java -version
   - python --version
-  # Nu Html Checker uses utf-8 for output so change code page here
-  - chcp 65001
   - python %BUILD_PY% update
   - python %BUILD_PY% dldeps
 
