@@ -16,7 +16,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## ECMAScript Regular Expression
 		
 	form.data.pattern = 
-		w:pattern
+		string
 		
 ## Temporal
 		

@@ -239,7 +239,7 @@ class UrlExtractor(HTMLParser):
 
 def runCmd(cmd):
     print(" ".join(cmd))
-    subprocess.call(cmd)
+    return subprocess.call(cmd)
 
 
 def execCmd(cmd, args):
@@ -722,9 +722,10 @@ def buildJing():
 
 def buildCssValidator():
     os.chdir("css-validator")
-    runCmd([javaCmd, "-jar",
-            os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
-            "jar-without-dependencies"])
+    if runCmd([javaCmd, "-jar",
+               os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
+               "jar-without-dependencies"]):
+        sys.exit(1)
     os.chdir("..")
 
 
