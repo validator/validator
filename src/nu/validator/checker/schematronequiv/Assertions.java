@@ -76,12 +76,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import org.apache.log4j.Logger;
-
 public class Assertions extends Checker {
-
-    private static final Logger log4j = //
-            Logger.getLogger(Assertions.class);
 
     private static boolean followW3Cspec = "1".equals(
             System.getProperty("nu.validator.servlet.follow-w3c-spec"));
@@ -458,7 +453,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("address", "section");
         registerProhibitedAncestor("address", "nav");
         registerProhibitedAncestor("address", "article");
-        registerProhibitedAncestor("address", "aside");
         registerProhibitedAncestor("header", "header");
         registerProhibitedAncestor("footer", "header");
         registerProhibitedAncestor("address", "header");
@@ -467,7 +461,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("dt", "header");
         registerProhibitedAncestor("dt", "footer");
         registerProhibitedAncestor("dt", "article");
-        registerProhibitedAncestor("dt", "aside");
         registerProhibitedAncestor("dt", "nav");
         registerProhibitedAncestor("dt", "section");
         registerProhibitedAncestor("dt", "h1");
@@ -481,7 +474,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("th", "header");
         registerProhibitedAncestor("th", "footer");
         registerProhibitedAncestor("th", "article");
-        registerProhibitedAncestor("th", "aside");
         registerProhibitedAncestor("th", "nav");
         registerProhibitedAncestor("th", "section");
         registerProhibitedAncestor("th", "h1");
@@ -605,8 +597,8 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dd", "definition");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("details", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("dl", "list");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("dt", "listitem");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("dt", "term");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("fieldset", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("figure", "figure");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("form", "form");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("footer", "contentinfo");
@@ -647,7 +639,6 @@ public class Assertions extends Checker {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("body", "document");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("datalist", "listbox");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("details", "group");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.put("dl", "list");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("form", "form");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("hr", "separator");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("main", "main");
@@ -1301,7 +1292,9 @@ public class Assertions extends Checker {
         // label for
         for (IdrefLocator idrefLocator : formControlReferences) {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
-                err("The \u201Cfor\u201D attribute of the \u201Clabel\u201D element must refer to a non-hidden form control.",
+                err("The value of the \u201Cfor\u201D attribute of the"
+                        + " \u201Clabel\u201D element must be the ID of a"
+                        + " non-hidden form control.",
                         idrefLocator.getLocator());
             }
         }
@@ -1464,6 +1457,7 @@ public class Assertions extends Checker {
                 ApplContext ac = new ApplContext("en");
                 ac.setCssVersionAndProfile("css3svg");
                 ac.setMedium("all");
+                ac.setSuggestPropertyName(false);
                 ac.setTreatVendorExtensionsAsWarnings(true);
                 ac.setTreatCssHacksAsWarnings(true);
                 ac.setWarningLevel(-1);
@@ -1678,6 +1672,7 @@ public class Assertions extends Checker {
                         ApplContext ac = new ApplContext("en");
                         ac.setCssVersionAndProfile("css3svg");
                         ac.setMedium("all");
+                        ac.setSuggestPropertyName(false);
                         ac.setTreatVendorExtensionsAsWarnings(true);
                         ac.setTreatCssHacksAsWarnings(true);
                         ac.setWarningLevel(-1);
@@ -2239,10 +2234,6 @@ public class Assertions extends Checker {
                 }
             } else if ("hgroup" == localName) {
                 incrementUseCounter("hgroup-found");
-                String systemId = getDocumentLocator().getSystemId();
-                if (systemId != null) {
-                    log4j.info("hgroup " + systemId);
-                }
             } else if ("main" == localName) {
                 for (int i = 0; i < currentPtr; i++) {
                     String ancestorName = stack[currentPtr - i].getName();

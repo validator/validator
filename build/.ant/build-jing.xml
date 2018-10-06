@@ -81,14 +81,17 @@ DEALINGS IN THE SOFTWARE.
       <license
         name="3-clause BSD license"
         distribution="repo"
-        url="https://jing-trang.googlecode.com/svn/branches/validator-nu/copying.txt"/>
+        url="https://github.com/relaxng/jing-trang/blob/validator-nu/copying.txt"/>
       <scm
-        connection="scm:svn:http://jing-trang.googlecode.com/svn/branches/validator-nu/"
-        developerConnection="scm:svn:https://jing-trang.googlecode.com/svn/branches/validator-nu/"
-        url="https://code.google.com/p/jing-trang/source/browse/branches/validator-nu/"/>
+        connection="scm:git:git@github.com:relaxng/jing-trang.git"
+        developerConnection="scm:git:git@github.com:relaxng/jing-trang.git"
+        url="https://github.com/relaxng/jing-trang/tree/validator-nu"/>
       <issueManagement
-        system="Google Code Issues"
-        url="https://code.google.com/p/jing-trang/issues/list"/>
+        system="GitHub Issues"
+        url="https://github.com/relaxng/jing-trang/issues"/>
+      <ciManagement
+        system="Travis CI"
+        url="https://travis-ci.org/relaxng/jing-trang"/>
       <developer
         name="James Clark"
         id="jjc@jclark.com"

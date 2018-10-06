@@ -68,8 +68,6 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Idref.THE_INSTANCE;
         } else if ("IDREFS".equals(typeLocalName)) {
             return Idrefs.THE_INSTANCE;
-        } else if ("pattern".equals(typeLocalName)) {
-            return Pattern.THE_INSTANCE;
         } else if ("datetime".equals(typeLocalName)) {
             return Datetime.THE_INSTANCE;
         } else if ("datetime-local".equals(typeLocalName)) {

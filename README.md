@@ -33,10 +33,10 @@ released upstream in these formats:
    [15]: https://validator.github.io/validator/#standalone
    [16]: https://validator.github.io/validator/#servlet
 
-**Note:** The _vnu.jar_ and _vnu.war_ files require a Java 8 environment; they
-won’t run in Java 7 or older environment.
+**Note:** The _vnu.jar_ and _vnu.war_ files require an environment with Java 8
+or above; they won’t run in Java 7 or older environment.
 
-You can [get the latest release][17] or run [`docker run -p 8888:8888
+You can [get the latest release][17] or run [`docker run -it --rm -p 8888:8888
 validator/validator:latest`][18], [`npm install vnu-jar`][19],
 [`brew install vnu`][20], or [`pip install html5validator`][21] and see the
 **Usage** and **Web-based checking** sections below. Or automate your document
@@ -58,7 +58,7 @@ checking with a frontend such as:
   * [LMVTFY: Let Me Validate That For You][27] (auto-check HTML of
   JSFiddle/JSBin etc. links in github issue comments)
 
-   [22]: https://github.com/jzaefferer/grunt-html
+   [22]: https://github.com/validator/grunt-html
    [23]: https://github.com/watilde/gulp-html
    [24]: https://github.com/svenkreiss/html5validator
    [25]: https://jekyllrb.com/
@@ -369,8 +369,8 @@ application by connecting to [http://localhost/vnu/][36].
 
 **Note:** You may want to customize the `/WEB-INF/web.xml` file inside the WAR
 file (you can use any ZIP-handling program) to modify the servlet filter
-configuration. For example, if you wanted to disable the inbound size
-limit-filter, you could comment out that filter like this:
+configuration. For example, if you wanted to disable the inbound-size-limit
+filter, you could comment out that filter like this:
 
     <!--
       <filter>
@@ -559,7 +559,7 @@ following:
 Follow the steps below to build, test, and run the checker such that you can
 open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
-  1. Make sure you have git, python, and JDK 8 installed.
+  1. Make sure you have git, python, and JDK 8 or above installed.
 
   2. Set the `JAVA_HOME` environment variable:
 

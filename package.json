@@ -1,8 +1,9 @@
 {
   "name": "vnu-jar",
-  "version": "18.3.0",
+  "version": "18.8.29",
   "description": "Provides the Nu Html Checker «vnu.jar» file",
   "main": "vnu-jar.js",
+  "author": "Michael[tm] Smith <mike@w3.org>",
   "engines": {
     "node": ">=0.10"
   },
@@ -18,6 +19,8 @@
   "keywords": [
     "checker",
     "html",
+    "lint",
+    "linter",
     "jar",
     "nu",
     "validator",

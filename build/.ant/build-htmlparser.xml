@@ -48,7 +48,7 @@ DEALINGS IN THE SOFTWARE.
       artifactId="htmlparser"
       version="${version}"
       name="htmlparser"
-      description="The Validator.nu HTML Parser is an implementation of the HTML5 parsing algorithm in Java for applications. The parser is designed to work as a drop-in replacement for the XML parser in applications that already support XHTML 1.x content with an XML parser and use SAX, DOM or XOM to interface with the parser."
+      description="A fork of http://hg.mozilla.org/projects/htmlparser/ used by the Nu Html Checker."
       url="https://about.validator.nu/htmlparser/"
       packaging="jar">
       <license
@@ -60,14 +60,19 @@ DEALINGS IN THE SOFTWARE.
         distribution="repo"
         url="http://opensource.org/licenses/bsd-license.php"/>
       <scm
-        connection="scm:hg:https://hg.mozilla.org/projects/htmlparser"
-        developerConnection="scm:hg:https://hg.mozilla.org/projects/htmlparser"
-        url="https://hg.mozilla.org/projects/htmlparser"/>
+        connection="scm:git:git@github.com:validator/htmlparser.git"
+        developerConnection="scm:git:git@github.com:validator/htmlparser.git"
+        url="https://github.com/validator/htmlparser"/>
       <developer
         name="Henri Sivonen"
         id="hsivonen"
         email="hsivonen@iki.fi"
         url="https://hsivonen.iki.fi/"/>
+      <developer
+        name="Michael[tm] Smith"
+        id="sideshowbarker"
+        email="mike@w3.org"
+        url="https://people.w3.org/mike/"/>
       <dependency groupId="com.ibm.icu" artifactId="icu4j" version="4.0.1" scope="compile" optional="true"/>
       <dependency groupId="com.sdicons.jsontools" artifactId="jsontools-core" version="1.4" scope="test"/>
       <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0" scope="compile" optional="true"/>

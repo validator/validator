@@ -2,6 +2,27 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# 18.N.NN
+NN XXX 2018
+  - Allow `dppx` and `x` and units in media queries
+
+# 18.8.29
+29 August 2018
+  - CSS: Allow unit-less values for stroke-width and other from-SVG props
+  - CSS: Bring checking up to date w/ CSS Align3; support font-display
+
+# 18.7.23
+23 July 2018
+  - Disable logging in the language detector
+
+# 18.7.22
+22 July 2018
+  - Allow the `decoding` attribute for the `img` element
+  - Allow the `allow` attribute for the `iframe` element (initial support)
+  - Align ARIA checking further with ARIA in HTML spec requirements
+  - Restore the language-detection feature to vnu.jar command-line checker
+  - Ensure vnu.jar is always runnable under Java8, even if built under Java9
+
 # 18.3.0
 24 March 2018
   - Add new major (optional) feature to command-line checker, Web-based checker,

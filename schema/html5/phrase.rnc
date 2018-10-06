@@ -148,9 +148,7 @@ referrerpolicy =
 		& v5only
 	mark.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria?
 		)
 	mark.inner =
 		( common.inner.phrasing )
@@ -364,10 +362,8 @@ referrerpolicy =
 	bdo.elem =
 		element bdo { bdo.inner & bdo.attrs }
 	bdo.attrs =
-		(	common.attrs # dir required in Schematron
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		(	common.attrs
+		&	common.attrs.aria?
 		)
 	bdo.inner =
 		( common.inner.phrasing )
@@ -380,9 +376,7 @@ referrerpolicy =
 		element bdi { bdi.inner & bdi.attrs }
 	bdi.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria?
 		)
 	bdi.inner =
 		( common.inner.phrasing )
@@ -395,9 +389,7 @@ referrerpolicy =
 		element br { br.inner & br.attrs }
 	br.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria?
 		)
 	br.inner =
 		( empty )
@@ -410,9 +402,7 @@ referrerpolicy =
 		element wbr { wbr.inner & wbr.attrs }
 	wbr.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria?
 		)
 	wbr.inner =
 		( empty )

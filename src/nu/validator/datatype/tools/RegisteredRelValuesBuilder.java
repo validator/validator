@@ -93,6 +93,9 @@ public final class RegisteredRelValuesBuilder implements ContentHandler {
                 if ("formats".equals(atts.getValue("", "name"))) {
                     state = State.AWAITING_TR;
                 }
+                if ("proposals".equals(atts.getValue("", "name"))) {
+                    state = State.AWAITING_TR;
+                }
                 if ("HTML5_link_type_extensions".equals(
                         atts.getValue("", "name"))) {
                     state = State.AWAITING_TR;

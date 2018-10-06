@@ -532,8 +532,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.UNCHECKED_SUBTREE_WARNER);
             schemaMap.put("http://s.validator.nu/html5/assertions.sch",
                     CheckerSchema.ASSERTION_SCH);
-            schemaMap.put("http://s.validator.nu/html4/assertions.sch",
-                    CheckerSchema.HTML4ASSERTION_SCH);
             schemaMap.put("http://c.validator.nu/obsolete/",
                     CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
             schemaMap.put("http://c.validator.nu/xml-pi/",
@@ -2155,7 +2153,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                                 + ".");
                         validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                     }
-                } else {
+                }
+                if (validator == null) {
                     schemaIsDefault = true;
                     validator = validatorByDoctype(HTML5_SCHEMA);
                 }

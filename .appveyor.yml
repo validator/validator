@@ -1,22 +1,34 @@
+version: "{build}"
+
+clone_depth: 5
+
 environment:
-  PATH: "C:\\Python35;C:\\Python35\\Scripts;%PATH%"
-  JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+  PYTHON: C:\Python34-x64
+  BUILD_PY: .\build\build.py
+  matrix:
+    - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+    - JAVA_HOME: C:\Program Files\Java\jdk9
+    - JAVA_HOME: C:\Program Files\Java\jdk10
 
 install:
-  # Nu Html Checker uses utf-8 for output
-  # so that change code page here
-  - chcp 65001
-  - pip install certifi
-  - python .\build\build.py update
+  - set PATH=%PYTHON%;%PYTHON%\Scripts;%JAVA_HOME%\bin;%PATH%
+  - java -version
+  - python --version
+  - python %BUILD_PY% update
+  - appveyor-retry python %BUILD_PY% dldeps
 
 build_script:
-  - python .\build\build.py dldeps
-  - python .\build\build.py build
+  - appveyor-retry python %BUILD_PY% build
 
 test_script:
-  - python .\build\build.py check
-  - python .\build\build.py test
-  - echo "test" | python .\build\build.py jar
+  - python %BUILD_PY% check
+  - python %BUILD_PY% test
+  - python %BUILD_PY% jar
   - java -jar .\build\dist\vnu.jar .\build\dist\index.html
   - java -jar .\build\dist\vnu.jar .\site\nu-about.html
-  - echo "test" | python .\build\build.py war
+  - python %BUILD_PY% war
+
+cache:
+  # cache the dependencies folder, and invalidate the cache
+  # if any of the files right of the arrow change
+  - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'

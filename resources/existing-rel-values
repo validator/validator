@@ -1,0 +1,2193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<meta name="generator" content="MediaWiki 1.13.2" />
+		<meta name="keywords" content="existing-rel-values,existing-rel-values,Atom,POSH,RFC4287,XFN,XMDP,distributed-conversation-brainstorming,elemental-microformats,existing-class-names,existing-rev-values" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="/wiki/opensearch_desc.php" title="Microformats Wiki (en)" />
+		<link rel="alternate" type="application/rss+xml" title="Microformats Wiki RSS Feed" href="http://microformats.org/wiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="Microformats Wiki Atom Feed" href="http://microformats.org/wiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+	<link rel="stylesheet" type="text/css" href="/wiki/skins/common/shared.css" />		
+	<link rel="stylesheet" type="text/css" href="/wiki/skins/Microformats/microformats.css"/>
+
+	<style type="text/css">/*<![CDATA[*/
+@import "/wiki/index.php?title=MediaWiki:Common.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=18000";
+@import "/wiki/index.php?title=MediaWiki:Microformats_Wiki.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=18000";
+@import "/wiki/index.php?title=-&action=raw&gen=css&maxage=18000&useskin=Microformats+Wiki";
+/*]]>*/</style>
+<script type= "text/javascript">/*<![CDATA[*/
+var skin = "Microformats Wiki";
+var stylepath = "/wiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/wiki";
+var wgScript = "/wiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://microformats.org";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "existing-rel-values";
+var wgTitle = "existing-rel-values";
+var wgAction = "view";
+var wgArticleId = "4255";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "66721";
+var wgVersion = "1.13.2";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+
+    <script type="text/javascript" src="/wiki/skins/common/wikibits.js?164"></script>
+    		<script type="text/javascript" src="/wiki/skins/common/ajax.js?164"></script>
+<style type="text/css">/*<![CDATA[*/
+.source-text {line-height: normal;}
+.source-text li {line-height: normal;}
+/**
+ * GeSHi Dynamically Generated Stylesheet
+ * --------------------------------------
+ * Dynamically generated stylesheet for text
+ * CSS class: source-text, CSS id: 
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ * --------------------------------------
+ */
+.source-text .de1, .source-text .de2 {font-family: monospace; font-weight: normal; font-style: normal;}
+.source-text .imp {font-weight: bold; color: red;}
+.source-text li, .source-text li.li1 {font-weight: normal;}
+.source-text li.li2 {font-weight: bold;}
+.source-text .ln-xtra, .source-text li.ln-xtra, .source-text div.ln-xtra {color: #cc0; background-color: #ffc;}
+
+/*]]>*/
+</style>
+<style type="text/css">/*<![CDATA[*/
+@import "/wiki/index.php?title=MediaWiki:Geshi.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=18000";
+/*]]>*/
+</style>        <script type="text/javascript" src="/wiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=Microformats+Wiki"><!-- site js --></script>
+        	
+	<title> existing rel values  &middot; Microformats Wiki</title>
+	
+</head>
+	<!-- TODO: Template-dervied body class: spec and draft -->
+<body class="page-existing-rel-values ">
+    
+    <div class="header">
+            <a class="logo" href="/wiki/Main_Page">
+                <img src="/wiki/skins/Microformats/images/logo.gif" alt="Microformats Wiki"/>
+            </a>
+        
+        <ul class="nav">
+            <li><a href="/" title="Microformats.org Home">Blog</a></li>
+            <li class="active"><span>Wiki</span></li>
+            <li><a href="/discuss" title="Microformats discussion lists">Discuss</a></li>
+        </ul>
+        
+        <form action="/wiki/Special:Search" id="search">
+            <fieldset>
+            <label for="search-text">Search</label>
+    	    <input id="search-text" name="search" type="text" title="Search Microformats Wiki [f]" accesskey="f" value="" />
+	        <input type="submit" name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" /> 
+	        <input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+	        </fieldset>
+		</form>
+    </div>
+
+    <div class="content hentry">
+    
+	
+
+	    <h1 class="entry-title"> existing rel values </h1>
+
+		<p class="sub-title"></p>
+
+								    <!-- TODO: Jump nav -->
+		    <div id="jump-to-nav">Jump to:		        <a href="#sidebar">navigation</a>, 
+		        <a href="#search">search</a>
+		    </div>
+		        
+        <div class="entry-content">
+		<p><br />
+This page contains tables of known HTML rel values from specifications, formats, proposals, brainstorms, and non-trivial <a href="/wiki/POSH" class="mw-redirect" title="POSH">POSH</a> usage in the wild.  In addition, dropped and rejected values are listed at the end for comprehensiveness.
+</p><p><span id="usage">usage</span>: see <a href="/wiki/rel-faq#How_is_rel_used" title="rel-faq">how is 'rel' used</a>.  Regarding <span id="rev">rev</span>, see: <a href="/wiki/rel-faq#Should_rev_even_be_used" title="rel-faq">should 'rev' even be used</a>.
+</p><p>This page is also the official rel registry (<a href="https://html.spec.whatwg.org/multipage/links.html#other-link-types" class="external text" title="https://html.spec.whatwg.org/multipage/links.html#other-link-types" rel="nofollow">WHATWG HTML</a> (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#other-link-types" class="external text" title="http://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#other-link-types" rel="nofollow">original link</a>), <a href="http://www.w3.org/TR/html5/links.html#other-link-types" class="external text" title="http://www.w3.org/TR/html5/links.html#other-link-types" rel="nofollow">W3C HTML5</a>). Add new and proposed rel values to the following section:
+</p>
+<ul><li> <a href="/wiki/existing-rel-values#HTML5_link_type_extensions" title="existing-rel-values">HTML5 link type extension</a>
+</li></ul>
+<p><br />
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#formats"><span class="tocnumber">1</span> <span class="toctext">formats</span></a>
+<ul>
+<li class="toclevel-2"><a href="#notes"><span class="tocnumber">1.1</span> <span class="toctext">notes</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#proposals"><span class="tocnumber">2</span> <span class="toctext">proposals</span></a></li>
+<li class="toclevel-1"><a href="#HTML5_link_type_extensions"><span class="tocnumber">3</span> <span class="toctext">HTML5 link type extensions</span></a></li>
+<li class="toclevel-1"><a href="#brainstorming"><span class="tocnumber">4</span> <span class="toctext">brainstorming</span></a>
+<ul>
+<li class="toclevel-2"><a href="#more_brainstorming"><span class="tocnumber">4.1</span> <span class="toctext">more brainstorming</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#POSH_usage"><span class="tocnumber">5</span> <span class="toctext">POSH usage</span></a>
+<ul>
+<li class="toclevel-2"><a href="#WCLR"><span class="tocnumber">5.1</span> <span class="toctext">WCLR</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Dublin_Core"><span class="tocnumber">6</span> <span class="toctext">Dublin Core</span></a></li>
+<li class="toclevel-1"><a href="#Use_with_HTTP_Link_Header"><span class="tocnumber">7</span> <span class="toctext">Use with HTTP Link Header</span></a></li>
+<li class="toclevel-1"><a href="#unspecified"><span class="tocnumber">8</span> <span class="toctext">unspecified</span></a></li>
+<li class="toclevel-1"><a href="#non_HTML_rel_values"><span class="tocnumber">9</span> <span class="toctext">non HTML rel values</span></a></li>
+<li class="toclevel-1"><a href="#dropped"><span class="tocnumber">10</span> <span class="toctext">dropped</span></a></li>
+<li class="toclevel-1"><a href="#dropped_without_prejudice"><span class="tocnumber">11</span> <span class="toctext">dropped without prejudice</span></a></li>
+<li class="toclevel-1"><a href="#rejected"><span class="tocnumber">12</span> <span class="toctext">rejected</span></a></li>
+<li class="toclevel-1"><a href="#tools"><span class="tocnumber">13</span> <span class="toctext">tools</span></a></li>
+<li class="toclevel-1"><a href="#addtional_external_research"><span class="tocnumber">14</span> <span class="toctext">addtional external research</span></a>
+<ul>
+<li class="toclevel-2"><a href="#previous_attempts_at_documenting"><span class="tocnumber">14.1</span> <span class="toctext">previous attempts at documenting</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#related"><span class="tocnumber">15</span> <span class="toctext">related</span></a></li>
+<li class="toclevel-1"><a href="#copyright"><span class="tocnumber">16</span> <span class="toctext">copyright</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="formats"></a><h2> <span class="mw-headline"> formats </span></h2>
+<p>These rel values are defined formats from specifications (HTML 4, microformats) are thus are <strong>recommended for general use</strong>.  Alphabetically ordered by value.
+</p><p>Note:
+</p>
+<ul><li> <strong>Do not</strong> add proposed rel values for HTML5 here, add them to the <a href="#HTML5_link_type_extensions" title="">HTML5 link type extensions</a> table.
+</li><li> <strong>Do not</strong> add rel values you find in the wild to this table of rel formats, instead add them to the table in the <a href="/wiki/existing-rel-values#POSH_usage" title="existing-rel-values">POSH section</a>.
+</li><li> <strong>Do not</strong> add non-HTML rel values you find to this table of rel formats, instead add them to the table in the <a href="/wiki/existing-rel-values#non_HTML_rel_values" title="existing-rel-values">non HTML rel values section</a>.
+</li><li> <strong>Do not</strong> add rel values from obsolete/superceded proposals or drafts, instead add them to the table in the "dropped" section.
+</li></ul>
+<p>Sources:
+</p>
+<ul><li> W3C Recommendations: 
+<ul><li> <a href="http://www.w3.org/TR/html401/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html401/types.html#h-6.12" rel="nofollow">HTML 4.01 section 6.12 Link types</a> (HTML4 Link types)
+</li><li> <a href="http://www.w3.org/TR/grddl/" class="external text" title="http://www.w3.org/TR/grddl/" rel="nofollow">Gleaning Resource Descriptions from Dialects of Languages</a> (GRDDL)
+</li></ul>
+</li><li> <a href="/wiki/microformats" title="microformats">microformats</a> specifications
+<ul><li> <a href="/wiki/xfn" title="xfn">xfn</a>
+</li><li> <a href="/wiki/rel-license" title="rel-license">rel-license</a>
+</li><li> <a href="/wiki/rel-nofollow" title="rel-nofollow">rel-nofollow</a>
+</li></ul>
+</li></ul>
+<table border="1">
+<caption>
+</caption><tr>
+<th> Keyword
+</th><th> Effect on <code>link</code>
+</th><th> Effect on <code>a</code>, <code>area</code>
+</th><th> Brief description <br />(from the relevant specification where possible)
+</th><th> Link to defining specification
+</th></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-acquaintance&amp;action=edit&amp;redlink=1" class="new" title="rel-acquaintance (not yet written)">acquaintance</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the person represented by the current document considers the person represented by the referenced document to be an acquaintance
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-alternate" title="rel-alternate">alternate</a>
+</td><td> external resource
+</td><td> external relation
+</td><td> Designates substitute versions for the document in which the link occurs. When used together with the <code>lang</code> attribute, it implies a translated version of the document. When used together with the <code>media</code> attribute, it implies a version designed for a different medium (or media).
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-appendix&amp;action=edit&amp;redlink=1" class="new" title="rel-appendix (not yet written)">appendix</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a document serving as an appendix in a collection of documents.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-bookmark" class="mw-redirect" title="rel-bookmark">bookmark</a>
+</td><td> not allowed
+</td><td> allowed
+</td><td> Refers to a bookmark. A bookmark is a link to a key entry point within an extended document. The <code>title</code> attribute may be used, for example, to label the bookmark. Note that several bookmarks may be defined in each document.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-chapter&amp;action=edit&amp;redlink=1" class="new" title="rel-chapter (not yet written)">chapter</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a document serving as a chapter in a collection of documents.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-child&amp;action=edit&amp;redlink=1" class="new" title="rel-child (not yet written)">child</a>
+</td><td> external relation
+</td><td> external relation
+</td><td> The referenced person is a child of the person represented by the current document. It may also indicate that the target document is a hierarchical child, or subdocument, of the current document.
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>, <a href="https://www.w3.org/TR/relations.html" class="external text" title="https://www.w3.org/TR/relations.html" rel="nofollow">HTML 4.0 Specification</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-colleague&amp;action=edit&amp;redlink=1" class="new" title="rel-colleague (not yet written)">colleague</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person is a colleague of the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-contact" title="rel-contact">contact</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the person represented by the current document considers the person represented by the referenced document to be a contact
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-contents&amp;action=edit&amp;redlink=1" class="new" title="rel-contents (not yet written)">contents</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a document serving as a table of contents. Some user agents also support the synonym ToC (from "Table of Contents").
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-copyright&amp;action=edit&amp;redlink=1" class="new" title="rel-copyright (not yet written)">copyright</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a copyright statement for the current document.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-co-resident&amp;action=edit&amp;redlink=1" class="new" title="rel-co-resident (not yet written)">co-resident</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person lives in the same residence as the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-co-worker&amp;action=edit&amp;redlink=1" class="new" title="rel-co-worker (not yet written)">co-worker</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person is a co-worker of the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-crush" title="rel-crush">crush</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> this person considers the referenced person to be a crush (i.e. has a crush on the referenced person)
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-date" title="rel-date">date</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> this person considers the referenced person to be a date (i.e. is dating the referenced person)
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-friend&amp;action=edit&amp;redlink=1" class="new" title="rel-friend (not yet written)">friend</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the person represented by the current document considers the person represented by the referenced document to be a friend
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-glossary&amp;action=edit&amp;redlink=1" class="new" title="rel-glossary (not yet written)">glossary</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a document providing a list of terms and their definitions that pertain to the current document.</td><td><a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-help&amp;action=edit&amp;redlink=1" class="new" title="rel-help (not yet written)">help</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a document offering help (more information, links to other sources information, etc.)
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-its-rules&amp;action=edit&amp;redlink=1" class="new" title="rel-its-rules (not yet written)">its-rules</a>
+</td><td> allowed
+</td><td> not allowed
+</td><td> Refers to a document with external ITS rules.
+</td><td> <a href="http://www.w3.org/TR/its20/#selection-global-html5" class="external text" title="http://www.w3.org/TR/its20/#selection-global-html5" rel="nofollow">Internationalization Tag Set (ITS) Version 2.0</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-kin&amp;action=edit&amp;redlink=1" class="new" title="rel-kin (not yet written)">kin</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person is part of the extended family of the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-license" title="rel-license">license</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> &hellip;indicates that the [referenced document] is a license for the current page.
+</td><td> <a href="/wiki/rel-license" title="rel-license">rel-license</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-me" title="rel-me">me</a>
+</td><td> external relation
+</td><td> external relation
+</td><td> the referenced document represents the same person as does the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-met" title="rel-met">met</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> this person has met the referenced person
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-muse" title="rel-muse">muse</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person inspires the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-neighbor&amp;action=edit&amp;redlink=1" class="new" title="rel-neighbor (not yet written)">neighbor</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person lives nearby the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-next" title="rel-next">next</a>
+</td><td> external relation
+</td><td> external relation
+</td><td> Refers to the next document in a linear sequence of documents. User agents may choose to preload the "next" document, to reduce the perceived load time.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-nofollow" title="rel-nofollow">nofollow</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> indicates that the destination of that hyperlink <em title="SHOULD NOT in &#82;FC 2119 context" style="text-transform: lowercase; font-style: italic;" class="&#82;FC2119">SHOULD NOT</em> be afforded any additional weight or ranking by user agents which perform link analysis upon web pages (e.g. search engines).
+</td><td> <a href="/wiki/rel-nofollow" title="rel-nofollow">rel-nofollow</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-parent&amp;action=edit&amp;redlink=1" class="new" title="rel-parent (not yet written)">parent</a>
+</td><td> external relation
+</td><td> external relation
+</td><td> The referenced person is a parent of the person represented by the current document. It may also indicate that the target document is the hierarchical parent, or container, of the current document.
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>, <a href="https://www.w3.org/TR/relations.html" class="external text" title="https://www.w3.org/TR/relations.html" rel="nofollow">HTML 4.0 Specification</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-prev" title="rel-prev">prev</a>
+</td><td> external relation
+</td><td> external relation
+</td><td> Refers to the previous document in an ordered series of documents. Some user agents also support the synonym "Previous".
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-previous&amp;action=edit&amp;redlink=1" class="new" title="rel-previous (not yet written)">previous</a>
+</td><td> external relation
+</td><td> external relation
+</td><td> Synonym of <code>prev</code>
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-section&amp;action=edit&amp;redlink=1" class="new" title="rel-section (not yet written)">section</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a document serving as a section in a collection of documents.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-sibling&amp;action=edit&amp;redlink=1" class="new" title="rel-sibling (not yet written)">sibling</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person is a sibling of the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-spouse&amp;action=edit&amp;redlink=1" class="new" title="rel-spouse (not yet written)">spouse</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> the referenced person is a spouse of the person represented by the current document
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-start&amp;action=edit&amp;redlink=1" class="new" title="rel-start (not yet written)">start</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to the first document in a collection of documents. This link type tells search engines which document is considered by the author to be the starting point of the collection.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-stylesheet&amp;action=edit&amp;redlink=1" class="new" title="rel-stylesheet (not yet written)">stylesheet</a>
+</td><td> external resource
+</td><td> not allowed
+</td><td> a style sheet for the current document<br /> used with the invisible &lt;link href&gt; element which is not ideal for content relationships. Content relationships should be user visible and thus uses with &lt;a href&gt; are strongly preferred. Unfortunately the use of stylesheet in user visible content like &lt;a href&gt; appears to be strictly theoretical.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-subsection&amp;action=edit&amp;redlink=1" class="new" title="rel-subsection (not yet written)">subsection</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Refers to a document serving as a subsection in a collection of documents.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-sweetheart" title="rel-sweetheart">sweetheart</a>
+</td><td> not allowed
+</td><td> external relation
+</td><td> this person considers the referenced person to be their sweetheart
+</td><td> <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-tag" title="rel-tag">tag</a>
+</td><td> not allowed
+</td><td> allowed
+</td><td> &hellip;indicates that the [referenced document] is an author-designated "tag" (or keyword/subject) for the current page.
+</td><td> <a href="/wiki/rel-tag" title="rel-tag">rel-tag</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-toc&amp;action=edit&amp;redlink=1" class="new" title="rel-toc (not yet written)">toc</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Synonym of <code>contents</code> (from "Table Of Contents")
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4 Link types</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-transformation&amp;action=edit&amp;redlink=1" class="new" title="rel-transformation (not yet written)">transformation</a>
+</td><td> allowed
+</td><td> allowed
+</td><td> Relates a source document to a transformation, usually represented in XSLT, that relates the source document syntax to the RDF graph syntax. Used in <a href="/wiki/grddl" title="grddl">GRDDL</a>
+</td><td> <a href="http://www.w3.org/TR/grddl/#transformation" class="external text" title="http://www.w3.org/TR/grddl/#transformation" rel="nofollow">GRDDL</a>
+</td></tr></table>
+<a name="notes"></a><h3> <span class="mw-headline"> notes </span></h3>
+<ul><li><code>rel="alternate"</code> can take further meaning from additional attributes, such as 
+<ul><li> <code>rel="alternate" lang="fr"</code> (French language version of this page)
+</li><li> <code>rel="alternate" media="print"</code> (printable version of this page)
+</li><li> <code>rel="alternate" media="handheld"</code> (version of the page intended or better for handheld/portable devices like PDAs, cell phones, etc.)
+</li></ul>
+</li></ul>
+<ul><li>Synonyms such as "previous", "toc" are not as widely supported as the main term.
+</li></ul>
+<a name="proposals"></a><h2> <span class="mw-headline"> proposals </span></h2>
+<p>A few rel values have been developed as drafts as a result of going through most of the microformats <a href="/wiki/process" title="process">process</a>, and are thus listed here for your serious consideration. You <strong>may use these values</strong>, and if you find any problems with them please point them out on the respective "issues" page for the rel value.
+</p>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value </th><th> summary </th><th> proposed in </th><th> external spec (if any)
+</th></tr>
+<tr>
+<td> <a href="/wiki/rel-pronunciation" title="rel-pronunciation">pronunciation</a> </td><td> &hellip;indicates that the destination of the 'link' element is a document providing a pronunciation lexicon for speech-synthesis purposes. </td><td> <a href="/wiki/rel-pronunciation" title="rel-pronunciation">rel-pronunciation</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-directory" title="rel-directory">directory</a> </td><td> &hellip;indicates that the destination of the hyperlink is a directory listing containing an entry for the current page. </td><td> <a href="/wiki/rel-directory" title="rel-directory">rel-directory</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-enclosure" title="rel-enclosure">enclosure</a> </td><td> &hellip;indicates that the destination of that hyperlink is intended to be downloaded and cached. </td><td> <a href="/wiki/rel-enclosure" title="rel-enclosure">rel-enclosure</a> </td><td> <a href="http://www.apps.ietf.org/rfc/rfc4287.html" class="external text" title="http://www.apps.ietf.org/rfc/rfc4287.html" rel="nofollow">RFC4287</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-home" title="rel-home">home</a> </td><td> &hellip;indicates that the [referenced document] is the homepage of the site in which the current page appears. </td><td> <a href="/wiki/rel-home" title="rel-home">rel-home</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-payment" title="rel-payment">payment</a> </td><td> &hellip;indicates that the destination of the hyperlink provides a way to show or give support (e.g. financial) for the current page</td><td> <a href="/wiki/rel-payment" title="rel-payment">rel-payment</a>
+</td></tr>
+<tr>
+<td> vcs-* </td><td> &hellip;indicates that the destination of the hyperlink is the location of a Version Control System repository related to that page.</td><td> </td><td> <a href="https://joeyh.name/rfc/rel-vcs/" class="external text" title="https://joeyh.name/rfc/rel-vcs/" rel="nofollow">rel=vcs-*</a>
+</td></tr></table>
+<a name="HTML5_link_type_extensions"></a><h2> <span class="mw-headline"> HTML5 link type extensions </span></h2>
+<p>The following values are registered as link type extensions per the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#other-link-types" class="external text" title="http://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#other-link-types" rel="nofollow">requirements in the WHATWG HTML spec</a> and the <a href="http://www.w3.org/TR/html5/links.html#other-link-types" class="external text" title="http://www.w3.org/TR/html5/links.html#other-link-types" rel="nofollow">requirements in the W3C HTML5 spec</a>. 
+</p><p><br />
+Before you register a new value:
+</p>
+<ul><li> <b>Please check the <a href="#formats" title="">Formats table</a> and DO NOT re-register</b> rel values that are already there. Please note that the W3C HTML WG has made a <a href="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" class="external text" title="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" rel="nofollow">Decision</a> to drop <code>index</code>, <code>up</code>, <code>first</code> and <code>last</code> from the HTML5 spec itself.
+</li><li> <b>Please check the <a href="#dropped" title="">Dropped table</a> and DO NOT register</b> values that are already there. If you believe a rel value was dropped from another specification without prejudice, please provide link/cite to explicit text/decision stating as such, e.g. the value was merely postponed, or perhaps expected to be spun-out into its own spec from the group developing that specification.
+</li></ul>
+<p>Note that entries in the <a href="#formats" title="">Formats table</a> and entries that are already in HTML5 as built-in keywords are also considered extensions with the "Ratified" status.
+</p><p>Please make sure that registrations added here have all the required data filled in <i>including</i>:
+</p>
+<ul><li> "Effect on link"
+</li><li> "Effect on a and area" and 
+</li><li> a link to a spec that documents the keyword <i>as an HTML <code>rel</code> keyword</i>. (A spec that merely defines the file format of the link target but does not define the <code>rel</code> keyword for use in HTML is not the kind of spec that is being required here.)
+</li></ul>
+<p>Entries lacking any of the above required data will likely be removed. 
+</p><p>Changes to this registry will not be reflected in validators in real time. But validators will typically get automatically updated with the changes within one week or so
+</p>
+<table border="1">
+<caption>
+</caption><tr>
+<th> Keyword
+</th><th> Effect on <code>link</code>
+</th><th> Effect on <code>a</code>, <code>area</code>
+</th><th> Brief description
+</th><th> Link to specification
+</th><th> Synonyms
+</th><th> Status
+<p><br />
+</p>
+</th></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-amphtml&amp;action=edit&amp;redlink=1" class="new" title="rel-amphtml (not yet written)">amphtml</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Specify an alternate version of the document written in AMP HTML
+</td><td> <a href="https://github.com/ampproject/amphtml" class="external text" title="https://github.com/ampproject/amphtml" rel="nofollow">AMP HTML documentation</a>
+</td><td> could be combined with rel=alternate
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-apple-touch-icon&amp;action=edit&amp;redlink=1" class="new" title="rel-apple-touch-icon (not yet written)">apple-touch-icon</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify a Webpage Icon for a “Web Clip”, or “touch icon”, for mobile devices (not limited to Apple devices).
+</td><td> <a href="http://developer.apple.com/library/safari/#documentation/appleapplications/reference/safariwebcontent/configuringwebapplications/configuringwebapplications.html" class="external text" title="http://developer.apple.com/library/safari/#documentation/appleapplications/reference/safariwebcontent/configuringwebapplications/configuringwebapplications.html" rel="nofollow">Apple's Safari Web Content Guide</a>
+</td><td> probably redundant with rel=icon
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-apple-touch-icon-precomposed&amp;action=edit&amp;redlink=1" class="new" title="rel-apple-touch-icon-precomposed (not yet written)">apple-touch-icon-precomposed</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify a Webpage Icon for a “Web Clip”, or “touch icon”, for mobile devices (not limited to Apple devices).
+</td><td> <a href="http://developer.apple.com/library/safari/#documentation/appleapplications/reference/safariwebcontent/configuringwebapplications/configuringwebapplications.html" class="external text" title="http://developer.apple.com/library/safari/#documentation/appleapplications/reference/safariwebcontent/configuringwebapplications/configuringwebapplications.html" rel="nofollow">Apple's Safari Web Content Guide</a>
+</td><td> probably redundant with rel=icon
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-apple-touch-startup-image&amp;action=edit&amp;redlink=1" class="new" title="rel-apple-touch-startup-image (not yet written)">apple-touch-startup-image</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify a splashscreen for Web apps on iOS Safari
+</td><td> <a href="http://developer.apple.com/library/safari/#documentation/appleapplications/reference/safariwebcontent/configuringwebapplications/configuringwebapplications.html" class="external text" title="http://developer.apple.com/library/safari/#documentation/appleapplications/reference/safariwebcontent/configuringwebapplications/configuringwebapplications.html" rel="nofollow">Apple's Safari Web Content Guide</a>
+</td><td> maybe redundant with rel=icon with the sizes attribute?
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-archived&amp;action=edit&amp;redlink=1" class="new" title="rel-archived (not yet written)">archived</a>
+</td><td> External Resource
+</td><td> Hyperlink Annotation
+</td><td> The target resource is archived and kept largely or solely for historical purposes.
+</td><td> <a href="https://sitemorse.com/rel-archived/" class="external text" title="https://sitemorse.com/rel-archived/" rel="nofollow">rel="archived" description</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-attachment" title="rel-attachment">attachment</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> The resource linked to is "attached" to this document, similar to email attachments. Used in WordPress.
+</td><td> No formal specification
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-authorization_endpoint&amp;action=edit&amp;redlink=1" class="new" title="rel-authorization endpoint (not yet written)">authorization_endpoint</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify a hosted authorization server
+</td><td> <a href="https://www.w3.org/TR/indieauth/" class="external text" title="https://www.w3.org/TR/indieauth/" rel="nofollow">IndieAuth spec</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-canonical" title="rel-canonical">canonical</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Specifies the canonical URL for the current document in order to help avoid duplicate content.
+</td><td> <a href="http://en.wikipedia.org/wiki/Canonical_meta_tag" class="external text" title="http://en.wikipedia.org/wiki/Canonical_meta_tag" rel="nofollow">Canonical meta tag</a> <a href="http://www.Google.com/support/webmasters/bin/answer.py?answer=139066#2" class="external text" title="http://www.Google.com/support/webmasters/bin/answer.py?answer=139066#2" rel="nofollow">Canonicalization at Google Webmaster Central</a> <a href="http://www.Bing.com/community/site_blogs/b/webmaster/archive/2009/02/12/partnering-to-help-solve-duplicate-content-issues.aspx" class="external text" title="http://www.Bing.com/community/site_blogs/b/webmaster/archive/2009/02/12/partnering-to-help-solve-duplicate-content-issues.aspx" rel="nofollow">Microsoft Webmaster Center</a> <a href="http://www.YSearchBlog.com/2009/02/12/fighting-duplication-adding-more-arrows-to-your-quiver/" class="external text" title="http://www.YSearchBlog.com/2009/02/12/fighting-duplication-adding-more-arrows-to-your-quiver/" rel="nofollow">Yahoo! Search Blog</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-category" title="rel-category">category</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to a category assigned to the current document or post. Implemented by WordPress for indicating a relation between a blog post and a category.
+</td><td> <a href="/wiki/rel-category" title="rel-category">rel-category</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-code-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-code-repository (not yet written)">code-repository</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> indicates a code repository location. For link, it specifically indicates, in the case of server-generated content, the location of source code responsible for the generation of the current page, or, in the case of static files, where copies of the current page are housed). If the specific data/content built up at the page is stored separately from the generator (e.g., the code for a CMS vs. the specific CMS instance's SQL tables or JSON data files), this only refers to the generator and <a href="/wiki/index.php?title=rel-content-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-content-repository (not yet written)">content-repository</a> should be used to indicate the location for the storage of content. Otherwise, the code repository can be considered as also including the content. While the repository should contain its own license file, the <a href="/wiki/index.php?title=rel-code-license&amp;action=edit&amp;redlink=1" class="new" title="rel-code-license (not yet written)">code-license</a> rel-value is proposed as a direct pointer to the license (see also <a href="/wiki/index.php?title=rel-content-license&amp;action=edit&amp;redlink=1" class="new" title="rel-content-license (not yet written)">content-license</a>).
+</td><td>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-code-license&amp;action=edit&amp;redlink=1" class="new" title="rel-code-license (not yet written)">code-license</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> indicates a license for code (a proposed broader replacement for <a href="/wiki/rel-jslicense" title="rel-jslicense">jslicense</a>). For link, it specifically indicates, in the case of server-generated content, the location of the license for all source code responsible for the generation of the current page, or, in the case of static files, the location of the license for all of these files). If the specific data/content built up at the page is stored separately from the generator (e.g., the code for a CMS vs. the specific CMS instance's SQL tables or JSON data files), this only refers to the generator and <a href="/wiki/index.php?title=rel-content-license&amp;action=edit&amp;redlink=1" class="new" title="rel-content-license (not yet written)">content-license</a> should be used to indication the license for the content. Otherwise, code-license can be considered as also covering the license of the content. Pointing to the repository containing the static or generator code files should be done with <a href="/wiki/index.php?title=rel-code-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-code-repository (not yet written)">code-repository</a> (and <a href="/wiki/index.php?title=rel-content-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-content-repository (not yet written)">content-repository</a> for any separate content).
+</td><td>
+</td><td>
+</td><td> proposed
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-component&amp;action=edit&amp;redlink=1" class="new" title="rel-component (not yet written)">component</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify an HTML document that is treated as a component of this document.
+</td><td> <a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/components/index.html" class="external text" title="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/components/index.html" rel="nofollow">Web Components</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-chrome-webstore-item" title="rel-chrome-webstore-item">chrome-webstore-item</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Link tag to declare for app and extensions inline installations hosted in the Chrome Web Store.
+</td><td> <a href="https://developers.google.com/chrome/web-store/docs/inline_installation" class="external text" title="https://developers.google.com/chrome/web-store/docs/inline_installation" rel="nofollow">Using Inline Installation</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-content-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-content-repository (not yet written)">content-repository</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> indicates a repository housing data content. For link, it specifically indicates, in the case of server-generated content, the location where separately housed data files used to populate the current page are stored (otherwise "code-repository" is sufficient to include content as well as code). If the specific data/content built up at the page is stored separately from the generator (e.g., the code for a CMS vs. the specific CMS instance's SQL tables or JSON data files), this only refers to the data/content files and <a href="/wiki/index.php?title=rel-code-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-code-repository (not yet written)">code-repository</a> should be used to indicate the location for the storage of the generator source files. Otherwise, <a href="/wiki/index.php?title=rel-code-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-code-repository (not yet written)">code-repository</a> can be considered as also including the content instead. While the repository should contain its own license file, the <a href="/wiki/index.php?title=rel-content-license&amp;action=edit&amp;redlink=1" class="new" title="rel-content-license (not yet written)">content-license</a> rel-value is proposed as a direct pointer to the license (see also <a href="/wiki/index.php?title=rel-code-license&amp;action=edit&amp;redlink=1" class="new" title="rel-code-license (not yet written)">code-license</a>).
+</td><td>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-content-license&amp;action=edit&amp;redlink=1" class="new" title="rel-content-license (not yet written)">content-license</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> indicates a license for data content. For link, it specifically indicates, in the case of server-generated content, the location of the license for all separately housed data files used to populate the current page are stored, (otherwise "code-license" is sufficient to cover the license of content as well as code)). If the specific data/content built up at the page is stored separately from the generator (e.g., the code for a CMS vs. the specific CMS instance's SQL tables or JSON data files), this only refers to the data/content files and <a href="/wiki/index.php?title=rel-code-license&amp;action=edit&amp;redlink=1" class="new" title="rel-code-license (not yet written)">code-license</a> should be used to indication the license for the generator source files. Otherwise, code-license can be considered as also covering the license of the content. Pointing to the repository containing the data files should be done with <a href="/wiki/index.php?title=rel-content-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-content-repository (not yet written)">content-repository</a> (and <a href="/wiki/index.php?title=rel-code-repository&amp;action=edit&amp;redlink=1" class="new" title="rel-code-repository (not yet written)">code-repository</a> for the static or generator code files).
+</td><td>
+</td><td>
+</td><td> proposed
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.conformsTo</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> An established standard to which the described resource conforms. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.conformsTo" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.contributor</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> An entity responsible for making contributions to the resource. Examples include a person, an organization, or a service. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.contributor" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.creator</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> An entity primarily responsible for making the resource. Examples include a person, an organization, or a service. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.creator" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.description</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> An account of the resource. Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource.  <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.description" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.hasFormat</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that is substantially the same as the pre-existing described resource, but in another format.  <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.hasPart</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that is included either physically or logically in the described resource.  <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.hasVersion</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that is a version, edition, or adaptation of the described resource.  <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.isFormatOf</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that is substantially the same as the described resource, but in another format.  <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.isPartOf</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource in which the described resource is physically or logically included.  <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.isReferencedBy</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that references, cites, or otherwise points to the described resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.isReplacedBy</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that supplants, displaces, or supersedes the described resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.isRequiredBy</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that requires the described resource to support its function, delivery, or coherence. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.isVersionOf</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource of which the described resource is a version, edition, or adaptation.	<br />Changes in version imply substantive changes in content rather than differences in format. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.license</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A legal document giving official permission to do something with the resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.license" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.mediator</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> An entity that mediates access to the resource and for whom the resource is intended or useful. In an educational context, a mediator might be a parent, teacher, teaching assistant, or care-giver. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.mediator" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.publisher</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> An entity responsible for making the resource available. Examples include a person, an organization, or a service. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.publisher" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.references</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that is referenced, cited, or otherwise pointed to by the described resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.relation</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.replaces</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that is supplanted, displaced, or superseded by the described resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.requires</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource that is required by the described resource to support its function, delivery, or coherence. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.rightsHolder</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A person or organization owning or managing rights over the resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td> It may be replaced by the literal value in form of <code>&lt;meta name="DCTERMS.rightsHolder" content="..." /&gt;</code>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.source</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A related resource from which the described resource is derived. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dcterms.%28property%29&amp;action=edit&amp;redlink=1" class="new" title="rel-dcterms.(property) (not yet written)">DCTERMS.subject</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> The topic of the resource. <br />
+<p>Requires Dublin Core namespace declaration: <code><b>&lt;link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" /&gt;</b></code>
+</p>
+</td><td> <a href="http://dublincore.org/documents/dcmi-terms/" class="external text" title="http://dublincore.org/documents/dcmi-terms/" rel="nofollow">DCMI Metadata Terms</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-disclosure&amp;action=edit&amp;redlink=1" class="new" title="rel-disclosure (not yet written)">disclosure</a>
+</td><td> Not allowed
+</td><td> External Resource
+</td><td> The 'disclosure' Link Relation Type designates a list of patent disclosures or a particular patent disclosure itself made with respect to material for which such relation type is specified.
+</td><td> <a href="http://tools.ietf.org/html/draft-yevstifeyev-disclosure-relation" class="external text" title="http://tools.ietf.org/html/draft-yevstifeyev-disclosure-relation" rel="nofollow">The 'disclosure' Link Relation Type</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-discussion" title="rel-discussion">discussion</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to discussion of the current document or post.
+</td><td> <a href="/wiki/rel-discussion" title="rel-discussion">rel-discussion</a>
+</td><td>
+</td><td> proposed
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-dns-prefetch&amp;action=edit&amp;redlink=1" class="new" title="rel-dns-prefetch (not yet written)">dns-prefetch</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Tells the browser to perform dns lookup for host names ahead of use.
+</td><td> <a href="https://developer.mozilla.org/En/Controlling_DNS_prefetching" class="external text" title="https://developer.mozilla.org/En/Controlling_DNS_prefetching" rel="nofollow">Mozilla documentation</a> <a href="http://dev.chromium.org/developers/design-documents/dns-prefetching" class="external text" title="http://dev.chromium.org/developers/design-documents/dns-prefetching" rel="nofollow">Google documentation</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-edit&amp;action=edit&amp;redlink=1" class="new" title="rel-edit (not yet written)">edit</a>
+</td><td> Hyperlink
+</td><td> Not allowed
+</td><td> Tells the browser where the current page can be edited
+</td><td> <a href="http://universaleditbutton.org/Registered_MIME_type#Alternate_Linking_Scheme" class="external text" title="http://universaleditbutton.org/Registered_MIME_type#Alternate_Linking_Scheme" rel="nofollow">Universal Edit Button Alternate Linking Scheme</a>.  Implemented in at least <a href="http://mediawiki.org" class="external text" title="http://mediawiki.org" rel="nofollow">MediaWiki</a>.
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-edituri" title="rel-edituri">EditURI</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> A blogging auto discovery value, commonly used by WordPress
+</td><td> <a href="http://bitworking.org/projects/atom/draft-gregorio-09.html#Edit" class="external text" title="http://bitworking.org/projects/atom/draft-gregorio-09.html#Edit" rel="nofollow">AtomAPI</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-enclosure" title="rel-enclosure">enclosure</a>
+</td><td> External Resource
+</td><td> External Resource
+</td><td> Indicates that the referred resource is intended to be downloaded and cached.
+</td><td> <a href="/wiki/rel-enclosure" title="rel-enclosure">rel-enclosure</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-entry-content&amp;action=edit&amp;redlink=1" class="new" title="rel-entry-content (not yet written)">entry-content</a>
+</td><td> Not allowed
+</td><td> External Resource
+</td><td> Indicates that the referenced document is an alternative display source for an Internet Explorer Web Slice.
+</td><td> <a href="http://msdn.microsoft.com/en-us/library/cc304073(VS.85).aspx#_alternative" class="external text" title="http://msdn.microsoft.com/en-us/library/cc304073(VS.85).aspx#_alternative" rel="nofollow">Web Slice format specification 0.9</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-external" title="rel-external">external</a>
+</td><td> Not allowed
+</td><td> Hyperlink
+</td><td> Indicates that the referenced document is not part of the same site as the current document.
+</td><td> <a href="/wiki/rel-external" title="rel-external">rel-external</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-first&amp;action=edit&amp;redlink=1" class="new" title="rel-first (not yet written)">first</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Indicates that the document is part of a sequence, and that the link is leading to the document that is the first logical document in the sequence.
+</td><td> <a href="https://www.w3.org/TR/2011/WD-html5-20110113/links.html#link-type-first" class="external text" title="https://www.w3.org/TR/2011/WD-html5-20110113/links.html#link-type-first" rel="nofollow">W3C Working Draft 13 January 2011</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-gbfs&amp;action=edit&amp;redlink=1" class="new" title="rel-gbfs (not yet written)">gbfs</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> The location of the gbfs auto-discovery file
+</td><td> <a href="https://github.com/NABSA/gbfs/blob/master/gbfs.md" class="external text" title="https://github.com/NABSA/gbfs/blob/master/gbfs.md" rel="nofollow">General Bikeshare Feed Specification</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-gtfs-static&amp;action=edit&amp;redlink=1" class="new" title="rel-gtfs-static (not yet written)">gtfs-static</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Indicates the associated GTFS Static file
+</td><td> <a href="https://developers.google.com/transit/gtfs/reference" class="external text" title="https://developers.google.com/transit/gtfs/reference" rel="nofollow">General Transit Feed Specification Reference</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-gtfs-realtime&amp;action=edit&amp;redlink=1" class="new" title="rel-gtfs-realtime (not yet written)">gtfs-realtime</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Indicates the associated GTFS-Realtime file
+</td><td> <a href="https://developers.google.com/transit/gtfs-realtime/reference" class="external text" title="https://developers.google.com/transit/gtfs-realtime/reference" rel="nofollow">GTFS-realtime Reference</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-home" title="rel-home">home</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to the top level document for the current document. It can be combined with 'alternate' to indicate a feed for the site of the current page.
+</td><td> <a href="/wiki/rel-home" title="rel-home">rel-home</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-hub&amp;action=edit&amp;redlink=1" class="new" title="rel-hub (not yet written)">hub</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to a hub that enables registration for notification of updates to the current page.
+</td><td> <a href="http://pubsubhubbub.googlecode.com/svn/trunk/pubsubhubbub-core-0.3.html#discovery" class="external text" title="http://pubsubhubbub.googlecode.com/svn/trunk/pubsubhubbub-core-0.3.html#discovery" rel="nofollow">PubSubHubbub Spec</a> <a href="https://www.w3.org/TR/websub/" class="external text" title="https://www.w3.org/TR/websub/" rel="nofollow">WebSub spec</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-import&amp;action=edit&amp;redlink=1" class="new" title="rel-import (not yet written)">import</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> HTML Imports are a way to include and reuse HTML documents in other HTML documents.
+</td><td> <a href="http://www.w3.org/TR/html-imports" class="external text" title="http://www.w3.org/TR/html-imports" rel="nofollow">HTML Imports</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-in-reply-to" title="rel-in-reply-to">in-reply-to</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to an original post that the current page is a comment on or reply to.
+</td><td> <a href="/wiki/rel-in-reply-to" title="rel-in-reply-to">rel-in-reply-to</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-root&amp;action=edit&amp;redlink=1" class="new" title="rel-root (not yet written)">root</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> The target document is the root node of the hierarchical tree structure that hosts the current document
+</td><td> No formal specification
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-index&amp;action=edit&amp;redlink=1" class="new" title="rel-index (not yet written)">index</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to a document providing a list of topics with pointers that pertain to the current document.
+</td><td> <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-issues" title="rel-issues">issues</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to issues regarding the current document or specification.
+</td><td> <a href="/wiki/rel-discussion" title="rel-discussion">rel-discussion</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-jslicense" title="rel-jslicense">jslicense</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to a document with JavaScript source code and license information (also called a <a href="http://www.gnu.org/licenses/javascript-labels.html" class="external text" title="http://www.gnu.org/licenses/javascript-labels.html" rel="nofollow">JavaScript License Web Labels</a> page). We might want choose a keyword for this that is more general -- there are many situations besides JavaScript in which it is desirable or required by license agreements (e.g., GNU GPL) to make an offer of both the source code and a copy of a license when distributing object code versions of a given work.
+</td><td> <a href="/wiki/rel-jslicense" title="rel-jslicense">rel-jslicense</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-last&amp;action=edit&amp;redlink=1" class="new" title="rel-last (not yet written)">last</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Indicates that the document is part of a sequence, and that the link is leading to the document that is the last logical document in the sequence.
+</td><td> <a href="https://www.w3.org/TR/2011/WD-html5-20110113/links.html#link-type-last" class="external text" title="https://www.w3.org/TR/2011/WD-html5-20110113/links.html#link-type-last" rel="nofollow">W3C Working Draft 13 January 2011</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-lightbox&amp;action=edit&amp;redlink=1" class="new" title="rel-lightbox (not yet written)">lightbox</a>
+</td><td> Not allowed
+</td><td> Img Pop-Up
+</td><td> Images with this attribute are displayed in a larger way than embedded in a website (or how you specified it) when clicked (e.g. with installed "Lightbox 2"-Plugin). When adding [group] to rel="lightbox" all images get a clickable button for next/prev; insert into <code>&lt;a rel="lightbox[group]"&gt;&lt;img src="http:example.com/img.jpg"&gt;&lt;/a&gt;</code>
+</td><td> <a href="http://lokeshdhakar.com/projects/lightbox2/" class="external text" title="http://lokeshdhakar.com/projects/lightbox2/" rel="nofollow">Lightbox 2</a> (needs actual specification to be kept in this list, this link is just documentation of one implementation)
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-lightvideo&amp;action=edit&amp;redlink=1" class="new" title="rel-lightvideo (not yet written)">lightvideo</a>
+</td><td> Not allowed
+</td><td> Video Pop-Up
+</td><td> Loads the video in a lightbox effect
+</td><td> <a href="https://www.drupal.org/node/252276" class="external text" title="https://www.drupal.org/node/252276" rel="nofollow">Lightbox2 - How to display video content</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-manifest&amp;action=edit&amp;redlink=1" class="new" title="rel-manifest (not yet written)">manifest</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Imports or links to a manifest
+</td><td> <a href="http://w3c.github.io/manifest/#linking" class="external text" title="http://w3c.github.io/manifest/#linking" rel="nofollow">W3C Manifest for web application</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-mask-icon&amp;action=edit&amp;redlink=1" class="new" title="rel-mask-icon (not yet written)">mask-icon</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify a Webpage Icon for a “Pinned Tabs” on Safari 9.
+</td><td> <a href="https://developer.apple.com/library/prerelease/mac/releasenotes/General/WhatsNewInSafari/Articles/Safari_9.html#//apple_ref/doc/uid/TP40014305-CH9-SW20" class="external text" title="https://developer.apple.com/library/prerelease/mac/releasenotes/General/WhatsNewInSafari/Articles/Safari_9.html#//apple_ref/doc/uid/TP40014305-CH9-SW20" rel="nofollow">What is new in Safari 9.0</a>
+</td><td> probably redundant with rel=icon
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-meta" title="rel-meta">meta</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> External metadata about the HTML document
+</td><td> <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/#section-rdf-in-HTML" class="external text" title="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/#section-rdf-in-HTML" rel="nofollow">W3C's RDF/XML Syntax Specification</a>
+</td><td>
+</td><td> proposed
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-micropub&amp;action=edit&amp;redlink=1" class="new" title="rel-micropub (not yet written)">micropub</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> the micropub endpoint for creating new posts
+</td><td> <a href="https://www.w3.org/TR/micropub/" class="external text" title="https://www.w3.org/TR/micropub/" rel="nofollow">Micropub scecification</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-noopener&amp;action=edit&amp;redlink=1" class="new" title="rel-noopener (not yet written)">noopener</a>
+</td><td> Not allowed
+</td><td> Annotation
+</td><td> Requires that any browsing context created by following the hyperlink must not have an opener browsing context.
+</td><td> <a href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener" class="external text" title="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener" rel="nofollow">4.6.6.11 Link type ”noopener"</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-openid.delegate&amp;action=edit&amp;redlink=1" class="new" title="rel-openid.delegate (not yet written)">openid.delegate</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> When the page that contains the link is used as an OpenID indentifier, the relying party perform sOpenID 1.1 authentication with the link target as the identifier instead.
+</td><td> <a href="http://openid.net/specs/openid-authentication-1_1.html#delegating_authentication" class="external text" title="http://openid.net/specs/openid-authentication-1_1.html#delegating_authentication" rel="nofollow">OpenID Authentication 1.1</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-openid.server&amp;action=edit&amp;redlink=1" class="new" title="rel-openid.server (not yet written)">openid.server</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> The OpenID server for the relying party to contact for OpenID 1.1 authentication
+</td><td> <a href="http://openid.net/specs/openid-authentication-1_1.html#anchor4" class="external text" title="http://openid.net/specs/openid-authentication-1_1.html#anchor4" rel="nofollow">OpenID Authentication 1.1</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-openid2.local_id&amp;action=edit&amp;redlink=1" class="new" title="rel-openid2.local id (not yet written)">openid2.local_id</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> When the page that contains the link is used as an OpenID indentifier, the relying party perform sOpenID 2.0 authentication with the link target as the identifier instead.
+</td><td> <a href="http://openid.net/specs/openid-authentication-2_0.html#rfc.section.7.3.3" class="external text" title="http://openid.net/specs/openid-authentication-2_0.html#rfc.section.7.3.3" rel="nofollow">OpenID Authentication 2.0</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-openid2.provider&amp;action=edit&amp;redlink=1" class="new" title="rel-openid2.provider (not yet written)">openid2.provider</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> The OpenID server for the relying party to contact for OpenID 2.0 authentication
+</td><td> <a href="http://openid.net/specs/openid-authentication-2_0.html#rfc.section.7.3.3" class="external text" title="http://openid.net/specs/openid-authentication-2_0.html#rfc.section.7.3.3" rel="nofollow">OpenID Authentication 2.0</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-p3pv1&amp;action=edit&amp;redlink=1" class="new" title="rel-p3pv1 (not yet written)">p3pv1</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> References a machine-readable privacy policy description in the P3P format
+</td><td> <a href="http://www.w3.org/TR/P3P/#syntax_link" class="external text" title="http://www.w3.org/TR/P3P/#syntax_link" rel="nofollow">P3P spec</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-pgpkey&amp;action=edit&amp;redlink=1" class="new" title="rel-pgpkey (not yet written)">pgpkey</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Associates a PGP key with a Web page so that the Web page URL can be used as the commenter's URL in PGP-signed blog comments and the blogging system receiving the comment can fetch the key and verify the signature as belonging to the owner of the URL.
+</td><td> <a href="http://golem.ph.utexas.edu/~distler/blog/archives/000320.html" class="external text" title="http://golem.ph.utexas.edu/~distler/blog/archives/000320.html" rel="nofollow">PGP-Signed Comments</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-pingback&amp;action=edit&amp;redlink=1" class="new" title="rel-pingback (not yet written)">pingback</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> gives the address of the pingback server that handles pingbacks to the current document
+</td><td> <a href="http://www.hixie.ch/specs/pingback/pingback" class="external text" title="http://www.hixie.ch/specs/pingback/pingback" rel="nofollow">Pingback</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-preconnect&amp;action=edit&amp;redlink=1" class="new" title="rel-preconnect (not yet written)">preconnect</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Indicates an origin that will be used to fetch required resources. Initiating an early connection, which includes the DNS lookup, TCP handshake, and optional TLS negotiation, allows the user agent to mask the high costs of connection establishment latency.
+</td><td> <a href="http://www.w3.org/TR/resource-hints/" class="external text" title="http://www.w3.org/TR/resource-hints/" rel="nofollow">Resource Hints Working Draft</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-prerender" title="rel-prerender">prerender</a>
+</td><td> External Resource
+</td><td> External Resource
+</td><td> Prerenders the Web page targeted by the link including running it scripts.
+</td><td> <a href="/wiki/rel-prerender" title="rel-prerender">rel-prerender</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-profile" title="rel-profile">profile</a>
+</td><td> External Resource
+</td><td> Contextual External Resource
+</td><td> indicate[s] that the destination of that hyperlink is a metadata profile (e.g. an <a href="/wiki/XMDP" class="mw-redirect" title="XMDP">XMDP</a> profile) for the current page or portion thereof. See also <a href="/wiki/xmdp-brainstorming" title="xmdp-brainstorming">xmdp-brainstorming</a>.
+</td><td> <a href="http://microformats.org/wiki/rel-profile" class="external text" title="http://microformats.org/wiki/rel-profile" rel="nofollow">rel-profile</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-publisher&amp;action=edit&amp;redlink=1" class="new" title="rel-publisher (not yet written)">publisher</a>
+</td><td> External Resource
+</td><td> External Resource
+</td><td> Indicates that the referenced document is a metadata profile (e.g., a social-media/real-name profile such as a Google+ profile) for the publisher of the current page, or some portion of the current page.
+</td><td> <a href="https://support.google.com/plus/answer/1713826?hl=en" class="external text" title="https://support.google.com/plus/answer/1713826?hl=en" rel="nofollow">Google help page</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-radioepg&amp;action=edit&amp;redlink=1" class="new" title="rel-radioepg (not yet written)">radioepg</a>
+</td><td> External Resource
+</td><td> External Resource
+</td><td> Indicates that the referenced document is a RadioDNS Service Information document (ETSI TS 102 818 s10.2.3) containing information on the radio station that publishes the current page
+</td><td> <a href="https://radiodns.org/developers/documentation" class="external text" title="https://radiodns.org/developers/documentation" rel="nofollow">RadioDNS Documentation</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-rendition&amp;action=edit&amp;redlink=1" class="new" title="rel-rendition (not yet written)">rendition</a>
+</td><td> External Resource
+</td><td> External Resource
+</td><td> Indicates some example rendering, interpretation, or depiction of the source. User agents may choose to execute, display, or render the target in-place; or navigate to the target.
+</td><td> <a href="http://www.globalmentor.com/specs/html-rel-rendition/" class="external text" title="http://www.globalmentor.com/specs/html-rel-rendition/" rel="nofollow">HTML rel rendition</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-reply-to" title="rel-reply-to">reply-to</a>
+</td><td> External Resource
+</td><td> Hyperlink
+</td><td> indicates any mailbox(es) (i.e. email addresses) to which responses are to be sent. <i>Note: this is distinct from the 'in-reply-to' value which refers to the originating document, not to the address where comments should be sent.</i>
+</td><td> <a href="http://tools.ietf.org/html/rfc2822" class="external text" title="http://tools.ietf.org/html/rfc2822" rel="nofollow">RFC2822</a> (originally <a href="http://tools.ietf.org/html/rfc822#section-4.4.3" class="external text" title="http://tools.ietf.org/html/rfc822#section-4.4.3" rel="nofollow">RFC822</a>)
+</td><td>
+</td><td> ratified
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-schema.DCTERMS&amp;action=edit&amp;redlink=1" class="new" title="rel-schema.DCTERMS (not yet written)">schema.DCTERMS</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Maps the prefix "DCTERMS" for use in other Dublin-Core related link relations (such as DCTERMS.creator) and meta keywords
+</td><td> <a href="http://dublincore.org/documents/dc-html/#sect-4.2" class="external text" title="http://dublincore.org/documents/dc-html/#sect-4.2" rel="nofollow">Section 4.2 of "Expressing Dublin Core metadata using HTML/XHTML meta and link elements"</a>
+</td><td> see also <a href="https://wiki.whatwg.org/wiki/MetaExtensions" class="external text" title="https://wiki.whatwg.org/wiki/MetaExtensions" rel="nofollow">"WhatWG MetaExtensions Wiki</a> for usage examples in meta keywords
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-service&amp;action=edit&amp;redlink=1" class="new" title="rel-service (not yet written)">service</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Atom Publishing Protocol editing service autodiscovery.
+</td><td> <a href="http://wiki.whatwg.org/wiki/ServiceRelExtension" class="external text" title="http://wiki.whatwg.org/wiki/ServiceRelExtension" rel="nofollow">Documentation on the WHATWG wiki</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-shortlink" title="rel-shortlink">shortlink</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specifies the preferred shortened URL for the page.
+</td><td> <a href="http://code.google.com/p/shortlink/wiki/Specification" class="external text" title="http://code.google.com/p/shortlink/wiki/Specification" rel="nofollow">shortlink spec</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-sidebar" title="rel-sidebar">sidebar</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Indicates that the referenced document is intended to be shown in a secondary browsing context.
+</td><td> <a href="/wiki/rel-sidebar" title="rel-sidebar">rel-sidebar</a>
+</td><td>
+</td><td> proposed
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-sitemap" title="rel-sitemap">sitemap</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Provides a link to an XML document describing the layout of the site.
+</td><td> <a href="/wiki/rel-sitemap" title="rel-sitemap">rel-sitemap</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-subresource&amp;action=edit&amp;redlink=1" class="new" title="rel-subresource (not yet written)">subresource</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> An external resource intended for use within the current page.
+</td><td> <a href="http://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource" class="external text" title="http://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource" rel="nofollow">Chromium documentation</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-sword&amp;action=edit&amp;redlink=1" class="new" title="rel-sword (not yet written)">sword</a>
+</td><td> Hyperlink
+</td><td> Not allowed
+</td><td> SWORD is a lightweight protocol for remotely depositing content into repositories. .<a href="http://swordapp.org/" class="external text" title="http://swordapp.org/" rel="nofollow">The SWORD project</a>
+</td><td> <a href="/wiki/index.php?title=rel-sword&amp;action=edit&amp;redlink=1" class="new" title="rel-sword (not yet written)">rel-sword</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-syndication" title="rel-syndication">syndication</a>
+</td><td> Hyperlink
+</td><td> Hyperlink
+</td><td> Refers to a page which is a syndicated copy of the current page.
+</td><td> <a href="/wiki/rel-syndication" title="rel-syndication">rel-syndication</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-timesheet&amp;action=edit&amp;redlink=1" class="new" title="rel-timesheet (not yet written)">timesheet</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Applies a timesheet to the document.
+</td><td> <a href="http://www.w3.org/TR/timesheets/#smilTimesheetsNS-Elements-Timesheet" class="external text" title="http://www.w3.org/TR/timesheets/#smilTimesheetsNS-Elements-Timesheet" rel="nofollow">non-normative section in the Timesheet spec</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-token_endpoint&amp;action=edit&amp;redlink=1" class="new" title="rel-token endpoint (not yet written)">token_endpoint</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify an HTTP endpoint that Micropub clients can use to obtain an access token given an authorization code
+</td><td> <a href="https://www.w3.org/TR/indieauth/" class="external text" title="https://www.w3.org/TR/indieauth/" rel="nofollow">IndieAuth spec</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-webmention" title="rel-webmention">webmention</a>
+</td><td> External Resource
+</td><td> Hyperlink
+</td><td> gives the address of the webmention endpoint that handles webmentions to the current document
+</td><td> <a href="https://www.w3.org/TR/webmention/" class="external text" title="https://www.w3.org/TR/webmention/" rel="nofollow">Webmention specification</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-widget&amp;action=edit&amp;redlink=1" class="new" title="rel-widget (not yet written)">widget</a>
+</td><td> External Resource
+</td><td> External Resource
+</td><td> Autodiscovery for W3C widgets
+</td><td> <a href="http://dev.w3.org/2006/waf/widgets/Overview.html#linking-to-a-widget-package-from-a-html-" class="external text" title="http://dev.w3.org/2006/waf/widgets/Overview.html#linking-to-a-widget-package-from-a-html-" rel="nofollow">non-normative section in the Widget packaging spec</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-wlwmanifest&amp;action=edit&amp;redlink=1" class="new" title="rel-wlwmanifest (not yet written)">wlwmanifest</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Windows Live Writer manifest autodiscovery
+</td><td> <a href="http://msdn.microsoft.com/en-us/library/bb463263.aspx" class="external text" title="http://msdn.microsoft.com/en-us/library/bb463263.aspx" rel="nofollow">documentation on MSDN</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-image_src&amp;action=edit&amp;redlink=1" class="new" title="rel-image src (not yet written)">image_src</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Specify a Webpage Icon for use by Facebook, Yahoo, Digg, etc.
+</td><td> Unknown, but see for instance <a href="http://www.niallkennedy.com/blog/2009/03/enhanced-social-share.html" class="external text" title="http://www.niallkennedy.com/blog/2009/03/enhanced-social-share.html" rel="nofollow">this</a>
+</td><td> probably redundant with rel=icon
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-cmis-acl&amp;action=edit&amp;redlink=1" class="new" title="rel-cmis-acl (not yet written)">http://docs.oasis-open.org/ns/cmis/link/200908/acl</a>
+</td><td> External Resource
+</td><td> External Resource
+</td><td> Identifies the resource containing a CMIS ACL document for the link context
+</td><td> <a href="http://docs.oasis-open.org/cmis/CMIS/v1.0/cs01/cmis-spec-v1.0.html#_Toc243905525" class="external text" title="http://docs.oasis-open.org/cmis/CMIS/v1.0/cs01/cmis-spec-v1.0.html#_Toc243905525" rel="nofollow">CMIS 1.0, Section 3.4.3.4</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-stylesheet/less&amp;action=edit&amp;redlink=1" class="new" title="rel-stylesheet/less (not yet written)">stylesheet/less</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Less CSS framework stylesheets.
+</td><td> <a href="http://lesscss.org/#-client-side-usage" class="external text" title="http://lesscss.org/#-client-side-usage" rel="nofollow">Less CSS usage</a>
+</td><td>
+</td><td> proposed
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-yandex-tableau-widget&amp;action=edit&amp;redlink=1" class="new" title="rel-yandex-tableau-widget (not yet written)">yandex-tableau-widget</a>
+</td><td> External Resource
+</td><td> Not allowed
+</td><td> Lets webmasters configure the appearance of their own site widgets in Yandex.Browser
+</td><td> <a href="https://api.yandex.com/tableau/" class="external text" title="https://api.yandex.com/tableau/" rel="nofollow">Yandex's Tableau API</a>
+</td><td>
+</td><td> proposed
+<p><br />
+</p>
+</td></tr></table>
+<a name="brainstorming"></a><h2> <span class="mw-headline"> brainstorming </span></h2>
+<p>Several rel values are being brainstormed as potential microformats and are thus listed here. If you find you have a use for such semantics in real world examples, <strong>consider trying out</strong> these values and provide feedback on the respective brainstorming page(s) with your results and experiences.
+</p><p>You may list new proposed rel values here, and even better if you can list and link to POSH uses in the wild.
+</p>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value </th><th> summary </th><th> brainstormed in and usage in the wild
+</th></tr>
+<tr>
+<td> <a href="/wiki/rel-accessibility" title="rel-accessibility">accessibility</a> </td><td> indicate[s] that the destination of that hyperlink contains accessibility information for the current page. </td><td> <a href="http://www.brucelawson.co.uk/2009/rel-accessibility/" class="external text" title="http://www.brucelawson.co.uk/2009/rel-accessibility/" rel="nofollow">blog post</a> which itself uses the rel value in a &lt;link&gt; tag in the head of the document.
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-author" title="rel-author">author</a> </td><td> indicate[s] that the destination of that hyperlink represents the author of the current page. Combines with <a href="/wiki/rel-me" title="rel-me">rel-me</a> to chain authorship information. </td><td> Google has said it will index rel-Author in this <a href="http://googlewebmastercentral.blogspot.com/2011/06/authorship-markup-and-web-search.html" class="external text" title="http://googlewebmastercentral.blogspot.com/2011/06/authorship-markup-and-web-search.html" rel="nofollow">blog post</a>, with further <a href="http://www.google.com/support/webmasters/bin/answer.py?answer=1229920" class="external text" title="http://www.google.com/support/webmasters/bin/answer.py?answer=1229920" rel="nofollow">discussion of the rel-me connection</a> See also <a href="http://dev.w3.org/html5/spec/Overview.html#link-type-author" class="external text" title="http://dev.w3.org/html5/spec/Overview.html#link-type-author" rel="nofollow">the HTML5 spec</a>
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-bibliography&amp;action=edit&amp;redlink=1" class="new" title="rel-bibliography (not yet written)">bibliography</a> </td><td> indicate[s] that the destination of that hyperlink is a bibliography for the current page. </td><td> <a href="http://microformats.org/discuss/mail/microformats-discuss/2007-October/010863.html" class="external text" title="http://microformats.org/discuss/mail/microformats-discuss/2007-October/010863.html" rel="nofollow">mailing list post, 2007-10-15</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-cite&amp;action=edit&amp;redlink=1" class="new" title="rel-cite (not yet written)">cite</a> </td><td> indicate[s] that the destination of that hyperlink is an authoritative source or a precedent to the current page. </td><td> <a href="/wiki/distributed-conversation-brainstorming" title="distributed-conversation-brainstorming">distributed-conversation-brainstorming</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-group" title="rel-group">group</a> </td><td> the referenced document represents a group to which the person represented by the current document belongs </td><td> <a href="/wiki/group-brainstorming" title="group-brainstorming">group-brainstorming</a>
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <span id="longdesc"><a href="/wiki/rel-longdesc" title="rel-longdesc">longdesc</a></span> </td><td> Alternative to the img longdesc attribute, for use on visible links </td><td> <a href="http://www.google.com/search?q=rel%3D%22longdesc%22" class="external text" title="http://www.google.com/search?q=rel%3D%22longdesc%22" rel="nofollow">Google search for rel=longdesc in the wild</a> shows many sources of proposals. Please edit this to list the earliest and perhaps most recent/comprehensive proposal. No known real world POSH usage in the wild yet.
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-map&amp;action=edit&amp;redlink=1" class="new" title="rel-map (not yet written)">map</a> </td><td> Link to a map. Possibly embedded within an adr, hCard, geo or hCalendar. Parsers <em title="MAY in &#82;FC 2119 context" style="text-transform: lowercase; font-style: italic;" class="&#82;FC2119">MAY</em> attempt to parse the URL if it is a link to a known map site (e.g. Geohash, Google Maps, Multimap) and extract co-ordinates and other useful data. </td><td> (to <a href="/wiki/User:TobyInk" title="User:TobyInk">TobyInk</a> by email)
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-member&amp;action=edit&amp;redlink=1" class="new" title="rel-member (not yet written)">member</a> </td><td> the referenced document represents a member of the group represented by the current document </td><td> <a href="/wiki/group-brainstorming" title="group-brainstorming">group-brainstorming</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-m_PageScroll2id&amp;action=edit&amp;redlink=1" class="new" title="rel-m PageScroll2id (not yet written)">m_PageScroll2id</a> </td><td> JS to scroll to a defined ID </td><td> <a href="/wiki/group-brainstorming" title="group-brainstorming">group-brainstorming</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-prefetch&amp;action=edit&amp;redlink=1" class="new" title="rel-prefetch (not yet written)">prefetch</a> </td><td> indicates the URL and content-type of a resource that is likely to be a required resource when the next action or navigation is triggered. Initiating an early fetch allows the user agent to mask the request latency of the resource and make it available sooner to the application.</td><td> <a href="https://igrigorik.github.io/resource-hints/#prefetch" class="external text" title="https://igrigorik.github.io/resource-hints/#prefetch" rel="nofollow">resource hints draft</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-preload&amp;action=edit&amp;redlink=1" class="new" title="rel-preload (not yet written)">preload</a> </td><td> indicates the URL and content-type of a resource that should be fetched as early as possible by the user agent. Initiating an early fetch allows the user agent to mask the request latency of the resource and make it available sooner to the application.</td><td> <a href="https://igrigorik.github.io/resource-hints/#preload" class="external text" title="https://igrigorik.github.io/resource-hints/#preload" rel="nofollow">resource hints draft</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-prerender" title="rel-prerender">prerender</a> </td><td> indicates the URL of the next navigation target. Initiating a prerender allows the user agent to deliver an instant navigation experience: the user agent downloads the top-level resource and its assets, and performs all of the processing steps required to show the page without actually showing it to the user.</td><td> <a href="https://igrigorik.github.io/resource-hints/#prerender" class="external text" title="https://igrigorik.github.io/resource-hints/#prerender" rel="nofollow">resource hints draft</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-profile" title="rel-profile">profile</a> </td><td> indicate[s] that the destination of that hyperlink is a metadata profile (e.g. an <a href="/wiki/XMDP" class="mw-redirect" title="XMDP">XMDP</a> profile) for the current page or portion thereof </td><td> <a href="/wiki/xmdp-brainstorming" title="xmdp-brainstorming">xmdp-brainstorming</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-shortlink" title="rel-shortlink">shortlink</a> </td><td> the referenced document represents the current document but with a shorter URL </td><td> <a href="http://samj.net/2009/04/introducing-relshort-better-alternative.html" class="external text" title="http://samj.net/2009/04/introducing-relshort-better-alternative.html" rel="nofollow">blog post</a>
+</td></tr>
+<tr>
+<td> source </td><td> the referenced document represents the source code for the current document or project </td><td> <a href="/wiki/source-brainstorming" title="source-brainstorming">source-brainstorming</a> <a href="http://adactio.com/journal/6667/" class="external text" title="http://adactio.com/journal/6667/" rel="nofollow">blog post</a>
+</td></tr>
+<tr>
+<td> vcalendar-parent </td><td> link from an event to a containing event </td><td> <a href="/wiki/User:TobyInk/hcalendar-1.1" title="User:TobyInk/hcalendar-1.1">hCalendar 1.1 draft</a>
+</td></tr>
+<tr>
+<td> vcalendar-child </td><td> link from an event to a contained event </td><td> <a href="/wiki/User:TobyInk/hcalendar-1.1" title="User:TobyInk/hcalendar-1.1">hCalendar 1.1 draft</a>
+</td></tr>
+<tr>
+<td> vcalendar-sibling </td><td> link from an event to a related event with the same container </td><td> <a href="/wiki/User:TobyInk/hcalendar-1.1" title="User:TobyInk/hcalendar-1.1">hCalendar 1.1 draft</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-status&amp;action=edit&amp;redlink=1" class="new" title="rel-status (not yet written)">status</a> </td><td> the referenced document represents the status (or source of status updates) for the author of this document </td><td> <a href="http://monkinetic.com/2009/11/24/status-autodiscovery-relstatus.html" class="external text" title="http://monkinetic.com/2009/11/24/status-autodiscovery-relstatus.html" rel="nofollow">blog post</a>
+</td></tr>
+<tr>
+<td> <a href="https://api.w.org/" class="external free" title="https://api.w.org/" rel="nofollow">https://api.w.org/</a> </td><td> Link to Wordpress API </td><td> <a href="https://wordpress.org/themes/twentysixteen/" class="external text" title="https://wordpress.org/themes/twentysixteen/" rel="nofollow">Official Wordpress theme</a>
+</td></tr></table>
+<a name="more_brainstorming"></a><h3> <span class="mw-headline"> more brainstorming </span></h3>
+<p>See also:
+</p>
+<ul><li> <a href="/wiki/genealogy-brainstorming" title="genealogy-brainstorming">genealogy-brainstorming</a> for some thoughts on possible additional values for family relationships (use existing <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a> <a href="/wiki/index.php?title=rel-parent&amp;action=edit&amp;redlink=1" class="new" title="rel-parent (not yet written)">parent</a>, <a href="/wiki/index.php?title=rel-child&amp;action=edit&amp;redlink=1" class="new" title="rel-child (not yet written)">child</a>, <a href="/wiki/index.php?title=rel-sibling&amp;action=edit&amp;redlink=1" class="new" title="rel-sibling (not yet written)">sibling</a>, <a href="/wiki/index.php?title=rel-spouse&amp;action=edit&amp;redlink=1" class="new" title="rel-spouse (not yet written)">spouse</a>, <a href="/wiki/index.php?title=rel-kin&amp;action=edit&amp;redlink=1" class="new" title="rel-kin (not yet written)">kin</a> values first though)
+</li><li> <a href="/wiki/xpn-brainstorming" title="xpn-brainstorming">xpn-brainstorming</a> for some thoughts on possible additional values for professional relationships (use existing <a href="/wiki/XFN" class="mw-redirect" title="XFN">XFN</a> <a href="/wiki/index.php?title=rel-co-worker&amp;action=edit&amp;redlink=1" class="new" title="rel-co-worker (not yet written)">co-worker</a>, <a href="/wiki/index.php?title=rel-colleague&amp;action=edit&amp;redlink=1" class="new" title="rel-colleague (not yet written)">colleague</a> values first though)
+</li></ul>
+<a name="POSH_usage"></a><h2> <span class="mw-headline"> POSH usage </span></h2>
+<p>There are numerous rel values used as <a href="/wiki/POSH" class="mw-redirect" title="POSH">POSH</a>, both in the wild, whose origins are not necessarily known, nor are their meanings consistent.  There are also numerous rel values from external proposals of varying degrees of merit.  It is useful to document their existence and summarize their implied meanings/usage intent as research that may be used to perhaps take one or more of them thru the microformats <a href="/wiki/process" title="process">process</a> if there is both sufficient interest and sufficient in the wild usage.
+</p><p>Note: If a value is missing from this table, it may have either already been promoted by writing it up as a proposal, or demoted by being explicitly dropped. Please check the other tables first before adding to this table.
+</p><p>Note: this list is incomplete, please help complete it from the following sources:
+</p><p>External sources: 
+</p>
+<ul><li> <a href="http://developer.mozilla.org/about/meta" class="external text" title="http://developer.mozilla.org/about/meta" rel="nofollow">Meta Information in DevMo Docs</a> (DevMo)
+</li><li> <a href="http://wiki.mozilla.org/Microsummaries" class="external text" title="http://wiki.mozilla.org/Microsummaries" rel="nofollow">Microsummary</a>
+</li><li> <a href="http://lachy.id.au/dev/markup/specs/wclr/" class="external text" title="http://lachy.id.au/dev/markup/specs/wclr/" rel="nofollow">Web Communication Link Relationships</a> (WCLR)
+</li><li> <a href="http://www.w3.org/MarkUp/Relationships.html" class="external text" title="http://www.w3.org/MarkUp/Relationships.html" rel="nofollow">W3C Link Relationship values draft</a> (LRdraft) - from a draft of the HTML spec circa 1991. 
+</li><li> <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/section-links.html#linkTypes" class="external text" title="http://www.whatwg.org/specs/web-apps/current-work/multipage/section-links.html#linkTypes" rel="nofollow">HTML5 draft</a> <b>Liable to change</b>
+</li><li> <a href="http://wiki.foaf-project.org/Autodiscovery" class="external text" title="http://wiki.foaf-project.org/Autodiscovery" rel="nofollow">FOAF Project Wiki: Autodiscovery</a> (FOAF)
+</li><li> <a href="http://www.apps.ietf.org/rfc/rfc4685.html" class="external text" title="http://www.apps.ietf.org/rfc/rfc4685.html" rel="nofollow">RFC4685</a>
+</li><li> <a href="http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html" class="external text" title="http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html" rel="nofollow">Google Blog</a>
+</li></ul>
+<p><br />
+</p>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value </th><th> summary </th><th> origin </th><th> proposal(s)
+</th></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-archive&amp;action=edit&amp;redlink=1" class="new" title="rel-archive (not yet written)">archive</a> </td><td> index of archived entries </td><td> unknown, perhaps Wordpress open source blogging software </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-archives&amp;action=edit&amp;redlink=1" class="new" title="rel-archives (not yet written)">archives</a> </td><td> Provides a link to a collection of records, documents, or other materials of historical interest. </td><td>  </td><td> HTML5
+</td></tr>
+<tr>
+<td><a href="/wiki/rel-author" title="rel-author">author</a></td><td>see brainstorming above for suggested use by google</td><td>unknown </td><td> DevMo / HTML5
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-canonical" title="rel-canonical">canonical</a> </td><td> To help search engines disambiguate the same page with multiple representations </td><td> Google </td><td> <a href="http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html" class="external text" title="http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html" rel="nofollow">Google</a>/<a href="http://www.bing.com/community/blogs/webmaster/archive/2009/02/12/partnering-to-help-solve-duplicate-content-issues.aspx" class="external text" title="http://www.bing.com/community/blogs/webmaster/archive/2009/02/12/partnering-to-help-solve-duplicate-content-issues.aspx" rel="nofollow">Microsoft</a>/<a href="http://www.ysearchblog.com/2009/02/12/fighting-duplication-adding-more-arrows-to-your-quiver/" class="external text" title="http://www.ysearchblog.com/2009/02/12/fighting-duplication-adding-more-arrows-to-your-quiver/" rel="nofollow">Yahoo!</a>, <a href="http://blog.ask.com/2009/02/ask-is-going-canonical.html" class="external text" title="http://blog.ask.com/2009/02/ask-is-going-canonical.html" rel="nofollow">Ask Jeeves</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-comment&amp;action=edit&amp;redlink=1" class="new" title="rel-comment (not yet written)">comment</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-contribution&amp;action=edit&amp;redlink=1" class="new" title="rel-contribution (not yet written)">contribution</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-edituri" title="rel-edituri">EditURI</a>
+</td><td> Location of the xml-rpc gateway for a Wordpress install that allows external programs to add, edit and delete posts. Used by "<a href="http://codex.wordpress.org/Weblog_Client" class="external text" title="http://codex.wordpress.org/Weblog_Client" rel="nofollow">WordPress blog client</a>" software for automating posting and updating blog content from your desktop. </td><td> Seen in <a href="http://www.wordpress.org/" class="external text" title="http://www.wordpress.org/" rel="nofollow">WordPress</a>, e.g. <a href="http://www.tom-watson.co.uk/" class="external autonumber" title="http://www.tom-watson.co.uk/" rel="nofollow">[1]</a>.  </td><td> Description stubbed in <a href="/wiki/rel-edituri" title="rel-edituri">rel-edituri</a>.
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-endorsed&amp;action=edit&amp;redlink=1" class="new" title="rel-endorsed (not yet written)">endorsed</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-fan&amp;action=edit&amp;redlink=1" class="new" title="rel-fan (not yet written)">fan</a> </td><td> xxxx. </td><td> &hellip; </td><td> <a href="/wiki/hcard-user-profile-authoring" title="hcard-user-profile-authoring">hcard-user-profile-authoring</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-feed" title="rel-feed">feed</a> </td><td> Gives the address of a syndication feed for the current document. </td><td> &hellip; </td><td> WCLR/ HTML5
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-footnote&amp;action=edit&amp;redlink=1" class="new" title="rel-footnote (not yet written)">footnote</a> </td><td> Location of the footnote on a link to a footnote. </td><td> Markdown preprocessors such as <a href="http://maruku.rubyforge.org/" class="external text" title="http://maruku.rubyforge.org/" rel="nofollow">Maruku</a> </td><td> HTML5
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-icon&amp;action=edit&amp;redlink=1" class="new" title="rel-icon (not yet written)">icon</a> </td><td> Imports an icon to represent the current document. (Allowed in <code>link</code> only) </td><td> <a href="http://dev.w3.org/html5/spec-LC/links.html#rel-icon" class="external text" title="http://dev.w3.org/html5/spec-LC/links.html#rel-icon" rel="nofollow">HTML5</a> </td><td> WCLR/HTML5
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-kinetic-stylesheet&amp;action=edit&amp;redlink=1" class="new" title="rel-kinetic-stylesheet (not yet written)">kinetic-stylesheet</a> </td><td> Imports a <a href="http://kssproject.org/" class="external text" title="http://kssproject.org/" rel="nofollow">KSS</a> 'kinetic stylesheet' to bind dynamic behavior to elements </td><td> Used in the <a href="http://plone.org" class="external text" title="http://plone.org" rel="nofollow">Plone</a> Content Management System </td><td> &hellip;
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-lightbox&amp;action=edit&amp;redlink=1" class="new" title="rel-lightbox (not yet written)">lightbox</a> </td><td> Hook - Indicates that following the link will trigger a "lightbox" script (Allowed in <code>link</code> only) </td><td> (<a href="http://www.google.co.uk/search?q=rel%3D%22lightbox%22" class="external text" title="http://www.google.co.uk/search?q=rel%3D%22lightbox%22" rel="nofollow">Google search for rel=lightbox in the wild</a>) Use "lightbox" instead of "clearbox" or "prettyPhoto" </td><td> &hellip;
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-made&amp;action=edit&amp;redlink=1" class="new" title="rel-made (not yet written)">made</a> </td><td> &hellip; </td><td> &hellip; </td><td> LRdraft
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-meta" title="rel-meta">meta</a> </td><td> &hellip; </td><td>  <a href="http://www.w3.org/TR/1999/REC-rdf-syntax-19990222/#transport" class="external text" title="http://www.w3.org/TR/1999/REC-rdf-syntax-19990222/#transport" rel="nofollow">1999 W3C RDF syntax REC</a> </td><td> FOAF
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-microsummary&amp;action=edit&amp;redlink=1" class="new" title="rel-microsummary (not yet written)">microsummary</a></td><td> &hellip; </td><td> &hellip; </td><td><a href="http://wiki.mozilla.org/Microsummaries" class="external text" title="http://wiki.mozilla.org/Microsummaries" rel="nofollow">Microsummary</a>, be aware of: <a href="/wiki/page-summary-formats#Issues_2" title="page-summary-formats">microsummary issues</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-noreferrer&amp;action=edit&amp;redlink=1" class="new" title="rel-noreferrer (not yet written)">noreferrer</a> </td><td> indicates that no referrer information is to be leaked when following the link. </td><td> <a href="http://dev.w3.org/html5/spec-LC/links.html#rel-noreferrer" class="external text" title="http://dev.w3.org/html5/spec-LC/links.html#rel-noreferrer" rel="nofollow">HTML5</a> </td><td> HTML5
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-openid-delegate&amp;action=edit&amp;redlink=1" class="new" title="rel-openid-delegate (not yet written)">openid.delegate</a> </td><td> &hellip; </td><td> (<a href="http://www.google.co.uk/search?q=%22rel%3Dopenid%22" class="external text" title="http://www.google.co.uk/search?q=%22rel%3Dopenid%22" rel="nofollow">Google search for rel=openid.* in the wild</a>) </td><td> &hellip;
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-openid-server&amp;action=edit&amp;redlink=1" class="new" title="rel-openid-server (not yet written)">openid.server</a> </td><td> &hellip; </td><td> (<a href="http://www.google.co.uk/search?q=%22rel%3Dopenid%22" class="external text" title="http://www.google.co.uk/search?q=%22rel%3Dopenid%22" rel="nofollow">Google search for rel=openid.* in the wild</a>) </td><td> &hellip;
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-permalink&amp;action=edit&amp;redlink=1" class="new" title="rel-permalink (not yet written)">permalink</a> </td><td> indicate a permanent link for some, or all, content within the document. obsolete; use <code>bookmark</code> instead. </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-pgpkey&amp;action=edit&amp;redlink=1" class="new" title="rel-pgpkey (not yet written)">pgpkey</a> </td><td> (see also rel-publickey) </td><td> &hellip; </td><td> <a href="http://golem.ph.utexas.edu/~distler/blog/archives/000320.html" class="external autonumber" title="http://golem.ph.utexas.edu/~distler/blog/archives/000320.html" rel="nofollow">[2]</a>, <a href="http://golem.ph.utexas.edu/~distler/blog/archives/000325.html" class="external autonumber" title="http://golem.ph.utexas.edu/~distler/blog/archives/000325.html" rel="nofollow">[3]</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-pingback&amp;action=edit&amp;redlink=1" class="new" title="rel-pingback (not yet written)">pingback</a> </td><td> Gives the address of the pingback server that handles pingbacks to the current document. (Allowed in <code>link</code> only) </td><td> &hellip; </td><td> WCLR/ HTML5
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-popover&amp;action=edit&amp;redlink=1" class="new" title="rel-popover (not yet written)">popover</a> </td><td> Used by a JS widget to display a large, descriptive tooltip. </td><td> <a href="http://twitter.github.com/bootstrap" class="external text" title="http://twitter.github.com/bootstrap" rel="nofollow">Twitter's Bootstrap</a> <a href="http://twitter.github.com/bootstrap/javascript.html#popovers" class="external text" title="http://twitter.github.com/bootstrap/javascript.html#popovers" rel="nofollow">Popover.js</a> </td><td> &hellip;
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-prefetch&amp;action=edit&amp;redlink=1" class="new" title="rel-prefetch (not yet written)">prefetch</a> </td><td> Specifies that the target resource should be pre-emptively cached. (Allowed in <code>link</code> only) </td><td> &hellip; </td><td> HTML5
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-privacy&amp;action=edit&amp;redlink=1" class="new" title="rel-privacy (not yet written)">privacy</a> </td><td> Specifies that the target resource is the privacy policy. </td><td> &hellip; </td><td> &hellip;
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-publickey&amp;action=edit&amp;redlink=1" class="new" title="rel-publickey (not yet written)">publickey</a> </td><td> (see also rel-pgpkey) </td><td> &hellip; </td><td> <a href="http://rasterweb.net/raster/2002/12/12/20021212072812/" class="external autonumber" title="http://rasterweb.net/raster/2002/12/12/20021212072812/" rel="nofollow">[4]</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-referral&amp;action=edit&amp;redlink=1" class="new" title="rel-referral (not yet written)">referral</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-related&amp;action=edit&amp;redlink=1" class="new" title="rel-related (not yet written)">related</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-replies&amp;action=edit&amp;redlink=1" class="new" title="rel-replies (not yet written)">replies</a> </td><td> indicates a continued thread </td><td> unknown </td><td> <a href="http://www.apps.ietf.org/rfc/rfc4685.html" class="external text" title="http://www.apps.ietf.org/rfc/rfc4685.html" rel="nofollow">RFC4685</a>
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-respond-proxy&amp;action=edit&amp;redlink=1" class="new" title="rel-respond-proxy (not yet written)">respond-proxy</a> </td><td> Working with respond.js - proxy on external server </td><td> <a href="https://github.com/scottjehl/Respond" class="external autonumber" title="https://github.com/scottjehl/Respond" rel="nofollow">[5]</a> </td><td> <a href="https://github.com/scottjehl/Respond" class="external autonumber" title="https://github.com/scottjehl/Respond" rel="nofollow">[6]</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-respond-redirect&amp;action=edit&amp;redlink=1" class="new" title="rel-respond-redirect (not yet written)">respond-redirect</a> </td><td> Working with respond.js - redirect location on local server </td><td> <a href="https://github.com/scottjehl/Respond" class="external autonumber" title="https://github.com/scottjehl/Respond" rel="nofollow">[7]</a> </td><td> <a href="https://github.com/scottjehl/Respond" class="external autonumber" title="https://github.com/scottjehl/Respond" rel="nofollow">[8]</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-resource&amp;action=edit&amp;redlink=1" class="new" title="rel-resource (not yet written)">resource</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-search&amp;action=edit&amp;redlink=1" class="new" title="rel-search (not yet written)">search</a> </td><td> &hellip; </td><td> unknown </td><td> unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-sitemap" title="rel-sitemap">sitemap</a> </td><td> Links to a site map document. </td><td> &hellip; </td><td> <a href="http://www.sitemaps.org/" class="external free" title="http://www.sitemaps.org/" rel="nofollow">http://www.sitemaps.org/</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-sponsor&amp;action=edit&amp;redlink=1" class="new" title="rel-sponsor (not yet written)">sponsor</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-tooltip&amp;action=edit&amp;redlink=1" class="new" title="rel-tooltip (not yet written)">tooltip</a> </td><td> Used by a JS widget to display a tooltip similar (though more customizable) to what is shown by browsers if the 'title' attribute is present. </td><td> <a href="http://twitter.github.com/bootstrap" class="external text" title="http://twitter.github.com/bootstrap" rel="nofollow">Twitter's Bootstrap</a> <a href="http://twitter.github.com/bootstrap/javascript.html#tooltips" class="external text" title="http://twitter.github.com/bootstrap/javascript.html#tooltips" rel="nofollow">Tooltip.js</a> (and likely other JS tools) </td><td> &hellip;
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-trackback&amp;action=edit&amp;redlink=1" class="new" title="rel-trackback (not yet written)">trackback</a> </td><td> &hellip; </td><td> unknown, perhaps open source Movable Type blogging software </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-unendorsed&amp;action=edit&amp;redlink=1" class="new" title="rel-unendorsed (not yet written)">unendorsed</a> </td><td> (probably redundant to <a href="/wiki/rel-nofollow" title="rel-nofollow">nofollow</a>) </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-user&amp;action=edit&amp;redlink=1" class="new" title="rel-user (not yet written)">user</a> </td><td> &hellip; </td><td> &hellip; </td><td> WCLR
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-wlwmanifest&amp;action=edit&amp;redlink=1" class="new" title="rel-wlwmanifest (not yet written)">wlwmanifest</a> </td><td> Used by "<a href="http://explore.live.com/windows-live-writer" class="external text" title="http://explore.live.com/windows-live-writer" rel="nofollow">Windows Live Writer</a>," a Microsoft <a href="http://codex.wordpress.org/Weblog_Client" class="external text" title="http://codex.wordpress.org/Weblog_Client" rel="nofollow">blog client</a> for automating posting and updating blog content from your desktop. </td><td> Seen in <a href="http://www.wordpress.org/" class="external text" title="http://www.wordpress.org/" rel="nofollow">WordPress</a>, e.g. <a href="http://www.tom-watson.co.uk/" class="external autonumber" title="http://www.tom-watson.co.uk/" rel="nofollow">[9]</a>. Similar values are probably used by other blog content management systems as well. </td><td> &hellip;
+</td></tr></table>
+<p><br />
+</p>
+<a name="WCLR"></a><h3> <span class="mw-headline"> WCLR </span></h3>
+<p>The WCLR proposal is described by its author (in e-mail, 2007-09-25) as:
+</p>
+<blockquote>
+<p>&hellip;now effectively obsolete, since HTML5 and Microformats cover all the worthwhile relationships in that already.</p>
+<p>These are <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/section-links.html#linkTypes" class="external text" title="http://www.whatwg.org/specs/web-apps/current-work/multipage/section-links.html#linkTypes" rel="nofollow">covered by HTML5 already</a>:
+</p>
+<ul><li> permalink -&gt; bookmark
+</li><li> archive -&gt; archives
+</li><li> feed
+</li><li> pingback
+</li><li> unendorsed -&gt; nofollow
+</li></ul>
+<p>The rest now seem unnecessary.
+</p>
+</blockquote>
+<p>Nonetheless, there may be some mileage in using them in microformats, at least until HTML5 is widely available.
+</p>
+<a name="Dublin_Core"></a><h2> <span class="mw-headline"> Dublin Core </span></h2>
+<p>In the past, Dublin Core values have been added to this page in the table about HTML5 features, but no examples, nor an actual specification explicitly stating how the value(s) should be used in HTML could be found. The linked specifications below have been updated so we should start considering Dublin Core values accordingly.
+</p>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value </th><th> summary </th><th> source
+</th></tr>
+<tr>
+<td> schema.DC </td><td> a specification of all metadata terms maintained by the Dublin Core Metadata Initiative, with regard to the fifteen terms of the Dublin Core Metadata Element Set already published </td><td> <a href="http://www.dublincore.org/documents/dcq-html/" class="external text" title="http://www.dublincore.org/documents/dcq-html/" rel="nofollow">Dublin Core</a>
+</td></tr>
+<tr>
+<td> schema.DCTERMS </td><td> a specification of all metadata terms maintained by the Dublin Core Metadata Initiative, reflecting the changes described more fully in the 2012 document "Maintenance changes to DCMI Metadata Terms" <a href="http://dublincore.org/usage/decisions/2012/dcterms-changes/" class="external autonumber" title="http://dublincore.org/usage/decisions/2012/dcterms-changes/" rel="nofollow">[10]</a> </td><td> <a href="http://www.dublincore.org/documents/dcq-html/" class="external text" title="http://www.dublincore.org/documents/dcq-html/" rel="nofollow">Dublin Core</a>
+</td></tr>
+</table>
+<p><b>Issues need updating given new information from linked resources.</b>
+</p><p>Notes:
+</p>
+<ul><li> Dublin Core. This search may help: <a href="http://www.google.co.uk/search?as_q=rel%3Dschema.*&amp;hl=en&amp;num=10&amp;btnG=Google+Search&amp;as_epq=&amp;as_oq=&amp;as_eq=&amp;lr=&amp;as_ft=i&amp;as_filetype=&amp;as_qdr=all&amp;as_occt=any&amp;as_dt=i&amp;as_sitesearch=http%3A%2F%2Fdublincore.org&amp;as_rights=&amp;safe=images" class="external autonumber" title="http://www.google.co.uk/search?as_q=rel%3Dschema.*&amp;hl=en&amp;num=10&amp;btnG=Google+Search&amp;as_epq=&amp;as_oq=&amp;as_eq=&amp;lr=&amp;as_ft=i&amp;as_filetype=&amp;as_qdr=all&amp;as_occt=any&amp;as_dt=i&amp;as_sitesearch=http%3A%2F%2Fdublincore.org&amp;as_rights=&amp;safe=images" rel="nofollow">[11]</a>. 
+<ul><li> <b>examples from that search only use invisible <code>&lt;link href&gt;</code> element</b>. At first glance it appears the results from the search show only uses with the invisible <code>&lt;link href&gt;</code> element which is not ideal for content relationships.  Content relationships should be user visible and thus uses with <code>&lt;a href&gt;</code> are strongly preferred.  
+<ul><li> <a href="http://www.ietf.org/rfc/rfc2731.txt" class="external text" title="http://www.ietf.org/rfc/rfc2731.txt" rel="nofollow">RFC2731</a> defines <code>rel="schema.AC"</code> and <code>rel="schema.RC"</code> with the pattern <code>rel="schema.PREFIX"</code> as a syntax for defining namespaces for use in meta[@name], *[@rel], *[@rev] and (as per eRDF) *[@class] attributes. A link to a Dublin Core metadata schema is generally not suitable for end users, so <code>&lt;link href&gt;</code> appears to be more appropriate than <code>&lt;a href&gt;</code> for those that use Dublin Core metadata schemas.
+</li><li> The scheme proposed above provides metadata namespace declarations. As described by DCMI specifications, such indications <b>cannot</b> be provided w/o a suitable namespace. In order to give complete pieces of information, the correct description set must be: <code>&lt;link rel="schema.DCTERMS" href="<a href="http://purl.org/dc/terms/" class="external free" title="http://purl.org/dc/terms/" rel="nofollow">http://purl.org/dc/terms/</a>"&gt;</code> (for the namespace declaration, followed by) <code>&lt;meta name="DCTERMS.[element]" content="[element.value]"&gt;</code> for related elements. 
+<ul><li> Note: <a href="http://purl.org/dc/terms/" class="external text" title="http://purl.org/dc/terms/" rel="nofollow">schema.DCTERMS</a> is conventionally related to an upgraded elements list than <a href="http://purl.org/dc/elements/1.1/" class="external text" title="http://purl.org/dc/elements/1.1/" rel="nofollow">schema.DC</a> and should be preferred as rel values. Both are discussed here for subject completeness) 
+</li></ul>
+</li></ul>
+</li><li> <b>proposal to use in content currently only theoretical</b>. Thus unfortunately the use of Dublin Core in user visible content like <code>&lt;a href&gt;</code> appears to be strictly theoretical. See <a href="http://microformats.org/discuss/mail/microformats-discuss/2008-January/011445.html" class="external text" title="http://microformats.org/discuss/mail/microformats-discuss/2008-January/011445.html" rel="nofollow">microformats-discuss/2008-January/011445.html</a> for a proposal to use Dublin Core in user visible content.
+<ul><li> <b>recent improvements</b>. DCMI solves some trouble concerning metadata through the <i>description set model</i>. Some of these informations cannot currently be provided in any standard ways other than DC, namely dates, validity and periodicity. Following this public bug report (<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?format=multiple&amp;id=22520" class="external autonumber" title="https://www.w3.org/Bugs/Public/show_bug.cgi?format=multiple&amp;id=22520" rel="nofollow">[12]</a>), the correct namespace declaration for DC and DCTERMS metadata are now considered valid HTML code. We <b>must</b> encourage this practice both for internal usefulness and for shared practices. 
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> The Dublin Core document <a href="http://dublincore.org/documents/dc-html/" class="external text" title="http://dublincore.org/documents/dc-html/" rel="nofollow">"Expressing Dublin Core metadata using HTML/XHTML meta and link elements"</a> is a specification for, and gives examples of, both &lt;link rel="schema.DC" href="<a href="http://purl.org/dc/elements/1.1/" class="external free" title="http://purl.org/dc/elements/1.1/" rel="nofollow">http://purl.org/dc/elements/1.1/</a>"&gt; and &lt;link rel="schema.DCTERMS" href="<a href="http://purl.org/dc/terms/" class="external free" title="http://purl.org/dc/terms/" rel="nofollow">http://purl.org/dc/terms/</a>"&gt;. Note that Dublin Core encourages the use of DCTERMS elements over DC. A list of projects which use Dublin Core metadata is maintained <a href="http://dublincore.org/projects/" class="external text" title="http://dublincore.org/projects/" rel="nofollow">here</a>.
+</li><li> <a href="http://dublincore.org/documents/dc-html/" class="external text" title="http://dublincore.org/documents/dc-html/" rel="nofollow">"Expressing Dublin Core metadata using HTML/XHTML meta and link elements"</a> also includes examples of &lt;link rel="DCTERMS.[element]" href=""&gt;, where [element] = subject, isReferencedBy, creator, and publisher. The &lt;link&gt; tag is used instead of the &lt;meta&gt; tag whenever the content is a URL. (Note that this use is different from, but related to, &lt;link rel="schema.DCTERMS" href=""&gt;.) Potentially, <i>any</i> of the 55 DCTERMS elements could be used in this way, and this could include use in HTML 5.
+<ul><li> As said before, HTML5 validators now allow the use of <code>&lt;link rel="schema.DCTERMS" href="<a href="http://purl.org/dc/terms/" class="external free" title="http://purl.org/dc/terms/" rel="nofollow">http://purl.org/dc/terms/</a>"&gt;</code> for namespace declarations.
+</li></ul>
+</li></ul>
+<ul><li> According to DCMI specification linked above, as well as <a href="http://dublincore.org/documents/dc-html/" class="external text" title="http://dublincore.org/documents/dc-html/" rel="nofollow">"Expressing Dublin Core metadata using HTML/XHTML meta and link elements"</a> documentation, HTML5 @rel attribute proposed values table has been updated. It now includes a subset of DCMI <i>/terms/</i> namespace properties, more specifically those whose value can (or must) be logically expressed by a resource, so that the "href" attribute value becomes a non-literal value surrogate referring to the resource itself.
+<ul><li> Elements from <i>/elements/1.1/</i> namespace have not been included on purpose. According to <a href="http://wiki.dublincore.org/index.php/FAQ/DC_and_DCTERMS_Namespaces" class="external text" title="http://wiki.dublincore.org/index.php/FAQ/DC_and_DCTERMS_Namespaces" rel="nofollow">"FAQ/DC and DCTERMS Namespaces"</a>, the old namespace is maintained for legacy purposes only and it is not as suitable for non-literal values as the ones denoted by <code>&lt;link&gt;</code> elements.
+</li></ul>
+</li></ul>
+<a name="Use_with_HTTP_Link_Header"></a><h2> <span class="mw-headline"> Use with HTTP Link Header </span></h2>
+<p>You can also use any of the rel values (that are allowed for link elements) with HTTP Link Headers, 
+</p><p>Example: returning a Javascript file with a license (since JS itself has no way to indicate a license)
+</p>
+<div dir="ltr" style="text-align: left;"><pre class="source-text">Link: &lt;http://creativecommons.org/publicdomain/zero/1.0/&gt;; rel=&quot;license&quot;</pre></div>
+<p>For multiple licenses (e.g. CC-SA and GPL), simply use multiple <code>Link:</code> headers.
+</p>
+<div dir="ltr" style="text-align: left;"><pre class="source-text">Link: &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;; rel=&quot;license&quot;
+Link: &lt;http://www.gnu.org/licenses/gpl.html&gt;; rel=&quot;license&quot;</pre></div>
+<p>Example: similarly, linking to a copyright statement for an image:
+</p>
+<div dir="ltr" style="text-align: left;"><pre class="source-text">Link: &lt;http://example.org/copyright.html&gt;; rel=&quot;copyright&quot;</pre></div>
+<p>or providing a brief inline copyright statement:
+</p>
+<div dir="ltr" style="text-align: left;"><pre class="source-text">Link: &lt;data:text/plain;charset=utf-8,Copyright 2013 ExampleCo, All Rights Reserved.&gt;; rel=&quot;copyright&quot;</pre></div>
+<a name="unspecified"></a><h2> <span class="mw-headline"> unspecified </span></h2>
+<p>Some rel values have been added to this page perhaps in one of the tables above, but no examples, nor an actual specification explicitly stating that the value(s) should be used in the HTML 'rel' attribute could be found. They are listed here in the hopes someone can discover more specific/precise URLs to examples or specifications about them (preferably both).  Until such precise URLs to examples/specs are provided, the values can be treated as they are purely theoretical and thus of little interest.
+</p><p>A simple list here is sufficient.
+</p>
+<a name="non_HTML_rel_values"></a><h2> <span class="mw-headline"> non HTML rel values </span></h2>
+<p>There are markup languages other than HTML that also have a rel attribute, often based upon the HTML rel attribute.
+It is useful to document some of these other languages and their rel values for both reference purposes, and to provide  background research for the possible development and re-use of these values in HTML, as <a href="/wiki/poshformats" title="poshformats">poshformats</a> or <a href="/wiki/microformats" title="microformats">microformats</a>
+</p><p>Sources:
+</p>
+<ul><li> <a href="/wiki/Atom" class="mw-redirect" title="Atom">Atom</a> <a href="/wiki/RFC4287" class="mw-redirect" title="RFC4287">RFC4287</a> specification. 
+</li><li> See <a href="http://www.iana.org/assignments/link-relations.html" class="external free" title="http://www.iana.org/assignments/link-relations.html" rel="nofollow">http://www.iana.org/assignments/link-relations.html</a> for more.
+</li><li> See <a href="http://amundsen.com/media-types/maze/format/#link-relations" class="external text" title="http://amundsen.com/media-types/maze/format/#link-relations" rel="nofollow">Maze+XML</a>
+</li><li> See <a href="http://amundsen.com/media-types/collection/format/#link-relations" class="external text" title="http://amundsen.com/media-types/collection/format/#link-relations" rel="nofollow">Collection+JSON</a>
+</li><li> See <a href="http://www.opensearch.org/Specifications/OpenSearch/1.1#Url_rel_values" class="external text" title="http://www.opensearch.org/Specifications/OpenSearch/1.1#Url_rel_values" rel="nofollow">OpenSearch</a>
+</li><li> See <a href="http://tools.ietf.org/html/rfc6861" class="external text" title="http://tools.ietf.org/html/rfc6861" rel="nofollow">The Create-Form and Edit-Form Link Relations (RFC6861)</a>
+</li><li> See <a href="http://rels.messages.io" class="external text" title="http://rels.messages.io" rel="nofollow">Workflow-Related Link Relations at Messages.io</a>
+</li></ul>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value </th><th> summary<br />(from the relevant specification where possible)) </th><th> defining specification
+</th></tr>
+<tr>
+<td> self
+</td><td> From <a href="http://www.ietf.org/rfc/rfc4287.txt" class="external free" title="http://www.ietf.org/rfc/rfc4287.txt" rel="nofollow">http://www.ietf.org/rfc/rfc4287.txt</a>&nbsp;: <blockquote>The value "self" signifies that the IRI in the value of the href attribute identifies a resource equivalent to the containing element.</blockquote>
+</td><td> <a href="/wiki/Atom" class="mw-redirect" title="Atom">Atom</a> <a href="http://www.ietf.org/rfc/rfc4287.txt" class="external free" title="http://www.ietf.org/rfc/rfc4287.txt" rel="nofollow">http://www.ietf.org/rfc/rfc4287.txt</a>
+</td></tr>
+<tr>
+<td> <a href="http://gdata.youtube.com/schemas/2007#in-reply-to" class="external free" title="http://gdata.youtube.com/schemas/2007#in-reply-to" rel="nofollow">http://gdata.youtube.com/schemas/2007#in-reply-to</a> </td><td> See <a href="http://code.google.com/apis/youtube/2.0/developers_guide_protocol_comments.html" class="external free" title="http://code.google.com/apis/youtube/2.0/developers_guide_protocol_comments.html" rel="nofollow">http://code.google.com/apis/youtube/2.0/developers_guide_protocol_comments.html</a> </td><td> YouTube extension to Atom
+</td></tr>
+<tr>
+<td> collection </td><td> Refers to a resource which represents a collection of which the current resource is a member.
+<p>When used in the Maze+XML media type, the associated URI returns the available collection of mazes.
+</p>
+</td><td> Maze+XML, Collection+JSON, OpenSearch
+</td></tr>
+<tr>
+<td> compensatingtx </td><td> Link to a resource representing information about a compensating transaction for each member transaction of a <a href="http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf" class="external text" title="http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf" rel="nofollow">Long-Lived Compensating Transaction</a> </td><td> See <a href="http://rels.messages.io/#compensatingtx" class="external text" title="http://rels.messages.io/#compensatingtx" rel="nofollow">Compensating Transaction Link Relation</a>
+</td></tr>
+<tr>
+<td> east </td><td> Refers to a resource to the "east" of the current resource.
+<p>When used in the Maze+XML media type, the associated URI points to a neighboring cell resource to the east in the active maze.
+</p>
+</td><td> Maze+XML
+</td></tr>
+<tr>
+<td> events </td><td> Link to a collection resource representing a list of subscribe-able events. </td><td> See <a href="http://rels.messages.io/#events" class="external text" title="http://rels.messages.io/#events" rel="nofollow">Events Link Relation</a>
+</td></tr>
+<tr>
+<td> exit </td><td> Refers to a resource that represents the exit or end of the current client actvity or process.
+<p>When used in the Maze+XML media type, the associated URI points to the final exit resource of the active maze.
+</p>
+</td><td> Maze+XML
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> north </td><td> Refers to a resource that is "north" of the current resource.
+<p>When used in the Maze+XML media type, the associated URI points to a neighboring cell resource to the north in the active maze.
+</p>
+</td><td> Maze+XML
+</td></tr>
+<tr>
+<td> south </td><td> Refers to a resource that is "south" of the current resource.
+<p>When used in the Maze+XML media type, the associated URI points to a neighboring cell resource to the south in the active maze.
+</p>
+</td><td> Maze+XML
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-via&amp;action=edit&amp;redlink=1" class="new" title="rel-via (not yet written)">via</a> </td><td> Identifies a resource that is the source of the information in the context. </td><td>  Atom 1.0 Syndication format (<a href="http://tools.ietf.org/html/rfc4287" class="external" title="http://tools.ietf.org/html/rfc4287">RFC 4287</a>)
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> west </td><td> Refers to a resource that is "west" of the current resource.
+<p>When used in the Maze+XML media type, the associated URI points to a neighboring cell resource to the west in the active maze.
+</p>
+</td><td> Maze+XML
+</td></tr>
+<tr>
+<td> item </td><td> The target IRI points to a resource that is a member of a collection represented by the context IRI. </td><td> Collection+JSON
+</td></tr>
+<tr>
+<td> create-form </td><td> When included in a resource, the "create-form" link relation MAY identify a target resource that represents the form to append a new member to the link context. </td><td> See <a href="http://tools.ietf.org/html/rfc6861" class="external text" title="http://tools.ietf.org/html/rfc6861" rel="nofollow">The Create-Form and Edit-Form Link Relations (RFC6861)</a>
+</td></tr>
+<tr>
+<td> edit-form </td><td> When included in a resource, the "edit-form" link relation identifies a target resource that represents the form for editing associated resource. </td><td> See <a href="http://tools.ietf.org/html/rfc6861" class="external text" title="http://tools.ietf.org/html/rfc6861" rel="nofollow">The Create-Form and Edit-Form Link Relations (RFC6861)</a>
+</td></tr>
+<tr>
+<td> lightframe </td><td> Opens the target in a lightbox. On inclusion it provides a simple target the lightframe and loads the content in a lightbox effect </td><td> Lightbox
+</td></tr>
+<tr>
+<td> superbox[image] </td><td> jQuery Superbox! is a script which allows you display windows with the lightbox effect. </td><td> superbox
+</td></tr>
+<tr>
+<td> wp-video-lightbox </td><td> wp-video-lightbox! is a rel to anchor tag script display videos with the lightbox effect. </td><td> wp-video-lightbox
+</td></tr>
+<tr>
+<td> youtube </td><td> Opens the target youtube video in using the Swipebox Plugin </td><td> Swipebox
+</td></tr>
+<tr>
+<td> shadowbox </td><td> shadowbox is a jQuery script for images displaying with the "lightbox" effects. </td><td> shadowbox
+</td></tr>
+<tr>
+<td> permission </td><td> When included in a resource, the "permission" link relation MAY identify a target resource that represents the list of entities that can access or modify the resource in the link context. </td><td> See <a href="http://cdoc.io/spec.html#permission-link-relation" class="external text" title="http://cdoc.io/spec.html#permission-link-relation" rel="nofollow">Collection Document Media Type Specification</a>
+</td></tr>
+<tr>
+<td> sub </td><td> When included in a resource representation of an event, the "sub" (subscription) link relation MAY identify a target resource that represents the ability to subscribe to the pub/sub  event-type resource in the link context. </td><td> See <a href="http://rels.messages.io/#sub" class="external text" title="http://rels.messages.io/#sub" rel="nofollow">Subscription Link Relation</a>
+</td></tr>
+<tr>
+<td> unsub </td><td> When included in a resource representation of an event, the "unsub" (subscription cancellation) link relation MAY identify a target resource that represents the ability to un-subscribe from the pub/sub  event-type resource in the link context. </td><td> See <a href="http://rels.messages.io/#unsub" class="external text" title="http://rels.messages.io/#unsub" rel="nofollow">Subscription Cancellation Link Relation</a>
+</td></tr>
+<tr>
+<td> version-history
+</td><td> When included on a versioned resource, this link points to a resource containing the version history for this resource.
+</td><td> <a href="http://tools.ietf.org/html/rfc5829" class="external text" title="http://tools.ietf.org/html/rfc5829" rel="nofollow">RFC 5829</a>
+</td></tr>
+<tr>
+<td> latest-version
+</td><td> When included on a versioned resource, this link points to a resource containing the latest (e.g., current) version.
+</td><td> <a href="http://tools.ietf.org/html/rfc5829" class="external text" title="http://tools.ietf.org/html/rfc5829" rel="nofollow">RFC 5829</a>
+</td></tr>
+<tr>
+<td> working-copy
+</td><td> When included on a versioned resource, this link points to a working copy for this resource.
+</td><td> <a href="http://tools.ietf.org/html/rfc5829" class="external text" title="http://tools.ietf.org/html/rfc5829" rel="nofollow">RFC 5829</a>
+</td></tr>
+<tr>
+<td> working-copy-of
+</td><td> When included on a working copy, this link points to the versioned resource from which this working copy was obtained.
+</td><td> <a href="http://tools.ietf.org/html/rfc5829" class="external text" title="http://tools.ietf.org/html/rfc5829" rel="nofollow">RFC 5829</a>
+</td></tr>
+<tr>
+<td> predecessor-version
+</td><td> When included on a versioned resource, this link points to a resource containing the predecessor version in the version history.
+</td><td> <a href="http://tools.ietf.org/html/rfc5829" class="external text" title="http://tools.ietf.org/html/rfc5829" rel="nofollow">RFC 5829</a>
+</td></tr>
+<tr>
+<td> successor-version
+</td><td> When included on a versioned resource, this link points to a resource containing the successor version in the version history.
+</td><td> <a href="http://tools.ietf.org/html/rfc5829" class="external text" title="http://tools.ietf.org/html/rfc5829" rel="nofollow">RFC 5829</a>
+</td></tr>
+<tr>
+<td> ... </td><td> ... </td><td> ...
+</td></tr></table>
+<a name="dropped"></a><h2> <span class="mw-headline"> dropped </span></h2>
+<p>The following rel values were in earlier version(s) of specification(s) and it is presumed by their absence from the most recent version of the respective specification(s) that they have been deprecated or obsoleted. 
+</p><p>In general, you <em title="SHOULD NOT in &#82;FC 2119 context" style="text-transform: lowercase; font-style: italic;" class="&#82;FC2119">SHOULD NOT</em> use any dropped values.
+</p><p>If any such values have been superceded by standard values (see the first table on this page), then you <em title="MUST NOT in &#82;FC 2119 context" style="text-transform: lowercase; font-style: italic;" class="&#82;FC2119">MUST NOT</em> use the dropped versions.
+</p><p>In particular:
+</p>
+<ul><li> if a rel value was in a draft and is missing (without explanation) from the final spec, or
+</li><li> if a rel value was in a previous version of and is missing (without explanation) from an update to the specification (even a draft update)
+</li></ul>
+<p>Then absent any other information or explanation, it is presumed that the group/editors working on that specification decided to explicitly drop it (either in development, or in the updated version) and thus it should be obsoleted (not re-registered). 
+</p><p>If you wish to add them, please research <em>why</em> such values were omitted from latter specifications before doing so. If you do discover the reasoning, please add a short statement or link to thereof into the appropriate place in the following table.
+</p><p>If there is more data, e.g. a link to an email of discussion of the spec development that explains <i>why</i> the rel value was dropped, and it explicitly states, e.g. it was without prejudice, or merely post-poned, or perhaps expected to be spun-out into its spec (or some other explicit positive reason), then it makes to link/cite that explicit text as part of a proposal.
+</p><p>Sources: 
+</p>
+<ul><li> <a href="http://www.w3.org/MarkUp/html3/" class="external text" title="http://www.w3.org/MarkUp/html3/" rel="nofollow">HTML3</a> (HTML3) / has been superceded by <a href="http://www.w3.org/MarkUp/Wilbur/" class="external text" title="http://www.w3.org/MarkUp/Wilbur/" rel="nofollow">HTML 3.2</a> - which itself has been superceded by <a href="http://www.w3.org/TR/REC-html40" class="external text" title="http://www.w3.org/TR/REC-html40" rel="nofollow">HTML 4.0</a> - which itself has been updated by <a href="http://w3.org/TR/html401" class="external text" title="http://w3.org/TR/html401" rel="nofollow">HTML 4.01</a>, commonly referred to as "HTML 4" in this wiki and other places.)
+</li><li> <a href="http://www.w3.org/TR/relations.html" class="external text" title="http://www.w3.org/TR/relations.html" rel="nofollow">Proposed HTML 4.0 link types</a> (HTML4dropped) - obsoleted/superceded by the HTML 4.0 Recommendation.  Any values that were in the "Proposed HTML 4.0 link types" document but didn't make it into the HTML 4.0 Recommendation were thus explicitly dropped and should be avoided.
+</li></ul>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value </th><th> summary </th><th> defining specification </th><th> why dropped
+</th></tr>
+<tr>
+<td><a href="/wiki/index.php?title=rel-banner&amp;action=edit&amp;redlink=1" class="new" title="rel-banner (not yet written)">banner</a></td><td>Was used to reference another document to be used as banner for this document (i.e. a form of "include" statement).</td><td> HTML3 </td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-begin&amp;action=edit&amp;redlink=1" class="new" title="rel-begin (not yet written)">begin</a> </td><td> identifies the author-defined start of a sequence of documents of which the current document is a node.
+</td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-biblioentry&amp;action=edit&amp;redlink=1" class="new" title="rel-biblioentry (not yet written)">biblioentry</a> </td><td> identifies a bibliographic entry </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-bibliography&amp;action=edit&amp;redlink=1" class="new" title="rel-bibliography (not yet written)">bibliography</a> </td><td> identifies a bibliography </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-child&amp;action=edit&amp;redlink=1" class="new" title="rel-child (not yet written)">child</a> (obsolete/superceded) </td><td> the target document is a hierarchical child, or subdocument, of the current document</td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-citation&amp;action=edit&amp;redlink=1" class="new" title="rel-citation (not yet written)">citation</a> </td><td> the target is a bibliographic citation </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-collection&amp;action=edit&amp;redlink=1" class="new" title="rel-collection (not yet written)">collection</a> </td><td> the target document is an collection that contains the current document </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-definition&amp;action=edit&amp;redlink=1" class="new" title="rel-definition (not yet written)">definition</a> </td><td> identifies a definition of a term </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-disclaimer&amp;action=edit&amp;redlink=1" class="new" title="rel-disclaimer (not yet written)">disclaimer</a> </td><td> identifies a hypertext link to a legal disclaimer </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-editor&amp;action=edit&amp;redlink=1" class="new" title="rel-editor (not yet written)">editor</a> </td><td> identifies a hypertext link to an editor </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-end&amp;action=edit&amp;redlink=1" class="new" title="rel-end (not yet written)">end</a> </td><td> identifies the author-defined end of a sequence of documents of which the current document is a node. </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-footnote&amp;action=edit&amp;redlink=1" class="new" title="rel-footnote (not yet written)">footnote</a> </td><td> the anchor is a footnote marker and the target is a footnote </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-navigate&amp;action=edit&amp;redlink=1" class="new" title="rel-navigate (not yet written)">navigate</a> </td><td> the target document contains information such as a image map that will help users to gain a sense of how and where to found information </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-origin&amp;action=edit&amp;redlink=1" class="new" title="rel-origin (not yet written)">origin</a> </td><td> synonym for <code>top</code> </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-parent&amp;action=edit&amp;redlink=1" class="new" title="rel-parent (not yet written)">parent</a> (obsolete/superceded) </td><td> the target document is the hierarchical parent, or container, of the current document</td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-pointer&amp;action=edit&amp;redlink=1" class="new" title="rel-pointer (not yet written)">pointer</a> </td><td> the target is a pointer to the real target. This value can be used by a user agent to perform a pre-fetch of the specified target for evaluation until the real target is reached </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-publisher&amp;action=edit&amp;redlink=1" class="new" title="rel-publisher (not yet written)">publisher</a> </td><td> identifies a hypertext link to a publisher </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-sibling&amp;action=edit&amp;redlink=1" class="new" title="rel-sibling (not yet written)">sibling</a> (obsolete/superceded) </td><td> the target document is a child of a common parent, or a hierarchical peer of the current document</td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-top&amp;action=edit&amp;redlink=1" class="new" title="rel-top (not yet written)">top</a> </td><td> the target document is the logical top node of the tree (see also <code>begin</code>) </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-trademark&amp;action=edit&amp;redlink=1" class="new" title="rel-trademark (not yet written)">trademark</a> </td><td> identifies a hypertext link to a trademark notice </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-translation&amp;action=edit&amp;redlink=1" class="new" title="rel-translation (not yet written)">translation</a> </td><td> the target is a translation to another language </td><td> HTML4dropped</td><td>unknown
+<p><br />
+</p>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-urc&amp;action=edit&amp;redlink=1" class="new" title="rel-urc (not yet written)">urc</a> </td><td> identifies a Universal Resource Citation </td><td> HTML4dropped</td><td>unknown
+</td></tr>
+</table>
+<a name="dropped_without_prejudice"></a><h2> <span class="mw-headline"> dropped without prejudice </span></h2>
+<p>In one known instance (from HTML4 to HTML5), some rel values were in an earlier version of a specification (or a proposal) and were dropped from a latter (draft) version, and it was noted that these values were dropped with the intent that they could still be proposed in a registry and thus they explicitly were not deprecated or obsoleted. This section documents such values as separate from the <a href="#dropped" title="">dropped</a> section.
+</p><p>In general, you <em title="SHOULD NOT in &#82;FC 2119 context" style="text-transform: lowercase; font-style: italic;" class="&#82;FC2119">SHOULD NOT</em> use any dropped values.
+</p><p>If any such values have been superceded by standard values (see the first table on this page), then you <em title="MUST NOT in &#82;FC 2119 context" style="text-transform: lowercase; font-style: italic;" class="&#82;FC2119">MUST NOT</em> use the dropped versions.
+</p><p>Rel values that were dropped without prejudice from a specification will be considered similar to new values that have never been specified.
+</p><p>If you know of additional rel values that were dropped without prejudice from an update to a specification, please cite a URL and quote from the group developing the specification that officially states from that group that the dropping of the values was done without prejudice, or equivalent statement (such as explicit allowance of external registration, proposal, and/or development).
+</p><p>This table serves a historical purpose. If you wish to propose a value from this table, please copy it and leave it in place.
+</p><p>Sources: 
+</p>
+<ul><li> Several rel values were <a href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=7475#c15" class="external text" title="http://www.w3.org/Bugs/Public/show_bug.cgi?id=7475#c15" rel="nofollow">explicitly dropped from HTML5</a>. Per: <a href="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" class="external text" title="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" rel="nofollow">Issue 118 Decision</a> (<b>emphasis</b> added): <blockquote><p>"The final proposal argues for the removal of some relation values, to wit, it suggests removal of <b>index, up, first and last</b>. It was pointed out in survey comments that these relations are already registered in the IANA link relation registry. Presumably, <b>these relations could also be entered in whatever other registry or registries HTML5 adopts for this purpose</b>.</p>...<p>"Next Steps</p>...<p>"Since the relations to be removed are already registered at the IANA link relation registry, no further action is needed to include them there. WG members are <b>free to register or record these relations elsehwere</b> [sic], as well."</p></blockquote> 
+</li></ul>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value
+</th><th> summary
+</th><th> defining specification
+</th><th> why dropped
+</th></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-first&amp;action=edit&amp;redlink=1" class="new" title="rel-first (not yet written)">first</a>
+</td><td> Synonym for <code>start</code>
+</td><td> HTML4dropped - never in an official spec
+</td><td> <a href="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" class="external text" title="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" rel="nofollow">Explicitly dropped from HTML5 interim draft yet permitted for external registry</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-index&amp;action=edit&amp;redlink=1" class="new" title="rel-index (not yet written)">index</a>
+</td><td> Refers to a document providing an index for the current document.
+</td><td> was in <a href="http://www.w3.org/TR/html4/types.html#h-6.12" class="external text" title="http://www.w3.org/TR/html4/types.html#h-6.12" rel="nofollow">HTML4</a>;  the token has been re-registered within the <a href="#HTML5_link_type_extensions" title="">HTML5 link type extensions</a> and is now valid.
+</td><td> <a href="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" class="external text" title="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" rel="nofollow">Explicitly dropped from HTML5 interim draft yet permitted for external registry</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/index.php?title=rel-last&amp;action=edit&amp;redlink=1" class="new" title="rel-last (not yet written)">last</a>
+</td><td> Refers to the last document in a collection of documents.
+</td><td> HTML4dropped - never in an official spec
+</td><td> <a href="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" class="external text" title="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" rel="nofollow">Explicitly dropped from HTML5 interim draft yet permitted for external registry</a>
+</td></tr>
+<tr>
+<td> <a href="/wiki/rel-up" title="rel-up">up</a>
+</td><td> When the document forms part of a hierarchy, this link references the immediate parent of the current document. Synonym for <code>parent</code>.
+</td><td> was in <a href="http://www.w3.org/MarkUp/html3/dochead.html" class="external text" title="http://www.w3.org/MarkUp/html3/dochead.html" rel="nofollow">HTML3</a> - but <a href="http://www.w3.org/TR/html401/types.html#type-links" class="external text" title="http://www.w3.org/TR/html401/types.html#type-links" rel="nofollow">dropped in HTML4</a>
+</td><td> <a href="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" class="external text" title="http://lists.w3.org/Archives/Public/public-html/2011Feb/att-0481/issue-118-decision.html" rel="nofollow">Explicitly dropped from HTML5 interim draft yet permitted for external registry</a>
+</td></tr>
+</table>
+<p>See related <a href="http://dev.w3.org/html5/spec/links.html#linkTypes" class="external text" title="http://dev.w3.org/html5/spec/links.html#linkTypes" rel="nofollow">HTML5: Link types</a> for existing HTML5 specified rel values.
+</p>
+<a name="rejected"></a><h2> <span class="mw-headline"> rejected </span></h2>
+<p>Some rel values have been proposed and rejected.  They are listed here to make that explicit.  Authors <em title="MUST NOT in &#82;FC 2119 context" style="text-transform: lowercase; font-style: italic;" class="&#82;FC2119">MUST NOT</em> use rejected rel values.
+</p><p>Source: <a href="/wiki/rejected-formats" title="rejected-formats">rejected-formats</a>.
+</p>
+<table border="1">
+<caption>
+</caption><tr>
+<th> rel value </th><th> origin / proposal </th><th> why rejected
+</th></tr>
+<tr>
+<td> <a href="/wiki/rel-logo" title="rel-logo">logo</a>
+</td><td> <a href="http://relogo.org" class="external text" title="http://relogo.org" rel="nofollow">Relogo.org</a>
+</td><td> <a href="/wiki/rejected-formats#Logo" title="rejected-formats">rejected-formats#Logo</a>
+</td></tr>
+<tr>
+<td><a href="/wiki/rel-pavatar" title="rel-pavatar">pavatar</a> </td><td> <a href="http://pavatar.com/" class="external text" title="http://pavatar.com/" rel="nofollow">pavatar</a> </td><td> <a href="/wiki/rejected-formats#Pavatar" title="rejected-formats">rejected-formats#Pavatar</a>
+</td></tr>
+</table>
+<a name="tools"></a><h2> <span class="mw-headline"> tools </span></h2>
+<p>See <a href="/wiki/implementations" title="implementations">implementations</a>.
+</p>
+<a name="addtional_external_research"></a><h2> <span class="mw-headline"> addtional external research </span></h2>
+<p>Here are some additional historical references to the development or rel-values which may be useful when researching values, especially why specific values may have been proposed but abandoned.
+</p>
+<ul><li> 1996-06-07 <a href="http://www.w3.org/MarkUp/draft-ietf-html-relrev-00.txt" class="external text" title="http://www.w3.org/MarkUp/draft-ietf-html-relrev-00.txt" rel="nofollow">Hypertext links in HTML</a> (copies: <a href="http://ftp.ics.uci.edu/pub/ietf/html/draft-ietf-html-relrev-00.txt" class="external text" title="http://ftp.ics.uci.edu/pub/ietf/html/draft-ietf-html-relrev-00.txt" rel="nofollow">ftp.ics.uci.edu</a>)
+</li><li> 1996-11-13 <a href="http://www.w3.org/Architecture/NOTE-link" class="external text" title="http://www.w3.org/Architecture/NOTE-link" rel="nofollow">Describing and Linking Web Resources</a> 
+</li><li> 1997-01-23 <a href="http://lists.gnu.org/archive/html/lynx-dev/1997-01/msg00537.html" class="external text" title="http://lists.gnu.org/archive/html/lynx-dev/1997-01/msg00537.html" rel="nofollow">LYNX-DEV Lynx and the LINK tag</a> 
+</li><li> 1997-01-24 <a href="http://lists.w3.org/Archives/Public/w3c-sgml-wg/1997Jan/0357.html" class="external text" title="http://lists.w3.org/Archives/Public/w3c-sgml-wg/1997Jan/0357.html" rel="nofollow">Taxonomy list</a> 
+</li><li> 1997-03-28 <a href="http://www.w3.org/TR/WD-htmllink-970328" class="external text" title="http://www.w3.org/TR/WD-htmllink-970328" rel="nofollow">W3C Working Draft: Hypertext Links and Meta Information in HTML</a>
+</li></ul>
+<a name="previous_attempts_at_documenting"></a><h3> <span class="mw-headline"> previous attempts at documenting </span></h3>
+<p>There have been previous attempts at documenting known rel values, most of which fell out of date due to being dependent on a single author maintaining them. They're listed here purely for historical reasons, and are not sufficient to be references of their own (since they're just individual curations of other references)
+</p>
+<ul><li> <a href="http://fantasai.tripod.com/qref/Appendix/LinkTypes/ltdef.html" class="external text" title="http://fantasai.tripod.com/qref/Appendix/LinkTypes/ltdef.html" rel="nofollow">Link Type Definitions Glossary</a> by fantasai
+</li><li> ...
+</li></ul>
+<a name="related"></a><h2> <span class="mw-headline"> related </span></h2>
+<ul><li> <a href="/wiki/rel" title="rel">rel</a>
+</li><li> <strong class="selflink">existing rel values</strong>
+</li><li> <a href="/wiki/rel-examples" title="rel-examples">rel examples</a>
+</li><li> <a href="/wiki/rel-faq" title="rel-faq">rel FAQ</a>
+</li><li> <a href="/wiki/rel-design-pattern" title="rel-design-pattern">rel design pattern</a>
+</li><li> <a href="/wiki/rel-values-issues" title="rel-values-issues">rel values issues</a>
+</li><li> <a href="/wiki/rel-registry" title="rel-registry">rel-registry</a>
+</li><li> <a href="/wiki/elemental-microformats" class="mw-redirect" title="elemental-microformats">elemental-microformats</a>
+</li><li> <a href="/wiki/existing-rev-values" title="existing-rev-values">existing-rev-values</a>
+</li><li> <a href="/wiki/existing-class-names" class="mw-redirect" title="existing-class-names">existing-class-names</a>
+</li></ul>
+<a name="copyright"></a><h2> <span class="mw-headline"> copyright </span></h2>
+<div id="public-domain"><span style="float:left;margin:0.3em 0 0"><a href="http://creativecommons.org/licenses/publicdomain/" class="external text" title="http://creativecommons.org/licenses/publicdomain/" rel="nofollow"><img src="http://creativecommons.org/images/public/norights-a.gif" alt="norights-a.gif" /></a></span> All text of this page is available under the terms of the <a href="http://creativecommons.org/licenses/publicdomain/" class="external text" title="http://creativecommons.org/licenses/publicdomain/" rel="nofollow">Creative Commons Public Domain License</a>. (See <a href="http://microformats.org/wiki/Microformats:Copyrights" class="external text" title="http://microformats.org/wiki/Microformats:Copyrights" rel="nofollow">Copyrights</a> for details.)</div>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 267/1000000
+Post-expand include size: 1793/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+<div class="printfooter">
+Retrieved from "<a href="http://microformats.org/wiki/existing-rel-values">http://microformats.org/wiki/existing-rel-values</a>"</div>
+		</div>	
+		
+				
+                    <div class="last-modified">
+                <a rel="bookmark" class="url uid" href="/wiki/index.php?title=existing-rel-values&amp;oldid=66721"> existing rel values </a>
+                was last modified:
+                                <span class="updated">
+                    <span class="value-title" title="2018-03-19T17:08:00-0700"> </span>
+                    Monday, March 19th, 2018                </span>
+            </div>
+        
+        <div id="content-controls">
+    		<h2>Views</h2>
+    		<ul>
+                		    <li id="ca-viewsource"><a href="/wiki/index.php?title=existing-rel-values&amp;action=edit" title="This page is protected.&#10;You can view its source. [e]" accesskey="e">View source</a></li>
+                		    <li id="ca-history"><a href="/wiki/index.php?title=existing-rel-values&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>
+                		</ul>
+    	</div>
+
+	</div>
+	
+<div id="sidebar">
+
+
+	<div class="box" id="p-Microformats_Wiki">
+		<h3>Microformats Wiki</h3>
+		<ul class="box-inner">
+			<li id="n-Front-Page"><a href="/wiki/Main_Page">Front Page</a></li>
+			<li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+			<li id="n-Events"><a href="/wiki/Microformats_Wiki:Current_events">Events</a></li>
+			<li id="n-help"><a href="/wiki/Help:Contents" title="The place to find out.">Help</a></li>
+		</ul>
+	</div>
+	
+	
+	<div class="box" id="p-tb">
+		<h3>Toolbox</h3>
+		<ul class="box-inner">
+				<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/existing-rel-values" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/existing-rel-values" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="/wiki/index.php?title=existing-rel-values&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="/wiki/index.php?title=existing-rel-values&amp;oldid=66721" title="Permanent link to this version of the page">Permanent link</a></li>		</ul>
+	</div>
+
+
+
+	<div class="box" id="user-box">
+	    	    <h3>Hey! You're not logged in</h3>
+		<ul class="box-inner">
+        		    <li id="pt-login"><a href="/wiki/index.php?title=Special:UserLogin&amp;returnto=existing-rel-values" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+                
+        
+        
+		</ul>
+	</div>
+
+</div><!-- end of the sidebar -->
+
+<div id="footer">
+
+
+    <address class="vcard">
+        The content of this wiki is the combined effort of the
+        <a class="fn org url" href="http://microformats.org">
+            microformats community
+        </a>.
+    </address>
+
+	<ul>
+    				<li id="about"><a href="/wiki/Microformats_Wiki:About" title="Microformats Wiki:About">About Microformats Wiki</a></li>
+				<li id="disclaimer"><a href="/wiki/Microformats_Wiki:General_disclaimer" title="Microformats Wiki:General disclaimer">Disclaimers</a></li>
+        <li>Powered by <a href="http://mediawiki.org">MediaWiki</a> | <a href="http://mediatemple.net/">(mt) media temple</a></li>
+	</ul>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<script type="text/javascript">
+_uacct = "UA-1889385-1";
+urchinTracker();
+</script>
+
+
+</body></html>
