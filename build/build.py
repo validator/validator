@@ -1407,6 +1407,10 @@ def updateSubmodules():
     runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge', '--init'])
 
 
+def updateSubmodulesShallow():
+    runCmd([gitCmd, 'submodule', 'update', '--init', '--depth', '1'])
+
+
 def downloadDependencies():
     for url, md5sum in dependencyPackages:
         downloadDependency(url, md5sum)
@@ -1610,6 +1614,8 @@ else:
             printHelp()
         elif arg == 'update':
             updateSubmodules()
+        elif arg == 'update-shallow':
+            updateSubmodulesShallow()
         elif arg == 'dldeps':
             downloadDependencies()
             downloadLocalEntities()

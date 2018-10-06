@@ -19,7 +19,7 @@ matrix:
 install:
   - export TOMCAT_VERSION=8.5.29
   - export BUILD_PY=./build/build.py
-  - $PYTHON $BUILD_PY update
+  - $PYTHON $BUILD_PY update-shallow
   - travis_retry $PYTHON $BUILD_PY dldeps
 
 script:
