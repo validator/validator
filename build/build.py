@@ -722,9 +722,10 @@ def buildJing():
 
 def buildCssValidator():
     os.chdir("css-validator")
-    runCmd([javaCmd, "-jar",
-            os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
-            "jar-without-dependencies"])
+    if runCmd([javaCmd, "-jar",
+               os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
+               "jar-without-dependencies"]):
+        sys.exit(1)
     os.chdir("..")
 
 
