@@ -4,7 +4,7 @@ The [Grant of license](CONTRIBUTING.md#grant-of-license) section at the end of t
 has details about licensing code contributions to this project, and about "signing off"
 on code contributions. Please make sure to read it.
 
-## Questions or problems? [![Nu Html Checker chat room](https://goo.gl/1kHqwI)][2]
+## Questions or problems? [![Nu Html Checker chat room](https://img.shields.io/badge/gitter-chat%20%E2%86%92-brightgreen.svg)][2]
 
 Along with using the [project issue tracker][1] you can get help in real time on the
 [validator project channel on Gitter][2] or [#whatwg channel on irc.freenode.net][3].
