@@ -1,4 +1,6 @@
-# The Nu Html Checker (v.Nu) [![Linux Build Status](https://img.shields.io/travis/validator/validator/master.svg?label=Linux%20build)](https://travis-ci.org/validator/validator) [![Windows Build status](https://img.shields.io/appveyor/ci/sideshowbarker/validator/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/sideshowbarker/validator) [![Chat room][1]][2] [![Download latest][3]][4]
+# The Nu Html Checker (v.Nu)
+
+[![Linux Build Status](https://img.shields.io/travis/validator/validator/master.svg?label=Linux%20build)](https://travis-ci.org/validator/validator) [![Windows Build status](https://img.shields.io/appveyor/ci/sideshowbarker/validator/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/sideshowbarker/validator) [![Chat room][1]][2] [![Download latest][3]][4]
 
    [1]: https://goo.gl/1kHqwI
    [2]: https://gitter.im/validator/validator
