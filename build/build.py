@@ -239,7 +239,7 @@ class UrlExtractor(HTMLParser):
 
 def runCmd(cmd):
     print(" ".join(cmd))
-    subprocess.call(cmd)
+    return subprocess.call(cmd)
 
 
 def execCmd(cmd, args):
