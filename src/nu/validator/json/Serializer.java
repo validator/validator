@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -222,6 +222,7 @@ public class Serializer implements JsonHandler {
             switch (state) {
                 case OBJECT:
                     writer.write('}');
+                    writer.flush();
                     pop();
                     first = false;
                     if (peek() == State.VALUE) {
