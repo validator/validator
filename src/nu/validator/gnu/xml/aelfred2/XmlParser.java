@@ -3779,7 +3779,6 @@ final class XmlParser {
             // assert (stream == null && reader == null && encoding == null)
             source = handler.resolveEntity(isPE, ename, scratch, ids.baseUri);
             if (source == null) {
-                handler.warn("skipping entity: " + ename);
                 handler.skippedEntity(ename);
                 if (isPE) {
                     skippedPE = true;
