@@ -298,14 +298,8 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void setup(String schemaUrl) throws SAXException, Exception {
-        setErrorHandler();
-        if (cssCheckingEnabled()) {
-            errorHandler.setLineOffset(-1);
-        }
-        errorHandler.setHtml(true);
-        errorHandler.start(null);
-        validator.setAllowCss(cssCheckingEnabled());
+    private static void setSchema(String schemaUrl)
+            throws SAXException, Exception {
         try {
             validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
         } catch (SchemaReadException e) {
@@ -322,6 +316,17 @@ public class SimpleCommandLineValidator {
             System.exit(1);
         }
         validator.setUpValidatorAndParsers(errorHandler, noStream, loadEntities);
+    }
+
+    private static void setup(String schemaUrl) throws SAXException, Exception {
+        setErrorHandler();
+        if (cssCheckingEnabled()) {
+            errorHandler.setLineOffset(-1);
+        }
+        errorHandler.setHtml(true);
+        errorHandler.start(null);
+        validator.setAllowCss(cssCheckingEnabled());
+        setSchema(schemaUrl);
     }
 
     private static void end() throws SAXException {
@@ -416,7 +421,7 @@ public class SimpleCommandLineValidator {
                 emitFilename(path);
                 if (!"http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc".equals(
                         validator.getMainSchemaUrl()) && !hasSchemaOption) {
-                    setup("http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc");
+                    setSchema("http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc");
                 }
                 validator.checkXmlFile(file);
             }
@@ -467,7 +472,7 @@ public class SimpleCommandLineValidator {
                 } else {
                     if (!"http://s.validator.nu/xhtml5-rdfalite.rnc".equals(
                             validator.getMainSchemaUrl()) && !hasSchemaOption) {
-                        setup("http://s.validator.nu/xhtml5-rdfalite.rnc");
+                        setSchema("http://s.validator.nu/xhtml5-rdfalite.rnc");
                     }
                     validator.checkXmlFile(file);
                 }
@@ -475,7 +480,7 @@ public class SimpleCommandLineValidator {
                 emitFilename(path);
                 if (!"http://s.validator.nu/html5-rdfalite.rnc".equals(
                         validator.getMainSchemaUrl()) && !hasSchemaOption) {
-                    setup("http://s.validator.nu/html5-rdfalite.rnc");
+                    setSchema("http://s.validator.nu/html5-rdfalite.rnc");
                 }
                 validator.checkHtmlFile(file, true);
             } else {
