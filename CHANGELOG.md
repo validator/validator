@@ -4,6 +4,7 @@ changes to any options/interfaces the checker exposes for developers.
 
 # 18.N.NN
 NN XXX 2018
+  - Fix bugs that caused the command-line checker to emit broken JSON output
   - Allow `dppx` and `x` and units in media queries
 
 # 18.8.29
