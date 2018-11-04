@@ -87,7 +87,7 @@ validatorVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20180722VNU"
 htmlparserVersion = "1.4.12"
 cssvalidatorVersion = "1.0.3"
-galimatiasVersion = "0.1.2"
+galimatiasVersion = "0.1.3"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
