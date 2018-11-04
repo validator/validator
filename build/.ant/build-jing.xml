@@ -35,7 +35,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="jing-schematron-src" location="${jing-src}/schematron/src/main" />
   <property name="jing-xerces-src" location="${jing-src}/xerces/src/main" />
   <target name="jing-javadoc-jar">
-    <javadoc destdir="${javadoc-dir}">
+    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
       <fileset dir="${jing-util-src}"/>
       <fileset dir="${jing-datatype-src}"/>
       <fileset dir="${jing-validate-src}"/>

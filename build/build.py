@@ -86,7 +86,7 @@ day = time.strftime('%d').lstrip('0')
 validatorVersion = "18.11.5"
 jingVersion = "20180722VNU"
 htmlparserVersion = "1.4.12"
-cssvalidatorVersion = "1.0.3"
+cssvalidatorVersion = "1.0.4"
 galimatiasVersion = "0.1.3"
 
 buildRoot = '.'

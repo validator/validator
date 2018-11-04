@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="htmlparser-sources-jar" value="${htmlparser-base}-sources.jar" />
   <property name="htmlparser-bundle-jar" value="${htmlparser-base}-bundle.jar" />
   <target name="htmlparser-javadoc-jar">
-    <javadoc destdir="${javadoc-dir}">
+    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
       <fileset dir="${htmlparser-src}"/>
     </javadoc>
     <jar destfile="${htmlparser-javadoc-jar}">

@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="cssvalidator-sources-jar" value="${cssvalidator-base}-sources.jar" />
   <property name="cssvalidator-bundle-jar" value="${cssvalidator-base}-bundle.jar" />
   <target name="cssvalidator-javadoc-jar">
-    <javadoc destdir="${javadoc-dir}">
+    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
       <fileset dir="${cssvalidator-src}"/>
       <classpath>
         <fileset dir="../css-validator/lib/">
