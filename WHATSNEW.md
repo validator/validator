@@ -1,8 +1,8 @@
-29 August 2018.
+05 November 2018.
 
-This release brings the checking support in the CSS backend up to date with CSS Align3, adds checking support for the `font-display` property, and allows unit-less numbers in the CSS `stroke-width` property and other from-SVG properties.
+This release fixes a bug that can happen with the command-line checker when you’ve chosen JSON output and you’re batch-checking a directory tree that contains a mix of .html/.xhtml/.svg files, as well as bug that can happen if the size of the JSON error output exceeds 8KB.
 
-More: https://github.com/validator/validator/blob/master/CHANGELOG.md#18829
+More: https://github.com/validator/validator/blob/master/CHANGELOG.md#18115
 
 The files in this release provide a portable standalone version of the Nu Html Checker in two different forms: as a Java jar file, and as a Java war file.
 

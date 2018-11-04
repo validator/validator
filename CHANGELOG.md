@@ -2,9 +2,9 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# 18.N.NN
-NN XXX 2018
-  - Fix bugs that caused the command-line checker to emit broken JSON output
+# 18.11.5
+05 November 2018
+  - Fix bugs that can cause the command-line checker to emit broken JSON output
   - Allow `dppx` and `x` and units in media queries
 
 # 18.8.29
