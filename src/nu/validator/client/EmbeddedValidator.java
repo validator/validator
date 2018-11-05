@@ -53,7 +53,7 @@ import nu.validator.xml.SystemErrErrorHandler;
  */
 public class EmbeddedValidator {
 
-    public static final String SCHEMA_URL = "http://s.validator.nu/html5-rdfalite.rnc";
+    public static final String SCHEMA_URL = "http://s.validator.nu/html5-all.rnc";
 
     public static enum OutputFormat {
         TEXT, XML, JSON, GNU

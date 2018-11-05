@@ -252,7 +252,7 @@ public class SimpleCommandLineValidator {
             filterPattern = Pattern.compile(filterString);
         }
         if (schemaUrl == null) {
-            schemaUrl = "http://s.validator.nu/html5-rdfalite.rnc";
+            schemaUrl = "http://s.validator.nu/html5-all.rnc";
         }
         if (outFormat == null) {
             outputFormat = OutputFormat.GNU;
@@ -470,17 +470,17 @@ public class SimpleCommandLineValidator {
                 if (forceHTML) {
                     validator.checkHtmlFile(file, true);
                 } else {
-                    if (!"http://s.validator.nu/xhtml5-rdfalite.rnc".equals(
+                    if (!"http://s.validator.nu/xhtml5-all.rnc".equals(
                             validator.getMainSchemaUrl()) && !hasSchemaOption) {
-                        setSchema("http://s.validator.nu/xhtml5-rdfalite.rnc");
+                        setSchema("http://s.validator.nu/xhtml5-all.rnc");
                     }
                     validator.checkXmlFile(file);
                 }
             } else if (isHtml(file)) {
                 emitFilename(path);
-                if (!"http://s.validator.nu/html5-rdfalite.rnc".equals(
+                if (!"http://s.validator.nu/html5-all.rnc".equals(
                         validator.getMainSchemaUrl()) && !hasSchemaOption) {
-                    setSchema("http://s.validator.nu/html5-rdfalite.rnc");
+                    setSchema("http://s.validator.nu/html5-all.rnc");
                 }
                 validator.checkHtmlFile(file, true);
             } else {

@@ -78,9 +78,6 @@ import org.xml.sax.SAXParseException;
 
 public class Assertions extends Checker {
 
-    private static boolean followW3Cspec = "1".equals(
-            System.getProperty("nu.validator.servlet.follow-w3c-spec"));
-
     private static boolean equalsIgnoreAsciiCase(String one, String other) {
         if (other == null) {
             return one == null;
@@ -187,21 +184,6 @@ public class Assertions extends Checker {
                 "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
         OBSOLETE_ELEMENTS.put("noframes",
                 "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
-        if (followW3Cspec) {
-            OBSOLETE_ELEMENTS.put("hgroup",
-                    "To mark up subheadings, consider either just putting the "
-                            + "subheading into a \u201Cp\u201D element after the "
-                            + "\u201Ch1\u201D-\u201Ch6\u201D element containing the "
-                            + "main heading, or else putting the subheading directly "
-                            + "within the \u201Ch1\u201D-\u201Ch6\u201D element "
-                            + "containing the main heading, but separated from the main "
-                            + "heading by punctuation and/or within, for example, a "
-                            + "\u201Cspan class=\"subheading\"\u201D element with "
-                            + "differentiated styling. "
-                            + "To group headings and subheadings, alternative titles, "
-                            + "or taglines, consider using the \u201Cheader\u201D or "
-                            + "\u201Cdiv\u201D elements.");
-        }
     }
 
     private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<>();
@@ -227,10 +209,6 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("for", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
-        if (!followW3Cspec) {
-            OBSOLETE_ATTRIBUTES.put("longdesc",
-                    new String[] { "img", "iframe" });
-        }
         OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
         OBSOLETE_ATTRIBUTES.put("name",
                 new String[] { "img", "embed", "option" });
@@ -284,10 +262,6 @@ public class Assertions extends Checker {
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
         OBSOLETE_ATTRIBUTES_MSG.put("language",
                 "Use the \u201Ctype\u201D attribute instead.");
-        if (!followW3Cspec) {
-            OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
-                    "Use a regular \u201Ca\u201D element to link to the description.");
-        }
         OBSOLETE_ATTRIBUTES_MSG.put("methods",
                 "Use the HTTP OPTIONS feature instead.");
         OBSOLETE_ATTRIBUTES_MSG.put("name",
@@ -1243,13 +1217,6 @@ public class Assertions extends Checker {
                 + element + "\u201D element is obsolete." + suggestion);
     }
 
-    private final void warnPresentationalAttribute(String attribute,
-            String element, String suggestion) throws SAXException {
-        warn("The \u201C" + attribute + "\u201D attribute on the \u201C"
-                + element + "\u201D element is presentational markup."
-                + " Consider using CSS instead." + suggestion);
-    }
-
     private final void warnExplicitRoleUnnecessaryForType(String element,
             String role, String type) throws SAXException {
         warn("The \u201C" + role + "\u201D role is unnecessary for element"
@@ -1852,13 +1819,6 @@ public class Assertions extends Checker {
                 }
             }
 
-            if (followW3Cspec) {
-                if (("input".equals(localName) || "textarea".equals(localName))
-                        && atts.getIndex("", "inputmode") > -1) {
-                  err("The \u201cinputmode\u201d attribute is not allowed by"
-                      + " the W3C HTML specification.");
-                }
-            }
             if ("input".equals(localName)) {
                 if (atts.getIndex("", "name") > -1
                         && "isindex".equals(atts.getValue("", "name"))) {
@@ -2155,8 +2115,7 @@ public class Assertions extends Checker {
                             + "\u201Chref\u201D attribute.");
                 }
                 if (atts.getIndex("", "alt") < 0) {
-                    if (followW3Cspec
-                            || (titleVal == null || "".equals(titleVal))) {
+                    if ((titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"
                                     + " \u201Calt\u201D attribute, except under"
@@ -2196,20 +2155,8 @@ public class Assertions extends Checker {
                                     + " is needed.");
                 }
                 if (atts.getIndex("", "border") > -1) {
-                    if (followW3Cspec) {
-                        if (atts.getIndex("", "border") > -1 && (!("".equals(
-                                atts.getValue("", "border"))
-                                || "1".equals(atts.getValue("", "border"))))) {
-                            errObsoleteAttribute("border", "table",
-                                    " Use CSS instead.");
-                        } else {
-                            warnPresentationalAttribute("border", "table",
-                                    " For example: \u201Ctable, td, th { border: 1px solid gray }\u201D");
-                        }
-                    } else {
-                        errObsoleteAttribute("border", "table",
-                                " Use CSS instead.");
-                    }
+                    errObsoleteAttribute("border", "table",
+                            " Use CSS instead.");
                 }
             } else if ("track" == localName
                     && atts.getIndex("", "default") >= 0) {

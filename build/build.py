@@ -139,7 +139,6 @@ socketTimeoutSeconds = 5
 maxConnPerRoute = 100
 maxTotalConnections = 200
 maxRedirects = 20  # Gecko default
-followW3Cspec = 0
 statistics = 0
 miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'
 
@@ -573,13 +572,6 @@ def openDriver(schemaDir, driverName, sourceName=""):
     return f
 
 
-def writeW3CToggle(f):
-    if followW3Cspec:
-        f.write("\t\tnonW3C = notAllowed\n")
-        f.write("\t\tW3Conly = empty\n")
-    f.write("}\n")
-
-
 ################################
 # HTML schema drivers
 ################################
@@ -595,13 +587,11 @@ def buildSchemaDriverHtml5NoMicrodata(schemaDir):
     f = openDriver(schemaDir, "html5full-no-microdata.rnc")
     f.write(schemaDriverNamespace)
     f.write(schemaDriverToggle_Html5)
-    writeW3CToggle(f)
+    f.write("}\n")
     f.write(schemaDriverBase)
     f.write(schemaDriverHtml5NoMicrodata)
-    # For W3C case, make HTML5 checking always include ITS2 support
-    if followW3Cspec:
-        f.write('include "its20-html5.rnc"\n')
-        f.write('common.attrs &= its-html-attributes\n')
+    f.write('include "its20-html5.rnc"\n')
+    f.write('common.attrs &= its-html-attributes\n')
     f.close()
 
 
@@ -645,7 +635,7 @@ def buildSchemaDriverXhtml5htmlNoMicrodata(schemaDir):
     f = openDriver(schemaDir, "xhtml5full-html-no-microdata.rnc")
     f.write(schemaDriverNamespace)
     f.write(schemaDriverToggle_Xhtml5html)
-    writeW3CToggle(f)
+    f.write("}\n")
     f.write(schemaDriverBase)
     f.write(schemaDriverHtml5NoMicrodata)
     f.close()
@@ -655,7 +645,7 @@ def buildSchemaDriverXhtml5xhtmlNoMicrodata(schemaDir):
     f = openDriver(schemaDir, "xhtml5full-xhtml-no-microdata.rnc")
     f.write(schemaDriverNamespace)
     f.write(schemaDriverToggle_Xhtml5xhtml)
-    writeW3CToggle(f)
+    f.write("}\n")
     f.write(schemaDriverBase)
     f.write(schemaDriverHtml5NoMicrodata)
     f.close()
@@ -793,7 +783,6 @@ def getRunArgs(heap="$((HEAP))"):
         '-Dnu.validator.servlet.deny-list=' + denyList,
         '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),  # nopep8
         '-Dnu.validator.servlet.filterfile=' + filterFile,
-        '-Dnu.validator.servlet.follow-w3c-spec=%d' % followW3Cspec,
         '-Dnu.validator.servlet.host.generic=' + genericHost,
         '-Dnu.validator.servlet.host.html5=' + html5Host,
         '-Dnu.validator.servlet.host.parsetree=' + parsetreeHost,
@@ -1301,10 +1290,7 @@ def spiderApacheDirectories(baseUrl, baseDir):
 def downloadLocalEntities():
     removeIfDirExists(os.path.join(buildRoot, "local-entities"))
     fileMap = {}
-    if followW3Cspec:
-        fileMap["html5spec"] = "https://w3c.github.io/html/single-page.html"
-    else:
-        fileMap["html5spec"] = "https://html.spec.whatwg.org/"
+    fileMap["html5spec"] = "https://html.spec.whatwg.org/"
     ensureDirExists(filesDir)
     for filename in fileMap:
         fetchUrlTo(fileMap[filename], os.path.join(filesDir, filename))
@@ -1435,10 +1421,7 @@ def buildAll():
 
 
 def runTests():
-    if followW3Cspec:
-        args = ["--ignore=hgroup,menu,figure,style", "tests/messages.json"]
-    else:
-        args = ["--ignore=html-its", "tests/messages.json"]
+    args = ["tests/messages.json"]
     className = "nu.validator.client.TestRunner"
     classPath = os.pathsep.join(
         buildRunJarPathList() +
@@ -1606,8 +1589,6 @@ else:
             maxTotalConnections = int(arg[24:])
         elif arg.startswith("--max-redirects="):
             maxConnPerRoute = int(arg[16:])
-        elif arg == '--follow-w3c-spec':
-            followW3Cspec = 1
         elif arg == '--statistics':
             statistics = 1
         elif arg == '--help':
