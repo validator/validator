@@ -532,12 +532,14 @@ include "common.rnc" {
         v5only = empty
         nonHTMLizable = notAllowed
         nonRoundtrippable = notAllowed
+}
 '''
 schemaDriverToggle_Xhtml5xhtml = '''\
 include "common.rnc" {
         XMLonly = empty
         HTMLonly = notAllowed
         v5only = empty
+}
 '''
 schemaDriverToggle_Xhtml5html = '''\
 include "common.rnc" {
@@ -546,6 +548,7 @@ include "common.rnc" {
         v5only = empty
         nonHTMLizable = notAllowed
         nonRoundtrippable = notAllowed
+}
 '''
 schemaDriverHtml5Microdata = '''\
 include "microdata.rnc"
@@ -587,7 +590,6 @@ def buildSchemaDriverHtml5NoMicrodata(schemaDir):
     f = openDriver(schemaDir, "html5full-no-microdata.rnc")
     f.write(schemaDriverNamespace)
     f.write(schemaDriverToggle_Html5)
-    f.write("}\n")
     f.write(schemaDriverBase)
     f.write(schemaDriverHtml5NoMicrodata)
     f.write('include "its20-html5.rnc"\n')
@@ -635,7 +637,6 @@ def buildSchemaDriverXhtml5htmlNoMicrodata(schemaDir):
     f = openDriver(schemaDir, "xhtml5full-html-no-microdata.rnc")
     f.write(schemaDriverNamespace)
     f.write(schemaDriverToggle_Xhtml5html)
-    f.write("}\n")
     f.write(schemaDriverBase)
     f.write(schemaDriverHtml5NoMicrodata)
     f.close()
@@ -645,7 +646,6 @@ def buildSchemaDriverXhtml5xhtmlNoMicrodata(schemaDir):
     f = openDriver(schemaDir, "xhtml5full-xhtml-no-microdata.rnc")
     f.write(schemaDriverNamespace)
     f.write(schemaDriverToggle_Xhtml5xhtml)
-    f.write("}\n")
     f.write(schemaDriverBase)
     f.write(schemaDriverHtml5NoMicrodata)
     f.close()
