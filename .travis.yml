@@ -13,7 +13,7 @@ matrix:
       env: PYTHON=python3
     - jdk: oraclejdk9
       env: PYTHON=python3
-    - jdk: openjdk10
+    - jdk: oraclejdk11
       env: PYTHON=python3
 
 install:
