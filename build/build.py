@@ -144,7 +144,7 @@ miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8
-    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.4.0/salvation-2.4.0.jar", "41bf4aa35eee2ff74cb07a763ecba190"),  # nopep8
+    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.6.0/salvation-2.6.0.jar", "ee5bddf2f9b8ad5b0d5caba86308c178"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),  # nopep8
