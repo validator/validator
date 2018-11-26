@@ -185,7 +185,7 @@ runDependencyJars = [
     "httpcore-4.4.jar",
     "httpclient-4.4.jar",
     "icu4j-58.2.jar",
-    "salvation-2.4.0.jar",
+    "salvation-2.6.0.jar",
     "javax.servlet-api-3.1.0.jar",
     "jchardet-1.0.jar",
     "jetty-http-9.2.25.v20180606.jar",
