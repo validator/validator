@@ -569,7 +569,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				)
 		form.attrs.accept-charset =
 			attribute accept-charset {
-				form.data.charsetlist
+				string
 			}	
 	form.inner =
 		( common.inner.flow )

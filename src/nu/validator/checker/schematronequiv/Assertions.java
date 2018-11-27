@@ -2328,7 +2328,17 @@ public class Assertions extends Checker {
                     }
                 }
             }
-
+            else if ("form" == localName) {
+                if (atts.getIndex("", "accept-charset") >= 0) {
+                    if (!"utf-8".equals(
+                            atts.getValue("", "accept-charset").toLowerCase())) {
+                        err("The only allowed value for the"
+                                + " \u201Caccept-charset\u201D attribute for"
+                                + " the \u201Cform\u201D element is"
+                                + " \u201Cutf-8\u201D.");
+                    }
+                }
+            }
             // script
             else if ("script" == localName) {
                 // script language
