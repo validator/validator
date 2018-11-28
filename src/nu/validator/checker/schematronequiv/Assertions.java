@@ -2688,7 +2688,9 @@ public class Assertions extends Checker {
                             .toLowerCase().split("\\s+"));
                 }
                 if (atts.getIndex("", "as") > -1
-                        && ((relList != null && !relList.contains("preload")
+                        && ((relList != null //
+                                && !(relList.contains("preload")
+                                        || relList.contains("modulepreload"))
                                 || !hasRel))) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cas\u201D attribute must have a"
@@ -2753,6 +2755,7 @@ public class Assertions extends Checker {
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
                                 && !(relList.contains("dns-prefetch")
+                                        || relList.contains("modulepreload")
                                         || relList.contains("pingback")
                                         || relList.contains("preconnect")
                                         || relList.contains("prefetch")
@@ -2767,6 +2770,7 @@ public class Assertions extends Checker {
                             + " \u201Citemprop\u201D attribute or has a"
                             + " \u201Crel\u201D attribute whose value contains"
                             + " \u201Cdns-prefetch\u201D,"
+                            + " \u201Cmodulepreload\u201D,"
                             + " \u201Cpingback\u201D,"
                             + " \u201Cpreconnect\u201D,"
                             + " \u201Cprefetch\u201D,"

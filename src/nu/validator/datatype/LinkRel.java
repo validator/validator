@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Mozilla Foundation
+ * Copyright (c) 2013-2018 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -48,6 +48,7 @@ public final class LinkRel extends AbstractRel {
             registeredValues.add("icon");
             registeredValues.add("license");
             registeredValues.add("mask-icon");
+            registeredValues.add("modulepreload");
             registeredValues.add("next");
             registeredValues.add("pingback");
             registeredValues.add("preconnect");

@@ -2,6 +2,12 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# N.N.N
+05 November 2018
+NN XXX NNNN
+  - Disallow `accept-charset` values other than `UTF-8`
+  - Allow `rel=modulepreload` for the `link` element
+
 # 18.11.5
 05 November 2018
   - Fix bugs that can cause the command-line checker to emit broken JSON output
