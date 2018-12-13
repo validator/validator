@@ -25,9 +25,7 @@ package nu.validator.datatype;
 import nu.validator.datatype.tools.RegisteredRelValuesBuilder;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import org.relaxng.datatype.DatatypeException;
 import org.xml.sax.SAXException;
@@ -75,9 +73,6 @@ public final class LinkRel extends AbstractRel {
     private LinkRel() {
         super();
     }
-
-    private final static boolean WARN = System.getProperty(
-            "nu.validator.datatype.warn", "").equals("true");
 
     @Override
     protected boolean isRegistered(CharSequence literal, String token)

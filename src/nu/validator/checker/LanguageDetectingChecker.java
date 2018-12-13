@@ -100,12 +100,6 @@ public class LanguageDetectingChecker extends Checker {
     private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
             "he", "pnb", "ps", "sd", "ug", "ur" };
 
-    private static final String[] COMMON_LANGS = { "ar", "ca", "cs", "da", "de",
-            "el", "en", "es", "et", "fa", "fi", "fr", "he", "hi", "hu", "id",
-            "it", "ja", "ka", "ko", "lt", "lv", "ms", "nl", "no", "pl", "pt",
-            "ro", "ru", "sk", "sq", "sv", "th", "tr", "uk", "vi", "zh-hans",
-            "zh-hant" };
-
     private static final String[] SKIP_NAMES = { "a", "figcaption", "form",
             "li", "nav", "pre", "script", "select", "style", "td", "textarea" };
 
@@ -644,7 +638,6 @@ public class LanguageDetectingChecker extends Checker {
             ArrayList<Language> possibilities = detector.getProbabilities();
             for (Language possibility : possibilities) {
                 possibileLanguages.add(possibility.lang);
-                ULocale plocale = new ULocale(possibility.lang);
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
                     setDocumentLanguage(detectedLanguage);

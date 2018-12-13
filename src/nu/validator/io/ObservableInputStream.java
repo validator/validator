@@ -179,7 +179,6 @@ public class ObservableInputStream extends InputStream {
     /**
      * @see java.lang.Object#finalize()
      */
-    @SuppressWarnings("deprecation")
     @Override
     protected void finalize() throws Throwable {
         observer.finalizerCalled();
