@@ -7,6 +7,7 @@ changes to any options/interfaces the checker exposes for developers.
 NN XXX NNNN
   - Disallow `accept-charset` values other than `UTF-8`
   - Allow `rel=modulepreload` for the `link` element
+  - CSS: Improve support for color values
 
 # 18.11.5
 05 November 2018
