@@ -59,7 +59,7 @@ checking with a frontend such as:
   JSFiddle/JSBin etc. links in github issue comments)
 
    [22]: https://github.com/validator/grunt-html
-   [23]: https://github.com/watilde/gulp-html
+   [23]: https://github.com/validator/gulp-html
    [24]: https://github.com/svenkreiss/html5validator
    [25]: https://jekyllrb.com/
 
