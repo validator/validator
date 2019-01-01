@@ -209,6 +209,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("for", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
+        OBSOLETE_ATTRIBUTES.put("longdesc", new String[] { "img", "iframe" });
         OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
         OBSOLETE_ATTRIBUTES.put("name",
                 new String[] { "img", "embed", "option" });
@@ -262,6 +263,8 @@ public class Assertions extends Checker {
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
         OBSOLETE_ATTRIBUTES_MSG.put("language",
                 "Use the \u201Ctype\u201D attribute instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
+                "Use a regular \u201Ca\u201D element to link to the description.");
         OBSOLETE_ATTRIBUTES_MSG.put("methods",
                 "Use the HTTP OPTIONS feature instead.");
         OBSOLETE_ATTRIBUTES_MSG.put("name",
