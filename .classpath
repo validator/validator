@@ -50,27 +50,32 @@
 			<attribute name="javadoc_location" value="http://docs.oracle.com/javaee/7/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-server-9.2.25.v20180606.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-server-9.4.9.v20180320.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://download.eclipse.org/jetty/9.2.14.v20151106/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.2.25.v20180606.jar">
+	<classpathentry kind="lib" path="dependencies/http2-server-9.4.9.v20180320.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://download.eclipse.org/jetty/9.2.14.v20151106/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-servlets-9.2.25.v20180606.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.4.9.v20180320.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://download.eclipse.org/jetty/9.2.14.v20151106/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-9.2.25.v20180606.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-servlets-9.4.9.v20180320.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://download.eclipse.org/jetty/9.2.14.v20151106/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-9.2.25.v20180606.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-util-9.4.9.v20180320.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://download.eclipse.org/jetty/9.2.14.v20151106/apidocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-9.4.9.v20180320.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://download.eclipse.org/jetty/9.2.14.v20151106/apidocs/"/>
 		</attributes>

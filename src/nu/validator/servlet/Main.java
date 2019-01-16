@@ -33,6 +33,8 @@ import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 
 import org.apache.log4j.PropertyConfigurator;
+import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
+import org.eclipse.jetty.http2.server.HTTP2ServerConnectionFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
@@ -80,7 +82,8 @@ public class Main {
         server.setHandler(contextHandler);
 
         ServerConnector serverConnector = new ServerConnector(server,
-                new HttpConnectionFactory(new HttpConfiguration()));
+                new HttpConnectionFactory(new HttpConfiguration()),
+                new HTTP2CServerConnectionFactory(new HttpConfiguration()));
         int port = args.length > 0 ? Integer.parseInt(args[0]) : 8888;
         serverConnector.setPort(port);
         server.setConnectors(new Connector[] { serverConnector });
