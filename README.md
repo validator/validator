@@ -567,6 +567,10 @@ open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
         export JAVA_HOME=$(/usr/libexec/java_home)            <-- MacOS
 
+        # On Fedora 29/etc. use openjdk-1.8.0 rather than openjdk-11
+        # or otherwise you'll get an error.
+        export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+
   3. Create a working directory:
 
         git clone https://github.com/validator/validator.git
