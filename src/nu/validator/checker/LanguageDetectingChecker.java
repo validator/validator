@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Mozilla Foundation
+ * Copyright (c) 2016-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -595,7 +595,8 @@ public class LanguageDetectingChecker extends Checker {
     @Override
     public void endDocument() throws SAXException {
         if (!"0".equals(System.getProperty(
-                "nu.validator.checker.enableLangDetection"))) {
+                "nu.validator.checker.enableLangDetection"))
+                && htmlStartTagLocator != null) {
             detectLanguageAndCheckAgainstDeclaredLanguage();
         }
     }
@@ -729,6 +730,9 @@ public class LanguageDetectingChecker extends Checker {
     @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
+        if ("http://www.w3.org/1999/xhtml" != uri) {
+            return;
+        }
         if (nonWhitespaceCharacterCount < MAX_CHARS) {
             documentContent.append(elementContent);
             elementContent.setLength(0);
@@ -795,6 +799,9 @@ public class LanguageDetectingChecker extends Checker {
     @Override
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
+        if ("http://www.w3.org/1999/xhtml" != uri) {
+            return;
+        }
         if ("html".equals(localName)) {
             htmlStartTagLocator = new LocatorImpl(getDocumentLocator());
             for (int i = 0; i < atts.getLength(); i++) {
