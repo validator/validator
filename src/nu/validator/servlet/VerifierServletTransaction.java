@@ -783,6 +783,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     return;
                 }
             }
+            if (document.contains("google.")) {
+                response.sendRedirect(document);
+                return;
+            }
         }
 
         String callback = null;
