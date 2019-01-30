@@ -482,6 +482,10 @@ public class LanguageDetectingChecker extends Checker {
                 && "yue".equals(lowerCaseContentLang)) {
             return;
         }
+        if ("el".equals(detectedLanguageCode)
+                && "grc".equals(contentLangCode)) {
+            return;
+        }
         if ("es".equals(detectedLanguageCode) && ("an".equals(contentLangCode)
                 || "ast".equals(contentLangCode))) {
             return;
