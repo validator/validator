@@ -24,12 +24,6 @@ public class UnsupportedFeatureChecker extends Checker {
             if (atts.getIndex("", "inputmode") > -1) {
                 warnAboutAttribute("inputmode");
             }
-        } else if ("script" == localName) {
-            if (atts.getIndex("", "type") > -1
-                    && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                            "module", atts.getValue("", "type"))) {
-                warn("Module scripts are not supported in most browsers yet.");
-            }
         } else if ("input" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
                 warnAboutAttributeOnElement("dirname", "input");
