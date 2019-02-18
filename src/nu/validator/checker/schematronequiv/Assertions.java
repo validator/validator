@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2018 Mozilla Foundation
+ * Copyright (c) 2008-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -609,6 +609,14 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("td", "cell");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tr", "row");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ul", "list");
+    }
+
+    private static final Map<String, String[]> //
+        ELEMENTS_WITH_IMPLICIT_ROLES = new HashMap<>();
+
+    static {
+        ELEMENTS_WITH_IMPLICIT_ROLES.put("th",
+                new String[] { "columnheader", "rowheader" });
     }
 
     private static final Map<String, String> ELEMENTS_THAT_NEVER_NEED_ROLE = new HashMap<>();
@@ -1229,10 +1237,21 @@ public class Assertions extends Checker {
     }
 
     private boolean currentElementHasRequiredAncestorRole(
-            Set<String> requiredAncestorRoles) {
+            Set<String> requiredAncestorRoles, String descendantRole) {
         for (String role : requiredAncestorRoles) {
             for (int i = 0; i < currentPtr; i++) {
                 if (role.equals(stack[currentPtr - i].getRole())) {
+                    return true;
+                }
+                String openElementName = stack[currentPtr - i].getName();
+                if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(openElementName)
+                        && ELEMENTS_WITH_IMPLICIT_ROLE.get(openElementName) //
+                                .equals(role)) {
+                    return true;
+                }
+                if (ELEMENTS_WITH_IMPLICIT_ROLES.containsKey(openElementName)
+                        && Arrays.binarySearch(ELEMENTS_WITH_IMPLICIT_ROLES //
+                                .get(descendantRole), role) >= 0) {
                     return true;
                 }
             }
@@ -2802,6 +2821,13 @@ public class Assertions extends Checker {
                             role)) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element" + " \u201C" + localName + "\u201D.");
+            } else if (ELEMENTS_WITH_IMPLICIT_ROLES.containsKey(localName)
+                    && role != null
+                    && Arrays.binarySearch(
+                            ELEMENTS_WITH_IMPLICIT_ROLES.get(localName),
+                            role) >= 0) {
+                warn("The \u201C" + role + "\u201D role is unnecessary for"
+                        + " element" + " \u201C" + localName + "\u201D.");
             } else if (ELEMENTS_THAT_NEVER_NEED_ROLE.containsKey(localName)
                     && ELEMENTS_THAT_NEVER_NEED_ROLE.get(localName).equals(
                             role)) {
@@ -2902,7 +2928,8 @@ public class Assertions extends Checker {
         if (requiredAncestorRoles != null && !"presentation".equals(parentRole)
                 && !"tbody".equals(localName) && !"tfoot".equals(localName)
                 && !"thead".equals(localName)) {
-            if (!currentElementHasRequiredAncestorRole(requiredAncestorRoles)) {
+            if (!currentElementHasRequiredAncestorRole(requiredAncestorRoles,
+                    role)) {
                 if (atts.getIndex("", "id") > -1
                         && !"".equals(atts.getValue("", "id"))) {
                     needsAriaOwner.add(new IdrefLocator(
