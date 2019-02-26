@@ -158,7 +158,7 @@ executable provides the following options:
     Specifies that only error-level messages and non-document-error messages are
     reported (so that warnings and info messages are not reported).
 
-    default: [unset; all message reported, including warnings & info messages]
+    default: [unset; all messages reported, including warnings & info messages]
 
 #### --Werror
 
