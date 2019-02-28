@@ -1237,7 +1237,7 @@ public class Assertions extends Checker {
     }
 
     private boolean currentElementHasRequiredAncestorRole(
-            Set<String> requiredAncestorRoles, String descendantRole) {
+            Set<String> requiredAncestorRoles) {
         for (String role : requiredAncestorRoles) {
             for (int i = 0; i < currentPtr; i++) {
                 if (role.equals(stack[currentPtr - i].getRole())) {
@@ -1251,7 +1251,7 @@ public class Assertions extends Checker {
                 }
                 if (ELEMENTS_WITH_IMPLICIT_ROLES.containsKey(openElementName)
                         && Arrays.binarySearch(ELEMENTS_WITH_IMPLICIT_ROLES //
-                                .get(descendantRole), role) >= 0) {
+                                .get(openElementName), role) >= 0) {
                     return true;
                 }
             }
@@ -2928,8 +2928,7 @@ public class Assertions extends Checker {
         if (requiredAncestorRoles != null && !"presentation".equals(parentRole)
                 && !"tbody".equals(localName) && !"tfoot".equals(localName)
                 && !"thead".equals(localName)) {
-            if (!currentElementHasRequiredAncestorRole(requiredAncestorRoles,
-                    role)) {
+            if (!currentElementHasRequiredAncestorRole(requiredAncestorRoles)) {
                 if (atts.getIndex("", "id") > -1
                         && !"".equals(atts.getValue("", "id"))) {
                     needsAriaOwner.add(new IdrefLocator(
