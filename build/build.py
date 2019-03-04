@@ -121,6 +121,7 @@ userAgent = 'Validator.nu/LV'
 icon = None
 stylesheet = None
 script = None
+scriptAdditional = ''
 serviceName = 'Validator.nu'
 resultsTitle = 'Validation results'
 messagesLimit = 1000
@@ -796,6 +797,7 @@ def getRunArgs(heap="$((HEAP))"):
         '-Dnu.validator.servlet.read-local-log4j-properties=1',
         '-Dnu.validator.servlet.results-title=' + resultsTitle,
         '-Dnu.validator.servlet.script=' + script,
+        '-Dnu.validator.servlet.script-additional=' + scriptAdditional,
         '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),  # nopep8
         '-Dnu.validator.servlet.max-requests=%d' % maxConnPerRoute,
         '-Dnu.validator.servlet.max-total-connections=%d' % maxTotalConnections,  # nopep8
@@ -1474,6 +1476,10 @@ def printHelp():
     print("                                Sets the URL for the script")
     print("                                Defaults to just script.js relative")
     print("                                to the validator URL")
+    print("  --script-additional=<URL>")
+    print("                                Sets the URL for a script file to")
+    print("                                include in addition to the file")
+    print("                                specified by the --script option.")
     print("  --stacksize=NN             -- Sets Java thread stack size in KB")
     print("  --stylesheet=style.css")
     print("                                Sets URL for the style sheet")
@@ -1545,6 +1551,8 @@ else:
             deploymentTarget = arg[13:]
         elif arg.startswith("--script="):
             script = arg[9:]
+        elif arg.startswith("--script-additional="):
+            scriptAdditional = arg[20:]
         elif arg.startswith("--name="):
             serviceName = arg[7:]
         elif arg.startswith("--results-title="):

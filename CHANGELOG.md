@@ -8,6 +8,7 @@ NN XXX NNNN
   - Allow `rel=modulepreload` for the `link` element
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements
+  - Add option to specify additional script for Web-based checker
 
 # 18.11.5
 05 November 2018

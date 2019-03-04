@@ -339,6 +339,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "nu.validator.servlet.script",
             "script.js");
 
+    private final static String SCRIPT_ADDITIONAL = System.getProperty(
+            "nu.validator.servlet.script-additional",
+            "");
+
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
@@ -2295,6 +2299,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     void emitScript() throws SAXException {
         attrs.clear();
         attrs.addAttribute("src", SCRIPT);
+        emitter.startElement("script", attrs);
+        emitter.endElement("script");
+    }
+
+    void emitScriptAdditional() throws SAXException {
+        if ("".equals(SCRIPT_ADDITIONAL)) {
+            return;
+        }
+        attrs.clear();
+        attrs.addAttribute("src", SCRIPT_ADDITIONAL);
         emitter.startElement("script", attrs);
         emitter.endElement("script");
     }
