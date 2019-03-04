@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Mozilla Foundation
+ * Copyright (c) 2012-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -132,6 +132,7 @@ public class Statistics {
         PARSER_XML_EXTERNAL("Parser: set to XML with external entities"), //
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
+        ARIA_LABEL_NO_ROLE_FOUND("aria-label with no role found"), //
         HGROUP_FOUND("<hgroup> found"), //
         STYLE_ELEMENT_ERRORS_FOUND("<style> element with CSS errors found"), //
         STYLE_ATTRIBUTE_ERRORS_FOUND("\"style\" attribute with CSS errors found"), //

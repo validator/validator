@@ -76,7 +76,12 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import org.apache.log4j.Logger;
+
 public class Assertions extends Checker {
+
+    private static final Logger log4j = //
+            Logger.getLogger(Assertions.class);
 
     private static boolean equalsIgnoreAsciiCase(String one, String other) {
         if (other == null) {
@@ -1599,6 +1604,7 @@ public class Assertions extends Checker {
         String role = null;
         String inputTypeVal = null;
         String activeDescendant = null;
+        String ariaLabel = null;
         String owns = null;
         String forAttr = null;
         boolean href = false;
@@ -1739,6 +1745,8 @@ public class Assertions extends Checker {
                         role = atts.getValue(i);
                     } else if ("aria-activedescendant" == attLocal) {
                         activeDescendant = atts.getValue(i);
+                    } else if ("aria-label" == attLocal) {
+                        ariaLabel = atts.getValue(i);
                     } else if ("aria-owns" == attLocal) {
                         owns = atts.getValue(i);
                     } else if ("list" == attLocal) {
@@ -2952,6 +2960,14 @@ public class Assertions extends Checker {
             }
         }
         allIds.addAll(ids);
+
+        if (ariaLabel != null && role == null) {
+            incrementUseCounter("aria-label-no-role-found");
+            String systemId = getDocumentLocator().getSystemId();
+            if (systemId != null) {
+                log4j.info("aria-label with no role " + systemId);
+            }
+        }
 
         // aria-activedescendant accompanied by aria-owns
         if (activeDescendant != null && !"".equals(activeDescendant)) {
