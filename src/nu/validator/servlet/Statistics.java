@@ -132,7 +132,7 @@ public class Statistics {
         PARSER_XML_EXTERNAL("Parser: set to XML with external entities"), //
         XMLNS_FILTER("Parser: XMLNS filter set"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
-        ARIA_LABEL_NO_ROLE_FOUND("aria-label with no role found"), //
+        ARIA_LABEL_MISUSE_FOUND("aria-label misuse found"), //
         HGROUP_FOUND("<hgroup> found"), //
         STYLE_ELEMENT_ERRORS_FOUND("<style> element with CSS errors found"), //
         STYLE_ATTRIBUTE_ERRORS_FOUND("\"style\" attribute with CSS errors found"), //

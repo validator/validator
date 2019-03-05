@@ -1139,6 +1139,54 @@ public class Assertions extends Checker {
         this.sourceIsCss = sourceIsCss;
     }
 
+    private boolean hasPageEmitterInCallStack() {
+        for (StackTraceElement el : Thread.currentThread().getStackTrace()) {
+            if (el.getClassName().equals("nu.validator.servlet.PageEmitter")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isAriaLabelMisuse(String ariaLabel, String localName,
+            String role, Attributes atts) {
+        if (ariaLabel == null) {
+            return false;
+        }
+        if (Arrays.binarySearch(INTERACTIVE_ELEMENTS, localName) >= 0) {
+            return false;
+        }
+        if (isLabelableElement(localName, atts)) {
+            return false;
+        }
+        if ("main" == localName //
+                || "nav" == localName //
+                || "table" == localName //
+                || "td" == localName //
+                || "th" == localName //
+        ) {
+            return false;
+        }
+        if (role != null) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isLabelableElement(String localName, Attributes atts) {
+        if ("button" == localName //
+                || ("input" == localName && !"hidden".equals(
+                        atts.getValue("", "type").toLowerCase())) //
+                || "meter" == localName //
+                || "output" == localName //
+                || "progress" == localName //
+                || "select" == localName //
+                || "textarea" == localName) {
+            return true;
+        }
+        return false;
+    }
+
     private void incrementUseCounter(String useCounterName) {
         if (request != null) {
             request.setAttribute(
@@ -2465,13 +2513,7 @@ public class Assertions extends Checker {
             }
 
             // labelable elements
-            if ("button" == localName
-                    || ("input" == localName
-                            && !AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                    "hidden", atts.getValue("", "type")))
-                    || "meter" == localName || "output" == localName
-                    || "progress" == localName || "select" == localName
-                    || "textarea" == localName) {
+            if (isLabelableElement(localName, atts)) {
                 for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
                     StackNode node = entry.getKey();
                     Locator locator = entry.getValue();
@@ -2961,11 +3003,14 @@ public class Assertions extends Checker {
         }
         allIds.addAll(ids);
 
-        if (ariaLabel != null && role == null) {
-            incrementUseCounter("aria-label-no-role-found");
+        if (isAriaLabelMisuse(ariaLabel, localName, role, atts)) {
+            warn("Possible misuse of \u201Caria-label\u201D. (If you disagree"
+                    + " with this warning, file an issue report or send e-mail"
+                    + " to www-validator@w3.org.)");
+            incrementUseCounter("aria-label-misuse-found");
             String systemId = getDocumentLocator().getSystemId();
-            if (systemId != null) {
-                log4j.info("aria-label with no role " + systemId);
+            if (systemId != null && hasPageEmitterInCallStack()) {
+                log4j.info("aria-label misuse " + systemId);
             }
         }
 

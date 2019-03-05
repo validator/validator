@@ -270,6 +270,9 @@ function createHtmlElement(tagName) {
 function injectHyperlinks() {
 	var errors = document.getElementsByClassName("error")
 	var warnings = document.getElementsByClassName("warning")
+	linkify(warnings, "file an issue report",
+		"https://github.com/validator/validator/issues/new",
+		"File a report in the GitHub issue tracker.")
 	linkify(warnings, "checking against the HTML5 + RDFa 1.1 schema",
 		"about.html#rdfa",
 		"About HTML5 + RDFa 1.1 checking.")

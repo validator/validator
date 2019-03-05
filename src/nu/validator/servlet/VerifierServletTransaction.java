@@ -1386,10 +1386,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
             }
             if (request.getAttribute(
-                    "http://validator.nu/properties/aria-label-no-role-found") != null
+                    "http://validator.nu/properties/aria-label-misuse-found") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/aria-label-no-role-found")) {
-                stats.incrementField(Statistics.Field.ARIA_LABEL_NO_ROLE_FOUND);
+                            "http://validator.nu/properties/aria-label-misuse-found")) {
+                stats.incrementField(Statistics.Field.ARIA_LABEL_MISUSE_FOUND);
             }
             if (request.getAttribute(
                     "http://validator.nu/properties/hgroup-found") != null
