@@ -1175,8 +1175,9 @@ public class Assertions extends Checker {
 
     private boolean isLabelableElement(String localName, Attributes atts) {
         if ("button" == localName //
-                || ("input" == localName && !"hidden".equals(
-                        atts.getValue("", "type").toLowerCase())) //
+                || ("input" == localName && !AttributeUtil //
+                        .lowerCaseLiteralEqualsIgnoreAsciiCaseString("hidden",
+                                atts.getValue("", "type"))) //
                 || "meter" == localName //
                 || "output" == localName //
                 || "progress" == localName //
