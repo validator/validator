@@ -38,7 +38,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)?
 		)
 	a.nohref.attrs =
-		( a.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
+		&	a.attrs.name?
 		&	common.attrs.aria?
 		)
 	a.attrs =
