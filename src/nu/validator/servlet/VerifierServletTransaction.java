@@ -2063,8 +2063,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             }
             if (index == -1) {
-                String message = "Cannot find preset schema for namespace: \u201C"
-                        + namespace + "\u201D.";
+                String message;
+                message = "XML document with no namespace; cannot determine"
+                        + " any schema to use for validation.";
+                if (namespace != "") {
+                    message = "Cannot find preset schema for namespace: \u201C"
+                            + namespace + "\u201D.";
+                }
                 SAXException se = new SAXException(message);
                 errorHandler.schemaError(se);
                 throw new CannotFindPresetSchemaException();

@@ -182,12 +182,18 @@ public class ContentTypeParser {
             String publicId, String contentType)
             throws SAXException, SAXParseException {
         TypedInputSource is;
+        String type;
         is = new TypedInputSource();
         is.setPublicId(publicId);
         is.setSystemId(baseUri);
         if (contentType != null) {
             String[] params = contentType.split(";");
-            String type = params[0].trim().toLowerCase();
+            if (params.length < 1) {
+                malformedContentTypeError(contentType, "");
+                return is;
+            } else {
+                type = params[0].trim().toLowerCase();
+            }
             boolean wasRnc = false;
             boolean wasCss = false;
             boolean wasHtml = false;
