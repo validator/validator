@@ -1471,6 +1471,95 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     }
                 }
             }
+            String mathElementName = (String) request.getAttribute(
+                    "http://validator.nu/properties/math-element");
+            if (mathElementName != null) {
+                if (mathElementName.contains("_")) {
+                    fieldName = "MATH_ELEMENT_"
+                            + mathElementName.replace("_", "__").toUpperCase();
+                } else {
+                    fieldName = "MATH_ELEMENT_"
+                            + mathElementName.replace("-", "_").toUpperCase();
+                }
+                try {
+                    stats.incrementField(stats.getFieldFromName(fieldName));
+                } catch (IllegalArgumentException e) {
+                }
+            }
+            String mathAttributeName = (String) request.getAttribute(
+                    "http://validator.nu/properties/math-attribute");
+            if (mathAttributeName != null) {
+                if (mathAttributeName.contains("_")) {
+                    fieldName = "MATH_ATTRIBUTE_" + mathAttributeName //
+                            .replace("_", "__").toUpperCase();
+                } else {
+                    fieldName = "MATH_ATTRIBUTE_" + mathAttributeName //
+                            .replace("-", "_").toUpperCase();
+                }
+                try {
+                    stats.incrementField(stats.getFieldFromName(fieldName));
+                } catch (IllegalArgumentException e) {
+                    stats.incrementField(Statistics.Field.LANG_OTHER);
+                }
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "mstyle-with-other-attributes") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/"
+                                    + "mstyle-with-other-attributes")) {
+                stats.incrementField(Statistics.Field //
+                        .MATH_MSTYLE_OTHER_ATTRIBUTE);
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "linethickness-interesting") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/"
+                                    + "linethickness-interesting")) {
+                stats.incrementField(Statistics.Field.MATH_VALUE_LINETHICKNESS);
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "mathsize-interesting") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/"
+                                    + "mathsize-interesting")) {
+                stats.incrementField(Statistics.Field.MATH_VALUE_MATHSIZE);
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "math-attribute-unitless-length") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/"
+                                    + "math-attribute-unitless-length")) {
+                stats.incrementField(Statistics.Field.MATH_VALUE_UNITLESS);
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "notation-attribute-radical-value") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/"
+                                    + "notation-attribute-radical-value")) {
+                stats.incrementField(Statistics.Field //
+                        .MATH_VALUE_NOTATION_RADICAL);
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "math-named-space-value") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/"
+                                    + "math-named-space-value")) {
+                stats.incrementField(Statistics.Field.MATH_VALUE_NAMED_SPACE);
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "math-attribute-leading-or-trailing-whitespace") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/math-attribute"
+                                    + "-leading-or-trailing-whitespace")) {
+                stats.incrementField(Statistics.Field.MATH_VALUE_WHITESPACE);
+            }
+            if (request.getAttribute("http://validator.nu/properties/"
+                    + "math-element-leading-or-trailing-whitespace") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/math-element"
+                                    + "-leading-or-trailing-whitespace")) {
+                stats.incrementField(Statistics.Field.MATH_ELEMENT_WHITESPACE);
+            }
         }
     }
 
