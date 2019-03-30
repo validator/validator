@@ -1328,7 +1328,7 @@ public class Assertions extends Checker {
         }
     }
 
-    private static final String[] MATH_INTERESTING_ATTRIBUTES = { //
+    public static final String[] MATH_INTERESTING_ATTRIBUTES = { //
             "actiontype", //
             "background", //
             "bevelled", //
@@ -1441,7 +1441,7 @@ public class Assertions extends Checker {
             "veryverythinmathspace" //
     };
 
-    private static final String[] MATH_INTERESTING_ELEMENTS = { //
+    public static final String[] MATH_INTERESTING_ELEMENTS = { //
             "annotation", //
             "annotation-xml", //
             "maction", //
@@ -1750,8 +1750,6 @@ public class Assertions extends Checker {
         if ("http://www.w3.org/1998/Math/MathML" == uri && request != null) {
             if (Arrays.binarySearch(MATH_TOKEN_ELEMENTS, localName) >= 0) {
                 String mathElementContents = node.getTextContent().toString();
-                System.out.println(
-                        localName + " contents: " + mathElementContents);
                 if (!mathElementContents.trim().equals(mathElementContents)) {
                     request.setAttribute("http://validator.nu/properties/"
                             + "math-element-leading-or-trailing-whitespace",
@@ -3155,7 +3153,7 @@ public class Assertions extends Checker {
                 String attValue = atts.getValue(i);
                 if (!attValue.trim().equals(attValue)) {
                     request.setAttribute("http://validator.nu/properties/"
-                            + "math-attribute-leading-or-trailing-whitespace",
+                            + "math-value-leading-or-trailing-whitespace",
                             true);
                 }
                 if (Arrays.binarySearch(MATH_LENGTH_ATTRIBUTES,
@@ -3164,23 +3162,23 @@ public class Assertions extends Checker {
                     if (!Double.isNaN(value) && value != 0) {
                         request.setAttribute(
                                 "http://validator.nu/properties/"
-                                        + "math-attribute-unitless-length",
+                                        + "math-value-unitless-length",
                                 true);
                     }
                 }
                 if (Arrays.binarySearch(MATH_INTERESTING_ATTRIBUTES,
                         attLocal) >= 0) {
                     request.setAttribute(
-                            "http://validator.nu/properties/math-attribute",
-                            attLocal);
+                            "http://validator.nu/properties/math-attribute/"
+                                    + attLocal,
+                            true);
                 }
                 if ("align".equals(attLocal)) {
                     if ("munderover".equals(localName)
                             || "munder".equals(localName)
                             || "mover".equals(localName)) {
-                        request.setAttribute(
-                                "http://validator.nu/properties/math-attribute",
-                                "align");
+                        request.setAttribute("http://validator.nu/properties/"
+                                + "math-attribute-align", true);
                     }
                 }
                 if ("mstyle".equals(localName)
@@ -3219,8 +3217,9 @@ public class Assertions extends Checker {
             if (Arrays.binarySearch(MATH_INTERESTING_ELEMENTS,
                     localName) >= 0) {
                 request.setAttribute(
-                        "http://validator.nu/properties/math-element",
-                        localName);
+                        "http://validator.nu/properties/math-element/"
+                                + localName,
+                        true);
             }
         }
 

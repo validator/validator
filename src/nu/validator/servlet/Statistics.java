@@ -538,6 +538,7 @@ public class Statistics {
         MATH_ELEMENT_ANNOTATION("Math element <annotation>"), //
         MATH_ELEMENT_ANNOTATION_XML("Math element <annotation-xml>"), //
         MATH_ELEMENT_MACTION("Math element <maction>"), //
+        MATH_ELEMENT_MATH("Math element <math>"), //
         MATH_ELEMENT_MENCLOSE("Math element <menclose>"), //
         MATH_ELEMENT_MERROR("Math element <merror>"), //
         MATH_ELEMENT_MFENCED("Math element <mfenced>"), //

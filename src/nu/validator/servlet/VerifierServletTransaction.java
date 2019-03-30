@@ -1471,35 +1471,34 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     }
                 }
             }
-            String mathElementName = (String) request.getAttribute(
-                    "http://validator.nu/properties/math-element");
-            if (mathElementName != null) {
-                if (mathElementName.contains("_")) {
-                    fieldName = "MATH_ELEMENT_"
-                            + mathElementName.replace("_", "__").toUpperCase();
-                } else {
-                    fieldName = "MATH_ELEMENT_"
-                            + mathElementName.replace("-", "_").toUpperCase();
-                }
-                try {
+            for (String element : Assertions.MATH_INTERESTING_ELEMENTS) {
+                String property = "http://validator.nu/properties/"
+                        + "math-element/" + element;
+                if (request.getAttribute(property) != null
+                        && (boolean) request.getAttribute(property)) {
+                    if (element.contains("_")) {
+                        fieldName = "MATH_ELEMENT_" + element //
+                                .replace("_", "__").toUpperCase();
+                    } else {
+                        fieldName = "MATH_ELEMENT_" + element //
+                                .replace("-", "_").toUpperCase();
+                    }
                     stats.incrementField(stats.getFieldFromName(fieldName));
-                } catch (IllegalArgumentException e) {
                 }
             }
-            String mathAttributeName = (String) request.getAttribute(
-                    "http://validator.nu/properties/math-attribute");
-            if (mathAttributeName != null) {
-                if (mathAttributeName.contains("_")) {
-                    fieldName = "MATH_ATTRIBUTE_" + mathAttributeName //
-                            .replace("_", "__").toUpperCase();
-                } else {
-                    fieldName = "MATH_ATTRIBUTE_" + mathAttributeName //
-                            .replace("-", "_").toUpperCase();
-                }
-                try {
+            for (String attribute : Assertions.MATH_INTERESTING_ATTRIBUTES) {
+                String property = "http://validator.nu/properties/"
+                        + "math-attribute/" + attribute;
+                if (request.getAttribute(property) != null
+                        && (boolean) request.getAttribute(property)) {
+                    if (attribute.contains("_")) {
+                        fieldName = "MATH_ATTRIBUTE_" + attribute //
+                                .replace("_", "__").toUpperCase();
+                    } else {
+                        fieldName = "MATH_ATTRIBUTE_" + attribute //
+                                .replace("-", "_").toUpperCase();
+                    }
                     stats.incrementField(stats.getFieldFromName(fieldName));
-                } catch (IllegalArgumentException e) {
-                    stats.incrementField(Statistics.Field.LANG_OTHER);
                 }
             }
             if (request.getAttribute("http://validator.nu/properties/"
@@ -1525,10 +1524,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.MATH_VALUE_MATHSIZE);
             }
             if (request.getAttribute("http://validator.nu/properties/"
-                    + "math-attribute-unitless-length") != null
+                    + "math-value-unitless-length") != null
                     && (boolean) request.getAttribute(
                             "http://validator.nu/properties/"
-                                    + "math-attribute-unitless-length")) {
+                                    + "math-value-unitless-length")) {
                 stats.incrementField(Statistics.Field.MATH_VALUE_UNITLESS);
             }
             if (request.getAttribute("http://validator.nu/properties/"
@@ -1547,9 +1546,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.MATH_VALUE_NAMED_SPACE);
             }
             if (request.getAttribute("http://validator.nu/properties/"
-                    + "math-attribute-leading-or-trailing-whitespace") != null
+                    + "math-value-leading-or-trailing-whitespace") != null
                     && (boolean) request.getAttribute(
-                            "http://validator.nu/properties/math-attribute"
+                            "http://validator.nu/properties/math-value"
                                     + "-leading-or-trailing-whitespace")) {
                 stats.incrementField(Statistics.Field.MATH_VALUE_WHITESPACE);
             }
