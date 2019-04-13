@@ -269,10 +269,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/microdata/",
             "http://c.validator.nu/langdetect/" };
 
-    private static final String[] ALL_CHECKERS_HTML4 = {
-            "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
-            "http://c.validator.nu/unchecked/", "http://c.validator.nu/usemap/" };
-
     private long start = System.currentTimeMillis();
 
     protected final HttpServletRequest request;
@@ -683,9 +679,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static boolean isCheckerUrl(String url) {
         if ("http://c.validator.nu/all/".equals(url)
                 || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
-            return true;
-        } else if ("http://c.validator.nu/all-html4/".equals(url)
-                || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
             return true;
         } else if ("http://c.validator.nu/base/".equals(url)) {
             return true;
@@ -1797,11 +1790,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             if ("http://c.validator.nu/all/".equals(url)
                     || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
                 for (String checker : ALL_CHECKERS) {
-                    v = combineValidatorByUrl(v, checker);
-                }
-            } else if ("http://c.validator.nu/all-html4/".equals(url)
-                    || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
-                for (String checker : ALL_CHECKERS_HTML4) {
                     v = combineValidatorByUrl(v, checker);
                 }
             } else {
