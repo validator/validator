@@ -45,6 +45,20 @@ DEALINGS IN THE SOFTWARE.
   <property name="jetty-version" value="9.2.25.v20180606" />
   <property name="log4j-version" value="1.2.17" />
   <property name="salvation-version" value="2.6.0" />
+  <!-- module dependencies -->
+  <property name="avalon-framework-api-version" value="4.3.1" />
+  <property name="avalon-logkit-version" value="2.2.1" />
+  <property name="cdi-api-version" value="2.0" />
+  <property name="el-api-version" value="2.2" />
+  <property name="javax-activation-version" value="1.2.0" />
+  <property name="javax-inject-version" value="1" />
+  <property name="javax-interceptor-api-version" value="1.2.2" />
+  <property name="javax-jms-api-version" value="2.0.1" />
+  <property name="jsr305-version" value="3.0.2" />
+  <property name="mail-version" value="1.4.7" />
+  <property name="portlet-api-version" value="3.0.1" />
+  <property name="slf4j-api-version" value="1.7.26" />
+  <property name="slf4j-log4j12-version" value="1.7.9" />
   <target name="build" depends="jar"/>
   <target name="clean">
     <delete dir="${dist}"/>
@@ -76,6 +90,24 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-util-ajax-${jetty-version}.jar"/>
       <zipfileset src="../dependencies/log4j-${log4j-version}.jar"/>
       <zipfileset src="../dependencies/salvation-${salvation-version}.jar"/>
+      <!-- module dependencies -->
+      <zipfileset src="../jing-trang/lib/ant.jar"/>
+      <zipfileset src="../jing-trang/lib/ant-launcher.jar"/>
+      <zipfileset src="../jing-trang/lib/isorelax.jar"/>
+      <zipfileset src="../dependencies/avalon-framework-api-${avalon-framework-api-version}.jar"/>
+      <zipfileset src="../dependencies/avalon-logkit-${avalon-logkit-version}.jar"/>
+      <zipfileset src="../dependencies/cdi-api-${cdi-api-version}.jar"/>
+      <zipfileset src="../dependencies/el-api-${el-api-version}.jar"/>
+      <zipfileset src="../dependencies/javax.activation-${javax-activation-version}.jar"/>
+      <zipfileset src="../dependencies/javax.inject-${javax-inject-version}.jar"/>
+      <zipfileset src="../dependencies/javax.interceptor-api-${javax-interceptor-api-version}.jar"/>
+      <zipfileset src="../dependencies/javax.jms-api-${javax-jms-api-version}.jar"/>
+      <zipfileset src="../dependencies/jetty-jmx-${jetty-version}.jar"/>
+      <zipfileset src="../dependencies/jsr305-${jsr305-version}.jar"/>
+      <zipfileset src="../dependencies/mail-${mail-version}.jar"/>
+      <zipfileset src="../dependencies/portlet-api-${portlet-api-version}.jar"/>
+      <zipfileset src="../dependencies/slf4j-api-${slf4j-api-version}.jar"/>
+      <zipfileset src="../dependencies/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
