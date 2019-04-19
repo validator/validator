@@ -167,7 +167,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.2.25.v20180606/jetty-servlets-9.2.25.v20180606.jar", "e1885683a65213deb62eff2dddf5f2dd"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.25.v20180606/jetty-util-9.2.25.v20180606.jar", "40e16d5b86902bd7c3a440e2c3eac041"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.25.v20180606/jetty-util-ajax-9.2.25.v20180606.jar", "84eca54fd6b260f3ca2d87bbb0cdd4f9"),  # nopep8
-    ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar", "7b56e34995f7f1cb55d7806b935f90a4"),  # nopep8
 ]
 
@@ -197,11 +196,7 @@ runDependencyJars = [
     "mail-1.5.0-b01.jar",
 ]
 
-buildOnlyDependencyJars = [
-    "xom-1.2.5.jar"
-]
-
-dependencyJars = runDependencyJars + buildOnlyDependencyJars
+dependencyJars = runDependencyJars
 
 javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
