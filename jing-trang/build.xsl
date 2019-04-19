@@ -252,10 +252,6 @@
       </xsl:if>
       <classpath>
 	<pathelement location="{$build}/{$app}.jar"/>
-	<xsl:if test="$app = 'jing'">
-	  <pathelement location="lib/xercesImpl.jar"/>
-	  <pathelement location="lib/saxon.jar"/>
-	</xsl:if>
       </classpath>
     </java>
   </target>

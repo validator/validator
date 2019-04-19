@@ -1,6 +1,0 @@
-<module>
-  <depends module="util"/>
-  <depends module="validate"/>
-  <depends lib="xercesImpl"/>
-  <compile/>
-</module>

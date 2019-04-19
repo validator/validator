@@ -1,12 +1,6 @@
 <module>
   <depends module="util"/>
-  <depends lib="xercesImpl"/>
   <compile test="yes"/>
-  <test name="xerces" type="java"
-	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
-    <arg value="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
-    <arg value="mod/regex/test/regextest.xml"/>
-  </test>
   <test name="java" type="java"
 	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
     <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
@@ -64,7 +58,6 @@
   <jar>
     <service type="com.thaiopensource.datatype.xsd.regex.RegexEngine">
       <provider classname="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
-      <provider classname="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
     </service>
   </jar>
 </module>

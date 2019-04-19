@@ -205,7 +205,7 @@
   <replace file="${build.dir}/jing-bin/readme.html" token="@VERSION@" value="${version}"/>
   <zip zipfile="${build.dir}/dist/jing-${version}.zip">
     <zipfileset dir="${build.dir}" includes="jing.jar" prefix="jing-${version}/bin"/> 
-    <zipfileset dir="lib" includes="saxon.jar,isorelax.jar,xercesImpl.jar,xml-apis.jar" 
+    <zipfileset dir="lib" includes="isorelax.jar" 
                 prefix="jing-${version}/bin"/> 
     <zipfileset dir="${build.dir}/mod/jing"
 		includes="src.zip"
