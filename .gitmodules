@@ -19,3 +19,6 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/validator/validator.wiki.git
+[submodule "langdetect"]
+	path = langdetect
+	url = https://github.com/validator/language-detection.git

@@ -88,6 +88,7 @@ jingVersion = "20180722VNU"
 htmlparserVersion = "1.4.12"
 cssvalidatorVersion = "1.0.4"
 galimatiasVersion = "0.1.3"
+langdetectVersion = "1.2"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
@@ -171,7 +172,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar", "1d04e4713e19ff23f9820f271e45c3be"),  # nopep8
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),  # nopep8
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
-    ("https://repo1.maven.org/maven2/net/arnx/jsonic/1.3.9/jsonic-1.3.9.jar", "0a227160073902d0a79b9abfcb1e1bac"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar", "7b56e34995f7f1cb55d7806b935f90a4"),  # nopep8
 ]
 
@@ -199,8 +199,6 @@ runDependencyJars = [
     "jetty-util-ajax-9.2.25.v20180606.jar",
     "log4j-1.2.17.jar",
     "mail-1.5.0-b01.jar",
-    "langdetect-1.1-20120112.jar",
-    "jsonic-1.3.9.jar",
 ]
 
 buildOnlyDependencyJars = [
@@ -378,7 +376,7 @@ def buildModule(rootDir, jarName, classPath):
 def dependencyJarPaths(depList=dependencyJars):
     extrasDir = os.path.join(buildRoot, "extras")
     pathList = [os.path.join(dependencyDir, dep) for dep in depList]
-    for jar in ["saxon9.jar", "xercesImpl.jar", "xml-apis.jar", "isorelax.jar"]:
+    for jar in ["saxon9.jar", "isorelax.jar"]:
         pathList += [os.path.join(jingTrangDir, "lib", jar)]
     ensureDirExists(extrasDir)
     pathList += findFilesWithExtension(extrasDir, "jar")
@@ -702,6 +700,11 @@ def buildHtmlParser():
     buildModule(os.path.join(buildRoot, "htmlparser"), "htmlparser", classPath)
 
 
+def buildLangdetect():
+    classPath = os.pathsep.join(dependencyJarPaths())
+    buildModule(os.path.join(buildRoot, "langdetect"), "langdetect", classPath)
+
+
 def buildJing():
     os.chdir("jing-trang")
     if os.name == 'nt':
@@ -754,7 +757,7 @@ def buildEmitters():
 def buildValidator():
     classPath = os.pathsep.join(
         dependencyJarPaths() +
-        jarNamesToPaths(["galimatias", "htmlparser"]) +
+        jarNamesToPaths(["galimatias", "htmlparser", "langdetect"]) +
         cssValidatorJarPath() +
         jingJarPath())
     buildEmitters()
@@ -762,7 +765,7 @@ def buildValidator():
 
 
 def ownJarList():
-    return jarNamesToPaths(["galimatias", "htmlparser", "validator"]) + cssValidatorJarPath() + jingJarPath()  # nopep8
+    return jarNamesToPaths(["galimatias", "htmlparser", "langdetect", "validator"]) + cssValidatorJarPath() + jingJarPath()  # nopep8
 
 
 def buildRunJarPathList():
@@ -893,6 +896,7 @@ class Release():
             os.path.join(jarsDir, "validator.jar"),
             os.path.join(jarsDir, "htmlparser.jar"),
             os.path.join(jarsDir, "galimatias.jar"),
+            os.path.join(jarsDir, "langdetect.jar"),
             os.path.join(cssValidatorDir, "css-validator.jar"),
         ])
 
@@ -909,6 +913,8 @@ class Release():
             self.version = cssvalidatorVersion
         if self.artifactId == "galimatias":
             self.version = galimatiasVersion
+        if self.artifactId == "langdetect":
+            self.version = langdetectVersion
         if url == snapshotsRepoUrl:
             self.version += "-SNAPSHOT"
         self.writeVersion()
@@ -1402,9 +1408,6 @@ def updateSubmodulesShallow():
 def downloadDependencies():
     for url, md5sum in dependencyPackages:
         downloadDependency(url, md5sum)
-        shutil.copy(os.path.join(buildRoot,
-                                 "resources", "langdetect-1.1-20120112.jar"),
-                    dependencyDir)
 
 
 def buildAll():
@@ -1417,6 +1420,7 @@ def buildAll():
     buildJing()
     buildSchemaDrivers()
     prepareLocalEntityJar()
+    buildLangdetect()
     buildGalimatias()
     buildHtmlParser()
     buildValidator()
@@ -1427,7 +1431,8 @@ def runTests():
     className = "nu.validator.client.TestRunner"
     classPath = os.pathsep.join(
         buildRunJarPathList() +
-        jarNamesToPaths(["galimatias", "htmlparser", "validator"]) +
+        jarNamesToPaths(["galimatias", "htmlparser", "langdetect",
+                         "validator"]) +
         cssValidatorJarPath() +
         jingJarPath())
     if runCmd([javaCmd, '-classpath', classPath, className] + args):
@@ -1666,6 +1671,15 @@ else:
             release.uploadToCentral(snapshotsRepoUrl)
         elif arg == 'galimatias-release':
             release = Release("galimatias")
+            release.uploadToCentral(stagingRepoUrl)
+        elif arg == 'langdetect-bundle':
+            release = Release("langdetect")
+            release.createBundle()
+        elif arg == 'langdetect-snapshot':
+            release = Release("langdetect")
+            release.uploadToCentral(snapshotsRepoUrl)
+        elif arg == 'langdetect-release':
+            release = Release("langdetect")
             release.uploadToCentral(stagingRepoUrl)
         elif arg == 'htmlparser-bundle':
             release = Release("htmlparser")
