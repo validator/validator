@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2015 Mozilla Foundation
+Copyright (c) 2019 Mozilla Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -49,7 +49,7 @@ DEALINGS IN THE SOFTWARE.
       version="${version}"
       name="galimatias"
       description="Fork of the galimatias URL parsing and normalization library."
-      url="https://github.com/smola/galimatias#galimatias"
+      url="https://github.com/validator/galimatias"
       packaging="jar">
       <license
         name="The MIT License"
@@ -76,10 +76,6 @@ DEALINGS IN THE SOFTWARE.
         email="mike@w3.org"
         url="https://people.w3.org/mike/"/>
       <dependency groupId="com.ibm.icu" artifactId="icu4j" version="4.0.1" scope="compile" optional="true"/>
-      <dependency groupId="junit" artifactId="junit" version="4.12" scope="test"/>
-      <dependency groupId="org.easytesting" artifactId="fest-assert" version="1.4" scope="test"/>
-      <dependency groupId="org.hamcrest" artifactId="hamcrest-api" version="1.0" scope="test"/>
-      <dependency groupId="org.slf4j" artifactId="slf4j-api" version="1.7.13" scope="test"/>
     </artifact:pom>
     <artifact:writepom pomRefId="galimatias-pom" file="${galimatias-base}.pom"/>
     <copy file="../jars/galimatias.jar" tofile="${galimatias-base}.jar"/>

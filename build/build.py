@@ -154,13 +154,11 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-adapters.jar", "5c82e86cc5b769f72abd2af1f92255fa"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-api.jar", "289dcb376743ab24ecaeb194a0d287d9"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),  # nopep8
-    ("https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar", "5b38c40c97fbd0adee29f91e60405584"),  # nopep8
     ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),  # nopep8
     ("https://repo1.maven.org/maven2/log4j/apache-log4j-extras/1.2.17/apache-log4j-extras-1.2.17.jar", "f32ed7ae770c83a4ac6fe6714f98f1bd"),  # nopep8
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/easytesting/fest-assert/1.4/fest-assert-1.4.jar", "05b9012baeccce4379d125a2050c6574"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.25.v20180606/jetty-http-9.2.25.v20180606.jar", "d65032c93330cc33f92ab3e9a74690bb"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.25.v20180606/jetty-io-9.2.25.v20180606.jar", "c0596d22696d73ee5919e82253596797"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.2.25.v20180606/jetty-security-9.2.25.v20180606.jar", "04d4d6f08166bffee9fba032b4976cef"),  # nopep8
@@ -169,8 +167,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.2.25.v20180606/jetty-servlets-9.2.25.v20180606.jar", "e1885683a65213deb62eff2dddf5f2dd"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.25.v20180606/jetty-util-9.2.25.v20180606.jar", "40e16d5b86902bd7c3a440e2c3eac041"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.25.v20180606/jetty-util-ajax-9.2.25.v20180606.jar", "84eca54fd6b260f3ca2d87bbb0cdd4f9"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar", "1d04e4713e19ff23f9820f271e45c3be"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar", "a5168034046d95e07f4aae3f5e2d1c67"),  # nopep8
     ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar", "7b56e34995f7f1cb55d7806b935f90a4"),  # nopep8
 ]
@@ -202,10 +198,6 @@ runDependencyJars = [
 ]
 
 buildOnlyDependencyJars = [
-    "fest-assert-1.4.jar",
-    "hamcrest-api-1.0.jar",
-    "junit-4.12.jar",
-    "slf4j-api-1.7.13.jar",
     "xom-1.2.5.jar"
 ]
 
