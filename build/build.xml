@@ -43,7 +43,6 @@ DEALINGS IN THE SOFTWARE.
   <property name="javax.servlet-api-version" value="3.1.0" />
   <property name="jchardet-version" value="1.0" />
   <property name="jetty-version" value="9.2.25.v20180606" />
-  <property name="langdetect-version" value="1.1-20120112" />
   <property name="log4j-version" value="1.2.17" />
   <property name="salvation-version" value="2.6.0" />
   <target name="build" depends="jar"/>
@@ -75,7 +74,6 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-servlets-${jetty-version}.jar"/>
       <zipfileset src="../dependencies/jetty-util-${jetty-version}.jar"/>
       <zipfileset src="../dependencies/jetty-util-ajax-${jetty-version}.jar"/>
-      <zipfileset src="../dependencies/langdetect-${langdetect-version}.jar"/>
       <zipfileset src="../dependencies/log4j-${log4j-version}.jar"/>
       <zipfileset src="../dependencies/salvation-${salvation-version}.jar"/>
       <manifest>
@@ -175,7 +173,6 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/httpclient-${httpclient-version}.jar"/>
       <fileset file="../dependencies/httpcore-${httpcore-version}.jar"/>
       <fileset file="../dependencies/icu4j-${icu4j-version}.jar"/>
-      <fileset file="../dependencies/langdetect-${langdetect-version}.jar"/>
       <fileset file="../dependencies/salvation-${salvation-version}.jar"/>
       <fileset file="../dependencies/jchardet-${jchardet-version}.jar"/>
       <fileset file="../dependencies/log4j-${log4j-version}.jar"/>
@@ -252,7 +249,6 @@ DEALINGS IN THE SOFTWARE.
         id="sideshowbarker"
         email="mike@w3.org"
         url="https://people.w3.org/mike/"/>
-      <dependency groupId="com.cybozu.labs" artifactId="langdetect" version="${langdetect-version}"/>
       <dependency groupId="com.ibm.icu" artifactId="icu4j" version="${icu4j-version}"/>
       <dependency groupId="com.shapesecurity" artifactId="salvation" version="${salvation-version}"/>
       <dependency groupId="commons-codec" artifactId="commons-codec" version="${commons-codec-version}"/>
