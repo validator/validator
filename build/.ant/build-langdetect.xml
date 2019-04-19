@@ -1,0 +1,82 @@
+<!--
+Copyright (c) 2019 Mozilla Foundation
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+-->
+<project name="html5-langdetect" basedir="."
+  xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+  <property name="langdetect-base" location="${dist}/langdetect-${version}" />
+  <property name="langdetect-src" location="../langdetect/src" />
+  <property name="langdetect-javadoc-jar" value="${langdetect-base}-javadoc.jar" />
+  <property name="langdetect-sources-jar" value="${langdetect-base}-sources.jar" />
+  <property name="langdetect-bundle-jar" value="${langdetect-base}-bundle.jar" />
+  <target name="langdetect-javadoc-jar">
+    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
+      <fileset dir="${langdetect-src}"/>
+    </javadoc>
+    <jar destfile="${langdetect-javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="langdetect-sources-jar">
+    <jar destfile="${langdetect-sources-jar}">
+      <fileset dir="${langdetect-src}"/>
+    </jar>
+  </target>
+  <target name="langdetect-artifacts" depends="langdetect-javadoc-jar, langdetect-sources-jar">
+    <delete file="${dist}/VERSION" />
+    <artifact:pom
+      id="langdetect-pom"
+      groupId="nu.validator"
+      artifactId="langdetect"
+      version="${version}"
+      name="langdetect"
+      description="Fork of the com.cybozu.labs.langdetect language-detection library"
+      url="https://github.com/validator/language-detection"
+      packaging="jar">
+      <license
+        name="Apache License, Version 2.0"
+        distribution="repo"
+        url="http://www.opensource.org/licenses/mit-license.php"/>
+      <scm
+        connection="scm:git:git://github.com/validator/langdetect.git"
+        developerConnection="scm:git:git://github.com/validator/langdetect.git"
+        url="https://github.com/validator/langdetect"/>
+      <issueManagement
+        system="GitHub Issues"
+        url="https://github.com/validator/langdetect/issues"/>
+      <developer
+        name="Nakatani Shuyo"
+        id="shuyo"
+        url="https://github.com/shuyo"/>
+      <developer
+        name="Michael[tm] Smith"
+        id="sideshowbarker"
+        email="mike@w3.org"
+        url="https://people.w3.org/mike/"/>
+      <dependency groupId="org.eclipse.jetty" artifactId="jetty-util-ajax" version="9.2.25.v20180606"/>
+    </artifact:pom>
+    <artifact:writepom pomRefId="langdetect-pom" file="${langdetect-base}.pom"/>
+    <copy file="../jars/langdetect.jar" tofile="${langdetect-base}.jar"/>
+  </target>
+  <target name="langdetect-bundle">
+    <jar basedir="${dist}" destfile="${langdetect-bundle-jar}"/>
+  </target>
+</project>
