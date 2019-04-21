@@ -57,6 +57,7 @@ try:
 except ImportError:
     CAFILE = None
 
+javaVersion = '9'
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
@@ -325,7 +326,10 @@ def runJavac(sourceDir, classDir, classPath):
         '-encoding',
         'UTF-8',
     ]
-    args.append('@temp-javac-list')
+    if javaVersion != "":
+        args.append('--release')
+        args.append(javaVersion)
+        args.append('@temp-javac-list')
     if runCmd(args):
         sys.exit(1)
     removeIfExists("temp-javac-list")
@@ -739,6 +743,9 @@ def buildEmitters():
         '-encoding',
         'UTF-8',
     ]
+    if javaVersion != "":
+        args.append('--release')
+        args.append(javaVersion)
     args.append(compilerFile)
     if runCmd(args):
         sys.exit(1)
