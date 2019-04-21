@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Mozilla Foundation
+ * Copyright (c) 2013-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -29,6 +29,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.module.ModuleDescriptor;
 import java.util.regex.Pattern;
 
 import nu.validator.htmlparser.sax.XmlSerializer;
@@ -57,6 +58,9 @@ public class SimpleCommandLineValidator {
     private static Package pkg = SimpleCommandLineValidator.class.getPackage();
 
     private static String version = pkg.getImplementationVersion();
+
+    private static ModuleDescriptor moduleDescriptor =
+        SimpleCommandLineValidator.class.getModule().getDescriptor();
 
     private static String userAgent;
 
@@ -208,6 +212,9 @@ public class SimpleCommandLineValidator {
                 } else if ("--version".equals(args[i])) {
                     if (version != null) {
                         System.out.println(version);
+                    }
+                    else if (moduleDescriptor != null) {
+                        System.out.println(moduleDescriptor.version().get());
                     } else {
                         System.out.println("[unknown version]");
                     }
