@@ -57,8 +57,11 @@ before_deploy:
   - git tag -m windows -f windows
 
 artifacts:
-  - path: 'build\dist\*.zip*'
-    name: RuntimeImageArtifacts
+  - path: 'build\dist\vnu.*.zip'
+    name: vnu.jar with JRE
+  - path: build\dist\vnu.jar
+    name: vnu.jar
+    type: zip
 
 deploy:
   tag: windows
