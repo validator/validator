@@ -995,9 +995,9 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
-            runCmd([jdepsCmd, '--generate-module-info', distDir,
+            runCmd([jdepsCmd, '--generate-open-module', distDir,
                     os.path.join(distDir, 'vnu.jar')])
-            runCmd([javacCmd, '--patch-module',
+            runCmd([javacCmd, '-nowarn', '--patch-module',
                     'vnu=' + os.path.join(distDir, 'vnu.jar'),
                     os.path.join(distDir, 'vnu', 'module-info.java')])
             runCmd([jarCmd, 'uf', os.path.join(distDir, 'vnu.jar'),
