@@ -62,6 +62,7 @@ javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
 jdepsCmd = 'jdeps'
+jlinkCmd = 'jlink'
 javadocCmd = 'javadoc'
 herokuCmd = 'heroku'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
@@ -892,6 +893,8 @@ class Release():
         self.artifactId = artifactId
         self.version = validatorVersion
         self.buildXml = os.path.join(buildRoot, "build", "build.xml")
+        self.vnuJar = os.path.join(distDir, "vnu.jar")
+        self.vnuImageDir = os.path.join(distDir, "vnu-image")
         self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
         self.setClasspath()
 
@@ -995,13 +998,18 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
-            runCmd([jdepsCmd, '--generate-open-module', distDir,
-                    os.path.join(distDir, 'vnu.jar')])
-            runCmd([javacCmd, '-nowarn', '--patch-module',
-                    'vnu=' + os.path.join(distDir, 'vnu.jar'),
+            runCmd([jdepsCmd, '--generate-open-module', distDir, self.vnuJar])
+            runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + self.vnuJar,
                     os.path.join(distDir, 'vnu', 'module-info.java')])
-            runCmd([jarCmd, 'uf', os.path.join(distDir, 'vnu.jar'),
+            runCmd([jarCmd, '--update',
+                    '--file', self.vnuJar,
+                    '--module-version=' + validatorVersion,
                     '-C', os.path.join(distDir, 'vnu'), 'module-info.class'])
+            removeIfDirExists(self.vnuImageDir)
+            runCmd([jlinkCmd, '--launcher',
+                    'vnu=vnu/nu.validator.client.SimpleCommandLineValidator',
+                    '--output', self.vnuImageDir, '--module-path', self.vnuJar,
+                    '--add-modules', 'vnu'])
             release.check()
 
     def createDistribution(self, jarOrWar, isNightly=False):
@@ -1204,8 +1212,7 @@ class Release():
             runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
     def check(self):
-        vnu = os.path.join(distDir, "vnu.jar")
-        if not os.path.exists(vnu):
+        if not os.path.exists(self.vnuJar):
             return
 
         minDocPath = os.path.join(buildRoot, 'minDoc.html')
@@ -1214,12 +1221,20 @@ class Release():
 
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            if runCmd([javaCmd, '-jar', vnu, '--format', _format, minDocPath]):
+            if runCmd([javaCmd, '-jar', self.vnuJar, '--format', _format,
+                       minDocPath]):
+                sys.exit(1)
+            if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'), '--format',
+                       _format, minDocPath]):
                 sys.exit(1)
         # also make sure it works even w/o --format value; returns gnu output
-        if runCmd([javaCmd, '-jar', vnu, minDocPath]):
+        if runCmd([javaCmd, '-jar', self.vnuJar, minDocPath]):
             sys.exit(1)
-        if runCmd([javaCmd, '-jar', vnu, '--version']):
+        if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'), minDocPath]):
+            sys.exit(1)
+        if runCmd([javaCmd, '-jar', self.vnuJar, '--version']):
+            sys.exit(1)
+        if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'), '--version']):
             sys.exit(1)
         os.remove(minDocPath)
 
