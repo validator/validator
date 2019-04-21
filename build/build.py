@@ -57,7 +57,7 @@ try:
 except ImportError:
     CAFILE = None
 
-javaVersion = '9'
+javaVersion = '1.8'
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
