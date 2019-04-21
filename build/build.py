@@ -327,9 +327,7 @@ def runJavac(sourceDir, classDir, classPath):
         'UTF-8',
     ]
     if javaVersion != "":
-        args.append('-target')
-        args.append(javaVersion)
-        args.append('-source')
+        args.append('--release')
         args.append(javaVersion)
         args.append('@temp-javac-list')
     if runCmd(args):
@@ -746,9 +744,7 @@ def buildEmitters():
         'UTF-8',
     ]
     if javaVersion != "":
-        args.append('-target')
-        args.append(javaVersion)
-        args.append('-source')
+        args.append('--release')
         args.append(javaVersion)
     args.append(compilerFile)
     if runCmd(args):

@@ -28,9 +28,9 @@ script:
   - $PYTHON $BUILD_PY jar
   - java -jar ./build/dist/vnu.jar ./build/dist/index.html
   - java -jar ./build/dist/vnu.jar ./site/nu-about.html
-  - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
+  - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 53.0"
   - $PYTHON $BUILD_PY war
-  - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
+  - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 53.0"
   - curl -O http://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
   - unzip apache-tomcat-$TOMCAT_VERSION.zip
   - chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
