@@ -5,10 +5,8 @@ git:
 
 matrix:
   include:
-    - jdk: oraclejdk8
+    - jdk: oraclejdk9
       env: PYTHON=python2
-    - jdk: oraclejdk8
-      env: PYTHON=python3
     - jdk: oraclejdk9
       env: PYTHON=python3
     - jdk: openjdk10
