@@ -11,6 +11,8 @@ matrix:
       env: PYTHON=python3
     - jdk: openjdk11
       env: PYTHON=python3
+    - jdk: openjdk12
+      env: PYTHON=python3
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_96f60dea8e9e_key -iv $encrypted_96f60dea8e9e_iv
