@@ -1023,6 +1023,7 @@ class Release():
         removeIfDirExists(self.vnuImageDir)
         runCmd([jlinkCmd, '--launcher',
                 'vnu=vnu/nu.validator.client.SimpleCommandLineValidator',
+                '--compress=2',
                 '--output', self.vnuImageDir, '--module-path', self.vnuJar,
                 '--add-modules', 'vnu'])
         release.checkRuntimeImage()
