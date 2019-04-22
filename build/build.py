@@ -58,15 +58,15 @@ except ImportError:
     CAFILE = None
 
 javaTargetVersion = '1.8'
-if sys.version_info[0] < 3:
-    javaEnvironmentVersion = subprocess.check_output(['java', '-version'],
-                                                     stderr=subprocess.STDOUT)\
-        .splitlines()[0].split()[2].strip('"').split('.')[0]
-else:
-    javaEnvironmentVersion = subprocess.check_output(['java', '-version'],
-                                                     text=True,
-                                                     stderr=subprocess.STDOUT)\
-        .splitlines()[0].split()[2].strip('"').split('.')[0]
+try:
+    javaRawVersion = subprocess.check_output(['java', '-version'],
+                                             text=True,
+                                             stderr=subprocess.STDOUT)
+except TypeError:
+    javaRawVersion = subprocess.check_output(['java', '-version'],
+                                             stderr=subprocess.STDOUT)
+javaEnvironmentVersion = javaRawVersion\
+    .splitlines()[0].split()[2].strip('"').split('.')[0]
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
