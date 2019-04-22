@@ -60,13 +60,13 @@ except ImportError:
 javaTargetVersion = '1.8'
 try:
     javaRawVersion = subprocess.check_output(['java', '-version'],
-                                             text=True,
+                                             universal_newlines=True,
                                              stderr=subprocess.STDOUT)
 except TypeError:
     javaRawVersion = subprocess.check_output(['java', '-version'],
                                              stderr=subprocess.STDOUT)
-javaEnvironmentVersion = int(javaRawVersion\
-    .splitlines()[0].split()[2].strip('"').split('.')[0])
+javaEnvVersion = int(javaRawVersion
+                     .splitlines()[0].split()[2].strip('"').split('.')[0])
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
@@ -1011,7 +1011,7 @@ class Release():
             release.checkJar()
 
     def createRuntimeImage(self):
-        if javaEnvironmentVersion < 9:
+        if javaEnvVersion < 9:
             return
         runCmd([jdepsCmd, '--generate-open-module', distDir, self.vnuJar])
         runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + self.vnuJar,
@@ -1246,7 +1246,7 @@ class Release():
         os.remove(self.minDocPath)
 
     def checkRuntimeImage(self):
-        if javaEnvironmentVersion < 9:
+        if javaEnvVersion < 9:
             return
         if not os.path.exists(self.vnuJar):
             return
