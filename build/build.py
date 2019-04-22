@@ -57,11 +57,15 @@ try:
 except ImportError:
     CAFILE = None
 
-javaVersion = '1.8'
+javaTargetVersion = '1.8'
+javaEnvironmentVersion = subprocess.check_output(['java', '-version'],
+                                                 stderr=subprocess.STDOUT)\
+    .splitlines()[0].split()[2].strip('"').split('.')[0]
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
 jdepsCmd = 'jdeps'
+jlinkCmd = 'jlink'
 javadocCmd = 'javadoc'
 herokuCmd = 'heroku'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
@@ -325,11 +329,11 @@ def runJavac(sourceDir, classDir, classPath):
         '-encoding',
         'UTF-8',
     ]
-    if javaVersion != "":
+    if javaTargetVersion != "":
         args.append('-target')
-        args.append(javaVersion)
+        args.append(javaTargetVersion)
         args.append('-source')
-        args.append(javaVersion)
+        args.append(javaTargetVersion)
         args.append('@temp-javac-list')
     if runCmd(args):
         sys.exit(1)
@@ -744,11 +748,11 @@ def buildEmitters():
         '-encoding',
         'UTF-8',
     ]
-    if javaVersion != "":
+    if javaTargetVersion != "":
         args.append('-target')
-        args.append(javaVersion)
+        args.append(javaTargetVersion)
         args.append('-source')
-        args.append(javaVersion)
+        args.append(javaTargetVersion)
     args.append(compilerFile)
     if runCmd(args):
         sys.exit(1)
@@ -892,6 +896,9 @@ class Release():
         self.artifactId = artifactId
         self.version = validatorVersion
         self.buildXml = os.path.join(buildRoot, "build", "build.xml")
+        self.vnuJar = os.path.join(distDir, "vnu.jar")
+        self.vnuImageDir = os.path.join(distDir, "vnu-runtime-image")
+        self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
         self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
         self.setClasspath()
 
@@ -995,14 +1002,24 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
-            runCmd([jdepsCmd, '--generate-open-module', distDir,
-                    os.path.join(distDir, 'vnu.jar')])
-            runCmd([javacCmd, '-nowarn', '--patch-module',
-                    'vnu=' + os.path.join(distDir, 'vnu.jar'),
-                    os.path.join(distDir, 'vnu', 'module-info.java')])
-            runCmd([jarCmd, 'uf', os.path.join(distDir, 'vnu.jar'),
-                    '-C', os.path.join(distDir, 'vnu'), 'module-info.class'])
-            release.check()
+            release.checkJar()
+
+    def createRuntimeImage(self):
+        if javaEnvironmentVersion < 9:
+            return
+        runCmd([jdepsCmd, '--generate-open-module', distDir, self.vnuJar])
+        runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + self.vnuJar,
+                os.path.join(distDir, 'vnu', 'module-info.java')])
+        runCmd([jarCmd, '--update',
+                '--file', self.vnuJar,
+                '--module-version=' + validatorVersion,
+                '-C', os.path.join(distDir, 'vnu'), 'module-info.class'])
+        removeIfDirExists(self.vnuImageDir)
+        runCmd([jlinkCmd, '--launcher',
+                'vnu=vnu/nu.validator.client.SimpleCommandLineValidator',
+                '--output', self.vnuImageDir, '--module-path', self.vnuJar,
+                '--add-modules', 'vnu'])
+        release.checkRuntimeImage()
 
     def createDistribution(self, jarOrWar, isNightly=False):
         self.setVersion()
@@ -1203,25 +1220,46 @@ class Release():
         for filename in findFiles(distDir):
             runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
-    def check(self):
-        vnu = os.path.join(distDir, "vnu.jar")
-        if not os.path.exists(vnu):
+    def checkJar(self):
+        if not os.path.exists(self.vnuJar):
             return
 
-        minDocPath = os.path.join(buildRoot, 'minDoc.html')
-        with open(minDocPath, 'w') as f:
+        with open(self.minDocPath, 'w') as f:
             f.write(miniDoc)
 
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            if runCmd([javaCmd, '-jar', vnu, '--format', _format, minDocPath]):
+            if runCmd([javaCmd, '-jar', self.vnuJar, '--format', _format,
+                       self.minDocPath]):
                 sys.exit(1)
         # also make sure it works even w/o --format value; returns gnu output
-        if runCmd([javaCmd, '-jar', vnu, minDocPath]):
+        if runCmd([javaCmd, '-jar', self.vnuJar, self.minDocPath]):
             sys.exit(1)
-        if runCmd([javaCmd, '-jar', vnu, '--version']):
+        if runCmd([javaCmd, '-jar', self.vnuJar, '--version']):
             sys.exit(1)
-        os.remove(minDocPath)
+        os.remove(self.minDocPath)
+
+    def checkRuntimeImage(self):
+        if javaEnvironmentVersion < 9:
+            return
+        if not os.path.exists(self.vnuJar):
+            return
+
+        with open(self.minDocPath, 'w') as f:
+            f.write(miniDoc)
+
+        formats = ["gnu", "xml", "json", "text"]
+        for _format in formats:
+            if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'), '--format',
+                       _format, self.minDocPath]):
+                sys.exit(1)
+        # also make sure it works even w/o --format value; returns gnu output
+        if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'),
+                   self.minDocPath]):
+            sys.exit(1)
+        if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'), '--version']):
+            sys.exit(1)
+        os.remove(self.minDocPath)
 
 
 def createTarball():
@@ -1555,7 +1593,7 @@ else:
         elif arg.startswith("--stacksize="):
             stackSize = arg[12:]
         elif arg.startswith("--javaversion="):
-            javaVersion = arg[14:]
+            javaTargetVersion = arg[14:]
         elif arg.startswith("--html5link="):
             html5specLink = arg[12:]
         elif arg.startswith("--about="):
@@ -1727,6 +1765,7 @@ else:
         elif arg == 'jar':
             release = Release()
             release.createExecutable("jar")
+            release.createRuntimeImage()
         elif arg == 'war':
             release = Release()
             release.createExecutable("war")
