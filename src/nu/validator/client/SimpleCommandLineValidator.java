@@ -29,6 +29,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
 import nu.validator.htmlparser.sax.XmlSerializer;
@@ -54,9 +55,7 @@ import org.xml.sax.SAXParseException;
  */
 public class SimpleCommandLineValidator {
 
-    private static Package pkg = SimpleCommandLineValidator.class.getPackage();
-
-    private static String version = pkg.getImplementationVersion();
+    private static String version;
 
     private static String userAgent;
 
@@ -113,6 +112,13 @@ public class SimpleCommandLineValidator {
     private static boolean hasSchemaOption;
 
     public static void main(String[] args) throws SAXException, Exception {
+        try (InputStream is = SimpleCommandLineValidator.class. //
+                getClassLoader().getResourceAsStream("META-INF/MANIFEST.MF")) {
+            version = (new Manifest(is)) //
+                .getMainAttributes().getValue("Implementation-Version");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         out = System.err;
         userAgent = "Validator.nu/LV";
         System.setProperty("nu.validator.datatype.warn", "true");
