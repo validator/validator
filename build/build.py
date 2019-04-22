@@ -59,6 +59,7 @@ except ImportError:
 
 javaTargetVersion = '1.8'
 javaEnvironmentVersion = subprocess.check_output(['java', '-version'],
+                                                 text=True,
                                                  stderr=subprocess.STDOUT)\
     .splitlines()[0].split()[2].strip('"').split('.')[0]
 javacCmd = 'javac'
