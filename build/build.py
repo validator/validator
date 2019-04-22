@@ -221,7 +221,7 @@ runDependencyJars = [
     "jetty-util-9.2.25.v20180606.jar",
     "jetty-util-ajax-9.2.25.v20180606.jar",
     "log4j-1.2.17.jar",
-    "mail-1.5.0-b01.jar",
+    "mail-1.4.7.jar",
 ]
 
 dependencyJars = runDependencyJars
