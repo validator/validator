@@ -65,8 +65,8 @@ try:
 except TypeError:
     javaRawVersion = subprocess.check_output(['java', '-version'],
                                              stderr=subprocess.STDOUT)
-javaEnvironmentVersion = javaRawVersion\
-    .splitlines()[0].split()[2].strip('"').split('.')[0]
+javaEnvironmentVersion = int(javaRawVersion\
+    .splitlines()[0].split()[2].strip('"').split('.')[0])
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
