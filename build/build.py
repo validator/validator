@@ -221,7 +221,7 @@ runDependencyJars = [
     "jetty-util-9.2.25.v20180606.jar",
     "jetty-util-ajax-9.2.25.v20180606.jar",
     "log4j-1.2.17.jar",
-    "mail-1.5.0-b01.jar",
+    "mail-1.4.7.jar",
 ]
 
 dependencyJars = runDependencyJars
@@ -1248,22 +1248,21 @@ class Release():
     def checkRuntimeImage(self):
         if javaEnvVersion < 9:
             return
-        if not os.path.exists(self.vnuJar):
-            return
+        vnuRunScript = os.path.join(self.vnuImageDir, 'bin', 'vnu')
+        if os.path.exists(os.path.join(self.vnuImageDir, 'bin', 'vnu.bat')):
+            vnuRunScript = os.path.join(self.vnuImageDir, 'bin', 'vnu.bat')
 
         with open(self.minDocPath, 'w') as f:
             f.write(miniDoc)
 
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'), '--format',
-                       _format, self.minDocPath]):
+            if runCmd([vnuRunScript, '--format', _format, self.minDocPath]):
                 sys.exit(1)
         # also make sure it works even w/o --format value; returns gnu output
-        if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'),
-                   self.minDocPath]):
+        if runCmd([vnuRunScript, self.minDocPath]):
             sys.exit(1)
-        if runCmd([os.path.join(self.vnuImageDir, 'bin', 'vnu'), '--version']):
+        if runCmd([vnuRunScript, '--version']):
             sys.exit(1)
         os.remove(self.minDocPath)
 
