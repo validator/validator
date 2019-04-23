@@ -1042,7 +1042,6 @@ class Release():
         os.chdir(os.path.join('..', '..'))
         removeIfDirExists(self.vnuImageDir)
         self.writeHashes()
-        self.sign()
 
     def createDistribution(self, jarOrWar, isNightly=False):
         self.setVersion()
