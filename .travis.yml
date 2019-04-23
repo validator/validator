@@ -111,3 +111,4 @@ after_deploy:
   - TRAVIS_TAG=jar
   - git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true
   - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
+  - git push git@github.com:validator/validator.git $TRAVIS_TAG
