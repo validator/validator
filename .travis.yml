@@ -44,8 +44,6 @@ install:
   - travis_retry $PYTHON $BUILD_PY dldeps
 
 script:
-  - echo "TRAVIS_TAG $TRAVIS_TAG"
-  - echo "TRAVIS_BRANCH $TRAVIS_BRANCH"
   - $PYTHON --version
   - travis_retry $PYTHON $BUILD_PY build
   - $PYTHON $BUILD_PY check
@@ -93,7 +91,7 @@ deploy:
     skip_cleanup: true
     file: "build/dist/{*.jar*}"
     on:
-      condition: $TRAVIS_TAG = jar
+      branch: jar
       repo: validator/validator
       jdk: openjdk11
     api_key:
