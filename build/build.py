@@ -59,23 +59,12 @@ except ImportError:
     CAFILE = None
 
 javaTargetVersion = '1.8'
-try:
-    javaRawVersion = subprocess.check_output(['java', '-version'],
-                                             universal_newlines=True,
-                                             stderr=subprocess.STDOUT)
-except TypeError:
-    javaRawVersion = subprocess.check_output(['java', '-version'],
-                                             stderr=subprocess.STDOUT)
-print (javaRawVersion)
-javaEnvVersion = int(javaRawVersion
-                     .splitlines()[0].split()[2].strip('"').split('.')[0])
-print (javaEnvVersion)
-javacCmd = 'javac'
-jarCmd = 'jar'
-javaCmd = 'java'
-jdepsCmd = 'jdeps'
-jlinkCmd = 'jlink'
-javadocCmd = 'javadoc'
+javacCmd = os.getenv("JAVA_HOME") + '/bin/javac'
+jarCmd = os.getenv("JAVA_HOME") + '/bin/jar'
+javaCmd = os.getenv("JAVA_HOME") + '/bin/java'
+jdepsCmd = os.getenv("JAVA_HOME") + '/bin/jdeps'
+jlinkCmd = os.getenv("JAVA_HOME") + '/bin/jlink'
+javadocCmd = os.getenv("JAVA_HOME") + '/bin/javadoc'
 herokuCmd = 'heroku'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
 tarCmd = 'tar'
@@ -84,6 +73,18 @@ gitCmd = 'git'
 mvnCmd = 'mvn'
 gpgCmd = 'gpg'
 npmCmd = 'npm'
+
+try:
+    javaRawVersion = subprocess.check_output([javaCmd, '-version'],
+                                             universal_newlines=True,
+                                             stderr=subprocess.STDOUT)
+except TypeError:
+    javaRawVersion = subprocess.check_output([javaCmd, '-version'],
+                                             stderr=subprocess.STDOUT)
+print (javaRawVersion)
+javaEnvVersion = int(javaRawVersion
+                     .splitlines()[0].split()[2].strip('"').split('.')[0])
+print (javaEnvVersion)
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
