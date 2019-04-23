@@ -907,6 +907,7 @@ class Release():
         self.vnuJar = os.path.join(distDir, "vnu.jar")
         self.vnuImageDirname = "vnu-runtime-image"
         self.vnuImageDir = os.path.join(distDir, self.vnuImageDirname)
+        self.vnuModuleInfoDir = os.path.join(distDir, "vnu")
         self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
         self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
         self.setClasspath()
@@ -1023,6 +1024,7 @@ class Release():
                 '--file', self.vnuJar,
                 '--module-version=' + validatorVersion,
                 '-C', os.path.join(distDir, 'vnu'), 'module-info.class'])
+        removeIfDirExists(self.vnuModuleInfoDir)
         removeIfDirExists(self.vnuImageDir)
         runCmd([jlinkCmd, '--launcher',
                 'vnu=vnu/nu.validator.client.SimpleCommandLineValidator',
@@ -1038,7 +1040,9 @@ class Release():
         removeIfExists(distroFile)
         shutil.make_archive(distroFile, 'zip', ".", self.vnuImageDirname)
         os.chdir(os.path.join('..', '..'))
+        removeIfDirExists(self.vnuImageDir)
         self.writeHashes()
+        self.sign()
 
     def createDistribution(self, jarOrWar, isNightly=False):
         self.setVersion()
