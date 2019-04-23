@@ -66,8 +66,10 @@ try:
 except TypeError:
     javaRawVersion = subprocess.check_output(['java', '-version'],
                                              stderr=subprocess.STDOUT)
+print (javaRawVersion)
 javaEnvVersion = int(javaRawVersion
                      .splitlines()[0].split()[2].strip('"').split('.')[0])
+print (javaEnvVersion)
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
@@ -1013,8 +1015,7 @@ class Release():
             release.checkJar()
 
     def createRuntimeImage(self):
-        if javaEnvVersion < 9:
-            return
+        print ("javaEnvVersion: " + str(javaEnvVersion))
         runCmd([jdepsCmd, '--generate-open-module', distDir, self.vnuJar])
         runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + self.vnuJar,
                 os.path.join(distDir, 'vnu', 'module-info.java')])
