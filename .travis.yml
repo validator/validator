@@ -58,7 +58,6 @@ before_deploy:
   - export TRAVIS_TAG=next
   - git tag -m next -f next
 deploy:
-  draft: true
   overwrite: true
   provider: releases
   file_glob: true
