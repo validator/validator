@@ -67,4 +67,4 @@ deploy:
   on:
     repo: validator/validator
   api_key:
-    secure: aIC/fuQU00E/TsKbfK0tf2BNKwM+w0MI0clEV+8nkrmtOXRVW+r/8L1da7hHWyD3XV4VqWKa4GkLqqO8HNjIHMvPulsG55wKt+zU9BoCt5j9xBnCWyLRDb07fawRHCZTQOCrdqbKiUVQufA2WVP
+    secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
