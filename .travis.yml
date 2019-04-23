@@ -102,7 +102,6 @@ deploy:
     skip_cleanup: true
     file: "build/dist/{*.zip*}"
     on:
-      condition: $TRAVIS_TAG =~ ^(osx|linux)$
       repo: validator/validator
       jdk: openjdk11
     api_key:
