@@ -57,7 +57,7 @@ notifications:
     on_start: false     # default: false
 
 before_deploy:
-  - for file in build/dist/{*.zip,*.jar,*.zip.sha1,*.zip.md5,*.jar.md5,*.jar.sha1}; do gpg --yes -ab --local-user 0xBC3A4B95 --sign $file; done
+  - for file in build/dist/{*.zip,*.jar,*.zip.sha1,*.zip.md5,*.jar.md5,*.jar.sha1}; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
   - ls -al build/dist
   - git config --local user.name "sideshowbarker"
   - git config --local user.email "mike@w3.org"
