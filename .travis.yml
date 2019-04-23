@@ -44,6 +44,8 @@ install:
   - travis_retry $PYTHON $BUILD_PY dldeps
 
 script:
+  - echo "TRAVIS_TAG $TRAVIS_TAG"
+  - echo "TRAVIS_BRANCH $TRAVIS_BRANCH"
   - $PYTHON --version
   - travis_retry $PYTHON $BUILD_PY build
   - $PYTHON $BUILD_PY check
@@ -83,8 +85,6 @@ before_deploy:
   - if [[ "$TRAVIS_TAG" == "jar" ]]; then :; elif [[ "$(uname)" == "Darwin" ]]; then TRAVIS_TAG="osx"; else TRAVIS_TAG="linux"; fi; export TRAVIS_TAG
   - git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true
   - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
-  - echo "TRAVIS_TAG $TRAVIS_TAG"
-  - echo "TRAVIS_BRANCH $TRAVIS_BRANCH"
 
 deploy:
   - provider: releases
@@ -110,7 +110,4 @@ deploy:
       secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
 
 after_deploy:
-  - TRAVIS_TAG=jar
-  - git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true
-  - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
-  - git push git@github.com:validator/validator.git $TRAVIS_TAG
+  - if [[ $OSTYPE = *linux* ]]; then TRAVIS_TAG=jar; git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true; git tag -m $TRAVIS_TAG -f $TRAVIS_TAG; git push git@github.com:validator/validator.git $TRAVIS_TAG; fi
