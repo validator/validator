@@ -76,9 +76,9 @@ before_deploy:
   - ls -al build/dist
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
-  - export TRAVIS_TAG=next
-  - git push --delete git@github.com:validator/validator.git next
-  - git tag -m next -f next
+  - if [[ "$(uname)" == "Darwin" ]]; then TRAVIS_TAG="next/osx"; else TRAVIS_TAG="next/linux"; export TRAVIS_TAG
+  - git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true
+  - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
 
 deploy:
   overwrite: true
