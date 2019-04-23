@@ -70,6 +70,7 @@ before_deploy:
   - git config --local user.name "sideshowbarker"
   - git config --local user.email "mike@w3.org"
   - export TRAVIS_TAG=next
+  - git push --delete origin next
   - git tag -m next -f next
 
 deploy:
