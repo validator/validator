@@ -38,7 +38,6 @@ script:
   - java -jar ./build/dist/vnu.jar ./build/dist/index.html
   - java -jar ./build/dist/vnu.jar ./site/nu-about.html
   - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
-  - ls -al build/dist
 
 cache:
   directories:

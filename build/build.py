@@ -81,10 +81,8 @@ try:
 except TypeError:
     javaRawVersion = subprocess.check_output([javaCmd, '-version'],
                                              stderr=subprocess.STDOUT)
-print (javaRawVersion)
 javaEnvVersion = int(javaRawVersion
                      .splitlines()[0].split()[2].strip('"').split('.')[0])
-print (javaEnvVersion)
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
@@ -1016,7 +1014,8 @@ class Release():
             release.checkJar()
 
     def createRuntimeImage(self):
-        print ("javaEnvVersion: " + str(javaEnvVersion))
+        if javaEnvVersion < 9:
+            return
         runCmd([jdepsCmd, '--generate-open-module', distDir, self.vnuJar])
         runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + self.vnuJar,
                 os.path.join(distDir, 'vnu', 'module-info.java')])
