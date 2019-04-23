@@ -208,6 +208,8 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/salvation-${salvation-version}.jar"/>
       <fileset file="../dependencies/jchardet-${jchardet-version}.jar"/>
       <fileset file="../dependencies/log4j-${log4j-version}.jar"/>
+      <fileset file="../dependencies/jetty-util-ajax-${jetty-version}.jar"/>
+      <fileset file="../dependencies/jetty-util-${jetty-version}.jar"/>
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
       <lib dir="${dist}/war/lib"/>
