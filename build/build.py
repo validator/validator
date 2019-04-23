@@ -43,6 +43,7 @@ except ImportError:
     from sha1 import new as sha1
 import zipfile
 import sys
+import platform
 try:
     from html.parser import HTMLParser
 except ImportError:
@@ -903,7 +904,8 @@ class Release():
         self.version = validatorVersion
         self.buildXml = os.path.join(buildRoot, "build", "build.xml")
         self.vnuJar = os.path.join(distDir, "vnu.jar")
-        self.vnuImageDir = os.path.join(distDir, "vnu-runtime-image")
+        self.vnuImageDirname = "vnu-runtime-image"
+        self.vnuImageDir = os.path.join(distDir, self.vnuImageDirname)
         self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
         self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
         self.setClasspath()
@@ -1023,10 +1025,19 @@ class Release():
         removeIfDirExists(self.vnuImageDir)
         runCmd([jlinkCmd, '--launcher',
                 'vnu=vnu/nu.validator.client.SimpleCommandLineValidator',
+                '--strip-debug', '--no-header-files', '--no-man-pages',
                 '--compress=2',
                 '--output', self.vnuImageDir, '--module-path', self.vnuJar,
                 '--add-modules', 'vnu'])
         release.checkRuntimeImage()
+        os.chdir(os.path.join('build', 'dist'))
+        distroFile = os.path.join('vnu.%s_%s_%s' % (self.version,
+                                                    platform.system(),
+                                                    platform.machine()))
+        removeIfExists(distroFile)
+        shutil.make_archive(distroFile, 'zip', ".", self.vnuImageDirname)
+        os.chdir(os.path.join('..', '..'))
+        self.writeHashes()
 
     def createDistribution(self, jarOrWar, isNightly=False):
         self.setVersion()
