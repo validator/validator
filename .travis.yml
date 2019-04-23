@@ -55,7 +55,7 @@ deploy:
   draft: true
   overwrite: true
   provider: releases
-  api_key: 823132994d938779a75a8e4f6454041e383ef7ff
+  api_key: 0aba5944dfff36b8f32981eb7c9157b10f098e3f
   file_glob: true
   file:
     - "build/dist/*.zip"
