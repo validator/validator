@@ -108,4 +108,4 @@ deploy:
       secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
 
 after_deploy:
-  - if [[ $OSTYPE = *linux* ]]; then TRAVIS_TAG=jar; git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true; git tag -m $TRAVIS_TAG -f $TRAVIS_TAG; git push git@github.com:validator/validator.git $TRAVIS_TAG; fi
+  - if [[ $OSTYPE = *linux* && $TRAVIS_TAG != jar ]]; then TRAVIS_TAG=jar; git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true; git tag -m $TRAVIS_TAG -f $TRAVIS_TAG; git push git@github.com:validator/validator.git $TRAVIS_TAG; fi
