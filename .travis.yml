@@ -53,6 +53,10 @@ notifications:
 
 before_deploy:
   - ls -al build/dist
+  - git config --local user.name "sideshowbarker"
+  - git config --local user.email "mike@w3.org"
+  - export TRAVIS_TAG=next
+  - git tag -m next -f next
 deploy:
   draft: true
   overwrite: true
