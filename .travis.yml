@@ -55,7 +55,6 @@ deploy:
   draft: true
   overwrite: true
   provider: releases
-  api_key: c047419385c694f90986dc5007e02763fe3a1393
   file_glob: true
   file:
     - "build/dist/*.zip"
@@ -67,3 +66,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: validator/validator
+  api_key:
+    secure: aIC/fuQU00E/TsKbfK0tf2BNKwM+w0MI0clEV+8nkrmtOXRVW+r/8L1da7hHWyD3XV4VqWKa4GkLqqO8HNjIHMvPulsG55wKt+zU9BoCt5j9xBnCWyLRDb07fawRHCZTQOCrdqbKiUVQufA2WVP
