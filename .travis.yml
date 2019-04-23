@@ -8,18 +8,15 @@ matrix:
     - os:  linux
       jdk: oraclejdk8
       env: PYTHON=python3
-    - os:  windows
-      jdk: openjdk11
-      env: PYTHON=python2
-    - os:  windows
-      jdk: openjdk11
-      env: PYTHON=python3
     - os:  linux
       jdk: openjdk11
       env: PYTHON=python3
     - os:  osx
       jdk: openjdk11
       env: PYTHON=python3
+    - os:  linux
+      jdk: openjdk12
+      env: PYTHON=python2
     - os:  linux
       jdk: openjdk12
       env: PYTHON=python3
