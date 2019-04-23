@@ -3,6 +3,10 @@ git:
   depth: 5
   submodules: false # we do this ourselves later with `build.py update`
 
+branches:
+  except:
+    - /^next/
+
 matrix:
   include:
     - os:  linux
