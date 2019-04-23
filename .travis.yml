@@ -38,6 +38,7 @@ script:
   - java -jar ./build/dist/vnu.jar ./build/dist/index.html
   - java -jar ./build/dist/vnu.jar ./site/nu-about.html
   - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
+  - ls -al build/dist
 
 cache:
   directories:
@@ -51,20 +52,17 @@ notifications:
     on_failure: always  # options: [always|never|change] default: always
     on_start: false     # default: false
 
+before_deploy:
+  - ls -al build/dist
 deploy:
   draft: true
   overwrite: true
   provider: releases
   file_glob: true
-  file:
-    - "build/dist/*.zip"
-    - "build/dist/*.zip.md5"
-    - "build/dist/*.zip.sha1"
-    - "build/dist/*.jar"
-    - "build/dist/*.jar.md5"
-    - "build/dist/*.jar.sha1"
+  file: "build/dist/{*.zip,*.jar,*.zip.sha1,*.zip.md5,*.jar.md5,*.jar.sha1}"
   skip_cleanup: true
   on:
     repo: validator/validator
+    jdk: openjdk11
   api_key:
     secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
