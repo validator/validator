@@ -28,7 +28,7 @@ before_install:
     -in key.gpg.enc -out key.gpg -d
   - chmod 600 deploy_key
   - cat known_hosts >> ~/.ssh/known_hosts
-  - chmd 600 ~/.ssh/known_hosts
+  - chmod 600 ~/.ssh/known_hosts
   - eval $(ssh-agent -s)
   - ssh-add deploy_key
   - gpg --import key.gpg
