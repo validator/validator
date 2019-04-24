@@ -96,7 +96,7 @@ year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
 day = time.strftime('%d').lstrip('0')
 validatorVersion = "%s.%s.%s" % (year, month, day)
-#validatorVersion = "18.11.5"
+# validatorVersion = "18.11.5"
 jingVersion = "20180722VNU"
 htmlparserVersion = "1.4.12"
 cssvalidatorVersion = "1.0.4"
@@ -105,6 +105,7 @@ langdetectVersion = "1.2"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
+distWarDir = os.path.join(buildRoot, "build", "dist-war")
 dependencyDir = os.path.join(buildRoot, "dependencies")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
@@ -894,6 +895,7 @@ def checkService():
 
 def clean():
     removeIfDirExists(distDir)
+    removeIfDirExists(distWarDir)
     removeIfDirExists(dependencyDir)
     removeIfDirExists(jarsDir)
 
@@ -924,11 +926,11 @@ class Release():
             os.path.join(cssValidatorDir, "css-validator.jar"),
         ])
 
-    def reInitDistDir(self):
-        removeIfDirExists(distDir)
-        ensureDirExists(distDir)
+    def reInitDistDir(self, whichDir):
+        removeIfDirExists(whichDir)
+        ensureDirExists(whichDir)
 
-    def setVersion(self, url=None):
+    def setVersion(self, whichDir, url=None):
         if self.artifactId == "jing":
             self.version = jingVersion
         if self.artifactId == "htmlparser":
@@ -941,10 +943,10 @@ class Release():
             self.version = langdetectVersion
         if url == snapshotsRepoUrl:
             self.version += "-SNAPSHOT"
-        self.writeVersion()
+        self.writeVersion(whichDir)
 
-    def writeVersion(self):
-        f = open(os.path.join(distDir, "VERSION"), "w")
+    def writeVersion(self, whichDir):
+        f = open(os.path.join(whichDir, "VERSION"), "w")
         f.write(self.version)
         f.close()
 
@@ -962,15 +964,15 @@ class Release():
         o.write(hasher.hexdigest().encode())
         o.close
 
-    def writeHashes(self):
-        for filename in findFiles(distDir):
+    def writeHashes(self, whichDir):
+        for filename in findFiles(whichDir):
             if os.path.basename(filename) in self.docs:
                 continue
             self.writeHash(filename, "md5")
             self.writeHash(filename, "sha1")
 
-    def sign(self):
-        for filename in findFiles(distDir):
+    def sign(self, whichDir):
+        for filename in findFiles(whichDir):
             if os.path.basename(filename) in self.docs:
                 continue
             runCmd([gpgCmd, '--yes', '-ab', filename])
@@ -985,10 +987,16 @@ class Release():
             fetchUrlTo(url, path, md5sum)
         self.setClasspath()
 
-    def createArtifacts(self, url=None):
-        self.reInitDistDir()
-        self.setVersion(url)
+    def createArtifacts(self, jarOrWar, url=None):
+        whichDir = distDir
+        distJarOrWar = "dist"
+        if jarOrWar == "war":
+            whichDir = distWarDir
+            distJarOrWar = "dist-war"
+        self.reInitDistWarDir(whichDir)
+        self.setVersion(whichDir, url)
         runCmd([javaCmd,
+                '-Ddist=' + distJarOrWar,
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
@@ -1004,11 +1012,17 @@ class Release():
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
     def createExecutable(self, jarOrWar):
-        self.reInitDistDir()
-        self.setVersion()
+        whichDir = distDir
+        distJarOrWar = "dist"
         if jarOrWar == "war":
-            os.mkdir(os.path.join(distDir, "war"))
+            distJarOrWar = "dist-war"
+            whichDir = distWarDir
+            ensureDirExists(whichDir)
+            os.mkdir(os.path.join(whichDir, "war"))
+        self.reInitDistDir(whichDir)
+        self.setVersion(whichDir)
         runCmd([javaCmd,
+                '-Ddist=' + distJarOrWar,
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
@@ -1033,7 +1047,7 @@ class Release():
                 '--output', self.vnuImageDir, '--module-path', self.vnuJar,
                 '--add-modules', 'vnu'])
         release.checkRuntimeImage()
-        os.chdir(os.path.join('build', 'dist'))
+        os.chdir(distDir)
         os_platform = 'linux'
         if platform.system() == 'Darwin':
             os_platform = 'osx'
@@ -1044,34 +1058,43 @@ class Release():
         shutil.make_archive(distroFile, 'zip', ".", self.vnuImageDirname)
         os.chdir(os.path.join('..', '..'))
         removeIfDirExists(self.vnuImageDir)
-        self.writeHashes()
+        self.writeHashes(distDir)
 
     def createDistribution(self, jarOrWar, isNightly=False):
-        self.setVersion()
+        whichDir = distDir
+        if jarOrWar == "war":
+            whichDir = distWarDir
+        self.setVersion(whichDir)
         if isNightly:
             self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
         self.createExecutable(jarOrWar)
         self.prepareDist(jarOrWar)
 
     def prepareDist(self, jarOrWar):
-        self.removeExtras()
-        print("Building %s/vnu.%s_%s.zip" % (distDir, jarOrWar, self.version))
+        whichDir = distDir
+        distJarOrWar = "dist"
+        if jarOrWar == "war":
+            whichDir = distWarDir
+            distJarOrWar = "dist-war"
+        self.removeExtras(whichDir)
+        print("Building %s/vnu.%s_%s.zip" % (distWarDir, jarOrWar,
+                                             self.version))
         if "nightly" not in self.version:
             for filename in self.docs:
-                shutil.copy(os.path.join(buildRoot, filename), distDir)
+                shutil.copy(os.path.join(buildRoot, filename), whichDir)
         os.chdir("build")
         distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar, self.version))
         removeIfExists(distroFile)
         zf = zipfile.ZipFile(distroFile, "w")
-        for dirname, subdirs, files in os.walk("dist"):
+        for dirname, subdirs, files in os.walk(distJarOrWar):
             zf.write(dirname)
         for filename in files:
             zf.write(os.path.join(dirname, filename))
         zf.close()
-        shutil.move(distroFile, "dist")
+        shutil.move(distroFile, distJarOrWar)
         os.chdir("..")
-        self.writeHashes()
-        self.sign()
+        self.writeHashes(whichDir)
+        self.sign(whichDir)
 
     def createOrUpdateGithubData(self):
         runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
@@ -1136,10 +1159,10 @@ class Release():
                     npmReadme.write(line)
         npmReadme.close()
 
-    def removeExtras(self):
-        removeIfExists(os.path.join(distDir, "VERSION"))
+    def removeExtras(self, whichDir):
+        removeIfExists(os.path.join(whichDir, "VERSION"))
         sigsums = re.compile("^.+\.asc$|^.+\.md5$|.+\.sha1$")
-        for filename in findFiles(distDir):
+        for filename in findFiles(whichDir):
             if (os.path.basename(filename) in self.docs or
                     sigsums.match(filename)):
                 removeIfExists(filename)
@@ -1201,10 +1224,13 @@ class Release():
         self.createExecutable("war")
         runCmd([herokuCmd,
                 'deploy:war', '--war',
-                os.path.join(distDir, "vnu.war"), '--app', 'vnu'])
+                os.path.join(distWarDir, "vnu.war"), '--app', 'vnu'])
 
-    def uploadToGithub(self):
-        for filename in findFiles(distDir):
+    def uploadToGithub(self, jarOrWar):
+        whichDir = distDir
+        if jarOrWar == "war":
+            whichDir = distWarDir
+        for filename in findFiles(whichDir):
             if "zip" in filename:
                 args = [
                     ghRelCmd,
@@ -1239,10 +1265,13 @@ class Release():
         shutil.move(packageJsonCopy, packageJson)
 
     def uploadToReleasesHost(self, jarOrWar, isNightly=False):
+        whichDir = distDir
+        if jarOrWar == "war":
+            whichDir = distWarDir
         path = "%s/%s" % (releasesPath, jarOrWar)
         if isNightly:
             path = "%s/%s" % (nightliesPath, jarOrWar)
-        for filename in findFiles(distDir):
+        for filename in findFiles(whichDir):
             runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
     def checkJar(self):
@@ -1707,10 +1736,10 @@ else:
             release.createOrUpdateGithubData()
             release.createDistribution("war")
             release.uploadToReleasesHost("war")
-            release.uploadToGithub()
+            release.uploadToGithub("war")
             release.createDistribution("jar")
             release.uploadToReleasesHost("jar")
-            release.uploadToGithub()
+            release.uploadToGithub("jar")
             release.uploadNpm()
         elif arg == 'npm-snapshot':
             release = Release()
@@ -1726,10 +1755,10 @@ else:
             release.createOrUpdateGithubData()
             release.createDistribution("war", isNightly)
             release.uploadToReleasesHost("war", isNightly)
-            release.uploadToGithub()
+            release.uploadToGithub("war")
             release.createDistribution("jar", isNightly)
             release.uploadToReleasesHost("jar", isNightly)
-            release.uploadToGithub()
+            release.uploadToGithub("jar")
         elif arg == 'nightly':
             isNightly = True
             release = Release()
