@@ -96,7 +96,7 @@ deploy:
     skip_cleanup: true
     file: "build/dist/{*.jar*}"
     on:
-      branch: jar
+      condition: $JAR_DEPLOY = "Yes"
       repo: validator/validator
       jdk: openjdk11
     api_key:
@@ -107,6 +107,7 @@ deploy:
     skip_cleanup: true
     file: "build/dist/{*.zip*}"
     on:
+      condition: $JAR_DEPLOY != "Yes"
       repo: validator/validator
       jdk: openjdk11
     api_key:
