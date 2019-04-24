@@ -88,7 +88,7 @@ before_deploy:
   - if [[ $JAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="jar"; fi; export TRAVIS_TAG
   - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
   - git tag -f $TRAVIS_TAG $TRAVIS_COMMIT
-  - git push -f $TRAVIS_TAG
+  - git push -f git@github.com:validator/validator.git $TRAVIS_TAG
 
 deploy:
   - provider: releases
