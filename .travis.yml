@@ -5,13 +5,16 @@ git:
 
 branches:
   except:
-    - /^(osx|linux)$/
+    - /^(osx|linux|jar)$/
 
 matrix:
   include:
     - os:  linux
       jdk: oraclejdk8
       env: PYTHON=python3
+    - os:  linux
+      jdk: openjdk11
+      env: JAR_DEPLOY=Yes
     - os:  linux
       jdk: openjdk11
       env: PYTHON=python3
@@ -26,6 +29,7 @@ matrix:
       env: PYTHON=python3
 
 before_install:
+  - if [[ -z "$PYTHON" ]]; then PYTHON=python3; fi
   - openssl aes-256-cbc -K $encrypted_88088d7aed65_key -iv $encrypted_88088d7aed65_iv
     -in deploy_key.enc -out deploy_key -d
   - openssl aes-256-cbc -K $encrypted_96f60dea8e9e_key -iv $encrypted_96f60dea8e9e_iv
@@ -80,7 +84,8 @@ before_deploy:
   - ls -al build/dist
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
-  - if [[ "$TRAVIS_TAG" == "jar" ]]; then :; elif [[ "$(uname)" == "Darwin" ]]; then TRAVIS_TAG="osx"; else TRAVIS_TAG="linux"; fi; export TRAVIS_TAG
+  - if [[ "$(uname)" == "Darwin" ]]; then TRAVIS_TAG="osx"; else TRAVIS_TAG="linux"; fi; export TRAVIS_TAG
+  - if [[ $JAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="jar"; fi; export TRAVIS_TAG
   - git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true
   - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
 
@@ -106,6 +111,3 @@ deploy:
       jdk: openjdk11
     api_key:
       secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
-
-after_deploy:
-  - if [[ $OSTYPE = *linux* && $TRAVIS_TAG != jar ]]; then TRAVIS_TAG=jar; git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true; git tag -m $TRAVIS_TAG -f $TRAVIS_TAG; git push git@github.com:validator/validator.git $TRAVIS_TAG; fi
