@@ -1034,9 +1034,12 @@ class Release():
                 '--add-modules', 'vnu'])
         release.checkRuntimeImage()
         os.chdir(os.path.join('build', 'dist'))
-        distroFile = os.path.join('vnu.%s_%s_%s' % (self.version,
-                                                    platform.system(),
-                                                    platform.machine()))
+        os_platform = 'linux'
+        if platform.system() == 'Darwin':
+            os_platform = 'osx'
+        if platform.system() == 'Windows':
+            os_platform = 'windows'
+        distroFile = os.path.join('vnu.%s' % (os_platform))
         removeIfExists(distroFile)
         shutil.make_archive(distroFile, 'zip', ".", self.vnuImageDirname)
         os.chdir(os.path.join('..', '..'))
