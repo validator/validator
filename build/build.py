@@ -59,12 +59,13 @@ except ImportError:
     CAFILE = None
 
 javaTargetVersion = '1.8'
-javacCmd = os.getenv("JAVA_HOME") + '/bin/javac'
-jarCmd = os.getenv("JAVA_HOME") + '/bin/jar'
-javaCmd = os.getenv("JAVA_HOME") + '/bin/java'
-jdepsCmd = os.getenv("JAVA_HOME") + '/bin/jdeps'
-jlinkCmd = os.getenv("JAVA_HOME") + '/bin/jlink'
-javadocCmd = os.getenv("JAVA_HOME") + '/bin/javadoc'
+JAVA_HOME = os.getenv('JAVA_HOME')
+javacCmd = os.path.join(JAVA_HOME, 'bin', 'javac')
+jarCmd = os.path.join(JAVA_HOME, 'bin', 'jar')
+javaCmd = os.path.join(JAVA_HOME, 'bin', 'java')
+jdepsCmd = os.path.join(JAVA_HOME, 'bin', 'jdeps')
+jlinkCmd = os.path.join(JAVA_HOME, 'bin', 'jlink')
+javadocCmd = os.path.join(JAVA_HOME, 'bin', 'javadoc')
 herokuCmd = 'heroku'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
 tarCmd = 'tar'
