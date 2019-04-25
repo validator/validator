@@ -14,7 +14,9 @@ matrix:
       env: PYTHON=python3
     - os:  linux
       jdk: openjdk11
-      env: JAR_DEPLOY=Yes
+      env:
+        - JAR_DEPLOY=Yes
+        - PYTHON=python3
     - os:  linux
       jdk: openjdk11
       env: PYTHON=python3
@@ -27,9 +29,6 @@ matrix:
     - os:  linux
       jdk: openjdk12
       env: PYTHON=python3
-
-before_install:
-  - if [[ -z "$PYTHON" ]]; then PYTHON=python3; fi
 
 install:
   - export TOMCAT_VERSION=8.5.29
