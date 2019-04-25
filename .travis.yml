@@ -38,7 +38,7 @@ install:
 
 script:
   - $PYTHON --version
-  - travis_retry $PYTHON $BUILD_PY build
+  - $PYTHON $BUILD_PY build
   - $PYTHON $BUILD_PY check
   - $PYTHON $BUILD_PY test
   - $PYTHON $BUILD_PY war

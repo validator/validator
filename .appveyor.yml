@@ -22,7 +22,7 @@ install:
   - appveyor-retry python %BUILD_PY% dldeps
 
 build_script:
-  - appveyor-retry python %BUILD_PY% build
+  - python %BUILD_PY% build
 
 test_script:
   - python %BUILD_PY% check
