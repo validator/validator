@@ -2,6 +2,10 @@ version: "{build}"
 
 clone_depth: 5
 
+branches:
+  except:
+    - /^(osx|linux|jar)$/
+
 environment:
   PYTHON: C:\Python36-x64
   BUILD_PY: .\build\build.py

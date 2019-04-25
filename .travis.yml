@@ -92,6 +92,7 @@ before_deploy:
 deploy:
   - provider: releases
     overwrite: true
+    prerelease: true
     file_glob: true
     skip_cleanup: true
     file: "build/dist/{*.jar*}"
@@ -103,6 +104,7 @@ deploy:
       secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
   - provider: releases
     overwrite: true
+    prerelease: true
     file_glob: true
     skip_cleanup: true
     file: "build/dist/{*.zip*}"
