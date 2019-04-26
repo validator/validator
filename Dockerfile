@@ -1,4 +1,4 @@
-FROM java:8u111-jre-alpine
+FROM openjdk:13-alpine
 # to use:
 # docker build -t validator/validator .
 # docker run -it --rm \
