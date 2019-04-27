@@ -211,10 +211,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     protected static final int HTML5_SCHEMA = 3;
 
-    protected static final int XHTML1STRICT_SCHEMA = 2;
-
-    protected static final int XHTML1TRANSITIONAL_SCHEMA = 1;
-
     protected static final int XHTML5_SCHEMA = 7;
 
     private static final char[] SERVICE_TITLE;
@@ -2219,36 +2215,22 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (validator == null) {
             try {
                 if ("yes".equals(request.getParameter("sniffdoctype"))) {
-                    if ("-//W3C//DTD XHTML 1.0 Transitional//EN".equals(publicIdentifier)) {
-                        errorHandler.info("XHTML 1.0 Transitional doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for "
-                                + getPresetLabel(XHTML1TRANSITIONAL_SCHEMA)
-                                + ".");
-                        validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
-                    } else if ("-//W3C//DTD XHTML 1.0 Strict//EN".equals(publicIdentifier)) {
-                        errorHandler.info("XHTML 1.0 Strict doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for "
-                                + getPresetLabel(XHTML1STRICT_SCHEMA)
-                                + ".");
-                        validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
-                    } else if ("-//W3C//DTD HTML 4.01 Transitional//EN".equals(publicIdentifier)) {
-                        errorHandler.info("HTML 4.01 Transitional doctype seen. Using the schema for "
-                                + getPresetLabel(XHTML1TRANSITIONAL_SCHEMA)
-                                + ".");
-                        validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
-                    } else if ("-//W3C//DTD HTML 4.01//EN".equals(publicIdentifier)) {
-                        errorHandler.info("HTML 4.01 Strict doctype seen. Using the schema for "
-                                + getPresetLabel(XHTML1STRICT_SCHEMA)
-                                + ".");
-                        validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
-                    } else if ("-//W3C//DTD HTML 4.0 Transitional//EN".equals(publicIdentifier)) {
-                        errorHandler.info("Legacy HTML 4.0 Transitional doctype seen.  Please consider using HTML 4.01 Transitional instead. Proceeding anyway for your convenience with the schema for "
-                                + getPresetLabel(XHTML1TRANSITIONAL_SCHEMA)
-                                + ".");
-                        validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
-                    } else if ("-//W3C//DTD HTML 4.0//EN".equals(publicIdentifier)) {
-                        errorHandler.info("Legacy HTML 4.0 Strict doctype seen. Please consider using HTML 4.01 instead. Proceeding anyway for your convenience with the schema for "
-                                + getPresetLabel(XHTML1STRICT_SCHEMA)
-                                + ".");
-                        validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
+                    if ("-//W3C//DTD XHTML 1.0 Transitional//EN" //
+                            .equals(publicIdentifier)
+                            || "-//W3C//DTD XHTML 1.0 Strict//EN" //
+                                    .equals(publicIdentifier)
+                            || "-//W3C//DTD HTML 4.01 Transitional//EN" //
+                                    .equals(publicIdentifier)
+                            || "-//W3C//DTD HTML 4.01//EN" //
+                                    .equals(publicIdentifier)
+                            || "-//W3C//DTD HTML 4.0 Transitional//EN" //
+                                    .equals(publicIdentifier)
+                            || "-//W3C//DTD HTML 4.0//EN" //
+                                    .equals(publicIdentifier)) {
+                        errorHandler.info("Legacy doctype seen. Ignoring the"
+                                + " doctype and using the schema for "
+                                + getPresetLabel(HTML5_SCHEMA) + ".");
+                        validator = validatorByDoctype(HTML5_SCHEMA);
                     }
                 }
                 if (validator == null) {
