@@ -949,7 +949,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
             vnuElementNameMessageText(e);
         } else {
             String msg = message.getMessage();
-            if (msg == null) {
+            if (msg == null && message.getCause() != null) {
                 msg = message.getCause().getMessage();
             }
             if (msg != null) {
