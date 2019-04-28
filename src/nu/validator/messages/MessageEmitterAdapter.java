@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2018 Mozilla Foundation
+ * Copyright (c) 2007-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -949,6 +949,9 @@ public class MessageEmitterAdapter implements ErrorHandler {
             vnuElementNameMessageText(e);
         } else {
             String msg = message.getMessage();
+            if (msg == null) {
+                msg = message.getCause().getMessage();
+            }
             if (msg != null) {
                 MessageTextHandler messageTextHandler = emitter.startText();
                 if (messageTextHandler != null) {
