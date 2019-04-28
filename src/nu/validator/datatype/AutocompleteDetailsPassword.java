@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Mozilla Foundation
+ * Copyright (c) 2016-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -40,6 +40,7 @@ public final class AutocompleteDetailsPassword extends AbstractAutocompleteDetai
     static {
         allowedFieldnames.add("new-password");
         allowedFieldnames.add("current-password");
+        allowedFieldnames.add("one-time-code");
     }
 
     @Override

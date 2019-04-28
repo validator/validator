@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Mozilla Foundation
+ * Copyright (c) 2016-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -59,6 +59,7 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
         allFieldnames.add("username");
         allFieldnames.add("new-password");
         allFieldnames.add("current-password");
+        allFieldnames.add("one-time-code");
         allFieldnames.add("organization");
         allFieldnames.add("street-address");
         allFieldnames.add("address-line1");
