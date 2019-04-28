@@ -1,6 +1,7 @@
 .ropeproject
 nbproject
 build/dist
+build/dist-war
 build/vnu*.jar.zip
 build/vnu*.war.zip
 build/validator*.jar
