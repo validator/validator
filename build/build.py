@@ -994,7 +994,7 @@ class Release():
         if jarOrWar == "war":
             whichDir = distWarDir
             distJarOrWar = "dist-war"
-        self.reInitDistWarDir(whichDir)
+        self.reInitDistDir(whichDir)
         self.setVersion(whichDir, url)
         runCmd([javaCmd,
                 '-Ddist=' + distJarOrWar,
