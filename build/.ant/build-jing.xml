@@ -33,7 +33,6 @@ DEALINGS IN THE SOFTWARE.
   <property name="jing-rng-validate-src" location="${jing-src}/rng-validate/src/main" />
   <property name="jing-nvdl-src" location="${jing-src}/nvdl/src/main" />
   <property name="jing-schematron-src" location="${jing-src}/schematron/src/main" />
-  <property name="jing-xerces-src" location="${jing-src}/xerces/src/main" />
   <target name="jing-javadoc-jar">
     <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
       <fileset dir="${jing-util-src}"/>
@@ -43,7 +42,6 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${jing-rng-validate-src}"/>
       <fileset dir="${jing-nvdl-src}"/>
       <fileset dir="${jing-schematron-src}"/>
-      <fileset dir="${jing-xerces-src}"/>
       <classpath>
         <fileset dir="../jing-trang/lib/">
           <include name="**/*.jar" />
@@ -64,7 +62,6 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${jing-rng-validate-src}"/>
       <fileset dir="${jing-nvdl-src}"/>
       <fileset dir="${jing-schematron-src}"/>
-      <fileset dir="${jing-xerces-src}"/>
     </jar>
   </target>
   <target name="jing-artifacts" depends="jing-javadoc-jar, jing-sources-jar">
@@ -109,8 +106,6 @@ DEALINGS IN THE SOFTWARE.
         url="https://people.w3.org/mike/"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
-      <dependency groupId="xerces" artifactId="xercesImpl" version="2.9.1"/>
-      <dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2"/>
     </artifact:pom>
     <artifact:writepom pomRefId="jing-pom" file="${jing-base}.pom"/>
     <copy file="../jing-trang/build/jing.jar" tofile="${jing-base}.jar"/>
