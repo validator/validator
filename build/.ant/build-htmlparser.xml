@@ -76,7 +76,6 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="com.ibm.icu" artifactId="icu4j" version="4.0.1" scope="compile" optional="true"/>
       <dependency groupId="com.sdicons.jsontools" artifactId="jsontools-core" version="1.4" scope="test"/>
       <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0" scope="compile" optional="true"/>
-      <dependency groupId="xom" artifactId="xom" version="1.1" scope="compile" optional="true"/>
     </artifact:pom>
     <artifact:writepom pomRefId="htmlparser-pom" file="${htmlparser-base}.pom"/>
     <copy file="../jars/htmlparser.jar" tofile="${htmlparser-base}.jar"/>
