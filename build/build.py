@@ -100,7 +100,7 @@ validatorVersion = "%s.%s.%s" % (year, month, day)
 # validatorVersion = "18.11.5"
 jingVersion = "20190429VNU"
 htmlparserVersion = "1.4.13"
-cssvalidatorVersion = "1.0.4"
+cssvalidatorVersion = "1.0.5"
 galimatiasVersion = "0.1.3"
 langdetectVersion = "1.2"
 
