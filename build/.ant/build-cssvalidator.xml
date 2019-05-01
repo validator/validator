@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2018 Mozilla Foundation
+Copyright (c) 2018-2019 Mozilla Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -29,11 +29,6 @@ DEALINGS IN THE SOFTWARE.
   <target name="cssvalidator-javadoc-jar">
     <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
       <fileset dir="${cssvalidator-src}"/>
-      <classpath>
-        <fileset dir="../css-validator/lib/">
-          <include name="**/*.jar" />
-        </fileset>
-      </classpath>
     </javadoc>
     <jar destfile="${cssvalidator-javadoc-jar}">
       <fileset dir="${javadoc-dir}" />
