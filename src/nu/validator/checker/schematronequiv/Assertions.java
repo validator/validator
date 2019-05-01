@@ -2433,8 +2433,9 @@ public class Assertions extends Checker {
             } else if ("main" == localName) {
                 for (int i = 0; i < currentPtr; i++) {
                     String ancestorName = stack[currentPtr - i].getName();
-                    if (Arrays.binarySearch(PROHIBITED_MAIN_ANCESTORS,
-                            ancestorName) >= 0) {
+                    if (ancestorName != null
+                            && Arrays.binarySearch(PROHIBITED_MAIN_ANCESTORS,
+                                    ancestorName) >= 0) {
                         err("The \u201Cmain\u201D element must not appear as a"
                                 + " descendant of the \u201C" + ancestorName
                                 + "\u201D element.");
