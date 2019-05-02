@@ -1048,6 +1048,8 @@ class Release():
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
             release.checkJar()
+        else:
+            self.writeHashes(distWarDir)
 
     def createRuntimeImage(self):
         if javaEnvVersion < 9:
