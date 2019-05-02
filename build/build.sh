@@ -4,7 +4,10 @@ if [ "$1" != "" ]; then
 else
   args="run";
 fi
-./build/build.py \
+if [ -z "$PYTHON" ]; then
+  PYTHON=python
+fi
+$PYTHON ./build/build.py \
   --connection-timeout=15 \
   --socket-timeout=15 \
   --name="Ready to check" \
