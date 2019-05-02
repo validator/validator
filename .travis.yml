@@ -14,14 +14,10 @@ matrix:
       env: PYTHON=python3
     - os:  linux
       jdk: openjdk11
-      env:
-        - JAR_DEPLOY=Yes
-        - PYTHON=python3
+      env: JAR_DEPLOY=Yes
     - os:  linux
       jdk: openjdk11
-      env:
-        - WAR_DEPLOY=Yes
-        - PYTHON=python3
+      env: WAR_DEPLOY=Yes
     - os:  linux
       jdk: openjdk11
       env: PYTHON=python3
@@ -129,7 +125,7 @@ deploy:
     skip_cleanup: true
     file: "build/dist/{*.zip*}"
     on:
-      condition: $JAR_DEPLOY != "Yes"
+      condition: $JAR_DEPLOY != "Yes" && $WAR_DEPLOY != "Yes"
       repo: validator/validator
       jdk: openjdk11
     api_key:
