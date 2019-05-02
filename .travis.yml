@@ -34,7 +34,7 @@ install:
   - export TOMCAT_VERSION=8.5.29
   - export BUILD_SH=./build/build.sh
   - $BUILD_SH update-shallow
-  - travis_retry $PYTHON $BUILD_SH dldeps
+  - travis_retry $BUILD_SH dldeps
 
 script:
   - $PYTHON --version
