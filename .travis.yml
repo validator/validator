@@ -83,8 +83,8 @@ before_deploy:
   - chmod 600 ~/.ssh/known_hosts
   - eval $(ssh-agent -s)
   - ssh-add deploy_key
-  - gpg --import key.gpg
-  - for file in build/dist/{*.zip,*.jar,*.zip.sha1,*.zip.md5,*.jar.md5,*.jar.sha1}; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
+  - gpg --import key.gpg || true
+  - for file in build/dist/{*.zip*,*.jar*,*.war*}; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
   - ls -al build/dist
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
