@@ -38,7 +38,7 @@ install:
   - travis_retry $BUILD_SH dldeps
 
 script:
-  - $PYTHON --version
+  - if [ -z "$PYTHON" ]; then python --version; else $PYTHON --version; fi
   - $BUILD_SH build
   - $BUILD_SH check
   - $BUILD_SH test
