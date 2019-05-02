@@ -735,11 +735,29 @@ def buildJing():
     os.chdir("..")
 
 
+def cleanJing():
+    os.chdir("jing-trang")
+    if os.name == 'nt':
+        runCmd([os.path.join(".", "ant.bat"), "clean"])
+    else:
+        runCmd([os.path.join(".", "ant"), "clean"])
+    os.chdir("..")
+
+
 def buildCssValidator():
     os.chdir("css-validator")
     if runCmd([javaCmd, "-jar",
                os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
                "jar-without-dependencies"]):
+        sys.exit(1)
+    os.chdir("..")
+
+
+def cleanCssValidator():
+    os.chdir("css-validator")
+    if runCmd([javaCmd, "-jar",
+               os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
+               "clean"]):
         sys.exit(1)
     os.chdir("..")
 
@@ -899,6 +917,8 @@ def clean():
     removeIfDirExists(distWarDir)
     removeIfDirExists(dependencyDir)
     removeIfDirExists(jarsDir)
+    cleanJing()
+    cleanCssValidator()
 
 
 class Release():
