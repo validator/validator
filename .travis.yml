@@ -5,7 +5,7 @@ git:
 
 branches:
   except:
-    - /^(osx|linux|jar)$/
+    - /^(osx|linux|jar|war)$/
 
 matrix:
   include:
@@ -16,6 +16,11 @@ matrix:
       jdk: openjdk11
       env:
         - JAR_DEPLOY=Yes
+        - PYTHON=python3
+    - os:  linux
+      jdk: openjdk11
+      env:
+        - WAR_DEPLOY=Yes
         - PYTHON=python3
     - os:  linux
       jdk: openjdk11
@@ -85,6 +90,7 @@ before_deploy:
   - git config --local user.email "mike@w3.org"
   - if [[ "$(uname)" == "Darwin" ]]; then TRAVIS_TAG="osx"; else TRAVIS_TAG="linux"; fi; export TRAVIS_TAG
   - if [[ $JAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="jar"; fi; export TRAVIS_TAG
+  - if [[ $WAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="war"; fi; export TRAVIS_TAG
   - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
   - git tag -f $TRAVIS_TAG $TRAVIS_COMMIT
   - git push -f git@github.com:validator/validator.git $TRAVIS_TAG
@@ -98,6 +104,18 @@ deploy:
     file: "build/dist/{*.jar*}"
     on:
       condition: $JAR_DEPLOY = "Yes"
+      repo: validator/validator
+      jdk: openjdk11
+    api_key:
+      secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
+  - provider: releases
+    overwrite: true
+    prerelease: true
+    file_glob: true
+    skip_cleanup: true
+    file: "build/dist-war/{*.war*}"
+    on:
+      condition: $WAR_DEPLOY = "Yes"
       repo: validator/validator
       jdk: openjdk11
     api_key:
