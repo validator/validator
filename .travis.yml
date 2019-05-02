@@ -89,9 +89,8 @@ before_deploy:
   - if [[ "$(uname)" == "Darwin" ]]; then TRAVIS_TAG="osx"; else TRAVIS_TAG="linux"; fi; export TRAVIS_TAG
   - if [[ $JAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="jar"; fi; export TRAVIS_TAG
   - if [[ $WAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="war"; fi; export TRAVIS_TAG
+  - git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true
   - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG
-  - git tag -f $TRAVIS_TAG $TRAVIS_COMMIT
-  - git push -f git@github.com:validator/validator.git $TRAVIS_TAG
 
 deploy:
   - provider: releases
