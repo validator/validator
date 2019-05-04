@@ -49,9 +49,9 @@ before_deploy:
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
   - cmd: appveyor-tools\secure-file -decrypt appveyor_key.enc -secret %ssh_secret%
   - chmod 600 appveyor_key
-  - cat known_hosts >> ~/.ssh/known_hosts
-  - chmod 600 ~/.ssh/known_hosts
-  - eval $(ssh-agent -s)
+  - cat known_hosts >> %userprofile%\.ssh\known_hosts
+  - chmod 600 %userprofile%\.ssh\known_hosts
+  - start-ssh-agent
   - ssh-add appveyor_key
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
