@@ -42,7 +42,7 @@ deploy:
   description: 'Runtime image for Windows'
   provider: GitHub
   auth_token:
-    secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
+    secure: kQDmkxCMEYfOefd3yGIfOTLL8e+w512Mv7tojXIVwH7Dgv0xx0n0mfdQXRFdKbXE
   artifact: /build\/dist\/.*\.zip\..*/
   draft: false
   prerelease: true
