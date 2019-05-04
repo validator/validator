@@ -36,3 +36,16 @@ cache:
   # cache the dependencies folder, and invalidate the cache
   # if any of the files right of the arrow change
   - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'
+
+deploy:
+  tag: windows
+  description: 'Runtime image for Windows'
+  provider: GitHub
+  auth_token:
+    secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
+  artifact: /build\/dist\/.*\.zip\..*/
+  draft: false
+  prerelease: true
+  force_update: true
+  on:
+    JAVA_HOME: C:\Program Files\Java\jdk11
