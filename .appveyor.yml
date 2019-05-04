@@ -4,7 +4,7 @@ clone_depth: 5
 
 branches:
   except:
-    - /^(osx|linux|jar)$/
+    - /^(osx|linux|jar|windows)$/
 
 environment:
   PYTHON: C:\Python36-x64
