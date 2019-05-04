@@ -51,11 +51,9 @@ before_deploy:
   - chmod 600 appveyor_key
   - cat known_hosts >> %userprofile%\.ssh\known_hosts
   - chmod 600 %userprofile%\.ssh\known_hosts
-  - bash -lc 'eval `ssh-agent -s`'
-  - ssh-add appveyor_key
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
-  - git push --delete git@github.com:validator/validator.git windows || true
+  - bash -lc "GIT_SSH_COMMAND='ssh -i appveyor_key' git push --delete git@github.com:validator/validator.git windows || true"
   - git tag -m windows -f windows
 
 deploy:
