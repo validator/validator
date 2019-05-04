@@ -7,6 +7,10 @@ branches:
     - /^(osx|linux|jar|windows)$/
 
 environment:
+
+environment:
+  ssh_secret:
+    secure: rSGxPYhT1WpkysdoBRSgj65HwEu3ULsFCfOoP7zJ/YbaVihhK8RfjaHcHQi50JH0
   PYTHON: C:\Python36-x64
   BUILD_PY: .\build\build.py
   matrix:
@@ -42,13 +46,9 @@ artifacts:
     name: RuntimeImageArtifacts
 
 before_deploy:
-  - ps: Set-Service wuauserv -StartupType Manual
-  - cinst -y openssl.light
-  - openssl aes-256-cbc -K $encrypted_88088d7aed65_key -iv $encrypted_88088d7aed65_iv
-    -in deploy_key.enc -out deploy_key -d
-  - openssl aes-256-cbc -K $encrypted_96f60dea8e9e_key -iv $encrypted_96f60dea8e9e_iv
-    -in key.gpg.enc -out key.gpg -d
-  - chmod 600 deploy_key
+  - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
+  - ./appveyor-tools/secure-file -decrypt appveyor_key.enc -secret $ssh_secret
+  - chmod 600 appveyor_key
 
 deploy:
   tag: windows
