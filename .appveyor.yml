@@ -31,7 +31,6 @@ test_script:
   - java -jar .\build\dist\vnu.jar .\build\dist\index.html
   - java -jar .\build\dist\vnu.jar .\site\nu-about.html
   - python %BUILD_PY% war
-  - ls .\build\dist\
 
 cache:
   # cache the dependencies folder, and invalidate the cache
@@ -39,7 +38,8 @@ cache:
   - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'
 
 artifacts:
-- path: '**\*.zip'
+  - path: '**\*.zip*'
+    name: RuntimeImageArtifacts
 
 deploy:
   tag: windows
@@ -47,7 +47,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: kQDmkxCMEYfOefd3yGIfOTLL8e+w512Mv7tojXIVwH7Dgv0xx0n0mfdQXRFdKbXE
-  artifact: /.*\.zip/
+  artifact: /.*\.zip.*/
   draft: false
   prerelease: true
   force_update: true
