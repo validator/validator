@@ -31,6 +31,7 @@ test_script:
   - java -jar .\build\dist\vnu.jar .\build\dist\index.html
   - java -jar .\build\dist\vnu.jar .\site\nu-about.html
   - python %BUILD_PY% war
+  - ls .\build\dist\
 
 cache:
   # cache the dependencies folder, and invalidate the cache
