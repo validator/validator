@@ -39,7 +39,6 @@ cache:
   - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'
 
 deploy:
-  tag: windows
   description: 'Runtime image for Windows'
   provider: GitHub
   auth_token:
