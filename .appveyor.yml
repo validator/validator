@@ -43,7 +43,6 @@ artifacts:
 
 deploy:
   tag: windows
-  description: 'Runtime image for Windows'
   provider: GitHub
   auth_token:
     secure: kQDmkxCMEYfOefd3yGIfOTLL8e+w512Mv7tojXIVwH7Dgv0xx0n0mfdQXRFdKbXE
