@@ -45,8 +45,8 @@ artifacts:
 
 before_deploy:
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
-  - ./appveyor-tools/secure-file -decrypt appveyor_key.enc -secret $ssh_secret
-  - chmod 600 appveyor_key
+  - sh: ./appveyor-tools/secure-file -decrypt appveyor_key.enc -secret $ssh_secret
+  - sh: chmod 600 appveyor_key
 
 deploy:
   tag: windows
