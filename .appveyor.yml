@@ -38,6 +38,9 @@ cache:
   # if any of the files right of the arrow change
   - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'
 
+artifacts:
+- path: '**\*.zip'
+
 deploy:
   tag: windows
   description: 'Runtime image for Windows'
