@@ -43,7 +43,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: kQDmkxCMEYfOefd3yGIfOTLL8e+w512Mv7tojXIVwH7Dgv0xx0n0mfdQXRFdKbXE
-  artifact: /build\/dist\/.*\.zip\..*/
+  artifact: build\dist\*.zip*
   draft: false
   prerelease: true
   force_update: true
