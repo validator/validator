@@ -47,8 +47,10 @@ before_deploy:
   - cinst -y openssh
   - refreshenv
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
-  - cmd: appveyor-tools\secure-file -decrypt path-to\encrypted-filename.ext.enc -secret %my_secret%
+  - cmd: appveyor-tools\secure-file -decrypt appveyor_key.enc -secret %ssh_secret%
   - chmod 600 appveyor_key
+  - cat known_hosts >> ~/.ssh/known_hosts
+  - chmod 600 ~/.ssh/known_hosts
   - eval $(ssh-agent -s)
   - ssh-add appveyor_key
   - git config --local user.name "Travis CI"
