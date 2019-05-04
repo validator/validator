@@ -44,12 +44,16 @@ artifacts:
     name: RuntimeImageArtifacts
 
 before_deploy:
-  - sh: cinst -y openssh
+  - cinst -y openssh
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
   - sh: ./appveyor-tools/secure-file -decrypt appveyor_key.enc -secret $ssh_secret
   - sh: chmod 600 appveyor_key
   - sh: eval $(ssh-agent -s)
   - sh: ssh-add appveyor_key
+  - sh: git config --local user.name "Travis CI"
+  - sh: git config --local user.email "mike@w3.org"
+  - sh: git push --delete git@github.com:validator/validator.git windows || true
+  - sh: git tag -m windows -f windows
 
 deploy:
   tag: windows
