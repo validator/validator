@@ -42,7 +42,8 @@ artifacts:
     name: RuntimeImageArtifacts
 
 before_deploy:
-  - cinst install openssl.light
+  - ps: Set-Service wuauserv -StartupType Manual
+  - cinst install -y openssl.light
   - openssl aes-256-cbc -K $encrypted_88088d7aed65_key -iv $encrypted_88088d7aed65_iv
     -in deploy_key.enc -out deploy_key -d
   - openssl aes-256-cbc -K $encrypted_96f60dea8e9e_key -iv $encrypted_96f60dea8e9e_iv
