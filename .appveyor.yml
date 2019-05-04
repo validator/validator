@@ -46,7 +46,7 @@ artifacts:
     name: RuntimeImageArtifacts
 
 before_deploy:
-  - cinst -y gnupg-modern
+  - cinst -y gpg4win
   - refreshenv
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
   - cmd: appveyor-tools\secure-file -decrypt appveyor_key.enc -secret %ssh_secret%
