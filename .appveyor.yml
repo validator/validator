@@ -2,6 +2,8 @@ version: "{build}"
 
 clone_depth: 5
 
+skip_tags: true
+
 branches:
   except:
     - /^(osx|linux|jar|windows)$/
