@@ -46,8 +46,6 @@ artifacts:
     name: RuntimeImageArtifacts
 
 before_deploy:
-  - cinst -y openssh
-  - refreshenv
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
   - cmd: appveyor-tools\secure-file -decrypt appveyor_key.enc -secret %ssh_secret%
   - chmod 600 appveyor_key
