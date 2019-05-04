@@ -51,7 +51,7 @@ before_deploy:
   - chmod 600 appveyor_key
   - cat known_hosts >> %userprofile%\.ssh\known_hosts
   - chmod 600 %userprofile%\.ssh\known_hosts
-  - ssh-agent -s
+  - eval $(ssh-agent -s)
   - ssh-add appveyor_key
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
