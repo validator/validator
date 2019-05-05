@@ -53,7 +53,7 @@ before_deploy:
   - cat known_hosts >> %userprofile%\.ssh\known_hosts
   - chmod 600 %userprofile%\.ssh\known_hosts
   - gpg --import appveyor.gpg
-  - bash -lc 'for file in build/dist/*.zip*; do gpg --yes -ab --local-user 6C976B92 --sign $file; done'
+  - bash -lc 'sleep 15; for file in build/dist/*.zip*; do gpg --yes -ab --local-user 6C976B92 --sign $file; done'
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
   - bash -lc "GIT_SSH_COMMAND='ssh -i appveyor_key' git push --delete git@github.com:validator/validator.git windows || true"
