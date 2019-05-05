@@ -44,15 +44,15 @@ cache:
 
 before_deploy:
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
-  - cmd: appveyor-tools\secure-file -decrypt appveyor_key.enc -secret %ssh_secret%
-  - cmd: appveyor-tools\secure-file -decrypt appveyor.gpg.enc -secret %ssh_secret%
-  - chmod 600 appveyor_key
-  - cat known_hosts >> %userprofile%\.ssh\known_hosts
+  - cmd: appveyor-tools\secure-file -decrypt resources\ssh_appveyor.enc -out resources\ssh_appveyor -secret %ssh_secret%
+  - cmd: appveyor-tools\secure-file -decrypt resources\gpg_appveyor.enc -out resources\gpg_appveyor -secret %ssh_secret%
+  - chmod 600 resources\ssh_appveyor
+  - cat resources\ssh_known_hosts >> %userprofile%\.ssh\known_hosts
   - chmod 600 %userprofile%\.ssh\known_hosts
-  - bash -lc 'rm -f build/dist/*.asc; gpg --import appveyor.gpg; for file in build/dist/*.zip*; do gpg --yes -ab --local-user 6C976B92 --sign $file; done'
+  - bash -lc 'rm -f build/dist/*.asc; gpg --import resources/gpg_appveyor; for file in build/dist/*.zip*; do gpg --yes -ab --local-user 6C976B92 --sign $file; done'
   - git config --local user.name "AppVeyor"
   - git config --local user.email "mike@w3.org"
-  - bash -lc "GIT_SSH_COMMAND='ssh -i appveyor_key' git push --delete git@github.com:validator/validator.git windows || true"
+  - bash -lc "GIT_SSH_COMMAND='ssh -i resources/ssh_appveyor' git push --delete git@github.com:validator/validator.git windows || true"
   - git tag -m windows -f windows
 
 artifacts:
