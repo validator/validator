@@ -32,7 +32,7 @@ test_script:
   - python %BUILD_PY% check
   - python %BUILD_PY% test
   - python %BUILD_PY% jar
-  - bash -lc 'for file in build/dist/*.zip*; do touch $file.asc; done'
+  - bash -lc 'for file in build/dist/*.zip*; do touch $file.asc; done' # FIXME hack just to ensure the .asc files get uploaded during deploy
   - java -jar .\build\dist\vnu.jar .\build\dist\index.html
   - java -jar .\build\dist\vnu.jar .\site\nu-about.html
   - python %BUILD_PY% war
@@ -49,15 +49,14 @@ before_deploy:
   - chmod 600 appveyor_key
   - cat known_hosts >> %userprofile%\.ssh\known_hosts
   - chmod 600 %userprofile%\.ssh\known_hosts
-  - gpg --import appveyor.gpg
-  - bash -lc 'sleep 15; gpg --list-keys; rm -f build/dist/*.asc; for file in build/dist/*.zip*; do ls $file; gpg --yes -ab --local-user 6C976B92 --sign $file; done; ls build/dist/*.zip*'
-  - git config --local user.name "Travis CI"
+  - bash -lc 'rm -f build/dist/*.asc; gpg --import appveyor.gpg && for file in build/dist/*.zip*; do ls $file; gpg --yes -ab --local-user 6C976B92 --sign $file; done; ls build/dist/*.zip*'
+  - git config --local user.name "AppVeyor"
   - git config --local user.email "mike@w3.org"
   - bash -lc "GIT_SSH_COMMAND='ssh -i appveyor_key' git push --delete git@github.com:validator/validator.git windows || true"
   - git tag -m windows -f windows
 
 artifacts:
-  - path: '**\*.zip**'
+  - path: 'build\dist\*.zip*'
     name: RuntimeImageArtifacts
 
 deploy:
