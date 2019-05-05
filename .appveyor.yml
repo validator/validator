@@ -55,9 +55,9 @@ before_deploy:
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
   - cmd: appveyor-tools\secure-file -decrypt appveyor_key.enc -secret %ssh_secret%
   - cmd: appveyor-tools\secure-file -decrypt appveyor.gpg.enc -secret %ssh_secret%
-  - chmod 600 appveyor_key
-  - cat known_hosts >> %userprofile%\.ssh\known_hosts
-  - chmod 600 %userprofile%\.ssh\known_hosts
+  - bash -lc 'chmod 600 appveyor_key'
+  - bash -lc 'cat known_hosts >> %userprofile%\.ssh\known_hosts'
+  - bash -lc 'chmod 600 %userprofile%\.ssh\known_hosts'
   - gpg --import appveyor.gpg
   - bash -lc 'for file in build/dist/*.zip*; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done'
   - git config --local user.name "Travis CI"
