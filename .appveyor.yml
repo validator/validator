@@ -46,6 +46,10 @@ artifacts:
     name: RuntimeImageArtifacts
 
 before_deploy:
+  - ps: |
+          $path = [Environment]::GetEnvironmentVariable("path", "machine")
+          $newPath = ($path.Split(';') | Where-Object { $_ -eq 'C:\ProgramData\chocolatey\bin' }) -join ';'
+          [Environment]::SetEnvironmentVariable("path", $newPath, "machine")
   - cinst -y gpg4win
   - refreshenv
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
