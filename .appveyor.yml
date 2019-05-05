@@ -42,7 +42,7 @@ cache:
   - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'
 
 artifacts:
-  - path: '**\*.zip*'
+  - path: '**\*.zip**'
     name: RuntimeImageArtifacts
 
 before_deploy:
