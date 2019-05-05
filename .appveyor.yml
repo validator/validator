@@ -41,10 +41,6 @@ cache:
   # if any of the files right of the arrow change
   - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'
 
-artifacts:
-  - path: '**\*.zip**'
-    name: RuntimeImageArtifacts
-
 before_deploy:
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
   - cmd: appveyor-tools\secure-file -decrypt appveyor_key.enc -secret %ssh_secret%
@@ -58,6 +54,10 @@ before_deploy:
   - git config --local user.email "mike@w3.org"
   - bash -lc "GIT_SSH_COMMAND='ssh -i appveyor_key' git push --delete git@github.com:validator/validator.git windows || true"
   - git tag -m windows -f windows
+
+artifacts:
+  - path: '**\*.zip**'
+    name: RuntimeImageArtifacts
 
 deploy:
   tag: windows
