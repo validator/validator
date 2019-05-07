@@ -9,6 +9,8 @@ NN XXX NNNN
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements
   - Add option to specify additional script for Web-based checker
+  - Release now includes binary runtime images (alternative to jar/war)
+  - Dockerfile: Switch to using binary runtime image rather than jar
 
 # 18.11.5
 05 November 2018
