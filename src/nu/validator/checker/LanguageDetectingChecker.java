@@ -198,7 +198,7 @@ public class LanguageDetectingChecker extends Checker {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     LanguageDetectingChecker.class.getClassLoader().getResourceAsStream(
-                            languageList)));
+                            languageList), "UTF-8"));
             List<String> languageTags = new ArrayList<>();
             String languageTagAndName = br.readLine();
             while (languageTagAndName != null) {
@@ -209,7 +209,7 @@ public class LanguageDetectingChecker extends Checker {
             for (String languageTag : languageTags) {
                 profiles.add((new BufferedReader(new InputStreamReader(
                         LanguageDetectingChecker.class.getClassLoader().getResourceAsStream(
-                                profilesDir + languageTag)))).readLine());
+                                profilesDir + languageTag), "UTF-8"))).readLine());
             }
             DetectorFactory.clear();
             DetectorFactory.loadProfile(profiles);
