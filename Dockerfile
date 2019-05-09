@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && unzip ./vnu.linux.zip \
     && rm ./vnu.linux.zip* \
     && apt-get purge -y --auto-remove gnupg dirmngr unzip
+ENV LANG C.UTF-8
 ENV CONNECTION_TIMEOUT_SECONDS 5
 ENV SOCKET_TIMEOUT_SECONDS 5
 EXPOSE 8888
