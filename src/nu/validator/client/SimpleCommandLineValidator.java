@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Mozilla Foundation
+ * Copyright (c) 2013-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -24,9 +24,10 @@ package nu.validator.client;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.jar.Manifest;
@@ -175,8 +176,10 @@ public class SimpleCommandLineValidator {
                 } else if ("--filterfile".equals(args[i])) {
                     File filterFile = new File(args[++i]);
                     StringBuilder sb = new StringBuilder();
-                    try (BufferedReader reader = //
-                            new BufferedReader(new FileReader(filterFile))) {
+                    try (BufferedReader reader = new BufferedReader( //
+                            new InputStreamReader(
+                                    new FileInputStream(filterFile),
+                                    "UTF-8"))) {
                         String line;
                         String pipe = "";
                         while ((line = reader.readLine()) != null) {
