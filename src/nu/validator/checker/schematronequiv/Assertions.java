@@ -2638,8 +2638,7 @@ public class Assertions extends Checker {
                             || "".equals(scriptType)) {
                         warn("The \u201Ctype\u201D attribute is unnecessary for"
                                 + " JavaScript resources.");
-                    }
-                    if ("module".equals(scriptType)) {
+                    } else if ("module".equals(scriptType)) {
                         if (atts.getIndex("", "integrity") > -1) {
                             err("A \u201Cscript\u201D element with an"
                                     + " \u201Cintegrity\u201D attribute must not have a"
@@ -2658,6 +2657,13 @@ public class Assertions extends Checker {
                                     + " \u201Ctype\u201D attribute with the value"
                                     + " \u201Cmodule\u201D.");
                         }
+                    } else if (atts.getIndex("", "src") > -1) {
+                            err("A \u201Cscript\u201D element with a"
+                                    + " \u201Csrc\u201D attribute must not have"
+                                    + " a \u201Ctype\u201D attribute whose"
+                                    + " value is anything other than"
+                                    + " the empty string, a JavaScript MIME"
+                                    + " type, or \u201Cmodule\u201D.");
                     }
                 }
             }
