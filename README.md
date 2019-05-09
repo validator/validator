@@ -101,7 +101,7 @@ whose names don’t end with the extensions `.html`, `.htm`, `.xhtml`, or `.xht`
 
 To check all documents in a particular directory as CSS:
 
-      java -jar ~/vnu.jar --force-css some-directory-name/
+      java -jar ~/vnu.jar --css some-directory-name/
 
 To check all documents in a particular directory as CSS, but skip any documents
 whose names don’t end with the extension `.css`:
@@ -116,7 +116,7 @@ checked as HTML:
 
 To check all documents in a particular directory as SVG:
 
-      java -jar ~/vnu.jar --force-svg some-directory-name/
+      java -jar ~/vnu.jar --svg some-directory-name/
 
 To check all documents in a particular directory as SVG, but skip any documents
 whose names don’t end with the extension `.svg`:
