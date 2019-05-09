@@ -197,8 +197,9 @@ public class LanguageDetectingChecker extends Checker {
         LANG_TAGS_BY_TLD.put("za", new String[] { "af" });
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
-                    LanguageDetectingChecker.class.getClassLoader().getResourceAsStream(
-                            languageList), "UTF-8"));
+                    LanguageDetectingChecker.class.getClassLoader() //
+                            .getResourceAsStream(languageList),
+                    "UTF-8"));
             List<String> languageTags = new ArrayList<>();
             String languageTagAndName = br.readLine();
             while (languageTagAndName != null) {
@@ -208,8 +209,9 @@ public class LanguageDetectingChecker extends Checker {
             List<String> profiles = new ArrayList<>();
             for (String languageTag : languageTags) {
                 profiles.add((new BufferedReader(new InputStreamReader(
-                        LanguageDetectingChecker.class.getClassLoader().getResourceAsStream(
-                                profilesDir + languageTag), "UTF-8"))).readLine());
+                        LanguageDetectingChecker.class.getClassLoader() //
+                                .getResourceAsStream(profilesDir + languageTag),
+                        "UTF-8"))).readLine());
             }
             DetectorFactory.clear();
             DetectorFactory.loadProfile(profiles);
