@@ -1169,6 +1169,7 @@ public class Assertions extends Checker {
                 || "header" == localName //
                 || "footer" == localName //
                 || "section" == localName //
+                || "article" == localName //
                 || "form" == localName //
                 || "img" == localName //
                 || "audio" == localName //
