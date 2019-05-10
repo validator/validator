@@ -1159,11 +1159,20 @@ public class Assertions extends Checker {
         if (isLabelableElement(localName, atts)) {
             return false;
         }
+        // https://developer.paciellogroup.com/blog/2017/07/short-note-on-aria-label-aria-labelledby-and-aria-describedby/
         if ("main" == localName //
                 || "nav" == localName //
                 || "table" == localName //
                 || "td" == localName //
                 || "th" == localName //
+                || "aside" == localName //
+                || "header" == localName //
+                || "footer" == localName //
+                || "section" == localName //
+                || "form" == localName //
+                || "img" == localName //
+                || "audio" == localName //
+                || "video" == localName //
         ) {
             return false;
         }
