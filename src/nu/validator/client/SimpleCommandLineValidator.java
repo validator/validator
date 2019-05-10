@@ -289,7 +289,13 @@ public class SimpleCommandLineValidator {
                 validator = new SimpleDocumentValidator();
             }
             setup(schemaUrl);
-            validator.checkHtmlInputSource(is);
+            if (forceCSS) {
+                validator.checkCssInputSource(is);
+            } else if (forceSVG) {
+                checkSvgInputSource(is);
+            } else {
+                validator.checkHtmlInputSource(is);
+            }
             end();
         } else if (hasFileArgs) {
             if (noLangDetect) {
@@ -416,6 +422,14 @@ public class SimpleCommandLineValidator {
         }
     }
 
+    private static void checkSvgInputSource(InputSource is) throws Exception {
+        if (!"http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc".equals(
+                validator.getMainSchemaUrl()) && !hasSchemaOption) {
+            setSchema("http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc");
+        }
+        validator.checkXmlInputSource(is);
+    }
+
     private static void checkSvgFile(File file) throws IOException, Exception {
         try {
             String path = file.getPath();
@@ -428,11 +442,6 @@ public class SimpleCommandLineValidator {
                 return;
             } else {
                 emitFilename(path);
-                if (!"http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc".equals(
-                        validator.getMainSchemaUrl()) && !hasSchemaOption) {
-                    setSchema("http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc");
-                }
-                validator.checkXmlFile(file);
             }
         } catch (SAXException e) {
             if (!errorsOnly) {

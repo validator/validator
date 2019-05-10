@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Mozilla Foundation
+ * Copyright (c) 2013-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -412,6 +412,15 @@ public class SimpleDocumentValidator {
             SAXException {
         validator.reset();
         checkAsXML(is);
+    }
+
+    /* *
+     * Checks an InputSource as a CSS document.
+     */
+    public void checkCssInputSource(InputSource is) throws IOException,
+            SAXException {
+        validator.reset();
+        checkAsCss(is);
     }
 
     /* *
