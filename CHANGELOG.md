@@ -9,6 +9,7 @@ NN XXX NNNN
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements
   - Add option to specify additional script for Web-based checker
+  - Enable checking standard input as SVG or CSS in command-line checker
   - Release now includes binary runtime images (alternative to jar/war)
   - Dockerfile: Switch to using binary runtime image rather than jar
 
