@@ -76,14 +76,18 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/commons-logging-${commons-logging-version}-adapters.jar"/>
       <zipfileset src="../dependencies/commons-logging-${commons-logging-version}-api.jar"/>
       <zipfileset src="../dependencies/http2-common-${jetty-version}.jar"/>
-      <zipfileset src="../dependencies/http2-hpack-${jetty-version}.jar"/>
+      <zipfileset src="../dependencies/http2-hpack-${jetty-version}.jar">
+        <exclude name="META-INF/services/**"/>
+      </zipfileset>
       <zipfileset src="../dependencies/http2-server-${jetty-version}.jar"/>
       <zipfileset src="../dependencies/httpclient-${httpclient-version}.jar"/>
       <zipfileset src="../dependencies/httpcore-${httpcore-version}.jar"/>
       <zipfileset src="../dependencies/icu4j-${icu4j-version}.jar"/>
       <zipfileset src="../dependencies/javax.servlet-api-${javax.servlet-api-version}.jar"/>
       <zipfileset src="../dependencies/jchardet-${jchardet-version}.jar"/>
-      <zipfileset src="../dependencies/jetty-http-${jetty-version}.jar"/>
+      <zipfileset src="../dependencies/jetty-http-${jetty-version}.jar">
+        <exclude name="META-INF/services/**"/>
+      </zipfileset>
       <zipfileset src="../dependencies/jetty-io-${jetty-version}.jar"/>
       <zipfileset src="../dependencies/jetty-security-${jetty-version}.jar"/>
       <zipfileset src="../dependencies/jetty-server-${jetty-version}.jar"/>
