@@ -1061,6 +1061,15 @@ class Release():
         if javaEnvVersion < 9:
             return
         runCmd([jdepsCmd, '--generate-open-module', distDir, self.vnuJar])
+        f = open(os.path.join(self.vnuModuleInfoDir, "module-info.java"), 'r+')
+        lines = f.readlines()
+        lines = lines[:-2]
+        f.seek(0)
+        f.truncate()
+        f.write(''.join(lines))
+        f.write('    uses org.eclipse.jetty.http.HttpFieldPreEncoder;\n')
+        f.write('}\n')
+        f.close()
         runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + self.vnuJar,
                 os.path.join(distDir, 'vnu', 'module-info.java')])
         runCmd([jarCmd, '--update',
