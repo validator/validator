@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2015 Mozilla Foundation
+ * Copyright (c) 2007-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -34,16 +34,15 @@ import javax.servlet.DispatcherType;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
-import org.eclipse.jetty.http2.server.HTTP2ServerConnectionFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.servlets.GzipFilter;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
 /**
@@ -66,8 +65,10 @@ public class Main {
 
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setContextPath("/");
-        contextHandler.addFilter(new FilterHolder(new GzipFilter()), "/*",
-                EnumSet.of(DispatcherType.REQUEST));
+        GzipHandler gzipHandler = new GzipHandler();
+        gzipHandler.setIncludedMethods("POST", "GET");
+        gzipHandler.setInflateBufferSize(2048);
+        gzipHandler.setHandler(contextHandler);
         contextHandler.addFilter(new FilterHolder(new InboundSizeLimitFilter(
                 SIZE_LIMIT)), "/*", EnumSet.of(DispatcherType.REQUEST));
         contextHandler.addFilter(new FilterHolder(new InboundGzipFilter()),
@@ -80,6 +81,7 @@ public class Main {
 
         Server server = new Server(new QueuedThreadPool(100));
         server.setHandler(contextHandler);
+        server.setHandler(gzipHandler);
 
         ServerConnector serverConnector = new ServerConnector(server,
                 new HttpConnectionFactory(new HttpConfiguration()),
