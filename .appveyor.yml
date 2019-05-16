@@ -30,13 +30,14 @@ build_script:
   - python %BUILD_PY% %BUILD_ARGS% build
 
 test_script:
-  - python %BUILD_PY% check
-  - python %BUILD_PY% test
   - python %BUILD_PY% jar
-  - bash -lc 'for file in build/dist/*.zip*; do touch $file.asc; done' # FIXME hack just to ensure the .asc files get uploaded during deploy
   - java -jar .\build\dist\vnu.jar .\build\dist\index.html
   - java -jar .\build\dist\vnu.jar .\site\nu-about.html
+  - python %BUILD_PY% runtime-image
   - python %BUILD_PY% war
+  - python %BUILD_PY% check
+  - python %BUILD_PY% test
+  - bash -lc 'for file in build/dist/*.zip*; do touch $file.asc; done' # FIXME hack just to ensure the .asc files get uploaded during deploy
 
 cache:
   # cache the dependencies folder, and invalidate the cache

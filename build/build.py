@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- vim: set fileencoding=utf-8 :
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2018 Mozilla Foundation
+# Copyright (c) 2008-2019 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -107,7 +107,10 @@ langdetectVersion = "1.2"
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
 distWarDir = os.path.join(buildRoot, "build", "dist-war")
+runtimeDistroBasename = None
+runtimeDistroFile = None
 vnuJar = os.path.join(distDir, "vnu.jar")
+vnuImageDirname = "vnu-runtime-image"
 dependencyDir = os.path.join(buildRoot, "dependencies")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
@@ -808,19 +811,19 @@ def buildValidator():
         jingJarPath())
     buildEmitters()
     buildModule(buildRoot, "validator", classPath)
+    release.createJarOrWar("jar")
 
 
 def ownJarList():
     return jarNamesToPaths(["galimatias", "htmlparser", "langdetect", "validator"]) + cssValidatorJarPath() + jingJarPath()  # nopep8
 
 
-def getRunArgs(heap="$((HEAP))"):
+def getRunArgs(heap="$((HEAP))", _type="jar"):
     args = [
         '-XX:-DontCompileHugeMethods',
         '-Xms%sk' % heap,
         '-Xmx%sk' % heap,
         '-Djava.security.properties=' + os.path.join(buildRoot, "resources", "security.properties"),  # nopep8
-        '-classpath', vnuJar,
         '-Dnu.validator.datatype.warn=true',
         '-Dnu.validator.messages.limit=%d' % messagesLimit,
         '-Dnu.validator.servlet.about-page=' + aboutPage,
@@ -852,6 +855,10 @@ def getRunArgs(heap="$((HEAP))"):
         '-Dnu.validator.spec.html5-link=' + html5specLink,
         '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),  # nopep8
     ]
+
+    if _type == "jar":
+        args.append('-classpath')
+        args.append(vnuJar)
 
     if stackSize != "":
         args.append('-Xss' + stackSize + 'k')
@@ -889,23 +896,14 @@ def generateRunScript():
 
 def runValidator():
     if not os.path.exists(vnuJar):
-        release = Release()
-        release.createExecutable("jar")
+        release.createJarOrWar("jar")
     ensureDirExists(os.path.join(buildRoot, "logs"))
     args = getRunArgs(str(int(heapSize) * 1024))
     execCmd(javaCmd, args)
 
 
-def checkService():
-    if not os.path.exists(vnuJar):
-        release = Release()
-        release.createExecutable("jar")
-    doc = miniDoc.replace(" ", "%20")
-    query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % doc
-    url = "http://localhost:%s/%s" % (portNumber, query)
-    args = getRunArgs(str(int(heapSize) * 1024))
-    daemon = subprocess.Popen([javaCmd, ] + args)
-    time.sleep(25)
+def checkUrlWithService(url, daemon):
+    time.sleep(15)
     print("Checking %s" % url)
     try:
         print(urlopen(url).read())
@@ -919,13 +917,62 @@ def checkService():
     daemon.terminate()
 
 
+def checkServiceWithJar(url):
+    if not os.path.exists(os.path.join(buildRoot, "jars")):
+        buildAll()
+    if not os.path.exists(vnuJar):
+        release.createJarOrWar("jar")
+    print("Checking service using jar...")
+    args = getRunArgs(str(int(heapSize) * 1024))
+    daemon = subprocess.Popen([javaCmd, ] + args)
+    checkUrlWithService(url, daemon)
+
+
+def checkServiceWithRuntimeImage(url):
+    if runtimeDistroFile is None \
+            or not os.path.exists(os.path.join(distDir, runtimeDistroFile)):
+        release.createRuntimeImage()
+    print("Checking service using runtime image...")
+    removeIfDirExists(vnuImageDirname)
+    zipExtract(os.path.join(distDir, runtimeDistroFile), ".")
+    for dirname, subdirs, files in os.walk(vnuImageDirname):
+        for f in files:
+            os.chmod(os.path.join(dirname, f), 0o777)
+    args = getRunArgs(str(int(heapSize) * 1024), "runtime-image")
+    daemon = subprocess.Popen([os.path.join(".", vnuImageDirname, "bin",
+                                            "java")] + args)
+    checkUrlWithService(url, daemon)
+    removeIfDirExists(vnuImageDirname)
+
+
+def checkService():
+    doc = miniDoc.replace(" ", "%20")
+    query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % doc
+    url = "http://127.0.0.1:%s/%s" % (portNumber, query)
+    checkServiceWithJar(url)
+    checkServiceWithRuntimeImage(url)
+
+
 def clean():
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
+
+
+def realclean():
+    clean()
     removeIfDirExists(dependencyDir)
     removeIfDirExists(jarsDir)
     cleanJing()
     cleanCssValidator()
+
+
+def getRuntimeDistroBasename():
+    os_platform = 'linux'
+    if platform.system() == 'Darwin':
+        os_platform = 'osx'
+    if platform.system() == 'Windows':
+        os_platform = 'windows'
+    return os.path.join('vnu.%s' % (os_platform))
 
 
 class Release():
@@ -934,8 +981,8 @@ class Release():
         self.artifactId = artifactId
         self.version = validatorVersion
         self.buildXml = os.path.join(buildRoot, "build", "build.xml")
-        self.vnuImageDirname = "vnu-runtime-image"
-        self.vnuImageDir = os.path.join(distDir, self.vnuImageDirname)
+        self.distroFile = None
+        self.vnuImageDir = os.path.join(distDir, vnuImageDirname)
         self.vnuModuleInfoDir = os.path.join(distDir, "vnu")
         self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
         self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
@@ -1038,7 +1085,7 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
-    def createExecutable(self, jarOrWar):
+    def createJarOrWar(self, jarOrWar):
         whichDir = distDir
         distJarOrWar = "dist"
         if jarOrWar == "war":
@@ -1060,6 +1107,7 @@ class Release():
     def createRuntimeImage(self):
         if javaEnvVersion < 9:
             return
+        self.createJarOrWar("jar")
         runCmd([jdepsCmd, '--generate-open-module', distDir, vnuJar])
         f = open(os.path.join(self.vnuModuleInfoDir, "module-info.java"), 'r+')
         lines = f.readlines()
@@ -1084,16 +1132,10 @@ class Release():
                 '--compress=2',
                 '--output', self.vnuImageDir, '--module-path', vnuJar,
                 '--add-modules', 'vnu'])
-        release.checkRuntimeImage()
+        self.checkRuntimeImage()
         os.chdir(distDir)
-        os_platform = 'linux'
-        if platform.system() == 'Darwin':
-            os_platform = 'osx'
-        if platform.system() == 'Windows':
-            os_platform = 'windows'
-        distroFile = os.path.join('vnu.%s' % (os_platform))
-        removeIfExists(distroFile)
-        shutil.make_archive(distroFile, 'zip', ".", self.vnuImageDirname)
+        removeIfExists(runtimeDistroFile)
+        shutil.make_archive(runtimeDistroBasename, 'zip', ".", vnuImageDirname)
         os.chdir(os.path.join('..', '..'))
         removeIfDirExists(self.vnuImageDir)
         self.writeHashes(distDir)
@@ -1105,7 +1147,7 @@ class Release():
         self.setVersion(whichDir)
         if isNightly:
             self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
-        self.createExecutable(jarOrWar)
+        self.createJarOrWar(jarOrWar)
         self.prepareDist(jarOrWar)
 
     def prepareDist(self, jarOrWar):
@@ -1121,15 +1163,16 @@ class Release():
             for filename in self.docs:
                 shutil.copy(os.path.join(buildRoot, filename), whichDir)
         os.chdir("build")
-        distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar, self.version))
-        removeIfExists(distroFile)
-        zf = zipfile.ZipFile(distroFile, "w")
+        self.distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar,
+                                                          self.version))
+        removeIfExists(self.distroFile)
+        zf = zipfile.ZipFile(self.distroFile, "w")
         for dirname, subdirs, files in os.walk(distJarOrWar):
             zf.write(dirname)
         for filename in files:
             zf.write(os.path.join(dirname, filename))
         zf.close()
-        shutil.move(distroFile, distJarOrWar)
+        shutil.move(self.distroFile, distJarOrWar)
         os.chdir("..")
         self.writeHashes(whichDir)
         self.sign(whichDir)
@@ -1259,7 +1302,7 @@ class Release():
                 runCmd(mvnArgs)
 
     def uploadToHeroku(self):
-        self.createExecutable("war")
+        self.createJarOrWar("war")
         runCmd([herokuCmd,
                 'deploy:war', '--war',
                 os.path.join(distWarDir, "vnu.war"), '--app', 'vnu'])
@@ -1314,11 +1357,9 @@ class Release():
 
     def checkJar(self):
         if not os.path.exists(vnuJar):
-            return
-
+            self.createJarOrWar("jar")
         with open(self.minDocPath, 'w') as f:
             f.write(miniDoc)
-
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
             if runCmd([javaCmd, '-jar', vnuJar, '--format', _format,
@@ -1337,10 +1378,8 @@ class Release():
         vnuRunScript = os.path.join(self.vnuImageDir, 'bin', 'vnu')
         if os.path.exists(os.path.join(self.vnuImageDir, 'bin', 'vnu.bat')):
             vnuRunScript = os.path.join(self.vnuImageDir, 'bin', 'vnu.bat')
-
         with open(self.minDocPath, 'w') as f:
             f.write(miniDoc)
-
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
             if runCmd([vnuRunScript, '--format', _format, self.minDocPath]):
@@ -1561,6 +1600,9 @@ def buildAll():
         print("Set the JAVA_HOME environment variable to the pathname" +
               " of the directory where your JDK is installed.")
         sys.exit(1)
+    if not os.path.exists(os.path.join(buildRoot, "dependencies")):
+        downloadDependencies()
+        downloadLocalEntities()
     buildCssValidator()
     buildJing()
     buildSchemaDrivers()
@@ -1573,8 +1615,7 @@ def buildAll():
 
 def runTests():
     if not os.path.exists(vnuJar):
-        release = Release()
-        release.createExecutable("jar")
+        release.createJarOrWar("jar")
     args = ["tests/messages.json"]
     className = "nu.validator.client.TestRunner"
     if runCmd([javaCmd, '-classpath', vnuJar, className] + args):
@@ -1653,6 +1694,9 @@ argv = sys.argv[1:]
 if len(argv) == 0:
     printHelp()
 else:
+    release = Release()
+    runtimeDistroBasename = getRuntimeDistroBasename()
+    runtimeDistroFile = runtimeDistroBasename + ".zip"
     for arg in argv:
         if arg.startswith("--git="):
             gitCmd = arg[6:]
@@ -1760,13 +1804,10 @@ else:
         elif arg == 'build':
             buildAll()
         elif arg == 'bundle':
-            release = Release()
             release.createBundle()
         elif arg == 'snapshot':
-            release = Release()
             release.uploadToCentral(snapshotsRepoUrl)
         elif arg == 'release':
-            release = Release()
             release.uploadToCentral(stagingRepoUrl)
             release.createOrUpdateGithubData()
             release.createDistribution("war")
@@ -1777,16 +1818,13 @@ else:
             release.uploadToGithub("jar")
             release.uploadNpm()
         elif arg == 'npm-snapshot':
-            release = Release()
-            release.createExecutable("jar")
+            release.createJarOrWar("jar")
             release.uploadNpm("next")
         elif arg == 'npm-release':
-            release = Release()
-            release.createExecutable("jar")
+            release.createJarOrWar("jar")
             release.uploadNpm()
         elif arg == 'github-release':
             isNightly = True
-            release = Release()
             release.createOrUpdateGithubData()
             release.createDistribution("war", isNightly)
             release.uploadToReleasesHost("war", isNightly)
@@ -1796,14 +1834,12 @@ else:
             release.uploadToGithub("jar")
         elif arg == 'nightly':
             isNightly = True
-            release = Release()
             release.createDistribution("war", isNightly)
             release.uploadToReleasesHost("war", isNightly)
             release.createDistribution("jar", isNightly)
             release.uploadToReleasesHost("jar", isNightly)
             release.uploadNpm("next")
         elif arg == 'heroku':
-            release = Release()
             release.uploadToHeroku()
         elif arg == 'galimatias-bundle':
             release = Release("galimatias")
@@ -1851,12 +1887,11 @@ else:
             release = Release("jing")
             release.uploadToCentral(stagingRepoUrl)
         elif arg == 'jar':
-            release = Release()
-            release.createExecutable("jar")
+            release.createJarOrWar("jar")
+        elif arg == 'runtime-image':
             release.createRuntimeImage()
         elif arg == 'war':
-            release = Release()
-            release.createExecutable("war")
+            release.createJarOrWar("war")
         elif arg == 'localent':
             prepareLocalEntityJar()
         elif arg == 'deploy':
@@ -1884,6 +1919,8 @@ else:
             checkService()
         elif arg == 'clean':
             clean()
+        elif arg == 'realclean':
+            realclean()
         elif arg == 'run':
             if not stylesheet:
                 stylesheet = 'style.css'
