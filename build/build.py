@@ -107,6 +107,7 @@ langdetectVersion = "1.2"
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
 distWarDir = os.path.join(buildRoot, "build", "dist-war")
+vnuJar = os.path.join(distDir, "vnu.jar")
 dependencyDir = os.path.join(buildRoot, "dependencies")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
@@ -813,19 +814,13 @@ def ownJarList():
     return jarNamesToPaths(["galimatias", "htmlparser", "langdetect", "validator"]) + cssValidatorJarPath() + jingJarPath()  # nopep8
 
 
-def buildRunJarPathList():
-    return dependencyJarPaths(runDependencyJars) + ownJarList()
-
-
 def getRunArgs(heap="$((HEAP))"):
-    classPath = os.pathsep.join(buildRunJarPathList())
     args = [
         '-XX:-DontCompileHugeMethods',
         '-Xms%sk' % heap,
         '-Xmx%sk' % heap,
         '-Djava.security.properties=' + os.path.join(buildRoot, "resources", "security.properties"),  # nopep8
-        '-classpath',
-        classPath,
+        '-classpath', vnuJar,
         '-Dnu.validator.datatype.warn=true',
         '-Dnu.validator.messages.limit=%d' % messagesLimit,
         '-Dnu.validator.servlet.about-page=' + aboutPage,
@@ -893,6 +888,9 @@ def generateRunScript():
 
 
 def runValidator():
+    if not os.path.exists(vnuJar):
+        release = Release()
+        release.createExecutable("jar")
     ensureDirExists(os.path.join(buildRoot, "logs"))
     args = getRunArgs(str(int(heapSize) * 1024))
     execCmd(javaCmd, args)
@@ -933,7 +931,6 @@ class Release():
         self.artifactId = artifactId
         self.version = validatorVersion
         self.buildXml = os.path.join(buildRoot, "build", "build.xml")
-        self.vnuJar = os.path.join(distDir, "vnu.jar")
         self.vnuImageDirname = "vnu-runtime-image"
         self.vnuImageDir = os.path.join(distDir, self.vnuImageDirname)
         self.vnuModuleInfoDir = os.path.join(distDir, "vnu")
@@ -1060,7 +1057,7 @@ class Release():
     def createRuntimeImage(self):
         if javaEnvVersion < 9:
             return
-        runCmd([jdepsCmd, '--generate-open-module', distDir, self.vnuJar])
+        runCmd([jdepsCmd, '--generate-open-module', distDir, vnuJar])
         f = open(os.path.join(self.vnuModuleInfoDir, "module-info.java"), 'r+')
         lines = f.readlines()
         lines = lines[:-2]
@@ -1070,10 +1067,10 @@ class Release():
         f.write('    uses org.eclipse.jetty.http.HttpFieldPreEncoder;\n')
         f.write('}\n')
         f.close()
-        runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + self.vnuJar,
+        runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + vnuJar,
                 os.path.join(distDir, 'vnu', 'module-info.java')])
         runCmd([jarCmd, '--update',
-                '--file', self.vnuJar,
+                '--file', vnuJar,
                 '--module-version=' + validatorVersion,
                 '-C', os.path.join(distDir, 'vnu'), 'module-info.class'])
         removeIfDirExists(self.vnuModuleInfoDir)
@@ -1082,7 +1079,7 @@ class Release():
                 'vnu=vnu/nu.validator.client.SimpleCommandLineValidator',
                 '--strip-debug', '--no-header-files', '--no-man-pages',
                 '--compress=2',
-                '--output', self.vnuImageDir, '--module-path', self.vnuJar,
+                '--output', self.vnuImageDir, '--module-path', vnuJar,
                 '--add-modules', 'vnu'])
         release.checkRuntimeImage()
         os.chdir(distDir)
@@ -1313,7 +1310,7 @@ class Release():
             runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
     def checkJar(self):
-        if not os.path.exists(self.vnuJar):
+        if not os.path.exists(vnuJar):
             return
 
         with open(self.minDocPath, 'w') as f:
@@ -1321,13 +1318,13 @@ class Release():
 
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            if runCmd([javaCmd, '-jar', self.vnuJar, '--format', _format,
+            if runCmd([javaCmd, '-jar', vnuJar, '--format', _format,
                        self.minDocPath]):
                 sys.exit(1)
         # also make sure it works even w/o --format value; returns gnu output
-        if runCmd([javaCmd, '-jar', self.vnuJar, self.minDocPath]):
+        if runCmd([javaCmd, '-jar', vnuJar, self.minDocPath]):
             sys.exit(1)
-        if runCmd([javaCmd, '-jar', self.vnuJar, '--version']):
+        if runCmd([javaCmd, '-jar', vnuJar, '--version']):
             sys.exit(1)
         os.remove(self.minDocPath)
 
@@ -1572,15 +1569,12 @@ def buildAll():
 
 
 def runTests():
+    if not os.path.exists(vnuJar):
+        release = Release()
+        release.createExecutable("jar")
     args = ["tests/messages.json"]
     className = "nu.validator.client.TestRunner"
-    classPath = os.pathsep.join(
-        buildRunJarPathList() +
-        jarNamesToPaths(["galimatias", "htmlparser", "langdetect",
-                         "validator"]) +
-        cssValidatorJarPath() +
-        jingJarPath())
-    if runCmd([javaCmd, '-classpath', classPath, className] + args):
+    if runCmd([javaCmd, '-classpath', vnuJar, className] + args):
         sys.exit(1)
 
 
