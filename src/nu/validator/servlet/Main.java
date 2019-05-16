@@ -32,6 +32,9 @@ import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
 
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
 import org.eclipse.jetty.server.Connector;
@@ -54,7 +57,17 @@ public class Main {
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
+    private static final void emitStartupMessage(Logger log4j, int port) {
+            log4j.debug("Checker service started at http://127.0.0.1:" + port);
+    }
+
     public static void main(String[] args) throws Exception {
+        Logger log4j = Logger.getLogger(Main.class);
+        ConsoleAppender console = new ConsoleAppender();
+        console.setLayout(new PatternLayout("%n%m%n"));
+        console.activateOptions();
+        log4j.setAdditivity(false);
+        log4j.addAppender(console);
         if (!"1".equals(System.getProperty("nu.validator.servlet.read-local-log4j-properties"))) {
             PropertyConfigurator.configure(Main.class.getClassLoader().getResource(
                     "nu/validator/localentities/files/log4j.properties"));
@@ -104,6 +117,7 @@ public class Main {
             }
 
             server.start();
+            emitStartupMessage(log4j, port);
 
             try (ServerSocket serverSocket = new ServerSocket(stopPort, 0,
                     InetAddress.getByName("127.0.0.1"));
@@ -114,6 +128,7 @@ public class Main {
             }
         } else {
             server.start();
+            emitStartupMessage(log4j, port);
         }
     }
 }
