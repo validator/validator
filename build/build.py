@@ -897,6 +897,9 @@ def runValidator():
 
 
 def checkService():
+    if not os.path.exists(vnuJar):
+        release = Release()
+        release.createExecutable("jar")
     doc = miniDoc.replace(" ", "%20")
     query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % doc
     url = "http://localhost:%s/%s" % (portNumber, query)
@@ -1050,7 +1053,7 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
-            release.checkJar()
+            self.checkJar()
         else:
             self.writeHashes(distWarDir)
 
