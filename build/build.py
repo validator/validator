@@ -929,6 +929,8 @@ def checkServiceWithJar(url):
 
 
 def checkServiceWithRuntimeImage(url):
+    if javaEnvVersion < 9:
+        return
     if runtimeDistroFile is None \
             or not os.path.exists(os.path.join(distDir, runtimeDistroFile)):
         release.createRuntimeImage()
