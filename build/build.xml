@@ -42,7 +42,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="icu4j-version" value="58.2" />
   <property name="javax.servlet-api-version" value="3.1.0" />
   <property name="jchardet-version" value="1.0" />
-  <property name="jetty-version" value="9.4.9.v20180320" />
+  <property name="jetty-version" value="9.4.18.v20190429" />
   <property name="log4j-version" value="1.2.17" />
   <property name="salvation-version" value="2.6.0" />
   <!-- module dependencies -->
