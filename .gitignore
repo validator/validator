@@ -1,5 +1,6 @@
 .ropeproject
 nbproject
+build/build.pyc
 build/dist
 build/dist-war
 build/vnu*.jar.zip

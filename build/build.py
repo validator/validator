@@ -108,10 +108,7 @@ langdetectVersion = "1.2"
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
 distWarDir = os.path.join(buildRoot, "build", "dist-war")
-runtimeDistroBasename = None
-runtimeDistroFile = None
 vnuJar = os.path.join(distDir, "vnu.jar")
-vnuImageDirname = "vnu-runtime-image"
 dependencyDir = os.path.join(buildRoot, "dependencies")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
@@ -804,17 +801,6 @@ def buildEmitters():
     removeIfDirExists(classDir)
 
 
-def buildValidator():
-    classPath = os.pathsep.join(
-        dependencyJarPaths() +
-        jarNamesToPaths(["galimatias", "htmlparser", "langdetect"]) +
-        cssValidatorJarPath() +
-        jingJarPath())
-    buildEmitters()
-    buildModule(buildRoot, "validator", classPath)
-    release.createJarOrWar("jar")
-
-
 def dockerBuild():
     args = [
         dockerCmd,
@@ -932,67 +918,6 @@ def generateRunScript():
     f.close()
 
 
-def runValidator():
-    if not os.path.exists(vnuJar):
-        release.createJarOrWar("jar")
-    ensureDirExists(os.path.join(buildRoot, "logs"))
-    args = getRunArgs(str(int(heapSize) * 1024))
-    execCmd(javaCmd, args)
-
-
-def checkUrlWithService(url, daemon):
-    time.sleep(15)
-    print("Checking %s" % url)
-    try:
-        print(urlopen(url).read())
-    except HTTPError as e:
-        print(e.reason)
-        sys.exit(1)
-    except URLError as e:
-        print(e.reason)
-        sys.exit(1)
-    time.sleep(5)
-    daemon.terminate()
-
-
-def checkServiceWithJar(url):
-    if not os.path.exists(os.path.join(buildRoot, "jars")):
-        buildAll()
-    if not os.path.exists(vnuJar):
-        release.createJarOrWar("jar")
-    print("Checking service using jar...")
-    args = getRunArgs(str(int(heapSize) * 1024))
-    daemon = subprocess.Popen([javaCmd, ] + args)
-    checkUrlWithService(url, daemon)
-
-
-def checkServiceWithRuntimeImage(url):
-    if javaEnvVersion < 9:
-        return
-    if runtimeDistroFile is None \
-            or not os.path.exists(os.path.join(distDir, runtimeDistroFile)):
-        release.createRuntimeImage()
-    print("Checking service using runtime image...")
-    removeIfDirExists(vnuImageDirname)
-    zipExtract(os.path.join(distDir, runtimeDistroFile), ".")
-    for dirname, subdirs, files in os.walk(vnuImageDirname):
-        for f in files:
-            os.chmod(os.path.join(dirname, f), 0o777)
-    args = getRunArgs(str(int(heapSize) * 1024), "runtime-image")
-    daemon = subprocess.Popen([os.path.join(".", vnuImageDirname, "bin",
-                                            "java")] + args)
-    checkUrlWithService(url, daemon)
-    removeIfDirExists(vnuImageDirname)
-
-
-def checkService():
-    doc = miniDoc.replace(" ", "%20")
-    query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % doc
-    url = "http://127.0.0.1:%s/%s" % (portNumber, query)
-    checkServiceWithJar(url)
-    checkServiceWithRuntimeImage(url)
-
-
 def clean():
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
@@ -1022,7 +947,10 @@ class Release():
         self.version = validatorVersion
         self.buildXml = os.path.join(buildRoot, "build", "build.xml")
         self.distroFile = None
-        self.vnuImageDir = os.path.join(distDir, vnuImageDirname)
+        self.runtimeDistroBasename = None
+        self.runtimeDistroFile = None
+        self.vnuImageDirname = "vnu-runtime-image"
+        self.vnuImageDir = os.path.join(distDir, self.vnuImageDirname)
         self.vnuModuleInfoDir = os.path.join(distDir, "vnu")
         self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
         self.docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
@@ -1174,8 +1102,11 @@ class Release():
                 '--add-modules', 'vnu'])
         self.checkRuntimeImage()
         os.chdir(distDir)
-        removeIfExists(runtimeDistroFile)
-        shutil.make_archive(runtimeDistroBasename, 'zip', ".", vnuImageDirname)
+        removeIfExists(self.runtimeDistroFile)
+        for fname in {"CHANGELOG.md", "LICENSE", "README.md", "index.html"}:
+            shutil.copy(os.path.join("..", "..", fname), self.vnuImageDirname)
+        shutil.make_archive(self.runtimeDistroBasename, 'zip', ".",
+                            self.vnuImageDirname)
         os.chdir(os.path.join('..', '..'))
         removeIfDirExists(self.vnuImageDir)
         self.writeHashes(distDir)
@@ -1431,6 +1362,99 @@ class Release():
             sys.exit(1)
         os.remove(self.minDocPath)
 
+    def checkUrlWithService(self, url, daemon):
+        time.sleep(15)
+        print("Checking %s" % url)
+        try:
+            print(urlopen(url).read())
+        except HTTPError as e:
+            print(e.reason)
+            sys.exit(1)
+        except URLError as e:
+            print(e.reason)
+            sys.exit(1)
+        time.sleep(5)
+        daemon.terminate()
+
+    def checkServiceWithJar(self, url):
+        if not os.path.exists(os.path.join(buildRoot, "jars")):
+            buildAll()
+        if not os.path.exists(vnuJar):
+            self.createJarOrWar("jar")
+        print("Checking service using jar...")
+        args = getRunArgs(str(int(heapSize) * 1024))
+        daemon = subprocess.Popen([javaCmd, ] + args)
+        self.checkUrlWithService(url, daemon)
+
+    def checkServiceWithRuntimeImage(self, url):
+        if javaEnvVersion < 9:
+            return
+        if self.runtimeDistroFile is None \
+                or not os.path.exists(os.path.join(distDir,
+                                                   self.runtimeDistroFile)):
+            self.createRuntimeImage()
+        print("Checking service using runtime image...")
+        removeIfDirExists(self.vnuImageDirname)
+        zipExtract(os.path.join(distDir, self.runtimeDistroFile), ".")
+        for dirname, subdirs, files in os.walk(self.vnuImageDirname):
+            for f in files:
+                os.chmod(os.path.join(dirname, f), 0o777)
+        args = getRunArgs(str(int(heapSize) * 1024), "runtime-image")
+        daemon = subprocess.Popen([os.path.join(".", self.vnuImageDirname,
+                                                "bin", "java")] + args)
+        self.checkUrlWithService(url, daemon)
+        removeIfDirExists(self.vnuImageDirname)
+
+    def checkService(self):
+        doc = miniDoc.replace(" ", "%20")
+        query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % doc
+        url = "http://127.0.0.1:%s/%s" % (portNumber, query)
+        self.checkServiceWithJar(url)
+        self.checkServiceWithRuntimeImage(url)
+
+    def buildValidator(self):
+        classPath = os.pathsep.join(
+            dependencyJarPaths() +
+            jarNamesToPaths(["galimatias", "htmlparser", "langdetect"]) +
+            cssValidatorJarPath() +
+            jingJarPath())
+        buildEmitters()
+        buildModule(buildRoot, "validator", classPath)
+        self.createJarOrWar("jar")
+
+    def runValidator(self):
+        if not os.path.exists(vnuJar):
+            self.createJarOrWar("jar")
+        ensureDirExists(os.path.join(buildRoot, "logs"))
+        args = getRunArgs(str(int(heapSize) * 1024))
+        execCmd(javaCmd, args)
+
+    def runTests(self):
+        if not os.path.exists(vnuJar):
+            self.createJarOrWar("jar")
+        args = ["tests/messages.json"]
+        className = "nu.validator.client.TestRunner"
+        if runCmd([javaCmd, '-classpath', vnuJar, className] + args):
+            sys.exit(1)
+
+    def buildAll(self):
+        if 'JAVA_HOME' not in os.environ:
+            print("Error: The JAVA_HOME environment variable is not set.")
+            print("Set the JAVA_HOME environment variable to the pathname" +
+                  " of the directory where your JDK is installed.")
+            sys.exit(1)
+        if not os.path.exists(os.path.join(buildRoot, "dependencies")):
+            downloadDependencies()
+            downloadLocalEntities()
+        buildCssValidator()
+        buildJing()
+        buildSchemaDrivers()
+        prepareLocalEntityJar()
+        buildLangdetect()
+        buildGalimatias()
+        buildHtmlParser()
+        self.buildValidator()
+
 
 def createTarball():
     args = [
@@ -1634,41 +1658,13 @@ def downloadDependencies():
         downloadDependency(url, md5sum)
 
 
-def buildAll():
-    if 'JAVA_HOME' not in os.environ:
-        print("Error: The JAVA_HOME environment variable is not set.")
-        print("Set the JAVA_HOME environment variable to the pathname" +
-              " of the directory where your JDK is installed.")
-        sys.exit(1)
-    if not os.path.exists(os.path.join(buildRoot, "dependencies")):
-        downloadDependencies()
-        downloadLocalEntities()
-    buildCssValidator()
-    buildJing()
-    buildSchemaDrivers()
-    prepareLocalEntityJar()
-    buildLangdetect()
-    buildGalimatias()
-    buildHtmlParser()
-    buildValidator()
-
-
-def runTests():
-    if not os.path.exists(vnuJar):
-        release.createJarOrWar("jar")
-    args = ["tests/messages.json"]
-    className = "nu.validator.client.TestRunner"
-    if runCmd([javaCmd, '-classpath', vnuJar, className] + args):
-        sys.exit(1)
-
-
 def splitHostSpec(spec):
     index = spec.find('/')
     return (spec[0:index], spec[index:])
 
 
 def printHelp():
-    print("Usage: python build/build.py [options] [tasks]")
+    print("Usage: python %s [options] [tasks]" % sys.argv[0])
     print("")
     print("Options:")
     print("  --about=https://about.validator.nu/")
@@ -1724,270 +1720,274 @@ def printHelp():
     print("  run      -- Run the system")
     print("  all      -- update dldeps build test run")
     print("  bundle   -- Create a Maven release bundle")
-    print("  jar      -- Create a JAR file containing a release distribution")
-    print("  war      -- Create a WAR file containing a release distribution")
+    print("  image    -- Create a binary runtime image of the checker")
+    print("  jar      -- Create a JAR package of the checker")
+    print("  war      -- Create a WAR package of the checker")
     print("  script   -- Make run-validator.sh script for running the system")
 
 
-buildScript = sys.argv[0]
-argv = sys.argv[1:]
-if len(argv) == 0:
-    printHelp()
-else:
-    release = Release()
-    runtimeDistroBasename = getRuntimeDistroBasename()
-    runtimeDistroFile = runtimeDistroBasename + ".zip"
-    for arg in argv:
-        if arg.startswith("--git="):
-            gitCmd = arg[6:]
-        elif arg.startswith("--java="):
-            javaCmd = arg[7:]
-        elif arg.startswith("--jar="):
-            jarCmd = arg[6:]
-        elif arg.startswith("--javac="):
-            javacCmd = arg[8:]
-        elif arg.startswith("--javadoc="):
-            javadocCmd = arg[10:]
-        elif arg.startswith("--jdk-bin="):
-            jdkBinDir = arg[10:]
-            javaCmd = os.path.join(jdkBinDir, "java")
-            jarCmd = os.path.join(jdkBinDir, "jar")
-            javacCmd = os.path.join(jdkBinDir, "javac")
-            javadocCmd = os.path.join(jdkBinDir, "javadoc")
-        elif arg.startswith("--port="):
-            portNumber = arg[7:]
-        elif arg.startswith("--control-port="):
-            controlPort = arg[15:]
-        elif arg.startswith("--log4j="):
-            log4jProps = arg[8:]
-        elif arg.startswith("--heap="):
-            heapSize = arg[7:]
-        elif arg.startswith("--stacksize="):
-            stackSize = arg[12:]
-        elif arg.startswith("--javaversion="):
-            javaTargetVersion = arg[14:]
-        elif arg.startswith("--html5link="):
-            html5specLink = arg[12:]
-        elif arg.startswith("--about="):
-            aboutPage = arg[8:]
-        elif arg.startswith("--denylist="):
-            denyList = arg[11:]
-        elif arg.startswith("--stylesheet="):
-            stylesheet = arg[13:]
-        elif arg.startswith("--icon="):
-            icon = arg[7:]
-        elif arg.startswith("--user-agent="):
-            userAgent = arg[13:]
-        elif arg.startswith("--scp-target="):
-            deploymentTarget = arg[13:]
-        elif arg.startswith("--script="):
-            script = arg[9:]
-        elif arg.startswith("--script-additional="):
-            scriptAdditional = arg[20:]
-        elif arg.startswith("--name="):
-            serviceName = arg[7:]
-        elif arg.startswith("--results-title="):
-            resultsTitle = arg[16:]
-        elif arg.startswith("--messages-limit="):
-            messagesLimit = int(arg[17:])
-        elif arg.startswith("--genericpath="):
-            (genericHost, genericPath) = splitHostSpec(arg[14:])
-        elif arg.startswith("--html5path="):
-            (html5Host, html5Path) = splitHostSpec(arg[12:])
-        elif arg.startswith("--parsetreepath="):
-            (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
-        elif arg.startswith("--page-template="):
-            pageTemplate = arg[16:]
-        elif arg.startswith("--form-template="):
-            formTemplate = arg[16:]
-        elif arg.startswith("--presets-file="):
-            presetsFile = arg[15:]
-        elif arg.startswith("--about-file="):
-            aboutFile = arg[13:]
-        elif arg.startswith("--stylesheet-file="):
-            stylesheetFile = arg[18:]
-        elif arg.startswith("--script-file="):
-            scriptFile = arg[14:]
-        elif arg.startswith("--filter-file="):
-            filterFile = arg[14:]
-        elif arg == '--promiscuous-ssl=on':
-            disablePromiscuousSsl = 0
-        elif arg == '--promiscuous-ssl=off':
-            disablePromiscuousSsl = 1
-        elif arg == '--no-self-update':
-            pass
-        elif arg == '--local':
-            pass
-        elif arg.startswith("--connection-timeout="):
-            connectionTimeoutSeconds = int(arg[21:])
-        elif arg.startswith("--socket-timeout="):
-            socketTimeoutSeconds = int(arg[17:])
-        elif arg.startswith("--max-requests="):
-            maxConnPerRoute = int(arg[15:])
-        elif arg.startswith("--max-total-connections="):
-            maxTotalConnections = int(arg[24:])
-        elif arg.startswith("--max-redirects="):
-            maxConnPerRoute = int(arg[16:])
-        elif arg == '--statistics':
-            statistics = 1
-        elif arg == '--help':
-            printHelp()
-        elif arg == 'update':
-            updateSubmodules()
-        elif arg == 'update-shallow':
-            updateSubmodulesShallow()
-        elif arg == 'dldeps':
-            downloadDependencies()
-            downloadLocalEntities()
-        elif arg == 'checkout':
-            pass
-        elif arg == 'build':
-            buildAll()
-        elif arg == 'docker-build':
-            dockerBuild()
-        elif arg == 'docker-run':
-            dockerRun()
-        elif arg == 'docker-push':
-            dockerPush()
-        elif arg == 'bundle':
-            release.createBundle()
-        elif arg == 'snapshot':
-            release.uploadToCentral(snapshotsRepoUrl)
-        elif arg == 'release':
-            release.uploadToCentral(stagingRepoUrl)
-            release.createOrUpdateGithubData()
-            release.createDistribution("war")
-            release.uploadToReleasesHost("war")
-            release.uploadToGithub("war")
-            release.createDistribution("jar")
-            release.uploadToReleasesHost("jar")
-            release.uploadToGithub("jar")
-            release.uploadNpm()
-        elif arg == 'npm-snapshot':
-            release.createJarOrWar("jar")
-            release.uploadNpm("next")
-        elif arg == 'npm-release':
-            release.createJarOrWar("jar")
-            release.uploadNpm()
-        elif arg == 'github-release':
-            isNightly = True
-            release.createOrUpdateGithubData()
-            release.createDistribution("war", isNightly)
-            release.uploadToReleasesHost("war", isNightly)
-            release.uploadToGithub("war")
-            release.createDistribution("jar", isNightly)
-            release.uploadToReleasesHost("jar", isNightly)
-            release.uploadToGithub("jar")
-        elif arg == 'nightly':
-            isNightly = True
-            release.createDistribution("war", isNightly)
-            release.uploadToReleasesHost("war", isNightly)
-            release.createDistribution("jar", isNightly)
-            release.uploadToReleasesHost("jar", isNightly)
-            release.uploadNpm("next")
-        elif arg == 'heroku':
-            release.uploadToHeroku()
-        elif arg == 'galimatias-bundle':
-            release = Release("galimatias")
-            release.createBundle()
-        elif arg == 'galimatias-snapshot':
-            release = Release("galimatias")
-            release.uploadToCentral(snapshotsRepoUrl)
-        elif arg == 'galimatias-release':
-            release = Release("galimatias")
-            release.uploadToCentral(stagingRepoUrl)
-        elif arg == 'langdetect-bundle':
-            release = Release("langdetect")
-            release.createBundle()
-        elif arg == 'langdetect-snapshot':
-            release = Release("langdetect")
-            release.uploadToCentral(snapshotsRepoUrl)
-        elif arg == 'langdetect-release':
-            release = Release("langdetect")
-            release.uploadToCentral(stagingRepoUrl)
-        elif arg == 'htmlparser-bundle':
-            release = Release("htmlparser")
-            release.createBundle()
-        elif arg == 'htmlparser-snapshot':
-            release = Release("htmlparser")
-            release.uploadToCentral(snapshotsRepoUrl)
-        elif arg == 'htmlparser-release':
-            release = Release("htmlparser")
-            release.uploadToCentral(stagingRepoUrl)
-        elif arg == 'cssvalidator-bundle':
-            release = Release("cssvalidator")
-            release.createBundle()
-        elif arg == 'cssvalidator-snapshot':
-            release = Release("cssvalidator")
-            release.uploadToCentral(snapshotsRepoUrl)
-        elif arg == 'cssvalidator-release':
-            release = Release("cssvalidator")
-            release.uploadToCentral(stagingRepoUrl)
-        elif arg == 'jing-bundle':
-            release = Release("jing")
-            release.createBundle()
-        elif arg == 'jing-snapshot':
-            release = Release("jing")
-            release.uploadToCentral(snapshotsRepoUrl)
-        elif arg == 'jing-release':
-            release = Release("jing")
-            release.uploadToCentral(stagingRepoUrl)
-        elif arg == 'jar':
-            release.createJarOrWar("jar")
-        elif arg == 'runtime-image':
-            release.createRuntimeImage()
-        elif arg == 'war':
-            release.createJarOrWar("war")
-        elif arg == 'localent':
-            prepareLocalEntityJar()
-        elif arg == 'deploy':
-            deployOverScp()
-        elif arg == 'tar':
-            createTarball()
-            createDepTarball()
-        elif arg == 'script':
-            if not stylesheet:
-                stylesheet = 'style.css'
-            if not script:
-                script = 'script.js'
-            if not icon:
-                icon = 'icon.png'
-            generateRunScript()
-        elif arg == 'test':
-            runTests()
-        elif arg == 'check':
-            if not stylesheet:
-                stylesheet = 'style.css'
-            if not script:
-                script = 'script.js'
-            if not icon:
-                icon = 'icon.png'
-            checkService()
-        elif arg == 'clean':
-            clean()
-        elif arg == 'realclean':
-            realclean()
-        elif arg == 'run':
-            if not stylesheet:
-                stylesheet = 'style.css'
-            if not script:
-                script = 'script.js'
-            if not icon:
-                icon = 'icon.png'
-            runValidator()
-        elif arg == 'all':
-            updateSubmodules()
-            downloadDependencies()
-            downloadLocalEntities()
-            prepareLocalEntityJar()
-            buildAll()
-            runTests()
-            if not stylesheet:
-                stylesheet = 'style.css'
-            if not script:
-                script = 'script.js'
-            if not icon:
-                icon = 'icon.png'
-            runValidator()
-        else:
-            print("Unknown option %s." % arg)
+def main(argv):
+    global gitCmd, javaCmd, jarCmd, javacCmd, javadocCmd, portNumber, \
+        controlPort, log4jProps, heapSize, stackSize, javaTargetVersion, \
+        html5specLink, aboutPage, denyList, userAgent, deploymentTarget, \
+        scriptAdditional, serviceName, resultsTitle, messagesLimit, \
+        pageTemplate, formTemplate, presetsFile, aboutFile, stylesheetFile, \
+        scriptFile, filterFile, disablePromiscuousSsl, \
+        connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
+        maxConnPerRoute, statistics, stylesheet, script, icon
+    if len(argv) == 0:
+        printHelp()
+    else:
+        release = Release()
+        release.runtimeDistroBasename = getRuntimeDistroBasename()
+        release.runtimeDistroFile = release.runtimeDistroBasename + ".zip"
+        for arg in argv:
+            if arg.startswith("--git="):
+                gitCmd = arg[6:]
+            elif arg.startswith("--java="):
+                javaCmd = arg[7:]
+            elif arg.startswith("--jar="):
+                jarCmd = arg[6:]
+            elif arg.startswith("--javac="):
+                javacCmd = arg[8:]
+            elif arg.startswith("--javadoc="):
+                javadocCmd = arg[10:]
+            elif arg.startswith("--jdk-bin="):
+                jdkBinDir = arg[10:]
+                javaCmd = os.path.join(jdkBinDir, "java")
+                jarCmd = os.path.join(jdkBinDir, "jar")
+                javacCmd = os.path.join(jdkBinDir, "javac")
+                javadocCmd = os.path.join(jdkBinDir, "javadoc")
+            elif arg.startswith("--port="):
+                portNumber = arg[7:]
+            elif arg.startswith("--control-port="):
+                controlPort = arg[15:]
+            elif arg.startswith("--log4j="):
+                log4jProps = arg[8:]
+            elif arg.startswith("--heap="):
+                heapSize = arg[7:]
+            elif arg.startswith("--stacksize="):
+                stackSize = arg[12:]
+            elif arg.startswith("--javaversion="):
+                javaTargetVersion = arg[14:]
+            elif arg.startswith("--html5link="):
+                html5specLink = arg[12:]
+            elif arg.startswith("--about="):
+                aboutPage = arg[8:]
+            elif arg.startswith("--denylist="):
+                denyList = arg[11:]
+            elif arg.startswith("--stylesheet="):
+                stylesheet = arg[13:]
+            elif arg.startswith("--icon="):
+                icon = arg[7:]
+            elif arg.startswith("--user-agent="):
+                userAgent = arg[13:]
+            elif arg.startswith("--scp-target="):
+                deploymentTarget = arg[13:]
+            elif arg.startswith("--script="):
+                script = arg[9:]
+            elif arg.startswith("--script-additional="):
+                scriptAdditional = arg[20:]
+            elif arg.startswith("--name="):
+                serviceName = arg[7:]
+            elif arg.startswith("--results-title="):
+                resultsTitle = arg[16:]
+            elif arg.startswith("--messages-limit="):
+                messagesLimit = int(arg[17:])
+            elif arg.startswith("--genericpath="):
+                (genericHost, genericPath) = splitHostSpec(arg[14:])
+            elif arg.startswith("--html5path="):
+                (html5Host, html5Path) = splitHostSpec(arg[12:])
+            elif arg.startswith("--parsetreepath="):
+                (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
+            elif arg.startswith("--page-template="):
+                pageTemplate = arg[16:]
+            elif arg.startswith("--form-template="):
+                formTemplate = arg[16:]
+            elif arg.startswith("--presets-file="):
+                presetsFile = arg[15:]
+            elif arg.startswith("--about-file="):
+                aboutFile = arg[13:]
+            elif arg.startswith("--stylesheet-file="):
+                stylesheetFile = arg[18:]
+            elif arg.startswith("--script-file="):
+                scriptFile = arg[14:]
+            elif arg.startswith("--filter-file="):
+                filterFile = arg[14:]
+            elif arg == '--promiscuous-ssl=on':
+                disablePromiscuousSsl = 0
+            elif arg == '--promiscuous-ssl=off':
+                disablePromiscuousSsl = 1
+            elif arg == '--no-self-update':
+                pass
+            elif arg == '--local':
+                pass
+            elif arg.startswith("--connection-timeout="):
+                connectionTimeoutSeconds = int(arg[21:])
+            elif arg.startswith("--socket-timeout="):
+                socketTimeoutSeconds = int(arg[17:])
+            elif arg.startswith("--max-requests="):
+                maxConnPerRoute = int(arg[15:])
+            elif arg.startswith("--max-total-connections="):
+                maxTotalConnections = int(arg[24:])
+            elif arg.startswith("--max-redirects="):
+                maxConnPerRoute = int(arg[16:])
+            elif arg == '--statistics':
+                statistics = 1
+            elif arg == '--help':
+                printHelp()
+            elif arg == 'update':
+                updateSubmodules()
+            elif arg == 'update-shallow':
+                updateSubmodulesShallow()
+            elif arg == 'dldeps':
+                downloadDependencies()
+                downloadLocalEntities()
+            elif arg == 'checkout':
+                pass
+            elif arg == 'build':
+                release.buildAll()
+            elif arg == 'docker-build':
+                dockerBuild()
+            elif arg == 'docker-run':
+                dockerRun()
+            elif arg == 'docker-push':
+                dockerPush()
+            elif arg == 'bundle':
+                release.createBundle()
+            elif arg == 'snapshot':
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'release':
+                release.uploadToCentral(stagingRepoUrl)
+                release.createDistribution("jar")
+                release.createDistribution("war")
+                release.createOrUpdateGithubData()
+                release.uploadToGithub()
+                release.uploadNpm()
+            elif arg == 'npm-snapshot':
+                release.createJarOrWar("jar")
+                release.uploadNpm("next")
+            elif arg == 'npm-release':
+                release.createJarOrWar("jar")
+                release.uploadNpm()
+            elif arg == 'github-release':
+                release.createDistribution("jar")
+                release.createDistribution("war")
+                release.createOrUpdateGithubData()
+                release.uploadToGithub()
+            elif arg == 'nightly':
+                isNightly = True
+                release.createDistribution("war", isNightly)
+                release.uploadToReleasesHost("war", isNightly)
+                release.createDistribution("jar", isNightly)
+                release.uploadToReleasesHost("jar", isNightly)
+                release.uploadNpm("next")
+            elif arg == 'heroku':
+                release.uploadToHeroku()
+            elif arg == 'galimatias-bundle':
+                release = Release("galimatias")
+                release.createBundle()
+            elif arg == 'galimatias-snapshot':
+                release = Release("galimatias")
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'galimatias-release':
+                release = Release("galimatias")
+                release.uploadToCentral(stagingRepoUrl)
+            elif arg == 'langdetect-bundle':
+                release = Release("langdetect")
+                release.createBundle()
+            elif arg == 'langdetect-snapshot':
+                release = Release("langdetect")
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'langdetect-release':
+                release = Release("langdetect")
+                release.uploadToCentral(stagingRepoUrl)
+            elif arg == 'htmlparser-bundle':
+                release = Release("htmlparser")
+                release.createBundle()
+            elif arg == 'htmlparser-snapshot':
+                release = Release("htmlparser")
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'htmlparser-release':
+                release = Release("htmlparser")
+                release.uploadToCentral(stagingRepoUrl)
+            elif arg == 'cssvalidator-bundle':
+                release = Release("cssvalidator")
+                release.createBundle()
+            elif arg == 'cssvalidator-snapshot':
+                release = Release("cssvalidator")
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'cssvalidator-release':
+                release = Release("cssvalidator")
+                release.uploadToCentral(stagingRepoUrl)
+            elif arg == 'jing-bundle':
+                release = Release("jing")
+                release.createBundle()
+            elif arg == 'jing-snapshot':
+                release = Release("jing")
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'jing-release':
+                release = Release("jing")
+                release.uploadToCentral(stagingRepoUrl)
+            elif arg == 'image':
+                release.createRuntimeImage()
+            elif arg == 'jar':
+                release.createJarOrWar("jar")
+            elif arg == 'war':
+                release.createJarOrWar("war")
+            elif arg == 'localent':
+                prepareLocalEntityJar()
+            elif arg == 'deploy':
+                deployOverScp()
+            elif arg == 'tar':
+                createTarball()
+                createDepTarball()
+            elif arg == 'script':
+                if not stylesheet:
+                    stylesheet = 'style.css'
+                if not script:
+                    script = 'script.js'
+                if not icon:
+                    icon = 'icon.png'
+                generateRunScript()
+            elif arg == 'test':
+                release.runTests()
+            elif arg == 'check':
+                if not stylesheet:
+                    stylesheet = 'style.css'
+                if not script:
+                    script = 'script.js'
+                if not icon:
+                    icon = 'icon.png'
+                release.checkService()
+            elif arg == 'clean':
+                clean()
+            elif arg == 'realclean':
+                realclean()
+            elif arg == 'run':
+                if not stylesheet:
+                    stylesheet = 'style.css'
+                if not script:
+                    script = 'script.js'
+                if not icon:
+                    icon = 'icon.png'
+                release.runValidator()
+            elif arg == 'all':
+                updateSubmodules()
+                downloadDependencies()
+                downloadLocalEntities()
+                prepareLocalEntityJar()
+                release.buildAll()
+                release.runTests()
+                if not stylesheet:
+                    stylesheet = 'style.css'
+                if not script:
+                    script = 'script.js'
+                if not icon:
+                    icon = 'icon.png'
+                release.runValidator()
+            else:
+                print("Unknown option %s." % arg)
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
