@@ -578,23 +578,39 @@ public class SimpleCommandLineValidator {
     private static void usage() {
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("    java -jar vnu.jar [--errors-only] [--Werror] [--exit-zero-always]");
-        System.out.println("         [--asciiquotes] [--user-agent USER_AGENT] [--no-langdetect]");
-        System.out.println("         [--no-stream] [--filterfile FILENAME] [--filterpattern PATTERN]");
-        System.out.println("         [--css] [--skip-non-css] [--also-check-css]");
-        System.out.println("         [--svg] [--skip-non-svg] [--also-check-svg]");
-        System.out.println("         [--html] [--skip-non-html] [--format gnu|xml|json|text]");
-        System.out.println("         [--help] [--verbose] [--version] FILES");
+        System.out.println("    vnu-runtime-image/bin/vnu OPTIONS FILES (Linux or macOS)");
+        System.out.println("    vnu-runtime-image\\bin\\vnu.bat OPTIONS FILES (Windows)");
+        System.out.println("    java -jar ~/vnu.jar OPTIONS FILES (any system with Java8+ installed)");
         System.out.println("");
-        System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
+        System.out.println("...where FILES are the documents to check, and OPTIONS are zero or more of:");
         System.out.println("");
-        System.out.println("    java -cp vnu.jar nu.validator.client.HttpClient FILES");
+        System.out.println("    --errors-only --Werror --exit-zero-always --asciiquotes");
+        System.out.println("    --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME");
+        System.out.println("    --filterpattern PATTERN --css --skip-non-css --also-check-css --svg");
+        System.out.println("    --skip-non-svg --also-check-svg --html --skip-non-html");
+        System.out.println("    --format gnu|xml|json|text --help --verbose --version");
         System.out.println("");
-        System.out.println("For detailed usage information, use \"java -jar vnu.jar --help\" or see:");
+        System.out.println("For detailed usage information, try the \"--help\" option or see:");
         System.out.println("");
         System.out.println("  http://validator.github.io/");
         System.out.println("");
         System.out.println("To read from stdin, use \"-\" as the filename, like this: \"java -jar vnu.jar - \".");
+        System.out.println("");
+        System.out.println("To run the checker as a standalone Web-based service, open a new terminal");
+        System.out.println("window and invoke the checker like this");
+        System.out.println("");
+        System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
+        System.out.println("    vnu-runtime-image/bin/java nu.validator.servlet.Main 8888");
+        System.out.println("    vnu-runtime-image\\bin\\java -cp vnu.jar nu.validator.servlet.Main 8888");
+        System.out.println("");
+        System.out.println("...then open http://127.0.0.1:8888 in a browser.");
+        System.out.println("");
+        System.out.println("After that, to check documents locally using the packaged HTTP client, do this:");
+        System.out.println("");
+        System.out.println("    java -cp vnu.jar nu.validator.client.HttpClient FILES");
+        System.out.println("    vnu-runtime-image/bin/java nu.validator.client.HttpClient FILES");
+        System.out.println("    vnu-runtime-image\\bin\\java nu.validator.client.HttpClient FILES");
+        System.out.println("");
     }
 
     private static void help() {
