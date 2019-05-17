@@ -397,8 +397,8 @@ the browser.
 
    [32]: https://validator.w3.org/nu/
 
-**Note:** If you get a `StackOverflowError` error when using the vnu.jar file,
-try adjusting the thread stack size by providing the `-Xss` option to java:
+**Note:** If you get a `StackOverflowError` error when using the checker, try
+adjusting the thread stack size by providing the `-Xss` option to java:
 
       java -Xss512k -cp ~/vnu.jar nu.validator.servlet.Main 8888
 
@@ -479,7 +479,7 @@ Other options are documented below.
 
 ### HTTP client options
 
-When using packaged HTTP client for sending documents to an instance of the
+When using the packaged HTTP client for sending documents to an instance of the
 checker HTTP service for checking, you can set Java system properties to control
 configuration options for the checker behavior.
 
