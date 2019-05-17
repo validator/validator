@@ -67,6 +67,7 @@ jdepsCmd = os.path.join(JAVA_HOME, 'bin', 'jdeps')
 jlinkCmd = os.path.join(JAVA_HOME, 'bin', 'jlink')
 javadocCmd = os.path.join(JAVA_HOME, 'bin', 'javadoc')
 herokuCmd = 'heroku'
+dockerCmd = 'docker'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
 tarCmd = 'tar'
 scpCmd = 'scp'
@@ -812,6 +813,43 @@ def buildValidator():
     buildEmitters()
     buildModule(buildRoot, "validator", classPath)
     release.createJarOrWar("jar")
+
+
+def dockerBuild():
+    args = [
+        dockerCmd,
+        "build",
+        "-t",
+        "validator/validator",
+        "."
+    ]
+    runCmd(args)
+
+
+def dockerRun():
+    args = [
+        dockerCmd,
+        "run",
+        "-it",
+        "--rm",
+        "-e",
+        "CONNECTION_TIMEOUT_SECONDS=15",
+        "-e",
+        "SOCKET_TIMEOUT_SECONDS=15",
+        "-p",
+        "8888:8888",
+        "validator/validator"
+    ]
+    runCmd(args)
+
+
+def dockerPush():
+    args = [
+        dockerCmd,
+        "push",
+        "validator/validator:latest",
+    ]
+    runCmd(args)
 
 
 def ownJarList():
@@ -1805,6 +1843,12 @@ else:
             pass
         elif arg == 'build':
             buildAll()
+        elif arg == 'docker-build':
+            dockerBuild()
+        elif arg == 'docker-run':
+            dockerRun()
+        elif arg == 'docker-push':
+            dockerPush()
         elif arg == 'bundle':
             release.createBundle()
         elif arg == 'snapshot':
