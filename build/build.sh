@@ -7,4 +7,4 @@ fi
 if [ -z "$PYTHON" ]; then
   PYTHON=python
 fi
-$PYTHON ./build/checker.py $args
+$PYTHON ./checker.py $args
