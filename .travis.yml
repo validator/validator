@@ -1,7 +1,7 @@
 language: java
 git:
   depth: 5
-  submodules: false # we do this ourselves later with `build.py update`
+  submodules: false # we do this ourselves later with `checker.py update`
 
 branches:
   except:
@@ -33,19 +33,19 @@ matrix:
 
 install:
   - export TOMCAT_VERSION=8.5.29
-  - export BUILD_SH=./build/build.sh
-  - $BUILD_SH update-shallow
-  - travis_retry $BUILD_SH dldeps
+  - export CHECKER_PY=./checker.py
+  - $PYTHON $CHECKER_PY update-shallow
+  - travis_retry $PYTHON $CHECKER_PY dldeps
 
 script:
   - if [ -z "$PYTHON" ]; then python --version; else $PYTHON --version; fi
-  - $BUILD_SH build
-  - $BUILD_SH jar
+  - $PYTHON $CHECKER_PY build
+  - $PYTHON $CHECKER_PY jar
   - java -jar ./build/dist/vnu.jar ./build/dist/index.html
   - java -jar ./build/dist/vnu.jar ./site/nu-about.html
   - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
-  - $BUILD_SH runtime-image
-  - $BUILD_SH war
+  - $PYTHON $CHECKER_PY runtime-image
+  - $PYTHON $CHECKER_PY war
   - jar xf ./build/dist-war/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
   - curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
   - unzip apache-tomcat-$TOMCAT_VERSION.zip
@@ -56,8 +56,8 @@ script:
   - curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
   - test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
   - if [ $? != 0 ]; then cat RESULTS; fi
-  - $BUILD_SH check
-  - $BUILD_SH test
+  - $PYTHON $CHECKER_PY check
+  - $PYTHON $CHECKER_PY test
 
 cache:
   directories:

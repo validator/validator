@@ -12,8 +12,7 @@ environment:
   ssh_secret:
     secure: rSGxPYhT1WpkysdoBRSgj65HwEu3ULsFCfOoP7zJ/YbaVihhK8RfjaHcHQi50JH0
   PYTHON: C:\Python36-x64
-  BUILD_PY: .\build\build.py
-  BUILD_ARGS: '--name="Ready to check" --results-title="Showing results" --page-template="site/NuPageEmitter.xml" --form-template="site/NuFormEmitter.xml" --about-file="site/nu-about.html" --script-file="site/nu-script.js" --stylesheet-file="site/nu-style.css"'
+  CHECKER_PY: .\checker.py
   matrix:
     - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
     - JAVA_HOME: C:\Program Files\Java\jdk11
@@ -23,26 +22,26 @@ install:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%JAVA_HOME%\bin;%PATH%
   - java -version
   - python --version
-  - python %BUILD_PY% update-shallow
-  - appveyor-retry python %BUILD_PY% dldeps
+  - python %CHECKER_PY% update-shallow
+  - appveyor-retry python %CHECKER_PY% dldeps
 
 build_script:
-  - python %BUILD_PY% %BUILD_ARGS% build
+  - python %CHECKER_PY% build
 
 test_script:
-  - python %BUILD_PY% jar
+  - python %CHECKER_PY% jar
   - java -jar .\build\dist\vnu.jar .\build\dist\index.html
   - java -jar .\build\dist\vnu.jar .\site\nu-about.html
-  - python %BUILD_PY% runtime-image
-  - python %BUILD_PY% war
-  - python %BUILD_PY% check
-  - python %BUILD_PY% test
+  - python %CHECKER_PY% runtime-image
+  - python %CHECKER_PY% war
+  - python %CHECKER_PY% check
+  - python %CHECKER_PY% test
   - bash -lc 'for file in build/dist/*.zip*; do touch $file.asc; done' # FIXME hack just to ensure the .asc files get uploaded during deploy
 
 cache:
   # cache the dependencies folder, and invalidate the cache
   # if any of the files right of the arrow change
-  - 'dependencies -> .appveyor.yml,%BUILD_PY%,build\build.xml'
+  - 'dependencies -> .appveyor.yml,%CHECKER_PY%,build\build.py,build\build.xml'
 
 before_deploy:
   - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
