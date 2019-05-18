@@ -649,7 +649,7 @@ open `http://127.0.0.1:8888/` in a Web browser to use the checker Web UI.
 
   5. Start the checker Python script:
 
-        python ./build/checker.py all
+        python ./checker.py all
 
 The first time you run the checker Python script, you’ll need to be online and
 the build will need time to download several megabytes of dependencies.
@@ -657,15 +657,15 @@ the build will need time to download several megabytes of dependencies.
 The steps above will build, test, and run the checker such that you can open
 `http://127.0.0.1:8888/` in a Web browser to use the checker Web UI.
 
-Use `python ./build/checker.py --help` to see command-line options for
-controlling the behavior of the script, as well as build-target names you can
-call separately; e.g.:
+Use `python ./checker.py --help` to see command-line options for controlling the
+behavior of the script, as well as build-target names you can call separately;
+e.g.:
 
-  * `python ./build/checker.py build` (to build only)
+  * `python ./checker.py build` (to build only)
 
-  * `python ./build/checker.py build test` (to build and test)
+  * `python ./checker.py build test` (to build and test)
 
-  * `python ./build/checker.py run` (to run only)
+  * `python ./checker.py run` (to run only)
 
-  * `python ./build/checker.py jar` (to compile `vnu.jar`)
+  * `python ./checker.py jar` (to compile `vnu.jar`)
 

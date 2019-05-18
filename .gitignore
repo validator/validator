@@ -1,5 +1,6 @@
 .ropeproject
 nbproject
+build/__init__.pyc
 build/build.pyc
 build/dist
 build/dist-war
