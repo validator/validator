@@ -816,6 +816,17 @@ possible values: "yes" or "no"
 
     <h3 id="http-servlet-options">HTTP servlet options</h3>
 
+<h4 id="nuvalidatorservletbindaddress">nu.validator.servlet.bind-address</h4>
+<pre>
+Specifies the socket timeout.
+
+default: 127.0.0.1
+
+possible values: The IP address of any network interface
+
+example: -Dnu.validator.servlet.bind-address=0.0.0.0
+</pre>
+
 <h4 id="nuvalidatorservletconnectiontimeout">nu.validator.servlet.connection-timeout</h4>
 <pre>
 Specifies the connection timeout.
@@ -858,14 +869,16 @@ for example, the <code>17.11.1</code> version:</p>
   docker run -it --rm -p 8888:8888 validator/validator:17.11.1
 </pre>
 
-<p>To run the checker with a connection timeout and socket timeout
-different than the default 5 seconds, use the
-<code>CONNECTION_TIMEOUT_SECONDS</code> and
+<p>To make the checker listen only on a specific interface (rather than
+listening on all interfaces) and run with a connection timeout and socket
+timeout different than the default 5 seconds, use the
+<code>BIND_ADDRESS</code>, <code>CONNECTION_TIMEOUT_SECONDS</code> and
 <code>SOCKET_TIMEOUT_SECONDS</code> environment variables:</p>
 <pre>
   docker run -it --rm \
-     <span class=option-value>-e CONNECTION_TIMEOUT_SECONDS=15</span> \
-     <span class=option-value>-e SOCKET_TIMEOUT_SECONDS=15</span> \
+     <span class=option-value>-e BIND_ADDRESS=127.0.0.1</span> \
+     <span class=option-value>-e CONNECTION_TIMEOUT_SECONDS=15</span> \
+     <span class=option-value>-e SOCKET_TIMEOUT_SECONDS=15</span> \
      -p 8888:8888 \
      validator/validator
 </pre>
