@@ -60,17 +60,22 @@ public class Main {
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
-    private static final void emitStartupMessage(Logger log4j, int port) {
-            log4j.debug("Checker service started at http://127.0.0.1:" + port);
+    private static final void emitStartupMessage(Logger log4j, String host,
+            int port) {
+        log4j.debug(String.format("Checker service started at http://%s:%s/",
+                host, port));
     }
 
     public static void main(String[] args) throws Exception {
-        if (!"1".equals(System.getProperty("nu.validator.servlet.read-local-log4j-properties"))) {
-            PropertyConfigurator.configure(Main.class.getClassLoader().getResource(
-                    "nu/validator/localentities/files/log4j.properties"));
+        if (!"1".equals(System.getProperty(
+                "nu.validator.servlet.read-local-log4j-properties"))) {
+            PropertyConfigurator.configure(
+                    Main.class.getClassLoader().getResource(
+                            "nu/validator/localentities/files/log4j.properties"));
         } else {
-            PropertyConfigurator.configure(System.getProperty(
-                    "nu.validator.servlet.log4j-properties", "log4j.properties"));
+            PropertyConfigurator.configure(
+                    System.getProperty("nu.validator.servlet.log4j-properties",
+                            "log4j.properties"));
         }
         Logger log4j = Logger.getLogger(Main.class);
         ConsoleAppender console = new ConsoleAppender();
@@ -121,7 +126,7 @@ public class Main {
             }
 
             server.start();
-            emitStartupMessage(log4j, port);
+            emitStartupMessage(log4j, serverConnector.getHost(), port);
 
             try (ServerSocket serverSocket = new ServerSocket(stopPort, 0,
                     InetAddress.getByName("127.0.0.1"));
@@ -132,7 +137,7 @@ public class Main {
             }
         } else {
             server.start();
-            emitStartupMessage(log4j, port);
+            emitStartupMessage(log4j, serverConnector.getHost(), port);
         }
     }
 }
