@@ -110,6 +110,7 @@ distDir = os.path.join(buildRoot, "build", "dist")
 distWarDir = os.path.join(buildRoot, "build", "dist-war")
 vnuJar = os.path.join(distDir, "vnu.jar")
 dependencyDir = os.path.join(buildRoot, "dependencies")
+extrasDir = os.path.join(buildRoot, "extras")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
 cssValidatorDir = os.path.join(buildRoot, "css-validator")
@@ -174,7 +175,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/javax/mail/mail/1.4.7/mail-1.4.7.jar", "77f53ff0c78ba43c4812ecc9f53e20f8"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),  # nopep8
     ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),  # nopep8
-    ("https://repo1.maven.org/maven2/log4j/apache-log4j-extras/1.2.17/apache-log4j-extras-1.2.17.jar", "f32ed7ae770c83a4ac6fe6714f98f1bd"),  # nopep8
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),  # nopep8
@@ -209,7 +209,6 @@ moduleDependencyPackages = [
 ]
 
 runDependencyJars = [
-    "apache-log4j-extras-1.2.17.jar",
     "commons-codec-1.10.jar",
     "commons-fileupload-1.3.1.jar",
     "commons-io-2.4.jar",
@@ -399,6 +398,10 @@ def buildModule(rootDir, jarName, classPath):
     shutil.copyfile(jarFile, os.path.join(jarsDir, jarName + ".jar"))
     removeIfDirExists(classDir)
     removeIfDirExists(modDistDir)
+
+
+def extrasJarPaths():
+    return findFilesWithExtension(extrasDir, "jar")
 
 
 def dependencyJarPaths(depList=dependencyJars):
@@ -884,7 +887,7 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
 
     if _type == "jar":
         args.append('-classpath')
-        args.append(vnuJar)
+        args.append(os.pathsep.join(extrasJarPaths() + [vnuJar]))
 
     if stackSize != "":
         args.append('-Xss' + stackSize + 'k')
@@ -1653,11 +1656,22 @@ def updateSubmodulesShallow():
     runCmd([gitCmd, 'submodule', 'update', '--init', '--depth', '1'])
 
 
+def downloadExtras():
+    url = "https://repo1.maven.org/maven2/log4j/apache-log4j-extras/1.2.17/apache-log4j-extras-1.2.17.jar"  # nopep8
+    md5sum = "f32ed7ae770c83a4ac6fe6714f98f1bd"
+    extrasDir = os.path.join(buildRoot, "extras")
+    ensureDirExists(extrasDir)
+    path = os.path.join(extrasDir, url[url.rfind("/") + 1:])
+    if not os.path.exists(path):
+        fetchUrlTo(url, path, md5sum)
+
+
 def downloadDependencies():
     for url, md5sum in dependencyPackages:
         downloadDependency(url, md5sum)
     for url, md5sum in moduleDependencyPackages:
         downloadDependency(url, md5sum)
+    downloadExtras()
 
 
 def splitHostSpec(spec):
@@ -1735,7 +1749,7 @@ def main(argv):
         html5specLink, aboutPage, denyList, userAgent, deploymentTarget, \
         scriptAdditional, serviceName, resultsTitle, messagesLimit, \
         pageTemplate, formTemplate, presetsFile, aboutFile, stylesheetFile, \
-        scriptFile, filterFile, disablePromiscuousSsl, \
+        scriptFile, filterFile, disablePromiscuousSsl, extrasDir, \
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress
     if len(argv) == 0:
