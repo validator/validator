@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 ENV LANG C.UTF-8
 ENV CONNECTION_TIMEOUT_SECONDS 5
 ENV SOCKET_TIMEOUT_SECONDS 5
+ENV BIND_ADDRESS 0.0.0.0
 ENV PATH=/vnu-runtime-image/bin:$PATH
 EXPOSE 8888
 # hadolint ignore=DL3025
@@ -47,4 +48,5 @@ CMD CONNECTION_TIMEOUT=$((CONNECTION_TIMEOUT_SECONDS * 1000)); \
     ./vnu-runtime-image/bin/java \
     -Dnu.validator.servlet.connection-timeout=$CONNECTION_TIMEOUT \
     -Dnu.validator.servlet.socket-timeout=$SOCKET_TIMEOUT \
+    -Dnu.validator.servlet.bind-address=$BIND_ADDRESS \
     -m vnu/nu.validator.servlet.Main 8888
