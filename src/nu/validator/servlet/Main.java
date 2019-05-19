@@ -54,6 +54,9 @@ import org.eclipse.jetty.util.thread.QueuedThreadPool;
  */
 public class Main {
 
+    private static final String BIND_ADDRESS = System.getProperty(
+            "nu.validator.servlet.bind-address", "127.0.0.1");
+
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
@@ -101,6 +104,7 @@ public class Main {
                 new HTTP2CServerConnectionFactory(new HttpConfiguration()));
         int port = args.length > 0 ? Integer.parseInt(args[0]) : 8888;
         serverConnector.setPort(port);
+        serverConnector.setHost(BIND_ADDRESS);
         server.setConnectors(new Connector[] { serverConnector });
 
         int stopPort = -1;

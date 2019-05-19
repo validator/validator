@@ -127,6 +127,7 @@ stylesheetFile = os.path.join("site", "style.css")
 scriptFile = os.path.join("site", "script.js")
 filterFile = os.path.join("resources", "message-filters.txt")
 
+bindAddress = '127.0.0.1'
 portNumber = '8888'
 controlPort = None
 log4jProps = 'resources/log4j.properties'
@@ -851,6 +852,7 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
         '-Dnu.validator.datatype.warn=true',
         '-Dnu.validator.messages.limit=%d' % messagesLimit,
         '-Dnu.validator.servlet.about-page=' + aboutPage,
+        '-Dnu.validator.servlet.bind-address=' + bindAddress,
         '-Dnu.validator.servlet.deny-list=' + denyList,
         '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),  # nopep8
         '-Dnu.validator.servlet.filterfile=' + filterFile,
@@ -1692,6 +1694,7 @@ def printHelp():
     print("                                of error+warning messages to report")
     print("                                for any document before stopping")
     print("  --name=Validator.nu        -- Sets service name")
+    print("  --bind-address=127.0.0.1   -- Sets server bind address")
     print("  --port=8888                -- Sets server port number")
     print("  --promiscuous-ssl=on       -- Don't check SSL/TLS trust chain")
     print("  --results-title=Validation results")
@@ -1734,7 +1737,7 @@ def main(argv):
         pageTemplate, formTemplate, presetsFile, aboutFile, stylesheetFile, \
         scriptFile, filterFile, disablePromiscuousSsl, \
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
-        maxConnPerRoute, statistics, stylesheet, script, icon
+        maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress
     if len(argv) == 0:
         printHelp()
     else:
@@ -1758,6 +1761,8 @@ def main(argv):
                 jarCmd = os.path.join(jdkBinDir, "jar")
                 javacCmd = os.path.join(jdkBinDir, "javac")
                 javadocCmd = os.path.join(jdkBinDir, "javadoc")
+            elif arg.startswith("--bind-address="):
+                bindAddress = arg[15:]
             elif arg.startswith("--port="):
                 portNumber = arg[7:]
             elif arg.startswith("--control-port="):
