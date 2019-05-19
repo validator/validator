@@ -208,35 +208,6 @@ moduleDependencyPackages = [
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/1.7.9/slf4j-log4j12-1.7.9.jar", "54528e0b3ea7656072a9b591248c6457"),  # nopep8
 ]
 
-runDependencyJars = [
-    "commons-codec-1.10.jar",
-    "commons-fileupload-1.3.1.jar",
-    "commons-io-2.4.jar",
-    "commons-logging-1.2.jar",
-    "commons-logging-1.2-adapters.jar",
-    "commons-logging-1.2-api.jar",
-    "httpcore-4.4.jar",
-    "httpclient-4.4.jar",
-    "icu4j-58.2.jar",
-    "salvation-2.6.0.jar",
-    "javax.servlet-api-3.1.0.jar",
-    "jchardet-1.0.jar",
-    "http2-common-9.4.18.v20190429.jar",
-    "http2-hpack-9.4.18.v20190429.jar",
-    "http2-server-9.4.18.v20190429.jar",
-    "jetty-http-9.4.18.v20190429.jar",
-    "jetty-io-9.4.18.v20190429.jar",
-    "jetty-security-9.4.18.v20190429.jar",
-    "jetty-server-9.4.18.v20190429.jar",
-    "jetty-servlet-9.4.18.v20190429.jar",
-    "jetty-servlets-9.4.18.v20190429.jar",
-    "jetty-util-9.4.18.v20190429.jar",
-    "jetty-util-ajax-9.4.18.v20190429.jar",
-    "log4j-1.2.17.jar",
-    "mail-1.4.7.jar",
-]
-
-dependencyJars = runDependencyJars
 
 javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
@@ -404,9 +375,9 @@ def extrasJarPaths():
     return findFilesWithExtension(extrasDir, "jar")
 
 
-def dependencyJarPaths(depList=dependencyJars):
+def dependencyJarPaths():
     extrasDir = os.path.join(buildRoot, "extras")
-    pathList = [os.path.join(dependencyDir, dep) for dep in depList]
+    pathList = findFilesWithExtension(dependencyDir, "jar")
     for jar in ["saxon9.jar", "isorelax.jar"]:
         pathList += [os.path.join(jingTrangDir, "lib", jar)]
     ensureDirExists(extrasDir)
@@ -732,9 +703,7 @@ def buildHtmlParser():
 
 
 def buildLangdetect():
-    classPath = os.pathsep.join(dependencyJarPaths() +
-                                [os.path.join(dependencyDir,
-                                              "jetty-util-ajax-9.2.25.v20180606.jar")])  # nopep8
+    classPath = os.pathsep.join(dependencyJarPaths())
     buildModule(os.path.join(buildRoot, "langdetect"), "langdetect", classPath)
 
 
@@ -1479,7 +1448,7 @@ def createDepTarball():
         tarCmd,
         "zcf",
         os.path.join(buildRoot, "deps.tar.gz"),
-    ] + dependencyJarPaths(runDependencyJars)
+    ] + dependencyJarPaths()
     runCmd(args)
 
 
