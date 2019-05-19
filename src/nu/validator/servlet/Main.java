@@ -65,12 +65,6 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        Logger log4j = Logger.getLogger(Main.class);
-        ConsoleAppender console = new ConsoleAppender();
-        console.setLayout(new PatternLayout("%n%m%n"));
-        console.activateOptions();
-        log4j.setAdditivity(false);
-        log4j.addAppender(console);
         if (!"1".equals(System.getProperty("nu.validator.servlet.read-local-log4j-properties"))) {
             PropertyConfigurator.configure(Main.class.getClassLoader().getResource(
                     "nu/validator/localentities/files/log4j.properties"));
@@ -78,6 +72,12 @@ public class Main {
             PropertyConfigurator.configure(System.getProperty(
                     "nu.validator.servlet.log4j-properties", "log4j.properties"));
         }
+        Logger log4j = Logger.getLogger(Main.class);
+        ConsoleAppender console = new ConsoleAppender();
+        console.setLayout(new PatternLayout("%n%m%n"));
+        console.activateOptions();
+        log4j.setAdditivity(false);
+        log4j.addAppender(console);
 
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setContextPath("/");
