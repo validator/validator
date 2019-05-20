@@ -59,13 +59,6 @@ except ImportError:
     CAFILE = None
 
 javaTargetVersion = '1.8'
-JAVA_HOME = os.getenv('JAVA_HOME')
-javacCmd = os.path.join(JAVA_HOME, 'bin', 'javac')
-jarCmd = os.path.join(JAVA_HOME, 'bin', 'jar')
-javaCmd = os.path.join(JAVA_HOME, 'bin', 'java')
-jdepsCmd = os.path.join(JAVA_HOME, 'bin', 'jdeps')
-jlinkCmd = os.path.join(JAVA_HOME, 'bin', 'jlink')
-javadocCmd = os.path.join(JAVA_HOME, 'bin', 'javadoc')
 herokuCmd = 'heroku'
 dockerCmd = 'docker'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
@@ -75,16 +68,6 @@ gitCmd = 'git'
 mvnCmd = 'mvn'
 gpgCmd = 'gpg'
 npmCmd = 'npm'
-
-try:
-    javaRawVersion = subprocess.check_output([javaCmd, '-version'],
-                                             universal_newlines=True,
-                                             stderr=subprocess.STDOUT)
-except TypeError:
-    javaRawVersion = subprocess.check_output([javaCmd, '-version'],
-                                             stderr=subprocess.STDOUT)
-javaEnvVersion = int(javaRawVersion
-                     .splitlines()[0].split()[2].strip('"').split('.')[0])
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
@@ -1412,11 +1395,6 @@ class Release():
             sys.exit(1)
 
     def buildAll(self):
-        if 'JAVA_HOME' not in os.environ:
-            print("Error: The JAVA_HOME environment variable is not set.")
-            print("Set the JAVA_HOME environment variable to the pathname" +
-                  " of the directory where your JDK is installed.")
-            sys.exit(1)
         if not os.path.exists(os.path.join(buildRoot, "dependencies")):
             downloadDependencies()
             downloadLocalEntities()
@@ -1720,10 +1698,33 @@ def main(argv):
         pageTemplate, formTemplate, presetsFile, aboutFile, stylesheetFile, \
         scriptFile, filterFile, disablePromiscuousSsl, extrasDir, \
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
-        maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress
+        maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
+        jdepsCmd, jlinkCmd, javaEnvVersion
     if len(argv) == 0:
         printHelp()
     else:
+        if 'JAVA_HOME' not in os.environ:
+            print("Error: The JAVA_HOME environment variable is not set.")
+            print("Set the JAVA_HOME environment variable to the pathname" +
+                  " of the directory where your JDK is installed.")
+            sys.exit(1)
+        JAVA_HOME = os.getenv('JAVA_HOME')
+        javacCmd = os.path.join(JAVA_HOME, 'bin', 'javac')
+        jarCmd = os.path.join(JAVA_HOME, 'bin', 'jar')
+        javaCmd = os.path.join(JAVA_HOME, 'bin', 'java')
+        jdepsCmd = os.path.join(JAVA_HOME, 'bin', 'jdeps')
+        jlinkCmd = os.path.join(JAVA_HOME, 'bin', 'jlink')
+        javadocCmd = os.path.join(JAVA_HOME, 'bin', 'javadoc')
+        try:
+            javaRawVersion = subprocess.check_output([javaCmd, '-version'],
+                                                     universal_newlines=True,
+                                                     stderr=subprocess.STDOUT)
+        except TypeError:
+            javaRawVersion = subprocess.check_output([javaCmd, '-version'],
+                                                     stderr=subprocess.STDOUT)
+        javaEnvVersion = \
+            int(javaRawVersion
+                .splitlines()[0].split()[2].strip('"').split('.')[0])
         release = Release()
         release.runtimeDistroBasename = getRuntimeDistroBasename()
         release.runtimeDistroFile = release.runtimeDistroBasename + ".zip"
