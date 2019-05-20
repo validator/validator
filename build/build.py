@@ -128,7 +128,7 @@ stylesheetFile = os.path.join("site", "style.css")
 scriptFile = os.path.join("site", "script.js")
 filterFile = os.path.join("resources", "message-filters.txt")
 
-bindAddress = '127.0.0.1'
+bindAddress = '0.0.0.0'
 portNumber = '8888'
 controlPort = None
 log4jProps = 'resources/log4j.properties'
