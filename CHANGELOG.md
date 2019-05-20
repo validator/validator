@@ -13,7 +13,7 @@ NN XXX NNNN
   - Include binary runtime images in release (alternative to jar/war)
   - Dockerfile: Switch to using binary runtime image rather than jar
   - Add checker.py script to repo (for building/testing/running checker)
-  - Change Web-based service to bind by default only to 127.0.0.1
+  - Add option to bind to specific IP address (rather than all interfaces)
 
 # 18.11.5
 05 November 2018

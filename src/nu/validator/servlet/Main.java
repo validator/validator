@@ -55,7 +55,7 @@ import org.eclipse.jetty.util.thread.QueuedThreadPool;
 public class Main {
 
     private static final String BIND_ADDRESS = System.getProperty(
-            "nu.validator.servlet.bind-address", "127.0.0.1");
+            "nu.validator.servlet.bind-address", "0.0.0.0");
 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));

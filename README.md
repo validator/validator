@@ -572,13 +572,13 @@ checker service, as documented at
 
 #### nu.validator.servlet.bind-address
 
-    Specifies the socket timeout.
+    Binds the validator service to the specified IP address.
 
-    default: 127.0.0.1
+    default: 0.0.0.0 [causes the checker to listen on all interfaces]
 
     possible values: The IP address of any network interface
 
-    example: -Dnu.validator.servlet.bind-address=0.0.0.0
+    example: -Dnu.validator.servlet.bind-address=127.0.0.1
 
 #### nu.validator.servlet.connection-timeout
 

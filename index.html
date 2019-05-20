@@ -601,7 +601,7 @@ environment variable, you can invoke the checker with just
 </pre>
 
     <p>Then open
-    <a href="http://127.0.0.1:8888">http://127.0.0.1:8888</a>
+    <a href="http://0.0.0.0:8888">http://0.0.0.0:8888</a>
     in a browser. (To listen on a different port, replace <code
     class=arg>8888</code> with the port number.)
 
@@ -818,13 +818,13 @@ possible values: "yes" or "no"
 
 <h4 id="nuvalidatorservletbindaddress">nu.validator.servlet.bind-address</h4>
 <pre>
-Specifies the socket timeout.
+Binds the validator service to the specified IP address.
 
-default: 127.0.0.1
+default: 0.0.0.0 [causes the checker to listen on all interfaces]
 
 possible values: The IP address of any network interface
 
-example: -Dnu.validator.servlet.bind-address=0.0.0.0
+example: -Dnu.validator.servlet.bind-address=127.0.0.1
 </pre>
 
 <h4 id="nuvalidatorservletconnectiontimeout">nu.validator.servlet.connection-timeout</h4>
@@ -904,7 +904,7 @@ compose</code>, create a Compose file named <code>docker-compose.yml</code>
 <h2>Build instructions</h2>
 <p>
 Follow the steps below to build, test, and run the checker such that you can open
-<code>http://127.0.0.1:8888/</code> in a Web browser to use the checker Web UI.
+<code>http://0.0.0.0:8888/</code> in a Web browser to use the checker Web UI.
 
 <div class=set>
 <ol>
@@ -931,7 +931,7 @@ and the build will need time to download several megabytes of dependencies.
 
 <p>
 The steps above will build, test, and run the checker such that you can open
-<code>http://127.0.0.1:8888/</code> in a Web browser to use the checker Web UI.
+<code>http://0.0.0.0:8888/</code> in a Web browser to use the checker Web UI.
 
 <p>
 Use <code>python ./checker.py --help</code> to see command-line
