@@ -369,27 +369,27 @@ following are detailed instructions on using them.
    [30]: https://github.com/validator/validator/releases/latest
 
 **Note:** Throughout these instructions, replace `~/vnu.jar` with the actual
-path to that jar file on your system, and replace `vnu-runtime-image/bin/vnu`
-and `vnu-runtime-image\bin\vnu.bat` with the actual path to the `vnu` or
-`vnu.bat` program on your system — or if you add the `vnu-runtime-image/bin` or
-`vnu-runtime-image\bin` directory your system `PATH` environment variable, you
-can invoke the checker with just `vnu`.
+path to that jar file on your system, and replace `vnu-runtime-image/bin/java`
+and `vnu-runtime-image\bin\java.exe` with the actual path to the checker `java`
+or `java.exe` program on your system — or if you add the `vnu-runtime-image/bin`
+or `vnu-runtime-image\bin` directory your system `PATH` environment variable,
+you can invoke the checker with just `java nu.validator.servlet.Main 8888`.
 
 ### Standalone web server
 
 To run the checker as a standalone service (using a built-in Jetty server), open
 a new terminal window and invoke the checker like this:
 
-    java -cp ~/vnu.jar            nu.validator.servlet.Main 8888
+    java -cp ~/vnu.jar              nu.validator.servlet.Main 8888
 
-    vnu-runtime-image/bin/vnu     nu.validator.servlet.Main 8888
+    vnu-runtime-image/bin/java      nu.validator.servlet.Main 8888
 
-    vnu-runtime-image\bin\vnu.bat nu.validator.servlet.Main 8888
+    vnu-runtime-image\bin\java.exe  nu.validator.servlet.Main 8888
 
-Then open [http://127.0.0.1:8888][31] in a browser. (To listen on a different
+Then open [http://0.0.0.0:8888][31] in a browser. (To listen on a different
 port, replace `8888` with the port number.)
 
-   [31]: http://127.0.0.1:8888
+   [31]: http://0.0.0.0:8888
 
 You’ll see a form similar to [validator.w3.org/nu][32] that allows you to enter
 the URL of an HTML document and have the results for that document displayed in
@@ -451,13 +451,13 @@ either send documents to a locally-running instance of the checker HTTP service
 To check documents locally using the packaged HTTP client, do this:
 
   1. Start up the checker as a local HTTP service, as described in the
-  Standalone web server section.
+  **Standalone web server** section.
 
   2. Open a new terminal window and invoke the HTTP client like this:
 
-        java -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
+    java -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
 
-      vnu-runtime-image/bin/vnu nu.validator.client.HttpClient FILE.html...
+    vnu-runtime-image/bin/vnu nu.validator.client.HttpClient FILE.html...
 
 To send documents to an instance of the checker on the Web, such as
 [html5.validator.nu/][35], use the nu.validator.client.host and
@@ -641,7 +641,7 @@ following:
 ## Build instructions
 
 Follow the steps below to build, test, and run the checker such that you can
-open `http://127.0.0.1:8888/` in a Web browser to use the checker Web UI.
+open `http://0.0.0.0:8888/` in a Web browser to use the checker Web UI.
 
   1. Make sure you have git, python, and JDK 8 or above installed.
 
@@ -667,7 +667,7 @@ The first time you run the checker Python script, you’ll need to be online and
 the build will need time to download several megabytes of dependencies.
 
 The steps above will build, test, and run the checker such that you can open
-`http://127.0.0.1:8888/` in a Web browser to use the checker Web UI.
+`http://0.0.0.0:8888/` in a Web browser to use the checker Web UI.
 
 Use `python ./checker.py --help` to see command-line options for controlling the
 behavior of the script, as well as build-target names you can call separately;

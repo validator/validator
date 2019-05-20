@@ -572,13 +572,13 @@ Shows the checker version number.
 <p class=note><b>Note:</b>
 Throughout these instructions, replace <code>~/vnu.jar</code> with the
 actual path to that jar file on your system, and replace
-<code>vnu-runtime-image/bin/vnu</code> and
-<code>vnu-runtime-image\bin\vnu.bat</code> with the actual path to the
-<code>vnu</code> or <code>vnu.bat</code> program on your system — or if you
-add the <code>vnu-runtime-image/bin</code> or
+<code>vnu-runtime-image/bin/java</code> and
+<code>vnu-runtime-image\bin\java.exe</code> with the actual path to the
+checker <code>java</code> or <code>java.exe</code> program on your system —
+or if you add the <code>vnu-runtime-image/bin</code> or
 <code>vnu-runtime-image\bin</code> directory your system <code>PATH</code>
 environment variable, you can invoke the checker with just
-<code>vnu</code>.
+<code>java nu.validator.servlet.Main 8888</code>.
 
 <p class=links>
 <a href="#standalone">Standalone</a> ·
@@ -593,11 +593,11 @@ environment variable, you can invoke the checker with just
     Jetty server), open a new terminal window and invoke the checker
     like this:
 
-<pre>java -cp ~/vnu.jar            <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
+<pre>java -cp ~/vnu.jar              <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
 </pre>
-<pre>vnu-runtime-image/bin/vnu     <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
+<pre>vnu-runtime-image/bin/java      <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
 </pre>
-<pre>vnu-runtime-image\bin\vnu.bat <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
+<pre>vnu-runtime-image\bin\java.exe  <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
 </pre>
 
     <p>Then open
@@ -681,15 +681,13 @@ INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
     To check documents locally using the packaged HTTP client, do this:
     <ol>
       <li>Start up the checker as a local HTTP service, as described in the
-      <a href="#standalone">Standalone web server</a>
+      <b><a href="#standalone">Standalone web server</a></b>
       section.
       <li>Open a new terminal window and invoke the HTTP client like this:
 
-<pre>
-  java -cp ~/vnu.jar <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
+<pre>java -cp ~/vnu.jar <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
 </pre>
-<pre>
-  vnu-runtime-image/bin/vnu <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
+<pre>vnu-runtime-image/bin/vnu <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
 </pre>
 </ol>
      To send documents to an instance of the checker on the Web, such as
