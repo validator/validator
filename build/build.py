@@ -265,7 +265,16 @@ def findFiles(directory):
     for root, dirs, files in os.walk(directory):
         for filename in files:
             candidate = os.path.join(root, filename)
-            if candidate.find("/.svn") == -1:
+            rv.append(candidate)
+    return rv
+
+
+def findFilesShallow(directory):
+    rv = []
+    for root, dirs, files in os.walk(directory):
+        if root[len(directory)+1:].count(os.sep) < 1:
+            for filename in files:
+                candidate = os.path.join(root, filename)
                 rv.append(candidate)
     return rv
 
@@ -964,17 +973,21 @@ class Release():
         o.close
 
     def writeHashes(self, whichDir):
-        for filename in findFiles(whichDir):
+        files = [f for f in os.listdir(whichDir)
+                 if os.path.isfile(os.path.join(whichDir, f))]
+        for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
-            self.writeHash(filename, "md5")
-            self.writeHash(filename, "sha1")
+            self.writeHash(os.path.join(whichDir, filename), "md5")
+            self.writeHash(os.path.join(whichDir, filename), "sha1")
 
     def sign(self, whichDir):
-        for filename in findFiles(whichDir):
+        files = [f for f in os.listdir(whichDir)
+                 if os.path.isfile(os.path.join(whichDir, f))]
+        for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
-            runCmd([gpgCmd, '--yes', '-ab', filename])
+            runCmd([gpgCmd, '--yes', '-ab', os.path.join(whichDir, filename)])
 
     def downloadMavenAntTasksJar(self):
         url = "https://repo1.maven.org/maven2/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar"  # nopep8
@@ -1065,7 +1078,6 @@ class Release():
         shutil.make_archive(self.runtimeDistroBasename, 'zip', ".",
                             self.vnuImageDirname)
         os.chdir(os.path.join('..', '..'))
-        removeIfDirExists(self.vnuImageDir)
         self.writeHashes(distDir)
 
     def createDistribution(self, jarOrWar, isNightly=False):
@@ -1350,17 +1362,10 @@ class Release():
                 or not os.path.exists(os.path.join(distDir,
                                                    self.runtimeDistroFile)):
             self.createRuntimeImage()
-        print("Checking service using runtime image...")
-        removeIfDirExists(self.vnuImageDirname)
-        zipExtract(os.path.join(distDir, self.runtimeDistroFile), ".")
-        for dirname, subdirs, files in os.walk(self.vnuImageDirname):
-            for f in files:
-                os.chmod(os.path.join(dirname, f), 0o777)
-        args = getRunArgs(str(int(heapSize) * 1024), "runtime-image")
-        daemon = subprocess.Popen([os.path.join(".", self.vnuImageDirname,
+        args = getRunArgs(str(int(heapSize) * 1024), "image")
+        daemon = subprocess.Popen([os.path.join(distDir, self.vnuImageDirname,
                                                 "bin", "java")] + args)
         self.checkUrlWithService(url, daemon)
-        removeIfDirExists(self.vnuImageDirname)
 
     def checkService(self):
         doc = miniDoc.replace(" ", "%20")
@@ -1655,7 +1660,7 @@ def printHelp():
     print("                                of error+warning messages to report")
     print("                                for any document before stopping")
     print("  --name=Validator.nu        -- Sets service name")
-    print("  --bind-address=127.0.0.1   -- Sets server bind address")
+    print("  --bind-address=0.0.0.0     -- Sets server bind address")
     print("  --port=8888                -- Sets server port number")
     print("  --promiscuous-ssl=on       -- Don't check SSL/TLS trust chain")
     print("  --results-title=Validation results")
