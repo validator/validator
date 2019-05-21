@@ -26,9 +26,12 @@ package nu.validator.servlet;
 import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.EnumSet;
+import java.util.Enumeration;
 
 import javax.servlet.DispatcherType;
 
@@ -60,8 +63,31 @@ public class Main {
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
+    private static final void emitInterfaceInformation(Logger log4j) {
+        String ip;
+        try {
+            Enumeration<NetworkInterface> interfaces = //
+                NetworkInterface.getNetworkInterfaces();
+            log4j.debug("");
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                if (iface.isLoopback() || !iface.isUp())
+                    continue;
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                while(addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    ip = addr.getHostAddress();
+                    log4j.debug(String.format("%10s %s", //
+                                iface.getDisplayName(), ip)); }
+            }
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static final void emitStartupMessage(Logger log4j, String host,
             int port) {
+        log4j.debug("");
         log4j.debug(String.format("Checker service started at http://%s:%s/",
                 host, port));
     }
@@ -79,7 +105,7 @@ public class Main {
         }
         Logger log4j = Logger.getLogger(Main.class);
         ConsoleAppender console = new ConsoleAppender();
-        console.setLayout(new PatternLayout("%n%m%n"));
+        console.setLayout(new PatternLayout("%m%n"));
         console.activateOptions();
         log4j.setAdditivity(false);
         log4j.addAppender(console);
@@ -126,6 +152,7 @@ public class Main {
             }
 
             server.start();
+            emitInterfaceInformation(log4j);
             emitStartupMessage(log4j, serverConnector.getHost(), port);
 
             try (ServerSocket serverSocket = new ServerSocket(stopPort, 0,
@@ -137,6 +164,7 @@ public class Main {
             }
         } else {
             server.start();
+            emitInterfaceInformation(log4j);
             emitStartupMessage(log4j, serverConnector.getHost(), port);
         }
     }
