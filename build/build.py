@@ -1045,7 +1045,8 @@ class Release():
     def createRuntimeImage(self):
         if javaEnvVersion < 9:
             return
-        self.createJarOrWar("jar")
+        if not os.path.exists(vnuJar):
+            self.createJarOrWar("jar")
         runCmd([jdepsCmd, '--generate-open-module', distDir, vnuJar])
         f = open(os.path.join(self.vnuModuleInfoDir, "module-info.java"), 'r+')
         lines = f.readlines()
