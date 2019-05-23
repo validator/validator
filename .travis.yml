@@ -5,7 +5,7 @@ git:
 
 branches:
   except:
-    - /^(osx|linux|jar|war)$/
+    - /^(osx|linux|windows|jar|war)$/
 
 matrix:
   include:
