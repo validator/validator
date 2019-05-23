@@ -22,7 +22,7 @@
 
 package nu.validator.messages.types;
 
-class Warning extends Info {
+class Warning extends MessageType {
 
     private final static char[] PRESENTATION_NAME = "Warning".toCharArray();
     
@@ -31,11 +31,8 @@ class Warning extends Info {
         return PRESENTATION_NAME;
     }
 
-    /**
-     * @see nu.validator.messages.types.MessageType#getSubType()
-     */
     @Override
-    public String getSubType() {
+    public String getSuperType() {
         return "warning";
     }
 }
