@@ -616,13 +616,11 @@ the `17.11.1` version:
 
       docker run -it --rm -p 8888:8888 validator/validator:17.11.1
 
-To make the checker listen only on a specific interface (rather than listening
-on all interfaces) and run with a connection timeout and socket timeout
-different than the default 5 seconds, use the `BIND_ADDRESS`,
-`CONNECTION_TIMEOUT_SECONDS` and `SOCKET_TIMEOUT_SECONDS` environment variables:
+To make the checker run with a connection timeout and socket timeout different
+than the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and
+`SOCKET_TIMEOUT_SECONDS` environment variables:
 
       docker run -it --rm \
-         -e BIND_ADDRESS=127.0.0.1 \
          -e CONNECTION_TIMEOUT_SECONDS=15 \
          -e SOCKET_TIMEOUT_SECONDS=15 \
          -p 8888:8888 \
