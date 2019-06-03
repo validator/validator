@@ -2045,6 +2045,11 @@ public class Assertions extends Checker {
                                         locator);
                                 siblingSources.remove(locator);
                             } else if (media != null
+                                    && "".equals(trimSpaces(media))) {
+                                err("Value of \u201cmedia\u201d attribute here"
+                                        + " must not be empty.",
+                                        locator);
+                            } else if (media != null
                                     && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                             "all", trimSpaces(media))) {
                                 err("Value of \u201cmedia\u201d attribute here"
