@@ -1174,6 +1174,11 @@ public class Assertions extends Checker {
                 || "img" == localName //
                 || "audio" == localName //
                 || "video" == localName //
+                // https://github.com/validator/validator/issues/775#issuecomment-494455608
+                || "area" == localName //
+                || "fieldset" == localName //
+                || "summary" == localName //
+                || "figure" == localName //
         ) {
             return false;
         }
