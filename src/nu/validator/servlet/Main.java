@@ -23,8 +23,14 @@
 
 package nu.validator.servlet;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ConnectException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
@@ -63,30 +69,73 @@ public class Main {
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
-    private static final void emitInterfaceInformation(Logger log4j) {
+    private static final boolean isRunningInsideDockerContainer() {
+        try (BufferedReader reader = new BufferedReader( //
+                new InputStreamReader(new FileInputStream("/proc/1/cgroup"),
+                        "UTF-8"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+                if (line.contains("/docker/")) {
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return false;
+    }
+
+    private static final void emitStartupMessage(Logger log4j, String host,
+            int port) {
+        if (isRunningInsideDockerContainer()) {
+            log4j.debug("Checker service started.");
+            return;
+        }
         String ip;
+        log4j.debug("");
+        log4j.debug("WARNING: Future checker releases will bind by default to"
+                + " 127.0.0.1.");
+        log4j.debug("Your checker deployment might become unreachable unless"
+                + " you use the");
+        log4j.debug("nu.validator.servlet.bind-address system property or"
+                + " --bind-address");
+        log4j.debug("script option to bind the checker to a different"
+                + " address:");
         try {
             Enumeration<NetworkInterface> interfaces = //
-                NetworkInterface.getNetworkInterfaces();
-            log4j.debug("");
+                    NetworkInterface.getNetworkInterfaces();
             while (interfaces.hasMoreElements()) {
                 NetworkInterface iface = interfaces.nextElement();
                 if (iface.isLoopback() || !iface.isUp())
                     continue;
                 Enumeration<InetAddress> addresses = iface.getInetAddresses();
-                while(addresses.hasMoreElements()) {
+                while (addresses.hasMoreElements()) {
                     InetAddress addr = addresses.nextElement();
                     ip = addr.getHostAddress();
-                    log4j.debug(String.format("%10s %s", //
-                                iface.getDisplayName(), ip)); }
+                    if (addr instanceof Inet4Address) {
+                        log4j.debug("");
+                        log4j.debug(String.format(
+                                "  python ./checker.py --bind-address %s run",
+                                ip));
+                        log4j.debug(String.format("  java"
+                                + " -Dnu.validator.servlet.bind-address=%s"
+                                + " -cp vnu.jar"
+                                + " nu.validator.servlet.Main 8888", ip));
+                        log4j.debug(String.format("  vnu-runtime-image/bin/java"
+                                + " -Dnu.validator.servlet.bind-address=%s"
+                                + " nu.validator.servlet.Main 8888", ip));
+                        log4j.debug(String.format(
+                                "  vnu-runtime-image\\bin\\java.exe"
+                                        + " -Dnu.validator.servlet.bind-address=%s"
+                                        + " nu.validator.servlet.Main 8888",
+                                ip));
+                    }
+                }
             }
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static final void emitStartupMessage(Logger log4j, String host,
-            int port) {
         log4j.debug("");
         log4j.debug(String.format("Checker service started at http://%s:%s/",
                 host, port));
@@ -152,7 +201,6 @@ public class Main {
             }
 
             server.start();
-            emitInterfaceInformation(log4j);
             emitStartupMessage(log4j, serverConnector.getHost(), port);
 
             try (ServerSocket serverSocket = new ServerSocket(stopPort, 0,
@@ -164,7 +212,6 @@ public class Main {
             }
         } else {
             server.start();
-            emitInterfaceInformation(log4j);
             emitStartupMessage(log4j, serverConnector.getHost(), port);
         }
     }

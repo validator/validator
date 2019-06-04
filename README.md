@@ -391,11 +391,30 @@ port, replace `8888` with the port number.)
 
    [31]: http://0.0.0.0:8888
 
-You’ll see a form similar to [validator.w3.org/nu][32] that allows you to enter
-the URL of an HTML document and have the results for that document displayed in
-the browser.
+**Warning:** Future checker releases will bind by default to the address
+`127.0.0.1`. Your checker deployment might become unreachable unless you use the
+`nu.validator.servlet.bind-address` system property to bind the checker to a
+different address:
 
-   [32]: https://validator.w3.org/nu/
+    java -cp ~/vnu.jar \
+        -Dnu.validator.servlet.bind-address=128.30.52.73 \
+        nu.validator.servlet.Main 8888
+
+    vnu-runtime-image/bin/java \
+        -Dnu.validator.servlet.bind-address=128.30.52.73 \
+        nu.validator.servlet.Main 8888
+
+    vnu-runtime-image\bin\java.exe  \
+        -Dnu.validator.servlet.bind-address=128.30.52.73 \
+        nu.validator.servlet.Main 8888
+
+When you open [http://0.0.0.0:8888][32] (or whatever URL corresponds to the
+`nu.validator.servlet.bind-address` value you’re using), you’ll see a form
+similar to [validator.w3.org/nu][33] that allows you to enter the URL of an HTML
+document and have the results for that document displayed in the browser.
+
+   [32]: http://0.0.0.0:8888
+   [33]: https://validator.w3.org/nu/
 
 **Note:** If you get a `StackOverflowError` error when using the checker, try
 adjusting the thread stack size by providing the `-Xss` option to java:
@@ -409,11 +428,11 @@ adjusting the thread stack size by providing the `-Xss` option to java:
 To run the checker inside of an existing servlet container such as Apache Tomcat
 you will need to deploy the `vnu.war` file to that server following its
 documentation. For example, on Apache Tomcat you could do this using the
-[Manager][33] application or simply by copying the file to the `webapps`
+[Manager][34] application or simply by copying the file to the `webapps`
 directory (since that is the default `appBase` setting). Typically you would see
 a message similar to the following in the `catalina.out` log file.
 
-   [33]: https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
+   [34]: https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
 
     May 7, 2014 4:42:04 PM org.apache.catalina.startup.HostConfig deployWAR
     INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
@@ -422,9 +441,9 @@ Assuming your servlet container is configured to receive HTTP requests sent to
 `localhost` on port `80` and the context root of this application is `vnu`
 (often the default behavior is to use the WAR file's filename as the context
 root unless one is explicitly specified) you should be able to access the
-application by connecting to [http://localhost/vnu/][34].
+application by connecting to [http://localhost/vnu/][35].
 
-   [34]: http://localhost/vnu/
+   [35]: http://localhost/vnu/
 
 **Note:** You may want to customize the `/WEB-INF/web.xml` file inside the WAR
 file (you can use any ZIP-handling program) to modify the servlet filter
@@ -460,10 +479,10 @@ To check documents locally using the packaged HTTP client, do this:
     vnu-runtime-image/bin/vnu nu.validator.client.HttpClient FILE.html...
 
 To send documents to an instance of the checker on the Web, such as
-[html5.validator.nu/][35], use the nu.validator.client.host and
+[html5.validator.nu/][36], use the nu.validator.client.host and
 nu.validator.client.port options, like this:
 
-   [35]: https://html5.validator.nu/
+   [36]: https://html5.validator.nu/
 
     java -cp ~/vnu.jar -Dnu.validator.client.port=80 \
         -Dnu.validator.client.host=html5.validator.nu \
@@ -497,9 +516,9 @@ ones by setting the value of the `nu.validator.client.level` system property to
 
 Most of the properties listed below map to the common input parameters for the
 checker service, as documented at
-[github.com/validator/validator/wiki/Service-»-Common-params][36].
+[github.com/validator/validator/wiki/Service-»-Common-params][37].
 
-   [36]: https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params
+   [37]: https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params
 
 #### nu.validator.client.host
 
@@ -603,9 +622,9 @@ checker service, as documented at
 ## Pulling from Docker Hub
 
 You can pull the checker from the
-[https://hub.docker.com/r/validator/validator/][37] repo at Docker Hub.
+[https://hub.docker.com/r/validator/validator/][38] repo at Docker Hub.
 
-   [37]: https://hub.docker.com/r/validator/validator/
+   [38]: https://hub.docker.com/r/validator/validator/
 
 To pull and run the latest version of the checker:
 
@@ -666,6 +685,12 @@ the build will need time to download several megabytes of dependencies.
 
 The steps above will build, test, and run the checker such that you can open
 `http://0.0.0.0:8888/` in a Web browser to use the checker Web UI.
+
+**Warning:** Future checker releases will bind by default to the address
+`127.0.0.1`. Your checker deployment might become unreachable unless you use the
+`--bind-address` option to bind the checker to a different address:
+
+        python ./checker.py --bind-address=128.30.52.73 all
 
 Use `python ./checker.py --help` to see command-line options for controlling the
 behavior of the script, as well as build-target names you can call separately;
