@@ -75,7 +75,6 @@ public class Main {
                         "UTF-8"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
                 if (line.contains("/docker/")) {
                     return true;
                 }
@@ -89,6 +88,7 @@ public class Main {
     private static final void emitStartupMessage(Logger log4j, String host,
             int port) {
         if (isRunningInsideDockerContainer()) {
+            log4j.debug("");
             log4j.debug("Checker service started.");
             return;
         }
