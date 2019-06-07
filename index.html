@@ -719,7 +719,7 @@ INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
 
 <pre>java -cp ~/vnu.jar <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
 </pre>
-<pre>vnu-runtime-image/bin/vnu <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
+<pre>vnu-runtime-image/bin/java <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
 </pre>
 </ol>
      To send documents to an instance of the checker on the Web, such as
@@ -897,6 +897,12 @@ repo at Docker Hub.
 for example, the <code>17.11.1</code> version:</p>
 <pre>
   docker run -it --rm -p 8888:8888 validator/validator:17.11.1
+</pre>
+
+<p>To bind the checker to a specific address (rather than have it listening
+on all interfaces):
+<pre>
+  docker run -it --rm -p <span class=option-value>128.30.52.73:8888:8888</span> validator/validator:latest
 </pre>
 
 <p>To make the checker run with a connection timeout and socket timeout

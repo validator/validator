@@ -476,7 +476,7 @@ To check documents locally using the packaged HTTP client, do this:
 
     java -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
 
-    vnu-runtime-image/bin/vnu nu.validator.client.HttpClient FILE.html...
+    vnu-runtime-image/bin/java nu.validator.client.HttpClient FILE.html...
 
 To send documents to an instance of the checker on the Web, such as
 [html5.validator.nu/][36], use the nu.validator.client.host and
@@ -634,6 +634,11 @@ To pull and run a specific Docker-Hub tag/version of the checker — for example
 the `17.11.1` version:
 
       docker run -it --rm -p 8888:8888 validator/validator:17.11.1
+
+To bind the checker to a specific address (rather than have it listening on all
+interfaces):
+
+      docker run -it --rm -p 128.30.52.73:8888:8888 validator/validator:latest
 
 To make the checker run with a connection timeout and socket timeout different
 than the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and
