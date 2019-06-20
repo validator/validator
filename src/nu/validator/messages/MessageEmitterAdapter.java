@@ -395,6 +395,9 @@ public class MessageEmitterAdapter implements ErrorHandler {
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
             String.join("|", DEFAULT_FILTER_STRINGS));
 
+    protected static final Pattern FILE_NOT_CHECKED = Pattern.compile(
+            ".*File was not checked.*");
+
     private final AttributesImpl attributesImpl = new AttributesImpl();
 
     private final char[] oneChar = { '\u0000' };
@@ -531,7 +534,9 @@ public class MessageEmitterAdapter implements ErrorHandler {
         if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
             return;
         }
-        this.warnings++;
+        if (!FILE_NOT_CHECKED.matcher(e.getMessage()).matches()) {
+            this.warnings++;
+        }
         throwIfTooManyMessages();
         messageFromSAXParseException(MessageType.WARNING, e, exact, null);
     }
