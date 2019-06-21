@@ -2800,11 +2800,15 @@ public class Assertions extends Checker {
                 }
                 if (atts.getIndex("", "integrity") > -1
                         && ((relList != null && !relList.contains("stylesheet")
+                                && !relList.contains("preload")
+                                && !relList.contains("modulepreload")
                                 || !hasRel))) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cintegrity\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
-                            + " value \u201Cstylesheet\u201D.");
+                            + " value \u201Cstylesheet\u201D or the value"
+                            + " \u201Cpreload\u201D or the value"
+                            + " \u201Cmodulepreload\u201D.");
                 }
                 if (atts.getIndex("", "sizes") > -1
                         && ((relList != null && !relList.contains("icon")
