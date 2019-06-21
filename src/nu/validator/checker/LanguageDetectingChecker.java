@@ -100,8 +100,9 @@ public class LanguageDetectingChecker extends Checker {
     private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
             "he", "pnb", "ps", "sd", "ug", "ur" };
 
-    private static final String[] SKIP_NAMES = { "a", "figcaption", "form",
-            "li", "nav", "pre", "script", "select", "style", "td", "textarea" };
+    private static final String[] SKIP_NAMES = { "a", "details", "figcaption",
+            "form", "li", "nav", "pre", "script", "select", "style", "summary",
+            "td", "textarea" };
 
     static {
         LANG_TAGS_BY_TLD.put("ae", new String[] { "ar" });
