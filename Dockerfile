@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && rm ./vnu.linux.zip* \
     && apt-get purge -y --auto-remove gnupg dirmngr unzip
 ENV LANG C.UTF-8
+ENV JAVA_TOOL_OPTIONS ""
 ENV CONNECTION_TIMEOUT_SECONDS 5
 ENV SOCKET_TIMEOUT_SECONDS 5
 ENV BIND_ADDRESS 0.0.0.0
