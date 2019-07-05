@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -28,17 +28,26 @@ import org.xml.sax.SAXException;
 
 public class JsonMessageTextHandler implements MessageTextHandler {
 
-    private static final char[] LEFT = {'\u201C'};
+    private char[] LEFT;
 
-    private static final char[] RIGHT = {'\u201D'};
+    private char[] RIGHT;
     
     private final JsonHandler handler;
     
+
     /**
      * @param handler
      */
-    public JsonMessageTextHandler(final JsonHandler handler) {
+    public JsonMessageTextHandler(final JsonHandler handler,
+            boolean asciiQuotes) {
         this.handler = handler;
+        if (asciiQuotes) {
+            LEFT = new char[]{'\''};
+            RIGHT = new char[]{'\''};
+        } else {
+            LEFT = new char[]{'\u201C'};
+            RIGHT = new char[]{'\u201D'};
+        }
     }
 
     @Override

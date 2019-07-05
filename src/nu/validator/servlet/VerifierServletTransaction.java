@@ -343,6 +343,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private final static String FILTER_FILE = System.getProperty(
             "nu.validator.servlet.filterfile", "resources/message-filters.txt");
 
+    private final static String ASCII_QUOTES = System.getProperty(
+            "nu.validator.client.asciiquotes", "no");
+
     protected String schemaUrls = null;
 
     protected Validator validator = null;
@@ -905,7 +908,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         boolean errorsOnly = ("error".equals(request.getParameter("level")));
 
-        boolean asciiQuotes = (request.getParameter("asciiquotes") != null);
+        boolean asciiQuotes = false;
+
+        if (!"no".equals(ASCII_QUOTES)) {
+            asciiQuotes = true;
+        }
+
+        if (request.getParameter("asciiquotes") != null) {
+            asciiQuotes = true;
+        }
 
         int lineOffset = 0;
         String lineOffsetStr = request.getParameter("lineoffset");
@@ -959,7 +970,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             sourceCode, showSource, null, lineOffset, false,
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
-                                    callback));
+                                    callback, asciiQuotes));
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }

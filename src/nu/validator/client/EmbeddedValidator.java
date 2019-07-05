@@ -262,7 +262,8 @@ public class EmbeddedValidator {
             case GNU:
                 return new GnuMessageEmitter(this.out, asciiQuotes);
             case JSON:
-                return new JsonMessageEmitter(new Serializer(this.out), null);
+                return new JsonMessageEmitter(new Serializer(this.out), null,
+                        asciiQuotes);
             case XML:
                 return new XmlMessageEmitter(new XmlSerializer(this.out));
             default:

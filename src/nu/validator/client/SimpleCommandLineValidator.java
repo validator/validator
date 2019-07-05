@@ -568,7 +568,8 @@ public class SimpleCommandLineValidator {
             errorHandler = new MessageEmitterAdapter(filterPattern, sourceCode,
                     showSource, imageCollector, lineOffset, true,
                     new JsonMessageEmitter(
-                            new nu.validator.json.Serializer(out), callback));
+                            new nu.validator.json.Serializer(out), callback,
+                            asciiQuotes));
         } else {
             throw new RuntimeException("Bug. Should be unreachable.");
         }

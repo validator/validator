@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2016 Mozilla Foundation
+ * Copyright (c) 2007-2019 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -43,11 +43,13 @@ public class JsonMessageEmitter extends MessageEmitter {
     /**
      * @param handler
      */
-    public JsonMessageEmitter(final JsonHandler handler, final String callback) {
+    public JsonMessageEmitter(final JsonHandler handler, final String callback,
+            boolean asciiQuotes) {
         this.handler = handler;
         this.callback = callback;
         this.extractHandler = new JsonExtractHandler(handler);
-        this.messageTextHandler = new JsonMessageTextHandler(handler);
+        this.messageTextHandler = new JsonMessageTextHandler(handler,
+                asciiQuotes);
     }
 
     @Override
