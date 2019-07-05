@@ -917,6 +917,16 @@ different than the default 5 seconds, use the
      validator/validator
 </pre>
 
+<p>To make the checker run with particular Java system properties set,
+use the <code>JAVA_TOOL_OPTIONS</code> environment variable:
+<pre>
+  docker run -it --rm \
+     <span class=option-value>-e JAVA_TOOL_OPTIONS=-Dnu.validator.client.asciiquotes=yes </span> \
+     -p 8888:8888 \
+     validator/validator
+</pre>
+
+
 <p>
 To define a service named <code>vnu</code> for use with <code>docker
 compose</code>, create a Compose file named <code>docker-compose.yml</code>

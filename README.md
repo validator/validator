@@ -650,6 +650,14 @@ than the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and
          -p 8888:8888 \
          validator/validator
 
+To make the checker run with particular Java system properties set, use the
+`JAVA_TOOL_OPTIONS` environment variable:
+
+      docker run -it --rm \
+         -e JAVA_TOOL_OPTIONS=-Dnu.validator.client.asciiquotes=yes  \
+         -p 8888:8888 \
+         validator/validator
+
 To define a service named `vnu` for use with `docker compose`, create a Compose
 file named `docker-compose.yml` (for example), with contents such as the
 following:
