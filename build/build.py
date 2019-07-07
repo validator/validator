@@ -83,8 +83,8 @@ day = time.strftime('%d').lstrip('0')
 validatorVersion = "%s.%s.%s" % (year, month, day)
 # validatorVersion = "18.11.5"
 jingVersion = "20190429VNU"
-htmlparserVersion = "1.4.13"
-cssvalidatorVersion = "1.0.5"
+htmlparserVersion = "1.4.14"
+cssvalidatorVersion = "1.0.6"
 galimatiasVersion = "0.1.3"
 langdetectVersion = "1.2"
 
