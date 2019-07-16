@@ -90,7 +90,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Shared attributes for <input>
 		
-	shared-input.attrs =
+	shared-input-no-size.attrs =
 		(	input.attrs.autocomplete?
 		&	shared-form.attrs.autofocus?
 		&	input.attrs.list?
@@ -100,6 +100,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.placeholder?
 		&	shared-form.attrs.readonly?
 		&	shared-form.attrs.required?
+		)
+
+	shared-input.attrs =
+		(	shared-input-no-size.attrs
 		&	shared-form.attrs.size?
 		)
 
@@ -419,7 +423,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.number.attrs = 
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-input.attrs
+		&	shared-input-no-size.attrs
 		&	input.number.attrs.type
 		&	input.number.attrs.min?
 		&	input.number.attrs.max?
@@ -455,7 +459,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.range.attrs = 
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-input.attrs
+		&	shared-input-no-size.attrs
 		&	input.range.attrs.type
 		&	input.range.attrs.min?
 		&	input.range.attrs.max?
