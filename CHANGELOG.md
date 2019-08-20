@@ -7,6 +7,7 @@ NN XXX NNNN
   - Disallow `accept-charset` values other than `UTF-8`
   - Allow `rel=modulepreload` for the `link` element
   - Allow `integrity` attribute on link[rel=preload|modulepreload]
+  - Allow `inputmode` as a global attribute
   - Allow negated media features in `media` and `sizes` attributes
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements

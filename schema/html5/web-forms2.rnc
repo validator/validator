@@ -78,11 +78,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			form.data.nonemptystring
 		}
 
-	shared-form.attrs.inputmode =
-		attribute inputmode {
-			string
-		}
-
 	shared-form.attrs.minlength =
 		attribute minlength {
 			common.data.integer.non-negative
@@ -156,7 +151,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.pattern?
 		&	shared-form.attrs.required?
 		&	shared-form.attrs.placeholder?
-		&	shared-form.attrs.inputmode?
 		&	shared-form.attrs.minlength?
 		)
 
@@ -669,7 +663,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 				&	textarea.attrs.cols?
 				)
 			)
-		&	shared-form.attrs.inputmode?
 		&	input.attrs.autocomplete.any?
 		)
 		textarea.attrs.wrap.hard =

@@ -177,6 +177,7 @@ namespace local = ""
 			                    | contenteditable
 			                    | draggable
 			                    | hidden
+			                    | inputmode
 			                    | onabort
 			                    | onautocomplete
 			                    | onautocompleteerror

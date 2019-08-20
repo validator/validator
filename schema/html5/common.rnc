@@ -201,7 +201,12 @@ common.attrs.present =
 		}
 
 common.attrs.other =
-	empty
+	common.attrs.inputmode?
+
+	common.attrs.inputmode =
+		attribute inputmode {
+			string
+		}
 
 # #####################################################################
 ##  Common Datatypes                                                  #
