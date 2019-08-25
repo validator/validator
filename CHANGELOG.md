@@ -5,6 +5,7 @@ changes to any options/interfaces the checker exposes for developers.
 # N.N.N
 NN XXX NNNN
   - Disallow `accept-charset` values other than `UTF-8`
+  - Disallow object[typemustmatch]
   - Allow `rel=modulepreload` for the `link` element
   - Allow `integrity` attribute on link[rel=preload|modulepreload]
   - Allow `inputmode` as a global attribute
