@@ -154,7 +154,7 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8
     ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.7.2/salvation-2.7.2.jar", "d81345b141a8cc93fc6be49a6840a7f0"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),  # nopep8
-    ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),  # nopep8
+    ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4.jar", "0c3b924dcaaa90c3fb93fe04ae96a35e"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar", "040b4b4d8eac886f6b4a2a3bd2f31b00"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-adapters.jar", "5c82e86cc5b769f72abd2af1f92255fa"),  # nopep8
