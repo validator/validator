@@ -201,8 +201,15 @@ common.attrs.present =
 		}
 
 common.attrs.other =
-	common.attrs.inputmode?
+	(	common.attrs.autofocus?
+	&	common.attrs.inputmode?
+	)
 
+	common.attrs.autofocus = 
+		attribute autofocus {
+			w:string "autofocus" | w:string ""
+		}
+	
 	common.attrs.inputmode =
 		attribute inputmode {
 			string
