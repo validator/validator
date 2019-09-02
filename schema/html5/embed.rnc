@@ -179,6 +179,7 @@ namespace local = ""
 			                    | draggable
 			                    | hidden
 			                    | inputmode
+			                    | nonce
 			                    | onabort
 			                    | onautocomplete
 			                    | onautocompleteerror

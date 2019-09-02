@@ -10,6 +10,7 @@ NN XXX NNNN
   - Allow `integrity` attribute on link[rel=preload|modulepreload]
   - Allow `autofocus` as a global attribute
   - Allow `inputmode` as a global attribute
+  - Allow `nonce` as a global attribute
   - Allow negated media features in `media` and `sizes` attributes
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements
