@@ -348,7 +348,7 @@ public class SimpleCommandLineValidator {
         errorHandler.end("Document checking completed. No errors found.",
                 "Document checking completed.", "");
         if (errorHandler.getErrors() > 0 || errorHandler.getFatalErrors() > 0
-                || (wError && errorHandler.getWarnings() > 0)) {
+                || (wError && errorHandler.getWarnings() > 0 && !errorsOnly)) {
             System.exit(exitZeroAlways ? 0 : 1);
         }
     }

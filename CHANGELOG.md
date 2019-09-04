@@ -14,7 +14,8 @@ NN XXX NNNN
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements
   - Add option to specify additional script for Web-based checker
-  - Enable checking standard input as SVG or CSS in command-line checker
+  - CLI: Make --errors-only option take precedence over --Werror
+  - CLI: Enable checking standard input as SVG or CSS
   - Include binary runtime images in release (alternative to jar/war)
   - Dockerfile: Switch to using binary runtime image rather than jar
   - Add checker.py script to repo (for building/testing/running checker)
