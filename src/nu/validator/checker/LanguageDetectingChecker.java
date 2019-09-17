@@ -102,7 +102,7 @@ public class LanguageDetectingChecker extends Checker {
 
     private static final String[] SKIP_NAMES = { "a", "details", "figcaption",
             "form", "li", "nav", "pre", "script", "select", "span", "style",
-            "summary", "td", "textarea" };
+            "summary", "td", "textarea", "th", "tr" };
 
     static {
         LANG_TAGS_BY_TLD.put("ae", new String[] { "ar" });
