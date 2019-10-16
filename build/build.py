@@ -867,7 +867,7 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
 
 def generateRunScript():
     args = getRunArgs()
-    f = open(os.path.join(buildRoot, "run-validator.sh"), 'wb')
+    f = open(os.path.join(buildRoot, "run-validator.sh"), 'w')
     f.write("#!/bin/sh\n")
     if heapSize.startswith('-'):
         f.write("HEAP=`grep MemTotal /proc/meminfo | awk '{print $2}'`\n")
