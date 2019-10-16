@@ -278,6 +278,8 @@ namespace local = ""
 			                    | itemid
 			                    | name
 			                    | align
+			                    | hspace
+			                    | vspace
 			                    | about
 			                    | prefix
 			                    | property

@@ -326,7 +326,7 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("frame", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("height", new String[] { "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("hspace",
-                new String[] { "img", "object", "embed" });
+                new String[] { "embed", "iframe", "input", "img", "object" });
         OBSOLETE_STYLE_ATTRS.put("link", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("bottommargin", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("marginheight",
@@ -347,7 +347,7 @@ public class Assertions extends Checker {
                 "tbody", "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("vlink", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("vspace",
-                new String[] { "img", "object", "embed" });
+                new String[] { "embed", "iframe", "input", "img", "object" });
         OBSOLETE_STYLE_ATTRS.put("width", new String[] { "hr", "table", "td",
                 "th", "col", "colgroup", "pre" });
     }
