@@ -168,6 +168,10 @@ public class Assertions extends Checker {
                         "file" });
         INPUT_ATTRIBUTES.put("size", new String[] { "text", "search", "url",
                 "tel", "email", "password" });
+
+        for (String[] allowedTypes: INPUT_ATTRIBUTES.values()) {
+            Arrays.sort(allowedTypes);
+        }
     }
 
     private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<>();
@@ -230,6 +234,10 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("usemap", new String[] { "input" });
         OBSOLETE_ATTRIBUTES.put("valuetype", new String[] { "param" });
         OBSOLETE_ATTRIBUTES.put("version", new String[] { "html" });
+
+        for (String[] elementNames: OBSOLETE_ATTRIBUTES.values()) {
+            Arrays.sort(elementNames);
+        }
     }
 
     private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<>();
@@ -350,6 +358,10 @@ public class Assertions extends Checker {
                 new String[] { "embed", "iframe", "input", "img", "object" });
         OBSOLETE_STYLE_ATTRS.put("width", new String[] { "hr", "table", "td",
                 "th", "col", "colgroup", "pre" });
+
+        for (String[] elementNames: OBSOLETE_STYLE_ATTRS.values()) {
+            Arrays.sort(elementNames);
+        }
     }
 
     private static final HashSet<String> JAVASCRIPT_MIME_TYPES = new HashSet<>();
@@ -1851,7 +1863,6 @@ public class Assertions extends Checker {
                             && "li" != localName) {
                         String[] elementNames = OBSOLETE_ATTRIBUTES.get(
                                 attLocal);
-                        Arrays.sort(elementNames);
                         if (Arrays.binarySearch(elementNames, localName) >= 0) {
                             String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(
                                     attLocal)
@@ -1864,7 +1875,6 @@ public class Assertions extends Checker {
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                         String[] elementNames = OBSOLETE_STYLE_ATTRS.get(
                                 attLocal);
-                        Arrays.sort(elementNames);
                         if (Arrays.binarySearch(elementNames, localName) >= 0) {
                             errObsoleteAttribute(attLocal, localName,
                                     " Use CSS instead.");
@@ -1872,7 +1882,6 @@ public class Assertions extends Checker {
                     } else if (INPUT_ATTRIBUTES.containsKey(attLocal)
                             && "input" == localName) {
                         String[] allowedTypes = INPUT_ATTRIBUTES.get(attLocal);
-                        Arrays.sort(allowedTypes);
                         inputTypeVal = inputTypeVal == null ? "text"
                                 : inputTypeVal;
                         if (Arrays.binarySearch(allowedTypes,
