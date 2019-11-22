@@ -22,7 +22,7 @@ install:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%JAVA_HOME%\bin;%PATH%
   - java -version
   - python --version
-  - python %CHECKER_PY% update-shallow
+  - python %CHECKER_PY% update
   - appveyor-retry python %CHECKER_PY% dldeps
 
 build_script:
