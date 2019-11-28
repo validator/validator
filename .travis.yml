@@ -34,7 +34,7 @@ matrix:
 install:
   - export TOMCAT_VERSION=8.5.29
   - export CHECKER_PY=./checker.py
-  - $PYTHON $CHECKER_PY update-shallow
+  - $PYTHON $CHECKER_PY update
   - travis_retry $PYTHON $CHECKER_PY dldeps
 
 script:
