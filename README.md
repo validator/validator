@@ -21,13 +21,14 @@ code][10].
    [10]: https://validator.github.io/validator/#build-instructions
 
 A [Dockerfile][11] (see the **Pulling from Docker Hub** section below) and
-[npm][12], [pip][13], and [brew][14] packages of it are also available, and it’s
-released upstream in these formats:
+[npm][12], [pip][13], and [brew][14] packages of it are also available.
 
    [11]: https://hub.docker.com/r/validator/validator/
    [12]: https://www.npmjs.com/package/vnu-jar
    [13]: https://github.com/svenkreiss/html5validator
    [14]: https://libraries.io/homebrew/vnu
+
+It is released upstream in these formats:
 
   * pre-compiled Linux, Windows, and macOS binaries that include an embedded
   Java runtime

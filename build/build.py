@@ -1155,8 +1155,8 @@ class Release():
         f.close
 
     def createNpmReadme(self, readMe, readMeCopy):
-        drop = "It is released as two packages:"
-        splitAt = "is a portable standalone version for"
+        drop = "It is released upstream in these formats:"
+        splitAt = "a portable version you can use on any system that has Java"
         shutil.move(readMe, readMeCopy)
         npmFragment = os.path.join(buildRoot, "npm.md")
         npmReadme = open(readMe, 'w')
