@@ -1155,17 +1155,14 @@ class Release():
         f.close
 
     def createNpmReadme(self, readMe, readMeCopy):
-        drop = "It is released upstream in these formats:"
-        splitAt = "a portable version you can use on any system that has Java"
+        splitAt = "see the **Pulling from Docker Hub** section below"
         shutil.move(readMe, readMeCopy)
         npmFragment = os.path.join(buildRoot, "npm.md")
         npmReadme = open(readMe, 'w')
         with open(readMeCopy, 'r') as original:
             skip = False
             for line in original:
-                if line.find(drop) != -1:
-                    npmReadme.write(line.replace(drop, ""))
-                elif line.find(splitAt) != -1:
+                if line.find(splitAt) != -1:
                     skip = True
                     with open(npmFragment, 'r') as fragment:
                         for line in fragment:
