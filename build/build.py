@@ -1271,6 +1271,7 @@ class Release():
                 runCmd(args)
 
     def uploadNpm(self, tag=None):
+        runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         removeIfExists(os.path.join(buildRoot, "CHANGELOG.md~"))
         readMe = os.path.join(buildRoot, "README.md")
