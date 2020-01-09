@@ -175,7 +175,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		link.attrs.rel =
 			attribute rel {
-				w:link-rel
+				string
 			}
 		link.attrs.as =
 			attribute as {

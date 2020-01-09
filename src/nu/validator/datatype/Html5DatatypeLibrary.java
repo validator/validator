@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007-2017 Mozilla Foundation
+ * Copyright (c) 2007-2020 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -154,10 +154,6 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Zero.THE_INSTANCE;
         } else if ("script-documentation".equals(typeLocalName)) {
             return ScriptDocumentation.THE_INSTANCE;
-        } else if ("a-rel".equals(typeLocalName)) {
-            return ARel.THE_INSTANCE;
-        } else if ("link-rel".equals(typeLocalName)) {
-            return LinkRel.THE_INSTANCE;
         } else if ("non-empty-string".equals(typeLocalName)) {
             return NonEmptyString.THE_INSTANCE;
         } else if ("string-without-line-breaks".equals(typeLocalName)) {
