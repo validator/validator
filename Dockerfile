@@ -15,9 +15,9 @@ ADD https://github.com/validator/validator/releases/download/linux/vnu.linux.zip
 ADD https://github.com/validator/validator/releases/download/linux/vnu.linux.zip.sha1.asc .
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && apt-get install --no-install-recommends -y \
-       gnupg=2.1.18-8~deb9u4 \
-       dirmngr=2.1.18-8~deb9u4 \
-       unzip=6.0-21+deb9u1 \
+       gnupg=2.2.12-1+deb10u1 \
+       dirmngr=2.2.12-1+deb10u1 \
+       unzip=6.0-23+deb10u1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir ~/.gnupg \
