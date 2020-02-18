@@ -1070,6 +1070,7 @@ class Release():
                 '--strip-debug', '--no-header-files', '--no-man-pages',
                 '--compress=2',
                 '--output', self.vnuImageDir, '--module-path', vnuJar,
+                '--add-modules', 'jdk.crypto.ec',
                 '--add-modules', 'vnu'])
         self.checkRuntimeImage()
         os.chdir(distDir)
