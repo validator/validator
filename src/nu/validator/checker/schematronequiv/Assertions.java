@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2019 Mozilla Foundation
+ * Copyright (c) 2008-2020 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -537,10 +537,7 @@ public class Assertions extends Checker {
     }
 
     static {
-        registerRequiredAncestorRole("combobox", "option");
         registerRequiredAncestorRole("listbox", "option");
-        registerRequiredAncestorRole("radiogroup", "option");
-        registerRequiredAncestorRole("menu", "option");
         registerRequiredAncestorRole("menu", "menuitem");
         registerRequiredAncestorRole("menu", "menuitemcheckbox");
         registerRequiredAncestorRole("menu", "menuitemradio");
@@ -549,7 +546,6 @@ public class Assertions extends Checker {
         registerRequiredAncestorRole("menubar", "menuitemradio");
         registerRequiredAncestorRole("tablist", "tab");
         registerRequiredAncestorRole("tree", "treeitem");
-        registerRequiredAncestorRole("tree", "option");
         registerRequiredAncestorRole("group", "treeitem");
         registerRequiredAncestorRole("group", "listitem");
         registerRequiredAncestorRole("group", "menuitemradio");
