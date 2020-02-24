@@ -30,6 +30,15 @@ matrix:
     - os:  linux
       jdk: openjdk12
       env: PYTHON=python3
+    - os:  linux
+      jdk: openjdk13
+      env: PYTHON=python3
+    - os:  linux
+      jdk: openjdk14
+      env: PYTHON=python3
+    - os:  linux
+      jdk: openjdk-ea
+      env: PYTHON=python3
 
 install:
   - export TOMCAT_VERSION=8.5.29
