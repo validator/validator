@@ -25,12 +25,6 @@ matrix:
       jdk: openjdk11
       env: PYTHON=python3
     - os:  linux
-      jdk: openjdk12
-      env: PYTHON=python2
-    - os:  linux
-      jdk: openjdk12
-      env: PYTHON=python3
-    - os:  linux
       jdk: openjdk13
       env: PYTHON=python3
     - os:  linux
