@@ -23,6 +23,7 @@ namespace local = ""
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
 		&	img.attrs.decoding?
+		&	img.attrs.loading?
 		&	img.attrs.border? # obsolete
 		&	referrerpolicy?
 		&	embedded.content.attrs.crossorigin?
@@ -68,6 +69,10 @@ namespace local = ""
 				|	string "async"
 				|	string "auto"
 				)
+			}
+		img.attrs.loading =
+			attribute loading {
+				w:string "lazy" | w:string "eager"
 			}
 		img.attrs.border =
 			attribute border {

@@ -6,6 +6,7 @@ changes to any options/interfaces the checker exposes for developers.
 NN XXX NNNN
   - Disallow `accept-charset` values other than `UTF-8`
   - Disallow object[typemustmatch]
+  - Allow `loaing` attribute for the `img` element (lazy loading)
   - Allow `rel=modulepreload` for the `link` element
   - Allow `integrity` attribute on link[rel=preload|modulepreload]
   - Allow `autofocus` as a global attribute
