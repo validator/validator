@@ -1729,7 +1729,8 @@ def main(argv):
                                                      stderr=subprocess.STDOUT)
         javaEnvVersion = \
             int(javaRawVersion
-                .splitlines()[0].split()[2].strip('"').split('.')[0])
+                .splitlines()[0].split()[2].strip('"').split('.')[0]
+                .replace('-ea', ''))
         release = Release()
         release.runtimeDistroBasename = getRuntimeDistroBasename()
         release.runtimeDistroFile = release.runtimeDistroBasename + ".zip"
