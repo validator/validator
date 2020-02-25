@@ -9,6 +9,7 @@ NN XXX NNNN
   - Allow `loading` attribute for the `img` element (lazy loading)
   - Allow `rel=modulepreload` for the `link` element
   - Allow `integrity` attribute on link[rel=preload|modulepreload]
+  - Allow `integrity` attribute on script[type=module]
   - Allow `autofocus` as a global attribute
   - Allow `inputmode` as a global attribute
   - Allow `nonce` as a global attribute

@@ -2495,12 +2495,6 @@ public class Assertions extends Checker {
                         warn("The \u201Ctype\u201D attribute is unnecessary for"
                                 + " JavaScript resources.");
                     } else if ("module".equals(scriptType)) {
-                        if (atts.getIndex("", "integrity") > -1) {
-                            err("A \u201Cscript\u201D element with an"
-                                    + " \u201Cintegrity\u201D attribute must not have a"
-                                    + " \u201Ctype\u201D attribute with the value"
-                                    + " \u201Cmodule\u201D.");
-                        }
                         if (atts.getIndex("", "defer") > -1) {
                             err("A \u201Cscript\u201D element with a"
                                     + " \u201Cdefer\u201D attribute must not have a"
