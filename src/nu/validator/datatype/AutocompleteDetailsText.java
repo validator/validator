@@ -102,6 +102,8 @@ public final class AutocompleteDetailsText extends AbstractAutocompleteDetails {
         allowedContactFieldnames.add("tel-local-prefix");
         allowedContactFieldnames.add("tel-local-suffix");
         allowedContactFieldnames.add("tel-extension");
+        allowedContactFieldnames.add("email");
+        allowedContactFieldnames.add("impp");
     }
 
     @Override
