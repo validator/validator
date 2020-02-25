@@ -241,6 +241,7 @@ namespace local = ""
 			                    | onsecuritypolicyviolation
 			                    | onseeked
 			                    | onseeking
+			                    | onslotchange
 			                    | onselect
 			                    | onstalled
 			                    | onsubmit

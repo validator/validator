@@ -179,6 +179,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onseeked?
 		&	scripting.attr.onseeking?
 		&	scripting.attr.onselect?
+		&	scripting.attr.onslotchange?
 		&	scripting.attr.onstalled?
 		&	scripting.attr.onsubmit?
 		&	scripting.attr.onsuspend?
@@ -311,6 +312,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onseeking { common.data.functionbody }
 	scripting.attr.onselect =
 		attribute onselect { common.data.functionbody }
+	scripting.attr.onslotchange =
+		attribute onslotchange { common.data.functionbody }
 	scripting.attr.onstalled =
 		attribute onstalled { common.data.functionbody }
 	scripting.attr.onsubmit =
