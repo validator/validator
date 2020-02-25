@@ -186,8 +186,7 @@ namespace local = ""
 			                    | inputmode
 			                    | nonce
 			                    | onabort
-			                    | onautocomplete
-			                    | onautocompleteerror
+			                    | onauxclick
 			                    | onblur
 			                    | oncancel
 			                    | oncanplay
@@ -196,7 +195,9 @@ namespace local = ""
 			                    | onclick
 			                    | onclose
 			                    | oncontextmenu
+			                    | oncopy
 			                    | oncuechange
+			                    | oncut
 			                    | ondblclick
 			                    | ondrag
 			                    | ondragend
@@ -211,8 +212,7 @@ namespace local = ""
 			                    | onended
 			                    | onerror
 			                    | onfocus
-			                    | onfocusin
-			                    | onfocusout
+			                    | onformdata
 			                    | oninput
 			                    | oninvalid
 			                    | onkeydown
@@ -229,7 +229,7 @@ namespace local = ""
 			                    | onmouseout
 			                    | onmouseover
 			                    | onmouseup
-			                    | onwheel
+			                    | onpaste
 			                    | onpause
 			                    | onplay
 			                    | onplaying
@@ -238,10 +238,10 @@ namespace local = ""
 			                    | onreset
 			                    | onresize
 			                    | onscroll
+			                    | onsecuritypolicyviolation
 			                    | onseeked
 			                    | onseeking
 			                    | onselect
-			                    | onsort
 			                    | onstalled
 			                    | onsubmit
 			                    | onsuspend
@@ -249,6 +249,7 @@ namespace local = ""
 			                    | ontoggle
 			                    | onvolumechange
 			                    | onwaiting
+			                    | onwheel
 			                    | role
 			                    | aria-atomic
 			                    | aria-busy
