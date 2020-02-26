@@ -2263,6 +2263,16 @@ public class Assertions extends Checker {
                                         + " \u201Cpresentation\u201D");
                             }
                         }
+                    } else {
+                        // img with alt="some text" and role
+                        for (String roleValue : roles) {
+                            if ("none".equals(roleValue)
+                                    || "presentation".equals(roleValue)) {
+                                err("Bad value \u201C" + roleValue + "\u201D"
+                                        + " for attribute \u201Crole\u201D on"
+                                        + " element \u201Cimg\u201D");
+                            }
+                        }
                     }
                 }
             } else if ("table" == localName) {
