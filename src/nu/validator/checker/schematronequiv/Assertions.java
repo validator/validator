@@ -2212,6 +2212,11 @@ public class Assertions extends Checker {
             if ("area" == localName && ((ancestorMask & MAP_MASK) == 0)) {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
             } else if ("img" == localName) {
+                List<String> roles = null;
+                if (role != null) {
+                    roles = Arrays.asList(role.trim() //
+                            .toLowerCase().split("\\s+"));
+                }
                 String titleVal = atts.getValue("", "title");
                 if (ismap && ((ancestorMask & HREF_MASK) == 0)) {
                     err("The \u201Cimg\u201D element with the "
@@ -2220,6 +2225,16 @@ public class Assertions extends Checker {
                             + "\u201Chref\u201D attribute.");
                 }
                 if (atts.getIndex("", "alt") < 0) {
+                    // img without alt attribute
+                    if (role != null) {
+                        for (String roleValue : roles) {
+                            if (!("img".equals(roleValue))) {
+                                err("Bad value \u201C" + roleValue + "\u201D"
+                                        + " for attribute \u201Crole\u201D on"
+                                        + " element \u201Cimg\u201D");
+                            }
+                        }
+                    }
                     if ((titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"
@@ -2233,18 +2248,20 @@ public class Assertions extends Checker {
                                     new LocatorImpl(getDocumentLocator()));
                         }
                     }
-                } else {
-                    if ("".equals(atts.getValue("", "alt")) && role != null) {
-                        List<String> roles = Arrays.asList(role.trim() //
-                                .toLowerCase().split("\\s+"));
-                        if (!roles.contains("none")
-                                && !roles.contains("presentation")) {
-                            err("An \u201Cimg\u201D element which has an"
-                                    + " \u201Calt\u201D attribute whose value"
-                                    + " is the empty string must not have a"
-                                    + " \u201Crole\u201D attribute with any"
-                                    + " value other than \u201Cnone\u201D or"
-                                    + " \u201Cpresentation\u201D");
+                } else if (role != null) {
+                    if ("".equals(atts.getValue("", "alt"))) {
+                        // img with alt="" and role
+                        for (String roleValue : roles) {
+                            if (!("none".equals(roleValue))
+                                    && !("presentation".equals(roleValue))) {
+                                err("An \u201Cimg\u201D element which has an"
+                                        + " \u201Calt\u201D attribute whose"
+                                        + " value is the empty string must not"
+                                        + " have a \u201Crole\u201D attribute"
+                                        + " with any value other than"
+                                        + " \u201Cnone\u201D or"
+                                        + " \u201Cpresentation\u201D");
+                            }
                         }
                     }
                 }
@@ -2900,8 +2917,11 @@ public class Assertions extends Checker {
             if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
                     && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(
                             role)) {
-                warn("The \u201C" + role + "\u201D role is unnecessary for"
-                        + " element" + " \u201C" + localName + "\u201D.");
+                if (!("img".equals(localName)
+                        && ("".equals(atts.getValue("", "alt"))))) {
+                    warn("The \u201C" + role + "\u201D role is unnecessary for"
+                            + " element" + " \u201C" + localName + "\u201D.");
+                }
             } else if (ELEMENTS_WITH_IMPLICIT_ROLES.containsKey(localName)
                     && role != null
                     && Arrays.binarySearch(
