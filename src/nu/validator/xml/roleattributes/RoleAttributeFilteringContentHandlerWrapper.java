@@ -365,18 +365,6 @@ public class RoleAttributeFilteringContentHandlerWrapper
                     + " ARIA non-abstract role.", locator));
 
         }
-        if (errorHandler != null && roleValue != null
-                && (tokens.contains("none")
-                        && !tokens.contains("presentation"))) {
-            errorHandler.warning(new SAXParseException(//
-                    "\u201crole=\"none\"\u201d is not yet"
-                            + " supported in all browsers."
-                            + " Consider instead either using"
-                            + " \u201crole=\"presentation\"\u201d or"
-                            + " \u201crole=\"none presentation\"\u201d.",
-                    locator));
-
-        }
         return roleValue != null ? roleValue : tokenList;
     }
 
