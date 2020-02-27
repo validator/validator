@@ -2952,8 +2952,17 @@ public class Assertions extends Checker {
                         || "text".equals(inputTypeVal)
                         || "url".equals(inputTypeVal)) {
                     if (atts.getIndex("", "list") < 0) {
-                        if ("textbox".equals(role)) {
+                        if ("textbox".equals(role)
+                                && !"search".equals(inputTypeVal)) {
                             warn("The \u201Ctextbox\u201D role is unnecessary"
+                                    + " for an \u201Cinput\u201D element that"
+                                    + " has no \u201Clist\u201D attribute and"
+                                    + " whose type is" + " \u201C"
+                                    + inputTypeVal + "\u201D.");
+                        }
+                        if ("searchbox".equals(role)
+                                && "search".equals(inputTypeVal)) {
+                            warn("The \u201Csearchbox\u201D role is unnecessary"
                                     + " for an \u201Cinput\u201D element that"
                                     + " has no \u201Clist\u201D attribute and"
                                     + " whose type is" + " \u201C"
