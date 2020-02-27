@@ -1708,6 +1708,7 @@ public class Assertions extends Checker {
             boolean tabindex = false;
             boolean languageJavaScript = false;
             boolean typeNotTextJavaScript = false;
+            boolean hasAriaAttributes = false;
             String xmlLang = null;
             String lang = null;
             String id = null;
@@ -1718,6 +1719,9 @@ public class Assertions extends Checker {
                 String attUri = atts.getURI(i);
                 if (attUri.length() == 0) {
                     String attLocal = atts.getLocalName(i);
+                    if (attLocal.startsWith("aria-")) {
+                        hasAriaAttributes = true;
+                    }
                     if ("embed".equals(localName)) {
                         for (int j = 0; j < attLocal.length(); j++) {
                             char c = attLocal.charAt(j);
@@ -2224,17 +2228,8 @@ public class Assertions extends Checker {
                             + "\u201Ca\u201D ancestor with the "
                             + "\u201Chref\u201D attribute.");
                 }
-                if (atts.getIndex("", "alt") < 0) {
-                    // img without alt attribute
-                    if (role != null) {
-                        for (String roleValue : roles) {
-                            if (!("img".equals(roleValue))) {
-                                err("Bad value \u201C" + roleValue + "\u201D"
-                                        + " for attribute \u201Crole\u201D on"
-                                        + " element \u201Cimg\u201D");
-                            }
-                        }
-                    }
+                if (atts.getIndex("", "alt") < 0 //
+                        && role == null && !hasAriaAttributes) {
                     if ((titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"

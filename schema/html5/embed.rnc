@@ -10,14 +10,11 @@ namespace local = ""
 
 ## Images: <img>
 
-	img.elem =
-		element img { img.inner & img.attrs }
-	img.attrs =
+	shared-img.attrs =
 		(	common.attrs
 		&	img.attrs.src
 		&	img.attrs.srcset?
 		&	img.attrs.sizes?
-		&	img.attrs.alt? # ARIA: if alt empty, only allowed role value is "presentation"; check in assertions
 		&	img.attrs.generator-unable-to-provide-required-alt?
 		&	img.attrs.height?
 		&	img.attrs.width?
@@ -28,7 +25,18 @@ namespace local = ""
 		&	img.attrs.border? # obsolete
 		&	referrerpolicy?
 		&	embedded.content.attrs.crossorigin?
+		)
+
+	no-alt-img.elem =
+		element img { img.inner & shared-img.attrs }
+
+	img.elem =
+		element img { img.inner & img.attrs }
+	img.attrs =
+		(	shared-img.attrs
+		&	img.attrs.alt
 		&	(	common.attrs.aria.implicit.img
+			|	common.attrs.aria.implicit.img
 			|	common.attrs.aria.role.button
 			|	common.attrs.aria.role.checkbox
 			|	common.attrs.aria.role.img
@@ -48,6 +56,7 @@ namespace local = ""
 			|	common.attrs.aria.role.treeitem
 			)?
 		)
+
 		img.attrs.src =
 			attribute src {
 				common.data.uri.non-empty
@@ -102,6 +111,7 @@ namespace local = ""
 	img.inner =
 		empty
 
+	common.elem.phrasing |= no-alt-img.elem
 	common.elem.phrasing |= img.elem
 
 ## Image with multiple sources: <picture>
