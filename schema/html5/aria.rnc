@@ -104,6 +104,9 @@ common.attrs.aria.implicit.listitem |=
 	&	aria.state.expanded?
 	)
 
+common.attrs.aria.implicit.math |=
+	(	aria.state.expanded? )
+
 common.attrs.aria.implicit.option |=
 	(	aria.prop.posinset?
 	&	aria.prop.setsize?
@@ -1047,6 +1050,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			attribute role { string "math" }
 	
 	common.attrs.aria |= aria.math
+	common.attrs.aria.role.math |= aria.math
 
 ## menu
 	aria.menu =

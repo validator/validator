@@ -603,7 +603,6 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("li", "listitem");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("link", "link");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("main", "main");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("math", "math");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("menu", "menu");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("nav", "navigation");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
@@ -641,7 +640,6 @@ public class Assertions extends Checker {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("form", "form");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("hr", "separator");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("main", "main");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.put("math", "math");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("meter", "progressbar");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("nav", "navigation");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("option", "option");
@@ -1693,6 +1691,13 @@ public class Assertions extends Checker {
             ancestorMask = parent.getAncestorMask();
             parentName = parent.getName();
             parentRole = parent.getRole();
+        }
+        if ("http://www.w3.org/1998/Math/MathML" == uri
+                && "math".equals(localName) //
+                && atts.getIndex("", "role") > -1
+                && "math".equals(atts.getValue("", "role"))) {
+            warn("Element \u201Cmath\u201D does not need a"
+                    + " \u201Crole\u201D attribute.");
         }
         if ("http://www.w3.org/1999/xhtml" == uri) {
             boolean controls = false;

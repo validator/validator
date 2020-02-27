@@ -17,6 +17,7 @@ NN XXX NNNN
   - Allow negated media features in `media` and `sizes` attributes
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements
+  - ARIA: Add proper ARIA checking for the `math` element
   - Add option to specify additional script for Web-based checker
   - CLI: Make --errors-only option take precedence over --Werror
   - CLI: Enable checking standard input as SVG or CSS
