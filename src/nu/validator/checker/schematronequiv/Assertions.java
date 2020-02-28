@@ -606,12 +606,9 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("menu", "menu");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("nav", "navigation");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("optgroup", "group");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("option", "option");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("progress", "progressbar");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("section", "region");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("select", "listbox");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("summary", "button");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("table", "table");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tbody", "rowgroup");
@@ -643,8 +640,8 @@ public class Assertions extends Checker {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("meter", "progressbar");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("nav", "navigation");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("option", "option");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("optgroup", "group");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("progress", "progressbar");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.put("select", "listbox");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("summary", "button");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("textarea", "textbox");
     }
@@ -3144,25 +3141,78 @@ public class Assertions extends Checker {
                     child.setHeadingFound();
                 }
             }
-            if ("select" == localName && atts.getIndex("", "required") > -1
-                    && atts.getIndex("", "multiple") < 0) {
+            if ("select" == localName) {
+                boolean hasSize = false;
+                boolean sizeIsOne = false;
+                boolean sizeIsGreaterThanOne = false;
+                boolean hasMultiple = atts.getIndex("", "multiple") > -1;
                 if (atts.getIndex("", "size") > -1) {
+                    hasSize = true;
                     String size = trimSpaces(atts.getValue("", "size"));
                     if (!"".equals(size)) {
                         try {
-                            if ((size.length() > 1 && size.charAt(0) == '+'
+                            if ((size.length() > 1 //
+                                    && size.charAt(0) == '+'
                                     && Integer.parseInt(size.substring(1)) == 1)
                                     || Integer.parseInt(size) == 1) {
-                                child.setOptionNeeded();
-                            } else {
-                                // do nothing
+                                sizeIsOne = true;
+                            } else if ((size.length() > 1
+                                    && size.charAt(0) == '+'
+                                    && Integer.parseInt(size.substring(1)) > 1)
+                                    || Integer.parseInt(size) > 1) {
+                                sizeIsGreaterThanOne = true;
                             }
                         } catch (NumberFormatException e) {
                         }
                     }
+                }
+                if (sizeIsGreaterThanOne || hasMultiple) {
+                    if ("listbox".equals(role)) {
+                        warn("The \u201Clistbox\u201D role is unnecessary for"
+                                + " element \u201Cselect\u201D with a"
+                                + " \u201Cmultiple\u201D attribute or with a"
+                                + " \u201Csize\u201D attribute whose value"
+                                + " is greater than 1.");
+                    } else if (role != null) {
+                        err("A \u201Cselect\u201D element with a"
+                                + " \u201Cmultiple\u201D attribute or with a"
+                                + " \u201Csize\u201D attribute whose value"
+                                + " is greater than 1 must not have any"
+                                + " \u201Crole\u201D attribute.");
+                    }
+                }
+                if (!hasMultiple) {
+                    if (!sizeIsGreaterThanOne && role != null) {
+                        if ("combobox".equals(role)) {
+                            warn("The \u201Ccombobox\u201D role is unnecessary"
+                                    + " for element \u201Cselect\u201D"
+                                    + " without a \u201Cmultiple\u201D"
+                                    + " attribute and without a"
+                                    + " \u201Csize\u201D attribute whose value"
+                                    + " is greater than 1.");
+                        } else if (!"menu".equals(role)) {
+                            err("The \u201C" + role + "\u201D role is not"
+                                    + " allowed for element \u201Cselect\u201D"
+                                    + " without a \u201Cmultiple\u201D"
+                                    + " attribute and without a"
+                                    + " \u201Csize\u201D attribute whose value"
+                                    + " is greater than 1.");
+                        }
+                    }
+                    if (atts.getIndex("", "required") > -1) {
+                        if (hasSize) {
+                            if (sizeIsOne) {
+                                child.setOptionNeeded();
+                            } else {
+                                // "size" attr specified but isn't 1; do nothing
+                            }
+                        } else {
+                            // "size" unspecified; so browsers default size to 1
+                            child.setOptionNeeded();
+                        }
+                    }
                 } else {
-                    // default size is 1
-                    child.setOptionNeeded();
+                        // ARIA
                 }
             }
             if (localName.contains("-")) {
