@@ -19,9 +19,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	script.attrs.integrity?
 		&	embedded.content.attrs.crossorigin?
 		&	referrerpolicy?
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
 		)
 	script.elem.imported =
 		element script { script.inner.imported & script.attrs.imported }
@@ -37,9 +34,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	script.attrs.integrity?
 		&	embedded.content.attrs.crossorigin?
 		&	referrerpolicy?
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
 		)
 		script.attrs.src =
 			attribute src {
@@ -108,11 +102,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	noscript.inner.flow =
 		( common.inner.flow )
 	noscript.attrs =
-		(	common.attrs
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
-		)
+		( common.attrs )
 
 	common.elem.metadata |= noscript.elem.head
 	common.elem.phrasing |= noscript.elem.phrasing

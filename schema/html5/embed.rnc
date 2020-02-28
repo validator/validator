@@ -409,7 +409,6 @@ namespace local = ""
 		&	(	common.attrs.aria.role.application
 			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
-			|	common.attrs.aria.role.presentation
 			)?
 		)
 		object.attrs.data =
@@ -456,9 +455,6 @@ namespace local = ""
 		(	common.attrs
 		&	param.attrs.name
 		&	param.attrs.value
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
 		)
 		param.attrs.name =
 			attribute name {
@@ -551,9 +547,6 @@ namespace local = ""
 	map.attrs =
 		(	common.attrs
 		&	map.attrs.name
-		&	(	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
 		) # REVISIT make id required in Schematron
 		map.attrs.name =
 			attribute name {

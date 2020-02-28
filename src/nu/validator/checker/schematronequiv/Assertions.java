@@ -576,9 +576,6 @@ public class Assertions extends Checker {
     private static final Map<String, String> ELEMENTS_WITH_IMPLICIT_ROLE = new HashMap<>();
 
     static {
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("a", "link");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("address", "contentinfo");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("area", "link");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("article", "article");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("aside", "complementary");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("body", "document");
@@ -598,12 +595,12 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h4", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h5", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h6", "heading");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("hr", "separator");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("header", "banner");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("img", "img");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("li", "listitem");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("link", "link");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("main", "main");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("menu", "menu");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("nav", "navigation");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
@@ -635,7 +632,6 @@ public class Assertions extends Checker {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("datalist", "listbox");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("details", "group");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("form", "form");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.put("hr", "separator");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("main", "main");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("meter", "progressbar");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("nav", "navigation");
@@ -2981,6 +2977,12 @@ public class Assertions extends Checker {
 
                     }
                 }
+            } else if (atts.getIndex("", "href") > -1 && "link".equals(role)
+                    && ("a".equals(localName) || "area".equals(localName)
+                            || "link".equals(localName))) {
+                warn("The \u201Clink\u201D role is unnecessary for element"
+                        + " \u201C" + localName + "\u201D with attribute"
+                        + " \u201Chref\u201D.");
             } else if (atts.getIndex("", "href") > -1 && "link".equals(role)
                     && ("a".equals(localName) || "area".equals(localName)
                             || "link".equals(localName))) {

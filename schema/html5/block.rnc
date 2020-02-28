@@ -26,7 +26,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element hr { hr.inner & hr.attrs }
 	hr.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.role.separator
+		&	(	common.attrs.aria.implicit.separator
+			|	common.attrs.aria.role.separator
 			|	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.doc-pagebreak
 			)?

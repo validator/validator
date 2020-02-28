@@ -172,6 +172,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	common.attrs.aria.role.option
 			|	common.attrs.aria.role.radio
 			|	common.attrs.aria.role.switch
+			|	common.attrs.aria.role.tab
 			)?
 		)
 		input.button.attrs.type = 

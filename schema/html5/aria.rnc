@@ -149,6 +149,14 @@ common.attrs.aria.implicit.searchbox |=
 	&	aria.prop.required?
 	)
 
+common.attrs.aria.implicit.separator |=
+	(	aria.prop.valuemax?
+	&	aria.prop.valuemin?
+	&	aria.prop.valuenow?
+	&	aria.prop.valuetext?
+	&	aria.prop.orientation?
+	)
+
 common.attrs.aria.implicit.slider |=
 	(	aria.prop.valuemax?
 	&	aria.prop.valuemin?
@@ -1296,6 +1304,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			attribute role { string "scrollbar" }
 
 	common.attrs.aria |= aria.scrollbar
+	common.attrs.aria.role.scrollbar |= aria.scrollbar
 
 ## search
 	aria.search =
