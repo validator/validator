@@ -7,6 +7,11 @@ branches:
   except:
     - /^(osx|linux|windows|jar|war)$/
 
+env:
+  global:
+    - TOMCAT_VERSION=8.5.29
+    - CHECKER_PY=./checker.py
+
 matrix:
   include:
     - os:  linux
@@ -35,8 +40,6 @@ matrix:
       env: PYTHON=python3
 
 install:
-  - export TOMCAT_VERSION=8.5.29
-  - export CHECKER_PY=./checker.py
   - $PYTHON $CHECKER_PY update
   - travis_retry $PYTHON $CHECKER_PY dldeps
 
