@@ -42,6 +42,9 @@ matrix:
 install:
   - $PYTHON $CHECKER_PY update
   - travis_retry $PYTHON $CHECKER_PY dldeps
+  - curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
+  - unzip apache-tomcat-$TOMCAT_VERSION.zip
+  - chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
 
 script:
   - if [ -z "$PYTHON" ]; then python --version; else $PYTHON --version; fi
@@ -53,9 +56,6 @@ script:
   - $PYTHON $CHECKER_PY runtime-image
   - $PYTHON $CHECKER_PY war
   - jar xf ./build/dist-war/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
-  - curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
-  - unzip apache-tomcat-$TOMCAT_VERSION.zip
-  - chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
   - apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh start
   - cp ./build/dist-war/vnu.war apache-tomcat-$TOMCAT_VERSION/webapps/
   - sleep 15s; tail apache-tomcat-$TOMCAT_VERSION/logs/catalina.out || true
