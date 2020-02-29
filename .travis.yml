@@ -11,6 +11,7 @@ env:
   global:
     - TOMCAT_VERSION=8.5.29
     - CHECKER_PY=./checker.py
+    - TRAVIS_TAG=linux
 
 matrix:
   include:
@@ -19,16 +20,18 @@ matrix:
       env: PYTHON=python3
     - os:  linux
       jdk: openjdk11
-      env: JAR_DEPLOY=Yes
+      env: TRAVIS_TAG=jar
     - os:  linux
       jdk: openjdk11
-      env: WAR_DEPLOY=Yes
+      env: TRAVIS_TAG=war
     - os:  linux
       jdk: openjdk11
       env: PYTHON=python3
     - os:  osx
       jdk: openjdk11
-      env: PYTHON=python3
+      env:
+        - PYTHON=python3
+        - TRAVIS_TAG=osx
     - os:  linux
       jdk: openjdk13
       env: PYTHON=python3
@@ -93,9 +96,6 @@ before_deploy:
   - ls -al build/dist-war
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
-  - if [[ "$(uname)" == "Darwin" ]]; then TRAVIS_TAG="osx"; else TRAVIS_TAG="linux"; fi; export TRAVIS_TAG
-  - if [[ $JAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="jar"; fi; export TRAVIS_TAG
-  - if [[ $WAR_DEPLOY == "Yes" ]]; then TRAVIS_TAG="war"; fi; export TRAVIS_TAG
   - git push --delete git@github.com:validator/validator.git $TRAVIS_TAG || true
   - git tag -m $TRAVIS_TAG -f $TRAVIS_TAG -s --local-user 0x6C976B92
 
@@ -107,7 +107,7 @@ deploy:
     skip_cleanup: true
     file: "build/dist/{*.jar*}"
     on:
-      condition: $JAR_DEPLOY = "Yes"
+      condition: $TRAVIS_TAG = "jar"
       repo: validator/validator
       jdk: openjdk11
     api_key:
@@ -119,7 +119,7 @@ deploy:
     skip_cleanup: true
     file: "build/dist-war/{*.war*}"
     on:
-      condition: $WAR_DEPLOY = "Yes"
+      condition: $TRAVIS_TAG = "war"
       repo: validator/validator
       jdk: openjdk11
     api_key:
@@ -131,7 +131,7 @@ deploy:
     skip_cleanup: true
     file: "build/dist/{*.zip*}"
     on:
-      condition: $JAR_DEPLOY != "Yes" && $WAR_DEPLOY != "Yes"
+      condition: $TRAVIS_TAG != "jar" && $TRAVIS_TAG != "war"
       repo: validator/validator
       jdk: openjdk11
     api_key:
