@@ -12,37 +12,36 @@ env:
     - TOMCAT_VERSION=8.5.29
     - CHECKER_PY=./checker.py
     - TRAVIS_TAG=linux
+    - PYTHON=python3
 
 matrix:
   include:
     - os:  linux
       jdk: openjdk8
-      env: PYTHON=python3
     - os:  linux
-      jdk: openjdk11
-      env: TRAVIS_TAG=jar
-    - os:  linux
-      jdk: openjdk11
-      env: TRAVIS_TAG=war
-    - os:  linux
-      jdk: openjdk11
-      env: PYTHON=python3
-    - os:  osx
       jdk: openjdk11
       env:
-        - PYTHON=python3
-        - TRAVIS_TAG=osx
+        - TRAVIS_TAG=jar
+        - PYTHON=python
+    - os:  linux
+      jdk: openjdk11
+      env:
+        - TRAVIS_TAG=war
+        - PYTHON=python
+    - os:  linux
+      jdk: openjdk11
+    - os:  osx
+      jdk: openjdk11
+      env: TRAVIS_TAG=osx
     - os:  linux
       jdk: openjdk13
-      env: PYTHON=python3
     - os:  linux
       jdk: openjdk14
-      env: PYTHON=python3
     - os:  linux
       jdk: openjdk-ea
-      env: PYTHON=python3
 
 install:
+  - $PYTHON --version
   - $PYTHON $CHECKER_PY update
   - travis_retry $PYTHON $CHECKER_PY dldeps
   - curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
@@ -50,7 +49,6 @@ install:
   - chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
 
 script:
-  - if [ -z "$PYTHON" ]; then python --version; else $PYTHON --version; fi
   - $PYTHON $CHECKER_PY build
   - $PYTHON $CHECKER_PY jar
   - java -jar ./build/dist/vnu.jar ./build/dist/index.html
