@@ -152,5 +152,5 @@ jobs:
       if: matrix.java == 11
       with:
         # Currently creates a nested zip https://github.com/actions/upload-artifact/issues/3
-        name: vnu.linux.zip
-        path: "build/dist/vnu.linux.zip"
+        name: vnu.osx.zip
+        path: "build/dist/vnu.osx.zip"
