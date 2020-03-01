@@ -28,7 +28,9 @@ jobs:
     # - name: Update
     #   run: python ./checker.py update
     - name: Install Dependencies
-      run: python ./checker.py dldeps
+      run: |
+        python ./checker.py update
+        python ./checker.py dldeps
     - name: Build
       env:
         TOMCAT_VERSION: 8.5.29
