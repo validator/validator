@@ -90,25 +90,25 @@ jobs:
       with:
         python-version: '3.x'
     - name: Update Submodules
-      run: python ./checker.py update
+      run: python .\checker.py update
     - name: Install Dependencies
-      run: python ./checker.py dldeps
+      run: python .\checker.py dldeps
     - name: Build
       run: |
-        python ./checker.py build
-        python ./checker.py jar
+        python .\checker.py build
+        python .\checker.py jar
         java -jar .\build\dist\vnu.jar .\build\dist\index.html
         java -jar .\build\dist\vnu.jar .\site\nu-about.html
-        python ./checker.py runtime-image
-        python ./checker.py war
-        python ./checker.py check
-        python ./checker.py test
+        python .\checker.py runtime-image
+        python .\checker.py war
+        python .\checker.py check
+        python .\checker.py test
     # - uses: actions/upload-artifact@v1
     #   if: matrix.java == 11
     #   with:
     #     # Currently creates a nested zip https://github.com/actions/upload-artifact/issues/3
-    #     name: vnu.linux.zip
-    #     path: "build/dist/vnu.linux.zip"
+    #     name: vnu.windows.zip
+    #     path: "build/dist/vnu.windows.zip"
 
   # darwin:
   #   runs-on: macos-latest
