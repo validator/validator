@@ -30,7 +30,12 @@ jobs:
     - name: Install Dependencies
       run: python ./checker.py dldeps
     - name: Build
+      env:
+        TOMCAT_VERSION: 8.5.29
       run: |
+        curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
+        unzip apache-tomcat-$TOMCAT_VERSION.zip
+        chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
         python ./checker.py build
         python ./checker.py build
         python ./checker.py jar
