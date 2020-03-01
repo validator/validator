@@ -94,26 +94,12 @@ jobs:
     - name: Install Dependencies
       run: python ./checker.py dldeps
     - name: Build
-      env:
-        TOMCAT_VERSION: 8.5.29
       run: |
-        curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
-        unzip apache-tomcat-$TOMCAT_VERSION.zip
-        chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
-        python ./checker.py build
         python ./checker.py jar
-        java -jar ./build/dist/vnu.jar ./build/dist/index.html
-        java -jar ./build/dist/vnu.jar ./site/nu-about.html
-        jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
+        java -jar .\build\dist\vnu.jar .\build\dist\index.html
+        java -jar .\build\dist\vnu.jar .\site\nu-about.html
         python ./checker.py runtime-image
         python ./checker.py war
-        jar xf ./build/dist-war/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
-        apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh start
-        cp ./build/dist-war/vnu.war apache-tomcat-$TOMCAT_VERSION/webapps/
-        sleep 15s; tail apache-tomcat-$TOMCAT_VERSION/logs/catalina.out || true
-        curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
-        test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
-        if [ $? != 0 ]; then cat RESULTS; fi
         python ./checker.py check
         python ./checker.py test
     # - uses: actions/upload-artifact@v1
