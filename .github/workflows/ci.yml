@@ -99,7 +99,6 @@ jobs:
         python .\checker.py jar
         java -jar .\build\dist\vnu.jar .\build\dist\index.html
         java -jar .\build\dist\vnu.jar .\site\nu-about.html
-        python .\checker.py runtime-image
         python .\checker.py war
         python .\checker.py check
         python .\checker.py test
