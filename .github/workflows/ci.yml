@@ -95,6 +95,7 @@ jobs:
       run: python ./checker.py dldeps
     - name: Build
       run: |
+        python ./checker.py build
         python ./checker.py jar
         java -jar .\build\dist\vnu.jar .\build\dist\index.html
         java -jar .\build\dist\vnu.jar .\site\nu-about.html
