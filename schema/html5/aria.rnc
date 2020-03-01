@@ -286,35 +286,9 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 
 ## dropeffect
 	aria.state.dropeffect =
-		attribute aria-dropeffect
-			{	token "none" #default
-			| token "popup"
-			| token "execute"
-			|	list 
-				{	( string "copy" )
-				,	( string "execute" )?
-				}
-			|	list 
-				{	( string "move" )
-				,	( string "execute" )?
-				}
-			|	list 
-				{	( string "link" )
-				,	( string "execute" )?
-				}
-			|	list 
-				{	( string "execute" )
-				,	( string "copy" )
-				}
-			|	list 
-				{	( string "execute" )
-				,	( string "move" )
-				}
-			|	list 
-				{	( string "execute" )
-				,	( string "link" )
-				}
-			}
+		attribute aria-dropeffect {
+			string
+		}
 
 ## expanded
 	aria.state.expanded =
