@@ -36,7 +36,6 @@ jobs:
   #       unzip apache-tomcat-$TOMCAT_VERSION.zip
   #       chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
   #       python ./checker.py build
-  #       python ./checker.py build
   #       python ./checker.py jar
   #       java -jar ./build/dist/vnu.jar ./build/dist/index.html
   #       java -jar ./build/dist/vnu.jar ./site/nu-about.html
@@ -102,7 +101,6 @@ jobs:
         unzip apache-tomcat-$TOMCAT_VERSION.zip
         chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
         python ./checker.py build
-        python ./checker.py build
         python ./checker.py jar
         java -jar ./build/dist/vnu.jar ./build/dist/index.html
         java -jar ./build/dist/vnu.jar ./site/nu-about.html
@@ -153,7 +151,6 @@ jobs:
   #       curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
   #       unzip apache-tomcat-$TOMCAT_VERSION.zip
   #       chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
-  #       python ./checker.py build
   #       python ./checker.py build
   #       python ./checker.py jar
   #       java -jar ./build/dist/vnu.jar ./build/dist/index.html
