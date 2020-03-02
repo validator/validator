@@ -31,7 +31,6 @@ matrix:
     - os:  linux
       jdk: openjdk11
     - os:  osx
-      jdk: openjdk11
       env:
         - TRAVIS_TAG=osx
         - JAVA_HOME=$(/usr/libexec/java_home)
