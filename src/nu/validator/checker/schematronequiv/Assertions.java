@@ -1556,7 +1556,11 @@ public class Assertions extends Checker {
                             cssMessage = cpe.getMessage();
                         }
                         if (!"".equals(cssMessage)) {
-                            message = cssProperty + cssMessage + ".";
+                            message = cssProperty + cssMessage.trim();
+                            if (!".".equals(
+                                    message.substring(message.length() - 1))) {
+                                message = message + ".";
+                            }
                         }
                     } else {
                         message = ex.getMessage();
@@ -1781,7 +1785,11 @@ public class Assertions extends Checker {
                                     cssMessage = cpe.getMessage();
                                 }
                                 if (!"".equals(cssMessage)) {
-                                    message = cssProperty + cssMessage + ".";
+                                    message = cssProperty + cssMessage.trim();
+                                    if (!".".equals(message.substring(
+                                            message.length() - 1))) {
+                                        message = message + ".";
+                                    }
                                 }
                             } else {
                                 message = ex.getMessage();
