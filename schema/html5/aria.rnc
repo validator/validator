@@ -286,8 +286,9 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 
 ## dropeffect
 	aria.state.dropeffect =
-		attribute aria-dropeffect {
-			string
+		attribute aria-dropeffect
+			{	
+				list { ("copy" | "execute" | "link" | "move" | "none" | "popup") + } 
 		}
 
 ## expanded
