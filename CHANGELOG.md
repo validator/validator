@@ -16,6 +16,7 @@ NN XXX NNNN
   - Allow `nonce` as a global attribute
   - Allow heading content within `legend` element
   - Allow negated media features in `media` and `sizes` attributes
+  - Align `autocomplete` checking with current spec
   - CSS: Improve support for color values
   - ARIA: Allow implicit roles to satisfy owned-by requirements
   - ARIA: Add proper ARIA checking for the `math` element

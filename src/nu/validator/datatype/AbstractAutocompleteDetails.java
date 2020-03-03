@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Mozilla Foundation
+ * Copyright (c) 2016-2020 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -165,12 +165,16 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
             }
             detailTokens.remove(0);
         }
+        if (contactTypes.contains(detailTokens.get(0))) {
+            isContactDetails = true;
+            contactType = detailTokens.get(0);
+            detailTokens.remove(0);
+        }
         for (String token : detailTokens) {
             if (contactTypes.contains(token)) {
                 throw newDatatypeException(
                         "The token \u201c" + token + "\u201d must only"
-                                + " appear as the first token in a list"
-                                + " of autofill detail tokens.");
+                                + " appear before any autofill field names.");
             } else if (token.startsWith("section-")) {
                 throw newDatatypeException(
                         "A \u201csection-*\u201d indicator must only"
