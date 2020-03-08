@@ -14,6 +14,7 @@ NN XXX NNNN
   - Allow `autofocus` as a global attribute
   - Allow `inputmode` as a global attribute
   - Allow `nonce` as a global attribute
+  - Allow `allow-downloads` in iframe[sandbox]
   - Allow heading content within `legend` element
   - Allow negated media features in `media` and `sizes` attributes
   - Align `autocomplete` checking with current spec

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Mozilla Foundation
+ * Copyright (c) 2017-2020 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -52,6 +52,7 @@ public final class SandboxAllowList extends AbstractDatatype {
     private boolean hasAllowTopNavigationByUserActivation;
 
     static {
+        allowedKeywords.add("allow-downloads");
         allowedKeywords.add("allow-forms");
         allowedKeywords.add("allow-modals");
         allowedKeywords.add("allow-orientation-lock");
