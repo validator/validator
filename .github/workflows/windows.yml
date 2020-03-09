@@ -1,0 +1,45 @@
+name: Windows build for vnu
+
+on: [push, pull_request]
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java:
+        - 8
+        - 11
+        - 13
+        - 14-ea
+        - 15-ea
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.3.0
+      with:
+        java-version: ${{ matrix.java }}
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: Update Submodules
+      run: python .\checker.py update
+    - name: Install Dependencies
+      run: python .\checker.py dldeps
+    - name: Build
+      run: |
+        python .\checker.py build
+        python .\checker.py jar
+        java -jar .\build\dist\vnu.jar .\build\dist\index.html
+        java -jar .\build\dist\vnu.jar .\site\nu-about.html
+        python .\checker.py war
+        python .\checker.py check
+        python .\checker.py test
+    - uses: actions/upload-artifact@v1
+      if: matrix.java == 11
+      with:
+        # Currently creates a nested zip https://github.com/actions/upload-artifact/issues/3
+        name: vnu.windows.zip
+        path: "build/dist/vnu.windows.zip"
