@@ -28,16 +28,16 @@ jobs:
       env:
         TOMCAT_VERSION: 8.5.29
       run: |
+        python ./checker.py build
+        python ./checker.py jar
+        python ./checker.py image
+        python ./checker.py war
+        java -jar ./build/dist/vnu.jar ./build/dist/index.html
+        java -jar ./build/dist/vnu.jar ./site/nu-about.html
         curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
         unzip apache-tomcat-$TOMCAT_VERSION.zip
         chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
-        python ./checker.py build
-        python ./checker.py jar
-        java -jar ./build/dist/vnu.jar ./build/dist/index.html
-        java -jar ./build/dist/vnu.jar ./site/nu-about.html
         jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
-        python ./checker.py runtime-image
-        python ./checker.py war
         jar xf ./build/dist-war/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
         apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh start
         cp ./build/dist-war/vnu.war apache-tomcat-$TOMCAT_VERSION/webapps/

@@ -32,9 +32,10 @@ jobs:
       run: |
         python .\checker.py build
         python .\checker.py jar
+        python .\checker.py image
+        python .\checker.py war
         java -jar .\build\dist\vnu.jar .\build\dist\index.html
         java -jar .\build\dist\vnu.jar .\site\nu-about.html
-        python .\checker.py war
         python .\checker.py check
         python .\checker.py test
     - uses: actions/upload-artifact@v1
