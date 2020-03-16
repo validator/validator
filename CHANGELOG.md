@@ -2,8 +2,8 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
-# N.N.N
-NN XXX NNNN
+# 20.3.16
+16 March 2020
   - Disallow `accept-charset` values other than `UTF-8`
   - Disallow object[typemustmatch]
   - Allow SVG feDropShadow element (from Filter Effects spec)
