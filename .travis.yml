@@ -91,7 +91,6 @@ before_deploy:
   - gpg --import resources/gpg_travis || true
   - for file in build/dist/{*.zip*,*.jar*}; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
   - for file in build/dist-war/*.war*; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
-  - rm -f build/dist/*.asc.asc
   - ls -al build/dist
   - ls -al build/dist-war
   - git config --local user.name "Travis CI"
@@ -129,7 +128,7 @@ deploy:
     prerelease: true
     file_glob: true
     skip_cleanup: true
-    file: "build/dist/{*.zip*}"
+    file: "build/dist/{*.zip,*.zip.asc,*zip.md5,*.zip.md5.asc,*.zip.sha1,*.zip.sha1.asc}"
     on:
       condition: $TRAVIS_TAG != "jar" && $TRAVIS_TAG != "war"
       repo: validator/validator
