@@ -1120,7 +1120,7 @@ class Release():
         self.sign(whichDir)
 
     def createOrUpdateGithubData(self):
-        runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
+        runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
         args = [
             "-u",
             "validator",
@@ -1269,7 +1269,7 @@ class Release():
                 runCmd(args)
 
     def uploadNpm(self, tag=None):
-        runCmd([gitCmd, 'tag', '-s', '-f', ('v%s' % validatorVersion)])
+        runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         removeIfExists(os.path.join(buildRoot, "CHANGELOG.md~"))
         readMe = os.path.join(buildRoot, "README.md")
