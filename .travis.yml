@@ -91,7 +91,7 @@ before_deploy:
   - gpg --import resources/gpg_travis || true
   - for file in build/dist/{*.zip*,*.jar*}; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
   - for file in build/dist-war/*.war*; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
-  - rm build/dist/*.asc.asc
+  - rm -f build/dist/*.asc.asc
   - ls -al build/dist
   - ls -al build/dist-war
   - git config --local user.name "Travis CI"
