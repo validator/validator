@@ -89,9 +89,9 @@ before_deploy:
   - eval $(ssh-agent -s)
   - ssh-add resources/ssh_travis
   - gpg --import resources/gpg_travis || true
-  - for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
-  - for file in build/dist-war/{*.war*,; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done
-  - ls -al build/dist
+  - for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done || true
+  - for file in build/dist-war/{*.war*,; do gpg --yes -ab --local-user 0x6C976B92 --sign $file; done || true
+  - ls -al build/distk
   - ls -al build/dist-war
   - git config --local user.name "Travis CI"
   - git config --local user.email "mike@w3.org"
