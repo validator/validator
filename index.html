@@ -995,10 +995,13 @@ options for controlling the behavior of the script, as well as build-target
 names you can call separately; e.g.:
 
 <ul>
-<li><code>python ./checker.py build</code> (to build only)
-<li><code>python ./checker.py build test</code> (to build and test)
-<li><code>python ./checker.py run</code> (to run only)
-<li><code>python ./checker.py jar</code> (to compile <code>vnu.jar</code>)
+<li><pre>python ./checker.py build  # to build only</pre>
+<li><pre>python ./checker.py build  # test to build and test</pre>
+<li><pre>python ./checker.py run    # to run only</pre>
+<li><pre>python ./checker.py jar    # to compile <code>vnu.jar</code></pre>
+<li><pre>python ./checker.py update-shallow && \
+  python ./checker.py dldeps && \
+  python ./checker.py jar  # compile vnu.jar faster</pre>
 </ul>
 </div>
 </section>
