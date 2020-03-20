@@ -716,5 +716,5 @@ e.g.:
 
   * `python ./checker.py run` (to run only)
 
-  * `python ./checker.py jar` (to compile `vnu.jar`)
+  * `python ./checker.py update-shallow && python ./checker.py dldeps && python ./checker.py jar` (to compile `vnu.jar`)
 
