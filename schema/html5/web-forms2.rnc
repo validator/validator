@@ -210,7 +210,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.file.attrs &=
 		(	shared-input.attrs
 		&	input.attrs.multiple?
+		&	input.input.attrs.capture?
 		)
+		input.input.attrs.capture =
+			attribute capture {
+				w:string "user" | w:string "environment"
+			}
 
 ## Image Submit Button: <input type='image'>, Extensions
 
