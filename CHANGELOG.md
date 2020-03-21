@@ -5,6 +5,7 @@ changes to any options/interfaces the checker exposes for developers.
 # N.N.N
 NN XXX NNNN
   - CLI: Ensure the --version option reports the actual version
+  - CSS: Improvements in calc(), min()/max() checking, more
 
 # 20.3.16
 16 March 2020
