@@ -2,6 +2,10 @@ With a few exceptions, this is a record of mainly just user-facing
 changes—that is, either changes to the actual behavior of the checker, or
 changes to any options/interfaces the checker exposes for developers.
 
+# N.N.N
+NN XXX NNNN
+  - CLI: Ensure the --version option reports the actual version
+
 # 20.3.16
 16 March 2020
   - Disallow `accept-charset` values other than `UTF-8`

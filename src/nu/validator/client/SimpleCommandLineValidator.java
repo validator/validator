@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Mozilla Foundation
+ * Copyright (c) 2013-2020 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -30,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
@@ -113,12 +115,15 @@ public class SimpleCommandLineValidator {
     private static boolean hasSchemaOption;
 
     public static void main(String[] args) throws SAXException, Exception {
-        try (InputStream is = SimpleCommandLineValidator.class. //
-                getClassLoader().getResourceAsStream("META-INF/MANIFEST.MF")) {
-            version = (new Manifest(is)) //
-                .getMainAttributes().getValue("Implementation-Version");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Enumeration<URL> resources = SimpleCommandLineValidator.class. //
+                getClassLoader().getResources("META-INF/MANIFEST.MF");
+        while (resources.hasMoreElements()) {
+            try (InputStream is = resources.nextElement().openStream()) {
+                version = new Manifest(is).getMainAttributes() //
+                        .getValue("Implementation-Version");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         out = System.err;
         userAgent = "Validator.nu/LV";
