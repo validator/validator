@@ -4,9 +4,10 @@ changes to any options/interfaces the checker exposes for developers.
 
 # N.N.N
 NN XXX NNNN
-  - CLI: Ensure the --version option reports the actual version
-  - CSS: Improvements in calc(), min()/max() checking, more
-  - Allow `capture` attribute for the input[type=file] element
+  - CLI: Ensure the `--version` option reports the actual version
+  - CSS: Improvements in `calc()`, `min()`/`max()` checking, more
+  - Allow `height` and `width` attributes for SVG `symbol` element
+  - Allow `capture` attribute for the `input[type=file]` element
 
 # 20.3.16
 16 March 2020
