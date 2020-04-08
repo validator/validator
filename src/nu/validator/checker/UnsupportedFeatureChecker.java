@@ -15,7 +15,7 @@ public class UnsupportedFeatureChecker extends Checker {
         if ("http://www.w3.org/1999/xhtml" != uri) {
             return;
         }
-        if ("dialog" == localName || "bdi" == localName) {
+        if ("dialog" == localName) {
             warnAboutElement(localName);
         } else if ("textarea" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
