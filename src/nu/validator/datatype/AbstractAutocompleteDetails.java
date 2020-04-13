@@ -165,7 +165,8 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
             }
             detailTokens.remove(0);
         }
-        if (contactTypes.contains(detailTokens.get(0))) {
+        if (detailTokens.size() > 0
+                && contactTypes.contains(detailTokens.get(0))) {
             isContactDetails = true;
             contactType = detailTokens.get(0);
             detailTokens.remove(0);
