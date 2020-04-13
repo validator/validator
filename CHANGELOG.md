@@ -8,6 +8,7 @@ NN XXX NNNN
   - CSS: Improvements in `calc()`, `min()`/`max()` checking, more
   - Allow `height` and `width` attributes for SVG `symbol` element
   - Allow `capture` attribute for the `input[type=file]` element
+  - Allow `disabled` attribute for the `link[rel=stylesheet]` element
 
 # 20.3.16
 16 March 2020

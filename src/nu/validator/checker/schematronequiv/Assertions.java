@@ -2837,6 +2837,13 @@ public class Assertions extends Checker {
                             + " \u201Cpreload\u201D or the value"
                             + " \u201Cmodulepreload\u201D.");
                 }
+                if (atts.getIndex("", "disabled") > -1
+                        && (!relList.contains("stylesheet") || !hasRel)) {
+                    err("A \u201Clink\u201D element with a"
+                            + " \u201Cdisabled\u201D attribute must have a"
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cstylesheet\u201D.");
+                }
                 if (atts.getIndex("", "sizes") > -1
                         && ((relList != null && !relList.contains("icon")
                                 && !relList.contains("apple-touch-icon"))

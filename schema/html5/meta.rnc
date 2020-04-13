@@ -152,6 +152,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	referrerpolicy?
 		&	link.attrs.sizes?
 		&	link.attrs.color?
+		&	link.attrs.disabled?
 		&	link.attrs.scope?
 		&	link.attrs.updateviacache?
 		&	link.attrs.workertype?
@@ -200,6 +201,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		link.attrs.color =
 			attribute color {
 				common.data.color
+			}
+		link.attrs.disabled =
+			attribute disabled {
+				w:string "disabled" | w:string ""
 			}
 		link.attrs.scope =
 			attribute scope {
