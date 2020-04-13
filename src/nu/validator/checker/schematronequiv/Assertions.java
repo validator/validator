@@ -2815,18 +2815,25 @@ public class Assertions extends Checker {
                             atts.getValue("", "rel") //
                             .toLowerCase().split("\\s+"));
                 }
-                if (atts.getIndex("", "as") > -1
-                        && ((relList != null //
-                                && !(relList.contains("preload")
-                                        || relList.contains("modulepreload"))
-                                || !hasRel))) {
+                if (relList.contains("preload")
+                        && atts.getIndex("", "as") < 0) {
+                    err("A \u201Clink\u201D element with a"
+                            + " \u201Crel\u201D attribute that contains the"
+                            + " value \u201Cpreload\u201D must have an"
+                            + " \u201Cas\u201D attribute.");
+                }
+                if (atts.getIndex("", "as") > -1 //
+                        && (!(relList.contains("preload")
+                                || relList.contains("modulepreload")) //
+                                || !hasRel)) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cas\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
-                            + " value \u201Cpreload\u201D.");
+                            + " value \u201Cpreload\u201D or the value"
+                            + " \u201Cmodulepreload\u201D.");
                 }
                 if (atts.getIndex("", "integrity") > -1
-                        && ((relList != null && !relList.contains("stylesheet")
+                        && ((!relList.contains("stylesheet")
                                 && !relList.contains("preload")
                                 && !relList.contains("modulepreload")
                                 || !hasRel))) {
