@@ -134,6 +134,9 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
         boolean isContactDetails = false;
         String contactType = "";
         String firstRemainingToken = "";
+        if (detailTokens.size() < 1) {
+            return;
+        }
         if (contactTypes.contains(detailTokens.get(0))) {
             isContactDetails = true;
             contactType = detailTokens.get(0);
