@@ -2833,10 +2833,10 @@ public class Assertions extends Checker {
                             + " \u201Cmodulepreload\u201D.");
                 }
                 if (atts.getIndex("", "integrity") > -1
-                        && ((!relList.contains("stylesheet")
-                                && !relList.contains("preload")
-                                && !relList.contains("modulepreload")
-                                || !hasRel))) {
+                        && (!(relList.contains("stylesheet")
+                                || relList.contains("preload")
+                                || relList.contains("modulepreload")) //
+                                || !hasRel)) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cintegrity\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
@@ -2845,16 +2845,18 @@ public class Assertions extends Checker {
                             + " \u201Cmodulepreload\u201D.");
                 }
                 if (atts.getIndex("", "disabled") > -1
-                        && (!relList.contains("stylesheet") || !hasRel)) {
+                        && (!relList.contains("stylesheet") //
+                                || !hasRel)) {
                     err("A \u201Clink\u201D element with a"
                             + " \u201Cdisabled\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
                             + " value \u201Cstylesheet\u201D.");
                 }
                 if (atts.getIndex("", "sizes") > -1
-                        && ((relList != null && !relList.contains("icon")
-                                && !relList.contains("apple-touch-icon"))
-                                && !relList.contains("apple-touch-icon-precomposed")
+                        && (!(relList.contains("icon")
+                                || relList.contains("apple-touch-icon")
+                                || relList.contains(
+                                        "apple-touch-icon-precomposed"))
                                 || !hasRel)) {
                     err("A \u201Clink\u201D element with a"
                             + " \u201Csizes\u201D attribute must have a"
@@ -2863,35 +2865,32 @@ public class Assertions extends Checker {
                             + " \u201Capple-touch-icon\u201D or the value"
                             + " \u201Capple-touch-icon-precomposed\u201D.");
                 }
-                if (atts.getIndex("", "color") > -1 //
-                        && (!hasRel || (relList != null
-                                && !relList.contains("mask-icon")))) {
+                if (atts.getIndex("", "color") > -1
+                        && (!relList.contains("mask-icon") //
+                                || !hasRel)) {
                     err("A \u201Clink\u201D element with a"
                             + " \u201Ccolor\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains"
                             + " the value \u201Cmask-icon\u201D.");
                 }
-                if (atts.getIndex("", "scope") > -1 //
-                        && ((relList != null
-                                && !relList.contains("serviceworker"))
+                if (atts.getIndex("", "scope") > -1
+                        && (!relList.contains("serviceworker") //
                                 || !hasRel)) {
                     err("A \u201Clink\u201D element with a"
                             + " \u201Cscope\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
                             + " value \u201Cserviceworker\u201D.");
                 }
-                if (atts.getIndex("", "updateviacache") > -1 //
-                        && ((relList != null
-                                && !relList.contains("serviceworker"))
+                if (atts.getIndex("", "updateviacache") > -1
+                        && (!relList.contains("serviceworker") //
                                 || !hasRel)) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cupdateviacache\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
                             + " value \u201Cserviceworker\u201D.");
                 }
-                if (atts.getIndex("", "workertype") > -1 //
-                        && ((relList != null
-                                && !relList.contains("serviceworker"))
+                if (atts.getIndex("", "workertype") > -1
+                        && (!relList.contains("serviceworker") //
                                 || !hasRel)) {
                     err("A \u201Clink\u201D element with a"
                             + " \u201Cworkertype\u201D attribute must have a"
