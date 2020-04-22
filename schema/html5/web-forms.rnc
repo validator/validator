@@ -416,6 +416,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	(	common.attrs.aria.role.listbox # aria-multiselectable depends on "multiple" value; check in assertions
 			|	common.attrs.aria.role.combobox
 			|	common.attrs.aria.role.menu
+			|	common.attrs.aria.implicit.combobox
+			|	common.attrs.aria.implicit.listbox
 			)?
 		)
 		select.attrs.size =
