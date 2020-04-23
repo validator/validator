@@ -9,6 +9,7 @@ NN XXX NNNN
   - Allow `height` and `width` attributes for SVG `symbol` element
   - Allow `capture` attribute for the `input[type=file]` element
   - Allow `disabled` attribute for the `link[rel=stylesheet]` element
+  - ARIA: Fix bug that disallowed implicit combobox/listbox for `select`
 
 # 20.3.16
 16 March 2020
