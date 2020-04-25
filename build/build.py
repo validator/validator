@@ -58,7 +58,7 @@ try:
 except ImportError:
     CAFILE = None
 
-javaTargetVersion = '1.8'
+javaTargetVersion = '8'
 herokuCmd = 'heroku'
 dockerCmd = 'docker'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
@@ -311,9 +311,7 @@ def runJavac(sourceDir, classDir, classPath):
         'UTF-8',
     ]
     if javaTargetVersion != "":
-        args.append('-target')
-        args.append(javaTargetVersion)
-        args.append('-source')
+        args.append('--release')
         args.append(javaTargetVersion)
         args.append('@temp-javac-list')
     if runCmd(args):
@@ -750,9 +748,7 @@ def buildEmitters():
         'UTF-8',
     ]
     if javaTargetVersion != "":
-        args.append('-target')
-        args.append(javaTargetVersion)
-        args.append('-source')
+        args.append('--release')
         args.append(javaTargetVersion)
     args.append(compilerFile)
     if runCmd(args):
