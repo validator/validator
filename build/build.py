@@ -254,7 +254,7 @@ def findFilesWithExtension(directory, extension):
     rv = []
     ext = '.' + extension
     for root, dirs, files in os.walk(directory):
-        if root.endswith("nu/validator/htmlparser/xom"):
+        if root.endswith(os.path.join("nu", "validator", "htmlparser", "xom")):
             continue
         for filename in files:
             if filename.endswith(ext):
