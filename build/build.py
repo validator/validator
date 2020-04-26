@@ -315,7 +315,7 @@ def runJavac(sourceDir, classDir, classPath):
     if javaTargetVersion != "":
         args.append('--release')
         args.append(javaTargetVersion)
-        args.append('@temp-javac-list')
+    args.append('@temp-javac-list')
     if runCmd(args):
         sys.exit(1)
     removeIfExists("temp-javac-list")
@@ -1729,6 +1729,8 @@ def main(argv):
             int(javaRawVersion
                 .splitlines()[0].split()[2].strip('"').split('.')[0]
                 .replace('-ea', ''))
+        if javaEnvVersion < 9:
+            javaTargetVersion = ''
         release = Release()
         release.runtimeDistroBasename = getRuntimeDistroBasename()
         release.runtimeDistroFile = release.runtimeDistroBasename + ".zip"
