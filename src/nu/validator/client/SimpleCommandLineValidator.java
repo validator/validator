@@ -436,6 +436,10 @@ public class SimpleCommandLineValidator {
     }
 
     private static void checkSvgFile(File file) throws IOException, Exception {
+        if (!"http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc".equals(
+                validator.getMainSchemaUrl()) && !hasSchemaOption) {
+            setSchema("http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc");
+        }
         try {
             String path = file.getPath();
             if (!file.exists()) {
@@ -447,6 +451,7 @@ public class SimpleCommandLineValidator {
                 return;
             } else {
                 emitFilename(path);
+                validator.checkXmlFile(file);
             }
         } catch (SAXException e) {
             if (!errorsOnly) {
