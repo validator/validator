@@ -260,13 +260,13 @@ environment variable, you can invoke the checker with just
 
 <p>To check one or more documents from the command line:
 <pre>
-  vnu-runtime-image/bin/vnu      FILE.html FILE2.html FILE3.HTML...
+  vnu-runtime-image/bin/vnu      FILE.html FILE2.html FILE3.html...
 </pre>
 <pre>
-  vnu-runtime-image\bin\vnu.bat  FILE.html FILE2.html FILE3.HTML...
+  vnu-runtime-image\bin\vnu.bat  FILE.html FILE2.html FILE3.html...
 </pre>
 <pre>
-  java -jar ~/vnu.jar            FILE.html FILE2.html FILE3.HTML...
+  java -jar ~/vnu.jar            FILE.html FILE2.html FILE3.html...
 </pre>
 
 <div class=note>
@@ -547,8 +547,8 @@ Shows the checker version number.
   <a href="https://html5.validator.nu/">html5.validator.nu</a>,
   and
   <a href="https://validator.w3.org/nu/">validator.w3.org/nu</a>,
-  for browser-based checking of HTML documents over
-  the Web.
+  for browser-based checking of HTML documents, CSS stylesheets, and SVG
+  images over the Web.
   To that end, the checker is released as several separate packages:
   <ul>
   <li>Linux, Windows, and macOS binaries for
@@ -560,8 +560,8 @@ Shows the checker version number.
   </ul>
   <p>
   All deployments expose a REST API that enables checking of HTML
-  documents from other clients, not just web browsers. And the
-  Linux, Windows, and macOS binaries and
+  documents, CSS stylesheets, and SVG images from other clients, not just
+  web browsers. And the Linux, Windows, and macOS binaries and
   <code>vnu.jar</code> package also include
   <a href="#http-client">a simple HTTP client</a> that enables you to
   either send documents to a locally-running instance of the checker HTTP
@@ -640,8 +640,8 @@ checker to a different address:
     <code>nu.validator.servlet.bind-address</code> value you’re using),
     you’ll see a form similar to <a
     href="https://validator.w3.org/nu/">validator.w3.org/nu</a> that allows
-    you to enter the URL of an HTML document and have the results for that
-    document displayed in the browser.
+    you to enter the URL of an HTML document, CSS stylesheet, or SVG image,
+    and have the results of checking that resource displayed in the browser.
 
 <div class=note>
 <p><b>Note:</b> If you get a <code>StackOverflowError</code>

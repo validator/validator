@@ -105,11 +105,11 @@ can invoke the checker with just `vnu`.
 
 To check one or more documents from the command line:
 
-      vnu-runtime-image/bin/vnu      FILE.html FILE2.html FILE3.HTML...
+      vnu-runtime-image/bin/vnu      FILE.html FILE2.html FILE3.html...
 
-      vnu-runtime-image\bin\vnu.bat  FILE.html FILE2.html FILE3.HTML...
+      vnu-runtime-image\bin\vnu.bat  FILE.html FILE2.html FILE3.html...
 
-      java -jar ~/vnu.jar            FILE.html FILE2.html FILE3.HTML...
+      java -jar ~/vnu.jar            FILE.html FILE2.html FILE3.html...
 
 **Note:** If you get a `StackOverflowError` error when invoking the checker, try
 adjusting the thread stack size by providing the `-Xss` option to java:
@@ -340,8 +340,8 @@ provides the following options:
 The Nu Html Checker — along with being usable as [a standalone command-line
 client][26] — can be run as an HTTP service, similar to [checker.html5.org][27],
 [html5.validator.nu][28], and [validator.w3.org/nu][29], for browser-based
-checking of HTML documents over the Web. To that end, the checker is released as
-several separate packages:
+checking of HTML documents, CSS stylesheets, and SVG images over the Web. To
+that end, the checker is released as several separate packages:
 
    [26]: https://validator.github.io/validator/#usage
    [27]: https://checker.html5.org/
@@ -356,12 +356,12 @@ several separate packages:
 
   * `vnu.war` for deploying the checker to a servlet container such as Tomcat
 
-All deployments expose a REST API that enables checking of HTML documents from
-other clients, not just web browsers. And the Linux, Windows, and macOS binaries
-and `vnu.jar` package also include a simple HTTP client that enables you to
-either send documents to a locally-running instance of the checker HTTP service
-— for fast command-line checking — or to any remote instance of the checker HTTP
-service running anywhere on the Web.
+All deployments expose a REST API that enables checking of HTML documents, CSS
+stylesheets, and SVG images from other clients, not just web browsers. And the
+Linux, Windows, and macOS binaries and `vnu.jar` package also include a simple
+HTTP client that enables you to either send documents to a locally-running
+instance of the checker HTTP service — for fast command-line checking — or to
+any remote instance of the checker HTTP service running anywhere on the Web.
 
 The [latest releases of the Linux, Windows, and macOS binaries and vnu.jar and
 vnu.war packages][30] are available from the `validator` project at github. The
@@ -412,7 +412,8 @@ different address:
 When you open [http://0.0.0.0:8888][32] (or whatever URL corresponds to the
 `nu.validator.servlet.bind-address` value you’re using), you’ll see a form
 similar to [validator.w3.org/nu][33] that allows you to enter the URL of an HTML
-document and have the results for that document displayed in the browser.
+document, CSS stylesheet, or SVG image, and have the results of checking that
+resource displayed in the browser.
 
    [32]: http://0.0.0.0:8888
    [33]: https://validator.w3.org/nu/
