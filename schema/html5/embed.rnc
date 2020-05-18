@@ -27,16 +27,12 @@ namespace local = ""
 		&	embedded.content.attrs.crossorigin?
 		)
 
-	no-alt-img.elem =
-		element img { img.inner & shared-img.attrs }
-
 	img.elem =
 		element img { img.inner & img.attrs }
 	img.attrs =
 		(	shared-img.attrs
-		&	img.attrs.alt
+		&	img.attrs.alt?
 		&	(	common.attrs.aria.implicit.img
-			|	common.attrs.aria.implicit.img
 			|	common.attrs.aria.role.button
 			|	common.attrs.aria.role.checkbox
 			|	common.attrs.aria.role.img
@@ -111,7 +107,6 @@ namespace local = ""
 	img.inner =
 		empty
 
-	common.elem.phrasing |= no-alt-img.elem
 	common.elem.phrasing |= img.elem
 
 ## Image with multiple sources: <picture>

@@ -1710,7 +1710,7 @@ public class Assertions extends Checker {
             boolean tabindex = false;
             boolean languageJavaScript = false;
             boolean typeNotTextJavaScript = false;
-            boolean hasAriaAttributes = false;
+            boolean hasAriaAttributesOtherThanAriaHidden = false;
             String xmlLang = null;
             String lang = null;
             String id = null;
@@ -1721,8 +1721,9 @@ public class Assertions extends Checker {
                 String attUri = atts.getURI(i);
                 if (attUri.length() == 0) {
                     String attLocal = atts.getLocalName(i);
-                    if (attLocal.startsWith("aria-")) {
-                        hasAriaAttributes = true;
+                    if (attLocal.startsWith("aria-")
+                            && !"aria-hidden".equals(attLocal)) {
+                        hasAriaAttributesOtherThanAriaHidden = true;
                     }
                     if ("embed".equals(localName)) {
                         for (int j = 0; j < attLocal.length(); j++) {
@@ -2234,8 +2235,18 @@ public class Assertions extends Checker {
                             + "\u201Ca\u201D ancestor with the "
                             + "\u201Chref\u201D attribute.");
                 }
-                if (atts.getIndex("", "alt") < 0 //
-                        && role == null && !hasAriaAttributes) {
+                if (atts.getIndex("", "alt") < 0) {
+                    if (role != null) {
+                        err("An \u201Cimg\u201D element with no \u201Calt\u201D"
+                                + " attribute must not have a"
+                                + " \u201Crole\u201D attribute.");
+                    }
+                    if (hasAriaAttributesOtherThanAriaHidden) {
+                        err("An \u201Cimg\u201D element with no \u201Calt\u201D"
+                                + " attribute must not have any"
+                                + " \u201Caria-*\u201D attributes other than"
+                                + " \u201Caria-hidden\u201D.");
+                    }
                     if ((titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"

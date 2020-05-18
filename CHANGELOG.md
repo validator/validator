@@ -11,6 +11,7 @@ NN XXX NNNN
   - Allow `capture` attribute for the `input[type=file]` element
   - Allow `disabled` attribute for the `link[rel=stylesheet]` element
   - ARIA: Fix bug that disallowed implicit combobox/listbox for `select`
+  - ARIA: Improve error message for `alt`-less `img` with ARIA attributes
 
 # 20.3.16
 16 March 2020
