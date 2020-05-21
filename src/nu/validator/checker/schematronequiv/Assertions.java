@@ -1711,6 +1711,7 @@ public class Assertions extends Checker {
             boolean languageJavaScript = false;
             boolean typeNotTextJavaScript = false;
             boolean hasAriaAttributesOtherThanAriaHidden = false;
+            boolean isCustomElement = false;
             String xmlLang = null;
             String lang = null;
             String id = null;
@@ -1930,6 +1931,30 @@ public class Assertions extends Checker {
                 }
             }
 
+            if (localName.contains("-")) {
+                isCustomElement = true;
+                if (atts.getIndex("", "is") > -1) {
+                    err("Autonomous custom elements must not specify the"
+                            + " \u201cis\u201d attribute.");
+                }
+                try {
+                    CustomElementName.THE_INSTANCE.checkValid(localName);
+                } catch (DatatypeException e) {
+                    try {
+                        if (getErrorHandler() != null) {
+                            String msg = e.getMessage();
+                            if (e instanceof Html5DatatypeException) {
+                                msg = msg.substring(msg.indexOf(": ") + 2);
+                            }
+                            VnuBadElementNameException ex = new VnuBadElementNameException(
+                                    localName, uri, msg, getDocumentLocator(),
+                                    CustomElementName.class, false);
+                            getErrorHandler().error(ex);
+                        }
+                    } catch (ClassNotFoundException ce) {
+                    }
+                }
+            }
             if ("input".equals(localName)) {
                 if (atts.getIndex("", "name") > -1
                         && "isindex".equals(atts.getValue("", "name"))) {
@@ -2661,7 +2686,8 @@ public class Assertions extends Checker {
                     || "output" == localName //
                     || "progress" == localName //
                     || "select" == localName //
-                    || "textarea" == localName) {
+                    || "textarea" == localName //
+                    || isCustomElement) {
                 formControlIds.addAll(ids);
             }
 
@@ -3247,29 +3273,6 @@ public class Assertions extends Checker {
                     }
                 } else {
                         // ARIA
-                }
-            }
-            if (localName.contains("-")) {
-                if (atts.getIndex("", "is") > -1) {
-                    err("Autonomous custom elements must not specify the"
-                            + " \u201cis\u201d attribute.");
-                }
-                try {
-                    CustomElementName.THE_INSTANCE.checkValid(localName);
-                } catch (DatatypeException e) {
-                    try {
-                        if (getErrorHandler() != null) {
-                            String msg = e.getMessage();
-                            if (e instanceof Html5DatatypeException) {
-                                msg = msg.substring(msg.indexOf(": ") + 2);
-                            }
-                            VnuBadElementNameException ex = new VnuBadElementNameException(
-                                    localName, uri, msg, getDocumentLocator(),
-                                    CustomElementName.class, false);
-                            getErrorHandler().error(ex);
-                        }
-                    } catch (ClassNotFoundException ce) {
-                    }
                 }
             }
         } else if ("http://n.validator.nu/custom-elements/" == uri) {
