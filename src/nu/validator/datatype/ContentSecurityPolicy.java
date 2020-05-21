@@ -61,9 +61,7 @@ public class ContentSecurityPolicy extends AbstractDatatype {
         StringBuilder errors = new StringBuilder();
         StringBuilder warnings = new StringBuilder();
         StringBuilder others = new StringBuilder();
-        Parser.parse(literal.toString()
-                .replace("\n", " ") // https://github.com/validator/validator/issues/917
-                , "http://example.org", notices);
+        Parser.parse(literal.toString(), "http://example.org", notices);
         if (!notices.isEmpty()) {
             for (Notice notice : notices) {
                 if (notice.show().contains("experimental directive")) {
