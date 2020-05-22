@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- vim: set fileencoding=utf-8 :
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2019 Mozilla Foundation
+# Copyright (c) 2008-2020 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -70,7 +70,7 @@ gpgCmd = 'gpg'
 npmCmd = 'npm'
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'  # nopep8
 # in your ~/.ssh/config, you'll need to define a host named "releasesHost"
 releasesHost = "releasesHost"
 nightliesPath = "/var/www/nightlies"
@@ -144,11 +144,11 @@ maxConnPerRoute = 100
 maxTotalConnections = 200
 maxRedirects = 20  # Gecko default
 statistics = 0
-miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'
+miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'  # nopep8
 
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8
-    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.7.1/salvation-2.7.1.jar", "36771a8aaf4061538d5164bc0953306e"),  # nopep8
+    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.7.2/salvation-2.7.2.jar", "d81345b141a8cc93fc6be49a6840a7f0"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),  # nopep8
@@ -669,7 +669,7 @@ def buildSchemaDriverXhtml5html(schemaDir):
 
 
 def buildSchemaDriverXhtml5htmlRDFa(schemaDir):
-    f = openDriver(schemaDir, "xhtml5full-html-rdfa.rnc", "xhtml5full-html.rnc")
+    f = openDriver(schemaDir, "xhtml5full-html-rdfa.rnc", "xhtml5full-html.rnc")  # nopep8
     f.write(schemaDriverHtml5RDFa)
     f.close()
 
@@ -1179,7 +1179,7 @@ class Release():
 
     def removeExtras(self, whichDir):
         removeIfExists(os.path.join(whichDir, "VERSION"))
-        sigsums = re.compile("^.+\.asc$|^.+\.md5$|.+\.sha1$")
+        sigsums = re.compile(r"^.+\.asc$|^.+\.md5$|.+\.sha1$")
         for filename in findFiles(whichDir):
             if (os.path.basename(filename) in self.docs or
                     sigsums.match(filename)):
@@ -1345,7 +1345,7 @@ class Release():
 
     def checkServiceWithJar(self, url):
         if not os.path.exists(os.path.join(buildRoot, "jars")):
-            buildAll()
+            self.buildAll()
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
         print("Checking service using jar...")
@@ -1655,7 +1655,7 @@ def printHelp():
     print("  --log4j=log4j.properties   -- Sets path to log4 configuration")
     print("  --messages-limit=1000")
     print("                                Sets limit on the maximum number")
-    print("                                of error+warning messages to report")
+    print("                                of errors+warnings to report")
     print("                                for any document before stopping")
     print("  --name=Validator.nu        -- Sets service name")
     print("  --bind-address=0.0.0.0     -- Sets server bind address")
@@ -1665,7 +1665,7 @@ def printHelp():
     print("                                Sets title to show on results page")
     print("  --script=script.js")
     print("                                Sets the URL for the script")
-    print("                                Defaults to just script.js relative")
+    print("                                Defaults to \"script.js\" relative")
     print("                                to the validator URL")
     print("  --script-additional=<URL>")
     print("                                Sets the URL for a script file to")
@@ -1674,7 +1674,7 @@ def printHelp():
     print("  --stacksize=NN             -- Sets Java thread stack size in KB")
     print("  --stylesheet=style.css")
     print("                                Sets URL for the style sheet")
-    print("                                Defaults to just style.css relative")
+    print("                                Defaults to \"style.css\" relative")
     print("                                to the validator URL")
     print("  --user-agent                  Sets User-Agent string for checker")
     print("")
@@ -1983,6 +1983,7 @@ def main(argv):
                 release.runValidator()
             else:
                 print("Unknown option %s." % arg)
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])
