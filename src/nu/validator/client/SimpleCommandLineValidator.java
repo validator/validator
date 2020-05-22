@@ -24,6 +24,7 @@ package nu.validator.client;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -153,6 +154,8 @@ public class SimpleCommandLineValidator {
         hasSchemaOption = false;
         boolean hasFileArgs = false;
         boolean readFromStdIn = false;
+		boolean hasURLList = false;
+		String fileNameWithURLList = null;
         int fileArgsStart = 0;
         if (args.length == 0) {
             usage();
@@ -259,7 +262,10 @@ public class SimpleCommandLineValidator {
                                 + " requires a URL for a schema.");
                         System.exit(1);
                     }
-                }
+				} else if ("--url_list".equals(args[i])) {
+                    fileNameWithURLList = args[++i];
+					hasURLList = true;
+                }					
             }
         }
         if (!"".equals(filterString)) {
@@ -302,14 +308,19 @@ public class SimpleCommandLineValidator {
                 validator.checkHtmlInputSource(is);
             }
             end();
-        } else if (hasFileArgs) {
+        } else if ((hasFileArgs) || (hasURLList)) {
             if (noLangDetect) {
                 validator = new SimpleDocumentValidator(true, false, false);
             } else {
                 validator = new SimpleDocumentValidator(true, false, true);
+            }   
+            setup(schemaUrl);            
+            if (hasURLList) {
+                checkURLsInList(fileNameWithURLList);
             }
-            setup(schemaUrl);
-            checkFiles(args, fileArgsStart);
+            if (hasFileArgs) {
+                checkFiles(args, fileArgsStart);
+            } 
             end();
         } else {
             System.err.printf("\nError: No documents specified.\n");
@@ -396,6 +407,24 @@ public class SimpleCommandLineValidator {
             }
         }
     }
+	
+    private static void checkURLsInList(String fileNameWithURLList)
+            throws IOException, Exception, SAXException {
+		String str = null;
+		BufferedReader URLList = new BufferedReader(new FileReader(fileNameWithURLList));
+		while ((str = URLList.readLine()) != null) {
+            if (str.startsWith("http://") || str.startsWith("https://")) {
+                emitFilename(str);
+                try {
+                    validator.checkHttpURL(str, userAgent, errorHandler);
+                } catch (IOException e) {
+                    errorHandler.fatalError(new SAXParseException(e.getMessage(),
+                            null, str, -1, -1,
+                            new SystemIdIOException(str, e.getMessage())));
+                }
+            }
+        }
+    }	
 
     private static void recurseDirectory(File directory)
             throws IOException, Exception {
@@ -599,7 +628,7 @@ public class SimpleCommandLineValidator {
         System.out.println("    --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME");
         System.out.println("    --filterpattern PATTERN --css --skip-non-css --also-check-css --svg");
         System.out.println("    --skip-non-svg --also-check-svg --html --skip-non-html");
-        System.out.println("    --format gnu|xml|json|text --help --verbose --version");
+        System.out.println("    --format gnu|xml|json|text --help --verbose --version --url_list FILENAME");
         System.out.println("");
         System.out.println("For detailed usage information, try the \"--help\" option or see:");
         System.out.println("");
