@@ -22,14 +22,10 @@ matrix:
       jdk: openjdk11
       env:
         - TRAVIS_TAG=jar
-        - PYTHON=python
     - os:  linux
       jdk: openjdk11
       env:
         - TRAVIS_TAG=war
-        - PYTHON=python
-    - os:  linux
-      jdk: openjdk11
     - os:  osx
       env:
         - TRAVIS_TAG=osx
