@@ -4,6 +4,7 @@ changes to any options/interfaces the checker exposes for developers.
 
 # N.N.N
 NN XXX NNNN
+  - CLI: Add new `--stdout` option, to report all messages to stdout
   - CLI: Ensure the `--version` option reports the actual version
   - CLI: Actually check SVG files, rather than just seeming to (bug fix)
   - CSS: Improvements in `calc()`, `min()`/`max()` checking, more

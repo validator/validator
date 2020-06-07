@@ -78,6 +78,8 @@ public class SimpleCommandLineValidator {
 
     private static boolean exitZeroAlways;
 
+    private static boolean reportMessagesToStdOut;
+
     private static boolean loadEntities;
 
     private static boolean noLangDetect;
@@ -140,6 +142,7 @@ public class SimpleCommandLineValidator {
         forceHTML = false;
         loadEntities = false;
         exitZeroAlways = false;
+        reportMessagesToStdOut = false;
         noLangDetect = false;
         noStream = false;
         lineOffset = 0;
@@ -176,6 +179,8 @@ public class SimpleCommandLineValidator {
                     wError = true;
                 } else if ("--exit-zero-always".equals(args[i])) {
                     exitZeroAlways = true;
+                } else if ("--stdout".equals(args[i])) {
+                    reportMessagesToStdOut = true;
                 } else if ("--asciiquotes".equals(args[i])) {
                     asciiQuotes = true;
                 } else if ("--filterfile".equals(args[i])) {
@@ -261,6 +266,9 @@ public class SimpleCommandLineValidator {
                     }
                 }
             }
+        }
+        if (reportMessagesToStdOut) {
+            out = System.out;
         }
         if (!"".equals(filterString)) {
             filterPattern = Pattern.compile(filterString);
@@ -595,7 +603,7 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("...where FILES are the documents to check, and OPTIONS are zero or more of:");
         System.out.println("");
-        System.out.println("    --errors-only --Werror --exit-zero-always --asciiquotes");
+        System.out.println("    --errors-only --Werror --exit-zero-always --stdout --asciiquotes");
         System.out.println("    --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME");
         System.out.println("    --filterpattern PATTERN --css --skip-non-css --also-check-css --svg");
         System.out.println("    --skip-non-svg --also-check-svg --html --skip-non-html");
