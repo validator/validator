@@ -26,7 +26,7 @@ A [Dockerfile][11] (see the **Pulling from Docker Hub** section below) and
    [11]: https://hub.docker.com/r/validator/validator/
    [12]: https://www.npmjs.com/package/vnu-jar
    [13]: https://github.com/svenkreiss/html5validator
-   [14]: https://libraries.io/homebrew/vnu
+   [14]: https://formulae.brew.sh/formula/vnu
 
 It is released upstream in these formats:
 
