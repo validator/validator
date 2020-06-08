@@ -81,8 +81,6 @@ public class SimpleCommandLineValidator {
 
     private static boolean exitZeroAlways;
 
-    private static boolean reportMessagesToStdOut;
-
     private static boolean loadEntities;
 
     private static boolean noLangDetect;
@@ -146,7 +144,6 @@ public class SimpleCommandLineValidator {
         forceHTML = false;
         loadEntities = false;
         exitZeroAlways = false;
-        reportMessagesToStdOut = false;
         noLangDetect = false;
         noStream = false;
         lineOffset = 0;
@@ -184,7 +181,8 @@ public class SimpleCommandLineValidator {
                 } else if ("--exit-zero-always".equals(args[i])) {
                     exitZeroAlways = true;
                 } else if ("--stdout".equals(args[i])) {
-                    reportMessagesToStdOut = true;
+                    out = System.out;
+                    otherOut = System.err;
                 } else if ("--asciiquotes".equals(args[i])) {
                     asciiQuotes = true;
                 } else if ("--filterfile".equals(args[i])) {
@@ -270,10 +268,6 @@ public class SimpleCommandLineValidator {
                     }
                 }
             }
-        }
-        if (reportMessagesToStdOut) {
-            out = System.out;
-            otherOut = System.err;
         }
         if (!"".equals(filterString)) {
             filterPattern = Pattern.compile(filterString);
