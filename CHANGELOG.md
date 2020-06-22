@@ -1,6 +1,6 @@
 With a few exceptions, this is a record of mainly just user-facing
-changes—that is, either changes to the actual behavior of the checker, or
-changes to any options/interfaces the checker exposes for developers.
+changes — that is, either changes to the actual behavior of the checker,
+or changes to any options/interfaces the checker exposes for developers.
 
 # N.N.N
 NN XXX NNNN
@@ -14,6 +14,7 @@ NN XXX NNNN
   - Treat custom elements as labelable elements for `label[for]` handling
   - ARIA: Fix bug that disallowed implicit combobox/listbox for `select`
   - ARIA: Improve error message for `alt`-less `img` with ARIA attributes
+  - ARIA: Allow `section[role=doc-glossary]`
 
 # 20.3.16
 16 March 2020
