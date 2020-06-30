@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2019 Mozilla Foundation
+ * Copyright (c) 2007-2020 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -63,8 +63,7 @@ import org.eclipse.jetty.util.thread.QueuedThreadPool;
  */
 public class Main {
 
-    private static final String BIND_ADDRESS = System.getProperty(
-            "nu.validator.servlet.bind-address", "0.0.0.0");
+    private static final String BIND_ADDRESS;
 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
@@ -83,6 +82,17 @@ public class Main {
         } catch (IOException e) {
         }
         return false;
+    }
+
+    static {
+        if (System.getenv("BIND_ADDRESS") != null) {
+            System.out.println("BIND_ADDRESS is " +
+                    System.getenv("BIND_ADDRESS"));
+            BIND_ADDRESS = System.getenv("BIND_ADDRESS");
+        } else {
+            BIND_ADDRESS = System.getProperty(
+                    "nu.validator.servlet.bind-address", "0.0.0.0");
+        }
     }
 
     private static final void emitStartupMessage(Logger log4j, String host,
