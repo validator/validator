@@ -277,6 +277,10 @@ namespace local = ""
 			                    | onsuspend
 			                    | ontimeupdate
 			                    | ontoggle
+			                    | ontransitioncancel
+			                    | ontransitionend
+			                    | ontransitionrun
+			                    | ontransitionstart
 			                    | onvolumechange
 			                    | onwaiting
 			                    | onwheel
