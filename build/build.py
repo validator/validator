@@ -1857,7 +1857,8 @@ def main(argv):
                 release.createDistribution("jar")
                 release.createDistribution("war")
                 release.createOrUpdateGithubData()
-                release.uploadToGithub()
+                release.uploadToGithub("jar")
+                release.uploadToGithub("war")
                 release.uploadNpm()
             elif arg == 'npm-snapshot':
                 release.createJarOrWar("jar")
@@ -1869,7 +1870,8 @@ def main(argv):
                 release.createDistribution("jar")
                 release.createDistribution("war")
                 release.createOrUpdateGithubData()
-                release.uploadToGithub()
+                release.uploadToGithub("jar")
+                release.uploadToGithub("war")
             elif arg == 'nightly':
                 isNightly = True
                 release.createDistribution("war", isNightly)
