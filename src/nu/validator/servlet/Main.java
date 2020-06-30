@@ -86,8 +86,6 @@ public class Main {
 
     static {
         if (System.getenv("BIND_ADDRESS") != null) {
-            System.out.println("BIND_ADDRESS is " +
-                    System.getenv("BIND_ADDRESS"));
             BIND_ADDRESS = System.getenv("BIND_ADDRESS");
         } else {
             BIND_ADDRESS = System.getProperty(

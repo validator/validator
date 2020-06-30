@@ -99,8 +99,6 @@ public class VerifierServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         if (System.getenv("CONNECTION_TIMEOUT_SECONDS") != null) {
-            System.out.println("CONNECTION_TIMEOUT_SECONDS is " +
-                    System.getenv("CONNECTION_TIMEOUT_SECONDS"));
             CONNECTION_TIMEOUT = Integer.parseInt(
                     System.getenv("CONNECTION_TIMEOUT_SECONDS")) * 1000;
         } else {
