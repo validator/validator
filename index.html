@@ -164,7 +164,7 @@ li > ul {
     <a href="https://www.npmjs.com/package/vnu-jar">npm</a>,
     <a href="https://github.com/svenkreiss/html5validator">pip</a>,
     and
-    <a href="https://libraries.io/homebrew/vnu">brew</a>
+    <a href="https://formulae.brew.sh/formula/vnu">brew</a>
     packages of it are also available.
 
     <p>It is released upstream in these formats:
@@ -234,7 +234,7 @@ Run the checker with one of the following invocations:
 <i><code>OPTIONS</code></i> are zero or more of the following options:
 
 <pre>
---errors-only --Werror --exit-zero-always
+--errors-only --Werror --exit-zero-always --stdout
 --asciiquotes --user-agent USER_AGENT --no-langdetect
 --no-stream --filterfile FILENAME --filterpattern PATTERN
 --css --skip-non-css --also-check-css
@@ -400,6 +400,13 @@ default: [unset; checker exits zero if only warnings are encountered]
 Makes the checker exit zero even if errors are reported for any documents.
 
 default: [unset; checker exits 1 if errors are reported for any documents]
+</pre>
+
+<h4 id="stdout">--stdout</h4>
+<pre>
+Makes the checker report errors and warnings to stdout rather than stderr.
+
+default: [unset; checker reports errors and warnings to stderr]
 </pre>
 
 <h4 id="filterfile">--filterfile <var>FILENAME</var></h4>

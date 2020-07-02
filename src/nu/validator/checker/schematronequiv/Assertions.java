@@ -2861,13 +2861,15 @@ public class Assertions extends Checker {
                 }
                 if (atts.getIndex("", "as") > -1 //
                         && (!(relList.contains("preload")
-                                || relList.contains("modulepreload")) //
+                                || relList.contains("modulepreload") //
+                                || relList.contains("prefetch")) //
                                 || !hasRel)) {
                     err("A \u201Clink\u201D element with an"
                             + " \u201Cas\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
                             + " value \u201Cpreload\u201D or the value"
-                            + " \u201Cmodulepreload\u201D.");
+                            + " \u201Cmodulepreload\u201D or the value"
+                            + " \u201Cprefetch\u201D.");
                 }
                 if (atts.getIndex("", "integrity") > -1
                         && (!(relList.contains("stylesheet")

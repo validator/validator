@@ -26,7 +26,7 @@ A [Dockerfile][11] (see the **Pulling from Docker Hub** section below) and
    [11]: https://hub.docker.com/r/validator/validator/
    [12]: https://www.npmjs.com/package/vnu-jar
    [13]: https://github.com/svenkreiss/html5validator
-   [14]: https://libraries.io/homebrew/vnu
+   [14]: https://formulae.brew.sh/formula/vnu
 
 It is released upstream in these formats:
 
@@ -85,7 +85,7 @@ Run the checker with one of the following invocations:
 …where _`FILES`_ are the documents to check, and _`OPTIONS`_ are zero or more of
 the following options:
 
-    --errors-only --Werror --exit-zero-always --asciiquotes
+    --errors-only --Werror --exit-zero-always --stdout --asciiquotes
     --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME
     --filterpattern PATTERN --css --skip-non-css --also-check-css --svg
     --skip-non-svg --also-check-svg --html --skip-non-html
@@ -217,6 +217,12 @@ provides the following options:
     Makes the checker exit zero even if errors are reported for any documents.
 
     default: [unset; checker exits 1 if errors are reported for any documents]
+
+#### --stdout
+
+    Makes the checker report errors and warnings to stdout rather than stderr.
+
+    default: [unset; checker reports errors and warnings to stderr]
 
 #### --filterfile _FILENAME_
 

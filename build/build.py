@@ -80,11 +80,11 @@ releaseDate = time.strftime('%d %B %Y')
 year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
 day = time.strftime('%d').lstrip('0')
-validatorVersion = "%s.%s.%s" % (year, month, day)
-# validatorVersion = "20.3.16"
+# validatorVersion = "%s.%s.%s" % (year, month, day)
+validatorVersion = "20.6.30"
 jingVersion = "20190429VNU"
-htmlparserVersion = "1.4.15"
-cssvalidatorVersion = "1.0.7"
+htmlparserVersion = "1.4.16"
+cssvalidatorVersion = "1.0.8"
 galimatiasVersion = "0.1.3"
 langdetectVersion = "1.2"
 
@@ -1857,7 +1857,8 @@ def main(argv):
                 release.createDistribution("jar")
                 release.createDistribution("war")
                 release.createOrUpdateGithubData()
-                release.uploadToGithub()
+                release.uploadToGithub("jar")
+                release.uploadToGithub("war")
                 release.uploadNpm()
             elif arg == 'npm-snapshot':
                 release.createJarOrWar("jar")
@@ -1869,7 +1870,8 @@ def main(argv):
                 release.createDistribution("jar")
                 release.createDistribution("war")
                 release.createOrUpdateGithubData()
-                release.uploadToGithub()
+                release.uploadToGithub("jar")
+                release.uploadToGithub("war")
             elif arg == 'nightly':
                 isNightly = True
                 release.createDistribution("war", isNightly)

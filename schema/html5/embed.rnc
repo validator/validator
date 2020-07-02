@@ -239,6 +239,8 @@ namespace local = ""
 			                    | onended
 			                    | onerror
 			                    | onfocus
+			                    | onfocusin
+			                    | onfocusout
 			                    | onformdata
 			                    | oninput
 			                    | oninvalid
@@ -275,6 +277,10 @@ namespace local = ""
 			                    | onsuspend
 			                    | ontimeupdate
 			                    | ontoggle
+			                    | ontransitioncancel
+			                    | ontransitionend
+			                    | ontransitionrun
+			                    | ontransitionstart
 			                    | onvolumechange
 			                    | onwaiting
 			                    | onwheel

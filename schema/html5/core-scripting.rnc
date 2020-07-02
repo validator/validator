@@ -236,6 +236,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onerror { common.data.functionbody }
 	scripting.attr.onfocus =
 		attribute onfocus { common.data.functionbody }
+	scripting.attr.onfocusin =
+		attribute onfocusin { common.data.functionbody }
+	scripting.attr.onfocusout =
+		attribute onfocusout { common.data.functionbody }
 	scripting.attr.onformchange =
 		attribute onformchange { common.data.functionbody }
 	scripting.attr.onformdata =
@@ -314,6 +318,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute ontimeupdate { common.data.functionbody }
 	scripting.attr.ontoggle =
 		attribute ontoggle { common.data.functionbody }
+	scripting.attr.ontransitioncancel =
+		attribute ontransitioncancel { common.data.functionbody }
+	scripting.attr.ontransitionend =
+		attribute ontransitionend { common.data.functionbody }
+	scripting.attr.ontransitionrun =
+		attribute ontransitionrun { common.data.functionbody }
+	scripting.attr.ontransitionstart =
+		attribute ontransitionstart { common.data.functionbody }
 	scripting.attr.onvolumechange =
 		attribute onvolumechange { common.data.functionbody }
 	scripting.attr.onwaiting =

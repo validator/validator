@@ -1,9 +1,10 @@
 With a few exceptions, this is a record of mainly just user-facing
-changes—that is, either changes to the actual behavior of the checker, or
-changes to any options/interfaces the checker exposes for developers.
+changes — that is, either changes to the actual behavior of the checker,
+or changes to any options/interfaces the checker exposes for developers.
 
-# N.N.N
-NN XXX NNNN
+# 20.6.30
+30 June 2020
+  - CLI: Add new `--stdout` option, to report all messages to stdout
   - CLI: Ensure the `--version` option reports the actual version
   - CLI: Actually check SVG files, rather than just seeming to (bug fix)
   - CSS: Improvements in `calc()`, `min()`/`max()` checking, more
@@ -13,6 +14,7 @@ NN XXX NNNN
   - Treat custom elements as labelable elements for `label[for]` handling
   - ARIA: Fix bug that disallowed implicit combobox/listbox for `select`
   - ARIA: Improve error message for `alt`-less `img` with ARIA attributes
+  - ARIA: Allow `section[role=doc-glossary]`
 
 # 20.3.16
 16 March 2020

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2020 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -64,6 +64,10 @@ public class VerifierServlet extends HttpServlet {
 
     static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");
 
+    private static final Integer CONNECTION_TIMEOUT;
+
+    private static final Integer SOCKET_TIMEOUT;
+
     private static final byte[] GENERIC_ROBOTS_TXT;
 
     private static final byte[] HTML5_ROBOTS_TXT;
@@ -94,10 +98,23 @@ public class VerifierServlet extends HttpServlet {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        PrudentHttpEntityResolver.setParams(
-            Integer.parseInt(System.getProperty("nu.validator.servlet.connection-timeout","5000")),
-            Integer.parseInt(System.getProperty("nu.validator.servlet.socket-timeout","5000")),
-            Integer.parseInt(System.getProperty("nu.validator.servlet.max-requests","100")));
+        if (System.getenv("CONNECTION_TIMEOUT_SECONDS") != null) {
+            CONNECTION_TIMEOUT = Integer.parseInt(
+                    System.getenv("CONNECTION_TIMEOUT_SECONDS")) * 1000;
+        } else {
+            CONNECTION_TIMEOUT = Integer.parseInt(System.getProperty(
+                    "nu.validator.servlet.connection-timeout", "5000"));
+        }
+        if (System.getenv("SOCKET_TIMEOUT_SECONDS") != null) {
+            SOCKET_TIMEOUT = Integer.parseInt(
+                    System.getenv("SOCKET_TIMEOUT_SECONDS")) * 1000;
+        } else {
+            SOCKET_TIMEOUT = Integer.parseInt(System.getProperty(
+                    "nu.validator.servlet.socket-timeout", "5000"));
+        }
+        PrudentHttpEntityResolver.setParams(CONNECTION_TIMEOUT, SOCKET_TIMEOUT,
+                Integer.parseInt(System.getProperty(
+                        "nu.validator.servlet.max-requests", "100")));
         // force some class loading
         new VerifierServletTransaction(null, null);
         new MessageEmitterAdapter(null, null, false, null, 0, false, null);

@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2015-2019 Mozilla Foundation
+Copyright (c) 2015-2020 Mozilla Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -28,7 +28,10 @@ DEALINGS IN THE SOFTWARE.
   <property name="htmlparser-bundle-jar" value="${htmlparser-base}-bundle.jar" />
   <target name="htmlparser-javadoc-jar">
     <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
-      <fileset dir="${htmlparser-src}"/>
+      <fileset dir="${htmlparser-src}">
+        <include name="**/*.java"/>
+        <exclude name="nu/validator/htmlparser/xom/**"/>
+      </fileset>
     </javadoc>
     <jar destfile="${htmlparser-javadoc-jar}">
       <fileset dir="${javadoc-dir}" />
