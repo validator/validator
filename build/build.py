@@ -1012,11 +1012,11 @@ class Release():
 
     def createBundle(self):
         self.downloadMavenAntTasksJar()
-        self.createArtifacts()
+        self.createArtifacts("jar")
         print("Building %s/%s-%s-bundle.jar" %
               (distDir, self.artifactId, self.version))
-        self.sign()
-        self.writeVersion()
+        self.sign(distDir)
+        self.writeVersion(distDir)
         runCmd([javaCmd,
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
