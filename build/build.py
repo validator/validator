@@ -257,6 +257,14 @@ def findFilesWithExtension(directory, extension):
         if root.endswith(os.path.join("nu", "validator", "htmlparser", "xom")):
             continue
         for filename in files:
+            if filename == 'XSLT4HTML5XOM.java':
+                continue
+            if filename == 'TokenizerTester.java':
+                continue
+            if filename == 'JSONArrayTokenHandler.java':
+                continue
+            if filename == 'XomTest.java':
+                continue
             if filename.endswith(ext):
                 rv.append(os.path.join(root, filename))
     return rv
@@ -345,8 +353,8 @@ def runJar(classDir, jarFile, sourceDir):
     removeIfExists("temp-jar-list")
 
 
-def buildModule(rootDir, jarName, classPath):
-    sourceDir = os.path.join(rootDir, "src")
+def buildModule(rootDir, jarName, classPath, srcSubDir="src"):
+    sourceDir = os.path.join(rootDir, srcSubDir)
     classDir = os.path.join(rootDir, "classes")
     modDistDir = os.path.join(rootDir, "dist")
     jarFile = os.path.join(modDistDir, jarName + ".jar")
@@ -692,6 +700,13 @@ def buildGalimatias():
 def buildHtmlParser():
     classPath = os.pathsep.join(dependencyJarPaths())
     buildModule(os.path.join(buildRoot, "htmlparser"), "htmlparser", classPath)
+
+
+def buildHtmlParserTestSrc():
+    classPath = os.pathsep.join(dependencyJarPaths()
+                                + [os.path.join(jarsDir, "htmlparser.jar")])
+    buildModule(os.path.join(buildRoot, "htmlparser"), "htmlparser-test-src",
+                classPath, "test-src")
 
 
 def buildLangdetect():
@@ -1408,6 +1423,7 @@ class Release():
         buildLangdetect()
         buildGalimatias()
         buildHtmlParser()
+        buildHtmlParserTestSrc()
         self.buildValidator()
 
 
