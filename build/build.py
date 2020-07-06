@@ -1881,6 +1881,12 @@ def main(argv):
                 release.uploadNpm("next")
             elif arg == 'heroku':
                 release.uploadToHeroku()
+            elif arg == 'maven-bundle':
+                release.createBundle()
+            elif arg == 'maven-snapshot':
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'maven-release':
+                release.uploadToCentral(stagingRepoUrl)
             elif arg == 'galimatias-bundle':
                 release = Release("galimatias")
                 release.createBundle()
