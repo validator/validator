@@ -177,6 +177,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onsuspend?
 		&	scripting.attr.ontimeupdate?
 		&	scripting.attr.ontoggle?
+		&	scripting.attr.ontransitioncancel?
+		&	scripting.attr.ontransitioncancel?
+		&	scripting.attr.ontransitionend?
+		&	scripting.attr.ontransitionrun?
+		&	scripting.attr.ontransitionstart?
 		&	scripting.attr.onvolumechange?
 		&	scripting.attr.onwaiting?
 		&	scripting.attr.onwheel?
