@@ -159,7 +159,7 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),  # nopep8
     ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),  # nopep8
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9.jar", "62fce5f1f44f9df4a68d9a390b8982eb"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-common/9.4.18.v20190429/http2-common-9.4.18.v20190429.jar", "d4f0dede20f81acfb53f97c01fae71cf"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-hpack/9.4.18.v20190429/http2-hpack-9.4.18.v20190429.jar", "0323c6dd472c456a99d068f171cbd661"),  # nopep8
