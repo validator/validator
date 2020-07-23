@@ -6,8 +6,10 @@ or changes to any options/interfaces the checker exposes for developers.
 NN XXX NNNN
   - CLI: Add nu.validator.htmlparser.tools|test classes to vnu.jar
   - CLI/Docker: Enable setting timeouts & bind address w/ environment vars
+  - CSS: Support color-adjust
   - Docker: Migrate Dockerfile to “distroless” image (reduces image size)
   - ARIA: Allow `aria-required` with `input[type=file]`
+  - Update doc-fetching backend to Apache HTTP Components HttpClient 4.5.9
 
 # 20.6.30
 30 June 2020
