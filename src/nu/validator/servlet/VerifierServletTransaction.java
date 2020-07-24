@@ -1187,6 +1187,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             isHtmlOrXhtml = false;
             if (e.getCause() instanceof org.apache.http.TruncatedChunkException) {
                 log4j.debug("TruncatedChunkException", e.getCause());
+            } else if (e.getCause() instanceof //
+                    org.apache.http.ConnectionClosedException
+                    && (e.getMessage().contains("closing chunk expected"))) {
+                log4j.debug("ConnectionClosedException", e.getCause());
             } else {
                 errorHandler.ioError(e);
             }
