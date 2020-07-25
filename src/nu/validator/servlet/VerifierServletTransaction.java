@@ -1188,6 +1188,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             if (e.getCause() instanceof org.apache.http.TruncatedChunkException) {
                 log4j.debug("TruncatedChunkException", e.getCause());
             } else if (e.getCause() instanceof //
+                    org.apache.http.MalformedChunkCodingException
+                    && (e.getMessage(). //
+                        contains("CRLF expected at end of chunk"))) {
+                log4j.debug("MalformedChunkCodingException", e.getCause());
+            } else if (e.getCause() instanceof //
                     org.apache.http.ConnectionClosedException
                     && (e.getMessage().contains("closing chunk expected"))) {
                 log4j.debug("ConnectionClosedException", e.getCause());
