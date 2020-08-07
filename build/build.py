@@ -1051,7 +1051,7 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
-            self.checkJar()
+            self.checkJar(call_createJarOrWar=False)
         else:
             self.writeHashes(distWarDir)
 
@@ -1308,9 +1308,10 @@ class Release():
         for filename in findFiles(whichDir):
             runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
-    def checkJar(self):
+    def checkJar(self, call_createJarOrWar=True):
         if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+            if call_createJarOrWar:
+                self.createJarOrWar("jar")
         with open(self.minDocPath, 'w') as f:
             f.write(miniDoc)
         formats = ["gnu", "xml", "json", "text"]
