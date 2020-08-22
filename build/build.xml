@@ -37,8 +37,8 @@ DEALINGS IN THE SOFTWARE.
   <property name="commons-fileupload-version" value="1.3.1" />
   <property name="commons-io-version" value="2.4" />
   <property name="commons-logging-version" value="1.2" />
-  <property name="httpclient-version" value="4.4" />
-  <property name="httpcore-version" value="4.4" />
+  <property name="httpclient-version" value="4.5.9" />
+  <property name="httpcore-version" value="4.4.9" />
   <property name="icu4j-version" value="58.2" />
   <property name="javax.servlet-api-version" value="3.1.0" />
   <property name="jchardet-version" value="1.0" />
@@ -304,7 +304,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="nu.validator" artifactId="galimatias" version="0.1.3"/>
       <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.16"/>
       <dependency groupId="nu.validator" artifactId="cssvalidator" version="1.0.8"/>
-      <dependency groupId="nu.validator" artifactId="jing" version="20190429VNU"/>
+      <dependency groupId="nu.validator" artifactId="jing" version="20200702VNU"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="${httpclient-version}"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="${httpcore-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="${jetty-version}"/>

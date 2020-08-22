@@ -1045,6 +1045,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return;
         }
 
+        boolean exceptionThrown = true;
         boolean isHtmlOrXhtml = (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML);
         if (isHtmlOrXhtml) {
             try {
@@ -1165,6 +1166,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 headingOutline = (Deque<Section>) request.getAttribute(
                         "http://validator.nu/properties/heading-outline");
             }
+            exceptionThrown = false;
         } catch (CannotFindPresetSchemaException e) {
         } catch (ResourceNotRetrievableException e) {
             log4j.debug(e.getMessage());
@@ -1184,10 +1186,19 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 log4j.debug("SAXException: " + e.getMessage());
             }
         } catch (IOException e) {
-            isHtmlOrXhtml = false;
             if (e.getCause() instanceof org.apache.http.TruncatedChunkException) {
                 log4j.debug("TruncatedChunkException", e.getCause());
+            } else if (e.getCause() instanceof //
+                    org.apache.http.MalformedChunkCodingException
+                    && (e.getMessage(). //
+                        contains("CRLF expected at end of chunk"))) {
+                log4j.debug("MalformedChunkCodingException", e.getCause());
+            } else if (e.getCause() instanceof //
+                    org.apache.http.ConnectionClosedException
+                    && (e.getMessage().contains("closing chunk expected"))) {
+                log4j.debug("ConnectionClosedException", e.getCause());
             } else {
+                isHtmlOrXhtml = false;
                 errorHandler.ioError(e);
             }
         } catch (IncorrectSchemaException e) {
@@ -1208,18 +1219,25 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     e,
                     "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
         } finally {
+            if (showOutline && exceptionThrown) {
+                errorHandler.warning(new SAXParseException(
+                        "Unable to show outline. (Most likely due to a"
+                                + " malformed HTTP response from the server"
+                                + " hosting the document that was checked.)",
+                        null));
+            }
             errorHandler.end(successMessage(), failureMessage(),
                     (String) request.getAttribute(
                             "http://validator.nu/properties/document-language"));
             gatherStatistics();
-        }
-        if (isHtmlOrXhtml) {
-            XhtmlOutlineEmitter outlineEmitter = new XhtmlOutlineEmitter(
-                    contentHandler, outline, headingOutline);
-            outlineEmitter.emitHeadings();
-            outlineEmitter.emit();
-            emitDetails();
-            StatsEmitter.emit(contentHandler, this);
+            if (isHtmlOrXhtml) {
+                XhtmlOutlineEmitter outlineEmitter = new XhtmlOutlineEmitter(
+                        contentHandler, outline, headingOutline);
+                outlineEmitter.emitHeadings();
+                outlineEmitter.emit();
+                emitDetails();
+                StatsEmitter.emit(contentHandler, this);
+            }
         }
     }
 

@@ -139,6 +139,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onended?
 		&	scripting.attr.onerror?
 		&	scripting.attr.onfocus?
+		&	scripting.attr.onfocusin?
+		&	scripting.attr.onfocusout?
 		&	scripting.attr.onformdata?
 		&	scripting.attr.oninput?
 		&	scripting.attr.oninvalid?
@@ -175,6 +177,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onsuspend?
 		&	scripting.attr.ontimeupdate?
 		&	scripting.attr.ontoggle?
+		&	scripting.attr.ontransitioncancel?
+		&	scripting.attr.ontransitionend?
+		&	scripting.attr.ontransitionrun?
+		&	scripting.attr.ontransitionstart?
 		&	scripting.attr.onvolumechange?
 		&	scripting.attr.onwaiting?
 		&	scripting.attr.onwheel?

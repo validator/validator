@@ -47,4 +47,6 @@ EXPOSE 8888
 FROM gcr.io/distroless/base
 COPY --from=builder /vnu-runtime-image /vnu-runtime-image
 COPY --from=builder /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
+COPY --from=builder /bin/sh /bin/sh
+COPY --from=builder /usr/bin/dirname /usr/bin/dirname
 CMD ["./vnu-runtime-image/bin/java", "-m", "vnu/nu.validator.servlet.Main", "8888"]

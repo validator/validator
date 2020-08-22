@@ -1,6 +1,5 @@
 .PHONY: .FORCE
 
-existing-rel-values: .FORCE
-	curl -O http://microformats.org/wiki/existing-rel-values \
-	  && curl http://microformats.org/wiki/existing-rel-values \
-	  | grep -v www.google-analytics.com > $@
+language-subtag-registry.txt: .FORCE
+	curl -o language-subtag-registry.txt \
+	  https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry

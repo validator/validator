@@ -80,9 +80,9 @@ releaseDate = time.strftime('%d %B %Y')
 year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
 day = time.strftime('%d').lstrip('0')
-# validatorVersion = "%s.%s.%s" % (year, month, day)
-validatorVersion = "20.6.30"
-jingVersion = "20190429VNU"
+validatorVersion = "%s.%s.%s" % (year, month, day)
+# validatorVersion = "20.6.30"
+jingVersion = "20200702VNU"
 htmlparserVersion = "1.4.16"
 cssvalidatorVersion = "1.0.8"
 galimatiasVersion = "0.1.3"
@@ -159,8 +159,8 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),  # nopep8
     ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),  # nopep8
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.4/httpclient-4.4.jar", "ccf9833ec0cbd38831ceeb8fc246e2dd"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar", "e016cf1346ba3f65302c3d71c5b91f44"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9.jar", "62fce5f1f44f9df4a68d9a390b8982eb"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar", "b89455507839c09d6119661defd2166a"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-common/9.4.18.v20190429/http2-common-9.4.18.v20190429.jar", "d4f0dede20f81acfb53f97c01fae71cf"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-hpack/9.4.18.v20190429/http2-hpack-9.4.18.v20190429.jar", "0323c6dd472c456a99d068f171cbd661"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-server/9.4.18.v20190429/http2-server-9.4.18.v20190429.jar", "9c82833f49671905299a1a0d0edc031d"),  # nopep8
@@ -257,6 +257,14 @@ def findFilesWithExtension(directory, extension):
         if root.endswith(os.path.join("nu", "validator", "htmlparser", "xom")):
             continue
         for filename in files:
+            if filename == 'XSLT4HTML5XOM.java':
+                continue
+            if filename == 'TokenizerTester.java':
+                continue
+            if filename == 'JSONArrayTokenHandler.java':
+                continue
+            if filename == 'XomTest.java':
+                continue
             if filename.endswith(ext):
                 rv.append(os.path.join(root, filename))
     return rv
@@ -345,8 +353,8 @@ def runJar(classDir, jarFile, sourceDir):
     removeIfExists("temp-jar-list")
 
 
-def buildModule(rootDir, jarName, classPath):
-    sourceDir = os.path.join(rootDir, "src")
+def buildModule(rootDir, jarName, classPath, srcSubDir="src"):
+    sourceDir = os.path.join(rootDir, srcSubDir)
     classDir = os.path.join(rootDir, "classes")
     modDistDir = os.path.join(rootDir, "dist")
     jarFile = os.path.join(modDistDir, jarName + ".jar")
@@ -694,6 +702,13 @@ def buildHtmlParser():
     buildModule(os.path.join(buildRoot, "htmlparser"), "htmlparser", classPath)
 
 
+def buildHtmlParserTestSrc():
+    classPath = os.pathsep.join(dependencyJarPaths()
+                                + [os.path.join(jarsDir, "htmlparser.jar")])
+    buildModule(os.path.join(buildRoot, "htmlparser"), "htmlparser-test-src",
+                classPath, "test-src")
+
+
 def buildLangdetect():
     classPath = os.pathsep.join(dependencyJarPaths())
     buildModule(os.path.join(buildRoot, "langdetect"), "langdetect", classPath)
@@ -1012,11 +1027,11 @@ class Release():
 
     def createBundle(self):
         self.downloadMavenAntTasksJar()
-        self.createArtifacts()
+        self.createArtifacts("jar")
         print("Building %s/%s-%s-bundle.jar" %
               (distDir, self.artifactId, self.version))
-        self.sign()
-        self.writeVersion()
+        self.sign(distDir)
+        self.writeVersion(distDir)
         runCmd([javaCmd,
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
@@ -1036,7 +1051,7 @@ class Release():
                 '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
-            self.checkJar()
+            self.checkJar(call_createJarOrWar=False)
         else:
             self.writeHashes(distWarDir)
 
@@ -1293,9 +1308,10 @@ class Release():
         for filename in findFiles(whichDir):
             runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
-    def checkJar(self):
+    def checkJar(self, call_createJarOrWar=True):
         if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+            if call_createJarOrWar:
+                self.createJarOrWar("jar")
         with open(self.minDocPath, 'w') as f:
             f.write(miniDoc)
         formats = ["gnu", "xml", "json", "text"]
@@ -1408,6 +1424,7 @@ class Release():
         buildLangdetect()
         buildGalimatias()
         buildHtmlParser()
+        buildHtmlParserTestSrc()
         self.buildValidator()
 
 
@@ -1881,6 +1898,12 @@ def main(argv):
                 release.uploadNpm("next")
             elif arg == 'heroku':
                 release.uploadToHeroku()
+            elif arg == 'maven-bundle':
+                release.createBundle()
+            elif arg == 'maven-snapshot':
+                release.uploadToCentral(snapshotsRepoUrl)
+            elif arg == 'maven-release':
+                release.uploadToCentral(stagingRepoUrl)
             elif arg == 'galimatias-bundle':
                 release = Release("galimatias")
                 release.createBundle()
