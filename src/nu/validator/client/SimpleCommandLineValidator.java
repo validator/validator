@@ -158,8 +158,8 @@ public class SimpleCommandLineValidator {
         hasSchemaOption = false;
         boolean hasFileArgs = false;
         boolean readFromStdIn = false;
-		boolean hasURLList = false;
-		String fileNameWithURLList = null;
+		boolean hasFileList = false;
+		String fileNameWithFileList = null;
         int fileArgsStart = 0;
         if (args.length == 0) {
             usage();
@@ -269,9 +269,9 @@ public class SimpleCommandLineValidator {
                                 + " requires a URL for a schema.");
                         System.exit(1);
                     }
-				} else if ("--url_list".equals(args[i])) {
-                    fileNameWithURLList = args[++i];
-					hasURLList = true;
+				} else if ("--file_url_list".equals(args[i])) {
+                    fileNameWithFileList = args[++i];
+					hasFileList = true;
                 }					
             }
         }
@@ -315,15 +315,15 @@ public class SimpleCommandLineValidator {
                 validator.checkHtmlInputSource(is);
             }
             end();
-        } else if ((hasFileArgs) || (hasURLList)) {
+        } else if ((hasFileArgs) || (hasFileList)) {
             if (noLangDetect) {
                 validator = new SimpleDocumentValidator(true, false, false);
             } else {
                 validator = new SimpleDocumentValidator(true, false, true);
             }   
             setup(schemaUrl);            
-            if (hasURLList) {
-                checkURLsInList(fileNameWithURLList);
+            if (hasFileList) {
+                checkFilesInList(fileNameWithFileList);
             }
             if (hasFileArgs) {
                 checkFiles(args, fileArgsStart);
@@ -375,75 +375,69 @@ public class SimpleCommandLineValidator {
             System.exit(exitZeroAlways ? 0 : 1);
         }
     }
+	
+    private static void checkFile(String fileName)
+            throws IOException, Exception, SAXException {
+		if (fileName.startsWith("http://") || fileName.startsWith("https://")) {
+			emitFilename(fileName);
+			try {
+				validator.checkHttpURL(fileName, userAgent, errorHandler);
+			} catch (IOException e) {
+				if (e.getCause() instanceof //
+						org.apache.http.TruncatedChunkException) {
+				} else if (e.getCause() instanceof //
+						org.apache.http.MalformedChunkCodingException
+						&& (e.getMessage().contains(
+								"CRLF expected at end of chunk"))) {
+				} else if (e.getCause() instanceof //
+						org.apache.http.ConnectionClosedException
+						&& (e.getMessage().contains(
+								"closing chunk expected"))) {
+				}
+				errorHandler.fatalError(new SAXParseException(e.getMessage(),
+						null, fileName, -1, -1,
+						new SystemIdIOException(fileName, e.getMessage())));
+			}
+		} else {
+			File file = new File(fileName);
+			if (file.isDirectory()) {
+				recurseDirectory(file);
+			} else if (forceCSS) {
+				checkCssFile(file);
+			} else if (skipNonCSS) {
+				if (isCss(file)) {
+					checkCssFile(file);
+				}
+			} else if (alsoCheckCSS && isCss(file)) {
+				checkCssFile(file);
+			} else if (forceSVG) {
+				checkSvgFile(file);
+			} else if (skipNonSVG) {
+				if (isSvg(file)) {
+					checkSvgFile(file);
+				}
+			} else if (alsoCheckSVG && isSvg(file)) {
+				checkSvgFile(file);
+			} else {
+				checkHtmlFile(file);
+			}
+		}
+    }
+	
 
     private static void checkFiles(String[] args, int fileArgsStart)
             throws IOException, Exception, SAXException {
         for (int i = fileArgsStart; i < args.length; i++) {
-            if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
-                emitFilename(args[i]);
-                try {
-                    validator.checkHttpURL(args[i], userAgent, errorHandler);
-                } catch (IOException e) {
-                    if (e.getCause() instanceof //
-                            org.apache.http.TruncatedChunkException) {
-                        continue;
-                    } else if (e.getCause() instanceof //
-                            org.apache.http.MalformedChunkCodingException
-                            && (e.getMessage().contains(
-                                    "CRLF expected at end of chunk"))) {
-                        continue;
-                    } else if (e.getCause() instanceof //
-                            org.apache.http.ConnectionClosedException
-                            && (e.getMessage().contains(
-                                    "closing chunk expected"))) {
-                        continue;
-                    }
-                    errorHandler.fatalError(new SAXParseException(e.getMessage(),
-                            null, args[i], -1, -1,
-                            new SystemIdIOException(args[i], e.getMessage())));
-                }
-            } else {
-                File file = new File(args[i]);
-                if (file.isDirectory()) {
-                    recurseDirectory(file);
-                } else if (forceCSS) {
-                    checkCssFile(file);
-                } else if (skipNonCSS) {
-                    if (isCss(file)) {
-                        checkCssFile(file);
-                    }
-                } else if (alsoCheckCSS && isCss(file)) {
-                    checkCssFile(file);
-                } else if (forceSVG) {
-                    checkSvgFile(file);
-                } else if (skipNonSVG) {
-                    if (isSvg(file)) {
-                        checkSvgFile(file);
-                    }
-                } else if (alsoCheckSVG && isSvg(file)) {
-                    checkSvgFile(file);
-                } else {
-                    checkHtmlFile(file);
-                }
-            }
+			checkFile(args[i]);
         }
     }
 	
-    private static void checkURLsInList(String fileNameWithURLList)
+    private static void checkFilesInList(String fileNameWithFileList)
             throws IOException, Exception, SAXException {
 		String str = null;
-		BufferedReader URLList = new BufferedReader(new FileReader(fileNameWithURLList));
-		while ((str = URLList.readLine()) != null) {
-            if (str.startsWith("http://") || str.startsWith("https://")) {
-                emitFilename(str);
-                try {
-                    validator.checkHttpURL(str, userAgent, errorHandler);
-                } catch (IOException e) {
-                    errorHandler.fatalError(new SAXParseException(e.getMessage(),
-                            null, str, -1, -1,
-                            new SystemIdIOException(str, e.getMessage())));
-                }
-            }
+		BufferedReader FileList = new BufferedReader(new FileReader(fileNameWithFileList));
+		while ((str = FileList.readLine()) != null) {
+			checkFile(str);
         }
     }	
 
