@@ -1167,6 +1167,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         "http://validator.nu/properties/heading-outline");
             }
             exceptionThrown = false;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            System.exit(1);
         } catch (CannotFindPresetSchemaException e) {
         } catch (ResourceNotRetrievableException e) {
             log4j.debug(e.getMessage());
