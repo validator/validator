@@ -31,33 +31,7 @@ public class UnsupportedFeatureChecker extends Checker {
             if (atts.getIndex("", "inputmode") > -1) {
                 warnAboutAttribute("inputmode");
             }
-            String type = atts.getValue("", "type");
-            if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                    "date", type)) {
-                warnAboutInputType("date");
-            } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                    "month", type)) {
-                warnAboutInputType("month");
-            } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                    "week", type)) {
-                warnAboutInputType("week");
-            } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                    "time", type)) {
-                warnAboutInputType("time");
-            } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                    "datetime-local", type)) {
-                warnAboutInputType("datetime-local");
-            } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                    "color", type)) {
-                warnAboutInputType("color");
-            }
         }
-    }
-
-    private void warnAboutInputType(String name) throws SAXException {
-        warn("The \u201C" + name + "\u201D input type is not supported in"
-                + " all browsers. Please be sure to test, and consider"
-                + " using a polyfill.");
     }
 
     private void warnAboutAttribute(String name) throws SAXException {
