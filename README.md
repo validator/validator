@@ -1,8 +1,9 @@
 # The Nu Html Checker (v.Nu) [![Chat room][1]][2] [![Download latest][3]][4]
 
-   [1]: https://goo.gl/1kHqwI
+   [1]: https://shorturl.at/coqQW
    [2]: https://gitter.im/validator/validator
-   [3]: https://goo.gl/3PC2Qn
+
+   [3]: https://shorturl.at/gCNTW
    [4]: https://github.com/validator/validator/releases/latest
 
 The Nu Html Checker (v.Nu) helps you [catch unintended mistakes in your HTML,
