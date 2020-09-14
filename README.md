@@ -1,9 +1,8 @@
 # The Nu Html Checker (v.Nu) [![Chat room][1]][2] [![Download latest][3]][4]
 
-   [1]: https://shorturl.at/coqQW
+   [1]: https://img.shields.io/badge/gitter-chat%20%E2%86%92-brightgreen.svg
    [2]: https://gitter.im/validator/validator
-
-   [3]: https://shorturl.at/gCNTW
+   [3]: https://img.shields.io/badge/download-latest%20%E2%86%92-blue.svg
    [4]: https://github.com/validator/validator/releases/latest
 
 The Nu Html Checker (v.Nu) helps you [catch unintended mistakes in your HTML,
@@ -18,7 +17,6 @@ code][10].
    [7]: https://validator.github.io/validator/#standalone
    [8]: https://validator.w3.org/nu/
    [9]: https://github.com/validator/validator
-
    [10]: https://validator.github.io/validator/#build-instructions
 
 A [Dockerfile][11] (see the **Pulling from Docker Hub** section below) and
@@ -56,7 +54,6 @@ checking with a frontend such as:
    [17]: https://hub.docker.com/r/validator/validator/
    [18]: https://www.npmjs.com/package/vnu-jar
    [19]: https://libraries.io/homebrew/vnu
-
    [20]: https://github.com/svenkreiss/html5validator
 
   * [Grunt plugin for HTML validation][21] or [Gulp plugin for HTML
