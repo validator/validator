@@ -1500,7 +1500,7 @@ def spiderApacheDirectories(baseUrl, baseDir):
 def downloadLocalEntities():
     removeIfDirExists(os.path.join(buildRoot, "local-entities"))
     fileMap = {}
-    fileMap["html5spec"] = "https://html.spec.whatwg.org/"
+    fileMap["html5spec"] = "https://html.spec.whatwg.org/commit-snapshots/14f032e79db6597f4eaa95271bca06b0922ffc34/"
     ensureDirExists(filesDir)
     for filename in fileMap:
         fetchUrlTo(fileMap[filename], os.path.join(filesDir, filename))
