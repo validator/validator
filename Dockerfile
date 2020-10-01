@@ -42,11 +42,11 @@ ENV CONNECTION_TIMEOUT_SECONDS 5
 ENV SOCKET_TIMEOUT_SECONDS 5
 ENV BIND_ADDRESS 0.0.0.0
 ENV PATH=/vnu-runtime-image/bin:$PATH
-EXPOSE 8888
 # hadolint ignore=DL3006
 FROM gcr.io/distroless/base
 COPY --from=builder /vnu-runtime-image /vnu-runtime-image
 COPY --from=builder /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
 COPY --from=builder /bin/sh /bin/sh
 COPY --from=builder /usr/bin/dirname /usr/bin/dirname
+EXPOSE 8888
 CMD ["./vnu-runtime-image/bin/java", "-m", "vnu/nu.validator.servlet.Main", "8888"]
