@@ -36,17 +36,17 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && unzip ./vnu.linux.zip \
     && rm ./vnu.linux.zip* \
     && apt-get purge -y --auto-remove gnupg dirmngr unzip
-ENV LANG C.UTF-8
-ENV JAVA_TOOL_OPTIONS ""
-ENV CONNECTION_TIMEOUT_SECONDS 5
-ENV SOCKET_TIMEOUT_SECONDS 5
-ENV BIND_ADDRESS 0.0.0.0
-ENV PATH=/vnu-runtime-image/bin:$PATH
 # hadolint ignore=DL3006
 FROM gcr.io/distroless/base
 COPY --from=builder /vnu-runtime-image /vnu-runtime-image
 COPY --from=builder /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
 COPY --from=builder /bin/sh /bin/sh
 COPY --from=builder /usr/bin/dirname /usr/bin/dirname
+ENV LANG C.UTF-8
+ENV JAVA_TOOL_OPTIONS ""
+ENV CONNECTION_TIMEOUT_SECONDS 5
+ENV SOCKET_TIMEOUT_SECONDS 5
+ENV BIND_ADDRESS 0.0.0.0
+ENV PATH=/vnu-runtime-image/bin:$PATH
 EXPOSE 8888
 CMD ["./vnu-runtime-image/bin/java", "-m", "vnu/nu.validator.servlet.Main", "8888"]
