@@ -269,7 +269,7 @@ public class SimpleCommandLineValidator {
                                 + " requires a URL for a schema.");
                         System.exit(1);
                     }
-				} else if ("--file_url_list".equals(args[i])) {
+				} else if ("--file-url-list".equals(args[i])) {
                     fileNameWithFileList = args[++i];
 					hasFileList = true;
                 }					
