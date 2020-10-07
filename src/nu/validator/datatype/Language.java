@@ -294,6 +294,9 @@ public final class Language extends AbstractDatatype {
                 if ("t".equals(subtag)) {
                     return;
                 }
+                if ("u".equals(subtag)) {
+                    return;
+                }
                 throw newDatatypeException("Unknown extension ", subtag, ".");
             } else if ((len == 4 && isDigit(subtag.charAt(0))
                     && isLowerCaseAlphaNumeric(subtag))
