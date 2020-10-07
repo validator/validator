@@ -274,6 +274,10 @@ import io.mola.galimatias.GalimatiasParseException;
             if (FORBIDDEN_HOSTS.contains(url.host().toHostString())) {
                 throw new IOException( "Forbidden host.");
             }
+            if (url.port() != 80 && url.port() != 81 && url.port() != 443
+                    && url.port() < 1024) {
+                throw new IOException("Forbidden port.");
+            }
             m.setHeader("User-Agent", userAgent);
             m.setHeader("Accept", buildAccept());
             m.setHeader("Accept-Encoding", "gzip");
