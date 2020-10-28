@@ -131,6 +131,9 @@ public class Statistics {
         CUSTOM_ENC("Encoding: manually set"), //
         PARSER_XML_EXTERNAL("Parser: set to XML with external entities"), //
         XMLNS_FILTER("Parser: XMLNS filter set"), //
+        HAS_ERRORS("Conformance: Documents with errors"), //
+        HAS_WARNINGS("Conformance: Documents with warnings"), //
+        HAS_FATAL_ERRORS("Fatal errors"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
         ARIA_LABEL_MISUSE_FOUND("aria-label misuse found"), //
         HGROUP_FOUND("<hgroup> found"), //

@@ -1251,6 +1251,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         synchronized (stats) {
             stats.incrementTotal();
+            if (errorHandler.getWarnings() > 0) {
+                stats.incrementField(Statistics.Field.HAS_WARNINGS);
+            }
+            if (errorHandler.getErrors() > 0) {
+                stats.incrementField(Statistics.Field.HAS_ERRORS);
+            }
+            if (errorHandler.getFatalErrors() > 0) {
+                stats.incrementField(Statistics.Field.HAS_FATAL_ERRORS);
+            }
             if (charsetOverride != null) {
                 stats.incrementField(Statistics.Field.CUSTOM_ENC);
             }
