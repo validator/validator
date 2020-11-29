@@ -479,6 +479,7 @@ namespace local = ""
 		&	iframe.attrs.name?
 		&	iframe.attrs.width?
 		&	iframe.attrs.height?
+		&	iframe.attrs.loading?
 		&	iframe.attrs.sandbox?
 		&	iframe.attrs.allowfullscreen?
 		&	iframe.attrs.allow?
@@ -504,6 +505,10 @@ namespace local = ""
 		iframe.attrs.height =
 			attribute height {
 				common.data.integer.non-negative
+			}
+		iframe.attrs.loading =
+			attribute loading {
+				w:string "lazy" | w:string "eager"
 			}
 		iframe.attrs.width =
 			attribute width {

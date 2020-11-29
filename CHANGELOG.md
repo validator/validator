@@ -4,6 +4,7 @@ or changes to any options/interfaces the checker exposes for developers.
 
 # NN.NN.NN
 NN XXX NNNN
+  - Allow `loading` attribute for the `iframe` element (lazy loading)
   - CLI: Add nu.validator.htmlparser.tools|test classes to vnu.jar
   - CLI/Docker: Enable setting timeouts & bind address w/ environment vars
   - CSS: Support color-adjust
