@@ -2585,11 +2585,11 @@ public class Assertions extends Checker {
                 if (atts.getIndex("", "type") > -1) {
                     String styleType = atts.getValue("", "type").toLowerCase();
                     if ("text/css".equals(styleType)) {
-                        warn(" The \u201Ctype\u201D attribute for the"
+                        warn("The \u201Ctype\u201D attribute for the"
                                 + " \u201Cstyle\u201D element is not needed and"
                                 + " should be omitted.");
                     } else {
-                        err(" The only allowed value for the \u201Ctype\u201D"
+                        err("The only allowed value for the \u201Ctype\u201D"
                                 + " attribute for the \u201Cstyle\u201D element"
                                 + " is \u201Ctext/css\u201D (with no"
                                 + " parameters). (But the attribute is not"
