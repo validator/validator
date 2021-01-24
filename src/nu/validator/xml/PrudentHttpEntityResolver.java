@@ -51,6 +51,7 @@ import nu.validator.io.SystemIdIOException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -281,6 +282,7 @@ import io.mola.galimatias.GalimatiasParseException;
             m.setHeader("User-Agent", userAgent);
             m.setHeader("Accept", buildAccept());
             m.setHeader("Accept-Encoding", "gzip");
+            m.setProtocolVersion(HttpVersion.HTTP_1_0);
             if (request != null && request.getAttribute(
                     "http://validator.nu/properties/accept-language") != null) {
                 m.setHeader("Accept-Language", (String) request.getAttribute(

@@ -11,6 +11,7 @@ NN XXX NNNN
   - Docker: Migrate Dockerfile to “distroless” image (reduces image size)
   - ARIA: Allow `aria-required` with `input[type=file]`
   - Update doc-fetching backend to Apache HTTP Components HttpClient 4.5.9
+  - Make the checker use HTTP 1.0 for all requests it make, not HTTP 1.1
   - Make the checker ignore error for malformed/missing HTTP closing chunk
 
 # 20.6.30
