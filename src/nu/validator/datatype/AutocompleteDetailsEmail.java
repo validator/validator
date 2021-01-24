@@ -41,6 +41,7 @@ public final class AutocompleteDetailsEmail extends AbstractAutocompleteDetails 
 
     static {
         allowedFieldnames.add("email");
+        allowedFieldnames.add("username");
         allowedContactFieldnames.add("email");
     }
 
