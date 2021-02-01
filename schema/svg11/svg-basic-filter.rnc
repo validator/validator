@@ -131,7 +131,22 @@ grammar {
         attribute in2 { text },
         [ a:defaultValue = "normal" ]
         attribute mode {
-            string "normal" | string "multiply" | string "screen" | string "darken" | string "lighten"
+            string "normal"
+            | string "multiply"
+            | string "screen"
+            | string "overlay"
+            | string "darken"
+            | string "lighten"
+            | string "color-dodge"
+            | string "color-burn"
+            | string "hard-light"
+            | string "soft-light"
+            | string "difference"
+            | string "exclusion"
+            | string "hue"
+            | string "saturation"
+            | string "color"
+            | string "luminosity"
         }?
     a:documentation [
         "\x{a}" ~
