@@ -33,6 +33,8 @@ matrix:
     - os:  linux
       jdk: openjdk15
     - os:  linux
+      jdk: openjdk16
+    - os:  linux
       jdk: openjdk-ea
 
 install:
