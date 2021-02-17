@@ -17,7 +17,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && apt-get install --no-install-recommends -y \
        gnupg=2.2.12-1+deb10u1 \
        dirmngr=2.2.12-1+deb10u1 \
-       unzip=6.0-23+deb10u1 \
+       unzip=6.0-23+deb10u2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir ~/.gnupg \
