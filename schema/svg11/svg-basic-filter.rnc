@@ -199,7 +199,7 @@ grammar {
         attribute in2 { text },
         [ a:defaultValue = "over" ]
         attribute operator {
-            string "over" | string "in" | string "out" | string "atop" | string "xor" | string "arithmetic"
+            string "over" | string "in" | string "out" | string "atop" | string "xor" | string "lighter" | string "arithmetic"
         }?,
         attribute k1 { Number.datatype }?,
         attribute k2 { Number.datatype }?,

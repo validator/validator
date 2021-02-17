@@ -6,6 +6,7 @@ or changes to any options/interfaces the checker exposes for developers.
 NN XXX NNNN
   - Allow `loading` attribute for the `iframe` element (lazy loading)
   - Allow `autocomplete=username` with `input[type=email]`
+  - Allow `operator=lighter` for SVG `feComposite` element
   - Allow more values for SVG `feBlend` element `mode` attribute
   - CLI: Add nu.validator.htmlparser.tools|test classes to vnu.jar
   - CLI/Docker: Enable setting timeouts & bind address w/ environment vars
