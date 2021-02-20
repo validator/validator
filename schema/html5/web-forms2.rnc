@@ -671,6 +671,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				)
 			)
 		&	input.attrs.autocomplete.any?
+		&	input.attrs.autocorrect.any?
 		)
 		textarea.attrs.wrap.hard =
 			attribute wrap {
