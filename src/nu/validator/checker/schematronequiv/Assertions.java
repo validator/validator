@@ -2174,8 +2174,12 @@ public class Assertions extends Checker {
 
             // Obsolete elements
             if (OBSOLETE_ELEMENTS.get(localName) != null) {
-                err("The \u201C" + localName + "\u201D element is obsolete. "
-                        + OBSOLETE_ELEMENTS.get(localName));
+                String suggestion = "";
+                if (!"".equals(OBSOLETE_ELEMENTS.get(localName))) {
+                    suggestion = " " + OBSOLETE_ELEMENTS.get(localName);
+                }
+                err("The \u201C" + localName + "\u201D element is obsolete."
+                        + suggestion);
             }
 
             // Exclusions
