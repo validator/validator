@@ -150,6 +150,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
+        System.setProperties(new ThreadLocalProperties(System.getProperties()));
         if (!"1".equals(System.getProperty(
                 "nu.validator.servlet.read-local-log4j-properties"))) {
             PropertyConfigurator.configure(
