@@ -251,6 +251,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.datetime-local.attrs.min?
 		&	input.datetime-local.attrs.max?
 		&	input.attrs.step.float?
+		&	aria.prop.required?
 		&	input.datetime-local.attrs.value?
 		)	
 		input.datetime-local.attrs.type = 
@@ -283,6 +284,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.date.attrs.type
 		&	input.date.attrs.min?
 		&	input.date.attrs.max?
+		&	aria.prop.required?
 		&	input.attrs.step.integer?
 		&	input.date.attrs.value?
 		)	
@@ -316,6 +318,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.month.attrs.type
 		&	input.month.attrs.min?
 		&	input.month.attrs.max?
+		&	aria.prop.required?
 		&	input.attrs.step.integer?
 		&	input.month.attrs.value?
 		)	
@@ -349,6 +352,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.time.attrs.type
 		&	input.time.attrs.min?
 		&	input.time.attrs.max?
+		&	aria.prop.required?
 		&	input.attrs.step.float?
 		&	input.time.attrs.value?
 		)	
@@ -382,6 +386,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.week.attrs.type
 		&	input.week.attrs.min?
 		&	input.week.attrs.max?
+		&	aria.prop.required?
 		&	input.attrs.step.integer?
 		&	input.week.attrs.value?
 		)	
