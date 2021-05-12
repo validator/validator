@@ -119,7 +119,7 @@ deploy:
     prerelease: true
     file_glob: true
     skip_cleanup: true
-    file: "build/dist/{*.zip,*.zip.asc,*zip.md5,*.zip.md5.asc,*.zip.sha1,*.zip.sha1.asc}"
+    file: "build/dist/{*.zip,*zip.md5,*.zip.sha1}"
     on:
       condition: $TRAVIS_TAG != "jar" && $TRAVIS_TAG != "war"
       repo: validator/validator

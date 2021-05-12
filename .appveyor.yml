@@ -37,7 +37,6 @@ test_script:
   - python %CHECKER_PY% war
   - python %CHECKER_PY% check
   - python %CHECKER_PY% test
-  - bash -lc 'for file in build/dist/*.zip*; do touch $file.asc; done' # FIXME hack just to ensure the .asc files get uploaded during deploy
 
 cache:
   # cache the dependencies folder, and invalidate the cache
