@@ -54,7 +54,7 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
           new String[] {"http://wiki.whatwg.org/wiki/MetaExtensions",
             "About registering names as meta extensions."});
       MAGIC_LINKS.put("guidance on providing text alternatives for images",
-          new String[] {"https://html.spec.whatwg.org/multipage/images.html#alt",
+          new String[] {"https://www.w3.org/WAI/tutorials/images/",
             "About providing text alternatives for images."});
     }
 

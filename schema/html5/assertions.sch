@@ -65,7 +65,7 @@ THE SOFTWARE.
 				&#x201C;alt&#x201D; attribute, except under certain
 				conditions. For details, consult guidance on
 				providing text alternatives for images.
-				https://html.spec.whatwg.org/multipage/images.html#alt
+				https://www.w3.org/WAI/tutorials/images/
 			</assert>
 		</rule>
 	</pattern>
