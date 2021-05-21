@@ -390,6 +390,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
             // (non-)errors for features the CSS checker doesn’t support yet
             ".*Unknown pseudo-element or pseudo-class \u201C:focus-within\u201D.*", //
             ".*leader(.+)is not a \u201Ccontent\u201D value.*", //
+            ".*is not a “format” value.*", //
             ".*Property “all” doesn't exist.*", //
             ".*Property “aspect-ratio” doesn't exist.*", //
             ".*Property “border-block-width” doesn't exist.*", //
