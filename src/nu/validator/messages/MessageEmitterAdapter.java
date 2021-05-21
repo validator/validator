@@ -394,6 +394,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".* Property “text-decoration-thickness” doesn't exist.*", //
             ".* Property “text-decoration-skip-ink” doesn't exist.*", //
             ".* Property “border-block-width” doesn't exist.*", //
+            ".* Property “backdrop-filter” doesn't exist.*", //
     };
 
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
