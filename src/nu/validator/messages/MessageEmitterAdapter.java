@@ -391,10 +391,15 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*Unknown pseudo-element or pseudo-class \u201C:focus-within\u201D.*", //
             ".*leader(.+)is not a \u201Ccontent\u201D value.*", //
             ".*Property “all” doesn't exist.*", //
-            ".* Property “text-decoration-thickness” doesn't exist.*", //
-            ".* Property “text-decoration-skip-ink” doesn't exist.*", //
-            ".* Property “border-block-width” doesn't exist.*", //
-            ".* Property “backdrop-filter” doesn't exist.*", //
+            ".*Property “aspect-ratio” doesn't exist.*", //
+            ".*Property “border-block-width” doesn't exist.*", //
+            ".*Property “backdrop-filter” doesn't exist.*", //
+            ".*Property “font-variation-settings” doesn't exist.*", //
+            ".*Property “padding-inline-start” doesn't exist.*", //
+            ".*Property “scale” doesn't exist.*", //
+            ".*Property “text-decoration-thickness” doesn't exist.*", //
+            ".*Property “text-decoration-skip-ink” doesn't exist.*", //
+            ".*Property “text-underline-offset” doesn't exist.*", //
     };
 
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
