@@ -45,6 +45,6 @@ public class StreamBoundException extends SystemIdIOException {
     }
 
     public StreamBoundException(String message, String systemId) {
-        super(message, systemId);
+        super(systemId, message);
     }
 }
