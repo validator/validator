@@ -101,7 +101,7 @@ deploy:
       repo: validator/validator
       jdk: openjdk11
     api_key:
-      secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
+      secure: "LeO/Egf5TYyPAyTCMKkeIlqwcJInXcH3pZGSoT3eMd7Wmt1gWTwpBBN6lDm+ftouWLoGNi6cJ2W+ky5XjHLsO+80UN05T9LC6aoDO658fG0E770ApIUJf858HQCzrb56G2uBYRXkFqk3LrjBY+w8tVaqLijdFiDOSD+2OKmatU0="
   - provider: releases
     overwrite: true
     prerelease: true
@@ -113,7 +113,7 @@ deploy:
       repo: validator/validator
       jdk: openjdk11
     api_key:
-      secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
+      secure: "LeO/Egf5TYyPAyTCMKkeIlqwcJInXcH3pZGSoT3eMd7Wmt1gWTwpBBN6lDm+ftouWLoGNi6cJ2W+ky5XjHLsO+80UN05T9LC6aoDO658fG0E770ApIUJf858HQCzrb56G2uBYRXkFqk3LrjBY+w8tVaqLijdFiDOSD+2OKmatU0="
   - provider: releases
     overwrite: true
     prerelease: true
@@ -125,7 +125,7 @@ deploy:
       repo: validator/validator
       jdk: openjdk11
     api_key:
-      secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
+      secure: "LeO/Egf5TYyPAyTCMKkeIlqwcJInXcH3pZGSoT3eMd7Wmt1gWTwpBBN6lDm+ftouWLoGNi6cJ2W+ky5XjHLsO+80UN05T9LC6aoDO658fG0E770ApIUJf858HQCzrb56G2uBYRXkFqk3LrjBY+w8tVaqLijdFiDOSD+2OKmatU0="
   - provider: releases
     overwrite: true
     prerelease: true
@@ -137,4 +137,4 @@ deploy:
       repo: validator/validator
       os:  osx
     api_key:
-      secure: "Rx95y6BDpQSCPkWr8FqUByet61U7z1Tqo3KrRm2AN2MLbch9YcX8KScvH3Mmtk3wEsdOTsgLt6SYxBrU/7RKLKlvUTaIRFecQm/hZuhThLcd91q40Oy3KcedSsUUaYljRbvg/nh6MeloVOvDM5VitqV07NwykA0pVrSqoFJDBHA="
+      secure: "LeO/Egf5TYyPAyTCMKkeIlqwcJInXcH3pZGSoT3eMd7Wmt1gWTwpBBN6lDm+ftouWLoGNi6cJ2W+ky5XjHLsO+80UN05T9LC6aoDO658fG0E770ApIUJf858HQCzrb56G2uBYRXkFqk3LrjBY+w8tVaqLijdFiDOSD+2OKmatU0="
