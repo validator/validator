@@ -406,6 +406,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*Property “border-block-width” doesn't exist.*", //
             ".*Property “backdrop-filter” doesn't exist.*", //
             ".*Property “font-variation-settings” doesn't exist.*", //
+            ".*Property “overflow-anchor” doesn't exist.*", //
             ".*Property “padding-inline-start” doesn't exist.*", //
             ".*Property “scale” doesn't exist.*", //
             ".*Property “text-decoration-thickness” doesn't exist.*", //
