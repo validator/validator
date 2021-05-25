@@ -1726,6 +1726,25 @@ public class Assertions extends Checker {
                             && !"aria-hidden".equals(attLocal)) {
                         hasAriaAttributesOtherThanAriaHidden = true;
                     }
+                    if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(
+                            attLocal)) {
+                        String stateOrProperty = "aria-" + attLocal;
+                        if (atts.getIndex("", stateOrProperty) > -1) {
+                            if ("true".equals(
+                                    atts.getValue("", stateOrProperty))) {
+                                warn("Attribute \u201C" + stateOrProperty
+                                        + "\u201D is unnecessary for elements"
+                                        + " that have attribute \u201C"
+                                        + attLocal + "\u201D.");
+                            } else if ("false".equals(
+                                    atts.getValue("", stateOrProperty))) {
+                                err("Attribute \u201C" + stateOrProperty
+                                        + "\u201D must not be specified on"
+                                        + " elements that have attribute"
+                                        + " \u201C" + attLocal + "\u201D.");
+                            }
+                        }
+                    }
                     if ("embed".equals(localName)) {
                         for (int j = 0; j < attLocal.length(); j++) {
                             char c = attLocal.charAt(j);
@@ -1905,17 +1924,6 @@ public class Assertions extends Checker {
                                     + " \u201Cautofocus\u201D attribute.");
                         }
                         hasAutofocus = true;
-                    } else if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(
-                            attLocal)) {
-                        String stateOrProperty = "aria-" + attLocal;
-                        if (atts.getIndex("", stateOrProperty) > -1
-                                && "true".equals(
-                                        atts.getValue("", stateOrProperty))) {
-                            warn("Attribute \u201C" + stateOrProperty
-                                    + "\u201D is unnecessary for elements that"
-                                    + " have attribute \u201C" + attLocal
-                                    + "\u201D.");
-                        }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
