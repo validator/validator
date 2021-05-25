@@ -386,7 +386,8 @@ public class Assertions extends Checker {
     }
 
     private static final String[] INTERACTIVE_ELEMENTS = { "a", "button",
-            "details", "embed", "iframe", "label", "select", "textarea" };
+            "details", "dialog", "embed", "iframe", "label", "select",
+            "textarea" };
 
     private static final String[] INTERACTIVE_ROLES = { "button", "checkbox",
             "combobox", "grid", "gridcell", "listbox", "menu", "menubar",
@@ -1158,26 +1159,45 @@ public class Assertions extends Checker {
         if (isLabelableElement(localName, atts)) {
             return false;
         }
-        // https://developer.paciellogroup.com/blog/2017/07/short-note-on-aria-label-aria-labelledby-and-aria-describedby/
-        if ("main" == localName //
-                || "nav" == localName //
-                || "table" == localName //
-                || "td" == localName //
-                || "th" == localName //
-                || "aside" == localName //
-                || "header" == localName //
-                || "footer" == localName //
-                || "section" == localName //
+        // https://html5accessibility.com/stuff/2020/11/07/not-so-short-note-on-aria-label-usage-big-table-edition/
+        if (//
+                // "a" == localName // INTERACTIVE_ELEMENTS
+                "area" == localName // https://github.com/validator/validator/issues/775#issuecomment-494455608
                 || "article" == localName //
-                || "form" == localName //
-                || "img" == localName //
+                || "aside" == localName //
                 || "audio" == localName //
-                || "video" == localName //
-                // https://github.com/validator/validator/issues/775#issuecomment-494455608
-                || "area" == localName //
+                // "button" == localName // INTERACTIVE_ELEMENTS
+                // "details" == localName // INTERACTIVE_ELEMENTS
+                // "dialog" == localName // INTERACTIVE_ELEMENTS
+                || "dl" == localName //
                 || "fieldset" == localName //
-                || "summary" == localName //
                 || "figure" == localName //
+                || "footer" == localName //
+                || "form" == localName //
+                || "h1" == localName //
+                || "h2" == localName //
+                || "h3" == localName //
+                || "h4" == localName //
+                || "h5" == localName //
+                || "h6" == localName //
+                || "header" == localName //
+                || "hr" == localName //
+                // "iframe" == localName // INTERACTIVE_ELEMENTS
+                || "img" == localName // https://github.com/validator/validator/issues/775
+                // "input" == localName // isLabelableElement
+                || "main" == localName //
+                // "meter" == localName // isLabelableElement
+                || "nav" == localName //
+                || "ol" == localName //
+                // "progress" == localName // isLabelableElement
+                || "section" == localName //
+                // "select" == localName // isLabelableElement
+                || "summary" == localName // https://github.com/validator/validator/issues/775#issuecomment-494459220
+                || "svg" == localName //
+                || "table" == localName //
+                // "textarea" == localName // INTERACTIVE_ELEMENTS
+                || "video" == localName //
+                || "ul" == localName //
         ) {
             return false;
         }
