@@ -585,6 +585,7 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dd", "definition");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("details", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dialog", "dialog");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("dfn", "term");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("dt", "term");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("fieldset", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("figure", "figure");
