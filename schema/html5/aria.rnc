@@ -1362,6 +1362,8 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		(	aria.role.tab
 		&	aria.state.selected?
 		&	aria.state.expanded?
+		&	aria.prop.posinset?
+		&	aria.prop.setsize?
 		)
 		aria.role.tab = 
 			attribute role { string "tab" }
