@@ -3241,6 +3241,11 @@ public class Assertions extends Checker {
                 boolean sizeIsOne = false;
                 boolean sizeIsGreaterThanOne = false;
                 boolean hasMultiple = atts.getIndex("", "multiple") > -1;
+                if (atts.getIndex("", "aria-multiselectable") > -1) {
+                    warn("The \u201Caria-multiselectable\u201D attribute"
+                            + " should not be used with the \u201Cselect"
+                            + " \u201D element.");
+                }
                 if (atts.getIndex("", "size") > -1) {
                     hasSize = true;
                     String size = trimSpaces(atts.getValue("", "size"));
