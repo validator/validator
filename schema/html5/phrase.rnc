@@ -406,7 +406,7 @@ referrerpolicy =
 		element br { br.inner & br.attrs }
 	br.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
+		&	common.attrs.aria.role.presentation?
 		)
 	br.inner =
 		( empty )
