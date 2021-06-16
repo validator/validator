@@ -3010,6 +3010,12 @@ public class Assertions extends Checker {
 
             // Warnings for use of ARIA attributes with markup already
             // having implicit ARIA semantics.
+            if (atts.getIndex("", "aria-placeholder") > -1
+                    && atts.getIndex("", "placeholder") > -1) {
+                err("The \u201Caria-placeholder\u201D attribute must not be"
+                        + " specified on elements that have a"
+                        + " \u201Cplaceholder\u201D attribute.");
+            }
             if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
                     && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(
                             role)) {

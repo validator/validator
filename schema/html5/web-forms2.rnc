@@ -87,6 +87,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.minlength?
 		&	shared-form.attrs.pattern?
 		&	shared-form.attrs.placeholder?
+		&	aria.prop.placeholder?
 		&	shared-form.attrs.readonly?
 		&	shared-form.attrs.required?
 		)
@@ -97,6 +98,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.minlength?
 		&	shared-form.attrs.pattern?
 		&	shared-form.attrs.placeholder?
+		&	aria.prop.placeholder?
 		&	shared-form.attrs.readonly?
 		&	shared-form.attrs.required?
 		&	shared-form.attrs.size?
@@ -155,6 +157,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.pattern?
 		&	shared-form.attrs.required?
 		&	shared-form.attrs.placeholder?
+		&	aria.prop.placeholder?
 		&	shared-form.attrs.minlength?
 		)
 
@@ -165,6 +168,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.attrs.list?
 		&	shared-form.attrs.pattern?
 		&	shared-form.attrs.placeholder?
+		&	aria.prop.placeholder?
 		&	shared-form.attrs.required?
 		&	aria.prop.required?
 		&	shared-form.attrs.minlength?
@@ -666,6 +670,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.minlength?
 		&	shared-form.attrs.required? 
 		&	textarea.attrs.placeholder?
+		&	aria.prop.placeholder?
 		&	shared-form.attrs.dirname?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 

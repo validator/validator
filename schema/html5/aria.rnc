@@ -144,7 +144,6 @@ common.attrs.aria.implicit.searchbox |=
 	(	aria.prop.activedescendant?
 	&	aria.prop.autocomplete?
 	&	aria.prop.multiline?
-	&	aria.prop.placeholder?
 	&	aria.prop.readonly?
 	&	aria.prop.required?
 	)
@@ -1257,7 +1256,6 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.activedescendant?
 		&	aria.prop.autocomplete?
 		&	aria.prop.multiline?
-		&	aria.prop.placeholder?
 		&	aria.prop.readonly?
 		&	aria.prop.required?
 		)
@@ -1423,7 +1421,6 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.activedescendant?
 		&	aria.prop.autocomplete? # not inherited
 		&	aria.prop.multiline? # not inherited
-		&	aria.prop.placeholder?
 		&	aria.prop.readonly? # not inherited
 		&	aria.prop.required?
 		)
