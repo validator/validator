@@ -2741,6 +2741,21 @@ public class Assertions extends Checker {
                         new LocatorImpl(getDocumentLocator()), list));
             }
 
+            // input@type=checkbox
+            if ("input" == localName
+                    && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                            "checkbox", atts.getValue("", "type"))) {
+                if ("button".equals(role)
+                        && !"true".equals(atts.getValue("", "aria-pressed"))) {
+                    err("An \u201Cinput\u201D element with a \u201Ctype\u201D"
+                            + " attribute whose value is \u201Ccheckbox\u201D"
+                            + " and with a \u201Crole\u201D attribute whose"
+                            + " value is \u201Cbutton\u201D must have an"
+                            + " \u201Caria-pressed\u201D attribute whose value"
+                            + " is \u201Ctrue\u201D.");
+                }
+            }
+
             // input@type=button
             if ("input" == localName
                     && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(

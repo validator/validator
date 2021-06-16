@@ -1085,6 +1085,13 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	common.attrs.aria |= aria.menuitemcheckbox
 	common.attrs.aria.role.menuitemcheckbox |= aria.menuitemcheckbox
 
+## menuitemcheckbox w/o checked required
+	aria.menuitemcheckbox-checked-not-required =
+		(	aria.role.menuitemcheckbox )
+		aria.role.menuitemcheckbox-checked-not-required =
+			attribute role { string "menuitemcheckbox" }
+	common.attrs.aria.role.menuitemcheckbox-checked-not-required |= aria.menuitemcheckbox-checked-not-required
+
 ## menuitemradio
 	aria.menuitemradio =
 		(	aria.role.menuitemradio
@@ -1098,6 +1105,17 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.menuitemradio
 	common.attrs.aria.role.menuitemradio |= aria.menuitemradio
+
+## menuitemradio w/o checked required
+	aria.menuitemradio-checked-not-required =
+		(	aria.role.menuitemradio
+		&	aria.state.selected?
+		&	aria.prop.posinset?
+		&	aria.prop.setsize?
+		)
+		aria.role.menuitemradio-checked-not-required =
+			attribute role { string "menuitemradio" }
+	common.attrs.aria.role.menuitemradio-checked-not-required |= aria.menuitemradio-checked-not-required
 
 ## navigation
 	aria.navigation =
@@ -1354,6 +1372,13 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 
 	common.attrs.aria |= aria.switch
 	common.attrs.aria.role.switch |= aria.switch
+
+## switch w/o checked required
+	aria.switch-checked-not-required =
+		(	aria.role.switch )
+		aria.role.switch-checked-not-required =
+			attribute role { string "switch" }
+	common.attrs.aria.role.switch-checked-not-required |= aria.switch-checked-not-required
 
 ## tab
 	aria.tab =
