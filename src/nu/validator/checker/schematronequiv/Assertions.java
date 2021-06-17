@@ -1996,6 +1996,14 @@ public class Assertions extends Checker {
                             + " attribute of the \u201cinput\u201d element is"
                             + " not allowed.");
                 }
+                if (atts.getIndex("", "hidden") > -1
+                        && (atts.getIndex("", "aria-hidden") > -1
+                                || hasAriaAttributesOtherThanAriaHidden)) {
+                    err("An \u201cinput\u201d element with a \u201ctype\u201d"
+                            + " attribute whose value is \u201chidden\u201d"
+                            + " must not have any \u201Caria-*\u201D"
+                            + " attributes.");
+                }
                 inputTypeVal = inputTypeVal == null ? "text" : inputTypeVal;
                 if (atts.getIndex("", "autocomplete") > -1) {
                     Class<?> datatypeClass = null;
