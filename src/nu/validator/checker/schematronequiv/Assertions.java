@@ -3036,14 +3036,23 @@ public class Assertions extends Checker {
                 err("The \u201Citemtype\u201D attribute must not be specified on elements that do not have an \u201Citemscope\u201D attribute specified.");
             }
 
-            // Warnings for use of ARIA attributes with markup already
-            // having implicit ARIA semantics.
+            // Errors for use of ARIA attributes that conflict with native
+            // element semantics.
+            if (atts.getIndex("", "contenteditable") > -1
+                    && "true".equals(atts.getValue("", "aria-readonly"))) {
+                err("The \u201Caria-readonly\u201D attribute must only be"
+                        + " specified with a value of \u201Cfalse\u201D"
+                        + " on elements that have a \u201Ccontenteditable\u201D"
+                        + " attribute.");
+            }
             if (atts.getIndex("", "aria-placeholder") > -1
                     && atts.getIndex("", "placeholder") > -1) {
                 err("The \u201Caria-placeholder\u201D attribute must not be"
                         + " specified on elements that have a"
                         + " \u201Cplaceholder\u201D attribute.");
             }
+            // Warnings for use of ARIA attributes with markup already
+            // having implicit ARIA semantics.
             if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
                     && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(
                             role)) {
