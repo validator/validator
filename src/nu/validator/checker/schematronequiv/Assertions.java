@@ -1299,6 +1299,8 @@ public class Assertions extends Checker {
 
     private boolean hasTopLevelH1;
 
+    private boolean hasAncestorTableIsRoleTableGridOrTreeGrid = false;
+
     private int numberOfTemplatesDeep = 0;
 
     private Set<Locator> secondLevelH1s = new HashSet<>();
@@ -1663,6 +1665,7 @@ public class Assertions extends Checker {
         hasContentTypePragma = false;
         hasAutofocus = false;
         hasTopLevelH1 = false;
+        hasAncestorTableIsRoleTableGridOrTreeGrid = false;
         numberOfTemplatesDeep = 0;
     }
 
@@ -2391,6 +2394,11 @@ public class Assertions extends Checker {
                     }
                 }
             } else if ("table" == localName) {
+                if (role == null // implicit role=table
+                        || "table".equals(role) || "grid".equals(role)
+                        || "treegrid".equals(role)) {
+                    hasAncestorTableIsRoleTableGridOrTreeGrid = true;
+                }
                 if (atts.getIndex("", "summary") >= 0) {
                     errObsoleteAttribute("summary", "table",
                             " Consider describing the structure of the"
@@ -2405,6 +2413,16 @@ public class Assertions extends Checker {
                     errObsoleteAttribute("border", "table",
                             " Use CSS instead.");
                 }
+            } else if (hasAncestorTableIsRoleTableGridOrTreeGrid
+                    && atts.getIndex("", "role") >= 0 && ("td" == localName
+                            || "tr" == localName || "th" == localName)) {
+                err("The \u201Crole\u201D attribute must not be used"
+                        + " on a \u201C" + localName + "\u201D element"
+                        + " which has a \u201Ctable\u201D ancestor with"
+                        + " no \u201Crole\u201D attribute, or with a"
+                        + " \u201Crole\u201D attribute whose value is"
+                        + " \u201Ctable\u201D, \u201Cgrid\u201D,"
+                        + " or \u201Ctreegrid\u201D.");
             } else if ("track" == localName
                     && atts.getIndex("", "default") >= 0) {
                 for (Map.Entry<StackNode, TaintableLocatorImpl> entry : openMediaElements.entrySet()) {
