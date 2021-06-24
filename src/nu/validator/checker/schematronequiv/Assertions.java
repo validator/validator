@@ -1539,6 +1539,8 @@ public class Assertions extends Checker {
             } else if ("option" == localName
                     && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
+                warn("The \u201Caria-selected\u201D attribute should not be"
+                        + " used on the \u201Coption\u201D element.");
             } else if ("style" == localName) {
                 String styleContents = node.getTextContent().toString();
                 int lineOffset = 0;
