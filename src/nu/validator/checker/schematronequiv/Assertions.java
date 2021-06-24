@@ -3278,8 +3278,16 @@ public class Assertions extends Checker {
             if (number > -1) {
                 ancestorMask |= (1 << number);
             }
-            if ("a" == localName && href) {
-                ancestorMask |= HREF_MASK;
+            if ("a" == localName) {
+                if (href) {
+                    ancestorMask |= HREF_MASK;
+                    if ("true".equals(atts.getValue("", "aria-disabled"))) {
+                        warn("An \u201Caria-disabled\u201D attribute whose"
+                                + " value is \u201Ctrue\u201D should not be"
+                                + " specified on an \u201Ca\u201D element"
+                                + " that has an \u201Chref\u201D attribute.");
+                    }
+                }
             }
             StackNode child = new StackNode(ancestorMask, localName, role,
                     activeDescendant, forAttr);
