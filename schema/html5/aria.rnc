@@ -197,6 +197,10 @@ common.attrs.aria.implicit.column-or-row-header |=
 	(	aria.prop.sort?
 	&	aria.prop.readonly?
 	&	aria.prop.required?
+	&	aria.prop.colspan?
+	&	aria.prop.colindex?
+	&	aria.prop.rowspan?
+	&	aria.prop.rowindex?
 	&	aria.state.selected?
 	&	aria.state.expanded?
 	)
@@ -694,6 +698,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	aria.cell =
 		(	aria.role.cell
 		&	aria.prop.colspan?
+		&	aria.prop.colindex?
 		&	aria.prop.rowspan?
 		&	aria.prop.rowindex?
 		)
@@ -872,6 +877,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.state.expanded?
 		&	aria.prop.required?
 		&	aria.prop.colspan?
+		&	aria.prop.colindex?
 		&	aria.prop.rowspan?
 		&	aria.prop.rowindex?
 		)
