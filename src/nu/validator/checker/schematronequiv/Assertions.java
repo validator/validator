@@ -385,6 +385,11 @@ public class Assertions extends Checker {
         JAVASCRIPT_MIME_TYPES.add("text/x-javascript");
     }
 
+    private static final String[] ARIA_HIDDEN_NOT_ALLOWED_ELEMENTS = { "base",
+            "col", "colgroup", "head", "html", "link", "map", "meta",
+            "noscript", "param", "picture", "script", "slot", "source", "style",
+            "template", "title", "track" };
+
     private static final String[] INTERACTIVE_ELEMENTS = { "a", "button",
             "details", "dialog", "embed", "iframe", "label", "select",
             "textarea" };
@@ -1750,8 +1755,22 @@ public class Assertions extends Checker {
                 String attUri = atts.getURI(i);
                 if (attUri.length() == 0) {
                     String attLocal = atts.getLocalName(i);
-                    if (attLocal.startsWith("aria-")
-                            && !"aria-hidden".equals(attLocal)) {
+                    if ("aria-hidden".equals(attLocal)) {
+                        if (Arrays.binarySearch(
+                                ARIA_HIDDEN_NOT_ALLOWED_ELEMENTS,
+                                localName) >= 0) {
+                            err("The \u201Caria-hidden\u201D attribute must not"
+                                    + " be specified on the \u201C" + localName
+                                    + "\u201D element.");
+                        } else if ("input" == localName
+                                && "hidden".equals(atts.getValue("", "type"))) {
+                            err("The \u201Caria-hidden\u201D attribute must not"
+                                    + " be specified on an \u201Cinput\u201D"
+                                    + " element whose \u201Ctype\u201D"
+                                    + " attribute has the value"
+                                    + " \u201Chidden\u201D.");
+                        }
+                    } else if (attLocal.startsWith("aria-")) {
                         hasAriaAttributesOtherThanAriaHidden = true;
                     }
                     if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(
