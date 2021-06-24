@@ -1541,8 +1541,6 @@ public class Assertions extends Checker {
             } else if ("option" == localName
                     && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
-                warn("The \u201Caria-selected\u201D attribute should not be"
-                        + " used on the \u201Coption\u201D element.");
             } else if ("style" == localName) {
                 String styleContents = node.getTextContent().toString();
                 int lineOffset = 0;
@@ -2238,6 +2236,10 @@ public class Assertions extends Checker {
             }
 
             if ("option" == localName && !parent.hasOption()) {
+                if (atts.getIndex("", "aria-selected") > -1) {
+                    warn("The \u201Caria-selected\u201D attribute should not be"
+                            + " used on the \u201Coption\u201D element.");
+                }
                 if (atts.getIndex("", "value") < 0) {
                     parent.setNoValueOptionFound();
                 } else if (atts.getIndex("", "value") > -1
