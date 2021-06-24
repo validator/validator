@@ -660,10 +660,12 @@ public class Assertions extends Checker {
     private static final Set<String> ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY = new HashSet<>();
 
     static {
+        ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("colspan");
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("disabled");
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("hidden");
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("readonly");
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("required");
+        ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("rowspan");
     }
 
     private static final String h1WarningMessage = "Consider using the"
@@ -1756,17 +1758,26 @@ public class Assertions extends Checker {
                             attLocal)) {
                         String stateOrProperty = "aria-" + attLocal;
                         if (atts.getIndex("", stateOrProperty) > -1) {
-                            if ("true".equals(
-                                    atts.getValue("", stateOrProperty))) {
+                            String attLocalValue = atts.getValue("", attLocal);
+                            String stateOrPropertyValue = atts.getValue("",
+                                    stateOrProperty);
+                            if ("true".equals(stateOrPropertyValue)
+                                    || attLocalValue.equals(
+                                            stateOrPropertyValue)) {
                                 warn("Attribute \u201C" + stateOrProperty
                                         + "\u201D is unnecessary for elements"
                                         + " that have attribute \u201C"
                                         + attLocal + "\u201D.");
-                            } else if ("false".equals(
-                                    atts.getValue("", stateOrProperty))) {
+                            } else if ("false".equals(stateOrPropertyValue)) {
                                 err("Attribute \u201C" + stateOrProperty
                                         + "\u201D must not be specified on"
                                         + " elements that have attribute"
+                                        + " \u201C" + attLocal + "\u201D.");
+                            } else if (!attLocalValue.equals(
+                                            stateOrPropertyValue)) {
+                                err("Attribute \u201C" + stateOrProperty
+                                        + "\u201D must not be specified with"
+                                        + " a different value than  attribute"
                                         + " \u201C" + attLocal + "\u201D.");
                             }
                         }
