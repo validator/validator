@@ -30,6 +30,10 @@ matrix:
       env:
         - TRAVIS_TAG=osx
         - JAVA_HOME=$(/usr/libexec/java_home)
+    - os:  windows
+      jdk: openjdk11
+      env:
+        - TRAVIS_TAG=windows
     - os:  linux
       jdk: openjdk15
     - os:  linux
