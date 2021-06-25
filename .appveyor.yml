@@ -10,7 +10,7 @@ branches:
 
 environment:
   ssh_secret:
-    secure: rSGxPYhT1WpkysdoBRSgj65HwEu3ULsFCfOoP7zJ/YbaVihhK8RfjaHcHQi50JH0
+    secure: 06gkPxKdBO6AP58DfYl4/jpFZ+SzGINrqU7Kh32kOHye3jPjpYPjMILaCIPCDzak
   PYTHON: C:\Python36-x64
   CHECKER_PY: .\checker.py
   matrix:
