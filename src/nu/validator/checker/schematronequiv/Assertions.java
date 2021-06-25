@@ -2508,7 +2508,6 @@ public class Assertions extends Checker {
                 double optimum = getDoubleAttribute(atts, "optimum");
                 double low = getDoubleAttribute(atts, "low");
                 double high = getDoubleAttribute(atts, "high");
-
                 if (!Double.isNaN(min) && !Double.isNaN(value)
                         && !(min <= value)) {
                     err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Cvalue\u201D attribute.");
@@ -2579,6 +2578,18 @@ public class Assertions extends Checker {
                 if (!Double.isNaN(optimum) && Double.isNaN(max)
                         && !(optimum <= 1)) {
                     err("The value of the \u201Coptimum\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
+                }
+                if (atts.getIndex("", "aria-valuemin") >= 0
+                        && !"".equals(atts.getValue("", "aria-valuemin"))) {
+                    if (atts.getIndex("", "min") >= 0) {
+                        err("The \u201Caria-valuemin\u201D attribute must not"
+                                + " be used on an element which has a"
+                                + " \u201Cmin\u201D attribute.");
+                    } else {
+                        warn("The \u201Caria-valuemin\u201D attribute should"
+                                + " not be used on a \u201Cmeter\u201D"
+                                + " element.");
+                    }
                 }
             }
 
@@ -3143,6 +3154,28 @@ public class Assertions extends Checker {
                                 + " which has a \u201Ctype\u201D attribute"
                                 + " whose value is \u201C" + inputTypeVal
                                 + "\u201D.");
+                    }
+                }
+                if ("date".equals(inputTypeVal)
+                        || "month".equals(inputTypeVal)
+                        || "week".equals(inputTypeVal)
+                        || "time".equals(inputTypeVal)
+                        || "datetime-local".equals(inputTypeVal)
+                        || "number".equals(inputTypeVal)
+                        || "range".equals(inputTypeVal)) {
+                    if (atts.getIndex("", "aria-valuemin") >= 0
+                            && !"".equals(atts.getValue("", "aria-valuemin"))) {
+                        if (atts.getIndex("", "min") >= 0) {
+                            err("The \u201Caria-valuemin\u201D attribute must"
+                                    + " not be used on an element which has a"
+                                    + " \u201Cmin\u201D attribute.");
+                        } else {
+                            warn("The \u201Caria-valuemin\u201D attribute"
+                                    + " should not be used on an"
+                                    + " \u201Cinput\u201D element which has a"
+                                    + " \u201Ctype\u201D attribute whose value"
+                                    + " is \u201C" + inputTypeVal + "\u201D.");
+                        }
                     }
                 }
                 if (INPUT_TYPES_WITH_IMPLICIT_ROLE.containsKey(inputTypeVal)

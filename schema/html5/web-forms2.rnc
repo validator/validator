@@ -253,6 +253,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-input.attrs
 		&	input.datetime-local.attrs.type
 		&	input.datetime-local.attrs.min?
+		&	aria.prop.valuemin?
 		&	input.datetime-local.attrs.max?
 		&	input.attrs.step.float?
 		&	aria.prop.required?
@@ -287,6 +288,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-input.attrs
 		&	input.date.attrs.type
 		&	input.date.attrs.min?
+		&	aria.prop.valuemin?
 		&	input.date.attrs.max?
 		&	aria.prop.required?
 		&	input.attrs.step.integer?
@@ -321,6 +323,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-input.attrs
 		&	input.month.attrs.type
 		&	input.month.attrs.min?
+		&	aria.prop.valuemin?
 		&	input.month.attrs.max?
 		&	aria.prop.required?
 		&	input.attrs.step.integer?
@@ -355,6 +358,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-input.attrs
 		&	input.time.attrs.type
 		&	input.time.attrs.min?
+		&	aria.prop.valuemin?
 		&	input.time.attrs.max?
 		&	aria.prop.required?
 		&	input.attrs.step.float?
@@ -389,6 +393,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-input.attrs
 		&	input.week.attrs.type
 		&	input.week.attrs.min?
+		&	aria.prop.valuemin?
 		&	input.week.attrs.max?
 		&	aria.prop.required?
 		&	input.attrs.step.integer?
