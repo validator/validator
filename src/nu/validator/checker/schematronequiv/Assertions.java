@@ -2498,6 +2498,18 @@ public class Assertions extends Checker {
                         }
                     }
                 }
+                if (atts.getIndex("", "aria-valuemax") >= 0
+                        && !"".equals(atts.getValue("", "aria-valuemax"))) {
+                    if (atts.getIndex("", "max") >= 0) {
+                        err("The \u201Caria-valuemax\u201D attribute must not"
+                                + " be used on an element which has a"
+                                + " \u201Cmax\u201D attribute.");
+                    } else {
+                        warn("The \u201Caria-valuemax\u201D attribute should"
+                                + " not be used on a \u201Cprogress\u201D"
+                                + " element.");
+                    }
+                }
             }
 
             // meter
@@ -2587,6 +2599,18 @@ public class Assertions extends Checker {
                                 + " \u201Cmin\u201D attribute.");
                     } else {
                         warn("The \u201Caria-valuemin\u201D attribute should"
+                                + " not be used on a \u201Cmeter\u201D"
+                                + " element.");
+                    }
+                }
+                if (atts.getIndex("", "aria-valuemax") >= 0
+                        && !"".equals(atts.getValue("", "aria-valuemax"))) {
+                    if (atts.getIndex("", "max") >= 0) {
+                        err("The \u201Caria-valuemax\u201D attribute must not"
+                                + " be used on an element which has a"
+                                + " \u201Cmax\u201D attribute.");
+                    } else {
+                        warn("The \u201Caria-valuemax\u201D attribute should"
                                 + " not be used on a \u201Cmeter\u201D"
                                 + " element.");
                     }
@@ -3171,6 +3195,20 @@ public class Assertions extends Checker {
                                     + " \u201Cmin\u201D attribute.");
                         } else {
                             warn("The \u201Caria-valuemin\u201D attribute"
+                                    + " should not be used on an"
+                                    + " \u201Cinput\u201D element which has a"
+                                    + " \u201Ctype\u201D attribute whose value"
+                                    + " is \u201C" + inputTypeVal + "\u201D.");
+                        }
+                    }
+                    if (atts.getIndex("", "aria-valuemax") >= 0
+                            && !"".equals(atts.getValue("", "aria-valuemax"))) {
+                        if (atts.getIndex("", "max") >= 0) {
+                            err("The \u201Caria-valuemax\u201D attribute must"
+                                    + " not be used on an element which has a"
+                                    + " \u201Cmax\u201D attribute.");
+                        } else {
+                            warn("The \u201Caria-valuemax\u201D attribute"
                                     + " should not be used on an"
                                     + " \u201Cinput\u201D element which has a"
                                     + " \u201Ctype\u201D attribute whose value"

@@ -65,6 +65,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	meter.attrs.low?
 		&	meter.attrs.high?
 		&	meter.attrs.max?
+		&	aria.prop.valuemax?
 		&	meter.attrs.optimum?
 		)
 		meter.attrs.value =
