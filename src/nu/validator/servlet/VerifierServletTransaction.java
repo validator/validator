@@ -105,6 +105,7 @@ import nu.validator.xml.XhtmlSaxEmitter;
 import nu.validator.xml.customelements.NamespaceChangingSchemaWrapper;
 import nu.validator.xml.templateelement.TemplateElementDroppingSchemaWrapper;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
+import nu.validator.xml.ariaattributes.AriaAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 
@@ -563,8 +564,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 Schema s = entry.getValue();
                 String u = entry.getKey();
                 if (isDataAttributeDroppingSchema(u)) {
-                    s = new DataAttributeDroppingSchemaWrapper(
-                            s);
+                    s = new DataAttributeDroppingSchemaWrapper(s);
+                }
+                if (isAriaAttributeDroppingSchema(u)) {
+                    s = new AriaAttributeDroppingSchemaWrapper(s);
                 }
                 if (isXmlLangAllowingSchema(u)) {
                     s = new XmlLangAttributeDroppingSchemaWrapper(s);
@@ -626,6 +629,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     private static boolean isDataAttributeDroppingSchema(String key) {
+        return ("http://s.validator.nu/xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/html5.rnc".equals(key)
+                || "http://s.validator.nu/html5-all.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-all.rnc".equals(key)
+                || "http://s.validator.nu/html5-its.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/html5-rdfalite.rnc".equals(key));
+    }
+
+    private static boolean isAriaAttributeDroppingSchema(String key) {
         return ("http://s.validator.nu/xhtml5.rnc".equals(key)
                 || "http://s.validator.nu/html5.rnc".equals(key)
                 || "http://s.validator.nu/html5-all.rnc".equals(key)

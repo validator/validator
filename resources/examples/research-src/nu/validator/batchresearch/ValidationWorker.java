@@ -44,6 +44,7 @@ import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.xml.AttributesPermutingXMLReaderWrapper;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
+import nu.validator.xml.ariaattributes.AriaAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 
 import org.whattf.checker.jing.CheckerSchema;
@@ -293,6 +294,7 @@ public class ValidationWorker implements Runnable, ErrorHandler,
         InputSource is = new InputSource((new File(args[3])).toURL().toExternalForm());
         SchemaReader sr = CompactSchemaReader.getInstance();
         schemas.add(new XmlLangAttributeDroppingSchemaWrapper(new DataAttributeDroppingSchemaWrapper(sr.createSchema(is, PropertyMap.EMPTY))));
+        schemas.add(new XmlLangAttributeDroppingSchemaWrapper(new AriaAttributeDroppingSchemaWrapper(sr.createSchema(is, PropertyMap.EMPTY))));
 
         CountingReadLine countingReadLine = new CountingReadLine(in);
         

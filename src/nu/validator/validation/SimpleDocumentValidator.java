@@ -49,6 +49,7 @@ import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.source.SourceCode;
 import nu.validator.xml.customelements.NamespaceChangingSchemaWrapper;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
+import nu.validator.xml.ariaattributes.AriaAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 import nu.validator.xml.templateelement.TemplateElementDroppingSchemaWrapper;
@@ -267,6 +268,7 @@ public class SimpleDocumentValidator {
                         "Failed to retrieve secondary schema.");
             }
             schema = new DataAttributeDroppingSchemaWrapper(schema);
+            schema = new AriaAttributeDroppingSchemaWrapper(schema);
             schema = new XmlLangAttributeDroppingSchemaWrapper(schema);
             schema = new RoleAttributeFilteringSchemaWrapper(schema);
             schema = new TemplateElementDroppingSchemaWrapper(schema);

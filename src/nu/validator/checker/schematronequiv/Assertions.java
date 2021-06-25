@@ -1158,6 +1158,9 @@ public class Assertions extends Checker {
 
     private boolean isAriaLabelMisuse(String ariaLabel, String localName,
             String role, Attributes atts) {
+        if (ariaLabel == "") {
+            return false;
+        }
         if (ariaLabel == null) {
             return false;
         }
@@ -1756,9 +1759,10 @@ public class Assertions extends Checker {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
                 String attUri = atts.getURI(i);
+                boolean isEmptyAtt = "".equals(atts.getValue(i));
                 if (attUri.length() == 0) {
                     String attLocal = atts.getLocalName(i);
-                    if ("aria-hidden".equals(attLocal)) {
+                    if ("aria-hidden".equals(attLocal) && !isEmptyAtt) {
                         if (Arrays.binarySearch(
                                 ARIA_HIDDEN_NOT_ALLOWED_ELEMENTS,
                                 localName) >= 0) {
@@ -1773,11 +1777,11 @@ public class Assertions extends Checker {
                                     + " attribute has the value"
                                     + " \u201Chidden\u201D.");
                         }
-                    } else if (attLocal.startsWith("aria-")) {
+                    } else if (attLocal.startsWith("aria-") && !isEmptyAtt) {
                         hasAriaAttributesOtherThanAriaHidden = true;
                     }
                     if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(
-                            attLocal)) {
+                            attLocal) && !isEmptyAtt) {
                         String stateOrProperty = "aria-" + attLocal;
                         if (atts.getIndex("", stateOrProperty) > -1) {
                             String attLocalValue = atts.getValue("", attLocal);
@@ -1905,11 +1909,12 @@ public class Assertions extends Checker {
                         }
                     } else if ("role" == attLocal) {
                         role = atts.getValue(i);
-                    } else if ("aria-activedescendant" == attLocal) {
+                    } else if ("aria-activedescendant" == attLocal
+                            && !isEmptyAtt) {
                         activeDescendant = atts.getValue(i);
-                    } else if ("aria-label" == attLocal) {
+                    } else if ("aria-label" == attLocal && !isEmptyAtt) {
                         ariaLabel = atts.getValue(i);
-                    } else if ("aria-owns" == attLocal) {
+                    } else if ("aria-owns" == attLocal && !isEmptyAtt) {
                         owns = atts.getValue(i);
                     } else if ("list" == attLocal) {
                         list = atts.getValue(i);
@@ -2030,7 +2035,8 @@ public class Assertions extends Checker {
                             + " not allowed.");
                 }
                 if (atts.getIndex("", "hidden") > -1
-                        && (atts.getIndex("", "aria-hidden") > -1
+                        && ((atts.getIndex("", "aria-hidden") > -1
+                                && !"".equals(atts.getValue("", "aria-hidden")))
                                 || hasAriaAttributesOtherThanAriaHidden)) {
                     err("An \u201cinput\u201d element with a \u201ctype\u201d"
                             + " attribute whose value is \u201chidden\u201d"
@@ -2236,7 +2242,8 @@ public class Assertions extends Checker {
             }
 
             if ("option" == localName && !parent.hasOption()) {
-                if (atts.getIndex("", "aria-selected") > -1) {
+                if (atts.getIndex("", "aria-selected") > -1
+                        && !"".equals(atts.getValue("", "aria-selected"))) {
                     warn("The \u201Caria-selected\u201D attribute should not be"
                             + " used on the \u201Coption\u201D element.");
                 }
@@ -3208,6 +3215,7 @@ public class Assertions extends Checker {
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
+                boolean isEmptyAtt = !"".equals(atts.getValue(i));
                 if (atts.getType(i) == "ID") {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
@@ -3218,9 +3226,11 @@ public class Assertions extends Checker {
                 if (atts.getURI(i).length() == 0) {
                     if ("role" == attLocal) {
                         role = atts.getValue(i);
-                    } else if ("aria-activedescendant" == attLocal) {
+                    } else if ("aria-activedescendant" == attLocal
+                            && !isEmptyAtt) {
+                        System.out.println("found aria-activedescendant 1");
                         activeDescendant = atts.getValue(i);
-                    } else if ("aria-owns" == attLocal) {
+                    } else if ("aria-owns" == attLocal && !isEmptyAtt) {
                         owns = atts.getValue(i);
                     }
                 }
@@ -3250,7 +3260,7 @@ public class Assertions extends Checker {
         // ARIA IDREFS
         for (String att : MUST_NOT_DANGLE_IDREFS) {
             String attVal = atts.getValue("", att);
-            if (attVal != null) {
+            if (attVal != null && attVal != "") {
                 String[] tokens = AttributeUtil.split(attVal);
                 for (String token : tokens) {
                     ariaReferences.add(
