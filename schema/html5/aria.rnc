@@ -31,6 +31,7 @@ aria.global =
 	&	aria.prop.owns?
 	&	aria.prop.relevant?
 	&	aria.prop.roledescription?
+	&	aria.prop.description?
 	)
 
 common.attrs.other &= aria.global?
@@ -398,6 +399,12 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	aria.prop.describedby =
 		attribute aria-describedby {
 			common.data.idrefs #REVISIT add Schematron check
+		}
+
+## description
+	aria.prop.description =
+		attribute aria-description {
+			string
 		}
 
 ## details
