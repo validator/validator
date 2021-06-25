@@ -3243,7 +3243,16 @@ public class Assertions extends Checker {
                                     + " whose type is" + " \u201C"
                                     + inputTypeVal + "\u201D.");
                         }
-
+                        if (atts.getIndex("", "aria-haspopup") >= 0
+                                && !"".equals(
+                                        atts.getValue("", "aria-haspopup"))) {
+                            warn("The \u201Caria-haspopup\u201D attribute"
+                                    + " should not be used on an"
+                                    + " \u201Cinput\u201D element that has a"
+                                    + " \u201Clist\u201D attribute and whose"
+                                    + " type is \u201C" + inputTypeVal
+                                    + "\u201D.");
+                        }
                     }
                 }
             } else if (atts.getIndex("", "href") > -1 && "link".equals(role)
