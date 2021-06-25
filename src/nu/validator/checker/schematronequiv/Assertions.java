@@ -3134,6 +3134,17 @@ public class Assertions extends Checker {
                         + " \u201Crole\u201D attribute.");
             } else if ("input" == localName) {
                 inputTypeVal = inputTypeVal == null ? "text" : inputTypeVal;
+                if ("radio".equals(inputTypeVal)
+                        || "checkbox".equals(inputTypeVal)) {
+                    if (atts.getIndex("", "aria-checked") >= 0
+                            && !"".equals(atts.getValue("", "aria-checked"))) {
+                        warn("The \u201Caria-checked\u201D attribute should not"
+                                + " be used on an \u201Cinput\u201D element"
+                                + " which has a \u201Ctype\u201D attribute"
+                                + " whose value is \u201C" + inputTypeVal
+                                + "\u201D.");
+                    }
+                }
                 if (INPUT_TYPES_WITH_IMPLICIT_ROLE.containsKey(inputTypeVal)
                         && INPUT_TYPES_WITH_IMPLICIT_ROLE.get(
                                 inputTypeVal).equals(role)) {
