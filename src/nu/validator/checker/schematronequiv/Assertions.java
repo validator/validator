@@ -2378,18 +2378,10 @@ public class Assertions extends Checker {
                 } else if (role != null) {
                     if ("".equals(atts.getValue("", "alt"))) {
                         // img with alt="" and role
-                        for (String roleValue : roles) {
-                            if (!("none".equals(roleValue))
-                                    && !("presentation".equals(roleValue))) {
-                                err("An \u201Cimg\u201D element which has an"
-                                        + " \u201Calt\u201D attribute whose"
-                                        + " value is the empty string must not"
-                                        + " have a \u201Crole\u201D attribute"
-                                        + " with any value other than"
-                                        + " \u201Cnone\u201D or"
-                                        + " \u201Cpresentation\u201D");
-                            }
-                        }
+                        err("An \u201Cimg\u201D element which has an"
+                                + " \u201Calt\u201D attribute whose value is"
+                                + " the empty string must not have a"
+                                + " \u201Crole\u201D attribute.");
                     } else {
                         // img with alt="some text" and role
                         for (String roleValue : roles) {
