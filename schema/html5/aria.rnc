@@ -594,7 +594,9 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## setsize
 	aria.prop.setsize =
 		attribute aria-setsize {
-			common.data.integer.non-negative
+			(	common.data.integer.non-negative
+                        |	string "-1"
+                        )
 		}
 
 ## sort
