@@ -39,7 +39,7 @@ jobs:
         java -jar .\build\dist\vnu.jar .\site\nu-about.html
         python .\checker.py check
         python .\checker.py test
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v2
       if: matrix.java == 11
       with:
         # Currently creates a nested zip https://github.com/actions/upload-artifact/issues/3
