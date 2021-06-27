@@ -1,6 +1,10 @@
 name: Windows build for vnu
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - "dependabot/**"
+  pull_request:
 
 jobs:
   windows:
