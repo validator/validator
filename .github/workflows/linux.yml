@@ -79,4 +79,4 @@ jobs:
         prerelease: true
         title: "jar"
         files: |
-          *.jar
+          build/dist/*.jar*
