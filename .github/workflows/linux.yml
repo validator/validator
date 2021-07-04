@@ -75,7 +75,7 @@ jobs:
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "jar"
+        automatic_release_tag: "jar2"
         prerelease: true
         title: "jar"
         files: |
