@@ -72,3 +72,11 @@ jobs:
         # Currently creates a nested zip https://github.com/actions/upload-artifact/issues/3
         name: vnu.linux.zip
         path: "build/dist/vnu.linux.zip"
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "jar"
+        prerelease: true
+        title: "jar"
+        files: |
+          *.jar
