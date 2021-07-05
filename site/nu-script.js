@@ -1,5 +1,5 @@
 /*
- * @source: https://github.com/validator/validator/blob/master/site/nu-script.js
+ * @source: https://github.com/validator/validator/blob/main/site/nu-script.js
  *
  * @licstart  The following is the entire license notice for the JavaScript
  * code in this file.

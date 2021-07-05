@@ -269,7 +269,7 @@ DEALINGS IN THE SOFTWARE.
       <license
         name="The MIT License"
         distribution="repo"
-        url="https://raw.githubusercontent.com/validator/validator/master/LICENSE"/>
+        url="https://raw.githubusercontent.com/validator/validator/main/LICENSE"/>
       <scm
         connection="scm:git:git://github.com/validator/validator.git"
         developerConnection="scm:git:git://github.com/validator/validator.git"

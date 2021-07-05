@@ -85,15 +85,15 @@ the code to get started, here’s a brief annotated overview of the repository c
 
 ## Grant of license
 
-Please read the https://github.com/validator/validator/blob/master/DCO file.
+Please read the https://github.com/validator/validator/blob/main/DCO file.
 
 By contributing to this project, you agree to license your contributions under
-[the MIT license](https://github.com/validator/validator/blob/master/LICENSE)
+[the MIT license](https://github.com/validator/validator/blob/main/LICENSE)
 and to waive any requirement to include an additional copyright notice.
 
 When contributing pull requests, please add a "Signed-off-by" line to your
 git commit messages to indicate that you have read all of the content of
-https://github.com/validator/validator/blob/master/DCO and that you certify
+https://github.com/validator/validator/blob/main/DCO and that you certify
 your code contributions actually conform to the terms of that agreement.
 
 To add a "Signed-off-by" line, invoke `git commit` with the `-s` option:
