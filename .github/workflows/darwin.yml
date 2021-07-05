@@ -2,8 +2,7 @@ name: macOS build for vnu
 
 on:
   push:
-    branches-ignore:
-      - "dependabot/**"
+    branches: [main]
   pull_request:
 
 jobs:
@@ -11,50 +10,40 @@ jobs:
     runs-on: macos-latest
     strategy:
       fail-fast: false
-      matrix:
-        java:
-        - 11
-
     steps:
-    - uses: actions/checkout@v2
-    # - name: Setup Java JDK
-    #   uses: actions/setup-java@v2
-    #   with:
-    #     distribution: adopt
-    #     java-version: ${{ matrix.java }}
-    # - uses: actions/setup-python@v2
-    #   with:
-    #     python-version: '3.x'
-    # - name: Update Submodules
-    #   run: python ./checker.py update
-    # - name: Install Dependencies
-    #   run: python ./checker.py dldeps
-    # - name: Build
-    #   env:
-    #     TOMCAT_VERSION: 8.5.29
-    #   run: |
-    #     python ./checker.py build
-    #     python ./checker.py jar
-    #     python ./checker.py image
-    #     python ./checker.py war
-    #     java -jar ./build/dist/vnu.jar ./build/dist/index.html
-    #     java -jar ./build/dist/vnu.jar ./site/nu-about.html
-    #     curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
-    #     unzip apache-tomcat-$TOMCAT_VERSION.zip
-    #     chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
-    #     jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 52.0"
-    #     jar xf ./build/dist-war/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 52.0"
-    #     apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh start
-    #     cp ./build/dist-war/vnu.war apache-tomcat-$TOMCAT_VERSION/webapps/
-    #     sleep 15s; tail apache-tomcat-$TOMCAT_VERSION/logs/catalina.out || true
-    #     curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
-    #     test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
-    #     if [ $? != 0 ]; then cat RESULTS; fi
-    #     python ./checker.py check
-    #     python ./checker.py test
-    # - uses: actions/upload-artifact@v2
-    #   if: matrix.java == 11
-    #   with:
-    #     # Currently creates a nested zip https://github.com/actions/upload-artifact/issues/3
-    #     name: vnu.osx.zip
-    #     path: "build/dist/vnu.osx.zip"
+      - uses: actions/checkout@v2
+      - name: Set up Java JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: 16
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Update submodules
+        run: python ./checker.py update
+      - name: Install dependencies
+        run: python ./checker.py dldeps
+      - name: Build
+        uses: ./.github/actions/build
+      - name: Import GPG signing key
+        uses: crazy-max/ghaction-import-gpg@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
+          passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
+          git-user-signingkey: true
+          git-commit-gpgsign: true
+      - name: Sign release artifacts
+        if: github.ref == 'refs/heads/main'
+        run: |
+          for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true
+          for file in build/dist/*.jar*; do gpg --yes -ab --sign $file; done || true
+          for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
+      - name: Release new macOS binary image
+        uses: "marvinpinto/action-automatic-releases@latest"
+        if: github.ref == 'refs/heads/main'
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "osx"
+          files: build/dist/*.zip*
