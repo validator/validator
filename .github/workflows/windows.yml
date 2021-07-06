@@ -45,9 +45,16 @@ jobs:
       - name: Sign release artifacts
         if: github.ref == 'refs/heads/main'
         run: bash -lc 'for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true'
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Release new Windows binary image
+        uses: ncipollo/release-action@v1.8.6
         if: github.ref == 'refs/heads/main'
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "windows"
-          files: build/dist/*.zip*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.sha }}
+          allowUpdates: true
+          artifacts: build/dist/*.zip*
+          body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
+          name: latest
+          omitName: true
+          prerelease: true
+          tag: latest

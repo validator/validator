@@ -9,10 +9,8 @@ FROM debian:stable-slim AS builder
 LABEL name="vnu"
 LABEL version="dev"
 LABEL maintainer="Michael[tm] Smith <mike@w3.org>"
-ADD https://github.com/validator/validator/releases/download/linux/vnu.linux.zip .
-ADD https://github.com/validator/validator/releases/download/linux/vnu.linux.zip.asc .
-ADD https://github.com/validator/validator/releases/download/linux/vnu.linux.zip.sha1 .
-ADD https://github.com/validator/validator/releases/download/linux/vnu.linux.zip.sha1.asc .
+ADD https://github.com/validator/validator/releases/download/latest/vnu.linux.zip .
+ADD https://github.com/validator/validator/releases/download/latest/vnu.linux.zip.sha1 .
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && apt-get install --no-install-recommends -y \
        unzip=6.0-23+deb10u2 \

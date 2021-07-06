@@ -60,10 +60,16 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "jar"
           files: build/dist/*.jar*
-      - name: Release new war
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Release new jar, war, and Linux binary runtime image
+        uses: ncipollo/release-action@v1.8.6
         if: matrix.java == 16 && github.ref == 'refs/heads/main'
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "war"
-          files: build/dist-war/*.war*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.sha }}
+          allowUpdates: true
+          artifacts: build/dist/*.zip*,*build/dist/*.jar*,build/dist-war/*.war*
+          body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
+          name: latest
+          omitName: true
+          prerelease: true
+          tag: latest

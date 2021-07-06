@@ -41,9 +41,15 @@ jobs:
           for file in build/dist/*.jar*; do gpg --yes -ab --sign $file; done || true
           for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
       - name: Release new macOS binary image
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: ncipollo/release-action@v1.8.6
         if: github.ref == 'refs/heads/main'
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "osx"
-          files: build/dist/*.zip*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.sha }}
+          allowUpdates: true
+          artifacts: build/dist/*.zip*
+          body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
+          name: latest
+          omitName: true
+          prerelease: true
+          tag: latest
