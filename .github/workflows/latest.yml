@@ -1,0 +1,73 @@
+name: Publish 'latest' tag
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  prep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update the 'latest' tag
+        run: |
+           git config user.name github-actions
+           git config user.email github-actions@github.com
+           git push origin :refs/tags/latest || true
+           git tag -m latest -fa latest || true
+           git push origin main --tags
+  build:
+    runs-on: ${{ matrix.os }}
+    needs: prep
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: 16
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Update submodules
+        run: python ./checker.py update
+      - name: Install dependencies
+        run: python ./checker.py dldeps
+      - name: Build
+        run: |
+          python .\checker.py build
+          python .\checker.py jar
+          python .\checker.py image
+          python .\checker.py war
+      - name: Import GPG signing key
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
+          passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
+          git-user-signingkey: true
+          git-commit-gpgsign: true
+      - name: Sign release artifacts
+        shell: bash
+        run: |
+          for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true
+          for file in build/dist/*.jar*; do gpg --yes -ab --sign $file; done || true
+          for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
+      - name: Release new jar, war, and binary runtime image
+        uses: ncipollo/release-action@v1.8.6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.sha }}
+          allowUpdates: true
+          artifacts: build/dist/*.zip*,*build/dist/*.jar*,build/dist-war/*.war*
+          body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
+          name: latest
+          omitName: true
+          prerelease: true
+          tag: latest
