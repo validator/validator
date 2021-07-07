@@ -46,20 +46,6 @@ jobs:
           for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true
           for file in build/dist/*.jar*; do gpg --yes -ab --sign $file; done || true
           for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
-      - name: Release new linux binary image
-        uses: "marvinpinto/action-automatic-releases@latest"
-        if: matrix.java == 16 && github.ref == 'refs/heads/main'
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "linux"
-          files: build/dist/*.zip*
-      - name: Release new jar
-        uses: "marvinpinto/action-automatic-releases@latest"
-        if: matrix.java == 16 && github.ref == 'refs/heads/main'
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "jar"
-          files: build/dist/*.jar*
       - name: Release new jar, war, and Linux binary runtime image
         uses: ncipollo/release-action@v1.8.6
         if: matrix.java == 16 && github.ref == 'refs/heads/main'

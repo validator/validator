@@ -16,6 +16,8 @@ NN XXX NNNN
   - Update doc-fetching backend to Apache HTTP Components HttpClient 4.5.9
   - Make the checker use HTTP 1.0 for all requests it make, not HTTP 1.1
   - Make the checker ignore error for malformed/missing HTTP closing chunk
+  - Release: All autopublished-on-push release artifacts are now released
+    under the tag `latest`; no more `jar`, `war`, `windows`, `linux`, `osx`
 
 # 20.6.30
 30 June 2020
