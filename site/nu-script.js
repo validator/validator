@@ -277,7 +277,7 @@ function injectHyperlinks() {
 		"about.html#rdfa",
 		"About HTML5 + RDFa 1.1 checking.")
 	linkify(warnings, "are treated as top-level headings by many screen readers and other tools",
-		"https://www.w3.org/wiki/HTML/Usage/Headings/h1only",
+		"https://html5accessibility.com/stuff/2021/07/08/preserved-in-html/",
 		"HTML heading usage and tools support")
 	linkify(warnings, "add identifying headings to all sections",
 		"https://www.w3.org/wiki/HTML/Usage/Headings/Missing",
