@@ -1,0 +1,20 @@
+name: Prepare the 'latest' release
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update the 'latest' tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+           git config user.name github-actions
+           git config user.email github-actions@github.com
+           git push origin :refs/tags/latest || true
+           git tag -m latest -fa latest || true
+           git push origin main --tags
