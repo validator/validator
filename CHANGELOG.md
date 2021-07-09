@@ -14,10 +14,11 @@ NN XXX NNNN
   - Docker: Migrate Dockerfile to “distroless” image (reduces image size)
   - ARIA: Added many changes to align with current ARIA in HTML and ARIA specs
   - Update doc-fetching backend to Apache HTTP Components HttpClient 4.5.9
-  - Make the checker use HTTP 1.0 for all requests it make, not HTTP 1.1
+  - Make the checker use HTTP 1.0 for all requests it sends, not HTTP 1.1
   - Make the checker ignore error for malformed/missing HTTP closing chunk
   - Release: All autopublished-on-push release artifacts are now released
     under the tag `latest`; no more `jar`, `war`, `windows`, `linux`, `osx`
+  - Docker: Image moved to https://ghcr.io/validator/validator
 
 # 20.6.30
 30 June 2020

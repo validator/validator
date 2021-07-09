@@ -69,6 +69,8 @@ mvnCmd = 'mvn'
 gpgCmd = 'gpg'
 npmCmd = 'npm'
 
+gitHubUser = subprocess.run([gitCmd, 'config', 'github.user'], capture_output=True).stdout.decode("utf-8")
+
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'  # nopep8
 # in your ~/.ssh/config, you'll need to define a host named "releasesHost"
@@ -769,7 +771,7 @@ def dockerBuild():
         dockerCmd,
         "build",
         "-t",
-        "validator/validator",
+        "ghcr.io/validator/validator",
         "."
     ]
     runCmd(args)
@@ -787,16 +789,28 @@ def dockerRun():
         "SOCKET_TIMEOUT_SECONDS=15",
         "-p",
         "8888:8888",
-        "validator/validator"
+        "ghcr.io/validator/validator"
     ]
     runCmd(args)
 
 
 def dockerPush():
     args = [
+        "echo",
+        os.environ['GITHUB_TOKEN'],
+        "|",
+        dockerCmd,
+        "login",
+        "ghcr.io",
+        "--username",
+        gitHubUser,
+        "--password-stdin",
+    ]
+    runCmd(args)
+    args = [
         dockerCmd,
         "push",
-        "validator/validator:latest",
+        "ghcr.io/validator/validator:latest",
     ]
     runCmd(args)
 

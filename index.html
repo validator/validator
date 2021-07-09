@@ -160,8 +160,8 @@ li > ul {
     <a href="https://validator.github.io/validator/#build-instructions">instructions on how to build, test, and run the code</a>.
 
     <p>
-    A <a href="https://hub.docker.com/r/validator/validator/">Dockerfile</a>
-    (see the <a href="#dockerhub"><b>Pulling from Docker Hub</b></a>
+    A <a href="https://ghcr.io/validator/validator">Dockerfile</a>
+    (see the <a href="#docker-image"><b>Pulling the Docker image</b></a>
     section below) and
     <a href="https://www.npmjs.com/package/vnu-jar">npm</a>,
     <a href="https://github.com/svenkreiss/html5validator">pip</a>,
@@ -189,7 +189,7 @@ li > ul {
     You can
     <a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
     or run
-    <a href="https://hub.docker.com/r/validator/validator/"><code>docker run -it --rm -p 8888:8888 validator/validator:latest</code></a>,
+    <a href="https://github.com/validator/validator/pkgs/container/validator"><code>docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest</code></a>,
     <a href="https://www.npmjs.com/package/vnu-jar"><code>npm install vnu-jar</code></a>,
     <a href="https://libraries.io/homebrew/vnu"><code>brew install vnu</code></a>,
     or
@@ -890,28 +890,29 @@ example: -Dnu.validator.servlet.socket-timeout=5000
 
   </section>
 </div>
-<section id="dockerhub">
-<h2>Pulling from Docker Hub</h2>
+<section id="docker-image">
+<h2>Pulling the Docker image</h2>
 <p>
-You can pull the checker from the
-<a href="https://hub.docker.com/r/validator/validator/">https://hub.docker.com/r/validator/validator/</a>
-repo at Docker Hub.
+You can pull the checker Docker image from
+<a
+href="https://ghcr.io/validator/validator">https://ghcr.io/validator/validator</a>
+in the GitHub container registry.
 <div class=set>
 <p>To pull and run the latest version of the checker:</p>
 <pre>
-  docker run -it --rm -p 8888:8888 validator/validator:latest
+  docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest
 </pre>
 
-<p>To pull and run a specific Docker-Hub tag/version of the checker —
-for example, the <code>17.11.1</code> version:</p>
+<p>To pull and run a specific tag/version of the checker from the container
+registry — for example, the <code>17.11.1</code> version:</p>
 <pre>
-  docker run -it --rm -p 8888:8888 validator/validator:17.11.1
+  docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:17.11.1
 </pre>
 
 <p>To bind the checker to a specific address (rather than have it listening
 on all interfaces):
 <pre>
-  docker run -it --rm -p <span class=option-value>128.30.52.73:8888:8888</span> validator/validator:latest
+  docker run -it --rm -p <span class=option-value>128.30.52.73:8888:8888</span> ghcr.io/validator/validator:latest
 </pre>
 
 <p>To make the checker run with a connection timeout and socket timeout

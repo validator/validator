@@ -19,10 +19,10 @@ code][10].
    [9]: https://github.com/validator/validator
    [10]: https://validator.github.io/validator/#build-instructions
 
-A [Dockerfile][11] (see the **Pulling from Docker Hub** section below) and
+A [Dockerfile][11] (see the **Pulling the Docker image** section below) and
 [npm][12], [pip][13], and [brew][14] packages of it are also available.
 
-   [11]: https://hub.docker.com/r/validator/validator/
+   [11]: https://ghcr.io/validator/validator
    [12]: https://www.npmjs.com/package/vnu-jar
    [13]: https://github.com/svenkreiss/html5validator
    [14]: https://formulae.brew.sh/formula/vnu
@@ -45,15 +45,16 @@ installed. The pre-compiled Linux, Windows, and macOS binaries don’t require y
 to have any version of Java already installed at all.
 
 You can [get the latest release][16] or run [`docker run -it --rm -p 8888:8888
-validator/validator:latest`][17], [`npm install vnu-jar`][18],
+ghcr.io/validator/validator:latest`][17], [`npm install vnu-jar`][18],
 [`brew install vnu`][19], or [`pip install html5validator`][20] and see the
 **Usage** and **Web-based checking** sections below. Or automate your document
 checking with a frontend such as:
 
    [16]: https://github.com/validator/validator/releases/latest
-   [17]: https://hub.docker.com/r/validator/validator/
+   [17]: https://github.com/validator/validator/pkgs/container/validator
    [18]: https://www.npmjs.com/package/vnu-jar
    [19]: https://libraries.io/homebrew/vnu
+
    [20]: https://github.com/svenkreiss/html5validator
 
   * [Grunt plugin for HTML validation][21] or [Gulp plugin for HTML
@@ -624,26 +625,27 @@ checker service, as documented at
 
     example: -Dnu.validator.servlet.socket-timeout=5000
 
-## Pulling from Docker Hub
+## Pulling the Docker image
 
-You can pull the checker from the
-[https://hub.docker.com/r/validator/validator/][37] repo at Docker Hub.
+You can pull the checker Docker image from
+[https://ghcr.io/validator/validator][37] in the GitHub container registry.
 
-   [37]: https://hub.docker.com/r/validator/validator/
+   [37]: https://ghcr.io/validator/validator
 
 To pull and run the latest version of the checker:
 
-      docker run -it --rm -p 8888:8888 validator/validator:latest
+      docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest
 
-To pull and run a specific Docker-Hub tag/version of the checker — for example,
-the `17.11.1` version:
+To pull and run a specific tag/version of the checker from the GitHub container
+registry — for example, the `17.11.1` version:
 
-      docker run -it --rm -p 8888:8888 validator/validator:17.11.1
+      docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:17.11.1
 
 To bind the checker to a specific address (rather than have it listening on all
 interfaces):
 
-      docker run -it --rm -p 128.30.52.73:8888:8888 validator/validator:latest
+      docker run -it --rm -p 128.30.52.73:8888:8888
+      ghcr.io/validator/validator:latest
 
 To make the checker run with a connection timeout and socket timeout different
 than the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and
