@@ -1,12 +1,16 @@
 name: Publish 'latest' tag
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI Build"]
     branches: [main]
+    types:
+      - completed
 
 jobs:
   prep:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
       - name: Update the 'latest' tag
@@ -18,6 +22,7 @@ jobs:
            git push origin main --tags
   build:
     runs-on: ${{ matrix.os }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs: prep
     strategy:
       fail-fast: true
