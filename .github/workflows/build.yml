@@ -1,0 +1,121 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  prep:
+    name: Prepare the build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update the 'latest' tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+           git config user.name github-actions
+           git config user.email github-actions@github.com
+           git push origin :refs/tags/latest || true
+           git tag -m latest -fa latest || true
+           git push origin main --tags
+  build:
+    name: Build on ${{ matrix.os }} with Java ${{ matrix.java }}
+    needs: prep
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        java: [16, 11, 8, 17-ea]
+        exclude:
+          - os: macos-latest
+            java: 8
+          - os: macos-latest
+            java: 11
+          - os: macos-latest
+            java: 17-ea
+          - os: windows-latest
+            java: 8
+          - os: windows-latest
+            java: 11
+          - os: windows-latest
+            java: 17-ea
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: ${{ matrix.java }}
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Update submodules
+        run: python checker.py update
+      - name: Install dependencies
+        run: python checker.py dldeps
+      - name: Build
+        run: |
+          python checker.py build
+          python checker.py jar
+          python checker.py image
+          python checker.py war
+      - name: Test
+        shell: bash
+        env:
+          TOMCAT_VERSION: 8.5.29
+        run: |
+          java -jar build/dist/vnu.jar build/dist/index.html
+          java -jar build/dist/vnu.jar site/nu-about.html
+          jar xf build/dist/vnu.jar && javap -verbose nu/validator/client/SimpleCommandLineValidator.class | grep "major version: 52"
+          curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
+          unzip apache-tomcat-$TOMCAT_VERSION.zip
+          chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
+          jar xf build/dist-war/vnu.war && javap -verbose WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "major version: 52"
+          apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh start
+          cp build/dist-war/vnu.war apache-tomcat-$TOMCAT_VERSION/webapps/
+          sleep 15s; tail apache-tomcat-$TOMCAT_VERSION/logs/catalina.out || true
+          curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
+          test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
+          if [ $? != 0 ]; then cat RESULTS; fi
+          python ./checker.py check
+          python ./checker.py test
+      - name: Import GPG signing key
+        if: matrix.java == 16 && github.ref == 'refs/heads/main'
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
+          passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
+          git-user-signingkey: true
+          git-commit-gpgsign: true
+      - name: Sign release artifacts
+        if: matrix.java == 16 && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true
+          for file in build/dist/*.jar*; do gpg --yes -ab --sign $file; done || true
+          for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
+      - name: Release new binary runtime image
+        if: matrix.java == 16 && github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1.8.6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.sha }}
+          allowUpdates: true
+          artifacts: build/dist/*.zip*
+          body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
+          omitName: true
+          prerelease: true
+          tag: latest
+      - name: Release new jar and war
+        if: matrix.os == 'ubuntu-latest' && matrix.java == 16 && github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1.8.6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          artifacts: build/dist/*.jar*,build/dist-war/*.war*
+          omitBodyDuringUpdate: true
+          omitName: true
+          prerelease: true
+          tag: latest
