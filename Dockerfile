@@ -1,11 +1,11 @@
 FROM debian:stable-slim AS builder
 # to use:
-# docker build -t validator/validator .
+# docker build -t ghcr.io/validator/validator .
 # docker run -it --rm \
 #    -e CONNECTION_TIMEOUT_SECONDS=15 \
 #    -e SOCKET_TIMEOUT_SECONDS=15 \
 #    -p 8888:8888 \
-#    validator/validator
+#    ghcr.io/validator/validator
 LABEL name="vnu"
 LABEL version="dev"
 LABEL maintainer="Michael[tm] Smith <mike@w3.org>"
