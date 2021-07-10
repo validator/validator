@@ -11,4 +11,4 @@ jobs:
       contents: read
       packages: write
     steps:
-      uses: ./.github/actions/docker-push
+      - uses: ./.github/actions/docker-push
