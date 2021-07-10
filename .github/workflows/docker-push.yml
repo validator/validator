@@ -34,5 +34,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: latest, ${{ steps.meta.outputs.tags }}
+          tags: ghcr.io/validator/validator:latest, ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
