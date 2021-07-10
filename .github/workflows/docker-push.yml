@@ -15,7 +15,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-
     steps:
       - uses: actions/checkout@v2
       - name: Log in to the container registry
