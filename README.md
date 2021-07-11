@@ -19,8 +19,8 @@ code][10].
    [9]: https://github.com/validator/validator
    [10]: https://validator.github.io/validator/#build-instructions
 
-A [Dockerfile][11] (see the **Pulling the Docker image** section below) and
-[npm][12], [pip][13], and [brew][14] packages of it are also available.
+A [Dockerfile][11] (see **Pulling the Docker image** below) and [npm][12],
+[pip][13], and [brew][14] packages are also available.
 
    [11]: https://ghcr.io/validator/validator
    [12]: https://www.npmjs.com/package/vnu-jar
@@ -60,11 +60,11 @@ checking with a frontend such as:
   * [Grunt plugin for HTML validation][21] or [Gulp plugin for HTML
   validation][22] or [Maven plugin for HTML validation][23]
 
-  * [html5validator `pip` package][24] (for HTML checking integration in Travis
-  CI, CircleCI, CodeShip, Jekyll, Pelican, etc.)
+  * [html5validator `pip` package][24] (for integration in Travis CI, CircleCI,
+  CodeShip, Jekyll, Pelican, etc.)
 
-  * [LMVTFY: Let Me Validate That For You][25] (auto-check HTML of
-  JSFiddle/JSBin, etc., links in GitHub issue comments)
+  * [LMVTFY: Let Me Validate That For You][25] (auto-check JSFiddle/JSBin, etc.,
+  links in GitHub issue comments)
 
    [21]: https://github.com/validator/grunt-html
    [22]: https://github.com/validator/gulp-html
@@ -636,7 +636,7 @@ To pull and run the latest version of the checker:
 
       docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest
 
-To pull and run a specific tag/version of the checker from the GitHub container
+To pull and run a specific tag/version of the checker from the container
 registry — for example, the `17.11.1` version:
 
       docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:17.11.1

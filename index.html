@@ -136,70 +136,30 @@ li > ul {
 </style>
 </head>
 <body>
-  <h1>The Nu Html Checker (v.Nu)
-    <a href="https://gitter.im/validator/validator"
-    ><img src="https://img.shields.io/badge/gitter-chat%20%E2%86%92-brightgreen.svg"
-      alt="Chat room"></a>
-    <a href="https://github.com/validator/validator/releases/latest"
-    ><img src="https://img.shields.io/badge/download-latest%20%E2%86%92-blue.svg"
-      alt="Download latest"></a>
-  </h1>
-    <p>
-    The Nu Html Checker (v.Nu) helps you <a
-    href="https://validator.w3.org/nu/about.html#why-validate">catch unintended mistakes in your
-    HTML, CSS, and SVG</a>. It enables you to <a
-    href="https://validator.github.io/validator/#usage">batch-check
-    documents from the command line</a> and from other scripts/apps, and to
-    <a href="https://validator.github.io/validator/#standalone">deploy your
-    own instance of the checker as a service</a> (like <a
-    href="https://validator.w3.org/nu/">validator.w3.org/nu</a>).
-
-    Its
-    <a href="https://github.com/validator/validator">source code is available</a>,
-    as are
-    <a href="https://validator.github.io/validator/#build-instructions">instructions on how to build, test, and run the code</a>.
+  <h1>The Nu Html Checker (v.Nu) <a href="https://gitter.im/validator/validator" ><img src="https://img.shields.io/badge/gitter-chat%20%E2%86%92-brightgreen.svg" alt="Chat room"></a> <a href="https://github.com/validator/validator/releases/latest" ><img src="https://img.shields.io/badge/download-latest%20%E2%86%92-blue.svg" alt="Download latest"></a> </h1>
 
     <p>
-    A <a href="https://ghcr.io/validator/validator">Dockerfile</a>
-    (see the <a href="#docker-image"><b>Pulling the Docker image</b></a>
-    section below) and
-    <a href="https://www.npmjs.com/package/vnu-jar">npm</a>,
-    <a href="https://github.com/svenkreiss/html5validator">pip</a>,
-    and
-    <a href="https://formulae.brew.sh/formula/vnu">brew</a>
-    packages of it are also available.
+    The Nu Html Checker (v.Nu) helps you <a href="https://validator.w3.org/nu/about.html#why-validate">catch unintended mistakes in your HTML, CSS, and SVG</a>. It enables you to <a href="https://validator.github.io/validator/#usage">batch-check documents from the command line</a> and from other scripts/apps, and to <a href="https://validator.github.io/validator/#standalone">deploy your own instance of the checker as a service</a> (like <a href="https://validator.w3.org/nu/">validator.w3.org/nu</a>).
 
-    <p>It is released upstream in these formats:
+    Its <a href="https://github.com/validator/validator">source code is available</a>, as are <a href="https://validator.github.io/validator/#build-instructions">instructions on how to build, test, and run the code</a>.
+
+    <p>
+    A <a href="https://ghcr.io/validator/validator">Dockerfile</a> (see <a href="#docker-image"><b>Pulling the Docker image</b></a> below) and <a href="https://www.npmjs.com/package/vnu-jar">npm</a>, <a href="https://github.com/svenkreiss/html5validator">pip</a>, and <a href="https://formulae.brew.sh/formula/vnu">brew</a> packages are also available.
+
+    <p>
+    It is released upstream in these formats:
 
     <ul>
-    <li>pre-compiled Linux, Windows, and macOS binaries that include an
-    embedded Java runtime
-    <li><code>vnu.jar</code> — a portable version you can use on any system
-    that has Java 8 or above installed
-    <li><code>vnu.war</code> — for
-    <a href="https://validator.github.io/validator/#servlet">deploying the checker service through a servlet container such as Tomcat</a>
+    <li>pre-compiled Linux, Windows, and macOS binaries that include an embedded Java runtime
+    <li><code>vnu.jar</code> — a portable version you can use on any system that has Java 8 or above installed
+    <li><code>vnu.war</code> — for <a href="https://validator.github.io/validator/#servlet">deploying the checker service through a servlet container such as Tomcat</a>
     </ul>
 
-    <p class=note><b>Note:</b> The <var>vnu.jar</var> and
-    <var>vnu.war</var> files require you to have Java 8 or above installed.
-    The pre-compiled Linux, Windows, and macOS binaries don’t require you
-    to have any version of Java already installed at all.
+    <p class=note>
+    <b>Note:</b> The <var>vnu.jar</var> and <var>vnu.war</var> files require you to have Java 8 or above installed.  The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
 
     <p>
-    You can
-    <a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
-    or run
-    <a href="https://github.com/validator/validator/pkgs/container/validator"><code>docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest</code></a>,
-    <a href="https://www.npmjs.com/package/vnu-jar"><code>npm install vnu-jar</code></a>,
-    <a href="https://libraries.io/homebrew/vnu"><code>brew install vnu</code></a>,
-    or
-    <a href="https://github.com/svenkreiss/html5validator"><code>pip install html5validator</code></a>
-    and see the
-    <a href="#usage"><b>Usage</b></a>
-    and
-    <a href="#web-based-checking"><b>Web-based checking</b></a>
-    sections below.
-    Or automate your document checking with a frontend such as:
+    You can <a href="https://github.com/validator/validator/releases/latest">get the latest release</a> or run <a href="https://github.com/validator/validator/pkgs/container/validator"><code>docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest</code></a>, <a href="https://www.npmjs.com/package/vnu-jar"><code>npm install vnu-jar</code></a>, <a href="https://libraries.io/homebrew/vnu"><code>brew install vnu</code></a>, or <a href="https://github.com/svenkreiss/html5validator"><code>pip install html5validator</code></a> and see the <a href="#usage"><b>Usage</b></a> and <a href="#web-based-checking"><b>Web-based checking</b></a> sections below.  Or automate your document checking with a frontend such as:
 <ul>
 <li>
 <a href="https://github.com/validator/grunt-html">Grunt plugin for HTML validation</a>
@@ -208,12 +168,9 @@ or
 or
 <a href="https://github.com/validator/maven-plugin">Maven plugin for HTML validation</a>
 <li>
-<a href="https://github.com/svenkreiss/html5validator">html5validator <code>pip</code> package</a>
-(for HTML checking integration in Travis CI, CircleCI, CodeShip, Jekyll,
-Pelican, etc.)
+<a href="https://github.com/svenkreiss/html5validator">html5validator <code>pip</code> package</a> (for integration in Travis CI, CircleCI, CodeShip, Jekyll, Pelican, etc.)
 <li>
-<a href="https://github.com/cvrebert/lmvtfy/">LMVTFY: Let Me Validate That For You</a>
-(auto-check HTML of JSFiddle/JSBin, etc., links in GitHub issue comments)
+<a href="https://github.com/cvrebert/lmvtfy/">LMVTFY: Let Me Validate That For You</a> (auto-check JSFiddle/JSBin, etc., links in GitHub issue comments)
 </ul>
 
 <p class=links>
@@ -234,8 +191,7 @@ Run the checker with one of the following invocations:
 <div>• <code>java -jar ~/vnu.jar OPTIONS FILES</code> (any system with Java8+ installed)</div>
 
 <p>
-…where <i><code>FILES</code></i> are the documents to check, and
-<i><code>OPTIONS</code></i> are zero or more of the following options:
+…where <i><code>FILES</code></i> are the documents to check, and <i><code>OPTIONS</code></i> are zero or more of the following options:
 
 <pre>
 --errors-only --Werror --exit-zero-always --stdout
@@ -247,22 +203,14 @@ Run the checker with one of the following invocations:
 --help --verbose --version
 </pre>
 
-<p>The <a href="https://validator.github.io/validator/#options">Options</a>
-section below provides details on each option, and the rest of this section
-provides some specific examples.
+<p>
+The <a href="https://validator.github.io/validator/#options">Options</a> section below provides details on each option, and the rest of this section provides some specific examples.
 
 <p class=note><b>Note:</b>
-Throughout these examples, replace <code>~/vnu.jar</code> with the actual
-path to that jar file on your system, and replace
-<code>vnu-runtime-image/bin/vnu</code> and
-<code>vnu-runtime-image\bin\vnu.bat</code> with the actual path to the
-<code>vnu</code> or <code>vnu.bat</code> program on your system — or if you
-add the <code>vnu-runtime-image/bin</code> or
-<code>vnu-runtime-image\bin</code> directory your system <code>PATH</code>
-environment variable, you can invoke the checker with just
-<code>vnu</code>.
+Throughout these examples, replace <code>~/vnu.jar</code> with the actual path to that jar file on your system, and replace <code>vnu-runtime-image/bin/vnu</code> and <code>vnu-runtime-image\bin\vnu.bat</code> with the actual path to the <code>vnu</code> or <code>vnu.bat</code> program on your system — or if you add the <code>vnu-runtime-image/bin</code> or <code>vnu-runtime-image\bin</code> directory your system <code>PATH</code> environment variable, you can invoke the checker with just <code>vnu</code>.
 
-<p>To check one or more documents from the command line:
+<p>
+To check one or more documents from the command line:
 <pre>
   vnu-runtime-image/bin/vnu      FILE.html FILE2.html FILE3.html...
 </pre>
@@ -274,9 +222,8 @@ environment variable, you can invoke the checker with just
 </pre>
 
 <div class=note>
-<p><b>Note:</b> If you get a <code>StackOverflowError</code> error when
-invoking the checker, try adjusting the thread stack size by providing the
-<code>-Xss</code> option to java:</p>
+<p>
+<b>Note:</b> If you get a <code>StackOverflowError</code> error when invoking the checker, try adjusting the thread stack size by providing the <code>-Xss</code> option to java:
 
 <pre>
   java <span class="option-value">-Xss512k</span> -jar ~/vnu.jar ...
@@ -289,8 +236,8 @@ invoking the checker, try adjusting the thread stack size by providing the
 
 </div>
 
-<p>To check all documents in a particular directory
-<code>DIRECTORY_PATH</code> as HTML:
+<p>
+To check all documents in a particular directory <code>DIRECTORY_PATH</code> as HTML:
 <pre>
   java -jar ~/vnu.jar            DIRECTORY_PATH
 </pre>
@@ -304,53 +251,47 @@ invoking the checker, try adjusting the thread stack size by providing the
 <h4 id=more-examples>More examples</h4>
 
 <p class=note><b>Note:</b>
-The examples in this section assume you have the
-<code>vnu-runtime-image/bin</code> or <code>vnu-runtime-image\bin</code>
-directory in your system <code>PATH</code> environment variable. If you’re
-using the jar file instead, replace <code>vnu</code> in the examples with
-<code>java -jar ~/vnu.jar</code>.
+The examples in this section assume you have the <code>vnu-runtime-image/bin</code> or <code>vnu-runtime-image\bin</code> directory in your system <code>PATH</code> environment variable. If you’re using the jar file instead, replace <code>vnu</code> in the examples with <code>java -jar ~/vnu.jar</code>.
 
-<p>To check all documents in a particular directory
-<code>DIRECTORY_PATH</code> as HTML, but skip any documents whose names
-don’t end with the extensions <code>.html</code>, <code>.htm</code>,
-<code>.xhtml</code>, or <code>.xht</code>:
+<p>
+To check all documents in a particular directory <code>DIRECTORY_PATH</code> as HTML, but skip any documents whose names don’t end with the extensions <code>.html</code>, <code>.htm</code>, <code>.xhtml</code>, or <code>.xht</code>:
 
 <pre>
   vnu <span class="option-value">--skip-non-html</span> DIRECTORY_PATH
 </pre>
 
-<p>To check all documents in a particular directory as CSS:
+<p>
+To check all documents in a particular directory as CSS:
 <pre>
   vnu <span class="option-value">--css</span> DIRECTORY_PATH
 </pre>
 
-<p>To check all documents in a particular directory as CSS, but skip any
-documents whose names don’t end with the extension <code>.css</code>:
+<p>
+To check all documents in a particular directory as CSS, but skip any documents whose names don’t end with the extension <code>.css</code>:
 <pre>
   vnu <span class="option-value">--skip-non-css</span> DIRECTORY_PATH
 </pre>
 
-<p>To check all documents in a particular directory, with documents whose
-names end in the extension <code>.css</code> being checked as CSS, and all
-other documents being checked as HTML:
+<p>
+To check all documents in a particular directory, with documents whose names end in the extension <code>.css</code> being checked as CSS, and all other documents being checked as HTML:
 <pre>
   vnu <span class="option-value">--also-check-css</span> DIRECTORY_PATH
 </pre>
 
-<p>To check all documents in a particular directory as SVG:
+<p>
+To check all documents in a particular directory as SVG:
 <pre>
   vnu <span class="option-value">--svg</span> DIRECTORY_PATH
 </pre>
 
-<p>To check all documents in a particular directory as SVG, but skip any
-documents whose names don’t end with the extension <code>.svg</code>:
+<p>
+To check all documents in a particular directory as SVG, but skip any documents whose names don’t end with the extension <code>.svg</code>:
 <pre>
   vnu <span class="option-value">--skip-non-svg</span> DIRECTORY_PATH
 </pre>
 
-<p>To check all documents in a particular directory, with documents whose
-names end in the extension <code>.svg</code> being checked as SVG, and all
-other documents being checked as HTML:
+<p>
+To check all documents in a particular directory, with documents whose names end in the extension <code>.svg</code> being checked as SVG, and all other documents being checked as HTML:
 <pre>
   vnu <span class="option-value">--also-check-svg</span> DIRECTORY_PATH
 </pre>
@@ -372,8 +313,8 @@ other documents being checked as HTML:
 </pre>
 
 <h3 id="options">Options</h3>
-<p>When used from the command line as described in this section, the
-checker provides the following options:
+<p>
+When used from the command line as described in this section, the checker provides the following options:
 
 <h4 id="asciiquotes">--asciiquotes</h4>
 <pre>
@@ -551,13 +492,8 @@ Shows the checker version number.
 
 <h2 id="web-based-checking">Web-based checking</h2>
 
-  <p>The Nu Html Checker — along with being usable as
-  <a href="https://validator.github.io/validator/#usage">a standalone command-line client</a> — can
-  be run as an HTTP service, similar to
-  <a href="https://validator.w3.org/nu/">validator.w3.org/nu</a>,
-  for browser-based checking of HTML documents, CSS stylesheets, and SVG
-  images over the Web.
-  To that end, the checker is released as several separate packages:
+  <p>
+  The Nu Html Checker — along with being usable as <a href="https://validator.github.io/validator/#usage">a standalone command-line client</a> — can be run as an HTTP service, similar to <a href="https://validator.w3.org/nu/">validator.w3.org/nu</a>, for browser-based checking of HTML documents, CSS stylesheets, and SVG images over the Web.  To that end, the checker is released as several separate packages:
   <ul>
   <li>Linux, Windows, and macOS binaries for
   <a href="#standalone">deploying the checker as a simple self-contained service</a> on any system
@@ -567,14 +503,7 @@ Shows the checker version number.
   <a href="#servlet">deploying the checker to a servlet container such as Tomcat</a>
   </ul>
   <p>
-  All deployments expose a REST API that enables checking of HTML
-  documents, CSS stylesheets, and SVG images from other clients, not just
-  web browsers. And the Linux, Windows, and macOS binaries and
-  <code>vnu.jar</code> package also include
-  <a href="#http-client">a simple HTTP client</a> that enables you to
-  either send documents to a locally-running instance of the checker HTTP
-  service — for fast command-line checking — or to any remote instance of the
-  checker HTTP service running anywhere on the Web.
+  All deployments expose a REST API that enables checking of HTML documents, CSS stylesheets, and SVG images from other clients, not just web browsers. And the Linux, Windows, and macOS binaries and <code>vnu.jar</code> package also include <a href="#http-client">a simple HTTP client</a> that enables you to either send documents to a locally-running instance of the checker HTTP service — for fast command-line checking — or to any remote instance of the checker HTTP service running anywhere on the Web.
   <p>
   The
   <a href="https://github.com/validator/validator/releases/latest" >latest
@@ -584,15 +513,7 @@ Shows the checker version number.
   The following are detailed instructions on using them.
 
 <p class=note><b>Note:</b>
-Throughout these instructions, replace <code>~/vnu.jar</code> with the
-actual path to that jar file on your system, and replace
-<code>vnu-runtime-image/bin/java</code> and
-<code>vnu-runtime-image\bin\java.exe</code> with the actual path to the
-checker <code>java</code> or <code>java.exe</code> program on your system —
-or if you add the <code>vnu-runtime-image/bin</code> or
-<code>vnu-runtime-image\bin</code> directory your system <code>PATH</code>
-environment variable, you can invoke the checker with just
-<code>java nu.validator.servlet.Main 8888</code>.
+Throughout these instructions, replace <code>~/vnu.jar</code> with the actual path to that jar file on your system, and replace <code>vnu-runtime-image/bin/java</code> and <code>vnu-runtime-image\bin\java.exe</code> with the actual path to the checker <code>java</code> or <code>java.exe</code> program on your system — or if you add the <code>vnu-runtime-image/bin</code> or <code>vnu-runtime-image\bin</code> directory your system <code>PATH</code> environment variable, you can invoke the checker with just <code>java nu.validator.servlet.Main 8888</code>.
 
 <p class=links>
 <a href="#standalone">Standalone</a> ·
@@ -603,9 +524,8 @@ environment variable, you can invoke the checker with just
   <div class=set>
   <section id=standalone>
     <h3>Standalone web server</h3>
-    <p>To run the checker as a standalone service (using a built-in
-    Jetty server), open a new terminal window and invoke the checker
-    like this:
+    <p>
+    To run the checker as a standalone service (using a built-in Jetty server), open a new terminal window and invoke the checker like this:
 
 <pre>java -cp ~/vnu.jar              <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
 </pre>
@@ -621,11 +541,7 @@ environment variable, you can invoke the checker with just
 
 <div class=note>
 <p>
-<b>Warning:</b> Future checker releases will bind by default to the
-address <code>127.0.0.1</code>. Your checker deployment might become
-unreachable unless you use the
-<code>nu.validator.servlet.bind-address</code> system property to bind the
-checker to a different address:
+<b>Warning:</b> Future checker releases will bind by default to the address <code>127.0.0.1</code>. Your checker deployment might become unreachable unless you use the <code>nu.validator.servlet.bind-address</code> system property to bind the checker to a different address:
 
 <pre>java -cp ~/vnu.jar \
     <span class="option-value">-Dnu.validator.servlet.bind-address=128.30.52.73</span> \
@@ -643,18 +559,11 @@ checker to a different address:
 </div>
 
     <p>
-    When you open <a href="http://0.0.0.0:8888">http://0.0.0.0:8888</a> (or
-    whatever URL corresponds to the
-    <code>nu.validator.servlet.bind-address</code> value you’re using),
-    you’ll see a form similar to <a
-    href="https://validator.w3.org/nu/">validator.w3.org/nu</a> that allows
-    you to enter the URL of an HTML document, CSS stylesheet, or SVG image,
-    and have the results of checking that resource displayed in the browser.
+    When you open <a href="http://0.0.0.0:8888">http://0.0.0.0:8888</a> (or whatever URL corresponds to the <code>nu.validator.servlet.bind-address</code> value you’re using), you’ll see a form similar to <a href="https://validator.w3.org/nu/">validator.w3.org/nu</a> that allows you to enter the URL of an HTML document, CSS stylesheet, or SVG image, and have the results of checking that resource displayed in the browser.
 
 <div class=note>
-<p><b>Note:</b> If you get a <code>StackOverflowError</code>
-error when using the checker, try adjusting the thread stack size by
-providing the <code>-Xss</code> option to java:
+<p>
+<b>Note:</b> If you get a <code>StackOverflowError</code> error when using the checker, try adjusting the thread stack size by providing the <code>-Xss</code> option to java:
 
 <pre>
   java <span class="option-value">-Xss512k</span> -cp ~/vnu.jar nu.validator.servlet.Main 8888
@@ -668,35 +577,19 @@ providing the <code>-Xss</code> option to java:
   </section>
   <section id=servlet>
     <h3>Deployment to servlet container</h3>
-    <p>To run the checker inside of an existing servlet container
-    such as Apache Tomcat you will need to deploy the <code>vnu.war</code>
-    file to that server following its documentation.
-    For example, on Apache Tomcat you could do this using
-    the <a href="https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html">Manager</a> application or simply by copying the file to
-    the <code>webapps</code> directory
-    (since that is the default <code>appBase</code> setting).
-	Typically you would see a message similar to the following
-	in the <code>catalina.out</code> log file.
+    <p>
+    To run the checker inside of an existing servlet container such as Apache Tomcat you will need to deploy the <code>vnu.war</code> file to that server following its documentation.  For example, on Apache Tomcat you could do this using the <a href="https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html">Manager</a> application or simply by copying the file to the <code>webapps</code> directory (since that is the default <code>appBase</code> setting).  Typically you would see a message similar to the following in the <code>catalina.out</code> log file.
 <pre>
 May 7, 2014 4:42:04 PM org.apache.catalina.startup.HostConfig deployWAR
 INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
 </pre>
 
-    <p>Assuming your servlet container is configured to receive HTTP
-    requests sent to <code>localhost</code> on port <code>80</code>
-    and the context root of this application is <code>vnu</code>
-    (often the default behavior is to use the WAR file's filename
-    as the context root unless one is explicitly specified)
-    you should be able to access the application by connecting
-    to <a href="http://localhost/vnu/">http://localhost/vnu/</a>.
+    <p>
+    Assuming your servlet container is configured to receive HTTP requests sent to <code>localhost</code> on port <code>80</code> and the context root of this application is <code>vnu</code> (often the default behavior is to use the WAR file's filename as the context root unless one is explicitly specified) you should be able to access the application by connecting to <a href="http://localhost/vnu/">http://localhost/vnu/</a>.
 
 <div class=note>
 <p>
-    <b>Note:</b> You may want to customize the
-    <code>/WEB-INF/web.xml</code> file inside the WAR file (you can use any
-    ZIP-handling program) to modify the servlet filter configuration.
-    For example, if you wanted to disable the inbound-size-limit filter,
-    you could comment out that filter like this:
+    <b>Note:</b> You may want to customize the <code>/WEB-INF/web.xml</code> file inside the WAR file (you can use any ZIP-handling program) to modify the servlet filter configuration.  For example, if you wanted to disable the inbound-size-limit filter, you could comment out that filter like this:
     <pre>
 &lt;!--
   &lt;filter>
@@ -714,16 +607,12 @@ INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
   <section id=http-client>
   <h3>HTTP client (for fast command-line checking)</h3>
 
-    <p>The checker is packaged with an HTTP client you can use from the
-    command line to either send documents to a locally-running instance of
-    the checker HTTP service — for fast command-line checking — or to a
-    remote instance anywhere on the Web.
+    <p>
+    The checker is packaged with an HTTP client you can use from the command line to either send documents to a locally-running instance of the checker HTTP service — for fast command-line checking — or to a remote instance anywhere on the Web.
     <p>
     To check documents locally using the packaged HTTP client, do this:
     <ol>
-      <li>Start up the checker as a local HTTP service, as described in the
-      <b><a href="#standalone">Standalone web server</a></b>
-      section.
+      <li>Start up the checker as a local HTTP service, as described in the <b><a href="#standalone">Standalone web server</a></b> section.
       <li>Open a new terminal window and invoke the HTTP client like this:
 
 <pre>java -cp ~/vnu.jar <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
@@ -731,13 +620,7 @@ INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
 <pre>vnu-runtime-image/bin/java <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
 </pre>
 </ol>
-     To send documents to an instance of the checker on the Web, such as
-     <a href="https://html5.validator.nu/">html5.validator.nu/</a>,
-     use the
-     <a href="#nuvalidatorclienthost">nu.validator.client.host</a>
-     and
-     <a href="#nuvalidatorclientport">nu.validator.client.port</a>
-     options, like this:
+     To send documents to an instance of the checker on the Web, such as <a href="https://html5.validator.nu/">html5.validator.nu/</a>, use the <a href="#nuvalidatorclienthost">nu.validator.client.host</a> and <a href="#nuvalidatorclientport">nu.validator.client.port</a> options, like this:
 <pre class=aligned>
 java -cp ~/vnu.jar <span class=java-property>-Dnu.validator.client.port=80</span> \
     <span class=java-property>-Dnu.validator.client.host=html5.validator.nu</span> \
@@ -754,14 +637,11 @@ vnu-runtime-image/bin/java <span class=java-property>-Dnu.validator.client.port=
 
     <h3 id="http-client-options">HTTP client options</h3>
 
-    <p>When using the packaged HTTP client for sending documents to an instance
-    of the checker HTTP service for checking, you can set Java system
-    properties to control configuration options for the checker behavior.
+    <p>
+    When using the packaged HTTP client for sending documents to an instance of the checker HTTP service for checking, you can set Java system properties to control configuration options for the checker behavior.
 
-    <p>For example, you can suppress warning-level messages and only
-    show error-level ones by setting the value of the
-    <code>nu.validator.client.level</code> system property to
-    <code>error</code>, like this:
+    <p>
+    For example, you can suppress warning-level messages and only show error-level ones by setting the value of the <code>nu.validator.client.level</code> system property to <code>error</code>, like this:
 
 <pre class=aligned>
 java <span class=java-property>-Dnu.validator.client.level=error</span> \
@@ -773,10 +653,8 @@ vnu-runtime-image/bin/java <span class=java-property>-Dnu.validator.client.level
        -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
 </pre>
 
-    <p>Most of the properties listed below map to the common input
-    parameters for the checker service, as documented at
-    <a href="https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params"
-      >github.com/validator/validator/wiki/Service-»-Common-params</a>.
+    <p>
+    Most of the properties listed below map to the common input parameters for the checker service, as documented at <a href="https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params" >github.com/validator/validator/wiki/Service-»-Common-params</a>.
 
 <h4 id="nuvalidatorclienthost">nu.validator.client.host</h4>
 <pre>
@@ -893,32 +771,28 @@ example: -Dnu.validator.servlet.socket-timeout=5000
 <section id="docker-image">
 <h2>Pulling the Docker image</h2>
 <p>
-You can pull the checker Docker image from
-<a
-href="https://ghcr.io/validator/validator">https://ghcr.io/validator/validator</a>
-in the GitHub container registry.
+You can pull the checker Docker image from <a href="https://ghcr.io/validator/validator">https://ghcr.io/validator/validator</a> in the GitHub container registry.
 <div class=set>
-<p>To pull and run the latest version of the checker:</p>
+<p>
+To pull and run the latest version of the checker:</p>
 <pre>
   docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest
 </pre>
 
-<p>To pull and run a specific tag/version of the checker from the container
-registry — for example, the <code>17.11.1</code> version:</p>
+<p>
+To pull and run a specific tag/version of the checker from the container registry — for example, the <code>17.11.1</code> version:</p>
 <pre>
   docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:17.11.1
 </pre>
 
-<p>To bind the checker to a specific address (rather than have it listening
-on all interfaces):
+<p>
+To bind the checker to a specific address (rather than have it listening on all interfaces):
 <pre>
   docker run -it --rm -p <span class=option-value>128.30.52.73:8888:8888</span> ghcr.io/validator/validator:latest
 </pre>
 
-<p>To make the checker run with a connection timeout and socket timeout
-different than the default 5 seconds, use the
-<code>CONNECTION_TIMEOUT_SECONDS</code> and
-<code>SOCKET_TIMEOUT_SECONDS</code> environment variables:</p>
+<p>
+To make the checker run with a connection timeout and socket timeout different than the default 5 seconds, use the <code>CONNECTION_TIMEOUT_SECONDS</code> and <code>SOCKET_TIMEOUT_SECONDS</code> environment variables:</p>
 <pre>
   docker run -it --rm \
      <span class=option-value>-e CONNECTION_TIMEOUT_SECONDS=15</span> \
@@ -927,8 +801,8 @@ different than the default 5 seconds, use the
      validator/validator
 </pre>
 
-<p>To make the checker run with particular Java system properties set,
-use the <code>JAVA_TOOL_OPTIONS</code> environment variable:
+<p>
+To make the checker run with particular Java system properties set, use the <code>JAVA_TOOL_OPTIONS</code> environment variable:
 <pre>
   docker run -it --rm \
      <span class=option-value>-e JAVA_TOOL_OPTIONS=-Dnu.validator.client.asciiquotes=yes </span> \
@@ -938,10 +812,7 @@ use the <code>JAVA_TOOL_OPTIONS</code> environment variable:
 
 
 <p>
-To define a service named <code>vnu</code> for use with <code>docker
-compose</code>, create a Compose file named <code>docker-compose.yml</code>
-(for example), with contents such as the following:</p>
-
+To define a service named <code>vnu</code> for use with <code>docker compose</code>, create a Compose file named <code>docker-compose.yml</code> (for example), with contents such as the following:
 <pre>
   version: '2'
   services:
@@ -957,8 +828,7 @@ compose</code>, create a Compose file named <code>docker-compose.yml</code>
 <section id="build-instructions">
 <h2>Build instructions</h2>
 <p>
-Follow the steps below to build, test, and run the checker such that you can open
-<code>http://0.0.0.0:8888/</code> in a Web browser to use the checker Web UI.
+Follow the steps below to build, test, and run the checker such that you can open <code>http://0.0.0.0:8888/</code> in a Web browser to use the checker Web UI.
 
 <div class=set>
 <ol>
@@ -978,30 +848,23 @@ Follow the steps below to build, test, and run the checker such that you can ope
 <pre>python ./checker.py all</pre>
 
 <p class=note>
-The first time you run the checker Python script, you’ll need to be online
-and the build will need time to download several megabytes of dependencies.
+The first time you run the checker Python script, you’ll need to be online and the build will need time to download several megabytes of dependencies.
 </li>
 </ol>
 
 <p>
-The steps above will build, test, and run the checker such that you can open
-<code>http://0.0.0.0:8888/</code> in a Web browser to use the checker Web UI.
+The steps above will build, test, and run the checker such that you can open <code>http://0.0.0.0:8888/</code> in a Web browser to use the checker Web UI.
 
 <div class=note>
 <p>
-<b>Warning:</b> Future checker releases will bind by default to the
-address <code>127.0.0.1</code>. Your checker deployment might become
-unreachable unless you use the <code>--bind-address</code> option to bind
-the checker to a different address:
+<b>Warning:</b> Future checker releases will bind by default to the address <code>127.0.0.1</code>. Your checker deployment might become unreachable unless you use the <code>--bind-address</code> option to bind the checker to a different address:
 
 <pre>python ./checker.py <span class="option-value">--bind-address=128.30.52.73</span> <span class=arg>all</span></pre>
 
 </div>
 
 <p>
-Use <code>python ./checker.py --help</code> to see command-line
-options for controlling the behavior of the script, as well as build-target
-names you can call separately; e.g.:
+Use <code>python ./checker.py --help</code> to see command-line options for controlling the behavior of the script, as well as build-target names you can call separately; e.g.:
 
 <ul>
 <li><pre>python ./checker.py build  # to build only</pre>
