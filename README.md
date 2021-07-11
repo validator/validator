@@ -1,7 +1,7 @@
 # The Nu Html Checker (v.Nu) [![Chat room][1]][2] [![Download latest][3]][4]
 
-   [1]: https://img.shields.io/badge/gitter-chat%20%E2%86%92-brightgreen.svg
-   [2]: https://gitter.im/validator/validator
+   [1]: https://img.shields.io/badge/[matrix]-chat%20%E2%86%92-brightgreen.svg
+   [2]: https://matrix.to/#/#validator_validator:gitter.im
    [3]: https://img.shields.io/badge/download-latest%20%E2%86%92-blue.svg
    [4]: https://github.com/validator/validator/releases/latest
 
