@@ -19,6 +19,7 @@ NN XXX NNNN
   - Release: All autopublished-on-push release artifacts are now released
     under the tag `latest`; no more `jar`, `war`, `windows`, `linux`, `osx`
   - Docker: Image moved to https://ghcr.io/validator/validator
+  - NPMs now released to GitHub Packages, in addition to npmjs.com
 
 # 20.6.30
 30 June 2020

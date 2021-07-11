@@ -24,6 +24,7 @@
 
 import os
 import shutil
+import json
 try:
     from urllib.request import urlopen
     from urllib.error import URLError, HTTPError
@@ -1156,39 +1157,42 @@ class Release():
         args.append(os.path.join(buildRoot, "WHATSNEW.md"))
         runCmd([ghRelCmd, 'edit', '-p'] + args)
 
-    def createPackageJson(self, packageJson, packageJsonCopy):
-        shutil.move(packageJson, packageJsonCopy)
-        f = open(packageJson, 'w')
-        with open(packageJsonCopy, 'r') as original:
-            for line in original:
-                if line.find('  "version":') != -1:
-                    f.write('  "version": "%s",\n' % validatorVersion)
-                else:
-                    f.write(line)
-        f.close
+    def createPackageJson(self, packageJson):
+        with open(packageJson, 'r') as original:
+            copy = json.load(original)
+        copy['version'] = validatorVersion
+        with open(packageJson, 'w') as f:
+            json.dump(copy, f)
+
+    def createGitHubPackageJson(self, packageJson):
+        with open(packageJson, 'r') as original:
+            copy = json.load(original)
+        copy['name'] = "@validator/vnu-jar"
+        copy['version'] = validatorVersion
+        copy['publishConfig'] = {"registry": "https://npm.pkg.github.com"}
+        with open(packageJson, 'w') as f:
+            json.dump(copy, f)
 
     def createNpmReadme(self, readMe, readMeCopy):
-        splitAt = "see the **Pulling from Docker Hub** section below"
-        shutil.move(readMe, readMeCopy)
+        splitAt = "see **Pulling the Docker image** below"
         npmFragment = os.path.join(buildRoot, "npm.md")
         npmReadme = open(readMe, 'w')
-        with open(readMeCopy, 'r') as original:
-            skip = False
-            for line in original:
-                if line.find(splitAt) != -1:
-                    skip = True
-                    with open(npmFragment, 'r') as fragment:
-                        for line in fragment:
-                            npmReadme.write(line)
-                elif line.find("## Usage") != -1:
-                    skip = False
-                    npmReadme.write(line)
-                elif line.find("## Web-based checking") != -1:
-                    skip = True
-                elif skip:
-                    continue
-                else:
-                    npmReadme.write(line)
+        skip = False
+        for line in readMeCopy.splitlines():
+            if line.find(splitAt) != -1:
+                skip = True
+                with open(npmFragment, 'r') as fragment:
+                    for line in fragment:
+                        npmReadme.write(line)
+            elif line.find("## Usage") != -1:
+                skip = False
+                npmReadme.write(line)
+            elif line.find("## Web-based checking") != -1:
+                skip = True
+            elif skip:
+                continue
+            else:
+                npmReadme.write(line + '\n')
         npmReadme.close()
 
     def removeExtras(self, whichDir):
@@ -1285,17 +1289,26 @@ class Release():
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         removeIfExists(os.path.join(buildRoot, "CHANGELOG.md~"))
         readMe = os.path.join(buildRoot, "README.md")
-        readMeCopy = readMe + ".GOOD"
-        packageJson = os.path.join(buildRoot, "package.json")
-        packageJsonCopy = packageJson + ".GOOD"
+        with open(readMe, 'r') as f:
+            readMeCopy = f.read()
         self.createNpmReadme(readMe, readMeCopy)
-        self.createPackageJson(packageJson, packageJsonCopy)
+        packageJson = os.path.join(buildRoot, "package.json")
+        with open(packageJson, 'r') as f:
+            packageJsonCopy = f.read()
+        self.createPackageJson(packageJson)
         if tag:
             runCmd([npmCmd, 'publish', '--tag', tag])
         else:
             runCmd([npmCmd, 'publish'])
-        shutil.move(readMeCopy, readMe)
-        shutil.move(packageJsonCopy, packageJson)
+        self.createGitHubPackageJson(packageJson)
+        if tag:
+            runCmd([npmCmd, 'publish', '--tag', tag])
+        else:
+            runCmd([npmCmd, 'publish'])
+        with open(readMe, 'w') as f:
+            f.write(readMeCopy)
+        with open(packageJson, 'w') as f:
+            f.write(packageJsonCopy)
 
     def uploadToReleasesHost(self, jarOrWar, isNightly=False):
         whichDir = distDir
