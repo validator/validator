@@ -278,8 +278,8 @@ DEALINGS IN THE SOFTWARE.
         system="GitHub Issues"
         url="https://github.com/validator/validator/issues"/>
       <ciManagement
-        system="Travis CI"
-        url="https://travis-ci.org/validator/validator"/>
+        system="GitHub Actions"
+        url="https://github.com/validator/validator/actions"/>
       <developer
         name="Henri Sivonen"
         id="hsivonen"
