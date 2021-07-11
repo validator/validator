@@ -69,7 +69,7 @@ mvnCmd = 'mvn'
 gpgCmd = 'gpg'
 npmCmd = 'npm'
 
-gitHubUser = subprocess.run([gitCmd, 'config', 'github.user'], capture_output=True).stdout.decode("utf-8")
+gitHubUser = subprocess.run([gitCmd, 'config', 'github.user'], capture_output=True).stdout.decode("utf-8")  # nopep8
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'  # nopep8
@@ -1899,6 +1899,8 @@ def main(argv):
             elif arg == 'maven-snapshot':
                 release.uploadToCentral(snapshotsRepoUrl)
             elif arg == 'maven-release':
+                # someday instead:
+                # ./checker.py bundle && mvn -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator deploy -f build/dist/validator-NN.NN.NN.pom  # nopep8
                 release.uploadToCentral(stagingRepoUrl)
             elif arg == 'galimatias-bundle':
                 release = Release("galimatias")
