@@ -952,6 +952,7 @@ class Release():
         ensureDirExists(whichDir)
 
     def setVersion(self, whichDir, url=None):
+        self.version = validatorVersion
         if self.artifactId == "jing":
             self.version = jingVersion
         if self.artifactId == "htmlparser":
@@ -1203,9 +1204,31 @@ class Release():
                     sigsums.match(filename)):
                 removeIfExists(filename)
 
+    def uploadMavenToGitHub(self):
+        self.setVersion(distDir)
+        print("version: " + self.version)
+        self.downloadMavenAntTasksJar()
+        self.createArtifacts("jar")
+        basename = "%s-%s" % (self.artifactId, self.version)
+        mvnArgs = [
+            mvnCmd,
+            "-DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator",  # nopep8
+            "-f",
+            "%s.pom" % os.path.join(distDir, basename),
+            "gpg:sign-and-deploy-file",
+            "-Dgpg.executable=%s" % gpgCmd,
+            "-DrepositoryId=github",
+            "-Durl=%s" % 'https://maven.pkg.github.com/validator/validator',
+            "-DpomFile=%s.pom" % basename,
+            "-Dfile=%s.jar" % basename,
+            "-Djavadoc=%s-javadoc.jar" % basename,
+            "-Dsources=%s-sources.jar" % basename,
+        ]
+        runCmd(mvnArgs)
+
     def uploadToCentral(self, url):
         self.downloadMavenAntTasksJar()
-        self.createArtifacts(url)
+        self.createArtifacts("jar", url)
         basename = "%s-%s" % (self.artifactId, self.version)
         mvnArgs = [
             mvnCmd,
@@ -1221,6 +1244,8 @@ class Release():
             "-Dsources=%s-sources.jar" % basename,
         ]
         runCmd(mvnArgs)
+        if url != stagingRepoUrl:
+            return
         mvnArgs = [
             mvnCmd,
             "-f",
@@ -1878,8 +1903,10 @@ def main(argv):
                 release.createBundle()
             elif arg == 'snapshot':
                 release.uploadToCentral(snapshotsRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'release':
                 release.uploadToCentral(stagingRepoUrl)
+                release.uploadMavenToGitHub()
                 release.createDistribution("jar")
                 release.createDistribution("war")
                 release.createOrUpdateGithubData()
@@ -1911,53 +1938,65 @@ def main(argv):
                 release.createBundle()
             elif arg == 'maven-snapshot':
                 release.uploadToCentral(snapshotsRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'maven-release':
                 release.uploadToCentral(stagingRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'galimatias-bundle':
                 release = Release("galimatias")
                 release.createBundle()
             elif arg == 'galimatias-snapshot':
                 release = Release("galimatias")
                 release.uploadToCentral(snapshotsRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'galimatias-release':
                 release = Release("galimatias")
                 release.uploadToCentral(stagingRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'langdetect-bundle':
                 release = Release("langdetect")
                 release.createBundle()
             elif arg == 'langdetect-snapshot':
                 release = Release("langdetect")
                 release.uploadToCentral(snapshotsRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'langdetect-release':
                 release = Release("langdetect")
                 release.uploadToCentral(stagingRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'htmlparser-bundle':
                 release = Release("htmlparser")
                 release.createBundle()
             elif arg == 'htmlparser-snapshot':
                 release = Release("htmlparser")
                 release.uploadToCentral(snapshotsRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'htmlparser-release':
                 release = Release("htmlparser")
                 release.uploadToCentral(stagingRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'cssvalidator-bundle':
                 release = Release("cssvalidator")
                 release.createBundle()
             elif arg == 'cssvalidator-snapshot':
                 release = Release("cssvalidator")
                 release.uploadToCentral(snapshotsRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'cssvalidator-release':
                 release = Release("cssvalidator")
                 release.uploadToCentral(stagingRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'jing-bundle':
                 release = Release("jing")
                 release.createBundle()
             elif arg == 'jing-snapshot':
                 release = Release("jing")
                 release.uploadToCentral(snapshotsRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'jing-release':
                 release = Release("jing")
                 release.uploadToCentral(stagingRepoUrl)
+                release.uploadMavenToGitHub()
             elif arg == 'image':
                 release.createRuntimeImage()
             elif arg == 'jar':

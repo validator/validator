@@ -20,6 +20,7 @@ NN XXX NNNN
     under the tag `latest`; no more `jar`, `war`, `windows`, `linux`, `osx`
   - Docker: Image moved to https://ghcr.io/validator/validator
   - NPMs now released to GitHub Packages, in addition to npmjs.com
+  - Maven packages now released to GitHub Packages, in addition to Central
 
 # 20.6.30
 30 June 2020
