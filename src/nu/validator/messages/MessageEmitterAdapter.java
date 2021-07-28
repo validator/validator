@@ -403,14 +403,9 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*“svg” is not a “format” value.*", //
             ".*Property “all” doesn't exist.*", //
             ".*Property “aspect-ratio” doesn't exist.*", //
-            ".*Property “border-block-width” doesn't exist.*", //
             ".*Property “backdrop-filter” doesn't exist.*", //
             ".*Property “font-variation-settings” doesn't exist.*", //
-            ".*Property “margin-block-start” doesn't exist.*", //
-            ".*Property “max-block-size” doesn't exist.*", //
-            ".*Property “min-block-size” doesn't exist.*", //
             ".*Property “overflow-anchor” doesn't exist.*", //
-            ".*Property “padding-inline-start” doesn't exist.*", //
             ".*Property “scale” doesn't exist.*", //
             ".*Property “text-decoration-thickness” doesn't exist.*", //
             ".*Property “text-decoration-skip-ink” doesn't exist.*", //
