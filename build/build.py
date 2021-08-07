@@ -148,6 +148,7 @@ maxTotalConnections = 200
 maxRedirects = 20  # Gecko default
 statistics = 0
 miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'  # nopep8
+additionalJavaSystemProperties = ''
 
 dependencyPackages = [
     ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/58.2/icu4j-58.2.jar", "605d8a0276a280ff6332c3bd26071180"),  # nopep8
@@ -869,6 +870,8 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
 
     if disablePromiscuousSsl:
         args.append('-Dnu.validator.xml.promiscuous-ssl=false')
+
+    args.extend(additionalJavaSystemProperties.split())
 
     args.append('nu.validator.servlet.Main')
 
@@ -1753,7 +1756,7 @@ def main(argv):
         scriptFile, filterFile, disablePromiscuousSsl, extrasDir, \
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
-        jdepsCmd, jlinkCmd, javaEnvVersion
+        jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties
     if len(argv) == 0:
         printHelp()
     else:
@@ -1790,6 +1793,8 @@ def main(argv):
                 gitCmd = arg[6:]
             elif arg.startswith("--java="):
                 javaCmd = arg[7:]
+            elif arg.startswith("--additional-java-system-properties="):
+                additionalJavaSystemProperties = arg[36:]
             elif arg.startswith("--jar="):
                 jarCmd = arg[6:]
             elif arg.startswith("--javac="):

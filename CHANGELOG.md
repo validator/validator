@@ -21,6 +21,7 @@ NN XXX NNNN
   - Docker: Image moved to https://ghcr.io/validator/validator
   - NPMs now released to GitHub Packages, in addition to npmjs.com
   - Maven packages now released to GitHub Packages, in addition to Central
+  - Add --additional-java-system-properties option for build script
 
 # 20.6.30
 30 June 2020
