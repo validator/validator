@@ -13,7 +13,7 @@ ADD https://github.com/validator/validator/releases/download/latest/vnu.linux.zi
 ADD https://github.com/validator/validator/releases/download/latest/vnu.linux.zip.sha1 .
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && apt-get install --no-install-recommends -y \
-       unzip=6.0-23+deb10u2 \
+       unzip=6.0-26 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && echo "$(cat vnu.linux.zip.sha1)  vnu.linux.zip" | sha1sum -c - \
