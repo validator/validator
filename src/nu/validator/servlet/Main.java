@@ -45,7 +45,6 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.PropertyConfigurator;
-import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
@@ -189,8 +188,7 @@ public class Main {
         server.setHandler(gzipHandler);
 
         ServerConnector serverConnector = new ServerConnector(server,
-                new HttpConnectionFactory(new HttpConfiguration()),
-                new HTTP2CServerConnectionFactory(new HttpConfiguration()));
+                new HttpConnectionFactory(new HttpConfiguration()));
         int port = args.length > 0 ? Integer.parseInt(args[0]) : 8888;
         serverConnector.setPort(port);
         serverConnector.setHost(BIND_ADDRESS);

@@ -165,9 +165,6 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9.jar", "62fce5f1f44f9df4a68d9a390b8982eb"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar", "b89455507839c09d6119661defd2166a"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-common/10.0.6/http2-common-10.0.6.jar", "44b258fd14a0f40faa89635ba1271598"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-hpack/10.0.6/http2-hpack-10.0.6.jar", "7968408d6b864a803901c8651873baac"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/http2/http2-server/10.0.6/http2-server-10.0.6.jar", "27040f45a024ef19aab9c9da015235e3"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/10.0.6/jetty-http-10.0.6.jar", "41ea38b964318fecfeb1e7f08f45ca65"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/10.0.6/jetty-io-10.0.6.jar", "ea99e5373710b2f8fb43372e48aea158"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/10.0.6/jetty-security-10.0.6.jar", "a0a73ccebc9b383dfdcdaed7040ccf1a"),  # nopep8
@@ -194,7 +191,6 @@ moduleDependencyPackages = [
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26.jar", "60ec8751be37d54a2aa1b6178f87b968"),  # nopep8
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/1.7.9/slf4j-log4j12-1.7.9.jar", "54528e0b3ea7656072a9b591248c6457"),  # nopep8
 ]
-
 
 javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
