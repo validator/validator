@@ -165,14 +165,14 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9.jar", "62fce5f1f44f9df4a68d9a390b8982eb"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar", "b89455507839c09d6119661defd2166a"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/10.0.6/jetty-http-10.0.6.jar", "41ea38b964318fecfeb1e7f08f45ca65"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/10.0.6/jetty-io-10.0.6.jar", "ea99e5373710b2f8fb43372e48aea158"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/10.0.6/jetty-security-10.0.6.jar", "a0a73ccebc9b383dfdcdaed7040ccf1a"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/10.0.6/jetty-server-10.0.6.jar", "54cd76220b8e58c3b09d1a1cead39f25"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/10.0.6/jetty-servlet-10.0.6.jar", "b94b49c288f4518c97609f484d655383"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/10.0.6/jetty-servlets-10.0.6.jar", "3b388105ad3901bb1f55ba2801b998d3"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/10.0.6/jetty-util-10.0.6.jar", "ee6565ad43292dffc713e5053678d64b"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/10.0.6/jetty-util-ajax-10.0.6.jar", "948a3c0562dc8d0e714a75ba2c81cce3"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.4.43.v20210629/jetty-http-9.4.43.v20210629.jar", "5e360d8304d60bd34892c48d73fbf930"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.4.43.v20210629/jetty-io-9.4.43.v20210629.jar", "7ebafda46576f28c46aa1499df0ececa"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.4.43.v20210629/jetty-security-9.4.43.v20210629.jar", "a7ebb4459799a50488861c168d1c6ebe"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.4.43.v20210629/jetty-server-9.4.43.v20210629.jar", "c362a3b46717fd88ccbea17c886e7b30"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/9.4.43.v20210629/jetty-servlet-9.4.43.v20210629.jar", "b444e483352abd7ba7962a9ec40a94cb"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.4.43.v20210629/jetty-servlets-9.4.43.v20210629.jar", "d9ebfb4c7e1122d395a1e8d0245bc40c"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.4.43.v20210629/jetty-util-9.4.43.v20210629.jar", "fc256ead0123aa96db80be89ae8704d2"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.4.43.v20210629/jetty-util-ajax-9.4.43.v20210629.jar", "1d837e9f2f459a82a011e34ddd96da1c"),  # nopep8
 ]
 
 moduleDependencyPackages = [
@@ -185,7 +185,7 @@ moduleDependencyPackages = [
     ("https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar", "289075e48b909e9e74e6c915b3631d2e"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/interceptor/javax.interceptor-api/1.2.2/javax.interceptor-api-1.2.2.jar", "d46f2dac1607941fbfb81eb7bc83157a"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/jms/javax.jms-api/2.0.1/javax.jms-api-2.0.1.jar", "d69d2e02910e97b2478c0105e9b2caab"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-jmx/10.0.6/jetty-jmx-10.0.6.jar", "a448e0740fa14fc53d5da742c6779bdf"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-jmx/9.4.43.v20210629/jetty-jmx-9.4.43.v20210629.jar", "ce4a073f8ae9ab55aaaec7310c517d2b"),  # nopep8
     ("https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar", "dd83accb899363c32b07d7a1b2e4ce40"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar", "ff22c9434e12a87b6023e301600b6c44"),  # nopep8
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26.jar", "60ec8751be37d54a2aa1b6178f87b968"),  # nopep8
