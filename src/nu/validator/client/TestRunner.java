@@ -43,6 +43,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import org.eclipse.jetty.util.ajax.JSON;
+import org.eclipse.jetty.util.ajax.JSON.ReaderSource;
 
 import org.relaxng.datatype.DatatypeException;
 
@@ -450,7 +451,7 @@ public class TestRunner extends MessageEmitterAdapter {
             OutputStreamWriter out = new OutputStreamWriter(
                     new FileOutputStream(messagesFile), "utf-8");
             try (BufferedWriter bw = new BufferedWriter(out)) {
-                bw.write(JSON.toString(reportedMessages));
+                bw.write((new JSON()).toJSON(reportedMessages));
             }
         }
     }
@@ -460,7 +461,8 @@ public class TestRunner extends MessageEmitterAdapter {
             baseDir = messagesFile.getCanonicalFile().getParentFile();
             FileInputStream fis = new FileInputStream(messagesFile);
             InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
-            expectedMessages = (HashMap<String, String>) JSON.parse(reader);
+            expectedMessages = (HashMap<String, String>)
+                    (new JSON()).parse(new ReaderSource(reader));
         } else {
             baseDir = new File(System.getProperty("user.dir"));
         }

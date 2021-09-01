@@ -50,34 +50,34 @@
 			<attribute name="javadoc_location" value="http://docs.oracle.com/javaee/7/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-server-9.4.18.v20190429.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-server-10.0.6.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/9.4.18.v20190429/"/>
+			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/10.0.6/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/http2-server-9.4.18.v20190429.jar">
+	<classpathentry kind="lib" path="dependencies/http2-server-10.0.6.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/9.4.18.v20190429/"/>
+			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/10.0.6/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.4.18.v20190429.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-servlet-10.0.6.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/9.4.18.v20190429/"/>
+			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/10.0.6/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-servlets-9.4.18.v20190429.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-servlets-10.0.6.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/9.4.18.v20190429/"/>
+			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/10.0.6/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-9.4.18.v20190429.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-util-10.0.6.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/9.4.18.v20190429/"/>
+			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/10.0.6/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-9.4.18.v20190429.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-10.0.6.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/9.4.18.v20190429/"/>
+			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/10.0.6/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="jars/langdetect.jar">
