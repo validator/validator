@@ -403,8 +403,6 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*Property “backdrop-filter” doesn't exist.*", //
             ".*Property “font-variation-settings” doesn't exist.*", //
             ".*Property “scale” doesn't exist.*", //
-            ".*“.+(em|px)” is not a “text-decoration” value.*", //
-            ".*“text-decoration”: “.+(em|px)” is not a “color” value.*", //
     };
 
     protected static final Pattern DEFAULT_FILTER_PATTERN = Pattern.compile(
