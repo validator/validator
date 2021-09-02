@@ -27,24 +27,20 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [16, 11, 8, 17, 18-ea]
+        java: [16, 11, 8, 17-ea]
         exclude:
           - os: macos-latest
             java: 8
           - os: macos-latest
             java: 11
           - os: macos-latest
-            java: 17
-          - os: macos-latest
-            java: 18-ea
+            java: 17-ea
           - os: windows-latest
             java: 8
           - os: windows-latest
             java: 11
           - os: windows-latest
-            java: 17
-          - os: windows-latest
-            java: 18-ea
+            java: 17-ea
     steps:
       - uses: actions/checkout@v2
       - name: Set up Java JDK
