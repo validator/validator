@@ -83,7 +83,7 @@ jobs:
           python ./checker.py test
       - name: Import GPG signing key
         if: matrix.java == 16 && github.ref == 'refs/heads/main'
-        uses: crazy-max/ghaction-import-gpg@v3
+        uses: crazy-max/ghaction-import-gpg@v4
         with:
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
           passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
