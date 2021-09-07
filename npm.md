@@ -17,8 +17,6 @@ npm install --save vnu-jar@next
 
 ## Example
 
-For Node.js 6+
-
 ```js
 'use strict';
 
