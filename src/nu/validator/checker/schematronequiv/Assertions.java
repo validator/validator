@@ -1558,7 +1558,7 @@ public class Assertions extends Checker {
                 ac.setTreatCssHacksAsWarnings(true);
                 ac.setWarningLevel(-1);
                 ac.setFakeURL("file://localhost/StyleElement");
-                StyleSheetParser styleSheetParser = new StyleSheetParser();
+                StyleSheetParser styleSheetParser = new StyleSheetParser(ac);
                 styleSheetParser.parseStyleSheet(ac,
                         new StringReader(styleContents.substring(lineOffset)),
                         null);
@@ -1836,7 +1836,7 @@ public class Assertions extends Checker {
                         ac.setWarningLevel(-1);
                         ac.setFakeURL("file://localhost/StyleAttribute");
                         StyleSheetParser styleSheetParser = //
-                                new StyleSheetParser();
+                                new StyleSheetParser(ac);
                         styleSheetParser.parseStyleAttribute(ac,
                                 new ByteArrayInputStream(
                                         styleContents.getBytes()),

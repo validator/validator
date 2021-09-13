@@ -59,7 +59,7 @@ public class MediaQuery extends AbstractDatatype {
         } else {
             style = String.format("@media %s %s", literalString, "{}");
         }
-        StyleSheetParser styleSheetParser = new StyleSheetParser();
+        StyleSheetParser styleSheetParser = new StyleSheetParser(ac);
         styleSheetParser.parseStyleSheet(ac, new StringReader(style), null);
         styleSheetParser.getStyleSheet().findConflicts(ac);
         Errors errors = styleSheetParser.getStyleSheet().getErrors();
