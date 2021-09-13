@@ -98,7 +98,7 @@ jobs:
           for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
       - name: Release new binary runtime image
         if: matrix.java == 16 && github.ref == 'refs/heads/main'
-        uses: ncipollo/release-action@v1.8.8
+        uses: ncipollo/release-action@v1.8.9
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit: ${{ github.sha }}
@@ -110,7 +110,7 @@ jobs:
           tag: latest
       - name: Release new jar and war
         if: matrix.os == 'ubuntu-latest' && matrix.java == 16 && github.ref == 'refs/heads/main'
-        uses: ncipollo/release-action@v1.8.8
+        uses: ncipollo/release-action@v1.8.9
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
