@@ -389,19 +389,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*is only used for backwards compatibility with older CSP.*", //
             // (non-)errors for features the CSS checker doesn’t support yet
             ".*Unknown pseudo-element or pseudo-class \u201C::?file-selector-button\u201D.*", //
-            ".*leader(.+)is not a \u201Ccontent\u201D value.*", //
-            ".*“text” is not a “background-clip” value.*", //
-            ".*“conic-gradient[^”]+” is not a “background-color” value.*", //
-            ".*“woff” is not a “format” value.*", //
-            ".*“truetype” is not a “format” value.*", //
-            ".*“opentype” is not a “format” value.*", //
-            ".*“woff2” is not a “format” value.*", //
-            ".*“embedded-opentype” is not a “format” value.*", //
-            ".*“collection” is not a “format” value.*", //
-            ".*“svg” is not a “format” value.*", //
             ".*Property “all” doesn't exist.*", //
-            ".*Property “backdrop-filter” doesn't exist.*", //
-            ".*Property “font-variation-settings” doesn't exist.*", //
             ".*Property “scale” doesn't exist.*", //
     };
 
