@@ -388,7 +388,6 @@ public class MessageEmitterAdapter implements ErrorHandler {
             ".*\\s+“report-uri”\\s+in\\s+favour\\s+of\\s+a\\s+new\\s+“report-to”.*", //
             ".*is only used for backwards compatibility with older CSP.*", //
             // (non-)errors for features the CSS checker doesn’t support yet
-            ".*Unknown pseudo-element or pseudo-class \u201C::?file-selector-button\u201D.*", //
             ".*Property “scale” doesn't exist.*", //
     };
 
