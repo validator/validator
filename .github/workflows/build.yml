@@ -42,7 +42,7 @@ jobs:
       - name: Set up Java JDK
         uses: actions/setup-java@v2
         with:
-          distribution: adopt
+          distribution: zulu
           java-version: ${{ matrix.java }}
       - uses: actions/setup-python@v2
         with:
