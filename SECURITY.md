@@ -4,7 +4,7 @@ This is the security policy for the Nu Html Checker at https://github.com/valida
 
 ## Supported Versions
 
-A new unnumbered distribution of the Nu Html Checker is built for every push to the main branch of the repo; see https://github.com/validator/validator/releases. Any security fixes will first be made available in an unnumbered distribution (which replaces the previous unnumbered distribution), and in the next numbered version released. No fixes of any kind are backported to the older numbered versions.
+A new unnumbered distribution of the Nu Html Checker is built for every push to the main branch; see https://github.com/validator/validator/releases. Any security fixes will first be made available in an unnumbered distribution (which replaces the previous unnumbered distribution), and in the next numbered version released. No fixes of any kind are backported to the older numbered versions.
 
 ## Reporting a Vulnerability
 
