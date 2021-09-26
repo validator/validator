@@ -43,9 +43,6 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
-import nu.validator.checker.Checker;
-import nu.validator.checker.LocatorImpl;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
