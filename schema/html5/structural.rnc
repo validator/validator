@@ -14,6 +14,7 @@
 			|	common.attrs.aria.role.application
 			|	common.attrs.aria.role.dialog
 			|	common.attrs.aria.role.feed
+			|	common.attrs.aria.role.group
 			|	common.attrs.aria.role.log
 			|	common.attrs.aria.role.marquee
 			|	common.attrs.aria.role.presentation
