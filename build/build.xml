@@ -33,7 +33,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator-javadoc-jar" value="${dist}/${artifactId}-${version}-javadoc.jar" />
   <property name="validator-sources-jar" value="${dist}/${artifactId}-${version}-sources.jar" />
   <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version}-bundle.jar" />
-  <property name="commons-codec-version" value="1.10" />
+  <property name="commons-codec-version" value="1.15" />
   <property name="commons-fileupload-version" value="1.4" />
   <property name="commons-io-version" value="2.4" />
   <property name="commons-logging-version" value="1.2" />
