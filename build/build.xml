@@ -57,7 +57,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="jsr305-version" value="3.0.2" />
   <property name="mail-version" value="1.4.7" />
   <property name="portlet-api-version" value="3.0.1" />
-  <property name="slf4j-api-version" value="1.7.26" />
+  <property name="slf4j-api-version" value="1.7.29" />
   <property name="slf4j-log4j12-version" value="1.7.9" />
   <target name="build" depends="jar"/>
   <target name="clean">

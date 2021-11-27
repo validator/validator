@@ -188,7 +188,7 @@ moduleDependencyPackages = [
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-jmx/9.4.43.v20210629/jetty-jmx-9.4.43.v20210629.jar", "ce4a073f8ae9ab55aaaec7310c517d2b"),  # nopep8
     ("https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar", "dd83accb899363c32b07d7a1b2e4ce40"),  # nopep8
     ("https://repo1.maven.org/maven2/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar", "ff22c9434e12a87b6023e301600b6c44"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26.jar", "60ec8751be37d54a2aa1b6178f87b968"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.29/slf4j-api-1.7.29.jar", "75191c97f2d6ef4f990cbb4b2e56a46b"),  # nopep8
     ("https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/1.7.9/slf4j-log4j12-1.7.9.jar", "54528e0b3ea7656072a9b591248c6457"),  # nopep8
 ]
 
