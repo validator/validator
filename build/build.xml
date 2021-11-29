@@ -58,7 +58,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="mail-version" value="1.4.7" />
   <property name="portlet-api-version" value="3.0.1" />
   <property name="slf4j-api-version" value="1.7.29" />
-  <property name="slf4j-log4j12-version" value="1.7.9" />
+  <property name="slf4j-log4j12-version" value="1.7.32" />
   <target name="build" depends="jar"/>
   <target name="clean">
     <delete dir="${dist}"/>
