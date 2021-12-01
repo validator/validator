@@ -164,7 +164,7 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),  # nopep8
     ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar", "40d6b9075fbd28fa10292a45a0db9457"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar", "b89455507839c09d6119661defd2166a"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.14/httpcore-4.4.14.jar", "2b3991eda121042765a5ee299556c200"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.4.43.v20210629/jetty-http-9.4.43.v20210629.jar", "5e360d8304d60bd34892c48d73fbf930"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.4.43.v20210629/jetty-io-9.4.43.v20210629.jar", "7ebafda46576f28c46aa1499df0ececa"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.4.43.v20210629/jetty-security-9.4.43.v20210629.jar", "a7ebb4459799a50488861c168d1c6ebe"),  # nopep8
