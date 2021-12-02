@@ -584,7 +584,9 @@ if (document.getElementById) {
 				var helptext = document.querySelector("#filters > div")
 				if (filtersbutton) {
 					filtersbutton.className = "message_filtering"
-					filtersbutton.focus()
+					if (!window.location.hash) {
+						filtersbutton.focus()
+					}
 					filtersbutton.setAttribute('tabindex', '0')
 				}
 				if (helptext) {
