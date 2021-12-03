@@ -44,6 +44,7 @@ namespace local = ""
 			|	common.attrs.aria.role.option
 			|	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.progressbar
+			|	common.attrs.aria.role.radio
 			|	common.attrs.aria.role.scrollbar
 			|	common.attrs.aria.role.separator
 			|	common.attrs.aria.role.slider
