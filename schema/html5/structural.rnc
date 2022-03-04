@@ -77,6 +77,8 @@
 			|	common.attrs.aria.role.doc-toc
 			|	common.attrs.aria.role.menu
 			|	common.attrs.aria.role.menubar
+			|	common.attrs.aria.role.none
+			|	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.tablist
 			)?
 		)
