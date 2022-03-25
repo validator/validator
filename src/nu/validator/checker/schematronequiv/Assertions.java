@@ -1529,7 +1529,9 @@ public class Assertions extends Checker {
             } else if ("section" == localName && !node.hasHeading()) {
                 warn("Section lacks heading. Consider using"
                         + " \u201ch2\u201d-\u201ch6\u201d elements to add"
-                        + " identifying headings to all sections.",
+                        + " identifying headings to all sections, or else"
+                        + " use a \u201cdiv\u201d element instead for any"
+                        + " cases where no heading is needed.",
                         node.locator());
             } else if ("article" == localName && !node.hasHeading()) {
                 warn("Article lacks heading. Consider using"
