@@ -624,7 +624,7 @@ public class SimpleCommandLineValidator {
         otherOut.println("");
         otherOut.println("For detailed usage information, try the \"--help\" option or see:");
         otherOut.println("");
-        otherOut.println("  http://validator.github.io/");
+        otherOut.println("  https://validator.github.io/validator/");
         otherOut.println("");
         otherOut.println("To read from stdin, use \"-\" as the filename, like this: \"java -jar vnu.jar - \".");
         otherOut.println("");
