@@ -139,6 +139,8 @@ namespace local = ""
 		&	source.picture.attrs.srcset
 		&	source.picture.attrs.sizes?
 		&	source.picture.attrs.type?
+		&	source.picture.attrs.width?
+		&	source.picture.attrs.height?
 		)
 		source.picture.attrs.media =
 			attribute media {
@@ -155,6 +157,14 @@ namespace local = ""
 		source.picture.attrs.type =
 			attribute type {
 				common.data.mimetype
+			}
+		source.picture.attrs.width =
+			attribute width {
+				common.data.integer.non-negative
+			}
+		source.picture.attrs.height =
+			attribute height {
+				common.data.integer.non-negative
 			}
 	source.picture.inner =
 		( empty )
