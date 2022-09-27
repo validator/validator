@@ -1587,7 +1587,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return; // presumed to be permissive
         }
 
-        htmlParser.setErrorProfile(profileMap);
+        if (htmlParser != null) {
+            htmlParser.setErrorProfile(profileMap);
+        }
     }
 
     /**
