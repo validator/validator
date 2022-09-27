@@ -953,7 +953,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             new XmlSerializer(out);
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new MessageEmitterAdapter(filterPattern,
+                errorHandler = new MessageEmitterAdapter(request, filterPattern,
                         sourceCode, showSource, imageCollector, lineOffset,
                         false, new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
@@ -1427,6 +1427,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             } else if (externalSchematron) {
                 stats.incrementField(Statistics.Field.LOGIC_ERROR);
+            }
+            if (request.getAttribute(
+                    "http://validator.nu/properties/self-closing-tag-found") != null
+                    && (boolean) request.getAttribute(
+                            "http://validator.nu/properties/self-closing-tag-found")) {
+                stats.incrementField(Statistics.Field.SELF_CLOSING_TAG_FOUND);
             }
             if (request.getAttribute(
                     "http://validator.nu/properties/aria-label-misuse-found") != null

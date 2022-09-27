@@ -34,6 +34,8 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.DatatypeMismatchException;
 import nu.validator.checker.VnuBadAttrValueException;
@@ -423,6 +425,8 @@ public class MessageEmitterAdapter implements ErrorHandler {
 
     private final ImageCollector imageCollector;
 
+    private final HttpServletRequest request;
+
     private int lineOffset;
 
     private Spec spec = EmptySpec.THE_INSTANCE;
@@ -462,6 +466,22 @@ public class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
+    public MessageEmitterAdapter(HttpServletRequest request, Pattern
+            filterPattern, SourceCode sourceCode, boolean showSource,
+            ImageCollector imageCollector, int lineOffset, boolean batchMode,
+            MessageEmitter messageEmitter) {
+        super();
+        this.filterPattern = filterPattern;
+        this.sourceCode = sourceCode;
+        this.emitter = messageEmitter;
+        this.exactErrorHandler = new ExactErrorHandler(this);
+        this.showSource = showSource;
+        this.lineOffset = lineOffset;
+        this.batchMode = batchMode;
+        this.imageCollector = imageCollector;
+        this.request = request;
+    }
+
     public MessageEmitterAdapter(Pattern filterPattern, SourceCode sourceCode,
             boolean showSource, ImageCollector imageCollector, int lineOffset,
             boolean batchMode, MessageEmitter messageEmitter) {
@@ -474,6 +494,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
         this.lineOffset = lineOffset;
         this.batchMode = batchMode;
         this.imageCollector = imageCollector;
+        this.request = null;
     }
 
     /**
@@ -489,6 +510,7 @@ public class MessageEmitterAdapter implements ErrorHandler {
         this.lineOffset = 0;
         this.batchMode = false;
         this.imageCollector = null;
+        this.request = null;
     }
 
     /**
@@ -799,6 +821,11 @@ public class MessageEmitterAdapter implements ErrorHandler {
             int oneBasedLine, int oneBasedColumn, boolean exact, int[] start)
             throws SAXException {
         String msg = message.getMessage();
+        if (request != null && msg.contains("Self-closing tag syntax")) {
+            request.setAttribute(
+                    "http://validator.nu/properties/self-closing-tag-found",
+                    true);
+        }
         if (msg != null && ((filterPattern != null
                 && filterPattern.matcher(msg).matches())
                 || DEFAULT_FILTER_PATTERN.matcher(msg).matches())) {

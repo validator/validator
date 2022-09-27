@@ -135,6 +135,7 @@ public class Statistics {
         HAS_WARNINGS("Conformance: Documents with warnings"), //
         HAS_FATAL_ERRORS("Fatal errors"), //
         LOGIC_ERROR("Logic errors in schema stats"), //
+        SELF_CLOSING_TAG_FOUND("self-closing tag found"), //
         ARIA_LABEL_MISUSE_FOUND("aria-label misuse found"), //
         HGROUP_FOUND("<hgroup> found"), //
         STYLE_ELEMENT_ERRORS_FOUND("<style> element with CSS errors found"), //
