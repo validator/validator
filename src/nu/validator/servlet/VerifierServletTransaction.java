@@ -1570,6 +1570,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     protected void setErrorProfile() {
         profile = request.getParameter("profile");
 
+        if (profile == null) {
+            profile = System.getProperty("nu.validator.htmlparser.profile", "");
+        }
+
         HashMap<String, String> profileMap = new HashMap<>();
 
         if ("pedagogical".equals(profile)) {
@@ -1577,6 +1581,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } else if ("polyglot".equals(profile)) {
             profileMap.put("xhtml1", "warn");
             profileMap.put("xhtml2", "warn");
+        } else if ("html-strict".equals(profile)) {
+            profileMap.put("html-strict", "warn");
         } else {
             return; // presumed to be permissive
         }
