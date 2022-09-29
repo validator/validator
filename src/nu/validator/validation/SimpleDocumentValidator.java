@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.util.HashMap;
 
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
@@ -351,6 +352,9 @@ public class SimpleDocumentValidator {
         if (!noStream) {
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         }
+        HashMap<String, String> profileMap = new HashMap<>();
+        profileMap.put("html-strict", "warn");
+        htmlParser.setErrorProfile(profileMap);
         htmlReader = getWiretap(htmlParser);
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());

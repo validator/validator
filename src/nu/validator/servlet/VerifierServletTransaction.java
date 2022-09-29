@@ -1574,28 +1574,25 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     protected void setErrorProfile() {
-        profile = request.getParameter("profile");
-
-        if (profile == null) {
-            profile = System.getProperty("nu.validator.htmlparser.profile", "");
+        if (htmlParser == null) {
+            return;
         }
-
+        profile = request.getParameter("profile");
         HashMap<String, String> profileMap = new HashMap<>();
-
+        if (profile == null) {
+            profileMap.put("html-strict", "warn");
+            htmlParser.setErrorProfile(profileMap);
+            return;
+        }
         if ("pedagogical".equals(profile)) {
             profileMap.put("xhtml1", "warn");
         } else if ("polyglot".equals(profile)) {
             profileMap.put("xhtml1", "warn");
             profileMap.put("xhtml2", "warn");
-        } else if ("html-strict".equals(profile)) {
-            profileMap.put("html-strict", "warn");
         } else {
             return; // presumed to be permissive
         }
-
-        if (htmlParser != null) {
-            htmlParser.setErrorProfile(profileMap);
-        }
+        htmlParser.setErrorProfile(profileMap);
     }
 
     /**
