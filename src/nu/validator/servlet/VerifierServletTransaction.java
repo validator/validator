@@ -960,27 +960,33 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(filterPattern,
-                            sourceCode, showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(request,
+                            filterPattern, sourceCode, showSource, null,
+                            lineOffset, false,
                             new TextMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.GNU) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(filterPattern,
-                            sourceCode, showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(request,
+                            filterPattern, sourceCode, showSource, null,
+                            lineOffset, false,
                             new GnuMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
-                    errorHandler = new MessageEmitterAdapter(filterPattern,
-                            sourceCode, showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(request,
+                            filterPattern, sourceCode, showSource, null,
+                            lineOffset, false,
                             new XmlMessageEmitter(new XmlSerializer(out)));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
-                        response.setContentType("application/json; charset=utf-8");
+                        response.setContentType(
+                                "application/json; charset=utf-8");
                     } else {
-                        response.setContentType("application/javascript; charset=utf-8");
+                        response.setContentType(
+                                "application/javascript; charset=utf-8");
                     }
-                    errorHandler = new MessageEmitterAdapter(filterPattern,
-                            sourceCode, showSource, null, lineOffset, false,
+                    errorHandler = new MessageEmitterAdapter(request,
+                            filterPattern, sourceCode, showSource, null,
+                            lineOffset, false,
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback, asciiQuotes));
