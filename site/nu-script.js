@@ -270,15 +270,13 @@ function createHtmlElement(tagName) {
 function injectHyperlinks() {
 	var errors = document.getElementsByClassName("error")
 	var warnings = document.getElementsByClassName("warning")
-	linkify(warnings, "widely discouraged",
-		"https://google.github.io/styleguide/htmlcssguide.html#Document_Type",
-		"Google HTML/CSS Style Guide info on self-closing tag syntax")
-	linkify(warnings, "interacts badly with other HTML features",
-		"https://software.hixie.ch/utilities/js/live-dom-viewer/?saved=10809",
-		"Demo showing how self-closing tag syntax unexpectedly causes the slash to become part of an attribute value")
-	linkify(warnings, "without any option to prevent it from doing so",
-		"https://github.com/prettier/prettier/issues/5246",
-		"Prettier issue “Add an option to prefer void tags over self closing tags”")
+	var info = document.getElementsByClassName("info")
+	linkify(info, "has no effect",
+		"https://github.com/validator/validator/wiki/Markup-%C2%BB-Void-elements#trailing-slashes-in-void-element-start-tags-do-not-mark-the-start-tags-as-self-closing",
+		"Trailing slashes in void-element start tags do not mark the start tags as self-closing")
+	linkify(info, "interacts badly with unquoted attribute values",
+		"https://github.com/validator/validator/wiki/Markup-%C2%BB-Void-elements#trailing-slashes-directly-preceded-by-unquoted-attribute-values",
+		"Trailing slashes directly preceded by unquoted attribute values")
 	linkify(warnings, "file an issue report",
 		"https://github.com/validator/validator/issues/new",
 		"File a report in the GitHub issue tracker.")
