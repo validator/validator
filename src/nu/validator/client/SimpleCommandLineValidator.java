@@ -24,6 +24,7 @@ package nu.validator.client;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -157,6 +158,8 @@ public class SimpleCommandLineValidator {
         hasSchemaOption = false;
         boolean hasFileArgs = false;
         boolean readFromStdIn = false;
+		boolean hasFileList = false;
+		String fileNameWithFileList = null;
         int fileArgsStart = 0;
         if (args.length == 0) {
             usage();
@@ -266,7 +269,10 @@ public class SimpleCommandLineValidator {
                                 + " requires a URL for a schema.");
                         System.exit(1);
                     }
-                }
+				} else if ("--file-url-list".equals(args[i])) {
+                    fileNameWithFileList = args[++i];
+					hasFileList = true;
+                }					
             }
         }
         if (!"".equals(filterString)) {
@@ -309,14 +315,19 @@ public class SimpleCommandLineValidator {
                 validator.checkHtmlInputSource(is);
             }
             end();
-        } else if (hasFileArgs) {
+        } else if ((hasFileArgs) || (hasFileList)) {
             if (noLangDetect) {
                 validator = new SimpleDocumentValidator(true, false, false);
             } else {
                 validator = new SimpleDocumentValidator(true, false, true);
+            }   
+            setup(schemaUrl);            
+            if (hasFileList) {
+                checkFilesInList(fileNameWithFileList);
             }
-            setup(schemaUrl);
-            checkFiles(args, fileArgsStart);
+            if (hasFileArgs) {
+                checkFiles(args, fileArgsStart);
+            } 
             end();
         } else {
             System.err.printf("\nError: No documents specified.\n");
@@ -364,59 +375,71 @@ public class SimpleCommandLineValidator {
             System.exit(exitZeroAlways ? 0 : 1);
         }
     }
+	
+    private static void checkFile(String fileName)
+            throws IOException, Exception, SAXException {
+		if (fileName.startsWith("http://") || fileName.startsWith("https://")) {
+			emitFilename(fileName);
+			try {
+				validator.checkHttpURL(fileName, userAgent, errorHandler);
+			} catch (IOException e) {
+				if (e.getCause() instanceof //
+						org.apache.http.TruncatedChunkException) {
+				} else if (e.getCause() instanceof //
+						org.apache.http.MalformedChunkCodingException
+						&& (e.getMessage().contains(
+								"CRLF expected at end of chunk"))) {
+				} else if (e.getCause() instanceof //
+						org.apache.http.ConnectionClosedException
+						&& (e.getMessage().contains(
+								"closing chunk expected"))) {
+				}
+				errorHandler.fatalError(new SAXParseException(e.getMessage(),
+						null, fileName, -1, -1,
+						new SystemIdIOException(fileName, e.getMessage())));
+			}
+		} else {
+			File file = new File(fileName);
+			if (file.isDirectory()) {
+				recurseDirectory(file);
+			} else if (forceCSS) {
+				checkCssFile(file);
+			} else if (skipNonCSS) {
+				if (isCss(file)) {
+					checkCssFile(file);
+				}
+			} else if (alsoCheckCSS && isCss(file)) {
+				checkCssFile(file);
+			} else if (forceSVG) {
+				checkSvgFile(file);
+			} else if (skipNonSVG) {
+				if (isSvg(file)) {
+					checkSvgFile(file);
+				}
+			} else if (alsoCheckSVG && isSvg(file)) {
+				checkSvgFile(file);
+			} else {
+				checkHtmlFile(file);
+			}
+		}
+    }
+	
 
     private static void checkFiles(String[] args, int fileArgsStart)
             throws IOException, Exception, SAXException {
         for (int i = fileArgsStart; i < args.length; i++) {
-            if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
-                emitFilename(args[i]);
-                try {
-                    validator.checkHttpURL(args[i], userAgent, errorHandler);
-                } catch (IOException e) {
-                    if (e.getCause() instanceof //
-                            org.apache.http.TruncatedChunkException) {
-                        continue;
-                    } else if (e.getCause() instanceof //
-                            org.apache.http.MalformedChunkCodingException
-                            && (e.getMessage().contains(
-                                    "CRLF expected at end of chunk"))) {
-                        continue;
-                    } else if (e.getCause() instanceof //
-                            org.apache.http.ConnectionClosedException
-                            && (e.getMessage().contains(
-                                    "closing chunk expected"))) {
-                        continue;
-                    }
-                    errorHandler.fatalError(new SAXParseException(e.getMessage(),
-                            null, args[i], -1, -1,
-                            new SystemIdIOException(args[i], e.getMessage())));
-                }
-            } else {
-                File file = new File(args[i]);
-                if (file.isDirectory()) {
-                    recurseDirectory(file);
-                } else if (forceCSS) {
-                    checkCssFile(file);
-                } else if (skipNonCSS) {
-                    if (isCss(file)) {
-                        checkCssFile(file);
-                    }
-                } else if (alsoCheckCSS && isCss(file)) {
-                    checkCssFile(file);
-                } else if (forceSVG) {
-                    checkSvgFile(file);
-                } else if (skipNonSVG) {
-                    if (isSvg(file)) {
-                        checkSvgFile(file);
-                    }
-                } else if (alsoCheckSVG && isSvg(file)) {
-                    checkSvgFile(file);
-                } else {
-                    checkHtmlFile(file);
-                }
-            }
+			checkFile(args[i]);
         }
     }
+	
+    private static void checkFilesInList(String fileNameWithFileList)
+            throws IOException, Exception, SAXException {
+		String str = null;
+		BufferedReader FileList = new BufferedReader(new FileReader(fileNameWithFileList));
+		while ((str = FileList.readLine()) != null) {
+			checkFile(str);
+        }
+    }	
 
     private static void recurseDirectory(File directory)
             throws IOException, Exception {
@@ -620,7 +643,7 @@ public class SimpleCommandLineValidator {
         otherOut.println("    --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME");
         otherOut.println("    --filterpattern PATTERN --css --skip-non-css --also-check-css --svg");
         otherOut.println("    --skip-non-svg --also-check-svg --html --skip-non-html");
-        otherOut.println("    --format gnu|xml|json|text --help --verbose --version");
+        otherOut.println("    --format gnu|xml|json|text --help --verbose --version --url_list FILENAME");
         otherOut.println("");
         otherOut.println("For detailed usage information, try the \"--help\" option or see:");
         otherOut.println("");
