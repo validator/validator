@@ -4,7 +4,8 @@ or changes to any options/interfaces the checker exposes for developers.
 
 # NN.NN.NN
 NN XXX NNNN
- -  Warn about void elements that use self-closing tag syntax
+  - Report void elements that have a trailing slash in their start tags
+  - Skip template contents when checking for duplicate IDs (bug fix)
   - Allow `loading` attribute for the `iframe` element (lazy loading)
   - Allow `autocomplete=username` with `input[type=email]`
   - Allow `operator=lighter` for SVG `feComposite` element
