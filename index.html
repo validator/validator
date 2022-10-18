@@ -200,7 +200,7 @@ Run the checker with one of the following invocations:
 --no-stream --filterfile FILENAME --filterpattern PATTERN
 --css --skip-non-css --also-check-css
 --svg --skip-non-svg --also-check-svg
---html --skip-non-html --format gnu|xml|json|text
+--xml --html --skip-non-html --format gnu|xml|json|text
 --help --verbose --version
 </pre>
 
@@ -435,6 +435,13 @@ default: [unset; all documents found are checked, regardless of extension]
 Forces any *.xhtml or *.xht documents to be parsed using the HTML parser.
 
 default: [unset; XML parser is used for *.xhtml and *.xht documents]
+</pre>
+
+<h4 id="xml">--xml</h4>
+<pre>
+Forces any *.html documents to be parsed using the XML parser.
+
+default: [unset; HTML parser is used for *.html documents]
 </pre>
 
 <h4 id="also-check-css">--also-check-css</h4>

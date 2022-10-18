@@ -12,6 +12,7 @@ NN XXX NNNN
   - Allow more values for SVG `feBlend` element `mode` attribute
   - Allow non-JS MIME types for `script` elements with `src` attributes
   - CLI: Add nu.validator.htmlparser.tools|test classes to vnu.jar
+  - CLI: Add new `--xml` option, to force parsing using the XML parser
   - CLI/Docker: Enable setting timeouts & bind address w/ environment vars
   - CSS: Support color-adjust
   - Docker: Migrate Dockerfile to “distroless” image (reduces image size)

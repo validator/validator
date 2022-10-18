@@ -103,6 +103,8 @@ public class SimpleCommandLineValidator {
 
     private static boolean forceHTML;
 
+    private static boolean forceXML;
+
     private static boolean asciiQuotes;
 
     private static int lineOffset;
@@ -142,6 +144,7 @@ public class SimpleCommandLineValidator {
         forceSVG = false;
         skipNonHTML = false;
         forceHTML = false;
+        forceXML = false;
         loadEntities = false;
         exitZeroAlways = false;
         noLangDetect = false;
@@ -252,6 +255,8 @@ public class SimpleCommandLineValidator {
                     skipNonHTML = true;
                 } else if ("--html".equals(args[i])) {
                     forceHTML = true;
+                } else if ("--xml".equals(args[i])) {
+                    forceXML = true;
                 } else if ("--entities".equals(args[i])) {
                     loadEntities = true;
                 } else if ("--no-langdetect".equals(args[i])) {
@@ -527,11 +532,19 @@ public class SimpleCommandLineValidator {
                 }
             } else if (isHtml(file)) {
                 emitFilename(path);
-                if (!"http://s.validator.nu/html5-all.rnc".equals(
-                        validator.getMainSchemaUrl()) && !hasSchemaOption) {
-                    setSchema("http://s.validator.nu/html5-all.rnc");
+                if (forceXML) {
+                    if (!"http://s.validator.nu/xhtml5-all.rnc".equals(
+                            validator.getMainSchemaUrl()) && !hasSchemaOption) {
+                        setSchema("http://s.validator.nu/xhtml5-all.rnc");
+                    }
+                    validator.checkXmlFile(file);
+                } else {
+                    if (!"http://s.validator.nu/html5-all.rnc".equals(
+                            validator.getMainSchemaUrl()) && !hasSchemaOption) {
+                        setSchema("http://s.validator.nu/html5-all.rnc");
+                    }
+                    validator.checkHtmlFile(file, true);
                 }
-                validator.checkHtmlFile(file, true);
             } else {
                 if (verbose) {
                     errorHandler.warning(new SAXParseException(
@@ -619,7 +632,7 @@ public class SimpleCommandLineValidator {
         otherOut.println("    --errors-only --Werror --exit-zero-always --stdout --asciiquotes");
         otherOut.println("    --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME");
         otherOut.println("    --filterpattern PATTERN --css --skip-non-css --also-check-css --svg");
-        otherOut.println("    --skip-non-svg --also-check-svg --html --skip-non-html");
+        otherOut.println("    --skip-non-svg --also-check-svg --xml --html --skip-non-html");
         otherOut.println("    --format gnu|xml|json|text --help --verbose --version");
         otherOut.println("");
         otherOut.println("For detailed usage information, try the \"--help\" option or see:");

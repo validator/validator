@@ -1,8 +1,8 @@
 # The Nu Html Checker (v.Nu) [![Chat room][1]][2] [![Download latest][3]][4]
 
-   [1]: https://img.shields.io/badge/[matrix]-chat%20%E2%86%92-brightgreen.svg
+   [1]: resources/matrix-chat.svg
    [2]: https://matrix.to/#/#validator_validator:gitter.im
-   [3]: https://img.shields.io/badge/download-latest%20%E2%86%92-blue.svg
+   [3]: resources/download-latest.svg
    [4]: https://github.com/validator/validator/releases/latest
 
 The Nu Html Checker (v.Nu) helps you [catch unintended mistakes in your HTML,
@@ -17,6 +17,7 @@ code][10].
    [7]: https://validator.github.io/validator/#standalone
    [8]: https://validator.w3.org/nu/
    [9]: https://github.com/validator/validator
+
    [10]: https://validator.github.io/validator/#build-instructions
 
 A [Dockerfile][11] (see **Pulling the Docker image** below) and [npm][12],
@@ -89,7 +90,7 @@ the following options:
     --errors-only --Werror --exit-zero-always --stdout --asciiquotes
     --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME
     --filterpattern PATTERN --css --skip-non-css --also-check-css --svg
-    --skip-non-svg --also-check-svg --html --skip-non-html
+    --skip-non-svg --also-check-svg --xml --html --skip-non-html
     --format gnu|xml|json|text --help --verbose --version
 
 The [Options][27] section below provides details on each option, and the rest of
@@ -296,6 +297,12 @@ provides the following options:
     Forces any *.xhtml or *.xht documents to be parsed using the HTML parser.
 
     default: [unset; XML parser is used for *.xhtml and *.xht documents]
+
+#### --xml
+
+    Forces any *.html documents to be parsed using the XML parser.
+
+    default: [unset; HTML parser is used for *.html documents]
 
 #### --also-check-css
 
