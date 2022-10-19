@@ -156,6 +156,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	link.attrs.scope?
 		&	link.attrs.updateviacache?
 		&	link.attrs.workertype?
+		&	link.attrs.imagesrcset?
+		&	link.attrs.imagesizes?
 		#	link.attrs.title included in common.attrs
 		&	embedded.content.attrs.crossorigin?
 		&	common.attrs.aria.role.link?
@@ -222,6 +224,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 				string "classic"
 			|	string "module"
 			}
+		link.attrs.imagesrcset =
+			attribute imagesrcset {
+				string
+			} & v5only
+		link.attrs.imagesizes =
+			attribute imagesizes {
+				common.data.source.size.list
+			} & v5only
 	link.inner =
 		( empty )
 		
