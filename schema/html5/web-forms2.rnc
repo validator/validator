@@ -36,6 +36,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		shared-form.attrs.formmethod.data = 
 			( w:string "get"
 			| w:string "post"
+			| w:string "dialog"
 			)
 
 	shared-form.attrs.formtarget = 

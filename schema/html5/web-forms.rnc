@@ -561,7 +561,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 				form.attrs.method.data
 			}
 			form.attrs.method.data = 
-				( w:string "get" | w:string "post" )
+				( w:string "get"
+				| w:string "post"
+				| w:string "dialog"
+				)
 		form.attrs.enctype =
 			attribute enctype {
 				form.attrs.enctype.data
