@@ -142,8 +142,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.i18n
 		&	common.attrs.present
 		&	common.attrs.other
-		&	link.attrs.href
 		&	link.attrs.rel
+		&	link.attrs.href?
 		&	link.attrs.as?
 		&	link.attrs.integrity?
 		&	shared-hyperlink.attrs.hreflang?

@@ -2108,11 +2108,13 @@ public class Assertions extends Checker {
                     }
                 }
             }
-            if ("img".equals(localName) || "source".equals(localName)) {
-                if (atts.getIndex("", "srcset") > -1) {
-                    String srcsetVal = atts.getValue("", "srcset");
+            if ("img".equals(localName) || "source".equals(localName) || "link".equals(localName)) {
+                String srcSetName = "link".equals(localName) ? "imagesrcset" : "srcset";
+                String sizesName = "link".equals(localName) ? "imagesizes" : "sizes";
+                if (atts.getIndex("", srcSetName) > -1) {
+                    String srcsetVal = atts.getValue("", srcSetName);
                     try {
-                        if (atts.getIndex("", "sizes") > -1) {
+                        if (atts.getIndex("", sizesName) > -1) {
                             ImageCandidateStringsWidthRequired.THE_INSTANCE.checkValid(
                                     srcsetVal);
                         } else {
@@ -2122,17 +2124,17 @@ public class Assertions extends Checker {
                         // see nu.validator.datatype.ImageCandidateStrings
                         if ("1".equals(System.getProperty(
                                 "nu.validator.checker.imageCandidateString.hasWidth"))) {
-                            if (atts.getIndex("", "sizes") < 0) {
-                                err("When the \u201csrcset\u201d attribute has"
+                            if (atts.getIndex("", sizesName) < 0) {
+                                err("When the \u201c" + srcSetName + "\u201d attribute has"
                                         + " any image candidate string with a"
                                         + " width descriptor, the"
-                                        + " \u201csizes\u201d attribute"
+                                        + " \u201c" + sizesName + "\u201d attribute"
                                         + " must also be present.");
                             }
                         }
                     } catch (DatatypeException e) {
                         Class<?> datatypeClass = ImageCandidateStrings.class;
-                        if (atts.getIndex("", "sizes") > -1) {
+                        if (atts.getIndex("", sizesName) > -1) {
                             datatypeClass = ImageCandidateStringsWidthRequired.class;
                         }
                         try {
@@ -2147,7 +2149,7 @@ public class Assertions extends Checker {
                                     }
                                 }
                                 VnuBadAttrValueException ex = new VnuBadAttrValueException(
-                                        localName, uri, "srcset", srcsetVal,
+                                        localName, uri, srcSetName, srcsetVal,
                                         msg, getDocumentLocator(),
                                         datatypeClass, false);
                                 getErrorHandler().error(ex);
@@ -2167,7 +2169,7 @@ public class Assertions extends Checker {
                                         + " following sibling"
                                         + " \u201csource\u201d element or"
                                         + " \u201cimg\u201d element with a"
-                                        + " \u201csrcset\u201d attribute"
+                                        + " \u201c" + srcSetName + "\u201d attribute"
                                         + " must have a"
                                         + " \u201cmedia\u201d attribute and/or"
                                         + " \u201ctype\u201d attribute.",
@@ -2187,9 +2189,9 @@ public class Assertions extends Checker {
                             }
                         }
                     }
-                } else if (atts.getIndex("", "sizes") > -1) {
-                    err("The \u201csizes\u201d attribute may be specified"
-                            + " only if the \u201csrcset\u201d attribute is"
+                } else if (atts.getIndex("", sizesName) > -1) {
+                    err("The \u201c" + sizesName + "\u201d attribute may be specified"
+                            + " only if the \u201c" + srcSetName + "\u201d attribute is"
                             + " also present.");
                 }
             }
@@ -2994,6 +2996,13 @@ public class Assertions extends Checker {
                             atts.getValue("", "rel") //
                             .toLowerCase().split("\\s+"));
                 }
+                if (atts.getIndex("", "href") == -1
+                        && atts.getIndex("", "imagesrcset") == -1
+                        && atts.getIndex("", "resource") == -1) { //rdfa
+                    err("A \u201Clink\u201D element must have"
+                                + " \u201Chref\u201D or \u201Cimagesrcset\u201D"
+                                + " attribute or both.");
+                }
                 if (relList.contains("preload")
                         && atts.getIndex("", "as") < 0) {
                     err("A \u201Clink\u201D element with a"
@@ -3077,6 +3086,36 @@ public class Assertions extends Checker {
                             + " \u201Cworkertype\u201D attribute must have a"
                             + " \u201Crel\u201D attribute that contains the"
                             + " value \u201Cserviceworker\u201D.");
+                }
+                if (atts.getIndex("", "imagesrcset") > -1
+                        && !(relList.contains("preload")
+                        || !hasRel)) {
+                    err("A \u201Clink\u201D element with an"
+                                + " \u201Cimagesrcset\u201D attribute must have a"
+                                + " \u201Crel\u201D attribute that contains the"
+                                + " value \u201Cpreload\u201D.");
+                }
+                if (atts.getIndex("", "imagesizes") > -1
+                        && !(relList.contains("preload")
+                        || !hasRel)) {
+                    err("A \u201Clink\u201D element with an"
+                                + " \u201Cimagesizes\u201D attribute must have a"
+                                + " \u201Crel\u201D attribute that contains the"
+                                + " value \u201Cpreload\u201D.");
+                }
+                if (atts.getIndex("", "imagesrcset") > -1
+                        && (atts.getIndex("", "as") == -1
+                        || !atts.getValue("", "as").equalsIgnoreCase("image"))) {
+                    err("A \u201Clink\u201D element with an"
+                                + " \u201Cimagesrcset\u201D attribute must have an"
+                                + " \u201Cas\u201D attribute with value \u201Cimage\u201D.");
+                }
+                if (atts.getIndex("", "imagesizes") > -1
+                        && (atts.getIndex("", "as") == -1
+                        || !atts.getValue("", "as").equalsIgnoreCase("image"))) {
+                    err("A \u201Clink\u201D element with an"
+                                + " \u201Cimagesizes\u201D attribute must have an"
+                                + " \u201Cas\u201D attribute with value \u201Cimage\u201D.");
                 }
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
