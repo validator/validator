@@ -2999,9 +2999,9 @@ public class Assertions extends Checker {
                 if (atts.getIndex("", "href") == -1
                         && atts.getIndex("", "imagesrcset") == -1
                         && atts.getIndex("", "resource") == -1) { //rdfa
-                    err("A \u201Clink\u201D element must have"
+                    err("A \u201Clink\u201D element must have an"
                                 + " \u201Chref\u201D or \u201Cimagesrcset\u201D"
-                                + " attribute or both.");
+                                + " attribute, or both.");
                 }
                 if (relList.contains("preload")
                         && atts.getIndex("", "as") < 0) {
