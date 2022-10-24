@@ -321,6 +321,7 @@ namespace local = ""
 			                    | aria-roledescription
 			                    | spellcheck
 			                    | autocapitalize
+			                    | enterkeyhint
 			                    | accesskey
 			                    | itemref
 			                    | itemprop
