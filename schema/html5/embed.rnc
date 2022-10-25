@@ -223,8 +223,9 @@ namespace local = ""
 			                    | hidden
 			                    | inputmode
 			                    | nonce
-			                    | onabort
 			                    | onauxclick
+			                    | onbeforeinput
+			                    | onbeforematch
 			                    | onblur
 			                    | oncancel
 			                    | oncanplay
@@ -232,7 +233,9 @@ namespace local = ""
 			                    | onchange
 			                    | onclick
 			                    | onclose
+			                    | oncontextlost
 			                    | oncontextmenu
+			                    | oncontextrestored
 			                    | oncopy
 			                    | oncuechange
 			                    | oncut
@@ -249,8 +252,6 @@ namespace local = ""
 			                    | onended
 			                    | onerror
 			                    | onfocus
-			                    | onfocusin
-			                    | onfocusout
 			                    | onformdata
 			                    | oninput
 			                    | oninvalid
@@ -280,17 +281,13 @@ namespace local = ""
 			                    | onsecuritypolicyviolation
 			                    | onseeked
 			                    | onseeking
-			                    | onslotchange
 			                    | onselect
+			                    | onslotchange
 			                    | onstalled
 			                    | onsubmit
 			                    | onsuspend
 			                    | ontimeupdate
 			                    | ontoggle
-			                    | ontransitioncancel
-			                    | ontransitionend
-			                    | ontransitionrun
-			                    | ontransitionstart
 			                    | onvolumechange
 			                    | onwaiting
 			                    | onwheel
