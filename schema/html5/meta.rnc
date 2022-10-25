@@ -55,13 +55,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	body.attrs.onbeforeprint?
 		&	body.attrs.onbeforeunload?
 		&	body.attrs.onhashchange?
+		&	body.attrs.onlanguagechange?
 		&	body.attrs.onmessage?
+		&	body.attrs.onmessageerror?
 		&	body.attrs.onoffline?
 		&	body.attrs.ononline?
 		&	body.attrs.onpagehide?
 		&	body.attrs.onpageshow?
 		&	body.attrs.onpopstate?
+		&	body.attrs.onrejectionhandled?
 		&	body.attrs.onstorage?
+		&	body.attrs.onunhandledrejection?
 		&	body.attrs.onunload?
 		)
 	body.inner =
@@ -75,26 +79,28 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onbeforeunload { common.data.functionbody }
 	body.attrs.onhashchange =
 		attribute onhashchange { common.data.functionbody }
+	body.attrs.onlanguagechange =
+		attribute onlanguagechange { common.data.functionbody }
 	body.attrs.onmessage =
 		attribute onmessage { common.data.functionbody }
+	body.attrs.onmessageerror =
+		attribute onmessageerror { common.data.functionbody }
 	body.attrs.onoffline =
 		attribute onoffline { common.data.functionbody }
 	body.attrs.ononline =
 		attribute ononline { common.data.functionbody }
-	body.attrs.onpopstate =
-		attribute onpopstate { common.data.functionbody }
 	body.attrs.onpagehide =
 		attribute onpagehide { common.data.functionbody }
 	body.attrs.onpageshow =
 		attribute onpageshow { common.data.functionbody }
-	body.attrs.onredo =
-		attribute onredo { common.data.functionbody }
-	body.attrs.onresize =
-		attribute onresize { common.data.functionbody }
+	body.attrs.onpopstate =
+		attribute onpopstate { common.data.functionbody }
+	body.attrs.onrejectionhandled =
+		attribute onrejectionhandled { common.data.functionbody }
 	body.attrs.onstorage =
 		attribute onstorage { common.data.functionbody }
-	body.attrs.onundo =
-		attribute onundo { common.data.functionbody }
+	body.attrs.onunhandledrejection =
+		attribute onunhandledrejection { common.data.functionbody }
 	body.attrs.onunload =
 		attribute onunload { common.data.functionbody }
 
