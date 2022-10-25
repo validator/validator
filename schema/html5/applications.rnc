@@ -95,15 +95,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)
 		}
 
-## Application Cache: manifest
-
-	html.attrs.manifest =
-		attribute manifest {
-			common.data.uri.non-empty
-		}
-		
-	html.attrs &= html.attrs.manifest?
-
 ## Progess Indicator: <progress>
 
 	progress.elem =
