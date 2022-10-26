@@ -32,7 +32,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.attrs.hidden =
 		attribute hidden {
-			w:string "hidden" | w:string ""
+			w:string "hidden" | w:string "until-found" | w:string ""
 		}
 
 ## Global attributes applicable on elements with editable content
