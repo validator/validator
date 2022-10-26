@@ -2986,6 +2986,14 @@ public class Assertions extends Checker {
                     }
                     hasContentTypePragma = true;
                 }
+                if (atts.getIndex("", "media") > -1 &&
+                        (atts.getIndex("", "name") <= -1
+                        || !atts.getValue("", "name").equalsIgnoreCase("theme-color"))) {
+                    err("A \u201Cmeta\u201D element with a"
+                                + " \u201Cmedia\u201D attribute must have a"
+                                + " \u201Cname\u201D attribute that contains the"
+                                + " value \u201Ctheme-color\u201D.");
+                }
             }
             if ("link" == localName) {
                 boolean hasRel = false;
