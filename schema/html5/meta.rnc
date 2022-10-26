@@ -283,6 +283,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.microdata.itemscope?
 		&	common.attrs.microdata.itemtype?
 		&	common.attrs.microdata.itemid?
+		&	shared-hyperlink.attrs.media?
 		)
 		meta.name.attrs.name =
 			attribute name {
