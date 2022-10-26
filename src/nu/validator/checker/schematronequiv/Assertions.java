@@ -2050,8 +2050,14 @@ public class Assertions extends Checker {
                     Class<?> datatypeClass = null;
                     String autocompleteVal = atts.getValue("", "autocomplete");
                     try {
-                        if (!"on".equals(autocompleteVal)
-                                && !"off".equals(autocompleteVal)) {
+                        if("on".equals(autocompleteVal) || "off".equals(autocompleteVal)) {
+                            if ("hidden".equals(inputTypeVal)) {
+                                err("An \u201cinput\u201d element with a \u201ctype\u201d"
+                                            + " attribute whose value is \u201chidden\u201d"
+                                            + " must not use value \u201Con\u201D or \u201Coff\u201D"
+                                            + " in attribute \u201Cautocomplete\u201D.");
+                            }
+                        } else {
                             if ("hidden".equals(inputTypeVal)) {
                                 AutocompleteDetailsAny.THE_INSTANCE.checkValid(
                                         autocompleteVal);
