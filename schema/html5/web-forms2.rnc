@@ -4,261 +4,19 @@ datatypes w = "http://whattf.org/datatype-draft"
 ##  RELAX NG Schema for HTML 5: Web Forms 2.0 markup                  #
 # #####################################################################
 
-## Shared attributes for form controls
-
-	common-form.attrs &=
-		( common-form.attrs.form? )
-
-	common-form.attrs.form |= 
-		attribute form {
-			common.data.idref
-		}
-
-	shared-form.attrs.formaction =
-		attribute formaction {
-			common.data.uri.non-empty
-		}
-
-	shared-form.attrs.formenctype =
-		attribute formenctype {
-			shared-form.attrs.formenctype.data
-		}
-		shared-form.attrs.formenctype.data = 
-			(	w:string "application/x-www-form-urlencoded" 
-			|	w:string "multipart/form-data"
-			|	w:string "text/plain"
-			)
-
-	shared-form.attrs.formmethod =
-		attribute formmethod {
-			shared-form.attrs.formmethod.data
-		}
-		shared-form.attrs.formmethod.data = 
-			( w:string "get"
-			| w:string "post"
-			| w:string "dialog"
-			)
-
-	shared-form.attrs.formtarget = 
-		attribute formtarget {
-			common.data.browsing-context-or-keyword
-		}
-
-	shared-form.attrs.formnovalidate = 
-		attribute formnovalidate {
-			w:string "formnovalidate" | w:string ""
-		}
-
-	shared-form.attrs.pattern = 
-		attribute pattern {
-			form.data.pattern
-		}
-
-	shared-form.attrs.template = 
-		attribute template {
-			common.data.idref
-		}
-
-	shared-form.attrs.required = 
-		attribute required {
-			w:string "required" | w:string ""
-		}
-
-	shared-form.attrs.placeholder = 
-		attribute placeholder {
-			form.data.stringwithoutlinebreaks
-		}
-
-	shared-form.attrs.dirname = 
-		attribute dirname {
-			form.data.nonemptystring
-		}
-
-	shared-form.attrs.minlength =
-		attribute minlength {
-			common.data.integer.non-negative
-		}
-
-## Shared attributes for <input>
-		
-	shared-input-no-size.attrs =
-		(	input.attrs.autocomplete?
-		&	input.attrs.list?
-		&	shared-form.attrs.maxlength?
-		&	shared-form.attrs.minlength?
-		&	shared-form.attrs.pattern?
-		&	shared-form.attrs.placeholder?
-		&	aria.prop.placeholder?
-		&	shared-form.attrs.readonly?
-		&	shared-form.attrs.required?
-		)
-
-	shared-input-no-list.attrs =
-		(	input.attrs.autocomplete?
-		&	shared-form.attrs.maxlength?
-		&	shared-form.attrs.minlength?
-		&	shared-form.attrs.pattern?
-		&	shared-form.attrs.placeholder?
-		&	aria.prop.placeholder?
-		&	shared-form.attrs.readonly?
-		&	shared-form.attrs.required?
-		&	shared-form.attrs.size?
-		)
-
-	shared-input.attrs =
-		(	shared-input-no-size.attrs
-		&	shared-form.attrs.size?
-		)
-
-	input.attrs.list = 
-		attribute list {
-			common.data.idref
-		}
-	
-	input.attrs.step.float = 
-		attribute step {
-			w:string "any" | common.data.float.positive
-		}
-	
-	input.attrs.step.integer = 
-		attribute step {
-			w:string "any" | common.data.integer.positive 
-		}
-	
-	input.attrs.multiple = 
-		attribute multiple {
-			w:string "multiple" | w:string ""
-		}
-
-## autocomplete
-
-	input.attrs.autocomplete.any =
-		attribute autocomplete {
-			(	w:string "on" | w:string "off"
-			|	common.data.autocomplete.any
-			)
-		}
-
-	input.attrs.autocomplete =
-		attribute autocomplete {
-			string
-		}
-
-## Hidden String: <input type='hidden'>, Extensions
-
-	input.hidden.attrs &=
-		input.attrs.autocomplete?
-
-## Text Field: <input type='text'>, Extensions
-
-	input.text.attrs &=
-		(	input.attrs.autocomplete?
-		&	shared-form.attrs.dirname?
-		&	input.attrs.list?
-		&	shared-form.attrs.pattern?
-		&	shared-form.attrs.required?
-		&	shared-form.attrs.placeholder?
-		&	aria.prop.placeholder?
-		&	shared-form.attrs.minlength?
-		)
-
-## Password Field: <input type='password'>, Extensions
-
-	input.password.attrs &=
-		(	input.attrs.autocomplete?
-		&	input.attrs.list?
-		&	shared-form.attrs.pattern?
-		&	shared-form.attrs.placeholder?
-		&	aria.prop.placeholder?
-		&	shared-form.attrs.required?
-		&	aria.prop.required?
-		&	shared-form.attrs.minlength?
-		)
-
-## Checkbox <input type='checkbox'>, Extensions
-
-	input.checkbox.attrs &=
-		(	shared-input.attrs
-		&	aria.prop.required?
-		)
-
-## Radiobutton: <input type='radio'>, Extensions
-
-	input.radio.attrs &=
-		(	shared-input.attrs
-		&	aria.prop.required?
-		)
-
-## Scripting Hook Button: <input type='button'>, Extensions
-
-	input.button.attrs &=
-		(	shared-input.attrs	)
-
-## Submit Button: <input type='submit'>, Extensions
-
-	input.submit.attrs &=
-		(	shared-input.attrs
-		&	shared-form.attrs.formaction?
-		&	shared-form.attrs.formenctype?
-		&	shared-form.attrs.formmethod?
-		&	shared-form.attrs.formtarget?
-		&	shared-form.attrs.formnovalidate?
-		)
-
-## Reset Button: <input type='reset'>, Extensions
-
-	input.reset.attrs &=
-		(	shared-input.attrs	)
-
-## File Upload: <input type='file'>, Extensions
-
-	input.file.attrs &=
-		(	shared-input.attrs
-		&	input.attrs.multiple?
-		&	aria.prop.required?
-		&	input.input.attrs.capture?
-		)
-		input.input.attrs.capture =
-			attribute capture {
-				w:string "user" | w:string "environment"
-			}
-
-## Image Submit Button: <input type='image'>, Extensions
-
-	input.image.attrs &=
-		(	shared-input.attrs
-		&	shared-form.attrs.formaction?
-		&	shared-form.attrs.formenctype?
-		&	shared-form.attrs.formmethod?
-		&	shared-form.attrs.formtarget?
-		&	shared-form.attrs.formnovalidate?
-		&	input.image.attrs.height?
-		&	input.image.attrs.width?
-		)	
-		input.image.attrs.height =
-			attribute height {
-				common.data.integer.non-negative
-			}
-		input.image.attrs.width =
-			attribute width {
-				common.data.integer.non-negative
-			}
-
 ## Date and Time with No Time Zone Information: <input type='datetime-local'>
 
 	input.datetime-local.elem = 
 		element input { input.datetime-local.attrs }
 	input.datetime-local.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input.attrs
+		&	shared-form.attrs.date-time
 		&	input.datetime-local.attrs.type
 		&	input.datetime-local.attrs.min?
 		&	aria.prop.valuemin?
 		&	input.datetime-local.attrs.max?
 		&	aria.prop.valuemax?
 		&	input.attrs.step.float?
-		&	aria.prop.required?
 		&	input.datetime-local.attrs.value?
 		)	
 		input.datetime-local.attrs.type = 
@@ -286,14 +44,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.date.attrs }
 	input.date.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input.attrs
+		&	shared-form.attrs.date-time
 		&	input.date.attrs.type
 		&	input.date.attrs.min?
 		&	aria.prop.valuemin?
 		&	input.date.attrs.max?
 		&	aria.prop.valuemax?
-		&	aria.prop.required?
 		&	input.attrs.step.integer?
 		&	input.date.attrs.value?
 		)	
@@ -322,14 +78,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.month.attrs }
 	input.month.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input.attrs
+		&	shared-form.attrs.date-time
 		&	input.month.attrs.type
 		&	input.month.attrs.min?
 		&	aria.prop.valuemin?
 		&	input.month.attrs.max?
 		&	aria.prop.valuemax?
-		&	aria.prop.required?
 		&	input.attrs.step.integer?
 		&	input.month.attrs.value?
 		)	
@@ -358,14 +112,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.time.attrs }
 	input.time.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input.attrs
+		&	shared-form.attrs.date-time
 		&	input.time.attrs.type
 		&	input.time.attrs.min?
 		&	aria.prop.valuemin?
 		&	input.time.attrs.max?
 		&	aria.prop.valuemax?
-		&	aria.prop.required?
 		&	input.attrs.step.float?
 		&	input.time.attrs.value?
 		)	
@@ -394,14 +146,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.week.attrs }
 	input.week.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input.attrs
+		&	shared-form.attrs.date-time
 		&	input.week.attrs.type
 		&	input.week.attrs.min?
 		&	aria.prop.valuemin?
 		&	input.week.attrs.max?
 		&	aria.prop.valuemax?
-		&	aria.prop.required?
 		&	input.attrs.step.integer?
 		&	input.week.attrs.value?
 		)	
@@ -431,7 +181,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.number.attrs = 
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-input-no-size.attrs
+		&	input.attrs.autocomplete?
+		&	input.attrs.list?
+		&	shared-form.attrs.placeholder?
+		&	aria.prop.placeholder?
+		&	shared-form.attrs.required?
+		&	shared-form.attrs.readonly?
 		&	input.number.attrs.type
 		&	input.number.attrs.min?
 		&	input.number.attrs.max?
@@ -467,7 +222,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.range.attrs = 
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-input-no-size.attrs
+		&	input.attrs.autocomplete?
+		&	input.attrs.list?
 		&	input.range.attrs.type
 		&	input.range.attrs.min?
 		&	input.range.attrs.max?
@@ -502,14 +258,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.email.attrs }	
 	input.email.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input-no-list.attrs
 		&	input.email.attrs.type
 		&	(	(	input.attrs.multiple
 				&	input.email.attrs.value.multiple?
 				)
 			|	input.email.attrs.value.single?
 			)?
+		&	shared-form.attrs.single-line-text-edit
 		&	(
 				(	common.attrs.aria.implicit.textbox
 				|	common.attrs.aria.role.textbox
@@ -542,10 +297,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.url.attrs }
 	input.url.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input-no-list.attrs
 		&	input.url.attrs.type
-		&	input.url.attrs.value?
+		&	input.url.attrs.value? 
+		&	shared-form.attrs.single-line-text-edit
 		&	(
 				(	common.attrs.aria.implicit.textbox
 				|	common.attrs.aria.role.textbox
@@ -574,11 +328,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.search.attrs }
 	input.search.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input.attrs
 		&	input.search.attrs.type
-		&	input.search.attrs.value?
-		&	shared-form.attrs.dirname?
+		&	input.search.attrs.value? 
+		&	shared-form.attrs.single-line-text-edit
+		&	shared-form.attrs.dirname? 
+		&	input.attrs.list?
 		&	(	common.attrs.aria.implicit.searchbox
 			|	common.attrs.aria.role.searchbox
 			)?
@@ -600,10 +354,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.tel.attrs }	
 	input.tel.attrs = 
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-input-no-list.attrs
 		&	input.tel.attrs.type
-		&	input.tel.attrs.value?
+		&	input.tel.attrs.value? 
+		&	shared-form.attrs.single-line-text-edit
 		&	(
 				(	common.attrs.aria.implicit.textbox
 				|	common.attrs.aria.role.textbox
@@ -633,9 +386,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.color.attrs = 
 		(	common.attrs
 		&	common-form.attrs
+		&	input.attrs.autocomplete?
+		&	input.attrs.list?
 		&	input.color.attrs.type
 		&	input.color.attrs.value?
-		&	shared-input.attrs
 		)	
 		input.color.attrs.type = 
 			attribute type {
@@ -677,12 +431,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 	textarea.attrs.rows-and-cols-wf1 |= 
 		empty
 	textarea.attrs &=
-		(	shared-form.attrs.maxlength?
-		&	shared-form.attrs.minlength?
-		&	shared-form.attrs.required? 
-		&	textarea.attrs.placeholder?
+		(	textarea.attrs.placeholder?
 		&	aria.prop.placeholder?
-		&	shared-form.attrs.dirname?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
 				&	textarea.attrs.cols
@@ -722,16 +472,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 
 	common.elem.phrasing |= datalist.elem
-
-## Complex Submit Button: <button type='submit'>, extensions
-
-	button.submit.attrs &=
-		(	shared-form.attrs.formaction? 
-		&	shared-form.attrs.formenctype? 
-		&	shared-form.attrs.formmethod? 
-		&	shared-form.attrs.formtarget? 
-		&	shared-form.attrs.formnovalidate? 
-		)
 	
 
 ## Form: <form>, extensions

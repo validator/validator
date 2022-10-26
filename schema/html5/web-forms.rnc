@@ -4,12 +4,55 @@ datatypes w = "http://whattf.org/datatype-draft"
 ##  RELAX NG Schema for HTML 5: Web Forms 1.0 markup                  #
 # #####################################################################
 
-## Shared attributes for form controls
+## Groups of shared attributes
 
+# Shared by all form controls
 	common-form.attrs =
 		(	common-form.attrs.name?
 		&	common-form.attrs.disabled?
+		&	common-form.attrs.form?
 		)
+
+# Shared by all single or multiple line text edit controls
+	shared-form.attrs.text-edit =
+		(	common-form.attrs
+		&	shared-form.attrs.minlength?
+		&	shared-form.attrs.maxlength?
+		&	shared-form.attrs.required?
+		&	shared-form.attrs.readonly?
+		)
+
+# Shared by all single-line text edit controls
+	shared-form.attrs.single-line-text-edit =
+		(	shared-form.attrs.text-edit
+		&	input.attrs.autocomplete?
+		&	shared-form.attrs.placeholder?
+		&	aria.prop.placeholder?
+		&	shared-form.attrs.pattern?
+		&	shared-form.attrs.size?
+		)
+
+# Shared by all date & time controls
+	shared-form.attrs.date-time =
+		(	common-form.attrs?
+		&	input.attrs.autocomplete?
+		&	input.attrs.list?
+		&	shared-form.attrs.required?
+		&	aria.prop.required?
+		&	shared-form.attrs.readonly?
+		)
+
+# Shared by all buttons able to submit the form
+	shared-form.attrs.submit = 
+		(	common-form.attrs?
+		&	shared-form.attrs.formaction?
+		&	shared-form.attrs.formenctype?
+		&	shared-form.attrs.formmethod?
+		&	shared-form.attrs.formtarget?
+		&	shared-form.attrs.formnovalidate?
+		)
+
+## Shared attributes by all form controls
 		
 	common-form.attrs.name = 
 		attribute name {
@@ -21,14 +64,60 @@ datatypes w = "http://whattf.org/datatype-draft"
 			w:string "disabled" | w:string ""
 		}
 
+	common-form.attrs.form |= 
+		attribute form {
+			common.data.idref
+		}
+		
+## Shared attributes by most of control fields
+
+	input.attrs.autocomplete.any =
+		attribute autocomplete {
+			(	w:string "on" | w:string "off"
+			|	common.data.autocomplete.any
+			)
+		}
+
+	input.attrs.autocomplete =
+		attribute autocomplete {
+			string
+		}
+
+	input.attrs.list = 
+		attribute list {
+			common.data.idref
+		}
+
+	shared-form.attrs.required = 
+		attribute required {
+			w:string "required" | w:string ""
+		}
+
 	shared-form.attrs.readonly = 
 		attribute readonly {
 			w:string "readonly" | w:string ""
 		}
 
+## Shared attributes by all single-line text control fields
+
+	shared-form.attrs.minlength =
+		attribute minlength {
+			common.data.integer.non-negative
+		}
+
 	shared-form.attrs.maxlength = 
 		attribute maxlength {
 			common.data.integer.non-negative
+		}
+
+	shared-form.attrs.pattern = 
+		attribute pattern {
+			form.data.pattern
+		}
+
+	shared-form.attrs.placeholder = 
+		attribute placeholder {
+			form.data.stringwithoutlinebreaks
 		}
 
 	shared-form.attrs.size = 
@@ -38,11 +127,68 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	# REVISIT tabindex goes in common.attrs
 
-## Shared attributes for <input>
+## Shared attributes by buttons able to submit the form
+
+	shared-form.attrs.formaction =
+		attribute formaction {
+			common.data.uri.non-empty
+		}
+
+	shared-form.attrs.formenctype =
+		attribute formenctype {
+			shared-form.attrs.formenctype.data
+		}
+		shared-form.attrs.formenctype.data = 
+			(	w:string "application/x-www-form-urlencoded" 
+			|	w:string "multipart/form-data"
+			|	w:string "text/plain"
+			)
+
+	shared-form.attrs.formmethod =
+		attribute formmethod {
+			shared-form.attrs.formmethod.data
+		}
+		shared-form.attrs.formmethod.data = 
+			( w:string "get"
+			| w:string "post"
+			| w:string "dialog"
+			)
+
+	shared-form.attrs.formtarget = 
+		attribute formtarget {
+			common.data.browsing-context-or-keyword
+		}
+
+	shared-form.attrs.formnovalidate = 
+		attribute formnovalidate {
+			w:string "formnovalidate" | w:string ""
+		}
+
+## Other shared attributes
 	
 	input.attrs.checked = 
 		attribute checked {
 			w:string "checked" | w:string ""
+		}
+
+	shared-form.attrs.dirname = 
+		attribute dirname {
+			form.data.nonemptystring
+		}
+
+	input.attrs.multiple = 
+		attribute multiple {
+			w:string "multiple" | w:string ""
+		}
+
+	input.attrs.step.float = 
+		attribute step {
+			w:string "any" | common.data.float.positive
+		}
+
+	input.attrs.step.integer = 
+		attribute step {
+			w:string "any" | common.data.integer.positive 
 		}
 
 ## Text Field: <input type='text'>
@@ -51,12 +197,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.text.attrs }
 	input.text.attrs = 
 		(	common.attrs
-		&	common-form.attrs
 		&	input.text.attrs.type?
-		&	shared-form.attrs.maxlength? 
-		&	shared-form.attrs.readonly?
-		&	shared-form.attrs.size?
 		&	input.text.attrs.value? 
+		&	shared-form.attrs.single-line-text-edit
+		&	shared-form.attrs.dirname? 
+		&	input.attrs.list?
 		&	(	common.attrs.aria.implicit.textbox
 			|	common.attrs.aria.role.textbox
 			|	common.attrs.aria.role.combobox
@@ -81,12 +226,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.password.attrs }
 	input.password.attrs = 
 		(	common.attrs
-		&	common-form.attrs
 		&	input.password.attrs.type
-		&	shared-form.attrs.maxlength? 
-		&	shared-form.attrs.readonly? 
-		&	shared-form.attrs.size?
 		&	input.password.attrs.value? 
+		&	shared-form.attrs.single-line-text-edit
+		&	aria.prop.required?
 		)
 		input.password.attrs.type = 
 			attribute type {
@@ -106,8 +249,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.checkbox.attrs = 
 		(	common.attrs
 		&	common-form.attrs
+		&	input.attrs.checked?
+		&	shared-form.attrs.required?
+		&	aria.prop.required?
 		&	input.checkbox.attrs.type
-		&	input.attrs.checked? 
 		&	input.checkbox.attrs.value? 
 		&	(	common.attrs.aria.implicit.checkbox
 			|	common.attrs.aria.role.checkbox
@@ -135,8 +280,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.radio.attrs = 
 		(	common.attrs
 		&	common-form.attrs
+		&	input.attrs.checked?
+		&	shared-form.attrs.required?
+		&	aria.prop.required?
 		&	input.radio.attrs.type
-		&	input.attrs.checked? 
 		&	input.radio.attrs.value? 
 		&	(	common.attrs.aria.implicit.radio
 			|	common.attrs.aria.role.radio
@@ -195,7 +342,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.submit.attrs }
 	input.submit.attrs = 
 		(	common.attrs
-		&	common-form.attrs
+		&	shared-form.attrs.submit
 		&	input.submit.attrs.type
 		&	input.submit.attrs.value? 
 		&	(	common.attrs.aria.implicit.button
@@ -245,8 +392,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.file.attrs = 
 		(	common.attrs
 		&	common-form.attrs
+		&	input.attrs.multiple?
+		&	shared-form.attrs.required?
+		&	aria.prop.required?
 		&	input.file.attrs.type
 		&	input.file.attrs.accept?
+		&	input.input.attrs.capture?
 		)
 		input.file.attrs.type = 
 			attribute type {
@@ -255,6 +406,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		input.file.attrs.accept = 
 			attribute accept {
 				form.data.mimetypelist
+			}
+		input.input.attrs.capture =
+			attribute capture {
+				w:string "user" | w:string "environment"
 			}
 
 	input.elem |= input.file.elem
@@ -266,6 +421,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.hidden.attrs = 
 		(	common.attrs
 		&	common-form.attrs
+		&	input.attrs.autocomplete?
 		&	input.hidden.attrs.type
 		&	input.hidden.attrs.value? 
 		)
@@ -286,10 +442,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element input { input.image.attrs }
 	input.image.attrs = 
 		(	common.attrs
-		&	common-form.attrs
+		&	shared-form.attrs.submit
 		&	input.image.attrs.type
 		&	input.image.attrs.alt 
 		&	input.image.attrs.src? 
+		&	input.image.attrs.height?
+		&	input.image.attrs.width?
 		&	(	common.attrs.aria.implicit.button
 			|	common.attrs.aria.role.button
 			|	common.attrs.aria.role.link
@@ -312,6 +470,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute src {
 				common.data.uri.non-empty
 			}
+		input.image.attrs.height =
+			attribute height {
+				common.data.integer.non-negative
+			}
+		input.image.attrs.width =
+			attribute width {
+				common.data.integer.non-negative
+			}
 	
 	input.elem |= input.image.elem
 	
@@ -323,8 +489,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element textarea { textarea.inner & textarea.attrs }
 	textarea.attrs =
 		(	common.attrs
-		&	common-form.attrs
-		&	shared-form.attrs.readonly?
+		&	shared-form.attrs.text-edit
+		&	shared-form.attrs.dirname? 
 		&	textarea.attrs.rows-and-cols-wf1
 		&	(	common.attrs.aria.implicit.textbox
 			|	common.attrs.aria.role.textbox
@@ -453,7 +619,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element button { button.inner & button.submit.attrs }	
 	button.submit.attrs =
 		(	common.attrs
-		&	common-form.attrs
+		&	shared-form.attrs.submit
 		&	button.submit.attrs.type?
 		&	button.attrs.value?
 		&	(	common.attrs.aria.implicit.button

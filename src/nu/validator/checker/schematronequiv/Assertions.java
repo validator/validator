@@ -138,42 +138,6 @@ public class Assertions extends Checker {
         return "";
     }
 
-    private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
-
-    static {
-        INPUT_ATTRIBUTES.put("autocomplete",
-                new String[] { "hidden", "text", "search", "url", "tel", "email",
-                        "password", "date", "month", "week", "time",
-                        "datetime-local", "number", "range", "color" });
-        INPUT_ATTRIBUTES.put("list",
-                new String[] { "text", "search", "url", "tel", "email",
-                        "date", "month", "week", "time",
-                        "datetime-local", "number", "range", "color" });
-        INPUT_ATTRIBUTES.put("maxlength", new String[] { "text", "search",
-                "url", "tel", "email", "password" });
-        INPUT_ATTRIBUTES.put("minlength", new String[] { "text", "search",
-                "url", "tel", "email", "password" });
-        INPUT_ATTRIBUTES.put("pattern", new String[] { "text", "search", "url",
-                "tel", "email", "password" });
-        INPUT_ATTRIBUTES.put("placeholder", new String[] { "text", "search",
-                "url", "tel", "email", "password", "number" });
-        INPUT_ATTRIBUTES.put("readonly",
-                new String[] { "text", "search", "url", "tel", "email",
-                        "password", "date", "month", "week", "time",
-                        "datetime-local", "number" });
-        INPUT_ATTRIBUTES.put("required",
-                new String[] { "text", "search", "url", "tel", "email",
-                        "password", "date", "month", "week", "time",
-                        "datetime-local", "number", "checkbox", "radio",
-                        "file" });
-        INPUT_ATTRIBUTES.put("size", new String[] { "text", "search", "url",
-                "tel", "email", "password" });
-
-        for (String[] allowedTypes: INPUT_ATTRIBUTES.values()) {
-            Arrays.sort(allowedTypes);
-        }
-    }
-
     private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<>();
 
     static {
@@ -1971,18 +1935,6 @@ public class Assertions extends Checker {
                         if (Arrays.binarySearch(elementNames, localName) >= 0) {
                             errObsoleteAttribute(attLocal, localName,
                                     " Use CSS instead.");
-                        }
-                    } else if (INPUT_ATTRIBUTES.containsKey(attLocal)
-                            && "input" == localName) {
-                        String[] allowedTypes = INPUT_ATTRIBUTES.get(attLocal);
-                        inputTypeVal = inputTypeVal == null ? "text"
-                                : inputTypeVal;
-                        if (Arrays.binarySearch(allowedTypes,
-                                inputTypeVal) < 0) {
-                            err("Attribute \u201c" + attLocal
-                                    + "\u201d is only allowed when the input"
-                                    + " type is " + renderTypeList(allowedTypes)
-                                    + ".");
                         }
                     } else if ("autofocus" == attLocal) {
                         if (hasAutofocus) {
