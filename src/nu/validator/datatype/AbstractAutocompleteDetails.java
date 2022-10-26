@@ -106,14 +106,15 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        if (literal.length() == 0) {
+        String trimmed = trimWhitespace(literal.toString());
+        if (trimmed.length() == 0) {
             throw newDatatypeException("Must not be empty.");
         }
         StringBuilder builder = new StringBuilder();
         ArrayList<String> detailTokens = new ArrayList<>();
-        int len = literal.length();
+        int len = trimmed.length();
         for (int i = 0; i < len; i++) {
-            char c = literal.charAt(i);
+            char c = trimmed.charAt(i);
             if (isWhitespace(c) && builder.length() > 0) {
                 detailTokens.add(builder.toString());
                 builder.setLength(0);
