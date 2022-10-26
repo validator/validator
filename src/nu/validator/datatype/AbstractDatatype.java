@@ -152,6 +152,20 @@ public abstract class AbstractDatatype implements Datatype {
     public boolean isContextDependent() {
         return false;
     }
+    
+    protected final String trimWhitespace(String s) {
+        int len = s.length();
+        int st = 0;
+        char[] val = s.toCharArray();
+    
+        while ((st < len) && (isWhitespace(val[st]))) {
+            st++;
+        }
+        while ((st < len) && (isWhitespace(val[len - 1]))) {
+            len--;
+        }
+        return ((st > 0) || (len < s.length())) ? s.substring(st, len) : s;
+    }
 
     /**
      * Checks if a UTF-16 code unit represents a whitespace character (U+0020, 
