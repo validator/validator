@@ -129,6 +129,7 @@
 			|	h5.elem
 			|	h6.elem
 			)
+			&	p.elem*
 			&	common.elem.script-supporting*
 		)+
 
