@@ -33,6 +33,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	script.attrs.language? # restricted in Schematron
 		&	script.attrs.integrity?
 		&	embedded.content.attrs.crossorigin?
+		&	common.attrs.blocking?
 		&	referrerpolicy?
 		)
 		script.attrs.src =

@@ -210,6 +210,11 @@ common.attrs.other =
 			w:string "autofocus" | w:string ""
 		}
 
+	common.attrs.blocking = 
+		attribute blocking {
+			w:string "render" | w:string ""
+		}
+
 	common.attrs.nonce =
 		attribute nonce {
 			string

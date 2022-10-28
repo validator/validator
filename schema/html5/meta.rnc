@@ -166,6 +166,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	link.attrs.imagesizes?
 		#	link.attrs.title included in common.attrs
 		&	embedded.content.attrs.crossorigin?
+		&	common.attrs.blocking?
 		&	common.attrs.aria.role.link?
 		)
 		link.attrs.href =
@@ -253,6 +254,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	style.attrs.type?
 		&	style.attrs.media?
+		&	common.attrs.blocking?
 		#	style.attrs.title included in common.attrs
 		)
 		style.attrs.type =
