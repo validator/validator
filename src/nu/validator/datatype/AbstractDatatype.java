@@ -152,12 +152,11 @@ public abstract class AbstractDatatype implements Datatype {
     public boolean isContextDependent() {
         return false;
     }
-    
+
     protected final String trimWhitespace(String s) {
         int len = s.length();
         int st = 0;
         char[] val = s.toCharArray();
-    
         while ((st < len) && (isWhitespace(val[st]))) {
             st++;
         }

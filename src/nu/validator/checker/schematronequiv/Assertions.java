@@ -2050,12 +2050,16 @@ public class Assertions extends Checker {
                     Class<?> datatypeClass = null;
                     String autocompleteVal = atts.getValue("", "autocomplete");
                     try {
-                        if("on".equals(autocompleteVal) || "off".equals(autocompleteVal)) {
+                        if ("on".equals(autocompleteVal)
+                                || "off".equals(autocompleteVal)) {
                             if ("hidden".equals(inputTypeVal)) {
-                                err("An \u201cinput\u201d element with a \u201ctype\u201d"
-                                            + " attribute whose value is \u201chidden\u201d"
-                                            + " must not use value \u201Con\u201D or \u201Coff\u201D"
-                                            + " in attribute \u201Cautocomplete\u201D.");
+                                err("An \u201cinput\u201d element with a"
+                                        + " \u201ctype\u201d attribute whose"
+                                        + " value is \u201chidden\u201d must"
+                                        + " not have an"
+                                        + " \u201Cautocomplete\u201D attribute"
+                                        + " whose value is \u201Con\u201D or"
+                                        + " \u201Coff\u201D.");
                             }
                         } else {
                             if ("hidden".equals(inputTypeVal)) {
@@ -2114,9 +2118,12 @@ public class Assertions extends Checker {
                     }
                 }
             }
-            if ("img".equals(localName) || "source".equals(localName) || "link".equals(localName)) {
-                String srcSetName = "link".equals(localName) ? "imagesrcset" : "srcset";
-                String sizesName = "link".equals(localName) ? "imagesizes" : "sizes";
+            if ("img".equals(localName) || "source".equals(localName)
+                    || "link".equals(localName)) {
+                String srcSetName = "link".equals(localName) ? "imagesrcset"
+                        : "srcset";
+                String sizesName = "link".equals(localName) ? "imagesizes"
+                        : "sizes";
                 if (atts.getIndex("", srcSetName) > -1) {
                     String srcsetVal = atts.getValue("", srcSetName);
                     try {
@@ -2131,11 +2138,12 @@ public class Assertions extends Checker {
                         if ("1".equals(System.getProperty(
                                 "nu.validator.checker.imageCandidateString.hasWidth"))) {
                             if (atts.getIndex("", sizesName) < 0) {
-                                err("When the \u201c" + srcSetName + "\u201d attribute has"
-                                        + " any image candidate string with a"
-                                        + " width descriptor, the"
-                                        + " \u201c" + sizesName + "\u201d attribute"
-                                        + " must also be present.");
+                                err("When the \u201c" + srcSetName
+                                        + "\u201d attribute has any image"
+                                        + " candidate string with a width"
+                                        + " descriptor, the \u201c" + sizesName
+                                        + "\u201d attribute must"
+                                        + " also be specified.");
                             }
                         }
                     } catch (DatatypeException e) {
@@ -2196,9 +2204,9 @@ public class Assertions extends Checker {
                         }
                     }
                 } else if (atts.getIndex("", sizesName) > -1) {
-                    err("The \u201c" + sizesName + "\u201d attribute may be specified"
-                            + " only if the \u201c" + srcSetName + "\u201d attribute is"
-                            + " also present.");
+                    err("The \u201c" + sizesName + "\u201d attribute must only"
+                            + " be specified if the \u201c" + srcSetName
+                            + "\u201d attribute is also specified.");
                 }
             }
 
@@ -2992,13 +3000,14 @@ public class Assertions extends Checker {
                     }
                     hasContentTypePragma = true;
                 }
-                if (atts.getIndex("", "media") > -1 &&
-                        (atts.getIndex("", "name") <= -1
-                        || !atts.getValue("", "name").equalsIgnoreCase("theme-color"))) {
-                    err("A \u201Cmeta\u201D element with a"
-                                + " \u201Cmedia\u201D attribute must have a"
-                                + " \u201Cname\u201D attribute that contains the"
-                                + " value \u201Ctheme-color\u201D.");
+                if (atts.getIndex("", "media") > -1
+                        && (atts.getIndex("", "name") <= -1
+                                || !atts.getValue("", "name").equalsIgnoreCase(
+                                        "theme-color"))) {
+                    err("A \u201Cmeta\u201D element with a \u201Cmedia\u201D"
+                            + " attribute must have a \u201Cname\u201D"
+                            + " attribute whose value is"
+                            + " \u201Ctheme-color\u201D.");
                 }
             }
             if ("link" == localName) {
