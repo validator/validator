@@ -212,7 +212,7 @@ common.attrs.other =
 
 	common.attrs.blocking = 
 		attribute blocking {
-			w:string "render" | w:string ""
+			list { w:string "render" }
 		}
 
 	common.attrs.nonce =
