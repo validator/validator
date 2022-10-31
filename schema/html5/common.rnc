@@ -203,6 +203,7 @@ common.attrs.present =
 common.attrs.other =
 	(	common.attrs.autofocus?
 	&	common.attrs.nonce?
+	&	common.attrs.inert?
 	)
 
 	common.attrs.autofocus = 
@@ -213,6 +214,11 @@ common.attrs.other =
 	common.attrs.nonce =
 		attribute nonce {
 			string
+		}
+
+	common.attrs.inert = 
+		attribute inert {
+			w:string "inert" | w:string ""
 		}
 
 # #####################################################################

@@ -218,6 +218,7 @@ namespace local = ""
 			                    | style
 			                    | tabindex
 			                    | autofocus
+			                    | inert
 			                    | contenteditable
 			                    | draggable
 			                    | hidden
