@@ -3172,9 +3172,11 @@ public class Assertions extends Checker {
                             || relList.contains("preload")
                             || relList.contains("stylesheet")))) {
                     err("A \u201Clink\u201D element with a"
-                                + " \u201Cblocking\u201D attribute,"
-                                + " must have a \u201Crel\u201D attribute with value \u201Cmodulepreload\u201D," +
-                                " \u201Cpreload\u201D or \u201Cstylesheet\u201D.");
+                                + " \u201Cblocking\u201D attribute must have a"
+                                + " \u201Crel\u201D attribute whose value is"
+                                + " \u201Cmodulepreload\u201D,"
+                                + " \u201Cpreload\u201D, or"
+                                + " \u201Cstylesheet\u201D.");
                 }
             }
 
