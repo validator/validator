@@ -3140,6 +3140,18 @@ public class Assertions extends Checker {
                                 + " \u201Cimagesizes\u201D attribute must have an"
                                 + " \u201Cas\u201D attribute with value \u201Cimage\u201D.");
                 }
+                if (relList.contains("alternate")
+                        && relList.contains("stylesheet")
+                        && (atts.getIndex("", "title") == -1
+                            || "".equals(atts.getValue("", "title")))) {
+                    err("A \u201Clink\u201D element with a"
+                                + " \u201Crel\u201D attribute that"
+                                + " contains both the values"
+                                + " \u201Calternate\u201D and"
+                                + " \u201Cstylesheet\u201D must have a"
+                                + " \u201Ctitle\u201D attribute with a"
+                                + " non-empty value.");
+                }
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
                                 && !(relList.contains("dns-prefetch")
