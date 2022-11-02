@@ -1734,13 +1734,12 @@ public class Assertions extends Checker {
             warn("Element \u201Cmath\u201D does not need a"
                     + " \u201Crole\u201D attribute.");
         }
-        if ("http://www.w3.org/2000/svg" == uri) {
-            if ("a" == localName) {
-                for(int i = 0;i < currentPtr;i++) {
-                    String ancestorName = stack[currentPtr - i].getName();
-                    if("a".equals(ancestorName)) {
-                        err("The element \u201Ca\u201D must not appear as a descendant of an element \u201Ca\u201D.");
-                    }
+        if ("http://www.w3.org/2000/svg" == uri
+                && "a".equals(localName)) {
+            for(int i = 0;i < currentPtr;i++) {
+                String ancestorName = stack[currentPtr - i].getName();
+                if("a".equals(ancestorName)) {
+                    err("The element \u201Ca\u201D must not appear as a descendant of an element \u201Ca\u201D.");
                 }
             }
         }
