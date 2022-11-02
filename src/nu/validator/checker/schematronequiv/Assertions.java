@@ -24,17 +24,18 @@ package nu.validator.checker.schematronequiv;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1133,8 +1134,6 @@ public class Assertions extends Checker {
 
     private int currentPtr;
 
-    private int currentSectioningDepth;
-
     public Assertions() {
         super();
     }
@@ -1288,7 +1287,7 @@ public class Assertions extends Checker {
 
     private int currentHeadingPtr;
 
-    private int currentSectioningElementPtr;
+    private final LinkedList<Integer> sectioningElementPtrs = new LinkedList<>();
 
     private boolean hasVisibleMain;
 
@@ -1636,8 +1635,7 @@ public class Assertions extends Checker {
             }
             if ("article" == localName || "aside" == localName
                     || "nav" == localName || "section" == localName) {
-                currentSectioningElementPtr = currentPtr - 1;
-                currentSectioningDepth--;
+                sectioningElementPtrs.pollLast();
             }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
@@ -1659,8 +1657,6 @@ public class Assertions extends Checker {
         currentPtr = 0;
         currentFigurePtr = -1;
         currentHeadingPtr = -1;
-        currentSectioningElementPtr = -1;
-        currentSectioningDepth = 0;
         stack[0] = null;
         hasVisibleMain = false;
         hasMetaCharset = false;
@@ -1690,6 +1686,7 @@ public class Assertions extends Checker {
         allIds.clear();
         siblingSources.clear();
         secondLevelH1s.clear();
+        sectioningElementPtrs.clear();
     }
 
     /**
@@ -2237,15 +2234,14 @@ public class Assertions extends Checker {
             }
             if ("article" == localName || "aside" == localName
                     || "nav" == localName || "section" == localName) {
-                currentSectioningElementPtr = currentPtr + 1;
-                currentSectioningDepth++;
+                sectioningElementPtrs.add(currentPtr + 1);
             }
             if ("h1" == localName || "h2" == localName || "h3" == localName
                     || "h4" == localName || "h5" == localName
                     || "h6" == localName) {
                 currentHeadingPtr = currentPtr + 1;
-                if (currentSectioningElementPtr > -1) {
-                    stack[currentSectioningElementPtr].setHeadingFound();
+                if (!sectioningElementPtrs.isEmpty()) {
+                    stack[sectioningElementPtrs.peekLast()].setHeadingFound();
                 }
             }
             if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
@@ -2483,9 +2479,9 @@ public class Assertions extends Checker {
                     hasVisibleMain = true;
                 }
             } else if ("h1" == localName) {
-                if (currentSectioningDepth > 1) {
+                if (sectioningElementPtrs.size() > 1) {
                     warn(h1WarningMessage);
-                } else if (currentSectioningDepth == 1) {
+                } else if (sectioningElementPtrs.size() == 1) {
                     secondLevelH1s.add(new LocatorImpl(getDocumentLocator()));
                 } else {
                     hasTopLevelH1 = true;
