@@ -168,6 +168,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onreset?
 		&	scripting.attr.onresize?
 		&	scripting.attr.onscroll?
+		&	scripting.attr.onscrollend?
 		&	scripting.attr.onsecuritypolicyviolation?
 		&	scripting.attr.onseeked?
 		&	scripting.attr.onseeking?
@@ -295,6 +296,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onresize { common.data.functionbody }
 	scripting.attr.onscroll =
 		attribute onscroll { common.data.functionbody }
+	scripting.attr.onscrollend =
+		attribute onscrollend { common.data.functionbody }
 	scripting.attr.onsecuritypolicyviolation =
 		attribute onsecuritypolicyviolation { common.data.functionbody }
 	scripting.attr.onseeked =
