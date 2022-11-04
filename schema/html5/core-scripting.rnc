@@ -322,6 +322,44 @@ datatypes w = "http://whattf.org/datatype-draft"
 	scripting.attr.onwheel =
 		attribute onwheel { common.data.functionbody }
 
+## Pointer Events
+	common.attrs.scripting &=
+		(	scripting.attr.onpointerover?
+		&	scripting.attr.onpointerenter?
+		&	scripting.attr.onpointerdown?
+		&	scripting.attr.onpointermove?
+		&	scripting.attr.onpointerrawupdate?
+		&	scripting.attr.onpointerup?
+		&	scripting.attr.onpointercancel?
+		&	scripting.attr.onpointerout?
+		&	scripting.attr.onpointerleave?
+		&	scripting.attr.ongotpointercapture?
+		&	scripting.attr.onlostpointercapture?
+		)
+
+	scripting.attr.onpointerover =
+		attribute onpointerover { common.data.functionbody }
+	scripting.attr.onpointerenter =
+		attribute onpointerenter { common.data.functionbody }
+	scripting.attr.onpointerdown =
+		attribute onpointerdown { common.data.functionbody }
+	scripting.attr.onpointermove =
+		attribute onpointermove { common.data.functionbody }
+	scripting.attr.onpointerrawupdate =
+		attribute onpointerrawupdate { common.data.functionbody }
+	scripting.attr.onpointerup =
+		attribute onpointerup { common.data.functionbody }
+	scripting.attr.onpointercancel =
+		attribute onpointercancel { common.data.functionbody }
+	scripting.attr.onpointerout =
+		attribute onpointerout { common.data.functionbody }
+	scripting.attr.onpointerleave =
+		attribute onpointerleave { common.data.functionbody }
+	scripting.attr.ongotpointercapture =
+		attribute ongotpointercapture { common.data.functionbody }
+	scripting.attr.onlostpointercapture =
+		attribute onlostpointercapture { common.data.functionbody }
+
 #	scripting.attr.common =
 #		(	scripting.attr.mouse
 #		&	scripting.attr.keyboard
