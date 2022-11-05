@@ -216,117 +216,118 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("tt", "Use CSS instead.");
     }
 
-    private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<>();
+    /**
+     * Collection that contains attribute name as key, while value is {@link Map} that contains element name as key and error message as a value.
+     */
+    private static final Map<String, Map<String, String>> OBSOLETE_ATTRIBUTES = new HashMap<>();
 
-    static {
-        OBSOLETE_ATTRIBUTES.put("abbr", new String[] { "td" });
-        OBSOLETE_ATTRIBUTES.put("archive", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("axis", new String[] { "td", "th" });
-        OBSOLETE_ATTRIBUTES.put("charset", new String[] { "link", "a" });
-        OBSOLETE_ATTRIBUTES.put("classid", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("code", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("codebase", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("codetype", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("coords", new String[] { "a" });
-        OBSOLETE_ATTRIBUTES.put("datafld", new String[] { "span", "div",
-                "object", "input", "select", "textarea", "button", "table" });
-        OBSOLETE_ATTRIBUTES.put("dataformatas", new String[] { "span", "div",
-                "object", "input", "select", "textarea", "button", "table" });
-        OBSOLETE_ATTRIBUTES.put("datasrc", new String[] { "span", "div",
-                "object", "input", "select", "textarea", "button", "table" });
-        OBSOLETE_ATTRIBUTES.put("datapagesize", new String[] { "table" });
-        OBSOLETE_ATTRIBUTES.put("declare", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
-        OBSOLETE_ATTRIBUTES.put("for", new String[] { "script" });
-        OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
-        OBSOLETE_ATTRIBUTES.put("longdesc", new String[] { "img", "iframe" });
-        OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
-        OBSOLETE_ATTRIBUTES.put("name",
-                new String[] { "img", "embed", "option" });
-        OBSOLETE_ATTRIBUTES.put("nohref", new String[] { "area" });
-        OBSOLETE_ATTRIBUTES.put("profile", new String[] { "head" });
-        OBSOLETE_ATTRIBUTES.put("scheme", new String[] { "meta" });
-        OBSOLETE_ATTRIBUTES.put("scope", new String[] { "td" });
-        OBSOLETE_ATTRIBUTES.put("shape", new String[] { "a" });
-        OBSOLETE_ATTRIBUTES.put("standby", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("target", new String[] { "link" });
-        OBSOLETE_ATTRIBUTES.put("type", new String[] { "param" });
-        OBSOLETE_ATTRIBUTES.put("urn", new String[] { "a", "link" });
-        OBSOLETE_ATTRIBUTES.put("usemap", new String[] { "input" });
-        OBSOLETE_ATTRIBUTES.put("valuetype", new String[] { "param" });
-        OBSOLETE_ATTRIBUTES.put("version", new String[] { "html" });
-        OBSOLETE_ATTRIBUTES.put("manifest", new String[] { "html" });
-
-        for (String[] elementNames: OBSOLETE_ATTRIBUTES.values()) {
-            Arrays.sort(elementNames);
+    private static void registerObsoleteAttribute(String name, String[] elements, String suggestion) {
+        Map<String, String> map = OBSOLETE_ATTRIBUTES.computeIfAbsent(name, k -> new HashMap<>());
+        for(String element : elements) {
+            map.put(element, suggestion);
         }
     }
 
-    private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<>();
-
     static {
-        OBSOLETE_ATTRIBUTES_MSG.put("abbr",
+        registerObsoleteAttribute("abbr",
+                new String[] { "td" },
                 "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
-        OBSOLETE_ATTRIBUTES_MSG.put("archive",
+        registerObsoleteAttribute("archive",
+                new String[] { "object" },
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Carchive\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("axis",
+        registerObsoleteAttribute("axis",
+                new String[] { "td", "th" },
                 "Use the \u201Cscope\u201D attribute.");
-        OBSOLETE_ATTRIBUTES_MSG.put("charset",
+        registerObsoleteAttribute("charset",
+                new String[] { "a", "link" },
                 "Use an HTTP Content-Type header on the linked resource instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("classid",
+        registerObsoleteAttribute("classid",
+                new String[] { "object" },
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Cclassid\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("code",
+        registerObsoleteAttribute("code",
+                new String[] { "object" },
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccode\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codebase",
+        registerObsoleteAttribute("codebase",
+                new String[] { "object" },
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodebase\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codetype",
+        registerObsoleteAttribute("codetype",
+                new String[] { "object" },
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("coords",
+        registerObsoleteAttribute("coords",
+                new String[] { "a" },
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("datapagesize", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("datafld",
+        registerObsoleteAttribute("datafld",
+                new String[] { "button", "div", "input", "object", "select", "span", "table", "textarea" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("dataformatas",
+        registerObsoleteAttribute("dataformatas",
+                new String[] { "button", "div", "input", "object", "select", "span", "table", "textarea" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("datasrc",
+        registerObsoleteAttribute("datapagesize",
+                new String[] { "table" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("datasrc",
+                new String[] { "button", "div", "input", "object", "select", "span", "table", "textarea" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("for",
-                "Use DOM Events mechanisms to register event listeners.");
-        OBSOLETE_ATTRIBUTES_MSG.put("event",
-                "Use DOM Events mechanisms to register event listeners.");
-        OBSOLETE_ATTRIBUTES_MSG.put("declare",
+        registerObsoleteAttribute("declare",
+                new String[] { "object" },
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
-        OBSOLETE_ATTRIBUTES_MSG.put("language",
+        registerObsoleteAttribute("event",
+                new String[] { "script" },
+                "Use DOM Events mechanisms to register event listeners.");
+        registerObsoleteAttribute("for",
+                new String[] { "script" },
+                "Use DOM Events mechanisms to register event listeners.");
+        registerObsoleteAttribute("language",
+                new String[] { "script" },
                 "Use the \u201Ctype\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
+        registerObsoleteAttribute("longdesc",
+                new String[] { "iframe", "img" },
                 "Use a regular \u201Ca\u201D element to link to the description.");
-        OBSOLETE_ATTRIBUTES_MSG.put("methods",
+        registerObsoleteAttribute("manifest",
+                new String[] { "html" },
+                "Use service workers instead.");
+        registerObsoleteAttribute("methods",
+                new String[] { "a", "link" },
                 "Use the HTTP OPTIONS feature instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("name",
+        registerObsoleteAttribute("name",
+                new String[] { "embed", "img", "option" },
                 "Use the \u201Cid\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("nohref",
+        registerObsoleteAttribute("nohref",
+                new String[] { "area" },
                 "Omitting the \u201Chref\u201D attribute is sufficient.");
-        OBSOLETE_ATTRIBUTES_MSG.put("profile",
+        registerObsoleteAttribute("profile",
+                new String[] { "head" },
                 "To declare which \u201Cmeta\u201D terms are used in the document, instead register the names as meta extensions. To trigger specific UA behaviors, use a \u201Clink\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("scheme",
+        registerObsoleteAttribute("scheme",
+                new String[] { "meta" },
                 "Use only one scheme per field, or make the scheme declaration part of the value.");
-        OBSOLETE_ATTRIBUTES_MSG.put("scope",
+        registerObsoleteAttribute("scope",
+                new String[] { "td" },
                 "Use the \u201Cscope\u201D attribute on a \u201Cth\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("shape",
+        registerObsoleteAttribute("shape",
+                new String[] { "a" },
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("standby",
+        registerObsoleteAttribute("standby",
+                new String[] { "object" },
                 "Optimise the linked resource so that it loads quickly or, at least, incrementally.");
-        OBSOLETE_ATTRIBUTES_MSG.put("target", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("type",
+        registerObsoleteAttribute("target",
+                new String[] { "link" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("type",
+                new String[] { "param" },
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
-        OBSOLETE_ATTRIBUTES_MSG.put("urn",
+        registerObsoleteAttribute("urn",
+                new String[] { "a", "link" },
                 "Specify the preferred persistent identifier using the \u201Chref\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("usemap",
+        registerObsoleteAttribute("usemap",
+                new String[] { "input" },
                 "Use the \u201Cimg\u201D element instead of the \u201Cinput\u201D element for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("valuetype",
+        registerObsoleteAttribute("valuetype",
+                new String[] { "param" },
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
-        OBSOLETE_ATTRIBUTES_MSG.put("version", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("manifest", "Use service workers instead.");
+        registerObsoleteAttribute("version",
+                new String[] { "html" },
+                "You can safely omit it.");
     }
 
     private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<>();
@@ -2266,19 +2267,9 @@ public class Assertions extends Checker {
                                 " Use the \u201Crel\u201D attribute instead,"
                                         + " with a term having the opposite meaning.");
                     } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
-                            && "ol" != localName && "ul" != localName
-                            && "li" != localName) {
-                        String[] elementNames = OBSOLETE_ATTRIBUTES.get(
-                                attLocal);
-                        if (Arrays.binarySearch(elementNames, localName) >= 0) {
-                            String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(
-                                    attLocal)
-                                            ? " " + OBSOLETE_ATTRIBUTES_MSG.get(
-                                                    attLocal)
-                                            : "";
-                            errObsoleteAttribute(attLocal, localName,
-                                    suggestion);
-                        }
+                            && OBSOLETE_ATTRIBUTES.get(attLocal).containsKey(localName)) {
+                        String suggestion = OBSOLETE_ATTRIBUTES.get(attLocal).get(localName);
+                        errObsoleteAttribute(attLocal, localName, suggestion.isEmpty() ? "" : " " + suggestion);
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                         String[] elementNames = OBSOLETE_STYLE_ATTRS.get(
                                 attLocal);
