@@ -1305,6 +1305,8 @@ public class Assertions extends Checker {
 
     private int numberOfTemplatesDeep = 0;
 
+    private int numberOfSvgAelementsDeep = 0;
+
     private Set<Locator> secondLevelH1s = new HashSet<>();
 
     private Map<Locator, Map<String, String>> siblingSources = new ConcurrentHashMap<>();
@@ -1471,6 +1473,9 @@ public class Assertions extends Checker {
             }
         } else if (numberOfTemplatesDeep > 0) {
             return;
+        }
+        if ("http://www.w3.org/2000/svg" == uri && "a".equals(localName)) {
+            numberOfSvgAelementsDeep--;
         }
         StackNode node = pop();
         String systemId = node.locator().getSystemId();
@@ -1666,6 +1671,7 @@ public class Assertions extends Checker {
         hasTopLevelH1 = false;
         hasAncestorTableIsRoleTableGridOrTreeGrid = false;
         numberOfTemplatesDeep = 0;
+        numberOfSvgAelementsDeep = 0;
     }
 
     @Override
@@ -1704,6 +1710,13 @@ public class Assertions extends Checker {
             }
         } else if (numberOfTemplatesDeep > 0) {
             return;
+        }
+        if ("http://www.w3.org/2000/svg" == uri && "a".equals(localName)) {
+            numberOfSvgAelementsDeep++;
+            if (numberOfSvgAelementsDeep != 1) {
+                err("The SVG element \u201Ca\u201D must not appear as a"
+                        + " descendant of another SVG element \u201Ca\u201D.");
+            }
         }
         Set<String> ids = new HashSet<>();
         String role = null;
