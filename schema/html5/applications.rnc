@@ -95,6 +95,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)
 		}
 
+## obsolete “manifest” attribute (non-conforming; see assertions for error)
+
+	html.attrs.manifest =
+		attribute manifest {
+			text
+		}
+		
+	html.attrs &= html.attrs.manifest?
+
 ## Progess Indicator: <progress>
 
 	progress.elem =

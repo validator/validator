@@ -2000,6 +2000,9 @@ public class Assertions extends Checker {
                                     + " \u201Cautofocus\u201D attribute.");
                         }
                         hasAutofocus = true;
+                    } else if ("manifest" == attLocal && "html" == localName) {
+                        err("The manifest-based application-cache feature is"
+                                + " obsolete. Use service workers instead.");
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
