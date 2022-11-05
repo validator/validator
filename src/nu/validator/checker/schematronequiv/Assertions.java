@@ -235,6 +235,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("usemap", new String[] { "input" });
         OBSOLETE_ATTRIBUTES.put("valuetype", new String[] { "param" });
         OBSOLETE_ATTRIBUTES.put("version", new String[] { "html" });
+        OBSOLETE_ATTRIBUTES.put("manifest", new String[] { "html" });
 
         for (String[] elementNames: OBSOLETE_ATTRIBUTES.values()) {
             Arrays.sort(elementNames);
@@ -305,6 +306,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES_MSG.put("valuetype",
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
         OBSOLETE_ATTRIBUTES_MSG.put("version", "You can safely omit it.");
+        OBSOLETE_ATTRIBUTES_MSG.put("manifest", "Use service workers instead.");
     }
 
     private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<>();
@@ -2000,9 +2002,6 @@ public class Assertions extends Checker {
                                     + " \u201Cautofocus\u201D attribute.");
                         }
                         hasAutofocus = true;
-                    } else if ("manifest" == attLocal && "html" == localName) {
-                        err("The manifest-based application-cache feature is"
-                                + " obsolete. Use service workers instead.");
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
