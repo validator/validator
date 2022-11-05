@@ -12,268 +12,81 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Centering: <center>
 
 	center.elem =
-		element center { center.inner & center.attrs }
-	center.attrs =
-		( common.attrs )
-	center.inner =
-		( common.inner.flow )
+		element center { common.inner.anything & common.attr.anything }
 
 	common.elem.flow |= center.elem
 
 ## Inline Styling: <font>
 
 	font.elem =
-		element font { font.inner & font.attrs }
-	font.attrs =
-		(	common.attrs
-		&	font.attrs.color?
-		&	font.attrs.face?
-		&	font.attrs.size?
-		&	common.attrs.aria?
-		)
-		font.attrs.color =
-			attribute color {
-				string
-			}
-		font.attrs.face =
-			attribute face {
-				string
-			}
-		font.attrs.size =
-			attribute size {
-				string
-			}
-	font.inner =
-		( common.inner.phrasing )
+		element font { common.inner.anything & common.attr.anything }
 
 	common.elem.phrasing |= font.elem
 
 ## Base Font Size: <basefont>
 
 	basefont.elem =
-		element basefont { empty & basefont.attrs }
-	basefont.attrs =
-		(	common.attrs
-		&	basefont.attrs.color?
-		&	basefont.attrs.face?
-		&	basefont.attrs.size?
-		)
-		basefont.attrs.color =
-			attribute color {
-				string
-			}
-		basefont.attrs.face =
-			attribute face {
-				string
-			}
-		basefont.attrs.size =
-			attribute size {
-				string
-			}
+		element basefont { common.inner.anything & common.attr.anything }
 
 	common.elem.flow |= basefont.elem
 
 ## Larger Font: <big>
 
 	big.elem =
-		element big { big.inner & big.attrs }
-	big.attrs =
-		( common.attrs )
-	big.inner =
-		( common.inner.flow )
+		element big { common.inner.anything & common.attr.anything }
 
 	common.elem.phrasing |= big.elem
 
 ## Struck Text: <strike>
 
 	strike.elem =
-		element strike { strike.inner & strike.attrs }
-	strike.attrs =
-		( common.attrs )
-	strike.inner =
-		( common.inner.flow )
+		element strike { common.inner.anything & common.attr.anything }
 
 	common.elem.phrasing |= strike.elem
 
 ## Teletype: <tt>
 
 	tt.elem =
-		element tt { tt.inner & tt.attrs }
-	tt.attrs =
-		( common.attrs )
-	tt.inner =
-		( common.inner.flow )
+		element tt { common.inner.anything & common.attr.anything }
 
 	common.elem.phrasing |= tt.elem
 
 ## Abbreviation: <acronym>
 
 	acronym.elem =
-		element acronym { acronym.inner & acronym.attrs }
-	acronym.attrs =
-		( common.attrs )
-	acronym.inner =
-		( common.inner.flow )
+		element acronym { common.inner.anything & common.attr.anything }
 
 	common.elem.phrasing |= acronym.elem
 
 ## Directory: <dir>
 
 	dir.elem =
-		element dir { dir.inner & dir.attrs }
-	dir.attrs =
-		(	common.attrs
-		&	dir.attrs.compact?
-		)
-	dir.attrs.compact =
-		attribute compact {
-			string
-		}
-	dir.inner =
-		( li.elem* )
+		element dir { common.inner.anything & common.attr.anything }
 
 	common.elem.flow |= dir.elem
 
 ## Java Applets: <applet>
 
-	applet.elem.flow =
-		element applet { applet.inner.flow & applet.attrs }
-	applet.elem.phrasing =
-		element applet { applet.inner.phrasing & applet.attrs }
-	applet.attrs =
-		(	common.attrs
-		&	applet.attrs.archive?
-		&	applet.attrs.code
-		&	applet.attrs.codebase?
-		&	applet.attrs.name?
-		&	applet.attrs.height
-		&	applet.attrs.width
-		)
-		applet.attrs.archive =
-			attribute archive {
-				common.data.uri #FIXME *comma* separated URI list (*grumble*)
-			}
-		applet.attrs.code =
-			attribute code {
-				token
-			}
-		applet.attrs.codebase =
-			attribute codebase {
-				common.data.uri
-			}
-		applet.attrs.name =
-			attribute name {
-				string #FIXME refine
-			}
-		applet.attrs.height =
-			attribute height {
-				common.data.integer.positive
-			}
-		applet.attrs.width =
-			attribute width {
-				common.data.integer.positive
-			}
-	applet.inner.flow =
-		(	param.elem*
-		,	common.inner.flow
-		)
-	applet.inner.phrasing =
-		(	param.elem*
-		,	common.inner.phrasing
-		)
+	applet.elem =
+		element applet { common.inner.anything & common.attr.anything }
 
-	common.elem.flow |= applet.elem.flow
-	common.elem.phrasing |= applet.elem.phrasing
+	common.elem.flow |= applet.elem
+	common.elem.phrasing |= applet.elem
 
 ## Frame Set: <frameset>
 
 	frameset.elem =
-		element frameset { frameset.inner & frameset.attrs }
-	frameset.attrs =
-		(	common.attrs
-		&	frameset.attrs.rows?
-		&	frameset.attrs.columns?
-		&	frameset.attrs.onunload?
-		)
-		frameset.attrs.rows =
-			attribute rows {
-				string
-			}
-		frameset.attrs.columns =
-			attribute columns {
-				string
-			}
-		frameset.attrs.onunload =
-			attribute onunload {
-				string
-			}
-	frameset.inner =
-		(
-			(	frameset.elem
-			|	frame.elem
-			)+
-			& noframes.elem?
-		)
+		element frameset { common.inner.anything & common.attr.anything }
 
 ## Frame: <frame>
 
 	frame.elem =
-		element frame { empty & frame.attrs }
-	frame.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
-		&	frame.attrs.longdesc?
-		&	frame.attrs.name?
-		&	frame.attrs.src?
-		&	frame.attrs.frameborder?
-		&	frame.attrs.marginwidth?
-		&	frame.attrs.marginheight?
-		&	frame.attrs.noresize?
-		&	frame.attrs.scrolling?
-		)
-		frame.attrs.longdesc =
-			attribute longdesc {
-				string
-			}
-		frame.attrs.name =
-			attribute name {
-				string
-			}
-		frame.attrs.src =
-			attribute src {
-				string
-			}
-		frame.attrs.frameborder =
-			attribute frameborder {
-				string
-			}
-		frame.attrs.marginwidth =
-			attribute marginwidth {
-				string
-			}
-		frame.attrs.marginheight =
-			attribute marginheight {
-				string
-			}
-		frame.attrs.noresize =
-			attribute noresize {
-				string
-			}
-		frame.attrs.scrolling =
-			attribute scrolling {
-				string
-			}
+		element frame { common.inner.anything & common.attr.anything }
 
 ## Alternate no-frames content: <noframes>
 
 	noframes.elem =
-		element noframes { noframes.inner & noframes.attrs }
-	noframes.attrs =
-		( common.attrs )
-	noframes.inner =
-		( common.inner.flow )
+		element noframes { common.inner.anything & common.attr.anything }
 
 	common.elem.flow |= noframes.elem
 
@@ -305,12 +118,114 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Key-pair generator/input control: <keygen>
 
 	keygen.elem =
-		element keygen { keygen.inner & keygen.attrs* }
-	keygen.attrs = attribute * { text }
-	keygen.inner =
-		( empty )
+		element keygen { common.inner.anything & common.attr.anything }
 
 	common.elem.phrasing |= keygen.elem
+
+## Background Sound: <bgsound>
+
+	bgsound.elem =
+		element bgsound { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= bgsound.elem
+
+## Single line text input: <isindex>
+
+	isindex.elem =
+		element isindex { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= isindex.elem
+
+## Render HTML code on page: <listing>
+
+	listing.elem =
+		element listing { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= listing.elem
+
+## Command item that the user can invoke from a popup menu: <menuitem>
+
+	menuitem.elem =
+		element menuitem { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= menuitem.elem
+
+## Next document-wide numeric identifier: <nextid>
+
+	nextid.elem =
+		element nextid { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= nextid.elem
+
+## Embed Fallback: <noembed>
+
+	noembed.elem =
+		element noembed { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= noembed.elem
+
+## Render as raw text: <plaintext>
+
+	plaintext.elem =
+		element plaintext { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= plaintext.elem
+
+## Ruby Base: <rb>
+
+	rb.elem =
+		element rb { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= rb.elem
+
+## Ruby Text Container: <rtc>
+
+	rtc.elem =
+		element rtc { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= rtc.elem
+
+## Display code: <xmp>
+
+	xmp.elem =
+		element xmp { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= xmp.elem
+
+## Blinking Text: <blink>
+
+	blink.elem =
+		element blink { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= blink.elem
+
+## Insert scrolling area: <marquee>
+
+	marquee.elem =
+		element marquee { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= marquee.elem
+
+## Multi-column layout: <multicol>
+
+	multicol.elem =
+		element multicol { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= multicol.elem
+
+## Line break not allowed: <nobr>
+
+	nobr.elem =
+		element nobr { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= nobr.elem
+
+## Insert empty spaces: <spacer>
+
+	spacer.elem =
+		element spacer { common.inner.anything & common.attr.anything }
+
+	common.elem.phrasing |= spacer.elem
 
 ## Obsolete attributes
 

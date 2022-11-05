@@ -186,22 +186,34 @@ public class Assertions extends Checker {
     private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<>();
 
     static {
+        OBSOLETE_ELEMENTS.put("applet", "Use \u201cembed\u201d or \u201cobject\u201d element instead.");
+        OBSOLETE_ELEMENTS.put("acronym", "Use the \u201Cabbr\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("bgsound", "Use the \u201Caudio\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("dir", "Use the \u201Cul\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("frame", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+        OBSOLETE_ELEMENTS.put("frameset", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+        OBSOLETE_ELEMENTS.put("noframes", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+        OBSOLETE_ELEMENTS.put("isindex", "Use the \u201Cform\u201D element containing \u201Cinput\u201D element of type \u201Ctext\u201D instead.");
         OBSOLETE_ELEMENTS.put("keygen", "");
+        OBSOLETE_ELEMENTS.put("listing", "Use \u201Cpre\u201D or \u201Ccode\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("menuitem", "Use script to handle \u201Ccontextmenu\u201D event instead.");
+        OBSOLETE_ELEMENTS.put("nextid", "Use GUIDs instead.");
+        OBSOLETE_ELEMENTS.put("noembed", "Use the \u201Cobject\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("plaintext", "Use the \u201Ctext/plain\u201D MIME type instead.");
+        OBSOLETE_ELEMENTS.put("rb", "");
+        OBSOLETE_ELEMENTS.put("rtc", "");
+        OBSOLETE_ELEMENTS.put("strike", "Use \u201Cdel\u201D or \u201Cs\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("xmp", "Use \u201Cpre\u201D or \u201Ccode\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("basefont", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("big", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("blink", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("center", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("font", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("big", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("strike", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("marquee", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("multicol", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("nobr", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("spacer", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("tt", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("acronym",
-                "Use the \u201Cabbr\u201D element instead.");
-        OBSOLETE_ELEMENTS.put("dir", "Use the \u201Cul\u201D element instead.");
-        OBSOLETE_ELEMENTS.put("applet",
-                "Use the \u201Cobject\u201D element instead.");
-        OBSOLETE_ELEMENTS.put("basefont", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("frameset",
-                "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
-        OBSOLETE_ELEMENTS.put("noframes",
-                "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
     }
 
     private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<>();
