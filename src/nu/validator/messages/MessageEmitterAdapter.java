@@ -821,16 +821,18 @@ public class MessageEmitterAdapter implements ErrorHandler {
             int oneBasedLine, int oneBasedColumn, boolean exact, int[] start)
             throws SAXException {
         String msg = message.getMessage();
-        if (request != null && msg.contains(
+        if (msg != null && msg.contains(
                 "Trailing slash on void elements has no effect")) {
             if (type != MessageType.INFO) {
                 message(MessageType.INFO, message, systemId, oneBasedLine,
                         oneBasedColumn, exact, start);
                 return;
             }
-            request.setAttribute(
-                    "http://validator.nu/properties/self-closing-tag-found",
-                    true);
+            if (request != null) {
+                request.setAttribute(
+                        "http://validator.nu/properties/self-closing-tag-found",
+                        true);
+            }
         }
         if (msg != null && ((filterPattern != null
                 && filterPattern.matcher(msg).matches())
