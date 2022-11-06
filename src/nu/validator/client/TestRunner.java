@@ -83,6 +83,8 @@ public class TestRunner extends MessageEmitterAdapter {
     private static boolean writeMessages;
 
     private static boolean verbose;
+    
+    private static boolean escapeQuotes;
 
     private File baseDir = null;
 
@@ -255,7 +257,7 @@ public class TestRunner extends MessageEmitterAdapter {
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
-                    reportedMessages.put(testFilename, exception.getMessage());
+                    reportedMessages.put(testFilename, prepareMessageForPrint(exception.getMessage()));
                 } else if (expectedMessages != null
                         && expectedMessages.get(testFilename) == null) {
                     try {
@@ -275,8 +277,8 @@ public class TestRunner extends MessageEmitterAdapter {
                                 "\"%s\": error: Expected \"%s\""
                                         + " but instead encountered \"%s\".",
                                 this.getFileURL(file),
-                                expectedMessages.get(testFilename),
-                                exception.getMessage()));
+                                prepareMessageForPrint(expectedMessages.get(testFilename)),
+                                prepareMessageForPrint(exception.getMessage())));
                         err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
@@ -296,6 +298,16 @@ public class TestRunner extends MessageEmitterAdapter {
                 }
             }
         }
+    }
+    
+    private String prepareMessageForPrint(String message) {
+        return escapeQuotes ? escapeQuotes(message) : message;
+    }
+    
+    private String escapeQuotes(String message) {
+        return message
+                .replaceAll("\u201c", "\\\\u201c")
+                .replaceAll("\u201d", "\\\\u201d");
     }
 
     private void checkHasWarningFiles(List<File> files) throws IOException {
@@ -317,7 +329,7 @@ public class TestRunner extends MessageEmitterAdapter {
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
-                    reportedMessages.put(testFilename, exception.getMessage());
+                    reportedMessages.put(testFilename, prepareMessageForPrint(exception.getMessage()));
                 } else if (expectedMessages != null
                         && expectedMessages.get(testFilename) == null) {
                     try {
@@ -336,8 +348,8 @@ public class TestRunner extends MessageEmitterAdapter {
                                 "\"%s\": error: Expected \"%s\""
                                         + " but instead encountered \"%s\".",
                                 this.getFileURL(file),
-                                expectedMessages.get(testFilename),
-                                exception.getMessage()));
+                                prepareMessageForPrint(expectedMessages.get(testFilename)),
+                                prepareMessageForPrint(exception.getMessage())));
                         err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
@@ -501,7 +513,7 @@ public class TestRunner extends MessageEmitterAdapter {
         err.write(": ");
         err.write(messageType);
         err.write(": ");
-        err.write(e.getMessage());
+        err.write(prepareMessageForPrint(e.getMessage()));
         err.write("\n");
         err.flush();
     }
@@ -581,6 +593,8 @@ public class TestRunner extends MessageEmitterAdapter {
                 writeMessages = true;
             } else if (arg.startsWith("--ignore=")) {
                 ignoreList = arg.substring(9, arg.length()).split(",");
+            } else if ("--escape-quotes".equals(arg)) {
+                escapeQuotes = true;
             } else if (arg.startsWith("--")) {
                 System.out.println(String.format(
                         "\nError: There is no option \"%s\".", arg));
@@ -624,7 +638,7 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private static void usage() {
         System.out.println("\nUsage:");
-        System.out.println("\n    java nu.validator.client.TestRunner [--errors-only] [--write-messages]");
+        System.out.println("\n    java nu.validator.client.TestRunner [--errors-only] [--write-messages] [--escape-quotes]");
         System.out.println("          [--verbose] [MESSAGES.json]");
         System.out.println("\n...where the MESSAGES.json file contains name/value pairs in which the name is");
         System.out.println("a pathname of a document to check and the value is the first error message or");
