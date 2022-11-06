@@ -45,11 +45,33 @@ public class SourceSizeList extends AbstractDatatype {
         LENGTH_UNITS.add("ex");
         LENGTH_UNITS.add("ch");
         LENGTH_UNITS.add("rem");
+        LENGTH_UNITS.add("cap");
+        LENGTH_UNITS.add("ic");
         /* viewport-percentage lengths */
         LENGTH_UNITS.add("vw");
+        LENGTH_UNITS.add("svw");
+        LENGTH_UNITS.add("lvw");
+        LENGTH_UNITS.add("dvw");
         LENGTH_UNITS.add("vh");
+        LENGTH_UNITS.add("svh");
+        LENGTH_UNITS.add("lvh");
+        LENGTH_UNITS.add("dvh");
+        LENGTH_UNITS.add("vi");
+        LENGTH_UNITS.add("svi");
+        LENGTH_UNITS.add("lvi");
+        LENGTH_UNITS.add("dvi");
+        LENGTH_UNITS.add("vb");
+        LENGTH_UNITS.add("svb");
+        LENGTH_UNITS.add("lvb");
+        LENGTH_UNITS.add("dvb");
         LENGTH_UNITS.add("vmin");
+        LENGTH_UNITS.add("svmin");
+        LENGTH_UNITS.add("lvmin");
+        LENGTH_UNITS.add("dvmin");
         LENGTH_UNITS.add("vmax");
+        LENGTH_UNITS.add("svmax");
+        LENGTH_UNITS.add("lvmax");
+        LENGTH_UNITS.add("dvmax");
         /* absolute lengths */
         LENGTH_UNITS.add("cm");
         LENGTH_UNITS.add("mm");
