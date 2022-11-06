@@ -64,6 +64,41 @@ public class SourceSizeList extends AbstractDatatype {
         }
         VALID_UNITS.setLength(VALID_UNITS.length() - 1);
     }
+    
+    private static final Set<String> FUNCTION_NAMES = new LinkedHashSet<>();
+    
+    private static final StringBuilder VALID_FUNCTION_NAMES = new StringBuilder();
+    
+    static {
+        /* Basic Arithmetic */
+        FUNCTION_NAMES.add("calc");
+        /* Comparison Functions */
+        FUNCTION_NAMES.add("min");
+        FUNCTION_NAMES.add("max");
+        FUNCTION_NAMES.add("clamp");
+        /* Trigonometric Functions */
+        FUNCTION_NAMES.add("sin");
+        FUNCTION_NAMES.add("cos");
+        FUNCTION_NAMES.add("tan");
+        FUNCTION_NAMES.add("asin");
+        FUNCTION_NAMES.add("acos");
+        FUNCTION_NAMES.add("atan");
+        FUNCTION_NAMES.add("atan2");
+        /* Exponential Functions */
+        FUNCTION_NAMES.add("pow");
+        FUNCTION_NAMES.add("sqrt");
+        FUNCTION_NAMES.add("hypot");
+        FUNCTION_NAMES.add("log");
+        FUNCTION_NAMES.add("exp");
+        /* Sign-Related Functions */
+        FUNCTION_NAMES.add("abs");
+        FUNCTION_NAMES.add("sign");
+    
+        for (CharSequence name : FUNCTION_NAMES) {
+            VALID_FUNCTION_NAMES.append(" \u201c").append(name).append("\u201d,");
+        }
+        VALID_FUNCTION_NAMES.setLength(VALID_FUNCTION_NAMES.length() - 1);
+    }
 
     private static final CssNumberToken CSS_NUMBER_TOKEN = CssNumberToken.THE_INSTANCE;
 
@@ -116,7 +151,7 @@ public class SourceSizeList extends AbstractDatatype {
             return;
         }
         if (')' == unparsedSize.charAt(unparsedSize.length() - 1)) {
-            checkCalc(unparsedSize, extract, isLast);
+            checkFunction(unparsedSize, extract, isLast);
             return;
         }
         int sizeValueStart = lastSpaceIndex(unparsedSize);
@@ -162,7 +197,7 @@ public class SourceSizeList extends AbstractDatatype {
         }
     }
 
-    private void checkCalc(StringBuilder sb, CharSequence extract,
+    private void checkFunction(StringBuilder sb, CharSequence extract,
             boolean isLast) throws DatatypeException {
         int firstParenPosition = sb.length() - 1;
         int unMatchedParenCount = 1;
@@ -177,21 +212,29 @@ public class SourceSizeList extends AbstractDatatype {
                 unMatchedParenCount++;
             }
         }
-        int CALC_START = firstParenPosition - "calc".length(); // readability
-        boolean hasCalc = CALC_START > -1 && "calc".equals(toAsciiLowerCase(
-                sb.subSequence(CALC_START, firstParenPosition)));
-        boolean startsWithCalc = hasCalc && CALC_START == 0;
-        boolean hasWhitespaceThenCalc = hasCalc && CALC_START > 0
-                && isWhitespace(sb.charAt(CALC_START - 1));
-        if (!isLast && startsWithCalc) {
+        
+        String functionName = extractFunctionNameFromTail(sb.subSequence(0, firstParenPosition)).toString();
+        int nameStartPosition = firstParenPosition - functionName.length();
+        
+        if (functionName.isEmpty()) {
+            errNotFunctionName("", extract);
+        } else if (!isLast && nameStartPosition == 0) {
             errNoMediaCondition(sb, extract);
+        } else if (nameStartPosition != 0 && !isWhitespace(sb.charAt(nameStartPosition - 1))) {
+            errNoWhitespaceBeforeFunction(extract);
+        } else if (!FUNCTION_NAMES.contains(toAsciiLowerCase(functionName))) {
+            errNotFunctionName(functionName, extract);
         }
-        if (startsWithCalc || hasWhitespaceThenCalc) {
-            sb.setLength(CALC_START);
-            trimTrailingWhitespace(sb);
-        } else {
-            errNotNumber(sb, extract);
+    }
+    
+    private CharSequence extractFunctionNameFromTail(CharSequence sequence) {
+        for(int i = sequence.length() - 1;i >= 0;i --) {
+            char c = sequence.charAt(i);
+            if(isWhitespace(c) || c == ')') {
+                return sequence.subSequence(i + 1, sequence.length());
+            }
         }
+        return sequence;
     }
 
     private void checkForInvalidComments(String currentChunk,
@@ -358,6 +401,24 @@ public class SourceSizeList extends AbstractDatatype {
         err(msg);
     }
 
+    private void errNotFunctionName(CharSequence name, CharSequence extract)
+            throws DatatypeException {
+        String msg = "Expected function (one of" + VALID_FUNCTION_NAMES + ") but found ";
+        if ("".equals(name)) {
+            msg += "no name";
+        } else {
+            msg += code(name);
+        }
+        msg += " at " + clip(extract) + ".";
+        err(msg);
+    }
+    
+    private void errNoWhitespaceBeforeFunction(CharSequence extract)
+            throws DatatypeException {
+        err("There must be a whitespace between media query and a function at "
+                    + clip(extract) + ".");
+    }
+    
     private void errMismatchedParens(CharSequence cs, CharSequence extract)
             throws DatatypeException {
         err("Mismatched parentheses in " + clip(extract) + ".");
