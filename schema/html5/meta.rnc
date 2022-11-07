@@ -252,15 +252,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element style { style.inner & style.attrs }
 	style.attrs =
 		(	common.attrs
-		&	style.attrs.type?
 		&	style.attrs.media?
 		&	common.attrs.blocking?
 		#	style.attrs.title included in common.attrs
 		)
-		style.attrs.type =
-			attribute type {
-				text
-			}
 		style.attrs.media =
 			attribute media {
 				common.data.mediaquery

@@ -29,7 +29,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	script.attrs.async?
 		&	script.attrs.type?
 		&	script.attrs.nomodule?
-		&	script.attrs.charset?
 		&	script.attrs.language? # restricted in Schematron
 		&	script.attrs.integrity?
 		&	embedded.content.attrs.crossorigin?
@@ -55,10 +54,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		script.attrs.nomodule =
 			attribute nomodule {
 				w:string "nomodule" | w:string ""
-			}
-		script.attrs.charset =
-			attribute charset {
-				string
 			}
 		script.attrs.language =
 			attribute language {

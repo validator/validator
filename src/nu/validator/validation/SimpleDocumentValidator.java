@@ -33,7 +33,6 @@ import java.util.HashMap;
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
 import nu.validator.checker.table.TableChecker;
-import nu.validator.checker.ConformingButObsoleteWarner;
 import nu.validator.checker.MicrodataChecker;
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.TextContentChecker;
@@ -315,8 +314,6 @@ public class SimpleDocumentValidator {
             validator = new CombineValidator(validator, langdetectValidator);
             validator = new CombineValidator(validator, new CheckerValidator(
                     new TableChecker(), jingPropertyMap));
-            validator = new CombineValidator(validator, new CheckerValidator(
-                    new ConformingButObsoleteWarner(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new MicrodataChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(

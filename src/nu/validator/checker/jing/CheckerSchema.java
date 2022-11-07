@@ -23,7 +23,6 @@
 package nu.validator.checker.jing;
 
 import nu.validator.checker.Checker;
-import nu.validator.checker.ConformingButObsoleteWarner;
 import nu.validator.checker.DebugChecker;
 import nu.validator.checker.LanguageDetectingChecker;
 import nu.validator.checker.MicrodataChecker;
@@ -56,8 +55,6 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema TABLE_CHECKER = new CheckerSchema(PropertyMap.EMPTY, TableChecker.class);
 
     public static final CheckerSchema ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Assertions.class);
-    
-    public static final CheckerSchema CONFORMING_BUT_OBSOLETE_WARNER = new CheckerSchema(PropertyMap.EMPTY, ConformingButObsoleteWarner.class);
     
     public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);
 

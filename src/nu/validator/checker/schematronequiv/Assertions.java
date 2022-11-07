@@ -196,117 +196,151 @@ public class Assertions extends Checker {
                 "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
     }
 
-    private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<>();
+    /**
+     * Collection that contains attribute name as key, while value is {@link Map} that contains element name as key and error message as a value.
+     */
+    private static final Map<String, Map<String, String>> OBSOLETE_ATTRIBUTES = new HashMap<>();
 
-    static {
-        OBSOLETE_ATTRIBUTES.put("abbr", new String[] { "td" });
-        OBSOLETE_ATTRIBUTES.put("archive", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("axis", new String[] { "td", "th" });
-        OBSOLETE_ATTRIBUTES.put("charset", new String[] { "link", "a" });
-        OBSOLETE_ATTRIBUTES.put("classid", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("code", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("codebase", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("codetype", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("coords", new String[] { "a" });
-        OBSOLETE_ATTRIBUTES.put("datafld", new String[] { "span", "div",
-                "object", "input", "select", "textarea", "button", "table" });
-        OBSOLETE_ATTRIBUTES.put("dataformatas", new String[] { "span", "div",
-                "object", "input", "select", "textarea", "button", "table" });
-        OBSOLETE_ATTRIBUTES.put("datasrc", new String[] { "span", "div",
-                "object", "input", "select", "textarea", "button", "table" });
-        OBSOLETE_ATTRIBUTES.put("datapagesize", new String[] { "table" });
-        OBSOLETE_ATTRIBUTES.put("declare", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
-        OBSOLETE_ATTRIBUTES.put("for", new String[] { "script" });
-        OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
-        OBSOLETE_ATTRIBUTES.put("longdesc", new String[] { "img", "iframe" });
-        OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
-        OBSOLETE_ATTRIBUTES.put("name",
-                new String[] { "img", "embed", "option" });
-        OBSOLETE_ATTRIBUTES.put("nohref", new String[] { "area" });
-        OBSOLETE_ATTRIBUTES.put("profile", new String[] { "head" });
-        OBSOLETE_ATTRIBUTES.put("scheme", new String[] { "meta" });
-        OBSOLETE_ATTRIBUTES.put("scope", new String[] { "td" });
-        OBSOLETE_ATTRIBUTES.put("shape", new String[] { "a" });
-        OBSOLETE_ATTRIBUTES.put("standby", new String[] { "object" });
-        OBSOLETE_ATTRIBUTES.put("target", new String[] { "link" });
-        OBSOLETE_ATTRIBUTES.put("type", new String[] { "param" });
-        OBSOLETE_ATTRIBUTES.put("urn", new String[] { "a", "link" });
-        OBSOLETE_ATTRIBUTES.put("usemap", new String[] { "input" });
-        OBSOLETE_ATTRIBUTES.put("valuetype", new String[] { "param" });
-        OBSOLETE_ATTRIBUTES.put("version", new String[] { "html" });
-        OBSOLETE_ATTRIBUTES.put("manifest", new String[] { "html" });
-
-        for (String[] elementNames: OBSOLETE_ATTRIBUTES.values()) {
-            Arrays.sort(elementNames);
+    private static void registerObsoleteAttribute(String name, String[] elements, String suggestion) {
+        Map<String, String> map = OBSOLETE_ATTRIBUTES.computeIfAbsent(name, k -> new HashMap<>());
+        for(String element : elements) {
+            map.put(element, suggestion);
         }
     }
 
-    private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<>();
-
     static {
-        OBSOLETE_ATTRIBUTES_MSG.put("abbr",
+        registerObsoleteAttribute("abbr",
+                new String[] { "td" },
                 "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
-        OBSOLETE_ATTRIBUTES_MSG.put("archive",
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Carchive\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("axis",
+        registerObsoleteAttribute("accept",
+                new String[] { "form" },
+                "Use the \u201Caccept\u201D attribute directly on the \u201Cinput\u201D elements instead.");
+        registerObsoleteAttribute("archive",
+                new String[] { "object" },
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
+        registerObsoleteAttribute("axis",
+                new String[] { "td", "th" },
                 "Use the \u201Cscope\u201D attribute.");
-        OBSOLETE_ATTRIBUTES_MSG.put("charset",
+        registerObsoleteAttribute("border",
+                new String[] { "input", "img", "object", "table" },
+                "Consider specifying \u201Cimg { border: 0; }\u201D in CSS instead.");
+        registerObsoleteAttribute("charset",
+                new String[] { "a", "link" },
                 "Use an HTTP Content-Type header on the linked resource instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("classid",
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Cclassid\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("code",
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccode\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codebase",
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodebase\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codetype",
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("coords",
+        registerObsoleteAttribute("classid",
+                new String[] { "object" },
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
+        registerObsoleteAttribute("code",
+                new String[] { "object" },
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
+        registerObsoleteAttribute("codebase",
+                new String[] { "object" },
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
+        registerObsoleteAttribute("codetype",
+                new String[] { "object" },
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
+        registerObsoleteAttribute("coords",
+                new String[] { "a" },
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("datapagesize", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("datafld",
+        registerObsoleteAttribute("datafld",
+                new String[] { "a", "button", "div", "fieldset", "iframe", "img", "input", "label", "legend", "object", "select", "span", "textarea" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("dataformatas",
+        registerObsoleteAttribute("dataformatas",
+                new String[] { "button", "div", "input", "label", "legend", "object", "option", "select", "span", "table" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("datasrc",
+        registerObsoleteAttribute("datapagesize",
+                new String[] { "table" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("datasrc",
+                new String[] { "a", "button", "div", "iframe", "img", "input", "label", "legend", "object", "option", "select", "span", "table", "textarea" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
-        OBSOLETE_ATTRIBUTES_MSG.put("for",
-                "Use DOM Events mechanisms to register event listeners.");
-        OBSOLETE_ATTRIBUTES_MSG.put("event",
-                "Use DOM Events mechanisms to register event listeners.");
-        OBSOLETE_ATTRIBUTES_MSG.put("declare",
+        registerObsoleteAttribute("declare",
+                new String[] { "object" },
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
-        OBSOLETE_ATTRIBUTES_MSG.put("language",
+        registerObsoleteAttribute("event",
+                new String[] { "script" },
+                "Use DOM Events mechanisms to register event listeners.");
+        registerObsoleteAttribute("for",
+                new String[] { "script" },
+                "Use DOM Events mechanisms to register event listeners.");
+        registerObsoleteAttribute("hreflang",
+                new String[] { "area" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("ismap",
+                new String[] { "input" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("label",
+                new String[] { "menu" },
+                "Use script to handle \u201Ccontextmenu\u201D event instead.");
+        registerObsoleteAttribute("language",
+                new String[] { "script" },
                 "Use the \u201Ctype\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
+        registerObsoleteAttribute("longdesc",
+                new String[] { "iframe", "img" },
                 "Use a regular \u201Ca\u201D element to link to the description.");
-        OBSOLETE_ATTRIBUTES_MSG.put("methods",
+        registerObsoleteAttribute("lowsrc",
+                new String[] { "img" },
+                "Use a progressive JPEG image instead.");
+        registerObsoleteAttribute("manifest",
+                new String[] { "html" },
+                "Use service workers instead.");
+        registerObsoleteAttribute("methods",
+                new String[] { "a", "link" },
                 "Use the HTTP OPTIONS feature instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("name",
+        registerObsoleteAttribute("name",
+                new String[] { "a", "embed", "img", "option" },
                 "Use the \u201Cid\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("nohref",
+        registerObsoleteAttribute("name",
+                new String[] { "a" },
+                "Consider putting an \u201Cid\u201D attribute on the nearest container instead.");
+        registerObsoleteAttribute("nohref",
+                new String[] { "area" },
                 "Omitting the \u201Chref\u201D attribute is sufficient.");
-        OBSOLETE_ATTRIBUTES_MSG.put("profile",
+        registerObsoleteAttribute("profile",
+                new String[] { "head" },
                 "To declare which \u201Cmeta\u201D terms are used in the document, instead register the names as meta extensions. To trigger specific UA behaviors, use a \u201Clink\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("scheme",
+        registerObsoleteAttribute("scheme",
+                new String[] { "meta" },
                 "Use only one scheme per field, or make the scheme declaration part of the value.");
-        OBSOLETE_ATTRIBUTES_MSG.put("scope",
+        registerObsoleteAttribute("scope",
+                new String[] { "td" },
                 "Use the \u201Cscope\u201D attribute on a \u201Cth\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("shape",
+        registerObsoleteAttribute("shape",
+                new String[] { "a" },
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("standby",
+        registerObsoleteAttribute("standby",
+                new String[] { "object" },
                 "Optimise the linked resource so that it loads quickly or, at least, incrementally.");
-        OBSOLETE_ATTRIBUTES_MSG.put("target", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("type",
+        registerObsoleteAttribute("summary",
+                new String[] { "table" },
+                "Consider describing the structure of the \u201Ctable\u201D in a \u201Ccaption\u201D element or in a \u201Cfigure\u201D element containing the \u201Ctable\u201D; or, simplify the structure of the \u201Ctable\u201D so that no description is needed.");
+        registerObsoleteAttribute("target",
+                new String[] { "link" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("type",
+                new String[] { "param" },
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
-        OBSOLETE_ATTRIBUTES_MSG.put("urn",
+        registerObsoleteAttribute("type",
+                new String[] { "area" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("type",
+                new String[] { "menu" },
+                "Use script to handle \u201Ccontextmenu\u201D event instead.");
+        registerObsoleteAttribute("typemustmatch",
+                new String[] { "object" },
+                "Avoid using \u201Cobject\u201D elements with untrusted resources.");
+        registerObsoleteAttribute("urn",
+                new String[] { "a", "link" },
                 "Specify the preferred persistent identifier using the \u201Chref\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("usemap",
-                "Use the \u201Cimg\u201D element instead of the \u201Cinput\u201D element for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("valuetype",
+        registerObsoleteAttribute("usemap",
+                new String[] { "input", "object" },
+                "Use the \u201Cimg\u201D element instead.");
+        registerObsoleteAttribute("valuetype",
+                new String[] { "param" },
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
-        OBSOLETE_ATTRIBUTES_MSG.put("version", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("manifest", "Use service workers instead.");
+        registerObsoleteAttribute("version",
+                new String[] { "html" },
+                "You can safely omit it.");
     }
 
     private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<>();
@@ -320,9 +354,10 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("alink", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("allowtransparency",
                 new String[] { "iframe" });
-        OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body", "table", "thead", "tbody", "tfoot", "tr", "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("bgcolor",
                 new String[] { "table", "tr", "td", "th", "body" });
+        OBSOLETE_STYLE_ATTRS.put("bordercolor", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("char", new String[] { "col", "colgroup",
@@ -334,8 +369,9 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("compact",
                 new String[] { "dl", "menu", "ol", "ul" });
         OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("framespacing", new String[] { "iframe" });
         OBSOLETE_STYLE_ATTRS.put("frame", new String[] { "table" });
-        OBSOLETE_STYLE_ATTRS.put("height", new String[] { "td", "th" });
+        OBSOLETE_STYLE_ATTRS.put("height", new String[] { "table", "thead", "tbody", "tfoot", "tr", "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("hspace",
                 new String[] { "embed", "iframe", "input", "img", "object" });
         OBSOLETE_STYLE_ATTRS.put("link", new String[] { "body" });
@@ -365,6 +401,14 @@ public class Assertions extends Checker {
         for (String[] elementNames: OBSOLETE_STYLE_ATTRS.values()) {
             Arrays.sort(elementNames);
         }
+    }
+    
+    private static final Map<String, String> OBSOLETE_GLOBAL_ATTRIBUTES = new HashMap<>();
+    
+    static {
+        OBSOLETE_GLOBAL_ATTRIBUTES.put("contextmenu", "Use script to handle \u201Ccontextmenu\u201D event instead.");
+        OBSOLETE_GLOBAL_ATTRIBUTES.put("dropzone", "Use script to handle the \u201Cdragenter\u201D and \u201Cdragover\u201D events instead.");
+        OBSOLETE_GLOBAL_ATTRIBUTES.put("onshow", "Use script to handle \u201Ccontextmenu\u201D event instead.");
     }
 
     private static final HashSet<String> JAVASCRIPT_MIME_TYPES = new HashSet<>();
@@ -1963,20 +2007,18 @@ public class Assertions extends Checker {
                         errObsoleteAttribute("rev", localName,
                                 " Use the \u201Crel\u201D attribute instead,"
                                         + " with a term having the opposite meaning.");
-                    } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
-                            && "ol" != localName && "ul" != localName
-                            && "li" != localName) {
-                        String[] elementNames = OBSOLETE_ATTRIBUTES.get(
-                                attLocal);
-                        if (Arrays.binarySearch(elementNames, localName) >= 0) {
-                            String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(
-                                    attLocal)
-                                            ? " " + OBSOLETE_ATTRIBUTES_MSG.get(
-                                                    attLocal)
-                                            : "";
-                            errObsoleteAttribute(attLocal, localName,
-                                    suggestion);
+                    } else if ("autofocus" == attLocal) {
+                        if (hasAutofocus) {
+                            err("A document must not include more than one"
+                                        + " \u201Cautofocus\u201D attribute.");
                         }
+                        hasAutofocus = true;
+                    }
+                    
+                    if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
+                            && OBSOLETE_ATTRIBUTES.get(attLocal).containsKey(localName)) {
+                        String suggestion = OBSOLETE_ATTRIBUTES.get(attLocal).get(localName);
+                        errObsoleteAttribute(attLocal, localName, suggestion.isEmpty() ? "" : " " + suggestion);
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                         String[] elementNames = OBSOLETE_STYLE_ATTRS.get(
                                 attLocal);
@@ -1984,6 +2026,9 @@ public class Assertions extends Checker {
                             errObsoleteAttribute(attLocal, localName,
                                     " Use CSS instead.");
                         }
+                    } else if (OBSOLETE_GLOBAL_ATTRIBUTES.containsKey(attLocal)) {
+                        String suggestion = OBSOLETE_GLOBAL_ATTRIBUTES.get(attLocal);
+                        err("The \u201C" + attLocal + "\u201D attribute is obsolete." + (suggestion.isEmpty() ? "" : " " + suggestion));
                     } else if (INPUT_ATTRIBUTES.containsKey(attLocal)
                             && "input" == localName) {
                         String[] allowedTypes = INPUT_ATTRIBUTES.get(attLocal);
@@ -1996,12 +2041,6 @@ public class Assertions extends Checker {
                                     + " type is " + renderTypeList(allowedTypes)
                                     + ".");
                         }
-                    } else if ("autofocus" == attLocal) {
-                        if (hasAutofocus) {
-                            err("A document must not include more than one"
-                                    + " \u201Cautofocus\u201D attribute.");
-                        }
-                        hasAutofocus = true;
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
@@ -2428,20 +2467,6 @@ public class Assertions extends Checker {
                         || "treegrid".equals(role)) {
                     hasAncestorTableIsRoleTableGridOrTreeGrid = true;
                 }
-                if (atts.getIndex("", "summary") >= 0) {
-                    errObsoleteAttribute("summary", "table",
-                            " Consider describing the structure of the"
-                                    + " \u201Ctable\u201D in a \u201Ccaption\u201D "
-                                    + " element or in a \u201Cfigure\u201D element "
-                                    + " containing the \u201Ctable\u201D; or,"
-                                    + " simplify the structure of the"
-                                    + " \u201Ctable\u201D so that no description"
-                                    + " is needed.");
-                }
-                if (atts.getIndex("", "border") > -1) {
-                    errObsoleteAttribute("border", "table",
-                            " Use CSS instead.");
-                }
             } else if (hasAncestorTableIsRoleTableGridOrTreeGrid
                     && atts.getIndex("", "role") >= 0 && ("td" == localName
                             || "tr" == localName || "th" == localName)) {
@@ -2642,20 +2667,6 @@ public class Assertions extends Checker {
                 String nameVal = atts.getValue("", "name");
                 if (nameVal != null && !nameVal.equals(id)) {
                     err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
-                }
-            }
-
-            else if ("object" == localName) {
-                if (atts.getIndex("", "typemustmatch") >= 0) {
-                    if ((atts.getIndex("", "data") < 0)
-                            || (atts.getIndex("", "type") < 0)) {
-                        {
-                            err("Element \u201Cobject\u201D must not have"
-                                    + " attribute \u201Ctypemustmatch\u201D unless"
-                                    + " both attribute \u201Cdata\u201D"
-                                    + " and attribute \u201Ctype\u201D are also specified.");
-                        }
-                    }
                 }
             }
             else if ("form" == localName) {

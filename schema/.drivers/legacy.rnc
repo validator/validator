@@ -364,6 +364,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 		}
 	a.attrs &= a.attrs.charset?
 
+	script.attrs.charset =
+		attribute charset {
+			string
+		}
+	script.attrs.imported &= script.attrs.charset?
+	script.attrs.embedded &= script.attrs.charset?
+
 ## classid attribute
 
 	object.attrs.classid =
@@ -441,6 +448,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 	link.attrs &= link.attrs.methods?
 
 ## name attribute
+
+	a.attrs.name =
+		attribute name {
+			string
+		}
+	a.attrs &= a.attrs.name?
 
 	img.attrs.name =
 		attribute name {
@@ -530,14 +543,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		}
 	link.attrs &= link.attrs.target?
 
-## type attribute
-
-	param.attrs.type =
-		attribute type {
-			string
-		}
-	param.attrs &= param.attrs.type?
-
 ## urn attribute
 
 	a.attrs.urn =
@@ -559,6 +564,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 			string
 		}
 	input.image.attrs &= input.attrs.usemap?
+
+	object.attrs.usemap =	
+		attribute usemap {
+			string
+		}
+	object.attrs &= object.attrs.usemap?
 
 ## valuetype attribute
 
@@ -772,6 +783,48 @@ datatypes w = "http://whattf.org/datatype-draft"
 			string
 		}
 	body.attrs &= body.attrs.background?
+	
+	table.attrs.background =
+		attribute background {
+			string
+		}
+	table.attrs &= table.attrs.background?
+
+	thead.attrs.background =
+		attribute background {
+			string
+		}
+	thead.attrs &= thead.attrs.background?
+
+	tbody.attrs.background =
+		attribute background {
+			string
+		}
+	tbody.attrs &= tbody.attrs.background?
+
+	tfoot.attrs.background =
+		attribute background {
+			string
+		}
+	tfoot.attrs &= tfoot.attrs.background?
+
+	tr.attrs.background =
+		attribute background {
+			string
+		}
+	tr.attrs &= tr.attrs.background?
+
+	td.attrs.background =
+		attribute background {
+			string
+		}
+	td.attrs &= td.attrs.background?
+
+	th.attrs.background =
+		attribute background {
+			string
+		}
+	th.attrs &= th.attrs.background?
 
 ## color attribute
 
@@ -815,6 +868,39 @@ datatypes w = "http://whattf.org/datatype-draft"
 	th.attrs &= th.attrs.bgcolor?
 
 ## border attribute
+
+	input.attrs.border =
+		attribute border {
+			string
+		}
+	input.text.attrs &= input.attrs.border?
+	input.password.attrs &= input.attrs.border?
+	input.checkbox.attrs &= input.attrs.border?
+	input.radio.attrs &= input.attrs.border?
+	input.button.attrs &= input.attrs.border?
+	input.submit.attrs &= input.attrs.border?
+	input.reset.attrs &= input.attrs.border?
+	input.file.attrs &= input.attrs.border?
+	input.image.attrs &= input.attrs.border?
+	input.datetime.attrs &= input.attrs.border?
+	input.datetime-local.attrs &= input.attrs.border?
+	input.date.attrs &= input.attrs.border?
+	input.month.attrs &= input.attrs.border?
+	input.time.attrs &= input.attrs.border?
+	input.week.attrs &= input.attrs.border?
+	input.number.attrs &= input.attrs.border?
+	input.range.attrs &= input.attrs.border?
+	input.email.attrs &= input.attrs.border?
+	input.url.attrs &= input.attrs.border?
+	input.search.attrs &= input.attrs.border?
+	input.tel.attrs &= input.attrs.border?
+	input.color.attrs &= input.attrs.border?
+
+	img.attrs.border =
+		attribute border {
+			string
+		}
+	img.attrs &= img.attrs.border?
 
 	object.attrs.border =
 		attribute border {
@@ -995,6 +1081,36 @@ datatypes w = "http://whattf.org/datatype-draft"
 	iframe.attrs &= iframe.attrs.frameborder?
 
 ## height attribute
+
+	table.attrs.height =	
+		attribute height {
+			string
+		}
+	table.attrs &= table.attrs.height?
+
+	thead.attrs.height =	
+		attribute height {
+			string
+		}
+	thead.attrs &= thead.attrs.height?
+
+	tbody.attrs.height =	
+		attribute height {
+			string
+		}
+	tbody.attrs &= tbody.attrs.height?
+
+	tfoot.attrs.height =	
+		attribute height {
+			string
+		}
+	tfoot.attrs &= tfoot.attrs.height?
+
+	tr.attrs.height =	
+		attribute height {
+			string
+		}
+	tr.attrs &= tr.attrs.height?
 
 	td.attrs.height =
 		attribute height {
@@ -1214,6 +1330,30 @@ datatypes w = "http://whattf.org/datatype-draft"
 		}
 	ul.attrs &= ul.attrs.type?
 
+	param.attrs.type =
+		attribute type {
+			string
+		}
+	param.attrs &= param.attrs.type?
+
+	area.attrs.type =
+		attribute type {
+			string
+		}
+	area.attrs &= area.attrs.type?
+
+	style.attrs.type =
+		attribute type {
+			string
+		}
+	style.attrs &= style.attrs.type?
+
+	menu.attrs.type =
+		attribute type {
+			string
+		}
+	menu.attrs &= menu.attrs.type?
+
 ## valign attribute
 
 	col.attrs.valign =
@@ -1399,6 +1539,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute datafld {
 			string
 		}
+	a.attrs &= legacy.attrs.datafld?
 	span.attrs &= legacy.attrs.datafld?
 	div.attrs &= legacy.attrs.datafld?
 	object.attrs &= legacy.attrs.datafld?
@@ -1429,7 +1570,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 	button.submit.attrs &= legacy.attrs.datafld?
 	button.reset.attrs &= legacy.attrs.datafld?
 	button.button.attrs &= legacy.attrs.datafld?
-	table.attrs &= legacy.attrs.datafld?
+	fieldset.attrs &= legacy.attrs.datafld?
+	iframe.attrs &= legacy.attrs.datafld?
+	img.attrs &= legacy.attrs.datafld?
+	label.attrs &= legacy.attrs.datafld?
+	legend.attrs &= legacy.attrs.datafld?
+
 
 ## dataformatas attribute
 
@@ -1464,11 +1610,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.tel.attrs &= legacy.attrs.dataformatas?
 	input.color.attrs &= legacy.attrs.dataformatas?
 	select.attrs &= legacy.attrs.dataformatas?
-	textarea.attrs &= legacy.attrs.dataformatas?
 	button.submit.attrs &= legacy.attrs.dataformatas?
 	button.reset.attrs &= legacy.attrs.dataformatas?
 	button.button.attrs &= legacy.attrs.dataformatas?
 	table.attrs &= legacy.attrs.dataformatas?
+	label.attrs &= legacy.attrs.dataformatas?
+	legend.attrs &= legacy.attrs.dataformatas?
+	option.attrs &= legacy.attrs.dataformatas?
 
 ## datasrc attribute
 
@@ -1476,6 +1624,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute datasrc {
 			string
 		}
+	a.attrs &= legacy.attrs.datasrc?
 	span.attrs &= legacy.attrs.datasrc?
 	div.attrs &= legacy.attrs.datasrc?
 	object.attrs &= legacy.attrs.datasrc?
@@ -1507,3 +1656,117 @@ datatypes w = "http://whattf.org/datatype-draft"
 	button.reset.attrs &= legacy.attrs.datasrc?
 	button.button.attrs &= legacy.attrs.datasrc?
 	table.attrs &= legacy.attrs.datasrc?
+	iframe.attrs &= legacy.attrs.datasrc?
+	img.attrs &= legacy.attrs.datasrc?
+	label.attrs &= legacy.attrs.datasrc?
+	legend.attrs &= legacy.attrs.datasrc?
+	option.attrs &= legacy.attrs.datasrc?
+
+## accept attribute
+
+	form.attrs.accept =
+		attribute accept {
+			string
+		}
+	form.attrs &= form.attrs.accept?
+
+## contextmenu attribute
+
+	legacy.attrs.contextmenu =
+		attribute contextmenu {
+			string
+		}
+	common.attrs.other &= legacy.attrs.contextmenu?
+
+## dropzone attribute
+
+	legacy.attrs.dropzone =
+		attribute dropzone {
+			string
+		}
+	common.attrs.other &= legacy.attrs.dropzone?
+
+## hreflang attribute
+
+	area.attrs.hreflang =
+		attribute hreflang {
+			string
+		}
+	area.attrs &= area.attrs.hreflang?
+
+## ismap attribute
+
+	input.attrs.ismap =
+		attribute ismap {
+			string
+		}
+	input.text.attrs &= input.attrs.ismap?
+	input.password.attrs &= input.attrs.ismap?
+	input.checkbox.attrs &= input.attrs.ismap?
+	input.radio.attrs &= input.attrs.ismap?
+	input.button.attrs &= input.attrs.ismap?
+	input.submit.attrs &= input.attrs.ismap?
+	input.reset.attrs &= input.attrs.ismap?
+	input.file.attrs &= input.attrs.ismap?
+	input.image.attrs &= input.attrs.ismap?
+	input.datetime.attrs &= input.attrs.ismap?
+	input.datetime-local.attrs &= input.attrs.ismap?
+	input.date.attrs &= input.attrs.ismap?
+	input.month.attrs &= input.attrs.ismap?
+	input.time.attrs &= input.attrs.ismap?
+	input.week.attrs &= input.attrs.ismap?
+	input.number.attrs &= input.attrs.ismap?
+	input.range.attrs &= input.attrs.ismap?
+	input.email.attrs &= input.attrs.ismap?
+	input.url.attrs &= input.attrs.ismap?
+	input.search.attrs &= input.attrs.ismap?
+	input.tel.attrs &= input.attrs.ismap?
+	input.color.attrs &= input.attrs.ismap?
+
+## label attribute
+
+	menu.attrs.label =
+		attribute label {
+			string
+		}
+	menu.attrs &= menu.attrs.label?
+
+## lowsrc attribute
+
+	img.attrs.lowsrc =
+		attribute lowsrc {
+			string
+		}
+	img.attrs &= img.attrs.lowsrc?
+
+## onshow attribute
+
+	legacy.attrs.onshow =
+		attribute onshow {
+			string
+		}
+	common.attrs.other &= legacy.attrs.onshow?
+
+## typemustmatch attribute
+
+	object.attrs.typemustmatch =
+		attribute typemustmatch {
+			string
+		}
+	object.attrs &= object.attrs.typemustmatch?
+
+## bordercolor attribute
+
+	table.attrs.bordercolor =
+		attribute bordercolor {
+			string
+		}
+	table.attrs &= table.attrs.bordercolor?
+
+## framespacing attribute
+
+	iframe.attrs.framespacing =
+		attribute framespacing {
+			string
+		}
+	iframe.attrs &= iframe.attrs.framespacing?
