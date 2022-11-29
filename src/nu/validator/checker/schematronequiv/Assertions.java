@@ -778,11 +778,11 @@ public class Assertions extends Checker {
         private boolean emptyValueOptionFound = false;
 
         private boolean isCollectingCharacters = false;
-        
+
         private Locator captionNestedInFigure;
-        
+
         private boolean isCollectingChildren = false;
-        
+
         private List<StackNode> collectedChildren;
 
         /**
@@ -1153,14 +1153,15 @@ public class Assertions extends Checker {
         }
 
         public void addChild(StackNode node) {
-            if(collectedChildren == null) {
+            if (collectedChildren == null) {
                 collectedChildren = new ArrayList<>();
             }
             collectedChildren.add(node);
         }
 
         public List<StackNode> getCollectedChildren() {
-            return collectedChildren == null ? Collections.emptyList() : collectedChildren;
+            return collectedChildren == null ? Collections.emptyList()
+                    : collectedChildren;
         }
     }
 
@@ -1537,11 +1538,16 @@ public class Assertions extends Checker {
                 }
                 if (node.getCaptionNestedInFigure() != null
                         && node.getCollectedChildren().size() == 2
-                        && node.getCollectedChildren().stream().anyMatch(s -> "figcaption" == s.getName())
-                        && node.getCollectedChildren().stream().anyMatch(s -> "table" == s.getName())) {
-                    warn("When a \u201Ctable\u201D element is the only content" +
-                                 " in a \u201Cfigure\u201D element other than the \u201Cfigcaption\u201D," +
-                                 " the \u201Ccaption\u201D element should be omitted in favor of the \u201Cfigcaption\u201D.", node.getCaptionNestedInFigure());
+                        && node.getCollectedChildren().stream().anyMatch(
+                                s -> "figcaption" == s.getName())
+                        && node.getCollectedChildren().stream().anyMatch(
+                                s -> "table" == s.getName())) {
+                    warn("When a \u201Ctable\u201D element is the only content"
+                            + " in a \u201Cfigure\u201D element other than the"
+                            + " \u201Cfigcaption\u201D, the \u201Ccaption\u201D"
+                            + " element should be omitted in favor of the"
+                            + " \u201Cfigcaption\u201D.",
+                            node.getCaptionNestedInFigure());
                 }
             } else if ("picture" == localName) {
                 siblingSources.clear();
@@ -2273,11 +2279,11 @@ public class Assertions extends Checker {
             if ("figure" == localName) {
                 currentFigurePtr = currentPtr + 1;
             }
-            if ("caption" == localName
-                    && "table" == parentName
+            if ("caption" == localName && "table" == parentName
                     && stack.length >= currentPtr - 1
                     && "figure" == stack[currentPtr - 1].getName()) {
-                stack[currentPtr - 1].setCaptionNestedInFigure(new LocatorImpl(getDocumentLocator()));
+                stack[currentPtr - 1].setCaptionNestedInFigure(
+                        new LocatorImpl(getDocumentLocator()));
             }
             if ((ancestorMask & FIGURE_MASK) != 0) {
                 if ("img" == localName) {
@@ -3651,7 +3657,7 @@ public class Assertions extends Checker {
                         // ARIA
                 }
             }
-            if(parent != null && parent.isCollectingChildren()) {
+            if (parent != null && parent.isCollectingChildren()) {
                 parent.addChild(child);
             }
         } else if ("http://n.validator.nu/custom-elements/" == uri) {
