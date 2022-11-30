@@ -1642,7 +1642,7 @@ public class Assertions extends Checker {
                     || "nav" == localName || "section" == localName) {
                 sectioningElementPtrs.pollLast();
             }
-            if("script" == localName && parsingScriptImportMap) {
+            if ("script" == localName && parsingScriptImportMap) {
                 isImportMapValid(node.getTextContent().toString());
             }
         }
@@ -1653,52 +1653,76 @@ public class Assertions extends Checker {
                     locator);
         }
     }
-    
+
     private boolean isImportMapValid(String scriptContent) throws SAXException {
         Object importMap;
         try {
             importMap = JSON.parse(scriptContent, true);
-        } catch(IllegalStateException e) {
-            err("Element \u201cscript\u201d whose \u201ctype\u201d attribute is \u201cimportmap\u201d must have valid JSON content.");
+        } catch (IllegalStateException e) {
+            err("A script \u201cscript\u201d with a \u201ctype\u201d attribute"
+                    + " whose value is \u201cimportmap\u201d must have valid"
+                    + " JSON content.");
             return false;
         }
         if (!(importMap instanceof Map)) {
-            err("Element \u201cscript\u201d whose \u201ctype\u201d attribute is \u201cimportmap\u201d must contain JSON object.");
+            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
+                    + " whose value is \u201cimportmap\u201d must contain a"
+                    + " JSON object.");
             return false;
         }
-        
+
         Map<String, Object> importMapObject = (Map<String, Object>) importMap;
-        
+
         for (Map.Entry<String, Object> importMapEntry : importMapObject.entrySet()) {
             String specifierType = importMapEntry.getKey();
-            if (!"imports".equals(specifierType) && !"scopes".equals(specifierType)) {
-                err("Element \u201cscript\u201d whose \u201ctype\u201d attribute is \u201cimportmap\u201d must contain JSON object with no other property than \u201cimports\u201d and \u201cscopes\u201d.");
+            if (!"imports".equals(specifierType)
+                    && !"scopes".equals(specifierType)) {
+                err("A \u201cscript\u201d element with a \u201ctype\u201d"
+                        + " attribute whose value is \u201cimportmap\u201d must"
+                        + " contain a JSON object with no properties other than"
+                        + " \u201cimports\u201d and \u201cscopes\u201d.");
                 return false;
             }
             if (!(importMapEntry.getValue() instanceof Map)) {
-                err("Value of property \u201c" + specifierType + "\u201d inside \u201cscript\u201d element whose \u201ctype\u201d attribute is \u201cimportmap\u201d must be a JSON object.");
+                err("The value of the \u201c" + specifierType + "\u201d"
+                        + " property within the content of a \u201cscript\u201d"
+                        + " element with a \u201ctype\u201d attribute whose"
+                        + " value is \u201cimportmap\u201d must be a JSON"
+                        + " object.");
                 return false;
             }
-            
+
             Map<String, Object> importMapValue = (Map<String, Object>) importMapEntry.getValue();
             for (Map.Entry<String, Object> entry : importMapValue.entrySet()) {
-                
+
                 if ("imports".equals(specifierType)) {
-                    if (!isSpecifierMapValid(specifierType, entry.getKey(), entry.getValue())) {
+                    if (!isSpecifierMapValid(specifierType, entry.getKey(),
+                            entry.getValue())) {
                         return false;
                     }
                 } else if ("scopes".equals(specifierType)) {
                     if (!isValidURL(entry.getKey())) {
-                        err("Value of property \u201cscopes\u201d inside \u201cscript\u201d element whose \u201ctype\u201d attribute is \u201cimportmap\u201d must be a JSON object whose keys are valid URL strings.");
+                        err("The value of the \u201cscopes\u201d property"
+                                + " within the content of a \u201cscript\u201d"
+                                + " element with a \u201ctype\u201d attribute"
+                                + " whose value is \u201cimportmap\u201d must"
+                                + " be a JSON object whose keys are valid URL"
+                                + " strings.");
                         return false;
                     }
                     if (!(entry.getValue() instanceof Map)) {
-                        err("Value of property \u201cscopes\u201d inside \u201cscript\u201d element whose \u201ctype\u201d attribute is \u201cimportmap\u201d must be a JSON object whose values are also JSON objects.");
+                        err("The value of the \u201cscopes\u201d property"
+                                + " within the content of a \u201cscript\u201d"
+                                + " element with a \u201ctype\u201d attribute"
+                                + " whose value is \u201cimportmap\u201d must"
+                                + " be a JSON object whose values are also"
+                                + " JSON objects.");
                         return false;
                     }
                     Map<String, Object> scopesMap = (Map<String, Object>) entry.getValue();
                     for (Map.Entry<String, Object> scopesEntry : scopesMap.entrySet()) {
-                        if (!isSpecifierMapValid(specifierType, scopesEntry.getKey(), scopesEntry.getValue())) {
+                        if (!isSpecifierMapValid(specifierType,
+                                scopesEntry.getKey(), scopesEntry.getValue())) {
                             return false;
                         }
                     }
@@ -1707,41 +1731,62 @@ public class Assertions extends Checker {
         }
         return true;
     }
-    
-    private boolean isSpecifierMapValid(String type, String key, Object value) throws SAXException {
+
+    private boolean isSpecifierMapValid(String type, String key, Object value)
+            throws SAXException {
         if (key.isEmpty()) {
-            err("Specifier map defined in \u201c" + type + "\u201d property inside \u201cscript\u201d element whose \u201ctype\u201d attribute is \u201cimportmap\u201d must contain only non-empty keys.");
+            err("A specifier map defined in a \u201c" + type + "\u201d"
+                    + " property within the content of a \u201cscript\u201d"
+                    + " element with a \u201ctype\u201d attribute whose value"
+                    + " is \u201cimportmap\u201d must only contain non-empty"
+                    + " keys.");
             return false;
         }
         if (!(value instanceof String)) {
-            err("Specifier map defined in \u201c" + type + "\u201d property inside \u201cscript\u201d element whose \u201ctype\u201d attribute is \u201cimportmap\u201d must contain only string values.");
+            err("A specifier map defined in a \u201c" + type + "\u201d"
+                    + " property within the content of a \u201cscript\u201d"
+                    + " element with a \u201ctype\u201d attribute whose value"
+                    + " is \u201cimportmap\u201d must only contain string"
+                    + " values.");
             return false;
         }
         String sValue = (String) value;
         if (!isValidURL(sValue)) {
-            err("Specifier map defined in \u201c" + type + "\u201d property inside \u201cscript\u201d element whose \u201ctype\u201d attribute is \u201cimportmap\u201d must contain only valid URL values.");
+            err("A specifier map defined in a \u201c" + type + "\u201d"
+                    + " property within the content of a \u201cscript\u201d"
+                    + " element with a \u201ctype\u201d attribute whose value"
+                    + " is \u201cimportmap\u201d must only contain valid URL"
+                    + " values.");
             return false;
         }
         if (key.endsWith("/") && !sValue.endsWith("/")) {
-            err("Specifier map defined in \u201c" + type + "\u201d property inside \u201cscript\u201d element whose \u201ctype\u201d attribute is \u201cimportmap\u201d must have values end with \u201c/\u201d when its corresponding key ends with \u201c/\u201d.");
+            err("A specifier map defined in a \u201c" + type + "\u201d"
+                    + " property within the content of a \u201cscript\u201d"
+                    + " element with a \u201ctype\u201d attribute whose value"
+                    + " is \u201cimportmap\u201d must have values that end with"
+                    + " \u201c/\u201d when its corresponding key ends with"
+                    + " \u201c/\u201d.");
             return false;
         }
         return true;
     }
-    
+
     private boolean isValidURL(String value) {
         try {
             URL.parse(value);
             return true;
-        } catch (GalimatiasParseException e) {}
-        
-        if (value.startsWith("/") || value.startsWith("./") || value.startsWith("../")) {
+        } catch (GalimatiasParseException e) {
+        }
+
+        if (value.startsWith("/") || value.startsWith("./")
+                || value.startsWith("../")) {
             try {
                 URL.parse("https://example.com/" + value);
                 return true;
-            } catch (GalimatiasParseException e) {}
+            } catch (GalimatiasParseException e) {
+            }
         }
-        
+
         return false;
     }
 
@@ -2817,9 +2862,10 @@ public class Assertions extends Checker {
                         }
                     } else if ("importmap".equals(scriptType)) {
                         if (atts.getIndex("", "src") > -1) {
-                            err("Element \u201cscript\u201d whose \u201ctype\u201d" +
-                                        " attribute is \u201cimportmap\u201d," +
-                                        " must not have a \u201Csrc\u201D attribute.");
+                            err("A \u201cscript\u201d element with a"
+                                    + " \u201ctype\u201d attribute whose value"
+                                    + " is \u201cimportmap\u201d must not have"
+                                    + " a \u201Csrc\u201D attribute.");
                         }
                         parsingScriptImportMap = true;
                     }
