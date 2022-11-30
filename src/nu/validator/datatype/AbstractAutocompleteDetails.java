@@ -106,15 +106,11 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        String trimmed = trimWhitespace(literal.toString());
-        if (trimmed.length() == 0) {
-            throw newDatatypeException("Must not be empty.");
-        }
         StringBuilder builder = new StringBuilder();
         ArrayList<String> detailTokens = new ArrayList<>();
-        int len = trimmed.length();
+        int len = literal.length();
         for (int i = 0; i < len; i++) {
-            char c = trimmed.charAt(i);
+            char c = literal.charAt(i);
             if (isWhitespace(c) && builder.length() > 0) {
                 detailTokens.add(builder.toString());
                 builder.setLength(0);
@@ -125,55 +121,25 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
         if (builder.length() > 0) {
             detailTokens.add(builder.toString());
         }
-        if (detailTokens.size() > 0) {
-            checkTokens(detailTokens);
-        }
+        checkTokens(detailTokens);
     }
 
     private void checkTokens(ArrayList<String> detailTokens)
             throws DatatypeException {
         boolean isContactDetails = false;
-        String contactType = "";
-        String firstRemainingToken = "";
-        if (detailTokens.size() < 1) {
-            return;
-        }
-        if (CONTACT_TYPES.contains(detailTokens.get(0))) {
-            isContactDetails = true;
-            contactType = detailTokens.get(0);
-            detailTokens.remove(0);
-        }
-        if (detailTokens.size() > 0
+        if (!detailTokens.isEmpty()
                 && detailTokens.get(0).startsWith("section-")) {
-            if (isContactDetails) {
-                throw newDatatypeException(
-                        "A \u201csection-*\u201d indicator is not allowed"
-                                + " when the first token in a list"
-                                + " of autofill detail tokens is" + " \u201c"
-                                + contactType + "\u201d.");
-            }
             detailTokens.remove(0);
         }
-        if (detailTokens.size() < 1) {
-            return;
-        }
-        firstRemainingToken = detailTokens.get(0);
-        if (firstRemainingToken.equals("shipping")
-                || firstRemainingToken.equals("billing")) {
-            if (isContactDetails) {
-                throw newDatatypeException(
-                        "The token \u201c" + firstRemainingToken + "\u201d is"
-                                + " not allowed when the first token in a list"
-                                + " of autofill detail tokens is" + " \u201c"
-                                + contactType + "\u201d.");
-            }
+        if (!detailTokens.isEmpty()
+                && (detailTokens.get(0).equals("shipping")
+                || detailTokens.get(0).equals("billing"))) {
             detailTokens.remove(0);
         }
-        if (detailTokens.size() > 0
+        if (!detailTokens.isEmpty()
                 && CONTACT_TYPES.contains(detailTokens.get(0))) {
-            isContactDetails = true;
-            contactType = detailTokens.get(0);
             detailTokens.remove(0);
+            isContactDetails = true;
         }
         for (String token : detailTokens) {
             if (CONTACT_TYPES.contains(token)) {
@@ -210,6 +176,8 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
         if (detailTokens.size() > 1) {
             throw newDatatypeException("A list of autofill details tokens must"
                     + " not contain more than one autofill field name.");
+        } else if (detailTokens.isEmpty()) {
+            throw newDatatypeException("A list must contain autofill field name.");
         }
     }
 
