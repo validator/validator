@@ -3394,14 +3394,10 @@ public class Assertions extends Checker {
                 }
                 if (atts.getIndex("", "blocking") > -1
                         && (atts.getIndex("", "rel") == -1
-                        || !(relList.contains("modulepreload")
-                            || relList.contains("preload")
-                            || relList.contains("stylesheet")))) {
+                        || !relList.contains("stylesheet"))) {
                     err("A \u201Clink\u201D element with a"
                                 + " \u201Cblocking\u201D attribute must have a"
                                 + " \u201Crel\u201D attribute whose value is"
-                                + " \u201Cmodulepreload\u201D,"
-                                + " \u201Cpreload\u201D, or"
                                 + " \u201Cstylesheet\u201D.");
                 }
             }
