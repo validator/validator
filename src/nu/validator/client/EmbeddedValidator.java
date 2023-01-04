@@ -67,6 +67,7 @@ public class EmbeddedValidator {
     private boolean noStream = false;
     private OutputFormat outputFormat = OutputFormat.JSON;
     private String schemaUrl = SCHEMA_URL;
+    private String version = "[unknown version]";
 
     /**
      * Validate the file at the given path
@@ -214,6 +215,22 @@ public class EmbeddedValidator {
     }
 
     /**
+     * @param version
+     *            version of the checker
+     */
+    public void setVersion(final String version) {
+        if (version == null) {
+            throw new IllegalArgumentException("version should not be a null");
+        }
+
+        this.version = version;
+    }
+
+    public String getVersion() {
+        return this.version;
+    }
+
+    /**
      * Self-contained, single use class for encapsulated building of an embedded
      * validator.
      */
@@ -263,7 +280,7 @@ public class EmbeddedValidator {
                 return new GnuMessageEmitter(this.out, asciiQuotes);
             case JSON:
                 return new JsonMessageEmitter(new Serializer(this.out), null,
-                        asciiQuotes);
+                        asciiQuotes, version);
             case XML:
                 return new XmlMessageEmitter(new XmlSerializer(this.out));
             default:
