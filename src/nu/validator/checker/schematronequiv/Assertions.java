@@ -678,6 +678,82 @@ public class Assertions extends Checker {
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("required");
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("rowspan");
     }
+    
+    /**
+     * Map of global aria attributes as keys and array of roles for which they have been deprecated for, as values.
+     * Array of roles is sorted according to {@linkplain Comparable natural ordering}
+     */
+    private static final Map<String, String[]> ARIA_DEPRECATED_GLOBAL_ATTRIBUTES = new HashMap<>();
+    
+    static {
+        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-disabled", new String[] {
+                "alert", "alertdialog", "article", "associationlist",
+                "associationlistitemkey", "associationlistitemvalue", "banner",
+                "blockquote", "caption", "cell", "code", "command", "comment",
+                "complementary", "contentinfo", "definition", "deletion",
+                "dialog", "directory", "document", "emphasis", "feed", "figure",
+                "form", "generic", "heading", "img", "insertion", "landmark",
+                "list", "listitem", "log", "main", "mark", "marquee", "math",
+                "meter", "navigation", "note", "paragraph", "presentation",
+                "progressbar", "range", "region", "rowgroup", "search",
+                "section", "sectionhead", "status", "strong", "structure",
+                "subscript", "suggestion", "superscript", "table", "tabpanel",
+                "term", "time", "timer", "tooltip", "widget", "window" });
+        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-errormessage",
+                new String[] { "alert", "alertdialog", "article",
+                        "associationlist", "associationlistitemkey",
+                        "associationlistitemvalue", "banner", "blockquote",
+                        "button", "caption", "cell", "code", "command",
+                        "comment", "complementary", "composite", "contentinfo",
+                        "definition", "deletion", "dialog", "directory",
+                        "document", "emphasis", "feed", "figure", "form",
+                        "generic", "grid", "group", "heading", "img", "input",
+                        "insertion", "landmark", "link", "list", "listitem",
+                        "log", "main", "mark", "marquee", "math", "menu",
+                        "menubar", "menuitem", "menuitemcheckbox",
+                        "menuitemradio", "meter", "navigation", "note",
+                        "option", "paragraph", "presentation", "progressbar",
+                        "radio", "range", "region", "row", "rowgroup",
+                        "scrollbar", "search", "section", "sectionhead",
+                        "select", "separator", "status", "strong", "structure",
+                        "subscript", "suggestion", "superscript", "tab",
+                        "table", "tablist", "tabpanel", "term", "time", "timer",
+                        "toolbar", "tooltip", "treeitem", "widget", "window" });
+        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-haspopup", new String[] {
+                "alert", "alertdialog", "article", "associationlist",
+                "associationlistitemkey", "associationlistitemvalue", "banner",
+                "blockquote", "caption", "cell", "checkbox", "code", "command",
+                "comment", "complementary", "composite", "contentinfo",
+                "definition", "deletion", "dialog", "directory", "document",
+                "emphasis", "feed", "figure", "form", "generic", "grid",
+                "group", "heading", "img", "input", "insertion", "landmark",
+                "list", "listbox", "listitem", "log", "main", "mark", "marquee",
+                "math", "menu", "menubar", "meter", "navigation", "note",
+                "option", "paragraph", "presentation", "progressbar", "radio",
+                "radiogroup", "range", "region", "row", "rowgroup", "scrollbar",
+                "search", "section", "sectionhead", "select", "separator",
+                "spinbutton", "status", "strong", "structure", "subscript",
+                "suggestion", "superscript", "switch", "table", "tablist",
+                "tabpanel", "term", "time", "timer", "toolbar", "tooltip",
+                "tree", "treegrid", "widget", "window" });
+        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-invalid", new String[] {
+                "alert", "alertdialog", "article", "associationlist",
+                "associationlistitemkey", "associationlistitemvalue", "banner",
+                "blockquote", "button", "caption", "cell", "code", "command",
+                "comment", "complementary", "composite", "contentinfo",
+                "definition", "deletion", "dialog", "directory", "document",
+                "emphasis", "feed", "figure", "form", "generic", "grid",
+                "group", "heading", "img", "input", "insertion", "landmark",
+                "link", "list", "listitem", "log", "main", "mark", "marquee",
+                "math", "menu", "menubar", "menuitem", "menuitemcheckbox",
+                "menuitemradio", "meter", "navigation", "note", "option",
+                "paragraph", "presentation", "progressbar", "radio", "range",
+                "region", "row", "rowgroup", "scrollbar", "search", "section",
+                "sectionhead", "select", "separator", "status", "strong",
+                "structure", "subscript", "suggestion", "superscript", "tab",
+                "table", "tablist", "tabpanel", "term", "time", "timer",
+                "toolbar", "tooltip", "treeitem", "widget", "window" });
+    }
 
     private static final String h1WarningMessage = "Consider using the"
             + " \u201Ch1\u201D element as a top-level heading only (all"
@@ -2556,6 +2632,18 @@ public class Assertions extends Checker {
             if (Arrays.binarySearch(INTERACTIVE_ELEMENTS, localName) >= 0) {
                 checkForInteractiveAncestorRole(
                         "The element \u201C" + localName + "\u201D");
+            }
+            
+            if (role != null && !role.isEmpty()) {
+                for (Map.Entry<String, String[]> attributeAndRoles : ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.entrySet()) {
+                    if (atts.getIndex("", attributeAndRoles.getKey()) >= 0
+                            && Arrays.binarySearch(attributeAndRoles.getValue(),
+                                    role) >= 0) {
+                        warn("Attribute \u201C" + attributeAndRoles.getKey()
+                                + "\u201D is deprecated on element with the attribute"
+                                + " \u201Crole=" + role + "\u201D.");
+                    }
+                }
             }
 
             // Ancestor requirements/restrictions
