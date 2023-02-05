@@ -874,13 +874,13 @@ The steps above will build, test, and run the checker such that you can open <co
 Use <code>python ./checker.py --help</code> to see command-line options for controlling the behavior of the script, as well as build-target names you can call separately; e.g.:
 
 <ul>
-<li><pre>python ./checker.py build  # to build only</pre>
-<li><pre>python ./checker.py build  # test to build and test</pre>
-<li><pre>python ./checker.py run    # to run only</pre>
-<li><pre>python ./checker.py jar    # to compile <code>vnu.jar</code></pre>
+<li><pre>python ./checker.py build       # to build only</pre>
+<li><pre>python ./checker.py build test  # to build and test</pre>
+<li><pre>python ./checker.py run         # to run only</pre>
+<li><pre>python ./checker.py jar         # to compile <code>vnu.jar</code></pre>
 <li><pre>python ./checker.py update-shallow && \
   python ./checker.py dldeps && \
-  python ./checker.py jar  # compile vnu.jar faster</pre>
+  python ./checker.py jar       # to compile <code>vnu.jar</code> faster</pre>
 </ul>
 </div>
 </section>

@@ -724,14 +724,14 @@ Use `python ./checker.py --help` to see command-line options for controlling the
 behavior of the script, as well as build-target names you can call separately;
 e.g.:
 
-  * python ./checker.py build  # to build only
+  * python ./checker.py build       # to build only
 
-  * python ./checker.py test   # to build and test
+  * python ./checker.py build test  # to build and test
 
-  * python ./checker.py run    # to run only
+  * python ./checker.py run         # to run only
 
-  * python ./checker.py jar    # to compile vnu.jar
+  * python ./checker.py jar         # to compile vnu.jar
 
   * python ./checker.py update-shallow && \
       python ./checker.py dldeps && \
-      python ./checker.py jar  # compile vnu.jar faster
+      python ./checker.py jar       # to compile vnu.jar faster
