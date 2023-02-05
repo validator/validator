@@ -726,7 +726,7 @@ e.g.:
 
   * python ./checker.py build  # to build only
 
-  * python ./checker.py build  # test to build and test
+  * python ./checker.py test   # to build and test
 
   * python ./checker.py run    # to run only
 
