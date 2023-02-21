@@ -1697,6 +1697,7 @@ public class Assertions extends Checker {
             }
             if ("script" == localName && parsingScriptImportMap) {
                 isImportMapValid(node.getTextContent().toString());
+                parsingScriptImportMap = false;
             }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
