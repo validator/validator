@@ -678,6 +678,13 @@ public class Assertions extends Checker {
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("required");
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("rowspan");
     }
+    
+    /**
+     * Names of link types that are considered as "External Resource" according to https://html.spec.whatwg.org/multipage/links.html#linkTypes
+     */
+    private static final String[] EXTERNAL_RESOURCE_LINK_REL = new String[] {
+            "dns-prefetch", "icon", "manifest", "modulepreload", "pingback", "preconnect", "prefetch", "preload", "prerender", "stylesheet"
+    };
 
     private static final String h1WarningMessage = "Consider using the"
             + " \u201Ch1\u201D element as a top-level heading only (all"
@@ -2908,6 +2915,11 @@ public class Assertions extends Checker {
                                 + " \u201Cintegrity\u201D unless attribute"
                                 + " \u201Csrc\u201D is also specified.");
                     }
+                    if (atts.getIndex("", "fetchpriority") > -1) {
+                        warn("Element \u201Cscript\u201D should not have attribute"
+                                     + " \u201Cfetchpriority\u201D unless attribute"
+                                     + " \u201Csrc\u201D is also specified.");
+                    }
                 }
                 if (atts.getIndex("", "type") > -1) {
                     String scriptType = atts.getValue("", "type").toLowerCase();
@@ -3364,6 +3376,12 @@ public class Assertions extends Checker {
                                 + " \u201Cstylesheet\u201D must have a"
                                 + " \u201Ctitle\u201D attribute with a"
                                 + " non-empty value.");
+                }
+                if (atts.getIndex("", "fetchpriority") > -1
+                        && Arrays.stream(EXTERNAL_RESOURCE_LINK_REL).noneMatch(relList::contains)) {
+                    warn("A \u201Clink\u201D element with \u201Cfetchpriority\u201D"
+                                + " attribute should have a \u201Crel\u201D"
+                                + " attribute containing external resource type.");
                 }
                 if ((ancestorMask & BODY_MASK) != 0
                         && (relList != null
