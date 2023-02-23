@@ -393,7 +393,7 @@ public class Assertions extends Checker {
 
     private static final String[] ARIA_HIDDEN_NOT_ALLOWED_ELEMENTS = { "base",
             "col", "colgroup", "head", "html", "link", "map", "meta",
-            "noscript", "param", "picture", "script", "slot", "source", "style",
+            "noscript", "param", "script", "slot", "source", "style",
             "template", "title", "track" };
 
     private static final String[] INTERACTIVE_ELEMENTS = { "a", "button",
