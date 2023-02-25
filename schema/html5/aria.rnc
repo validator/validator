@@ -374,7 +374,9 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## colcount
 	aria.prop.colcount =
 		attribute aria-colcount {
-			common.data.integer.positive
+			(	common.data.integer.non-negative
+                        |	string "-1"
+                        )
 		}
 
 ## colindex
