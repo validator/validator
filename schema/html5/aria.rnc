@@ -576,7 +576,9 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## rowcount
 	aria.prop.rowcount =
 		attribute aria-rowcount {
-			common.data.integer.positive
+			(	common.data.integer.non-negative
+                        |	string "-1"
+                        )
 		}
 
 ## rowindex
