@@ -3473,7 +3473,7 @@ public class Assertions extends Checker {
                         || "checkbox".equals(inputTypeVal)) {
                     if (atts.getIndex("", "aria-checked") >= 0
                             && !"".equals(atts.getValue("", "aria-checked"))) {
-                        warn("The \u201Caria-checked\u201D attribute should not"
+                        err("The \u201Caria-checked\u201D attribute must not"
                                 + " be used on an \u201Cinput\u201D element"
                                 + " which has a \u201Ctype\u201D attribute"
                                 + " whose value is \u201C" + inputTypeVal
