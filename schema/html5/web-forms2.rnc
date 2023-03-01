@@ -716,8 +716,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( option.elem* & common.inner.phrasing )
 	datalist.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.role.listbox # aria-multiselectable must be false; check by assertions
-			|	common.attrs.aria.implicit.listbox
 			)?
 		)
 
