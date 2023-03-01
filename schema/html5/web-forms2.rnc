@@ -717,7 +717,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	datalist.attrs =
 		(	common.attrs
 			)?
-		)
 
 	common.elem.phrasing |= datalist.elem
 
