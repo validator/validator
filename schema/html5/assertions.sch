@@ -1232,4 +1232,18 @@ THE SOFTWARE.
 		</rule>
 	</pattern>
 
+<!--                               deprecated ARIA attribute Warnings                                  -->
+	<pattern name='Warnings for ARIA attributes that are deprecated'>
+		<rule context='*[@aria-grabbed]'>
+		  <report test='@aria-grabbed' role='warning'>
+				Do not use the &#x201C;aria-grabbed&#x201D; attribute, it is deprecated and lacks robust support.
+		  </report>
+		</rule>
+		<rule context='*[@aria-dropeffect]'>
+		  <report test='@aria-dropeffect' role='warning'>
+				Do not use the &#x201C;aria-dropeffect&#x201D; attribute, it is deprecated and lacks robust support.
+		  </report>
+		</rule>
+	</pattern>
+
 </schema>

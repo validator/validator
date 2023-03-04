@@ -314,11 +314,9 @@ namespace local = ""
 			                    | aria-describedby
 			                    | aria-description
 			                    | aria-disabled
-			                    | aria-dropeffect
 			                    | aria-errormessage
 			                    | aria-expanded
 			                    | aria-flowto
-			                    | aria-grabbed
 			                    | aria-haspopup
 			                    | aria-hidden
 			                    | aria-invalid
