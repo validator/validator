@@ -17,10 +17,8 @@ aria.global =
 	&	aria.prop.describedby?
 	&	aria.prop.details?
 	&	aria.state.disabled?
-	&	aria.state.dropeffect?
 	&	aria.prop.errormessage?
 	&	aria.prop.flowto?
-	&	aria.state.grabbed?
 	&	aria.prop.haspopup?
 	&	aria.state.hidden?
 	&	aria.state.invalid?
