@@ -35,6 +35,16 @@ public class ConformingButObsoleteWarner extends Checker {
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == uri) {
+            int len = atts.getLength();
+            for (int i = 0; i < len; i++) {
+                String attributeName = atts.getLocalName(i);
+                if ("aria-dropeffect".equals(attributeName)
+                        || "aria-grabbed".equals(attributeName)) {
+                    warn("The \u201C" + attributeName + "\u201D attribute is"
+                            + " deprecated and should not be used. Support for"
+                            + " it is poor and is unlikely to improve.");
+                        }
+            }
             if ("img" == localName) {
                 if (atts.getIndex("", "border") > -1) {
                     warn("The \u201Cborder\u201D attribute is obsolete."
