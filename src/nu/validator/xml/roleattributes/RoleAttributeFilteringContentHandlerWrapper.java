@@ -250,6 +250,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
             "menuitem", //
             "menuitemcheckbox", //
             "menuitemradio", //
+            "meter", //
             "navigation", //
             "none", //
             "note", //
