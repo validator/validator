@@ -18,7 +18,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.attrs.contenteditable =
 		attribute contenteditable {
-			w:string "true" | w:string "false" | w:string ""
+			w:string "true" | w:string "plaintext-only" | w:string "false" | w:string ""
 		}
 
 ## Draggable Element: draggable
