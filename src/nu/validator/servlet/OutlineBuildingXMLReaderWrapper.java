@@ -738,10 +738,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         if (currentOutlinee != null) {
             if (isHeadingOutline) {
                 request.setAttribute(
-                        "http://validator.nu/properties/heading-outline",
-                        currentOutlinee.outline);
-            } else {
-                request.setAttribute(
                         "http://validator.nu/properties/document-outline",
                         currentOutlinee.outline);
             }

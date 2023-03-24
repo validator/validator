@@ -36,41 +36,18 @@ import org.xml.sax.SAXException;
 public class XhtmlOutlineEmitter {
 
     private static final char[] OUTLINE = //
-            "Structural outline".toCharArray();
-
-    private static final char[] HEADINGOUTLINE = //
-            "Heading-level outline".toCharArray();
+            "Outline".toCharArray();
 
     private final Deque<Section> outline;
-
-    private final Deque<Section> headingOutline;
 
     private final XhtmlSaxEmitter emitter;
 
     private final AttributesImpl attrs = new AttributesImpl();
 
     public XhtmlOutlineEmitter(final ContentHandler contentHandler,
-            final Deque<Section> outline, final Deque<Section> headingOutline) {
+            final Deque<Section> outline) {
         this.emitter = new XhtmlSaxEmitter(contentHandler);
         this.outline = outline;
-        this.headingOutline = headingOutline;
-    }
-
-    public void emit() throws SAXException {
-        if (outline != null) {
-            attrs.clear();
-            attrs.addAttribute("id", "outline");
-            emitter.startElement("section", attrs);
-            emitter.startElement("h2");
-            emitter.characters(OUTLINE);
-            emitter.endElement("h2");
-            try {
-                emitOutline(outline, 0);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            emitter.endElement("section");
-        }
     }
 
     boolean hasH1 = false;
@@ -93,7 +70,7 @@ public class XhtmlOutlineEmitter {
 
     boolean emittedDummyH5 = false;
 
-    public void emitHeadings() throws SAXException {
+    public void emit() throws SAXException {
         hasH1 = false;
         hasH2 = false;
         hasH3 = false;
@@ -104,15 +81,15 @@ public class XhtmlOutlineEmitter {
         emittedDummyH3 = false;
         emittedDummyH4 = false;
         emittedDummyH5 = false;
-        if (headingOutline != null) {
+        if (outline != null) {
             attrs.clear();
             attrs.addAttribute("id", "headingoutline");
             emitter.startElement("section", attrs);
             emitter.startElement("h2");
-            emitter.characters(HEADINGOUTLINE);
+            emitter.characters(OUTLINE);
             emitter.endElement("h2");
             try {
-                emitHeadingOutline(headingOutline, 0);
+                emitHeadingOutline(outline, 0);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -167,9 +144,9 @@ public class XhtmlOutlineEmitter {
         emitter.endElement("ol");
     }
 
-    protected void emitHeadingOutline(Deque<Section> headingOutline,
+    protected void emitHeadingOutline(Deque<Section> outline,
             int currentDepth) throws IOException, SAXException {
-        for (Section section : headingOutline) {
+        for (Section section : outline) {
             String headingName = section.getHeadingElementName();
             if ("h1".equals(headingName)) {
                 hasH1 = true;
