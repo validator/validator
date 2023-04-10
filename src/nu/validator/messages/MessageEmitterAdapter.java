@@ -821,6 +821,16 @@ public class MessageEmitterAdapter implements ErrorHandler {
             int oneBasedLine, int oneBasedColumn, boolean exact, int[] start)
             throws SAXException {
         String msg = message.getMessage();
+        if (msg != null && ((filterPattern != null
+                && filterPattern.matcher(msg).matches())
+                || DEFAULT_FILTER_PATTERN.matcher(msg).matches())) {
+            if (type.getSuperType() == "error" && this.errors > 0) {
+                this.errors--;
+            } else if (type.getSubType() == "warning" && this.warnings > 0) {
+                this.warnings--;
+            }
+            return;
+        }
         if (msg != null && msg.contains(
                 "Trailing slash on void elements has no effect")) {
             if (type != MessageType.INFO) {
@@ -833,16 +843,6 @@ public class MessageEmitterAdapter implements ErrorHandler {
                         "http://validator.nu/properties/self-closing-tag-found",
                         true);
             }
-        }
-        if (msg != null && ((filterPattern != null
-                && filterPattern.matcher(msg).matches())
-                || DEFAULT_FILTER_PATTERN.matcher(msg).matches())) {
-            if (type.getSuperType() == "error" && this.errors > 0) {
-                this.errors--;
-            } else if (type.getSubType() == "warning" && this.warnings > 0) {
-                this.warnings--;
-            }
-            return;
         }
         if (loggingOk
                 && (type.getSuperType() == "error")
