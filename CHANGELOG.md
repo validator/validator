@@ -11,6 +11,7 @@ NN XXX NNNN
   - Allow `operator=lighter` for SVG `feComposite` element
   - Allow more values for SVG `feBlend` element `mode` attribute
   - Allow non-JS MIME types for `script` elements with `src` attributes
+  - Fix bug in handling of (non)reporting of invalid named character refs
   - CLI: Add nu.validator.htmlparser.tools|test classes to vnu.jar
   - CLI: Add new `--xml` option, to force parsing using the XML parser
   - CLI/Docker: Enable setting timeouts & bind address w/ environment vars
