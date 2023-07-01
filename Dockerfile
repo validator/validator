@@ -21,11 +21,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && rm ./vnu.linux.zip* \
     && apt-get purge -y --auto-remove unzip
 # hadolint ignore=DL3006
-FROM gcr.io/distroless/base
+FROM debian:stable-slim
 COPY --from=builder /vnu-runtime-image /vnu-runtime-image
-COPY --from=builder /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
-COPY --from=builder /bin/sh /bin/sh
-COPY --from=builder /usr/bin/dirname /usr/bin/dirname
 ENV LANG C.UTF-8
 ENV JAVA_TOOL_OPTIONS ""
 ENV CONNECTION_TIMEOUT_SECONDS 5
