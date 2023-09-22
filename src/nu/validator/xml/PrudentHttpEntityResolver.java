@@ -227,7 +227,7 @@ import io.mola.galimatias.GalimatiasParseException;
         String allowedAddressType = System.getProperty(
             "nu.validator.servlet.allowed-address-type", "all");
 
-        if ("any".equals(allowedAddressType)) {
+        if ("none".equals(allowedAddressType)) {
             throw new IOException("URL-based checks are prohibited.");
         }
 

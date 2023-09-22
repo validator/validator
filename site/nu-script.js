@@ -109,7 +109,7 @@ function initFieldHolders() {
 		fileInput.setAttribute('tabindex','0')
 	}
 	var label = document.getElementById("inputlabel");
-	var disabledAddressType = label.getAttribute('data-allowed-address-type') === 'any'
+	var disabledAddressType = label.getAttribute('data-allowed-address-type') === 'none'
 	label.removeAttribute("for")
 	label.textContent = "Check by"
 	var modeSelect = createHtmlElement("select")

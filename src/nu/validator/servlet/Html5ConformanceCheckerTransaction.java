@@ -157,7 +157,7 @@ public class Html5ConformanceCheckerTransaction extends
 
         String allowedAddressType = System.getProperty("nu.validator.servlet.allowed-address-type", "all");
 
-        if ("any".equals(allowedAddressType)) {
+        if ("none".equals(allowedAddressType)) {
             attrs.addAttribute("data-allowed-address-type", allowedAddressType);
         }
 

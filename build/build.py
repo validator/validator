@@ -1720,7 +1720,7 @@ def printHelp():
     print("                                - 'all': Allow all URLs (default)")
     print("                                - 'same-origin': Allow only")
     print("                                  same-origin URLs")
-    print("                                - 'any': Disallow all URLs")
+    print("                                - 'none': Disallow all URLs")
     print("  --promiscuous-ssl=on       -- Don't check SSL/TLS trust chain")
     print("  --results-title=Validation results")
     print("                                Sets title to show on results page")

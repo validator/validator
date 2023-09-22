@@ -1912,7 +1912,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
-            boolean isAllowedAddress = !("any".equals(
+            boolean isAllowedAddress = !("none".equals(
                 System.getProperty("nu.validator.servlet.allowed-address-type", "all")));
 
             emitter.characters(RESULTS_TITLE);
@@ -1948,7 +1948,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         String allowedAddressType = System.getProperty("nu.validator.servlet.allowed-address-type", "all");
 
-        if ("any".equals(allowedAddressType)) {
+        if ("none".equals(allowedAddressType)) {
             attrs.addAttribute("data-allowed-address-type", allowedAddressType);
         }
 
