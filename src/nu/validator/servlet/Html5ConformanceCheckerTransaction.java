@@ -56,7 +56,6 @@ public class Html5ConformanceCheckerTransaction extends
             "nu.validator.servlet.service-name", "Validator.nu") + " (X)HTML5 Validator ").toCharArray();
 
     private static final char[] TECHNOLOGY_PREVIEW = "(Living Validator)".toCharArray();
-
     private static final char[] RESULTS_TITLE = "(X)HTML5 validation results".toCharArray();
 
     private static final char[] FOR = " for ".toCharArray();
@@ -146,6 +145,27 @@ public class Html5ConformanceCheckerTransaction extends
             }
         }
     }
+
+    /**
+     * @see nu.validator.servlet.VerifierServletTransaction#emitLabel()
+     */
+    @Override
+    void emitLabel() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("id", "inputlabel");
+        attrs.addAttribute("for", "doc");
+
+        String allowedAddressType = System.getProperty("nu.validator.servlet.allowed-address-type", "all");
+
+        if ("any".equals(allowedAddressType)) {
+            attrs.addAttribute("data-allowed-address-type", allowedAddressType);
+        }
+
+        emitter.startElement("label", attrs);
+        emitter.characters("Document URL:");
+        emitter.endElement("label");
+    }
+
 
     /**
      * @see nu.validator.servlet.VerifierServletTransaction#tryToSetupValidator()

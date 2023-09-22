@@ -223,6 +223,14 @@ import io.mola.galimatias.GalimatiasParseException;
     @Override
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {
+
+        String allowedAddressType = System.getProperty(
+            "nu.validator.servlet.allowed-address-type", "all");
+
+        if ("any".equals(allowedAddressType)) {
+            throw new IOException("URL-based checks are prohibited.");
+        }
+
         if (requestsLeft > -1) {
             if (requestsLeft == 0) {
                 throw new IOException(
@@ -236,6 +244,16 @@ import io.mola.galimatias.GalimatiasParseException;
             URL url = null;
             try {
                 url = URL.parse(systemId);
+                if ("same-origin".equals(allowedAddressType)) {
+                    URL currentURL = URL.parse(request.getRequestURL().toString());
+
+                    String currentURLOrigin = currentURL.scheme() + currentURL.host() + currentURL.port();
+                    String targetURLOrigin = url.scheme() + url.host() + url.port();
+
+                    if (!currentURLOrigin.equals(targetURLOrigin)) {
+                        throw new IOException("Cross-origin requests are prohibited.");
+                    }
+                }
             } catch (GalimatiasParseException e) {
                 IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
                 SAXParseException spe = new SAXParseException(e.getMessage(),
