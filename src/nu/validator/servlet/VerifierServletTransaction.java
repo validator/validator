@@ -1912,9 +1912,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
+            boolean isAllowedAddress = !("none".equals(
+                System.getProperty("nu.validator.servlet.allowed-address-type", "all")));
+
             emitter.characters(RESULTS_TITLE);
             emitter.characters(FOR);
-            if (document != null && document.length() > 0) {
+            if (isAllowedAddress && document != null && document.length() > 0) {
                 emitter.characters(scrub(shortenDataUri(document)));
             } else if (request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename") != null) {
                 emitter.characters("uploaded file "
@@ -1933,6 +1936,25 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 emitter.endElement("span");
             }
         }
+    }
+
+    /**
+     * @throws SAXException
+     */
+    void emitLabel() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("id", "inputlabel");
+        attrs.addAttribute("for", "doc");
+
+        String allowedAddressType = System.getProperty("nu.validator.servlet.allowed-address-type", "all");
+
+        if ("none".equals(allowedAddressType)) {
+            attrs.addAttribute("data-allowed-address-type", allowedAddressType);
+        }
+
+        emitter.startElement("label", attrs);
+        emitter.characters("Document URL:");
+        emitter.endElement("label");
     }
 
     protected String shortenDataUri(String uri) {

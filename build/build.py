@@ -133,6 +133,7 @@ resultsTitle = 'Validation results'
 messagesLimit = 1000
 maxFileSize = 12288
 disablePromiscuousSsl = 0
+allowedAddressType = 'all'
 genericHost = ''
 html5Host = ''
 parsetreeHost = ''
@@ -829,6 +830,7 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
         '-Dnu.validator.messages.limit=%d' % messagesLimit,
         '-Dnu.validator.servlet.about-page=' + aboutPage,
         '-Dnu.validator.servlet.bind-address=' + bindAddress,
+        '-Dnu.validator.servlet.allowed-address-type=' + allowedAddressType,
         '-Dnu.validator.servlet.deny-list=' + denyList,
         '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),  # nopep8
         '-Dnu.validator.servlet.filterfile=' + filterFile,
@@ -1712,6 +1714,13 @@ def printHelp():
     print("  --name=Validator.nu        -- Sets service name")
     print("  --bind-address=0.0.0.0     -- Sets server bind address")
     print("  --port=8888                -- Sets server port number")
+    print("  --allowed-address-type=<value>")
+    print("                                Sets which URLs the checker allows.")
+    print("                                Possible values:")
+    print("                                - 'all': Allow all URLs (default)")
+    print("                                - 'same-origin': Allow only")
+    print("                                  same-origin URLs")
+    print("                                - 'none': Disallow all URLs")
     print("  --promiscuous-ssl=on       -- Don't check SSL/TLS trust chain")
     print("  --results-title=Validation results")
     print("                                Sets title to show on results page")
@@ -1751,7 +1760,7 @@ def main(argv):
         html5specLink, aboutPage, denyList, userAgent, deploymentTarget, \
         scriptAdditional, serviceName, resultsTitle, messagesLimit, \
         pageTemplate, formTemplate, presetsFile, aboutFile, stylesheetFile, \
-        scriptFile, filterFile, disablePromiscuousSsl, extrasDir, \
+        scriptFile, filterFile, allowedAddressType, disablePromiscuousSsl, extrasDir, \
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
         jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties
@@ -1863,6 +1872,8 @@ def main(argv):
                 scriptFile = arg[14:]
             elif arg.startswith("--filter-file="):
                 filterFile = arg[14:]
+            elif arg.startswith("--allowed-address-type="):
+                allowedAddressType = arg[23:]
             elif arg == '--promiscuous-ssl=on':
                 disablePromiscuousSsl = 0
             elif arg == '--promiscuous-ssl=off':

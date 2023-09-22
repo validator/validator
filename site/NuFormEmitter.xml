@@ -33,8 +33,8 @@
 			></span
 		></p
 		><div id="inputregion"
-			><label id="inputlabel" for="doc">Document URL:</label
-			><?SaxCompiler-code t.emitDocField();
+			><?SaxCompiler-code t.emitLabel();
+			?><?SaxCompiler-code t.emitDocField();
 		?></div
 		><p
 			><input value="Check" type="submit" id="submit"></input

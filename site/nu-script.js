@@ -109,11 +109,16 @@ function initFieldHolders() {
 		fileInput.setAttribute('tabindex','0')
 	}
 	var label = document.getElementById("inputlabel");
+	var disabledAddressType = label.getAttribute('data-allowed-address-type') === 'none'
 	label.removeAttribute("for")
 	label.textContent = "Check by"
 	var modeSelect = createHtmlElement("select")
 	modeSelect.id = 'docselect'
-	modeSelect.appendChild(createOption('address', ''))
+	var addressOption = createOption('address', '')
+	if (disabledAddressType) {
+		addressOption.disabled = true
+	}
+	modeSelect.appendChild(addressOption)
 	modeSelect.appendChild(createOption('file upload', 'file'))
 	modeSelect.appendChild(createOption('text input', 'textarea'))
 	modeSelect.onchange = function() {
@@ -136,7 +141,7 @@ function initFieldHolders() {
 		installFileUpload()
 		modeSelect.value = 'file'
 	} else
-		if (urlInput.className == 'textarea') {
+		if (urlInput.className == 'textarea' || disabledAddressType) {
 		installTextarea()
 		modeSelect.value = 'textarea'
 	}
@@ -148,7 +153,7 @@ function initFieldHolders() {
 		installFileUpload()
 		modeSelect.value = 'file'
 	} else {
-		if (location.hash == '#textarea') {
+		if (location.hash == '#textarea' || disabledAddressType) {
 			installTextarea()
 			modeSelect.value = 'textarea'
 		}
