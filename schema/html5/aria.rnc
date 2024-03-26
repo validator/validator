@@ -106,6 +106,13 @@ common.attrs.aria.implicit.listitem |=
 common.attrs.aria.implicit.math |=
 	(	aria.state.expanded? )
 
+common.attrs.aria.implicit.meter |=
+	(	aria.prop.valuemax?
+	&	aria.prop.valuemin?
+	&	aria.prop.valuenow?
+	&	aria.prop.valuetext?
+	)
+
 common.attrs.aria.implicit.option |=
 	(	aria.prop.posinset?
 	&	aria.prop.setsize?
@@ -1118,6 +1125,20 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		aria.role.menuitemradio-checked-not-required =
 			attribute role { string "menuitemradio" }
 	common.attrs.aria.role.menuitemradio-checked-not-required |= aria.menuitemradio-checked-not-required
+
+## meter
+	aria.meter =
+		(	aria.role.meter
+		&	aria.prop.valuemax? # not inherited
+		&	aria.prop.valuemin? # not inherited
+		&	aria.prop.valuenow? # not inherited
+		&	aria.prop.valuetext? # not inherited
+		)
+		aria.role.meter = 
+			attribute role { string "meter" }
+	
+	common.attrs.aria |= aria.meter
+	common.attrs.aria.role.meter |= aria.meter
 
 ## navigation
 	aria.navigation =
