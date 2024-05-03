@@ -64,6 +64,7 @@ public final class SandboxAllowList extends AbstractDatatype {
         allowedKeywords.add("allow-scripts");
         allowedKeywords.add("allow-top-navigation");
         allowedKeywords.add("allow-top-navigation-by-user-activation");
+        allowedKeywords.add("allow-top-navigation-to-custom-protocols");
     }
 
     @Override

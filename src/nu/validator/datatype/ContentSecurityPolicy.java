@@ -45,8 +45,11 @@ public class ContentSecurityPolicy extends AbstractDatatype {
 
     private static final String SANDBOX_KEYWORDS = "("
             + "allow-forms|allow-modals|allow-pointer-lock"
+            + "|allow-downloads|allow-orientation-lock|allow-presentation"
             + "|allow-popups-to-escape-sandbox|allow-popups|allow-same-origin"
-            + "|allow-scripts|allow-top-navigation)";
+            + "|allow-scripts|allow-top-navigation"
+            + "|allow-top-navigation-by-user-activation"
+            + "|allow-top-navigation-to-custom-protocols)";
 
     protected ContentSecurityPolicy() {
         super();
