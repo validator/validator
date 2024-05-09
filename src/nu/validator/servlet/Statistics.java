@@ -25,7 +25,7 @@ package nu.validator.servlet;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import nu.validator.htmlparser.sax.HtmlSerializer;
 import nu.validator.xml.EmptyAttributes;

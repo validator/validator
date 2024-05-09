@@ -2,28 +2,28 @@
  * Copyright (c) 2006 Henri Sivonen
  * Copyright (c) 2018 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
 package nu.validator.checker;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -33,15 +33,15 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
- * The abstract base class for SAX-based content checkers that listen to 
- * the <code>ContentHandler</code> events and emit errors and warnings to 
+ * The abstract base class for SAX-based content checkers that listen to
+ * the <code>ContentHandler</code> events and emit errors and warnings to
  * an <code>ErrorHandler</code>.
- * 
- * <p>Always delegates <code>ignorableWhitespace()</code> to 
- * <code>characters()</code>. The other <code>ContentHandler</code> 
- * methods here are stubs that do nothing. Subclasses, therefore, never 
- * need to call the superclass methods. 
- * 
+ *
+ * <p>Always delegates <code>ignorableWhitespace()</code> to
+ * <code>characters()</code>. The other <code>ContentHandler</code>
+ * methods here are stubs that do nothing. Subclasses, therefore, never
+ * need to call the superclass methods.
+ *
  * @version $Id$
  * @author hsivonen
  */
@@ -60,7 +60,7 @@ public abstract class Checker implements ContentHandler {
 
     /**
      * Emit a warning. The locator is used.
-     * 
+     *
      * @param message the warning message
      * @throws SAXException if something goes wrong
      */
@@ -73,7 +73,7 @@ public abstract class Checker implements ContentHandler {
 
     /**
      * Emit a warning with specified locator.
-     * 
+     *
      * @param message the warning message
      * @throws SAXException if something goes wrong
      */
@@ -83,10 +83,10 @@ public abstract class Checker implements ContentHandler {
             errorHandler.warning(spe);
         }
     }
-    
+
     /**
      * Emit an error with specified locator.
-     * 
+     *
      * @param message the error message
      * @throws SAXException if something goes wrong
      */
@@ -96,10 +96,10 @@ public abstract class Checker implements ContentHandler {
             errorHandler.error(spe);
         }
     }
-    
+
     /**
      * Emit an error. The locator is used.
-     * 
+     *
      * @param message the error message
      * @throws SAXException if something goes wrong
      */
@@ -121,16 +121,16 @@ public abstract class Checker implements ContentHandler {
     }
 
     /**
-     * Does nothing. Subclasses are expected to override this method with 
-     * an implementation that clears the state of the checker and releases 
+     * Does nothing. Subclasses are expected to override this method with
+     * an implementation that clears the state of the checker and releases
      * objects the checker might hold references to.
      */
     public void reset() {
     }
-    
+
     /**
      * Returns the errorHandler.
-     * 
+     *
      * @return the errorHandler
      */
     public ErrorHandler getErrorHandler() {
@@ -139,23 +139,23 @@ public abstract class Checker implements ContentHandler {
 
     /**
      * Sets the errorHandler.
-     * 
+     *
      * @param errorHandler
      *            the errorHandler to set
      */
     public void setErrorHandler(ErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
     }
-    
+
     /**
      * Returns the locator.
-     * 
+     *
      * @return the locator
      */
     public Locator getDocumentLocator() {
         return this.locator;
     }
-    
+
     /**
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
@@ -184,7 +184,7 @@ public abstract class Checker implements ContentHandler {
 
     /**
      * Calls <code>characters()</code>.
-     * 
+     *
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
     @Override
@@ -200,7 +200,7 @@ public abstract class Checker implements ContentHandler {
     public void characters(char[] ch, int start, int length)
             throws SAXException {
     }
-    
+
     /**
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)

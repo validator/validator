@@ -34,7 +34,7 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.DatatypeMismatchException;

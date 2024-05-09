@@ -39,7 +39,7 @@ import java.net.SocketException;
 import java.util.EnumSet;
 import java.util.Enumeration;
 
-import javax.servlet.DispatcherType;
+import jakarta.servlet.DispatcherType;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;

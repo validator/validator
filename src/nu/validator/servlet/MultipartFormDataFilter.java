@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 2007-2018 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -41,21 +41,25 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.fileupload2.core.FileItemInput;
+import org.apache.commons.fileupload2.core.FileItemInputIterator;
+import org.apache.commons.fileupload2.core.FileUploadException;
+import org.apache.commons.fileupload2.jakarta.servlet5.JakartaServletFileUpload;
 
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+//import org.apache.commons.fileupload.FileItemIterator;
+//import org.apache.commons.fileupload.FileItemStream;
+//import org.apache.commons.fileupload.FileUploadException;
+//import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class MultipartFormDataFilter implements Filter {
@@ -127,18 +131,18 @@ public final class MultipartFormDataFilter implements Filter {
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        if (ServletFileUpload.isMultipartContent(request)) {
+        if (JakartaServletFileUpload.isMultipartContent(request)) {
             try {
                 boolean utf8 = false;
                 String contentType = null;
                 Map<String, String[]> params = new HashMap<>();
                 InputStream fileStream = null;
-                ServletFileUpload upload = new ServletFileUpload();
-                FileItemIterator iter = upload.getItemIterator(request);
+                JakartaServletFileUpload upload = new JakartaServletFileUpload();
+                FileItemInputIterator iter = upload.getItemIterator(request);
                 while (iter.hasNext()) {
-                    FileItemStream fileItemStream = iter.next();
-                    if (fileItemStream.isFormField()) {
-                        String fieldName = fileItemStream.getFieldName();
+                    FileItemInput fileItemInput = iter.next();
+                    if (fileItemInput.isFormField()) {
+                        String fieldName = fileItemInput.getFieldName();
                         if ("content".equals(fieldName)
                                 || "fragment".equals(fieldName)) {
                             utf8 = true;
@@ -153,18 +157,18 @@ public final class MultipartFormDataFilter implements Filter {
                                 contentType = "text/css";
                             }
                             request.setAttribute("nu.validator.servlet.MultipartFormDataFilter.type", "textarea");
-                            fileStream = fileItemStream.openStream();
+                            fileStream = fileItemInput.getInputStream();
                             break;
                         } else {
                             putParam(
                                     params,
                                     fieldName,
-                                    utf8ByteStreamToString(fileItemStream.openStream()));
+                                    utf8ByteStreamToString(fileItemInput.getInputStream()));
                         }
                     } else {
-                        String fileName = fileItemStream.getName();
+                        String fileName = fileItemInput.getName();
                         if (fileName != null) {
-                            putParam(params, fileItemStream.getFieldName(),
+                            putParam(params, fileItemInput.getFieldName(),
                                     fileName);
                             request.setAttribute(
                                     "nu.validator.servlet.MultipartFormDataFilter.filename",
@@ -178,7 +182,7 @@ public final class MultipartFormDataFilter implements Filter {
                             contentType = "text/html";
                         }
                         request.setAttribute("nu.validator.servlet.MultipartFormDataFilter.type", "file");
-                        fileStream = fileItemStream.openStream();
+                        fileStream = fileItemInput.getInputStream();
                         break;
                     }
                 }
@@ -226,7 +230,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.http.HttpServletRequestWrapper#getDateHeader(java.lang.String)
+         * @see jakarta.servlet.http.HttpServletRequestWrapper#getDateHeader(java.lang.String)
          */
         @Override
         public long getDateHeader(String name) {
@@ -244,7 +248,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.http.HttpServletRequestWrapper#getHeader(java.lang.String)
+         * @see jakarta.servlet.http.HttpServletRequestWrapper#getHeader(java.lang.String)
          */
         @Override
         public String getHeader(String name) {
@@ -262,7 +266,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.http.HttpServletRequestWrapper#getHeaderNames()
+         * @see jakarta.servlet.http.HttpServletRequestWrapper#getHeaderNames()
          */
         @Override
         public Enumeration getHeaderNames() {
@@ -286,7 +290,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.http.HttpServletRequestWrapper#getHeaders(java.lang.String)
+         * @see jakarta.servlet.http.HttpServletRequestWrapper#getHeaders(java.lang.String)
          */
         @Override
         public Enumeration getHeaders(String name) {
@@ -304,7 +308,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.http.HttpServletRequestWrapper#getIntHeader(java.lang.String)
+         * @see jakarta.servlet.http.HttpServletRequestWrapper#getIntHeader(java.lang.String)
          */
         @Override
         public int getIntHeader(String name) {
@@ -322,7 +326,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getCharacterEncoding()
+         * @see jakarta.servlet.ServletRequestWrapper#getCharacterEncoding()
          */
         @Override
         public String getCharacterEncoding() {
@@ -330,7 +334,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getContentLength()
+         * @see jakarta.servlet.ServletRequestWrapper#getContentLength()
          */
         @Override
         public int getContentLength() {
@@ -338,7 +342,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getContentType()
+         * @see jakarta.servlet.ServletRequestWrapper#getContentType()
          */
         @Override
         public String getContentType() {
@@ -346,7 +350,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getInputStream()
+         * @see jakarta.servlet.ServletRequestWrapper#getInputStream()
          */
         @Override
         public ServletInputStream getInputStream() throws IOException {
@@ -354,7 +358,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getParameter(java.lang.String)
+         * @see jakarta.servlet.ServletRequestWrapper#getParameter(java.lang.String)
          */
         @Override
         public String getParameter(String key) {
@@ -367,7 +371,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getParameterMap()
+         * @see jakarta.servlet.ServletRequestWrapper#getParameterMap()
          */
         @Override
         public Map getParameterMap() {
@@ -375,7 +379,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getParameterNames()
+         * @see jakarta.servlet.ServletRequestWrapper#getParameterNames()
          */
         @Override
         public Enumeration getParameterNames() {
@@ -383,7 +387,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getParameterValues(java.lang.String)
+         * @see jakarta.servlet.ServletRequestWrapper#getParameterValues(java.lang.String)
          */
         @Override
         public String[] getParameterValues(String key) {
@@ -391,7 +395,7 @@ public final class MultipartFormDataFilter implements Filter {
         }
 
         /**
-         * @see javax.servlet.ServletRequestWrapper#getReader()
+         * @see jakarta.servlet.ServletRequestWrapper#getReader()
          */
         @Override
         public BufferedReader getReader() throws IOException {

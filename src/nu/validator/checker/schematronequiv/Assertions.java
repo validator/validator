@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import io.mola.galimatias.GalimatiasParseException;
 import io.mola.galimatias.URL;
@@ -678,7 +678,7 @@ public class Assertions extends Checker {
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("required");
         ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.add("rowspan");
     }
-    
+
     /**
      * Names of link types that are considered as "External Resource" according to https://html.spec.whatwg.org/multipage/links.html#linkTypes
      */
@@ -1347,7 +1347,7 @@ public class Assertions extends Checker {
     private boolean hasTopLevelH1;
 
     private boolean hasAncestorTableIsRoleTableGridOrTreeGrid = false;
-    
+
     private boolean parsingScriptImportMap = false;
 
     private int numberOfTemplatesDeep = 0;
@@ -1718,7 +1718,7 @@ public class Assertions extends Checker {
     private boolean isImportMapValid(String scriptContent) throws SAXException {
         Object importMap;
         try {
-            importMap = JSON.parse(scriptContent, true);
+            importMap = new JSON().parse(new JSON.StringSource(scriptContent), true);
         } catch (IllegalStateException e) {
             err("A script \u201cscript\u201d with a \u201ctype\u201d attribute"
                     + " whose value is \u201cimportmap\u201d must have valid"

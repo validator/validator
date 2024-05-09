@@ -38,7 +38,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
