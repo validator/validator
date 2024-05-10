@@ -248,7 +248,7 @@ DEALINGS IN THE SOFTWARE.
         <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </war>
-    <delete dir="${dist}/war"></delete>
+    <delete dir="${dist}/war" />
   </target>
   <target name="validator-javadoc-jar">
     <property name="javadoc-dir" value="${dist}/javadoc" />
