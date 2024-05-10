@@ -200,7 +200,8 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../jing-trang/build/jing.jar"/>
       <fileset file="../jing-trang/lib/saxon9.jar"/>
       <fileset file="../dependencies/commons-codec-${commons-codec-version}.jar"/>
-      <fileset file="../dependencies/commons-fileupload-${commons-fileupload-version}.jar"/>
+      <fileset file="../dependencies/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
+      <fileset file="../dependencies/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
       <fileset file="../dependencies/commons-io-${commons-io-version}.jar"/>
       <fileset file="../dependencies/commons-logging-${commons-logging-version}.jar"/>
       <fileset file="../dependencies/commons-logging-${commons-logging-version}-adapters.jar"/>
@@ -213,6 +214,8 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/log4j-${log4j-version}.jar"/>
       <fileset file="../dependencies/jetty-util-ajax-${jetty-version}.jar"/>
       <fileset file="../dependencies/jetty-util-${jetty-version}.jar"/>
+      <fileset file="../dependencies/jetty-util-${jetty-version}.jar"/>
+      <fileset file="../dependencies/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
       <lib dir="${dist}/war/lib"/>
