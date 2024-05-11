@@ -59,7 +59,7 @@ try:
 except ImportError:
     CAFILE = None
 
-javaTargetVersion = '11'
+javaTargetVersion = '8'
 herokuCmd = 'heroku'
 dockerCmd = 'docker'
 ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
