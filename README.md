@@ -33,7 +33,7 @@ It is released upstream in these formats:
   * pre-compiled Linux, Windows, and macOS binaries that include an embedded
   Java runtime
 
-  * `vnu.jar` — a portable version you can use on any system that has Java 8 or
+  * `vnu.jar` — a portable version you can use on any system that has Java 11 or
   above installed
 
   * `vnu.war` — for [deploying the checker service through a servlet container
@@ -41,7 +41,7 @@ It is released upstream in these formats:
 
    [15]: https://validator.github.io/validator/#servlet
 
-**Note:** The _vnu.jar_ and _vnu.war_ files require you to have Java 8 or above
+**Note:** The _vnu.jar_ and _vnu.war_ files require you to have Java 11 or above
 installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you
 to have any version of Java already installed at all.
 
