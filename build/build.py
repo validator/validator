@@ -1065,7 +1065,7 @@ class Release():
             return
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
-        runCmd([jdepsCmd, '--generate-open-module', distDir, vnuJar])
+        runCmd([jdepsCmd, '--ignore-missing-deps', '--generate-open-module', distDir, vnuJar])
         f = open(os.path.join(self.vnuModuleInfoDir, "module-info.java"), 'r+')
         lines = f.readlines()
         lines = lines[:-2]
