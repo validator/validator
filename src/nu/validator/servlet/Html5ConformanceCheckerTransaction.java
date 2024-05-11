@@ -2,22 +2,22 @@
  * Copyright (c) 2005, 2006 Henri Sivonen
  * Copyright (c) 2007-2017 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -25,9 +25,9 @@ package nu.validator.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -47,11 +47,11 @@ public class Html5ConformanceCheckerTransaction extends
     protected boolean isSimple() {
         return true;
     }
-    
+
     private final static String GENERIC_FACET = (VerifierServlet.GENERIC_HOST.isEmpty() ? "" : ("//" + VerifierServlet.GENERIC_HOST)) + VerifierServlet.GENERIC_PATH;
 
-    private static final char[] GENERIC_UI = "More options".toCharArray();    
-    
+    private static final char[] GENERIC_UI = "More options".toCharArray();
+
     private static final char[] SERVICE_TITLE = (System.getProperty(
             "nu.validator.servlet.service-name", "Validator.nu") + " (X)HTML5 Validator ").toCharArray();
 
@@ -59,7 +59,7 @@ public class Html5ConformanceCheckerTransaction extends
     private static final char[] RESULTS_TITLE = "(X)HTML5 validation results".toCharArray();
 
     private static final char[] FOR = " for ".toCharArray();
-    
+
     private static final String SUCCESS_HTML = "The document is valid HTML5 + ARIA + SVG 1.1 + MathML 2.0 (subject to the utter previewness of this service).";
 
     private static final String SUCCESS_XHTML = "The document is valid XHTML5 + ARIA + SVG 1.1 + MathML 2.0 (subject to the utter previewness of this service).";
@@ -69,7 +69,7 @@ public class Html5ConformanceCheckerTransaction extends
     private static final String FAILURE_XHTML = "There were errors. (Tried in the XHTML mode.)";
 
     private boolean usingHtml = false;
-    
+
     public Html5ConformanceCheckerTransaction(HttpServletRequest request,
             HttpServletResponse response) {
         super(request, response);
@@ -133,8 +133,8 @@ public class Html5ConformanceCheckerTransaction extends
         if (willValidate()) {
             emitter.characters(RESULTS_TITLE);
             if (document != null && document.length() > 0) {
-                emitter.characters(FOR);                
-                emitter.characters(scrub(shortenDataUri(document)));                
+                emitter.characters(FOR);
+                emitter.characters(scrub(shortenDataUri(document)));
             }
         } else {
             emitter.characters(SERVICE_TITLE);
@@ -208,14 +208,14 @@ public class Html5ConformanceCheckerTransaction extends
             CharsetEmitter.emit(contentHandler, this);
         }
     }
-    
+
     @Override
     void emitOtherFacetLink() throws SAXException {
         attrs.clear();
         attrs.addAttribute("href", GENERIC_FACET);
         emitter.startElement("a", attrs);
         emitter.characters(GENERIC_UI);
-        emitter.endElement("a");   
+        emitter.endElement("a");
     }
 
 }
