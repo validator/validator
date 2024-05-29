@@ -488,6 +488,10 @@ public class SimpleCommandLineValidator {
     }
 
     private static void checkCssFile(File file) throws IOException, Exception {
+        if (!"http://s.validator.nu/xhtml5-all.rnc".equals(
+                validator.getMainSchemaUrl()) && !hasSchemaOption) {
+            setSchema("http://s.validator.nu/xhtml5-all.rnc");
+        }
         try {
             String path = file.getPath();
             if (!file.exists()) {
