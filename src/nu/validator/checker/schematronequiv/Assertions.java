@@ -614,6 +614,7 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("li", "listitem");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("link", "link");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("main", "main");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("meter", "meter");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("nav", "navigation");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("ol", "list");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("output", "status");
@@ -646,7 +647,7 @@ public class Assertions extends Checker {
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("details", "group");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("form", "form");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("main", "main");
-        ELEMENTS_THAT_NEVER_NEED_ROLE.put("meter", "progressbar");
+        ELEMENTS_THAT_NEVER_NEED_ROLE.put("meter", "meter");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("nav", "navigation");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("option", "option");
         ELEMENTS_THAT_NEVER_NEED_ROLE.put("optgroup", "group");
