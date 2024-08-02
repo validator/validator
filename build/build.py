@@ -220,7 +220,7 @@ class UrlExtractor(HTMLParser):
 
 def runCmd(cmd):
     print(" ".join(cmd))
-    return subprocess.call(cmd)
+    subprocess.check_call(cmd)
 
 
 def execCmd(cmd, args):
@@ -318,8 +318,7 @@ def runJavac(sourceDir, classDir, classPath):
         args.append('--release')
         args.append(javaTargetVersion)
     args.append('@temp-javac-list')
-    if runCmd(args):
-        sys.exit(1)
+    runCmd(args)
     removeIfExists("temp-javac-list")
 
 
@@ -721,19 +720,17 @@ def cleanJing():
 
 def buildCssValidator():
     os.chdir("css-validator")
-    if runCmd([javaCmd, "-jar",
-               os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
-               "jar-without-dependencies"]):
-        sys.exit(1)
+    runCmd([javaCmd, "-jar",
+           os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
+           "jar-without-dependencies"])
     os.chdir("..")
 
 
 def cleanCssValidator():
     os.chdir("css-validator")
-    if runCmd([javaCmd, "-jar",
-               os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
-               "clean"]):
-        sys.exit(1)
+    runCmd([javaCmd, "-jar",
+           os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
+           "clean"])
     os.chdir("..")
 
 
@@ -755,14 +752,11 @@ def buildEmitters():
         args.append('--release')
         args.append(javaTargetVersion)
     args.append(compilerFile)
-    if runCmd(args):
-        sys.exit(1)
+    runCmd(args)
     pageEmitter = os.path.join(vnuSrc, "servlet", "PageEmitter.java")
     formEmitter = os.path.join(vnuSrc, "servlet", "FormEmitter.java")
-    if runCmd([javaCmd, '-cp', classDir, compilerClass, pageTemplate, pageEmitter]):  # nopep8
-        sys.exit(1)
-    if runCmd([javaCmd, '-cp', classDir, compilerClass, formTemplate, formEmitter]):  # nopep8
-        sys.exit(1)
+    runCmd([javaCmd, '-cp', classDir, compilerClass, pageTemplate, pageEmitter])  # nopep8
+    runCmd([javaCmd, '-cp', classDir, compilerClass, formTemplate, formEmitter])  # nopep8
     removeIfDirExists(classDir)
 
 
@@ -1357,14 +1351,11 @@ class Release():
             f.write(miniDoc)
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            if runCmd([javaCmd, '-jar', vnuJar, '--format', _format,
-                       self.minDocPath]):
-                sys.exit(1)
+            runCmd([javaCmd, '-jar', vnuJar, '--format', _format,
+                   self.minDocPath])
         # also make sure it works even w/o --format value; returns gnu output
-        if runCmd([javaCmd, '-jar', vnuJar, self.minDocPath]):
-            sys.exit(1)
-        if runCmd([javaCmd, '-jar', vnuJar, '--version']):
-            sys.exit(1)
+        runCmd([javaCmd, '-jar', vnuJar, self.minDocPath])
+        runCmd([javaCmd, '-jar', vnuJar, '--version'])
         os.remove(self.minDocPath)
 
     def checkRuntimeImage(self):
@@ -1377,13 +1368,10 @@ class Release():
             f.write(miniDoc)
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            if runCmd([vnuRunScript, '--format', _format, self.minDocPath]):
-                sys.exit(1)
+            runCmd([vnuRunScript, '--format', _format, self.minDocPath])
         # also make sure it works even w/o --format value; returns gnu output
-        if runCmd([vnuRunScript, self.minDocPath]):
-            sys.exit(1)
-        if runCmd([vnuRunScript, '--version']):
-            sys.exit(1)
+        runCmd([vnuRunScript, self.minDocPath])
+        runCmd([vnuRunScript, '--version'])
         os.remove(self.minDocPath)
 
     def checkUrlWithService(self, url, daemon):
@@ -1451,8 +1439,7 @@ class Release():
             self.createJarOrWar("jar")
         args = ["tests/messages.json"]
         className = "nu.validator.client.TestRunner"
-        if runCmd([javaCmd, '-classpath', vnuJar, className] + args):
-            sys.exit(1)
+        runCmd([javaCmd, '-classpath', vnuJar, className] + args)
 
     def buildAll(self):
         if not os.path.exists(os.path.join(buildRoot, "dependencies")):
