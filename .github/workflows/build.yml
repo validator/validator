@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [22, 21, 17, 11.0.23]
+        java: [23, 22, 21, 17, 11.0.23]
         exclude:
           - os: macos-latest
             java: 11.0.23
