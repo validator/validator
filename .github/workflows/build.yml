@@ -42,7 +42,7 @@ jobs:
           java-version: ${{ matrix.java }}
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.13'
       - name: Update submodules
         run: python checker.py update
       - name: Install dependencies
