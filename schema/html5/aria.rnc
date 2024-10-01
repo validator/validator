@@ -928,7 +928,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 ## heading
 	aria.heading =
 		(	aria.role.heading
-		&	aria.prop.level ? # not inherited
+		&	aria.prop.level 	# ARIA 1.1 and 1.2 required
 		&	aria.state.expanded?
 		)
 		aria.role.heading =
