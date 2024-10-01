@@ -1390,9 +1390,9 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 ## scrollbar
 	aria.scrollbar =
 		(	aria.role.scrollbar
-		&	aria.prop.orientation
-		&	aria.prop.valuemax
-		&	aria.prop.valuemin
+		&	aria.prop.orientation?	# ARIA 1.2 optional
+		&	aria.prop.valuemax? 	# ARIA 1.2 optional
+		&	aria.prop.valuemin?		# ARIA 1.2 optional
 		&	aria.prop.valuenow
 		&	aria.prop.valuetext?
 		)
@@ -1433,8 +1433,8 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 ## slider
 	aria.slider =
 		(	aria.role.slider
-		&	aria.prop.valuemax
-		&	aria.prop.valuemin
+		&	aria.prop.valuemax? 		# optional in ARIA 1.2
+		&	aria.prop.valuemin? 		# optional in ARIA 1.2
 		&	aria.prop.valuenow
 		&	aria.prop.valuetext?
 		&	aria.prop.readonly? 		# ARIA 1.1 and 1.2
@@ -1449,9 +1449,9 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 ## spinbutton
 	aria.spinbutton =
 		(	aria.role.spinbutton
-		&	aria.prop.valuemax
-		&	aria.prop.valuemin
-		&	aria.prop.valuenow
+		&	aria.prop.valuemax? 			# optional in ARIA 1.2
+		&	aria.prop.valuemin? 			# optional in ARIA 1.2
+		&	aria.prop.valuenow? 			# optional in ARIA 1.2
 		&	aria.prop.valuetext?
 		&	aria.prop.activedescendant?		# ARIA 1.1 and 1.2
 		&	aria.prop.readonly? 			# ARIA 1.1 and 1.2
