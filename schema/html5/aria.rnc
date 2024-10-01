@@ -682,7 +682,17 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.banner
 	common.attrs.aria.landmark.banner |= aria.banner
+
+## blockquote - added in ARIA 1.2
+	aria.blockquote =
+		(	aria.role.blockquote
+		)
+		aria.role.blockquote =
+			attribute role { string "blockquote" }
 	
+	common.attrs.aria |= aria.blockquote
+	common.attrs.aria.role.blockquote |= aria.blockquote	
+
 ## button
 	aria.button =
 		(	aria.role.button
@@ -694,6 +704,16 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.button
 	common.attrs.aria.role.button |= aria.button
+
+## caption - added in ARIA 1.2
+	aria.caption =
+		(	aria.role.caption
+		)
+		aria.role.caption =
+			attribute role { string "caption" }
+
+	common.attrs.aria |= aria.caption
+	common.attrs.aria.role.caption |= aria.caption
 
 ## cell
 	aria.cell =
@@ -719,6 +739,16 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.checkbox
 	common.attrs.aria.role.checkbox |= aria.checkbox
+
+## code - added in ARIA 1.2
+	aria.code =
+		(	aria.role.code
+		)
+		aria.role.code =
+			attribute role { string "code" }
+
+	common.attrs.aria |= aria.code
+	common.attrs.aria.role.code |= aria.code
 
 # columnheader
 	aria.columnheader =
@@ -788,6 +818,16 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	common.attrs.aria |= aria.definition
 	common.attrs.aria.role.definition |= aria.definition
 
+## deletion - added in ARIA 1.2
+	aria.deletion =
+		(	aria.role.deletion
+		)
+		aria.role.deletion =
+			attribute role { string "deletion" }
+
+	common.attrs.aria |= aria.deletion
+	common.attrs.aria.role.deletion |= aria.deletion
+
 ## dialog
 	aria.dialog =
 		(	aria.role.dialog
@@ -821,6 +861,16 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 
 	common.attrs.aria |= aria.document
 	common.attrs.aria.landmark.document |= aria.document
+
+## emphasis - added in ARIA 1.2
+	aria.emphasis =
+		(	aria.role.emphasis
+		)
+		aria.role.emphasis =
+			attribute role { string "emphasis" }
+
+	common.attrs.aria |= aria.emphasis
+	common.attrs.aria.role.emphasis |= aria.emphasis
 
 ## feed
 	aria.feed =
@@ -947,6 +997,16 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.img
 	common.attrs.aria.role.img |= aria.img
+
+## insertion - added in ARIA 1.2
+	aria.insertion =
+		(	aria.role.insertion
+		)
+		aria.role.insertion =
+			attribute role { string "insertion" }
+
+	common.attrs.aria |= aria.insertion
+	common.attrs.aria.role.insertion |= aria.insertion
 
 ## link
 	aria.link =
@@ -1129,6 +1189,20 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "menuitemradio" }
 	common.attrs.aria.role.menuitemradio-checked-not-required |= aria.menuitemradio-checked-not-required
 
+## meter - added in ARIA 1.2
+	aria.meter =
+		(	aria.role.meter
+		&	aria.prop.valuemax? # optional
+		&	aria.prop.valuemin? # optional
+		&	aria.prop.valuetext? # inherited
+		&	aria.prop.valuenow # required
+		)		
+		aria.role.meter =
+			attribute role { string "meter" }
+
+	common.attrs.aria |= aria.meter
+	common.attrs.aria.role.meter |= aria.meter
+
 ## navigation
 	aria.navigation =
 		(	aria.role.navigation
@@ -1172,6 +1246,16 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.option
 	common.attrs.aria.role.option |= aria.option
+
+## paragraph - added in ARIA 1.2
+	aria.paragraph =
+		(	aria.role.paragraph
+		)
+		aria.role.paragraph =
+			attribute role { string "paragraph" }
+
+	common.attrs.aria |= aria.paragraph
+	common.attrs.aria.role.paragraph |= aria.paragraph
 
 ## presentation
 	aria.presentation =
@@ -1380,6 +1464,36 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	common.attrs.aria |= aria.status
 	common.attrs.aria.role.status |= aria.status
 
+## strong - added in ARIA 1.2
+	aria.strong =
+		(	aria.role.strong
+		)
+		aria.role.strong =
+			attribute role { string "strong" }
+
+	common.attrs.aria |= aria.strong
+	common.attrs.aria.role.strong |= aria.strong
+
+## subscript - added in ARIA 1.2
+	aria.subscript =
+		(	aria.role.subscript
+		)
+		aria.role.subscript = 
+			attribute role { string "subscript" }
+	
+	common.attrs.aria |= aria.subscript
+	common.attrs.aria.role.subscript |= aria.subscript
+
+## superscript - added in ARIA 1.2
+	aria.superscript =
+		(	aria.role.superscript
+		)
+		aria.role.superscript =
+			attribute role { string "superscript" }
+
+	common.attrs.aria |= aria.superscript
+	common.attrs.aria.role.superscript |= aria.superscript
+
 ## switch
 	aria.switch =
 		(	aria.role.switch
@@ -1474,6 +1588,16 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.textbox
 	common.attrs.aria.role.textbox |= aria.textbox
+
+## time - added in ARIA 1.2
+	aria.time =
+		(	aria.role.time
+		)
+		aria.role.time =
+			attribute role { string "time" }
+
+	common.attrs.aria |= aria.time
+	common.attrs.aria.role.time |= aria.time
 
 ## timer
 	aria.timer =
