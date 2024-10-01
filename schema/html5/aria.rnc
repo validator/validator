@@ -44,6 +44,7 @@ common.attrs.aria.implicit.button |=
 common.attrs.aria.implicit.cell |=
 	(	aria.prop.colspan?
 	&	aria.prop.rowspan?
+	&	aria.prop.colindex?	# ARIA 1.1 and 1.2
 	&	aria.prop.rowindex?
 	)
 
@@ -650,6 +651,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	aria.application =
 		(	aria.role.application
 		&	aria.state.expanded?
+		&	aria.prop.activedescendant?		# ARIA 1.1 and 1.2
 		)
 		aria.role.application = 
 			attribute role { string "application" }
@@ -661,6 +663,8 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	aria.article =
 		(	aria.role.article
 		&	aria.state.expanded?
+		&	aria.prop.posinset?		# ARIA 1.1 and 1.2
+		&	aria.prop.setsize?		# ARIA 1.1 and 1.2
 		)
 		aria.role.article = 
 			attribute role { string "article" }
@@ -708,6 +712,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	aria.checkbox =
 		(	aria.role.checkbox
 		&	aria.state.checked #required!
+		&	aria.prop.readonly? 	# ARIA 1.1 and 1.2
 		)
 		aria.role.checkbox = 
 			attribute role { string "checkbox" }
@@ -725,6 +730,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.required?
 		&	aria.prop.colspan?
 		&	aria.prop.rowspan?
+		&	aria.prop.colindex?	# ARIA 1.1 and 1.2
 		&	aria.prop.rowindex?
 		)
 		aria.role.columnheader = 
@@ -971,6 +977,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.required?
 		&	aria.prop.activedescendant?
 		&	aria.state.expanded?
+		&	aria.prop.readonly? # ARIA 1.1 and 1.2
 		&	aria.prop.orientation?
 		)
 		aria.role.listbox = 
@@ -1081,6 +1088,8 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	aria.menuitemcheckbox =
 		(	aria.role.menuitemcheckbox
 		&	aria.state.checked #required
+		&	aria.prop.posinset?		# ARIA 1.1 and 1.2
+		&	aria.prop.setsize?		# ARIA 1.1 and 1.2
 		)
 		aria.role.menuitemcheckbox = 
 			attribute role { string "menuitemcheckbox" }
@@ -1207,6 +1216,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		(	aria.role.radiogroup
 		&	aria.prop.activedescendant?
 		&	aria.state.expanded?
+		&	aria.prop.readonly? # ARIA 1.1 and 1.2
 		&	aria.prop.required?
 		&	aria.prop.orientation?
 		)
@@ -1264,6 +1274,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.required?
 		&	aria.prop.colspan?
 		&	aria.prop.rowspan?
+		&	aria.prop.colindex?	# ARIA 1.1 and 1.2
 		&	aria.prop.rowindex?
 		)
 		aria.role.rowheader = 
@@ -1277,6 +1288,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.activedescendant?
 		&	aria.prop.autocomplete?
 		&	aria.prop.multiline?
+		&	aria.prop.placeholder?	# ARIA 1.1 and 1.2
 		&	aria.prop.readonly?
 		&	aria.prop.required?
 		)
@@ -1331,6 +1343,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.valuemin
 		&	aria.prop.valuenow
 		&	aria.prop.valuetext?
+		&	aria.prop.readonly? 		# ARIA 1.1 and 1.2
 		&	aria.prop.orientation?
 		)
 		aria.role.slider = 
@@ -1346,6 +1359,8 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.valuemin
 		&	aria.prop.valuenow
 		&	aria.prop.valuetext?
+		&	aria.prop.activedescendant?		# ARIA 1.1 and 1.2
+		&	aria.prop.readonly? 			# ARIA 1.1 and 1.2
 		&	aria.prop.required?
 		)
 		aria.role.spinbutton = 
@@ -1369,6 +1384,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	aria.switch =
 		(	aria.role.switch
 		&	aria.state.checked #required!
+		&	aria.prop.readonly? 	# ARIA 1.1 and 1.2
 		)
 		aria.role.switch =
 			attribute role { string "switch" }
@@ -1449,6 +1465,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.activedescendant?
 		&	aria.prop.autocomplete? # not inherited
 		&	aria.prop.multiline? # not inherited
+		&	aria.prop.placeholder?	# ARIA 1.1 and 1.2
 		&	aria.prop.readonly? # not inherited
 		&	aria.prop.required?
 		)
