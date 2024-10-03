@@ -28,6 +28,7 @@ NN XXX NNNN
   - NPMs now released to GitHub Packages, in addition to npmjs.com
   - Maven packages now released to GitHub Packages, in addition to Central
   - Add --additional-java-system-properties option for build script
+  - Added this line to test CI failures
 
 # 20.6.30
 30 June 2020
