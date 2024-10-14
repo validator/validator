@@ -152,7 +152,7 @@ miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'
 additionalJavaSystemProperties = ''
 
 dependencyPackages = [
-    ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/70.1/icu4j-70.1.jar", "d0583e891bfeb065b17806d8c6535bda"),  # nopep8
+    ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/75.1/icu4j-75.1.jar", "0a299714195ba447c9774f5491cdbc57"),  # nopep8
     ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.7.2/salvation-2.7.2.jar", "d81345b141a8cc93fc6be49a6840a7f0"),  # nopep8
     ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.15/commons-codec-1.15.jar", "303baf002ce6d382198090aedd9d79a2"),  # nopep8
     ("https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.jar", "6180d94509d26d293bd2d04389156e4b"),  # nopep8
