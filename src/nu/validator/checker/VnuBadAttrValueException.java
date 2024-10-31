@@ -45,7 +45,7 @@ import com.thaiopensource.xml.util.Name;
  * intended for use in cases of reporting datatype mismatches when checking
  * attributes for which expressing the association between the attribute and the
  * expected datatype(s) of it value using a schema may not be possible or
- * practical or preferrable (for example, the case of the img|source "srcset"
+ * practical or preferable (for example, the case of the img|source "srcset"
  * attribute, which has different expected datatypes depending on whether the
  * img|source also has a "sizes" attribute).
  * </p>

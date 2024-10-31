@@ -95,7 +95,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)
 		}
 
-## Progess Indicator: <progress>
+## Progress Indicator: <progress>
 
 	progress.elem =
 		element progress { progress.inner & progress.attrs }

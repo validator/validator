@@ -293,7 +293,7 @@ final class XmlParser {
 
     private int sourceType; // type of input source
 
-    private LinkedList<Input> inputStack; // stack of input soruces
+    private LinkedList<Input> inputStack; // stack of input sources
 
     private String characterEncoding; // current character encoding
 
@@ -1449,7 +1449,7 @@ final class XmlParser {
         char c;
 
         while (true) {
-            // consume characters (or ignorable whitspace) until delimiter
+            // consume characters (or ignorable whitespace) until delimiter
             parseCharData();
 
             // Handle delimiters
@@ -3788,7 +3788,7 @@ final class XmlParser {
 
             // we might be using alternate IDs/encoding
             systemId = source.getSystemId();
-            // The following warning and setting systemId was deleted bcause
+            // The following warning and setting systemId was deleted because
             // the application has the option of not setting systemId
             // provided that it has set the characte/byte stream.
             /*
@@ -4227,7 +4227,7 @@ final class XmlParser {
         input.readBufferLength = readBufferLength;
         input.line = line;
         input.linePrev = linePrev;
-        input.charecterEncoding = characterEncoding;
+        input.characterEncoding = characterEncoding;
         input.readBufferOverflow = readBufferOverflow;
         input.is = is;
         input.currentByteCount = currentByteCount;
@@ -4298,7 +4298,7 @@ final class XmlParser {
         readBufferLength = input.readBufferLength;
         line = input.line;
         linePrev = input.linePrev;
-        characterEncoding = input.charecterEncoding;
+        characterEncoding = input.characterEncoding;
         readBufferOverflow = input.readBufferOverflow;
         is = input.is;
         currentByteCount = input.currentByteCount;
@@ -4729,7 +4729,7 @@ final class XmlParser {
 
         int line;
 
-        String charecterEncoding;
+        String characterEncoding;
 
         int readBufferOverflow;
 

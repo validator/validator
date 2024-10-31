@@ -72,7 +72,7 @@ THE SOFTWARE.
 
 	<pattern name='Triggered on mutually exclusive elements and prohibited-descendant cases'>
 
-	<!-- Exclusions and prohibited-descendant contraints  - - - - - - - - - - - -->
+	<!-- Exclusions and prohibited-descendant constraints  - - - - - - - - - - - -->
 
 	<rule context='h:form|h:dfn|h:noscript|h:address'>
 			<report test='ancestor::*[name() = name(current())]'>
@@ -165,7 +165,7 @@ THE SOFTWARE.
 				in a &#x201C;caption&#x201D; element or
 				in a &#x201C;figure&#x201D; element containing
 				the &#x201C;table&#x201D; element; or, simplify
-				the structue of the table so that no
+				the structure of the table so that no
 				description is needed.
 			</report>
 		</rule>

@@ -80,7 +80,7 @@ text.datatype = text
 
 # a single character from [ISO10646]
 character.datatype =
-    # modified - restriction to lenght 1
+    # modified - restriction to length 1
     xsd:string { length = "1" }
 # a character encoding, as per [RFC2045]
 charset.datatype = text

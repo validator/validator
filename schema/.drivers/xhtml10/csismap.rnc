@@ -89,7 +89,7 @@ Inline.class |= map
 #  shape=circle   coords=10,10,10
 # 
 #  Schematron is not used Relax NG has a better way to describe this - look below
-#  Anyway this Schematron pattern allows just numbers in the coords not Lenghts datatype
+#  Anyway this Schematron pattern allows just numbers in the coords not Lengths datatype
 # 
 # 
 #   <sch:pattern name="area.shape.coords">

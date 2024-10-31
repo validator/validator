@@ -377,7 +377,7 @@ NN XXX NNNN
     “hilite” info.  When you set the `--format` option to `json`, `xml`,
     `xhtml`, or `html` (but not `gnu` or `text`), the output now includes:
       - an extract from the doc source (`extract` field in JSON output)
-      - which extract part to hilight (JSON `hiliteLength` & `hiliteStart`)
+      - which extract part to highlight (JSON `hiliteLength` & `hiliteStart`)
       - error range starting line/column (JSON `firstColumn` & `firstLine`)
   - Added full support for checking documents at SNI origins.
   - Fixed regression that caused CLI/API to parse .xhtml docs as text/html
@@ -412,7 +412,7 @@ NN XXX NNNN
     behavior to now generate vnu.jar/vnu.war builds that can run in Java6
     VMs (as well as in any newer VMs). To generate a vnu.jar/vnu.war build
     with a newer/different VM target, use, e.g., `--javaversion=1.8`.
-  - added `--stacksize` option to build script & removed harcoded stack size
+  - added `--stacksize` option to build script & removed hardcoded stack size
   - fixed several bugs in `sizes` checking
   - fixed position reporting of bad character refs in `title` & `textarea`
   - fixed ARIA checking to allow `li[role=separator]` & `time[role=timer]`

@@ -38,7 +38,7 @@ include "datatypes.rnc"
 include "attribs.rnc"
 # include "struct.rnc"
 
-# this modeule is neede for frameset
+# this modeule is needed for frameset
 include "frames.rnc"
 include "text.rnc" {
     # added - bugfix - overwrites address alement because in trasitional it can contain p element
