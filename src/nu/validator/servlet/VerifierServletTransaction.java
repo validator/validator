@@ -154,7 +154,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final Pattern SPACE = Pattern.compile("\\s+");
 
-    private static final Pattern JS_IDENTIFIER = Pattern.compile("[\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$][\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$\\p{Mn}\\p{Mc}\\p{And}\\p{Pc}]*");
+    private static final Pattern JS_IDENTIFIER = Pattern.compile("[\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$][\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}]*");
 
     private static final String[] JS_RESERVED_WORDS = { "abstract", "boolean",
             "break", "byte", "case", "catch", "char", "class", "const",
