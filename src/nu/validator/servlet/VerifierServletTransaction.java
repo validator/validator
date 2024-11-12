@@ -789,12 +789,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     return;
                 }
             }
-            if ((document.contains("google."))
-                    || (document.contains("yahoo."))
-                    || (document.contains("outlook.live."))) {
-                response.sendRedirect(document);
-                return;
-            }
         }
 
         String callback = null;
