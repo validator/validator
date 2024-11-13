@@ -35,7 +35,7 @@
 a.attlist &= target.attrib
 area.attlist &= target.attrib
 base.attlist &= target.attrib
-# modified - bugfix - sould be link.attlist instead of link.attrib
+# modified - bugfix - should be link.attlist instead of link.attrib
 link.attlist &= target.attrib
 form.attlist &= target.attrib
 target.attrib =
