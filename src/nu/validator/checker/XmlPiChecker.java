@@ -424,7 +424,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     /**
-     * Collect a set of attribues and values from the data part of a PI.
+     * Collect a set of attributes and values from the data part of a PI.
      *
      * <p>
      * The bulk of this method and associated methods that follow it here are
