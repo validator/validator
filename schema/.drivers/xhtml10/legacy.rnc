@@ -102,7 +102,7 @@ hr.attlist &=
     attribute align { string "left" | string "center" | string "right" }?,
     attribute noshade { string "noshade" }?,
     attribute size { pixels.datatype }?,
-    # bugfix - not Pixels but Lenght datatype
+    # bugfix - not Pixels but Length datatype
     attribute width { length.datatype }?
 img.attlist &=
     attribute align { string "top" | string "middle" | string "bottom" | string "left" | string "right" }?,
@@ -125,7 +125,7 @@ li.attlist &=
          | string "I")
         | (string "disc" | string "square" | string "circle")
     }?,
-    # added - value is a sequece of digits
+    # added - value is a sequence of digits
     attribute value { number.datatype }?
 object.attlist &=
     attribute align { string "top" | string "middle" | string "bottom" | string "left" | string "right" }?,
@@ -142,7 +142,7 @@ ol.attlist &=
         | string "I"
     }?,
     attribute compact { string "compact" }?,
-    # added - needs to be a sequece of digits
+    # added - needs to be a sequence of digits
     attribute start { number.datatype }?
 p.attlist &= align.attrib
 pre.attlist &= attribute width { length.datatype }?
@@ -235,7 +235,7 @@ Block.class |=
 List.class |= dir | menu
 head.content &= isindex?
 Block.mix |= text | Inline.class
-# added - bugfix -  in transitional froms can contain flow elements ... (thay may not contain other nasted forms - see ../exclude/ form.rng
+# added - bugfix -  in transitional forms can contain flow elements ... (they may not contain other nested forms - see ../exclude/ form.rng
 form |= Inline.class
 # moved (from nameident.rng) - bugfix - just transitional form can have name attribute
 form.attlist &= nametok.attlist
