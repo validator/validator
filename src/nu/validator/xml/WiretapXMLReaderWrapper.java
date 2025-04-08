@@ -41,7 +41,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
 
     private ContentHandler contentHandler;
 
-    private ContentHandler wiretapContentHander;
+    private ContentHandler wiretapContentHandler;
 
     private LexicalHandler lexicalHandler;
 
@@ -60,13 +60,13 @@ public class WiretapXMLReaderWrapper implements XMLReader {
     }
 
     /**
-     * Sets the wiretapContentHander.
+     * Sets the wiretapContentHandler.
      * 
-     * @param wiretapContentHander
-     *            the wiretapContentHander to set
+     * @param wiretapContentHandler
+     *            the wiretapContentHandler to set
      */
-    public void setWiretapContentHander(ContentHandler wiretapContentHander) {
-        this.wiretapContentHander = wiretapContentHander;
+    public void setWiretapContentHandler(ContentHandler wiretapContentHandler) {
+        this.wiretapContentHandler = wiretapContentHandler;
         updateWiretap();
     }
 
@@ -240,14 +240,14 @@ public class WiretapXMLReaderWrapper implements XMLReader {
 
     private void updateWiretap() {
         if (contentHandler != null) {
-            if (wiretapContentHander != null) {
+            if (wiretapContentHandler != null) {
                 wrappedReader.setContentHandler(new CombineContentHandler(
-                        wiretapContentHander, contentHandler));
+                        wiretapContentHandler, contentHandler));
             } else {
                 wrappedReader.setContentHandler(contentHandler);
             }
         } else {
-            wrappedReader.setContentHandler(wiretapContentHander);
+            wrappedReader.setContentHandler(wiretapContentHandler);
         }
 
         try {

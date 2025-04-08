@@ -37,7 +37,7 @@ grammar {
     StrokeDashArrayValue.datatype = xsd:string
     
     ## 
-    ##       'stroke-dashoffset' property/attribute value (e.g., 'none', <legnth>)
+    ##       'stroke-dashoffset' property/attribute value (e.g., 'none', <length>)
     ##     
     StrokeDashOffsetValue.datatype = xsd:string
     
