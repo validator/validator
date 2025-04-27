@@ -3,13 +3,13 @@ documents from the command line and from other scripts/apps.
 
 You can work with `vnu.jar` in CommonJS modules.
 
-## Install latest release version
+## Install the latest release version
 
 ```sh
 npm install --save vnu-jar
 ```
 
-## Install 'next' version
+## Install the 'next' version
 
 ```sh
 npm install --save vnu-jar@next
