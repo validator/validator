@@ -322,8 +322,11 @@ public final class SourceCode implements CharacterHandler {
             if (length > 0) {
                 if (!((fromLine == 0 || fromLine == lines.size() - 1)
                         && this.isCss)) {
-                    handler.characters(line.getBuffer(),
-                            line.getOffset() + from.getColumn(), length);
+                    try {
+                        handler.characters(line.getBuffer(),
+                                line.getOffset() + from.getColumn(), length);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                    }
                 }
             }
             if (fromLine + 1 != lines.size()) {
@@ -335,8 +338,11 @@ public final class SourceCode implements CharacterHandler {
             int wholeLine = fromLine + 1;
             while (wholeLine < untilLine) {
                 line = getLine(wholeLine);
-                handler.characters(line.getBuffer(), line.getOffset(),
-                        line.getBufferLength());
+                try {
+                    handler.characters(line.getBuffer(), line.getOffset(),
+                            line.getBufferLength());
+                } catch (ArrayIndexOutOfBoundsException e) {
+                }
                 wholeLine++;
                 if (wholeLine != lines.size()) {
                     handler.newLine();
@@ -347,8 +353,11 @@ public final class SourceCode implements CharacterHandler {
             if (untilCol > 0) {
                 line = getLine(untilLine);
                 if (!(untilLine == lines.size() - 1 && this.isCss)) {
-                    handler.characters(line.getBuffer(), line.getOffset(),
-                            untilCol);
+                    try {
+                        handler.characters(line.getBuffer(), line.getOffset(),
+                                untilCol);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                    }
                 }
             }
         }
