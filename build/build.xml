@@ -43,7 +43,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="jakarta.servlet-api-version" value="5.0.2" />
   <property name="jchardet-version" value="1.0" />
   <property name="jetty-version" value="11.0.20" />
-  <property name="log4j-version" value="1.2.17" />
+  <property name="reload4j-version" value="1.2.25" />
   <property name="salvation-version" value="2.7.2" />
   <!-- module dependencies -->
   <property name="avalon-framework-api-version" value="4.3.1" />
@@ -109,7 +109,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-util-ajax-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/log4j-${log4j-version}.jar"/>
+      <zipfileset src="../dependencies/reload4j-1.2.25.jar"/>
       <zipfileset src="../dependencies/salvation-${salvation-version}.jar"/>
       <!-- module dependencies -->
       <zipfileset src="../jing-trang/lib/ant.jar"/>
