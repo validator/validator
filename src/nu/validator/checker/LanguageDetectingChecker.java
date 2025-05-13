@@ -643,22 +643,22 @@ public class LanguageDetectingChecker extends Checker {
             Detector detector = DetectorFactory.create();
             detector.append(textContent);
             detector.getProbabilities();
-            ArrayList<String> possibileLanguages = new ArrayList<>();
+            ArrayList<String> possibleLanguages = new ArrayList<>();
             ArrayList<Language> possibilities = detector.getProbabilities();
             for (Language possibility : possibilities) {
-                possibileLanguages.add(possibility.lang);
+                possibleLanguages.add(possibility.lang);
                 if (possibility.prob > MIN_PROBABILITY) {
                     detectedLanguage = possibility.lang;
                     setDocumentLanguage(detectedLanguage);
-                } else if ((possibileLanguages.contains("hr")
-                        && (possibileLanguages.contains("sr-latn")
-                                || possibileLanguages.contains("bs")))
-                        || (possibileLanguages.contains("sr-latn")
-                                && (possibileLanguages.contains("hr")
-                                        || possibileLanguages.contains("bs")))
-                        || (possibileLanguages.contains("bs")
-                                && (possibileLanguages.contains("hr")
-                                        || possibileLanguages.contains(
+                } else if ((possibleLanguages.contains("hr")
+                        && (possibleLanguages.contains("sr-latn")
+                                || possibleLanguages.contains("bs")))
+                        || (possibleLanguages.contains("sr-latn")
+                                && (possibleLanguages.contains("hr")
+                                        || possibleLanguages.contains("bs")))
+                        || (possibleLanguages.contains("bs")
+                                && (possibleLanguages.contains("hr")
+                                        || possibleLanguages.contains(
                                                 "sr-latn")))) {
                     if (htmlElementHasLang || systemId != null) {
                         detectedLanguage = getDetectedLanguageSerboCroatian();
