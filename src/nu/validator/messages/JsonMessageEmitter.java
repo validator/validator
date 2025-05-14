@@ -39,17 +39,20 @@ public class JsonMessageEmitter extends MessageEmitter {
     private final JsonMessageTextHandler messageTextHandler;
     
     private boolean arrayOpen;
-    
+
+    private final String version;
+
     /**
      * @param handler
      */
     public JsonMessageEmitter(final JsonHandler handler, final String callback,
-            boolean asciiQuotes) {
+            boolean asciiQuotes, final String version) {
         this.handler = handler;
         this.callback = callback;
         this.extractHandler = new JsonExtractHandler(handler);
         this.messageTextHandler = new JsonMessageTextHandler(handler,
                 asciiQuotes);
+        this.version = version;
     }
 
     @Override
@@ -163,6 +166,10 @@ public class JsonMessageEmitter extends MessageEmitter {
         if (documentUri != null) {
             handler.key("url");
             handler.string(documentUri);
+        }
+        if (version != null) {
+            handler.key("version");
+            handler.string(version);
         }
         handler.key("messages");
         handler.startArray();
