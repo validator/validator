@@ -4,6 +4,7 @@ or changes to any options/interfaces the checker exposes for developers.
 
 # NN.NN.NN
 NN XXX NNNN
+  - Add support for HTML `search` element (flow content container)
   - Require Java 11; stop supporting Java 8
   - Report void elements that have a trailing slash in their start tags
   - Skip template contents when checking for duplicate IDs (bug fix)
