@@ -13,7 +13,7 @@
 
 <p> This package contains &AElig;lfred2, which includes an
 enhanced SAX2-compatible version of the &AElig;lfred
-non-validating XML parser, a modular (and hence optional) 
+non-validating XML parser, a modular (and hence optional)
 DTD validating parser, and modular (and hence optional)
 JAXP glue to those.
 Use these like any other SAX2 parsers. </p>
@@ -108,7 +108,7 @@ removed, and so the overall size of &AElig;lfred was actually reduced.
 Subsequent performance work produced a notable speedup (over twenty
 percent on larger files).  That is, the tradeoffs between speed, size, and
 conformance were re-targeted towards conformance and support of newer APIs
-(SAX2), with a a positive performance impact. </p>
+(SAX2), with a positive performance impact. </p>
 
 <p> The role anticipated for this version of &AElig;lfred is as a
 lightweight Free Software SAX parser that can be used in essentially every
@@ -169,7 +169,7 @@ all XML parsers are required to support:</p> <ul>
     in anticipation that Unicode (even with surrogate pairs)
     would eventually become limiting.  UCS-4 permits encoding
     of non-Unicode characters, which Java can't represent (and
-    XML doesn't allow).  
+    XML doesn't allow).
     </li>
 
     </ul>
@@ -205,9 +205,9 @@ Of course, UTF-8 and UTF-16 handle the Euro symbol directly.
 
 <h3><a name="violations">Known Conformance Violations</a></h3>
 
-<p>Known conformance issues should be of negligible importance for 
+<p>Known conformance issues should be of negligible importance for
 most applications, and include: </p><ul>
-    
+
     <li> Rather than following the voluminous "Appendix B" rules about
     what characters may appear in names (and name tokens), the Unicode
     rules embedded in <em>java.lang.Character</em> are used.
@@ -285,7 +285,7 @@ refocusing the API on SAX2, and improving conformance to the extent
 that most developers should not need to use another XML parser.  </p>
 
 <p> The code has been cleaned up (referring to the XML 1.0 spec in
-all the production numbers in 
+all the production numbers in
 comments, rather than some preliminary draft, for one example) and
 has been sped up a bit as well.
 JAXP support has been added, although developers are still
@@ -471,4 +471,3 @@ constraints that can't be verified using the SAX2 event stream
 are now reported directly by &AElig;lfred2. </p>
 
 </body></html>
-
