@@ -1347,15 +1347,33 @@ class Release():
         if not os.path.exists(vnuJar):
             if call_createJarOrWar:
                 self.createJarOrWar("jar")
+
+        javaArg = None
+        if stackSize != "":
+            javaArg = '-Xss' + stackSize + 'k'
+
         with open(self.minDocPath, 'w') as f:
             f.write(miniDoc)
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            runCmd([javaCmd, '-jar', vnuJar, '--format', _format,
-                   self.minDocPath])
+            if javaArg:
+                args = [javaCmd, javaArg, '-jar', vnuJar, '--format', _format,
+                       self.minDocPath]
+            else:
+                args = [javaCmd, '-jar', vnuJar, '--format', _format,
+                       self.minDocPath]
+            runCmd(args)
         # also make sure it works even w/o --format value; returns gnu output
-        runCmd([javaCmd, '-jar', vnuJar, self.minDocPath])
-        runCmd([javaCmd, '-jar', vnuJar, '--version'])
+        if javaArg:
+            args = [javaCmd, javaArg, '-jar', vnuJar, self.minDocPath]
+        else:
+            args = [javaCmd, '-jar', vnuJar, self.minDocPath]
+        runCmd(args)
+        if javaArg:
+            args = [javaCmd, javaArg, '-jar', vnuJar, '--version']
+        else:
+            args = [javaCmd, '-jar', vnuJar, '--version']
+        runCmd(args)
         os.remove(self.minDocPath)
 
     def checkRuntimeImage(self):
@@ -1437,9 +1455,16 @@ class Release():
     def runTests(self):
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
+        javaArg = None
+        if stackSize != "":
+            javaArg = '-Xss' + stackSize + 'k'
         args = ["tests/messages.json"]
         className = "nu.validator.client.TestRunner"
-        runCmd([javaCmd, '-classpath', vnuJar, className] + args)
+        if javaArg:
+            cmd = [javaCmd, javaArg, '-classpath', vnuJar, className] + args
+        else:
+            cmd = [javaCmd, '-classpath', vnuJar, className] + args
+        runCmd(cmd)
 
     def buildAll(self):
         if not os.path.exists(os.path.join(buildRoot, "dependencies")):
