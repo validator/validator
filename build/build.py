@@ -1774,9 +1774,9 @@ def main(argv):
         except TypeError:
             javaRawVersion = subprocess.check_output([javaCmd, '-version'],
                                                      stderr=subprocess.STDOUT)
+        javaRawVersion = list(filter(lambda x:'version' in x, javaRawVersion.splitlines()))
         javaEnvVersion = \
-            int(javaRawVersion
-                .splitlines()[0].split()[2].strip('"').split('.')[0]
+            int(javaRawVersion[0].split()[2].strip('"').split('.')[0]
                 .replace('-ea', ''))
         if javaEnvVersion < 9:
             javaTargetVersion = ''
