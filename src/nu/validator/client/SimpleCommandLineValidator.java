@@ -120,16 +120,7 @@ public class SimpleCommandLineValidator {
     private static boolean hasSchemaOption;
 
     public static void main(String[] args) throws SAXException, Exception {
-        Enumeration<URL> resources = SimpleCommandLineValidator.class. //
-                getClassLoader().getResources("META-INF/MANIFEST.MF");
-        while (resources.hasMoreElements()) {
-            try (InputStream is = resources.nextElement().openStream()) {
-                version = new Manifest(is).getMainAttributes() //
-                        .getValue("Implementation-Version");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        version = SimpleCommandLineValidator.class.getPackage().getImplementationVersion();
         out = System.err;
         otherOut = System.out;
         userAgent = "Validator.nu/LV";
