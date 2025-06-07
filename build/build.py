@@ -861,7 +861,7 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
 
     if stackSize != "":
         args.append('-Xss' + stackSize + 'k')
-        args.append('-XX:ThreadStackSize=' + stackSize + 'k')
+        args.append('-XX:ThreadStackSize=' + stackSize)
 
     if disablePromiscuousSsl:
         args.append('-Dnu.validator.xml.promiscuous-ssl=false')
