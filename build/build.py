@@ -1680,7 +1680,7 @@ def printHelp():
     print("  --control-port=-1")
     print("                                Sets server control port number")
     print("                                (necessary for daemonizing)")
-    print("  --filter-file=resources/message-filters.text")
+    print("  --filter-file=resources/message-filters.txt")
     print("                                Sets path to the filter file")
     print("  --git=/usr/bin/git         -- Sets path to the git binary")
     print("  --heap=512                 -- Sets Java heap size in MB")
