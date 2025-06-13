@@ -130,6 +130,9 @@ public class SimpleCommandLineValidator {
                 throw new RuntimeException(e);
             }
         }
+        if (version == null) {
+            version = "[unknown version]";
+        }
         out = System.err;
         otherOut = System.out;
         userAgent = "Validator.nu/LV";
@@ -230,11 +233,7 @@ public class SimpleCommandLineValidator {
                 } else if ("--user-agent".equals(args[i])) {
                     userAgent = args[++i];
                 } else if ("--version".equals(args[i])) {
-                    if (version != null) {
-                        otherOut.println(version);
-                    } else {
-                        otherOut.println("[unknown version]");
-                    }
+                    otherOut.println(version);
                     System.exit(0);
                 } else if ("--help".equals(args[i])) {
                     help();
@@ -618,7 +617,7 @@ public class SimpleCommandLineValidator {
                     showSource, imageCollector, lineOffset, true,
                     new JsonMessageEmitter(
                             new nu.validator.json.Serializer(out), callback,
-                            asciiQuotes));
+                            asciiQuotes, version));
         } else {
             throw new RuntimeException("Bug. Should be unreachable.");
         }

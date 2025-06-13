@@ -980,7 +980,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             lineOffset, false,
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
-                                    callback, asciiQuotes));
+                                    callback, asciiQuotes, String.valueOf(VERSION)));
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }
