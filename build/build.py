@@ -1041,6 +1041,7 @@ class Release():
         if jarOrWar == "war":
             distJarOrWar = "dist-war"
             whichDir = distWarDir
+            removeIfDirExists(os.path.join(whichDir, "war"))
             ensureDirExists(whichDir)
             os.mkdir(os.path.join(whichDir, "war"))
         self.reInitDistDir(whichDir)
