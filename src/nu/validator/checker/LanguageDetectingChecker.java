@@ -214,6 +214,11 @@ public class LanguageDetectingChecker extends Checker {
                 }
                 DetectorFactory.clear();
                 DetectorFactory.loadProfile(profiles);
+                try {
+                    long seed = Long.parseLong(System.getProperty("nu.validator.checker.langDetectionSeed"));
+                    DetectorFactory.setSeed(seed);
+                } catch (NumberFormatException e) {
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (LangDetectException e) {
