@@ -48,7 +48,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
 
         public String lang; // null if no xml:lang
 
-        private boolean langSpeficied;
+        private boolean langSpecified;
 
         private boolean rtl;
 
@@ -61,7 +61,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
             this.currentAbsolute = currentAbsolute;
             this.originalRelative = originalRelative;
             this.lang = lang;
-            this.langSpeficied = langSpecified;
+            this.langSpecified = langSpecified;
             this.rtl = rtl;
         }
     }
@@ -212,10 +212,10 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
             if (i == 0) {
                 stack.addLast(node); // root
             } else if (i == 1) {
-                push(href, node.langSpeficied ? node.lang : null,
+                push(href, node.langSpecified ? node.lang : null,
                         node.rtl ? Direction.RTL : Direction.LTR);
             } else {
-                push(node.originalRelative, node.langSpeficied ? node.lang
+                push(node.originalRelative, node.langSpecified ? node.lang
                         : null, node.rtl ? Direction.RTL : Direction.LTR);
             }
             i++;
@@ -250,9 +250,9 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
                 // nop
             } else if (i == 1) {
                 node.lang = lang;
-                node.langSpeficied = true; // probably unnecessary...
+                node.langSpecified = true; // probably unnecessary...
             } else {
-                if (node.langSpeficied) {
+                if (node.langSpecified) {
                     return;
                 } else {
                     node.lang = lang;
