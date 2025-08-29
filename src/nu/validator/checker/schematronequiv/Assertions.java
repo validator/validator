@@ -1993,13 +1993,23 @@ public class Assertions extends Checker {
                         hasAriaAttributesOtherThanAriaHidden = true;
                     }
                     if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(
-                            attLocal) && !isEmptyAtt) {
+                            attLocal) && (!isEmptyAtt || "hidden".equals(attLocal))) {
                         String stateOrProperty = "aria-" + attLocal;
                         if (atts.getIndex("", stateOrProperty) > -1) {
                             String attLocalValue = atts.getValue("", attLocal);
                             String stateOrPropertyValue = atts.getValue("",
                                     stateOrProperty);
-                            if ("true".equals(stateOrPropertyValue)
+                            if ("hidden".equals(attLocal)
+                                    && "until-found".equals(attLocalValue)
+                                    && "true".equals(stateOrPropertyValue)) {
+                                err("Attribute \u201Caria-hidden\u201D with value"
+                                        + " \u201Ctrue\u201D must not be specified"
+                                        + " on elements with \u201Chidden\u201D"
+                                        + " attribute value \u201Cuntil-found\u201D."
+                                        + " This combination prevents content from"
+                                        + " being accessible to assistive technology"
+                                        + " when revealed through search.");
+                            } else if ("true".equals(stateOrPropertyValue)
                                     || attLocalValue.equals(
                                             stateOrPropertyValue)) {
                                 warn("Attribute \u201C" + stateOrProperty
