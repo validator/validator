@@ -31,7 +31,6 @@ import nu.validator.checker.RdfaLiteChecker;
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.TextContentChecker;
 import nu.validator.checker.UncheckedSubtreeWarner;
-import nu.validator.checker.UnsupportedFeatureChecker;
 import nu.validator.checker.UsemapChecker;
 import nu.validator.checker.XmlPiChecker;
 import nu.validator.checker.schematronequiv.Assertions;
@@ -60,8 +59,6 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema CONFORMING_BUT_OBSOLETE_WARNER = new CheckerSchema(PropertyMap.EMPTY, ConformingButObsoleteWarner.class);
     
     public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);
-
-    public static final CheckerSchema UNSUPPORTED_CHECKER = new CheckerSchema(PropertyMap.EMPTY, UnsupportedFeatureChecker.class);
 
     public static final CheckerSchema MICRODATA_CHECKER = new CheckerSchema(PropertyMap.EMPTY, MicrodataChecker.class);
 

@@ -261,7 +261,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/text-content/",
             "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
-            "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
+            "http://c.validator.nu/xml-pi/",
             "http://c.validator.nu/microdata/",
             "http://c.validator.nu/langdetect/" };
 
@@ -533,8 +533,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
             schemaMap.put("http://c.validator.nu/xml-pi/",
                     CheckerSchema.XML_PI_CHECKER);
-            schemaMap.put("http://c.validator.nu/unsupported/",
-                    CheckerSchema.UNSUPPORTED_CHECKER);
             schemaMap.put("http://c.validator.nu/microdata/",
                     CheckerSchema.MICRODATA_CHECKER);
             schemaMap.put("http://c.validator.nu/rdfalite/",

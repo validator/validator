@@ -38,7 +38,6 @@ import nu.validator.checker.MicrodataChecker;
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.TextContentChecker;
 import nu.validator.checker.UncheckedSubtreeWarner;
-import nu.validator.checker.UnsupportedFeatureChecker;
 import nu.validator.checker.UsemapChecker;
 import nu.validator.checker.XmlPiChecker;
 import nu.validator.gnu.xml.aelfred2.FatalSAXException;
@@ -325,8 +324,6 @@ public class SimpleDocumentValidator {
                     new TextContentChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new UncheckedSubtreeWarner(), jingPropertyMap));
-            validator = new CombineValidator(validator, new CheckerValidator(
-                    new UnsupportedFeatureChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new UsemapChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
