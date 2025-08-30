@@ -308,6 +308,7 @@ namespace local = ""
 			                    | ongotpointercapture
 			                    | onlostpointercapture
 			                    | role
+			                    | aria-activedescendant
 			                    | aria-atomic
 			                    | aria-busy
 			                    | aria-controls
