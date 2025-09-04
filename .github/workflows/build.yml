@@ -10,7 +10,7 @@ jobs:
     name: Prepare the build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - name: Update the 'latest' tag
         if: github.ref == 'refs/heads/main'
         run: |
@@ -34,7 +34,7 @@ jobs:
           - os: windows-latest
             java: 11.0.3
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - name: Set up Java JDK
         uses: actions/setup-java@v5
         with:
