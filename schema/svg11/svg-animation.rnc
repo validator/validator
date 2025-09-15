@@ -87,16 +87,16 @@ grammar {
         SVG.AnimationValue.extra.attrib
     a:documentation [
         "\x{a}" ~
-        "    SVG.AnimationAddtion.attrib\x{a}" ~
+        "    SVG.AnimationAddition.attrib\x{a}" ~
         "  "
     ]
-    SVG.AnimationAddtion.extra.attrib = empty
-    SVG.AnimationAddtion.attrib =
+    SVG.AnimationAddition.extra.attrib = empty
+    SVG.AnimationAddition.attrib =
         [ a:defaultValue = "replace" ]
         attribute additive { string "replace" | string "sum" }?,
         [ a:defaultValue = "none" ]
         attribute accumulate { string "none" | string "sum" }?,
-        SVG.AnimationAddtion.extra.attrib
+        SVG.AnimationAddition.extra.attrib
     a:documentation [
         "\x{a}" ~
         "    animate: Animate Element\x{a}" ~
@@ -113,7 +113,7 @@ grammar {
         SVG.AnimationAttribute.attrib,
         SVG.AnimationTiming.attrib,
         SVG.AnimationValue.attrib,
-        SVG.AnimationAddtion.attrib
+        SVG.AnimationAddition.attrib
     a:documentation [ "\x{a}" ~ "    set: Set Element\x{a}" ~ "  " ]
     SVG.set.content = SVG.Description.class*
     set = element set { attlist.set, SVG.set.content }
@@ -143,7 +143,7 @@ grammar {
         SVG.External.attrib,
         SVG.Animation.attrib,
         SVG.AnimationTiming.attrib,
-        SVG.AnimationAddtion.attrib,
+        SVG.AnimationAddition.attrib,
         [ a:defaultValue = "paced" ]
         attribute calcMode {
             string "discrete" | string "linear" | string "paced" | string "spline"
@@ -177,7 +177,7 @@ grammar {
         SVG.AnimationAttribute.attrib,
         SVG.AnimationTiming.attrib,
         SVG.AnimationValue.attrib,
-        SVG.AnimationAddtion.attrib
+        SVG.AnimationAddition.attrib
     a:documentation [
         "\x{a}" ~
         "    animateTransform: Animate Transform Element\x{a}" ~
@@ -197,7 +197,7 @@ grammar {
         SVG.AnimationAttribute.attrib,
         SVG.AnimationTiming.attrib,
         SVG.AnimationValue.attrib,
-        SVG.AnimationAddtion.attrib,
+        SVG.AnimationAddition.attrib,
         [ a:defaultValue = "translate" ]
         attribute type {
             string "translate" | string "scale" | string "rotate" | string "skewX" | string "skewY"
