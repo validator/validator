@@ -165,8 +165,8 @@ public class SimpleCommandLineValidator {
                 fileArgsStart = i;
                 break;
             } else {
-                if ("--verbose".equals(args[i])) {
-                    verbose = true;
+                 if ("--asciiquotes".equals(args[i])) {
+                    asciiQuotes = true;
                 } else if ("--errors-only".equals(args[i])) {
                     errorsOnly = true;
                     System.setProperty("nu.validator.datatype.warn", "false");
@@ -177,8 +177,6 @@ public class SimpleCommandLineValidator {
                 } else if ("--stdout".equals(args[i])) {
                     out = System.out;
                     otherOut = System.err;
-                } else if ("--asciiquotes".equals(args[i])) {
-                    asciiQuotes = true;
                 } else if ("--filterfile".equals(args[i])) {
                     File filterFile = new File(args[++i]);
                     StringBuilder sb = new StringBuilder();
@@ -218,26 +216,13 @@ public class SimpleCommandLineValidator {
                     }
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
-                } else if ("--user-agent".equals(args[i])) {
-                    userAgent = args[++i];
-                } else if ("--version".equals(args[i])) {
-                    if (version != null) {
-                        otherOut.println(version);
-                    } else {
-                        otherOut.println("[unknown version]");
-                    }
-                    System.exit(0);
                 } else if ("--help".equals(args[i])) {
                     help();
                     System.exit(0);
-                } else if ("--also-check-css".equals(args[i])) {
-                    alsoCheckCSS = true;
                 } else if ("--skip-non-css".equals(args[i])) {
                     skipNonCSS = true;
                 } else if ("--css".equals(args[i])) {
                     forceCSS = true;
-                } else if ("--also-check-svg".equals(args[i])) {
-                    alsoCheckSVG = true;
                 } else if ("--skip-non-svg".equals(args[i])) {
                     skipNonSVG = true;
                 } else if ("--svg".equals(args[i])) {
@@ -248,12 +233,27 @@ public class SimpleCommandLineValidator {
                     forceHTML = true;
                 } else if ("--xml".equals(args[i])) {
                     forceXML = true;
-                } else if ("--entities".equals(args[i])) {
-                    loadEntities = true;
+                } else if ("--also-check-css".equals(args[i])) {
+                    alsoCheckCSS = true;
+                } else if ("--also-check-svg".equals(args[i])) {
+                    alsoCheckSVG = true;
+                } else if ("--user-agent".equals(args[i])) {
+                    userAgent = args[++i];
                 } else if ("--no-langdetect".equals(args[i])) {
                     noLangDetect = true;
                 } else if ("--no-stream".equals(args[i])) {
                     noStream = true;
+                } else if ("--verbose".equals(args[i])) {
+                    verbose = true;
+                } else if ("--version".equals(args[i])) {
+                    if (version != null) {
+                        otherOut.println(version);
+                    } else {
+                        otherOut.println("[unknown version]");
+                    }
+                    System.exit(0);
+                } else if ("--entities".equals(args[i])) {
+                    loadEntities = true;
                 } else if ("--schema".equals(args[i])) {
                     hasSchemaOption = true;
                     schemaUrl = args[++i];

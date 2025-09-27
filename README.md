@@ -62,11 +62,11 @@ Run the checker with one of the following invocations:
 
 …where _`FILES`_ are the documents to check, and _`OPTIONS`_ are zero or more of the following options:
 
-    --errors-only --Werror --exit-zero-always --stdout --asciiquotes
-    --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME
-    --filterpattern PATTERN --css --skip-non-css --also-check-css --svg
-    --skip-non-svg --also-check-svg --xml --html --skip-non-html
-    --format gnu|xml|json|text --help --verbose --version
+    --asciiquotes --errors-only --Werror --exit-zero-always --stdout
+    --filterfile FILENAME --filterpattern PATTERN --format gnu|xml|json|text
+    --help --skip-non-css --css --skip-non-svg --svg --skip-non-html --html
+    --xml --also-check-css --also-check-svg --user-agent USER_AGENT
+    --no-langdetect --no-stream --verbose --version --entities --schema SCHEMA
 
 The [Options][23] section below provides details on each option, and the rest of this section provides some specific examples.
 
