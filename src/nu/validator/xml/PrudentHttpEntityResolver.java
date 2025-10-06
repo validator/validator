@@ -338,6 +338,17 @@ import io.mola.galimatias.GalimatiasParseException;
                         String.format("%s: %s", m.getURI().toString(), msg));
             }
             HttpEntity entity = response.getEntity();
+            if (entity == null) {
+                String msg = "Empty response.";
+                SAXParseException spe = new SAXParseException(msg, publicId,
+                        m.getURI().toString(), -1, -1,
+                        new SystemIdIOException(m.getURI().toString(), msg));
+                if (errorHandler != null) {
+                    errorHandler.fatalError(spe);
+                }
+                throw new ResourceNotRetrievableException(
+                        String.format("%s: %s", m.getURI().toString(), msg));
+            }
             long len = entity.getContentLength();
             if (sizeLimit > -1 && len > sizeLimit) {
                 SAXParseException spe = new SAXParseException(
