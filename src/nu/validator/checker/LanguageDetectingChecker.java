@@ -828,8 +828,15 @@ public class LanguageDetectingChecker extends Checker {
                     }
                     htmlElementHasLang = true;
                     htmlElementLangAttrValue = atts.getValue(i);
-                    declaredLangCode = new ULocale(
-                            htmlElementLangAttrValue).getLanguage();
+                    try {
+                        declaredLangCode = new ULocale(
+                                htmlElementLangAttrValue).getLanguage();
+                    } catch (IllegalArgumentException e) {
+                        String message = "The \u201Chtml\u201D start tag has a"
+                            + " malformed value for its \u201Clang\u201D"
+                            + " attribute.";
+                        warn(message, htmlStartTagLocator);
+                    }
                 } else if ("dir".equals(atts.getLocalName(i))) {
                     hasDir = true;
                     dirAttrValue = atts.getValue(i);
