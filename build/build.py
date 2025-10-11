@@ -174,7 +174,9 @@ dependencyPackages = [
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.20/jetty-servlet-11.0.20.jar", "eef8ffa65723dfd913af3c56173041b2"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.20/jetty-servlets-11.0.20.jar", "d3c54ba8c07b70c124a8908f5a5f6d9f"),  # nopep8
     ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.20/jetty-util-11.0.20.jar", "83d40c5c7d81c7f6ba2772d76387397d"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/11.0.20/jetty-util-ajax-11.0.20.jar", "c853563f3fa877f512e91dab5c30fd3a"),  # nopep8
+    ("https://repo1.maven.org/maven2/org/glassfish/javax.json/1.1.4/javax.json-1.1.4.jar", "ac67218fb9716fec512be8d0d877bde2"),  # nopep8
+
+
 ]
 
 moduleDependencyPackages = [
