@@ -1070,6 +1070,7 @@ class Release():
         f.truncate()
         f.write(''.join(lines))
         f.write('    uses org.eclipse.jetty.http.HttpFieldPreEncoder;\n')
+        f.write('    uses javax.json.spi.JsonProvider;\n')
         f.write('}\n')
         f.close()
         runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + vnuJar,
