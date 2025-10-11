@@ -39,11 +39,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
+import javax.json.JsonString;
+import javax.json.JsonWriter;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import org.eclipse.jetty.util.ajax.JSON;
-import org.eclipse.jetty.util.ajax.JSON.ReaderSource;
 
 import org.relaxng.datatype.DatatypeException;
 
@@ -86,12 +89,12 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private File baseDir = null;
 
-    private Map<String, String> expectedMessages;
+    private Map<String, JsonString> expectedMessages;
 
-    private Map<String, String> reportedMessages;
+    private JsonObjectBuilder reportedMessages;
 
     public TestRunner() throws IOException {
-        reportedMessages = new LinkedHashMap<>();
+        reportedMessages = Json.createObjectBuilder();
         validator = new SimpleDocumentValidator(true, false, false);
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
@@ -222,7 +225,7 @@ public class TestRunner extends MessageEmitterAdapter {
         // http://www.unicode.org/reports/tr18/#General_Category_Property
         String messageReported = exception.getMessage().replaceAll("\\p{C}",
                 "?");
-        String messageExpected = expectedMessages.get(testFilename).replaceAll(
+        String messageExpected = expectedMessages.get(testFilename).getString().replaceAll(
                 "\\p{C}", "?");
         // FIXME: The string replacements below are a hack to "normalize"
         // error messages reported for bad values of the ins/del datetime
@@ -255,7 +258,7 @@ public class TestRunner extends MessageEmitterAdapter {
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
-                    reportedMessages.put(testFilename, exception.getMessage());
+                    reportedMessages.add(testFilename, exception.getMessage());
                 } else if (expectedMessages != null
                         && expectedMessages.get(testFilename) == null) {
                     try {
@@ -317,7 +320,7 @@ public class TestRunner extends MessageEmitterAdapter {
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
-                    reportedMessages.put(testFilename, exception.getMessage());
+                    reportedMessages.add(testFilename, exception.getMessage());
                 } else if (expectedMessages != null
                         && expectedMessages.get(testFilename) == null) {
                     try {
@@ -451,7 +454,9 @@ public class TestRunner extends MessageEmitterAdapter {
             OutputStreamWriter out = new OutputStreamWriter(
                     new FileOutputStream(messagesFile), "utf-8");
             try (BufferedWriter bw = new BufferedWriter(out)) {
-                bw.write((new JSON()).toJSON(reportedMessages));
+                JsonWriter jsonWriter = Json.createWriter(bw);
+                jsonWriter.writeObject(reportedMessages.build());
+                jsonWriter.close();
             }
         }
     }
@@ -460,9 +465,8 @@ public class TestRunner extends MessageEmitterAdapter {
         if (messagesFile != null) {
             baseDir = messagesFile.getCanonicalFile().getParentFile();
             FileInputStream fis = new FileInputStream(messagesFile);
-            InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
-            expectedMessages = (HashMap<String, String>)
-                    (new JSON()).parse(new ReaderSource(reader));
+            JsonReader reader = Json.createReader(fis);
+            expectedMessages = (Map)reader.readObject();
         } else {
             baseDir = new File(System.getProperty("user.dir"));
         }

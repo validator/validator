@@ -39,6 +39,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import javax.json.Json;
+import javax.json.JsonReader;
+import javax.json.JsonStructure;
+
 import io.mola.galimatias.GalimatiasParseException;
 import io.mola.galimatias.URL;
 import nu.validator.checker.AttributeUtil;
@@ -66,7 +70,6 @@ import nu.validator.datatype.ImageCandidateURL;
 import nu.validator.htmlparser.impl.NCName;
 import nu.validator.messages.MessageEmitterAdapter;
 
-import org.eclipse.jetty.util.ajax.JSON;
 import org.relaxng.datatype.DatatypeException;
 
 import org.w3c.css.css.StyleSheetParser;
@@ -1716,9 +1719,10 @@ public class Assertions extends Checker {
     }
 
     private boolean isImportMapValid(String scriptContent) throws SAXException {
-        Object importMap;
+        JsonStructure importMap;
         try {
-            importMap = new JSON().parse(new JSON.StringSource(scriptContent), true);
+            JsonReader reader = Json.createReader(new StringReader(scriptContent));
+            importMap = reader.readObject();
         } catch (IllegalStateException e) {
             err("A script \u201cscript\u201d with a \u201ctype\u201d attribute"
                     + " whose value is \u201cimportmap\u201d must have valid"
