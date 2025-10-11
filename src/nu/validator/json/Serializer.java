@@ -108,50 +108,53 @@ public class Serializer implements JsonHandler {
         int s = start;
         int end = start + length;
         for (int i = start; i < end; i++) {
-            char c = ch[i];
-            if (c <= '\u001F' || c == '\"' || c == '\\') {
-                if (s < i) {
-                    writer.write(ch, s, i - s);
+            try {
+                char c = ch[i];
+                if (c <= '\u001F' || c == '\"' || c == '\\') {
+                    if (s < i) {
+                        writer.write(ch, s, i - s);
+                    }
+                    s = i + 1;
+                    writer.write('\\');
+                    switch (c) {
+                        case '\"':
+                            writer.write('\"');
+                            break;
+                        case '\\':
+                            writer.write('\\');
+                            break;
+                        case '\u0008':
+                            writer.write('b');
+                            break;
+                        case '\u000C':
+                            writer.write('f');
+                            break;
+                        case '\n':
+                            writer.write('n');
+                            break;
+                        case '\r':
+                            writer.write('r');
+                            break;
+                        case '\t':
+                            writer.write('t');
+                            break;
+                        default:
+                            String hex = Integer.toHexString(c);
+                            if (hex.length() == 1) {
+                                writer.write("u000");
+                                writer.write(hex);
+                            } else {
+                                writer.write("u00");
+                                writer.write(hex);                            
+                            }
+                            break;
+                    }
                 }
-                s = i + 1;
-                writer.write('\\');
-                switch (c) {
-                    case '\"':
-                        writer.write('\"');
-                        break;
-                    case '\\':
-                        writer.write('\\');
-                        break;
-                    case '\u0008':
-                        writer.write('b');
-                        break;
-                    case '\u000C':
-                        writer.write('f');
-                        break;
-                    case '\n':
-                        writer.write('n');
-                        break;
-                    case '\r':
-                        writer.write('r');
-                        break;
-                    case '\t':
-                        writer.write('t');
-                        break;
-                    default:
-                        String hex = Integer.toHexString(c);
-                        if (hex.length() == 1) {
-                            writer.write("u000");
-                            writer.write(hex);
-                        } else {
-                            writer.write("u00");
-                            writer.write(hex);                            
-                        }
-                        break;
-                }
+            } catch (ArrayIndexOutOfBoundsException e) {
             }
-        }
-        if (s < end) {
-            writer.write(ch, s, end - s);
+            if (s < end) {
+                writer.write(ch, s, end - s);
+            }
         }
     }
 
