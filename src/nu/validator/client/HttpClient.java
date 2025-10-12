@@ -42,14 +42,17 @@ public class HttpClient {
         String host = System.getProperty("nu.validator.client.host",
                 "127.0.0.1");
         String port = System.getProperty("nu.validator.client.port", "8888");
-        String origin = "http://" + host + ":" + port;
+        String path = System.getProperty("nu.validator.client.path", "/");
+        if (!path.endsWith("/"))
+            path += "/";
+        String origin = "http://" + host + ":" + port + path;
         String level = System.getProperty("nu.validator.client.level", null);
         String parser = System.getProperty("nu.validator.client.parser", null);
         String charset = System.getProperty("nu.validator.client.charset", null);
         String contentType = System.getProperty(
                 "nu.validator.client.content-type", null);
         boolean hasErrors = false;
-        String url = origin + "/?laxtype="
+        String url = origin + "?laxtype="
                 + System.getProperty("nu.validator.client.laxtype", "yes");
         url += "&out="
                 + System.getProperty("nu.validator.client.out", "gnu");

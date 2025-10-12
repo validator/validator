@@ -672,11 +672,20 @@ default: <span class=option-value>"127.0.0.1"</span>
 
 <h4 id="nuvalidatorclientport">nu.validator.client.port</h4>
 <pre>
-Specifies the hostname of the checker for the client to connect to.
+Specifies the port of the checker for the client to connect to.
 
 default: <span class=option-value>"8888"</span>
 
 example: java -Dnu.validator.client.port=8080 -jar ~/vnu.jar FILE.html
+</pre>
+
+<h4 id="nuvalidatorclientpath">nu.validator.client.path</h4>
+<pre>
+Specifies the path of the checker for the client to connect to.
+
+default: <span class=option-value>"/"</span>
+
+example: java -Dnu.validator.client.path=/vnu -jar ~/vnu.jar FILE.html
 </pre>
 
 <h4 id="nuvalidatorclientlevel">nu.validator.client.level</h4>
