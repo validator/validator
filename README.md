@@ -49,7 +49,7 @@ You can [get the latest release][16] or run [`docker run -it --rm -p 8888:8888
 ghcr.io/validator/validator:latest`][17], [`npm install vnu-jar`][18],
 [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][19],
 [`brew install vnu`][20], or [`pip install html5validator`][21] and see the
-**Usage** and **Web-based checking** sections below. Or automate your document
+[Usage](#usage) and [Web-based checking](#web-based-checking) sections below. Or automate your document
 checking with a frontend such as:
 
    [16]: https://github.com/validator/validator/releases/latest
