@@ -542,11 +542,19 @@ checker service, as documented at
 
 #### nu.validator.client.port
 
-    Specifies the hostname of the checker for the client to connect to.
+    Specifies the port of the checker for the client to connect to.
 
     default: "8888"
 
     example: java -Dnu.validator.client.port=8080 -jar ~/vnu.jar FILE.html
+
+#### nu.validator.client.path
+
+    Specifies the path of the checker for the client to connect to.
+
+    default: "/"
+
+    example: java -Dnu.validator.client.path=/vnu -jar ~/vnu.jar FILE.html
 
 #### nu.validator.client.level
 
