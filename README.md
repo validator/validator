@@ -150,7 +150,7 @@ To check standard input:
 
       echo '<!doctype html><title>...' | java -jar ~/vnu.jar -
 
-### Options
+## Options
 
 When used from the command line as described in this section, the checker provides the following options:
 
