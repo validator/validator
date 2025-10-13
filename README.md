@@ -72,6 +72,8 @@ The [Options][23] section below provides details on each option, and the rest of
 
    [23]: https://validator.github.io/validator/#options
 
+#### Examples
+
 > [!NOTE]
 > Throughout these examples, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/vnu` and `vnu-runtime-image\bin\vnu.bat` with the actual path to the `vnu` or `vnu.bat` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the checker with just `vnu`.
 
