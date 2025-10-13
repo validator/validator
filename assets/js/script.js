@@ -9,6 +9,7 @@ const replaceOnDocument = (pattern, string, {target = document.body} = {}) => {
 };
 replaceOnDocument(/\[!IMPORTANT\]/g, "👋 Important: ");
 replaceOnDocument(/\[!NOTE\]/g, "👉 Note: ");
+replaceOnDocument(/\[!WARNING\]/g, "⚠️ Warning: ");
 
 anchors.options.placement = 'left';
 document.addEventListener('DOMContentLoaded', function(event) { anchors.add(); });
