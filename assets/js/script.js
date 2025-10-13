@@ -1,4 +1,3 @@
-document.querySelector("h1").textContent = "An Outsider’s Guide to the W3C";
 const replaceOnDocument = (pattern, string, {target = document.body} = {}) => {
   // Handle `string` — see the last section
   [
