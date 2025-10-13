@@ -26,7 +26,8 @@ It is released upstream in these formats:
 
    [11]: https://validator.github.io/validator/#servlet
 
-**Note:** The _vnu.jar_ and _vnu.war_ files require you to have Java 11 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
+> [!NOTE]
+> The `vnu.jar` and `vnu.war` files require you to have Java 11 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
 
 You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13], [`npm install vnu-jar`][14], [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15], [`brew install vnu`][16], or [`pip install html5validator`][17] and see the **Usage** and **Web-based checking** sections below. Or automate your document checking with a frontend such as:
 
@@ -71,7 +72,8 @@ The [Options][23] section below provides details on each option, and the rest of
 
    [23]: https://validator.github.io/validator/#options
 
-**Note:** Throughout these examples, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/vnu` and `vnu-runtime-image\bin\vnu.bat` with the actual path to the `vnu` or `vnu.bat` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the checker with just `vnu`.
+> [!NOTE]
+> Throughout these examples, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/vnu` and `vnu-runtime-image\bin\vnu.bat` with the actual path to the `vnu` or `vnu.bat` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the checker with just `vnu`.
 
 To check one or more documents from the command line:
 
@@ -81,7 +83,8 @@ To check one or more documents from the command line:
 
       java -jar ~/vnu.jar            FILE.html FILE2.html FILE3.html...
 
-**Note:** If you get a `StackOverflowError` error when invoking the checker, try adjusting the thread stack size by providing the `-Xss` option to java:
+> [!NOTE]
+> If you get a `StackOverflowError` error when invoking the checker, try adjusting the thread stack size by providing the `-Xss` option to java:
 
       java -Xss512k -jar ~/vnu.jar ...
 
@@ -98,7 +101,8 @@ To check all documents in a particular directory `DIRECTORY_PATH` as HTML:
 
 #### More examples
 
-**Note:** The examples in this section assume you have the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory in your system `PATH` environment variable. If you’re using the jar file instead, replace `vnu` in the examples with `java -jar ~/vnu.jar`.
+> [!NOTE]
+> The examples in this section assume you have the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory in your system `PATH` environment variable. If you’re using the jar file instead, replace `vnu` in the examples with `java -jar ~/vnu.jar`.
 
 To check all documents in a particular directory `DIRECTORY_PATH` as HTML, but skip any documents whose names don’t end with the extensions `.html`, `.htm`, `.xhtml`, or `.xht`:
 
@@ -323,7 +327,8 @@ The [latest releases of the Linux, Windows, and macOS binaries and vnu.jar and v
 
    [26]: https://github.com/validator/validator/releases/latest
 
-**Note:** Throughout these instructions, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/java` and `vnu-runtime-image\bin\java.exe` with the actual path to the checker `java` or `java.exe` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the checker with just `java nu.validator.servlet.Main 8888`.
+> [!NOTE]
+> Throughout these instructions, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/java` and `vnu-runtime-image\bin\java.exe` with the actual path to the checker `java` or `java.exe` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the checker with just `java nu.validator.servlet.Main 8888`.
 
 ### Standalone web server
 
@@ -339,7 +344,8 @@ Then open [http://0.0.0.0:8888][27] in a browser. (To listen on a different port
 
    [27]: http://0.0.0.0:8888
 
-**Warning:** Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `nu.validator.servlet.bind-address` system property to bind the checker to a different address:
+> [!WARNING]
+> Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `nu.validator.servlet.bind-address` system property to bind the checker to a different address:
 
     java -cp ~/vnu.jar \
         -Dnu.validator.servlet.bind-address=128.30.52.73 \
@@ -358,7 +364,8 @@ When you open [http://0.0.0.0:8888][28] (or whatever URL corresponds to the `nu.
    [28]: http://0.0.0.0:8888
    [29]: https://validator.w3.org/nu/
 
-**Note:** If you get a `StackOverflowError` error when using the checker, try adjusting the thread stack size by providing the `-Xss` option to java:
+> [!NOTE]
+> If you get a `StackOverflowError` error when using the checker, try adjusting the thread stack size by providing the `-Xss` option to java:
 
       java -Xss512k -cp ~/vnu.jar nu.validator.servlet.Main 8888
 
@@ -376,7 +383,9 @@ To run the checker inside of an existing servlet container such as Apache Tomcat
 Assuming your servlet container is configured to receive HTTP requests sent to `localhost` on port `80` and the context root of this application is `vnu` (often the default behavior is to use the WAR file's filename as the context root unless one is explicitly specified) you should be able to access the application by connecting to [http://localhost/vnu/][31].
 
    [31]: http://localhost/vnu/
-**Note:** You may want to customize the `/WEB-INF/web.xml` file inside the WAR file (you can use any ZIP-handling program) to modify the servlet filter configuration. For example, if you wanted to disable the inbound-size-limit filter, you could comment out that filter like this:
+
+> [!NOTE]
+> You may want to customize the `/WEB-INF/web.xml` file inside the WAR file (you can use any ZIP-handling program) to modify the servlet filter configuration. For example, if you wanted to disable the inbound-size-limit filter, you could comment out that filter like this:
 
     <!--
       <filter>
@@ -621,7 +630,8 @@ The first time you run the checker Python script, you’ll need to be online and
 
 The steps above will build, test, and run the checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the checker Web UI.
 
-**Warning:** Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `--bind-address` option to bind the checker to a different address:
+> [!WARNING]
+> Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `--bind-address` option to bind the checker to a different address:
 
         python ./checker.py --bind-address=128.30.52.73 all
 
