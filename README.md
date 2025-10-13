@@ -653,8 +653,7 @@ registry — for example, the `17.11.1` version:
 To bind the checker to a specific address (rather than have it listening on all
 interfaces):
 
-      docker run -it --rm -p 128.30.52.73:8888:8888
-      ghcr.io/validator/validator:latest
+      docker run -it --rm -p 128.30.52.73:8888:8888 ghcr.io/validator/validator:latest
 
 To make the checker run with a connection timeout and socket timeout different
 than the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and
@@ -693,21 +692,29 @@ open `http://0.0.0.0:8888/` in a Web browser to use the checker Web UI.
 
   2. Set the `JAVA_HOME` environment variable:
 
-        export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64    <-- Ubuntu, etc.
+     ```
+     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64    <-- Ubuntu, etc.
 
-        export JAVA_HOME=$(/usr/libexec/java_home)            <-- MacOS
+     export JAVA_HOME=$(/usr/libexec/java_home)            <-- macOS
+     ```
 
   3. Create a working directory:
 
-        git clone https://github.com/validator/validator.git
+     ```
+     git clone https://github.com/validator/validator.git
+     ```
 
   4. Change into your working directory:
 
-        cd validator
+     ```
+     cd validator
+     ```
 
   5. Start the checker Python script:
 
-        python ./checker.py all
+     ```
+     python ./checker.py all
+     ```
 
 The first time you run the checker Python script, you’ll need to be online and
 the build will need time to download several megabytes of dependencies.
@@ -725,14 +732,14 @@ Use `python ./checker.py --help` to see command-line options for controlling the
 behavior of the script, as well as build-target names you can call separately;
 e.g.:
 
-  * python ./checker.py build       # to build only
+    python ./checker.py build       # to build only
 
-  * python ./checker.py build test  # to build and test
+    python ./checker.py build test  # to build and test
 
-  * python ./checker.py run         # to run only
+    python ./checker.py run         # to run only
 
-  * python ./checker.py jar         # to compile vnu.jar
+    python ./checker.py jar         # to compile vnu.jar
 
-  * python ./checker.py update-shallow && \
+    python ./checker.py update-shallow && \
       python ./checker.py dldeps && \
       python ./checker.py jar       # to compile vnu.jar faster
