@@ -1,0 +1,200 @@
+---
+---
+
+@import "{{ site.theme }}";
+body {
+	font-size: 16px;
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+	position: relative;
+        margin-bottom: 500px;
+}
+@media print {
+	.toc {
+		display: none;
+	}
+	#main_content, section {
+		max-width: none !important;
+		width: 1000px !important;
+	}
+}
+#footer {
+	font-size: 13px;
+}
+#sticky {
+	display: none;
+}
+@media (max-width: 600px) {
+	.mobile {
+		display: block;
+	}
+	#sticky {
+		display: block;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 60px;
+		width: 100%;
+		padding-top: 12px;
+		padding-bottom: 60px;
+		background: rgb(106, 106, 94);
+		text-align: center;
+		margin-bottom: 0;
+		font-size: 14px;
+	}
+}
+.close-button {
+	border: none;
+	display: inline-block;
+	padding-right: 10px;
+        padding-bottom: 0;
+	vertical-align: middle;
+	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
+	background-color: inherit;
+	text-align: center;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 20px !important;
+}
+.topright {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.container {
+	min-height: 100%;
+	margin-left: auto;
+	margin-bottom: 20px;
+}
+@media (max-width: 1310px) {
+	.container {
+		width: 60%;
+		max-width: 90%;
+		margin-left: 50px;
+	}
+}
+@media (max-width: 1000px) {
+	.container {
+		width: 50%;
+		margin-left: 30px;
+	}
+}
+@media (max-width: 800px) {
+	.container {
+		width: 40%;
+	}
+}
+@media (max-width: 600px) {
+	.container {
+		width: 90%;
+	}
+	.toc {
+		display: none !important;
+	}
+}
+.toc.toc-right {
+	right: calc((100% - 48rem - 4rem)/2);
+}
+.toc.toc-right {
+	right: 0;
+}
+.toc {
+	height: 100%;
+	width: 331px;
+	transform: translateX(0);
+}
+.transition--300 {
+	transition: all 300ms ease-in-out;
+}
+.is-position-fixed {
+	position: fixed !important;
+	top: 0;
+}
+.z-1 {
+	z-index: 1;
+}
+.pt5 {
+	padding-top: 4rem;
+}
+.pa4 {
+	padding: 2rem;
+}
+.absolute {
+	position: absolute;
+}
+.relative {
+	position: relative;
+}
+article, aside, footer, header, nav, section {
+	display: block;
+}
+* {
+	box-sizing: border-box;
+}
+ul li {
+	list-style-type: "\00BB " !important;
+        list-style-image: none !important;
+        padding-left: 3px;
+}
+.toc > .toc-list:first-child > li:first-child {
+	list-style: none !important;
+}
+.toc-list {
+	padding-left: 16px !important;
+}
+.is-active-link::before {
+	color: rgb(184, 233, 90) !important;
+      }
+.is-active-link {
+	color: rgb(184, 233, 90) !important;
+	text-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px, rgba(86, 111, 15, 0.1) 0px 0px 5px, rgba(86, 111, 15, 0.1) 0px 0px 10px !important;
+}
+section {
+	max-width: 859px;
+	border-bottom: 1px dashed #b5e853 !important;
+	padding-bottom: 16px;
+	margin-bottom: 16px !important;
+}
+h1 {
+	margin-top: 32px;
+	border-bottom: 1px dashed #b5e853;
+        padding-bottom: 16px;
+}
+h2, h3, h4 {
+	margin: 60px 0 6px;
+}
+h3 {
+	margin-top: 32px;
+}
+#main_content h4 {
+	font-size: 16px !important;
+	margin-top: 20px;
+}
+#why-not-just-wds + p + h4 {
+	font-size: 12.8px !important;
+}
+h2 + h2, h3 + h3, h4 + h4 {
+	margin-top: 0px !important;
+}
+h2 + p, h3 + p, h4 + p {
+	margin-top: 8px;
+}
+h1, h2, h3 {
+	line-height: 1.1;
+}
+blockquote {
+	margin-left: 3px;
+	border-left: .25em solid rgb(184, 233, 90) !important;
+	border-left-color: rgb(184, 233, 90) !important;
+}
+blockquote p:first-of-type::first-line {
+  color: magenta;
+}
+a {
+	text-decoration: none;
+}
+code {
+  font-size: 15px;
+  color: orange !important;
+}
