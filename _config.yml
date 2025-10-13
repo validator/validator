@@ -2,4 +2,4 @@ markdown: kramdown
 remote_theme: pages-themes/hacker@v0.2.0
 kramdown:
     typographic_symbols:
-        mdash: "—"
+        mdash: "--"
