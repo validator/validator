@@ -5,6 +5,7 @@ CSS, and SVG][1]. It enables you to [batch-check documents from the command
 line][2] and from other scripts/apps, and to [deploy your own instance of the
 checker as a service][3] (like [validator.w3.org/nu][4]). Its [source code is
 available][5], as are [instructions on how to build, test, and run the code][6].
+
    [1]: https://validator.w3.org/nu/about.html#why-validate
    [2]: https://validator.github.io/validator/#usage
    [3]: https://validator.github.io/validator/#standalone
