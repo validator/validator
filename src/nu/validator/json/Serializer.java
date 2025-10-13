@@ -149,9 +149,9 @@ public class Serializer implements JsonHandler {
                         break;
                 }
             }
-            if (s < end) {
-                writer.write(ch, s, end - s);
-            }
+        }
+        if (s < end) {
+            writer.write(ch, s, end - s);
         }
     }
 
