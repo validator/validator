@@ -71,7 +71,10 @@ public class XhtmlSourceHandler implements SourceHandler {
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         maybeOpen();
-        emitter.characters(ch, start, length);
+        try {
+            emitter.characters(ch, start, length);
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
     }
 
     private void maybeOpen() throws SAXException {
