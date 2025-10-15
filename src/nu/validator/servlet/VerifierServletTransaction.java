@@ -1917,6 +1917,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             } else {
                 emitter.characters("contents of text-input area");
             }
+            emitter.characters(" (checked with vnu ");
+            emitter.characters(VERSION);
+            emitter.characters(")");
         } else {
             emitter.characters(SERVICE_TITLE);
             if (markupAllowed
