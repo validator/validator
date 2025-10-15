@@ -40,7 +40,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import jakarta.servlet.http.HttpServletRequest;
 
 import javax.json.Json;
+import javax.json.JsonException;
 import javax.json.JsonReader;
+import javax.json.JsonString;
 import javax.json.JsonStructure;
 
 import io.mola.galimatias.GalimatiasParseException;
@@ -1723,7 +1725,7 @@ public class Assertions extends Checker {
         try {
             JsonReader reader = Json.createReader(new StringReader(scriptContent));
             importMap = reader.readObject();
-        } catch (IllegalStateException e) {
+        } catch (JsonException e) {
             err("A script \u201cscript\u201d with a \u201ctype\u201d attribute"
                     + " whose value is \u201cimportmap\u201d must have valid"
                     + " JSON content.");
@@ -1807,7 +1809,7 @@ public class Assertions extends Checker {
                     + " keys.");
             return false;
         }
-        if (!(value instanceof String)) {
+        if (!(value instanceof JsonString)) {
             err("A specifier map defined in a \u201c" + type + "\u201d"
                     + " property within the content of a \u201cscript\u201d"
                     + " element with a \u201ctype\u201d attribute whose value"
@@ -1815,7 +1817,7 @@ public class Assertions extends Checker {
                     + " values.");
             return false;
         }
-        String sValue = (String) value;
+        String sValue = ((JsonString) value).getString();
         if (!isValidURL(sValue)) {
             err("A specifier map defined in a \u201c" + type + "\u201d"
                     + " property within the content of a \u201cscript\u201d"
