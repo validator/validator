@@ -604,29 +604,21 @@ Follow the steps below to build, test, and run the checker such that you can ope
 
   2. Set the `JAVA_HOME` environment variable:
 
-     ```
-     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64    <-- Ubuntu, etc.
+         export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64    <-- Ubuntu, etc.
 
-     export JAVA_HOME=$(/usr/libexec/java_home)            <-- macOS
-     ```
+         export JAVA_HOME=$(/usr/libexec/java_home)            <-- macOS
 
   3. Create a working directory:
 
-     ```
-     git clone https://github.com/validator/validator.git
-     ```
+         git clone https://github.com/validator/validator.git
 
   4. Change into your working directory:
 
-     ```
-     cd validator
-     ```
+         cd validator
 
   5. Start the checker Python script:
 
-     ```
-     python ./checker.py all
-     ```
+         python ./checker.py all
 
 The first time you run the checker Python script, you’ll need to be online and the build will need time to download several megabytes of dependencies.
 
@@ -635,7 +627,7 @@ The steps above will build, test, and run the checker such that you can open `ht
 > [!WARNING]
 > Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `--bind-address` option to bind the checker to a different address:
 
-        python ./checker.py --bind-address=128.30.52.73 all
+    python ./checker.py --bind-address=128.30.52.73 all
 
 Use `python ./checker.py --help` to see command-line options for controlling the behavior of the script, as well as build-target names you can call separately; e.g.:
 
