@@ -450,15 +450,6 @@ public class TestRunner extends MessageEmitterAdapter {
             validator.setUpValidatorAndParsers(this, false, false);
             checkHasWarningFiles(hasWarningFiles);
         }
-        if (writeMessages) {
-            OutputStreamWriter out = new OutputStreamWriter(
-                    new FileOutputStream(messagesFile), "utf-8");
-            try (BufferedWriter bw = new BufferedWriter(out)) {
-                JsonWriter jsonWriter = Json.createWriter(bw);
-                jsonWriter.writeObject(reportedMessages.build());
-                jsonWriter.close();
-            }
-        }
     }
 
     public boolean runTestSuite() throws SAXException, Exception {
@@ -481,6 +472,15 @@ public class TestRunner extends MessageEmitterAdapter {
                 } else {
                     checkTestDirectoryAgainstSchema(directory, schema);
                 }
+            }
+        }
+        if (writeMessages) {
+            OutputStreamWriter out = new OutputStreamWriter(
+                    new FileOutputStream(messagesFile), "utf-8");
+            try (BufferedWriter bw = new BufferedWriter(out)) {
+                JsonWriter jsonWriter = Json.createWriter(bw);
+                jsonWriter.writeObject(reportedMessages.build());
+                jsonWriter.close();
             }
         }
         if (verbose) {
