@@ -617,41 +617,15 @@ public class SimpleCommandLineValidator {
     }
 
     private static void usage() {
-        otherOut.println("Usage:");
-        otherOut.println("");
-        otherOut.println("    vnu-runtime-image/bin/vnu OPTIONS FILES (Linux or macOS)");
-        otherOut.println("    vnu-runtime-image\\bin\\vnu.bat OPTIONS FILES (Windows)");
-        otherOut.println("    java -jar ~/vnu.jar OPTIONS FILES (any system with Java8+ installed)");
-        otherOut.println("");
-        otherOut.println("...where FILES are the documents to check, and OPTIONS are zero or more of:");
-        otherOut.println("");
-        otherOut.println("    --errors-only --Werror --exit-zero-always --stdout --asciiquotes");
-        otherOut.println("    --user-agent USER_AGENT --no-langdetect --no-stream --filterfile FILENAME");
-        otherOut.println("    --filterpattern PATTERN --css --skip-non-css --also-check-css --svg");
-        otherOut.println("    --skip-non-svg --also-check-svg --xml --html --skip-non-html");
-        otherOut.println("    --format gnu|xml|json|text --help --verbose --version");
-        otherOut.println("");
-        otherOut.println("For detailed usage information, try the \"--help\" option or see:");
-        otherOut.println("");
-        otherOut.println("  https://validator.github.io/validator/");
-        otherOut.println("");
-        otherOut.println("To read from stdin, use \"-\" as the filename, like this: \"java -jar vnu.jar - \".");
-        otherOut.println("");
-        otherOut.println("To run the checker as a standalone Web-based service, open a new terminal");
-        otherOut.println("window and invoke the checker like this");
-        otherOut.println("");
-        otherOut.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
-        otherOut.println("    vnu-runtime-image/bin/java nu.validator.servlet.Main 8888");
-        otherOut.println("    vnu-runtime-image\\bin\\java -cp vnu.jar nu.validator.servlet.Main 8888");
-        otherOut.println("");
-        otherOut.println("...then open http://127.0.0.1:8888 in a browser.");
-        otherOut.println("");
-        otherOut.println("After that, to check documents locally using the packaged HTTP client, do this:");
-        otherOut.println("");
-        otherOut.println("    java -cp vnu.jar nu.validator.client.HttpClient FILES");
-        otherOut.println("    vnu-runtime-image/bin/java nu.validator.client.HttpClient FILES");
-        otherOut.println("    vnu-runtime-image\\bin\\java nu.validator.client.HttpClient FILES");
-        otherOut.println("");
+        try (InputStream help = SimpleCommandLineValidator.class.getClassLoader().getResourceAsStream(
+                "nu/validator/localentities/files/usage")) {
+            otherOut.println("");
+            for (int b = help.read(); b != -1; b = help.read()) {
+                otherOut.write(b);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void help() {
