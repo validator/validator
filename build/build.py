@@ -1619,6 +1619,8 @@ def prepareLocalEntityJar():
                     os.path.join(filesDir, "log4j.properties"))
     shutil.copyfile(os.path.join(buildRoot, "README.md"),
                     os.path.join(filesDir, "cli-help"))
+    shutil.copyfile(os.path.join(buildRoot, "usage.md"),
+                    os.path.join(filesDir, "usage"))
     f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
     o = open(os.path.join(filesDir, "entitymap"), 'w')
     try:
