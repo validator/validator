@@ -152,7 +152,7 @@ To check standard input:
 
 ## Options
 
-When used from the command line as described in this section, the checker provides the following options:
+When used from the command line, the checker provides these options:
 
 #### --asciiquotes
 
