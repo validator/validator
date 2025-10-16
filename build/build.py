@@ -1617,10 +1617,8 @@ def prepareLocalEntityJar():
     shutil.copytree(os.path.join(buildRoot, "resources", "language-profiles"), languageProfilesTargetDir)  # nopep8
     shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"),
                     os.path.join(filesDir, "log4j.properties"))
-    shutil.copyfile(os.path.join(buildRoot, "README.md"),
-                    os.path.join(filesDir, "cli-help"))
-    shutil.copyfile(os.path.join(buildRoot, "usage.md"),
-                    os.path.join(filesDir, "usage"))
+    makeUsage()
+    makeCliHelp()
     f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
     o = open(os.path.join(filesDir, "entitymap"), 'w')
     try:
@@ -1646,6 +1644,50 @@ def prepareLocalEntityJar():
         removeIfExists(os.path.join(schemaDir, "html5", file))
     removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
     removeIfDirExists(os.path.join(schemaDir, "rdf"))
+
+
+def makeUsage():
+    usage_lines = []
+    with open(os.path.join(buildRoot, "usage.md")) as f:
+        for line in f:
+            usage_lines.append(stripLeadingHashes(line))
+    with open(os.path.join(filesDir, "usage"), "w") as f:
+        f.writelines(usage_lines)
+
+
+def makeCliHelp():
+    usage_lines = []
+    readme_lines = []
+    with open(os.path.join(buildRoot, "usage.md")) as f:
+        for line in f:
+            usage_lines.append(stripLeadingHashes(line))
+            if line.startswith("## OPTIONS"):
+                break
+    with open(os.path.join(buildRoot, "README.md")) as f:
+        in_block = False
+        for line in f:
+            if line.startswith("## Options"):
+                in_block = True
+                continue
+            elif line.startswith("## Web-based checking"):
+                in_block = False
+                continue
+            if in_block:
+                readme_lines.append(stripLeadingHashes(line))
+    with open(os.path.join(filesDir, "cli-help"), "w") as f:
+        f.writelines(usage_lines + readme_lines)
+
+
+def stripLeadingHashes(line):
+    if line.lstrip().startswith("#"):
+        i = 0
+        while i < len(line) and line[i] == "#":
+            i += 1
+        while i < len(line) and line[i] == " ":
+            i += 1
+        return line[i:]
+    else:
+        return line
 
 
 def zipExtract(zipArch, targetDir):
