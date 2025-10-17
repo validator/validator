@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1">EMPTY</param>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+  <element>
+    <name>bar</name>
+    <elementRef>
+      <name>EMPTY</name>
+    </elementRef>
+  </element>
+</doctype>

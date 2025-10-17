@@ -1,0 +1,17 @@
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="start">
+  <mode name="start">
+    <namespace ns="">
+      <validate schema="openTestSuite.rng">
+        <context path="correct" useMode="picl"/>
+      </validate>
+    </namespace>
+  </mode>
+  <mode name="picl">
+    <namespace ns="http://www.thaiopensource.com/validate/picl">
+      <validate schema="../mod/picl/src/main/com/thaiopensource/validate/picl/resources/picl.rnc"
+                schemaType="application/x-rnc"
+                useMode="#attach"/>
+      <attach useMode="#attach"/>
+    </namespace>
+  </mode>
+</rules>

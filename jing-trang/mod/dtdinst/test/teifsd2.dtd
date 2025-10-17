@@ -1,0 +1,212 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DFDDTD] 26.1: Feature System Declaration -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--First, we declare basic parameter entities and embed
+auxiliary files.-->
+<!--Embed entities for TEI generic identifiers.-->
+<!ENTITY  % TEI.elementNames SYSTEM 'teigis2.ent' >
+%TEI.elementNames;
+
+<!--Embed entities for TEI keywords.-->
+<!ENTITY  % TEI.keywords.ent SYSTEM 'teikey2.ent' >
+%TEI.keywords.ent;
+
+<!--Define element classes for content models, shared
+attributes for element classes, and global attributes.  (This all
+happens within the file teiclas2.ent.)-->
+<!ENTITY  % TEI.elementClasses SYSTEM 'teiclas2.ent' >
+%TEI.elementClasses;
+
+<!--Define element classes for feature structure
+declarations.-->
+
+<!ENTITY % x.boolean "" >
+<!ENTITY % m.boolean "%x.boolean; %n.any; | %n.none;"> 
+
+<!ENTITY % x.binary "" >
+<!ENTITY % m.binary "%x.binary; %n.minus; | %n.plus;"> 
+
+<!ENTITY % x.singleVal "" >
+<!ENTITY % m.singleVal "%x.singleVal; %m.binary; | %m.boolean; | %n.dft; | %n.msr; | %n.nbr; | %n.rate; | %n.str; | %n.sym; | %n.uncertain;"> 
+
+<!ENTITY % x.complexVal "" >
+<!ENTITY % m.complexVal "%x.complexVal; %n.alt; | %n.fs; | %n.vAlt;"> 
+
+<!ENTITY % x.featureVal "" >
+<!ENTITY % m.featureVal "%x.featureVal; %m.complexVal; | %n.null; | %m.singleVal;"> 
+<!--Now, we declare the elements for FSDs proper.-->
+
+<!-- [DFDFSD2] 26.2: Feature System Declaration -->
+
+<!ENTITY % teiFsd2 'INCLUDE' >
+<![ %teiFsd2; [
+
+<!ELEMENT %n.teiFsd2; %om.RR;  ((%n.teiHeader;), (%n.fsDecl;)+)> 
+<!ATTLIST %n.teiFsd2;  
+      %a.global;
+      TEIform CDATA 'teiFsd2' >
+  
+]]>
+  
+<!ENTITY % fsDecl 'INCLUDE' >
+<![ %fsDecl; [
+
+<!ELEMENT %n.fsDecl; %om.RR;   ((%n.fsDescr;)?, (%n.fDecl;)+, (%n.fsConstraints;)?)> 
+<!ATTLIST %n.fsDecl;  
+      %a.global;
+      type CDATA #REQUIRED
+      baseType CDATA #IMPLIED
+      TEIform CDATA 'fsDecl' >
+  
+]]>
+  
+<!ENTITY % fsDescr 'INCLUDE' >
+<![ %fsDescr; [
+
+<!ELEMENT %n.fsDescr; %om.RO;  %paraContent;> 
+<!ATTLIST %n.fsDescr;  
+      %a.global;
+      TEIform CDATA 'fsDescr' >
+  
+]]>
+  
+<!-- end of [DFDFSD2]  26.2-->
+
+
+<!-- [DFDX] 26.3: Feature definitions -->
+
+<!ENTITY % fDecl 'INCLUDE' >
+<![ %fDecl; [
+
+<!ELEMENT %n.fDecl; %om.RR;   ((%n.fDescr;)?, (%n.vRange;), (%n.vDefault;)?)> 
+<!ATTLIST %n.fDecl;  
+      %a.global;
+      name NMTOKEN #REQUIRED
+      org (unit | set | bag | list) "unit"
+      TEIform CDATA 'fDecl' >
+  
+]]>
+  
+<!ENTITY % fDescr 'INCLUDE' >
+<![ %fDescr; [
+
+<!ELEMENT %n.fDescr; %om.RO;  %paraContent;> 
+<!ATTLIST %n.fDescr;  
+      %a.global;
+      TEIform CDATA 'fDescr' >
+  
+]]>
+  
+<!ENTITY % vRange 'INCLUDE' >
+<![ %vRange; [
+
+<!ELEMENT %n.vRange; %om.RO;   (%m.featureVal;)> 
+<!ATTLIST %n.vRange;  
+      %a.global;
+      TEIform CDATA 'vRange' >
+  
+]]>
+  
+<!ENTITY % vDefault 'INCLUDE' >
+<![ %vDefault; [
+
+<!ELEMENT %n.vDefault; %om.RR;  ((%m.featureVal;)+ | (%n.if;)+)> 
+<!ATTLIST %n.vDefault;  
+      %a.global;
+      TEIform CDATA 'vDefault' >
+  
+]]>
+  
+<!ENTITY % if 'INCLUDE' >
+<![ %if; [
+
+<!ELEMENT %n.if; %om.RR;   (((%n.fs;) | %n.f; | %n.fAlt;), (%n.then;), (%m.featureVal;) )> 
+<!ATTLIST %n.if;  
+      %a.global;
+      TEIform CDATA 'if' >
+  
+]]>
+  
+<!ENTITY % then 'INCLUDE' >
+<![ %then; [
+
+<!ELEMENT %n.then; %om.RO;  EMPTY> 
+<!ATTLIST %n.then;  
+      %a.global;
+      TEIform CDATA 'then' >
+  
+]]>
+  
+<!-- end of [DFDX]  26.3-->
+
+
+<!-- [DFD2] 26.4: Feature structure constraints -->
+
+<!ENTITY % fsConstraints 'INCLUDE' >
+<![ %fsConstraints; [
+
+<!ELEMENT %n.fsConstraints; %om.RR;   ((%n.cond;) | %n.bicond;)*> 
+<!ATTLIST %n.fsConstraints;  
+      %a.global;
+      TEIform CDATA 'fsConstraints' >
+  
+]]>
+  
+<!ENTITY % cond 'INCLUDE' >
+<![ %cond; [
+
+<!ELEMENT %n.cond; %om.RO;   (((%n.fs;) | %n.f; | %n.fAlt;), (%n.then;), ((%n.fs;) | %n.f; | %n.fAlt;))> 
+<!ATTLIST %n.cond;  
+      %a.global;
+      TEIform CDATA 'cond' >
+  
+]]>
+  
+<!ENTITY % bicond 'INCLUDE' >
+<![ %bicond; [
+
+<!ELEMENT %n.bicond; %om.RO;   (((%n.fs;) | %n.f; | %n.fAlt;), (%n.iff;), ((%n.fs;) | %n.f; | %n.fAlt;))> 
+<!ATTLIST %n.bicond;  
+      %a.global;
+      TEIform CDATA 'bicond' >
+  
+]]>
+  
+<!ENTITY % iff 'INCLUDE' >
+<![ %iff; [
+
+<!ELEMENT %n.iff; %om.RO;  EMPTY> 
+<!ATTLIST %n.iff;  
+      %a.global;
+      TEIform CDATA 'iff' >
+  
+]]>
+  
+<!-- end of [DFD2]  26.4-->
+
+<!--The elements for feature structures themselves
+are declared in teifs2.dtd-->
+<!ENTITY  % TEI.fs.dtd SYSTEM 'teifs2.dtd' >
+%TEI.fs.dtd;
+
+<!--Finally, embed the TEI header and core tag sets.-->
+<!ENTITY  % TEI.header.dtd SYSTEM 'teihdr2.dtd' >
+%TEI.header.dtd;
+
+<!ENTITY  % TEI.core.dtd SYSTEM 'teicore2.dtd' >
+%TEI.core.dtd;
+
+<!-- end of [DFDDTD]  26.1-->

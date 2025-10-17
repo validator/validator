@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <element>
+    <name>doc</name>
+    <any/>
+  </element>
+  <element>
+    <name>foo</name>
+    <any/>
+  </element>
+  <element>
+    <name>bar</name>
+    <any/>
+  </element>
+</doctype>

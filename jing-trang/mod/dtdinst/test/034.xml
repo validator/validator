@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e">foo</param>
+  <element>
+    <name>doc</name>
+    <elementRef>
+      <name>foo</name>
+    </elementRef>
+  </element>
+  <attlist>
+    <name>doc</name>
+    <attribute>
+      <name>a1</name>
+      <tokenized>
+        <enum>foo</enum>
+      </tokenized>
+      <implied/>
+    </attribute>
+  </attlist>
+</doctype>

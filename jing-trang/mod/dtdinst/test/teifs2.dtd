@@ -1,0 +1,271 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DFS] 16.1: Feature Structures -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+
+<!-- [DFSBI] 16.2: Feature structures, binary values -->
+
+<!ENTITY % fs 'INCLUDE' >
+<![ %fs; [
+
+<!ELEMENT %n.fs; %om.RR;  (((%n.f;) | %n.fAlt; | %n.alt;)*)> 
+<!ATTLIST %n.fs;  
+      %a.global;
+      type CDATA #IMPLIED
+      feats IDREFS #IMPLIED
+      rel (eq|ne|sb|ns) "sb"
+      TEIform CDATA 'fs' >
+  
+]]>
+  
+<!ENTITY % f 'INCLUDE' >
+<![ %f; [
+
+<!ELEMENT %n.f; %om.RO;  ((%n.null;) | ((%n.plus;) | %n.minus; | %n.any; | %n.none; | %n.dft; | %n.uncertain; |
+sym | %n.nbr; | %n.msr; | %n.rate; | %n.str; | %n.vAlt; | %n.alt; | %n.fs;)*)> 
+<!ATTLIST %n.f;  
+      %a.global;
+      name NMTOKEN #REQUIRED
+      org (single|set|bag|list) #IMPLIED
+      rel (eq|ne|sb|ns) "eq"
+      fVal IDREFS #IMPLIED
+      TEIform CDATA 'f' >
+  
+]]>
+  
+<!ENTITY % plus 'INCLUDE' >
+<![ %plus; [
+
+<!ELEMENT %n.plus; %om.RO; EMPTY> 
+<!ATTLIST %n.plus;  
+      %a.global;
+      TEIform CDATA 'plus' >
+  
+]]>
+  
+<!ENTITY % minus 'INCLUDE' >
+<![ %minus; [
+
+<!ELEMENT %n.minus; %om.RO; EMPTY> 
+<!ATTLIST %n.minus;  
+      %a.global;
+      TEIform CDATA 'minus' >
+  
+]]>
+  
+<!-- end of [DFSBI]  16.2-->
+
+
+<!-- [DFSFL] 16.3: Feature libraries -->
+
+<!ENTITY % fLib 'INCLUDE' >
+<![ %fLib; [
+
+<!ELEMENT %n.fLib; %om.RR;  (((%n.f;) | %n.fAlt;)*)> 
+<!ATTLIST %n.fLib;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'fLib' >
+  
+]]>
+  
+<!ENTITY % fsLib 'INCLUDE' >
+<![ %fsLib; [
+
+<!ELEMENT %n.fsLib; %om.RR;  (((%n.fs;) | %n.vAlt;)*)> 
+<!ATTLIST %n.fsLib;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'fsLib' >
+  
+]]>
+  
+<!ENTITY % fvLib 'INCLUDE' >
+<![ %fvLib; [
+
+<!ELEMENT %n.fvLib; %om.RR;  (((%n.plus;) | %n.minus; | %n.any; | %n.none; | %n.dft; | %n.uncertain; | (%n.null;)
+| %n.sym; | %n.nbr; | %n.msr; | %n.rate; | %n.str; | %n.vAlt;)*)> 
+<!ATTLIST %n.fvLib;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'fvLib' >
+  
+]]>
+  
+<!-- end of [DFSFL]  16.3-->
+
+
+<!-- [DFSSY] 16.4: Symbolic, etc. values -->
+
+<!ENTITY % sym 'INCLUDE' >
+<![ %sym; [
+
+<!ELEMENT %n.sym; %om.RO; EMPTY> 
+<!ATTLIST %n.sym;  
+      %a.global;
+      value CDATA #REQUIRED
+      rel (eq|ne) "eq"
+      TEIform CDATA 'sym' >
+  
+]]>
+  
+<!ENTITY % nbr 'INCLUDE' >
+<![ %nbr; [
+
+<!ELEMENT %n.nbr; %om.RO; EMPTY> 
+<!ATTLIST %n.nbr;  
+      %a.global;
+      value CDATA #REQUIRED
+      valueTo CDATA #IMPLIED
+      rel (eq|ne|lt|le|gt|ge) "eq"
+      type (int|real) #IMPLIED
+      TEIform CDATA 'nbr' >
+  
+]]>
+  
+<!ENTITY % msr 'INCLUDE' >
+<![ %msr; [
+
+<!ELEMENT %n.msr; %om.RO; EMPTY> 
+<!ATTLIST %n.msr;  
+      %a.global;
+      value CDATA #REQUIRED
+      valueTo CDATA #IMPLIED
+      unit CDATA #REQUIRED
+      rel (eq|ne|lt|le|gt|ge) "eq"
+      type (int|real) #IMPLIED
+      TEIform CDATA 'msr' >
+  
+]]>
+  
+<!ENTITY % rate 'INCLUDE' >
+<![ %rate; [
+
+<!ELEMENT %n.rate; %om.RO; EMPTY> 
+<!ATTLIST %n.rate;  
+      %a.global;
+      value CDATA #REQUIRED
+      valueTo CDATA #IMPLIED
+      unit CDATA #IMPLIED
+      per CDATA #REQUIRED
+      rel (eq|ne|gt|ge|lt|le) "eq"
+      type (int|real) #IMPLIED
+      TEIform CDATA 'rate' >
+  
+]]>
+  
+<!ENTITY % str 'INCLUDE' >
+<![ %str; [
+
+<!ELEMENT %n.str; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.str;  
+      %a.global;
+      rel (eq|ne|sb|ns|lt|le|gt|ge) "eq"
+      TEIform CDATA 'str' >
+  
+]]>
+  
+<!-- end of [DFSSY]  16.4-->
+
+
+<!-- [DFSSS] 16.6: Null values -->
+
+<!ENTITY % null 'INCLUDE' >
+<![ %null; [
+
+<!ELEMENT %n.null; %om.RO; EMPTY> 
+<!ATTLIST %n.null;  
+      %a.global;
+      TEIform CDATA 'null' >
+  
+]]>
+  
+<!-- end of [DFSSS]  16.6-->
+
+
+<!-- [DFSAL] 16.7: Alternative features and feature values -->
+
+<!ENTITY % fAlt 'INCLUDE' >
+<![ %fAlt; [
+
+<!ELEMENT %n.fAlt; %om.RR;  (((%n.f;) | %n.fs; | %n.fAlt;), ((%n.f;) | %n.fs; | %n.fAlt;)+)> 
+<!ATTLIST %n.fAlt;  
+      %a.global;
+      mutExcl (Y|N) #IMPLIED
+      TEIform CDATA 'fAlt' >
+  
+]]>
+  
+<!ENTITY % vAlt 'INCLUDE' >
+<![ %vAlt; [
+
+<!ELEMENT %n.vAlt; %om.RR;  (((%n.plus;) | %n.minus; | %n.any; | %n.none; | %n.dft; | %n.uncertain; | %n.null; |
+sym | %n.nbr; | %n.msr; | %n.rate; | %n.str; | %n.vAlt; | %n.fs;), ((%n.plus;) | %n.minus; | %n.any; | %n.none; |
+dft | %n.uncertain; | %n.null; | %n.sym; | %n.nbr; | %n.msr; | %n.rate; | %n.str; | %n.vAlt; | %n.fs;)+)> 
+<!ATTLIST %n.vAlt;  
+      %a.global;
+      mutExcl (Y|N) #IMPLIED
+      TEIform CDATA 'vAlt' >
+  
+]]>
+  
+<!-- end of [DFSAL]  16.7-->
+
+
+<!-- [DFSBO] 16.8: Boolean, default, uncertainty values -->
+
+<!ENTITY % any 'INCLUDE' >
+<![ %any; [
+
+<!ELEMENT %n.any; %om.RO; EMPTY> 
+<!ATTLIST %n.any;  
+      %a.global;
+      TEIform CDATA 'any' >
+  
+]]>
+  
+<!ENTITY % none 'INCLUDE' >
+<![ %none; [
+
+<!ELEMENT %n.none; %om.RO; EMPTY> 
+<!ATTLIST %n.none;  
+      %a.global;
+      TEIform CDATA 'none' >
+  
+]]>
+  
+<!ENTITY % dft 'INCLUDE' >
+<![ %dft; [
+
+<!ELEMENT %n.dft; %om.RO; EMPTY> 
+<!ATTLIST %n.dft;  
+      %a.global;
+      TEIform CDATA 'dft' >
+  
+]]>
+  
+<!ENTITY % uncertain 'INCLUDE' >
+<![ %uncertain; [
+
+<!ELEMENT %n.uncertain; %om.RO; EMPTY> 
+<!ATTLIST %n.uncertain;  
+      %a.global;
+      TEIform CDATA 'uncertain' >
+  
+]]>
+  
+<!-- end of [DFSBO]  16.8-->
+
+<!-- end of [DFS]  16.1-->

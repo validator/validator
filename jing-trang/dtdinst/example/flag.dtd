@@ -1,0 +1,7 @@
+<!ENTITY % presentation "INCLUDE">
+<![%presentation;[
+<!ELEMENT big (#PCDATA)>
+<!ELEMENT small (#PCDATA)>
+]]>
+<!ELEMENT em (#PCDATA)>
+<!ELEMENT para (#PCDATA|em|big|small)*>

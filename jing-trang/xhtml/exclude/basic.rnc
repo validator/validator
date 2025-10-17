@@ -1,0 +1,21 @@
+# Checks exclusions applying to "a" and "pre" elements.
+# This schema is intended to be used in addition to xhtml.rng.
+
+default namespace = "http://www.w3.org/1999/xhtml"
+
+start = normalElement
+normalElement = element * - (a|pre) { normalContent }
+normalContent = (normalElement | aElement | preElement | anyAttribute | text)*
+aElement = element a { aContent }
+aContent = (element * - (a|pre) { aContent } | anyAttribute | text)*
+preElement = element pre { preContent }
+preContent =
+  (element * - (a|pre|img|object|applet|big|small|sub|sup|font|basefont)
+    { preContent }
+   | aPreElement | anyAttribute | text)*
+aPreElement = element a { aPreContent }
+aPreContent =
+  (element * - (a|pre|img|object|applet|big|small|sub|sup|font|basefont)
+    { aPreContent }
+   | anyAttribute | text)*
+anyAttribute = attribute * { text }

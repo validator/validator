@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <attributeGroup name="global.extra"/>
+  <attributeGroup name="global">
+    <attribute>
+      <name>id</name>
+      <tokenized name="ID"/>
+      <implied/>
+    </attribute>
+    <attribute>
+      <name>class</name>
+      <tokenized name="NMTOKEN"/>
+      <implied/>
+    </attribute>
+    <attributeGroupRef name="global.extra"/>
+  </attributeGroup>
+  <element>
+    <name>foo</name>
+    <zeroOrMore>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+    </zeroOrMore>
+  </element>
+  <attlist>
+    <name>foo</name>
+    <attributeGroupRef name="global"/>
+  </attlist>
+  <element>
+    <name>bar</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>bar</name>
+    <attributeGroupRef name="global"/>
+  </attlist>
+</doctype>

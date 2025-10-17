@@ -1,0 +1,14 @@
+Support inline schemas.
+
+Need to pass unparsed entities to sub schemas.
+
+Test option handling
+
+Handle possibility of multiple different validation processes using same schema.
+
+reject messages should specify mode
+
+Allow <validate> to specify name for schema; use that name in error messages.
+
+Allow namespace and anyNamespace nested in actions, with the effect that they
+create an anonymous mode.

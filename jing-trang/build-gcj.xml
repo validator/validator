@@ -1,0 +1,61 @@
+<project name="jing-trang-gcj" default="gcj-dist">
+
+<property name="topbuild.dir" value="${basedir}/build"/>
+<property name="build.dir" value="${topbuild.dir}"/>
+
+<target name="all" depends="test, trang-test, validate"/>
+
+<target name="init">
+  <mkdir dir="${build.dir}"/>
+  <mkdir dir="${build.dir}/dist"/>
+  <condition property="linux">
+    <os family="unix"/>
+  </condition>
+</target>
+
+<target name="gcj" if="linux" depends="init">
+  <exec executable="${basedir}/gcj/dist" failonerror="true" dir=".">
+    <arg value="${build.dir}"/>
+  </exec>
+  <checksum fileext=".md5">
+    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
+  </checksum>
+</target>
+
+<target name="gcj-rpm" depends="gcj" if="linux">
+  <mkdir dir="${build.dir}/gcj-rpm"/>
+  <apply executable="rpmbuild" failonerror="true" dir=".">
+    <arg value="-ta"/>
+    <arg value="-D"/>
+    <arg value="_jingbuilddir ${build.dir}"/>
+    <arg value="--rcfile=gcj/rpmrc"/>
+    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
+  </apply>
+</target>
+
+<target name="gcj-test" depends="gcj" if="linux">
+  <mkdir dir="${build.dir}/gcj-test"/>
+  <untar compression="gzip" dest="${build.dir}/gcj-test">
+    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
+  </untar>
+  <mkdir dir="${build.dir}/gcj-test/jingbuild"/>
+  <apply dir="${build.dir}/gcj-test/jingbuild" executable="/bin/sh" relative="false" failonerror="true">
+    <fileset dir="${build.dir}/gcj-test" includes="jing-*/configure"/>
+  </apply>
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/jingbuild"/>
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/jingbuild">
+    <arg value="check"/>
+  </exec>
+  <mkdir dir="${build.dir}/gcj-test/trangbuild"/>
+  <apply dir="${build.dir}/gcj-test/trangbuild" executable="/bin/sh" relative="false" failonerror="true">
+    <fileset dir="${build.dir}/gcj-test" includes="trang-*/configure"/>
+  </apply>
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/trangbuild"/>
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/trangbuild">
+    <arg value="check"/>
+  </exec>
+</target>
+
+<target name="gcj-dist" depends="gcj-test,gcj-rpm"/>
+
+</project>

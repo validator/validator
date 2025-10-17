@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <attributeDefault name="INHERITED">
+    <implied/>
+  </attributeDefault>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>doc</name>
+    <attribute>
+      <name>att</name>
+      <cdata/>
+      <attributeDefaultRef name="INHERITED"/>
+    </attribute>
+  </attlist>
+</doctype>

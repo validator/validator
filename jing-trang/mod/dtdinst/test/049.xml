@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="e1">
+    <include/>
+  </flag>
+  <includedSection flag="e1">
+    <modelGroup name="e2">
+      <choice>
+        <elementRef>
+          <name>foo</name>
+        </elementRef>
+        <elementRef>
+          <name>bar</name>
+        </elementRef>
+      </choice>
+    </modelGroup>
+    <element>
+      <name>bar</name>
+      <sequence/>
+    </element>
+  </includedSection>
+  <overridden>
+    <modelGroup name="e2">
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+    </modelGroup>
+  </overridden>
+  <element>
+    <name>doc</name>
+    <zeroOrMore>
+      <modelGroupRef name="e2"/>
+    </zeroOrMore>
+  </element>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+</doctype>

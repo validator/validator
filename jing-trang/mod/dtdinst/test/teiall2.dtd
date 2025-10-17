@@ -1,0 +1,34 @@
+<!ENTITY % TEI.XML "INCLUDE">
+<!ENTITY % TEI.prose "INCLUDE">
+<!ENTITY % TEI.verse "INCLUDE">
+<!ENTITY % TEI.drama "INCLUDE">
+<!ENTITY % TEI.spoken "INCLUDE">
+<!ENTITY % TEI.dictionaries "INCLUDE">
+<!ENTITY % TEI.terminology "INCLUDE">
+<!ENTITY % TEI.general "INCLUDE">
+<!ENTITY % TEI.linking "INCLUDE">
+<!ENTITY % TEI.analysis "INCLUDE">
+<!ENTITY % TEI.fs "INCLUDE">
+<!ENTITY % TEI.certainty "INCLUDE">
+<!ENTITY % TEI.transcr "INCLUDE">
+<!ENTITY % TEI.textcrit "INCLUDE">
+<!ENTITY % TEI.names.dates "INCLUDE">
+<!ENTITY % TEI.nets "INCLUDE">
+<!ENTITY % TEI.figures "INCLUDE">
+<!ENTITY % TEI.corpus "INCLUDE">
+<!ENTITY % tei2.dtd SYSTEM "tei2.dtd">
+<!-- Both dictionaries and terminlogy contain element
+     declarations for gram -->
+<!ENTITY % gram "IGNORE">
+%tei2.dtd;
+<!ELEMENT %n.att; (#PCDATA)>
+<!ELEMENT %n.gi; (#PCDATA)>
+<!ELEMENT %n.tag; (#PCDATA)>
+<!ELEMENT %n.val; (#PCDATA)>
+<!ELEMENT %n.dictScrap; EMPTY>
+<!ELEMENT %n.gram; %om.RO;  %paraContent;> 
+<!ATTLIST %n.gram;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'gram' >

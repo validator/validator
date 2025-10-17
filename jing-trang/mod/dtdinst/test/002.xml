@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <modelGroup name="e1">
+    <elementRef>
+      <name>name</name>
+    </elementRef>
+  </modelGroup>
+  <modelGroup name="e2">
+    <optional>
+      <modelGroupRef name="e1"/>
+    </optional>
+  </modelGroup>
+  <element>
+    <name>doc</name>
+    <modelGroupRef name="e2"/>
+  </element>
+  <element>
+    <name>name</name>
+    <elementRef>
+      <name>EMPTY</name>
+    </elementRef>
+  </element>
+</doctype>

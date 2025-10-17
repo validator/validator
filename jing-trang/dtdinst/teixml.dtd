@@ -1,0 +1,23 @@
+<!ENTITY % TEI.XML "INCLUDE">
+<!ENTITY % TEI.prose "INCLUDE">
+<!ENTITY % TEI.verse "INCLUDE">
+<!ENTITY % TEI.drama "INCLUDE">
+<!ENTITY % TEI.spoken "INCLUDE">
+<!ENTITY % TEI.dictionaries "INCLUDE">
+<!-- Both dictionaries and terminlogy contain element
+     declarations for gram.
+<!ENTITY % TEI.terminology "INCLUDE">
+-->
+<!ENTITY % TEI.general "INCLUDE">
+<!ENTITY % TEI.linking "INCLUDE">
+<!ENTITY % TEI.analysis "INCLUDE">
+<!ENTITY % TEI.fs "INCLUDE">
+<!ENTITY % TEI.certainty "INCLUDE">
+<!ENTITY % TEI.transcr "INCLUDE">
+<!ENTITY % TEI.textcrit "INCLUDE">
+<!ENTITY % TEI.names.dates "INCLUDE">
+<!ENTITY % TEI.nets "INCLUDE">
+<!ENTITY % TEI.figures "INCLUDE">
+<!ENTITY % TEI.corpus "INCLUDE">
+<!ENTITY % tei2.dtd SYSTEM "http://www.tei-c.org/P4X/DTD/tei2.dtd">
+%tei2.dtd;

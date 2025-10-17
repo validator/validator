@@ -1,0 +1,121 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Trang</title>
+</head>
+<body>
+<h1>Trang</h1>
+<h2>Multi-format schema converter based on RELAX NG</h2>
+
+<p>Copyright &#169; 2002, 2003, 2008 Thai Open Source Software Center
+Ltd</p>
+
+<p>See the file <a href="copying.txt">copying.txt</a> for copying
+permission.</p>
+
+<h3>Version @VERSION@</h3>
+
+<p>Trang converts between different schema languages for XML. It
+supports the following languages:</p>
+
+<ul>
+<li>RELAX NG (XML syntax)</li>
+<li>RELAX NG compact syntax</li>
+<li>XML 1.0 DTDs</li>
+<li>W3C XML Schema</li>
+</ul>
+
+<p>A schema written in any of the supported schema languages can be
+converted into any of the other supported schema languages, except
+that W3C XML Schema is supported for output only, not for input.</p>
+
+<p>Trang can also infer a schema from one or more example XML
+documents.</p>
+
+<p>Trang is constructed around an RELAX NG object model designed to
+support schema conversion.  For each schema language supported for
+input, there is an input module that can convert from the schema
+language into this internal object model.  Similarly, for each schema
+language supported for output, there is an output module that can
+convert from the internal object model in the schema language.</p>
+
+<p>Trang aims to produce human-understandable schemas; it tries for a
+translation that preserves all aspects of the input schema that may be
+significant to a human reader, including the definitions, the way the
+schema is divided into files, annotations and comments.</p>
+
+<p>Trang has a command-line user interface.  It has no graphical user
+interface.</p>
+
+<h2>Download</h2>
+
+<p>The
+file <a href="http://jing-trang.googlecode.com/files/trang-@VERSION@.zip"
+>trang-@VERSION@.zip</a> contains Trang version @VERSION@ including
+binaries, source code and documentation.  It requires a Java runtime
+compatible with the Java 2 Platform, Standard Edition (J2SE) version 5
+(or any later version), such as the Java Runtime Environment (JRE),
+which can be
+downloaded <a href="http://java.sun.com/j2se/downloads.html">here</a>.</p>
+
+<p>The latest version of Trang will aalways be available in
+the <a href="http://code.google.com/p/jing-trang/downloads/list">Downloads</a>
+section of the <a href="http://jing-trang.googlecode.com">project
+site</a>.</p>
+
+<h2>Further information</h2>
+
+<p>Detailed information about using Trang is in the <a
+href="trang-manual.html">manual</a>.</p>
+
+<p>Some background information on the conversion to W3C XML Schema is
+available in the <a href="convert-to-xsd-talk.html">slides</a> for a
+talk given a XML 2002.</p>
+
+<h2>Participate</h2>
+
+<p>Development of Trang, together
+with <a href="http://www.thaiopensource.com/relaxng/jing.html">Jing</a>,
+takes place in
+the <a href="http://jing-trang.googlecode.com">jing-trang project</a>,
+which is hosted on Google Code.</p>
+
+<p>If you find a bug or would like to request an enhancement, please
+create a new issue in
+the <a href="http://code.google.com/p/jing-trang/issues/list">Issues</a>
+section of the project site. You can talk with other users of Trang on
+the <a href="http://tech.groups.yahoo.com/group/rng-users/">rng-users</a>
+mailing list.</p>
+
+<p>If you want to make changes to Trang, you
+should <a href="http://code.google.com/p/jing-trang/source/checkout">check
+out</a> the source code from the project's Subversion repository. (The
+source code included in the Trang download is for reference purposes,
+and doesn't contain the supporting files, such as build scripts and
+test cases, that are needed for working conveniently with the source
+code.)</p>
+
+
+<h2>Related software</h2>
+
+<p>Trang's DTD input module uses <a
+href="http://www.thaiopensource.com/relaxng/dtdinst/">DTDinst</a>.
+The Trang distribution already includes the necessary parts of
+DTDinst, so there is no need to download DTDinst just in order to use
+Trang.  DTDinst is also available as an independent program that
+outputs an XML representation of an XML DTD.</p>
+
+<p>The <a href="http://msv.dev.java.net/">Sun Multi-Schema
+Validator</a> includes the rngconv tool, which converts from a variety
+of different schema languages into RELAX NG.  However, it is based on
+an object model which is designed to support validation, and so does
+not preserve aspects of the input schemas that are irrelevant for
+validation (such as the definitional structure).</p>
+
+<p>The <a href="http://www.brics.dk/schematools/">schematools</a>
+package does schema conversion based around a restricted subset of
+RELAX NG. It supports conversion from W3C XML Schema to RELAX NG.</p>
+
+<address><a href="mailto:jjc@thaiopensource.com">James Clark</a></address>
+
+</body>
+</html>

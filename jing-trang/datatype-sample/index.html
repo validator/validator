@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>RELAX NG Pluggable Datatype Library Example</title>
+</head>
+<body>
+
+<h1>RELAX NG Pluggable Datatype Library Example</h1>
+
+<p>This package contains a very simple example of a <a
+href="../doc/pluggable-datatypes.html">pluggable datatype library</a>.
+The datatype library is implemented by the class
+<code>com.thaiopensource.datatype.sample.BalancedString</code>.  The
+bulk of the implementation is inherited from the abstract class
+<code>com.thaiopensource.datatype.sample.SimpleDatatypeLibrary</code>,
+which provides default implementations for the methods in the
+interfaces which a datatype library must implement.  A class that
+derives from <code>SimpleDatatypeLibrary</code> has only to implement
+a <code>boolean isValid(String literal)</code> method.  The datatype
+library has the URI
+<code>http://www.thaiopensource.com/relaxng/datatypes/sample</code>,
+and contains exactly one datatype, which is called
+<code>balancedString</code>.  This datatype allows any string in which
+parentheses are properly balanced (nested). To use this sample
+datatype library, simply include <code>datatype-sample.jar</code> in
+your CLASSPATH.  You will then be able to validate against schemas
+using this additional datatype.  The file <a
+href="datatype-sample.rng">datatype-sample.rng</a> is a simple RELAX
+NG schema using this datatype; <a href="valid.xml">valid.xml</a> is an
+instance that is valid with respect to this schema; <a
+href="invalid.xml">invalid.xml</a> is an instance that is not valid
+with respect to this schema.</p>
+
+<address>
+<a href="mailto:jjc@jclark.com">James Clark</a>
+</address>
+</body>
+</html>

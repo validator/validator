@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <element>
+    <name>x:foo</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>x:foo</name>
+    <attribute>
+      <name>xmlns:x</name>
+      <cdata/>
+      <default>http://www.example.com</default>
+    </attribute>
+  </attlist>
+</doctype>
