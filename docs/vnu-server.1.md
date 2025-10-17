@@ -87,4 +87,4 @@ the thread stack size by providing the `-Xss` option to java:
 
 # SEE ALSO
 
-[vnu-client(1)](vnu-client.1.md)
+[vnu-client(1)](vnu-client.1.md), [vnu(1)](vnu.1.md)

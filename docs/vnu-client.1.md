@@ -114,4 +114,4 @@ To suppress warning-level messages and only show error-level ones by setting the
 
 # SEE ALSO
 
-[vnu-server(1)](vnu-server.1.md)
+[vnu-server(1)](vnu-server.1.md), [vnu(1)](vnu.1.md)
