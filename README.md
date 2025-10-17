@@ -1,34 +1,30 @@
-# The Nu Html Checker (v.Nu)
+# The Nu Html Checker (vnu)
 
-With vnu:
+With the Nu Html Checker (vnu), you can:
 
 - [catch unintended mistakes in your HTML, CSS, and SVG][1]
-- [batch-check documents from the command line][2] and from other scripts/apps,
-- [deploy your own instance of the checker as a service][3] (like [validator.w3.org/nu][4]).
+- [batch-check documents from the command line][2] and from other scripts/apps
+- [deploy your own instance of the vnu checker as a service][3] (like [validator.w3.org/nu][4])
 
    [1]: https://validator.w3.org/nu/about.html#why-validate
    [2]: #usage
    [3]: #standalone-web-server
    [4]: https://validator.w3.org/nu/
 
-## Download & install
+## Sources
 
-### Sources
-
-Its source code is available on [GitHub][5], as are [instructions on how to build, test, and run the code][6].
+The vnu source code is available on [GitHub][5], as are [instructions on how to build, test, and run the code][6].
 
    [5]: https://github.com/validator/validator
    [6]: #build-instructions
 
-### Binaries
+## Binaries
 
-It is released upstream in these formats:
+The Nu Html Checker (vnu) is released upstream in these formats:
 
-* pre-compiled Linux, Windows, and macOS binaries that include an embedded Java runtime
-
-* `vnu.jar` — a portable version you can use on any system that has Java 11 or above installed
-
-* `vnu.war` — for [deploying the checker service through a servlet container such as Tomcat][11]
+- pre-compiled Linux, Windows, and macOS binaries that include an embedded Java runtime
+- `vnu.jar` — a portable version you can use on any system that has Java 11 or above installed
+- `vnu.war` — for [deploying the vnu checker service through a servlet container such as Tomcat][11]
 
    [11]: #deployment-to-servlet-container
 
@@ -52,11 +48,9 @@ You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 g
    [16]: https://libraries.io/homebrew/vnu
    [17]: https://github.com/svenkreiss/html5validator
 
-* [Grunt plugin for HTML validation][18] or [Gulp plugin for HTML validation][19] or [Maven plugin for HTML validation][20]
-
-* [html5validator `pip` package][21] (for integration in Travis CI, CircleCI, CodeShip, Jekyll, Pelican, etc.)
-
-* [LMVTFY: Let Me Validate That For You][22] (auto-check JSFiddle/JSBin, etc., links in GitHub issue comments)
+- [Grunt plugin for HTML validation][18] or [Gulp plugin for HTML validation][19] or [Maven plugin for HTML validation][20]
+- [html5validator `pip` package][21] (for integration in Travis CI, CircleCI, CodeShip, Jekyll, Pelican, etc.)
+- [LMVTFY: Let Me Validate That For You][22] (auto-check JSFiddle/JSBin, etc., links in GitHub issue comments)
 
    [18]: https://github.com/validator/grunt-html
    [19]: https://github.com/validator/gulp-html
@@ -66,13 +60,11 @@ You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 g
 
 ## Usage
 
-Run the checker with one of the following invocations:
+You can run the vnu checker with one of the following invocations:
 
-• `vnu-runtime-image/bin/vnu OPTIONS FILES` (Linux or macOS)
-
-• `vnu-runtime-image\bin\vnu.bat OPTIONS FILES` (Windows)
-
-• `java -jar ~/vnu.jar OPTIONS FILES` (any system with Java8+ installed)
+- `vnu-runtime-image/bin/vnu OPTIONS FILES` (Linux or macOS)
+- `vnu-runtime-image\bin\vnu.bat OPTIONS FILES` (Windows)
+- `java -jar ~/vnu.jar OPTIONS FILES` (any system with Java8+ installed)
 
 …where _`FILES`_ are the documents to check, and _`OPTIONS`_ are zero or more of the following options:
 
@@ -89,7 +81,7 @@ The [Options][23] section below provides details on each option, and the rest of
 #### Examples
 
 > [!NOTE]
-> Throughout these examples, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/vnu` and `vnu-runtime-image\bin\vnu.bat` with the actual path to the `vnu` or `vnu.bat` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the checker with just `vnu`.
+> Throughout these examples, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/vnu` and `vnu-runtime-image\bin\vnu.bat` with the actual path to the `vnu` or `vnu.bat` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the vnu checker with just `vnu`.
 
 To check one or more documents from the command line:
 
@@ -100,7 +92,7 @@ To check one or more documents from the command line:
       java -jar ~/vnu.jar            FILE.html FILE2.html FILE3.html...
 
 > [!NOTE]
-> If you get a `StackOverflowError` error when invoking the checker, try adjusting the thread stack size by providing the `-Xss` option to java:
+> If you get a `StackOverflowError` error when invoking vnu, try adjusting the thread stack size by providing the `-Xss` option to java:
 
       java -Xss512k -jar ~/vnu.jar ...
 
@@ -166,7 +158,7 @@ To check standard input:
 
 ## Options
 
-When used from the command line, the checker provides these options:
+When used from the command line, the vnu checker provides these options:
 
 #### --asciiquotes
 
@@ -184,20 +176,20 @@ When used from the command line, the checker provides these options:
 
 #### --Werror
 
-    Makes the checker exit non-zero if any warnings are encountered (even if
+    Makes vnu exit non-zero if any warnings are encountered (even if
     there are no errors).
 
     default: [unset; checker exits zero if only warnings are encountered]
 
 #### --exit-zero-always
 
-    Makes the checker exit zero even if errors are reported for any documents.
+    Makes vnu exit zero even if errors are reported for any documents.
 
     default: [unset; checker exits 1 if errors are reported for any documents]
 
 #### --stdout
 
-    Makes the checker report errors and warnings to stdout rather than stderr.
+    Makes vnu report errors and warnings to stdout rather than stderr.
 
     default: [unset; checker reports errors and warnings to stderr]
 
@@ -322,29 +314,27 @@ When used from the command line, the checker provides these options:
 
 #### --version
 
-    Shows the checker version number.
+    Shows the vnu version number.
 
 ## Web-based checking
 
-The Nu Html Checker — along with being usable as [a standalone command-line client][24] — can be run as an HTTP service, similar to [validator.w3.org/nu][25], for browser-based checking of HTML documents, CSS stylesheets, and SVG images over the Web. To that end, the checker is released as several separate packages:
+The Nu Html Checker (vnu) — along with being usable as [a standalone command-line client][24] — can be run as an HTTP service, similar to [validator.w3.org/nu][25], for browser-based checking of HTML documents, CSS stylesheets, and SVG images over the Web. To that end, the vnu checker is released as several separate packages:
 
    [24]: https://validator.github.io/validator/#usage
    [25]: https://validator.w3.org/nu/
 
-* Linux, Windows, and macOS binaries for deploying the checker as a simple self-contained service on any system
+- Linux, Windows, and macOS binaries for deploying the vnu checker as a simple self-contained service on any system
+- `vnu.jar` for deploying the vnu checker as a simple self-contained service on a system with Java installed
+- `vnu.war` for deploying the vnu checker to a servlet container such as Tomcat
 
-* `vnu.jar` for deploying the checker as a simple self-contained service on a system with Java installed
-
-* `vnu.war` for deploying the checker to a servlet container such as Tomcat
-
-All deployments expose a REST API that enables checking of HTML documents, CSS stylesheets, and SVG images from other clients, not just web browsers. And the Linux, Windows, and macOS binaries and `vnu.jar` package also include a simple HTTP client that enables you to either send documents to a locally-running instance of the checker HTTP service — for fast command-line checking — or to any remote instance of the checker HTTP service running anywhere on the Web.
+All deployments expose a REST API that enables checking of HTML documents, CSS stylesheets, and SVG images from other clients, not just web browsers. And the Linux, Windows, and macOS binaries and `vnu.jar` package also include a simple HTTP client that enables you to either send documents to a locally-running instance of the vnu checker HTTP service — for fast command-line checking — or to any remote instance of the vnu checker HTTP service running anywhere on the Web.
 
 The [latest releases of the Linux, Windows, and macOS binaries and vnu.jar and vnu.war packages][26] are available from the `validator` project at github. The following are detailed instructions on using them.
 
    [26]: https://github.com/validator/validator/releases/latest
 
 > [!NOTE]
-> Throughout these instructions, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/java` and `vnu-runtime-image\bin\java.exe` with the actual path to the checker `java` or `java.exe` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the checker with just `java nu.validator.servlet.Main 8888`.
+> Throughout these instructions, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/java` and `vnu-runtime-image\bin\java.exe` with the actual path to the vnu `java` or `java.exe` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the vnu checker with just `java nu.validator.servlet.Main 8888`.
 
 ### Standalone web server
 
@@ -352,7 +342,7 @@ See [vnu-server](docs/vnu-server.1.md) for invocation manual page.
 
 ### Deployment to servlet container
 
-To run the checker inside of an existing servlet container such as Apache Tomcat you will need to deploy the `vnu.war` file to that server following its documentation. For example, on Apache Tomcat you could do this using the [Manager][30] application or simply by copying the file to the `webapps` directory (since that is the default `appBase` setting). Typically you would see a message similar to the following in the `catalina.out` log file.
+To run the vnu checker inside of an existing servlet container such as Apache Tomcat you will need to deploy the `vnu.war` file to that server following its documentation. For example, on Apache Tomcat you could do this using the [Manager][30] application or simply by copying the file to the `webapps` directory (since that is the default `appBase` setting). Typically you would see a message similar to the following in the `catalina.out` log file.
 
    [30]: https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
 
@@ -379,11 +369,11 @@ Assuming your servlet container is configured to receive HTTP requests sent to `
 
 ### HTTP client (for fast command-line checking)
 
-The checker is packaged with an HTTP client you can use from the command line to either send documents to a locally-running instance of the checker HTTP service — for fast command-line checking — or to a remote instance anywhere on the Web.
+The vnu checker is packaged with an HTTP client you can use from the command line to either send documents to a locally-running instance of the vnu checker HTTP service — for fast command-line checking — or to a remote instance anywhere on the Web.
 
 To check documents locally using the packaged HTTP client, do this:
 
-  1. Start up the checker as a local HTTP service, as described in the [**Standalone web server**][37] section.
+  1. Start up the vnu checker as a local HTTP service, as described in the [**Standalone web server**][37] section.
 
   2. Invoke the HTTP client like from the commandline according to [vnu-client](docs/vnu-client.1.md) manual page.
 
@@ -391,23 +381,23 @@ To check documents locally using the packaged HTTP client, do this:
 
 ## Pulling the Docker image
 
-You can pull the checker Docker image from [https://ghcr.io/validator/validator][34] in the GitHub container registry.
+You can pull the vnu Docker image from [https://ghcr.io/validator/validator][34] in the GitHub container registry.
 
    [34]: https://ghcr.io/validator/validator
 
-To pull and run the latest version of the checker:
+To pull and run the latest version of the vnu checker:
 
       docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest
 
-To pull and run a specific tag/version of the checker from the container registry — for example, the `17.11.1` version:
+To pull and run a specific tag/version of the vnu checker from the container registry — for example, the `17.11.1` version:
 
       docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:17.11.1
 
-To bind the checker to a specific address (rather than have it listening on all interfaces):
+To bind the vnu checker to a specific address (rather than have it listening on all interfaces):
 
       docker run -it --rm -p 128.30.52.73:8888:8888 ghcr.io/validator/validator:latest
 
-To make the checker run with a connection timeout and socket timeout different than the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and `SOCKET_TIMEOUT_SECONDS` environment variables:
+To make the vnu checker run with a connection timeout and socket timeout different from the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and `SOCKET_TIMEOUT_SECONDS` environment variables:
 
       docker run -it --rm \
          -e CONNECTION_TIMEOUT_SECONDS=15 \
@@ -415,7 +405,7 @@ To make the checker run with a connection timeout and socket timeout different t
          -p 8888:8888 \
          validator/validator
 
-To make the checker run with particular Java system properties set, use the `JAVA_TOOL_OPTIONS` environment variable:
+To make the vnu checker run with particular Java system properties set, use the `JAVA_TOOL_OPTIONS` environment variable:
 
       docker run -it --rm \
          -e JAVA_TOOL_OPTIONS=-Dnu.validator.client.asciiquotes=yes  \
@@ -432,7 +422,7 @@ To define a service named `vnu` for use with `docker compose`, create a Compose 
 
 ## Build instructions
 
-Follow the steps below to build, test, and run the checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the checker Web UI.
+Follow the steps below to build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
 
   1. Make sure you have git, python, JDK 8 or above and [ant](https://ant.apache.org/manual/install.html) installed.
 
@@ -450,13 +440,13 @@ Follow the steps below to build, test, and run the checker such that you can ope
 
          cd validator
 
-  5. Start the checker Python script:
+  5. Start the `checker.py` Python script:
 
          python ./checker.py all
 
-The first time you run the checker Python script, you’ll need to be online and the build will need time to download several megabytes of dependencies.
+The first time you run the `checker.py` Python script, you’ll need to be online and the build will need time to download several megabytes of dependencies.
 
-The steps above will build, test, and run the checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the checker Web UI.
+The steps above will build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
 
 > [!WARNING]
 > Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `--bind-address` option to bind the checker to a different address:
