@@ -1,5 +1,4 @@
 docs/*.1
-docs/vnu-usage.md
 .ropeproject
 nbproject
 build/__init__.pyc

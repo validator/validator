@@ -10,7 +10,7 @@ MANPAGES = $(patsubst %.md,%,$(wildcard *.1.md))
 
 .PHONY: all manpages clean
 
-all: manpages vnu-usage.md
+all: manpages
 
 manpages: $(MANPAGES)
 
@@ -21,9 +21,5 @@ manpages: $(MANPAGES)
 		| $(AWK) '!f && /.IP/ {f=1; next} 1' \
 		> $@
 
-vnu-usage.md: vnu.1.md
-	$(SED) -n "1,/^# OPTIONS$$/{ p; d; }" $< > $@
-	echo '\nFor details on all options and usage, try the "--help" option or see:\n\n  https://validator.github.io/validator/' >> $@
-
 clean:
-	$(RM) $(MANPAGES) vnu-usage.md
+	$(RM) $(MANPAGES)
