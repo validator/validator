@@ -385,7 +385,7 @@ public class SimpleDocumentValidator {
     private WiretapXMLReaderWrapper getWiretap(XMLReader reader) {
         WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(reader);
         ContentHandler recorder = sourceCode.getLocationRecorder();
-        wiretap.setWiretapContentHander(recorder);
+        wiretap.setWiretapContentHandler(recorder);
         wiretap.setWiretapLexicalHandler((LexicalHandler) recorder);
         return wiretap;
     }

@@ -121,7 +121,7 @@ public abstract class AbstractDatatype implements Datatype {
     }
 
     /**
-     * Implements strict stirng equality semantics by returning the 
+     * Implements strict string equality semantics by returning the 
      * <code>java.lang.Object</code>-level <code>hashCode</code> of 
      * the object.
      * @param value an object returned by <code>createValue</code>

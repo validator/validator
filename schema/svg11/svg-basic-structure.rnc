@@ -228,7 +228,7 @@ grammar {
         attribute transform { TransformList.datatype }?
     a:documentation [
         "\x{a}" ~
-        "    defs: Definisions Element\x{a}" ~
+        "    defs: Definitions Element\x{a}" ~
         "  "
     ]
     SVG.defs.content =

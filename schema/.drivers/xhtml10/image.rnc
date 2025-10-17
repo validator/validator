@@ -37,7 +37,7 @@ namespace sch = "http://www.ascc.net/xml/schematron"
 
 sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 [
-    #  added - images contained in button element shall not have usemap atribute specified
+    #  added - images contained in button element shall not have usemap attribute specified
     
     sch:pattern [
         name = "button.img.usemap"
@@ -50,7 +50,7 @@ sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
             sch:report [
                 test = "descendant::html:img[@usemap]"
                 "\x{a}" ~
-                "               Images contained in button element shall not have usemap atribute specified.\x{a}" ~
+                "               Images contained in button element shall not have usemap attribute specified.\x{a}" ~
                 "          "
             ]
             "\x{a}" ~
