@@ -1,0 +1,16 @@
+<!ENTITY % TEI.XML "INCLUDE">
+<!ENTITY % TEI.terminology "INCLUDE">
+<!ENTITY % termtags SYSTEM "teite2f.dtd">
+<!ENTITY % termEntry "IGNORE">
+<!ENTITY % tei2.dtd SYSTEM "tei2.dtd">
+%tei2.dtd;
+<!ELEMENT %n.termEntry; %om.RO;
+ ( (%m.terminologyMisc; | %n.otherForm; | (%n.gram;) |
+%m.terminologyInclusions; | %m.Incl;)*, ((%n.term;), 
+(%m.terminologyMisc; | %n.otherForm; | %n.gram; | %m.terminologyInclusions; | %m.Incl;)*  )+ )   
+> 
+<!ATTLIST %n.termEntry;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'termEntry' >
+  

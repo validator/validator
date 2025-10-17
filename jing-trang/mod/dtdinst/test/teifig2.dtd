@@ -1,0 +1,94 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DFTFF] 22.: Tables, Formulae, Figures -->
+
+
+<!-- [DFTTAB] 22.1.1: Tables -->
+
+<!ENTITY % table 'INCLUDE' >
+<![ %table; [
+
+<!ELEMENT %n.table; %om.RR;  (((%n.head;) | %m.Incl;)*, ((%n.row;), (%m.Incl;)*)+)> 
+<!ATTLIST %n.table;  
+      %a.global;
+      rows CDATA #IMPLIED
+      cols CDATA #IMPLIED
+      TEIform CDATA 'table' >
+  
+]]>
+  
+<!ENTITY % row 'INCLUDE' >
+<![ %row; [
+
+<!ELEMENT %n.row;
+%om.RO;  (((%n.cell;)|(%n.table;)), (%m.Incl;)*)+> 
+<!ATTLIST %n.row;  
+      %a.global;
+      role CDATA "data"
+      TEIform CDATA 'row' >
+  
+]]>
+  
+<!ENTITY % cell 'INCLUDE' >
+<![ %cell; [
+
+<!ELEMENT %n.cell; %om.RO; %paraContent;> 
+<!ATTLIST %n.cell;  
+      %a.global;
+      role CDATA "data"
+      rows CDATA "1"
+      cols CDATA "1"
+      TEIform CDATA 'cell' >
+  
+]]>
+  
+<!-- end of [DFTTAB]  22.1.1-->
+
+
+<!-- [DFTFOR] 22.2: Formulae -->
+
+<!ENTITY % formula 'INCLUDE' >
+<![ %formula; [
+
+<!ELEMENT %n.formula; %om.RR; %formulaContent;> 
+<!ATTLIST %n.formula;  
+      %a.global;
+      notation %formulaNotations; #REQUIRED
+      TEIform CDATA 'formula' >
+  
+]]>
+  
+<!-- end of [DFTFOR]  22.2-->
+
+
+<!-- [DFTGRA] 22.3: Figures -->
+
+<!ENTITY % figure 'INCLUDE' >
+<![ %figure; [
+
+<!ELEMENT %n.figure; %om.RR;  ((%m.Incl;)*, 
+                              ((%n.head;), (%m.Incl;)*)?, 
+                              ((%n.p;), (%m.Incl;)*)*,
+                              ((%n.figDesc;), (%m.Incl;)*)?, 
+                              ((%n.text;), (%m.Incl;)*)?) > 
+<!ATTLIST %n.figure;  
+      %a.global;
+      entity ENTITY #IMPLIED
+      TEIform CDATA 'figure' >
+  
+]]>
+  
+<!ENTITY % figDesc 'INCLUDE' >
+<![ %figDesc; [
+
+<!ELEMENT %n.figDesc; %om.RR;  %paraContent;> 
+<!ATTLIST %n.figDesc;  
+      %a.global;
+      TEIform CDATA 'figDesc' >
+  
+]]>
+  
+<!-- end of [DFTGRA]  22.3-->
+
+<!-- end of [DFTFF]  22.-->

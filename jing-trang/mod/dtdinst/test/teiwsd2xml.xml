@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="TEI.XML">
+    <include/>
+  </flag>
+  <externalId name="teiwsd2.dtd" system="teiwsd2.dtd"/>
+  <flag name="figure">
+    <ignore/>
+  </flag>
+  <externalIdRef name="teiwsd2.dtd">
+    <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+    <comment> [DWD] 25.1: Writing System Declaration </comment>
+    <comment>Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.</comment>
+    <comment>Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.</comment>
+    <comment>These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+    <comment>These materials subject to revision.
+Current versions are available from the Text Encoding
+Initiative.</comment>
+    <attributeDefault name="INHERITED">
+      <implied/>
+    </attributeDefault>
+    <datatype name="ISO-date">
+      <cdata/>
+    </datatype>
+    <comment>Embed entities for TEI generic identifiers.</comment>
+    <externalId name="TEI.elementNames" system="teigis2.ent"/>
+    <externalIdRef name="TEI.elementNames">
+      <param name="n.TEI.2">TEI.2</param>
+      <param name="n.ab">ab</param>
+      <param name="n.abbr">abbr</param>
+      <param name="n.activity">activity</param>
+      <param name="n.actor">actor</param>
+      <param name="n.add">add</param>
+      <param name="n.addName">addName</param>
+      <param name="n.addSpan">addSpan</param>
+      <param name="n.addrLine">addrLine</param>
+      <param name="n.address">address</param>
+      <param name="n.admin">admin</param>
+      <param name="n.affiliation">affiliation</param>
+      <param name="n.alt">alt</param>
+      <param name="n.altGrp">altGrp</param>
+      <param name="n.analytic">analytic</param>
+      <param name="n.anchor">anchor</param>
+      <param name="n.any">any</param>
+      <param name="n.app">app</param>
+      <param name="n.arc">arc</param>
+      <param name="n.argument">argument</param>
+      <param name="n.att">att</param>
+      <param name="n.attDef">attDef</param>
+      <param name="n.attList">attList</param>
+      <param name="n.attName">attName</param>
+      <param name="n.attlDecl">attlDecl</param>
+      <param name="n.author">author</param>
+      <param name="n.authority">authority</param>
+      <param name="n.availability">availability</param>
+      <param name="n.back">back</param>
+      <nameSpec name="n.baseWsd">
+        <name>baseWsd</name>
+      </nameSpec>
+      <param name="n.bibl">bibl</param>
+      <param name="n.biblFull">biblFull</param>
+      <param name="n.biblScope">biblScope</param>
+      <param name="n.biblStruct">biblStruct</param>
+      <param name="n.bicond">bicond</param>
+      <param name="n.birth">birth</param>
+      <param name="n.bloc">bloc</param>
+      <param name="n.body">body</param>
+      <param name="n.broadcast">broadcast</param>
+      <param name="n.byline">byline</param>
+      <param name="n.c">c</param>
+      <param name="n.caesura">caesura</param>
+      <param name="n.camera">camera</param>
+      <param name="n.caption">caption</param>
+      <param name="n.case">case</param>
+      <param name="n.castGroup">castGroup</param>
+      <param name="n.castItem">castItem</param>
+      <param name="n.castList">castList</param>
+      <param name="n.catDesc">catDesc</param>
+      <param name="n.catRef">catRef</param>
+      <param name="n.category">category</param>
+      <param name="n.cb">cb</param>
+      <param name="n.cell">cell</param>
+      <param name="n.certainty">certainty</param>
+      <param name="n.change">change</param>
+      <param name="n.channel">channel</param>
+      <nameSpec name="n.character">
+        <name>character</name>
+      </nameSpec>
+      <nameSpec name="n.characters">
+        <name>characters</name>
+      </nameSpec>
+      <param name="n.children">children</param>
+      <param name="n.cit">cit</param>
+      <param name="n.cl">cl</param>
+      <param name="n.class">class</param>
+      <param name="n.classCode">classCode</param>
+      <param name="n.classDecl">classDecl</param>
+      <param name="n.classDoc">classDoc</param>
+      <param name="n.classes">classes</param>
+      <param name="n.closer">closer</param>
+      <nameSpec name="n.codedCharSet">
+        <name>codedCharSet</name>
+      </nameSpec>
+      <param name="n.col">col</param>
+      <param name="n.colloc">colloc</param>
+      <param name="n.cond">cond</param>
+      <param name="n.constitution">constitution</param>
+      <param name="n.corr">corr</param>
+      <param name="n.correction">correction</param>
+      <param name="n.country">country</param>
+      <param name="n.creation">creation</param>
+      <param name="n.damage">damage</param>
+      <param name="n.dataDesc">dataDesc</param>
+      <param name="n.datatype">datatype</param>
+      <param name="n.date">date</param>
+      <param name="n.dateRange">dateRange</param>
+      <param name="n.dateStruct">dateStruct</param>
+      <param name="n.dateline">dateline</param>
+      <param name="n.day">day</param>
+      <nameSpec name="n.declaration">
+        <name>declaration</name>
+      </nameSpec>
+      <param name="n.def">def</param>
+      <param name="n.default">default</param>
+      <param name="n.del">del</param>
+      <param name="n.delSpan">delSpan</param>
+      <param name="n.derivation">derivation</param>
+      <nameSpec name="n.desc">
+        <name>desc</name>
+      </nameSpec>
+      <param name="n.descrip">descrip</param>
+      <param name="n.dft">dft</param>
+      <param name="n.dictScrap">dictScrap</param>
+      <nameSpec name="n.direction">
+        <name>direction</name>
+      </nameSpec>
+      <param name="n.distance">distance</param>
+      <param name="n.distinct">distinct</param>
+      <param name="n.distributor">distributor</param>
+      <param name="n.div">div</param>
+      <param name="n.div0">div0</param>
+      <param name="n.div1">div1</param>
+      <param name="n.div2">div2</param>
+      <param name="n.div3">div3</param>
+      <param name="n.div4">div4</param>
+      <param name="n.div5">div5</param>
+      <param name="n.div6">div6</param>
+      <param name="n.div7">div7</param>
+      <param name="n.divGen">divGen</param>
+      <param name="n.docAuthor">docAuthor</param>
+      <param name="n.docDate">docDate</param>
+      <param name="n.docEdition">docEdition</param>
+      <param name="n.docImprint">docImprint</param>
+      <param name="n.docTitle">docTitle</param>
+      <param name="n.domain">domain</param>
+      <param name="n.eLeaf">eLeaf</param>
+      <param name="n.eTree">eTree</param>
+      <param name="n.edition">edition</param>
+      <param name="n.editionStmt">editionStmt</param>
+      <param name="n.editor">editor</param>
+      <param name="n.editorialDecl">editorialDecl</param>
+      <param name="n.education">education</param>
+      <param name="n.eg">eg</param>
+      <param name="n.elemDecl">elemDecl</param>
+      <param name="n.emph">emph</param>
+      <param name="n.encodingDesc">encodingDesc</param>
+      <param name="n.entDoc">entDoc</param>
+      <param name="n.entName">entName</param>
+      <nameSpec name="n.entitySet">
+        <name>entitySet</name>
+      </nameSpec>
+      <param name="n.entry">entry</param>
+      <param name="n.entryFree">entryFree</param>
+      <param name="n.epigraph">epigraph</param>
+      <param name="n.epilogue">epilogue</param>
+      <param name="n.equipment">equipment</param>
+      <param name="n.equiv">equiv</param>
+      <param name="n.etym">etym</param>
+      <param name="n.event">event</param>
+      <nameSpec name="n.exceptions">
+        <name>exceptions</name>
+      </nameSpec>
+      <param name="n.exemplum">exemplum</param>
+      <param name="n.expan">expan</param>
+      <nameSpec name="n.extFigure">
+        <name>extFigure</name>
+      </nameSpec>
+      <param name="n.extent">extent</param>
+      <param name="n.f">f</param>
+      <param name="n.fAlt">fAlt</param>
+      <param name="n.fDecl">fDecl</param>
+      <param name="n.fDescr">fDescr</param>
+      <param name="n.fLib">fLib</param>
+      <param name="n.factuality">factuality</param>
+      <param name="n.figDesc">figDesc</param>
+      <nameSpec name="n.figure">
+        <name>figure</name>
+      </nameSpec>
+      <param name="n.fileDesc">fileDesc</param>
+      <param name="n.files">files</param>
+      <param name="n.firstLang">firstLang</param>
+      <param name="n.foreName">foreName</param>
+      <param name="n.foreign">foreign</param>
+      <param name="n.forest">forest</param>
+      <param name="n.forestGrp">forestGrp</param>
+      <nameSpec name="n.form">
+        <name>form</name>
+      </nameSpec>
+      <param name="n.formula">formula</param>
+      <param name="n.front">front</param>
+      <param name="n.fs">fs</param>
+      <param name="n.fsConstraints">fsConstraints</param>
+      <param name="n.fsDecl">fsDecl</param>
+      <param name="n.fsDescr">fsDescr</param>
+      <param name="n.fsLib">fsLib</param>
+      <param name="n.fsdDecl">fsdDecl</param>
+      <param name="n.funder">funder</param>
+      <param name="n.fvLib">fvLib</param>
+      <param name="n.fw">fw</param>
+      <param name="n.gap">gap</param>
+      <param name="n.gen">gen</param>
+      <param name="n.genName">genName</param>
+      <param name="n.geog">geog</param>
+      <param name="n.geogName">geogName</param>
+      <param name="n.gi">gi</param>
+      <param name="n.gloss">gloss</param>
+      <param name="n.gram">gram</param>
+      <param name="n.gramGrp">gramGrp</param>
+      <param name="n.graph">graph</param>
+      <param name="n.group">group</param>
+      <param name="n.hand">hand</param>
+      <param name="n.handList">handList</param>
+      <param name="n.handShift">handShift</param>
+      <param name="n.head">head</param>
+      <param name="n.headItem">headItem</param>
+      <param name="n.headLabel">headLabel</param>
+      <param name="n.hi">hi</param>
+      <param name="n.hom">hom</param>
+      <param name="n.hour">hour</param>
+      <param name="n.hyph">hyph</param>
+      <param name="n.hyphenation">hyphenation</param>
+      <param name="n.iNode">iNode</param>
+      <param name="n.idno">idno</param>
+      <param name="n.if">if</param>
+      <param name="n.iff">iff</param>
+      <param name="n.ihs">ihs</param>
+      <param name="n.imprimatur">imprimatur</param>
+      <param name="n.imprint">imprint</param>
+      <param name="n.index">index</param>
+      <param name="n.interaction">interaction</param>
+      <param name="n.interp">interp</param>
+      <param name="n.interpGrp">interpGrp</param>
+      <param name="n.interpretation">interpretation</param>
+      <param name="n.item">item</param>
+      <param name="n.itype">itype</param>
+      <param name="n.join">join</param>
+      <param name="n.joinGrp">joinGrp</param>
+      <param name="n.keywords">keywords</param>
+      <param name="n.kinesic">kinesic</param>
+      <param name="n.l">l</param>
+      <param name="n.label">label</param>
+      <param name="n.lacunaEnd">lacunaEnd</param>
+      <param name="n.lacunaStart">lacunaStart</param>
+      <param name="n.lang">lang</param>
+      <param name="n.langKnown">langKnown</param>
+      <param name="n.langUsage">langUsage</param>
+      <nameSpec name="n.language">
+        <name>language</name>
+      </nameSpec>
+      <param name="n.lb">lb</param>
+      <param name="n.lbl">lbl</param>
+      <param name="n.leaf">leaf</param>
+      <param name="n.lem">lem</param>
+      <param name="n.lg">lg</param>
+      <param name="n.lg1">lg1</param>
+      <param name="n.lg2">lg2</param>
+      <param name="n.lg3">lg3</param>
+      <param name="n.lg4">lg4</param>
+      <param name="n.lg5">lg5</param>
+      <param name="n.line">line</param>
+      <param name="n.link">link</param>
+      <param name="n.linkGrp">linkGrp</param>
+      <param name="n.list">list</param>
+      <param name="n.listBibl">listBibl</param>
+      <param name="n.locale">locale</param>
+      <param name="n.m">m</param>
+      <param name="n.measure">measure</param>
+      <param name="n.meeting">meeting</param>
+      <param name="n.mentioned">mentioned</param>
+      <param name="n.metDecl">metDecl</param>
+      <param name="n.milestone">milestone</param>
+      <param name="n.minus">minus</param>
+      <param name="n.minute">minute</param>
+      <param name="n.monogr">monogr</param>
+      <param name="n.month">month</param>
+      <param name="n.mood">mood</param>
+      <param name="n.move">move</param>
+      <param name="n.msr">msr</param>
+      <param name="n.name">name</param>
+      <param name="n.nameLink">nameLink</param>
+      <param name="n.nbr">nbr</param>
+      <param name="n.node">node</param>
+      <param name="n.none">none</param>
+      <param name="n.normalization">normalization</param>
+      <nameSpec name="n.note">
+        <name>note</name>
+      </nameSpec>
+      <param name="n.notesStmt">notesStmt</param>
+      <param name="n.null">null</param>
+      <param name="n.num">num</param>
+      <param name="n.number">number</param>
+      <param name="n.oRef">oRef</param>
+      <param name="n.oVar">oVar</param>
+      <param name="n.occasion">occasion</param>
+      <param name="n.occupation">occupation</param>
+      <param name="n.offSet">offSet</param>
+      <param name="n.ofig">ofig</param>
+      <param name="n.opener">opener</param>
+      <param name="n.orgDivn">orgDivn</param>
+      <param name="n.orgName">orgName</param>
+      <param name="n.orgTitle">orgTitle</param>
+      <param name="n.orgType">orgType</param>
+      <param name="n.orig">orig</param>
+      <param name="n.orth">orth</param>
+      <param name="n.otherForm">otherForm</param>
+      <param name="n.p">p</param>
+      <param name="n.pRef">pRef</param>
+      <param name="n.pVar">pVar</param>
+      <param name="n.page">page</param>
+      <param name="n.parents">parents</param>
+      <param name="n.part">part</param>
+      <param name="n.particDesc">particDesc</param>
+      <param name="n.particLinks">particLinks</param>
+      <param name="n.pause">pause</param>
+      <param name="n.pb">pb</param>
+      <param name="n.per">per</param>
+      <param name="n.performance">performance</param>
+      <param name="n.persName">persName</param>
+      <param name="n.person">person</param>
+      <param name="n.personGrp">personGrp</param>
+      <param name="n.phr">phr</param>
+      <param name="n.placeName">placeName</param>
+      <param name="n.plus">plus</param>
+      <param name="n.pos">pos</param>
+      <param name="n.postBox">postBox</param>
+      <param name="n.postCode">postCode</param>
+      <param name="n.preparedness">preparedness</param>
+      <param name="n.principal">principal</param>
+      <param name="n.profileDesc">profileDesc</param>
+      <param name="n.projectDesc">projectDesc</param>
+      <param name="n.prologue">prologue</param>
+      <param name="n.pron">pron</param>
+      <param name="n.ptr">ptr</param>
+      <param name="n.pubPlace">pubPlace</param>
+      <param name="n.publicationStmt">publicationStmt</param>
+      <param name="n.publisher">publisher</param>
+      <param name="n.purpose">purpose</param>
+      <param name="n.q">q</param>
+      <param name="n.quotation">quotation</param>
+      <param name="n.quote">quote</param>
+      <param name="n.rate">rate</param>
+      <param name="n.rdg">rdg</param>
+      <param name="n.rdgGrp">rdgGrp</param>
+      <param name="n.re">re</param>
+      <param name="n.recording">recording</param>
+      <param name="n.recordingStmt">recordingStmt</param>
+      <param name="n.ref">ref</param>
+      <param name="n.refsDecl">refsDecl</param>
+      <param name="n.reg">reg</param>
+      <param name="n.region">region</param>
+      <param name="n.relation">relation</param>
+      <param name="n.remarks">remarks</param>
+      <param name="n.rendition">rendition</param>
+      <param name="n.residence">residence</param>
+      <param name="n.resp">resp</param>
+      <param name="n.respStmt">respStmt</param>
+      <param name="n.respons">respons</param>
+      <param name="n.restore">restore</param>
+      <param name="n.revisionDesc">revisionDesc</param>
+      <param name="n.role">role</param>
+      <param name="n.roleDesc">roleDesc</param>
+      <param name="n.roleName">roleName</param>
+      <param name="n.root">root</param>
+      <param name="n.row">row</param>
+      <param name="n.rs">rs</param>
+      <param name="n.s">s</param>
+      <param name="n.salute">salute</param>
+      <param name="n.samplingDecl">samplingDecl</param>
+      <nameSpec name="n.script">
+        <name>script</name>
+      </nameSpec>
+      <param name="n.scriptStmt">scriptStmt</param>
+      <param name="n.second">second</param>
+      <param name="n.seg">seg</param>
+      <param name="n.segmentation">segmentation</param>
+      <param name="n.sense">sense</param>
+      <param name="n.series">series</param>
+      <param name="n.seriesStmt">seriesStmt</param>
+      <param name="n.set">set</param>
+      <param name="n.setting">setting</param>
+      <param name="n.settingDesc">settingDesc</param>
+      <param name="n.settlement">settlement</param>
+      <param name="n.shift">shift</param>
+      <param name="n.sic">sic</param>
+      <param name="n.signed">signed</param>
+      <param name="n.soCalled">soCalled</param>
+      <param name="n.socecStatus">socecStatus</param>
+      <param name="n.sound">sound</param>
+      <param name="n.sourceDesc">sourceDesc</param>
+      <param name="n.sp">sp</param>
+      <param name="n.space">space</param>
+      <param name="n.span">span</param>
+      <param name="n.spanGrp">spanGrp</param>
+      <param name="n.speaker">speaker</param>
+      <param name="n.sponsor">sponsor</param>
+      <param name="n.stage">stage</param>
+      <param name="n.state">state</param>
+      <param name="n.stdVals">stdVals</param>
+      <param name="n.step">step</param>
+      <param name="n.str">str</param>
+      <param name="n.street">street</param>
+      <param name="n.stress">stress</param>
+      <param name="n.string">string</param>
+      <param name="n.subc">subc</param>
+      <param name="n.superentry">superentry</param>
+      <param name="n.supplied">supplied</param>
+      <param name="n.surname">surname</param>
+      <param name="n.syll">syll</param>
+      <param name="n.sym">sym</param>
+      <param name="n.symbol">symbol</param>
+      <param name="n.table">table</param>
+      <param name="n.tag">tag</param>
+      <param name="n.tagDoc">tagDoc</param>
+      <param name="n.tagUsage">tagUsage</param>
+      <param name="n.tagsDecl">tagsDecl</param>
+      <param name="n.taxonomy">taxonomy</param>
+      <param name="n.tech">tech</param>
+      <param name="n.teiCorpus.2">teiCorpus.2</param>
+      <param name="n.teiFsd2">teiFsd2</param>
+      <param name="n.teiHeader">teiHeader</param>
+      <param name="n.term">term</param>
+      <param name="n.termEntry">termEntry</param>
+      <param name="n.text">text</param>
+      <param name="n.textClass">textClass</param>
+      <param name="n.textDesc">textDesc</param>
+      <param name="n.then">then</param>
+      <param name="n.tig">tig</param>
+      <param name="n.time">time</param>
+      <param name="n.timeRange">timeRange</param>
+      <param name="n.timeStruct">timeStruct</param>
+      <param name="n.timeline">timeline</param>
+      <param name="n.title">title</param>
+      <param name="n.titlePage">titlePage</param>
+      <param name="n.titlePart">titlePart</param>
+      <param name="n.titleStmt">titleStmt</param>
+      <param name="n.tns">tns</param>
+      <param name="n.tr">tr</param>
+      <param name="n.trailer">trailer</param>
+      <param name="n.trans">trans</param>
+      <param name="n.tree">tree</param>
+      <param name="n.triangle">triangle</param>
+      <param name="n.tsd">tsd</param>
+      <param name="n.u">u</param>
+      <param name="n.uncertain">uncertain</param>
+      <param name="n.unclear">unclear</param>
+      <param name="n.usg">usg</param>
+      <param name="n.vAlt">vAlt</param>
+      <param name="n.vDefault">vDefault</param>
+      <param name="n.vRange">vRange</param>
+      <param name="n.val">val</param>
+      <param name="n.valDesc">valDesc</param>
+      <param name="n.valList">valList</param>
+      <param name="n.variantEncoding">variantEncoding</param>
+      <param name="n.view">view</param>
+      <param name="n.vocal">vocal</param>
+      <param name="n.vol">vol</param>
+      <param name="n.w">w</param>
+      <param name="n.week">week</param>
+      <param name="n.when">when</param>
+      <param name="n.wit">wit</param>
+      <param name="n.witDetail">witDetail</param>
+      <param name="n.witEnd">witEnd</param>
+      <param name="n.witList">witList</param>
+      <param name="n.witStart">witStart</param>
+      <param name="n.witness">witness</param>
+      <param name="n.writing">writing</param>
+      <param name="n.xptr">xptr</param>
+      <param name="n.xr">xr</param>
+      <param name="n.xref">xref</param>
+      <param name="n.year">year</param>
+    </externalIdRef>
+    <comment>Insert switch for XML/SGML </comment>
+    <overridden>
+      <flag name="TEI.XML">
+        <ignore/>
+      </flag>
+    </overridden>
+    <includedSection flag="TEI.XML">
+      <param name="om.RO"></param>
+      <param name="om.RR"></param>
+    </includedSection>
+    <overridden>
+      <param name="om.RO">- o</param>
+    </overridden>
+    <overridden>
+      <param name="om.RR">- -</param>
+    </overridden>
+    <attributeGroup name="a.global">
+      <attribute>
+        <name>id</name>
+        <tokenized name="ID"/>
+        <implied/>
+      </attribute>
+      <attribute>
+        <name>lang</name>
+        <cdata/>
+        <attributeDefaultRef name="INHERITED"/>
+      </attribute>
+    </attributeGroup>
+    <flag name="declaration">
+      <include/>
+    </flag>
+    <includedSection flag="declaration">
+      <element>
+        <nameSpecRef name="n.declaration"/>
+        <sequence>
+          <elementRef>
+            <nameSpecRef name="n.language"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.script"/>
+          </elementRef>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.direction"/>
+            </elementRef>
+          </zeroOrMore>
+          <elementRef>
+            <nameSpecRef name="n.characters"/>
+          </elementRef>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.note"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.declaration"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>name</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>date</name>
+          <datatypeRef name="ISO-date"/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>declaration</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> [DWDLA] 25.2: Language identification </comment>
+    <flag name="language">
+      <include/>
+    </flag>
+    <includedSection flag="language">
+      <element>
+        <nameSpecRef name="n.language"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.language"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>iso639</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>language</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> end of [DWDLA]  25.2</comment>
+    <comment> [DWDWS] 25.3: Script and writing direction </comment>
+    <flag name="script">
+      <include/>
+    </flag>
+    <includedSection flag="script">
+      <element>
+        <nameSpecRef name="n.script"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.script"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>script</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="direction">
+      <include/>
+    </flag>
+    <includedSection flag="direction">
+      <element>
+        <nameSpecRef name="n.direction"/>
+        <sequence/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.direction"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>chars</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>lines</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>direction</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> end of [DWDWS]  25.3</comment>
+    <comment> [DWDCSBA] 25.4.1: Base components </comment>
+    <flag name="characters">
+      <include/>
+    </flag>
+    <includedSection flag="characters">
+      <element>
+        <nameSpecRef name="n.characters"/>
+        <sequence>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.codedCharSet"/>
+            </elementRef>
+          </zeroOrMore>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.baseWsd"/>
+            </elementRef>
+          </zeroOrMore>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.entitySet"/>
+            </elementRef>
+          </zeroOrMore>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.exceptions"/>
+            </elementRef>
+          </optional>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.characters"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>characters</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <attributeGroup name="a.baseStandard">
+      <attribute>
+        <name>name</name>
+        <cdata/>
+        <required/>
+      </attribute>
+      <attribute>
+        <name>authority</name>
+        <tokenized>
+          <enum>tei</enum>
+          <enum>iso</enum>
+          <enum>national</enum>
+          <enum>private</enum>
+          <enum>none</enum>
+        </tokenized>
+        <required/>
+      </attribute>
+    </attributeGroup>
+    <flag name="codedCharSet">
+      <include/>
+    </flag>
+    <includedSection flag="codedCharSet">
+      <element>
+        <nameSpecRef name="n.codedCharSet"/>
+        <sequence/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.codedCharSet"/>
+        <attributeGroupRef name="a.global"/>
+        <attributeGroupRef name="a.baseStandard"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>codedCharSet</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="baseWsd">
+      <include/>
+    </flag>
+    <includedSection flag="baseWsd">
+      <element>
+        <nameSpecRef name="n.baseWsd"/>
+        <sequence/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.baseWsd"/>
+        <attributeGroupRef name="a.global"/>
+        <attributeGroupRef name="a.baseStandard"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>baseWsd</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="entitySet">
+      <include/>
+    </flag>
+    <includedSection flag="entitySet">
+      <element>
+        <nameSpecRef name="n.entitySet"/>
+        <sequence/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.entitySet"/>
+        <attributeGroupRef name="a.global"/>
+        <attributeGroupRef name="a.baseStandard"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>entitySet</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> end of [DWDCSBA]  25.4.1</comment>
+    <comment> [DWDCSEX] 25.4.2: Exceptions to the base components </comment>
+    <flag name="exceptions">
+      <include/>
+    </flag>
+    <includedSection flag="exceptions">
+      <element>
+        <nameSpecRef name="n.exceptions"/>
+        <zeroOrMore>
+          <elementRef>
+            <nameSpecRef name="n.character"/>
+          </elementRef>
+        </zeroOrMore>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.exceptions"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>exceptions</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="character">
+      <include/>
+    </flag>
+    <includedSection flag="character">
+      <element>
+        <nameSpecRef name="n.character"/>
+        <sequence>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.desc"/>
+            </elementRef>
+          </zeroOrMore>
+          <oneOrMore>
+            <elementRef>
+              <nameSpecRef name="n.form"/>
+            </elementRef>
+          </oneOrMore>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.note"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.character"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>class</name>
+          <tokenized>
+            <enum>lexical</enum>
+            <enum>punc</enum>
+            <enum>lexpunc</enum>
+            <enum>digit</enum>
+            <enum>space</enum>
+            <enum>DL</enum>
+            <enum>LD</enum>
+            <enum>dia</enum>
+            <enum>joiner</enum>
+            <enum>other</enum>
+          </tokenized>
+          <default>lexical</default>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>character</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="desc">
+      <include/>
+    </flag>
+    <includedSection flag="desc">
+      <element>
+        <nameSpecRef name="n.desc"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.desc"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>desc</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="form">
+      <include/>
+    </flag>
+    <includedSection flag="form">
+      <element>
+        <nameSpecRef name="n.form"/>
+        <sequence>
+          <oneOrMore>
+            <elementRef>
+              <nameSpecRef name="n.desc"/>
+            </elementRef>
+          </oneOrMore>
+          <zeroOrMore>
+            <choice>
+              <elementRef>
+                <nameSpecRef name="n.figure"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.extFigure"/>
+              </elementRef>
+            </choice>
+          </zeroOrMore>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.note"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.form"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>string</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>et</name>
+          <tokenized name="IDREF"/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>entityStd</name>
+          <tokenized name="ENTITIES"/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>entityLoc</name>
+          <tokenized name="ENTITIES"/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>ucs-4</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>afiicode</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>form</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <overridden>
+      <flag name="figure">
+        <include/>
+      </flag>
+    </overridden>
+    <ignoredSection flag="figure">
+
+&lt;!ELEMENT %n.figure; %om.RR;  CDATA&gt; 
+&lt;!ATTLIST %n.figure;  
+      %a.global;
+      notation CDATA #REQUIRED
+      TEIform CDATA 'figure' &gt;
+  
+</ignoredSection>
+    <flag name="extFigure">
+      <include/>
+    </flag>
+    <includedSection flag="extFigure">
+      <element>
+        <nameSpecRef name="n.extFigure"/>
+        <sequence/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.extFigure"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>notation</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>entity</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>extFigure</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> end of [DWDCSEX]  25.4.2</comment>
+    <comment> [DWDNO] 25.5: Notes </comment>
+    <flag name="note">
+      <include/>
+    </flag>
+    <includedSection flag="note">
+      <element>
+        <nameSpecRef name="n.note"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.note"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>note</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> end of [DWDNO]  25.5</comment>
+    <comment> end of [DWD]  25.1</comment>
+  </externalIdRef>
+  <element>
+    <nameSpecRef name="n.figure"/>
+    <pcdata/>
+  </element>
+  <attlist>
+    <nameSpecRef name="n.figure"/>
+    <attributeGroupRef name="a.global"/>
+    <attribute>
+      <name>notation</name>
+      <cdata/>
+      <required/>
+    </attribute>
+    <attribute>
+      <name>TEIform</name>
+      <cdata/>
+      <default>figure</default>
+    </attribute>
+  </attlist>
+</doctype>

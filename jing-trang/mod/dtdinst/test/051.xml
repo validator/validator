@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="e1">
+    <include/>
+  </flag>
+  <includedSection flag="e1">
+    <modelGroup name="e2">
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+    </modelGroup>
+  </includedSection>
+  <overridden>
+    <param name="e2">foo),(foo</param>
+  </overridden>
+  <element>
+    <name>doc</name>
+    <modelGroupRef name="e2"/>
+  </element>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+</doctype>

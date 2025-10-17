@@ -1,0 +1,4 @@
+<!ENTITY % para.name "para">
+<!ENTITY % em.name "em">
+<!ELEMENT %para.name; (#PCDATA|%em.name;)*>
+<!ELEMENT %em.name; (#PCDATA)>

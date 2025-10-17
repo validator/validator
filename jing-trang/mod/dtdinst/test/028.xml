@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="e1">
+    <include/>
+  </flag>
+  <flag name="e2">
+    <flagRef name="e1"/>
+  </flag>
+  <includedSection>
+    <comment> this is included </comment>
+    <flag name="e3">
+      <ignore/>
+    </flag>
+  </includedSection>
+  <includedSection flag="e1"/>
+  <includedSection flag="e2">
+    <element>
+      <name>doc</name>
+      <sequence/>
+    </element>
+  </includedSection>
+  <ignoredSection flag="e3">any random junk</ignoredSection>
+</doctype>

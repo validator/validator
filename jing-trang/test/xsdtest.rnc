@@ -1,0 +1,22 @@
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start =
+  element xsdtest {
+    element datatype {
+      attribute name { xsd:NCName },
+      ((param*, (valid|invalid)*)
+       | (valid|invalid|equiv|length|lessThan|incomparable)*)
+    }*
+  }
+
+param = element param { attribute name { xsd:NCName }, string }
+valid = element valid { internalSubset?, string }
+invalid = element invalid { internalSubset?, string }
+equiv = element equiv { element class { value+ }+ }
+
+value = element value { internalSubset?, string }
+length = element length { attribute value { xsd:integer }, internalSubset?, string }
+lessThan = element lessThan { value, value }
+incomparable = element incomparable { value, value }
+
+internalSubset = attribute internalSubset { string }

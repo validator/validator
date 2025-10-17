@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <modelGroup name="inline.class">
+    <choice>
+      <elementRef>
+        <name>code</name>
+      </elementRef>
+      <elementRef>
+        <name>em</name>
+      </elementRef>
+    </choice>
+  </modelGroup>
+  <modelGroup name="model">
+    <zeroOrMore>
+      <choice>
+        <pcdata/>
+        <modelGroupRef name="inline.class"/>
+      </choice>
+    </zeroOrMore>
+  </modelGroup>
+  <element>
+    <name>para</name>
+    <modelGroupRef name="model"/>
+  </element>
+  <element>
+    <name>code</name>
+    <modelGroupRef name="model"/>
+  </element>
+  <element>
+    <name>em</name>
+    <modelGroupRef name="model"/>
+  </element>
+</doctype>

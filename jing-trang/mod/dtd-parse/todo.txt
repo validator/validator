@@ -1,0 +1,66 @@
+Put location information in the object model.
+
+Support OASIS catalogs.
+
+Option for properties file to set properties.
+
+Option to set start elements.
+
+Make UriEntityManager respect charset parameter.
+
+Make UriEntityManager get the right base URI after HTTP redirection.
+
+Add DtdParseException to om package.
+
+Maybe better to avoid empty sequences and empty choices in the object
+model.
+
+Methods on DTD giving random access to various kinds of declaration.
+
+Command-line options to expand/not recognize various kinds of ref.
+
+Command-line option to define a parameter entity as INCLUDE.
+
+Maybe distinguish char entities in object model; or perhaps
+represent result of parsing entity.
+
+Try to parse ignored marked sections.
+
+Warning for unused parameter entities.
+
+String pasting.
+
+SAXEntityManager (support Norm's entity manager)
+
+Check that no default value for ID.
+
+Check that at most one ID per element type.
+
+Check at most one NOTATION attribute per element.
+
+Check that members of NOTATION enumeration are declared as NOTATION
+attributes.
+
+Check that EMPTY elements don't have a NOTATION attribute.
+
+Check that attribute defaults are legal.
+
+Check that notation name of unparsed external entity is declared.
+
+Check no duplicate element names in mixed content model.
+
+Use nameSpec for general entities.
+
+EncodingDetectInputStream should support entities that need an XmlDecl
+rather than a TextDecl.
+
+In EncodingDetectInputStream should check that encoding specified in
+XML declaration is consistent with auto-detected encoding.
+
+Add a MINIMIZATION_SEMANTIC to deal with TEI RR/RO.
+
+Cleanup handling of newline normalization.
+
+Line-wrapping for long attribute lists in XmlWriter.
+
+private and nested classes

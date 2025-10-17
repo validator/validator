@@ -1,0 +1,11 @@
+# Checks exclusions applying to basic-table module.
+# This schema is intended to be used in addition to xhtml.rng.
+
+default namespace = "http://www.w3.org/1999/xhtml"
+
+start = normalElement
+normalElement = element * - table { normalContent }
+normalContent = (normalElement | tableElement | anyAttribute | text)*
+tableElement = element table { tableContent }
+tableContent = (element * - table { tableContent } | anyAttribute | text)*
+anyAttribute = attribute * { text }

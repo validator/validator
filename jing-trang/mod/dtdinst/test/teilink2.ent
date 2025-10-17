@@ -1,0 +1,43 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DSAENTS] 14.: Global attributes for the TEI.linking tag set -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--When tag set TEI.linking is used, the following attributes
+may be attached to any element:-->
+<!ENTITY % a.linking '
+      corresp IDREFS #IMPLIED
+      synch IDREFS #IMPLIED
+      sameAs IDREF #IMPLIED
+      copyOf IDREF #IMPLIED
+      next IDREF #IMPLIED
+      prev IDREF #IMPLIED
+      exclude IDREFS #IMPLIED
+      select IDREFS #IMPLIED'> 
+<!--The following attributes apply to all pointer
+elements:-->
+<!ENTITY % a.pointer '
+      type CDATA #IMPLIED
+      resp CDATA #IMPLIED
+      crdate CDATA #IMPLIED
+      targType CDATA #IMPLIED
+      targOrder (Y | N | U) "U"
+      evaluate (all | one | none) #IMPLIED'> 
+<!--The following attributes apply to all pointer group
+elements:-->
+<!ENTITY % a.pointerGroup '
+      %a.pointer;
+      domains IDREFS #IMPLIED
+      targFunc NMTOKENS #IMPLIED'> 
+<!-- end of [DSAENTS]  14.-->

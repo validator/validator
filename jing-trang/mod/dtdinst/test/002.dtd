@@ -1,0 +1,4 @@
+<!ENTITY % e1 "name">
+<!ENTITY % e2 "%e1;?">
+<!ELEMENT doc (%e2;)>
+<!ELEMENT name (EMPTY)>

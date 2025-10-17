@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>doc</name>
+    <attribute>
+      <name>a1</name>
+      <cdata/>
+      <fixed>foo value</fixed>
+    </attribute>
+    <attribute>
+      <name>a2</name>
+      <tokenized name="IDREFS"/>
+      <fixed>really bizarre</fixed>
+    </attribute>
+    <attribute>
+      <name>a3</name>
+      <tokenized>
+        <enum>foo</enum>
+      </tokenized>
+      <fixed>foo</fixed>
+    </attribute>
+  </attlist>
+</doctype>

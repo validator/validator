@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <externalId name="e1" system="054.ent"/>
+  <externalIdRef name="e1">
+    <element>
+      <name>doc</name>
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+    </element>
+  </externalIdRef>
+  <externalId name="e2" system="sub/054.ent"/>
+  <externalIdRef name="e2">
+    <element>
+      <name>foo</name>
+      <sequence/>
+    </element>
+  </externalIdRef>
+</doctype>

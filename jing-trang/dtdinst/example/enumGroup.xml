@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <enumGroup name="asia">
+    <enum>JP</enum>
+    <enum>TH</enum>
+  </enumGroup>
+  <enumGroup name="europe">
+    <enum>UK</enum>
+    <enum>FR</enum>
+    <enum>IT</enum>
+  </enumGroup>
+  <enumGroup name="world">
+    <enumGroupRef name="asia"/>
+    <enumGroupRef name="europe"/>
+  </enumGroup>
+  <element>
+    <name>employee</name>
+    <pcdata/>
+  </element>
+  <attlist>
+    <name>employee</name>
+    <attribute>
+      <name>country</name>
+      <tokenized>
+        <enumGroupRef name="world"/>
+      </tokenized>
+      <implied/>
+    </attribute>
+  </attlist>
+</doctype>

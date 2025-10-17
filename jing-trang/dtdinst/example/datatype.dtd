@@ -1,0 +1,6 @@
+<!ENTITY % date "CDATA">
+<!ELEMENT holiday EMPTY>
+<!ATTLIST holiday
+  startDate %date; #REQUIRED
+  endDate %date; #REQUIRED
+>

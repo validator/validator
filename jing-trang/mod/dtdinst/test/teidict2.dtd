@@ -1,0 +1,517 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DDIBO] 12.1: Base tag set for printed dictionaries -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--First we embed the default text structure.-->
+<![ %TEI.singleBase; [
+<!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' >
+%TEI.structure.dtd;
+]]>
+<!--Now we define the dictionary-specific material.-->
+
+<!-- [DDIEN] 12.2.1: Dictionary entries and their structure -->
+
+<!ENTITY % superentry 'INCLUDE' >
+<![ %superentry; [
+
+<!ELEMENT %n.superentry; %om.RO;   (((%n.form;)?, (%n.entry;)+)| %n.dictScrap;)> 
+<!ATTLIST %n.superentry;  
+      %a.global;
+      %a.entries;
+      TEIform CDATA 'superentry' >
+  
+]]>
+  
+<!ENTITY % entry 'INCLUDE' >
+<![ %entry; [
+
+<!ELEMENT %n.entry; %om.RO;  ((%n.hom;) | %n.sense; |
+%m.dictionaryTopLevel; | %m.Incl; )+> 
+<!ATTLIST %n.entry;  
+      %a.global;
+      %a.entries;
+      TEIform CDATA 'entry' >
+  
+]]>
+  
+<!ENTITY % entryFree 'INCLUDE' >
+<![ %entryFree; [
+
+<!ELEMENT %n.entryFree; %om.RO;  (#PCDATA | %m.dictionaryParts; |
+%m.phrase; | %m.inter; | %m.Incl;)* > 
+<!ATTLIST %n.entryFree;  
+      %a.global;
+      %a.entries;
+      %a.dictionaries;
+      TEIform CDATA 'entryFree' >
+  
+]]>
+  
+<!ENTITY % hom 'INCLUDE' >
+<![ %hom; [
+
+<!ELEMENT %n.hom; %om.RO;
+ ((%n.sense;) | %m.dictionaryTopLevel; | %n.dictScrap;)* 
+> 
+<!ATTLIST %n.hom;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'hom' >
+  
+]]>
+  
+<!ENTITY % sense 'INCLUDE' >
+<![ %sense; [
+
+<!ELEMENT %n.sense; %om.RR;   (#PCDATA | %n.sense; | %m.dictionaryTopLevel; |
+%m.phrase; | %m.Incl;)*> 
+<!ATTLIST %n.sense;  
+      %a.global;
+      %a.dictionaries;
+      level CDATA #IMPLIED
+      TEIform CDATA 'sense' >
+  
+]]>
+  
+<!-- end of [DDIEN]  12.2.1-->
+
+
+<!-- [DDITPFO] 12.3.1: The form group -->
+
+<!ENTITY % form 'INCLUDE' >
+<![ %form; [
+
+<!ELEMENT %n.form; %om.RR;   (#PCDATA | %m.phrase; | %m.inter; | %m.formInfo; |
+%m.Incl; )*> 
+<!ATTLIST %n.form;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'form' >
+  
+]]>
+  
+<!ENTITY % orth 'INCLUDE' >
+<![ %orth; [
+
+<!ELEMENT %n.orth; %om.RO;  %paraContent;> 
+<!ATTLIST %n.orth;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      extent CDATA "full"
+      TEIform CDATA 'orth' >
+  
+]]>
+  
+<!ENTITY % pron 'INCLUDE' >
+<![ %pron; [
+
+<!ELEMENT %n.pron; %om.RO;  %paraContent;> 
+<!ATTLIST %n.pron;  
+      %a.global;
+      %a.dictionaries;
+      extent CDATA "full"
+      notation CDATA #IMPLIED
+      TEIform CDATA 'pron' >
+  
+]]>
+  
+<!ENTITY % hyph 'INCLUDE' >
+<![ %hyph; [
+
+<!ELEMENT %n.hyph; %om.RO;  %paraContent;> 
+<!ATTLIST %n.hyph;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'hyph' >
+  
+]]>
+  
+<!ENTITY % syll 'INCLUDE' >
+<![ %syll; [
+
+<!ELEMENT %n.syll; %om.RO;  %paraContent;> 
+<!ATTLIST %n.syll;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'syll' >
+  
+]]>
+  
+<!ENTITY % stress 'INCLUDE' >
+<![ %stress; [
+
+<!ELEMENT %n.stress; %om.RO;  %paraContent;> 
+<!ATTLIST %n.stress;  
+      %a.global;
+      TEIform CDATA 'stress' >
+  
+]]>
+  
+<!--(LBL is declared with USG, elsewhere.)-->
+<!--Elements for morphological information:-->
+<!ENTITY % gram 'INCLUDE' >
+<![ %gram; [
+
+<!ELEMENT %n.gram; %om.RO;  %paraContent;> 
+<!ATTLIST %n.gram;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'gram' >
+  
+]]>
+  
+<!ENTITY % gen 'INCLUDE' >
+<![ %gen; [
+
+<!ELEMENT %n.gen; %om.RR;  %paraContent;> 
+<!ATTLIST %n.gen;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'gen' >
+  
+]]>
+  
+<!ENTITY % number 'INCLUDE' >
+<![ %number; [
+
+<!ELEMENT %n.number; %om.RR;  %paraContent;> 
+<!ATTLIST %n.number;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'number' >
+  
+]]>
+  
+<!ENTITY % case 'INCLUDE' >
+<![ %case; [
+
+<!ELEMENT %n.case; %om.RR;  %paraContent;> 
+<!ATTLIST %n.case;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'case' >
+  
+]]>
+  
+<!ENTITY % per 'INCLUDE' >
+<![ %per; [
+
+<!ELEMENT %n.per; %om.RO;  %paraContent;> 
+<!ATTLIST %n.per;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'per' >
+  
+]]>
+  
+<!ENTITY % tns 'INCLUDE' >
+<![ %tns; [
+
+<!ELEMENT %n.tns; %om.RO;  %paraContent;> 
+<!ATTLIST %n.tns;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'tns' >
+  
+]]>
+  
+<!ENTITY % mood 'INCLUDE' >
+<![ %mood; [
+
+<!ELEMENT %n.mood; %om.RO;  %paraContent;> 
+<!ATTLIST %n.mood;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'mood' >
+  
+]]>
+  
+<!ENTITY % itype 'INCLUDE' >
+<![ %itype; [
+
+<!ELEMENT %n.itype; %om.RR;  %paraContent;> 
+<!ATTLIST %n.itype;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'itype' >
+  
+]]>
+  
+<!-- end of [DDITPFO]  12.3.1-->
+
+
+<!-- [DDITPGR] 12.3.2: The gram group -->
+
+<!ENTITY % gramGrp 'INCLUDE' >
+<![ %gramGrp; [
+
+<!ELEMENT %n.gramGrp; %om.RR;  (#PCDATA | %m.phrase; | %m.inter; | %m.gramInfo; | %m.Incl;)*> 
+<!ATTLIST %n.gramGrp;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'gramGrp' >
+  
+]]>
+  
+<!ENTITY % pos 'INCLUDE' >
+<![ %pos; [
+
+<!ELEMENT %n.pos; %om.RO;  %paraContent;> 
+<!ATTLIST %n.pos;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'pos' >
+  
+]]>
+  
+<!ENTITY % subc 'INCLUDE' >
+<![ %subc; [
+
+<!ELEMENT %n.subc; %om.RO;  %paraContent;> 
+<!ATTLIST %n.subc;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'subc' >
+  
+]]>
+  
+<!ENTITY % colloc 'INCLUDE' >
+<![ %colloc; [
+
+<!ELEMENT %n.colloc; %om.RO;  %paraContent;> 
+<!ATTLIST %n.colloc;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'colloc' >
+  
+]]>
+  
+<!-- end of [DDITPGR]  12.3.2-->
+
+
+<!-- [DDITPDE] 12.3.3.1: Definition text -->
+
+<!ENTITY % def 'INCLUDE' >
+<![ %def; [
+
+<!ELEMENT %n.def; %om.RO;  %paraContent;> 
+<!ATTLIST %n.def;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'def' >
+  
+]]>
+  
+<!-- end of [DDITPDE]  12.3.3.1-->
+
+
+<!-- [DDITPTR] 12.3.3.2: Translation information -->
+
+<!ENTITY % trans 'INCLUDE' >
+<![ %trans; [
+
+<!ELEMENT %n.trans; %om.RO;   (#PCDATA | %m.phrase; | %m.inter; |
+%m.dictionaryParts;| %m.Incl;)*> 
+<!ATTLIST %n.trans;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'trans' >
+  
+]]>
+  
+<!ENTITY % tr 'INCLUDE' >
+<![ %tr; [
+
+<!ELEMENT %n.tr; %om.RO;  %paraContent;> 
+<!ATTLIST %n.tr;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'tr' >
+  
+]]>
+  
+<!-- end of [DDITPTR]  12.3.3.2-->
+
+
+<!-- [DDITPET] 12.3.4: Etymologies -->
+
+<!ENTITY % etym 'INCLUDE' >
+<![ %etym; [
+
+<!ELEMENT %n.etym; %om.RO;   (#PCDATA | %m.phrase; | %m.inter; | %n.usg; | %n.lbl; |
+def | %n.trans; | %n.tr; | %m.morphInfo; | %n.eg; | %n.xr; | %m.Incl;)*> 
+<!ATTLIST %n.etym;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'etym' >
+  
+]]>
+  
+<!ENTITY % lang 'INCLUDE' >
+<![ %lang; [
+
+<!ELEMENT %n.lang; %om.RR;  %paraContent;> 
+<!ATTLIST %n.lang;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'lang' >
+  
+]]>
+  
+<!-- end of [DDITPET]  12.3.4-->
+
+
+<!-- [DDITPEG] 12.3.5.1: Examples and citations -->
+
+<!ENTITY % eg 'INCLUDE' >
+<![ %eg; [
+
+<!ELEMENT %n.eg; %om.RO;   ((%n.q;) | %n.quote; | %n.cit; | %m.dictionaryParts; |
+%m.formPointers;)+ > 
+<!ATTLIST %n.eg;  
+      %a.global;
+      %a.dictionaries;
+      TEIform CDATA 'eg' >
+  
+]]>
+  
+<!-- end of [DDITPEG]  12.3.5.1-->
+
+
+<!-- [DDITPUS] 12.3.5.2: Usage information -->
+
+<!ENTITY % usg 'INCLUDE' >
+<![ %usg; [
+
+<!ELEMENT %n.usg; %om.RO;  %paraContent;> 
+<!ATTLIST %n.usg;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'usg' >
+  
+]]>
+  
+<!ENTITY % lbl 'INCLUDE' >
+<![ %lbl; [
+
+<!ELEMENT %n.lbl; %om.RO;  %paraContent;> 
+<!ATTLIST %n.lbl;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'lbl' >
+  
+]]>
+  
+<!-- end of [DDITPUS]  12.3.5.2-->
+
+
+<!-- [DDITPXR] 12.3.5.3: Cross References -->
+
+<!ENTITY % xr 'INCLUDE' >
+<![ %xr; [
+
+<!ELEMENT %n.xr; %om.RO;   (#PCDATA | %m.phrase; | %m.inter; | %n.usg; | %n.lbl; | %m.Incl;)*> 
+<!ATTLIST %n.xr;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'xr' >
+  
+]]>
+  
+<!-- end of [DDITPXR]  12.3.5.3-->
+
+
+<!-- [DDITPRE] 12.3.6: Related entries -->
+
+<!ENTITY % re 'INCLUDE' >
+<![ %re; [
+
+<!ELEMENT %n.re; %om.RO;   (#PCDATA | %n.sense; | %m.dictionaryTopLevel; |
+      %m.phrase; | %m.Incl; )*
+> 
+<!ATTLIST %n.re;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 're' >
+  
+]]>
+  
+<!-- end of [DDITPRE]  12.3.6-->
+
+
+<!-- [DDIHW] 12.4: Headword references -->
+
+<!ENTITY % oRef 'INCLUDE' >
+<![ %oRef; [
+
+<!ELEMENT %n.oRef; %om.RO;  EMPTY> 
+<!ATTLIST %n.oRef;  
+      %a.global;
+      %a.formPointers;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'oRef' >
+  
+]]>
+  
+<!ENTITY % oVar 'INCLUDE' >
+<![ %oVar; [
+
+<!ELEMENT %n.oVar; %om.RR;   (#PCDATA | %n.oRef;)*> 
+<!ATTLIST %n.oVar;  
+      %a.global;
+      %a.formPointers;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'oVar' >
+  
+]]>
+  
+<!ENTITY % pRef 'INCLUDE' >
+<![ %pRef; [
+
+<!ELEMENT %n.pRef; %om.RO;  EMPTY> 
+<!ATTLIST %n.pRef;  
+      %a.global;
+      %a.formPointers;
+      %a.dictionaries;
+      TEIform CDATA 'pRef' >
+  
+]]>
+  
+<!ENTITY % pVar 'INCLUDE' >
+<![ %pVar; [
+
+<!ELEMENT %n.pVar; %om.RR;   (#PCDATA | %n.pRef;)*> 
+<!ATTLIST %n.pVar;  
+      %a.global;
+      %a.formPointers;
+      %a.dictionaries;
+      TEIform CDATA 'pVar' >
+  
+]]>
+  
+<!-- end of [DDIHW]  12.4-->
+
+<!-- end of [DDIBO]  12.1-->

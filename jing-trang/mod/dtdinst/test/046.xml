@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <externalId name="e1" system="046.ent"/>
+  <param name="e2">%e1;</param>
+  <internalEntity name="e3">INCLUDE</internalEntity>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+</doctype>

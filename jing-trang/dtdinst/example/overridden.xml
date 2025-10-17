@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="presentation">
+    <include/>
+  </flag>
+  <includedSection flag="presentation">
+    <modelGroup name="inline.class">
+      <choice>
+        <elementRef>
+          <name>big</name>
+        </elementRef>
+        <elementRef>
+          <name>small</name>
+        </elementRef>
+        <elementRef>
+          <name>em</name>
+        </elementRef>
+      </choice>
+    </modelGroup>
+  </includedSection>
+  <overridden>
+    <modelGroup name="inline.class">
+      <elementRef>
+        <name>em</name>
+      </elementRef>
+    </modelGroup>
+  </overridden>
+  <element>
+    <name>big</name>
+    <pcdata/>
+  </element>
+  <element>
+    <name>small</name>
+    <pcdata/>
+  </element>
+  <element>
+    <name>em</name>
+    <pcdata/>
+  </element>
+  <element>
+    <name>para</name>
+    <zeroOrMore>
+      <choice>
+        <pcdata/>
+        <modelGroupRef name="inline.class"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+</doctype>

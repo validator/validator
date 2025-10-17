@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1">&amp;#x26;#x41;</param>
+  <nameSpec name="e2">
+    <name>A</name>
+  </nameSpec>
+  <element>
+    <nameSpecRef name="e2"/>
+    <sequence/>
+  </element>
+</doctype>

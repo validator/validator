@@ -1,0 +1,26 @@
+
+start = 
+  element testSuite { 
+    element testCase|bug { (correct-compact & correct-xml) | incorrect-compact }*
+  }
+
+correct-xml = element xml { xml-resources, element correct { rng } }
+
+xml-resources = (element resource { name, rng }
+                 | element dir { name, xml-resources })*
+
+correct-compact = element compact { 
+                   compact-resources,
+                   element correct { compact }
+                 }
+
+compact-resources =  (element resource { name, compact }
+                     | element dir { name, compact-resources })*
+
+incorrect-compact = element compact { compact-resources, element incorrect { compact } }
+
+compact = attribute encoding { token }?, text
+
+rng = external "../../doc/compact/relaxng.rnc"
+
+name = attribute name { string }

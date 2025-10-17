@@ -1,0 +1,110 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DTENE] 13.4.1: Elements for nested-style terminological data -->
+
+<!--The nested structure is used for data interchange and represents a
+canonical structured form for terminology entries, which differs
+from the less structured forms frequently used to store data in
+terminological databases.-->
+<!ENTITY % termEntry 'INCLUDE' >
+<![ %termEntry; [
+
+<!ELEMENT %n.termEntry; %om.RO; 
+ ((%m.terminologyMisc; | %m.terminologyInclusions; | %m.Incl;)*, 
+ ((%n.tig;), (%m.Incl; | %m.terminologyInclusions;)*)+)
+> 
+<!ATTLIST %n.termEntry;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'termEntry' >
+  
+]]>
+  
+<!--Notes, descrip(s) and admin(s) are allowed in the termEntry
+to provide documentation that applies to the whole entry.-->
+<!--tig='term information group'-->
+<!--ofig='otherform information group'-->
+<!ENTITY % tig 'INCLUDE' >
+<![ %tig; [
+
+<!ELEMENT %n.tig; %om.RO;
+ ((%m.terminologyMisc;| %m.terminologyInclusions; | %m.Incl;)*, 
+((%n.term;), ((%n.gram;) | %m.terminologyInclusions; | %m.Incl;)*),
+((%m.terminologyMisc;), 
+(%m.terminologyInclusions; | %m.Incl;)*)*, 
+((%n.ofig;), (%m.terminologyInclusions; | %m.Incl;)*)*)
+> 
+<!ATTLIST %n.tig;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'tig' >
+  
+]]>
+  
+<!--Order is significant: term, descrip(s), ofig(s) or otherform(s)-->
+<!ENTITY % ofig 'INCLUDE' >
+<![ %ofig; [
+
+<!ELEMENT %n.ofig; %om.RO;
+  ((%m.terminologyMisc; | %m.Incl;)*, ((%n.otherForm;), ((%n.gram;) | %m.Incl;)*),
+ ((%m.terminologyMisc;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.ofig;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'ofig' >
+  
+]]>
+  
+<!ENTITY % otherForm 'INCLUDE' >
+<![ %otherForm; [
+
+<!ELEMENT %n.otherForm; %om.RO;  %paraContent;> 
+<!ATTLIST %n.otherForm;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'otherForm' >
+  
+]]>
+  
+<!ENTITY % descrip 'INCLUDE' >
+<![ %descrip; [
+
+<!ELEMENT %n.descrip; %om.RO;  %paraContent;> 
+<!ATTLIST %n.descrip;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'descrip' >
+  
+]]>
+  
+<!ENTITY % admin 'INCLUDE' >
+<![ %admin; [
+
+<!ELEMENT %n.admin; %om.RO;  %paraContent;> 
+<!ATTLIST %n.admin;  
+      %a.global;
+      type CDATA #IMPLIED
+      date CDATA '%ISO-date;'
+      resp CDATA #IMPLIED
+      TEIform CDATA 'admin' >
+  
+]]>
+  
+<!--We define a.dictionaries as the empty string,
+since we are not now using the tag set for
+dictionaries.-->
+<!ENTITY % a.dictionaries ''> 
+<!ENTITY % gram 'INCLUDE' >
+<![ %gram; [
+
+<!ELEMENT %n.gram; %om.RO;  %paraContent;> 
+<!ATTLIST %n.gram;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'gram' >
+  
+]]>
+  
+<!-- end of [DTENE]  13.4.1-->

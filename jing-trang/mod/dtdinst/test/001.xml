@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1">value</param>
+  <attributeDefault name="e2">
+    <default>value</default>
+  </attributeDefault>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>doc</name>
+    <attribute>
+      <name>a</name>
+      <cdata/>
+      <attributeDefaultRef name="e2"/>
+    </attribute>
+  </attlist>
+</doctype>

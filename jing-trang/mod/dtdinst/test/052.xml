@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <attributeGroup name="bar">
+    <attribute>
+      <name>bar</name>
+      <cdata/>
+      <implied/>
+    </attribute>
+  </attributeGroup>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>foo</name>
+    <attributeGroupRef name="bar"/>
+  </attlist>
+  <attlist>
+    <name>foo</name>
+    <attributeGroupRef name="bar"/>
+  </attlist>
+</doctype>

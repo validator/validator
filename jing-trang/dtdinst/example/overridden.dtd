@@ -1,0 +1,9 @@
+<!ENTITY % presentation "INCLUDE">
+<![%presentation;[
+<!ENTITY % inline.class "big|small|em">
+]]>
+<!ENTITY % inline.class "em">
+<!ELEMENT big (#PCDATA)>
+<!ELEMENT small (#PCDATA)>
+<!ELEMENT em (#PCDATA)>
+<!ELEMENT para (#PCDATA|%inline.class;)*>

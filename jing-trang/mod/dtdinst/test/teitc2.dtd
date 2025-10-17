@@ -1,0 +1,201 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DTC] 19.: Tags for text criticism -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+
+<!-- [DTCAPEN] 19.1.1: Apparatus entry -->
+
+<!ENTITY % app 'INCLUDE' >
+<![ %app; [
+
+<!ELEMENT %n.app; %om.RO;  
+ ((%m.Incl;)*, ((%n.lem;), (%m.Incl;)*,
+              ((%n.wit;), (%m.Incl;)*)? )?, 
+      ( ((%n.rdg;), (%m.Incl;)*, 
+        ((%n.wit;), (%m.Incl;)*)?) 
+      | ((%n.rdgGrp;), (%m.Incl;)*, 
+        ((%n.wit;), (%m.Incl;)*)?))+
+)> 
+<!ATTLIST %n.app;  
+      %a.global;
+      type CDATA #IMPLIED
+      from IDREF #IMPLIED
+      to IDREF #IMPLIED
+      loc CDATA #IMPLIED
+      TEIform CDATA 'app' >
+  
+]]>
+  
+<!-- end of [DTCAPEN]  19.1.1-->
+
+
+<!-- [DTCAPLR] 19.1.2: Readings -->
+
+<!ENTITY % lem 'INCLUDE' >
+<![ %lem; [
+
+<!ELEMENT %n.lem;
+%om.RO;   (#PCDATA | %m.phrase; | %m.inter; | %m.Incl; | %m.fragmentary;)*> 
+<!ATTLIST %n.lem;  
+      %a.global;
+      %a.readings;
+      TEIform CDATA 'lem' >
+  
+]]>
+  
+<!ENTITY % rdg 'INCLUDE' >
+<![ %rdg; [
+
+<!ELEMENT %n.rdg;
+%om.RO;   (#PCDATA | %m.phrase; | %m.inter; | %m.Incl; |
+%m.fragmentary;)* > 
+<!ATTLIST %n.rdg;  
+      %a.global;
+      %a.readings;
+      TEIform CDATA 'rdg' >
+  
+]]>
+  
+<!-- end of [DTCAPLR]  19.1.2-->
+
+
+<!-- [DTCAPSU] 19.1.3: Reading Groups -->
+
+<!ENTITY % rdgGrp 'INCLUDE' >
+<![ %rdgGrp; [
+
+<!ELEMENT %n.rdgGrp; %om.RO;  ((%m.Incl;)*, ((((%n.rdgGrp;), (%m.Incl;)*) | 
+((%n.rdg;), (%m.Incl;)*, ((%n.wit;), (%m.Incl;)*)?)))+)> 
+<!ATTLIST %n.rdgGrp;  
+      %a.global;
+      %a.readings;
+      TEIform CDATA 'rdgGrp' >
+  
+]]>
+  
+<!-- end of [DTCAPSU]  19.1.3-->
+
+
+<!-- [DTCAPWD] 19.1.4.1: Witness Details -->
+
+<!ENTITY % witDetail 'INCLUDE' >
+<![ %witDetail; [
+
+<!ELEMENT %n.witDetail; %om.RO; %paraContent;> 
+<!ATTLIST %n.witDetail;  
+      %a.global;
+      target IDREFS #REQUIRED
+      resp CDATA #IMPLIED
+      wit CDATA #REQUIRED
+      type CDATA #IMPLIED
+      place CDATA 'apparatus'
+      TEIform CDATA 'witDetail' >
+  
+]]>
+  
+<!-- end of [DTCAPWD]  19.1.4.1-->
+
+
+<!-- [DTCSCWL] 19.1.4.2: Source-text Witness Lists in Apparatus -->
+
+<!ENTITY % wit 'INCLUDE' >
+<![ %wit; [
+
+<!ELEMENT %n.wit; %om.RO;  %paraContent;> 
+<!ATTLIST %n.wit;  
+      %a.global;
+      TEIform CDATA 'wit' >
+  
+]]>
+  
+<!-- end of [DTCSCWL]  19.1.4.2-->
+
+
+<!-- [DTCAPLW] 19.1.4.3: Witness Lists in Front Matter -->
+
+<!ENTITY % witList 'INCLUDE' >
+<![ %witList; [
+
+<!ELEMENT %n.witList; %om.RO;  ((%m.Incl;)*, ((%n.witness;), (%m.Incl;)*)+)> 
+<!ATTLIST %n.witList;  
+      %a.global;
+      TEIform CDATA 'witList' >
+  
+]]>
+  
+<!ENTITY % witness 'INCLUDE' >
+<![ %witness; [
+
+<!ELEMENT %n.witness; %om.RO; %paraContent;> 
+<!ATTLIST %n.witness;  
+      %a.global;
+      sigil CDATA #REQUIRED
+      included CDATA ''
+      TEIform CDATA 'witness' >
+  
+]]>
+  
+<!-- end of [DTCAPLW]  19.1.4.3-->
+
+
+<!-- [DTCFW] 19.1.5: Fragmentary witnesses -->
+
+<!ENTITY % witStart 'INCLUDE' >
+<![ %witStart; [
+
+<!ELEMENT %n.witStart; %om.RO;  EMPTY> 
+<!ATTLIST %n.witStart;  
+      %a.global;
+      %a.fragmentary;
+      TEIform CDATA 'witStart' >
+  
+]]>
+  
+<!ENTITY % witEnd 'INCLUDE' >
+<![ %witEnd; [
+
+<!ELEMENT %n.witEnd; %om.RO;  EMPTY> 
+<!ATTLIST %n.witEnd;  
+      %a.global;
+      %a.fragmentary;
+      TEIform CDATA 'witEnd' >
+  
+]]>
+  
+<!ENTITY % lacunaStart 'INCLUDE' >
+<![ %lacunaStart; [
+
+<!ELEMENT %n.lacunaStart; %om.RO;  EMPTY> 
+<!ATTLIST %n.lacunaStart;  
+      %a.global;
+      %a.fragmentary;
+      TEIform CDATA 'lacunaStart' >
+  
+]]>
+  
+<!ENTITY % lacunaEnd 'INCLUDE' >
+<![ %lacunaEnd; [
+
+<!ELEMENT %n.lacunaEnd; %om.RO;  EMPTY> 
+<!ATTLIST %n.lacunaEnd;  
+      %a.global;
+      %a.fragmentary;
+      TEIform CDATA 'lacunaEnd' >
+  
+]]>
+  
+<!-- end of [DTCFW]  19.1.5-->
+
+<!-- end of [DTC]  19.-->

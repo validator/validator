@@ -1,0 +1,414 @@
+<project name="jing-trang" default="jar">
+
+<property name="lib.dir" value="lib"/>
+<property name="build.dir" value="${basedir}/build"/>
+
+<property name="moddir" value="mod"/>
+<property name="modfile" value="mod.xml"/>
+
+<target name="check-modules">
+  <uptodate property="modules-ok" targetfile="modules.xml">
+    <srcresources>
+      <dirset dir="mod" includes=".,*"/>
+    </srcresources>
+  </uptodate>
+</target>
+
+<target name="modules" depends="check-modules" unless="modules-ok">
+  <pathconvert property="modfrag" pathsep="&lt;/module>&#xA;&lt;module>">
+    <fileset dir="${moddir}">
+      <include name="*/${modfile}"/>
+    </fileset>
+    <globmapper from="${basedir}/${moddir}/*/${modfile}"
+		to="*"
+		handledirsep="true"/>
+  </pathconvert>
+
+  <echo file="modules.xml" encoding="UTF-8">&lt;modules>
+&lt;module>${modfrag}&lt;/module>
+&lt;/modules></echo>
+
+</target>
+
+<target name="check-modbuild">
+  <uptodate property="modbuild-ok" targetfile="modbuild.xml">
+    <srcfiles dir="${moddir}" includes="*/${modfile}"/>
+    <srcfiles file="build.xsl"/>
+    <srcfiles file="modules.xml"/>
+  </uptodate>
+</target>
+
+<target name="modbuild" depends="modules,check-modbuild" unless="modbuild-ok">
+  <xslt style="build.xsl" in="modules.xml" out="modbuild.xml" force="true">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
+</target>
+
+<target name="test" depends="modbuild">
+  <ant antfile="modbuild.xml" target="test"/>
+</target>
+
+<target name="srczip" depends="modbuild">
+  <ant antfile="modbuild.xml" target="srczip"/>
+</target>
+
+<target name="jar" depends="modbuild">
+  <ant antfile="modbuild.xml" target="jar"/>
+  <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
+    <classpath>
+      <pathelement location="${build.dir}/jing.jar"/>
+    </classpath>
+  </taskdef>
+</target>
+
+<target name="compile" depends="modbuild">
+  <ant antfile="modbuild.xml" target="compile"/>
+</target>
+
+<target name="gen" depends="modbuild,iml">
+  <ant antfile="modbuild.xml" target="gen"/>
+</target>
+
+<target name="iml">
+  <xslt style="iml.xsl"
+	includes="${moddir}/*/${modfile}"
+	filedirparameter="name"
+	destdir=".">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+    <regexpmapper from="mod/([-a-zA-Z0-9_]*)/mod.xml"
+		  to="mod/\1/\1.iml"
+		  handledirsep="true"/>
+  </xslt>
+</target>
+
+<target name="init">
+  <mkdir dir="${build.dir}"/>
+  <mkdir dir="${build.dir}/dist"/>
+</target>
+
+<target name="version">
+  <xmlproperty file="version.xml"/>
+</target>
+
+<target name="validate" depends="jar" description="Validate all XML files" >
+  <jing rngfile="test/regextest.rnc" compactsyntax="true">
+    <fileset dir="test" includes="regextest.xml"/>
+  </jing>
+  <jing rngfile="xhtml/xhtml.rng">
+    <fileset dir="doc" includes="*.html,jing-bin/*.html,regex/*.html"/>
+    <fileset dir="datatype-sample" includes="index.html"/>
+    <fileset dir="test" includes="index.html"/>
+    <fileset dir="doc/compact" includes="*.html"/>
+    <fileset dir="." includes="copying.html"/>
+    <fileset dir="trang/doc" includes="*.html"/>
+  </jing>
+  <jing rngfile="eg/relaxng.rng">
+    <fileset dir="eg" includes="*.rng"/>
+    <fileset dir="xhtml" includes="**/*.rng"/>
+  </jing>
+  <jing rngfile="doc/compact/relaxng.rnc" compactsyntax="true">
+    <fileset dir="eg" includes="relaxng.rng"/>
+  </jing>
+  <jing rngfile="eg/xslt.rng">
+    <fileset dir="convert" includes="*.xsl"/>
+  </jing>
+  <jing rngfile="doc/design.rng">
+    <fileset dir="doc" includes="design.xml"/>
+  </jing>
+  <jing rngfile="doc/nrl.rng">
+    <fileset dir="doc" includes="nrl.xml"/>
+  </jing>
+</target>
+
+<path id="javadoc.sourcepath">
+  <pathelement location="mod/util/src/main"/>
+  <pathelement location="mod/datatype/src/main"/>
+  <pathelement location="mod/rng-parse/src/main"/>
+  <pathelement location="mod/validate/src/main"/>
+  <pathelement location="mod/rng-validate/src/main"/>
+  <pathelement location="mod/nvdl/src/main"/>
+  <pathelement location="mod/schematron/src/main"/>
+  <pathelement location="mod/xerces/src/main"/>
+</path>
+
+<property name="javadoc.packagenames"
+	  value="com.thaiopensource.validate,
+                 com.thaiopensource.validate.rng,
+                 com.thaiopensource.validate.xerces,
+                 com.thaiopensource.validate.schematron,
+                 com.thaiopensource.validate.nrl,
+                 com.thaiopensource.validate.auto,
+                 com.thaiopensource.xml.sax,
+                 com.thaiopensource.util"/>
+
+<target name="javadoc" depends="init">
+  <mkdir dir="${build.dir}/api"/>
+  <mkdir dir="${build.dir}/api/datatype"/>
+  <mkdir dir="${build.dir}/api/jing"/>
+  <mkdir dir="${build.dir}/api/regex"/>
+  <javadoc sourcepath="mod/datatype/src/main" destdir="${build.dir}/api/datatype"
+    doctitle="RELAX NG Datatype API" windowtitle="RELAX NG Datatype API"
+    packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
+  <javadoc sourcepath="mod/util/src/main:mod/regex/src/main" destdir="${build.dir}/api/regex"
+    packagenames="com.thaiopensource.datatype.xsd.regex,
+		  com.thaiopensource.datatype.xsd.regex.java,
+		  com.thaiopensource.datatype.xsd.regex.xerces2"/>
+  <javadoc sourcepathref="javadoc.sourcepath" destdir="${build.dir}/api/jing"
+    doctitle="Jing API" windowtitle="Jing API"
+    packagenames="${javadoc.packagenames}">
+    <link offline="true" href="../datatype" packagelistLoc="${build.dir}/api/datatype"/>
+    <link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
+	  packagelistLoc="extapidoc/jdk/1.5"/>
+  </javadoc>
+</target>
+
+<target name="doccheck" depends="init">
+  <mkdir dir="${build.dir}/doccheck"/>
+  <javadoc sourcepathref="javadoc.sourcepath"
+           destdir="${build.dir}/doccheck"
+           packagenames="${javadoc.packagenames}"
+           doclet="com.sun.tools.doclets.doccheck.DocCheck"
+           docletpath="lib/doccheck.jar"/>
+</target>
+
+<target name="datatype-sample" depends="jar">
+  <ant dir="datatype-sample">
+    <property name="build.dir" value="${build.dir}/datatype-sample"/>
+    <property name="jing.jar" value="${build.dir}/jing.jar"/>
+  </ant>
+</target>
+
+<target name="jing-doc" depends="version">
+  <xslt basedir="doc" destdir="${build.dir}" includes="derivative.xml"
+        style="doc/derivative.xsl">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
+  <xslt basedir="doc" destdir="${build.dir}" includes="design.xml"
+        style="doc/design.xsl">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
+  <xslt basedir="doc" destdir="${build.dir}" includes="nrl.xml"
+        style="doc/nrl.xsl">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
+  <copy todir="${build.dir}">
+    <fileset dir="doc" includes="*.html"/>
+  </copy>
+  <replace file="${build.dir}/jing.html" token="@VERSION@" value="${version}"/>
+</target>
+
+<target name="jing-dist" depends="init,jar,javadoc,jing-doc,datatype-sample,srczip,version">
+  <mkdir dir="${build.dir}/jing-bin"/>
+  <copy todir="${build.dir}/jing-bin">
+    <fileset dir="doc/jing-bin" includes="readme.html"/>
+  </copy>
+  <replace file="${build.dir}/jing-bin/readme.html" token="@VERSION@" value="${version}"/>
+  <zip zipfile="${build.dir}/dist/jing-${version}.zip">
+    <zipfileset dir="${build.dir}" includes="jing.jar" prefix="jing-${version}/bin"/> 
+    <zipfileset dir="lib" includes="isorelax.jar" 
+                prefix="jing-${version}/bin"/> 
+    <zipfileset dir="${build.dir}/mod/jing"
+		includes="src.zip"
+		prefix="jing-${version}"/> 
+    <zipfileset dir="${build.dir}" includes="api/**" prefix="jing-${version}/doc"/>
+    <zipfileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"
+                prefix="jing-${version}/lib"/>
+    <zipfileset dir="doc/compact" includes="relaxng.rnc" prefix="jing-${version}/lib"/>
+    <zipfileset dir="mod/schematron/src/main/com/thaiopensource/validate/schematron/resources"
+                includes="schematron.rnc"
+                prefix="jing-${version}/lib"/>
+    <zipfileset dir="mod/nvdl/src/main/com/thaiopensource/validate/mns/resources"
+                includes="mns.rng"
+                prefix="jing-${version}/lib"/>
+    <zipfileset dir="mod/nvdl/src/main/com/thaiopensource/validate/nrl/resources"
+                includes="nrl.rng"
+                prefix="jing-${version}/lib"/>
+    <zipfileset dir="." includes="xhtml/**/*.rng,xhtml/index.html" prefix="jing-${version}/lib"/>
+    <zipfileset dir="doc"
+                includes="jing-ant.html,jing-datatypes.html,jing-other.html,pluggable-datatypes.html"
+                prefix="jing-${version}/doc"/>
+    <zipfileset dir="${build.dir}"
+                includes="jing.html,nrl.html"
+                prefix="jing-${version}/doc"/>
+    <zipfileset dir="doc/jing-bin"
+                includes="copying.html"
+                prefix="jing-${version}/doc"/>
+    <zipfileset dir="lib"
+                includes="xerces.copying.txt,isorelax.copying.txt"
+                prefix="jing-${version}/doc"/>
+    <zipfileset dir="${build.dir}/jing-bin"
+                includes="readme.html"
+                prefix="jing-${version}"/>
+    <zipfileset dir="datatype-sample" prefix="jing-${version}/sample/datatype"/>
+    <zipfileset dir="${build.dir}/datatype-sample"
+                includes="datatype-sample.jar"
+                prefix="jing-${version}/sample/datatype"/>
+  </zip>
+  <checksum file="${build.dir}/dist/jing-${version}.zip" algorithm="sha1"/>
+</target>
+
+<target name="trang-doc" depends="version">
+  <copy todir="${build.dir}">
+    <fileset dir="trang" includes="copying.txt"/>
+    <fileset dir="trang/doc" includes="trang.html,trang-manual.html,convert-to-xsd-talk.html"/>
+  </copy>
+  <replace dir="${build.dir}"
+	   includes="trang.html,trang-manual.html" token="@VERSION@" value="${version}"/>
+</target>
+
+<target name="trang-dist" depends="init,jar,trang-doc,srczip,version">
+  <zip zipfile="${build.dir}/dist/trang-${version}.zip">
+    <zipfileset dir="trang" includes="copying.txt" prefix="trang-${version}"/>
+    <zipfileset dir="${build.dir}"
+		includes="trang-manual.html"
+		prefix="trang-${version}"/>
+    <zipfileset dir="${build.dir}"
+		includes="trang.jar"
+		prefix="trang-${version}"/>
+    <zipfileset dir="${build.dir}/mod/trang"
+		includes="src.zip" 
+		prefix="trang-${version}"/>
+  </zip>
+  <checksum file="${build.dir}/dist/trang-${version}.zip" algorithm="sha1"/>
+</target>
+
+<target name="dtdinst-doc" depends="version">
+  <mkdir dir="${build.dir}/dtdinst"/>
+  <mkdir dir="${build.dir}/dtdinst/example"/>
+  <copy todir="${build.dir}/dtdinst/example">
+    <fileset dir="dtdinst/example" includes="*.dtd"/>
+    <mapper type="glob" from="*.dtd" to="*.dtd.txt"/>
+  </copy>
+  <copy todir="${build.dir}/dtdinst/example">
+    <fileset dir="dtdinst/example" includes="*.ent,*.xml"/>
+  </copy>
+  <copy todir="${build.dir}/dtdinst">
+    <fileset dir="." includes="index.html,copying.txt,dtdinst2rng.xsl"/>
+  </copy>
+  <java classname="com.thaiopensource.relaxng.translate.Driver"
+        fork="true"
+        failonerror="yes"
+        classpath="${build.dir}/trang.jar">
+    <arg value="dtdinst/dtdinst.rnc"/>
+    <arg value="${build.dir}/dtdinst/dtdinst.rng"/>
+  </java>
+  <copy todir="${build.dir}/dtdinst">
+    <fileset dir="dtdinst" includes="index.html,copying.txt,dtdinst2rng.xsl"/>
+  </copy>
+  <copy file="dtdinst/dtdinst.rnc" tofile="${build.dir}/dtdinst/dtdinst.rnc.txt"/>
+  <copy file="dtdinst/teixml.dtd" tofile="${build.dir}/dtdinst/teixml.dtd.txt"/>
+  <replace file="${build.dir}/dtdinst/index.html"
+           token="@VERSION@"
+           value="${version}"/>
+</target>
+
+<target name="dtdinst-dist" depends="init,jar,dtdinst-doc,srczip,version">
+  <zip zipfile="${build.dir}/dist/dtdinst-${version}.zip">
+    <zipfileset dir="${build.dir}/dtdinst" prefix="dtdinst-${version}"/>
+    <zipfileset dir="${build.dir}"
+		includes="dtdinst.jar"
+		prefix="dtdinst-${version}"/>
+    <zipfileset dir="${build.dir}/mod/dtdinst"
+		includes="src.zip" 
+		prefix="dtdinst-${version}"/>
+  </zip>
+  <checksum file="${build.dir}/dist/dtdinst-${version}.zip" algorithm="sha1"/>
+</target>
+
+<target name="website" depends="validate,javadoc,datatype-sample,jing-doc,trang-doc,dtdinst-doc"
+  description="Build a .tar.gz containing the complete relaxng website" >
+  <copy todir="${build.dir}">
+    <fileset dir="." includes="xhtml/**/*.rng,xhtml/index.html"/>
+    <fileset dir="." includes="copying.html"/>
+    <fileset dir="convert" includes="from-relax.xsl,simplify.xsl"/>
+    <fileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"/>
+  </copy>
+  <mkdir dir="${build.dir}/compact"/>
+  <copy todir="${build.dir}/compact">
+    <fileset dir="doc/compact" includes="*.html"/>
+  </copy>
+  <copy file="doc/compact/relaxng.rnc"
+        tofile="${build.dir}/compact/relaxng.rnc.txt"/>
+  <zip zipfile="${build.dir}/testSuite.zip">
+    <fileset dir="test" includes="index.html,spectest.xml,split.xsl,saxon.xsl,prep.xml"/>
+    <fileset dir="eg" includes="testSuite.rng"/>
+  </zip>
+  <tar tarfile="${build.dir}/relaxng.tar" basedir="${build.dir}"
+    includes="testSuite.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,api/**,compact/**,dtdinst/**"/>
+  <gzip zipfile="${build.dir}/dist/relaxng.tar.gz" src="${build.dir}/relaxng.tar"/>
+</target>
+
+<target name="dist" depends="test,validate,jing-dist,trang-dist,dtdinst-dist,website"
+	description="Make a distribution, leaving artifacts in ${build.dir}/dist"/>
+
+<target name="googlecode.properties.available">
+  <available file="${user.home}/googlecode.properties"
+	     property="googlecode.properties.available"/>
+</target>
+
+<target name="googlecode.properties"
+	depends="googlecode.properties.available"
+	if="googlecode.properties.available">
+  <property file="${user.home}/googlecode.properties"
+	    prefix="googlecode"/>
+</target>
+
+<target name="googlecode.upload"
+	depends="version,googlecode.properties"
+	description="Upload files to Google Code. Run dist before this.">
+  <taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask"
+	   classpath="lib/ant-googlecode.jar" name="gcupload"/>
+  <gcupload username="${googlecode.username}" 
+            password="${googlecode.password}" 
+            projectname="jing-trang" 
+            targetfilename="jing-${version}.zip" 
+            filename="${build.dir}/dist/jing-${version}.zip"
+            summary="Jing version ${version} packaged for use with JRE (includes binary, source and documentation)"
+            labels="Featured, Type-Archive, OpSys-All, Version-${version}"/>
+  <gcupload username="${googlecode.username}" 
+            password="${googlecode.password}" 
+            projectname="jing-trang" 
+            targetfilename="trang-${version}.zip" 
+            filename="${build.dir}/dist/trang-${version}.zip"
+            summary="Trang version ${version} packaged for use with JRE (includes binary, source and documentation)"
+            labels="Featured, Type-Archive, OpSys-All, Version-${version}"/>
+  <gcupload username="${googlecode.username}" 
+            password="${googlecode.password}" 
+            projectname="jing-trang" 
+            targetfilename="dtdinst-${version}.zip" 
+            filename="${build.dir}/dist/dtdinst-${version}.zip"
+            summary="DTDinst version ${version} packaged for use with JRE (includes binary, source and documentation)"
+            labels="Type-Archive, OpSys-All, Version-${version}"/>
+</target>
+
+<target name="clean" 
+	description="Remove almost all files created during the build process">
+  <delete dir="${build.dir}"/>
+</target>
+
+<target name="realclean" depends="clean"
+	description="Remove all files created during the build process">
+  <delete>
+    <fileset dir="mod" includes="*/*.iml"/>
+    <fileset file="modbuild.xml"/>
+    <fileset file="modules.xml"/>
+  </delete>
+</target>
+
+<target name="services" depends="jar"
+        description="Extract META-INF services files from jars into classes build directory (for debugging in an IDE)">
+  <unzip dest="${build.dir}/mod/jing/classes/main"
+	 src="${build.dir}/jing.jar">
+    <patternset>
+      <include name="META-INF/services/*"/>
+    </patternset>
+  </unzip>
+  <unzip dest="${build.dir}/mod/trang/classes/main"
+	 src="${build.dir}/trang.jar">
+    <patternset>
+      <include name="META-INF/services/*"/>
+    </patternset>
+  </unzip>
+</target>
+
+</project>

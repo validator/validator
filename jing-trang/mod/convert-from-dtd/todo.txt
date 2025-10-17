@@ -1,0 +1,16 @@
+Option to map comments into annotations (or maybe should be separate program).
+
+Output overridden definitions.
+
+Try to preserve marked sections.
+
+Annotation for included sections (d:condition="flagName")
+
+When inlining attlist decls, comments should be inlined also.  Maybe
+inlining attlist decls should be separate later transformation.  Also
+need to fix XSD output to deal with such comments.
+
+Choose start elements based on presence of namespace declarations.
+
+An attribute group that contains only namespace declarations should
+disappear completely.

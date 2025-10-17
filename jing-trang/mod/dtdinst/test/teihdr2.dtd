@@ -1,0 +1,799 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [D221] 5.1.1: The TEI Header -->
+
+<!--teihdr2.dtd  Tags for TEI Header.-->
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!ENTITY % teiHeader 'INCLUDE' >
+<![ %teiHeader; [
+
+<!ELEMENT %n.teiHeader; %om.RR;  ((%n.fileDesc;), (%n.encodingDesc;)*, (%n.profileDesc;)*, (%n.revisionDesc;)?)> 
+<!ATTLIST %n.teiHeader;  
+      %a.global;
+      type CDATA "text"
+      creator CDATA #IMPLIED
+      status (new | update) "new"
+      date.created CDATA #IMPLIED
+      date.updated CDATA #IMPLIED
+      TEIform CDATA 'teiHeader' >
+  
+]]>
+  
+<!-- [D221B] 5.1.1:  -->
+
+
+<!-- [D222] 5.2: The file description -->
+
+<!ENTITY % fileDesc 'INCLUDE' >
+<![ %fileDesc; [
+
+<!ELEMENT %n.fileDesc; %om.RR;  ((%n.titleStmt;),   (%n.editionStmt;)?,
+               (%n.extent;)?,      (%n.publicationStmt;),
+               (%n.seriesStmt;)?, (%n.notesStmt;)?,
+               (%n.sourceDesc;)+              )> 
+<!ATTLIST %n.fileDesc;  
+      %a.global;
+      TEIform CDATA 'fileDesc' >
+  
+]]>
+  
+
+<!-- [D2221] 5.2.1: The title statement -->
+
+
+<!ENTITY % titleStmt 'INCLUDE' >
+<![ %titleStmt; [
+
+<!ELEMENT %n.titleStmt; %om.RO;  (((%n.title;)+, ((%n.author;) | (%n.editor;)
+| %n.sponsor; | %n.funder; | (%n.principal;)
+| %n.respStmt;)*))> 
+<!ATTLIST %n.titleStmt;  
+      %a.global;
+      TEIform CDATA 'titleStmt' >
+  
+]]>
+  
+<!ENTITY % sponsor 'INCLUDE' >
+<![ %sponsor; [
+
+<!ELEMENT %n.sponsor; %om.RO;
+%phrase.seq;
+> 
+<!ATTLIST %n.sponsor;  
+      %a.global;
+      TEIform CDATA 'sponsor' >
+  
+]]>
+  
+<!ENTITY % funder 'INCLUDE' >
+<![ %funder; [
+
+<!ELEMENT %n.funder; %om.RO;  %phrase.seq; > 
+<!ATTLIST %n.funder;  
+      %a.global;
+      TEIform CDATA 'funder' >
+  
+]]>
+  
+<!ENTITY % principal 'INCLUDE' >
+<![ %principal; [
+
+<!ELEMENT %n.principal; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.principal;  
+      %a.global;
+      TEIform CDATA 'principal' >
+  
+]]>
+  
+<!--The TITLE, AUTHOR, NAME, RESPSTMT, and RESP elements are
+declared in file teicore2.dtd, not here.-->
+<!-- end of [D2221]  5.2.1-->
+
+
+<!-- [D2222] 5.2.2: The edition statement -->
+
+<!ENTITY % editionStmt 'INCLUDE' >
+<![ %editionStmt; [
+
+<!ELEMENT %n.editionStmt; %om.RO;  ( ((%n.edition;), (%n.respStmt;)*) | (%n.p;)+ )> 
+<!ATTLIST %n.editionStmt;  
+      %a.global;
+      TEIform CDATA 'editionStmt' >
+  
+]]>
+  
+<!ENTITY % edition 'INCLUDE' >
+<![ %edition; [
+
+<!ELEMENT %n.edition; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.edition;  
+      %a.global;
+      TEIform CDATA 'edition' >
+  
+]]>
+  
+<!-- end of [D2222]  5.2.2-->
+
+
+<!-- [D2223] 5.2.3: The extent statement -->
+
+<!ENTITY % extent 'INCLUDE' >
+<![ %extent; [
+
+<!ELEMENT %n.extent; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.extent;  
+      %a.global;
+      TEIform CDATA 'extent' >
+  
+]]>
+  
+<!-- end of [D2223]  5.2.3-->
+
+
+<!-- [D2224] 5.2.4: The publication statement -->
+
+<!ENTITY % publicationStmt 'INCLUDE' >
+<![ %publicationStmt; [
+
+<!ELEMENT %n.publicationStmt; %om.RO;
+ ( ( (%n.p;), (%m.Incl;)*)+ 
+  | ( ((%n.publisher;) | %n.distributor; | %n.authority; | %n.pubPlace; | %n.address; | (%n.idno;)
+  | %n.availability; | %n.date; ), (%m.Incl;)*)+ )> 
+<!ATTLIST %n.publicationStmt;  
+      %a.global;
+      TEIform CDATA 'publicationStmt' >
+  
+]]>
+  
+<!ENTITY % distributor 'INCLUDE' >
+<![ %distributor; [
+
+<!ELEMENT %n.distributor; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.distributor;  
+      %a.global;
+      TEIform CDATA 'distributor' >
+  
+]]>
+  
+<!ENTITY % authority 'INCLUDE' >
+<![ %authority; [
+
+<!ELEMENT %n.authority; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.authority;  
+      %a.global;
+      TEIform CDATA 'authority' >
+  
+]]>
+  
+<!ENTITY % idno 'INCLUDE' >
+<![ %idno; [
+
+<!ELEMENT %n.idno; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.idno;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'idno' >
+  
+]]>
+  
+<!ENTITY % availability 'INCLUDE' >
+<![ %availability; [
+
+<!ELEMENT %n.availability; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.availability;  
+      %a.global;
+      status (free | unknown | restricted) "unknown"
+      TEIform CDATA 'availability' >
+  
+]]>
+  
+<!--The PUBLISHER, PUBPLACE, and ADDRESS elements
+are defined in file teicore2.dtd.-->
+<!-- end of [D2224]  5.2.4-->
+
+
+<!-- [D2225] 5.2.5: The series statement -->
+
+<!ENTITY % seriesStmt 'INCLUDE' >
+<![ %seriesStmt; [
+
+<!ELEMENT %n.seriesStmt; %om.RO;  ( ((%n.title;), ((%n.idno;) |  %n.respStmt;)*)
+| (%n.p;)+ )> 
+<!ATTLIST %n.seriesStmt;  
+      %a.global;
+      TEIform CDATA 'seriesStmt' >
+  
+]]>
+  
+<!-- end of [D2225]  5.2.5-->
+
+
+<!-- [D2226] 5.2.6: The notes statement -->
+
+<!ENTITY % notesStmt 'INCLUDE' >
+<![ %notesStmt; [
+
+<!ELEMENT %n.notesStmt; %om.RO;  ((%n.note;)+)> 
+<!ATTLIST %n.notesStmt;  
+      %a.global;
+      TEIform CDATA 'notesStmt' >
+  
+]]>
+  
+<!--The NOTE element is defined with the core tags.-->
+<!-- end of [D2226]  5.2.6-->
+
+<!-- end of [D222]  5.2-->
+
+
+<!-- [D223] 5.2.7: The source description -->
+
+<!ENTITY % sourceDesc 'INCLUDE' >
+<![ %sourceDesc; [
+
+<!ELEMENT %n.sourceDesc; %om.RR;  ((%n.p;) | %n.bibl; | %n.biblFull; | %n.biblStruct; | %n.listBibl; |
+scriptStmt | %n.recordingStmt;)+> 
+<!ATTLIST %n.sourceDesc;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'sourceDesc' >
+  
+]]>
+  
+
+<!-- [D2231] 5.2.9: Script statement and recording statement -->
+
+<!ENTITY % scriptStmt 'INCLUDE' >
+<![ %scriptStmt; [
+
+<!ELEMENT %n.scriptStmt; %om.RR;  ((%n.p;)+ | %n.bibl; | %n.biblFull; | %n.biblStruct;)> 
+<!ATTLIST %n.scriptStmt;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'scriptStmt' >
+  
+]]>
+  
+<!ENTITY % recordingStmt 'INCLUDE' >
+<![ %recordingStmt; [
+
+<!ELEMENT %n.recordingStmt; %om.RR;  ((%n.p;)+ | (%n.recording;)+ )> 
+<!ATTLIST %n.recordingStmt;  
+      %a.global;
+      TEIform CDATA 'recordingStmt' >
+  
+]]>
+  
+<!ENTITY % recording 'INCLUDE' >
+<![ %recording; [
+
+<!ELEMENT %n.recording; %om.RR;  ((%n.p;)+ | ((%n.respStmt;) | %n.equipment; | %n.broadcast; | %n.date;)*)> 
+<!ATTLIST %n.recording;  
+      %a.global;
+      %a.declarable;
+      type (audio | video) "audio"
+      dur CDATA #IMPLIED
+      TEIform CDATA 'recording' >
+  
+]]>
+  
+<!ENTITY % equipment 'INCLUDE' >
+<![ %equipment; [
+
+<!ELEMENT %n.equipment; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.equipment;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'equipment' >
+  
+]]>
+  
+<!ENTITY % broadcast 'INCLUDE' >
+<![ %broadcast; [
+
+<!ELEMENT %n.broadcast; %om.RR;  ((%n.p;)+ | %n.bibl; | %n.biblStruct; | %n.biblFull; | %n.recording;)> 
+<!ATTLIST %n.broadcast;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'broadcast' >
+  
+]]>
+  
+<!-- end of [D2231]  5.2.9-->
+
+<!-- end of [D223]  5.2.7-->
+
+
+<!-- [D225] 5.3: The encoding description -->
+
+<!ENTITY % encodingDesc 'INCLUDE' >
+<![ %encodingDesc; [
+
+<!ELEMENT %n.encodingDesc; %om.RR;  ((%n.projectDesc;)*, (%n.samplingDecl;)*, (%n.editorialDecl;)*,
+              (%n.tagsDecl;)?, (%n.refsDecl;)*, (%n.classDecl;)*, (%n.metDecl;)*, (%n.fsdDecl;)*,
+              (%n.variantEncoding;)*, (%n.p;)*)> 
+<!ATTLIST %n.encodingDesc;  
+      %a.global;
+      TEIform CDATA 'encodingDesc' >
+  
+]]>
+  
+
+<!-- [D2251] 5.3.1: The project description -->
+
+<!ENTITY % projectDesc 'INCLUDE' >
+<![ %projectDesc; [
+
+<!ELEMENT %n.projectDesc; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.projectDesc;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'projectDesc' >
+  
+]]>
+  
+<!-- end of [D2251]  5.3.1-->
+
+
+<!-- [D2252] 5.3.2: The sampling declaration -->
+
+<!ENTITY % samplingDecl 'INCLUDE' >
+<![ %samplingDecl; [
+
+<!ELEMENT %n.samplingDecl; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.samplingDecl;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'samplingDecl' >
+  
+]]>
+  
+<!-- end of [D2252]  5.3.2-->
+
+
+<!-- [D2253] 5.3.3: The editorial practices declaration -->
+
+<!ENTITY % editorialDecl 'INCLUDE' >
+<![ %editorialDecl; [
+
+<!ELEMENT %n.editorialDecl; %om.RO;  ( (%n.p;)+ | (((%n.correction;) | (%n.normalization;)
+       | %n.quotation; | %n.hyphenation; | (%n.interpretation;)
+       | %n.segmentation; | %n.stdVals;)+, (%n.p;)*))> 
+<!ATTLIST %n.editorialDecl;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'editorialDecl' >
+  
+]]>
+  
+<!ENTITY % correction 'INCLUDE' >
+<![ %correction; [
+
+<!ELEMENT %n.correction; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.correction;  
+      %a.global;
+      %a.declarable;
+      status (high | medium | low | unknown) "unknown"
+      method (silent | tags) "silent"
+      TEIform CDATA 'correction' >
+  
+]]>
+  
+<!ENTITY % normalization 'INCLUDE' >
+<![ %normalization; [
+
+<!ELEMENT %n.normalization; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.normalization;  
+      %a.global;
+      %a.declarable;
+      source CDATA #IMPLIED
+      method (silent|tags) "silent"
+      TEIform CDATA 'normalization' >
+  
+]]>
+  
+<!ENTITY % quotation 'INCLUDE' >
+<![ %quotation; [
+
+<!ELEMENT %n.quotation; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.quotation;  
+      %a.global;
+      %a.declarable;
+      marks (none | some | all) "all"
+      form (data | rend | std | nonstd | unknown) "unknown"
+      TEIform CDATA 'quotation' >
+  
+]]>
+  
+<!ENTITY % hyphenation 'INCLUDE' >
+<![ %hyphenation; [
+
+<!ELEMENT %n.hyphenation; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.hyphenation;  
+      %a.global;
+      %a.declarable;
+      eol (all|some|none) "some"
+      TEIform CDATA 'hyphenation' >
+  
+]]>
+  
+<!ENTITY % segmentation 'INCLUDE' >
+<![ %segmentation; [
+
+<!ELEMENT %n.segmentation; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.segmentation;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'segmentation' >
+  
+]]>
+  
+<!ENTITY % stdVals 'INCLUDE' >
+<![ %stdVals; [
+
+<!ELEMENT %n.stdVals; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.stdVals;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'stdVals' >
+  
+]]>
+  
+<!ENTITY % interpretation 'INCLUDE' >
+<![ %interpretation; [
+
+<!ELEMENT %n.interpretation; %om.RO;  ((%n.p;)+)> 
+<!ATTLIST %n.interpretation;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'interpretation' >
+  
+]]>
+  
+<!-- end of [D2253]  5.3.3-->
+
+
+<!-- [DHD57] 5.3.4: Tag usage and rendition declarations -->
+
+<!ENTITY % tagsDecl 'INCLUDE' >
+<![ %tagsDecl; [
+
+<!ELEMENT %n.tagsDecl; %om.RO;  ((%n.rendition;)*, (%n.tagUsage;)*) > 
+<!ATTLIST %n.tagsDecl;  
+      %a.global;
+      TEIform CDATA 'tagsDecl' >
+  
+]]>
+  
+<!ENTITY % tagUsage 'INCLUDE' >
+<![ %tagUsage; [
+
+<!ELEMENT %n.tagUsage; %om.RO; %paraContent; > 
+<!ATTLIST %n.tagUsage;  
+      %a.global;
+      gi CDATA #REQUIRED
+      occurs CDATA #IMPLIED
+      ident CDATA #IMPLIED
+      render IDREF #IMPLIED
+      TEIform CDATA 'tagUsage' >
+  
+]]>
+  
+<!ENTITY % rendition 'INCLUDE' >
+<![ %rendition; [
+
+<!ELEMENT %n.rendition; %om.RO; %paraContent; > 
+<!ATTLIST %n.rendition;  
+      %a.global;
+      TEIform CDATA 'rendition' >
+  
+]]>
+  
+<!-- end of [DHD57]  5.3.4-->
+
+
+<!-- [D2254] 5.3.5.3: The reference scheme declaration -->
+
+<!ENTITY % refsDecl 'INCLUDE' >
+<![ %refsDecl; [
+
+<!ELEMENT %n.refsDecl; %om.RO;  ((%n.p;)+ | (%n.step;)+ | (%n.state;)+)> 
+<!ATTLIST %n.refsDecl;  
+      %a.global;
+      doctype CDATA "TEI.2"
+      TEIform CDATA 'refsDecl' >
+  
+]]>
+  
+<!ENTITY % step 'INCLUDE' >
+<![ %step; [
+
+<!ELEMENT %n.step; %om.RO; EMPTY> 
+<!ATTLIST %n.step;  
+      %a.global;
+      refunit CDATA #IMPLIED
+      length CDATA #IMPLIED
+      delim CDATA #IMPLIED
+      from %extPtr; #REQUIRED
+      to %extPtr; 'DITTO'
+      TEIform CDATA 'step' >
+  
+]]>
+  
+<!ENTITY % state 'INCLUDE' >
+<![ %state; [
+
+<!ELEMENT %n.state; %om.RO; EMPTY> 
+<!ATTLIST %n.state;  
+      %a.global;
+      ed CDATA #IMPLIED
+      unit CDATA #REQUIRED
+      length CDATA #IMPLIED
+      delim CDATA #IMPLIED
+      TEIform CDATA 'state' >
+  
+]]>
+  
+<!-- end of [D2254]  5.3.5.3-->
+
+
+<!-- [D2255] 5.3.6: The classification declaration -->
+
+<!ENTITY % classDecl 'INCLUDE' >
+<![ %classDecl; [
+
+<!ELEMENT %n.classDecl; %om.RR;  ((%n.taxonomy;)+)> 
+<!ATTLIST %n.classDecl;  
+      %a.global;
+      TEIform CDATA 'classDecl' >
+  
+]]>
+  
+<!ENTITY % taxonomy 'INCLUDE' >
+<![ %taxonomy; [
+
+<!ELEMENT %n.taxonomy; %om.RR;  ((%n.category;)+ | (((%n.bibl;) | %n.biblStruct; | %n.biblFull;),
+category*))> 
+<!ATTLIST %n.taxonomy;  
+      %a.global;
+      TEIform CDATA 'taxonomy' >
+  
+]]>
+  
+<!ENTITY % category 'INCLUDE' >
+<![ %category; [
+
+<!ELEMENT %n.category; %om.RR;  ((%n.catDesc;), (%n.category;)*)> 
+<!ATTLIST %n.category;  
+      %a.global;
+      TEIform CDATA 'category' >
+  
+]]>
+  
+<!ENTITY % catDesc 'INCLUDE' >
+<![ %catDesc; [
+
+<!ELEMENT %n.catDesc; %om.RO;  (#PCDATA | %m.phrase; | %n.textDesc; )*> 
+<!ATTLIST %n.catDesc;  
+      %a.global;
+      TEIform CDATA 'catDesc' >
+  
+]]>
+  
+<!-- end of [D2255]  5.3.6-->
+
+
+<!-- [D2256] 5.3.7: The FSD declaration -->
+
+<!ENTITY % fsdDecl 'INCLUDE' >
+<![ %fsdDecl; [
+
+<!ELEMENT %n.fsdDecl; %om.RO;  EMPTY> 
+<!ATTLIST %n.fsdDecl;  
+      %a.global;
+      type CDATA #REQUIRED
+      fsd ENTITY #REQUIRED
+      TEIform CDATA 'fsdDecl' >
+  
+]]>
+  
+<!-- end of [D2256]  5.3.7-->
+
+
+<!-- [D2258] 5.3.8: Metrical Notation Declaration -->
+
+<!ENTITY % metDecl 'INCLUDE' >
+<![ %metDecl; [
+
+<!ELEMENT %n.metDecl; %om.RO;   ((%component.seq;) | ((%n.symbol;)+))> 
+<!ATTLIST %n.metDecl;  
+      %a.global;
+      %a.declarable;
+      type CDATA "MET REAL"
+      pattern CDATA #IMPLIED
+      TEIform CDATA 'metDecl' >
+  
+]]>
+  
+<!ENTITY % symbol 'INCLUDE' >
+<![ %symbol; [
+
+<!ELEMENT %n.symbol; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.symbol;  
+      %a.global;
+      value CDATA #REQUIRED
+      terminal (Y|N) "Y"
+      TEIform CDATA 'symbol' >
+  
+]]>
+  
+<!-- end of [D2258]  5.3.8-->
+
+
+<!-- [DHDVAR] 5.3.9: Variant-Encoding Declaration -->
+
+<!ENTITY % variantEncoding 'INCLUDE' >
+<![ %variantEncoding; [
+
+<!ELEMENT %n.variantEncoding; %om.RO;  EMPTY> 
+<!ATTLIST %n.variantEncoding;  
+      %a.global;
+      method (location-referenced | double-end-point | parallel-segmentation) #REQUIRED
+      location (internal | external) #REQUIRED
+      TEIform CDATA 'variantEncoding' >
+  
+]]>
+  
+<!-- end of [DHDVAR]  5.3.9-->
+
+<!-- end of [D225]  5.3-->
+
+
+<!-- [D224] 5.4: The profile description -->
+
+<!ENTITY % profileDesc 'INCLUDE' >
+<![ %profileDesc; [
+
+<!ELEMENT %n.profileDesc; %om.RR;   ((%n.creation;)?, (%n.langUsage;)*, (%n.textDesc;)*,
+particDesc*, (%n.settingDesc;)*, (%n.handList;)*, (%n.textClass;)*)> 
+<!ATTLIST %n.profileDesc;  
+      %a.global;
+      TEIform CDATA 'profileDesc' >
+  
+]]>
+  
+
+<!-- [D224C] 5.4.1: Creation -->
+
+<!ENTITY % creation 'INCLUDE' >
+<![ %creation; [
+
+<!ELEMENT %n.creation; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.creation;  
+      %a.global;
+      TEIform CDATA 'creation' >
+  
+]]>
+  
+<!-- end of [D224C]  5.4.1-->
+
+
+<!-- [D2241] 5.4.2: Language usage -->
+
+<!ENTITY % langUsage 'INCLUDE' >
+<![ %langUsage; [
+
+<!ELEMENT %n.langUsage; %om.RO;  ((%n.p;) | %n.language;)+> 
+<!ATTLIST %n.langUsage;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'langUsage' >
+  
+]]>
+  
+<!ENTITY % language 'INCLUDE' >
+<![ %language; [
+
+<!ELEMENT %n.language; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.language;  
+      %a.global;
+      wsd ENTITY #IMPLIED
+      usage CDATA #IMPLIED
+      TEIform CDATA 'language' >
+  
+]]>
+  
+<!-- end of [D2241]  5.4.2-->
+
+
+<!-- [D2243] 5.4.3: Text Classification -->
+
+<!ENTITY % textClass 'INCLUDE' >
+<![ %textClass; [
+
+<!ELEMENT %n.textClass; %om.RR;  (((%n.classCode;) | %n.catRef; | %n.keywords;)* )> 
+<!ATTLIST %n.textClass;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'textClass' >
+  
+]]>
+  
+<!ENTITY % keywords 'INCLUDE' >
+<![ %keywords; [
+
+<!ELEMENT %n.keywords; %om.RO;  ((%n.term;)+ | %n.list;)> 
+<!ATTLIST %n.keywords;  
+      %a.global;
+      scheme IDREF #IMPLIED
+      TEIform CDATA 'keywords' >
+  
+]]>
+  
+<!ENTITY % classCode 'INCLUDE' >
+<![ %classCode; [
+
+<!ELEMENT %n.classCode; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.classCode;  
+      %a.global;
+      scheme IDREF #IMPLIED
+      TEIform CDATA 'classCode' >
+  
+]]>
+  
+<!ENTITY % catRef 'INCLUDE' >
+<![ %catRef; [
+
+<!ELEMENT %n.catRef; %om.RO; EMPTY> 
+<!ATTLIST %n.catRef;  
+      %a.global;
+      target IDREFS #REQUIRED
+      scheme IDREF #IMPLIED
+      TEIform CDATA 'catRef' >
+  
+]]>
+  
+<!-- end of [D2243]  5.4.3-->
+
+<!-- end of [D224]  5.4-->
+
+
+<!-- [D226] 5.5: The Revision Description -->
+
+<!ENTITY % revisionDesc 'INCLUDE' >
+<![ %revisionDesc; [
+
+<!ELEMENT %n.revisionDesc; %om.RR;  ((%n.list;) | (%n.change;)+)> 
+<!ATTLIST %n.revisionDesc;  
+      %a.global;
+      TEIform CDATA 'revisionDesc' >
+  
+]]>
+  
+<!ENTITY % change 'INCLUDE' >
+<![ %change; [
+
+<!ELEMENT %n.change; %om.RO;  ((%n.date;), (%n.respStmt;)+, %n.item;)> 
+<!ATTLIST %n.change;  
+      %a.global;
+      TEIform CDATA 'change' >
+  
+]]>
+  
+<!--respStmt, item, and date are declared in teicore2.-->
+<!-- end of [D226]  5.5-->
+
+<!-- end of [D221B]  5.1.1-->
+
+<!-- end of [D221]  5.1.1-->

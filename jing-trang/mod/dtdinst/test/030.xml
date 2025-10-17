@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <internalEntity name="e1">val</internalEntity>
+  <internalEntity name="e2">[&amp;e1;]</internalEntity>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>doc</name>
+    <attribute>
+      <name>att1</name>
+      <cdata/>
+      <default>/[val]/val/</default>
+    </attribute>
+    <attribute>
+      <name>att2</name>
+      <cdata/>
+      <default> </default>
+    </attribute>
+    <attribute>
+      <name>att3</name>
+      <cdata/>
+      <default> </default>
+    </attribute>
+    <attribute>
+      <name>att4</name>
+      <cdata/>
+      <default>&#xD;
+	 </default>
+    </attribute>
+    <attribute>
+      <name>att5</name>
+      <cdata/>
+      <fixed>val</fixed>
+    </attribute>
+  </attlist>
+</doctype>

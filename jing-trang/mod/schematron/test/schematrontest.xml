@@ -1,0 +1,602 @@
+<testSuite>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Print both cases">
+<rule context="AAA">
+<assert test="BBB">BBB element is missing.</assert>
+<report test="BBB">BBB element is present.</report>
+
+<assert test="@name">AAA misses attribute name.</assert>
+<report test="@name">AAA contains attribute name.</report>
+</rule>
+</pattern>
+
+<pattern name="Print positive result only">
+<rule context="AAA">
+<report test="BBB">BBB element is present.</report>
+<report test="@name">AAA contains attribute name.</report>
+</rule>
+</pattern>
+
+<pattern name="Print negative result only">
+<rule context="AAA">
+<assert test="BBB">BBB element is missing.</assert>
+<assert test="@name">AAA misses attribute name.</assert>
+</rule>
+</pattern>
+</schema>
+</correct>
+<invalid>
+
+<AAA>
+	<BBB/>
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+	<CCC/>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Open model">
+<rule context="AAA">
+<assert test="BBB"> BBB element is not present</assert>
+<assert test="CCC"> CCC element is not present</assert>
+</rule>
+</pattern>
+
+<pattern name="Closed model">
+<rule context="AAA">
+<assert test="BBB"> BBB element is not present</assert>
+<assert test="CCC"> CCC element is not present</assert>
+<assert test="count(BBB|CCC) = count (*)">There is an extra element</assert>
+</rule>
+</pattern>
+
+</schema></correct>
+<invalid>
+
+<AAA>
+	<BBB/>
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+	<BBB/>
+	<DDD/>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Attribute test">
+<rule context="CCC">
+<assert test="@name">attribute name is not present</assert>
+<report test="@name">attribute name is present</report>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA>
+	<BBB>
+		<CCC/>
+		<CCC/>
+	</BBB>
+	<CCC name="c1"/>
+	<CCC name="c2"/>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Root test">
+<rule context="/*">
+<assert test="name()='AAA'">Root element is <name/>, not AAA</assert>
+<report test="name()='AAA'">Root element is AAA</report>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA>
+	<BBB>
+		<CCC/>
+		<CCC/>
+	</BBB>
+</AAA>
+</invalid>
+<invalid>
+
+
+<XXX>
+	<BBB>
+		<CCC/>
+		<CCC/>
+	</BBB>
+</XXX>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Select empty elements CCC">
+<rule context="CCC">
+<assert test="normalize-space(.) and *">Source contains an empty element CCC </assert>
+
+<report test="normalize-space(.) = ''">[1]An element CCC  does not contain any text</report>
+<assert test="normalize-space(.)">[2]An element CCC  does not contain any text</assert>
+
+<report test="not(*)">[1]An element CCC  does not contain any child element</report>
+<assert test="*">[2]An element CCC  does not contain any child element</assert>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA>
+	<BBB>
+		<CCC/>
+	</BBB>
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+	<BBB>
+		<CCC>I am CCC element</CCC>
+	</BBB>
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+	<BBB>
+		<CCC>
+			<DDD/>
+		</CCC>
+	</BBB>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Predefined values">
+<rule context="AAA">
+<report test="normalize-space(.) = 'aaa' or normalize-space(.) = 'bbb'">O.K.</report>
+<assert test="normalize-space(.) = 'aaa' or normalize-space(.) = 'bbb'">The AAA value is not permitted.</assert>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA>
+aaa
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+		bbb
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+  ccc
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Test integer">
+<rule context="AAA">
+<report test="floor(.) = number(.)">O.K.</report>
+<assert test="floor(.) = number(.)">The AAA value is not an integer.</assert>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA>
+aaa
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+ 12.234
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+45
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+0
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+-45
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Test count">
+<rule context="/*">
+<report test="count(//BBB) = count(//AAA)">O.K.</report>
+<assert test="count(//BBB) &lt;= count(//AAA)">Some AAA are missing</assert>
+<report test="count(//BBB) &lt; count(//AAA)">Some BBB are missing</report>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<XXX>
+	<BBB/>
+	<BBB/>
+	<AAA/>
+	<BBB/>
+	<AAA/>
+	<AAA/>
+</XXX>
+</invalid>
+<invalid>
+
+<XXX>
+	<BBB/>
+	<AAA/>
+	<BBB/>
+	<AAA/>
+	<AAA/>
+</XXX>
+</invalid>
+<invalid>
+
+<XXX>
+	<BBB/>
+	<BBB/>
+	<AAA/>
+	<BBB/>
+	<AAA/>
+</XXX>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Test attribute">
+<rule context="CCC">
+<report test="parent::BBB and not(@id)">Attribute id is missing</report>
+<report test="not(parent::BBB) and @id">Attribute id is used in wrong context</report>
+</rule>
+</pattern>
+</schema></correct>
+<valid>
+
+<AAA>
+	<CCC/>
+	<CCC/>
+	<BBB>
+		<CCC id="Q1"/>
+	</BBB>
+</AAA>
+</valid>
+<invalid>
+
+<AAA>
+	<CCC id="Q2"/>
+	<CCC/>
+	<BBB>
+		<CCC id="Q1"/>
+	</BBB>
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+	<CCC/>
+	<CCC/>
+	<BBB>
+		<CCC/>
+	</BBB>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Character @ forbidden">
+<rule context="*">
+<report test="contains(.,'@')">Text in element <name/> must not contain character @</report>
+</rule>
+</pattern>
+</schema></correct>
+<valid>
+
+<AAA>
+	<BBB>bbbb</BBB>
+	<CCC>cccc</CCC>
+</AAA>
+</valid>
+<invalid>
+
+<AAA>
+	<BBB>bbbb@bbb.com</BBB>
+	<CCC>ccc@ccc.com</CCC>
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+	<BBB>bbbb</BBB>
+	<CCC>cccc</CCC>
+	aaa@aaa.net
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Attributes present">
+<rule context="BBB">
+<assert test="not(@aaa) or (@aaa and @bbb)">The element must not have an isolated aaa attribute</assert>
+<assert test="not(@bbb) or (@aaa and @bbb)">The element must not have an isolated bbb attribute</assert>
+</rule>
+</pattern>
+</schema></correct>
+<valid>
+
+<AAA>
+	<BBB aaa="A" bbb="B"/>
+</AAA>
+</valid>
+<invalid>
+
+<AAA>
+	<BBB bbb="B"/>
+</AAA>
+</invalid>
+<invalid>
+
+<AAA>
+	<BBB aaa="A"/>
+</AAA>
+</invalid>
+<valid>
+
+<AAA>
+	<BBB/>
+</AAA>
+</valid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Number of characters in an abbreviation">
+<rule context="BBB">
+<report test="string-length(@bbb) &lt; 2">There is not enough letters in the abbreviation</report>
+<report test="string-length(@bbb) &gt; 3">There is too much letters in the abbreviation</report>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA>
+	<BBB bbb="C"/>
+</AAA>
+</invalid>
+<valid>
+
+<AAA>
+	<BBB bbb="CZ"/>
+</AAA>
+</valid>
+<invalid>
+
+<AAA>
+	<BBB bbb="CZCZ"/>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Sum equals 100%.">
+<rule context="Total">
+<assert test="sum(//Percent) = 100">The values do not sum to 100%. </assert>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<Total>
+	<Percent>20</Percent>
+	<Percent>30</Percent>
+	<Percent>10</Percent>
+	<Percent>50</Percent>		
+</Total>
+</invalid>
+<invalid>
+
+<Total>
+	<Percent>20</Percent>
+	<Percent>10</Percent>
+	<Percent>50</Percent>		
+</Total>
+</invalid>
+<valid>
+
+<Total>
+	<Percent>20</Percent>
+	<Percent>30</Percent>
+	<Percent>50</Percent>		
+</Total>
+</valid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="a child of selected elements">
+<rule context="CCC">
+<assert test="parent::*[name()='BBB' or name()='DDD']">Element CCC must not be a child of element <name path="parent::*"/> </assert>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA>
+	<BBB>
+		<CCC/>
+	</BBB>
+	<CCC/>
+	<DDD>
+		<CCC/>
+		<EEE>
+			<CCC/>
+		</EEE>
+	</DDD>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="id is the only permited attribute name">
+<rule context="*">
+<report test="@*[not(name()='id')]">Atrribute <name path="@*[not(name()='id')]"/> is forbidden in element <name/> </report>
+</rule>
+</pattern>
+</schema></correct>
+<invalid>
+
+<AAA name="aaa">
+<BBB id="bbb"/>
+<CCC color="ccc"/>
+</AAA>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Required ID">
+    <rule context="cat | dog">
+        <assert test="@id">An element of type <name/> should have an id attribute that is a unique identifier for that animal.</assert>
+    </rule>
+</pattern>
+
+<pattern name="Required IDREF">
+	<rule context="catowner">
+	   <assert test="@pet">An element of type <name/> should have a pet attribute.</assert>
+	</rule>
+</pattern>
+
+<pattern name="IDREF should reference an ID used in the same document">
+	<rule context="catowner[@pet]">
+		<assert test="id(@pet)">An element of type <name/> should have a pet attribute that should contain a unique identifier.</assert>
+	</rule>
+</pattern>
+
+<pattern name="IDREF should reference an ID of a certain element type only">
+	<rule context="catowner[@pet]">
+		<assert test="(name(id(@pet)) ='cat')">An element of type <name/> should have a pet attribute that should contain the unique identifier for a cat.</assert>
+	</rule>
+</pattern>
+</schema></correct>
+<invalid dtd="
+&lt;!DOCTYPE ideg
+[
+&lt;!ELEMENT ideg    ( dog, cat, catowner+ )>
+&lt;!ELEMENT dog     ( #PCDATA )>
+&lt;!ELEMENT cat      ( #PCDATA )>
+&lt;!ELEMENT catowner ( #PCDATA )>
+&lt;!ATTLIST dog  id ID #REQUIRED >
+&lt;!ATTLIST cat   id ID #REQUIRED >
+&lt;!ATTLIST catowner  pet IDREF #REQUIRED>
+]>">
+<ideg>
+        <dog  id="danny"            >Danny</dog>
+        <cat   id="bede"              >Bede</cat>
+        <catowner >Harold</catowner>
+        <catowner pet="poochi" >Fumiaki</catowner>
+        <catowner pet="danny"   >Jimmy</catowner>
+        <catowner pet="bede"    >Rick</catowner>
+</ideg>
+
+</invalid>
+</testCase>
+<testCase>
+<resource name="source1.xml">
+
+<list>
+	<author id="a1">Alice</author>
+	<author id="p1">Paul</author>	
+	<author id="p2">Peter</author>
+</list>
+</resource>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Compare with the database">
+    <rule context="author">
+				<assert test="document('source1.xml')//author[@id=current()/@id]">The author is not in the database </assert>       
+    </rule>
+</pattern>
+
+</schema></correct>
+<invalid>
+
+<list>
+	<author id="a1"/>
+	<author id="a2"/>
+	<author id="p1"/>	
+	<author id="p2"/>
+</list>
+</invalid>
+</testCase>
+<testCase>
+<resource name="source1.xml">
+<list>
+	<Alice/>
+	<Peter/>
+	<Paul/>
+</list>
+</resource>
+<correct>
+<schema xmlns="http://www.ascc.net/xml/schematron">
+<pattern name="Start of paragraph restriction.">
+    <rule context="p">
+				<assert test="document('source1.xml')//*[name()=substring-before(current(),' ')]">The word at the beginning of sentence is not listed in XML 1.</assert>       
+    </rule>
+</pattern>
+
+</schema></correct>
+
+<invalid>
+
+<Document>
+	<p>Alice is a nice girl.</p>
+	<p>Where is Peter.</p>
+	<p>Paul was invited.</p>
+	<p>But Paul did not come.</p>
+</Document>
+</invalid>
+</testCase>
+</testSuite>

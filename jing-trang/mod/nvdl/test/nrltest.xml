@@ -1,0 +1,2170 @@
+<testSuite>
+<testCase>
+<incorrect>
+<thisIsJunk/>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://www.example.org/a">
+  <allow/>
+</namespace>
+<namespace ns="http://www.example.org/b">
+  <allow/>
+</namespace>
+</rules>
+</correct>
+<valid>
+<foo xmlns="http://www.example.org/a"/>
+</valid>
+<valid>
+<foo xmlns="http://www.example.org/b"/>
+</valid>
+<valid>
+<foo xmlns="http://www.example.org/a">
+<bar xmlns="http://www.example.org/b"/>
+</foo>
+</valid>
+<invalid>
+<foo xmlns="http://www.example.org/a">
+<bar xmlns="http://www.example.org/c"/>
+</foo>
+</invalid>
+<invalid>
+<foo xmlns="http://www.example.org/c"/>
+</invalid>
+<valid>
+<foo xmlns="http://www.example.org/a" att1="val2" att2="val2"/>
+</valid>
+<valid>
+<a:foo xmlns:a="http://www.example.org/a" a:att1="val2" a:att2="val2"/>
+</valid>
+<valid>
+<foo xmlns="http://www.example.org/a" 
+xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
+</valid>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="foo">
+<mode name="foo" extends="bar"/>
+<mode name="bar" extends="foo"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl"/>
+</correct>
+<invalid>
+<foo/>
+</invalid>
+<invalid>
+<foo xmlns="http://www.example.org"/>
+</invalid>
+</testCase>
+<testCase>
+<resource name="ibtwsh6.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="all">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class">
+        <data datatypeLibrary="" type="token"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="title">
+        <text/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="i18n">
+    <optional>
+      <attribute name="xml:lang">
+        <text/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="basic">
+    <ref name="all"/>
+    <ref name="i18n"/>
+  </define>
+  <define name="horiz.model">
+    <interleave>
+      <ref name="basic"/>
+      <text/>
+      <zeroOrMore>
+        <ref name="horiz"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="vert.model">
+    <interleave>
+      <ref name="horiz.model"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="struct.model">
+    <interleave>
+      <ref name="basic"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="horiz">
+    <choice>
+      <ref name="a"/>
+      <ref name="br"/>
+      <ref name="horiz.other"/>
+    </choice>
+  </define>
+  <define name="a">
+    <element name="a">
+      <optional>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="name">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute>
+          <choice>
+            <name ns="">rel</name>
+            <name ns="">rev</name>
+          </choice>
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <ref name="all"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="horiz.other">
+    <element>
+      <choice>
+        <name>abbr</name>
+        <name>acronym</name>
+        <name>cite</name>
+        <name>code</name>
+        <name>dfn</name>
+        <name>em</name>
+        <name>img</name>
+        <name>kbd</name>
+        <name>q</name>
+        <name>samp</name>
+        <name>span</name>
+        <name>strong</name>
+        <name>var</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="vert">
+    <choice>
+      <ref name="header"/>
+      <ref name="List"/>
+      <ref name="table"/>
+      <ref name="vert.other"/>
+    </choice>
+  </define>
+  <define name="header">
+    <element>
+      <choice>
+        <name>h1</name>
+        <name>h2</name>
+        <name>h3</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="List">
+    <choice>
+      <element name="dl">
+        <ref name="basic"/>
+        <oneOrMore>
+          <element>
+            <choice>
+              <name>dt</name>
+              <name>dd</name>
+            </choice>
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+      <element>
+        <choice>
+          <name>ol</name>
+          <name>ul</name>
+        </choice>
+        <ref name="basic"/>
+        <oneOrMore>
+          <element name="li">
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="aligns">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>justified</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+          <value>baseline</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="table">
+    <element name="table">
+      <ref name="basic"/>
+      <optional>
+        <attribute name="summary">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="caption">
+          <ref name="horiz.model"/>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="tr">
+          <ref name="basic"/>
+          <ref name="aligns"/>
+          <oneOrMore>
+            <ref name="tabledata"/>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tabledata">
+    <element>
+      <choice>
+        <name>th</name>
+        <name>td</name>
+      </choice>
+      <ref name="aligns"/>
+      <optional>
+        <attribute name="abbr">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="axis">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="colspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="headers">
+          <data type="IDREFS"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="rowspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="scope">
+          <choice>
+            <value>row</value>
+            <value>col</value>
+            <value>rowgroup</value>
+            <value>colgroup</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="vert.model"/>
+    </element>
+  </define>
+  <define name="vert.other">
+    <choice>
+      <element name="address">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="blockquote">
+        <optional>
+          <attribute name="cite">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <ref name="struct.model"/>
+      </element>
+      <element name="div">
+        <ref name="struct.model"/>
+      </element>
+      <element name="p">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="pre">
+        <ref name="horiz.model"/>
+      </element>
+    </choice>
+  </define>
+  <start>
+    <element name="html">
+      <ref name="i18n"/>
+      <optional>
+        <attribute name="xml:base">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <choice>
+            <value>preserve</value>
+            <value>default</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="head"/>
+      <element name="body">
+        <ref name="basic"/>
+        <zeroOrMore>
+          <ref name="vert"/>
+        </zeroOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="head">
+    <element name="head">
+      <ref name="i18n"/>
+      <element name="title">
+        <ref name="i18n"/>
+        <text/>
+      </element>
+      <zeroOrMore>
+        <element name="meta">
+          <optional>
+            <attribute>
+              <choice>
+                <name ns="">name</name>
+                <name ns="">http-equiv</name>
+              </choice>
+              <data datatypeLibrary="" type="token"/>
+            </attribute>
+          </optional>
+          <attribute name="content">
+            <text/>
+          </attribute>
+          <empty/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+</resource>
+<resource name="xhtml.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <include href="ibtwsh6.rng" ns="http://www.w3.org/1999/xhtml"/>
+</grammar>
+</resource>
+<resource name="rdfxml.rng">
+<!--
+  
+  RELAX NG Compact Schema for RDF/XML Syntax
+  
+  This schema is for information only and NON-NORMATIVE
+  
+  It is based on one originally written by James Clark in
+  http://lists.w3.org/Archives/Public/www-rdf-comments/2001JulSep/0248.html
+  and updated with later changes.
+  
+-->
+<grammar xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ns="http://www.w3.org/XML/1998/namespace" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <ref name="doc"/>
+  </start>
+  <!-- I cannot seem to do this in RNGC so they are expanded in-line -->
+  <!--
+    coreSyntaxTerms = rdf:RDF | rdf:ID | rdf:about | rdf:bagID | rdf:parseType | rdf:resource | rdf:nodeID | rdf:datatype
+    syntaxTerms = coreSyntaxTerms | rdf:Description | rdf:li
+    oldTerms    = rdf:aboutEach | rdf:aboutEachPrefix
+    nodeElementURIs       = * - ( coreSyntaxTerms | rdf:li | oldTerms )
+    propertyElementURIs   = * - ( coreSyntaxTerms | rdf:Description | oldTerms )
+    propertyAttributeURIs = * - ( coreSyntaxTerms | rdf:Description | rdf:li | oldTerms )
+  -->
+  <!--
+    Also needed to allow rdf:li on all property element productions
+    since we can't capture the rdf:li rewriting to rdf_<n> in relaxng
+  -->
+  <!-- Need to add these explicitly -->
+  <define name="xmllang">
+    <attribute name="xml:lang"/>
+  </define>
+  <define name="xmlbase">
+    <attribute name="xml:base"/>
+  </define>
+  <!-- and to forbid every other xml:* attribute, element -->
+  <define name="doc">
+    <ref name="RDF"/>
+  </define>
+  <define name="RDF">
+    <element name="rdf:RDF">
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="nodeElementList"/>
+    </element>
+  </define>
+  <define name="nodeElementList">
+    <zeroOrMore>
+      <ref name="nodeElement"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    Should be something like:
+     ws* , (  nodeElement , ws* )*
+    but RELAXNG does this by default, ignoring whitespace separating tags.
+  -->
+  <define name="nodeElement">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:li</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <choice>
+          <ref name="idAttr"/>
+          <ref name="nodeIdAttr"/>
+          <ref name="aboutAttr"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="bagIdAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="propertyAttr"/>
+      </zeroOrMore>
+      <ref name="propertyEltList"/>
+    </element>
+  </define>
+  <!--
+    It is not possible to say "and not things
+    beginning with _ in the rdf: namespace" in RELAX NG.
+  -->
+  <define name="ws">
+    <value> </value>
+  </define>
+  <!--
+    Not used in this RELAX NG schema; but should be any legal XML
+    whitespace defined by http://www.w3.org/TR/2000/REC-xml-20001006#NT-S
+  -->
+  <define name="propertyEltList">
+    <zeroOrMore>
+      <ref name="propertyElt"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    Should be something like:
+     ws* , ( propertyElt , ws* )*
+    but RELAXNG does this by default, ignoring whitespace separating tags.
+  -->
+  <define name="propertyElt">
+    <choice>
+      <ref name="resourcePropertyElt"/>
+      <ref name="literalPropertyElt"/>
+      <ref name="parseTypeLiteralPropertyElt"/>
+      <ref name="parseTypeResourcePropertyElt"/>
+      <ref name="parseTypeCollectionPropertyElt"/>
+      <ref name="parseTypeOtherPropertyElt"/>
+      <ref name="emptyPropertyElt"/>
+    </choice>
+  </define>
+  <define name="resourcePropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="nodeElement"/>
+    </element>
+  </define>
+  <define name="literalPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <choice>
+          <ref name="idAttr"/>
+          <ref name="datatypeAttr"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="parseTypeLiteralPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <ref name="parseLiteral"/>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="literal"/>
+    </element>
+  </define>
+  <define name="parseTypeResourcePropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <ref name="parseResource"/>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="propertyEltList"/>
+    </element>
+  </define>
+  <define name="parseTypeCollectionPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="parseCollection"/>
+      <ref name="nodeElementList"/>
+    </element>
+  </define>
+  <define name="parseTypeOtherPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="parseOther"/>
+      <ref name="any"/>
+    </element>
+  </define>
+  <define name="emptyPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <choice>
+          <ref name="resourceAttr"/>
+          <ref name="nodeIdAttr"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="bagIdAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="propertyAttr"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="idAttr">
+    <attribute name="rdf:ID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="nodeIdAttr">
+    <attribute name="rdf:nodeID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="aboutAttr">
+    <attribute name="rdf:about">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="bagIdAttr">
+    <attribute name="rdf:bagID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="propertyAttr">
+    <attribute>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:li</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <data type="string" datatypeLibrary=""/>
+    </attribute>
+  </define>
+  <define name="resourceAttr">
+    <attribute name="rdf:resource">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="datatypeAttr">
+    <attribute name="rdf:datatype">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="parseLiteral">
+    <attribute name="rdf:parseType">
+      <value>Literal</value>
+    </attribute>
+  </define>
+  <define name="parseResource">
+    <attribute name="rdf:parseType">
+      <value>Resource</value>
+    </attribute>
+  </define>
+  <define name="parseCollection">
+    <attribute name="rdf:parseType">
+      <value>Collection</value>
+    </attribute>
+  </define>
+  <define name="parseOther">
+    <attribute name="rdf:parseType"/>
+  </define>
+  <define name="URI-reference">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="literal">
+    <ref name="any"/>
+  </define>
+  <define name="IDsymbol">
+    <data type="NMTOKEN"/>
+  </define>
+  <define name="any">
+    <mixed>
+      <zeroOrMore>
+        <element>
+          <anyName/>
+          <zeroOrMore>
+            <attribute>
+              <anyName/>
+            </attribute>
+          </zeroOrMore>
+          <ref name="any"/>
+        </element>
+      </zeroOrMore>
+    </mixed>
+  </define>
+</grammar>
+</resource>
+<correct>
+<rules startMode="root" xmlns="http://www.thaiopensource.com/validate/nrl">
+  <mode name="root">
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <validate schema="xhtml.rng" useMode="#attach">
+        <context path="head" useMode="rdf"/>
+      </validate>
+    </namespace>
+  </mode>
+  <mode name="rdf">
+    <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <validate schema="rdfxml.rng" useMode="#attach"/>
+    </namespace>
+  </mode>
+</rules>
+</correct>
+<valid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>A title</title>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</valid>
+<valid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>A title</title>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</valid>
+<invalid>
+<randomJunk xmlns="http://example.org"/>
+</invalid>
+<invalid>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+</invalid>
+<invalid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>A title<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/></title>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</invalid>
+<invalid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+<head>
+<title>A title</title>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</invalid>
+</testCase>
+<testCase>
+<resource name="ibtwsh6.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="all">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class">
+        <data datatypeLibrary="" type="token"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="title">
+        <text/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="i18n">
+    <optional>
+      <attribute name="xml:lang">
+        <text/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="basic">
+    <ref name="all"/>
+    <ref name="i18n"/>
+  </define>
+  <define name="horiz.model">
+    <interleave>
+      <ref name="basic"/>
+      <text/>
+      <zeroOrMore>
+        <ref name="horiz"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="vert.model">
+    <interleave>
+      <ref name="horiz.model"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="struct.model">
+    <interleave>
+      <ref name="basic"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="horiz">
+    <choice>
+      <ref name="a"/>
+      <ref name="br"/>
+      <ref name="horiz.other"/>
+    </choice>
+  </define>
+  <define name="a">
+    <element name="a">
+      <optional>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="name">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute>
+          <choice>
+            <name ns="">rel</name>
+            <name ns="">rev</name>
+          </choice>
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <ref name="all"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="horiz.other">
+    <element>
+      <choice>
+        <name>abbr</name>
+        <name>acronym</name>
+        <name>cite</name>
+        <name>code</name>
+        <name>dfn</name>
+        <name>em</name>
+        <name>img</name>
+        <name>kbd</name>
+        <name>q</name>
+        <name>samp</name>
+        <name>span</name>
+        <name>strong</name>
+        <name>var</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="vert">
+    <choice>
+      <ref name="header"/>
+      <ref name="List"/>
+      <ref name="table"/>
+      <ref name="vert.other"/>
+    </choice>
+  </define>
+  <define name="header">
+    <element>
+      <choice>
+        <name>h1</name>
+        <name>h2</name>
+        <name>h3</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="List">
+    <choice>
+      <element name="dl">
+        <ref name="basic"/>
+        <oneOrMore>
+          <element>
+            <choice>
+              <name>dt</name>
+              <name>dd</name>
+            </choice>
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+      <element>
+        <choice>
+          <name>ol</name>
+          <name>ul</name>
+        </choice>
+        <ref name="basic"/>
+        <oneOrMore>
+          <element name="li">
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="aligns">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>justified</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+          <value>baseline</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="table">
+    <element name="table">
+      <ref name="basic"/>
+      <optional>
+        <attribute name="summary">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="caption">
+          <ref name="horiz.model"/>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="tr">
+          <ref name="basic"/>
+          <ref name="aligns"/>
+          <oneOrMore>
+            <ref name="tabledata"/>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tabledata">
+    <element>
+      <choice>
+        <name>th</name>
+        <name>td</name>
+      </choice>
+      <ref name="aligns"/>
+      <optional>
+        <attribute name="abbr">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="axis">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="colspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="headers">
+          <data type="IDREFS"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="rowspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="scope">
+          <choice>
+            <value>row</value>
+            <value>col</value>
+            <value>rowgroup</value>
+            <value>colgroup</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="vert.model"/>
+    </element>
+  </define>
+  <define name="vert.other">
+    <choice>
+      <element name="address">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="blockquote">
+        <optional>
+          <attribute name="cite">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <ref name="struct.model"/>
+      </element>
+      <element name="div">
+        <ref name="struct.model"/>
+      </element>
+      <element name="p">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="pre">
+        <ref name="horiz.model"/>
+      </element>
+    </choice>
+  </define>
+  <start>
+    <element name="html">
+      <ref name="i18n"/>
+      <optional>
+        <attribute name="xml:base">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <choice>
+            <value>preserve</value>
+            <value>default</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="head"/>
+      <element name="body">
+        <ref name="basic"/>
+        <zeroOrMore>
+          <ref name="vert"/>
+        </zeroOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="head">
+    <element name="head">
+      <ref name="i18n"/>
+      <element name="title">
+        <ref name="i18n"/>
+        <text/>
+      </element>
+      <zeroOrMore>
+        <element name="meta">
+          <optional>
+            <attribute>
+              <choice>
+                <name ns="">name</name>
+                <name ns="">http-equiv</name>
+              </choice>
+              <data datatypeLibrary="" type="token"/>
+            </attribute>
+          </optional>
+          <attribute name="content">
+            <text/>
+          </attribute>
+          <empty/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+</resource>
+<resource name="version.rnc">
+default namespace = "http://www.example.com/version"
+element linux|windows { empty }
+</resource>
+<correct>
+<rules startMode="root" xmlns="http://www.thaiopensource.com/validate/nrl">
+  <mode name="root">
+    <namespace ns="">
+      <validate schema="ibtwsh6.rng" useMode="linux"/>
+      <validate schema="ibtwsh6.rng" useMode="windows"/>
+    </namespace>
+  </mode>
+  <mode name="linux">
+    <namespace ns="http://www.example.com/version">
+      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
+      <unwrap useMode="#allow">
+	<context path="linux" useMode="#attach"/>
+      </unwrap>
+    </namespace>
+  </mode>
+  <mode name="windows">
+    <namespace ns="http://www.example.com/version">
+      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
+      <unwrap useMode="#allow">
+	<context path="windows" useMode="#attach"/>
+      </unwrap>
+    </namespace>
+  </mode>
+</rules>
+</correct>
+<valid>
+<html xmlns:v="http://www.example.com/version">
+<v:windows>
+<head>
+<title>A test</title>
+</head>
+</v:windows>
+<v:linux>
+<head>
+<title>A test</title>
+</head>
+</v:linux>
+<body><p>Text.</p></body>
+</html>
+</valid>
+<invalid>
+<html xmlns:v="http://www.example.com/version">
+<v:windows>
+<head>
+<title>A test</title>
+</head>
+</v:windows>
+<body><p>Text.</p></body>
+</html>
+</invalid>
+<valid>
+<html xmlns:v="http://www.example.com/version">
+<head>
+<title>A test</title>
+</head>
+<body>
+<p>Text.</p>
+<v:windows>
+<p>Windows.</p>
+</v:windows>
+</body>
+</html>
+</valid>
+<valid>
+<html xmlns:v="http://www.example.com/version">
+<head>
+<title>A test</title>
+</head>
+<body>
+<p>Text.</p>
+<ul>
+<v:windows>
+<li><span>Windows</span></li>
+</v:windows>
+<v:linux>
+<li><span>Linux</span></li>
+</v:linux>
+</ul>
+</body>
+</html>
+</valid>
+<invalid>
+<html xmlns:v="http://www.example.com/version">
+<head>
+<title>A test</title>
+</head>
+<body>
+<p>Text.</p>
+<ul>
+<v:windows>
+<li><v:windows><span>Windows</span></v:windows></li>
+</v:windows>
+<v:linux>
+<li><span>Linux</span></li>
+</v:linux>
+</ul>
+</body>
+</html>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<anyNamespace>
+  <allow/>
+</anyNamespace>
+<anyNamespace match="attributes">
+  <reject/>
+</anyNamespace>
+<namespace match="attributes" ns="http://www.example.org/a">
+  <allow/>
+</namespace>
+</rules>
+</correct>
+<valid>
+<foo xmlns:a="http://www.example.org/a">
+  <bar a:x="val1" a:y="val2"/>
+</foo>
+</valid>
+<valid>
+<foo xmlns:a="http://www.example.org/a">
+  <bar a:x="val1"/>
+</foo>
+</valid>
+<valid>
+<foo xmlns:a="http://www.example.org/a" a:x="val1">
+  <bar a:x="val1"/>
+</foo>
+</valid>
+<invalid>
+<foo xmlns:b="http://www.example.org/b">
+  <bar b:x="val1"/>
+</foo>
+</invalid>
+</testCase>
+<testCase>
+<resource name="atts.rnc">
+namespace a = "http://www.example.org/a"
+attribute a:x { text },
+attribute a:y { text }
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<anyNamespace>
+  <allow/>
+</anyNamespace>
+<anyNamespace match="attributes">
+  <reject/>
+</anyNamespace>
+<namespace match="attributes" ns="http://www.example.org/a">
+  <validate schema="atts.rnc" schemaType="application/x-rnc"/>
+</namespace>
+</rules>
+</correct>
+<valid>
+<foo xmlns:a="http://www.example.org/a" a:x="foo" a:y="bar"/>
+</valid>
+<valid>
+<foo/>
+</valid>
+<invalid>
+<foo xmlns:a="http://www.example.org/a" a:x="foo" a:y="bar" a:z="baz"/>
+</invalid>
+<invalid>
+<foo xmlns:a="http://www.example.org/a" a:x="foo"/>
+</invalid>
+<invalid>
+<foo xmlns:a="http://www.example.org/a" a:y="bar"/>
+</invalid>
+<valid>
+<foo>
+<bar xmlns:a="http://www.example.org/a" a:x="foo" a:y="bar"/>
+</foo>
+</valid>
+<invalid>
+<foo>
+<bar xmlns:a="http://www.example.org/a" a:x="foo"/>
+</foo>
+</invalid>
+</testCase>
+<testCase>
+<resource name="ab.mns">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://www.example.org/a">
+  <allow/>
+</namespace>
+<namespace ns="http://www.example.org/b">
+  <allow/>
+</namespace>
+</rules>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="start">
+<mode name="start" extends="c">
+  <namespace ns="http://www.example.org/a">
+    <validate schema="ab.mns" useMode="cover"/>
+  </namespace>
+  <namespace ns="http://www.example.org/b">
+    <validate schema="ab.mns" useMode="cover"/>
+  </namespace>
+</mode>
+<mode name="cover" extends="c">
+  <namespace ns="http://www.example.org/a">
+    <attach/>
+  </namespace>
+  <namespace ns="http://www.example.org/b">
+    <attach/>
+  </namespace>
+</mode>
+<mode name="c">
+  <namespace ns="http://www.example.org/c">
+    <allow/>
+  </namespace>
+</mode>
+</rules>
+</correct>
+<valid>
+<a:foo xmlns:a="http://www.example.org/a"
+ xmlns:b="http://www.example.org/b"
+ xmlns:c="http://www.example.org/b">
+<b:bar/>
+<c:baz>
+<a:foo/>
+</c:baz>
+</a:foo>
+</valid>
+<valid>
+<b:foo xmlns:a="http://www.example.org/a"
+ xmlns:b="http://www.example.org/b"
+ xmlns:c="http://www.example.org/b">
+<a:bar/>
+<c:baz>
+<a:foo/>
+</c:baz>
+</b:foo>
+</valid>
+<valid>
+<c:foo xmlns:a="http://www.example.org/a"
+ xmlns:b="http://www.example.org/b"
+ xmlns:c="http://www.example.org/b">
+<a:bar/>
+<c:baz>
+<a:foo/>
+</c:baz>
+</c:foo>
+</valid>
+<invalid>
+<foo/>
+</invalid>
+<invalid>
+<c:foo xmlns:a="http://www.example.org/a"
+ xmlns:b="http://www.example.org/b"
+ xmlns:c="http://www.example.org/b">
+<a:bar/>
+<c:baz>
+<foo/>
+</c:baz>
+</c:foo>
+</invalid>
+</testCase>
+<testCase>
+<resource name="atts.mns">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace match="attributes" ns="http://www.example.org/a">
+  <allow/>
+</namespace>
+<namespace match="attributes" ns="http://www.example.org/b">
+  <allow/>
+</namespace>
+</rules>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<anyNamespace>
+  <allow/>
+</anyNamespace>
+<anyNamespace match="attributes">
+  <validate schema="atts.mns"/>
+</anyNamespace>
+</rules>
+</correct>
+<valid>
+<foo xmlns:a="http://www.example.org/a" a:att="x"/>
+</valid>
+<valid>
+<foo xmlns:b="http://www.example.org/b" b:att="x"/>
+</valid>
+<invalid>
+<foo xmlns:c="http://www.example.org/c" c:att="x"/>
+</invalid>
+<valid>
+<foo/>
+</valid>
+<invalid>
+<foo att="x"/>
+</invalid>
+</testCase>
+<testCase>
+<resource name="xhtml.rng">
+<grammar ns="http://www.w3.org/1999/xhtml" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="all">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class">
+        <data datatypeLibrary="" type="token"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="title">
+        <text/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="i18n">
+    <optional>
+      <attribute name="xml:lang">
+        <text/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="basic">
+    <ref name="all"/>
+    <ref name="i18n"/>
+  </define>
+  <define name="horiz.model">
+    <interleave>
+      <ref name="basic"/>
+      <text/>
+      <zeroOrMore>
+        <ref name="horiz"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="vert.model">
+    <interleave>
+      <ref name="horiz.model"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="struct.model">
+    <interleave>
+      <ref name="basic"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="horiz">
+    <choice>
+      <ref name="a"/>
+      <ref name="br"/>
+      <ref name="horiz.other"/>
+    </choice>
+  </define>
+  <define name="a">
+    <element name="a">
+      <optional>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="name">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute>
+          <choice>
+            <name ns="">rel</name>
+            <name ns="">rev</name>
+          </choice>
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <ref name="all"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="horiz.other">
+    <element>
+      <choice>
+        <name>abbr</name>
+        <name>acronym</name>
+        <name>cite</name>
+        <name>code</name>
+        <name>dfn</name>
+        <name>em</name>
+        <name>img</name>
+        <name>kbd</name>
+        <name>q</name>
+        <name>samp</name>
+        <name>span</name>
+        <name>strong</name>
+        <name>var</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="vert">
+    <choice>
+      <ref name="header"/>
+      <ref name="List"/>
+      <ref name="table"/>
+      <ref name="vert.other"/>
+    </choice>
+  </define>
+  <define name="header">
+    <element>
+      <choice>
+        <name>h1</name>
+        <name>h2</name>
+        <name>h3</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="List">
+    <choice>
+      <element name="dl">
+        <ref name="basic"/>
+        <oneOrMore>
+          <element>
+            <choice>
+              <name>dt</name>
+              <name>dd</name>
+            </choice>
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+      <element>
+        <choice>
+          <name>ol</name>
+          <name>ul</name>
+        </choice>
+        <ref name="basic"/>
+        <oneOrMore>
+          <element name="li">
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="aligns">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>justified</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+          <value>baseline</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="table">
+    <element name="table">
+      <ref name="basic"/>
+      <optional>
+        <attribute name="summary">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="caption">
+          <ref name="horiz.model"/>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="tr">
+          <ref name="basic"/>
+          <ref name="aligns"/>
+          <oneOrMore>
+            <ref name="tabledata"/>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tabledata">
+    <element>
+      <choice>
+        <name>th</name>
+        <name>td</name>
+      </choice>
+      <ref name="aligns"/>
+      <optional>
+        <attribute name="abbr">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="axis">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="colspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="headers">
+          <data type="IDREFS"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="rowspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="scope">
+          <choice>
+            <value>row</value>
+            <value>col</value>
+            <value>rowgroup</value>
+            <value>colgroup</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="vert.model"/>
+    </element>
+  </define>
+  <define name="vert.other">
+    <choice>
+      <element name="address">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="blockquote">
+        <optional>
+          <attribute name="cite">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <ref name="struct.model"/>
+      </element>
+      <element name="div">
+        <ref name="struct.model"/>
+      </element>
+      <element name="p">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="pre">
+        <ref name="horiz.model"/>
+      </element>
+    </choice>
+  </define>
+  <start>
+    <element name="html">
+      <ref name="i18n"/>
+      <optional>
+        <attribute name="xml:base">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <choice>
+            <value>preserve</value>
+            <value>default</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="head"/>
+      <element name="body">
+        <ref name="basic"/>
+        <zeroOrMore>
+          <ref name="vert"/>
+        </zeroOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="head">
+    <element name="head">
+      <ref name="i18n"/>
+      <element name="title">
+        <ref name="i18n"/>
+        <text/>
+      </element>
+      <zeroOrMore>
+        <element name="meta">
+          <optional>
+            <attribute>
+              <choice>
+                <name ns="">name</name>
+                <name ns="">http-equiv</name>
+              </choice>
+              <data datatypeLibrary="" type="token"/>
+            </attribute>
+          </optional>
+          <attribute name="content">
+            <text/>
+          </attribute>
+          <empty/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+</resource>
+<resource name="soap-envelope.xsd">
+<!-- Schema for the SOAP/1.1 envelope
+
+     This schema has been produced using W3C's SOAP Version 1.2 schema
+     found at:
+
+     http://www.w3.org/2001/06/soap-envelope
+
+     Copyright 2001 Martin Gudgin, Developmentor.
+
+     Changes made are the following:
+     - reverted namespace to http://schemas.xmlsoap.org/soap/envelope/
+     - reverted mustUnderstand to only allow 0 and 1 as lexical values
+	 - made encodingStyle a global attribute 20020825
+
+	 Further changes:
+
+	 - removed default value from mustUnderstand attribute declaration - 20030314
+
+     Original copyright:
+     
+     Copyright 2001 W3C (Massachusetts Institute of Technology,
+     Institut National de Recherche en Informatique et en Automatique,
+     Keio University). All Rights Reserved.
+     http://www.w3.org/Consortium/Legal/
+
+     This document is governed by the W3C Software License [1] as
+     described in the FAQ [2].
+
+     [1] http://www.w3.org/Consortium/Legal/copyright-software-19980720
+     [2] http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620.html#DTD
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/"
+           targetNamespace="http://schemas.xmlsoap.org/soap/envelope/" >
+
+     
+  <!-- Envelope, header and body -->
+  <xs:element name="Envelope" type="tns:Envelope" />
+  <xs:complexType name="Envelope" >
+    <xs:sequence>
+      <xs:element ref="tns:Header" minOccurs="0" />
+      <xs:element ref="tns:Body" minOccurs="1" />
+      <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="lax" />
+  </xs:complexType>
+
+  <xs:element name="Header" type="tns:Header" />
+  <xs:complexType name="Header" >
+    <xs:sequence>
+      <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="lax" />
+  </xs:complexType>
+  
+  <xs:element name="Body" type="tns:Body" />
+  <xs:complexType name="Body" >
+    <xs:sequence>
+      <xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="lax" >
+	  <xs:annotation>
+	    <xs:documentation>
+		  Prose in the spec does not specify that attributes are allowed on the Body element
+		</xs:documentation>
+	  </xs:annotation>
+	</xs:anyAttribute>
+  </xs:complexType>
+
+       
+  <!-- Global Attributes.  The following attributes are intended to be usable via qualified attribute names on any complex type referencing them.  -->
+  <xs:attribute name="mustUnderstand" >	
+     <xs:simpleType>
+     <xs:restriction base='xs:boolean'>
+	   <xs:pattern value='0|1' />
+	 </xs:restriction>
+   </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="actor" type="xs:anyURI" />
+
+  <xs:simpleType name="encodingStyle" >
+    <xs:annotation>
+	  <xs:documentation>
+	    'encodingStyle' indicates any canonicalization conventions followed in the contents of the containing element.  For example, the value 'http://schemas.xmlsoap.org/soap/encoding/' indicates the pattern described in SOAP specification
+	  </xs:documentation>
+	</xs:annotation>
+    <xs:list itemType="xs:anyURI" />
+  </xs:simpleType>
+
+  <xs:attribute name="encodingStyle" type="tns:encodingStyle" />
+  <xs:attributeGroup name="encodingStyle" >
+    <xs:attribute ref="tns:encodingStyle" />
+  </xs:attributeGroup>
+
+  <xs:element name="Fault" type="tns:Fault" />
+  <xs:complexType name="Fault" final="extension" >
+    <xs:annotation>
+	  <xs:documentation>
+	    Fault reporting structure
+	  </xs:documentation>
+	</xs:annotation>
+    <xs:sequence>
+      <xs:element name="faultcode" type="xs:QName" />
+      <xs:element name="faultstring" type="xs:string" />
+      <xs:element name="faultactor" type="xs:anyURI" minOccurs="0" />
+      <xs:element name="detail" type="tns:detail" minOccurs="0" />      
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="detail">
+    <xs:sequence>
+      <xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="lax" /> 
+  </xs:complexType>
+
+</xs:schema>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.rng"/>
+</namespace>
+</rules>
+</correct>
+<valid>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+              xmlns="http://www.w3.org/1999/xhtml">
+<env:Body>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+<html>
+<head>
+<title>Document 2</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</env:Body>
+</env:Envelope>
+</valid>
+<valid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</valid>
+<invalid>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</invalid>
+<invalid>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+              xmlns="http://www.w3.org/1999/xhtml">
+<env:Body>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</env:Body>
+<env:Header/>
+</env:Envelope>
+</invalid>
+<valid>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+              xmlns="http://www.w3.org/1999/xhtml">
+<env:Header/>
+<env:Body>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</env:Body>
+</env:Envelope>
+</valid>
+</testCase>
+<testCase>
+<resource name="atts1.xsd">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/ns/1">
+  <xsd:attribute name="int" type="xsd:integer"/>
+  <xsd:attribute name="bool" type="xsd:boolean"/>
+</xsd:schema>
+</resource>
+<resource name="atts2.xsd">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/ns/2">
+  <xsd:attribute name="date" type="xsd:date"/>
+</xsd:schema>
+</resource>
+<resource name="root.rnc">
+default namespace = "http://example.com/ns/0"
+element root { empty }
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+  <namespace ns="http://example.com/ns/0">
+    <validate schema="root.rnc" schemaType="application/x-rnc"/>
+  </namespace>
+  <namespace ns="http://example.com/ns/1" match="attributes">
+    <validate schema="atts1.xsd"/>
+  </namespace>
+  <namespace ns="http://example.com/ns/2" match="attributes">
+    <validate schema="atts2.xsd"/>
+  </namespace>
+</rules>
+</correct>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n2="http://example.com/ns/2"
+      n2:date="1964-02-23"/>
+</valid>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      n1:int="42"/>
+</valid>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      n1:bool="true"/>
+</valid>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      xmlns:n2="http://example.com/ns/2"
+      n1:bool="true"
+      n1:int="42"
+      n2:date="1964-02-23"/>
+</valid>
+<invalid>
+<rot xmlns="http://example.com/ns/0"
+     xmlns:n2="http://example.com/ns/2"
+     n2:date="1964-02-23"/>
+</invalid>
+<invalid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      n1:bool="jing"/>
+</invalid>
+</testCase>
+</testSuite>

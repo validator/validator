@@ -1,0 +1,29 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DTCE] 19.: Entity classes for text criticism -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+
+<!ENTITY % x.fragmentary "" >
+<!ENTITY % m.fragmentary "%x.fragmentary; %n.lacunaEnd; | %n.lacunaStart; | %n.witEnd; | %n.witStart;"> 
+<!ENTITY % a.fragmentary '
+      wit CDATA #IMPLIED'> 
+<!ENTITY % a.readings '
+      wit CDATA #IMPLIED
+      type CDATA #IMPLIED
+      cause CDATA #IMPLIED
+      varSeq CDATA #IMPLIED
+      resp CDATA %INHERITED;
+      hand IDREF %INHERITED;'> 
+<!-- end of [DTCE]  19.-->

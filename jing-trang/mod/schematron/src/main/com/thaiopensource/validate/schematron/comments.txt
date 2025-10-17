@@ -1,0 +1,47 @@
+1. span, dir, emph contain PCDATA, not other inlines
+
+2 "The elements may also have an xml:dir attribute for tagging the written language of the contents of the element": should be xml:lang not xml:dir
+
+3. Might be useful to allow test to be a child element rather than an attribute, since newlines
+in attribute values tend to disappear because of attribute value normalization.
+
+4. abstract="true" seems redundant
+
+5. Unclear which nodes patterns are applied to: certainly element
+   nodes; root node too; what about attribute nodes?
+
+6. count(sch:*) = count(sch:assert |sch:report|sch:key|sch:extends ) doesn't work very well
+   since it doesn't pinpoint location of element that should be there
+
+7. Why do name and value-of use different names for their attributes that specify a path?
+
+8. In the DTD ns attribute on schema should have type uri not fpi.
+
+9. ns attribute is problematic. How does it interact with namespace declarations?
+Impossible to implement in XSLT without relying on non-portabl features.
+
+10. Why does DTD have rule* in content model for pattern, whereas S4S requires
+at least one rule?
+
+11. S4S doesn't disallow unknow, unqualified attributes on schematron elements.
+
+12. S4S requires at least non-whitespace character even on namespace qualified attributes
+on SChematron elements.
+
+14. S4S doesn't check that empty elements don't contain text
+
+15 DTD is inconsistent in type for xml:lang (p and report)
+
+16 type of match should be path
+
+17 name of ns attribute on schema is bad: doesn't reflect meaning that applies to roles
+
+18. position() and last()
+
+19. Whitespace handling in messages underspecified.
+
+20. icon attribute on key doesn't make sense to me
+
+21. keys in abstract rules
+
+22. diagnostics wrapper element seems unnecessary

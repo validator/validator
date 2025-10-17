@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <nameSpec name="para.name">
+    <name>para</name>
+  </nameSpec>
+  <nameSpec name="em.name">
+    <name>em</name>
+  </nameSpec>
+  <element>
+    <nameSpecRef name="para.name"/>
+    <zeroOrMore>
+      <choice>
+        <pcdata/>
+        <elementRef>
+          <nameSpecRef name="em.name"/>
+        </elementRef>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element>
+    <nameSpecRef name="em.name"/>
+    <pcdata/>
+  </element>
+</doctype>

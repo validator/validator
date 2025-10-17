@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <attributeDefault name="inherited">
+    <implied/>
+  </attributeDefault>
+  <attributeGroup name="security">
+    <attribute>
+      <name>security</name>
+      <tokenized name="NMTOKEN"/>
+      <attributeDefaultRef name="inherited"/>
+    </attribute>
+  </attributeGroup>
+  <element>
+    <name>div</name>
+    <sequence>
+      <zeroOrMore>
+        <elementRef>
+          <name>para</name>
+        </elementRef>
+      </zeroOrMore>
+      <zeroOrMore>
+        <elementRef>
+          <name>div</name>
+        </elementRef>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <element>
+    <name>para</name>
+    <pcdata/>
+  </element>
+  <attlist>
+    <name>div</name>
+    <attributeGroupRef name="security"/>
+  </attlist>
+  <attlist>
+    <name>para</name>
+    <attributeGroupRef name="security"/>
+  </attlist>
+</doctype>

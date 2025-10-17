@@ -1,0 +1,244 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DWD] 25.1: Writing System Declaration -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding
+Initiative.-->
+<!ENTITY  % INHERITED '#IMPLIED' >
+
+<!ENTITY  % ISO-date 'CDATA' >
+
+
+
+<!--Embed entities for TEI generic identifiers.-->
+
+
+<!ENTITY  % TEI.elementNames SYSTEM 'teigis2.ent' >%TEI.elementNames;
+
+
+<!--Insert switch for XML/SGML -->
+
+<!ENTITY  % TEI.XML 'IGNORE' >
+
+<![ %TEI.XML; [
+
+<!ENTITY  % om.RO '' >
+
+<!ENTITY  % om.RR '' >
+]]>
+
+<!ENTITY  % om.RO '- o' >
+
+<!ENTITY  % om.RR '- -' >
+
+<!ENTITY % a.global '
+      id ID #IMPLIED
+      lang CDATA %INHERITED;'> 
+<!ENTITY % declaration 'INCLUDE' >
+<![ %declaration; [
+
+<!ELEMENT %n.declaration; %om.RR;   ((%n.language;), (%n.script;), (%n.direction;)*, (%n.characters;), (%n.note;)*)> 
+<!ATTLIST %n.declaration;  
+      %a.global;
+      name CDATA #REQUIRED
+      date %ISO-date; #REQUIRED
+      TEIform CDATA 'declaration' >
+  
+]]>
+  
+
+<!-- [DWDLA] 25.2: Language identification -->
+
+<!ENTITY % language 'INCLUDE' >
+<![ %language; [
+
+<!ELEMENT %n.language; %om.RO;   (#PCDATA)> 
+<!ATTLIST %n.language;  
+      %a.global;
+      iso639 CDATA #REQUIRED
+      TEIform CDATA 'language' >
+  
+]]>
+  
+<!-- end of [DWDLA]  25.2-->
+
+
+<!-- [DWDWS] 25.3: Script and writing direction -->
+
+<!ENTITY % script 'INCLUDE' >
+<![ %script; [
+
+<!ELEMENT %n.script; %om.RO;   (#PCDATA)> 
+<!ATTLIST %n.script;  
+      %a.global;
+      TEIform CDATA 'script' >
+  
+]]>
+  
+<!ENTITY % direction 'INCLUDE' >
+<![ %direction; [
+
+<!ELEMENT %n.direction; %om.RO;  EMPTY> 
+<!ATTLIST %n.direction;  
+      %a.global;
+      chars CDATA #REQUIRED
+      lines CDATA #REQUIRED
+      TEIform CDATA 'direction' >
+  
+]]>
+  
+<!-- end of [DWDWS]  25.3-->
+
+
+<!-- [DWDCSBA] 25.4.1: Base components -->
+
+<!ENTITY % characters 'INCLUDE' >
+<![ %characters; [
+
+<!ELEMENT %n.characters; %om.RO;   ((%n.codedCharSet;)*, (%n.baseWsd;)*, (%n.entitySet;)*, (%n.exceptions;)?)> 
+<!ATTLIST %n.characters;  
+      %a.global;
+      TEIform CDATA 'characters' >
+  
+]]>
+  
+<!ENTITY % a.baseStandard '
+      name CDATA #REQUIRED
+      authority (tei | iso | national | private | none) #REQUIRED'> 
+<!ENTITY % codedCharSet 'INCLUDE' >
+<![ %codedCharSet; [
+
+<!ELEMENT %n.codedCharSet; %om.RO;  EMPTY> 
+<!ATTLIST %n.codedCharSet;  
+      %a.global;
+      %a.baseStandard;
+      TEIform CDATA 'codedCharSet' >
+  
+]]>
+  
+<!ENTITY % baseWsd 'INCLUDE' >
+<![ %baseWsd; [
+
+<!ELEMENT %n.baseWsd; %om.RO;  EMPTY> 
+<!ATTLIST %n.baseWsd;  
+      %a.global;
+      %a.baseStandard;
+      TEIform CDATA 'baseWsd' >
+  
+]]>
+  
+<!ENTITY % entitySet 'INCLUDE' >
+<![ %entitySet; [
+
+<!ELEMENT %n.entitySet; %om.RO;  EMPTY> 
+<!ATTLIST %n.entitySet;  
+      %a.global;
+      %a.baseStandard;
+      TEIform CDATA 'entitySet' >
+  
+]]>
+  
+<!-- end of [DWDCSBA]  25.4.1-->
+
+
+<!-- [DWDCSEX] 25.4.2: Exceptions to the base components -->
+
+<!ENTITY % exceptions 'INCLUDE' >
+<![ %exceptions; [
+
+<!ELEMENT %n.exceptions; %om.RO;   ((%n.character;)*)> 
+<!ATTLIST %n.exceptions;  
+      %a.global;
+      TEIform CDATA 'exceptions' >
+  
+]]>
+  
+<!ENTITY % character 'INCLUDE' >
+<![ %character; [
+
+<!ELEMENT %n.character; %om.RO;   ((%n.desc;)*, (%n.form;)+, (%n.note;)*)> 
+<!ATTLIST %n.character;  
+      %a.global;
+      class (lexical | punc | lexpunc | digit | space | DL | LD | dia | joiner | other) "lexical"
+      TEIform CDATA 'character' >
+  
+]]>
+  
+<!ENTITY % desc 'INCLUDE' >
+<![ %desc; [
+
+<!ELEMENT %n.desc; %om.RO;   (#PCDATA)> 
+<!ATTLIST %n.desc;  
+      %a.global;
+      TEIform CDATA 'desc' >
+  
+]]>
+  
+<!ENTITY % form 'INCLUDE' >
+<![ %form; [
+
+<!ELEMENT %n.form; %om.RO;   ((%n.desc;)+, ((%n.figure;) | %n.extFigure;)*, (%n.note;)*)> 
+<!ATTLIST %n.form;  
+      %a.global;
+      string CDATA #IMPLIED
+      et IDREF #IMPLIED
+      entityStd ENTITIES #IMPLIED
+      entityLoc ENTITIES #IMPLIED
+      ucs-4 CDATA #IMPLIED
+      afiicode CDATA #IMPLIED
+      TEIform CDATA 'form' >
+  
+]]>
+  
+<!ENTITY % figure 'INCLUDE' >
+<![ %figure; [
+
+<!ELEMENT %n.figure; %om.RR;  CDATA> 
+<!ATTLIST %n.figure;  
+      %a.global;
+      notation CDATA #REQUIRED
+      TEIform CDATA 'figure' >
+  
+]]>
+  
+<!ENTITY % extFigure 'INCLUDE' >
+<![ %extFigure; [
+
+<!ELEMENT %n.extFigure; %om.RO;  EMPTY> 
+<!ATTLIST %n.extFigure;  
+      %a.global;
+      notation CDATA #REQUIRED
+      entity CDATA #REQUIRED
+      TEIform CDATA 'extFigure' >
+  
+]]>
+  
+<!-- end of [DWDCSEX]  25.4.2-->
+
+
+<!-- [DWDNO] 25.5: Notes -->
+
+<!ENTITY % note 'INCLUDE' >
+<![ %note; [
+
+<!ELEMENT %n.note; %om.RO;   (#PCDATA)> 
+<!ATTLIST %n.note;  
+      %a.global;
+      TEIform CDATA 'note' >
+  
+]]>
+  
+<!-- end of [DWDNO]  25.5-->
+
+<!-- end of [DWD]  25.1-->

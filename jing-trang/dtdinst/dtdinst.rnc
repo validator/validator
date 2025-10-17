@@ -1,0 +1,121 @@
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = element doctype { decl* }
+
+decl = 
+  elementDecl 
+  | attlistDecl
+  | def
+  | overriddenDef
+  | externalIdRef
+  | includedSection
+  | ignoredSection
+  | internalEntityDecl
+  | externalEntityDecl
+  | notationDecl
+  | processingInstruction
+  | comment
+
+def =
+  modelGroupDef
+  | attributeGroupDef
+  | enumGroupDef
+  | datatypeDef
+  | attributeDefaultDef
+  | flagDef
+  | nameSpecDef
+  | externalIdDef
+  | paramDef
+
+elementDecl = element element { nameSpec, modelGroup }
+
+modelGroupDef = element modelGroup { name, modelGroup }
+
+datatypeDef = element datatype { name, datatype }
+
+attributeDefaultDef = element attributeDefault { name, attributeDefault }
+
+flagDef = element flag { name, flag }
+
+nameSpecDef = element nameSpec { name, nameSpec }
+
+externalIdDef = element externalId { name, externalId }
+
+paramDef = element param { name, text }
+
+overriddenDef = element overridden { def | duplicateDef }
+
+duplicateDef = element duplicate { name }
+
+includedSection = 
+  element includedSection { attribute flag { xsd:NCName }?, decl* }
+
+ignoredSection = 
+  element ignoredSection { attribute flag { xsd:NCName }?, text }
+
+externalIdRef = element externalIdRef { name, decl* }
+
+internalEntityDecl = element internalEntity { name, text }
+
+externalEntityDecl = element externalEntity { name, externalId }
+
+notationDecl = element notation { name, externalId }
+
+processingInstruction =
+  element processingInstruction { attribute target { xsd:NCName }, text }
+
+comment = element comment { text }
+
+datatype =
+  element tokenized { 
+    attribute name { "NMTOKEN" | "NMTOKENS"
+                     | "ENTITY" | "ENTITIES"
+                     | "ID" | "IDREF" | "IDREFS" }
+    | (attribute name { "NOTATION" }?, enumGroup)
+  }
+  | element cdata { empty }
+  | element datatypeRef { name }
+
+enumGroup =
+  (element enum { xsd:NMTOKEN }
+   | element enumGroupRef { name } )*
+
+enumGroupDef = element enumGroup { name, enumGroup }
+
+flag =
+  element include { empty }
+  | element ignore { empty }
+  | element flagRef { name }
+
+attlistDecl = element attlist { nameSpec, attributeGroup }
+
+attributeGroupDef = element attributeGroup { name, attributeGroup }
+
+attributeGroup =
+  (element attribute { nameSpec, datatype, attributeDefault }
+   | element attributeGroupRef { name } )*
+
+attributeDefault =
+  element implied { empty }
+  | element required { empty }
+  | element default|fixed { text }
+  | element attributeDefaultRef { name }
+
+modelGroup =
+  element modelGroupRef { name }
+  | element elementRef { nameSpec }
+  | element oneOrMore { modelGroup }
+  | element zeroOrMore { modelGroup }
+  | element optional { modelGroup }
+  | element pcdata { empty }
+  | element choice { (modelGroup, modelGroup+)? }
+  | element sequence { (modelGroup, modelGroup+)? }
+
+externalId =
+  attribute system { xsd:anyURI }?,
+  attribute public { text }?,
+  attribute xml:base { xsd:anyURI }?
+
+name = attribute name { xsd:NCName }
+
+nameSpec = element name { xsd:Name } | element nameSpecRef { name }

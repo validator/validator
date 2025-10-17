@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1"></param>
+  <nameSpec name="e2">
+    <name>foo</name>
+  </nameSpec>
+  <element>
+    <name>doc</name>
+    <choice>
+      <elementRef>
+        <nameSpecRef name="e2"/>
+      </elementRef>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+    </choice>
+  </element>
+</doctype>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <modelGroup name="e1">
+    <elementRef>
+      <name>foo</name>
+    </elementRef>
+  </modelGroup>
+  <element>
+    <name>foo</name>
+    <modelGroupRef name="e1"/>
+  </element>
+  <element>
+    <name>bar</name>
+    <modelGroupRef name="e1"/>
+  </element>
+</doctype>

@@ -1,0 +1,314 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DCCHDR] 23.2: Header extensions for Corpus Texts -->
+
+<!ENTITY % textDesc 'INCLUDE' >
+<![ %textDesc; [
+
+<!ELEMENT %n.textDesc; %om.RO;  ((%n.channel;), (%n.constitution;), (%n.derivation;), (%n.domain;), (%n.factuality;),
+    (%n.interaction;), (%n.preparedness;), (%n.purpose;)+)> 
+<!ATTLIST %n.textDesc;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'textDesc' >
+  
+]]>
+  
+<!ENTITY % particDesc 'INCLUDE' >
+<![ %particDesc; [
+
+<!ELEMENT %n.particDesc; %om.RO;  ((%n.p;)+ | ( ((%n.person;) | %n.personGrp;)+, (%n.particLinks;)?) )> 
+<!ATTLIST %n.particDesc;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'particDesc' >
+  
+]]>
+  
+<!ENTITY % settingDesc 'INCLUDE' >
+<![ %settingDesc; [
+
+<!ELEMENT %n.settingDesc; %om.RO;  ((%n.p;)+ | (%n.setting;)+)> 
+<!ATTLIST %n.settingDesc;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'settingDesc' >
+  
+]]>
+  
+<!-- [DCCAHTD] 23.2.1: Text description -->
+
+<!ENTITY % channel 'INCLUDE' >
+<![ %channel; [
+
+<!ELEMENT %n.channel; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.channel;  
+      %a.global;
+      mode (s | w | ws | sw | m | x) "x"
+      TEIform CDATA 'channel' >
+  
+]]>
+  
+<!ENTITY % constitution 'INCLUDE' >
+<![ %constitution; [
+
+<!ELEMENT %n.constitution; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.constitution;  
+      %a.global;
+      type (single | composite | frags | unknown) "single"
+      TEIform CDATA 'constitution' >
+  
+]]>
+  
+<!ENTITY % derivation 'INCLUDE' >
+<![ %derivation; [
+
+<!ELEMENT %n.derivation; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.derivation;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'derivation' >
+  
+]]>
+  
+<!ENTITY % domain 'INCLUDE' >
+<![ %domain; [
+
+<!ELEMENT %n.domain; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.domain;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'domain' >
+  
+]]>
+  
+<!ENTITY % factuality 'INCLUDE' >
+<![ %factuality; [
+
+<!ELEMENT %n.factuality; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.factuality;  
+      %a.global;
+      type (fiction|fact|mixed|inapplicable) #IMPLIED
+      TEIform CDATA 'factuality' >
+  
+]]>
+  
+<!ENTITY % interaction 'INCLUDE' >
+<![ %interaction; [
+
+<!ELEMENT %n.interaction; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.interaction;  
+      %a.global;
+      type (none|partial|complete|inapplicable) #IMPLIED
+      active CDATA #IMPLIED
+      passive CDATA #IMPLIED
+      TEIform CDATA 'interaction' >
+  
+]]>
+  
+<!ENTITY % preparedness 'INCLUDE' >
+<![ %preparedness; [
+
+<!ELEMENT %n.preparedness; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.preparedness;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'preparedness' >
+  
+]]>
+  
+<!ENTITY % purpose 'INCLUDE' >
+<![ %purpose; [
+
+<!ELEMENT %n.purpose; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.purpose;  
+      %a.global;
+      type CDATA #IMPLIED
+      degree (high | medium | low | unknown) #IMPLIED
+      TEIform CDATA 'purpose' >
+  
+]]>
+  
+<!-- end of [DCCAHTD]  23.2.1-->
+
+<!-- [DCCAHPA] 23.2.2: Participants description -->
+
+
+<!ENTITY % x.demographic "" >
+<!ENTITY % m.demographic "%x.demographic; %n.affiliation; | %n.birth; | %n.education; | %n.firstLang; | %n.langKnown; | %n.occupation; | %n.persName; | %n.residence; | %n.socecStatus;"> 
+<!ENTITY % person 'INCLUDE' >
+<![ %person; [
+
+<!ELEMENT %n.person; %om.RO;  ((%n.p;)+ | (%m.demographic;)* )> 
+<!ATTLIST %n.person;  
+      %a.global;
+      role CDATA #IMPLIED
+      sex (m | f | u ) #IMPLIED
+      age CDATA #IMPLIED
+      TEIform CDATA 'person' >
+  
+]]>
+  
+<!ENTITY % personGrp 'INCLUDE' >
+<![ %personGrp; [
+
+<!ELEMENT %n.personGrp; %om.RO;  ((%n.p;)+ | (%m.demographic;)* )> 
+<!ATTLIST %n.personGrp;  
+      %a.global;
+      role CDATA #IMPLIED
+      sex (m | f | u | x) #IMPLIED
+      age CDATA #IMPLIED
+      size CDATA #IMPLIED
+      TEIform CDATA 'personGrp' >
+  
+]]>
+  
+<!ENTITY % birth 'INCLUDE' >
+<![ %birth; [
+
+<!ELEMENT %n.birth; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.birth;  
+      %a.global;
+      date %ISO-date; #IMPLIED
+      TEIform CDATA 'birth' >
+  
+]]>
+  
+<!ENTITY % firstLang 'INCLUDE' >
+<![ %firstLang; [
+
+<!ELEMENT %n.firstLang; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.firstLang;  
+      %a.global;
+      TEIform CDATA 'firstLang' >
+  
+]]>
+  
+<!ENTITY % langKnown 'INCLUDE' >
+<![ %langKnown; [
+
+<!ELEMENT %n.langKnown; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.langKnown;  
+      %a.global;
+      TEIform CDATA 'langKnown' >
+  
+]]>
+  
+<!ENTITY % residence 'INCLUDE' >
+<![ %residence; [
+
+<!ELEMENT %n.residence; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.residence;  
+      %a.global;
+      TEIform CDATA 'residence' >
+  
+]]>
+  
+<!ENTITY % education 'INCLUDE' >
+<![ %education; [
+
+<!ELEMENT %n.education; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.education;  
+      %a.global;
+      TEIform CDATA 'education' >
+  
+]]>
+  
+<!ENTITY % affiliation 'INCLUDE' >
+<![ %affiliation; [
+
+<!ELEMENT %n.affiliation; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.affiliation;  
+      %a.global;
+      TEIform CDATA 'affiliation' >
+  
+]]>
+  
+<!ENTITY % occupation 'INCLUDE' >
+<![ %occupation; [
+
+<!ELEMENT %n.occupation; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.occupation;  
+      %a.global;
+      scheme IDREF #IMPLIED
+      code IDREF #IMPLIED
+      TEIform CDATA 'occupation' >
+  
+]]>
+  
+<!ENTITY % socecStatus 'INCLUDE' >
+<![ %socecStatus; [
+
+<!ELEMENT %n.socecStatus; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.socecStatus;  
+      %a.global;
+      scheme IDREF #IMPLIED
+      code IDREF #IMPLIED
+      TEIform CDATA 'socecStatus' >
+  
+]]>
+  
+<!ENTITY % particLinks 'INCLUDE' >
+<![ %particLinks; [
+
+<!ELEMENT %n.particLinks; %om.RO;  ((%n.p;)+ |  (%n.relation;)+) > 
+<!ATTLIST %n.particLinks;  
+      %a.global;
+      TEIform CDATA 'particLinks' >
+  
+]]>
+  
+<!ENTITY % relation 'INCLUDE' >
+<![ %relation; [
+
+<!ELEMENT %n.relation; %om.RO; EMPTY> 
+<!ATTLIST %n.relation;  
+      %a.global;
+      type CDATA "personal"
+      desc CDATA #IMPLIED
+      active IDREFS #IMPLIED
+      passive IDREFS #IMPLIED
+      mutual (Y | N) "Y"
+      TEIform CDATA 'relation' >
+  
+]]>
+  
+<!-- end of [DCCAHPA]  23.2.2-->
+
+<!-- [DCCAHSE] 23.2.3: Setting description -->
+
+<!ENTITY % setting 'INCLUDE' >
+<![ %setting; [
+
+<!ELEMENT %n.setting; %om.RR;  ((%n.p;)+ | ((%n.name;) | %n.time; | %n.date; | %n.locale; | %n.activity;)* )> 
+<!ATTLIST %n.setting;  
+      %a.global;
+      who IDREFS #IMPLIED
+      TEIform CDATA 'setting' >
+  
+]]>
+  
+<!ENTITY % locale 'INCLUDE' >
+<![ %locale; [
+
+<!ELEMENT %n.locale; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.locale;  
+      %a.global;
+      TEIform CDATA 'locale' >
+  
+]]>
+  
+<!ENTITY % activity 'INCLUDE' >
+<![ %activity; [
+
+<!ELEMENT %n.activity; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.activity;  
+      %a.global;
+      TEIform CDATA 'activity' >
+  
+]]>
+  
+<!-- end of [DCCAHSE]  23.2.3-->
+
+<!-- end of [DCCHDR]  23.2-->

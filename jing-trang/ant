@@ -1,0 +1,15 @@
+#!/bin/sh
+test -x "$JAVA_HOME/bin/java" || {
+    cat <<EOF 1>&2
+You must set JAVA_HOME environment variable to point to
+the directory where your JDK is installed.
+EOF
+    exit 1
+}
+JING_TRANG_HOME=`dirname $0`
+"$JAVA_HOME/bin/java" \
+  "-Dant.home=$JING_TRANG_HOME" \
+  -cp "$JING_TRANG_HOME/lib/ant-launcher.jar" \
+  org.apache.tools.ant.launch.Launcher \
+  -buildfile "$JING_TRANG_HOME/build.xml" \
+  "$@"

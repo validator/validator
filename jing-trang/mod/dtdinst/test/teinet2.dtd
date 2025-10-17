@@ -1,0 +1,190 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DGD] 21.: Graphs, networks and trees -->
+
+
+<!-- [DGDGR] 21.1: Graphs -->
+
+<!ENTITY % graph 'INCLUDE' >
+<![ %graph; [
+
+<!ELEMENT %n.graph; %om.RR;
+  ((((%n.node;), (%m.Incl;)*)+, ((%n.arc;), (%m.Incl;)*)*) | (((%n.arc;), (%m.Incl;)*)+,
+ ((%n.node;), (%m.Incl;)*)+))       
+> 
+<!ATTLIST %n.graph;  
+      %a.global;
+      type CDATA #IMPLIED
+      label CDATA #IMPLIED
+      order CDATA #IMPLIED
+      size CDATA #IMPLIED
+      TEIform CDATA 'graph' >
+  
+]]>
+  
+<!ENTITY % node 'INCLUDE' >
+<![ %node; [
+
+<!ELEMENT %n.node; %om.RO; EMPTY> 
+<!ATTLIST %n.node;  
+      %a.global;
+      label CDATA #IMPLIED
+      label2 CDATA #IMPLIED
+      value IDREF #IMPLIED
+      type CDATA #IMPLIED
+      adjTo IDREFS #IMPLIED
+      adjFrom IDREFS #IMPLIED
+      adj IDREFS #IMPLIED
+      inDegree CDATA #IMPLIED
+      outDegree CDATA #IMPLIED
+      degree CDATA #IMPLIED
+      TEIform CDATA 'node' >
+  
+]]>
+  
+<!ENTITY % arc 'INCLUDE' >
+<![ %arc; [
+
+<!ELEMENT %n.arc; %om.RO; EMPTY> 
+<!ATTLIST %n.arc;  
+      %a.global;
+      label CDATA #IMPLIED
+      label2 CDATA #IMPLIED
+      from IDREF #REQUIRED
+      to IDREF #REQUIRED
+      TEIform CDATA 'arc' >
+  
+]]>
+  
+<!-- end of [DGDGR]  21.1-->
+
+
+<!-- [DGDTR] 21.2: Trees (basic method) -->
+
+<!ENTITY % tree 'INCLUDE' >
+<![ %tree; [
+
+<!ELEMENT %n.tree; %om.RR;  (((%n.leaf;) | %n.iNode;)*, (%n.root;), ((%n.leaf;) | %n.iNode;)*)> 
+<!ATTLIST %n.tree;  
+      %a.global;
+      label CDATA #IMPLIED
+      arity CDATA #IMPLIED
+      ord (Y | N | partial) "Y"
+      order CDATA #IMPLIED
+      TEIform CDATA 'tree' >
+  
+]]>
+  
+<!ENTITY % root 'INCLUDE' >
+<![ %root; [
+
+<!ELEMENT %n.root; %om.RO; EMPTY> 
+<!ATTLIST %n.root;  
+      %a.global;
+      label CDATA #IMPLIED
+      value IDREF #IMPLIED
+      children IDREFS #IMPLIED
+      ord (Y | N) #IMPLIED
+      outDegree CDATA #IMPLIED
+      TEIform CDATA 'root' >
+  
+]]>
+  
+<!ENTITY % iNode 'INCLUDE' >
+<![ %iNode; [
+
+<!ELEMENT %n.iNode; %om.RO; EMPTY> 
+<!ATTLIST %n.iNode;  
+      %a.global;
+      label CDATA #IMPLIED
+      value IDREF #IMPLIED
+      children IDREFS #REQUIRED
+      parent IDREF #IMPLIED
+      ord (Y | N) #IMPLIED
+      follow IDREF #IMPLIED
+      outDegree CDATA #IMPLIED
+      TEIform CDATA 'iNode' >
+  
+]]>
+  
+<!ENTITY % leaf 'INCLUDE' >
+<![ %leaf; [
+
+<!ELEMENT %n.leaf; %om.RO; EMPTY> 
+<!ATTLIST %n.leaf;  
+      %a.global;
+      label CDATA #IMPLIED
+      value IDREF #IMPLIED
+      parent IDREF #IMPLIED
+      follow IDREF #IMPLIED
+      TEIform CDATA 'leaf' >
+  
+]]>
+  
+<!-- end of [DGDTR]  21.2-->
+
+
+<!-- [DGDAL] 21.3: Trees (alternate method) -->
+
+<!ENTITY % eTree 'INCLUDE' >
+<![ %eTree; [
+
+<!ELEMENT %n.eTree; %om.RR;  (((%n.eTree;) |  %n.triangle; | %n.eLeaf; )*)> 
+<!ATTLIST %n.eTree;  
+      %a.global;
+      label CDATA #IMPLIED
+      value IDREF #IMPLIED
+      TEIform CDATA 'eTree' >
+  
+]]>
+  
+<!ENTITY % triangle 'INCLUDE' >
+<![ %triangle; [
+
+<!ELEMENT %n.triangle; %om.RR;  (((%n.eTree;) | %n.triangle; | %n.eLeaf;)*)> 
+<!ATTLIST %n.triangle;  
+      %a.global;
+      label CDATA #IMPLIED
+      value IDREF #IMPLIED
+      TEIform CDATA 'triangle' >
+  
+]]>
+  
+<!ENTITY % eLeaf 'INCLUDE' >
+<![ %eLeaf; [
+
+<!ELEMENT %n.eLeaf; %om.RO; EMPTY> 
+<!ATTLIST %n.eLeaf;  
+      %a.global;
+      label CDATA #IMPLIED
+      value IDREF #IMPLIED
+      TEIform CDATA 'eLeaf' >
+  
+]]>
+  
+<!ENTITY % forest 'INCLUDE' >
+<![ %forest; [
+
+<!ELEMENT %n.forest; %om.RR;  (((%n.tree;) | %n.eTree; | %n.triangle;)+)> 
+<!ATTLIST %n.forest;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'forest' >
+  
+]]>
+  
+<!ENTITY % forestGrp 'INCLUDE' >
+<![ %forestGrp; [
+
+<!ELEMENT %n.forestGrp; %om.RR;  (((%n.forest;))+)> 
+<!ATTLIST %n.forestGrp;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'forestGrp' >
+  
+]]>
+  
+<!-- end of [DGDAL]  21.3-->
+
+<!-- end of [DGD]  21.-->

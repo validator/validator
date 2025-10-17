@@ -1,0 +1,9 @@
+Choose default namespace.
+
+Should we reconsider always inlining elements that are referenced only once?
+
+Deal with QName datatype.
+
+Type of qualified attribute should be globally consistent.
+
+Option to make it more eager to use repeated choice groups.

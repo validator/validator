@@ -1,0 +1,63 @@
+<module>
+  <depends module="util"/>
+  <compile test="yes"/>
+  <test name="java" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+    <arg value="mod/regex/test/regextest.xml"/>
+  </test>
+  <test name="naming" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.NameTest">
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+  </test>
+  <test name="hard" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+    <arg value="mod/regex/test/hardtest.xml"/>
+  </test>
+<!-- This takes about a minute to run, so we need to separate it into a separate target.
+  <test name="category" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.CategoryTest">
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+    <arg value="lib/UnicodeData-4.0.0.txt"/>
+  </test>
+-->
+  <ant precompile="mod.regex.gen">
+    <target name="mod.regex.gen" depends="mod.regex.check-gen" unless="mod.regex.gen-ok">
+      <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/java"/>
+      <java classname="com.thaiopensource.datatype.xsd.regex.java.gen.NamingExceptionsGen"
+	    fork="yes"
+	    failonerror="yes">
+	<arg value="com.thaiopensource.datatype.xsd.regex.java.NamingExceptions"/>
+	<arg value="${build.dir}/mod/regex/gensrc/main"/>
+	<classpath>
+	  <pathelement location="${build.dir}/mod/regex-gen/classes/main"/>
+	  <pathelement location="${build.dir}/mod/util/classes/main"/>
+	</classpath>
+      </java>
+      <java classname="com.thaiopensource.datatype.xsd.regex.java.gen.CategoriesGen"
+	    fork="yes"
+	    failonerror="yes">
+	<arg value="com.thaiopensource.datatype.xsd.regex.java.Categories"/>
+	<arg value="${build.dir}/mod/regex/gensrc/main"/>
+	<arg value="lib/UnicodeData-3.1.0.txt"/>
+	<classpath>
+	  <pathelement location="${build.dir}/mod/regex-gen/classes/main"/>
+	  <pathelement location="${build.dir}/mod/util/classes/main"/>
+	</classpath>
+      </java>
+    </target>
+    
+    <target name="mod.regex.check-gen" depends="mod.regex-gen.compile-main">
+      <uptodate property="mod.regex.gen-ok"
+		targetfile="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/java/Categories.java">
+	<srcfiles dir="${build.dir}/mod/regex-gen/classes/main" includes="**/*.class"/>
+      </uptodate>
+    </target>
+  </ant>
+  <jar>
+    <service type="com.thaiopensource.datatype.xsd.regex.RegexEngine">
+      <provider classname="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+    </service>
+  </jar>
+</module>

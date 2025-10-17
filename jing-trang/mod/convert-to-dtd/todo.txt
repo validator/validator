@@ -1,0 +1,26 @@
+Generate comments from a:documentation elements
+Avoid warning for content that is data of type string
+Option to generate namespace declarations only on start elements
+Generate parameter entities to allow change of namespace prefix
+Support nested grammars
+Check for non-deterministic content models
+Option to protect attlist/element declarations with marked section
+Allow mixed(repeat(NOT_ALLOWED))
+Prettier formatting of ATTLISTs
+Order requiredParamEntities by definition order
+Customizable indent and line length
+Approximate <list> by NMTOKENS when possible
+Have a top-level annotation indicating a redefinition point (as in DocBook)
+Recognize definitions being used as INCLUDE/IGNORE (as in TEI)
+Give warnings for definitions that had to be expanded
+Closer approximation of choice of datatypes
+Approximate when single element restriction is violated
+Allow choice of attributes and data
+Try to push namespace declarations down into appropriate attribute groups
+Support for ANY
+<empty/> used as a model-group hook
+Approximate wildcards intelligently
+Handle interleave of zero or more element class with model group
+Turn elements with content <value type="string"></value> into EMPTY.
+Deal with characters outside repertoire of character encoding.
+Investigate using compact syntax pretty-printer for formatting content models.

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+  xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:nvdl="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+  <start>
+    <element name="rules">
+      <interleave>
+        <group>
+          <optional>
+            <ref name="schemaType"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="trigger"/>
+          </zeroOrMore>
+          <choice>
+            <zeroOrMore>
+              <ref name="rule"/>
+            </zeroOrMore>
+            <group>
+              <attribute name="startMode">
+                <data type="NCName"/>
+              </attribute>
+              <oneOrMore>
+                <ref name="mode"/>
+              </oneOrMore>
+            </group>
+          </choice>
+        </group>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </start>
+  <define name="trigger">
+    <element name="trigger">
+      <interleave>
+        <group>
+          <attribute name="ns">
+            <data type="string"/>
+          </attribute>
+          <attribute name="nameList">
+            <list>
+              <oneOrMore><data type="NCName"/></oneOrMore>
+            </list>
+          </attribute>
+        </group>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="mode">
+    <element name="mode">
+      <interleave>
+        <group>
+          <attribute name="name">
+            <data type="NCName"/>
+          </attribute>
+          <zeroOrMore>
+            <ref name="includedMode"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="rule"/>
+          </zeroOrMore>
+        </group>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="includedMode">
+    <element name="mode">
+      <interleave>
+        <group>
+          <optional>
+            <attribute name="name">
+              <data type="NCName"/>
+            </attribute>
+          </optional>
+          <zeroOrMore>
+            <ref name="includedMode"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="rule"/>
+          </zeroOrMore>
+        </group>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="rule">
+    <choice>
+      <element name="namespace">
+        <interleave>
+          <group>
+            <attribute name="ns">
+              <data type="string"/>
+            </attribute>
+            <optional>
+              <attribute name="wildCard">
+                <data type="string">
+                  <param name="maxLength">1</param>
+                </data>
+              </attribute>
+            </optional>
+            <ref name="ruleModel"/>
+          </group>
+          <ref name="foreign"/>
+        </interleave>
+      </element>
+      <element name="anyNamespace">
+        <interleave>
+          <ref name="ruleModel"/>
+          <ref name="foreign"/>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+  <define name="ruleModel">
+    <optional>
+      <attribute name="match">
+        <ref name="elementsOrAttributes"/>
+      </attribute>
+    </optional>
+    <ref name="actions"/>
+  </define>
+  <define name="elementsOrAttributes">
+    <list>
+      <choice>
+        <group>
+          <value>elements</value>
+          <value>attributes</value>
+        </group>
+        <group>
+          <value>attributes</value>
+          <value>elements</value>
+        </group>
+        <value>elements</value>
+        <value>attributes</value>
+      </choice>
+    </list>
+  </define>
+  <define name="actions">
+    <choice>
+      <ref name="cancelAction"/>
+      <group>
+        <zeroOrMore>
+          <ref name="noResultAction"/>
+        </zeroOrMore>
+        <choice>
+          <ref name="noResultAction"/>
+          <ref name="resultAction"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="noResultAction"/>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="cancelAction">
+    <element name="cancelNestedActions">
+      <ref name="foreign"/>
+    </element>
+  </define>
+  <define name="noResultAction">
+    <choice>
+      <element name="validate">
+        <interleave>
+          <group>
+            <optional>
+              <ref name="schemaType"/>
+            </optional>
+            <zeroOrMore>
+              <choice>
+                <ref name="message"/>
+                <ref name="option"/>
+              </choice>
+            </zeroOrMore>
+            <ref name="schema"/>
+            <ref name="modeUsage"/>
+          </group>
+          <ref name="foreign"/>
+        </interleave>
+      </element>
+      <element>
+        <choice>
+          <name>allow</name>
+          <name>reject</name>
+        </choice>
+        <interleave>
+          <group>
+            <zeroOrMore>
+              <ref name="message"/>
+            </zeroOrMore>
+            <ref name="modeUsage"/>
+          </group>
+          <ref name="foreign"/>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+  <define name="schema">
+    <choice>
+      <attribute name="schema">
+        <data type="anyURI"/>
+      </attribute>
+      <element name="schema">
+        <choice>
+          <text/>
+          <ref name="foreignElement"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="foreignAttribute"/>
+        </zeroOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="message">
+    <choice>
+      <attribute name="message"/>
+      <element name="message">
+        <group>
+          <text/>
+          <zeroOrMore>
+            <ref name="xmlAttribute"/>
+          </zeroOrMore>
+        </group>
+        <zeroOrMore>
+          <ref name="nonXMLForeignAttribute"/>
+        </zeroOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="resultAction">
+    <element>
+      <choice>
+        <name>attach</name>
+        <name>attachPlaceholder</name>
+        <name>unwrap</name>
+      </choice>
+      <interleave>
+        <group>
+          <zeroOrMore>
+            <ref name="message"/>
+          </zeroOrMore>
+          <ref name="modeUsage"/>
+        </group>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="option">
+    <element name="option">
+      <interleave>
+        <group>
+          <attribute name="name">
+            <data type="anyURI"/>
+          </attribute>
+          <optional>
+            <attribute name="arg"/>
+          </optional>
+          <optional>
+            <attribute name="mustSupport">
+              <data type="boolean"/>
+            </attribute>
+          </optional>
+        </group>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="modeUsage">
+    <optional>
+      <choice>
+        <attribute name="useMode">
+          <data type="NCName"/>
+        </attribute>
+        <ref name="nestedMode"/>
+      </choice>
+    </optional>
+    <zeroOrMore>
+      <element name="context">
+        <interleave>
+          <group>
+            <attribute name="path">
+              <ref name="path"/>
+            </attribute>
+            <optional>
+              <choice>
+                <attribute name="useMode">
+                  <data type="NCName"/>
+                </attribute>
+                <ref name="nestedMode"/>
+              </choice>
+            </optional>
+          </group>
+          <ref name="foreign"/>
+        </interleave>
+      </element>
+    </zeroOrMore>
+  </define>
+  <define name="nestedMode">
+    <element name="mode">
+      <interleave>
+        <group>
+          <zeroOrMore>
+            <ref name="includedMode"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="rule"/>
+          </zeroOrMore>
+        </group>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="schemaType">
+    <attribute name="schemaType">
+      <ref name="mediaType"/>
+    </attribute>
+  </define>
+  <define name="mediaType">
+    <data type="string">
+      <param name="pattern">\s*[0-9A-Za-z!#$%&amp;'\*\+\-\.\^_`\{\|\}~]*/[0-9A-Za-z!#$%&amp;'\*\+\-\.\^_`\{\|\}~]*\s*</param>
+    </data>
+  </define>
+  <define name="path">
+    <data type="string">
+      <param name="pattern">\s*(/\s*)?\i\c*(\s*/\s*\i\c*)*\s*(\|\s*(/\s*)?\i\c*(\s*/\s*\i\c*)*\s*)*</param>
+    </data>
+  </define>
+  <define name="foreignElement">
+    <element>
+      <anyName>
+        <except>
+          <nsName/>
+        </except>
+      </anyName>
+      <zeroOrMore>
+        <attribute>
+          <anyName/>
+        </attribute>
+      </zeroOrMore>
+      <mixed>
+        <zeroOrMore>
+          <ref name="anyElement"/>
+        </zeroOrMore>
+      </mixed>
+    </element>
+  </define>
+  <define name="anyElement">
+    <element>
+      <anyName/>
+      <zeroOrMore>
+        <attribute>
+          <anyName/>
+        </attribute>
+      </zeroOrMore>
+      <mixed>
+        <zeroOrMore>
+          <ref name="anyElement"/>
+        </zeroOrMore>
+      </mixed>
+    </element>
+  </define>
+  <define name="foreignAttribute">
+    <attribute>
+      <anyName>
+        <except>
+          <nsName/>
+          <nsName ns=""/>
+        </except>
+      </anyName>
+    </attribute>
+  </define>
+  <define name="nonXMLForeignAttribute">
+    <attribute>
+      <anyName>
+        <except>
+          <nsName ns="http://www.w3.org/XML/1998/namespace"/>
+          <nsName/>
+          <nsName ns=""/>
+        </except>
+      </anyName>
+    </attribute>
+  </define>
+  <define name="xmlAttribute">
+    <choice>
+      <attribute name="xml:lang"/>
+      <attribute name="xml:space">
+        <choice>
+          <value>default</value>
+          <value>preserve</value>
+        </choice>
+      </attribute>
+      <attribute name="xml:base">
+        <data type="anyURI"/>
+      </attribute>
+    </choice>
+  </define>
+  <define name="foreign">
+    <zeroOrMore>
+      <ref name="foreignAttribute"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="foreignElement"/>
+    </zeroOrMore>
+  </define>
+</grammar>

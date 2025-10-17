@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <internalEntity name="e">foo</internalEntity>
+  <internalEntity name="e">bar</internalEntity>
+  <externalEntity name="e" system="baz"/>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+</doctype>

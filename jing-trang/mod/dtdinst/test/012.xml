@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="f">f</param>
+  <param name="oo">oo</param>
+  <nameSpec name="foo">
+    <name>foo</name>
+  </nameSpec>
+  <element>
+    <nameSpecRef name="foo"/>
+    <sequence/>
+  </element>
+</doctype>

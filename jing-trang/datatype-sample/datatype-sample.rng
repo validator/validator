@@ -1,0 +1,6 @@
+<element name="balancedString"
+   xmlns="http://relaxng.org/ns/structure/1.0"
+   datatypeLibrary="http://www.thaiopensource.com/relaxng/datatypes/sample">
+  <data type="balancedString"/>
+</element>
+

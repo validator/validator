@@ -1,0 +1,39 @@
+<module>
+  <depends module="util"/>
+  <depends module="regex"/>
+  <depends module="datatype"/>
+  <depends module="xsd-datatype"/>
+  <depends module="validate"/>
+  <depends module="rng-parse"/>
+  <depends module="rng-validate"/>
+  <depends module="nvdl"/>
+  <depends module="schematron"/>
+  <depends module="picl"/>
+  <jar>
+    <manifest>
+      <attribute name="Main-Class" value="com/thaiopensource/relaxng/util/Driver"/>
+      <attribute name="Class-Path"
+		 value="saxon9.jar xalan.jar isorelax.jar"/>
+    </manifest>
+    <service type="com.thaiopensource.datatype.xsd.regex.RegexEngine">
+      <provider classname="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+    </service>
+    <service type="org.relaxng.datatype.DatatypeLibraryFactory"
+	     provider="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
+    <service type="org.iso_relax.verifier.VerifierFactoryLoader"
+	     provider="com.thaiopensource.relaxng.jarv.VerifierFactoryLoaderImpl"/>
+    <service type="com.thaiopensource.validate.SchemaReaderFactory">
+      <provider classname="com.thaiopensource.validate.jarv.JarvSchemaReaderFactory"/>
+      <provider classname="com.thaiopensource.validate.schematron.NewSaxonSchemaReaderFactory"/>
+      <provider classname="com.thaiopensource.validate.schematron.SchematronSchemaReaderFactory"/>
+    </service>
+    <service type="com.thaiopensource.validate.auto.SchemaReceiverFactory">
+      <provider classname="com.thaiopensource.validate.rng.SAXSchemaReceiverFactory"/>
+      <provider classname="com.thaiopensource.validate.nvdl.NvdlSchemaReceiverFactory"/>
+      <provider classname="com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory"/>
+      <provider classname="com.thaiopensource.validate.mns.MnsSchemaReceiverFactory"/>
+      <provider classname="com.thaiopensource.validate.auto.SchemaReaderLoaderSchemaReceiverFactory"/>
+      <provider classname="com.thaiopensource.validate.picl.PiclSchemaReceiverFactory"/>
+    </service>
+  </jar>
+</module>

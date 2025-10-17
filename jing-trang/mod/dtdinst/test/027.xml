@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="SGML">
+    <ignore/>
+  </flag>
+  <ignoredSection flag="SGML">
+&lt;!ENTITY % RR &quot;- -&quot;&gt;
+</ignoredSection>
+  <param name="RR"></param>
+  <element>
+    <name>doc</name>
+    <pcdata/>
+  </element>
+</doctype>

@@ -1,0 +1,997 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DCO] 6.12: Elements available in all forms of the TEI main DTD -->
+
+
+<!--Definition of elements, sub-group by sub-group.-->
+
+<!-- [DCOPA] 6.1: Paragraph -->
+
+<!ENTITY % p 'INCLUDE' >
+<![ %p; [
+
+<!ELEMENT %n.p; %om.RO;  %paraContent;> 
+<!ATTLIST %n.p;  
+      %a.global;
+      TEIform CDATA 'p' >
+  
+]]>
+  
+<!-- end of [DCOPA]  6.1-->
+
+
+<!-- [DCOHQ] 6.3.2.1: Highlighted phrases -->
+
+<!ENTITY % foreign 'INCLUDE' >
+<![ %foreign; [
+
+<!ELEMENT %n.foreign; %om.RR; %paraContent;> 
+<!ATTLIST %n.foreign;  
+      %a.global;
+      TEIform CDATA 'foreign' >
+  
+]]>
+  
+<!-- [DCOHQ1] 6.3.2.2:  -->
+
+<!ENTITY % emph 'INCLUDE' >
+<![ %emph; [
+
+<!ELEMENT %n.emph; %om.RR;  %paraContent;> 
+<!ATTLIST %n.emph;  
+      %a.global;
+      TEIform CDATA 'emph' >
+  
+]]>
+  
+<!ENTITY % hi 'INCLUDE' >
+<![ %hi; [
+
+<!ELEMENT %n.hi; %om.RR; %paraContent;> 
+<!ATTLIST %n.hi;  
+      %a.global;
+      TEIform CDATA 'hi' >
+  
+]]>
+  
+<!-- end of [DCOHQ1]  6.3.2.2-->
+
+<!-- [DCOHQ3] 6.3.2.3:  -->
+
+<!ENTITY % distinct 'INCLUDE' >
+<![ %distinct; [
+
+<!ELEMENT %n.distinct; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.distinct;  
+      %a.global;
+      type CDATA #IMPLIED
+      time CDATA #IMPLIED
+      space CDATA #IMPLIED
+      social CDATA #IMPLIED
+      TEIform CDATA 'distinct' >
+  
+]]>
+  
+<!-- end of [DCOHQ3]  6.3.2.3-->
+
+<!-- [DCOHQQ] 6.3.3: Quotation -->
+
+<!ENTITY % q 'INCLUDE' >
+<![ %q; [
+
+<!ELEMENT %n.q; %om.RR; %specialPara;> 
+<!ATTLIST %n.q;  
+      %a.global;
+      type CDATA #IMPLIED
+      direct (y | n | unspecified) "unspecified"
+      who CDATA #IMPLIED
+      TEIform CDATA 'q' >
+  
+]]>
+  
+<!ENTITY % quote 'INCLUDE' >
+<![ %quote; [
+
+<!ELEMENT %n.quote; %om.RR; %specialPara;> 
+<!ATTLIST %n.quote;  
+      %a.global;
+      TEIform CDATA 'quote' >
+  
+]]>
+  
+<!ENTITY % cit 'INCLUDE' >
+<![ %cit; [
+
+<!ELEMENT %n.cit; %om.RR;  ( ((%n.q;) | %n.quote; | %m.bibl; | %m.loc; | %m.Incl; )+)
+> 
+<!ATTLIST %n.cit;  
+      %a.global;
+      TEIform CDATA 'cit' >
+  
+]]>
+  
+<!ENTITY % soCalled 'INCLUDE' >
+<![ %soCalled; [
+
+<!ELEMENT %n.soCalled; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.soCalled;  
+      %a.global;
+      TEIform CDATA 'soCalled' >
+  
+]]>
+  
+<!-- end of [DCOHQQ]  6.3.3-->
+
+<!-- [DCOHQU] 6.3.4: Terms, glosses, etc. -->
+
+<!ENTITY % term 'INCLUDE' >
+<![ %term; [
+
+<!ELEMENT %n.term; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.term;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'term' >
+  
+]]>
+  
+<!ENTITY % mentioned 'INCLUDE' >
+<![ %mentioned; [
+
+<!ELEMENT %n.mentioned; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.mentioned;  
+      %a.global;
+      TEIform CDATA 'mentioned' >
+  
+]]>
+  
+<!ENTITY % gloss 'INCLUDE' >
+<![ %gloss; [
+
+<!ELEMENT %n.gloss; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.gloss;  
+      %a.global;
+      target IDREF #IMPLIED
+      TEIform CDATA 'gloss' >
+  
+]]>
+  
+<!-- end of [DCOHQU]  6.3.4-->
+
+<!-- end of [DCOHQ]  6.3.2.1-->
+
+
+<!-- [DCONA] 6.4.1: Proper Nouns -->
+
+
+<!ENTITY % name 'INCLUDE' >
+<![ %name; [
+
+<!ELEMENT %n.name; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.name;  
+      %a.global;
+      %a.names;
+      type CDATA #IMPLIED
+      TEIform CDATA 'name' >
+  
+]]>
+  
+
+<!ENTITY % rs 'INCLUDE' >
+<![ %rs; [
+
+<!ELEMENT %n.rs; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.rs;  
+      %a.global;
+      %a.names;
+      type CDATA #IMPLIED
+      TEIform CDATA 'rs' >
+  
+]]>
+  
+
+<!-- end of [DCONA]  6.4.1-->
+
+
+<!-- [DCONU] 6.4.3: Numbers and measures -->
+
+<!ENTITY % num 'INCLUDE' >
+<![ %num; [
+
+<!ELEMENT %n.num; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.num;  
+      %a.global;
+      type CDATA #IMPLIED
+      value CDATA #IMPLIED
+      TEIform CDATA 'num' >
+  
+]]>
+  
+<!ENTITY % measure 'INCLUDE' >
+<![ %measure; [
+
+<!ELEMENT %n.measure; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.measure;  
+      %a.global;
+      %a.names;
+      type CDATA #IMPLIED
+      TEIform CDATA 'measure' >
+  
+]]>
+  
+<!-- end of [DCONU]  6.4.3-->
+
+
+<!-- [DCODA] 6.4.4: Dates and times -->
+
+<!ENTITY % date 'INCLUDE' >
+<![ %date; [
+
+<!ELEMENT %n.date; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.date;  
+      %a.global;
+      calendar CDATA #IMPLIED
+      value CDATA #IMPLIED
+      certainty CDATA #IMPLIED
+      TEIform CDATA 'date' >
+  
+]]>
+  
+<!ENTITY % dateRange 'INCLUDE' >
+<![ %dateRange; [
+
+<!ELEMENT %n.dateRange; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.dateRange;  
+      %a.global;
+      calendar CDATA #IMPLIED
+      from CDATA #IMPLIED
+      to CDATA #IMPLIED
+      exact (to|from|both|none) #IMPLIED
+      TEIform CDATA 'dateRange' >
+  
+]]>
+  
+<!ENTITY % time 'INCLUDE' >
+<![ %time; [
+
+<!ELEMENT %n.time; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.time;  
+      %a.global;
+      value CDATA #IMPLIED
+      type (am | pm | 24hour | descriptive) #IMPLIED
+      zone CDATA #IMPLIED
+      TEIform CDATA 'time' >
+  
+]]>
+  
+<!ENTITY % timeRange 'INCLUDE' >
+<![ %timeRange; [
+
+<!ELEMENT %n.timeRange; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.timeRange;  
+      %a.global;
+      from CDATA #IMPLIED
+      to CDATA #IMPLIED
+      exact (to|from|both|none) #IMPLIED
+      TEIform CDATA 'timeRange' >
+  
+]]>
+  
+<!-- end of [DCODA]  6.4.4-->
+
+
+<!-- [DCOAB] 6.4.5: Abbreviations -->
+
+<!ENTITY % abbr 'INCLUDE' >
+<![ %abbr; [
+
+<!ELEMENT %n.abbr; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.abbr;  
+      %a.global;
+      expan CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED
+      type CDATA #IMPLIED
+      TEIform CDATA 'abbr' >
+  
+]]>
+  
+<!ENTITY % expan 'INCLUDE' >
+<![ %expan; [
+
+<!ELEMENT %n.expan; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.expan;  
+      %a.global;
+      abbr CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED
+      type CDATA #IMPLIED
+      TEIform CDATA 'expan' >
+  
+]]>
+  
+<!-- end of [DCOAB]  6.4.5-->
+
+
+<!-- [DCOEDC] 6.5.1: Editorial tags for correction -->
+
+<!ENTITY % sic 'INCLUDE' >
+<![ %sic; [
+
+<!ELEMENT %n.sic; %om.RR;  %specialPara;> 
+<!ATTLIST %n.sic;  
+      %a.global;
+      corr CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED
+      TEIform CDATA 'sic' >
+  
+]]>
+  
+<!ENTITY % corr 'INCLUDE' >
+<![ %corr; [
+
+<!ELEMENT %n.corr; %om.RR;  %specialPara;> 
+<!ATTLIST %n.corr;  
+      %a.global;
+      sic CDATA #IMPLIED
+      resp CDATA %INHERITED;
+      cert CDATA #IMPLIED
+      TEIform CDATA 'corr' >
+  
+]]>
+  
+<!-- end of [DCOEDC]  6.5.1-->
+
+
+<!-- [DCOEDR] 6.5.2: Editorial tags for regularization -->
+
+<!ENTITY % reg 'INCLUDE' >
+<![ %reg; [
+
+<!ELEMENT %n.reg; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.reg;  
+      %a.global;
+      orig CDATA #IMPLIED
+      resp CDATA #IMPLIED
+      TEIform CDATA 'reg' >
+  
+]]>
+  
+<!ENTITY % orig 'INCLUDE' >
+<![ %orig; [
+
+<!ELEMENT %n.orig; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.orig;  
+      %a.global;
+      reg CDATA #IMPLIED
+      resp CDATA #IMPLIED
+      TEIform CDATA 'orig' >
+  
+]]>
+  
+<!-- end of [DCOEDR]  6.5.2-->
+
+
+<!-- [DCOEDA] 6.5.3: Other editorial tags -->
+
+<!ENTITY % gap 'INCLUDE' >
+<![ %gap; [
+
+<!ELEMENT %n.gap; %om.RO;  EMPTY> 
+<!ATTLIST %n.gap;  
+      %a.global;
+      desc CDATA #IMPLIED
+      reason CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      hand IDREF %INHERITED;
+      agent CDATA #IMPLIED
+      extent CDATA #IMPLIED
+      TEIform CDATA 'gap' >
+  
+]]>
+  
+<!ENTITY % add 'INCLUDE' >
+<![ %add; [
+
+<!ELEMENT %n.add; %om.RR;  %specialPara;> 
+<!ATTLIST %n.add;  
+      %a.global;
+      place CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED
+      hand IDREF %INHERITED;
+      TEIform CDATA 'add' >
+  
+]]>
+  
+<!ENTITY % del 'INCLUDE' >
+<![ %del; [
+
+<!ELEMENT %n.del; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.del;  
+      %a.global;
+      type CDATA #IMPLIED
+      status CDATA 'unremarkable'
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED
+      hand IDREF %INHERITED;
+      TEIform CDATA 'del' >
+  
+]]>
+  
+<!ENTITY % unclear 'INCLUDE' >
+<![ %unclear; [
+
+<!ELEMENT %n.unclear; %om.RO;  %paraContent;> 
+<!ATTLIST %n.unclear;  
+      %a.global;
+      reason CDATA #IMPLIED
+      resp CDATA %INHERITED;
+      cert CDATA #IMPLIED
+      hand IDREF %INHERITED;
+      agent CDATA #IMPLIED
+      TEIform CDATA 'unclear' >
+  
+]]>
+  
+<!-- end of [DCOEDA]  6.5.3-->
+
+
+<!-- [DCOAD] 6.4.2: Addresses and their components -->
+
+<!ENTITY % address 'INCLUDE' >
+<![ %address; [
+
+<!ELEMENT %n.address; %om.RO;
+   ((%m.Incl;)*, (((%n.addrLine;), (%m.Incl;)*)+ | ((%m.addrPart;), (%m.Incl;)*)*))> 
+<!ATTLIST %n.address;  
+      %a.global;
+      TEIform CDATA 'address' >
+  
+]]>
+  
+<!ENTITY % addrLine 'INCLUDE' >
+<![ %addrLine; [
+
+<!ELEMENT %n.addrLine; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.addrLine;  
+      %a.global;
+      TEIform CDATA 'addrLine' >
+  
+]]>
+  
+<!ENTITY % street 'INCLUDE' >
+<![ %street; [
+
+<!ELEMENT %n.street; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.street;  
+      %a.global;
+      TEIform CDATA 'street' >
+  
+]]>
+  
+<!ENTITY % postCode 'INCLUDE' >
+<![ %postCode; [
+
+<!ELEMENT %n.postCode; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.postCode;  
+      %a.global;
+      TEIform CDATA 'postCode' >
+  
+]]>
+  
+<!ENTITY % postBox 'INCLUDE' >
+<![ %postBox; [
+
+<!ELEMENT %n.postBox; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.postBox;  
+      %a.global;
+      TEIform CDATA 'postBox' >
+  
+]]>
+  
+<!--Other components of addresses should be represented
+using the general purpose NAME element-->
+<!-- end of [DCOAD]  6.4.2-->
+
+
+<!-- [DCOXR] 6.6: Simple cross references -->
+
+<!ENTITY % a.pointer '
+      type CDATA #IMPLIED
+      resp CDATA #IMPLIED
+      crdate CDATA #IMPLIED
+      targType CDATA #IMPLIED
+      targOrder (Y | N | U) "U"
+      evaluate (all | one | none) #IMPLIED'> 
+<!ENTITY % ptr 'INCLUDE' >
+<![ %ptr; [
+
+<!ELEMENT %n.ptr; %om.RO; EMPTY> 
+<!ATTLIST %n.ptr;  
+      %a.global;
+      %a.pointer;
+      target IDREFS #REQUIRED
+      TEIform CDATA 'ptr' >
+  
+]]>
+  
+<!ENTITY % ref 'INCLUDE' >
+<![ %ref; [
+
+<!ELEMENT %n.ref; %om.RR; %paraContent;> 
+<!ATTLIST %n.ref;  
+      %a.global;
+      %a.pointer;
+      target IDREFS #IMPLIED
+      TEIform CDATA 'ref' >
+  
+]]>
+  
+<!-- end of [DCOXR]  6.6-->
+
+
+<!-- [DCOLI] 6.7: Lists and List Items -->
+
+<!ENTITY % list 'INCLUDE' >
+<![ %list; [
+
+<!ELEMENT %n.list;
+%om.RR;  ((%m.Incl;)*, ((%n.head;), (%m.Incl;)*)?, ( ( ((%n.item;), (%m.Incl;)*)*)
+| (((%n.headLabel;), (%m.Incl;)*)?, ((%n.headItem;), (%m.Incl;)*)?, ((%n.label;),
+(%m.Incl;)*, (%n.item;), (%m.Incl;)*)+)))> 
+<!ATTLIST %n.list;  
+      %a.global;
+      type CDATA "simple"
+      TEIform CDATA 'list' >
+  
+]]>
+  
+<!ENTITY % item 'INCLUDE' >
+<![ %item; [
+
+<!ELEMENT %n.item; %om.RO; %specialPara;> 
+<!ATTLIST %n.item;  
+      %a.global;
+      TEIform CDATA 'item' >
+  
+]]>
+  
+<!ENTITY % label 'INCLUDE' >
+<![ %label; [
+
+<!ELEMENT %n.label; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.label;  
+      %a.global;
+      TEIform CDATA 'label' >
+  
+]]>
+  
+<!ENTITY % head 'INCLUDE' >
+<![ %head; [
+
+<!ELEMENT %n.head; %om.RO; %paraContent;> 
+<!ATTLIST %n.head;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'head' >
+  
+]]>
+  
+<!ENTITY % headLabel 'INCLUDE' >
+<![ %headLabel; [
+
+<!ELEMENT %n.headLabel; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.headLabel;  
+      %a.global;
+      TEIform CDATA 'headLabel' >
+  
+]]>
+  
+<!ENTITY % headItem 'INCLUDE' >
+<![ %headItem; [
+
+<!ELEMENT %n.headItem; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.headItem;  
+      %a.global;
+      TEIform CDATA 'headItem' >
+  
+]]>
+  
+<!-- end of [DCOLI]  6.7-->
+
+
+<!-- [DCONO] 6.8.1: Annotation -->
+
+<!ENTITY % note 'INCLUDE' >
+<![ %note; [
+
+<!ELEMENT %n.note; %om.RO;  %specialPara;> 
+<!ATTLIST %n.note;  
+      %a.global;
+      type CDATA #IMPLIED
+      resp CDATA #IMPLIED
+      place CDATA 'unspecified'
+      anchored (yes | no) "yes"
+      target IDREFS #IMPLIED
+      targetEnd IDREFS #IMPLIED
+      TEIform CDATA 'note' >
+  
+]]>
+  
+
+<!-- [DCONOIX] 6.8.2: Index Entries -->
+
+<!ENTITY % index 'INCLUDE' >
+<![ %index; [
+
+<!ELEMENT %n.index; %om.RO;  EMPTY> 
+<!ATTLIST %n.index;  
+      %a.global;
+      index CDATA #IMPLIED
+      level1 CDATA #REQUIRED
+      level2 CDATA #IMPLIED
+      level3 CDATA #IMPLIED
+      level4 CDATA #IMPLIED
+      TEIform CDATA 'index' >
+  
+]]>
+  
+<!ENTITY % divGen 'INCLUDE' >
+<![ %divGen; [
+
+<!ELEMENT %n.divGen; %om.RO;  EMPTY> 
+<!ATTLIST %n.divGen;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'divGen' >
+  
+]]>
+  
+<!-- end of [DCONOIX]  6.8.2-->
+
+<!-- end of [DCONO]  6.8.1-->
+
+
+<!-- [DCORSM] 6.9.3: Milestone tags -->
+
+<!ENTITY % milestone 'INCLUDE' >
+<![ %milestone; [
+
+<!ELEMENT %n.milestone; %om.RO; EMPTY> 
+<!ATTLIST %n.milestone;  
+      %a.global;
+      ed CDATA #IMPLIED
+      unit CDATA #REQUIRED
+      TEIform CDATA 'milestone' >
+  
+]]>
+  
+<!ENTITY % pb 'INCLUDE' >
+<![ %pb; [
+
+<!ELEMENT %n.pb; %om.RO; EMPTY> 
+<!ATTLIST %n.pb;  
+      %a.global;
+      ed CDATA #IMPLIED
+      TEIform CDATA 'pb' >
+  
+]]>
+  
+<!ENTITY % lb 'INCLUDE' >
+<![ %lb; [
+
+<!ELEMENT %n.lb; %om.RO; EMPTY> 
+<!ATTLIST %n.lb;  
+      %a.global;
+      ed CDATA #IMPLIED
+      TEIform CDATA 'lb' >
+  
+]]>
+  
+<!ENTITY % cb 'INCLUDE' >
+<![ %cb; [
+
+<!ELEMENT %n.cb; %om.RO; EMPTY> 
+<!ATTLIST %n.cb;  
+      %a.global;
+      ed CDATA #IMPLIED
+      TEIform CDATA 'cb' >
+  
+]]>
+  
+<!-- end of [DCORSM]  6.9.3-->
+
+
+<!-- [DCOBI] 6.10.1: Tags for Bibliographic References -->
+
+<!ENTITY % bibl 'INCLUDE' >
+<![ %bibl; [
+
+<!ELEMENT %n.bibl; %om.RO;  (#PCDATA | %m.phrase; |
+    %m.biblPart; | %m.Incl;)*> 
+<!ATTLIST %n.bibl;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'bibl' >
+  
+]]>
+  
+<!ENTITY % biblStruct 'INCLUDE' >
+<![ %biblStruct; [
+
+<!ELEMENT %n.biblStruct; %om.RO;
+                   ((%m.Incl;)*, ((%n.analytic;), (%m.Incl;)*)?,
+                  (((%n.monogr;), (%m.Incl;)*), ((%n.series;), (%m.Incl;)*)*)+, (((%n.note;), (%m.Incl;)*) | ((%n.idno;), (%m.Incl;)*))*)> 
+<!ATTLIST %n.biblStruct;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'biblStruct' >
+  
+]]>
+  
+<!ENTITY % biblFull 'INCLUDE' >
+<![ %biblFull; [
+
+<!ELEMENT %n.biblFull; %om.RO;  ((%m.Incl;)*,
+          ((%n.titleStmt;), (%m.Incl;)*),   ((%n.editionStmt;), (%m.Incl;)*)?,
+               ((%n.extent;), (%m.Incl;)*)?,      ((%n.publicationStmt;), (%m.Incl;)*),
+               ((%n.seriesStmt;), (%m.Incl;)*)?, ((%n.notesStmt;), (%m.Incl;)*)?,
+               ((%n.sourceDesc;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.biblFull;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'biblFull' >
+  
+]]>
+  
+<!ENTITY % listBibl 'INCLUDE' >
+<![ %listBibl; [
+
+<!ELEMENT %n.listBibl; %om.RR;  ((%n.head;)?, ((%n.bibl;) | %n.biblStruct; |
+biblFull)+, (%n.trailer;)?)> 
+<!ATTLIST %n.listBibl;  
+      %a.global;
+      %a.declarable;
+      TEIform CDATA 'listBibl' >
+  
+]]>
+  
+<!-- [DCOBILV] 6.10.2.1: Levels of bibliographic information -->
+
+<!ENTITY % analytic 'INCLUDE' >
+<![ %analytic; [
+
+<!ELEMENT %n.analytic; %om.RO;  ((%n.author;) | %n.editor; | %n.respStmt; | %n.title; | %m.Incl;)*> 
+<!ATTLIST %n.analytic;  
+      %a.global;
+      TEIform CDATA 'analytic' >
+  
+]]>
+  
+<!ENTITY % monogr 'INCLUDE' >
+<![ %monogr; [
+
+<!ELEMENT %n.monogr; %om.RO;   (
+               ( (%m.Incl;)*, ((
+                 ((%n.author;) | %n.editor; | %n.respStmt;),
+                 ((%n.author;) | %n.editor; | %n.respStmt; | %m.Incl;)*,
+                 ((%n.title;), (%m.Incl;)*)+, 
+                 (((%n.editor;) | %n.respStmt;), (%m.Incl;)*)*)
+                 | (
+                 ((%n.title;), (%m.Incl;)*)+, (((%n.author;) | %n.editor; | %n.respStmt;),
+		 (%m.Incl;)*)*)))?,
+               (((%n.note;) | %n.meeting;), (%m.Incl;)*)*,
+               ((%n.edition;), ((%n.editor;) | %n.respStmt; | %m.Incl;)*)*,
+               (%n.imprint;), ((%n.imprint;) | %n.extent; | %n.biblScope; | %m.Incl;)*
+                            )
+> 
+<!ATTLIST %n.monogr;  
+      %a.global;
+      TEIform CDATA 'monogr' >
+  
+]]>
+  
+<!ENTITY % series 'INCLUDE' >
+<![ %series; [
+
+<!ELEMENT %n.series; %om.RO;   (#PCDATA | %n.title; | %n.editor; | %n.respStmt; | %n.biblScope; | %m.Incl;)*> 
+<!ATTLIST %n.series;  
+      %a.global;
+      TEIform CDATA 'series' >
+  
+]]>
+  
+<!-- end of [DCOBILV]  6.10.2.1-->
+
+<!-- [DCOBICOR] 6.10.2.2: Author, title, etc. -->
+
+<!ENTITY % author 'INCLUDE' >
+<![ %author; [
+
+<!ELEMENT %n.author; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.author;  
+      %a.global;
+      TEIform CDATA 'author' >
+  
+]]>
+  
+<!ENTITY % editor 'INCLUDE' >
+<![ %editor; [
+
+<!ELEMENT %n.editor; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.editor;  
+      %a.global;
+      role CDATA "editor"
+      TEIform CDATA 'editor' >
+  
+]]>
+  
+<!ENTITY % respStmt 'INCLUDE' >
+<![ %respStmt; [
+
+<!ELEMENT %n.respStmt; %om.RO;  ((%n.resp;) | %n.name; | %m.Incl;)+ > 
+<!ATTLIST %n.respStmt;  
+      %a.global;
+      TEIform CDATA 'respStmt' >
+  
+]]>
+  
+<!ENTITY % resp 'INCLUDE' >
+<![ %resp; [
+
+<!ELEMENT %n.resp; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.resp;  
+      %a.global;
+      TEIform CDATA 'resp' >
+  
+]]>
+  
+<!ENTITY % title 'INCLUDE' >
+<![ %title; [
+
+<!ELEMENT %n.title; %om.RO; %paraContent;> 
+<!ATTLIST %n.title;  
+      %a.global;
+      level (a | m | j | s | u) #IMPLIED
+      type CDATA #IMPLIED
+      TEIform CDATA 'title' >
+  
+]]>
+  
+<!ENTITY % meeting 'INCLUDE' >
+<![ %meeting; [
+
+<!ELEMENT %n.meeting; %om.RR; %paraContent;> 
+<!ATTLIST %n.meeting;  
+      %a.global;
+      TEIform CDATA 'meeting' >
+  
+]]>
+  
+<!-- end of [DCOBICOR]  6.10.2.2-->
+
+<!-- [DCOPUB] 6.10.2.3: Bibliographic subelements -->
+
+<!ENTITY % imprint 'INCLUDE' >
+<![ %imprint; [
+
+<!ELEMENT %n.imprint; %om.RO;
+         ((%n.pubPlace;) | %n.publisher; | %n.date; | %n.biblScope; | %m.Incl;)*> 
+<!ATTLIST %n.imprint;  
+      %a.global;
+      TEIform CDATA 'imprint' >
+  
+]]>
+  
+<!ENTITY % publisher 'INCLUDE' >
+<![ %publisher; [
+
+<!ELEMENT %n.publisher; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.publisher;  
+      %a.global;
+      TEIform CDATA 'publisher' >
+  
+]]>
+  
+<!ENTITY % biblScope 'INCLUDE' >
+<![ %biblScope; [
+
+<!ELEMENT %n.biblScope; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.biblScope;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'biblScope' >
+  
+]]>
+  
+<!ENTITY % pubPlace 'INCLUDE' >
+<![ %pubPlace; [
+
+<!ELEMENT %n.pubPlace; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.pubPlace;  
+      %a.global;
+      %a.names;
+      TEIform CDATA 'pubPlace' >
+  
+]]>
+  
+<!--Note and date are defined elsewhere, as are extent, address,
+and idno.-->
+<!-- end of [DCOPUB]  6.10.2.3-->
+
+<!-- end of [DCOBI]  6.10.1-->
+
+
+<!-- [DCOVE] 6.11.1: Verse -->
+
+<!ENTITY % l 'INCLUDE' >
+<![ %l; [
+
+<!ELEMENT %n.l; %om.RO; %paraContent;> 
+<!ATTLIST %n.l;  
+      %a.global;
+      %a.metrical;
+      %a.enjamb;
+      part (Y | N | I | M | F) "N"
+      TEIform CDATA 'l' >
+  
+]]>
+  
+<!ENTITY % lg 'INCLUDE' >
+<![ %lg; [
+
+<!ELEMENT %n.lg; %om.RO;  ((%m.divtop; |
+%m.Incl;)*, ((%n.l;) | %n.lg;), ((%n.l;) | %n.lg; | %m.Incl;)*, ((%m.divbot;),
+(%m.Incl;)*)*)> 
+<!ATTLIST %n.lg;  
+      %a.global;
+      %a.metrical;
+      %a.divn;
+      TEIform CDATA 'lg' >
+  
+]]>
+  
+<!-- end of [DCOVE]  6.11.1-->
+
+
+<!-- [DCODR] 6.11.2: Drama -->
+
+<!ENTITY % sp 'INCLUDE' >
+<![ %sp; [
+
+<!ELEMENT %n.sp; %om.RO;  ((%m.Incl;)*, ((%n.speaker;), (%m.Incl;)*)?, (((%n.p;) | %n.l; | %n.lg; | %n.ab; |
+seg | %n.stage;), (%m.Incl;)*)+)> 
+<!ATTLIST %n.sp;  
+      %a.global;
+      who IDREFS #IMPLIED
+      TEIform CDATA 'sp' >
+  
+]]>
+  
+<!ENTITY % speaker 'INCLUDE' >
+<![ %speaker; [
+
+<!ELEMENT %n.speaker; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.speaker;  
+      %a.global;
+      TEIform CDATA 'speaker' >
+  
+]]>
+  
+<!ENTITY % stage 'INCLUDE' >
+<![ %stage; [
+
+<!ELEMENT %n.stage; %om.RR; %specialPara;> 
+<!ATTLIST %n.stage;  
+      %a.global;
+      type CDATA "mix"
+      TEIform CDATA 'stage' >
+  
+]]>
+  
+<!-- end of [DCODR]  6.11.2-->
+
+<!-- end of [DCO]  6.12-->
