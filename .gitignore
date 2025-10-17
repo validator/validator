@@ -1,4 +1,4 @@
-vnu.1
+docs/*.1
 .ropeproject
 nbproject
 build/__init__.pyc
