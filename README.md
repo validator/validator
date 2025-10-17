@@ -1,20 +1,26 @@
 # The Nu Html Checker (v.Nu)
 
-The Nu Html Checker (v.Nu) helps you [catch unintended mistakes in your HTML, CSS, and SVG][1]. It enables you to [batch-check documents from the command line][2] and from other scripts/apps, and to [deploy your own instance of the checker as a service][3] (like [validator.w3.org/nu][4]). Its [source code is available][5], as are [instructions on how to build, test, and run the code][6].
+With vnu:
+
+- [catch unintended mistakes in your HTML, CSS, and SVG][1]
+- [batch-check documents from the command line][2] and from other scripts/apps,
+- [deploy your own instance of the checker as a service][3] (like [validator.w3.org/nu][4]).
 
    [1]: https://validator.w3.org/nu/about.html#why-validate
-   [2]: https://validator.github.io/validator/#usage
-   [3]: https://validator.github.io/validator/#standalone
+   [2]: #usage
+   [3]: #standalone-web-server
    [4]: https://validator.w3.org/nu/
+
+## Download & install
+
+### Sources
+
+Its source code is available on [GitHub][5], as are [instructions on how to build, test, and run the code][6].
+
    [5]: https://github.com/validator/validator
-   [6]: https://validator.github.io/validator/#build-instructions
+   [6]: #build-instructions
 
-A [Dockerfile][7] (see **Pulling the Docker image** below) and [npm][8], [pip][9], and [brew][10] packages are also available.
-
-   [7]: https://ghcr.io/validator/validator
-   [8]: https://www.npmjs.com/package/vnu-jar
-   [9]: https://github.com/svenkreiss/html5validator
-   [10]: https://formulae.brew.sh/formula/vnu
+### Binaries
 
 It is released upstream in these formats:
 
@@ -24,12 +30,20 @@ It is released upstream in these formats:
 
 * `vnu.war` — for [deploying the checker service through a servlet container such as Tomcat][11]
 
-   [11]: https://validator.github.io/validator/#servlet
+   [11]: #deployment-to-servlet-container
 
 > [!NOTE]
 > The `vnu.jar` and `vnu.war` files require you to have Java 11 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
 
-You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13], [`npm install vnu-jar`][14], [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15], [`brew install vnu`][16], or [`pip install html5validator`][17] and see the **Usage** and **Web-based checking** sections below. Or automate your document checking with a frontend such as:
+A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8], [pip][9], and [brew][10] packages are also available.
+
+   [7]: https://ghcr.io/validator/validator
+   [8]: https://www.npmjs.com/package/vnu-jar
+   [9]: https://github.com/svenkreiss/html5validator
+   [10]: https://formulae.brew.sh/formula/vnu
+   [36]: #pulling-the-docker-image
+
+You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13], [`npm install vnu-jar`][14], [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15], [`brew install vnu`][16], or [`pip install html5validator`][17] and see the **[Usage](#usage)** and **[Web-based checking](#web-based-checking)** sections below. Or automate your document checking with a frontend such as:
 
    [12]: https://github.com/validator/validator/releases/latest
    [13]: https://github.com/validator/validator/pkgs/container/validator
@@ -334,44 +348,7 @@ The [latest releases of the Linux, Windows, and macOS binaries and vnu.jar and v
 
 ### Standalone web server
 
-To run the checker as a standalone service (using a built-in Jetty server), open a new terminal window and invoke the checker like this:
-
-    java -cp ~/vnu.jar              nu.validator.servlet.Main 8888
-
-    vnu-runtime-image/bin/java      nu.validator.servlet.Main 8888
-
-    vnu-runtime-image\bin\java.exe  nu.validator.servlet.Main 8888
-
-Then open [http://0.0.0.0:8888][27] in a browser. (To listen on a different port, replace `8888` with the port number.)
-
-   [27]: http://0.0.0.0:8888
-
-> [!WARNING]
-> Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `nu.validator.servlet.bind-address` system property to bind the checker to a different address:
-
-    java -cp ~/vnu.jar \
-        -Dnu.validator.servlet.bind-address=128.30.52.73 \
-        nu.validator.servlet.Main 8888
-
-    vnu-runtime-image/bin/java \
-        -Dnu.validator.servlet.bind-address=128.30.52.73 \
-        nu.validator.servlet.Main 8888
-
-    vnu-runtime-image\bin\java.exe  \
-        -Dnu.validator.servlet.bind-address=128.30.52.73 \
-        nu.validator.servlet.Main 8888
-
-When you open [http://0.0.0.0:8888][28] (or whatever URL corresponds to the `nu.validator.servlet.bind-address` value you’re using), you’ll see a form similar to [validator.w3.org/nu][29] that allows you to enter the URL of an HTML document, CSS stylesheet, or SVG image, and have the results of checking that resource displayed in the browser.
-
-   [28]: http://0.0.0.0:8888
-   [29]: https://validator.w3.org/nu/
-
-> [!NOTE]
-> If you get a `StackOverflowError` error when using the checker, try adjusting the thread stack size by providing the `-Xss` option to java:
-
-      java -Xss512k -cp ~/vnu.jar nu.validator.servlet.Main 8888
-
-      vnu-runtime-image/bin/java -Xss512k -m vnu/nu.validator.servlet.Main 8888
+See [vnu-server](docs/vnu-server.1.md) for invocation manual page.
 
 ### Deployment to servlet container
 
@@ -406,154 +383,11 @@ The checker is packaged with an HTTP client you can use from the command line to
 
 To check documents locally using the packaged HTTP client, do this:
 
-  1. Start up the checker as a local HTTP service, as described in the **Standalone web server** section.
+  1. Start up the checker as a local HTTP service, as described in the [**Standalone web server**][37] section.
 
-  2. Open a new terminal window and invoke the HTTP client like this:
+  2. Invoke the HTTP client like from the commandline according to [vnu-client](docs/vnu-client.1.md) manual page.
 
-    java -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
-
-    vnu-runtime-image/bin/java nu.validator.client.HttpClient FILE.html...
-
-To send documents to an instance of the checker on the Web, such as [html5.validator.nu/][32], use the nu.validator.client.host and nu.validator.client.port options, like this:
-
-   [32]: https://html5.validator.nu/
-
-    java -cp ~/vnu.jar -Dnu.validator.client.port=80 \
-        -Dnu.validator.client.host=html5.validator.nu \
-        nu.validator.client.HttpClient FILE.html...
-
-…or like this:
-
-    vnu-runtime-image/bin/java -Dnu.validator.client.port=80 \
-        -Dnu.validator.client.host=html5.validator.nu \
-        nu.validator.client.HttpClient FILE.html...
-
-Other options are documented below.
-
-### HTTP client options
-
-When using the packaged HTTP client for sending documents to an instance of the checker HTTP service for checking, you can set Java system properties to control configuration options for the checker behavior.
-
-For example, you can suppress warning-level messages and only show error-level ones by setting the value of the `nu.validator.client.level` system property to `error`, like this:
-
-    java -Dnu.validator.client.level=error \
-           -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
-
-…or like this:
-
-    vnu-runtime-image/bin/java -Dnu.validator.client.level=error \
-           -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
-
-Most of the properties listed below map to the common input parameters for the checker service, as documented at [github.com/validator/validator/wiki/Service-»-Common-params][33].
-
-   [33]: https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params
-
-#### nu.validator.client.host
-
-    Specifies the hostname of the checker for the client to connect to.
-
-    default: "127.0.0.1"
-
-#### nu.validator.client.port
-
-    Specifies the port of the checker for the client to connect to.
-
-    default: "8888"
-
-    example: java -Dnu.validator.client.port=8080 -jar ~/vnu.jar FILE.html
-
-#### nu.validator.client.path
-
-    Specifies the path of the checker for the client to connect to.
-
-    default: "/"
-
-    example: java -Dnu.validator.client.path=/vnu -jar ~/vnu.jar FILE.html
-
-#### nu.validator.client.level
-
-    Specifies the severity level of messages to report; to suppress
-    warning-level messages, and only show error-level ones, set this property to
-    "error".
-
-    default: [unset]
-
-    possible values: "error"
-
-    example: java -Dnu.validator.client.level=error -jar ~/vnu.jar FILE.html
-
-#### nu.validator.client.parser
-
-    Specifies which parser to use.
-
-    default: "html"; or, for *.xhtml input files, "xml"
-
-    possible values: [see information at URL below]
-
-    https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params#parser
-
-#### nu.validator.client.charset
-
-    Specifies the encoding of the input document.
-
-    default: [unset]
-
-#### nu.validator.client.content-type
-
-    Specifies the content-type of the input document.
-
-    default: "text/html"; or, for *.xhtml files, "application/xhtml+xml"
-
-#### nu.validator.client.out
-
-    Specifies the output format for messages.
-
-    default: "gnu"
-
-    possible values: [see information at URL below]
-
-    https://github.com/validator/validator/wiki/Service-%C2%BB-Common-params#out
-
-#### nu.validator.client.asciiquotes
-
-    Specifies whether ASCII quotation marks are substituted for Unicode smart
-    quotation marks in messages.
-
-    default: "yes"
-
-    possible values: "yes" or "no"
-
-### HTTP servlet options
-
-#### nu.validator.servlet.bind-address
-
-    Binds the validator service to the specified IP address.
-
-    default: 0.0.0.0 [causes the checker to listen on all interfaces]
-
-    possible values: The IP address of any network interface
-
-    example: -Dnu.validator.servlet.bind-address=127.0.0.1
-
-#### nu.validator.servlet.connection-timeout
-
-    Specifies the connection timeout.
-
-    default: 5000
-
-    possible values: number of milliseconds
-
-    example: -Dnu.validator.servlet.connection-timeout=5000
-
-#### nu.validator.servlet.socket-timeout
-
-    Specifies the socket timeout.
-
-    default: 5000
-
-    possible values: number of milliseconds
-
-    example: -Dnu.validator.servlet.socket-timeout=5000
+   [37]: #standalone-web-server
 
 ## Pulling the Docker image
 
@@ -642,3 +476,7 @@ Use `python ./checker.py --help` to see command-line options for controlling the
     python ./checker.py update-shallow && \
       python ./checker.py dldeps && \
       python ./checker.py jar       # to compile vnu.jar faster
+
+## Wiki
+
+Additional documentation is available on the [wiki](https://github.com/validator/validator/wiki/).
