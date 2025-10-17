@@ -1648,7 +1648,7 @@ def prepareLocalEntityJar():
 
 def makeUsage():
     usage_lines = []
-    with open(os.path.join(buildRoot, "usage.md")) as f:
+    with open(os.path.join(buildRoot, "docs", "vnu-usage.md")) as f:
         for line in f:
             usage_lines.append(stripLeadingHashes(line))
     with open(os.path.join(filesDir, "usage"), "w") as f:
@@ -1658,7 +1658,7 @@ def makeUsage():
 def makeCliHelp():
     usage_lines = []
     readme_lines = []
-    with open(os.path.join(buildRoot, "usage.md")) as f:
+    with open(os.path.join(buildRoot, "docs", "vnu-usage.md")) as f:
         for line in f:
             usage_lines.append(stripLeadingHashes(line))
             if line.startswith("## OPTIONS"):

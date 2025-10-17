@@ -8,7 +8,7 @@ MANPAGE_LAST_UPDATE_DATE ?= $(shell $(DATE) +"%Y-%m-%d")
 
 all: vnu.1
 
-vnu.1: usage.md
+vnu.1: docs/vnu-usage.md
 	{ $(SED) '/^## OPTIONS/q' $< ; \
 		$(SED) -n '/^## Options/,/^## Web-based checking/{/^## Options/d;/^## Web-based checking/d;p;}' README.md | \
 		$(SED) 's/####/####    /'; } \
