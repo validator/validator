@@ -66,7 +66,7 @@ You can run the vnu checker with one of the invocations from the [vnu manual pag
 
 The Nu Html Checker (vnu) — along with being usable as [a standalone command-line client][24] — can be run as an HTTP service, similar to [validator.w3.org/nu][25], for browser-based checking of HTML documents, CSS stylesheets, and SVG images over the Web. To that end, the vnu checker is released as several separate packages:
 
-   [24]: https://validator.github.io/validator/#usage
+   [24]: #usage
    [25]: https://validator.w3.org/nu/
 
 - Linux, Windows, and macOS binaries for deploying the vnu checker as a simple self-contained service on any system
