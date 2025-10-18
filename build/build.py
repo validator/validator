@@ -1207,6 +1207,18 @@ class Release():
     def uploadMavenToGitHub(self):
         self.setVersion(distDir)
         print("version: " + self.version)
+        url = "https://api.github.com/orgs/validator/packages/maven/nu.validator.validator/versions"  # nopep8
+        try:
+            with urlopen(url) as response:
+                versions = json.load(response)
+        except HTTPError as e:
+            print(e.reason)
+            sys.exit(1)
+        except URLError as e:
+            print(e.reason)
+            sys.exit(1)
+        if self.version in [v["name"] for v in versions]:
+            return
         self.downloadMavenAntTasksJar()
         self.createArtifacts("jar")
         basename = "%s-%s" % (self.artifactId, self.version)
