@@ -17,9 +17,7 @@ manpages: $(MANPAGES)
 %.1: %.1.md
 	$(PANDOC) --standalone --from markdown -f markdown-smart --to man \
 		-M title:"$*(1) $* $(VNU_VERSION)" \
-		-M date:"$(MANPAGE_LAST_UPDATE_DATE)" $< \
-		| $(AWK) '!f && /.IP/ {f=1; next} 1' \
-		> $@
+		-M date:"$(MANPAGE_LAST_UPDATE_DATE)" $< > $@
 
 clean:
 	$(RM) $(MANPAGES)
