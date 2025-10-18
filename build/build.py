@@ -69,6 +69,7 @@ gitCmd = 'git'
 mvnCmd = 'mvn'
 gpgCmd = 'gpg'
 npmCmd = 'npm'
+antCmd = 'ant'
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'  # nopep8
@@ -100,9 +101,6 @@ jingTrangDir = os.path.join(buildRoot, "jing-trang")
 cssValidatorDir = os.path.join(buildRoot, "css-validator")
 vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
 filesDir = os.path.join(vnuSrc, "localentities", "files")
-antRoot = os.path.join(jingTrangDir, "lib")
-antJar = os.path.join(antRoot, "ant.jar")
-antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
 
 pageTemplate = os.path.join("site", "PageEmitter.xml")
 formTemplate = os.path.join("site", "FormEmitter.xml")
@@ -720,17 +718,13 @@ def cleanJing():
 
 def buildCssValidator():
     os.chdir("css-validator")
-    runCmd([javaCmd, "-jar",
-           os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
-           "jar-without-dependencies"])
+    runCmd(["ant", "jar-without-dependencies"])
     os.chdir("..")
 
 
 def cleanCssValidator():
     os.chdir("css-validator")
-    runCmd([javaCmd, "-jar",
-           os.path.join("..", "jing-trang", "lib", "ant-launcher.jar"),
-           "clean"])
+    runCmd(["ant", "clean"])
     os.chdir("..")
 
 
@@ -935,19 +929,6 @@ class Release():
         self.vnuModuleInfoDir = os.path.join(distDir, "vnu")
         self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
         self.docs = ["README.md", "LICENSE"]
-        self.setClasspath()
-
-    def setClasspath(self):
-        self.classpath = os.pathsep.join([
-            antJar, antLauncherJar,
-            os.pathsep.join(dependencyJarPaths()),
-            os.path.join(jingTrangDir, "build", "jing.jar"),
-            os.path.join(jarsDir, "validator.jar"),
-            os.path.join(jarsDir, "htmlparser.jar"),
-            os.path.join(jarsDir, "galimatias.jar"),
-            os.path.join(jarsDir, "langdetect.jar"),
-            os.path.join(cssValidatorDir, "css-validator.jar"),
-        ])
 
     def reInitDistDir(self, whichDir):
         removeIfDirExists(whichDir)
@@ -1013,7 +994,6 @@ class Release():
         path = os.path.join(extrasDir, url[url.rfind("/") + 1:])
         if not os.path.exists(path):
             fetchUrlTo(url, path, md5sum)
-        self.setClasspath()
 
     def createArtifacts(self, jarOrWar, url=None):
         whichDir = distDir
@@ -1023,9 +1003,9 @@ class Release():
             distJarOrWar = "dist-war"
         self.reInitDistDir(whichDir)
         self.setVersion(whichDir, url)
-        runCmd([javaCmd,
+        runCmd([antCmd,
                 '-Ddist=' + distJarOrWar,
-                '-cp', self.classpath, 'org.apache.tools.ant.Main',
+                '-lib', 'extras/maven-ant-tasks-2.1.3.jar',
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
     def createBundle(self):
@@ -1035,8 +1015,7 @@ class Release():
               (distDir, self.artifactId, self.version))
         self.sign(distDir)
         self.writeVersion(distDir)
-        runCmd([javaCmd,
-                '-cp', self.classpath, 'org.apache.tools.ant.Main',
+        runCmd([antCmd,
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
     def createJarOrWar(self, jarOrWar):
@@ -1050,9 +1029,8 @@ class Release():
             os.mkdir(os.path.join(whichDir, "war"))
         self.reInitDistDir(whichDir)
         self.setVersion(whichDir)
-        runCmd([javaCmd,
+        runCmd([antCmd,
                 '-Ddist=' + distJarOrWar,
-                '-cp', self.classpath, 'org.apache.tools.ant.Main',
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
             self.checkJar(call_createJarOrWar=False)
@@ -1810,6 +1788,7 @@ def printHelp():
     print("  --java=/usr/bin/java       -- Sets path to the java binary")
     print("  --javac=/usr/bin/javac     -- Sets path to the javac binary")
     print("  --javadoc=/usr/bin/javadoc -- Sets path to the javadoc binary")
+    print("  --ant=ant                  -- Sets path to the ant binary")
     print("  --javaversion=N.N          -- Sets Java VM version to build for")
     print("  --jdk-bin=/j2se/bin        -- Sets paths for all JDK tools")
     print("  --log4j=log4j.properties   -- Sets path to log4 configuration")
@@ -1914,6 +1893,8 @@ def main(argv):
                 javacCmd = arg[8:]
             elif arg.startswith("--javadoc="):
                 javadocCmd = arg[10:]
+            elif arg.startswith("--ant="):
+                antCmd = arg[6:]
             elif arg.startswith("--jdk-bin="):
                 jdkBinDir = arg[10:]
                 javaCmd = os.path.join(jdkBinDir, "java")

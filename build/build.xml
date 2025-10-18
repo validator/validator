@@ -250,9 +250,30 @@ DEALINGS IN THE SOFTWARE.
     </war>
     <delete dir="${dist}/war" />
   </target>
+
+  <path id="validator.classpath">
+    <fileset dir="../dependencies/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
+    <fileset dir="../dependencies/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
+    <fileset dir="../dependencies/" includes="commons-io-${commons-io-version}.jar" />
+    <fileset dir="../dependencies/" includes="httpclient-${httpclient-version}.jar" />
+    <fileset dir="../dependencies/" includes="httpcore-${httpcore-version}.jar" />
+    <fileset dir="../dependencies/" includes="icu4j-${icu4j-version}.jar" />
+    <fileset dir="../dependencies/" includes="javax.json-1.1.4.jar" />
+    <fileset dir="../dependencies/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
+    <fileset dir="../dependencies/" includes="jetty-server-${jetty-version}.jar" />
+    <fileset dir="../dependencies/" includes="jetty-servlet-${jetty-version}.jar" />
+    <fileset dir="../dependencies/" includes="jetty-util-${jetty-version}.jar" />
+    <fileset dir="../dependencies/" includes="log4j-${log4j-version}.jar" />
+    <fileset dir="../dependencies/" includes="salvation-${salvation-version}.jar" />
+    <pathelement location="../css-validator/css-validator.jar"/>
+    <pathelement location="../jars/galimatias.jar"/>
+    <pathelement location="../jars/htmlparser.jar"/>
+    <pathelement location="../jars/langdetect.jar"/>
+    <pathelement location="../jing-trang/build/jing.jar"/>
+  </path>
   <target name="validator-javadoc-jar">
     <property name="javadoc-dir" value="${dist}/javadoc" />
-    <javadoc destdir="${javadoc-dir}" additionalparam="-Xdoclint:none">
+    <javadoc destdir="${javadoc-dir}" additionalparam="-Xdoclint:none" classpathref="validator.classpath">
       <fileset dir="${src}">
         <exclude name="META-INF/**"/>
         <exclude name="nu/validator/datatype/data/encodings.json"/>
