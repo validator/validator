@@ -26,11 +26,11 @@ import os
 import shutil
 import json
 try:
-    from urllib.request import urlopen
+    from urllib.request import urlopen, Request
     from urllib.error import URLError, HTTPError
     from http.client import BadStatusLine
 except ImportError:
-    from urllib2 import urlopen, URLError, HTTPError
+    from urllib2 import urlopen, Request, URLError, HTTPError
     from httplib import BadStatusLine
 import socket
 import re
@@ -1208,8 +1208,15 @@ class Release():
         self.setVersion(distDir)
         print("version: " + self.version)
         url = "https://api.github.com/orgs/validator/packages/maven/nu.validator.validator/versions"  # nopep8
+        request = Request(
+            url,
+            headers={
+                "Authorization": "Bearer %s" % os.getenv("GITHUB_TOKEN"),
+                "Accept": "application/vnd.github+json",
+            },
+        )
         try:
-            with urlopen(url) as response:
+            with urlopen(request) as response:
                 versions = json.load(response)
         except HTTPError as e:
             print(e.reason)
