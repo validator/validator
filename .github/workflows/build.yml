@@ -109,3 +109,7 @@ jobs:
           omitBodyDuringUpdate: true
           omitName: true
           tag: latest
+      - name: Release new maven package
+        shell: bash
+        run: |
+          python ./checker.py maven-release

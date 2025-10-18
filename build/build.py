@@ -1974,10 +1974,8 @@ def main(argv):
             elif arg == 'bundle':
                 release.createBundle()
             elif arg == 'snapshot':
-                release.uploadToCentral(snapshotsRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'release':
-                release.uploadToCentral(stagingRepoUrl)
                 release.uploadMavenToGitHub()
                 release.createDistribution("jar")
                 release.createDistribution("war")
@@ -2009,65 +2007,53 @@ def main(argv):
             elif arg == 'maven-bundle':
                 release.createBundle()
             elif arg == 'maven-snapshot':
-                release.uploadToCentral(snapshotsRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'maven-release':
-                release.uploadToCentral(stagingRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'galimatias-bundle':
                 release = Release("galimatias")
                 release.createBundle()
             elif arg == 'galimatias-snapshot':
                 release = Release("galimatias")
-                release.uploadToCentral(snapshotsRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'galimatias-release':
                 release = Release("galimatias")
-                release.uploadToCentral(stagingRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'langdetect-bundle':
                 release = Release("langdetect")
                 release.createBundle()
             elif arg == 'langdetect-snapshot':
                 release = Release("langdetect")
-                release.uploadToCentral(snapshotsRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'langdetect-release':
                 release = Release("langdetect")
-                release.uploadToCentral(stagingRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'htmlparser-bundle':
                 release = Release("htmlparser")
                 release.createBundle()
             elif arg == 'htmlparser-snapshot':
                 release = Release("htmlparser")
-                release.uploadToCentral(snapshotsRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'htmlparser-release':
                 release = Release("htmlparser")
-                release.uploadToCentral(stagingRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'cssvalidator-bundle':
                 release = Release("cssvalidator")
                 release.createBundle()
             elif arg == 'cssvalidator-snapshot':
                 release = Release("cssvalidator")
-                release.uploadToCentral(snapshotsRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'cssvalidator-release':
                 release = Release("cssvalidator")
-                release.uploadToCentral(stagingRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'jing-bundle':
                 release = Release("jing")
                 release.createBundle()
             elif arg == 'jing-snapshot':
                 release = Release("jing")
-                release.uploadToCentral(snapshotsRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'jing-release':
                 release = Release("jing")
-                release.uploadToCentral(stagingRepoUrl)
                 release.uploadMavenToGitHub()
             elif arg == 'image':
                 release.createRuntimeImage()
