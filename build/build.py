@@ -293,33 +293,6 @@ def cssValidatorJarPath():
     return [os.path.join(buildRoot, "css-validator", "css-validator.jar"), ]
 
 
-def runJavac(sourceDir, classDir, classPath):
-    ensureDirExists(classDir)
-    sourceFiles = findFilesWithExtension(sourceDir, "java")
-    f = open("temp-javac-list", "w")
-    f.write("\n".join(sourceFiles))
-    f.close()
-    args = [
-        javacCmd,
-        '-g',
-        '-nowarn',
-        '-classpath',
-        classPath,
-        '-sourcepath',
-        sourceDir,
-        '-d',
-        classDir,
-        '-encoding',
-        'UTF-8',
-    ]
-    if javaTargetVersion != "":
-        args.append('--release')
-        args.append(javaTargetVersion)
-    args.append('@temp-javac-list')
-    runCmd(args)
-    removeIfExists("temp-javac-list")
-
-
 def copyFiles(sourceDir, classDir):
     files = findFiles(sourceDir)
     for f in files:
@@ -328,38 +301,6 @@ def copyFiles(sourceDir, classDir):
         if not os.path.exists(head):
             os.makedirs(head)
         shutil.copyfile(f, destFile)
-
-
-def runJar(classDir, jarFile, sourceDir):
-    classFiles = []
-    for file in findFiles(classDir):
-        if file.endswith(".java"):
-            continue
-        classFiles.append(file)
-    classList = ["-C " + classDir + " " + x[len(classDir) + 1:] + "" for x in classFiles]   # nopep8
-    f = open("temp-jar-list", "w")
-    f.write("\n".join(classList))
-    f.close()
-    runCmd([jarCmd, 'cf', jarFile, '@temp-jar-list'])
-    removeIfExists("temp-jar-list")
-
-
-def buildModule(rootDir, jarName, classPath):
-    sourceDir = os.path.join(rootDir, "src")
-    classDir = os.path.join(rootDir, "classes")
-    modDistDir = os.path.join(rootDir, "dist")
-    jarFile = os.path.join(modDistDir, jarName + ".jar")
-    removeIfExists(jarFile)
-    removeIfDirExists(classDir)
-    ensureDirExists(classDir)
-    ensureDirExists(modDistDir)
-    runJavac(sourceDir, classDir, classPath)
-    copyFiles(sourceDir, classDir)
-    runJar(classDir, jarFile, sourceDir)
-    ensureDirExists(jarsDir)
-    shutil.copyfile(jarFile, os.path.join(jarsDir, jarName + ".jar"))
-    removeIfDirExists(classDir)
-    removeIfDirExists(modDistDir)
 
 
 def extrasJarPaths():
@@ -889,6 +830,7 @@ def realclean():
     cleanModule("galimatias")
     cleanModule("htmlparser")
     cleanModule("langdetect")
+    cleanModule("validator")
     cleanJing()
     cleanCssValidator()
 
@@ -1450,13 +1392,8 @@ class Release():
         self.checkServiceWithRuntimeImage(url)
 
     def buildValidator(self):
-        classPath = os.pathsep.join(
-            dependencyJarPaths() +
-            jarNamesToPaths(["galimatias", "htmlparser", "langdetect"]) +
-            cssValidatorJarPath() +
-            jingJarPath())
         buildEmitters()
-        buildModule(buildRoot, "validator", classPath)
+        buildModule("validator")
         self.createJarOrWar("jar")
 
     def runValidator(self):
