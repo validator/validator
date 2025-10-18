@@ -282,7 +282,7 @@ DEALINGS IN THE SOFTWARE.
         <exclude name="nu/validator/gnu/xml/aelfred2/COPYING"/>
         <exclude name="nu/validator/gnu/xml/aelfred2/README"/>
         <exclude name="nu/validator/gnu/xml/aelfred2/package.html"/>
-        <exclude name="nu/validator/localentities/**"/>
+        <exclude name="nu/validator/localentities/files/**"/>
       </fileset>
     </javadoc>
     <jar destfile="${validator-javadoc-jar}">
