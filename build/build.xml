@@ -283,7 +283,29 @@ DEALINGS IN THE SOFTWARE.
       </fileset>
     </copy>
   </target>
-  <target name="validator-build" depends="validator-prepare">
+  <target name="validator-emitters" depends="validator-prepare">
+    <mkdir dir="${validator.basedir}/classesSaxCompiler"/>
+    <javac srcdir="${validator.basedir}/src"
+           destdir="${validator.basedir}/classesSaxCompiler"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           includes="nu/validator/xml/SaxCompiler.java"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+    <java classpath="${validator.basedir}/classesSaxCompiler"
+          classname="nu.validator.xml.SaxCompiler">
+      <arg file="${validator.basedir}/site/PageEmitter.xml"/>
+      <arg file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java"/>
+    </java>
+    <java classpath="${validator.basedir}/classesSaxCompiler"
+          classname="nu.validator.xml.SaxCompiler">
+      <arg file="${validator.basedir}/site/FormEmitter.xml"/>
+      <arg file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java"/>
+    </java>
+  </target>
+  <target name="validator-build" depends="validator-prepare,validator-emitters">
     <javac srcdir="${validator.basedir}/src"
            destdir="${validator.basedir}/classes"
            classpathref="validator.classpath"
@@ -296,7 +318,10 @@ DEALINGS IN THE SOFTWARE.
   </target>
   <target name="validator-clean">
     <delete dir="${validator.basedir}/classes"/>
+    <delete dir="${validator.basedir}/classesSaxCompiler"/>
     <delete file="${jarsDir}/validator.jar"/>
+    <delete file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java" verbose="true"/>
+    <delete file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java" verbose="true"/>
   </target>
   <target name="validator-jar" depends="validator-build">
     <mkdir dir="${validator.basedir}/jars"/>
