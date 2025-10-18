@@ -65,7 +65,14 @@ DEALINGS IN THE SOFTWARE.
   <target name="clean">
     <delete dir="${dist}"/>
   </target>
-  <target name="jar">
+  <target name="distclean"
+          depends="galimatias-clean,
+          htmlparser-clean,
+          langdetect-clean,
+          validator-clean,
+          css-validator-clean,
+          jing-clean"/>
+  <target name="jar" depends="validator-jar">
     <jar destfile="${dist}/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../css-validator/css-validator.jar"/>
@@ -145,7 +152,7 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
-  <target name="war">
+  <target name="war" depends="validator-jar">
     <mkdir dir="${dist}/war" />
     <echo file="${dist}/war/web.xml" append="false"
 ><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -305,7 +312,15 @@ DEALINGS IN THE SOFTWARE.
       <arg file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java"/>
     </java>
   </target>
-  <target name="validator-build" depends="validator-prepare,validator-emitters">
+  <target name="validator-build"
+          depends="validator-prepare,
+          validator-emitters,
+          langdetect-jar,
+          htmlparser-jar,
+          galimatias-jar,
+          htmlparser-jar,
+          jing-build,
+          css-validator-build">
     <javac srcdir="${validator.basedir}/src"
            destdir="${validator.basedir}/classes"
            classpathref="validator.classpath"
