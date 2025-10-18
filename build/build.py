@@ -683,19 +683,17 @@ def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
 #################################################################
 
 
-def buildGalimatias():
-    classPath = os.pathsep.join(dependencyJarPaths())
-    buildModule(os.path.join(buildRoot, "galimatias"), "galimatias", classPath)
+def buildModule(module):
+    runCmd([
+      antCmd,
+      "-Dbuild.java.target.version=" + javaTargetVersion,
+      "-f", os.path.join(buildRoot, "build", "build.xml"),
+      module + "-jar"
+      ])
 
 
-def buildHtmlParser():
-    classPath = os.pathsep.join(dependencyJarPaths())
-    buildModule(os.path.join(buildRoot, "htmlparser"), "htmlparser", classPath)
-
-
-def buildLangdetect():
-    classPath = os.pathsep.join(dependencyJarPaths())
-    buildModule(os.path.join(buildRoot, "langdetect"), "langdetect", classPath)
+def cleanModule(module):
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), module + "-clean"])
 
 
 def buildJing():
@@ -888,6 +886,9 @@ def realclean():
     clean()
     removeIfDirExists(dependencyDir)
     removeIfDirExists(jarsDir)
+    cleanModule("galimatias")
+    cleanModule("htmlparser")
+    cleanModule("langdetect")
     cleanJing()
     cleanCssValidator()
 
@@ -1487,9 +1488,9 @@ class Release():
         buildJing()
         buildSchemaDrivers()
         prepareLocalEntityJar()
-        buildLangdetect()
-        buildGalimatias()
-        buildHtmlParser()
+        buildModule("galimatias")
+        buildModule("htmlparser")
+        buildModule("langdetect")
         self.buildValidator()
 
 
