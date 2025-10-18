@@ -653,32 +653,6 @@ def cleanCssValidator():
     runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "css-validator-clean"])
 
 
-def buildEmitters():
-    compilerFile = os.path.join(vnuSrc, "xml", "SaxCompiler.java")
-    compilerClass = "nu.validator.xml.SaxCompiler"
-    classDir = os.path.join(buildRoot, "classes")
-    ensureDirExists(classDir)
-    args = [
-        javacCmd,
-        '-g',
-        '-nowarn',
-        '-d',
-        classDir,
-        '-encoding',
-        'UTF-8',
-    ]
-    if javaTargetVersion != "":
-        args.append('--release')
-        args.append(javaTargetVersion)
-    args.append(compilerFile)
-    runCmd(args)
-    pageEmitter = os.path.join(vnuSrc, "servlet", "PageEmitter.java")
-    formEmitter = os.path.join(vnuSrc, "servlet", "FormEmitter.java")
-    runCmd([javaCmd, '-cp', classDir, compilerClass, pageTemplate, pageEmitter])  # nopep8
-    runCmd([javaCmd, '-cp', classDir, compilerClass, formTemplate, formEmitter])  # nopep8
-    removeIfDirExists(classDir)
-
-
 def dockerBuild():
     args = [
         dockerCmd,
@@ -1392,7 +1366,6 @@ class Release():
         self.checkServiceWithRuntimeImage(url)
 
     def buildValidator(self):
-        buildEmitters()
         buildModule("validator")
         self.createJarOrWar("jar")
 
