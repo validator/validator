@@ -113,3 +113,5 @@ jobs:
         shell: bash
         run: |
           python ./checker.py maven-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
