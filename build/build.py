@@ -1156,8 +1156,6 @@ class Release():
         devnull.close()
         args.append('-n')
         args.append(releaseDate)
-        args.append('-d')
-        args.append(os.path.join(buildRoot, "WHATSNEW.md"))
         runCmd([ghRelCmd, 'edit', '-p'] + args)
 
     def createPackageJson(self, packageJson):
@@ -1314,7 +1312,6 @@ class Release():
     def uploadNpm(self, tag=None):
         runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
         removeIfExists(os.path.join(buildRoot, "README.md~"))
-        removeIfExists(os.path.join(buildRoot, "CHANGELOG.md~"))
         readMe = os.path.join(buildRoot, "README.md")
         with open(readMe, 'r') as f:
             readMeCopy = f.read()
