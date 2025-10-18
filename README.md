@@ -49,7 +49,7 @@ A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8], [
 
 You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13], [`npm install vnu-jar`][14], [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15], [`brew install vnu`][16], or [`pip install html5validator`][17] and see the **[Usage](#usage)** and **[Web-based checking](#web-based-checking)** sections below. Or automate your document checking with a frontend such as:
 
-   [12]: https://github.com/validator/validator/releases/latest
+   [12]: https://github.com/validator/validator/releases/tag/latest
    [13]: https://github.com/validator/validator/pkgs/container/validator
    [14]: https://www.npmjs.com/package/vnu-jar
    [15]: https://github.com/validator/validator/packages/892707
@@ -81,7 +81,7 @@ All deployments expose a REST API that enables checking of HTML documents, CSS s
 
 The [latest releases of the Linux, Windows, and macOS binaries and vnu.jar and vnu.war packages][26] are available from the `validator` project at github. The following are detailed instructions on using them.
 
-   [26]: https://github.com/validator/validator/releases/latest
+   [26]: https://github.com/validator/validator/releases/tag/latest
 
 > [!NOTE]
 > Throughout these instructions, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/java` and `vnu-runtime-image\bin\java.exe` with the actual path to the vnu `java` or `java.exe` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the vnu checker with just `java nu.validator.servlet.Main 8888`.
