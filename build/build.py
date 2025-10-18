@@ -699,33 +699,19 @@ def buildLangdetect():
 
 
 def buildJing():
-    os.chdir("jing-trang")
-    if os.name == 'nt':
-        runCmd([os.path.join(".", "ant.bat")])
-    else:
-        runCmd([os.path.join(".", "ant")])
-    os.chdir("..")
+    runCmd([antCmd, "-lib", "jing-trang/lib/saxon.jar", "-f", os.path.join(buildRoot, "build", "build.xml"), "jing-build"])
 
 
 def cleanJing():
-    os.chdir("jing-trang")
-    if os.name == 'nt':
-        runCmd([os.path.join(".", "ant.bat"), "clean"])
-    else:
-        runCmd([os.path.join(".", "ant"), "clean"])
-    os.chdir("..")
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "jing-clean"])
 
 
 def buildCssValidator():
-    os.chdir("css-validator")
-    runCmd(["ant", "jar-without-dependencies"])
-    os.chdir("..")
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "css-validator-build"])
 
 
 def cleanCssValidator():
-    os.chdir("css-validator")
-    runCmd(["ant", "clean"])
-    os.chdir("..")
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "css-validator-clean"])
 
 
 def buildEmitters():

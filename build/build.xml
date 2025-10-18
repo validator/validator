@@ -378,4 +378,24 @@ DEALINGS IN THE SOFTWARE.
   <import file=".ant/build-htmlparser.xml"/>
   <import file=".ant/build-cssvalidator.xml"/>
   <import file=".ant/build-jing.xml"/>
+
+
+  <property name="jing.basedir" location="../jing-trang" />
+  <target name="jing-build">
+    <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
+  </target>
+  <target name="jing-clean">
+    <ant dir="${jing.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
+    <delete file="${jing.basedir}/modbuild.xml"/>
+    <delete file="${jing.basedir}/modules.xml"/>
+  </target>
+
+
+  <property name="css-validator.basedir" location="../css-validator" />
+  <target name="css-validator-build">
+    <ant dir="${css-validator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
+  </target>
+  <target name="css-validator-clean">
+    <ant dir="${css-validator.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
+  </target>
 </project>
