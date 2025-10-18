@@ -273,6 +273,36 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="../jars/langdetect.jar"/>
     <pathelement location="../jing-trang/build/jing.jar"/>
   </path>
+
+  <property name="validator.basedir" location="../" />
+  <target name="validator-prepare">
+    <mkdir dir="${validator.basedir}/classes"/>
+    <copy todir="${validator.basedir}/classes" preservelastmodified="true">
+      <fileset dir="${validator.basedir}/src">
+        <exclude name="**/*.java" />
+      </fileset>
+    </copy>
+  </target>
+  <target name="validator-build" depends="validator-prepare">
+    <javac srcdir="${validator.basedir}/src"
+           destdir="${validator.basedir}/classes"
+           classpathref="validator.classpath"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+  </target>
+  <target name="validator-clean">
+    <delete dir="${validator.basedir}/classes"/>
+    <delete file="${jarsDir}/validator.jar"/>
+  </target>
+  <target name="validator-jar" depends="validator-build">
+    <mkdir dir="${validator.basedir}/jars"/>
+    <jar destfile="${jarsDir}/validator.jar" basedir="${validator.basedir}/classes" excludes="**/*.java"/>
+  </target>
+
   <target name="validator-javadoc-jar">
     <property name="javadoc-dir" value="${dist}/javadoc" />
     <javadoc destdir="${javadoc-dir}" additionalparam="-Xdoclint:none" classpathref="validator.classpath">
