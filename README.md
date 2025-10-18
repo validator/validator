@@ -11,6 +11,14 @@ With the Nu Html Checker (vnu), you can:
    [3]: #standalone-web-server
    [4]: https://validator.w3.org/nu/
 
+## Usage
+
+You can run the vnu checker with one of the invocations from the [vnu manual page](docs/vnu.1.md). For example:
+
+    java -jar ~/vnu.jar [OPTIONS]... FILES|DIRECTORY|URL...
+
+The [OPTIONS section of the vnu manual page](docs/vnu.1.md#options) has details on all available options.
+
 ## Sources
 
 The vnu source code is available on [GitHub][5], as are [instructions on how to build, test, and run the code][6].
@@ -57,10 +65,6 @@ You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 g
    [20]: https://github.com/validator/maven-plugin
    [21]: https://github.com/svenkreiss/html5validator
    [22]: https://github.com/cvrebert/lmvtfy/
-
-## Usage
-
-You can run the vnu checker with one of the invocations from the [vnu manual page](docs/vnu.1.md).
 
 ## Web-based checking
 
@@ -213,6 +217,6 @@ Use `python ./checker.py --help` to see command-line options for controlling the
       python ./checker.py dldeps && \
       python ./checker.py jar       # to compile vnu.jar faster
 
-## Wiki
+## Additional documentation
 
-Additional documentation is available on the [wiki](https://github.com/validator/validator/wiki/).
+Additional documentation is available on the [vnu wiki](https://github.com/validator/validator/wiki/).
