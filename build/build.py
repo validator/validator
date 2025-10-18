@@ -1216,7 +1216,7 @@ class Release():
             "-f",
             "%s.pom" % os.path.join(distDir, basename),
             "gpg:sign-and-deploy-file",
-            "-Dgpg.passphrase=\"${GPG_SIGNING_KEY_PASSPHRASE}\"",
+            "-Dgpg.passphrase=\"${secrets.GPG_SIGNING_KEY_PASSPHRASE}\"",
             "-Dgpg.executable=%s" % gpgCmd,
             "-DrepositoryId=github",
             "-Durl=%s" % 'https://maven.pkg.github.com/validator/validator',
