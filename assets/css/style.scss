@@ -198,3 +198,6 @@ code {
   font-size: 15px;
   color: orange !important;
 }
+li > p {
+  display: inline; /* work around broken kramdon output for lists */
+}

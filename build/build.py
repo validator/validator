@@ -1604,7 +1604,7 @@ def prepareLocalEntityJar():
                     os.path.join(filesDir, "script.js"))
     shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"),
                     os.path.join(filesDir, "icon.png"))
-    shutil.copyfile(os.path.join(buildRoot, "docs", "Microsyntax-descriptions.md"),  # nopep8
+    shutil.copyfile(os.path.join(buildRoot, "docs", "wiki", "Microsyntax-descriptions.md"),  # nopep8
                     os.path.join(filesDir, "syntax-descriptions"))
     shutil.copyfile(os.path.join(buildRoot, "resources", "language-profiles-list.txt"),  # nopep8
                     os.path.join(filesDir, "language-profiles-list.txt"))
@@ -1647,35 +1647,28 @@ def prepareLocalEntityJar():
 
 
 def makeUsage():
-    usage_lines = []
-    with open(os.path.join(buildRoot, "usage.md")) as f:
+    usageLines = []
+    with open(os.path.join(buildRoot, "docs", "vnu.1.md")) as f:
         for line in f:
-            usage_lines.append(stripLeadingHashes(line))
+            usageLines.append(stripLeadingHashes(line))
+            if line.startswith("# OPTIONS"):
+                break
+    usageLines.append("\n")
+    usageLines.append("For details on all options and usage,"
+                      + " try the \"--help\" option or see:\n")
+    usageLines.append("\n")
+    usageLines.append("https://validator.github.io/validator/\n")
     with open(os.path.join(filesDir, "usage"), "w") as f:
-        f.writelines(usage_lines)
+        f.writelines(usageLines)
 
 
 def makeCliHelp():
-    usage_lines = []
-    readme_lines = []
-    with open(os.path.join(buildRoot, "usage.md")) as f:
+    usageLines = []
+    with open(os.path.join(buildRoot, "docs", "vnu.1.md")) as f:
         for line in f:
-            usage_lines.append(stripLeadingHashes(line))
-            if line.startswith("## OPTIONS"):
-                break
-    with open(os.path.join(buildRoot, "README.md")) as f:
-        in_block = False
-        for line in f:
-            if line.startswith("## Options"):
-                in_block = True
-                continue
-            elif line.startswith("## Web-based checking"):
-                in_block = False
-                continue
-            if in_block:
-                readme_lines.append(stripLeadingHashes(line))
+            usageLines.append(stripLeadingHashes(line))
     with open(os.path.join(filesDir, "cli-help"), "w") as f:
-        f.writelines(usage_lines + readme_lines)
+        f.writelines(usageLines)
 
 
 def stripLeadingHashes(line):
