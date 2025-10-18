@@ -24,6 +24,7 @@
 package nu.validator.xml;
 
 import java.net.URL;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -413,6 +414,9 @@ public class SaxCompiler implements ContentHandler {
             XMLReader reader = factory.newSAXParser().getXMLReader();
             if (!args[0].contains(":")) {
               args[0] = "file:" + args[0];
+            } else if (args[0].charAt(1) == ':' && args[0].charAt(2) == '\\' ) {
+              //This is likely a file path on Windows. Convert it.
+              args[0] = new File(args[0]).toURI().toURL().toString();
             }
             System.err.println(args[0]);
             URL url = new URL(args[0]);
