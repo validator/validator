@@ -113,8 +113,3 @@ jobs:
         shell: bash
         run: |
           python ./checker.py maven-release
-        env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-          PASSPHRASE: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
-          GIT_USER_SIGNINGKEY: true
-          GIT_COMMIT_GPGSIGN: true

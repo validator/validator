@@ -1215,9 +1215,7 @@ class Release():
             "-DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator",  # nopep8
             "-f",
             "%s.pom" % os.path.join(distDir, basename),
-            "gpg:sign-and-deploy-file",
-            "-Dgpg.passphrase=%s" % os.getenv("PASSPHRASE"),
-            "-Dgpg.executable=%s" % gpgCmd,
+            "deploy:deploy-file",
             "-DrepositoryId=github",
             "-Durl=%s" % 'https://maven.pkg.github.com/validator/validator',
             "-DpomFile=%s.pom" % basename,
