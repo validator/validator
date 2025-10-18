@@ -26,7 +26,7 @@ The vnu source code is available on [GitHub][5], as are [instructions on how to 
    [5]: https://github.com/validator/validator
    [6]: #build-instructions
 
-## Binaries
+## Binaries and packages
 
 The Nu Html Checker (vnu) is released upstream in these formats:
 
@@ -47,7 +47,15 @@ A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8], [
    [10]: https://formulae.brew.sh/formula/vnu
    [36]: #pulling-the-docker-image
 
-You can [get the latest release][12] or run [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13], [`npm install vnu-jar`][14], [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15], [`brew install vnu`][16], or [`pip install html5validator`][17] and see the **[Usage](#usage)** and **[Web-based checking](#web-based-checking)** sections below. Or automate your document checking with a frontend such as:
+You can [get the latest release][12] or run one of the following:
+
+- [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13]
+- [`npm install vnu-jar`][14]
+- [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15]
+- [`brew install vnu`][16]
+- [`pip install html5validator`][17]
+
+…and see the **[Usage](#usage)** and **[Web-based checking](#web-based-checking)** sections here. Or automate your checking with a frontend such as:
 
    [12]: https://github.com/validator/validator/releases/tag/latest
    [13]: https://github.com/validator/validator/pkgs/container/validator
