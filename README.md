@@ -81,9 +81,9 @@ The Nu Html Checker (vnu) — along with being usable as [a standalone command-l
    [24]: #usage
    [25]: https://validator.w3.org/nu/
 
-- Linux, Windows, and macOS binaries for deploying the vnu checker as a simple self-contained service on any system
-- `vnu.jar` for deploying the vnu checker as a simple self-contained service on a system with Java installed
-- `vnu.war` for deploying the vnu checker to a servlet container such as Tomcat
+- Linux, Windows, and macOS binaries for deploying a self-contained service on any system
+- `vnu.jar` for deploying a self-contained service on a system with Java installed
+- `vnu.war` for deploying to a servlet container such as Tomcat
 
 All deployments expose a REST API that enables checking of HTML documents, CSS stylesheets, and SVG images from other clients, not just web browsers. And the Linux, Windows, and macOS binaries and `vnu.jar` package also include a simple HTTP client that enables you to either send documents to a locally-running instance of the vnu checker HTTP service — for fast command-line checking — or to any remote instance of the vnu checker HTTP service running anywhere on the Web.
 
@@ -98,7 +98,7 @@ The [latest releases of the Linux, Windows, and macOS binaries and vnu.jar and v
 
 See [vnu-server](docs/vnu-server.1.md) for invocation manual page.
 
-### Deployment to servlet container
+### Servlet container
 
 To run the vnu checker inside of an existing servlet container such as Apache Tomcat you will need to deploy the `vnu.war` file to that server following its documentation. For example, on Apache Tomcat you could do this using the [Manager][30] application or simply by copying the file to the `webapps` directory (since that is the default `appBase` setting). Typically you would see a message similar to the following in the `catalina.out` log file.
 
@@ -207,7 +207,7 @@ The first time you run the `checker.py` Python script, you’ll need to be onlin
 The steps above will build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
 
 > [!WARNING]
-> Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `--bind-address` option to bind the checker to a different address:
+> Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `--bind-address` option to bind to a different address:
 
     python ./checker.py --bind-address=128.30.52.73 all
 
