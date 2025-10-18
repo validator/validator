@@ -110,6 +110,7 @@ jobs:
           omitName: true
           tag: latest
       - name: Release new maven package
+        if: matrix.os == 'ubuntu-latest' && matrix.java == 25
         shell: bash
         run: |
           python ./checker.py maven-release
