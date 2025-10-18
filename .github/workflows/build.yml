@@ -98,7 +98,6 @@ jobs:
           artifacts: build/dist/*.zip*
           body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
           omitName: true
-          prerelease: true
           tag: latest
       - name: Release new jar and war
         if: matrix.os == 'ubuntu-latest' && matrix.java == 17 && github.ref == 'refs/heads/main'
@@ -109,5 +108,4 @@ jobs:
           artifacts: build/dist/*.jar*,build/dist-war/*.war*
           omitBodyDuringUpdate: true
           omitName: true
-          prerelease: true
           tag: latest
