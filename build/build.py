@@ -932,7 +932,7 @@ class Release():
         self.vnuImageDir = os.path.join(distDir, self.vnuImageDirname)
         self.vnuModuleInfoDir = os.path.join(distDir, "vnu")
         self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
-        self.docs = ["README.md", "CHANGELOG.md", "LICENSE"]
+        self.docs = ["README.md", "LICENSE"]
         self.setClasspath()
 
     def setClasspath(self):
@@ -1091,7 +1091,7 @@ class Release():
         self.checkRuntimeImage()
         os.chdir(distDir)
         removeIfExists(self.runtimeDistroFile)
-        for fname in {"CHANGELOG.md", "LICENSE", "README.md"}:
+        for fname in {"LICENSE", "README.md"}:
             shutil.copy(os.path.join("..", "..", fname), self.vnuImageDirname)
         shutil.make_archive(self.runtimeDistroBasename, 'zip', ".",
                             self.vnuImageDirname)
