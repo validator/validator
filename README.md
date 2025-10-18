@@ -34,7 +34,7 @@ The Nu Html Checker (vnu) is released upstream in these formats:
 - `vnu.jar` — a portable version you can use on any system that has Java 11 or above installed
 - `vnu.war` — for [deploying the vnu checker service through a servlet container such as Tomcat][11]
 
-   [11]: #deployment-to-servlet-container
+   [11]: #servlet-container
 
 > [!NOTE]
 > The `vnu.jar` and `vnu.war` files require you to have Java 11 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
