@@ -582,27 +582,6 @@ def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
 #################################################################
 
 
-def buildModule(module):
-    runCmd([
-      antCmd,
-      "-Dbuild.java.target.version=" + javaTargetVersion,
-      "-f", os.path.join(buildRoot, "build", "build.xml"),
-      module + "-jar"
-      ])
-
-
-def cleanModule(module):
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), module + "-clean"])
-
-
-def cleanJing():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "jing-clean"])
-
-
-def cleanCssValidator():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "css-validator-clean"])
-
-
 def dockerBuild():
     args = [
         dockerCmd,
@@ -1331,9 +1310,6 @@ class Release():
         url = "http://127.0.0.1:%s/%s" % (portNumber, query)
         self.checkServiceWithJar(url)
         self.checkServiceWithRuntimeImage(url)
-
-    def buildValidator(self):
-        buildModule("validator")
 
     def runValidator(self):
         if not os.path.exists(vnuJar):
