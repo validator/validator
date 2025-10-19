@@ -1328,7 +1328,6 @@ class Release():
                 runCmd(args)
 
     def uploadNpmToGitHub(self, tag=None):
-        runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         packageJson = os.path.join(buildRoot, "package.json")
         with open(packageJson, 'r') as f:
@@ -1342,7 +1341,6 @@ class Release():
             f.write(packageJsonCopy)
 
     def uploadNpm(self, tag=None):
-        runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         readMe = os.path.join(buildRoot, "README.md")
         with open(readMe, 'r') as f:
