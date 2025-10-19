@@ -40,7 +40,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${cssvalidator-src}"/>
     </jar>
   </target>
-  <target name="cssvalidator-artifacts" depends="cssvalidator-javadoc-jar, cssvalidator-sources-jar">
+  <target name="cssvalidator-artifacts" depends="dl-deps-antlib, css-validator-build, cssvalidator-javadoc-jar, cssvalidator-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
       id="cssvalidator-pom"
@@ -79,7 +79,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="cssvalidator-pom" file="${cssvalidator-base}.pom"/>
     <copy file="css-validator/css-validator.jar" tofile="${cssvalidator-base}.jar"/>
   </target>
-  <target name="cssvalidator-bundle">
+  <target name="cssvalidator-bundle" depends="cssvalidator-artifacts">
     <jar basedir="${dist}" destfile="${cssvalidator-bundle-jar}"/>
   </target>
 </project>

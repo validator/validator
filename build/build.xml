@@ -384,7 +384,7 @@ DEALINGS IN THE SOFTWARE.
   </path>
 
   <property name="validator.basedir" location="" />
-  <target name="validator-prepare">
+  <target name="validator-prepare" depends="dl-entities, localentities-build">
     <mkdir dir="${validator.basedir}/classes"/>
     <copy todir="${validator.basedir}/classes" preservelastmodified="true">
       <fileset dir="${validator.basedir}/src">
@@ -417,12 +417,14 @@ DEALINGS IN THE SOFTWARE.
   <target name="validator-build"
           depends="validator-prepare,
           validator-emitters,
-          langdetect-jar,
-          htmlparser-jar,
+          css-validator-build,
           galimatias-jar,
           htmlparser-jar,
           jing-build,
-          css-validator-build">
+          langdetect-jar,
+          dl-deps,
+          dl-deps-modules,
+          dl-deps-jetty">
     <javac srcdir="${validator.basedir}/src"
            destdir="${validator.basedir}/classes"
            classpathref="validator.classpath"
@@ -445,7 +447,16 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="${jarsDir}/validator.jar" basedir="${validator.basedir}/classes" excludes="**/*.java"/>
   </target>
 
-  <target name="validator-javadoc-jar">
+  <target name="validator-javadoc-jar"
+          depends="
+          css-validator-build,
+          galimatias-jar,
+          htmlparser-jar,
+          jing-build,
+          langdetect-jar,
+          dl-deps,
+          dl-deps-modules,
+          dl-deps-jetty">
     <property name="javadoc-dir" value="${dist}/javadoc" />
     <javadoc destdir="${javadoc-dir}" additionalparam="-Xdoclint:none" classpathref="validator.classpath">
       <fileset dir="${src}">
@@ -469,7 +480,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${src}"/>
     </jar>
   </target>
-  <target name="validator-artifacts" depends="dl-deps-antlib, validator-javadoc-jar, validator-sources-jar">
+  <target name="validator-artifacts" depends="dl-deps-antlib, validator-jar, validator-javadoc-jar, validator-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
       id="pom"
@@ -544,7 +555,7 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
-  <target name="validator-bundle">
+  <target name="validator-bundle" depends="validator-artifacts">
     <jar basedir="${dist}" destfile="${validator-bundle-jar}"/>
   </target>
   <import file=".ant/build-langdetect.xml"/>
@@ -566,7 +577,7 @@ DEALINGS IN THE SOFTWARE.
 
 
   <property name="css-validator.basedir" location="css-validator" />
-  <target name="css-validator-build">
+  <target name="css-validator-build" depends="dl-deps, dl-deps-modules" >
     <ant dir="${css-validator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
   </target>
   <target name="css-validator-clean">
@@ -578,7 +589,7 @@ DEALINGS IN THE SOFTWARE.
   <path id="galimatias.classpath">
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
   </path>
-  <target name="galimatias-build">
+  <target name="galimatias-build" depends="dl-deps, dl-deps-modules">
     <mkdir dir="${galimatias.basedir}/classes"/>
     <javac srcdir="${galimatias.basedir}/src/main/java"
            destdir="${galimatias.basedir}/classes"
@@ -627,7 +638,7 @@ DEALINGS IN THE SOFTWARE.
       <arg value="${htmlparser.basedir}/build/realsrc/nu/validator/htmlparser/impl/HotSpotWorkaround.txt"/>
     </java>
   </target>
-  <target name="htmlparser-build" depends="htmlparser-process-sources">
+  <target name="htmlparser-build" depends="dl-deps, dl-deps-modules, htmlparser-process-sources">
     <mkdir dir="${htmlparser.basedir}/build/classes"/>
     <javac srcdir="${htmlparser.basedir}/src"
            destdir="${htmlparser.basedir}/build/classes"
@@ -654,7 +665,7 @@ DEALINGS IN THE SOFTWARE.
   <path id="langdetect.classpath">
     <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
   </path>
-  <target name="langdetect-build">
+  <target name="langdetect-build" depends="dl-deps, dl-deps-modules">
     <mkdir dir="${langdetect.basedir}/classes"/>
     <javac srcdir="${langdetect.basedir}/src"
            destdir="${langdetect.basedir}/classes"

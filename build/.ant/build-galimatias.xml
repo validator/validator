@@ -40,7 +40,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${galimatias-src}"/>
     </jar>
   </target>
-  <target name="galimatias-artifacts" depends="galimatias-javadoc-jar, galimatias-sources-jar">
+  <target name="galimatias-artifacts" depends="dl-deps-antlib, galimatias-jar, galimatias-javadoc-jar, galimatias-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
       id="galimatias-pom"
@@ -80,7 +80,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="galimatias-pom" file="${galimatias-base}.pom"/>
     <copy file="jars/galimatias.jar" tofile="${galimatias-base}.jar"/>
   </target>
-  <target name="galimatias-bundle">
+  <target name="galimatias-bundle" depends="galimatias-artifacts">
     <jar basedir="${dist}" destfile="${galimatias-bundle-jar}"/>
   </target>
 </project>
