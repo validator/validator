@@ -110,7 +110,11 @@ jobs:
           omitName: true
           tag: latest
       - name: Release new maven package
-        if: matrix.os == 'ubuntu-latest' && matrix.java == 25
+        if: >
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          matrix.os == 'ubuntu-latest' &&
+          matrix.java == 25
         shell: bash
         run: |
           python ./checker.py maven-release
@@ -124,7 +128,11 @@ jobs:
       - name: Install Node dependencies
         run: npm install
       - name: Release new npm package
-        if: matrix.os == 'ubuntu-latest' && matrix.java == 25
+        if: >
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          matrix.os == 'ubuntu-latest' &&
+          matrix.java == 25
         shell: bash
         run: |
           python ./checker.py npm-release
