@@ -807,12 +807,6 @@ class Release():
             self.version = langdetectVersion
         if url == snapshotsRepoUrl:
             self.version += "-SNAPSHOT"
-        self.writeVersion(whichDir)
-
-    def writeVersion(self, whichDir):
-        f = open(os.path.join(whichDir, "VERSION"), "w")
-        f.write(self.version)
-        f.close()
 
     def writeHash(self, filename, md5OrSha1):
         BLOCKSIZE = 65536
@@ -864,7 +858,6 @@ class Release():
         print("Building %s/%s-%s-bundle.jar" %
               (distDir, self.artifactId, self.version))
         self.sign(distDir)
-        self.writeVersion(distDir)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Dversion=' + self.version,
@@ -1031,7 +1024,6 @@ class Release():
         npmReadme.close()
 
     def removeExtras(self, whichDir):
-        removeIfExists(os.path.join(whichDir, "VERSION"))
         sigsums = re.compile(r"^.+\.asc$|^.+\.md5$|.+\.sha1$")
         for filename in findFiles(whichDir):
             if (os.path.basename(filename) in self.docs or
