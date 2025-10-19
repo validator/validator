@@ -1335,9 +1335,8 @@ class Release():
         runCmd(cmd)
 
     def buildAll(self):
-        if not os.path.exists(os.path.join(buildRoot, "dependencies")):
-            downloadDependencies()
-            downloadLocalEntities()
+        downloadDependencies()
+        downloadLocalEntities()
         buildCssValidator()
         buildJing()
         buildSchemaDrivers()
@@ -1949,8 +1948,6 @@ def main(argv):
                 release.runValidator()
             elif arg == 'all':
                 updateSubmodules()
-                downloadDependencies()
-                downloadLocalEntities()
                 release.buildAll()
                 release.runTests()
                 if not stylesheet:
