@@ -26,6 +26,35 @@ DEALINGS IN THE SOFTWARE.
   <property name="galimatias-javadoc-jar" value="${galimatias-base}-javadoc.jar" />
   <property name="galimatias-sources-jar" value="${galimatias-base}-sources.jar" />
   <property name="galimatias-bundle-jar" value="${galimatias-base}-bundle.jar" />
+
+  <property name="galimatias.basedir" location="galimatias" />
+  <path id="galimatias.classpath">
+    <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
+  </path>
+
+  <target name="galimatias-build" depends="dl-deps, dl-deps-modules">
+    <mkdir dir="${galimatias.basedir}/classes"/>
+    <javac srcdir="${galimatias.basedir}/src/main/java"
+           destdir="${galimatias.basedir}/classes"
+           classpathref="galimatias.classpath"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+  </target>
+
+  <target name="galimatias-clean">
+    <delete dir="${galimatias.basedir}/classes"/>
+    <delete dir="${galimatias.basedir}/dist"/>
+    <delete file="${jarsDir}/galimatias.jar"/>
+  </target>
+
+  <target name="galimatias-jar" depends="galimatias-build">
+    <jar destfile="${jarsDir}/galimatias.jar" basedir="${galimatias.basedir}/classes"/>
+  </target>
+
   <target name="galimatias-javadoc-jar">
     <javadoc destdir="${javadoc-dir}"
              additionalparam="-html5 -Xdoclint:none"
@@ -37,11 +66,13 @@ DEALINGS IN THE SOFTWARE.
     </jar>
     <delete dir="${javadoc-dir}"/>
   </target>
+
   <target name="galimatias-sources-jar">
     <jar destfile="${galimatias-sources-jar}">
       <fileset dir="${galimatias-src}"/>
     </jar>
   </target>
+
   <target name="galimatias-artifacts" depends="dl-deps-antlib, galimatias-jar, galimatias-javadoc-jar, galimatias-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
@@ -82,6 +113,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="galimatias-pom" file="${galimatias-base}.pom"/>
     <copy file="jars/galimatias.jar" tofile="${galimatias-base}.jar"/>
   </target>
+
   <target name="galimatias-bundle" depends="galimatias-artifacts">
     <jar basedir="${dist}" destfile="${galimatias-bundle-jar}"/>
   </target>

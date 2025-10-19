@@ -26,6 +26,36 @@ DEALINGS IN THE SOFTWARE.
   <property name="langdetect-javadoc-jar" value="${langdetect-base}-javadoc.jar" />
   <property name="langdetect-sources-jar" value="${langdetect-base}-sources.jar" />
   <property name="langdetect-bundle-jar" value="${langdetect-base}-bundle.jar" />
+
+  <property name="langdetect.basedir" location="langdetect" />
+  <path id="langdetect.classpath">
+    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+  </path>
+
+  <target name="langdetect-build" depends="dl-deps, dl-deps-modules">
+    <mkdir dir="${langdetect.basedir}/classes"/>
+    <javac srcdir="${langdetect.basedir}/src"
+           destdir="${langdetect.basedir}/classes"
+           classpathref="langdetect.classpath"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+  </target>
+
+  <target name="langdetect-clean">
+    <delete dir="${langdetect.basedir}/classes"/>
+    <delete dir="${langdetect.basedir}/dist"/>
+    <delete file="${jarsDir}/langdetect.jar"/>
+  </target>
+
+  <target name="langdetect-jar" depends="langdetect-build">
+    <copy file="${langdetect.basedir}/src/com/cybozu/labs/langdetect/util/messages.properties" todir="${langdetect.basedir}/classes/com/cybozu/labs/langdetect/util"/>
+      <jar destfile="${jarsDir}/langdetect.jar" basedir="${langdetect.basedir}/classes"/>
+  </target>
+
   <target name="langdetect-javadoc-jar">
     <javadoc destdir="${javadoc-dir}"
              additionalparam="-html5 -Xdoclint:none"
@@ -37,11 +67,13 @@ DEALINGS IN THE SOFTWARE.
     </jar>
     <delete dir="${javadoc-dir}"/>
   </target>
+
   <target name="langdetect-sources-jar">
     <jar destfile="${langdetect-sources-jar}">
       <fileset dir="${langdetect-src}"/>
     </jar>
   </target>
+
   <target name="langdetect-artifacts" depends="dl-deps-antlib, langdetect-jar, langdetect-javadoc-jar, langdetect-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
@@ -78,6 +110,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="langdetect-pom" file="${langdetect-base}.pom"/>
     <copy file="jars/langdetect.jar" tofile="${langdetect-base}.jar"/>
   </target>
+
   <target name="langdetect-bundle" depends="langdetect-artifacts">
     <jar basedir="${dist}" destfile="${langdetect-bundle-jar}"/>
   </target>
