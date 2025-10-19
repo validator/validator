@@ -150,51 +150,6 @@ statistics = 0
 miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'  # nopep8
 additionalJavaSystemProperties = ''
 
-dependencyPackages = [
-    ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/75.1/icu4j-75.1.jar", "0a299714195ba447c9774f5491cdbc57"),  # nopep8
-    ("https://repo1.maven.org/maven2/com/shapesecurity/salvation/2.7.2/salvation-2.7.2.jar", "d81345b141a8cc93fc6be49a6840a7f0"),  # nopep8
-    ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.15/commons-codec-1.15.jar", "303baf002ce6d382198090aedd9d79a2"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.jar", "6180d94509d26d293bd2d04389156e4b"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-jakarta-servlet5/2.0.0-M2/commons-fileupload2-jakarta-servlet5-2.0.0-M2.jar", "6389bdd4bbcc54082686e3707289e780"),  # nopep8
-    ("https://repo1.maven.org/maven2/commons-io/commons-io/2.15.1/commons-io-2.15.1.jar", "84351f7991a0e6722f00e96a4ccc376f"),  # nopep8
-    ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar", "040b4b4d8eac886f6b4a2a3bd2f31b00"),  # nopep8
-    ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-adapters.jar", "5c82e86cc5b769f72abd2af1f92255fa"),  # nopep8
-    ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-api.jar", "289dcb376743ab24ecaeb194a0d287d9"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/mail/mail/1.4.7/mail-1.4.7.jar", "77f53ff0c78ba43c4812ecc9f53e20f8"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/toolchain/jetty-jakarta-servlet-api/5.0.2/jetty-jakarta-servlet-api-5.0.2.jar", "7de826f76a829dc9dfb41e437ff4bd01"),  # nopep8
-    ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),  # nopep8
-    ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar", "40d6b9075fbd28fa10292a45a0db9457"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.14/httpcore-4.4.14.jar", "2b3991eda121042765a5ee299556c200"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.20/jetty-http-11.0.20.jar", "fbbf12c985f7e9f5387c52b700057129"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.20/jetty-io-11.0.20.jar", "69edc0f6fb44ad9cd341f15d086859d7"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.20/jetty-security-11.0.20.jar", "65160e47126973ac352857430c0f0eb3"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.20/jetty-server-11.0.20.jar", "b6d93046e20136bfca140d4f68cd9c8a"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.20/jetty-servlet-11.0.20.jar", "eef8ffa65723dfd913af3c56173041b2"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.20/jetty-servlets-11.0.20.jar", "d3c54ba8c07b70c124a8908f5a5f6d9f"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.20/jetty-util-11.0.20.jar", "83d40c5c7d81c7f6ba2772d76387397d"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/glassfish/javax.json/1.1.4/javax.json-1.1.4.jar", "ac67218fb9716fec512be8d0d877bde2"),  # nopep8
-
-
-]
-
-moduleDependencyPackages = [
-    ("https://repo1.maven.org/maven2/com/sun/activation/javax.activation/1.2.0/javax.activation-1.2.0.jar", "be7c430df50b330cffc4848a3abedbfb"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/avalon/framework/avalon-framework-api/4.3.1/avalon-framework-api-4.3.1.jar", "7c543869a7eb2bad323a54e873973acf"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/apache/avalon/logkit/avalon-logkit/2.2.1/avalon-logkit-2.2.1.jar", "1cff819c8516bbe070530f3a8d801f2e"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/enterprise/cdi-api/2.0/cdi-api-2.0.jar", "a7768f3b33cd35f63d9cdcedfd537500"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/el/el-api/2.2/el-api-2.2.jar", "900b2de76d7c98f8dcbb43684c823113"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar", "5e50e56bcf4a3ef3bc758f69f7643c3b"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar", "289075e48b909e9e74e6c915b3631d2e"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/interceptor/javax.interceptor-api/1.2.2/javax.interceptor-api-1.2.2.jar", "d46f2dac1607941fbfb81eb7bc83157a"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/jms/javax.jms-api/2.0.1/javax.jms-api-2.0.1.jar", "d69d2e02910e97b2478c0105e9b2caab"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-jmx/11.0.20/jetty-jmx-11.0.20.jar", "605528653766f728f7ff994e39c17fa2"),  # nopep8
-    ("https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar", "dd83accb899363c32b07d7a1b2e4ce40"),  # nopep8
-    ("https://repo1.maven.org/maven2/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar", "ff22c9434e12a87b6023e301600b6c44"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.29/slf4j-api-1.7.29.jar", "75191c97f2d6ef4f990cbb4b2e56a46b"),  # nopep8
-    ("https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/1.7.32/slf4j-log4j12-1.7.32.jar", "9d80c6b213a73789fccd3fe48d5cb34c"),  # nopep8
-]
-
 javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
 leafPat = re.compile(r'^[a-zA-Z0-9_-]+\.[a-z]+$')
@@ -1629,15 +1584,6 @@ def zipExtract(zipArch, targetDir):
             o.close()
 
 
-def downloadDependency(url, md5sum):
-    ensureDirExists(dependencyDir)
-    path = os.path.join(dependencyDir, url[url.rfind("/") + 1:])
-    if not os.path.exists(path):
-        fetchUrlTo(url, path, md5sum)
-        if path.endswith(".zip"):
-            zipExtract(path, dependencyDir)
-
-
 def updateSubmodules():
     runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge', '--init'])
 
@@ -1657,10 +1603,7 @@ def downloadExtras():
 
 
 def downloadDependencies():
-    for url, md5sum in dependencyPackages:
-        downloadDependency(url, md5sum)
-    for url, md5sum in moduleDependencyPackages:
-        downloadDependency(url, md5sum)
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "dl-deps", "dl-deps-jetty", "dl-deps-modules"])
     downloadExtras()
 
 

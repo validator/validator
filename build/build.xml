@@ -44,6 +44,55 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator-javadoc-jar" value="${dist}/${artifactId}-${version.number}-javadoc.jar" />
   <property name="validator-sources-jar" value="${dist}/${artifactId}-${version.number}-sources.jar" />
   <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version.number}-bundle.jar" />
+
+  <macrodef name="get-and-checksum">
+    <attribute name="url"/>
+    <attribute name="destdir" default="${depsDir}"/>
+    <attribute name="skipexisting" default="true"/>
+    <attribute name="verbose" default="false"/>
+    <attribute name="checksum.skip" default="false"/>
+    <attribute name="checksum.pattern" default="{0}"/>
+    <sequential>
+      <local name="basename"/>
+      <basename property="basename" file="@{url}"/>
+      <mkdir dir="@{destdir}"/>
+
+      <get dest="@{destdir}" skipexisting="@{skipexisting}" verbose="@{verbose}">
+        <url url="@{url}"/>
+        <url url="@{url}.sha1"/>
+        <firstmatchmapper>
+          <globmapper from="@{url}.sha1" to="${basename}.sha1"/>
+          <globmapper from="@{url}" to="${basename}"/>
+        </firstmatchmapper>
+      </get>
+
+      <local name="checksum.matches"/>
+      <local name="checksum.matches.fail"/>
+      <checksum file="@{destdir}/${basename}" algorithm="sha" fileext=".sha1"
+                verifyproperty="checksum.matches"
+                pattern="@{checksum.pattern}"/>
+      <condition property="checksum.matches.fail">
+        <and>
+          <equals arg1="${checksum.matches}" arg2="false"/>
+          <equals arg1="@{checksum.skip}" arg2="false"/>
+        </and>
+      </condition>
+      <fail if="checksum.matches.fail">Checksum error on @{destdir}/${basename}</fail>
+    </sequential>
+  </macrodef>
+
+  <property name="jetty-version" value="11.0.20" />
+  <target name="dl-deps-jetty" unless="${offline}">
+    <echo>Downloading dependencies (jetty)</echo>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/${jetty-version}/jetty-http-${jetty-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/${jetty-version}/jetty-io-${jetty-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/${jetty-version}/jetty-security-${jetty-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/${jetty-version}/jetty-server-${jetty-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/${jetty-version}/jetty-servlet-${jetty-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/${jetty-version}/jetty-servlets-${jetty-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/${jetty-version}/jetty-util-${jetty-version}.jar"/>
+  </target>
+
   <property name="commons-codec-version" value="1.15" />
   <property name="commons-fileupload-version" value="2.0.0-M2" />
   <property name="commons-io-version" value="2.15.1" />
@@ -52,11 +101,31 @@ DEALINGS IN THE SOFTWARE.
   <property name="httpcore-version" value="4.4.14" />
   <property name="icu4j-version" value="75.1" />
   <property name="jakarta.servlet-api-version" value="5.0.2" />
+  <property name="javax.json-version" value="1.1.4" />
   <property name="jchardet-version" value="1.0" />
-  <property name="jetty-version" value="11.0.20" />
   <property name="log4j-version" value="1.2.17" />
+  <property name="mail-version" value="1.4.7" />
   <property name="salvation-version" value="2.7.2" />
-  <!-- module dependencies -->
+  <target name="dl-deps" unless="${offline}">
+    <echo>Downloading dependencies</echo>
+    <get-and-checksum url="https://repo1.maven.org/maven2/com/ibm/icu/icu4j/${icu4j-version}/icu4j-${icu4j-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/com/shapesecurity/salvation/${salvation-version}/salvation-${salvation-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/commons-codec/commons-codec/${commons-codec-version}/commons-codec-${commons-codec-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-core/${commons-fileupload-version}/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-jakarta-servlet5/${commons-fileupload-version}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/commons-io/commons-io/${commons-io-version}/commons-io-${commons-io-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-adapters.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-api.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/mail/mail/${mail-version}/mail-${mail-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/toolchain/jetty-jakarta-servlet-api/${jakarta.servlet-api-version}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/log4j/log4j/${log4j-version}/log4j-${log4j-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/${jchardet-version}/jchardet-${jchardet-version}.jar" checksum.pattern="{0} "/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/${httpclient-version}/httpclient-${httpclient-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/${httpcore-version}/httpcore-${httpcore-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/glassfish/javax.json/${javax.json-version}/javax.json-${javax.json-version}.jar"/>
+  </target>
+
   <property name="avalon-framework-api-version" value="4.3.1" />
   <property name="avalon-logkit-version" value="2.2.1" />
   <property name="cdi-api-version" value="2.0" />
@@ -66,10 +135,27 @@ DEALINGS IN THE SOFTWARE.
   <property name="javax-interceptor-api-version" value="1.2.2" />
   <property name="javax-jms-api-version" value="2.0.1" />
   <property name="jsr305-version" value="3.0.2" />
-  <property name="mail-version" value="1.4.7" />
   <property name="portlet-api-version" value="3.0.1" />
   <property name="slf4j-api-version" value="1.7.29" />
   <property name="slf4j-log4j12-version" value="1.7.32" />
+  <target name="dl-deps-modules" unless="${offline}">
+    <echo>Downloading dependencies (modules dependencies)</echo>
+    <get-and-checksum url="https://repo1.maven.org/maven2/com/sun/activation/javax.activation/${javax-activation-version}/javax.activation-${javax-activation-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/avalon/framework/avalon-framework-api/${avalon-framework-api-version}/avalon-framework-api-${avalon-framework-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/avalon/logkit/avalon-logkit/${avalon-logkit-version}/avalon-logkit-${avalon-logkit-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/enterprise/cdi-api/${cdi-api-version}/cdi-api-${cdi-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/el/el-api/${el-api-version}/el-api-${el-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/activation/javax.activation-api/${javax-activation-version}/javax.activation-api-${javax-activation-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/inject/javax.inject/${javax-inject-version}/javax.inject-${javax-inject-version}.jar" checksum.pattern="{0} "/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/interceptor/javax.interceptor-api/${javax-interceptor-api-version}/javax.interceptor-api-${javax-interceptor-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/jms/javax.jms-api/${javax-jms-api-version}/javax.jms-api-${javax-jms-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-jmx/${jetty-version}/jetty-jmx-${jetty-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/${jsr305-version}/jsr305-${jsr305-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/javax/portlet/portlet-api/${portlet-api-version}/portlet-api-${portlet-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/${slf4j-api-version}/slf4j-api-${slf4j-api-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/${slf4j-log4j12-version}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
+  </target>
+
   <target name="build" depends="jar"/>
   <target name="clean">
     <delete dir="${dist}"/>
@@ -124,7 +210,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/jetty-util-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/javax.json-1.1.4.jar">
+      <zipfileset src="${depsDir}/javax.json-${javax.json-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
       <zipfileset src="${depsDir}/log4j-${log4j-version}.jar"/>
@@ -251,7 +337,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="${depsDir}/jchardet-${jchardet-version}.jar"/>
       <fileset file="${depsDir}/log4j-${log4j-version}.jar"/>
       <fileset file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
-      <fileset file="${depsDir}/javax.json-1.1.4.jar"/>
+      <fileset file="${depsDir}/javax.json-${javax.json-version}.jar"/>
       <fileset file="${depsDir}/jetty-util-${jetty-version}.jar"/>
       <fileset file="${depsDir}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
     </copy>
@@ -276,7 +362,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="httpclient-${httpclient-version}.jar" />
     <fileset dir="${depsDir}/" includes="httpcore-${httpcore-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
-    <fileset dir="${depsDir}/" includes="javax.json-1.1.4.jar" />
+    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-server-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-servlet-${jetty-version}.jar" />
@@ -435,7 +521,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-server" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-servlets" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="${jetty-version}"/>
-      <dependency groupId="org.glassfish" artifactId="javax.json" version="1.1.4"/>
+      <dependency groupId="org.glassfish" artifactId="javax.json" version="${javax.json-version}"/>
     </artifact:pom>
     <artifact:writepom pomRefId="pom" file="${dist}/validator-${version.number}.pom"/>
     <jar destfile="${validator-jar}" duplicate="preserve">
@@ -559,7 +645,7 @@ DEALINGS IN THE SOFTWARE.
 
   <property name="langdetect.basedir" location="langdetect" />
   <path id="langdetect.classpath">
-    <fileset dir="${depsDir}/" includes="javax.json-1.1.4.jar" />
+    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
   </path>
   <target name="langdetect-build">
     <mkdir dir="${langdetect.basedir}/classes"/>
