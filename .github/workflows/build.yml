@@ -121,7 +121,6 @@ jobs:
         with:
           node-version: '20.x'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@validator'
       - name: Install Node dependencies
         run: npm install
       - name: Release new npm package
