@@ -216,8 +216,6 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/log4j-${log4j-version}.jar"/>
       <zipfileset src="${depsDir}/salvation-${salvation-version}.jar"/>
       <!-- module dependencies -->
-      <zipfileset src="jing-trang/lib/ant.jar"/>
-      <zipfileset src="jing-trang/lib/ant-launcher.jar"/>
       <zipfileset src="jing-trang/lib/isorelax.jar"/>
       <zipfileset src="${depsDir}/avalon-framework-api-${avalon-framework-api-version}.jar"/>
       <zipfileset src="${depsDir}/avalon-logkit-${avalon-logkit-version}.jar"/>
