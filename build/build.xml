@@ -336,13 +336,13 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="${depsDir}/log4j-${log4j-version}.jar"/>
       <fileset file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
       <fileset file="${depsDir}/javax.json-${javax.json-version}.jar"/>
-      <fileset file="${depsDir}/jetty-util-${jetty-version}.jar"/>
       <fileset file="${depsDir}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
       <lib dir="${dist}/war/lib"/>
       <classes dir="${dist}/war/classes">
         <exclude name="**/*.java"/>
+        <exclude name="**/nu/validator/servlet/Main.class"/>
       </classes>
       <classes file="${dist}/war/log4j.xml"/>
       <service type="org.relaxng.datatype.DatatypeLibraryFactory">
