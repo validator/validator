@@ -847,15 +847,6 @@ class Release():
                 continue
             runCmd([gpgCmd, '--yes', '-ab', os.path.join(whichDir, filename)])
 
-    def downloadMavenAntTasksJar(self):
-        url = "https://repo1.maven.org/maven2/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar"  # nopep8
-        md5sum = "7ce48382d1aa4138027a58ec2f29beda"
-        extrasDir = os.path.join(buildRoot, "extras")
-        ensureDirExists(extrasDir)
-        path = os.path.join(extrasDir, url[url.rfind("/") + 1:])
-        if not os.path.exists(path):
-            fetchUrlTo(url, path, md5sum)
-
     def createArtifacts(self, jarOrWar, url=None):
         whichDir = distDir
         distJarOrWar = "build/dist"
@@ -866,11 +857,9 @@ class Release():
         self.setVersion(whichDir, url)
         runCmd([antCmd,
                 '-Ddist=' + distJarOrWar,
-                '-lib', 'extras/maven-ant-tasks-2.1.3.jar',
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
     def createBundle(self):
-        self.downloadMavenAntTasksJar()
         self.createArtifacts("jar")
         print("Building %s/%s-%s-bundle.jar" %
               (distDir, self.artifactId, self.version))
@@ -1067,7 +1056,6 @@ class Release():
             sys.exit(1)
         if self.version in [v["name"] for v in versions]:
             return
-        self.downloadMavenAntTasksJar()
         self.createArtifacts("jar")
         basename = "%s-%s" % (self.artifactId, self.version)
         mvnArgs = [
@@ -1086,7 +1074,6 @@ class Release():
         runCmd(mvnArgs)
 
     def uploadToCentral(self, url):
-        self.downloadMavenAntTasksJar()
         self.createArtifacts("jar", url)
         basename = "%s-%s" % (self.artifactId, self.version)
         mvnArgs = [
