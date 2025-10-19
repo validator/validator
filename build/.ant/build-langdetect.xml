@@ -27,7 +27,9 @@ DEALINGS IN THE SOFTWARE.
   <property name="langdetect-sources-jar" value="${langdetect-base}-sources.jar" />
   <property name="langdetect-bundle-jar" value="${langdetect-base}-bundle.jar" />
   <target name="langdetect-javadoc-jar">
-    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
+    <javadoc destdir="${javadoc-dir}"
+             additionalparam="-html5 -Xdoclint:none"
+             classpathref="langdetect.classpath">
       <fileset dir="${langdetect-src}"/>
     </javadoc>
     <jar destfile="${langdetect-javadoc-jar}">
