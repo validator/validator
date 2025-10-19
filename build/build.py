@@ -875,6 +875,7 @@ class Release():
         self.reInitDistDir(whichDir)
         self.setVersion(whichDir, url)
         runCmd([antCmd,
+                '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Ddist=' + distJarOrWar,
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
@@ -885,6 +886,7 @@ class Release():
         self.sign(distDir)
         self.writeVersion(distDir)
         runCmd([antCmd,
+                '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
     def createJarOrWar(self, jarOrWar):
@@ -899,6 +901,7 @@ class Release():
         self.reInitDistDir(whichDir)
         self.setVersion(whichDir)
         runCmd([antCmd,
+                '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Ddist=' + distJarOrWar,
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
