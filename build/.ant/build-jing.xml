@@ -22,7 +22,7 @@ DEALINGS IN THE SOFTWARE.
 <project name="html5-jing" basedir="."
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <property name="jing-base" location="${dist}/jing-${version}" />
-  <property name="jing-src" location="../jing-trang/mod" />
+  <property name="jing-src" location="jing-trang/mod" />
   <property name="jing-javadoc-jar" value="${jing-base}-javadoc.jar" />
   <property name="jing-sources-jar" value="${jing-base}-sources.jar" />
   <property name="jing-bundle-jar" value="${jing-base}-bundle.jar" />
@@ -43,7 +43,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${jing-nvdl-src}"/>
       <fileset dir="${jing-schematron-src}"/>
       <classpath>
-        <fileset dir="../jing-trang/lib/">
+        <fileset dir="jing-trang/lib/">
           <include name="**/*.jar" />
         </fileset>
       </classpath>
@@ -108,7 +108,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
     </artifact:pom>
     <artifact:writepom pomRefId="jing-pom" file="${jing-base}.pom"/>
-    <copy file="../jing-trang/build/jing.jar" tofile="${jing-base}.jar"/>
+    <copy file="jing-trang/build/jing.jar" tofile="${jing-base}.jar"/>
   </target>
   <target name="jing-bundle">
     <jar basedir="${dist}" destfile="${jing-bundle-jar}"/>

@@ -22,7 +22,7 @@ DEALINGS IN THE SOFTWARE.
 <project name="html5-cssvalidator" basedir="."
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <property name="cssvalidator-base" location="${dist}/cssvalidator-${version}" />
-  <property name="cssvalidator-src" location="../css-validator/org" />
+  <property name="cssvalidator-src" location="css-validator/org" />
   <property name="cssvalidator-javadoc-jar" value="${cssvalidator-base}-javadoc.jar" />
   <property name="cssvalidator-sources-jar" value="${cssvalidator-base}-sources.jar" />
   <property name="cssvalidator-bundle-jar" value="${cssvalidator-base}-bundle.jar" />
@@ -77,7 +77,7 @@ DEALINGS IN THE SOFTWARE.
         url="https://people.w3.org/mike/"/>
     </artifact:pom>
     <artifact:writepom pomRefId="cssvalidator-pom" file="${cssvalidator-base}.pom"/>
-    <copy file="../css-validator/css-validator.jar" tofile="${cssvalidator-base}.jar"/>
+    <copy file="css-validator/css-validator.jar" tofile="${cssvalidator-base}.jar"/>
   </target>
   <target name="cssvalidator-bundle">
     <jar basedir="${dist}" destfile="${cssvalidator-bundle-jar}"/>
