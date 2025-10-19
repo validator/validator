@@ -594,16 +594,8 @@ def cleanModule(module):
     runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), module + "-clean"])
 
 
-def buildJing():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "jing-build"])
-
-
 def cleanJing():
     runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "jing-clean"])
-
-
-def buildCssValidator():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "css-validator-build"])
 
 
 def cleanCssValidator():
@@ -758,12 +750,7 @@ def realclean():
     clean()
     removeIfDirExists(dependencyDir)
     removeIfDirExists(jarsDir)
-    cleanModule("galimatias")
-    cleanModule("htmlparser")
-    cleanModule("langdetect")
-    cleanModule("validator")
-    cleanJing()
-    cleanCssValidator()
+    runCmd([antCmd, '-f', os.path.join(buildRoot, "build", "build.xml"), 'distclean'])
 
 
 def getRuntimeDistroBasename():
