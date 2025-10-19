@@ -64,7 +64,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${jing-schematron-src}"/>
     </jar>
   </target>
-  <target name="jing-artifacts" depends="jing-javadoc-jar, jing-sources-jar">
+  <target name="jing-artifacts" depends="dl-deps-antlib, jing-build, jing-javadoc-jar, jing-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
       id="jing-pom"
@@ -110,7 +110,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="jing-pom" file="${jing-base}.pom"/>
     <copy file="jing-trang/build/jing.jar" tofile="${jing-base}.jar"/>
   </target>
-  <target name="jing-bundle">
+  <target name="jing-bundle" depends="jing-artifacts">
     <jar basedir="${dist}" destfile="${jing-bundle-jar}"/>
   </target>
 </project>

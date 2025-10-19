@@ -43,7 +43,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${htmlparser-src}"/>
     </jar>
   </target>
-  <target name="htmlparser-artifacts" depends="htmlparser-javadoc-jar, htmlparser-sources-jar">
+  <target name="htmlparser-artifacts" depends="dl-deps-antlib, htmlparser-jar, htmlparser-javadoc-jar, htmlparser-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
       id="htmlparser-pom"
@@ -83,7 +83,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="htmlparser-pom" file="${htmlparser-base}.pom"/>
     <copy file="jars/htmlparser.jar" tofile="${htmlparser-base}.jar"/>
   </target>
-  <target name="htmlparser-bundle">
+  <target name="htmlparser-bundle" depends="htmlparser-artifacts">
     <jar basedir="${dist}" destfile="${htmlparser-bundle-jar}"/>
   </target>
 </project>

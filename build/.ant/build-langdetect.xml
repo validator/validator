@@ -40,7 +40,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${langdetect-src}"/>
     </jar>
   </target>
-  <target name="langdetect-artifacts" depends="langdetect-javadoc-jar, langdetect-sources-jar">
+  <target name="langdetect-artifacts" depends="dl-deps-antlib, langdetect-jar, langdetect-javadoc-jar, langdetect-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
       id="langdetect-pom"
@@ -76,7 +76,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="langdetect-pom" file="${langdetect-base}.pom"/>
     <copy file="jars/langdetect.jar" tofile="${langdetect-base}.jar"/>
   </target>
-  <target name="langdetect-bundle">
+  <target name="langdetect-bundle" depends="langdetect-artifacts">
     <jar basedir="${dist}" destfile="${langdetect-bundle-jar}"/>
   </target>
 </project>
