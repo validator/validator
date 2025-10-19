@@ -676,4 +676,29 @@ DEALINGS IN THE SOFTWARE.
       <jar destfile="${jarsDir}/langdetect.jar" basedir="${langdetect.basedir}/classes"/>
   </target>
 
+  <property name="python-executable" value="python3"/>
+  <target name="dl-entities" unless="${offline}">
+    <echo>Downloading local entities (this may take some time)</echo>
+    <exec executable="${python-executable}" failonerror="true" failifexecutionfails="true">
+      <env key="JAVA_HOME" value="${java.home}"/>
+      <arg file="build/build.py"/>
+      <arg value="dlentities"/> <!-- downloadLocalEntities() -->
+    </exec>
+  </target>
+
+  <target name="schema-drivers-build">
+    <exec executable="${python-executable}" failonerror="true" failifexecutionfails="true">
+      <env key="JAVA_HOME" value="${java.home}"/>
+      <arg file="build/build.py"/>
+      <arg value="schema-drivers"/> <!-- buildSchemaDrivers() -->
+    </exec>
+  </target>
+
+  <target name="localentities-build" depends="schema-drivers-build">
+    <exec executable="${python-executable}" failonerror="true" failifexecutionfails="true">
+      <env key="JAVA_HOME" value="${java.home}"/>
+      <arg file="build/build.py"/>
+      <arg value="localent"/> <!-- prepareLocalEntityJar() -->
+    </exec>
+  </target>
 </project>

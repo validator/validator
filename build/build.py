@@ -315,6 +315,11 @@ def buildSchemaDrivers():
     shutil.copy(itsRnc, html5Dir)
     shutil.copy(itsTypesRnc, html5Dir)
 
+
+def antBuildSchemaDrivers():
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "schema-drivers-build"])
+
+
 #################################################################
 # data and functions for building schema drivers
 #################################################################
@@ -1336,11 +1341,11 @@ class Release():
 
     def buildAll(self):
         downloadDependencies()
-        downloadLocalEntities()
+        antDownloadLocalEntities()
         buildCssValidator()
         buildJing()
-        buildSchemaDrivers()
-        prepareLocalEntityJar()
+        antBuildSchemaDrivers()
+        antPrepareLocalEntityJar()
         buildModule("galimatias")
         buildModule("htmlparser")
         buildModule("langdetect")
@@ -1441,6 +1446,10 @@ def downloadLocalEntities():
         fetchUrlTo(fileMap[filename], os.path.join(filesDir, filename))
 
 
+def antDownloadLocalEntities():
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "dl-entities"])
+
+
 def localPathToJarCompatName(path):
     return javaSafeNamePat.sub('_', path)
 
@@ -1509,6 +1518,10 @@ def prepareLocalEntityJar():
         removeIfExists(os.path.join(schemaDir, "html5", file))
     removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
     removeIfDirExists(os.path.join(schemaDir, "rdf"))
+
+
+def antPrepareLocalEntityJar():
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "localentities-build"])
 
 
 def makeUsage():
@@ -1819,6 +1832,8 @@ def main(argv):
             elif arg == 'dldeps':
                 downloadDependencies()
                 downloadLocalEntities()
+            elif arg == 'dlentities':
+                downloadLocalEntities()
             elif arg == 'checkout':
                 pass
             elif arg == 'build':
@@ -1918,6 +1933,8 @@ def main(argv):
                 release.createJarOrWar("war")
             elif arg == 'localent':
                 prepareLocalEntityJar()
+            elif arg == 'schema-drivers':
+                buildSchemaDrivers()
             elif arg == 'deploy':
                 deployOverScp()
             elif arg == 'tar':
