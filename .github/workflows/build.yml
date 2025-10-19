@@ -116,3 +116,18 @@ jobs:
           python ./checker.py maven-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@validator'
+      - name: Install Node dependencies
+        run: npm install
+      - name: Release new npm package
+        if: matrix.os == 'ubuntu-latest' && matrix.java == 25
+        shell: bash
+        run: |
+          python ./checker.py npm-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1327,6 +1327,20 @@ class Release():
                 ]
                 runCmd(args)
 
+    def uploadNpmToGitHub(self, tag=None):
+        runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
+        removeIfExists(os.path.join(buildRoot, "README.md~"))
+        packageJson = os.path.join(buildRoot, "package.json")
+        with open(packageJson, 'r') as f:
+            packageJsonCopy = f.read()
+        self.createGitHubPackageJson(packageJson)
+        if tag:
+            runCmd([npmCmd, 'publish', '--tag', tag])
+        else:
+            runCmd([npmCmd, 'publish'])
+        with open(packageJson, 'w') as f:
+            f.write(packageJsonCopy)
+
     def uploadNpm(self, tag=None):
         runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
         removeIfExists(os.path.join(buildRoot, "README.md~"))
@@ -1338,11 +1352,6 @@ class Release():
         with open(packageJson, 'r') as f:
             packageJsonCopy = f.read()
         self.createPackageJson(packageJson)
-        if tag:
-            runCmd([npmCmd, 'publish', '--tag', tag])
-        else:
-            runCmd([npmCmd, 'publish'])
-        self.createGitHubPackageJson(packageJson)
         if tag:
             runCmd([npmCmd, 'publish', '--tag', tag])
         else:
@@ -2000,13 +2009,13 @@ def main(argv):
                 release.createOrUpdateGithubData()
                 release.uploadToGithub("jar")
                 release.uploadToGithub("war")
-                release.uploadNpm()
+                release.uploadNpmToGitHub()
             elif arg == 'npm-snapshot':
                 release.createJarOrWar("jar")
-                release.uploadNpm("next")
+                release.uploadNpmToGitHub("next")
             elif arg == 'npm-release':
                 release.createJarOrWar("jar")
-                release.uploadNpm()
+                release.uploadNpmToGitHub()
             elif arg == 'github-release':
                 release.createDistribution("jar")
                 release.createDistribution("war")
@@ -2019,7 +2028,7 @@ def main(argv):
                 release.uploadToReleasesHost("war", isNightly)
                 release.createDistribution("jar", isNightly)
                 release.uploadToReleasesHost("jar", isNightly)
-                release.uploadNpm("next")
+                release.uploadNpmToGitHub("next")
             elif arg == 'heroku':
                 release.uploadToHeroku()
             elif arg == 'maven-bundle':
