@@ -90,6 +90,12 @@ DEALINGS IN THE SOFTWARE.
              classpath="${depsDir}/maven-ant-tasks-${maven-ant-tasks-version}.jar"/>
   </target>
 
+  <property name="extrasDir" value="extras" />
+  <target name="dl-extras" unless="${offline}">
+    <echo>Downloading dependencies (extras)</echo>
+    <get-and-checksum url="https://repo1.maven.org/maven2/log4j/apache-log4j-extras/1.2.17/apache-log4j-extras-1.2.17.jar" destdir="${extrasDir}"/>
+  </target>
+
   <property name="jetty-version" value="11.0.20" />
   <target name="dl-deps-jetty" unless="${offline}">
     <echo>Downloading dependencies (jetty)</echo>
