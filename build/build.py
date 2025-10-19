@@ -1448,7 +1448,11 @@ def downloadLocalEntities():
     fileMap["html5spec"] = "https://html.spec.whatwg.org/"
     ensureDirExists(filesDir)
     for filename in fileMap:
-        fetchUrlTo(fileMap[filename], os.path.join(filesDir, filename))
+        destFile = os.path.join(filesDir, filename)
+        if (os.path.exists(destFile) and (time.time() - os.path.getmtime(destFile) < 3600*24)):
+            print("'" + filename + "' is younger that 24h, skipping download.")
+            continue
+        fetchUrlTo(fileMap[filename], destFile)
 
 
 def localPathToJarCompatName(path):
