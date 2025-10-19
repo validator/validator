@@ -315,11 +315,6 @@ def buildSchemaDrivers():
     shutil.copy(itsRnc, html5Dir)
     shutil.copy(itsTypesRnc, html5Dir)
 
-
-def antBuildSchemaDrivers():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "schema-drivers-build"])
-
-
 #################################################################
 # data and functions for building schema drivers
 #################################################################
@@ -1316,7 +1311,6 @@ class Release():
 
     def buildValidator(self):
         buildModule("validator")
-        self.createJarOrWar("jar")
 
     def runValidator(self):
         if not os.path.exists(vnuJar):
@@ -1340,16 +1334,7 @@ class Release():
         runCmd(cmd)
 
     def buildAll(self):
-        downloadDependencies()
-        antDownloadLocalEntities()
-        buildCssValidator()
-        buildJing()
-        antBuildSchemaDrivers()
-        antPrepareLocalEntityJar()
-        buildModule("galimatias")
-        buildModule("htmlparser")
-        buildModule("langdetect")
-        self.buildValidator()
+        self.createJarOrWar("jar")
 
 
 def createTarball():
@@ -1446,10 +1431,6 @@ def downloadLocalEntities():
         fetchUrlTo(fileMap[filename], os.path.join(filesDir, filename))
 
 
-def antDownloadLocalEntities():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "dl-entities"])
-
-
 def localPathToJarCompatName(path):
     return javaSafeNamePat.sub('_', path)
 
@@ -1518,10 +1499,6 @@ def prepareLocalEntityJar():
         removeIfExists(os.path.join(schemaDir, "html5", file))
     removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
     removeIfDirExists(os.path.join(schemaDir, "rdf"))
-
-
-def antPrepareLocalEntityJar():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "localentities-build"])
 
 
 def makeUsage():
