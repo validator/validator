@@ -33,6 +33,18 @@ DEALINGS IN THE SOFTWARE.
   <property name="jing-rng-validate-src" location="${jing-src}/rng-validate/src/main" />
   <property name="jing-nvdl-src" location="${jing-src}/nvdl/src/main" />
   <property name="jing-schematron-src" location="${jing-src}/schematron/src/main" />
+
+  <property name="jing.basedir" location="jing-trang" />
+  <target name="jing-build">
+    <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
+  </target>
+
+  <target name="jing-clean">
+    <ant dir="${jing.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
+    <delete file="${jing.basedir}/modbuild.xml"/>
+    <delete file="${jing.basedir}/modules.xml"/>
+  </target>
+
   <target name="jing-javadoc-jar">
     <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
       <fileset dir="${jing-util-src}"/>
@@ -53,6 +65,7 @@ DEALINGS IN THE SOFTWARE.
     </jar>
     <delete dir="${javadoc-dir}"/>
   </target>
+
   <target name="jing-sources-jar">
     <jar destfile="${jing-sources-jar}">
       <fileset dir="${jing-util-src}"/>
@@ -64,6 +77,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${jing-schematron-src}"/>
     </jar>
   </target>
+
   <target name="jing-artifacts" depends="dl-deps-antlib, jing-build, jing-javadoc-jar, jing-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
@@ -110,6 +124,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="jing-pom" file="${jing-base}.pom"/>
     <copy file="jing-trang/build/jing.jar" tofile="${jing-base}.jar"/>
   </target>
+
   <target name="jing-bundle" depends="jing-artifacts">
     <jar basedir="${dist}" destfile="${jing-bundle-jar}"/>
   </target>

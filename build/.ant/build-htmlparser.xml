@@ -26,6 +26,61 @@ DEALINGS IN THE SOFTWARE.
   <property name="htmlparser-javadoc-jar" value="${htmlparser-base}-javadoc.jar" />
   <property name="htmlparser-sources-jar" value="${htmlparser-base}-sources.jar" />
   <property name="htmlparser-bundle-jar" value="${htmlparser-base}-bundle.jar" />
+
+  <property name="htmlparser.basedir" location="htmlparser" />
+
+  <path id="htmlparser.classpath">
+    <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jchardet-${jchardet-version}.jar" />
+  </path>
+
+  <target name="htmlparser-initialize">
+    <!-- copied over from htmlparser/pom.xml -->
+    <delete dir="${htmlparser.basedir}/build/realsrc"/>
+    <mkdir dir="${htmlparser.basedir}/build/realsrc"/>
+    <copy todir="${htmlparser.basedir}/build/realsrc" preservelastmodified="true">
+      <fileset dir="${htmlparser.basedir}/src"/>
+    </copy>
+  </target>
+
+  <target name="htmlparser-process-sources" depends="htmlparser-initialize">
+    <!-- copied over from htmlparser/pom.xml -->
+    <property name="translator.sources" value="${htmlparser.basedir}/translator-src"/>
+    <property name="translator.classes" value="${htmlparser.basedir}/build/translator-classes"/>
+    <mkdir dir="${translator.classes}"/>
+    <javac srcdir="${translator.sources}" includes="nu/validator/htmlparser/generator/ApplyHotSpotWorkaround.java" destdir="${translator.classes}" includeantruntime="false"/>
+    <java classname="nu.validator.htmlparser.generator.ApplyHotSpotWorkaround">
+      <classpath>
+        <pathelement location="${translator.classes}"/>
+      </classpath>
+      <arg value="${htmlparser.basedir}/build/realsrc/nu/validator/htmlparser/impl/Tokenizer.java"/>
+      <arg value="${htmlparser.basedir}/build/realsrc/nu/validator/htmlparser/impl/HotSpotWorkaround.txt"/>
+    </java>
+  </target>
+  <target name="htmlparser-build" depends="dl-deps, dl-deps-modules, htmlparser-process-sources">
+    <mkdir dir="${htmlparser.basedir}/build/classes"/>
+    <javac srcdir="${htmlparser.basedir}/src"
+           destdir="${htmlparser.basedir}/build/classes"
+           classpathref="htmlparser.classpath"
+           debug="true"
+           encoding="UTF-8"
+           excludes="nu/validator/htmlparser/xom/**"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+  </target>
+
+  <target name="htmlparser-clean">
+    <delete dir="${htmlparser.basedir}/build"/>
+    <delete dir="${htmlparser.basedir}/dist"/>
+    <delete file="${jarsDir}/htmlparser.jar"/>
+  </target>
+
+  <target name="htmlparser-jar" depends="htmlparser-build">
+    <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.basedir}/build/classes"/>
+  </target>
+
   <target name="htmlparser-javadoc-jar">
     <javadoc destdir="${javadoc-dir}"
              additionalparam="-html5 -Xdoclint:none"
@@ -45,6 +100,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${htmlparser-src}"/>
     </jar>
   </target>
+
   <target name="htmlparser-artifacts" depends="dl-deps-antlib, htmlparser-jar, htmlparser-javadoc-jar, htmlparser-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
@@ -85,6 +141,7 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="htmlparser-pom" file="${htmlparser-base}.pom"/>
     <copy file="jars/htmlparser.jar" tofile="${htmlparser-base}.jar"/>
   </target>
+
   <target name="htmlparser-bundle" depends="htmlparser-artifacts">
     <jar basedir="${dist}" destfile="${htmlparser-bundle-jar}"/>
   </target>
