@@ -33,9 +33,6 @@ jobs:
             java: 11.0.23
           - os: windows-latest
             java: 11.0.3
-    permissions:
-      contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v5
       - name: Set up Java JDK
@@ -132,4 +129,4 @@ jobs:
         run: |
           python ./checker.py npm-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
