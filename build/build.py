@@ -596,7 +596,7 @@ def cleanModule(module):
 
 
 def buildJing():
-    runCmd([antCmd, "-lib", "jing-trang/lib/saxon.jar", "-f", os.path.join(buildRoot, "build", "build.xml"), "jing-build"])
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "jing-build"])
 
 
 def cleanJing():
