@@ -165,17 +165,23 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/${slf4j-log4j12-version}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
   </target>
 
-  <target name="build" depends="jar"/>
-  <target name="clean">
-    <delete dir="${dist}"/>
+  <target name="dl-clean">
+    <echo>Remove ${depsDir}</echo>
+    <delete dir="${depsDir}"/>
   </target>
-  <target name="distclean"
+
+  <target name="build" depends="jar"/>
+  <target name="clean"
           depends="galimatias-clean,
           htmlparser-clean,
           langdetect-clean,
           validator-clean,
           css-validator-clean,
-          jing-clean"/>
+          jing-clean
+          ">
+    <delete dir="${dist}"/>
+  </target>
+  <target name="distclean" depends="clean, dl-clean"/>
   <target name="jar" depends="validator-jar">
     <jar destfile="${dist}/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="${jarsDir}" includes="*.jar"/>
