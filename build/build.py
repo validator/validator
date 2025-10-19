@@ -856,6 +856,7 @@ class Release():
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Ddist=' + distJarOrWar,
+                '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
 
     def createBundle(self):
@@ -866,6 +867,7 @@ class Release():
         self.writeVersion(distDir)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
     def createJarOrWar(self, jarOrWar):
@@ -882,6 +884,7 @@ class Release():
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Ddist=' + distJarOrWar,
+                '-Dversion=' + self.version,
                 '-f', self.buildXml, jarOrWar])
         if jarOrWar == "jar":
             self.checkJar(call_createJarOrWar=False)
