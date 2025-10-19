@@ -1328,6 +1328,27 @@ class Release():
                 runCmd(args)
 
     def uploadNpmToGitHub(self, tag=None):
+        self.setVersion(distDir)
+        print("version: " + self.version)
+        url = "https://api.github.com/orgs/validator/packages/npm/vnu-jar/versions"  # nopep8
+        request = Request(
+            url,
+            headers={
+                "Authorization": "Bearer %s" % os.getenv("GITHUB_TOKEN"),
+                "Accept": "application/vnd.github+json",
+            },
+        )
+        try:
+            with urlopen(request) as response:
+                versions = json.load(response)
+        except HTTPError as e:
+            print(e.reason)
+            sys.exit(1)
+        except URLError as e:
+            print(e.reason)
+            sys.exit(1)
+        if self.version in [v["name"] for v in versions]:
+            return
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         packageJson = os.path.join(buildRoot, "package.json")
         with open(packageJson, 'r') as f:
