@@ -22,7 +22,7 @@ DEALINGS IN THE SOFTWARE.
 <project name="html5-htmlparser" basedir="."
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <property name="htmlparser-base" location="${dist}/htmlparser-${version}" />
-  <property name="htmlparser-src" location="../htmlparser/src" />
+  <property name="htmlparser-src" location="htmlparser/src" />
   <property name="htmlparser-javadoc-jar" value="${htmlparser-base}-javadoc.jar" />
   <property name="htmlparser-sources-jar" value="${htmlparser-base}-sources.jar" />
   <property name="htmlparser-bundle-jar" value="${htmlparser-base}-bundle.jar" />
@@ -81,7 +81,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0" scope="compile" optional="true"/>
     </artifact:pom>
     <artifact:writepom pomRefId="htmlparser-pom" file="${htmlparser-base}.pom"/>
-    <copy file="../jars/htmlparser.jar" tofile="${htmlparser-base}.jar"/>
+    <copy file="jars/htmlparser.jar" tofile="${htmlparser-base}.jar"/>
   </target>
   <target name="htmlparser-bundle">
     <jar basedir="${dist}" destfile="${htmlparser-bundle-jar}"/>

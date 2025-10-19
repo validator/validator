@@ -903,10 +903,10 @@ class Release():
 
     def createArtifacts(self, jarOrWar, url=None):
         whichDir = distDir
-        distJarOrWar = "dist"
+        distJarOrWar = "build/dist"
         if jarOrWar == "war":
             whichDir = distWarDir
-            distJarOrWar = "dist-war"
+            distJarOrWar = "build/dist-war"
         self.reInitDistDir(whichDir)
         self.setVersion(whichDir, url)
         runCmd([antCmd,
@@ -926,9 +926,9 @@ class Release():
 
     def createJarOrWar(self, jarOrWar):
         whichDir = distDir
-        distJarOrWar = "dist"
+        distJarOrWar = "build/dist"
         if jarOrWar == "war":
-            distJarOrWar = "dist-war"
+            distJarOrWar = "build/dist-war"
             whichDir = distWarDir
             removeIfDirExists(os.path.join(whichDir, "war"))
             ensureDirExists(whichDir)
@@ -996,10 +996,10 @@ class Release():
 
     def prepareDist(self, jarOrWar):
         whichDir = distDir
-        distJarOrWar = "dist"
+        distJarOrWar = "build/dist"
         if jarOrWar == "war":
             whichDir = distWarDir
-            distJarOrWar = "dist-war"
+            distJarOrWar = "build/dist-war"
         self.removeExtras(whichDir)
         print("Building %s/vnu.%s_%s.zip" % (distWarDir, jarOrWar,
                                              self.version))

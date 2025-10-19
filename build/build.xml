@@ -19,11 +19,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 -->
-<project name="html5-validator" basedir="." default="build"
+<project name="html5-validator" basedir=".." default="build"
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <tstamp/>
-  <property name="dist" location="dist" />
-  <property name="jarsDir" location="../jars" />
+  <property name="dist" location="build/dist" />
+  <property name="jarsDir" location="jars" />
   <loadfile property="version" srcfile="${dist}/VERSION" failonerror="false" />
   <loadresource property="version.number">
     <string value="${version}"/>
@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="version" value="nightly-${DSTAMP}" />
   <property name="groupId" value="nu.validator" />
   <property name="artifactId" value="validator" />
-  <property name="src" location="../src" />
+  <property name="src" location="src" />
   <property name="javadoc-dir" value="${dist}/javadoc" />
   <property name="validator-jar" value="${dist}/${artifactId}-${version.number}.jar" />
   <property name="validator-javadoc-jar" value="${dist}/${artifactId}-${version.number}-javadoc.jar" />
@@ -82,72 +82,72 @@ DEALINGS IN THE SOFTWARE.
           jing-clean"/>
   <target name="jar" depends="validator-jar">
     <jar destfile="${dist}/vnu.jar" duplicate="preserve">
-      <zipgroupfileset dir="../jars" includes="*.jar"/>
-      <zipfileset src="../css-validator/css-validator.jar"/>
-      <zipfileset src="../jing-trang/build/jing.jar"/>
-      <zipfileset src="../jing-trang/lib/saxon9.jar"/>
-      <zipfileset src="../dependencies/commons-codec-${commons-codec-version}.jar"/>
-      <zipfileset src="../dependencies/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
-      <zipfileset src="../dependencies/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
-      <zipfileset src="../dependencies/commons-io-${commons-io-version}.jar"/>
-      <zipfileset src="../dependencies/commons-logging-${commons-logging-version}.jar"/>
-      <zipfileset src="../dependencies/commons-logging-${commons-logging-version}-adapters.jar"/>
-      <zipfileset src="../dependencies/commons-logging-${commons-logging-version}-api.jar"/>
-      <zipfileset src="../dependencies/httpclient-${httpclient-version}.jar"/>
-      <zipfileset src="../dependencies/httpcore-${httpcore-version}.jar"/>
-      <zipfileset src="../dependencies/icu4j-${icu4j-version}.jar"/>
+      <zipgroupfileset dir="${jarsDir}" includes="*.jar"/>
+      <zipfileset src="css-validator/css-validator.jar"/>
+      <zipfileset src="jing-trang/build/jing.jar"/>
+      <zipfileset src="jing-trang/lib/saxon9.jar"/>
+      <zipfileset src="dependencies/commons-codec-${commons-codec-version}.jar"/>
+      <zipfileset src="dependencies/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
+      <zipfileset src="dependencies/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
+      <zipfileset src="dependencies/commons-io-${commons-io-version}.jar"/>
+      <zipfileset src="dependencies/commons-logging-${commons-logging-version}.jar"/>
+      <zipfileset src="dependencies/commons-logging-${commons-logging-version}-adapters.jar"/>
+      <zipfileset src="dependencies/commons-logging-${commons-logging-version}-api.jar"/>
+      <zipfileset src="dependencies/httpclient-${httpclient-version}.jar"/>
+      <zipfileset src="dependencies/httpcore-${httpcore-version}.jar"/>
+      <zipfileset src="dependencies/icu4j-${icu4j-version}.jar"/>
 
-      <zipfileset src="../dependencies/jchardet-${jchardet-version}.jar"/>
-      <zipfileset src="../dependencies/jetty-http-${jetty-version}.jar">
+      <zipfileset src="dependencies/jchardet-${jchardet-version}.jar"/>
+      <zipfileset src="dependencies/jetty-http-${jetty-version}.jar">
         <exclude name="module-info.class" />
         <exclude name="META-INF/services/**"/>
       </zipfileset>
-      <zipfileset src="../dependencies/jetty-io-${jetty-version}.jar">
+      <zipfileset src="dependencies/jetty-io-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar">
+      <zipfileset src="dependencies/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/jetty-security-${jetty-version}.jar">
+      <zipfileset src="dependencies/jetty-security-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/jetty-server-${jetty-version}.jar">
+      <zipfileset src="dependencies/jetty-server-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/jetty-servlet-${jetty-version}.jar">
+      <zipfileset src="dependencies/jetty-servlet-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/jetty-servlets-${jetty-version}.jar">
+      <zipfileset src="dependencies/jetty-servlets-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/jetty-util-${jetty-version}.jar">
+      <zipfileset src="dependencies/jetty-util-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/javax.json-1.1.4.jar">
+      <zipfileset src="dependencies/javax.json-1.1.4.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/log4j-${log4j-version}.jar"/>
-      <zipfileset src="../dependencies/salvation-${salvation-version}.jar"/>
+      <zipfileset src="dependencies/log4j-${log4j-version}.jar"/>
+      <zipfileset src="dependencies/salvation-${salvation-version}.jar"/>
       <!-- module dependencies -->
-      <zipfileset src="../jing-trang/lib/ant.jar"/>
-      <zipfileset src="../jing-trang/lib/ant-launcher.jar"/>
-      <zipfileset src="../jing-trang/lib/isorelax.jar"/>
-      <zipfileset src="../dependencies/avalon-framework-api-${avalon-framework-api-version}.jar"/>
-      <zipfileset src="../dependencies/avalon-logkit-${avalon-logkit-version}.jar"/>
-      <zipfileset src="../dependencies/cdi-api-${cdi-api-version}.jar"/>
-      <zipfileset src="../dependencies/el-api-${el-api-version}.jar"/>
-      <zipfileset src="../dependencies/javax.activation-${javax-activation-version}.jar"/>
-      <zipfileset src="../dependencies/javax.inject-${javax-inject-version}.jar"/>
-      <zipfileset src="../dependencies/javax.interceptor-api-${javax-interceptor-api-version}.jar"/>
-      <zipfileset src="../dependencies/javax.jms-api-${javax-jms-api-version}.jar"/>
-      <zipfileset src="../dependencies/jetty-jmx-${jetty-version}.jar">
+      <zipfileset src="jing-trang/lib/ant.jar"/>
+      <zipfileset src="jing-trang/lib/ant-launcher.jar"/>
+      <zipfileset src="jing-trang/lib/isorelax.jar"/>
+      <zipfileset src="dependencies/avalon-framework-api-${avalon-framework-api-version}.jar"/>
+      <zipfileset src="dependencies/avalon-logkit-${avalon-logkit-version}.jar"/>
+      <zipfileset src="dependencies/cdi-api-${cdi-api-version}.jar"/>
+      <zipfileset src="dependencies/el-api-${el-api-version}.jar"/>
+      <zipfileset src="dependencies/javax.activation-${javax-activation-version}.jar"/>
+      <zipfileset src="dependencies/javax.inject-${javax-inject-version}.jar"/>
+      <zipfileset src="dependencies/javax.interceptor-api-${javax-interceptor-api-version}.jar"/>
+      <zipfileset src="dependencies/javax.jms-api-${javax-jms-api-version}.jar"/>
+      <zipfileset src="dependencies/jetty-jmx-${jetty-version}.jar">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="../dependencies/jsr305-${jsr305-version}.jar"/>
-      <zipfileset src="../dependencies/mail-${mail-version}.jar"/>
-      <zipfileset src="../dependencies/portlet-api-${portlet-api-version}.jar"/>
-      <zipfileset src="../dependencies/slf4j-api-${slf4j-api-version}.jar"/>
-      <zipfileset src="../dependencies/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
+      <zipfileset src="dependencies/jsr305-${jsr305-version}.jar"/>
+      <zipfileset src="dependencies/mail-${mail-version}.jar"/>
+      <zipfileset src="dependencies/portlet-api-${portlet-api-version}.jar"/>
+      <zipfileset src="dependencies/slf4j-api-${slf4j-api-version}.jar"/>
+      <zipfileset src="dependencies/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
@@ -228,31 +228,31 @@ DEALINGS IN THE SOFTWARE.
 </log4j:configuration>
 ]]></echo>
     <unzip dest="${dist}/war/classes">
-      <fileset dir="../jars">
+      <fileset dir="${jarsDir}">
         <include name="*.jar"/>
       </fileset>
     </unzip>
     <copy todir="${dist}/war/lib">
-      <fileset file="../css-validator/css-validator.jar"/>
-      <fileset file="../jing-trang/build/jing.jar"/>
-      <fileset file="../jing-trang/lib/saxon9.jar"/>
-      <fileset file="../dependencies/commons-codec-${commons-codec-version}.jar"/>
-      <fileset file="../dependencies/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
-      <fileset file="../dependencies/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
-      <fileset file="../dependencies/commons-io-${commons-io-version}.jar"/>
-      <fileset file="../dependencies/commons-logging-${commons-logging-version}.jar"/>
-      <fileset file="../dependencies/commons-logging-${commons-logging-version}-adapters.jar"/>
-      <fileset file="../dependencies/commons-logging-${commons-logging-version}-api.jar"/>
-      <fileset file="../dependencies/httpclient-${httpclient-version}.jar"/>
-      <fileset file="../dependencies/httpcore-${httpcore-version}.jar"/>
-      <fileset file="../dependencies/icu4j-${icu4j-version}.jar"/>
-      <fileset file="../dependencies/salvation-${salvation-version}.jar"/>
-      <fileset file="../dependencies/jchardet-${jchardet-version}.jar"/>
-      <fileset file="../dependencies/log4j-${log4j-version}.jar"/>
-      <fileset file="../dependencies/slf4j-api-${slf4j-api-version}.jar"/>
-      <fileset file="../dependencies/javax.json-1.1.4.jar"/>
-      <fileset file="../dependencies/jetty-util-${jetty-version}.jar"/>
-      <fileset file="../dependencies/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
+      <fileset file="css-validator/css-validator.jar"/>
+      <fileset file="jing-trang/build/jing.jar"/>
+      <fileset file="jing-trang/lib/saxon9.jar"/>
+      <fileset file="dependencies/commons-codec-${commons-codec-version}.jar"/>
+      <fileset file="dependencies/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
+      <fileset file="dependencies/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
+      <fileset file="dependencies/commons-io-${commons-io-version}.jar"/>
+      <fileset file="dependencies/commons-logging-${commons-logging-version}.jar"/>
+      <fileset file="dependencies/commons-logging-${commons-logging-version}-adapters.jar"/>
+      <fileset file="dependencies/commons-logging-${commons-logging-version}-api.jar"/>
+      <fileset file="dependencies/httpclient-${httpclient-version}.jar"/>
+      <fileset file="dependencies/httpcore-${httpcore-version}.jar"/>
+      <fileset file="dependencies/icu4j-${icu4j-version}.jar"/>
+      <fileset file="dependencies/salvation-${salvation-version}.jar"/>
+      <fileset file="dependencies/jchardet-${jchardet-version}.jar"/>
+      <fileset file="dependencies/log4j-${log4j-version}.jar"/>
+      <fileset file="dependencies/slf4j-api-${slf4j-api-version}.jar"/>
+      <fileset file="dependencies/javax.json-1.1.4.jar"/>
+      <fileset file="dependencies/jetty-util-${jetty-version}.jar"/>
+      <fileset file="dependencies/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
       <lib dir="${dist}/war/lib"/>
@@ -269,27 +269,27 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
   <path id="validator.classpath">
-    <fileset dir="../dependencies/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
-    <fileset dir="../dependencies/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
-    <fileset dir="../dependencies/" includes="commons-io-${commons-io-version}.jar" />
-    <fileset dir="../dependencies/" includes="httpclient-${httpclient-version}.jar" />
-    <fileset dir="../dependencies/" includes="httpcore-${httpcore-version}.jar" />
-    <fileset dir="../dependencies/" includes="icu4j-${icu4j-version}.jar" />
-    <fileset dir="../dependencies/" includes="javax.json-1.1.4.jar" />
-    <fileset dir="../dependencies/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
-    <fileset dir="../dependencies/" includes="jetty-server-${jetty-version}.jar" />
-    <fileset dir="../dependencies/" includes="jetty-servlet-${jetty-version}.jar" />
-    <fileset dir="../dependencies/" includes="jetty-util-${jetty-version}.jar" />
-    <fileset dir="../dependencies/" includes="log4j-${log4j-version}.jar" />
-    <fileset dir="../dependencies/" includes="salvation-${salvation-version}.jar" />
-    <pathelement location="../css-validator/css-validator.jar"/>
-    <pathelement location="../jars/galimatias.jar"/>
-    <pathelement location="../jars/htmlparser.jar"/>
-    <pathelement location="../jars/langdetect.jar"/>
-    <pathelement location="../jing-trang/build/jing.jar"/>
+    <fileset dir="dependencies/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
+    <fileset dir="dependencies/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
+    <fileset dir="dependencies/" includes="commons-io-${commons-io-version}.jar" />
+    <fileset dir="dependencies/" includes="httpclient-${httpclient-version}.jar" />
+    <fileset dir="dependencies/" includes="httpcore-${httpcore-version}.jar" />
+    <fileset dir="dependencies/" includes="icu4j-${icu4j-version}.jar" />
+    <fileset dir="dependencies/" includes="javax.json-1.1.4.jar" />
+    <fileset dir="dependencies/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
+    <fileset dir="dependencies/" includes="jetty-server-${jetty-version}.jar" />
+    <fileset dir="dependencies/" includes="jetty-servlet-${jetty-version}.jar" />
+    <fileset dir="dependencies/" includes="jetty-util-${jetty-version}.jar" />
+    <fileset dir="dependencies/" includes="log4j-${log4j-version}.jar" />
+    <fileset dir="dependencies/" includes="salvation-${salvation-version}.jar" />
+    <pathelement location="css-validator/css-validator.jar"/>
+    <pathelement location="${jarsDir}/galimatias.jar"/>
+    <pathelement location="${jarsDir}/htmlparser.jar"/>
+    <pathelement location="${jarsDir}/langdetect.jar"/>
+    <pathelement location="jing-trang/build/jing.jar"/>
   </path>
 
-  <property name="validator.basedir" location="../" />
+  <property name="validator.basedir" location="" />
   <target name="validator-prepare">
     <mkdir dir="${validator.basedir}/classes"/>
     <copy todir="${validator.basedir}/classes" preservelastmodified="true">
@@ -438,7 +438,7 @@ DEALINGS IN THE SOFTWARE.
     </artifact:pom>
     <artifact:writepom pomRefId="pom" file="${dist}/validator-${version.number}.pom"/>
     <jar destfile="${validator-jar}" duplicate="preserve">
-      <zipfileset src="../jars/validator.jar"/>
+      <zipfileset src="${jarsDir}/validator.jar"/>
       <manifest>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
         <attribute name="Implementation-Version" value="${version}"/>
@@ -460,7 +460,7 @@ DEALINGS IN THE SOFTWARE.
   <import file=".ant/build-jing.xml"/>
 
 
-  <property name="jing.basedir" location="../jing-trang" />
+  <property name="jing.basedir" location="jing-trang" />
   <target name="jing-build">
     <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
   </target>
@@ -471,7 +471,7 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
 
-  <property name="css-validator.basedir" location="../css-validator" />
+  <property name="css-validator.basedir" location="css-validator" />
   <target name="css-validator-build">
     <ant dir="${css-validator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
   </target>
@@ -480,9 +480,9 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
 
-  <property name="galimatias.basedir" location="../galimatias" />
+  <property name="galimatias.basedir" location="galimatias" />
   <path id="galimatias.classpath">
-    <fileset dir="../dependencies/" includes="icu4j-${icu4j-version}.jar" />
+    <fileset dir="dependencies/" includes="icu4j-${icu4j-version}.jar" />
   </path>
   <target name="galimatias-build">
     <mkdir dir="${galimatias.basedir}/classes"/>
@@ -506,10 +506,10 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
 
-  <property name="htmlparser.basedir" location="../htmlparser" />
+  <property name="htmlparser.basedir" location="htmlparser" />
   <path id="htmlparser.classpath">
-    <fileset dir="../dependencies/" includes="icu4j-${icu4j-version}.jar" />
-    <fileset dir="../dependencies/" includes="jchardet-${jchardet-version}.jar" />
+    <fileset dir="dependencies/" includes="icu4j-${icu4j-version}.jar" />
+    <fileset dir="dependencies/" includes="jchardet-${jchardet-version}.jar" />
   </path>
   <target name="htmlparser-initialize">
     <!-- copied over from htmlparser/pom.xml -->
@@ -556,9 +556,9 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
 
-  <property name="langdetect.basedir" location="../langdetect" />
+  <property name="langdetect.basedir" location="langdetect" />
   <path id="langdetect.classpath">
-    <fileset dir="../dependencies/" includes="javax.json-1.1.4.jar" />
+    <fileset dir="dependencies/" includes="javax.json-1.1.4.jar" />
   </path>
   <target name="langdetect-build">
     <mkdir dir="${langdetect.basedir}/classes"/>
