@@ -1517,6 +1517,8 @@ def preparePropertiesFile():
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
     preparePropertiesFile()
+    with open(os.path.join(filesDir, "version"), "w", encoding="utf-8") as f:
+        f.write(validatorVersion + "\n")
     shutil.copyfile(os.path.join(buildRoot, presetsFile),
                     os.path.join(filesDir, "presets"))
     shutil.copyfile(os.path.join(buildRoot, aboutFile),

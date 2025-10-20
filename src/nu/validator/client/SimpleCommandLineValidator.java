@@ -120,7 +120,6 @@ public class SimpleCommandLineValidator {
     private static boolean hasSchemaOption;
 
     public static void main(String[] args) throws SAXException, Exception {
-        version = SimpleCommandLineValidator.class.getPackage().getImplementationVersion();
         out = System.err;
         otherOut = System.out;
         userAgent = "Validator.nu/LV";
@@ -246,11 +245,7 @@ public class SimpleCommandLineValidator {
                 } else if ("--verbose".equals(args[i])) {
                     verbose = true;
                 } else if ("--version".equals(args[i])) {
-                    if (version != null) {
-                        otherOut.println(version);
-                    } else {
-                        otherOut.println("[unknown version]");
-                    }
+                    version();
                     System.exit(0);
                 } else if ("--entities".equals(args[i])) {
                     loadEntities = true;
@@ -633,6 +628,17 @@ public class SimpleCommandLineValidator {
                 "nu/validator/localentities/files/cli-help")) {
             otherOut.println("");
             for (int b = help.read(); b != -1; b = help.read()) {
+                otherOut.write(b);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void version() {
+        try (InputStream version = SimpleCommandLineValidator.class.getClassLoader().getResourceAsStream(
+                "nu/validator/localentities/files/version")) {
+            for (int b = version.read(); b != -1; b = version.read()) {
                 otherOut.write(b);
             }
         } catch (IOException e) {

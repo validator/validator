@@ -41,6 +41,7 @@ src/nu/validator/localentities/files/style.css
 src/nu/validator/localentities/files/subtag-registry
 src/nu/validator/localentities/files/syntax-descriptions
 src/nu/validator/localentities/files/usage
+src/nu/validator/localentities/files/version
 src/nu/validator/localentities/files/vnu-alt-advice
 src/nu/validator/localentities/files/wiki_whatwg_org_wiki_MicrosyntaxDescriptions
 src/nu/validator/localentities/files/wiki_whatwg_org_wiki_Validator_nu_alt_advice
