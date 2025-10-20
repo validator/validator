@@ -11,14 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Update the 'latest' tag
-        if: github.ref == 'refs/heads/main'
-        run: |
-           git config user.name github-actions
-           git config user.email github-actions@github.com
-           git push origin :refs/tags/latest || true
-           git tag -m latest -fa latest || true
-           git push origin main --tags
   build:
     name: Build on ${{ matrix.os }} with Java ${{ matrix.java }}
     needs: prep
@@ -116,8 +108,18 @@ jobs:
           version=$(java -jar ./build/dist/vnu.jar --version);
           tag_valid_version="${version// (/+}";
           tag_valid_version="${tag_valid_version/)}"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git tag --force "$tag_valid_version"
-          git push origin "$tag_valid_version"
+          git push origin main --tags
+      - name: Update the 'latest' tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git push origin :refs/tags/latest || true
+          git tag -m latest -fa latest || true
+          git push origin main --tags
       - name: Release new maven package
         if: >
           github.event_name == 'push' &&
