@@ -834,8 +834,11 @@ class Release():
                 '-Dvalidator.param.formTemplate=' + formTemplate,
                 '-Dvalidator.param.pageTemplate=' + pageTemplate,
                 '-Dvalidator.param.presetsFile=' + presetsFile,
+                '-Dvalidator.param.resultsTitle=' + resultsTitle,
                 '-Dvalidator.param.scriptFile=' + scriptFile,
+                '-Dvalidator.param.serviceName=' + serviceName,
                 '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
+                '-Dvalidator.param.userAgent=' + userAgent,
                 '-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
@@ -851,8 +854,11 @@ class Release():
                 '-Dvalidator.param.formTemplate=' + formTemplate,
                 '-Dvalidator.param.pageTemplate=' + pageTemplate,
                 '-Dvalidator.param.presetsFile=' + presetsFile,
+                '-Dvalidator.param.resultsTitle=' + resultsTitle,
                 '-Dvalidator.param.scriptFile=' + scriptFile,
+                '-Dvalidator.param.serviceName=' + serviceName,
                 '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
+                '-Dvalidator.param.userAgent=' + userAgent,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
@@ -873,8 +879,11 @@ class Release():
                 '-Dvalidator.param.formTemplate=' + formTemplate,
                 '-Dvalidator.param.pageTemplate=' + pageTemplate,
                 '-Dvalidator.param.presetsFile=' + presetsFile,
+                '-Dvalidator.param.resultsTitle=' + resultsTitle,
                 '-Dvalidator.param.scriptFile=' + scriptFile,
+                '-Dvalidator.param.serviceName=' + serviceName,
                 '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
+                '-Dvalidator.param.userAgent=' + userAgent,
                 '-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, jarOrWar])
@@ -1432,20 +1441,10 @@ def localPathToJarCompatName(path):
     return javaSafeNamePat.sub('_', path)
 
 
-def preparePropertiesFile():
-    f = open(os.path.join(filesDir, "misc.properties"), 'w')
-    f.write("nu.validator.servlet.service-name=%s\n" % serviceName)
-    f.write("nu.validator.servlet.results-title=%s\n" % resultsTitle)
-    f.write("nu.validator.servlet.version=%s\n" % validatorVersion)
-    f.write("nu.validator.servlet.user-agent=%s\n" % userAgent)
-    f.close()
-
-
 # This function builds all the resources.
 # It requires to have built the schemas before through buildSchemaDrivers()
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
-    preparePropertiesFile()
     makeUsage()
     makeCliHelp()
     f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
