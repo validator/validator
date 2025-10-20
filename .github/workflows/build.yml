@@ -141,3 +141,77 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  ant-build:
+    name: Ant build ${{ matrix.target }}
+    needs: prep
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [
+          build,
+          jar,
+          war,
+          cssvalidator-build,
+          cssvalidator-bundle,
+          galimatias-build,
+          galimatias-bundle,
+          htmlparser-build,
+          htmlparser-bundle,
+          jing-build,
+          jing-bundle,
+          langdetect-build,
+          langdetect-bundle,
+          validator-build,
+          validator-bundle,
+          validator-compare-full-and-merged-split,
+          validator-split-client,
+          validator-split-core,
+          validator-split-server,
+          ]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Java JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 25
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Update submodules
+        run: python checker.py update
+      - name: Run target ${{ matrix.target }}
+        run: ant -f build/build.xml ${{ matrix.target }}
+
+  ant-clean:
+    name: Ant clean
+    needs: prep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Java JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 25
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Update submodules
+        run: python checker.py update
+      - name: Prepare experiment
+        run: |
+          tar -cf /tmp/archive.tar .
+          mkdir -p _reference
+          mkdir -p _experiment
+          tar -C _reference -xf /tmp/archive.tar
+          tar -C _experiment -xf /tmp/archive.tar
+      - name: Run experiment
+        run: |
+          cd _experiment
+          ant -f build/build.xml jar war
+          ant -f build/build.xml distclean
+      - name: Check differences
+        run: diff -r _reference _experiment
