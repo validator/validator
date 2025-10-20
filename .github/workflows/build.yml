@@ -109,6 +109,13 @@ jobs:
           omitBodyDuringUpdate: true
           omitName: true
           tag: latest
+      - name: Tag the release
+        if: matrix.os == 'ubuntu-latest' && matrix.java == 17 && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          VERSION=$(java -jar ./build/dist/vnu.jar --version) || exit 1
+          git tag --force "$VERSION"
+          git push origin "$VERSION"
       - name: Release new maven package
         if: >
           github.event_name == 'push' &&
