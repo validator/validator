@@ -101,15 +101,6 @@ jobs:
           omitBodyDuringUpdate: true
           omitName: true
           tag: latest
-      - name: Tag the release
-        if: matrix.os == 'ubuntu-latest' && matrix.java == 17 && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          version=$(java -jar ./build/dist/vnu.jar --version);
-          tag_valid_version="${version// (/+}";
-          tag_valid_version="${tag_valid_version/)}"
-          git tag --force "$tag_valid_version"
-          git push origin main --tags
       - name: Update the 'latest' tag
         if: >
           github.event_name == 'push' &&
