@@ -44,6 +44,8 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator-sources-jar" value="${dist}/${artifactId}-${version.number}-sources.jar" />
   <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version.number}-bundle.jar" />
 
+  <!-- The default values of these 'validator.param.*' properties are supposed
+  to be equal to the values in build.py -->
   <property name="validator.param.aboutFile" value="site/about.html"/>
   <property name="validator.param.formTemplate" value="site/FormEmitter.xml"/>
   <property name="validator.param.pageTemplate" value="site/PageEmitter.xml"/>
