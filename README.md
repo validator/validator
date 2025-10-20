@@ -309,6 +309,36 @@ When used from the command line, the checker provides these options:
 #### --version
 
     Shows the checker version number.
+    
+## Java Usage
+
+Maven:
+
+    <dependency>
+        <groupId>nu.validator</groupId>
+        <artifactId>validator</artifactId>
+        <version>20.7.2</version>
+        <scope>test</scope>
+    </dependency>
+    
+Or Gradle:
+
+    testImplementation 'nu.validator:validator:20.7.2'
+    
+Basic usage java code:
+
+    String html = ...
+    EmbeddedValidator validator = new EmbeddedValidator();
+    validator.setOutputFormat( EmbeddedValidator.OutputFormat.GNU );
+    try {
+        String output = validator.validate( new ByteArrayInputStream( html.getBytes( StandardCharsets.UTF_8 ) ) );
+        if (!output.isEmpty())
+            throw new Exception( output ); //validation failed
+    } catch (SAXException e) {
+        throw new Exception( "Cannot validate html", e );
+    }
+        
+Using a different output format requires the code to be adjusted.
 
 ## Web-based checking
 
