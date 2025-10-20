@@ -1445,8 +1445,11 @@ def localPathToJarCompatName(path):
 # It requires to have built the schemas before through buildSchemaDrivers()
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
+
     makeUsage()
     makeCliHelp()
+
+    buildSchemaDrivers()
     f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
     o = open(os.path.join(filesDir, "entitymap"), 'w')
     try:
@@ -1878,8 +1881,6 @@ def main(argv):
                 release.createJarOrWar("war")
             elif arg == 'localent':
                 prepareLocalEntityJar()
-            elif arg == 'schema-drivers':
-                buildSchemaDrivers()
             elif arg == 'deploy':
                 deployOverScp()
             elif arg == 'tar':

@@ -836,15 +836,7 @@ DEALINGS IN THE SOFTWARE.
     </exec>
   </target>
 
-  <target name="schema-drivers-build">
-    <exec executable="${python-executable}" failonerror="true" failifexecutionfails="true">
-      <env key="JAVA_HOME" value="${java.home}"/>
-      <arg file="build/build.py"/>
-      <arg value="schema-drivers"/> <!-- buildSchemaDrivers() -->
-    </exec>
-  </target>
-
-  <target name="localentities-build" depends="schema-drivers-build">
+  <target name="localentities-build">
     <local name="filesDir"/>
     <property name="filesDir" value="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
     <mkdir dir="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
