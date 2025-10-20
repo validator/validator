@@ -276,12 +276,15 @@ def dependencyJarPaths():
 
 
 def buildSchemaDrivers():
-    baseDir = os.path.join(buildRoot, "schema")
-    html5Dir = os.path.join(baseDir, "html5")
-    driversDir = os.path.join(baseDir, ".drivers")
-    legacyRnc = os.path.join(driversDir, "legacy.rnc")
-    itsRnc = os.path.join(os.path.join(baseDir, "its2/its20-html5.rnc"))
-    itsTypesRnc = os.path.join(os.path.join(baseDir, "its2/its20-html5-types.rnc"))  # nopep8
+    schemaSrcDir = os.path.join(buildRoot, "schema")
+    schemaBuildDir = os.path.join(buildRoot, "build", "schema")
+    ensureDirExists(schemaBuildDir)
+    html5Dir = os.path.join(schemaBuildDir, "html5")
+    ensureDirExists(html5Dir)
+    driversSrcDir = os.path.join(schemaSrcDir, ".drivers")
+    srcLegacyRnc = os.path.join(driversSrcDir, "legacy.rnc")
+    srcItsRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5.rnc"))
+    srcItsTypesRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5-types.rnc"))  # nopep8
     buildSchemaDriverHtmlCore(html5Dir)
     buildSchemaDriverHtml5NoMicrodata(html5Dir)
     buildSchemaDriverHtml5(html5Dir)
@@ -297,24 +300,24 @@ def buildSchemaDrivers():
     buildSchemaDriverXhtml5xhtmlRDFaLite(html5Dir)
     buildSchemaDriverXhtml5htmlRDFaLite(html5Dir)
     for file in coreSchemaDriverFiles:
-        print("Copying %s to %s" % (os.path.join(driversDir, file), os.path.join(baseDir, file)))  # nopep8
-        shutil.copy(os.path.join(driversDir, file), baseDir)
-    xhtmlSourceDir = os.path.join(driversDir, "xhtml10")
-    xhtmlTargetDir = os.path.join(baseDir, "xhtml10")
+        print("Copying %s to %s" % (os.path.join(driversSrcDir, file), os.path.join(schemaBuildDir, file)))  # nopep8
+        shutil.copy(os.path.join(driversSrcDir, file), schemaBuildDir)
+    xhtmlSourceDir = os.path.join(driversSrcDir, "xhtml10")
+    xhtmlTargetDir = os.path.join(schemaBuildDir, "xhtml10")
     removeIfDirExists(xhtmlTargetDir)
     shutil.copytree(xhtmlSourceDir, xhtmlTargetDir)
     print("Copying %s to %s" % (xhtmlSourceDir, xhtmlTargetDir))
-    rdfDir = os.path.join(baseDir, "rdf")
+    rdfDir = os.path.join(schemaBuildDir, "rdf")
     removeIfDirExists(rdfDir)
     os.mkdir(rdfDir)
-    print("Copying %s to %s/rdf.rnc" % (os.path.join(driversDir, "rdf.rnc"), rdfDir))  # nopep8
-    shutil.copy(os.path.join(driversDir, "rdf.rnc"), rdfDir)
+    print("Copying %s to %s/rdf.rnc" % (os.path.join(driversSrcDir, "rdf.rnc"), rdfDir))  # nopep8
+    shutil.copy(os.path.join(driversSrcDir, "rdf.rnc"), rdfDir)
     removeIfExists(os.path.join(html5Dir, "legacy.rnc"))
     removeIfExists(os.path.join(html5Dir, "its20-html5.rnc"))
     removeIfExists(os.path.join(html5Dir, "its20-html5-types.rnc"))
-    shutil.copy(legacyRnc, html5Dir)
-    shutil.copy(itsRnc, html5Dir)
-    shutil.copy(itsTypesRnc, html5Dir)
+    shutil.copy(srcLegacyRnc, html5Dir)
+    shutil.copy(srcItsRnc, html5Dir)
+    shutil.copy(srcItsTypesRnc, html5Dir)
 
 #################################################################
 # data and functions for building schema drivers
@@ -1461,26 +1464,29 @@ def prepareLocalEntityJar():
     try:
         for line in f:
             url, path = line.strip().split("\t")
-            entPath = ""
+            entPath = []
+            index = -1
             if path.startswith("schema/html5/"):
-                entPath = os.path.join(buildRoot, "schema", "html5", path[13:])
+                entPath.append(os.path.join(buildRoot, "schema", "html5", path[13:]))
+                entPath.append(os.path.join(buildRoot, "build", "schema", "html5", path[13:]))
             elif path.startswith("schema/"):
-                entPath = os.path.join(buildRoot, path)
-            safeName = localPathToJarCompatName(path)
-            safePath = os.path.join(filesDir, safeName)
-            if os.path.exists(entPath):
-                o.write("%s\t%s\n" % (url, safeName))
-                shutil.copyfile(entPath, safePath)
+                entPath.append(os.path.join(buildRoot, path))
+                entPath.append(os.path.join(buildRoot, "build", path))
+            else:
+                continue
+            if os.path.exists(entPath[0]):
+              index = 0
+            elif os.path.exists(entPath[1]):
+              index = 1
+            if index >= 0:
+              safeName = localPathToJarCompatName(path)
+              safePath = os.path.join(filesDir, safeName)
+              o.write("%s\t%s\n" % (url, safeName))
+              shutil.copyfile(entPath[index], safePath)
     finally:
         f.close()
         o.close()
-    schemaDir = os.path.join(buildRoot, "schema")
-    for file in coreSchemaDriverFiles:
-        removeIfExists(os.path.join(schemaDir, file))
-    for file in htmlSchemaDriverFiles:
-        removeIfExists(os.path.join(schemaDir, "html5", file))
-    removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
-    removeIfDirExists(os.path.join(schemaDir, "rdf"))
+    removeIfDirExists(os.path.join(buildRoot, "build", "schema"))
 
 
 def makeUsage():
