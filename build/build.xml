@@ -529,6 +529,7 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="${validator.build.basedir}/vnu-core.jar"
          basedir="${validator.build.basedir}/core/classes"
          >
+      <fileset dir="${validator.build.basedir}/resources"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="Core &amp; CLI of The Nu Markup Checker (v.Nu)"/>
@@ -691,7 +692,9 @@ DEALINGS IN THE SOFTWARE.
 
   <target name="validator-jar" depends="validator-build">
     <mkdir dir="${validator.basedir}/jars"/>
-    <jar destfile="${jarsDir}/validator.jar" basedir="${validator.build.basedir}/full/classes" excludes="**/*.java"/>
+    <jar destfile="${jarsDir}/validator.jar" basedir="${validator.build.basedir}/full/classes" excludes="**/*.java">
+      <fileset dir="${validator.build.basedir}/resources"/>
+    </jar>
   </target>
 
   <target name="validator-javadoc-jar"
