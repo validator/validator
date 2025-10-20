@@ -86,7 +86,7 @@ headCommitHash = subprocess.check_output(
         ["git", "rev-parse", "--short", "HEAD"],
         stderr=subprocess.DEVNULL, text=True).strip()
 validatorVersion = "%s.%s.%s (%s)" % (year, month, day, headCommitHash)
-# validatorVersion = "20.6.30"
+validatorSimpleVersion = "%s.%s.%s" % (year, month, day)
 jingVersion = "20200702VNU"
 htmlparserVersion = "1.4.16"
 cssvalidatorVersion = "1.0.8"
@@ -1047,7 +1047,7 @@ class Release():
     def createPackageJson(self, packageJson):
         with open(packageJson, 'r') as original:
             copy = json.load(original)
-        copy['version'] = validatorVersion
+        copy['version'] = validatorSimpleVersion
         with open(packageJson, 'w') as f:
             json.dump(copy, f)
 
@@ -1055,7 +1055,7 @@ class Release():
         with open(packageJson, 'r') as original:
             copy = json.load(original)
         copy['name'] = "@validator/vnu-jar"
-        copy['version'] = validatorVersion
+        copy['version'] = validatorSimpleVersion
         copy['publishConfig'] = {"registry": "https://npm.pkg.github.com"}
         with open(packageJson, 'w') as f:
             json.dump(copy, f)
@@ -1091,8 +1091,8 @@ class Release():
                 removeIfExists(filename)
 
     def uploadMavenToGitHub(self):
-        self.setVersion(distDir)
-        print("version: " + self.version)
+        self.version = validatorSimpleVersion
+        print("maven package version: " + self.version)
         url = "https://api.github.com/orgs/validator/packages/maven/nu.validator.validator/versions"  # nopep8
         request = Request(
             url,
@@ -1214,8 +1214,8 @@ class Release():
                 runCmd(args)
 
     def uploadNpmToGitHub(self, tag=None):
-        self.setVersion(distDir)
-        print("version: " + self.version)
+        self.version = validatorSimpleVersion
+        print("npm package version: " + self.version)
         url = "https://api.github.com/orgs/validator/packages/npm/vnu-jar/versions"  # nopep8
         request = Request(
             url,
@@ -1914,9 +1914,6 @@ def main(argv):
                 release.uploadToGithub("jar")
                 release.uploadToGithub("war")
                 release.uploadNpmToGitHub()
-            elif arg == 'npm-snapshot':
-                release.createJarOrWar("jar")
-                release.uploadNpmToGitHub("next")
             elif arg == 'npm-release':
                 release.createJarOrWar("jar")
                 release.uploadNpmToGitHub()
