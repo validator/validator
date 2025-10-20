@@ -440,15 +440,16 @@ DEALINGS IN THE SOFTWARE.
            nowarn="true"
            release="${build.java.target.version}"
            />
+    <mkdir dir="${validator.build.basedir}/builtSrc/nu/validator/servlet"/>
     <java classpath="${validator.build.basedir}/saxCompiler/classes"
           classname="nu.validator.xml.SaxCompiler">
       <arg file="${validator.param.pageTemplate}"/>
-      <arg file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java"/>
+      <arg file="${validator.build.basedir}/builtSrc/nu/validator/servlet/PageEmitter.java"/>
     </java>
     <java classpath="${validator.build.basedir}/saxCompiler/classes"
           classname="nu.validator.xml.SaxCompiler">
       <arg file="${validator.param.formTemplate}"/>
-      <arg file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java"/>
+      <arg file="${validator.build.basedir}/builtSrc/nu/validator/servlet/FormEmitter.java"/>
     </java>
   </target>
 
@@ -463,15 +464,17 @@ DEALINGS IN THE SOFTWARE.
           dl-deps,
           dl-deps-modules,
           dl-deps-jetty">
-    <javac srcdir="${validator.basedir}/src"
-           destdir="${validator.build.basedir}/full/classes"
+    <javac destdir="${validator.build.basedir}/full/classes"
            classpathref="validator.classpath"
            debug="true"
            encoding="UTF-8"
            includeantruntime="false"
            nowarn="true"
            release="${build.java.target.version}"
-           />
+           >
+      <src path="${validator.basedir}/src"/>
+      <src path="${validator.build.basedir}/builtSrc"/>
+    </javac>
   </target>
 
   <target name="validator-split-core"
@@ -484,8 +487,7 @@ DEALINGS IN THE SOFTWARE.
           langdetect-jar,
           dl-deps,
           dl-deps-modules">
-    <javac srcdir="${validator.basedir}/src"
-           destdir="${validator.build.basedir}/core/classes"
+    <javac destdir="${validator.build.basedir}/core/classes"
            classpathref="validator-split-core.classpath"
            debug="true"
            encoding="UTF-8"
@@ -493,6 +495,8 @@ DEALINGS IN THE SOFTWARE.
            nowarn="true"
            release="${build.java.target.version}"
            >
+      <src path="${validator.basedir}/src"/>
+      <src path="${validator.build.basedir}/builtSrc"/>
       <exclude name="**/servlet/Main.java" />
     </javac>
   </target>
