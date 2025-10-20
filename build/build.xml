@@ -676,6 +676,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="validator-clean">
     <delete dir="${validator.build.basedir}"/>
     <deleteFileWithEmptyParent file="${jarsDir}/validator.jar"/>
+    <delete dir="build/schema"/>
     <delete file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java" verbose="true"/>
     <delete file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java" verbose="true"/>
     <delete>
