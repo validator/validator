@@ -103,8 +103,8 @@ extrasDir = os.path.join(buildRoot, "extras")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
 cssValidatorDir = os.path.join(buildRoot, "css-validator")
-vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
-filesDir = os.path.join(vnuSrc, "localentities", "files")
+# filesDir is the dir where built resources are stored
+filesDir = os.path.join(buildRoot, "build", "validator", "resources", "nu", "validator","localentities", "files")
 
 pageTemplate = os.path.join("site", "PageEmitter.xml")
 formTemplate = os.path.join("site", "FormEmitter.xml")
@@ -1429,6 +1429,8 @@ def preparePropertiesFile():
     f.close()
 
 
+# This function builds all the resources.
+# It requires to have built the schemas before through buildSchemaDrivers()
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
     preparePropertiesFile()
