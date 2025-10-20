@@ -1486,7 +1486,6 @@ def prepareLocalEntityJar():
     finally:
         f.close()
         o.close()
-    removeIfDirExists(os.path.join(buildRoot, "build", "schema"))
 
 
 def makeUsage():
