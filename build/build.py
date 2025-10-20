@@ -82,7 +82,10 @@ releaseDate = time.strftime('%d %B %Y')
 year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
 day = time.strftime('%d').lstrip('0')
-validatorVersion = "%s.%s.%s" % (year, month, day)
+headCommitHash = subprocess.check_output(
+        ["git", "rev-parse", "--short", "HEAD"],
+        stderr=subprocess.DEVNULL, text=True).strip()
+validatorVersion = "%s.%s.%s (%s)" % (year, month, day, headCommitHash)
 # validatorVersion = "20.6.30"
 jingVersion = "20200702VNU"
 htmlparserVersion = "1.4.16"
