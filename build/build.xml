@@ -46,6 +46,25 @@ DEALINGS IN THE SOFTWARE.
 
   <echo>Version is set to ${version}</echo>
 
+  <!-- Delete file and parent folder if it became empty -->
+  <macrodef name="deleteFileWithEmptyParent">
+    <attribute name="file"/>
+      <sequential>
+        <local name="parent"/>
+        <dirname property="parent" file="@{file}"/>
+        <echo>${parent} + @{file}</echo>
+        <delete file="@{file}"/>
+        <delete includeemptydirs="true" failonerror="false" quiet="true" verbose="true">
+          <fileset dir="${parent}">
+            <and>
+              <size value="0"/>
+              <type type="dir"/>
+            </and>
+          </fileset>
+        </delete>
+      </sequential>
+  </macrodef>
+
   <macrodef name="get-and-checksum">
     <attribute name="url"/>
     <attribute name="destdir" default="${depsDir}"/>
@@ -653,7 +672,7 @@ DEALINGS IN THE SOFTWARE.
 
   <target name="validator-clean">
     <delete dir="${validator.build.basedir}"/>
-    <delete file="${jarsDir}/validator.jar"/>
+    <deleteFileWithEmptyParent file="${jarsDir}/validator.jar"/>
     <delete file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java" verbose="true"/>
     <delete file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java" verbose="true"/>
   </target>

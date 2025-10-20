@@ -74,7 +74,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="htmlparser-clean">
     <delete dir="${htmlparser.basedir}/build"/>
     <delete dir="${htmlparser.basedir}/dist"/>
-    <delete file="${jarsDir}/htmlparser.jar"/>
+    <deleteFileWithEmptyParent file="${jarsDir}/htmlparser.jar"/>
   </target>
 
   <target name="htmlparser-jar" depends="htmlparser-build">
