@@ -12,8 +12,7 @@ build/validator*.jar
 build/VERSION
 build/.gradle
 run-validator.sh
-classes/
-classesSaxCompiler/
+build/validator/
 dependencies/
 extras/
 dist/

@@ -369,6 +369,8 @@ DEALINGS IN THE SOFTWARE.
     <delete dir="${dist}/war" />
   </target>
 
+  <property name="validator.basedir" location="." />
+  <property name="validator.build.basedir" location="build/validator" />
   <path id="validator.classpath">
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
@@ -389,20 +391,18 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="${jarsDir}/langdetect.jar"/>
     <pathelement location="jing-trang/build/jing.jar"/>
   </path>
-
-  <property name="validator.basedir" location="" />
   <target name="validator-prepare" depends="dl-entities, localentities-build">
-    <mkdir dir="${validator.basedir}/classes"/>
-    <copy todir="${validator.basedir}/classes" preservelastmodified="true">
+    <mkdir dir="${validator.build.basedir}/full/classes"/>
+    <copy todir="${validator.build.basedir}/full/classes" preservelastmodified="true">
       <fileset dir="${validator.basedir}/src">
         <exclude name="**/*.java" />
       </fileset>
     </copy>
   </target>
   <target name="validator-emitters" depends="validator-prepare">
-    <mkdir dir="${validator.basedir}/classesSaxCompiler"/>
+    <mkdir dir="${validator.build.basedir}/saxCompiler/classes"/>
     <javac srcdir="${validator.basedir}/src"
-           destdir="${validator.basedir}/classesSaxCompiler"
+           destdir="${validator.build.basedir}/saxCompiler/classes"
            debug="true"
            encoding="UTF-8"
            includeantruntime="false"
@@ -410,17 +410,18 @@ DEALINGS IN THE SOFTWARE.
            nowarn="true"
            release="${build.java.target.version}"
            />
-    <java classpath="${validator.basedir}/classesSaxCompiler"
+    <java classpath="${validator.build.basedir}/saxCompiler/classes"
           classname="nu.validator.xml.SaxCompiler">
       <arg file="${validator.basedir}/site/PageEmitter.xml"/>
       <arg file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java"/>
     </java>
-    <java classpath="${validator.basedir}/classesSaxCompiler"
+    <java classpath="${validator.build.basedir}/saxCompiler/classes"
           classname="nu.validator.xml.SaxCompiler">
       <arg file="${validator.basedir}/site/FormEmitter.xml"/>
       <arg file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java"/>
     </java>
   </target>
+
   <target name="validator-build"
           depends="validator-prepare,
           validator-emitters,
@@ -433,7 +434,7 @@ DEALINGS IN THE SOFTWARE.
           dl-deps-modules,
           dl-deps-jetty">
     <javac srcdir="${validator.basedir}/src"
-           destdir="${validator.basedir}/classes"
+           destdir="${validator.build.basedir}/full/classes"
            classpathref="validator.classpath"
            debug="true"
            encoding="UTF-8"
@@ -443,15 +444,15 @@ DEALINGS IN THE SOFTWARE.
            />
   </target>
   <target name="validator-clean">
-    <delete dir="${validator.basedir}/classes"/>
-    <delete dir="${validator.basedir}/classesSaxCompiler"/>
+    <delete dir="${validator.build.basedir}"/>
     <delete file="${jarsDir}/validator.jar"/>
     <delete file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java" verbose="true"/>
     <delete file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java" verbose="true"/>
   </target>
+
   <target name="validator-jar" depends="validator-build">
     <mkdir dir="${validator.basedir}/jars"/>
-    <jar destfile="${jarsDir}/validator.jar" basedir="${validator.basedir}/classes" excludes="**/*.java"/>
+    <jar destfile="${jarsDir}/validator.jar" basedir="${validator.build.basedir}/full/classes" excludes="**/*.java"/>
   </target>
 
   <target name="validator-javadoc-jar"
