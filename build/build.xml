@@ -177,7 +177,7 @@ DEALINGS IN THE SOFTWARE.
           htmlparser-clean,
           langdetect-clean,
           validator-clean,
-          css-validator-clean,
+          cssvalidator-clean,
           jing-clean
           ">
     <delete dir="${dist}"/>
@@ -433,7 +433,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="validator-build"
           depends="validator-prepare,
           validator-emitters,
-          css-validator-build,
+          cssvalidator-build,
           galimatias-jar,
           htmlparser-jar,
           jing-build,
@@ -455,7 +455,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="validator-split-core"
           depends="validator-prepare,
           validator-emitters,
-          css-validator-build,
+          cssvalidator-build,
           galimatias-jar,
           htmlparser-jar,
           jing-build,
@@ -665,7 +665,7 @@ DEALINGS IN THE SOFTWARE.
 
   <target name="validator-javadoc-jar"
           depends="
-          css-validator-build,
+          cssvalidator-build,
           galimatias-jar,
           htmlparser-jar,
           jing-build,

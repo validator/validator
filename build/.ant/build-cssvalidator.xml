@@ -27,13 +27,14 @@ DEALINGS IN THE SOFTWARE.
   <property name="cssvalidator-sources-jar" value="${cssvalidator-base}-sources.jar" />
   <property name="cssvalidator-bundle-jar" value="${cssvalidator-base}-bundle.jar" />
 
-  <property name="css-validator.basedir" location="css-validator" />
-  <target name="css-validator-build" depends="dl-deps, dl-deps-modules" >
-    <ant dir="${css-validator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
+  <property name="cssvalidator.basedir" location="css-validator" />
+
+  <target name="cssvalidator-build" depends="dl-deps, dl-deps-modules" >
+    <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
   </target>
 
-  <target name="css-validator-clean">
-    <ant dir="${css-validator.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
+  <target name="cssvalidator-clean">
+    <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
   </target>
 
   <target name="cssvalidator-javadoc-jar">
@@ -52,7 +53,7 @@ DEALINGS IN THE SOFTWARE.
     </jar>
   </target>
 
-  <target name="cssvalidator-artifacts" depends="dl-deps-antlib, css-validator-build, cssvalidator-javadoc-jar, cssvalidator-sources-jar">
+  <target name="cssvalidator-artifacts" depends="dl-deps-antlib, cssvalidator-build, cssvalidator-javadoc-jar, cssvalidator-sources-jar">
     <delete file="${dist}/VERSION" />
     <artifact:pom
       id="cssvalidator-pom"
