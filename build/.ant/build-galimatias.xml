@@ -48,7 +48,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="galimatias-clean">
     <delete dir="${galimatias.basedir}/classes"/>
     <delete dir="${galimatias.basedir}/dist"/>
-    <delete file="${jarsDir}/galimatias.jar"/>
+    <deleteFileWithEmptyParent file="${jarsDir}/galimatias.jar"/>
   </target>
 
   <target name="galimatias-jar" depends="galimatias-build">

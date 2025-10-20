@@ -48,7 +48,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="langdetect-clean">
     <delete dir="${langdetect.basedir}/classes"/>
     <delete dir="${langdetect.basedir}/dist"/>
-    <delete file="${jarsDir}/langdetect.jar"/>
+    <deleteFileWithEmptyParent file="${jarsDir}/langdetect.jar"/>
   </target>
 
   <target name="langdetect-jar" depends="langdetect-build">
