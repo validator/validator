@@ -25,6 +25,14 @@ DEALINGS IN THE SOFTWARE.
   <property name="dist" location="dist" />
   <property name="jarsDir" location="../jars" />
   <loadfile property="version" srcfile="${dist}/VERSION" failonerror="false" />
+  <loadresource property="version.number">
+    <string value="${version}"/>
+    <filterchain>
+      <tokenfilter>
+        <replaceregex pattern="^([^ ]+).*$" replace="\1"/>
+      </tokenfilter>
+    </filterchain>
+  </loadresource>
   <property name="build.java.target.version" value="8" />
   <property name="version" value="nightly-${DSTAMP}" />
   <property name="groupId" value="nu.validator" />
@@ -373,7 +381,7 @@ DEALINGS IN THE SOFTWARE.
       id="pom"
       groupId="nu.validator"
       artifactId="validator"
-      version="${version}"
+      version="${version.number}"
       name="The Nu Html Checker"
       description="An HTML-checking library (used by https://checker.html5.org/ and https://html5.validator.nu)"
       url="https://validator.github.io/validator/"
