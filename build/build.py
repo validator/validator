@@ -266,6 +266,7 @@ def extrasJarPaths():
 
 
 def dependencyJarPaths():
+    extrasDir = os.path.join(buildRoot, "extras")
     pathList = findFilesWithExtension(dependencyDir, "jar")
     for jar in ["saxon9.jar", "isorelax.jar"]:
         pathList += [os.path.join(jingTrangDir, "lib", jar)]
@@ -1572,10 +1573,13 @@ def updateSubmodulesShallow():
 
 
 def downloadExtras():
-    runCmd([antCmd,
-            "-DextrasDir=" + extrasDir,
-            "-f", os.path.join(buildRoot, "build", "build.xml"),
-            "dl-extras"])
+    url = "https://repo1.maven.org/maven2/log4j/apache-log4j-extras/1.2.17/apache-log4j-extras-1.2.17.jar"  # nopep8
+    md5sum = "f32ed7ae770c83a4ac6fe6714f98f1bd"
+    extrasDir = os.path.join(buildRoot, "extras")
+    ensureDirExists(extrasDir)
+    path = os.path.join(extrasDir, url[url.rfind("/") + 1:])
+    if not os.path.exists(path):
+        fetchUrlTo(url, path, md5sum)
 
 
 def downloadDependencies():
