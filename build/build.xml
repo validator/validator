@@ -39,10 +39,10 @@ DEALINGS IN THE SOFTWARE.
   <property name="artifactId" value="validator" />
   <property name="src" location="../src" />
   <property name="javadoc-dir" value="${dist}/javadoc" />
-  <property name="validator-jar" value="${dist}/${artifactId}-${version}.jar" />
-  <property name="validator-javadoc-jar" value="${dist}/${artifactId}-${version}-javadoc.jar" />
-  <property name="validator-sources-jar" value="${dist}/${artifactId}-${version}-sources.jar" />
-  <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version}-bundle.jar" />
+  <property name="validator-jar" value="${dist}/${artifactId}-${version.number}.jar" />
+  <property name="validator-javadoc-jar" value="${dist}/${artifactId}-${version.number}-javadoc.jar" />
+  <property name="validator-sources-jar" value="${dist}/${artifactId}-${version.number}-sources.jar" />
+  <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version.number}-bundle.jar" />
   <property name="commons-codec-version" value="1.15" />
   <property name="commons-fileupload-version" value="2.0.0-M2" />
   <property name="commons-io-version" value="2.15.1" />
@@ -436,7 +436,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="${jetty-version}"/>
       <dependency groupId="org.glassfish" artifactId="javax.json" version="1.1.4"/>
     </artifact:pom>
-    <artifact:writepom pomRefId="pom" file="${dist}/validator-${version}.pom"/>
+    <artifact:writepom pomRefId="pom" file="${dist}/validator-${version.number}.pom"/>
     <jar destfile="${validator-jar}" duplicate="preserve">
       <zipfileset src="../jars/validator.jar"/>
       <manifest>
