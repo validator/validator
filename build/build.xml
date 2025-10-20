@@ -44,6 +44,9 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator-sources-jar" value="${dist}/${artifactId}-${version.number}-sources.jar" />
   <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version.number}-bundle.jar" />
 
+  <property name="validator.param.pageTemplate" value="site/PageEmitter.xml"/>
+  <property name="validator.param.formTemplate" value="site/FormEmitter.xml"/>
+
   <echo>Version is set to ${version}</echo>
 
   <!-- Delete file and parent folder if it became empty -->
@@ -439,12 +442,12 @@ DEALINGS IN THE SOFTWARE.
            />
     <java classpath="${validator.build.basedir}/saxCompiler/classes"
           classname="nu.validator.xml.SaxCompiler">
-      <arg file="${validator.basedir}/site/PageEmitter.xml"/>
+      <arg file="${validator.param.pageTemplate}"/>
       <arg file="${validator.basedir}/src/nu/validator/servlet/PageEmitter.java"/>
     </java>
     <java classpath="${validator.build.basedir}/saxCompiler/classes"
           classname="nu.validator.xml.SaxCompiler">
-      <arg file="${validator.basedir}/site/FormEmitter.xml"/>
+      <arg file="${validator.param.formTemplate}"/>
       <arg file="${validator.basedir}/src/nu/validator/servlet/FormEmitter.java"/>
     </java>
   </target>

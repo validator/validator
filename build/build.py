@@ -827,6 +827,8 @@ class Release():
         self.setVersion(whichDir, url)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Dvalidator.param.formTemplate=' + formTemplate,
+                '-Dvalidator.param.pageTemplate=' + pageTemplate,
                 '-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
@@ -838,6 +840,8 @@ class Release():
         self.sign(distDir)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Dvalidator.param.formTemplate=' + formTemplate,
+                '-Dvalidator.param.pageTemplate=' + pageTemplate,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
@@ -854,6 +858,8 @@ class Release():
         self.setVersion(whichDir)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Dvalidator.param.formTemplate=' + formTemplate,
+                '-Dvalidator.param.pageTemplate=' + pageTemplate,
                 '-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, jarOrWar])
