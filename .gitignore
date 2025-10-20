@@ -19,5 +19,3 @@ extras/
 dist/
 jars/
 local-entities/
-src/nu/validator/servlet/FormEmitter.java
-src/nu/validator/servlet/PageEmitter.java
