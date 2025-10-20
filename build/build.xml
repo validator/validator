@@ -48,8 +48,11 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator.param.formTemplate" value="site/FormEmitter.xml"/>
   <property name="validator.param.pageTemplate" value="site/PageEmitter.xml"/>
   <property name="validator.param.presetsFile" value="resources/presets.txt"/>
+  <property name="validator.param.resultsTitle" value="Validation results"/>
   <property name="validator.param.scriptFile" value="site/script.js"/>
+  <property name="validator.param.serviceName" value="Validator.nu"/>
   <property name="validator.param.stylesheetFile" value="site/style.css"/>
+  <property name="validator.param.userAgent" value="Validator.nu/LV"/>
 
   <echo>Version is set to ${version}</echo>
 
@@ -845,6 +848,13 @@ DEALINGS IN THE SOFTWARE.
     <local name="filesDir"/>
     <property name="filesDir" value="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
     <mkdir dir="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
+
+    <propertyfile file="${filesDir}/misc.properties">
+      <entry key="nu.validator.servlet.service-name" value="${validator.param.serviceName}"/>
+      <entry key="nu.validator.servlet.results-title" value="${validator.param.resultsTitle}"/>
+      <entry key="nu.validator.servlet.version" value="${version}"/>
+      <entry key="nu.validator.servlet.user-agent" value="${validator.param.userAgent}"/>
+    </propertyfile>
 
     <echo file="${filesDir}/version">${version}</echo>
 
