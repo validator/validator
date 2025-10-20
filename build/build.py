@@ -736,27 +736,6 @@ def realclean():
     buildFilesToCleanup.append(os.path.join(buildRoot, "jars.tar.gz"))
     buildFilesToCleanup.append(os.path.join(buildRoot, "deps.tar.gz"))
 
-    buildFilesToCleanup.append(os.path.join(filesDir, "html5spec"))
-
-    buildFilesToCleanup.append(os.path.join(filesDir, "misc.properties"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "presets"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "about.html"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "style.css"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "script.js"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "icon.png"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "syntax-descriptions"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "language-profiles-list.txt"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "vnu-alt-advice"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "subtag-registry"))
-    removeIfDirExists(os.path.join(filesDir, "language-profiles"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "log4j.properties"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "usage"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "cli-help"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "entitymap"))
-    buildFilesToCleanup.append(os.path.join(filesDir, "schema_*"))
-    for aFile in glob.glob(os.path.join(filesDir, "schema_*")):
-        buildFilesToCleanup.append(aFile)
-
     for aFile in buildFilesToCleanup:
         try:
             os.remove(aFile)
