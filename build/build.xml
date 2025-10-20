@@ -391,6 +391,7 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="${jarsDir}/langdetect.jar"/>
     <pathelement location="jing-trang/build/jing.jar"/>
   </path>
+
   <target name="validator-prepare" depends="dl-entities, localentities-build">
     <mkdir dir="${validator.build.basedir}/full/classes"/>
     <copy todir="${validator.build.basedir}/full/classes" preservelastmodified="true">
@@ -398,7 +399,14 @@ DEALINGS IN THE SOFTWARE.
         <exclude name="**/*.java" />
       </fileset>
     </copy>
+    <mkdir dir="${validator.build.basedir}/core/classes"/>
+    <copy todir="${validator.build.basedir}/core/classes" preservelastmodified="true">
+      <fileset dir="${validator.basedir}/src">
+        <exclude name="**/*.java" />
+      </fileset>
+    </copy>
   </target>
+
   <target name="validator-emitters" depends="validator-prepare">
     <mkdir dir="${validator.build.basedir}/saxCompiler/classes"/>
     <javac srcdir="${validator.basedir}/src"
@@ -443,6 +451,206 @@ DEALINGS IN THE SOFTWARE.
            release="${build.java.target.version}"
            />
   </target>
+
+  <target name="validator-split-core"
+          depends="validator-prepare,
+          validator-emitters,
+          css-validator-build,
+          galimatias-jar,
+          htmlparser-jar,
+          jing-build,
+          langdetect-jar,
+          dl-deps,
+          dl-deps-modules">
+    <javac srcdir="${validator.basedir}/src"
+           destdir="${validator.build.basedir}/core/classes"
+           classpathref="validator-split-core.classpath"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           >
+      <exclude name="**/servlet/Main.java" />
+    </javac>
+  </target>
+
+
+  <path id="validator-split-core.classpath">
+    <!-- This should be the same as validator.classpath but without jetty -->
+    <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
+    <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
+    <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
+    <fileset dir="${depsDir}/" includes="httpclient-${httpclient-version}.jar" />
+    <fileset dir="${depsDir}/" includes="httpcore-${httpcore-version}.jar" />
+    <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
+    <!-- Since core doesn't contain the jetty server, there should be no jetty* here except the servlet-api -->
+    <fileset dir="${depsDir}/" includes="log4j-${log4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="salvation-${salvation-version}.jar" />
+    <pathelement location="css-validator/css-validator.jar"/>
+    <pathelement location="${jarsDir}/galimatias.jar"/>
+    <pathelement location="${jarsDir}/htmlparser.jar"/>
+    <pathelement location="${jarsDir}/langdetect.jar"/>
+    <pathelement location="jing-trang/build/jing.jar"/>
+  </path>
+
+  <path id="validator-split-core.runtime.classpath">
+    <!-- The ones required for a simple run of vnu-core.jar -->
+    <fileset dir="${depsDir}/" includes="commons-logging-${commons-logging-version}.jar" />
+    <fileset dir="${depsDir}/" includes="commons-logging-${commons-logging-version}-adaptesr.jar" />
+    <fileset dir="${depsDir}/" includes="commons-logging-${commons-logging-version}-api.jar" />
+  </path>
+
+  <target name="validator-split-core-jar" depends="validator-split-core">
+    <jar destfile="${validator.build.basedir}/vnu-core.jar"
+         basedir="${validator.build.basedir}/core/classes"
+         >
+      <manifest>
+        <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
+        <attribute name="Implementation-Title" value="Core &amp; CLI of The Nu Markup Checker (v.Nu)"/>
+        <attribute name="Implementation-Version" value="${version}"/>
+        <attribute name="Implementation-Vendor" value="http://validator.github.io/validator/"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="validator-split-core-jar-run" depends="validator-split-core-jar">
+    <tempfile property="temp.html.file" destdir="${validator.build.basedir}" prefix="minDoc" suffix=".html" deleteonexit="true"/>
+    <echo file="${temp.html.file}">
+      &lt;!doctype html&gt;&lt;html lang=""&gt;&lt;meta charset=utf-8&gt;&lt;title&gt;test&lt;/title&gt;
+    </echo>
+    <java classname="nu.validator.client.SimpleCommandLineValidator" fork="true" failonerror="true">
+      <classpath>
+        <path refid="validator-split-core.classpath"/>
+        <path refid="validator-split-core.runtime.classpath"/>
+        <path location="${validator.build.basedir}/vnu-core.jar"/>
+      </classpath>
+      <arg value="--verbose"/>
+      <arg value="${temp.html.file}"/>
+    </java>
+  </target>
+
+
+  <path id="validator-split-server.classpath">
+    <fileset dir="${depsDir}/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-server-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-servlet-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="log4j-${log4j-version}.jar" />
+    <pathelement path="${validator.build.basedir}/core/classes/"/>
+  </path>
+
+  <path id="validator-split-server.runtime.classpath">
+    <!-- The ones required for a simple run of vnu-server.jar -->
+    <pathelement location="${depsDir}/jetty-http-${jetty-version}.jar" />
+    <pathelement location="${depsDir}/jetty-io-${jetty-version}.jar" />
+    <pathelement location="${depsDir}/jetty-security-${jetty-version}.jar" />
+    <pathelement location="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
+    <pathelement location="${depsDir}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
+  </path>
+
+  <target name="validator-split-server"
+          depends="validator-split-core, dl-deps-jetty">
+    <mkdir dir="${validator.build.basedir}/server/classes"/>
+    <javac srcdir="${validator.basedir}/src"
+           destdir="${validator.build.basedir}/server/classes"
+           classpathref="validator-split-server.classpath"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           >
+        <include name="**/servlet/Main.java" />
+      </javac>
+  </target>
+
+  <target name="validator-split-server-jar" depends="validator-split-server">
+    <jar destfile="${validator.build.basedir}/vnu-server.jar"
+         basedir="${validator.build.basedir}/server/classes"
+         >
+      <manifest>
+        <attribute name="Main-Class" value="nu.validator.servlet.Main"/>
+        <attribute name="Implementation-Title" value="Standalone server of The Nu Markup Checker (v.Nu)"/>
+        <attribute name="Implementation-Version" value="${version}"/>
+        <attribute name="Implementation-Vendor" value="http://validator.github.io/validator/"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="validator-split-server-jar-run" depends="validator-split-server-jar">
+    <java classname="nu.validator.servlet.Main" fork="true" failonerror="true">
+      <classpath>
+        <path refid="validator-split-server.classpath"/>
+        <path refid="validator-split-server.runtime.classpath"/>
+        <path refid="validator-split-core.classpath"/>
+        <path refid="validator-split-core.runtime.classpath"/>
+        <path refid="validator.classpath"/>
+        <path location="${validator.build.basedir}/vnu-server.jar"/>
+      </classpath>
+    </java>
+  </target>
+
+
+  <target name="validator-split-client">
+    <mkdir dir="${validator.build.basedir}/client/classes"/>
+    <javac srcdir="${validator.basedir}/src"
+           destdir="${validator.build.basedir}/client/classes"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           >
+      <include name="nu/validator/client/HttpClient.java" />
+    </javac>
+  </target>
+
+  <target name="validator-split-client-jar" depends="validator-split-client">
+    <jar destfile="${validator.build.basedir}/vnu-client.jar"
+         basedir="${validator.build.basedir}/client/classes"
+         >
+      <manifest>
+        <attribute name="Main-Class" value="nu.validator.client.HttpClient"/>
+        <attribute name="Implementation-Title" value="HTTP Client for The Nu Markup Checker (v.Nu)"/>
+        <attribute name="Implementation-Version" value="${version}"/>
+        <attribute name="Implementation-Vendor" value="http://validator.github.io/validator/"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="validator-split-client-jar-run" depends="validator-split-client-jar">
+    <tempfile property="temp.html.file" destdir="${validator.build.basedir}" prefix="minDoc" suffix=".html" deleteonexit="true"/>
+    <echo file="${temp.html.file}">
+      &lt;!doctype html&gt;&lt;html lang=""&gt;&lt;meta charset=utf-8&gt;&lt;title&gt;test&lt;/title&gt;
+    </echo>
+    <java jar="${validator.build.basedir}/vnu-client.jar" fork="true" failonerror="true">
+<!--       <sysproperty key="nu.validator.client.port" value="8080"/> -->
+<!--       <sysproperty key="nu.validator.client.path" value="/vnu"/> -->
+      <arg value="${temp.html.file}"/>
+    </java>
+  </target>
+
+  <target name="validator-merge-split" depends="validator-split-core, validator-split-client, validator-split-server">
+    <delete dir="${validator.build.basedir}/merged-split"/>
+    <mkdir dir="${validator.build.basedir}/merged-split"/>
+    <copy todir="${validator.build.basedir}/merged-split">
+      <fileset dir="${validator.build.basedir}/core"/>
+      <fileset dir="${validator.build.basedir}/client"/>
+      <fileset dir="${validator.build.basedir}/server"/>
+    </copy>
+  </target>
+
+  <target name="validator-compare-full-and-merged-split" depends="validator-merge-split, validator-build">
+    <exec osfamily="unix" executable="diff" failonerror="true">
+      <arg value="-r"></arg>
+      <arg value="${validator.build.basedir}/full"></arg>
+      <arg value="${validator.build.basedir}/merged-split"></arg>
+    </exec>
+  </target>
+
   <target name="validator-clean">
     <delete dir="${validator.build.basedir}"/>
     <delete file="${jarsDir}/validator.jar"/>
