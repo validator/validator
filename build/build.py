@@ -830,8 +830,12 @@ class Release():
         self.setVersion(whichDir, url)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Dvalidator.param.aboutFile=' + aboutFile,
                 '-Dvalidator.param.formTemplate=' + formTemplate,
                 '-Dvalidator.param.pageTemplate=' + pageTemplate,
+                '-Dvalidator.param.presetsFile=' + presetsFile,
+                '-Dvalidator.param.scriptFile=' + scriptFile,
+                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
                 '-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
@@ -843,8 +847,12 @@ class Release():
         self.sign(distDir)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Dvalidator.param.aboutFile=' + aboutFile,
                 '-Dvalidator.param.formTemplate=' + formTemplate,
                 '-Dvalidator.param.pageTemplate=' + pageTemplate,
+                '-Dvalidator.param.presetsFile=' + presetsFile,
+                '-Dvalidator.param.scriptFile=' + scriptFile,
+                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
 
@@ -861,8 +869,12 @@ class Release():
         self.setVersion(whichDir)
         runCmd([antCmd,
                 '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Dvalidator.param.aboutFile=' + aboutFile,
                 '-Dvalidator.param.formTemplate=' + formTemplate,
                 '-Dvalidator.param.pageTemplate=' + pageTemplate,
+                '-Dvalidator.param.presetsFile=' + presetsFile,
+                '-Dvalidator.param.scriptFile=' + scriptFile,
+                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
                 '-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml, jarOrWar])
@@ -1434,31 +1446,6 @@ def preparePropertiesFile():
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
     preparePropertiesFile()
-    with open(os.path.join(filesDir, "version"), "w", encoding="utf-8") as f:
-        f.write(validatorVersion + "\n")
-    shutil.copyfile(os.path.join(buildRoot, presetsFile),
-                    os.path.join(filesDir, "presets"))
-    shutil.copyfile(os.path.join(buildRoot, aboutFile),
-                    os.path.join(filesDir, "about.html"))
-    shutil.copyfile(os.path.join(buildRoot, stylesheetFile),
-                    os.path.join(filesDir, "style.css"))
-    shutil.copyfile(os.path.join(buildRoot, scriptFile),
-                    os.path.join(filesDir, "script.js"))
-    shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"),
-                    os.path.join(filesDir, "icon.png"))
-    shutil.copyfile(os.path.join(buildRoot, "docs", "wiki", "Microsyntax-descriptions.md"),  # nopep8
-                    os.path.join(filesDir, "syntax-descriptions"))
-    shutil.copyfile(os.path.join(buildRoot, "resources", "language-profiles-list.txt"),  # nopep8
-                    os.path.join(filesDir, "language-profiles-list.txt"))
-    shutil.copyfile(os.path.join(buildRoot, "resources", "alt_advice.html"),
-                    os.path.join(filesDir, "vnu-alt-advice"))
-    shutil.copyfile(os.path.join(buildRoot, "resources", "language-subtag-registry.txt"),  # nopep8
-                    os.path.join(filesDir, "subtag-registry"))
-    languageProfilesTargetDir = os.path.join(filesDir, "language-profiles")
-    removeIfDirExists(languageProfilesTargetDir)
-    shutil.copytree(os.path.join(buildRoot, "resources", "language-profiles"), languageProfilesTargetDir)  # nopep8
-    shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"),
-                    os.path.join(filesDir, "log4j.properties"))
     makeUsage()
     makeCliHelp()
     f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))

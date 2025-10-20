@@ -44,8 +44,12 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator-sources-jar" value="${dist}/${artifactId}-${version.number}-sources.jar" />
   <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version.number}-bundle.jar" />
 
-  <property name="validator.param.pageTemplate" value="site/PageEmitter.xml"/>
+  <property name="validator.param.aboutFile" value="site/about.html"/>
   <property name="validator.param.formTemplate" value="site/FormEmitter.xml"/>
+  <property name="validator.param.pageTemplate" value="site/PageEmitter.xml"/>
+  <property name="validator.param.presetsFile" value="resources/presets.txt"/>
+  <property name="validator.param.scriptFile" value="site/script.js"/>
+  <property name="validator.param.stylesheetFile" value="site/style.css"/>
 
   <echo>Version is set to ${version}</echo>
 
@@ -838,6 +842,32 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
   <target name="localentities-build" depends="schema-drivers-build">
+    <local name="filesDir"/>
+    <property name="filesDir" value="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
+    <mkdir dir="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
+
+    <echo file="${filesDir}/version">${version}</echo>
+
+    <copy file="${validator.param.aboutFile}" tofile="${filesDir}/about.html"/>
+    <copy file="${validator.param.presetsFile}" tofile="${filesDir}/presets"/>
+    <copy file="${validator.param.scriptFile}" tofile="${filesDir}/script.js"/>
+    <copy file="${validator.param.stylesheetFile}" tofile="${filesDir}/style.css"/>
+    <copy file="${validator.basedir}/docs/wiki/Microsyntax-descriptions.md" tofile="${filesDir}/syntax-descriptions"/>
+    <copy file="${validator.basedir}/resources/alt_advice.html" tofile="${filesDir}/vnu-alt-advice"/>
+    <copy file="${validator.basedir}/resources/language-subtag-registry.txt" tofile="${filesDir}/subtag-registry"/>
+
+    <copy todir="${filesDir}" preservelastmodified="true" flatten="true">
+      <fileset dir="${validator.basedir}">
+        <include name="site/icon.png"/>
+        <include name="resources/language-profiles-list.txt"/>
+        <include name="resources/log4j.properties"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${filesDir}/language-profiles" preservelastmodified="true" flatten="true">
+      <fileset dir="resources/language-profiles"/>
+    </copy>
+
     <exec executable="${python-executable}" failonerror="true" failifexecutionfails="true">
       <env key="JAVA_HOME" value="${java.home}"/>
       <arg file="build/build.py"/>
