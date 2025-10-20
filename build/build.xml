@@ -421,7 +421,7 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="jing-trang/build/jing.jar"/>
   </path>
 
-  <target name="validator-prepare" depends="dl-entities, localentities-build">
+  <target name="validator-prepare" depends="dl-entities, validator-resources">
     <mkdir dir="${validator.build.basedir}/full/classes"/>
     <copy todir="${validator.build.basedir}/full/classes" preservelastmodified="true">
       <fileset dir="${validator.basedir}/src">
@@ -836,7 +836,7 @@ DEALINGS IN THE SOFTWARE.
     </exec>
   </target>
 
-  <target name="localentities-build">
+  <target name="validator-resources">
     <local name="filesDir"/>
     <property name="filesDir" value="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
     <mkdir dir="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
