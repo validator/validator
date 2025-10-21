@@ -726,8 +726,7 @@ def generateRunScript():
 def clean():
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
-    removeIfDirExists(os.path.join(buildRoot, "build", "schema"))
-    removeIfDirExists(os.path.join(buildRoot, "build", "validator"))
+    runCmd([antCmd, '-f', os.path.join(buildRoot, "build", "build.xml"), 'validator-clean'])
 
 
 def realclean():
