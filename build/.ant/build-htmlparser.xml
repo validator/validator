@@ -81,11 +81,11 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.basedir}/build/classes"/>
   </target>
 
-  <target name="htmlparser-javadoc-jar">
+  <target name="htmlparser-javadoc-jar" depends="htmlparser-process-sources">
     <javadoc destdir="${javadoc-dir}"
              additionalparam="-html5 -Xdoclint:none"
              classpathref="htmlparser.classpath">
-      <fileset dir="${htmlparser-src}">
+      <fileset dir="${htmlparser.build.basedir}/realsrc">
         <include name="**/*.java"/>
         <exclude name="nu/validator/htmlparser/xom/**"/>
       </fileset>
@@ -95,9 +95,9 @@ DEALINGS IN THE SOFTWARE.
     </jar>
     <delete dir="${javadoc-dir}"/>
   </target>
-  <target name="htmlparser-sources-jar">
+  <target name="htmlparser-sources-jar" depends="htmlparser-process-sources">
     <jar destfile="${htmlparser-sources-jar}">
-      <fileset dir="${htmlparser-src}"/>
+      <fileset dir="${htmlparser.build.basedir}/realsrc"/>
     </jar>
   </target>
 
