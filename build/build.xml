@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="dist" location="build/dist" />
   <property name="jarsDir" location="jars" />
   <property name="depsDir" location="dependencies" />
+  <property name="version" value="nightly-${DSTAMP}" />
   <loadresource property="version.number">
     <string value="${version}"/>
     <filterchain>
@@ -34,7 +35,6 @@ DEALINGS IN THE SOFTWARE.
     </filterchain>
   </loadresource>
   <property name="build.java.target.version" value="8" />
-  <property name="version" value="nightly-${DSTAMP}" />
   <property name="groupId" value="nu.validator" />
   <property name="artifactId" value="validator" />
   <property name="src" location="src" />
