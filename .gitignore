@@ -6,6 +6,9 @@ build/__pycache__/
 build/build.pyc
 build/dist
 build/dist-war
+build/galimatias
+build/htmlparser
+build/langdetect
 build/schema
 build/vnu*.jar.zip
 build/vnu*.war.zip

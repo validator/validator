@@ -28,14 +28,16 @@ DEALINGS IN THE SOFTWARE.
   <property name="galimatias-bundle-jar" value="${galimatias-base}-bundle.jar" />
 
   <property name="galimatias.basedir" location="galimatias" />
+  <property name="galimatias.build.basedir" location="build/galimatias" />
+
   <path id="galimatias.classpath">
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
   </path>
 
   <target name="galimatias-build" depends="dl-deps, dl-deps-modules">
-    <mkdir dir="${galimatias.basedir}/classes"/>
+    <mkdir dir="${galimatias.build.basedir}/classes"/>
     <javac srcdir="${galimatias.basedir}/src/main/java"
-           destdir="${galimatias.basedir}/classes"
+           destdir="${galimatias.build.basedir}/classes"
            classpathref="galimatias.classpath"
            debug="true"
            encoding="UTF-8"
@@ -46,13 +48,12 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
   <target name="galimatias-clean">
-    <delete dir="${galimatias.basedir}/classes"/>
-    <delete dir="${galimatias.basedir}/dist"/>
+    <delete dir="${galimatias.build.basedir}"/>
     <deleteFileWithEmptyParent file="${jarsDir}/galimatias.jar"/>
   </target>
 
   <target name="galimatias-jar" depends="galimatias-build">
-    <jar destfile="${jarsDir}/galimatias.jar" basedir="${galimatias.basedir}/classes"/>
+    <jar destfile="${jarsDir}/galimatias.jar" basedir="${galimatias.build.basedir}/classes"/>
   </target>
 
   <target name="galimatias-javadoc-jar">
