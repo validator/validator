@@ -617,6 +617,7 @@ public class SimpleCommandLineValidator {
             otherOut.println("");
             for (int b = help.read(); b != -1; b = help.read()) {
                 otherOut.write(b);
+                otherOut.flush();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -629,6 +630,7 @@ public class SimpleCommandLineValidator {
             otherOut.println("");
             for (int b = help.read(); b != -1; b = help.read()) {
                 otherOut.write(b);
+                otherOut.flush();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -640,6 +642,7 @@ public class SimpleCommandLineValidator {
                 "nu/validator/localentities/files/version")) {
             for (int b = version.read(); b != -1; b = version.read()) {
                 otherOut.write(b);
+                otherOut.flush();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
