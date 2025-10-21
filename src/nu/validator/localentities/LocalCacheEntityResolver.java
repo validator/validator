@@ -1,6 +1,8 @@
 package nu.validator.localentities;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -44,10 +46,20 @@ public class LocalCacheEntityResolver implements EntityResolver {
         return LOADER.getResourceAsStream("nu/validator/localentities/files/presets");
     }
 
-    public static InputStream getHtml5SpecAsStream() {
-        return LOADER.getResourceAsStream("nu/validator/localentities/files/html5spec");
+    public static InputStream getHtml5SpecAsStream(String resourceName) {
+        return LOADER.getResourceAsStream(resourceName);
     }
     
+    public static InputStream getHtml5SpecAsStream(File file) {
+        try {
+            InputStream fis = new FileInputStream(file);
+            return fis;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private EntityResolver delegate;
 
     private boolean allowRnc = false;

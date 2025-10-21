@@ -426,11 +426,20 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             List<String> labels = new LinkedList<>();
             List<String> urls = new LinkedList<>();
             Properties props = new Properties();
+            Properties props2 = new Properties();
 
             log4j.debug("Reading miscellaneous properties.");
 
             props.load(VerifierServlet.class.getClassLoader().getResourceAsStream(
                     "nu/validator/localentities/files/misc.properties"));
+
+            try(InputStream fis = new FileInputStream("vnu.properties")) {
+                props2.load(fis);
+            } catch(IOException e) {
+                log4j.debug("Optional vnu.properties file not found.");
+            }
+            props.putAll(props2);
+
             SERVICE_TITLE = (System.getProperty(
                     "nu.validator.servlet.service-name",
                     props.getProperty("nu.validator.servlet.service-name",
@@ -582,9 +591,27 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
             log4j.debug("Reading spec.");
 
-            html5spec = Html5SpecBuilder.parseSpec(LocalCacheEntityResolver.getHtml5SpecAsStream());
+            long startTime = System.currentTimeMillis();
+            String html5Load = props.getProperty("nu.validator.spec.html5-load");
+            Boolean useBuiltinSpec = false;
+            if (html5Load != null) {
+                log4j.debug("Trying external spec at: " + html5Load);
+                File html5file = new File(html5Load);
+                try {
+                    html5spec = Html5SpecBuilder.parseSpec(LocalCacheEntityResolver.getHtml5SpecAsStream(html5file));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    log4j.debug("Failed...");
+                    useBuiltinSpec = true;
+                }
+            }
+            if (html5Load == null || useBuiltinSpec == true) {
+                log4j.debug("Trying built-in spec");
+                html5spec = Html5SpecBuilder.parseSpec(LocalCacheEntityResolver.getHtml5SpecAsStream("nu/validator/localentities/files/html5spec"));
+            }
+            long endTime = System.currentTimeMillis();
 
-            log4j.debug("Spec read.");
+            log4j.debug("Spec read in " + (endTime - startTime) + " milliseconds.");
 
             if (new File(FILTER_FILE).isFile()) {
                 log4j.debug("Reading filter file " + FILTER_FILE);
