@@ -28,14 +28,16 @@ DEALINGS IN THE SOFTWARE.
   <property name="langdetect-bundle-jar" value="${langdetect-base}-bundle.jar" />
 
   <property name="langdetect.basedir" location="langdetect" />
+  <property name="langdetect.build.basedir" location="build/langdetect" />
+
   <path id="langdetect.classpath">
     <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
   </path>
 
   <target name="langdetect-build" depends="dl-deps, dl-deps-modules">
-    <mkdir dir="${langdetect.basedir}/classes"/>
+    <mkdir dir="${langdetect.build.basedir}/classes"/>
     <javac srcdir="${langdetect.basedir}/src"
-           destdir="${langdetect.basedir}/classes"
+           destdir="${langdetect.build.basedir}/classes"
            classpathref="langdetect.classpath"
            debug="true"
            encoding="UTF-8"
@@ -46,14 +48,13 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
   <target name="langdetect-clean">
-    <delete dir="${langdetect.basedir}/classes"/>
-    <delete dir="${langdetect.basedir}/dist"/>
+    <delete dir="${langdetect.build.basedir}"/>
     <deleteFileWithEmptyParent file="${jarsDir}/langdetect.jar"/>
   </target>
 
   <target name="langdetect-jar" depends="langdetect-build">
-    <copy file="${langdetect.basedir}/src/com/cybozu/labs/langdetect/util/messages.properties" todir="${langdetect.basedir}/classes/com/cybozu/labs/langdetect/util"/>
-      <jar destfile="${jarsDir}/langdetect.jar" basedir="${langdetect.basedir}/classes"/>
+    <copy file="${langdetect.basedir}/src/com/cybozu/labs/langdetect/util/messages.properties" todir="${langdetect.build.basedir}/classes/com/cybozu/labs/langdetect/util"/>
+      <jar destfile="${jarsDir}/langdetect.jar" basedir="${langdetect.build.basedir}/classes"/>
   </target>
 
   <target name="langdetect-javadoc-jar">

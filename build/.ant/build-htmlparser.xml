@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="htmlparser-bundle-jar" value="${htmlparser-base}-bundle.jar" />
 
   <property name="htmlparser.basedir" location="htmlparser" />
+  <property name="htmlparser.build.basedir" location="build/htmlparser" />
 
   <path id="htmlparser.classpath">
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
@@ -36,9 +37,9 @@ DEALINGS IN THE SOFTWARE.
 
   <target name="htmlparser-initialize">
     <!-- copied over from htmlparser/pom.xml -->
-    <delete dir="${htmlparser.basedir}/build/realsrc"/>
-    <mkdir dir="${htmlparser.basedir}/build/realsrc"/>
-    <copy todir="${htmlparser.basedir}/build/realsrc" preservelastmodified="true">
+    <delete dir="${htmlparser.build.basedir}/realsrc"/>
+    <mkdir dir="${htmlparser.build.basedir}/realsrc"/>
+    <copy todir="${htmlparser.build.basedir}/realsrc" preservelastmodified="true">
       <fileset dir="${htmlparser.basedir}/src"/>
     </copy>
   </target>
@@ -46,21 +47,21 @@ DEALINGS IN THE SOFTWARE.
   <target name="htmlparser-process-sources" depends="htmlparser-initialize">
     <!-- copied over from htmlparser/pom.xml -->
     <property name="translator.sources" value="${htmlparser.basedir}/translator-src"/>
-    <property name="translator.classes" value="${htmlparser.basedir}/build/translator-classes"/>
+    <property name="translator.classes" value="${htmlparser.build.basedir}/translator-classes"/>
     <mkdir dir="${translator.classes}"/>
     <javac srcdir="${translator.sources}" includes="nu/validator/htmlparser/generator/ApplyHotSpotWorkaround.java" destdir="${translator.classes}" includeantruntime="false"/>
     <java classname="nu.validator.htmlparser.generator.ApplyHotSpotWorkaround">
       <classpath>
         <pathelement location="${translator.classes}"/>
       </classpath>
-      <arg value="${htmlparser.basedir}/build/realsrc/nu/validator/htmlparser/impl/Tokenizer.java"/>
-      <arg value="${htmlparser.basedir}/build/realsrc/nu/validator/htmlparser/impl/HotSpotWorkaround.txt"/>
+      <arg value="${htmlparser.build.basedir}/realsrc/nu/validator/htmlparser/impl/Tokenizer.java"/>
+      <arg value="${htmlparser.build.basedir}/realsrc/nu/validator/htmlparser/impl/HotSpotWorkaround.txt"/>
     </java>
   </target>
   <target name="htmlparser-build" depends="dl-deps, dl-deps-modules, htmlparser-process-sources">
-    <mkdir dir="${htmlparser.basedir}/build/classes"/>
+    <mkdir dir="${htmlparser.build.basedir}/classes"/>
     <javac srcdir="${htmlparser.basedir}/src"
-           destdir="${htmlparser.basedir}/build/classes"
+           destdir="${htmlparser.build.basedir}/classes"
            classpathref="htmlparser.classpath"
            debug="true"
            encoding="UTF-8"
@@ -72,13 +73,12 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
   <target name="htmlparser-clean">
-    <delete dir="${htmlparser.basedir}/build"/>
-    <delete dir="${htmlparser.basedir}/dist"/>
+    <delete dir="${htmlparser.build.basedir}"/>
     <deleteFileWithEmptyParent file="${jarsDir}/htmlparser.jar"/>
   </target>
 
   <target name="htmlparser-jar" depends="htmlparser-build">
-    <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.basedir}/build/classes"/>
+    <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.build.basedir}/classes"/>
   </target>
 
   <target name="htmlparser-javadoc-jar" depends="htmlparser-process-sources">
