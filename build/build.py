@@ -731,7 +731,6 @@ def clean():
 
 def realclean():
     clean()
-    removeIfDirExists(dependencyDir)
     runCmd([antCmd, '-f', os.path.join(buildRoot, "build", "build.xml"), 'distclean'])
 
     buildFilesToCleanup = []
