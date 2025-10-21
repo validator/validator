@@ -702,6 +702,7 @@ DEALINGS IN THE SOFTWARE.
 
   <target name="validator-javadoc-jar"
           depends="
+          validator-emitters,
           cssvalidator-build,
           galimatias-jar,
           htmlparser-jar,
@@ -712,7 +713,7 @@ DEALINGS IN THE SOFTWARE.
           dl-deps-jetty">
     <property name="javadoc-dir" value="${dist}/javadoc" />
     <javadoc destdir="${javadoc-dir}" additionalparam="-Xdoclint:none" classpathref="validator.classpath">
-      <fileset dir="${src}">
+      <fileset dir="${validator.basedir}/src">
         <exclude name="META-INF/**"/>
         <exclude name="nu/validator/datatype/data/encodings.json"/>
         <exclude name="nu/validator/datatype/data/generate-encoding-data.py"/>
@@ -722,15 +723,17 @@ DEALINGS IN THE SOFTWARE.
         <exclude name="nu/validator/gnu/xml/aelfred2/package.html"/>
         <exclude name="nu/validator/localentities/files/**"/>
       </fileset>
+      <fileset dir="${validator.build.basedir}/builtSrc"/>
     </javadoc>
     <jar destfile="${validator-javadoc-jar}">
       <fileset dir="${javadoc-dir}" />
     </jar>
     <delete dir="${javadoc-dir}"/>
   </target>
-  <target name="validator-sources-jar">
+  <target name="validator-sources-jar" depends="validator-emitters">
     <jar destfile="${validator-sources-jar}">
-      <fileset dir="${src}"/>
+      <fileset dir="${validator.basedir}/src"/>
+      <fileset dir="${validator.build.basedir}/builtSrc"/>
     </jar>
   </target>
   <target name="validator-artifacts" depends="dl-deps-antlib, validator-jar, validator-javadoc-jar, validator-sources-jar">
