@@ -726,6 +726,8 @@ def generateRunScript():
 def clean():
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
+    removeIfDirExists(os.path.join(buildRoot, "build", "schema"))
+    removeIfDirExists(os.path.join(buildRoot, "build", "validator"))
 
 
 def realclean():
