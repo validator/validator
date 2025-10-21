@@ -71,6 +71,8 @@ mvnCmd = 'mvn'
 gpgCmd = 'gpg'
 npmCmd = 'npm'
 antCmd = 'ant'
+antCommonArgs = []
+offline = False
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'  # nopep8
@@ -726,12 +728,12 @@ def generateRunScript():
 def clean():
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
-    runCmd([antCmd, '-f', os.path.join(buildRoot, "build", "build.xml"), 'validator-clean'])
+    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot, "build", "build.xml"), 'validator-clean'])
 
 
 def realclean():
     clean()
-    runCmd([antCmd, '-f', os.path.join(buildRoot, "build", "build.xml"), 'distclean'])
+    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot, "build", "build.xml"), 'distclean'])
 
     buildFilesToCleanup = []
     buildFilesToCleanup.append(os.path.join(buildRoot, "run-validator.sh"))
@@ -827,7 +829,7 @@ class Release():
             distJarOrWar = "build/dist-war"
         self.reInitDistDir(whichDir)
         self.setVersion(whichDir, url)
-        runCmd([antCmd,
+        runCmd([antCmd] + antCommonArgs + [
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Dvalidator.param.aboutFile=' + aboutFile,
                 '-Dvalidator.param.formTemplate=' + formTemplate,
@@ -847,7 +849,7 @@ class Release():
         print("Building %s/%s-%s-bundle.jar" %
               (distDir, self.artifactId, self.version))
         self.sign(distDir)
-        runCmd([antCmd,
+        runCmd([antCmd] + antCommonArgs + [
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Dvalidator.param.aboutFile=' + aboutFile,
                 '-Dvalidator.param.formTemplate=' + formTemplate,
@@ -872,7 +874,7 @@ class Release():
             os.mkdir(os.path.join(whichDir, "war"))
         self.reInitDistDir(whichDir)
         self.setVersion(whichDir)
-        runCmd([antCmd,
+        runCmd([antCmd] + antCommonArgs + [
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Dvalidator.param.aboutFile=' + aboutFile,
                 '-Dvalidator.param.formTemplate=' + formTemplate,
@@ -1517,7 +1519,10 @@ def zipExtract(zipArch, targetDir):
 
 
 def updateSubmodules():
-    runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge', '--init'])
+    if offline:
+        runCmd([gitCmd, 'submodule', 'update', '--merge', '--init'])
+    else:
+        runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge', '--init'])
 
 
 def updateSubmodulesShallow():
@@ -1534,7 +1539,7 @@ def downloadExtras():
 
 
 def downloadDependencies():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "dl-all"])
+    runCmd([antCmd] + antCommonArgs + ["-f", os.path.join(buildRoot, "build", "build.xml"), "dl-all"])
     downloadExtras()
 
 
@@ -1599,6 +1604,8 @@ def printHelp():
     print("                                Defaults to \"style.css\" relative")
     print("                                to the validator URL")
     print("  --user-agent                  Sets User-Agent string for checker")
+    print("  --offline                  -- Build offline. Needs prior download")
+    print("                                of the dependencies with 'dldeps'.")
     print("")
     print("Tasks:")
     print("  update   -- Update git submodules")
@@ -1624,7 +1631,8 @@ def main(argv):
         scriptFile, filterFile, allowedAddressType, disablePromiscuousSsl, extrasDir, \
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
-        jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties
+        jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties, \
+        offline
     if len(argv) == 0:
         printHelp()
     else:
@@ -1671,6 +1679,10 @@ def main(argv):
                 javadocCmd = arg[10:]
             elif arg.startswith("--ant="):
                 antCmd = arg[6:]
+            elif arg == '--offline':
+                # Run ant without internet
+                antCommonArgs.append('-Doffline=true')
+                offline = True
             elif arg.startswith("--jdk-bin="):
                 jdkBinDir = arg[10:]
                 javaCmd = os.path.join(jdkBinDir, "java")

@@ -20,6 +20,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-validator" basedir=".." default="build"
+  xmlns:if="ant:if"
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <tstamp/>
   <property name="dist" location="build/dist" />
@@ -57,6 +58,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator.param.userAgent" value="Validator.nu/LV"/>
 
   <echo>Version is set to ${version}</echo>
+  <echo if:true="${offline}">Building in offline mode as requested (assuming you already have all dependencies).</echo>
 
   <!-- Delete file and parent folder if it became empty -->
   <macrodef name="deleteFileWithEmptyParent">
