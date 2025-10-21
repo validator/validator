@@ -16,11 +16,11 @@ build/validator*.jar
 build/validator/
 build/VERSION
 build/.gradle
-run-validator.sh
 dependencies/
 deps.tar.gz
-extras/
 dist/
+extras/
 jars.tar.gz
 jars/
 local-entities/
+run-validator.sh
