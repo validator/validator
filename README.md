@@ -204,6 +204,17 @@ Follow the steps below to build, test, and run the vnu checker such that you can
 
 The first time you run the `checker.py` Python script, you’ll need to be online and the build will need time to download several megabytes of dependencies.
 
+Alternatively, if you wish to first download all dependencies, and build later when **offline**:
+
+1. Use the `dldeps` task to download
+
+        python ./checker.py dldeps
+
+1. For all operations when offline, use the `--offline` option (place it before the task name)
+
+        python ./checker.py --offline all
+
+
 The steps above will build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
 
 > [!WARNING]
