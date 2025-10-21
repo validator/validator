@@ -40,11 +40,13 @@ jobs:
       - name: Install dependencies
         run: python checker.py dldeps
       - name: Build
+        shell: bash
         run: |
-          python checker.py build
-          python checker.py jar
-          python checker.py image
-          python checker.py war
+          version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
+          python checker.py --version="$version" build
+          python checker.py --version="$version" jar
+          python checker.py --version="$version" image
+          python checker.py --version="$version" war
       - name: Test
         shell: bash
         env:
