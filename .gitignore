@@ -13,10 +13,10 @@ build/schema
 build/vnu*.jar.zip
 build/vnu*.war.zip
 build/validator*.jar
+build/validator/
 build/VERSION
 build/.gradle
 run-validator.sh
-build/validator/
 dependencies/
 deps.tar.gz
 extras/
