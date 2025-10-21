@@ -1423,19 +1423,6 @@ def spiderApacheDirectories(baseUrl, baseDir):
         spiderApacheDirectories(directory, baseDir)
 
 
-def downloadLocalEntities():
-    removeIfDirExists(os.path.join(buildRoot, "local-entities"))
-    fileMap = {}
-    fileMap["html5spec"] = "https://html.spec.whatwg.org/"
-    ensureDirExists(filesDir)
-    for filename in fileMap:
-        destFile = os.path.join(filesDir, filename)
-        if (os.path.exists(destFile) and (time.time() - os.path.getmtime(destFile) < 3600*24)):
-            print("'" + filename + "' is younger that 24h, skipping download.")
-            continue
-        fetchUrlTo(fileMap[filename], destFile)
-
-
 def localPathToJarCompatName(path):
     return javaSafeNamePat.sub('_', path)
 
@@ -1547,7 +1534,7 @@ def downloadExtras():
 
 
 def downloadDependencies():
-    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "dl-deps", "dl-deps-jetty", "dl-deps-modules"])
+    runCmd([antCmd, "-f", os.path.join(buildRoot, "build", "build.xml"), "dl-all"])
     downloadExtras()
 
 
@@ -1778,9 +1765,6 @@ def main(argv):
                 updateSubmodulesShallow()
             elif arg == 'dldeps':
                 downloadDependencies()
-                downloadLocalEntities()
-            elif arg == 'dlentities':
-                downloadLocalEntities()
             elif arg == 'checkout':
                 pass
             elif arg == 'build':

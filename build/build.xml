@@ -197,9 +197,18 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/${slf4j-log4j12-version}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
   </target>
 
+  <target name="dl-html5spec" unless="${offline}">
+    <echo>Downloading latest html5 specification</echo>
+    <mkdir dir="build/html5spec"/>
+    <get src="https://html.spec.whatwg.org/" dest="build/html5spec/html5spec-single.html" usetimestamp="true" tryGzipEncoding="true"/>
+  </target>
+
+  <target name="dl-all" depends="dl-deps, dl-deps-modules, dl-deps-jetty, dl-html5spec, dl-deps-antlib"/>
+
   <target name="dl-clean">
     <echo>Remove ${depsDir}</echo>
     <delete dir="${depsDir}"/>
+    <delete dir="build/html5spec"/>
   </target>
 
   <target name="build" depends="jar"/>
@@ -423,7 +432,7 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="jing-trang/build/jing.jar"/>
   </path>
 
-  <target name="validator-prepare" depends="dl-entities, validator-resources">
+  <target name="validator-prepare" depends="validator-resources">
     <mkdir dir="${validator.build.basedir}/full/classes"/>
     <copy todir="${validator.build.basedir}/full/classes" preservelastmodified="true">
       <fileset dir="${validator.basedir}/src">
@@ -821,16 +830,8 @@ DEALINGS IN THE SOFTWARE.
   <import file=".ant/build-jing.xml"/>
 
   <property name="python-executable" value="python3"/>
-  <target name="dl-entities" unless="${offline}">
-    <echo>Downloading local entities (this may take some time)</echo>
-    <exec executable="${python-executable}" failonerror="true" failifexecutionfails="true">
-      <env key="JAVA_HOME" value="${java.home}"/>
-      <arg file="build/build.py"/>
-      <arg value="dlentities"/> <!-- downloadLocalEntities() -->
-    </exec>
-  </target>
 
-  <target name="validator-resources">
+  <target name="validator-resources" depends="dl-html5spec">
     <local name="filesDir"/>
     <property name="filesDir" value="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
     <mkdir dir="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
@@ -851,6 +852,7 @@ DEALINGS IN THE SOFTWARE.
     <copy file="${validator.basedir}/docs/wiki/Microsyntax-descriptions.md" tofile="${filesDir}/syntax-descriptions"/>
     <copy file="${validator.basedir}/resources/alt_advice.html" tofile="${filesDir}/vnu-alt-advice"/>
     <copy file="${validator.basedir}/resources/language-subtag-registry.txt" tofile="${filesDir}/subtag-registry"/>
+    <copy file="build/html5spec/html5spec-single.html" tofile="${filesDir}/html5spec"/>
 
     <copy todir="${filesDir}" preservelastmodified="true" flatten="true">
       <fileset dir="${validator.basedir}">
