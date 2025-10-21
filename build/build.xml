@@ -717,7 +717,6 @@ DEALINGS IN THE SOFTWARE.
         <exclude name="META-INF/**"/>
         <exclude name="nu/validator/datatype/data/encodings.json"/>
         <exclude name="nu/validator/datatype/data/generate-encoding-data.py"/>
-        <exclude name="nu/validator/datatype/Pattern.java"/>
         <exclude name="nu/validator/gnu/xml/aelfred2/COPYING"/>
         <exclude name="nu/validator/gnu/xml/aelfred2/README"/>
         <exclude name="nu/validator/gnu/xml/aelfred2/package.html"/>
