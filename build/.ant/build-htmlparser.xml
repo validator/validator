@@ -21,11 +21,6 @@ DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-htmlparser" basedir="."
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
-  <property name="htmlparser-base" location="${dist}/htmlparser-${version}" />
-  <property name="htmlparser-src" location="htmlparser/src" />
-  <property name="htmlparser-javadoc-jar" value="${htmlparser-base}-javadoc.jar" />
-  <property name="htmlparser-sources-jar" value="${htmlparser-base}-sources.jar" />
-  <property name="htmlparser-bundle-jar" value="${htmlparser-base}-bundle.jar" />
 
   <property name="htmlparser.basedir" location="htmlparser" />
   <property name="htmlparser.build.basedir" location="build/htmlparser" />
@@ -58,6 +53,7 @@ DEALINGS IN THE SOFTWARE.
       <arg value="${htmlparser.build.basedir}/realsrc/nu/validator/htmlparser/impl/HotSpotWorkaround.txt"/>
     </java>
   </target>
+
   <target name="htmlparser-build" depends="dl-deps, dl-deps-modules, htmlparser-process-sources">
     <mkdir dir="${htmlparser.build.basedir}/classes"/>
     <javac srcdir="${htmlparser.basedir}/src"
@@ -81,68 +77,4 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.build.basedir}/classes"/>
   </target>
 
-  <target name="htmlparser-javadoc-jar" depends="htmlparser-process-sources">
-    <javadoc destdir="${javadoc-dir}"
-             additionalparam="-html5 -Xdoclint:none"
-             classpathref="htmlparser.classpath">
-      <fileset dir="${htmlparser.build.basedir}/realsrc">
-        <include name="**/*.java"/>
-        <exclude name="nu/validator/htmlparser/xom/**"/>
-      </fileset>
-    </javadoc>
-    <jar destfile="${htmlparser-javadoc-jar}">
-      <fileset dir="${javadoc-dir}" />
-    </jar>
-    <delete dir="${javadoc-dir}"/>
-  </target>
-  <target name="htmlparser-sources-jar" depends="htmlparser-process-sources">
-    <jar destfile="${htmlparser-sources-jar}">
-      <fileset dir="${htmlparser.build.basedir}/realsrc"/>
-    </jar>
-  </target>
-
-  <target name="htmlparser-artifacts" depends="dl-deps-antlib, htmlparser-jar, htmlparser-javadoc-jar, htmlparser-sources-jar">
-    <delete file="${dist}/VERSION" />
-    <artifact:pom
-      id="htmlparser-pom"
-      groupId="nu.validator"
-      artifactId="htmlparser"
-      version="${version}"
-      name="htmlparser"
-      description="A fork of http://hg.mozilla.org/projects/htmlparser/ used by the Nu Html Checker."
-      url="https://about.validator.nu/htmlparser/"
-      packaging="jar">
-      <license
-        name="The MIT License"
-        distribution="repo"
-        url="http://www.opensource.org/licenses/mit-license.php"/>
-      <license
-        name="The (New) BSD License"
-        distribution="repo"
-        url="http://opensource.org/licenses/bsd-license.php"/>
-      <scm
-        connection="scm:git:git@github.com:validator/htmlparser.git"
-        developerConnection="scm:git:git@github.com:validator/htmlparser.git"
-        url="https://github.com/validator/htmlparser"/>
-      <developer
-        name="Henri Sivonen"
-        id="hsivonen"
-        email="hsivonen@iki.fi"
-        url="https://hsivonen.iki.fi/"/>
-      <developer
-        name="Michael[tm] Smith"
-        id="sideshowbarker"
-        email="mike@w3.org"
-        url="https://people.w3.org/mike/"/>
-      <dependency groupId="com.ibm.icu" artifactId="icu4j" version="4.0.1" scope="compile" optional="true"/>
-      <dependency groupId="com.sdicons.jsontools" artifactId="jsontools-core" version="1.4" scope="test"/>
-      <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0" scope="compile" optional="true"/>
-    </artifact:pom>
-    <artifact:writepom pomRefId="htmlparser-pom" file="${htmlparser-base}.pom"/>
-    <copy file="jars/htmlparser.jar" tofile="${htmlparser-base}.jar"/>
-  </target>
-
-  <target name="htmlparser-bundle" depends="htmlparser-artifacts">
-    <jar basedir="${dist}" destfile="${htmlparser-bundle-jar}"/>
-  </target>
 </project>

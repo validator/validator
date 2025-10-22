@@ -21,20 +21,9 @@ DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-jing" basedir="."
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
-  <property name="jing-base" location="${dist}/jing-${version}" />
-  <property name="jing-src" location="jing-trang/mod" />
-  <property name="jing-javadoc-jar" value="${jing-base}-javadoc.jar" />
-  <property name="jing-sources-jar" value="${jing-base}-sources.jar" />
-  <property name="jing-bundle-jar" value="${jing-base}-bundle.jar" />
-  <property name="jing-util-src" location="${jing-src}/util/src/main" />
-  <property name="jing-datatype-src" location="${jing-src}/datatype/src/main" />
-  <property name="jing-rng-parse-src" location="${jing-src}/rng-parse/src/main" />
-  <property name="jing-validate-src" location="${jing-src}/validate/src/main" />
-  <property name="jing-rng-validate-src" location="${jing-src}/rng-validate/src/main" />
-  <property name="jing-nvdl-src" location="${jing-src}/nvdl/src/main" />
-  <property name="jing-schematron-src" location="${jing-src}/schematron/src/main" />
 
   <property name="jing.basedir" location="jing-trang" />
+
   <target name="jing-build">
     <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
   </target>
@@ -45,87 +34,4 @@ DEALINGS IN THE SOFTWARE.
     <delete file="${jing.basedir}/modules.xml"/>
   </target>
 
-  <target name="jing-javadoc-jar">
-    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
-      <fileset dir="${jing-util-src}"/>
-      <fileset dir="${jing-datatype-src}"/>
-      <fileset dir="${jing-validate-src}"/>
-      <fileset dir="${jing-rng-parse-src}"/>
-      <fileset dir="${jing-rng-validate-src}"/>
-      <fileset dir="${jing-nvdl-src}"/>
-      <fileset dir="${jing-schematron-src}"/>
-      <classpath>
-        <fileset dir="jing-trang/lib/">
-          <include name="**/*.jar" />
-        </fileset>
-      </classpath>
-    </javadoc>
-    <jar destfile="${jing-javadoc-jar}">
-      <fileset dir="${javadoc-dir}" />
-    </jar>
-    <delete dir="${javadoc-dir}"/>
-  </target>
-
-  <target name="jing-sources-jar">
-    <jar destfile="${jing-sources-jar}">
-      <fileset dir="${jing-util-src}"/>
-      <fileset dir="${jing-datatype-src}"/>
-      <fileset dir="${jing-validate-src}"/>
-      <fileset dir="${jing-rng-parse-src}"/>
-      <fileset dir="${jing-rng-validate-src}"/>
-      <fileset dir="${jing-nvdl-src}"/>
-      <fileset dir="${jing-schematron-src}"/>
-    </jar>
-  </target>
-
-  <target name="jing-artifacts" depends="dl-deps-antlib, jing-build, jing-javadoc-jar, jing-sources-jar">
-    <delete file="${dist}/VERSION" />
-    <artifact:pom
-      id="jing-pom"
-      groupId="nu.validator"
-      artifactId="jing"
-      version="${version}"
-      name="Jing"
-      description="A branch of Jing used by the Nu Html Checker. (Jing is a tool for validating documents against RelaxNG schemas.)"
-      url="http://www.thaiopensource.com/relaxng/jing.html"
-      packaging="jar">
-      <license
-        name="3-clause BSD license"
-        distribution="repo"
-        url="https://github.com/relaxng/jing-trang/blob/validator-nu/copying.txt"/>
-      <scm
-        connection="scm:git:git@github.com:relaxng/jing-trang.git"
-        developerConnection="scm:git:git@github.com:relaxng/jing-trang.git"
-        url="https://github.com/relaxng/jing-trang/tree/validator-nu"/>
-      <issueManagement
-        system="GitHub Issues"
-        url="https://github.com/relaxng/jing-trang/issues"/>
-      <ciManagement
-        system="Travis CI"
-        url="https://travis-ci.org/relaxng/jing-trang"/>
-      <developer
-        name="James Clark"
-        id="jjc@jclark.com"
-        email="jjc@jclark.com"
-        url="http://jclark.com/"/>
-      <developer
-        name="Henri Sivonen"
-        id="hsivonen"
-        email="hsivonen@iki.fi"
-        url="https://hsivonen.iki.fi/"/>
-      <developer
-        name="Michael[tm] Smith"
-        id="sideshowbarker"
-        email="mike@w3.org"
-        url="https://people.w3.org/mike/"/>
-      <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
-      <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
-    </artifact:pom>
-    <artifact:writepom pomRefId="jing-pom" file="${jing-base}.pom"/>
-    <copy file="jing-trang/build/jing.jar" tofile="${jing-base}.jar"/>
-  </target>
-
-  <target name="jing-bundle" depends="jing-artifacts">
-    <jar basedir="${dist}" destfile="${jing-bundle-jar}"/>
-  </target>
 </project>

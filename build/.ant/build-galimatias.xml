@@ -21,12 +21,6 @@ DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-galimatias" basedir="."
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
-  <property name="galimatias-base" location="${dist}/galimatias-${version}" />
-  <property name="galimatias-src" location="galimatias/src" />
-  <property name="galimatias-javadoc-jar" value="${galimatias-base}-javadoc.jar" />
-  <property name="galimatias-sources-jar" value="${galimatias-base}-sources.jar" />
-  <property name="galimatias-bundle-jar" value="${galimatias-base}-bundle.jar" />
-
   <property name="galimatias.basedir" location="galimatias" />
   <property name="galimatias.build.basedir" location="build/galimatias" />
 
@@ -56,66 +50,4 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="${jarsDir}/galimatias.jar" basedir="${galimatias.build.basedir}/classes"/>
   </target>
 
-  <target name="galimatias-javadoc-jar">
-    <javadoc destdir="${javadoc-dir}"
-             additionalparam="-html5 -Xdoclint:none"
-             classpathref="galimatias.classpath">
-      <fileset dir="${galimatias-src}"/>
-    </javadoc>
-    <jar destfile="${galimatias-javadoc-jar}">
-      <fileset dir="${javadoc-dir}" />
-    </jar>
-    <delete dir="${javadoc-dir}"/>
-  </target>
-
-  <target name="galimatias-sources-jar">
-    <jar destfile="${galimatias-sources-jar}">
-      <fileset dir="${galimatias-src}"/>
-    </jar>
-  </target>
-
-  <target name="galimatias-artifacts" depends="dl-deps-antlib, galimatias-jar, galimatias-javadoc-jar, galimatias-sources-jar">
-    <delete file="${dist}/VERSION" />
-    <artifact:pom
-      id="galimatias-pom"
-      groupId="nu.validator"
-      artifactId="galimatias"
-      version="${version}"
-      name="galimatias"
-      description="Fork of the galimatias URL parsing and normalization library."
-      url="https://github.com/validator/galimatias"
-      packaging="jar">
-      <license
-        name="The MIT License"
-        distribution="repo"
-        url="http://www.opensource.org/licenses/mit-license.php"/>
-      <scm
-        connection="scm:git:git://github.com/validator/galimatias.git"
-        developerConnection="scm:git:git://github.com/validator/galimatias.git"
-        url="https://github.com/validator/galimatias"/>
-      <issueManagement
-        system="GitHub Issues"
-        url="https://github.com/validator/galimatias/issues"/>
-      <ciManagement
-        system="Travis CI"
-        url="https://travis-ci.org/validator/galimatias"/>
-      <developer
-        name="Santiago M. Mola"
-        id="smola"
-        email="santi@mola.io"
-        url="http://mola.io/"/>
-      <developer
-        name="Michael[tm] Smith"
-        id="sideshowbarker"
-        email="mike@w3.org"
-        url="https://people.w3.org/mike/"/>
-      <dependency groupId="com.ibm.icu" artifactId="icu4j" version="4.0.1" scope="compile" optional="true"/>
-    </artifact:pom>
-    <artifact:writepom pomRefId="galimatias-pom" file="${galimatias-base}.pom"/>
-    <copy file="jars/galimatias.jar" tofile="${galimatias-base}.jar"/>
-  </target>
-
-  <target name="galimatias-bundle" depends="galimatias-artifacts">
-    <jar basedir="${dist}" destfile="${galimatias-bundle-jar}"/>
-  </target>
 </project>
