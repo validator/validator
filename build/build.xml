@@ -825,12 +825,6 @@ DEALINGS IN THE SOFTWARE.
     <jar basedir="${dist}" destfile="${validator-bundle-jar}"/>
   </target>
 
-  <import file=".ant/build-langdetect.xml"/>
-  <import file=".ant/build-galimatias.xml"/>
-  <import file=".ant/build-htmlparser.xml"/>
-  <import file=".ant/build-cssvalidator.xml"/>
-  <import file=".ant/build-jing.xml"/>
-
   <property name="python-executable" value="python3"/>
 
   <target name="validator-resources" depends="dl-html5spec">
@@ -872,4 +866,123 @@ DEALINGS IN THE SOFTWARE.
       <arg value="localent"/> <!-- prepareLocalEntityJar() -->
     </exec>
   </target>
+
+  <property name="cssvalidator.basedir" location="css-validator" />
+  <target name="cssvalidator-build" depends="dl-deps, dl-deps-modules" >
+    <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
+  </target>
+  <target name="cssvalidator-clean">
+    <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
+  </target>
+
+  <property name="galimatias.basedir" location="galimatias" />
+  <property name="galimatias.build.basedir" location="build/galimatias" />
+  <path id="galimatias.classpath">
+    <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
+  </path>
+  <target name="galimatias-build" depends="dl-deps, dl-deps-modules">
+    <mkdir dir="${galimatias.build.basedir}/classes"/>
+    <javac srcdir="${galimatias.basedir}/src/main/java"
+           destdir="${galimatias.build.basedir}/classes"
+           classpathref="galimatias.classpath"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+  </target>
+  <target name="galimatias-clean">
+    <delete dir="${galimatias.build.basedir}"/>
+    <deleteFileWithEmptyParent file="${jarsDir}/galimatias.jar"/>
+  </target>
+  <target name="galimatias-jar" depends="galimatias-build">
+    <jar destfile="${jarsDir}/galimatias.jar" basedir="${galimatias.build.basedir}/classes"/>
+  </target>
+
+  <property name="htmlparser.basedir" location="htmlparser" />
+  <property name="htmlparser.build.basedir" location="build/htmlparser" />
+  <path id="htmlparser.classpath">
+    <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jchardet-${jchardet-version}.jar" />
+  </path>
+  <target name="htmlparser-initialize">
+    <!-- copied over from htmlparser/pom.xml -->
+    <delete dir="${htmlparser.build.basedir}/realsrc"/>
+    <mkdir dir="${htmlparser.build.basedir}/realsrc"/>
+    <copy todir="${htmlparser.build.basedir}/realsrc" preservelastmodified="true">
+      <fileset dir="${htmlparser.basedir}/src"/>
+    </copy>
+  </target>
+  <target name="htmlparser-process-sources" depends="htmlparser-initialize">
+    <!-- copied over from htmlparser/pom.xml -->
+    <property name="translator.sources" value="${htmlparser.basedir}/translator-src"/>
+    <property name="translator.classes" value="${htmlparser.build.basedir}/translator-classes"/>
+    <mkdir dir="${translator.classes}"/>
+    <javac srcdir="${translator.sources}" includes="nu/validator/htmlparser/generator/ApplyHotSpotWorkaround.java" destdir="${translator.classes}" includeantruntime="false"/>
+    <java classname="nu.validator.htmlparser.generator.ApplyHotSpotWorkaround">
+      <classpath>
+        <pathelement location="${translator.classes}"/>
+      </classpath>
+      <arg value="${htmlparser.build.basedir}/realsrc/nu/validator/htmlparser/impl/Tokenizer.java"/>
+      <arg value="${htmlparser.build.basedir}/realsrc/nu/validator/htmlparser/impl/HotSpotWorkaround.txt"/>
+    </java>
+  </target>
+  <target name="htmlparser-build" depends="dl-deps, dl-deps-modules, htmlparser-process-sources">
+    <mkdir dir="${htmlparser.build.basedir}/classes"/>
+    <javac srcdir="${htmlparser.basedir}/src"
+           destdir="${htmlparser.build.basedir}/classes"
+           classpathref="htmlparser.classpath"
+           debug="true"
+           encoding="UTF-8"
+           excludes="nu/validator/htmlparser/xom/**"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+  </target>
+  <target name="htmlparser-clean">
+    <delete dir="${htmlparser.build.basedir}"/>
+    <deleteFileWithEmptyParent file="${jarsDir}/htmlparser.jar"/>
+  </target>
+  <target name="htmlparser-jar" depends="htmlparser-build">
+    <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.build.basedir}/classes"/>
+  </target>
+
+  <property name="jing.basedir" location="jing-trang" />
+  <target name="jing-build">
+    <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
+  </target>
+  <target name="jing-clean">
+    <ant dir="${jing.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
+    <delete file="${jing.basedir}/modbuild.xml"/>
+    <delete file="${jing.basedir}/modules.xml"/>
+  </target>
+
+  <property name="langdetect.basedir" location="langdetect" />
+  <property name="langdetect.build.basedir" location="build/langdetect" />
+  <path id="langdetect.classpath">
+    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+  </path>
+  <target name="langdetect-build" depends="dl-deps, dl-deps-modules">
+    <mkdir dir="${langdetect.build.basedir}/classes"/>
+    <javac srcdir="${langdetect.basedir}/src"
+           destdir="${langdetect.build.basedir}/classes"
+           classpathref="langdetect.classpath"
+           debug="true"
+           encoding="UTF-8"
+           includeantruntime="false"
+           nowarn="true"
+           release="${build.java.target.version}"
+           />
+  </target>
+  <target name="langdetect-clean">
+    <delete dir="${langdetect.build.basedir}"/>
+    <deleteFileWithEmptyParent file="${jarsDir}/langdetect.jar"/>
+  </target>
+  <target name="langdetect-jar" depends="langdetect-build">
+    <copy file="${langdetect.basedir}/src/com/cybozu/labs/langdetect/util/messages.properties" todir="${langdetect.build.basedir}/classes/com/cybozu/labs/langdetect/util"/>
+      <jar destfile="${jarsDir}/langdetect.jar" basedir="${langdetect.build.basedir}/classes"/>
+  </target>
+
 </project>
