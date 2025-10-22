@@ -1624,7 +1624,7 @@ def main(argv):
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
         jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties, \
-        offline
+        offline, antCmd
     if len(argv) == 0:
         printHelp()
     else:
