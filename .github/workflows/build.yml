@@ -24,7 +24,7 @@ jobs:
           - os: macos-latest
             java: 11.0.23
           - os: windows-latest
-            java: 11.0.3
+            java: 11.0.23
     steps:
       - uses: actions/checkout@v5
       - name: Set up Java JDK
@@ -55,15 +55,16 @@ jobs:
           java -jar build/dist/vnu.jar build/dist/index.html
           java -jar build/dist/vnu.jar site/nu-about.html
           jar xf build/dist/vnu.jar && javap -verbose nu/validator/client/SimpleCommandLineValidator.class | grep "major version: 52"
-          curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
-          unzip apache-tomcat-$TOMCAT_VERSION.zip
-          chmod a+x apache-tomcat-$TOMCAT_VERSION/bin/*.sh
+          curl -O "https://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip"
+          unzip "apache-tomcat-$TOMCAT_VERSION.zip"
+          chmod a+x "apache-tomcat-$TOMCAT_VERSION/bin/*.sh"
           jar xf build/dist-war/vnu.war && javap -verbose WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "major version: 52"
-          apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh start
-          cp build/dist-war/vnu.war apache-tomcat-$TOMCAT_VERSION/webapps/
-          sleep 15; tail apache-tomcat-$TOMCAT_VERSION/logs/catalina.out || true
+          "apache-tomcat-$TOMCAT_VERSION/bin/catalina.sh" start
+          cp build/dist-war/vnu.war "apache-tomcat-$TOMCAT_VERSION/webapps/"
+          sleep 15; tail "apache-tomcat-$TOMCAT_VERSION/logs/catalina.out" || true
           curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
           test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
+          # shellcheck disable=SC2181
           if [ $? != 0 ]; then cat RESULTS; fi
           python ./checker.py check
           python ./checker.py test
@@ -79,9 +80,9 @@ jobs:
         if: matrix.java == 17 && github.ref == 'refs/heads/main'
         shell: bash
         run: |
-          for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true
-          for file in build/dist/*.jar*; do gpg --yes -ab --sign $file; done || true
-          for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
+          for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign "$file"; done || true
+          for file in build/dist/*.jar*; do gpg --yes -ab --sign "$file"; done || true
+          for file in build/dist-war/*.war*; do gpg --yes -ab --sign "$file"; done || true
       - name: Release new binary runtime image
         if: matrix.java == 17 && github.ref == 'refs/heads/main'
         uses: ncipollo/release-action@v1
@@ -174,7 +175,7 @@ jobs:
           validator-split-client,
           validator-split-core,
           validator-split-server,
-          ]
+        ]
     steps:
       - uses: actions/checkout@v5
       - name: Set up Java JDK
