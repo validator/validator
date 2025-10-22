@@ -7,6 +7,7 @@ build/build.pyc
 build/dist
 build/dist-war
 build/galimatias
+build/html5spec
 build/htmlparser
 build/langdetect
 build/schema
