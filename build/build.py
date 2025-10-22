@@ -149,7 +149,6 @@ maxConnPerRoute = 100
 maxTotalConnections = 200
 maxRedirects = 20  # Gecko default
 statistics = 0
-miniDoc = '<!doctype html><html lang=""><meta charset=utf-8><title>test</title>'  # nopep8
 additionalJavaSystemProperties = ''
 
 javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
@@ -768,7 +767,7 @@ class Release():
         self.vnuImageDirname = "vnu-runtime-image"
         self.vnuImageDir = os.path.join(distDir, self.vnuImageDirname)
         self.vnuModuleInfoDir = os.path.join(distDir, "vnu")
-        self.minDocPath = os.path.join(buildRoot, 'minDoc.html')
+        self.minDocPath = os.path.join(buildRoot, 'build', 'minDoc.html')
         self.docs = ["README.md", "LICENSE"]
 
     def reInitDistDir(self, whichDir):
@@ -1232,8 +1231,6 @@ class Release():
         if stackSize != "":
             javaArg = '-Xss' + stackSize + 'k'
 
-        with open(self.minDocPath, 'w') as f:
-            f.write(miniDoc)
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
             if javaArg:
@@ -1254,7 +1251,6 @@ class Release():
         else:
             args = [javaCmd, '-jar', vnuJar, '--version']
         runCmd(args)
-        os.remove(self.minDocPath)
 
     def checkRuntimeImage(self):
         if javaEnvVersion < 9:
@@ -1262,15 +1258,12 @@ class Release():
         vnuRunScript = os.path.join(self.vnuImageDir, 'bin', 'vnu')
         if os.path.exists(os.path.join(self.vnuImageDir, 'bin', 'vnu.bat')):
             vnuRunScript = os.path.join(self.vnuImageDir, 'bin', 'vnu.bat')
-        with open(self.minDocPath, 'w') as f:
-            f.write(miniDoc)
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
             runCmd([vnuRunScript, '--format', _format, self.minDocPath])
         # also make sure it works even w/o --format value; returns gnu output
         runCmd([vnuRunScript, self.minDocPath])
         runCmd([vnuRunScript, '--version'])
-        os.remove(self.minDocPath)
 
     def checkUrlWithService(self, url, daemon):
         time.sleep(15)
@@ -1309,7 +1302,9 @@ class Release():
         self.checkUrlWithService(url, daemon)
 
     def checkService(self):
-        doc = miniDoc.replace(" ", "%20")
+        with open(self.minDocPath, "r") as file:
+            doc = file.read()
+        doc = doc.rstrip().replace(" ", "%20")
         query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % doc
         url = "http://127.0.0.1:%s/%s" % (portNumber, query)
         self.checkServiceWithJar(url)
