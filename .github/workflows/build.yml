@@ -149,7 +149,7 @@ jobs:
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
           matrix.java == $JAVA_LATEST_VERSION
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20.x'
           registry-url: 'https://npm.pkg.github.com'
