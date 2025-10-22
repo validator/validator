@@ -22,12 +22,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [$JAVA_LATEST_VERSION, 21, 17, 11.0.23]
+        java: [25, 21, 17, 11.0.23]
         exclude:
           - os: macos-latest
             java: 11.0.23
           - os: windows-latest
-            java: 11.0.3
+            java: 11.0.23
     steps:
       - uses: actions/checkout@v5
       - name: Set up Java JDK
@@ -75,7 +75,7 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
@@ -87,7 +87,7 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         shell: bash
         run: |
           for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true
@@ -98,7 +98,7 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -113,7 +113,7 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -127,7 +127,7 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         run: |
           git push origin :refs/tags/latest || true
           git tag -m latest -fa latest || true
@@ -137,7 +137,7 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         shell: bash
         run: |
           python ./checker.py maven-release
@@ -148,7 +148,7 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         uses: actions/setup-node@v6
         with:
           node-version: '20.x'
@@ -158,14 +158,14 @@ jobs:
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         run: npm install
       - name: Release new npm package
         if: >
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
           matrix.os == 'ubuntu-latest' &&
-          matrix.java == $JAVA_LATEST_VERSION
+          matrix.java == env.JAVA_LATEST_VERSION
         shell: bash
         run: |
           python ./checker.py npm-release
@@ -210,7 +210,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: zulu
-          java-version: $JAVA_LATEST_VERSION
+          java-version: env.JAVA_LATEST_VERSION
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
@@ -229,7 +229,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: zulu
-          java-version: $JAVA_LATEST_VERSION
+          java-version: env.JAVA_LATEST_VERSION
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
