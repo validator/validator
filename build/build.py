@@ -73,6 +73,7 @@ npmCmd = 'npm'
 antCmd = 'ant'
 antCommonArgs = []
 offline = False
+verbose = False
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'  # nopep8
@@ -1320,7 +1321,10 @@ class Release():
         javaArg = None
         if stackSize != "":
             javaArg = '-Xss' + stackSize + 'k'
-        args = ["tests/messages.json"]
+        args = []
+        if verbose:
+            args.append("--verbose")
+        args.append("tests/messages.json")
         className = "nu.validator.client.TestRunner"
         if javaArg:
             cmd = [javaCmd, javaArg, '-classpath', vnuJar, className] + args
@@ -1599,6 +1603,7 @@ def printHelp():
     print("  --offline                  -- Build offline. Needs prior download")
     print("                                of the dependencies with 'dldeps'.")
     print("  --version=VERSION          -- Sets the version of vnu to VERSION")
+    print("  --verbose                  -- Run build & tests verbosely")
     print("")
     print("Tasks:")
     print("  update   -- Update git submodules")
@@ -1625,7 +1630,7 @@ def main(argv):
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
         jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties, \
-        offline, antCmd, validatorVersion
+        offline, antCmd, validatorVersion, verbose
     if len(argv) == 0:
         printHelp()
     else:
@@ -1764,6 +1769,10 @@ def main(argv):
                 statistics = 1
             elif arg.startswith("--version="):
                 validatorVersion = arg[10:]
+            elif arg == '--verbose':
+                # Run build & tests verbosely
+                antCommonArgs.append('-verbose')
+                verbose = True
             elif arg == '--help':
                 printHelp()
             elif arg == 'update':
