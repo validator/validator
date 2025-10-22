@@ -21,11 +21,6 @@ DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-cssvalidator" basedir="."
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
-  <property name="cssvalidator-base" location="${dist}/cssvalidator-${version}" />
-  <property name="cssvalidator-src" location="css-validator/org" />
-  <property name="cssvalidator-javadoc-jar" value="${cssvalidator-base}-javadoc.jar" />
-  <property name="cssvalidator-sources-jar" value="${cssvalidator-base}-sources.jar" />
-  <property name="cssvalidator-bundle-jar" value="${cssvalidator-base}-bundle.jar" />
 
   <property name="cssvalidator.basedir" location="css-validator" />
 
@@ -37,63 +32,4 @@ DEALINGS IN THE SOFTWARE.
     <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
   </target>
 
-  <target name="cssvalidator-javadoc-jar">
-    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
-      <fileset dir="${cssvalidator-src}"/>
-    </javadoc>
-    <jar destfile="${cssvalidator-javadoc-jar}">
-      <fileset dir="${javadoc-dir}" />
-    </jar>
-    <delete dir="${javadoc-dir}"/>
-  </target>
-
-  <target name="cssvalidator-sources-jar">
-    <jar destfile="${cssvalidator-sources-jar}">
-      <fileset dir="${cssvalidator-src}"/>
-    </jar>
-  </target>
-
-  <target name="cssvalidator-artifacts" depends="dl-deps-antlib, cssvalidator-build, cssvalidator-javadoc-jar, cssvalidator-sources-jar">
-    <delete file="${dist}/VERSION" />
-    <artifact:pom
-      id="cssvalidator-pom"
-      groupId="nu.validator"
-      artifactId="cssvalidator"
-      version="${version}"
-      name="cssvalidator"
-      description="Backend for the W3C CSS Validation Service"
-      url="https://jigsaw.w3.org/css-validator/about.html"
-      packaging="jar">
-      <license
-        name="W3C Software and Document Notice and License"
-        distribution="repo"
-        url="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document"/>
-      <scm
-        connection="scm:git:git@github.com:w3c/css-validator.git"
-        developerConnection="scm:git:git@github.com:w3c/css-validator.git"
-        url="https://github.com/w3c/css-validator"/>
-      <issueManagement
-        system="GitHub Issues"
-        url="https://github.com/w3c/css-validator/issues"/>
-      <ciManagement
-        system="Travis CI"
-        url="https://travis-ci.org/w3c/css-validator"/>
-      <developer
-        name="Yves Lafon"
-        id="ylafon"
-        email="yves@w3.org"
-        url="https://github.com/ylafon"/>
-      <developer
-        name="Michael[tm] Smith"
-        id="sideshowbarker"
-        email="mike@w3.org"
-        url="https://people.w3.org/mike/"/>
-    </artifact:pom>
-    <artifact:writepom pomRefId="cssvalidator-pom" file="${cssvalidator-base}.pom"/>
-    <copy file="css-validator/css-validator.jar" tofile="${cssvalidator-base}.jar"/>
-  </target>
-
-  <target name="cssvalidator-bundle" depends="cssvalidator-artifacts">
-    <jar basedir="${dist}" destfile="${cssvalidator-bundle-jar}"/>
-  </target>
 </project>
