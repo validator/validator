@@ -1598,6 +1598,7 @@ def printHelp():
     print("  --user-agent                  Sets User-Agent string for checker")
     print("  --offline                  -- Build offline. Needs prior download")
     print("                                of the dependencies with 'dldeps'.")
+    print("  --version=VERSION          -- Sets the version of vnu to VERSION")
     print("")
     print("Tasks:")
     print("  update   -- Update git submodules")
@@ -1624,7 +1625,7 @@ def main(argv):
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
         jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties, \
-        offline, antCmd
+        offline, antCmd, validatorVersion
     if len(argv) == 0:
         printHelp()
     else:
@@ -1761,6 +1762,8 @@ def main(argv):
                 maxConnPerRoute = int(arg[16:])
             elif arg == '--statistics':
                 statistics = 1
+            elif arg.startswith("--version="):
+                validatorVersion = arg[10:]
             elif arg == '--help':
                 printHelp()
             elif arg == 'update':
