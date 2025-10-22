@@ -1263,8 +1263,7 @@ class Release():
         runCmd([vnuRunScript, self.minDocPath])
         runCmd([vnuRunScript, '--version'])
 
-    def checkUrlWithService(self, url, daemon):
-        time.sleep(15)
+    def checkUrlWithService(self, url):
         print("Checking %s" % url)
         try:
             print(urlopen(url).read())
@@ -1274,8 +1273,6 @@ class Release():
         except URLError as e:
             print(e.reason)
             sys.exit(1)
-        time.sleep(5)
-        daemon.terminate()
 
     def checkServiceWithJar(self, url):
         if not os.path.exists(os.path.join(buildRoot, "jars")):
@@ -1283,9 +1280,16 @@ class Release():
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
         print("Checking service using jar...")
+        if isServiceUp(False):
+            print("Service is already/still running at " + bindAddress + ":" + portNumber)
+            print("Stop it first, then retry.")
+            sys.exit(1)
         args = getRunArgs(str(int(heapSize) * 1024))
         daemon = subprocess.Popen([javaCmd, ] + args)
-        self.checkUrlWithService(url, daemon)
+        waitUntilServiceIsReady()
+        self.checkUrlWithService(url)
+        daemon.terminate()
+        waitUntilServiceIsDown()
 
     def checkServiceWithRuntimeImage(self, url):
         if javaEnvVersion < 9:
@@ -1294,10 +1298,18 @@ class Release():
                 or not os.path.exists(os.path.join(distDir,
                                                    self.runtimeDistroFile)):
             self.createRuntimeImage()
+        print("Checking service using runtime image...")
+        if isServiceUp(False):
+            print("Service is already/still running at " + bindAddress + ":" + portNumber)
+            print("Stop it first, then retry.")
+            sys.exit(1)
         args = getRunArgs(str(int(heapSize) * 1024), "image")
         daemon = subprocess.Popen([os.path.join(distDir, self.vnuImageDirname,
                                                 "bin", "java")] + args)
-        self.checkUrlWithService(url, daemon)
+        waitUntilServiceIsReady()
+        self.checkUrlWithService(url)
+        daemon.terminate()
+        waitUntilServiceIsDown()
 
     def checkService(self):
         with open(self.minDocPath, "r") as file:
@@ -1543,6 +1555,44 @@ def splitHostSpec(spec):
     index = spec.find('/')
     return (spec[0:index], spec[index:])
 
+
+def waitUntilServiceIsReady():
+    if shutil.which("nc"):
+      isReady = False
+      while (isReady == False):
+        isReady = True
+        try:
+          subprocess.run(["nc", "-z", bindAddress, portNumber], check=True)
+        except:
+          isReady = False
+          time.sleep(1)
+    else:
+      # TODO: Support an equivalent command on Windows
+      time.sleep(15)
+
+def waitUntilServiceIsDown():
+    if shutil.which("nc"):
+      isReady = True
+      while (isReady == True):
+        isReady = True
+        try:
+          subprocess.run(["nc", "-z", bindAddress, portNumber], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+        except:
+          isReady = False
+        time.sleep(1)
+    else:
+      # TODO: Support an equivalent command on Windows
+      time.sleep(5)
+
+def isServiceUp(defaultReply):
+    if shutil.which("nc"):
+      try:
+        subprocess.run(["nc", "-z", bindAddress, portNumber], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+      except:
+        return False
+      return True
+    # TODO: Support an equivalent command on Windows
+    return defaultReply
 
 def printHelp():
     print("Usage: python %s [options] [tasks]" % sys.argv[0])
