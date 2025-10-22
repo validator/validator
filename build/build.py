@@ -58,7 +58,6 @@ try:
     CAFILE = certifi.where()
 except ImportError:
     CAFILE = None
-import glob
 
 javaTargetVersion = '8'
 herokuCmd = 'heroku'
@@ -103,7 +102,8 @@ jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
 cssValidatorDir = os.path.join(buildRoot, "css-validator")
 # filesDir is the dir where built resources are stored
-filesDir = os.path.join(buildRoot, "build", "validator", "resources", "nu", "validator","localentities", "files")
+filesDir = os.path.join(buildRoot, "build", "validator", "resources", "nu",
+                        "validator", "localentities", "files")
 
 pageTemplate = os.path.join("site", "PageEmitter.xml")
 formTemplate = os.path.join("site", "FormEmitter.xml")
@@ -281,7 +281,7 @@ def buildSchemaDrivers():
     ensureDirExists(html5Dir)
     driversSrcDir = os.path.join(schemaSrcDir, ".drivers")
     srcLegacyRnc = os.path.join(driversSrcDir, "legacy.rnc")
-    srcItsRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5.rnc"))
+    srcItsRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5.rnc"))  # nopep8
     srcItsTypesRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5-types.rnc"))  # nopep8
     buildSchemaDriverHtmlCore(html5Dir)
     buildSchemaDriverHtml5NoMicrodata(html5Dir)
@@ -614,7 +614,8 @@ def dockerRun():
 
 
 def gitHubUser():
-  return subprocess.run([gitCmd, 'config', 'github.user'], capture_output=True).stdout.decode("utf-8")  # nopep8
+    return subprocess.run([gitCmd, 'config', 'github.user'],
+                          capture_output=True).stdout.decode("utf-8")
 
 
 def dockerPush():
@@ -725,12 +726,18 @@ def generateRunScript():
 def clean():
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
-    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot, "build", "build.xml"), 'clean'])
+    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot,
+                                                          "build",
+                                                          "build.xml"),
+                                       'clean'])
 
 
 def realclean():
     clean()
-    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot, "build", "build.xml"), 'distclean'])
+    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot,
+                                                          "build",
+                                                          "build.xml"),
+                                       'distclean'])
 
     buildFilesToCleanup = []
     buildFilesToCleanup.append(os.path.join(buildRoot, "run-validator.sh"))
@@ -740,7 +747,7 @@ def realclean():
     for aFile in buildFilesToCleanup:
         try:
             os.remove(aFile)
-        except Exception as e:
+        except Exception:
             pass
 
 
@@ -895,7 +902,8 @@ class Release():
             return
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
-        runCmd([jdepsCmd, '--ignore-missing-deps', '--generate-open-module', distDir, vnuJar])
+        runCmd([jdepsCmd, '--ignore-missing-deps',
+                '--generate-open-module', distDir, vnuJar])
         f = open(os.path.join(self.vnuModuleInfoDir, "module-info.java"), 'r+')
         lines = f.readlines()
         lines = lines[:-2]
@@ -1233,10 +1241,10 @@ class Release():
         for _format in formats:
             if javaArg:
                 args = [javaCmd, javaArg, '-jar', vnuJar, '--format', _format,
-                       self.minDocPath]
+                        self.minDocPath]
             else:
                 args = [javaCmd, '-jar', vnuJar, '--format', _format,
-                       self.minDocPath]
+                        self.minDocPath]
             runCmd(args)
         # also make sure it works even w/o --format value; returns gnu output
         if javaArg:
@@ -1281,7 +1289,8 @@ class Release():
             self.createJarOrWar("jar")
         print("Checking service using jar...")
         if isServiceUp(False):
-            print("Service is already/still running at " + bindAddress + ":" + portNumber)
+            print("Service is already/still running at " + bindAddress +
+                  ":" + portNumber)
             print("Stop it first, then retry.")
             sys.exit(1)
         args = getRunArgs(str(int(heapSize) * 1024))
@@ -1300,7 +1309,8 @@ class Release():
             self.createRuntimeImage()
         print("Checking service using runtime image...")
         if isServiceUp(False):
-            print("Service is already/still running at " + bindAddress + ":" + portNumber)
+            print("Service is already/still running at " + bindAddress +
+                  ":" + portNumber)
             print("Stop it first, then retry.")
             sys.exit(1)
         args = getRunArgs(str(int(heapSize) * 1024), "image")
@@ -1454,22 +1464,24 @@ def prepareLocalEntityJar():
             entPath = []
             index = -1
             if path.startswith("schema/html5/"):
-                entPath.append(os.path.join(buildRoot, "schema", "html5", path[13:]))
-                entPath.append(os.path.join(buildRoot, "build", "schema", "html5", path[13:]))
+                entPath.append(os.path.join(buildRoot, "schema", "html5",
+                                            path[13:]))
+                entPath.append(os.path.join(buildRoot, "build", "schema",
+                                            "html5", path[13:]))
             elif path.startswith("schema/"):
                 entPath.append(os.path.join(buildRoot, path))
                 entPath.append(os.path.join(buildRoot, "build", path))
             else:
                 continue
             if os.path.exists(entPath[0]):
-              index = 0
+                index = 0
             elif os.path.exists(entPath[1]):
-              index = 1
+                index = 1
             if index >= 0:
-              safeName = localPathToJarCompatName(path)
-              safePath = os.path.join(filesDir, safeName)
-              o.write("%s\t%s\n" % (url, safeName))
-              shutil.copyfile(entPath[index], safePath)
+                safeName = localPathToJarCompatName(path)
+                safePath = os.path.join(filesDir, safeName)
+                o.write("%s\t%s\n" % (url, safeName))
+                shutil.copyfile(entPath[index], safePath)
     finally:
         f.close()
         o.close()
@@ -1530,7 +1542,8 @@ def updateSubmodules():
     if offline:
         runCmd([gitCmd, 'submodule', 'update', '--merge', '--init'])
     else:
-        runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge', '--init'])
+        runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge',
+                '--init'])
 
 
 def updateSubmodulesShallow():
@@ -1547,7 +1560,10 @@ def downloadExtras():
 
 
 def downloadDependencies():
-    runCmd([antCmd] + antCommonArgs + ["-f", os.path.join(buildRoot, "build", "build.xml"), "dl-all"])
+    runCmd([antCmd] + antCommonArgs + ["-f", os.path.join(buildRoot,
+                                                          "build",
+                                                          "build.xml"),
+                                       "dl-all"])
     downloadExtras()
 
 
@@ -1558,41 +1574,49 @@ def splitHostSpec(spec):
 
 def waitUntilServiceIsReady():
     if shutil.which("nc"):
-      isReady = False
-      while (isReady == False):
-        isReady = True
-        try:
-          subprocess.run(["nc", "-z", bindAddress, portNumber], check=True)
-        except:
-          isReady = False
-          time.sleep(1)
+        isReady = False
+        while (isReady is False):
+            isReady = True
+            try:
+                subprocess.run(["nc", "-z", bindAddress, portNumber],
+                               check=True)
+            except Exception:
+                isReady = False
+                time.sleep(1)
     else:
-      # TODO: Support an equivalent command on Windows
-      time.sleep(15)
+        # TODO: Support an equivalent command on Windows
+        time.sleep(15)
+
 
 def waitUntilServiceIsDown():
     if shutil.which("nc"):
-      isReady = True
-      while (isReady == True):
         isReady = True
-        try:
-          subprocess.run(["nc", "-z", bindAddress, portNumber], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-        except:
-          isReady = False
-        time.sleep(1)
+        while (isReady is True):
+            isReady = True
+            try:
+                subprocess.run(["nc", "-z", bindAddress, portNumber],
+                               check=True, stdout=subprocess.DEVNULL,
+                               stderr=subprocess.STDOUT)
+            except Exception:
+                isReady = False
+            time.sleep(1)
     else:
-      # TODO: Support an equivalent command on Windows
-      time.sleep(5)
+        # TODO: Support an equivalent command on Windows
+        time.sleep(5)
+
 
 def isServiceUp(defaultReply):
     if shutil.which("nc"):
-      try:
-        subprocess.run(["nc", "-z", bindAddress, portNumber], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-      except:
-        return False
-      return True
+        try:
+            subprocess.run(["nc", "-z", bindAddress, portNumber],
+                           check=True, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.STDOUT)
+        except Exception:
+            return False
+        return True
     # TODO: Support an equivalent command on Windows
     return defaultReply
+
 
 def printHelp():
     print("Usage: python %s [options] [tasks]" % sys.argv[0])
@@ -1627,7 +1651,7 @@ def printHelp():
     print("  --bind-address=0.0.0.0     -- Sets server bind address")
     print("  --port=8888                -- Sets server port number")
     print("  --allowed-address-type=<value>")
-    print("                                Sets which URLs the checker allows.")
+    print("                                Sets which URLs the checker allows.")  # nopep8
     print("                                Possible values:")
     print("                                - 'all': Allow all URLs (default)")
     print("                                - 'same-origin': Allow only")
@@ -1650,7 +1674,7 @@ def printHelp():
     print("                                Defaults to \"style.css\" relative")
     print("                                to the validator URL")
     print("  --user-agent                  Sets User-Agent string for checker")
-    print("  --offline                  -- Build offline. Needs prior download")
+    print("  --offline                  -- Build offline. Needs prior download")  # nopep8
     print("                                of the dependencies with 'dldeps'.")
     print("  --version=VERSION          -- Sets the version of vnu to VERSION")
     print("  --verbose                  -- Run build & tests verbosely")
@@ -1676,11 +1700,11 @@ def main(argv):
         html5specLink, aboutPage, denyList, userAgent, deploymentTarget, \
         scriptAdditional, serviceName, resultsTitle, messagesLimit, \
         pageTemplate, formTemplate, presetsFile, aboutFile, stylesheetFile, \
-        scriptFile, filterFile, allowedAddressType, disablePromiscuousSsl, extrasDir, \
+        scriptFile, filterFile, allowedAddressType, disablePromiscuousSsl, \
         connectionTimeoutSeconds, socketTimeoutSeconds, maxTotalConnections, \
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
         jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties, \
-        offline, antCmd, validatorVersion, verbose
+        offline, antCmd, validatorVersion, verbose, extrasDir
     if len(argv) == 0:
         printHelp()
     else:
@@ -1703,7 +1727,8 @@ def main(argv):
         except TypeError:
             javaRawVersion = subprocess.check_output([javaCmd, '-version'],
                                                      stderr=subprocess.STDOUT)
-        javaRawVersion = list(filter(lambda x:'version' in x, javaRawVersion.splitlines()))
+        javaRawVersion = list(filter(lambda x: 'version' in x,
+                                     javaRawVersion.splitlines()))
         javaEnvVersion = \
             int(javaRawVersion[0].split()[2].strip('"').split('.')[0]
                 .replace('-ea', ''))
