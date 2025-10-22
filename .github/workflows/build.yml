@@ -126,8 +126,6 @@ jobs:
           matrix.os == 'ubuntu-latest' &&
           matrix.java == 25
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
           git push origin :refs/tags/latest || true
           git tag -m latest -fa latest || true
           git push origin main --tags
