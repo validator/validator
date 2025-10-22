@@ -845,8 +845,6 @@ DEALINGS IN THE SOFTWARE.
       <entry key="nu.validator.servlet.user-agent" value="${validator.param.userAgent}"/>
     </propertyfile>
 
-    <echo file="${filesDir}/version">${version}</echo>
-
     <copy file="${validator.param.aboutFile}" tofile="${filesDir}/about.html"/>
     <copy file="${validator.param.presetsFile}" tofile="${filesDir}/presets"/>
     <copy file="${validator.param.scriptFile}" tofile="${filesDir}/script.js"/>

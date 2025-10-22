@@ -33,6 +33,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Properties;
 import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
@@ -58,8 +59,6 @@ import org.xml.sax.SAXParseException;
  * Simple command-line validator for HTML/XHTML files.
  */
 public class SimpleCommandLineValidator {
-
-    private static String version;
 
     private static String userAgent;
 
@@ -119,6 +118,16 @@ public class SimpleCommandLineValidator {
 
     private static boolean hasSchemaOption;
 
+    private static Properties props = new Properties();
+
+    static {
+        try {
+            props.load(SimpleDocumentValidator.class.getClassLoader().getResourceAsStream(
+                    "nu/validator/localentities/files/misc.properties"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void main(String[] args) throws SAXException, Exception {
         out = System.err;
         otherOut = System.out;
@@ -638,14 +647,8 @@ public class SimpleCommandLineValidator {
     }
 
     private static void version() {
-        try (InputStream version = SimpleCommandLineValidator.class.getClassLoader().getResourceAsStream(
-                "nu/validator/localentities/files/version")) {
-            for (int b = version.read(); b != -1; b = version.read()) {
-                otherOut.write(b);
-            }
-            otherOut.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        otherOut.println(props.getProperty("nu.validator.servlet.version",
+                    "[unknown version]"));
+        otherOut.flush();
     }
 }
