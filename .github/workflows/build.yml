@@ -68,11 +68,7 @@ jobs:
           python ./checker.py check
           python ./checker.py test
       - name: Import GPG signing key
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
+        if: matrix.java == 17 && github.ref == 'refs/heads/main'
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
@@ -80,22 +76,14 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
       - name: Sign release artifacts
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
+        if: matrix.java == 17 && github.ref == 'refs/heads/main'
         shell: bash
         run: |
           for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign $file; done || true
           for file in build/dist/*.jar*; do gpg --yes -ab --sign $file; done || true
           for file in build/dist-war/*.war*; do gpg --yes -ab --sign $file; done || true
       - name: Release new binary runtime image
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
+        if: matrix.java == 17 && github.ref == 'refs/heads/main'
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -106,11 +94,7 @@ jobs:
           omitName: true
           tag: latest
       - name: Release new jar and war
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
+        if: matrix.os == 'ubuntu-latest' && matrix.java == 17 && github.ref == 'refs/heads/main'
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -141,21 +125,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Node
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://npm.pkg.github.com'
       - name: Install Node dependencies
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
         run: npm install
       - name: Release new npm package
         if: >
