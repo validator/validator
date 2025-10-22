@@ -60,9 +60,7 @@ except ImportError:
     CAFILE = None
 
 javaTargetVersion = '8'
-herokuCmd = 'heroku'
 dockerCmd = 'docker'
-ghRelCmd = 'github-release'  # https://github.com/sideshowbarker/github-release
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
@@ -74,23 +72,11 @@ antCommonArgs = []
 offline = False
 verbose = False
 
-snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'  # nopep8
-# in your ~/.ssh/config, you'll need to define a host named "releasesHost"
-releasesHost = "releasesHost"
-nightliesPath = "/var/www/nightlies"
-releasesPath = "/var/www/releases"
-
 releaseDate = time.strftime('%d %B %Y')
 year = time.strftime('%y')
 month = time.strftime('%m').lstrip('0')
 day = time.strftime('%d').lstrip('0')
 validatorVersion = "%s.%s.%s" % (year, month, day)
-jingVersion = "20200702VNU"
-htmlparserVersion = "1.4.16"
-cssvalidatorVersion = "1.0.8"
-galimatiasVersion = "0.1.3"
-langdetectVersion = "1.2"
 
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
@@ -776,23 +762,8 @@ class Release():
         self.docs = ["README.md", "LICENSE"]
 
     def reInitDistDir(self, whichDir):
-        removeIfDirExists(whichDir)
-        ensureDirExists(whichDir)
-
-    def setVersion(self, whichDir, url=None):
-        self.version = validatorVersion
-        if self.artifactId == "jing":
-            self.version = jingVersion
-        if self.artifactId == "htmlparser":
-            self.version = htmlparserVersion
-        if self.artifactId == "cssvalidator":
-            self.version = cssvalidatorVersion
-        if self.artifactId == "galimatias":
-            self.version = galimatiasVersion
-        if self.artifactId == "langdetect":
-            self.version = langdetectVersion
-        if url == snapshotsRepoUrl:
-            self.version += "-SNAPSHOT"
+        removeIfDirExists(distDir)
+        ensureDirExists(distDir)
 
     def writeHash(self, filename, md5OrSha1):
         BLOCKSIZE = 65536
@@ -809,21 +780,21 @@ class Release():
         o.close
 
     def writeHashes(self, whichDir):
-        files = [f for f in os.listdir(whichDir)
-                 if os.path.isfile(os.path.join(whichDir, f))]
+        files = [f for f in os.listdir(distDir)
+                 if os.path.isfile(os.path.join(distDir, f))]
         for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
-            self.writeHash(os.path.join(whichDir, filename), "md5")
-            self.writeHash(os.path.join(whichDir, filename), "sha1")
+            self.writeHash(os.path.join(distDir, filename), "md5")
+            self.writeHash(os.path.join(distDir, filename), "sha1")
 
-    def sign(self, whichDir):
-        files = [f for f in os.listdir(whichDir)
-                 if os.path.isfile(os.path.join(whichDir, f))]
+    def sign(self):
+        files = [f for f in os.listdir(distDir)
+                 if os.path.isfile(os.path.join(distDir, f))]
         for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
-            runCmd([gpgCmd, '--yes', '-ab', os.path.join(whichDir, filename)])
+            runCmd([gpgCmd, '--yes', '-ab', os.path.join(distDir, filename)])
 
     def createArtifacts(self, jarOrWar, url=None):
         whichDir = distDir
@@ -832,7 +803,7 @@ class Release():
             whichDir = distWarDir
             distJarOrWar = "build/dist-war"
         self.reInitDistDir(whichDir)
-        self.setVersion(whichDir, url)
+        self.version = validatorVersion
         runCmd([antCmd] + antCommonArgs + [
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Dvalidator.param.aboutFile=' + aboutFile,
@@ -877,7 +848,7 @@ class Release():
             ensureDirExists(whichDir)
             os.mkdir(os.path.join(whichDir, "war"))
         self.reInitDistDir(whichDir)
-        self.setVersion(whichDir)
+        self.version = validatorVersion
         runCmd([antCmd] + antCommonArgs + [
                 '-Dbuild.java.target.version=' + javaTargetVersion,
                 '-Dvalidator.param.aboutFile=' + aboutFile,
@@ -938,66 +909,6 @@ class Release():
                             self.vnuImageDirname)
         os.chdir(os.path.join('..', '..'))
         self.writeHashes(distDir)
-
-    def createDistribution(self, jarOrWar, isNightly=False):
-        whichDir = distDir
-        if jarOrWar == "war":
-            whichDir = distWarDir
-        self.setVersion(whichDir)
-        if isNightly:
-            self.version = "nightly.%s" % time.strftime('%Y-%m-%d')
-        self.createJarOrWar(jarOrWar)
-        self.prepareDist(jarOrWar)
-
-    def prepareDist(self, jarOrWar):
-        whichDir = distDir
-        distJarOrWar = "build/dist"
-        if jarOrWar == "war":
-            whichDir = distWarDir
-            distJarOrWar = "build/dist-war"
-        self.removeExtras(whichDir)
-        print("Building %s/vnu.%s_%s.zip" % (distWarDir, jarOrWar,
-                                             self.version))
-        if "nightly" not in self.version:
-            for filename in self.docs:
-                shutil.copy(os.path.join(buildRoot, filename), whichDir)
-        os.chdir("build")
-        self.distroFile = os.path.join("vnu.%s_%s.zip" % (jarOrWar,
-                                                          self.version))
-        removeIfExists(self.distroFile)
-        zf = zipfile.ZipFile(self.distroFile, "w")
-        for dirname, subdirs, files in os.walk(distJarOrWar):
-            zf.write(dirname)
-        for filename in files:
-            zf.write(os.path.join(dirname, filename))
-        zf.close()
-        shutil.move(self.distroFile, distJarOrWar)
-        os.chdir("..")
-        self.writeHashes(whichDir)
-        self.sign(whichDir)
-
-    def createOrUpdateGithubData(self):
-        runCmd([gitCmd, 'tag', '-s', '-f', ('%s' % validatorVersion)])
-        args = [
-            "-u",
-            "validator",
-            "-r",
-            "validator",
-            "-t",
-            validatorVersion,
-        ]
-        devnull = open(os.devnull, 'wb')
-        infoArgs = [ghRelCmd, 'info'] + args
-        print(" ".join(infoArgs))
-        if subprocess.call(infoArgs, stdout=devnull, stderr=subprocess.STDOUT):
-            runCmd([ghRelCmd, 'release', '-p'] + args)
-        else:
-            runCmd([ghRelCmd, 'delete'] + args)
-            runCmd([ghRelCmd, 'release', '-p'] + args)
-        devnull.close()
-        args.append('-n')
-        args.append(releaseDate)
-        runCmd([ghRelCmd, 'edit', '-p'] + args)
 
     def createPackageJson(self, packageJson):
         with open(packageJson, 'r') as original:
@@ -1083,88 +994,6 @@ class Release():
         ]
         runCmd(mvnArgs)
 
-    def uploadToCentral(self, url):
-        self.createArtifacts("jar", url)
-        basename = "%s-%s" % (self.artifactId, self.version)
-        mvnArgs = [
-            mvnCmd,
-            "-f",
-            "%s.pom" % os.path.join(distDir, basename),
-            "gpg:sign-and-deploy-file",
-            "-Dgpg.executable=%s" % gpgCmd,
-            "-DrepositoryId=ossrh",
-            "-Durl=%s" % url,
-            "-DpomFile=%s.pom" % basename,
-            "-Dfile=%s.jar" % basename,
-            "-Djavadoc=%s-javadoc.jar" % basename,
-            "-Dsources=%s-sources.jar" % basename,
-        ]
-        runCmd(mvnArgs)
-        if url != stagingRepoUrl:
-            return
-        mvnArgs = [
-            mvnCmd,
-            "-f",
-            "%s.pom" % os.path.join(distDir, basename),
-            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-list",
-            "-DnexusUrl=https://oss.sonatype.org/",
-            "-DserverId=ossrh",
-        ]
-        output = subprocess.check_output(mvnArgs)
-        for line in output.decode('utf-8').split('\n'):
-            if "nuvalidator" in line:
-                stagingRepositoryId = "nuvalidator-" + line[19:23]
-                mvnArgs = [
-                    mvnCmd,
-                    "-f",
-                    "%s.pom" % os.path.join(distDir, basename),
-                    "org.sonatype.plugins:nexus-staging-maven-plugin:rc-close",     # nopep8
-                    "-DnexusUrl=https://oss.sonatype.org/",
-                    "-DserverId=ossrh",
-                    "-DautoReleaseAfterClose=true",
-                    "-DstagingRepositoryId=" + stagingRepositoryId
-                ]
-                runCmd(mvnArgs)
-                mvnArgs = [
-                    mvnCmd,
-                    "-f",
-                    "%s.pom" % os.path.join(distDir, basename),
-                    "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",   # nopep8
-                    "-DnexusUrl=https://oss.sonatype.org/",
-                    "-DserverId=ossrh",
-                    "-DautoReleaseAfterClose=true",
-                    "-DstagingRepositoryId=" + stagingRepositoryId
-                ]
-                runCmd(mvnArgs)
-
-    def uploadToHeroku(self):
-        self.createJarOrWar("war")
-        runCmd([herokuCmd,
-                'deploy:war', '--war',
-                os.path.join(distWarDir, "vnu.war"), '--app', 'vnu'])
-
-    def uploadToGithub(self, jarOrWar):
-        whichDir = distDir
-        if jarOrWar == "war":
-            whichDir = distWarDir
-        for filename in findFiles(whichDir):
-            if "zip" in filename:
-                args = [
-                    ghRelCmd,
-                    'upload',
-                    "-u",
-                    "validator",
-                    "-r",
-                    "validator",
-                    "-t",
-                    validatorVersion,
-                    "-n",
-                    os.path.basename(filename),
-                    "-f",
-                    filename,
-                ]
-                runCmd(args)
-
     def uploadNpmToGitHub(self, tag=None):
         self.version = validatorVersion
         print("npm package version: " + self.version)
@@ -1198,35 +1027,6 @@ class Release():
             runCmd([npmCmd, 'publish'])
         with open(packageJson, 'w') as f:
             f.write(packageJsonCopy)
-
-    def uploadNpm(self, tag=None):
-        removeIfExists(os.path.join(buildRoot, "README.md~"))
-        readMe = os.path.join(buildRoot, "README.md")
-        with open(readMe, 'r') as f:
-            readMeCopy = f.read()
-        self.createNpmReadme(readMe, readMeCopy)
-        packageJson = os.path.join(buildRoot, "package.json")
-        with open(packageJson, 'r') as f:
-            packageJsonCopy = f.read()
-        self.createPackageJson(packageJson)
-        if tag:
-            runCmd([npmCmd, 'publish', '--tag', tag])
-        else:
-            runCmd([npmCmd, 'publish'])
-        with open(readMe, 'w') as f:
-            f.write(readMeCopy)
-        with open(packageJson, 'w') as f:
-            f.write(packageJsonCopy)
-
-    def uploadToReleasesHost(self, jarOrWar, isNightly=False):
-        whichDir = distDir
-        if jarOrWar == "war":
-            whichDir = distWarDir
-        path = "%s/%s" % (releasesPath, jarOrWar)
-        if isNightly:
-            path = "%s/%s" % (nightliesPath, jarOrWar)
-        for filename in findFiles(whichDir):
-            runCmd([scpCmd, filename, ('%s:%s' % (releasesHost, path))])
 
     def checkJar(self, call_createJarOrWar=True):
         if not os.path.exists(vnuJar):
@@ -1870,82 +1670,14 @@ def main(argv):
                 release.createBundle()
             elif arg == 'snapshot':
                 release.uploadMavenToGitHub()
-            elif arg == 'release':
-                release.uploadMavenToGitHub()
-                release.createDistribution("jar")
-                release.createDistribution("war")
-                release.createOrUpdateGithubData()
-                release.uploadToGithub("jar")
-                release.uploadToGithub("war")
-                release.uploadNpmToGitHub()
             elif arg == 'npm-release':
                 release.createJarOrWar("jar")
                 release.uploadNpmToGitHub()
-            elif arg == 'github-release':
-                release.createDistribution("jar")
-                release.createDistribution("war")
-                release.createOrUpdateGithubData()
-                release.uploadToGithub("jar")
-                release.uploadToGithub("war")
-            elif arg == 'nightly':
-                isNightly = True
-                release.createDistribution("war", isNightly)
-                release.uploadToReleasesHost("war", isNightly)
-                release.createDistribution("jar", isNightly)
-                release.uploadToReleasesHost("jar", isNightly)
-                release.uploadNpmToGitHub("next")
-            elif arg == 'heroku':
-                release.uploadToHeroku()
             elif arg == 'maven-bundle':
                 release.createBundle()
             elif arg == 'maven-snapshot':
                 release.uploadMavenToGitHub()
             elif arg == 'maven-release':
-                release.uploadMavenToGitHub()
-            elif arg == 'galimatias-bundle':
-                release = Release("galimatias")
-                release.createBundle()
-            elif arg == 'galimatias-snapshot':
-                release = Release("galimatias")
-                release.uploadMavenToGitHub()
-            elif arg == 'galimatias-release':
-                release = Release("galimatias")
-                release.uploadMavenToGitHub()
-            elif arg == 'langdetect-bundle':
-                release = Release("langdetect")
-                release.createBundle()
-            elif arg == 'langdetect-snapshot':
-                release = Release("langdetect")
-                release.uploadMavenToGitHub()
-            elif arg == 'langdetect-release':
-                release = Release("langdetect")
-                release.uploadMavenToGitHub()
-            elif arg == 'htmlparser-bundle':
-                release = Release("htmlparser")
-                release.createBundle()
-            elif arg == 'htmlparser-snapshot':
-                release = Release("htmlparser")
-                release.uploadMavenToGitHub()
-            elif arg == 'htmlparser-release':
-                release = Release("htmlparser")
-                release.uploadMavenToGitHub()
-            elif arg == 'cssvalidator-bundle':
-                release = Release("cssvalidator")
-                release.createBundle()
-            elif arg == 'cssvalidator-snapshot':
-                release = Release("cssvalidator")
-                release.uploadMavenToGitHub()
-            elif arg == 'cssvalidator-release':
-                release = Release("cssvalidator")
-                release.uploadMavenToGitHub()
-            elif arg == 'jing-bundle':
-                release = Release("jing")
-                release.createBundle()
-            elif arg == 'jing-snapshot':
-                release = Release("jing")
-                release.uploadMavenToGitHub()
-            elif arg == 'jing-release':
-                release = Release("jing")
                 release.uploadMavenToGitHub()
             elif arg == 'image':
                 release.createRuntimeImage()
