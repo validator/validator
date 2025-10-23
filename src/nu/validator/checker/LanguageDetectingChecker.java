@@ -33,15 +33,21 @@ import io.mola.galimatias.Host;
 import io.mola.galimatias.URL;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
+import java.util.Properties;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -49,11 +55,13 @@ import org.xml.sax.SAXException;
 
 public class LanguageDetectingChecker extends Checker {
 
-    private static final String languageList = //
+    private static final String defaultLanguageList = //
             "nu/validator/localentities/files/language-profiles-list.txt";
 
-    private static final String profilesDir = //
+    private static final String defaultProfilesDir = //
             "nu/validator/localentities/files/language-profiles/";
+
+    private static final Logger log4j = Logger.getLogger(LanguageDetectingChecker.class);
 
     private static final Map<String, String[]> LANG_TAGS_BY_TLD = //
             new HashMap<>();
@@ -195,9 +203,19 @@ public class LanguageDetectingChecker extends Checker {
             LANG_TAGS_BY_TLD.put("vn", new String[] { "vi" });
             LANG_TAGS_BY_TLD.put("za", new String[] { "af" });
             try {
+
+                // Load properties
+                Properties props = new Properties();
+                try (InputStream fis = new FileInputStream("vnu.properties")) {
+                    props.load(fis);
+                } catch (IOException e) {
+                    log4j.debug("Optional vnu.properties file not found.");
+                }
+                String propsLanguageList = props.getProperty("nu.validator.checker.language-profiles-list");
+                String propsProfilesDir = props.getProperty("nu.validator.checker.language-profiles-dir");
+
                 BufferedReader br = new BufferedReader(new InputStreamReader(
-                        LanguageDetectingChecker.class.getClassLoader() //
-                                .getResourceAsStream(languageList),
+                        LanguageDetectingChecker.getIsFromProperty(propsLanguageList, defaultLanguageList),
                         "UTF-8"));
                 List<String> languageTags = new ArrayList<>();
                 String languageTagAndName = br.readLine();
@@ -207,9 +225,13 @@ public class LanguageDetectingChecker extends Checker {
                 }
                 List<String> profiles = new ArrayList<>();
                 for (String languageTag : languageTags) {
+                    String langFile = null;
+                    if (propsProfilesDir != null)
+                        langFile = propsProfilesDir +  File.separator + languageTag;
                     profiles.add((new BufferedReader(new InputStreamReader(
-                            LanguageDetectingChecker.class.getClassLoader() //
-                                    .getResourceAsStream(profilesDir + languageTag),
+                            LanguageDetectingChecker.getIsFromProperty(
+                                    langFile,
+                                    defaultProfilesDir + languageTag),
                             "UTF-8"))).readLine());
                 }
                 DetectorFactory.clear();
@@ -224,6 +246,31 @@ public class LanguageDetectingChecker extends Checker {
             } catch (LangDetectException e) {
             }
         }
+    }
+
+    static InputStream getIsFromProperty(String propValue, String defaultValue) {
+        InputStream propIs = null;
+        Boolean useBuiltinLanguageList = false;
+        if (propValue != null) {
+            // log4j.debug("Trying file at: " + propValue);
+            try {
+                propIs = new FileInputStream(new File(propValue));
+            } catch (Exception e) {
+                //e.printStackTrace();
+                log4j.debug("Failed loading file at: " + propValue);
+                useBuiltinLanguageList = true;
+            }
+        }
+        if (propValue == null || useBuiltinLanguageList == true) {
+            if (useBuiltinLanguageList)
+                log4j.debug("Trying built-in resource instead: " + defaultValue);
+            propIs = LanguageDetectingChecker.class.getClassLoader().getResourceAsStream(defaultValue);
+            if (useBuiltinLanguageList && propIs != null)
+                log4j.debug("Successfully loaded built-in resource: " + defaultValue);
+            if (propIs == null)
+                throw new RuntimeException("Failed loading resource at: " + defaultValue);
+        }
+        return propIs;
     }
 
     private boolean shouldAppendToLangdetectContent() {
