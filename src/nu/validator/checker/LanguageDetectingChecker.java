@@ -747,9 +747,11 @@ public class LanguageDetectingChecker extends Checker {
     public void endElement(String uri, String localName, String name)
             throws SAXException {
         if ("http://www.w3.org/1999/xhtml" != uri) {
+            elementContent.setLength(0);
             return;
         }
-        if (nonWhitespaceCharacterCount < MAX_CHARS) {
+        if (Arrays.binarySearch(SKIP_NAMES, localName) < 0 &&
+                nonWhitespaceCharacterCount < MAX_CHARS) {
             documentContent.append(elementContent);
             elementContent.setLength(0);
         }
@@ -764,6 +766,7 @@ public class LanguageDetectingChecker extends Checker {
             }
         } else {
             if (Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
+                elementContent.setLength(0);
                 currentOpenElementsWithSkipName--;
                 if (currentOpenElementsWithSkipName < 0) {
                     currentOpenElementsWithSkipName = 0;
@@ -815,7 +818,8 @@ public class LanguageDetectingChecker extends Checker {
     @Override
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
-        if ("http://www.w3.org/1999/xhtml" != uri) {
+        if ("http://www.w3.org/1999/xhtml" != uri
+                || Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
             return;
         }
         if ("html".equals(localName)) {
