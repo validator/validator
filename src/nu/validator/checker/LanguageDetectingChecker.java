@@ -609,12 +609,13 @@ public class LanguageDetectingChecker extends Checker {
      */
     @Override
     public void endDocument() throws SAXException {
-        if (!"0".equals(System.getProperty(
-                "nu.validator.checker.enableLangDetection"))
+        if (documentContent.length() > MIN_CHARS &&
+                !"0".equals(System.getProperty(
+                        "nu.validator.checker.enableLangDetection"))
                 && htmlStartTagLocator != null) {
-                detectLanguageAndCheckAgainstDeclaredLanguage();
-            }
-        }
+            detectLanguageAndCheckAgainstDeclaredLanguage();
+                }
+    }
 
     private void warnIfMissingLang() throws SAXException {
         if (!htmlElementHasLang) {
