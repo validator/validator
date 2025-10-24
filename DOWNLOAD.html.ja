@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>CSS 検証サービスのダウンロードとインストール</title>
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Home Page" />
+  <style type="text/css" media="all">
+    @import "style/base.css";
+  	@import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>CSS 検証サービス</span></a></h1>
+   <p id="tagline">
+     Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+   </p>
+  </div>
+
+
+<div class="doc">
+<h2>CSS 検証サービスのダウンロードとインストール</h2>
+
+<h3 id="download">CSS 検証サービスのダウンロード</h3>
+  
+<p>　CSS 検証サービスは、3種類のパッケージで利用可能です。最新版にを使いたい開発者のためのCVS、コマンドラインツールとしての使用のためのjarアーカイブ、そして(2009年以降の) サーバサイドアプリケーションのためのwarアーカイブです。</p>
+
+	<h4 id="source">ソースのダウンロード</h4>
+    <p>
+      <a href='https://github.com/w3c/css-validator'>CSS 検証サービス</a> は、CVS を使ってダウンロードできます。
+      <a href='http://dev.w3.org/cvsweb/'>ガイド</a>に従って W3C CVS 公開サーバーにアクセスし、2002/css-validator を取得してください。オンライン版のCSS 検証サービスは、stable releaseなので、一般的に CVS 版のものより古く、結果表示などが若干異なる可能性があります。</p>
+
+	<h4>Java パッケージ (jar/war) としてダウンロード</h4>
+	<p><a href="https://github.com/w3c/css-validator/releases/latest/download/css-validator.jar">css-validator.jar</a></p>
+
+
+<h3>インストールガイド</h3>
+<p>CSS 検査サービスはサーブレットであり、Java で書かれています。
+どんなサーブレットエンジン上にでもインストール可能で、またシンプルなコマンドラインツールとして使うこともできます。公式の W3C CSS 検査サービスは Jigsaw サーバー上で動いており、これがお勧めのセットアップです。ただしこの文書では単純化のために、Apache のサーブレットエンジンである Tomcat 用のオンラインサーブレットとしてインストールする方法についてより詳しく説明してあります。Jigsaw でサーブレットとしてインストールする方法や、コマンドライン環境で実行するためのガイドもこのページ下部にあります。</p>
+
+<h4 id="prereq">あらかじめ必要なもの</h4>
+
+<p>このインストールガイドでは、すでに次のものがインストールされ動作確認されているものとします: </p>
+<ul class="instructions">
+	<li>ただしく動作する Java 環境</li>
+	<li>Java 構築ツール「<a href="https://ant.apache.org/">Ant</a>」</li>
+	<li><a href="https://www.w3.org/Jigsaw/">Jigsaw</a>、<a href="https://tomcat.apache.org/">Tomcat</a>や<a href="http://www.mortbay.org/">Jetty</a>などの Java ウェブサーブレットコンテナ (オンラインサービスとして利用する場合のみ)。</li>
+</ul>
+
+<p id="prereq-libs">各自のシステムに CSS 検証サービスをインストールするには、<span class="file">servlet.jar</span>という Java ライブラリが必要です。これは、Tomcat のインストールパスを [<span class="const">TOMCAT_DIR</span>] とすると、[<span class="const">TOMCAT_DIR</span>]/common/lib/ にあるでしょう。servlet-api.jar という名前になっていることもあります。見当たらない場合は、<a href="http://java.sun.com/products/servlet/DOWNLOAD.html">java.sun.com</a> で入手して下さい。</p>
+  
+  
+<h4>Tomcat に CSS 検証サービスをインストールする</h4>
+  <ol class="instructions">
+	<li>CSS 検証サービスを<a href="#source">上記</a>の通りダウンロードしてください。</li>
+	<li><span class="file">[<span class="const">VALIDATOR_DIR</span>]build.xml</span>を編集して、servlet.libの値を<span class="file">servlet.jar</span>がある場所へのフルパスに変更してください。</li>
+	<li><span class="dir">[<span class="const">VALIDATOR_DIR</span></span>上で、<kbd>ant war</kbd>を実行するとビルドできます。antは、必要なライブラリをダウンロードして、<span class="file">css-validator.war</span>というアーカイブを作るはずです。</li>
+	<li>"<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/</span><span class="file">css-validator.jar</span>" を"<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/WEB-INF/lib/</span>" にコピーまたは移動します。</li>
+    <li>最後に、Tomcat サーバーを再起動します: <br />
+<kbd>"cd <span class="dir">[<span class="const">TOMCAT_DIR</span>]</span>; <span class="dir">./bin/</span><span class="file">shutdown.sh</span>; <span class="dir">./bin/</span><span class="file">startup.sh</span>;"</kbd>
+	</li>
+</ol>
+
+<h4>Jigsaw ウェブサーバーへのインストール</h4>
+<ol class="instructions">
+<li>上記ガイドに沿って、ソースをダウンロードして<span class="dir">[<span class="const">JIGSAW_DIR</span>]/WWW</span>に展開して、<kbd>ant jigsaw</kbd> でビルドします。</li>
+<li>次に、CSS 検証サービスをサーブレットのコンテナとして動作させるために、ホームディレクトリを設定します(通常は css-validator)。そして Jigsaw Admin を起動したら、HTTPFrame を ServletDirectoryFrame に変えてください。</li>
+<li>次のステップは "validator" リソースの作成です。これは、"ServletWrapper" クラスで "ServletWrapperFrame" フレームに属するリソースです。フレームについては自動的に設定されます。サーブレットのクラスは org.w3c.css.servlet.CssValidator です。すでに "validator" という名前のファイルが存在するなら、その名前を変えてください。
+このエイリアスの名前は必ず "validator" である必要があります。</li>
+<li>すべてのjarライブラリが<span class="dir">[<span class="const">JIGSAW_DIR</span>]/WWW/css-validator/lib</span>フォルダにありJigsawのCLASSPATHに設定さてれいることを確認してください。</li>
+<li>最後に Jigsaw を起動し、CSS 検証サービスを実行します。
+HTMLの場所を確認してください。
+一般的なURLは次のようになるはずです:<br />
+http://localhost:8001/css-validator/validator.html</li>
+</ol>
+
+<h3>コマンドラインからの利用</h3>
+
+<p>CSS 検証サービスは、Java がインストールされたコンピュータ上では、コマンドラインツールとして使うことができます。
+css-validator.jar を上の説明にしたがって作成したら、次のように起動します:<br />
+<kbd>java -jar css-validator.jar http://www.w3.org/</kbd>
+</p>
+<p>注意:css-validator.jarは/libフォルダと同じ場所にある必要があります。</p>
+</div>
+   <ul class="navbar"  id="menu">
+
+        <li><strong><a href="./" title="W3C CSS 検証サービスのホーム">ホーム</a></strong> <span class="hideme">|</span></li>
+        <li><a href="about.html" title="このサービスについて">このサービスについて</a> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="ドキュメント">ドキュメント</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="このサービスへのフィードバック">フィードバック</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="クレジットと謝辞">謝辞</a><span class="hideme">|</span></li>
+      </ul>
+
+      <ul id="lang_choice">
+
+     <li><a href="DOWNLOAD.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="DOWNLOAD.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+
+     <li><a href="DOWNLOAD.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="カスケーディング・スタイルシートについてもっと知るには"><img src="images/woolly-icon" width="72" height="48" alt="CSS" /></a>
+   </p>
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" width="80" height="15" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>

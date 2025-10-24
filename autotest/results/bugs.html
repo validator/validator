@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Language" content="en" />
+    <title>Tests Results</title>
+    <style type="text/css">
+      h1 {
+        text-align: center;
+        border: 2px solid;
+      }
+      h2 {
+        text-decoration: underline;
+        text-transform: capitalize
+      }
+      h3 {
+        font-size: 15pt;
+      }
+      dd {
+        display: inline;
+      }
+      .res, .error {
+        border-bottom: 1px solid black;
+      }
+      #valid {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Test Suite</h1>
+    <h2>bugs</h2>
+    <div class="res">
+      <h3><a href="testsuite/bugs/4870-5586.css">testsuite/bugs/4870-5586.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%2F**%2F%3E++b+%7B+color%3A+green+%7Db+%2F**%2F+%3E++c+%7B+color%3A+green+%7Dc%2F**%2F%3E++d+%7B+color%3A+green+%7Dd%2F**%2F+%3E++e+%7B+color%3A+green+%7De+%3E%2F**%2F+f+%7B+color%3A+green+%7Df+%3E%2F**%2Fg+%7B+color%3A+green+%7Dg+%2F**%2F+%2F**%2F%3E+h+%7B+color%3A+green+%7Dh+%2F**%2F+i+%7B+color%3A+green+%7Di%2F**%2F+j+%7B+color%3A+green+%7Dj+%2F**%2Fk+%7B+color%3A+green+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=4870">http://www.w3.org/Bugs/Public/show_bug.cgi?id=4870</a>&nbsp;and&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=5586">http://www.w3.org/Bugs/Public/show_bug.cgi?id=5586</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/750.css">testsuite/bugs/750.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2Erecenttitle%7B++++filter%3Aprogid%3ADXImageTransform%2EMicrosoft%2EGradient%28GradientType%3D1%2CStartColorStr%3D%27%2523FF003399%27%2C+EndColorStr%3D%27%2523FF6699CC%27%29%3B++padding-left%3A8px%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=750">http://www.w3.org/Bugs/Public/show_bug.cgi?id=750</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 4</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 4</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/372.css">testsuite/bugs/372.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%7B++background%3A+inherit+inherit%3B++background-attachment%3A+scroll+scroll%3B++background-attachment%3A+inherit+inherit%3B++background-color%3A+transparent+transparent%3B++background-color%3A+%23000+%23000%3B++background-color%3A+%23000000+%23000000%3B++background-color%3A+black+black%3B++background-color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++background-color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++background-color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++background-color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++background-color%3A+inherit+inherit%3B++background-image%3A+none+none%3B++background-image%3A+url%28http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%29+url%28http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%29%3B++background-image%3A+url%28%27http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%27%29+url%28%27http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%27%29%3B++background-image%3A+url%28%22http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%22%29+url%28%22http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%22%29%3B++background-image%3A+inherit+inherit%3B++background-position%3A+center+center+center%3B++background-position%3A+0+0+0%3B++background-position%3A+0%25+0%25+0%25%3B++background-position%3A+inherit+inherit%3B++background-repeat%3A+repeat+repeat%3B++background-repeat%3A+inherit+inherit%3B++border%3A+inherit+inherit%3B++border-bottom%3A+inherit+inherit%3B++border-bottom-color%3A+transparent+transparent%3B++border-bottom-color%3A+%23000+%23000%3B++border-bottom-color%3A+%23000000+%23000000%3B++border-bottom-color%3A+black+black%3B++border-bottom-color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++border-bottom-color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++border-bottom-color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++border-bottom-color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++border-bottom-color%3A+inherit+inherit%3B++border-bottom-style%3A+none+none%3B++border-bottom-style%3A+inherit+inherit%3B++border-bottom-width%3A+0+0%3B++border-bottom-width%3A+thin+thin%3B++border-bottom-width%3A+inherit+inherit%3B++border-collapse%3A+collapse+collapse%3B++border-collapse%3A+inherit+inherit%3B++border-color%3A+transparent+transparent+transparent+transparent+transparent%3B++border-color%3A+%23000+%23000+%23000+%23000+%23000%3B++border-color%3A+%23000000+%23000000+%23000000+%23000000+%23000000%3B++border-color%3A+black+black+black+black+black%3B++border-color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++border-color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++border-color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++border-color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++border-color%3A+inherit+inherit%3B++border-left%3A+inherit+inherit%3B++border-left-color%3A+transparent+transparent%3B++border-left-color%3A+%23000+%23000%3B++border-left-color%3A+%23000000+%23000000%3B++border-left-color%3A+black+black%3B++border-left-color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++border-left-color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++border-left-color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++border-left-color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++border-left-color%3A+inherit+inherit%3B++border-left-style%3A+none+none%3B++border-left-style%3A+inherit+inherit%3B++border-left-width%3A+0+0%3B++border-left-width%3A+thin+thin%3B++border-left-width%3A+inherit+inherit%3B++border-right%3A+inherit+inherit%3B++border-right-color%3A+transparent+transparent%3B++border-right-color%3A+%23000+%23000%3B++border-right-color%3A+%23000000+%23000000%3B++border-right-color%3A+black+black%3B++border-right-color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++border-right-color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++border-right-color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++border-right-color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++border-right-color%3A+inherit+inherit%3B++border-right-style%3A+none+none%3B++border-right-style%3A+inherit+inherit%3B++border-right-width%3A+0+0%3B++border-right-width%3A+thin+thin%3B++border-right-width%3A+inherit+inherit%3B++border-top%3A+inherit+inherit%3B++border-top-color%3A+transparent+transparent%3B++border-top-color%3A+%23000+%23000%3B++border-top-color%3A+%23000000+%23000000%3B++border-top-color%3A+black+black%3B++border-top-color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++border-top-color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++border-top-color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++border-top-color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++border-top-color%3A+inherit+inherit%3B++border-top-style%3A+none+none%3B++border-top-style%3A+inherit+inherit%3B++border-top-width%3A+0+0%3B++border-top-width%3A+thin+thin%3B++border-top-width%3A+inherit+inherit%3B++border-spacing%3A+0+0+0%3B++border-spacing%3A+inherit+inherit%3B++border-style%3A+none+none+none+none+none%3B++border-style%3A+inherit+inherit%3B++border-width%3A+0+0+0+0+0%3B++border-width%3A+inherit+inherit%3B++bottom%3A+0+0%3B++bottom%3A+0%25+0%25%3B++bottom%3A+auto+auto%3B++bottom%3A+inherit+inherit%3B++caption-side%3A+top+top%3B++caption-side%3A+inherit+inherit%3B++clear%3A+none+none%3B++clear%3A+inherit+inherit%3B++clip%3A+auto+auto%3B++clip%3A+rect%280%2C+0%2C+0%2C+0%29+rect%280%2C+0%2C+0%2C+0%29%3B++clip%3A+rect%280%2C+0%2C+0%2C+0%2C+0%29%3B++clip%3A+inherit+inherit%3B++color%3A+%23000+%23000%3B++color%3A+%23000000+%23000000%3B++color%3A+black+black%3B++color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++color%3A+inherit+inherit%3B++content%3A+normal+normal%3B++content%3A+inherit+inherit%3B++counter-increment%3A+a+1+1%3B++counter-increment%3A+none+none%3B++counter-increment%3A+inherit+inherit%3B++counter-reset%3A+a+1+1%3B++counter-reset%3A+none+none%3B++counter-reset%3A+inherit+inherit%3B++cursor%3A+auto+auto%3B++cursor%3A+url%28http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%29+url%28http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%29%3B++cursor%3A+url%28%27http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%27%29+url%28%27http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%27%29%3B++cursor%3A+url%28%22http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%22%29+url%28%22http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%22%29%3B++cursor%3A+inherit+inherit%3B++direction%3A+ltr+ltr%3B++direction%3A+inherit+inherit%3B++display%3A+block+block%3B++display%3A+inherit+inherit%3B++empty-cells%3A+show+show%3B++empty-cells%3A+inherit+inherit%3B++float%3A+none+none%3B++float%3A+inherit+inherit%3B++font%3A+icon+icon%3B++font%3A+inherit+inherit%3B++%2F*+%27font-family%27+accepts+duplicate+keywords+as+specific+font-family+names%2E+*%2F++font-size%3A+small+small%3B++font-size%3A+smaller+smaller%3B++font-size%3A+1em+1em%3B++font-size%3A+1%25+1%25%3B++font-size%3A+inherit+inherit%3B++font-style%3A+normal+normal%3B++font-style%3A+inherit+inherit%3B++font-variant%3A+normal+normal%3B++font-variant%3A+inherit+inherit%3B++font-weight%3A+bold+bold%3B++font-weight%3A+bolder+bolder%3B++font-weight%3A+400+400%3B++font-weight%3A+inherit+inherit%3B++height%3A+1em+1em%3B++height%3A+1%25+1%25%3B++height%3A+auto+auto%3B++height%3A+inherit+inherit%3B++left%3A+1em+1em%3B++left%3A+1%25+1%25%3B++left%3A+auto+auto%3B++left%3A+inherit+inherit%3B++letter-spacing%3A+1em+1em%3B++letter-spacing%3A+normal+normal%3B++letter-spacing%3A+inherit+inherit%3B++line-height%3A+normal+normal%3B++line-height%3A+1em+1em%3B++line-height%3A+1%25+1%25%3B++line-height%3A+1+1%3B++line-height%3A+inherit+inherit%3B++list-style%3A+inherit+inherit%3B++list-style-image%3A+none+none%3B++list-style-image%3A+url%28http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%29+url%28http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%29%3B++list-style-image%3A+url%28%27http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%27%29+url%28%27http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%27%29%3B++list-style-image%3A+url%28%22http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%22%29+url%28%22http%3A%2F%2Fwww%2Ew3%2Eorg%2FIcons%2Fw3c_home%22%29%3B++list-style-image%3A+inherit+inherit%3B++list-style-position%3A+inside+inside%3B++list-style-position%3A+inherit+inherit%3B++list-style-type%3A+disc+disc%3B++list-style-type%3A+inherit+inherit%3B++margin%3A+auto+auto+auto+auto+auto%3B++margin%3A+0+0+0+0+0%3B++margin%3A+0%25+0%25+0%25+0%25+0%25%3B++margin%3A+inherit+inherit%3B++margin-bottom%3A+auto+auto%3B++margin-bottom%3A+0+0%3B++margin-bottom%3A+0%25+0%25%3B++margin-bottom%3A+inherit+inherit%3B++margin-left%3A+auto+auto%3B++margin-left%3A+0+0%3B++margin-left%3A+0%25+0%25%3B++margin-left%3A+inherit+inherit%3B++margin-right%3A+auto+auto%3B++margin-right%3A+0+0%3B++margin-right%3A+0%25+0%25%3B++margin-right%3A+inherit+inherit%3B++margin-top%3A+auto+auto%3B++margin-top%3A+0+0%3B++margin-top%3A+0%25+0%25%3B++margin-top%3A+inherit+inherit%3B++max-height%3A+1em+1em%3B++max-height%3A+1%25+1%25%3B++max-height%3A+none+none%3B++max-height%3A+inherit+inherit%3B++max-width%3A+1em+1em%3B++max-width%3A+1%25+1%25%3B++max-width%3A+none+none%3B++max-width%3A+inherit+inherit%3B++min-height%3A+1em+1em%3B++min-height%3A+1%25+1%25%3B++min-height%3A+inherit+inherit%3B++min-width%3A+1em+1em%3B++min-width%3A+1%25+1%25%3B++min-width%3A+inherit+inherit%3B++orphans%3A+2+2%3B++orphans%3A+inherit+inherit%3B++outline%3A+inherit+inherit%3B++outline-color%3A+invert+invert%3B++outline-color%3A+%23000+%23000%3B++outline-color%3A+%23000000+%23000000%3B++outline-color%3A+black+black%3B++outline-color%3A+rgb%280%2C+0%2C+0%29+rgb%280%2C+0%2C+0%29%3B++outline-color%3A+rgb%280%25%2C+0%25%2C+0%25%29+rgb%280%25%2C+0%25%2C+0%25%29%3B++outline-color%3A+rgb%280%2C+0%2C+0%2C+0%29%3B++outline-color%3A+rgb%280%25%2C+0%25%2C+0%25%2C+0%25%29%3B++outline-color%3A+inherit+inherit%3B++outline-style%3A+none+none%3B++outline-style%3A+inherit+inherit%3B++outline-width%3A+0+0%3B++outline-width%3A+thin+thin%3B++outline-width%3A+inherit+inherit%3B++overflow%3A+auto+auto%3B++overflow%3A+inherit+inherit%3B++padding%3A+auto+auto+auto+auto+auto%3B++padding%3A+0+0+0+0+0%3B++padding%3A+0%25+0%25+0%25+0%25+0%25%3B++padding%3A+inherit+inherit%3B++padding-bottom%3A+auto+auto%3B++padding-bottom%3A+0+0%3B++padding-bottom%3A+0%25+0%25%3B++padding-bottom%3A+inherit+inherit%3B++padding-left%3A+auto+auto%3B++padding-left%3A+0+0%3B++padding-left%3A+0%25+0%25%3B++padding-left%3A+inherit+inherit%3B++padding-right%3A+auto+auto%3B++padding-right%3A+0+0%3B++padding-right%3A+0%25+0%25%3B++padding-right%3A+inherit+inherit%3B++padding-top%3A+auto+auto%3B++padding-top%3A+0+0%3B++padding-top%3A+0%25+0%25%3B++padding-top%3A+inherit+inherit%3B++page-break-after%3A+auto+auto%3B++page-break-after%3A+inherit+inherit%3B++page-break-before%3A+auto+auto%3B++page-break-before%3A+inherit+inherit%3B++page-break-inside%3A+auto+auto%3B++page-break-inside%3A+inherit+inherit%3B++position%3A+fixed+fixed%3B++position%3A+inherit+inherit%3B++quotes%3A+%22%28%22+%22%29%22+%22x%22%3B++quotes%3A+none+none%3B++quotes%3A+inherit+inherit%3B++right%3A+auto+auto%3B++right%3A+0+0%3B++right%3A+0%25+0%25%3B++right%3A+inherit+inherit%3B++table-layout%3A+auto+auto%3B++table-layout%3A+inherit+inherit%3B++text-align%3A+left+left%3B++text-align%3A+inherit+inherit%3B++text-decoration%3A+none+none%3B++text-decoration%3A+blink+blink%3B++text-decoration%3A+inherit+inherit%3B++text-indent%3A+0+0%3B++text-indent%3A+0%25+0%25%3B++text-indent%3A+inherit+inherit%3B++text-transform%3A+none+none%3B++text-transform%3A+inherit+inherit%3B++top%3A+auto+auto%3B++top%3A+0+0%3B++top%3A+0%25+0%25%3B++top%3A+inherit+inherit%3B++unicode-bidi%3A+embed+embed%3B++unicode-bidi%3A+inherit+inherit%3B++vertical-align%3A+sub+sub%3B++vertical-align%3A+0+0%3B++vertical-align%3A+0%25+0%25%3B++vertical-align%3A+inherit+inherit%3B++visibility%3A+hidden+hidden%3B++visibility%3A+inherit+inherit%3B++white-space%3A+pre+pre%3B++white-space%3A+inherit+inherit%3B++widows%3A+2+2%3B++widows%3A+inherit+inherit%3B++width%3A+1em+1em%3B++width%3A+1%25+1%25%3B++width%3A+auto+auto%3B++width%3A+inherit+inherit%3B++word-spacing%3A+normal+normal%3B++word-spacing%3A+0+0%3B++word-spacing%3A+inherit+inherit%3B++z-index%3A+auto+auto%3B++z-index%3A+1+1%3B++z-index%3A+inherit+inherit%3B++%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=372">http://www.w3.org/Bugs/Public/show_bug.cgi?id=372</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 309</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 309</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/corrected-bug_invalid-value1.css">testsuite/bugs/corrected-bug_invalid-value1.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+Should+not+be+valid%2C+here+is+not+a+valid+value+*%2Fimg+%7B++++float%3A+left+here%7D++%2F*+%22here%22+is+not+a+value+of+%27float%27+*%2F">Go to the Validator page</a></p>
+      <p></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/corrected-bug_invalid-value2.css">testsuite/bugs/corrected-bug_invalid-value2.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+Should+not+be+valid%2C+badly+validated+by+the+validator++*%2Fimg+%7B++++background%3A+%22red%22%7D+%2F*+keywords+cannot+be+quoted+*%2F">Go to the Validator page</a></p>
+      <p>Quoted keyword</p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/920.css">testsuite/bugs/920.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=div+%7Bborder%3A2px+dot%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=920">http://www.w3.org/Bugs/Public/show_bug.cgi?id=920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/778.css">testsuite/bugs/778.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%7B+border%3A+1px+solid+c85+%7Da+%7B+border%3A+1px+solid+123456+%7Da+%7B+border%3A+1px+solid+8D2828+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=778">http://www.w3.org/Bugs/Public/show_bug.cgi?id=778</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 3</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 3</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/289.css">testsuite/bugs/289.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%7B++background%3A+1+%22%22%2C+0deg+%2F+x%3B++border%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++border-bottom%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++border-color%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++border-left%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++border-right%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++border-style%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++border-top%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++border-width%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++font%3A+foo%2C+0deg+%2F+url%28r%29+x%3B++font%3A+foo+1em+serif%3B++font%3A+url%28r%29+1em+serif%3B++font%3A+foo-1+foo-2+foo-3+1em+serif%3B++font%3A+foo-1+foo-2+foo-3+foo-4+1em+serif%3B++list-style%3A+1+%22%22%2C+0deg+%2F+x%3B++margin%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++outline%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++padding%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++text-decoration%3A+1+%22%22%2C+0deg+%2F+url%28r%29+x%3B++%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=289">http://www.w3.org/Bugs/Public/show_bug.cgi?id=289</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 19</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 19</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/287.css">testsuite/bugs/287.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%7B+++border%3A+thin+dashed+1pt+white%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=287">http://www.w3.org/Bugs/Public/show_bug.cgi?id=287</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/696.css">testsuite/bugs/696.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=ul+%7Blist-style%3A+disk+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=696">http://www.w3.org/Bugs/Public/show_bug.cgi?id=696</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=471">http://www.w3.org/Bugs/Public/attachment.cgi?id=471</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D471">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=697">http://www.w3.org/Bugs/Public/show_bug.cgi?id=697</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/764.css">testsuite/bugs/764.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=BODY+%7B+++background-position%3A+90%25+top%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=764">http://www.w3.org/Bugs/Public/show_bug.cgi?id=764</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/1237.css">testsuite/bugs/1237.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=ul%23navigation+%3E+li+%7B%09display%3A+list-item+!important%3B%09list-style-type%3A+inherit%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=1237">http://www.w3.org/Bugs/Public/show_bug.cgi?id=1237</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/1269.css">testsuite/bugs/1269.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=body+%7Bcolor%3A+green%3B%7D%23test1+%7Bcolor%3A+rgb%28254%2E8%2C+0%2C+0%29%3B%7D%23test2+%7Bcolor%3A+rgb%280%2C+0%2C+254%2E0%29%3B%7D%23validation+img+%7Bmargin%3A+0%2E5em%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=1269">http://www.w3.org/Bugs/Public/show_bug.cgi?id=1269</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/1269bis.css">testsuite/bugs/1269bis.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=p%2Ecorrect+%7B+color%3A+red+%7D++++p%2Eincorrect+%7B+color%3A+green+%7D++++p%23numnumpercent+%7B+color%3A+rgb%28255%2C+0%2C+0%25%29+%7D++++p%23percentnumnum+%7B+color%3A+rgb%28100%25%2C+0%2C+0%29+%7D++++p%23percentpercentnum+%7B+color%3A+rgb%28100%25%2C+0%25%2C+0%29+%7D++++p%23percentnumpercent+%7B+color%3A+rgb%28100%25%2C+0%2C+0%25%29+%7D++++p%23floatnumnum+%7B+color%3A+rgb%28255%2E0%2C+0%2C+0%29+%7D++++p%23numfloatnum+%7B+color%3A+rgb%280%2C+128%2E0%2C+0%29+%7D++++p%23numnumnum+%7B+color%3A+rgb%280%2C+128%2C+0%29+%7D++++p%23percentpercentpercent1+%7B+color%3A+rgb%280%25%2C+50%25%2C+0%25%29+%7D++++p%23percentpercentpercent2+%7B+color%3A+rgb%280%25%2C+49%2E99%25%2C+0%25%29+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=1269">http://www.w3.org/Bugs/Public/show_bug.cgi?id=764</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 6</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 6</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/1847css3.css">testsuite/bugs/1847css3.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=body+%7B+font-family%3A+%22Helvetica%22%2C+%22Univers%22%2C+%22Arial%22%2C+sans-serif+%7D&amp;profile=css3">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=1847">http://www.w3.org/Bugs/Public/show_bug.cgi?id=1847</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/1885.css">testsuite/bugs/1885.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=body+%7B++++margin%3A+0px%3B++++background-color%3A+%23000%3B++++font-size%3A+0%2E9em%3B++++font-family%3A+%22Garrison+Sans%22%2C+%22Trebuchet+MS%22%2C+arial%3B++++color%3A+%23fff%3B++++%7Da%3Alink+%7B++++color%3A+%23fff%3B++++text-decoration%3A+none%3B%7Da%3Avisited+%7B++++color%3A+%23fff%3B++++text-decoration%3A+none%3B%7Da%3Ahover+%7B++++color%3A+%23ff0000%3B++++text-decoration%3A+none%3B%7Da%3Aactive+%7B++++color%3A+%23fff%3B++++text-decoration%3A+none%3B%7Ddiv%2Ewrapper+%7B++++width%3A+650px%3B++++height%3A+auto%3B++++padding-left%3A+5px%3B++++padding-right%3A+5px%3B++++position%3A+absolute%3B++++left%3A+50%25%3B++++margin-left%3A+-325px%3B++++border-left%3A+2px+dotted+%23fff%3B+%7Ddiv%2Eheader+%7B++++text-align%3A+center%3B++++padding-top%3A+5px%3B%7Ddiv%2Econtain+%7B++++padding-right%3A+5px%3B++++margin-bottom%3A+10px%3B++++border-top%3A+2px+white+dotted%3B++++border-right%3A+2px+white+dotted%3B++++border-bottom%3A+2px+white+dotted%3B%7Ddiv%2Efloat+%7B++++clear%3A+both%3B++++padding-top%3A+5px%3B%7Ddiv%2Efooter+%7B++++clear%3A+both%3B++++width%3A+650px%3B++++height%3A+auto%3B%3B++++padding-top%3A+10px%3B++++padding-bottom%3A+10px%3B++++border-top%3A+2px+dotted+%23fff%3B++++color%3A+%23fff%3B%7Ddiv%2Elegal+%7B++++text-align%3A+center%3B%7Ddiv%2Enav+%7B++++text-align%3A+center%3B++++margin%3A+0px%3B++++border-bottom%3A+1px+solid+%23fff%3B++++padding-bottom%3A+3px%3B%7Ddiv%2Epricelist+%7B++++border%3A+2px+outset+%23fff%3B++++padding-left%3A+5px%3B++++margin-bottom%3A+10px%3B%7Dul%2Etabs+%7B++++display%3A+inline%3B++++margin-left%3A+0px%3B++++padding-left%3A+0px%3B++++text-align%3A+center%3B%7Dul%2Epricing+%7B++++list-style%3A+none%3B%7Dul%2Etemplate+%7B++++list-style%3A+none%3B%7Dli%2Enavbg+%7B++++display%3A+inline%3B++++margin-right%3A+5px%3B++++padding-top%3A+5px%3B++++padding-bottom%3A+3px%3B++++padding-left%3A+7px%3B++++padding-right%3A+5px%3B++++border-top%3A+2px+outset+%23fff%3B++++border-left%3A+2px+outset+%23fff%3B++++border-right%3A+2px+solid+%23000%3B++++list-style%3A+none%3B++++background-color%3A+%23808080%3B++%7Dli%2Ecurrent+%7B++++display%3A+inline%3B++++margin-right%3A+5px%3B++++padding-left%3A+7px%3B++++padding-right%3A+5px%3B++++padding-top%3A+5px%3B++++padding-bottom%3A+3px%3B++++border-top%3A+2px+outset+%23fff%3B++++border-left%3A+2px+outset+%23fff%3B++++border-right%3A+2px+outset+%23000%3B++++border-bottom%3A+1px+solid+%23000%3B++++list-style%3A+none%3B++++color%3A+%23ff0000%3B%7Dimg%2Eindex+%7B++++float%3A+right%3B++++width%3A+250px%3B++++height%3A+300px%3B++++border%3A+0px%3B%7Dimg%2Elogo+%7B++++width%3A+646px%3B++++height%3A+80px%3B++++border%3A+0px%3B%7Dimg%2Etemplatethumb+%7B++++float%3A+right%3B++++width%3A+168px%3B++++height%3A+160px%3B++++border%3A+2px+outset+%23808080%3B++++margin-top%3A+5px%3B++++margin-right%3A+100px%3B%7Dh1%2C+h2+%7B++++font-size%3A+1%2E1em%3B++++color%3A+%23ffd700%3B%7Dp%2Eerror+%7B++++color%3A+%23fff%3B%7Dp%2Emain+%7B++++color%3A+%23fff%3B++++text-indent%3A+2%25%3B%7D%2Etotal+%7B++++color%3A+%23ffd700%3B%7D%2Erarr+%7B++++color%3A++%23ffd700%3B%7D++">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=1885">http://www.w3.org/Bugs/Public/show_bug.cgi?id=1885</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/391printscreen.css">testsuite/bugs/391printscreen.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%7B++widows%3A+2%3B++orphans%3A+2%3B%7D&amp;medium=print,screen">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=391">http://www.w3.org/Bugs/Public/show_bug.cgi?id=391</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/576css3.css">testsuite/bugs/576css3.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a++%7B++++color+%3A+transparent%3B%7D&amp;profile=css3">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=576">http://www.w3.org/Bugs/Public/show_bug.cgi?id=576</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/599.css">testsuite/bugs/599.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a++%7B++++color+%3A+%23000%3B++++background+%3A+%23fff%3B++++border+%3A+none%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=599">http://www.w3.org/Bugs/Public/show_bug.cgi?id=599</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/703.css">testsuite/bugs/703.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%7B+border%3A+thin+solid+%23996+!important%3B+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=703">http://www.w3.org/Bugs/Public/show_bug.cgi?id=703</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/763mobile.css">testsuite/bugs/763mobile.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=body+%7B++margin-top%3A+0%2E5em%3B++margin-bottom%3A+0%2E5em%3B++margin-left%3A+0%2E5em%3B++margin-right%3A+2em%3B++font-family%3A+verdana%3B++background-color%3A+green%3B++color%3A+red%3B%7D%2Es1+%7B+++width%3A+10em%3B+++background-color%3A+red%3B%7D%2Es2+%7B+++width%3A+20em%3B%7D%2Esmalltext+%7B+++font-size%3A+0%2E75em%3B%7D&amp;medium=mobile">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=763">http://www.w3.org/Bugs/Public/show_bug.cgi?id=763</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/777.css">testsuite/bugs/777.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=p+%7B+font%3A+normal+italic+12pt+georgia%2C+serif%3B+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=777">http://www.w3.org/Bugs/Public/show_bug.cgi?id=777</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/791.css">testsuite/bugs/791.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=H1+%7B+++elevation%3A+50rad%3B++%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=791">http://www.w3.org/Bugs/Public/show_bug.cgi?id=791</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/819.css">testsuite/bugs/819.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=body+%7B+margin%3A+0px%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+font-size%3A+10pt%3B+color%3A+%23003366%3B+background-color%3A+%23eeeeee%3B%7Dp%2C+td+%7B+font-size%3A+10pt%3B+color%3A+%23003366%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+background-color%3A+transparent%3B%7Da%2C+a%3Alink%2C+a%3Avisited%2C+a%3Aactive+%7B+font-size%3A+10pt%3B+color%3A+%230011ee%3B+background-color%3A+transparent%3B+text-decoration%3A+none%3B%7Da%3Ahover+%7B+color%3A+%23aa3300%3B+background-color%3A+transparent%3B+text-decoration%3A+underline%3B%7D%2F*--------------------td+%7B+display%3A+block%3B%7D--------------------*%2F%2Esmalltext+%7B+font-family%3A+Helvetica%2CVerdana%2CArial%2Csans-serif%3B+font-size%3A+8pt%3B%7D%2EcTextPink+%7B+color%3A+%23ff0088%3B+background-color%3A+transparent%3B+text-decoration%3A+none%3B%7D%2EcTextBlue+%7B+font-weight%3A+normal%3B+color%3A+%233300cc%3B+background-color%3A+transparent%3B+text-decoration%3A+none%3B%7D%2EcTextYellow+%7B+color%3A+%23EEEE00%3B+background-color%3A+transparent%3B%7D%2EcTextBGray+%7B+color%3A+%23DDEE88%3B+background-color%3A+transparent%3B%7D%2EcTextDeepBlue%7B+font-weight%3A+normal%3B+color%3A+%23003366%3B+background-color%3A+transparent%7Da%2EcTextDeepBlue%3Alink+%7B+font-weight%3A+normal%3B+color%3A+%23003366%3B+background-color%3A+transparent%7Da%2EcTextDeepBlue%3Avisited+%7B+font-weight%3A+normal%3B+color%3A+%23003366%3B+background-color%3A+transparent%7Da%2EcTextDeepBlue%3Ahover+%7B+font-weight%3A+normal%3B+color%3A+%23993366%3B+background-color%3A+transparent%7D%2EcTextDeepBlueBold+%7B+font-weight%3A+bold%3B+color%3A+%23003366%3B+background-color%3A+transparent%7Da%2EcTextDeepBlueBold%3Alink+%7B+text-decoration%3A+none%3B+%7Da%2EcTextDeepBlueBold%3Avisited+%7B+text-decoration%3A+none%3B+%7Da%2EcTextDeepBlueBold%3Ahover+%7B+text-decoration%3A+underline%3B+%7D%2EcTextDeepBlueBold2+%7B+font-weight%3A+bold%3B+color%3A+%23003366%3B+background-color%3A+transparent%7Da%2EcTextDeepBlueBold2%3Alink+%7B+font-weight%3A+bold%3B+color%3A+%23003366%3B+background-color%3A+transparent%7Da%2EcTextDeepBlueBold2%3Avisited+%7B+font-weight%3A+bold%3B+color%3A+%23003366%3B+background-color%3A+transparent%7Da%2EcTextDeepBlueBold2%3Ahover+%7B+font-weight%3A+bold%3B+color%3A+%23cc6600%3B+background-color%3A+transparent%7D%2EcTextBlack+%7B+font-weight%3A+normal%3B+color%3A+%23000000%3B+background-color%3A+transparent%7D%2EcTextWhite+%7B+font-weight%3A+normal%3B+color%3A+%23ffffff%3B+background-color%3A+transparent%7D%2EcTextDimYellow+%7B+font-weight%3A+normal%3B+color%3A+%23cccc88%3B+background-color%3A+transparent%7D%2EcTextPurple+%7B+font-weight%3A+normal%3B+color%3A+%23aa1199%3B+background-color%3A+transparent%7D%2EcTextGreen+%7B+font-weight%3A+normal%3B+color%3A+%2311aa11%3B+background-color%3A+transparent%3B%7Da%2EcTextGreen%3Alink+%7B+text-decoration%3A+none%3B+%7Da%2EcTextGreen%3Avisited+%7B+text-decoration%3A+none%3B+%7Da%2EcTextGreen%3Ahover+%7B+color%3A+%2333aaaa%3B+background-color%3A+transparent%3B+text-decoration%3A+underline%3B%7D%2EcTextBlueGreen+%7B+font-weight%3A+normal%3B+color%3A+%2333cccc%3B+background-color%3A+transparent%3B%7Da%2EcTextBlueGreen%3Alink+%7B+text-decoration%3A+none%3B+%7Da%2EcTextGreen%3Avisited+%7B+text-decoration%3A+none%3B+%7Da%2EcTextBlueGreen%3Ahover+%7B+color%3A+%2333ffff%3B+background-color%3A+transparent%3B+text-decoration%3A+underline%3B%7D%2EcTextGray+%7B+font-weight%3A+normal%3B+color%3A+%23888888%3B+background-color%3A+transparent%3B%7D%2EcTextBoldBlue+%7B+font-weight%3A+bold%3B+color%3A+%233300cc%3B+background-color%3A+transparent%7D%2EcTextBoldBlack+%7B+font-weight%3A+bold%3B+color%3A+%23000000%3B+background-color%3A+transparent%7Dh1+%7B+margin-top%3A+0px%3B+margin-bottom%3A+4px%3B+color%3A+%23006633%3B+background-color%3A+transparent%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+font-size%3A+18pt%3B+font-weight%3A+bold%3B%7Dh2+%7B+margin-top%3A+0px%3B+margin-bottom%3A+3px%3B+color%3A+%23006633%3B+background-color%3A+transparent%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+font-size%3A+14pt%3B+font-weight%3A+bold%3B%7Dh3+%7B+margin-top%3A+0px%3B+margin-bottom%3A+2px%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+font-size%3A+12pt%3B+font-weight%3A+bold%3B+color%3A+%23006633%3B+background-color%3A+transparent%3B%7Dh4+%7B+margin-top%3A+0px%3B+margin-bottom%3A+2px%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+font-size%3A+12pt%3B+font-weight%3A+bold%3B+font-style%3A+italic%3B+color%3A+%23006633%3B+background-color%3A+transparent%3B%7Dh5+%7B+margin-top%3A+0px%3B+margin-bottom%3A+2px%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+font-size%3A+12pt%3B+font-style%3A+italic%3B+color%3A+%23006633%3B+background-color%3A+transparent%3B%7Dh6+%7B+margin-top%3A+0px%3B+margin-bottom%3A+1px%3B+font-family%3A+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+font-size%3A+10pt%3B+font-weight%3A+bold%3B+font-style%3A+italic%3B+color%3A+%23006633%3B+background-color%3A+transparent%3B%7D%2F*+-------------------------------------------------+*%2F%2F*+-------------------------------------------------+*%2F%2EmenuBar+a+%7B+display%3A+block%3B+width%3A+100%25%3B%7D%2EmenubarInactive+%7B+display%3A+block%3B+width%3A+100%25%3B%7Dtable%2EmenuBar+%7B+border%3A+2px+outset%3B+padding%3A+0px%3B+margin%3A+0px%3B+width%3A+100px%3B%7Dtd%2EmenuBar+%7B+width%3A+91px%3B+margin%3A+0px+0px+0px+0px%3B+padding%3A+0px+0px+0px+0px%3B+text-align%3A+center%3B+line-height%3A1%2E5em%3B%7D%2F*+NOTE%3A+It+is+a%2EmenuBar+that+does+the+100%25+width+*%2Fa%2EmenuBar%2C+a%2EmenuBar%3Alink%2C+a%2EmenuBar%3Avisited%2C+a%2EmenuBar%3Aactive+%7B+display%3A+block%3B+width%3A+100%25%3B+color%3A+%23003366%3B+background-color%3A+transparent%3B%7D%2EmenuBar+a%3Ahover%2C+a%2EmenuBar%3Ahover+%7B+display%3A+block%3B+width%3A+100%25%3B+text-align%3A+center%3B+color%3A+%23ffff00%3B+background-color%3A+%23003366%3B+text-decoration%3A+none%3B%7D%2F*+-------------------------------------------------+*%2F%2Emenubar2+a%3Ahover+%7B+display%3A+block%3B+color%3A+%23ffff00%3B+background-color%3A+%230000ff%7D%2F*+-------------------------------------------------+*%2F%2EtextBox+%7B+color%3A+%23000000%3B+background-color%3A+%23c0c0c0%3B%7D%2EtextBox+P+%7B+color%3A+%23000000%3B+background-color%3A+%23c0c0c0%3B%7Dtable%2EtextBox+%7B+border%3A+2pt+outset%3B+width%3A+100%25%3B+border-collapse%3A+separate%3B+border-spacing%3A+2pt%3B%7Dtd%2EtextBox+%7B+border-right%3A+1pt+inset%3B+padding-right%3A+0%2E5em%3B+border-top%3A+1pt+inset%3B+padding-left%3A+0%2E5em%3B+padding-bottom%3A+0%2E5em%3B+border-left%3A+1pt+inset%3B+width%3A+100%25%3B+padding-top%3A+0%2E5em%3B+border-bottom%3A+1pt+inset%3B%7Dtd%2EtextBox+a%2C+td%2EtextBox+a%3Alink%2C+td%2EtextBox+a%3Avisited+%7B+color%3A+%231133cc%3B+background-color%3A+transparent%3B%7Dtd%2EtextBox+a%3AHover+%7B+color%3A+%23cc3311%3B+background-color%3A+transparent%3B+text-decoration%3A+underline%3B%7D%2F*+-------------------------------------------------+*%2F%2F*+-------------------------------------------------+*%2F%2EtopMenu+%7B+display%3A+block%3B+font-size%3A+10pt%3B+color%3A+%23ffff00%3B+line-HEIGHT%3A+12pt%3B+font-family%3A+Arial+Narrow%2C+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+background-color%3A+%23003366%3B+text-align%3A+center%7Dtd%2EtopMenu+%7B+border-right%3A+2px+outset%3B+padding-right%3A+0px%3B+border-top%3A+2px+outset%3B+display%3A+block%3B+padding-left%3A+0px%3B+padding-bottom%3A+0px%3B+border-left%3A+2px+outset%3B+width%3A+108px%3B+padding-top%3A+0px%3B+border-bottom%3A+2px+outset%7Dtd%2EtopMenu+a%3Ahover+%7B+display%3A+block%3B+color%3A+%23ffff00%3B+background-color%3A+%230000ff%3B%7D%2F*+-------------------------------------------------+*%2F%2F*+topMenu2++++++++++++++++++++++++++++++++++++++++++*%2F%2F*+-------------------------------------------------+*%2F%2F*+td%2EtopMenu2+*%2F%2EtopMenu2+%7B+display%3A+block%3B+text-align%3A+center%3B%7Da%2EtopMenu2%2C+a%2EtopMenu2%3Aactive%2C+a%2EtopMenu2%3Avisited+%7B+display%3A+block%3B+font-size%3A+10pt%3B+color%3A+%23ffff00%3B+font-family%3A+Arial+Narrow%2C+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+background-color%3A+%23003366%3B+text-align%3A+center%3B%7Dtd%2EtopMenu2+%7B+border-right%3A+2px%3B+padding-right%3A+2px%3B+border-top%3A+2px%3B+display%3A+block%3B+padding-left%3A+2px%3B+padding-bottom%3A+2px%3B+border-left%3A+2px%3B+width%3A+120px%3B+padding-top%3A+2px%3B+border-bottom%3A+2px%3B%7Da%2EtopMenu2%3Ahover+%7B+display%3A+block%3B+color%3A+%23ffff00%3B+background-color%3A+%230000ff%3B%7Dbody+%2EdropMenu2+%7B+display%3A+block%3B+%7D%2EdropMenu2+%7B+font-size%3A+10pt%3B+color%3A+%23ffff00%3B+font-family%3A+Arial+Narrow%2C+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+background-color%3A+%23003366%3B+text-align%3A+center%3B%7Dtd%2EdropMenu2+%7B+padding-top%3A+4px%3B+padding-right%3A+4px%3B+padding-left%3A+4px%3B+padding-bottom%3A+4px%3B+background%3A+none+transparent+scroll+repeat+0%25+0%25%3B+width%3A+108px%3B%7D%2EdropMenu2+a%3Avisited+%7B+background%3A+none+transparent+scroll+repeat+0%25+0%25%3B%7Dtd%2EDropMenu2+a%3Ahover+%7B+display%3A+block%3B+background%3A+%230000ff%3B+color%3A+%23ffff00%3B%7D%2EdropMenu+%7B+display%3A+block%3B+%7D%2EdropMenu+%7B+font-size%3A+10pt%3B+color%3A+%23ffff00%3B+font-family%3A+Arial+Narrow%2C+Arial%2C+Helvetica%2C+Verdana%2C+sans-serif%3B+background-color%3A+%23003366%3B+text-align%3A+center%3B%7Dtd%2EdropMenu+%7B+padding-right%3A+4px%3B+padding-left%3A+4px%3B+background%3A+none+transparent+scroll+repeat+0%25+0%25%3B+padding-bottom%3A+4px%3B+width%3A+108px%3B+padding-top%3A+4px%3B%7D%2EdropMenu+a%3Avisited+%7B+background-color%3A+transparent%3B+%7D%2Eflag1+%7Bbackground-color%3Atransparent%3B+color%3A%23cccccc%3B%7Da%2Eflag1+%7Bcolor%3A%23eeee33%3Bbackground-color%3Atransparent%3B%7Da%2Eflag1%3Avisited+%7Bcolor%3A%23eeee33%3Bbackground-color%3Atransparent%3B%7Da%2Eflag1%3Aactive+%7Bcolor%3A%23eeee33%3Bbackground-color%3Atransparent%3B%7Da%2Eflag1%3Ahover+%7Bcolor%3A%23ffff88%3Bbackground-color%3Atransparent%3Btext-decoration%3Aunderline%3B%7Dtd%2EtopCenter+%7Bvertical-align%3Atop%3B+text-align%3Acenter%3B%7Da%2EclsLinkBlue%2C+a%2EclsLinkBlue%3ALink%2C+a%2EclsLinkBlue%3AVisited+a%2EclsLinkBlue%3AActive+%7B+color%3A%230033ff%3B+background-color%3Atransparent%3B+text-decoration%3Anone%3B%7Da%2EclsLinkBlue%3AHover+%7B+color%3A%23aa3300%3B+background-color%3Atransparent%3B+text-decoration%3Aunderline%3B%7D%2F*+-------------------------------------------------+*%2F%2F*+ADDED+5%2F10%2F2004+*%2F%2F*+-------------------------------------------------+*%2Fli%2ELICR+%7B+margin-top%3A6px%3B%7D%2F*+-------------------------------------------------+*%2F%2F*+-------------------------------------------------+*%2F%2EdivBoosh+%7Btext-align%3Acenter%3B+padding%3A6px%3B%7D%2EimgBoosh+%7Bborder%3A5px%3B+border-style%3Ainset%3B+padding%3A1px%3B%7D%2F*+-------------------------------------------------+*%2F%2F*+-------------------------------------------------+*%2F%2Ecr+%7B+font-family%3AArial%2CHelvetica%2CVerdana%2Csans-serif%3B+font-size%3A8pt%3B%7D%2F*+-------------------------------------------------+*%2F%2F*+-------------------------------------------------+*%2F%2Ebuynow+%7B+border%3A+0px%3B+margin%3A+0px%3B+height%3A+20px%3B+width%3A+95px%3B+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=819">http://www.w3.org/Bugs/Public/show_bug.cgi?id=819</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/821.css">testsuite/bugs/821.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=e+%7B++display%3A+table%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=821">http://www.w3.org/Bugs/Public/show_bug.cgi?id=821</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/979.css">testsuite/bugs/979.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=body%7Bfont-size%3A%2E85em%3Bfont-family%3AVerdana%2C%22Bitstream+Vera+Sans%22%2CTahoma%2CArial%2CHelvetica%2Csans-serif%3Bcolor%3A%23000%3Bbackground%3A%23fff%3Bmargin%3A0%3Bpadding%3A0+0+1em+0%3Bmin-width%3A45em%3B%7Ddiv%2Cform%2Cul%2Col%2Cli%7Bmargin%3A0%3Bpadding%3A0%3B%7Dp%7Bmargin%3A1em+0%3B%7Dli%7Blist-style%3Anone%3B%7Dh2%2Ch3%2Ch4%2Ch5%2Ch6%7Bfont-size%3A1%2E1em%3Bfont-family%3AGeorgia%2C%22Bitstream+Vera+Serif%22%2C%22Times+New+Roman%22%2CTimesNR%2Ctimes%2Cserif%3Bfont-weight%3A700%3Bmargin%3A0%3Bpadding%3A0%3B%7Dimg%7Bborder%3Anone%3B%7Dpre%2Ccode%2Ckbd%2Csamp%2Ctt%7Bfont-family%3A%22Andale+Mono%22%2C%22Bitstream+Vera+Sans+Mono%22%2C%22Courier+New%22%2Ccourier%2Cmonospace%3Bwhite-space%3Apre%3B%7D%3Alink%3Afocus%2C%3Avisited%3Afocus%7Bcolor%3A%23d31%3B%7D%3Alink%7Bcolor%3A%2346c%3B%7D%3Avisited%7Bcolor%3A%23939%3B%7D%3Alink%3Ahover%2C%3Avisited%3Ahover%7Bcolor%3A%23d31%3B%7D%3Alink%3Aactive%2C%3Avisited%3Aactive%7Bcolor%3A%23a21%3B%7Dtextarea%3Afocus%2Cinput%5Btype%3Dtext%5D%3Afocus%2Cinput%5Btype%3Dpassword%5D%3Afocus%7Bbackground-color%3A%23eef%3B%7Dtextarea%3Aactive%2Cinput%5Btype%3Dtext%5D%3Aactive%2Cinput%5Btype%3Dpassword%5D%3Aactive%7Bbackground-color%3A%23eef%3B%7Dinput%5Btype%3Dsubmit%5D%3Afocus%2Cinput%5Btype%3Dbutton%5D%3Afocus%7Bcolor%3A%23eef%3Btext-decoration%3Aunderline%3B%7Dinput%5Btype%3Dsubmit%5D%2Cinput%5Btype%3Dbutton%5D%7Bcolor%3A%23fff%3Bbackground%3A%2366c%3Bborder%3A2px+outset+%2366c%3Btext-transform%3Acapitalize%3B%7Dinput%5Btype%3Dsubmit%5D%3Ahover%2Cinput%5Btype%3Dbutton%5D%3Ahover%7Bcolor%3A%23eef%3Btext-decoration%3Aunderline%3B%7Dinput%5Btype%3Dsubmit%5D%3Aactive%2Cinput%5Btype%3Dbutton%5D%3Aactive%7Bborder%3A2px+inset+%2366c%3B%7D%23pageheader%7Bfont-size%3A1%2E15em%3Bfont-family%3ATahoma%2C%22Bitstream+Vera+Sans%22%2CVerdana%2CHelvetica%2CArial%2Csans-serif%3Bcolor%3A%23fff%3Bbackground%3A%2366c%3Bborder-bottom%3A2px+solid+%23448%3Bpadding%3A%2E5em+1em%3B%7D%23pageheader+%3Alink%3Afocus%2C%23pageheader+%3Avisited%3Afocus%7Btext-decoration%3Aunderline%3B%7D%23pageheader+%3Alink%2C%23pageheader+%3Avisited%7Btext-decoration%3Anone%3Bcolor%3A%23fff%3B%7D%23pageheader+%3Alink%3Ahover%2C%23pageheader+%3Avisited%3Ahover%7Btext-decoration%3Aunderline%3B%7D%23pageheader+%3Alink%3Aactive%2C%23pageheader+%3Avisited%3Aactive%7Btext-decoration%3Aunderline%3B%7D%23logo%7Bfont-size%3A2em%3Bfont-family%3AHelvetica%2C%22Bitstream+Vera+Sans%22%2CArial%2CVerdana%2Csans-serif%3Bvertical-align%3Atext-bottom%3Bdisplay%3Ainline%3B%7D%23logo+%3Alink%3Afocus%2C%23logo+%3Avisited%3Afocus%7Btext-decoration%3Anone%3Bcolor%3A%23eef%3B%7D%23logo+%3Alink%2C%23logo+%3Avisited%7Btext-decoration%3Anone%3Bcolor%3A%23fff%3Bbackground%3A%23339%3Bborder%3A3px+outset+%2366c%3Bpadding%3A0+%2E33em%3B%7D%23logo+%3Alink%3Ahover%2C%23logo+%3Avisited%3Ahover%7Btext-decoration%3Anone%3Bcolor%3A%23eef%3B%7D%23logo+%3Alink%3Aactive%2C%23logo+%3Avisited%3Aactive%7Btext-decoration%3Anone%3Bcolor%3A%23eef%3Bborder%3A3px+inset+%2366c%3B%7D%23logo+span%2Ejeffcarr%7Bfont-variant%3Asmall-caps%3Bfont-style%3Aitalic%3Bfont-weight%3A900%3B%7D%23logo+span%2Einfo%7Bfont-size%3A%2E6em%3Bfont-style%3Aitalic%3Bfont-weight%3A900%3B%7D%23logo+span%2Edot%7Bfont-size%3A%2E3em%3B%7D%23usermenu%7Bposition%3Aabsolute%3Btop%3A%2E5em%3Bright%3A1em%3B%7D%23siteorientation%7Bbackground%3A%2355b%3Bborder%3A%2366c+inset+2px%3Bmargin%3A%2E5em+0+0+0%3Bpadding%3A%2E25em+1em%3Bdisplay%3Ablock%3B%7D%23annex%7Bfont-family%3ATahoma%2C%22Bitstream+Vera+Sans%22%2CVerdana%2CHelvetica%2CArial%2Csans-serif%3Bborder-right%3A2px+solid+%23448%3Bpadding%3A0+0+0+%2E5em%3Bwidth%3A14em%3Bfloat%3Aleft%3B%7D%23annex+div%7Bborder-bottom%3A1px+solid+%23448%3Bpadding%3A%2E5em+%2E5em+%2E5em+0%3B%7D%23annex+div%3Alast-child%7Bborder%3Anone%3B%7D%23annex+form+div%7Bborder%3Anone%3Bpadding%3A0%3B%7D%23annex+li%2C%23annex+input%7Bmargin%3A%2E25em+0+%2E25em+%2E75em%3Bdisplay%3Ablock%3B%7D%23annex+input%5Btype%3Dhidden%5D%7Bdisplay%3Anone%3B%7D%23primarycontent%7Bborder-left%3A2px+solid+%23448%3Bmargin%3A0+0+0+14%2E5em%3Bpadding%3A0+%2E5em+0+0%3B%7D%23primarycontent+div%7Bborder-bottom%3A1px+dashed+%23448%3Bpadding%3A%2E5em+0+%2E5em+%2E5em%3B%7D%23primarycontent+div%3Alast-child%7Bborder%3Anone%3B%7D%23primarycontent+form+div%7Bborder%3Anone%3Bpadding%3A0%3B%7D%23primarycontent+p%2C%23primarycontent+pre%7Bpadding%3A0+0+0+%2E5em%3B%7D%23primarycontent+%2Enavigationbar%7Btext-align%3Acenter%3Bcolor%3A%23448%3Bborder-top%3A%23448+solid+2px%3Bborder-bottom%3A%23448+solid+2px%3Bpadding%3A%2E25em+1em%3B%7D%23primarycontent+%2Enavigationbar+%2Eprevious%7Bfloat%3Aleft%3B%7D%23primarycontent+%2Enavigationbar+%2Esubsequent%7Bfloat%3Aright%3B%7D%23pagefooter%7Bfont-size%3A%2E8em%3Btext-align%3Acenter%3Bborder-top%3A3px+double+%23448%3Bwidth%3A99%25%3Bpadding%3A%2E4em%3Bclear%3Aboth%3B%7D%23pagefooter+h2%7B%7D%23adoptfirefox%7Bfloat%3Aleft%3Bwidth%3A300px%3B%7D%23pageinformation%7Btext-align%3Aleft%3Bfloat%3Aright%3Bwidth%3A20em%3B%7D%23pagevalidation+%3Alink%3Afocus%2C%23pagevalidation+%3Avisited%3Afocus%7Btext-decoration%3Anone%3Bbackground%3A%23eef%3B%7D%23pagevalidation+%3Alink%2C%23pagevalidation+%3Avisited%7Btext-decoration%3Anone%3Bcolor%3A%23000%3Bborder%3A2px+outset+%2366c%3Bdisplay%3Ablock%3Bmargin%3A%2E5em+0%3Bwidth%3A16em%3B%7D%23pagevalidation+%3Alink%3Ahover%2C%23pagevalidation+%3Avisited%3Ahover%7Btext-decoration%3Anone%3Bbackground%3A%23eef%3B%7D%23pagevalidation+%3Alink%3Aactive%2C%23pagevalidation+%3Avisited%3Aactive%7Bbackground%3A%23eef%3Bborder%3A2px+inset+%2366c%3B%7D%23pagevalidation+%3Alink%3Afocus+%2Eorganization%2C%23pagevalidation+%3Avisited%3Afocus+%2Eorganization%7Bcolor%3A%23eef%3B%7D%23pagevalidation+%2Eorganization%7Btext-align%3Acenter%3Bcolor%3A%23fff%3Bbackground%3A%2366c%3Bdisplay%3Ablock%3Bfloat%3Aleft%3Bwidth%3A3em%3Bmargin%3A0+%2E25em+0+0%3B%7D%23pagevalidation+%3Alink%3Ahover+%2Eorganization%2C%23pagevalidation+%3Avisited%3Ahover+%2Eorganization%7Bcolor%3A%23eef%3B%7D%23pagevalidation+%3Alink%3Aactive+%2Eorganization%2C%23pagevalidation+%3Avisited%3Aactive+%2Eorganization%7Bcolor%3A%23eef%3B%7D%2Ereaderlink%2C%2Esemanticheading%7Bdisplay%3Anone+!important%3B%7D%2Eformusername%7Bbackground%3A%23fff+url%28%27%2Fimages%2Fuserinfo%2Epng%27%29+no-repeat+scroll+center+left%3Bpadding-left%3A17px%3B%7D%2Eformpassword%7Bbackground%3A%23fff+url%28%27%2Fimages%2Fkey%2Epng%27%29+no-repeat+scroll+center+left%3Bpadding-left%3A17px%3B%7D%2Etabs+ul%7Bborder-bottom%3A2px+solid+%2355b%3Bpadding%3A%2E5em+%2E25em+0+%2E25em%3Bmargin%3A1em+0+0+0%3Bwidth%3A100%25%3Bfloat%3Aleft%3B%7D%2Etabs+li%7Bfloat%3Aleft%3B%7D%2Etabs+%3Alink%3Afocus%2C%2Etabs+%3Avisited%3Afocus%7Btext-decoration%3Aunderline%3Bcolor%3A%23fff%3B%7D%2Etabs+%3Alink%2C%2Etabs+%3Avisited%7Bfont-weight%3A700%3Btext-decoration%3Anone%3Bcolor%3A%23fff%3Bbackground%3A%2355b%3Bborder%3A1px+solid+%2355b%3Bpadding%3A%2E25em+%2E75em%3Bmargin%3A0+1px%3Bdisplay%3Ablock%3B%7D%2Etabs+%3Alink%3Ahover%2C%2Etabs+%3Avisited%3Ahover%7Btext-decoration%3Aunderline%3Bcolor%3A%23fff%3B%7D%2Etabs+%3Alink%3Aactive%2C%2Etabs+%3Avisited%3Aactive%7Btext-decoration%3Aunderline%3Bcolor%3A%23fff%3B%7D%2Etabs+li%2Ecurrent+%3Alink%2C%2Etabs+li%2Ecurrent+%3Avisited%7Btext-decoration%3Anone%3Bcolor%3A%23339%3Bbackground%3A%23fff%3Bborder%3A2px+solid+%23339%3Bborder-bottom%3A1px+solid+%23fff%3Bcursor%3Adefault%3B%7D%23pageinformation%7Btext-align%3Aleft%3Bfloat%3Aright%3Bwidth%3A20em%3B%7D%23pagevalidation+%3Alink%3Afocus%2C%23pagevalidation+%3Avisited%3Afocus%7Btext-decoration%3Anone%3Bbackground%3A%23eef%3B%7D%23pagevalidation+%3Alink%2C%23pagevalidation+%3Avisited%7Btext-decoration%3Anone%3Bcolor%3A%23000%3Bborder%3A2px+outset+%2366c%3Bdisplay%3Ablock%3Bmargin%3A%2E5em+0%3Bwidth%3A16em%3B%7D%23pagevalidation+%3Alink%3Ahover%2C%23pagevalidation+%3Avisited%3Ahover%7Btext-decoration%3Anone%3Bbackground%3A%23eef%3B%7D%23pagevalidation+%3Alink%3Aactive%2C%23pagevalidation+%3Avisited%3Aactive%7Bbackground%3A%23eef%3Bborder%3A2px+inset+%2366c%3B%7D%23pagevalidation+%3Alink%3Afocus+%2Eorganization%2C%23pagevalidation+%3Avisited%3Afocus+%2Eorganization%7Bcolor%3A%23eef%3B%7D%23pagevalidation+%2Eorganization%7Btext-align%3Acenter%3Bcolor%3A%23fff%3Bbackground%3A%2366c%3Bdisplay%3Ablock%3Bfloat%3Aleft%3Bwidth%3A3em%3Bmargin%3A0+%2E25em+0+0%3B%7D%23pagevalidation+%3Alink%3Ahover+%2Eorganization%2C%23pagevalidation+%3Avisited%3Ahover+%2Eorganization%7Bcolor%3A%23eef%3B%7D%23pagevalidation+%3Alink%3Aactive+%2Eorganization%2C%23pagevalidation+%3Avisited%3Aactive+%2Eorganization%7Bcolor%3A%23eef%3B%7D%2Ereaderlink%2C%2Esemanticheading%7Bdisplay%3Anone+!important%3B%7D%2Eformusername%7Bbackground%3A%23fff+url%28%27%2Fimages%2Fuserinfo%2Epng%27%29+no-repeat+scroll+center+left%3Bpadding-left%3A17px%3B%7D%2Eformpassword%7Bbackground%3A%23fff+url%28%27%2Fimages%2Fkey%2Epng%27%29+no-repeat+scroll+center+left%3Bpadding-left%3A17px%3B%7D%2Etabs+ul%7Bborder-bottom%3A2px+solid+%2355b%3Bpadding%3A%2E5em+%2E25em+0+%2E25em%3Bmargin%3A1em+0+0+0%3Bwidth%3A100%25%3Bfloat%3Aleft%3B%7D%2Etabs+li%7Bfloat%3Aleft%3B%7D%2Etabs+%3Alink%3Afocus%2C%2Etabs+%3Avisited%3Afocus%7Btext-decoration%3Aunderline%3Bcolor%3A%23fff%3B%7D%2Etabs+%3Alink%2C%2Etabs+%3Avisited%7Bfont-weight%3A700%3Btext-decoration%3Anone%3Bcolor%3A%23fff%3Bbackground%3A%2355b%3Bborder%3A1px+solid+%2355b%3Bpadding%3A%2E25em+%2E75em%3Bmargin%3A0+1px%3Bdisplay%3Ablock%3B%7D%2Etabs+%3Alink%3Ahover%2C%2Etabs+%3Avisited%3Ahover%7Btext-decoration%3Aunderline%3Bcolor%3A%23fff%3B%7D%2Etabs+%3Alink%3Aactive%2C%2Etabs+%3Avisited%3Aactive%7Btext-decoration%3Aunderline%3Bcolor%3A%23fff%3B%7D%2Etabs+li%2Ecurrent+%3Alink%2C%2Etabs+li%2Ecurrent+%3Avisited%7Btext-decoration%3Anone%3Bcolor%3A%23339%3Bbackground%3A%23fff%3Bborder%3A2px+solid+%23339%3Bborder-bottom%3A1px+solid+%23fff%3Bcursor%3Adefault%3B%7D&amp;profile=css3">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=979">http://www.w3.org/Bugs/Public/show_bug.cgi?id=979</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=388">http://www.w3.org/Bugs/Public/attachment.cgi?id=388</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D388">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=388">http://www.w3.org/Bugs/Public/show_bug.cgi?id=1504</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=389">http://www.w3.org/Bugs/Public/attachment.cgi?id=389</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D389">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=389">http://www.w3.org/Bugs/Public/show_bug.cgi?id=1504</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/2560.css">testsuite/bugs/2560.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%40media+Screen+%7B+p+%7B+margin%3A+0%3B+%7D+%7D%40media+sCreen+%7B+p+%7B+border-top%3A+12px%3B+%7D+%7D%40media+auraL+%7B+p+%7B+richness%3A+100%3B+%7D+%7D%40media+print+%7B+body+%7B+font-size%3A+10pt%3B+%7D+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2560">http://www.w3.org/Bugs/Public/show_bug.cgi?id=2560</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3037.css">testsuite/bugs/3037.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2Efoo+%7B+-moz-border-radius%3A+5px%3B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3037">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3037</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/2800.css">testsuite/bugs/2800.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%5Battr%3D%22%5C%5C%22%22%5D+%7B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2800">http://www.w3.org/Bugs/Public/show_bug.cgi?id=2800</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/233.css">testsuite/bugs/233.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=a+%7B++border%3A+transparent%3B++border%3A+solid+transparent%3B++border%3A+1px+transparent%3B++border%3A+solid+1px+transparent%3B++border%3A+1px+solid+transparent%3B++border%3A+transparent+solid%3B++border%3A+transparent+1px%3B++border%3A+transparent+solid+1px%3B++border%3A+transparent+1px+solid%3B++border%3A+solid+transparent+1px%3B++border%3A+1px+transparent+solid%3B++border-color%3A+black+black+black+transparent%3B++border-color%3A+black+black+transparent+transparent%3B++border-color%3A+black+black+transparent%3B++border-color%3A+black+transparent+black+black%3B++border-color%3A+black+transparent+black%3B++border-color%3A+black+transparent+transparent+transparent%3B++border-color%3A+black+transparent+transparent%3B++border-color%3A+black+transparent%3B++border-color%3A+transparent+black+black+black%3B++border-color%3A+transparent+black+black%3B++border-color%3A+transparent+black+transparent+transparent%3B++border-color%3A+transparent+black+transparent%3B++border-color%3A+transparent+black%3B++border-color%3A+transparent+transparent+black+black%3B++border-color%3A+transparent+transparent+black%3B++border-color%3A+transparent+transparent+transparent+black%3B++border-color%3A+transparent+transparent+transparent+transparent%3B++border-color%3A+transparent+transparent+transparent%3B++border-color%3A+transparent+transparent%3B++border-color%3A+transparent%3B++border-bottom%3A+transparent%3B++border-bottom%3A+solid+transparent%3B++border-bottom%3A+1px+transparent%3B++border-bottom%3A+solid+1px+transparent%3B++border-bottom%3A+1px+solid+transparent%3B++border-bottom%3A+transparent+solid%3B++border-bottom%3A+transparent+1px%3B++border-bottom%3A+transparent+solid+1px%3B++border-bottom%3A+transparent+1px+solid%3B++border-bottom%3A+solid+transparent+1px%3B++border-bottom%3A+1px+transparent+solid%3B++border-bottom-color%3A+transparent%3B++border-left%3A+transparent%3B++border-left%3A+solid+transparent%3B++border-left%3A+1px+transparent%3B++border-left%3A+solid+1px+transparent%3B++border-left%3A+1px+solid+transparent%3B++border-left%3A+transparent+solid%3B++border-left%3A+transparent+1px%3B++border-left%3A+transparent+solid+1px%3B++border-left%3A+transparent+1px+solid%3B++border-left%3A+solid+transparent+1px%3B++border-left%3A+1px+transparent+solid%3B++border-left-color%3A+transparent%3B++border-right%3A+transparent%3B++border-right%3A+solid+transparent%3B++border-right%3A+1px+transparent%3B++border-right%3A+solid+1px+transparent%3B++border-right%3A+1px+solid+transparent%3B++border-right%3A+transparent+solid%3B++border-right%3A+transparent+1px%3B++border-right%3A+transparent+solid+1px%3B++border-right%3A+transparent+1px+solid%3B++border-right%3A+solid+transparent+1px%3B++border-right%3A+1px+transparent+solid%3B++border-right-color%3A+transparent%3B++border-top%3A+transparent%3B++border-top%3A+solid+transparent%3B++border-top%3A+1px+transparent%3B++border-top%3A+solid+1px+transparent%3B++border-top%3A+1px+solid+transparent%3B++border-top%3A+transparent+solid%3B++border-top%3A+transparent+1px%3B++border-top%3A+transparent+solid+1px%3B++border-top%3A+transparent+1px+solid%3B++border-top%3A+solid+transparent+1px%3B++border-top%3A+1px+transparent+solid%3B++border-top-color%3A+transparent%3B++%7D&amp;warning=2">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=233">http://www.w3.org/Bugs/Public/show_bug.cgi?id=233</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 272</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 272</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/2919.css">testsuite/bugs/2919.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%3C%5C!--+%5C--%3E%3C%5C!--+-%5C-%3E%3C%5C!--+-%5C%5C-%3E%3C%5C!--+--%5C%3E%3C%5C!--+--%5C%5C%3E%3C%5C%5C%5C%5C%5C%5C%5C%5C%5C%5C%5C%5C%5C%5C%5C%5C!--+--%5C%5C%3E">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2919">http://www.w3.org/Bugs/Public/show_bug.cgi?id=2919</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3099.css">testsuite/bugs/3099.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=*%3Ahovverr+%7B%7D*%3Afirrrst-line%3Ahover+%7B%7D*%3Afirst-child%5C%3Afirst-line+%7B%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3099">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3099</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 3</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 3</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3627.css">testsuite/bugs/3627.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+this+should+pass+CSS2+test%2C+seehttp%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3627+*%2F+%2Eselector+%7B+color%3A+gr%5C000065en%3B+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3627">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3627</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3628.css">testsuite/bugs/3628.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+This+is+incorrect+in+CSS2%2C+but+used+to+be+OK+in+CSS1see+http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3628+*%2Fselector+%7B+color%3A+r%5C0065d%3B+%7D&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3628">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3628</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3628.css">testsuite/bugs/3628.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+This+is+incorrect+in+CSS2%2C+but+used+to+be+OK+in+CSS1see+http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3628+*%2Fselector+%7B+color%3A+r%5C0065d%3B+%7D&amp;profile=css1">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3628">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3628</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3630.css">testsuite/bugs/3630.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+this+should+not+pass+CSS2+or+CSS2%2E1+test%2C+seehttp%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3630+*%2F%2Efoo+%7Bcolor+%3A+red%3B++%7D%5C&amp;profile=css1">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3630">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3630</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3630.css">testsuite/bugs/3630.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+this+should+not+pass+CSS2+or+CSS2%2E1+test%2C+seehttp%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3630+*%2F%2Efoo+%7Bcolor+%3A+red%3B++%7D%5C&amp;profile=css2">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3630">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3630</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3631.css">testsuite/bugs/3631.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+This+should+not+pass+CSS+2+or+2%2E1+testsee+http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3631+*%2F%2Efoo+%7Bcolor%3Ared%5C+%3B+%7D%2Ebar+%7Bcolor%3Ared%5C++%7D&amp;profile=css2">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3631">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3631</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3632.css">testsuite/bugs/3632.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+this+should+not+pass+CSS2+checking%2C+seehttp%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3632+*%2F%2Efoo+%7B+background-image%3A+url%28myimage%5C%29+%3B+%7D&amp;profile=css2">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3632">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3632</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3633.css">testsuite/bugs/3633.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+This+should+not+pass+CSS+2+checking%2C+seesee+http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3633+*%2F%2Efoo+%7B+background-image%3A+url%28%22myimage%5C%22%29+%3B+%7D%2Efoo+%7B+background-image%3A+url%28%27myimage%5C%27%29+%3B+%7Dselector+%7B+font-family%3A+%22MyFont3%5C%22%2C++Serif%3B++%7D&amp;profile=css2">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3633">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3633</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/3634.css">testsuite/bugs/3634.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%2F*+this+should+be+illegal+in+CSS+2+and+2%2E1%2C+seehttp%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fshow_bug%2Ecgi%3Fid%3D3634+*%2Felement+%7Bcolor%3A%5C+red%3B+%7D&amp;profile=css2">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3634">http://www.w3.org/Bugs/Public/show_bug.cgi?id=3634</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/bugs/4981.css">testsuite/bugs/4981.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=%23selector+%7B+%3F+%7D">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=4981">Bug 4981</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=528">http://www.w3.org/Bugs/Public/attachment.cgi?id=528</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D528&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2920">Bug 2920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=529">http://www.w3.org/Bugs/Public/attachment.cgi?id=529</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D529&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2920">Bug 2920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=530">http://www.w3.org/Bugs/Public/attachment.cgi?id=530</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D530&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2920">Bug 2920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=531">http://www.w3.org/Bugs/Public/attachment.cgi?id=531</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D531&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2920">Bug 2920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=532">http://www.w3.org/Bugs/Public/attachment.cgi?id=532</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D532&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2920">Bug 2920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=533">http://www.w3.org/Bugs/Public/attachment.cgi?id=533</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D533&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2920">Bug 2920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=534">http://www.w3.org/Bugs/Public/attachment.cgi?id=534</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D534&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=2920">Bug 2920</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=535">http://www.w3.org/Bugs/Public/attachment.cgi?id=535</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D535">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=4469">Bug 4469</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=536">http://www.w3.org/Bugs/Public/attachment.cgi?id=536</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D536&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3632">Bug 3632</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=537">http://www.w3.org/Bugs/Public/attachment.cgi?id=537</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D537&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=3634">Bug 3634</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=540">http://www.w3.org/Bugs/Public/attachment.cgi?id=540</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D540&amp;profile=css3">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=5588">Bug 5588</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="testsuite/general/selectors/multipleattribute.css">testsuite/general/selectors/multipleattribute.css</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?text=span%5Bhello%3D%22Cleveland%22%5D%5Bgoodbye%3D%22Columbus%22%5D+%7B+color%3A+blue%3B+%7D&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See<a href="https://www.w3.org/TR/CSS21/selector.html#matching-attrs">css21 spec</a>and<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=5683">bug 5683</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Valid</dd>
+	<dd>Errors: 0</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=543">http://www.w3.org/Bugs/Public/attachment.cgi?id=543</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D543&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=5581">Bug 5581</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=544">http://www.w3.org/Bugs/Public/attachment.cgi?id=544</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D544&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=5581">Bug 5581</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=545">http://www.w3.org/Bugs/Public/attachment.cgi?id=545</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D545&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=5581">Bug 5581</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=610">http://www.w3.org/Bugs/Public/attachment.cgi?id=610</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D610&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=6297">Bug 6297</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 2</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+    <div class="res">
+      <h3><a href="https://www.w3.org/Bugs/Public/attachment.cgi?id=611">http://www.w3.org/Bugs/Public/attachment.cgi?id=611</a></h3>
+      <p><a href="http://qa-dev.w3.org:8001/css-validator/validator?uri=http%3A%2F%2Fwww%2Ew3%2Eorg%2FBugs%2FPublic%2Fattachment%2Ecgi%3Fid%3D611&amp;profile=css21">Go to the Validator page</a></p>
+      <p>See&nbsp;<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=6297">Bug 6297</a></p>
+      <dl>
+	<dt>Awaited result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+	<dt>Result</dt>
+	<dd>Not valid</dd>
+	<dd>Errors: 1</dd>
+	<dd>Warnings: 0</dd>
+      </dl>
+    </div>
+ <p id="valid">
+ <a href="https://validator.w3.org/check?uri=referer">
+ <img style="border:0;width:88px;height:31px"
+ src="https://www.w3.org/Icons/valid-xhtml10"
+ alt="Valid XHTML 1.0!" height="31" width="88" />
+ </a>
+ <a href="https://jigsaw.w3.org/css-validator/check/referer">
+ <img style="border:0;width:88px;height:31px"
+ src="https://jigsaw.w3.org/css-validator/images/vcss"
+ alt="Valid CSS!" />
+ </a>
+ </p>
+</body>
+
+</html>

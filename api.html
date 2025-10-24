@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Documentation of the Programmatic Interface (API) to The W3C CSS
+  Validation Service</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Home Page" />
+  <style type="text/css" media="all">
+@import "style/base.css";
+</style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>CSS Validation Service</span></a></h1>
+   <p id="tagline">
+     Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+   </p>
+  </div>
+
+<div class="doc">
+<h2>CSS Validator Web Service API<br />
+SOAP 1.2 validation interface documentation</h2>
+
+<h3 id="TableOfContents">Table of Contents</h3>
+
+<div id="toc">
+<ul>
+  <li><a href="#requestformat">Validation Request Format</a></li>
+  <li><a href="#soap12format">SOAP format description</a> 
+    <ul>
+      <li><a href="#soap12_sample">sample SOAP 1.2 validation
+      response</a></li>
+      <li><a href="#soap12response">SOAP1.2 response format reference</a></li>
+      <li><a href="#soap12message">SOAP1.2 atomic message (error or warning)
+        format reference</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<p id="skip"></p>
+
+<h3 id="requestformat">Validation Request Format</h3>
+
+<p>The documentation on how to create a custom request to the CSS validation service is available, 
+with a table of all existing parameters and their values, in the <a href="manual.html">User Manual</a>.</p>
+
+<h3 id="soap12format">SOAP format description</h3>
+
+<p>When called with parameter <code>output=soap12</code>, the validator will
+switch to its SOAP 1.2 interface. Below is a sample response, as well as a
+description of the most important elements of the response.</p>
+
+<p>A <a href="https://www.w3.org/2005/09/css-validator.wsdl">WSDL 2 description file</a> is lso available for this service.</p>
+
+<h4>sample SOAP 1.2 validation request</h4>
+
+<p>It is a simple HTTP GET call to a URI like:</p>
+
+<p><code>https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.w3.org%2F&amp;warning=0&amp;profile=css2</code></p>
+
+<h4 id="soap12_sample">sample SOAP 1.2 validation response</h4>
+
+<p>A SOAP response for the validation of a document (invalid) will look like
+this:</p>
+<pre style="font-size: smaller">&lt;?xml version='1.0' encoding="utf-8"?&gt;
+&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;env:Body&gt;
+    &lt;m:cssvalidationresponse 
+       env:encodingStyle="http://www.w3.org/2003/05/soap-encoding" 
+       xmlns:m="http://www.w3.org/2005/07/css-validator"&gt; 
+      &lt;m:uri&gt;http://www.w3.org/&lt;/m:uri&gt; 
+      &lt;m:checkedby&gt;http://jigsaw.w3.org/css-validator/&lt;/m:checkedby&gt;
+      &lt;m:csslevel&gt;css2&lt;/m:csslevel&gt;
+      &lt;m:date&gt;2006.02.23T01:19:57Z&lt;/m:date&gt;
+      &lt;m:validity&gt;true&lt;/m:validity&gt;
+      &lt;m:result&gt;
+        &lt;m:errors xml:lang="en"&gt;
+          &lt;m:errorcount&gt;0&lt;/m:errorcount&gt;
+        &lt;/m:errors&gt;
+        &lt;m:warnings xml:lang="en"&gt;
+          &lt;m:warningcount&gt;79&lt;/m:warningcount&gt;
+          &lt;m:warninglist&gt;
+            &lt;m:uri&gt;https://www.w3.org/StyleSheets/home.css&lt;/m:uri&gt;
+            &lt;m:warning&gt;
+              &lt;m:line&gt;85&lt;/m:line&gt;
+              &lt;m:level&gt;0&lt;/m:level&gt;
+              &lt;m:message&gt;Properties for other media might not work for usermedium&lt;/m:message&gt;
+            &lt;/m:warning&gt;
+          &lt;/m:warninglist&gt;
+          &lt;m:warninglist&gt;
+            &lt;m:uri&gt;https://www.w3.org/StyleSheets/home-import.css&lt;/m:uri&gt;
+            &lt;m:warning&gt;
+              &lt;m:line&gt;167&lt;/m:line&gt;
+              &lt;m:level&gt;0&lt;/m:level&gt;
+              &lt;m:message&gt;Properties for other media might not work for usermedium&lt;/m:message&gt;
+            &lt;/m:warning&gt;
+            &lt;m:warning&gt;
+              &lt;m:line&gt;349&lt;/m:line&gt;
+              &lt;m:level&gt;0&lt;/m:level&gt;
+              &lt;m:message&gt;Properties for other media might not work for usermedium&lt;/m:message&gt;
+            &lt;/m:warning&gt;
+            &lt;m:warning&gt;
+              &lt;m:line&gt;362&lt;/m:line&gt;
+              &lt;m:level&gt;0&lt;/m:level&gt;
+              &lt;m:message&gt;Properties for other media might not work for usermedium&lt;/m:message&gt;
+            &lt;/m:warning&gt;
+          &lt;/m:warninglist&gt;
+        &lt;/m:warnings&gt;
+      &lt;/m:result&gt;
+    &lt;/m:cssvalidationresponse&gt;
+  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;</pre>
+
+<h4 id="soap12response">SOAP1.2 response format reference</h4>
+
+<table class="refdoc">
+  <tbody>
+    <tr>
+      <th>element</th>
+      <th>description</th>
+    </tr>
+    <tr>
+      <th id="soap12_markupvalidationresponse">cssvalidationresponse</th>
+      <td>The main element of the validation response. Encloses all other
+        information about the validation results.</td>
+    </tr>
+    <tr>
+      <th id="soap12_uri">uri</th>
+      <td>the address of the document validated. In <a
+        href="https://www.w3.org/WAI/ER/">EARL</a> terms, this is the
+        <kbd>TestSubject</kbd>.</td>
+    </tr>
+    <tr>
+      <th id="soap12_checkedby">checkedby</th>
+      <td>Location of the service which provided the validation result. In <a
+        href="https://www.w3.org/WAI/ER/">EARL</a> terms, this is the
+        <kbd>Assertor</kbd>.</td>
+    </tr>
+    <tr>
+      <th id="soap12_doctype">csslevel</th>
+      <td>The CSS level (or profile) in use during the validation.</td>
+    </tr>
+    <tr>
+      <th id="soap12_charset">date</th>
+      <td>The actual date of the validation</td>
+    </tr>
+    <tr>
+      <th id="soap12_validity">validity</th>
+      <td>Whether or not the document validated passed or not formal
+        validation (boolean)</td>
+    </tr>
+    <tr>
+      <th id="soap12_errors">errors</th>
+      <td>Encapsulates all data about errors encountered through the
+        validation process</td>
+    </tr>
+    <tr>
+      <th id="soap12_errorcount">errorcount</th>
+      <td>a child of <a href="#soap12_errors">errors</a>, counts the number
+        of errors listed</td>
+    </tr>
+    <tr>
+      <th id="soap12_errorlist">errorlist</th>
+      <td>a child of <a href="#soap12_errors">errors</a>, contains the list
+        of errors (surprise!)</td>
+    </tr>
+    <tr>
+      <th id="soap12_error">error</th>
+      <td>a child of <a href="#soap12_errorlist">errorlist</a>, contains the
+        information on a single validation error.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Note</strong>: <code>warnings</code>, <code>warningcount</code>,
+<code>warninglist</code> and <code>warning</code> are similar to,
+respectively, <code><a href="#soap12_errors">errors</a></code>, <code><a
+href="#soap12_errorcount">errorcount</a></code>, <code><a
+href="#soap12_errorlist">errorlist</a></code> and <code><a
+href="#soap12_error">error</a></code>.</p>
+
+<h4 id="soap12message">SOAP1.2 atomic message (error or warning) format
+reference</h4>
+
+<p>As seen as the example above, the children of the <code><a
+href="#soap12_error">error</a></code> element, but also the
+<code>warning</code> element are <code>line</code>, <code>level</code> and
+<code>message</code>, defined below:</p>
+
+<table class="refdoc">
+  <tbody>
+    <tr>
+      <th>element</th>
+      <th>description</th>
+    </tr>
+    <tr>
+      <th id="soap12_line">line</th>
+      <td>Within the source code of the validated document, refers to the
+        line where the error was detected.</td>
+    </tr>
+    <tr>
+      <th id="soap12_col">level</th>
+      <td>The level of the warning, only the ones whose level is under or
+        equal to the value specified in the request will be displayed.</td>
+    </tr>
+    <tr>
+      <th id="soap12_message">message</th>
+      <td>The actual error or warning message</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+   <ul class="navbar"  id="menu">
+
+	<li><strong><a href="./" title="Home page for the W3C CSS Validation Service">Home</a></strong> <span class="hideme">|</span></li>
+	<li><a href="about.html" title="About this service">About</a> <span class="hideme">|</span></li>
+
+        <li><a href="documentation.html" title="Documentation for the W3C CSS Validation Service">Documentation</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Download the CSS validator">Download</a> <span class="hideme">|</span></li>
+
+        <li><a href="Email.html" title="How to provide feedback on this service">Feedback</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Credits and Acknowlegments">Credits</a><span class="hideme">|</span></li>
+
+      </ul>
+
+   <div id="footer">
+   <p id="activity_logos">
+       <a href=""https://www.w3.org/Style/CSS/learning"" title="Learn more about Cascading Style Sheets"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+    <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+
+</html>
+
+

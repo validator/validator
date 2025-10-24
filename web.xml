@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+           "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  <servlet>
+    <servlet-name>validator</servlet-name>
+    <servlet-class>org.w3c.css.servlet.CssValidator</servlet-class>
+    <init-param>
+      <param-name>vendorExtensionsAsWarnings</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+       <servlet-name>validator</servlet-name>
+       <url-pattern>/validator</url-pattern>
+   </servlet-mapping>
+
+   <welcome-file-list>
+     <welcome-file>validator.html.en</welcome-file>
+   </welcome-file-list>
+
+<!-- ===================== Additional MIME Type Mappings =================== -->
+<!-- tomcat does not know language file extensions, we have to force them    -->
+<!-- to properly be recognized as being html files...                        -->  
+
+    <mime-mapping>                                                          
+        <extension>en</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>de</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>fr</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>es</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>it</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>nl</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>ja</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>pl-PL</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>pt-BR</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>sv</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>zh-cn</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+    <mime-mapping>                                                          
+        <extension>ko</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+   
+</web-app>

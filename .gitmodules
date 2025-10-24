@@ -1,23 +1,6 @@
-[submodule "css-validator"]
-	path = css-validator
-	url = https://github.com/w3c/css-validator.git
-	branch = validator-nu
-[submodule "htmlparser"]
-	path = htmlparser
-	url = https://github.com/validator/htmlparser.git
-[submodule "jing-trang"]
-	path = jing-trang
-	url = https://github.com/relaxng/jing-trang.git
-	branch = validator-nu
-[submodule "tests"]
-	path = tests
-	url = https://github.com/validator/tests.git
-[submodule "galimatias"]
-	path = galimatias
-	url = https://github.com/validator/galimatias.git
-[submodule "wiki"]
-	path = docs/wiki
-	url = https://github.com/validator/validator.wiki.git
-[submodule "langdetect"]
-	path = langdetect
-	url = https://github.com/validator/language-detection.git
+[submodule "testsuite"]
+	path = testsuite
+	url = https://github.com/w3c/css-validator-testsuite.git
+[submodule "javacc"]
+	path = javacc
+	url = https://github.com/javacc/javacc.git

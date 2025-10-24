@@ -1,0 +1,382 @@
+# Master localization string file: $Id$
+language_name: हिन्दी
+direction: ltr
+more_options: अतिरिक्त विकल्प
+title_more_options: दिखाएँ / छुपाएँ अतिरिक्त विकल्पों का मान्यता
+all: सब
+normal_report: सामान्य रिपोर्ट
+most_important: सबसे महत्वपूर्ण
+no_warnings: कोई चेतावनी नहीं
+profile: प्रोफ़ाइल
+no_special_profile: कोई विशेष प्रोफ़ाइल नहीं
+css1: CSS स्तर 1
+css2: CSS स्तर 2
+css21: CSS स्तर 2.1
+css3: CSS स्तर 3
+svg: SVG
+svgbasic: SVG बुनियादी
+svgtiny: SVG छोटे
+mobile: मोबाइल
+ATSC_TV_profile: ATSC TV प्रोफ़ाइल
+TV_profile: TV प्रोफ़ाइल
+medium: मध्यम
+aural: कर्ण - संबंधी
+braille: ब्रैल्ले
+embossed: उभरा
+handheld: हस्त दवारा
+print: छापना
+projection: प्रक्षेपण
+screen: चित्रपट
+tty: TTY
+tv: TV
+presentation: प्रस्तुति
+type: प्ररूप
+no_special_type: स्वचालित
+html_doc: HTML
+css_doc: CSS
+check: जाँचना
+W3C_CSS_validation_service: W3C सीएसएस मान्यकरण सेवा
+check_CSS: शैली पत्रक के साथ कास्केडिंग शैली शीट (सीएसएस) और (X)HTML दस्तावेजों की जाँच करे।
+by_URI: URI के द्वारा
+by_file_upload: फ़ाइल अपलोड के द्वारा
+by_direct_input: प्रत्यक्ष निवेश के द्वारा
+validate_by_URI: URI द्वारा मान्यकर्ण 
+enter_uri: किसी दस्तावेज़ के URI को दर्ज कीजिये (HTML  सीएसएस के साथ या केवल सीएसएस) जिसका आप मान्यकर्ण करना चाहते हैं।
+page_address: मान्यकर्ण करने के लिए पृष्ठ का पता
+address: पता
+submit_uri: मान्यकर्ण करने के लिए URI जमा करें
+validate_by_file_upload: फ़ाइल अपलोड के द्वारा मान्यकर्ण करें
+choose_document: मान्यकर्ण करने के लिए दस्तावेज़ चुनें
+choose_local_file: एक अवस्थिति फ़ाइल को अपलोड और मान्यकर्ण करने के लिए चुनें
+local_CSS_file: अवस्थिति CSS फ़ाइल
+submit_file: मान्यकर्ण करने के लिए फ़ाइल भेजें
+validate_by_input: प्रत्यक्ष निवेश के द्वारा मान्यकर्ण करें
+enter_CSS: मान्यकर्ण करने के लिए सीएसएस दर्ज करें
+submit_input: मान्यकर्ण करने के लिए आपनी सामग्री भेजें
+note: टिप्पणी
+note_xhtml_valid: यदि आप अपने (X) HTML दस्तावेज़ में एम्बेड होई सीएसएस शैली शीट का मान्यकर्ण करना चाहते हैं, तो पहले आप <a href="https://validator.w3.org/">जाँच करें कि जिस (X) HTML दस्तावेज़ का आप का उपयोग कर रहें हैं वो मान्यकृत है।</a>
+# End of variables added along with Index page template
+
+W3C_validator_results: W3C सीएसएस मान्यकर्ण के परिणाम
+# file_title: <!-- provided by the user -->
+CSS_validation_service: सीएसएस मान्यकर्ण सेवा
+jump_to: सीधे
+# errors_count: <!-- generated on the fly -->
+errors: त्रुटियों
+# warnings_count <!-- generated on the fly -->
+warnings: चेतावनियाँ
+validated_CSS: मान्यकृत CSS
+congrats: बधाई हो! कोई त्रुटि नहीं मिली।
+# The sentence defined by doc_validates_before_link and doc_validates_after_link variables goes: \
+# "This document validates as CSSXX!" where XX stands for the CSS version used \
+# Since the content of the link about the CSS version is generated on the fly, \
+# it is important to define what goes before the link and what goes afterwards in 2 separate \
+# variables because the position of the link in the sentence varies in different languages
+doc_validates_before_link: यह दस्तावेज़
+doc_validates_after_link: के रूप में मान्यकृत हुआ है!
+no_errors_interoperable_msg: अपने पाठकों है कि आप के लिए एक interoperable वेब पेज बनाने के लिए ध्यान रखा है दिखाने के लिए,\
+आप किसी भी पृष्ठ पर इस मान्य चिह्न प्रदर्शित कर सकते हैं. यहाँ XHTML आप अपने वेब पेज के लिए इस आइक:
+valid_CSS: Valid CSS!
+# <!-- close the img tag with > instead of /> if using HTML<= 4.01 -->
+no_errors_close_tags_msg: img टेग को &gt; से बंद करें न की /&gt; यदि आप HTML &lt;= 4.01 का उपयोग कर रहें हैं
+no_errors_dl_local_msg: यदि आप चाहें, तो आप इस छवि की एक प्रति डाउनलोड करने के लिए अपने स्थानीय वेब निर्देशिका में रखने के लिए कर सकते हैं \
+और अपने स्थानीय संदर्भ के लिए ऊपर छवि इस सर्वर पर एक बजाय XHTML टुकड़ा बदल जाते हैं.
+no_errors_create_link_msg: यदि आप इस पृष्ठ (यानी के लिए एक कड़ी है, यह सत्यापन परिणाम बनाने के लिए)\
+आसान बनाने के लिए फिर से भविष्य में इस पृष्ठ को मान्य करने के लिए या दूसरों को अपने पृष्ठ को मान्य करने की अनुमति चाहते हैं, यूआरआइ है:
+no_errors_forHTML_only_msg: केवल HTML / XML दस्तावेज़ के लिए ही
+no_errors_bookmark_msg: या, आप अपने बुकमार्क्स या होत्लिस्ट में वर्तमान पृष्ठ में जोड़ सकते हैं.
+note_valide_html: इरादे के मुताबिक काम करने के लिए, आपकी सीएसएस शैली पत्रक को एक सही दस्तावेज़ पार्स पेड़ की जरूरत है. इसका मतलब है आप को <a href="https://validator.w3.org/">वैध HTML</a>का उपयोग करना चाहिए.
+top: टॉप
+# hook_html_validator <!-- generated on the fly -->
+not-css1-style: /* सावधान ! यह एक CSS1 संपत्ति नहीं है! */
+errors_sorry_msg: क्षमा करें! हम निम्नलिखित त्रुटि मिली
+# errors_list: <!-- generated on the fly -->
+# warnings_list: <!-- generated on the fly -->
+# rules_count: <!-- generated on the fly -->
+valid_CSS_info: वैध सीएसएस जानकारी
+# charset: <!-- generated on the fly -->
+# rules_list: <!-- generated on the fly -->
+CSS_not_found: कोई शैली पत्रक नहीं मिली
+home: होम
+about: बारे में
+doc: दस्तावेज़ीकरण
+dl: डाउनलोड
+feedback: प्रतिक्रिया
+credits: क्रेडिट
+home_title: W3C सीएसएस मान्यकरण सेवा का मुख पृष्ठ
+about_title: इस सेवा के बारे में
+doc_title: W3C सीएसएस मान्यकरण सेवा के लिए दस्तावेज़ीकरण
+dl_title: सीएसएस मान्यक को डाउनलोड और स्थापित करें
+feedback_title: इस सेवा पर प्रतिक्रिया कैसे प्रदान करने के लिए
+credits_title: क्रेडिट और रसीद
+W3C_quality_msg: W3C की गुणवत्ता आश्वासन गतिविधि, आप के लिए मुफ्त वेब गुणवत्ता उपकरणों और अधिक ला रही है 
+learn_more_msg: शैली पत्रक कास्केडिंग के बारे में अधिक जानें
+support: इस उपकरण का समर्थन करें, और बनें
+supporter: W3C समर्थक
+# End of variables added along with Velocity
+
+# Defines your own error and warning message here
+content-type: text/html; charset=utf-8
+content-language: hi
+output-encoding-name: utf-8
+
+# You can change the level warning like this (example) :
+# warning.redefinition.level: 5
+#  level is an integer between 0 and 9 (all others values are ignored)
+warning.redefinition: \u201C%s\u201D की परिभाषा
+
+# used by xml parser 
+warning.style-inside-comment: HTML टिप्पणी के अंदर शैली नियमों को मत डालिए,  क्योंकि उन्हें उपयोगकर्ता एजेंट द्वारा हटाया जा सकता है 
+
+# used by org.w3c.css.properties.Css1Style
+warning.same-colors: \u201C%s\u201D और \u201C%s\u201D के लिए एक ही रंग
+warning.no-color: आपने कोई रंग स्थापित नही किया (या रंग पारदर्शी स्थापित है) परन्तु आपने पृष्ठभूमि रंग स्थापित कर रखा है. सुनिश्चित करें कि रंग की कास्केडिंग पाठ्य को पढ़ने योग्य रखता है.
+warning.no-background-color: आपने कोई पृष्ठभूमि रंग स्थापित नही किया (या पृष्ठभूमि रंग पारदर्शी स्थापित है) लेकिन आप एक रंग निर्धारित किया है. सुनिश्चित करें कि रंग की कास्केडिंग पाठ्य को पढ़ने योग्य रखता है.
+#warning.color.mixed-capitalization is now obsolete
+#warning.color.mixed-capitalization: Although color names are case-insensitive, it is recommended to use the mixed capitalization, to make the names more legible: \u201C%s\u201D
+warning.no-generic-family: \u201C%s\u201D: एक सामान्य परिवार को अंतिम विकल्प के रूप के उपयोग के लिए हम आपको प्रोत्साहित किया जाता है
+warning.with-space: श्वेत स्थान वाले परिवार नाम को उद्धृत किया जाना चाहिए. यदि उद्धृत छोड़ा जाता है, कोई भी श्वेत स्थान \
+नाम के पहले और बाद हटादिया जाता हैं और अंदर के श्वेत स्थान के अनुक्रम को एक श्वेत स्थान में बदल दिया जाता है. 
+warning.no-padding: आप को पृष्ठभूमि रंग के साथ एक पद्डिंग क्षेत्र का प्र्यौग करने के लिए प्रोत्साहित किया जाता है
+warning.same-colors2: \u201C%s\u201D और \u201C%s\u201D   इन दो संदर्भों में रंग और पृष्ठभूमि रंग के रंग एक ही है
+warning.relative-absolute: \u201C%s\u201D में कुछ निरपेक्ष और सापेक्ष लंबाई है. यह एक मजबूत शैली पत्रक नहीं है.
+# used by org.w3c.css.properties.CssSelectors
+warning.unknown-html: \u201C%s\u201D एक HTML तत्व नहीं है
+warning.html-inside: HTML तत्व एक और तत्व के अंदर नहीं हो सकता
+warning.body-inside: BODY तत्व HTML को छोड़कर किसी अन्य तत्व के अंदर नहीं किया जा सकता है
+warning.pseudo-classes: 'A' तत्व के आलावा एंकर प्सयूदो-क्लास \u201C%s\u201D का किसी अन्य तत्वों पर कोई प्रभाव नहीं होता
+
+# not used by org.w3c.css.properties.CssSelectors for the moment
+warning.noinside: \u201C%s\u201D इनलाइन तत्व के अंदर नहीं किया जा सकता है
+warning.withblock: सावधान . प्सयूदो तत्वों केवल एक ब्लॉक स्तर तत्व पर संलग्न किया जा सकता है
+warning.block-level: यह गुण ब्लॉक स्तर तत्वों पर लागू होता है.
+
+# used by org.w3c.css.parser.Frame
+warning.no-declaration: नियम में कोई घोषणा नही है
+
+# used by org.w3c.css.parser.CssFouffa
+warning.unsupported-import: आयातित शैली पत्रक सिध्ये डाले गये और फाइल अपलोड प्रणाली में नहीं जांचे जाते
+
+# used by org.w3c.css.values.CssColor
+warning.out-of-range: \u201C%s\u201D सीमा से बाहर है
+error.invalid-color: अवैध RGB कार्य
+
+warning.marker: मार्कर-ऑफसेट गुण 'डिस्प्ले: मारकर' के साथ तत्वों पर लागू होता है
+
+# used by org.w3c.css.properties.ACssStyle
+warning.relative: \u201C%s\u201D के गुणों में रिश्तेदार इकाइयों के प्रयोग से शैली पत्रक और अधिक मजबूत होता है
+
+# used by org.w3c.css.css.StyleSheetParser and org.w3c.css.css.StyleSheetXMLParser
+error.at-rule: क्षमा करें, at-rule \u201C%s\u201D लागू नहीं है.
+warning.at-rule: क्षमा करें, at-rule \u201C%s\u201D लागू नहीं है.
+
+# used by all properties and values
+error.operator: \u201C%s\u201D एक गलत ऑपरेटर है
+error.negative-value: \u201C%s\u201D निगेटि मूल्यों की अनुमति नहीं है
+error.few-value: \u201C%s\u201D गुणों के लिए बोहत कम मूल्य है
+
+# be careful here, values comes first
+# You can't write something like this : For the color, blue is an incorrect value
+error.value: \u201C%s\u201D \u201C%s\u201D का मूल्य नही है 
+
+#used by org.w3c.css.properties3.CssToggleGroup
+error.groupname: \u201C%s\u201D एक सही समूहनाम नहीं है. एक वैध पहचानकर्ता का प्रयोग करें
+
+#used by org.w3c.css.properties3.CssGroupReset
+error.nogroup: \u201C%s\u201D टॉगल समूह गुणों के द्वारा गठन नहीं किया है
+
+#used by org.w3c.css.properties3.CssGlyphOrVert
+error.anglevalue: मूल्य -360 और 360 के बीच का होना चाहिए और 90 के द्वारा भाग किया जा सकना चाहिए
+
+#used by org.w3c.css.properties3.CssTextKashidaSpace
+error.percentage: प्रतिशत मूल्य की उम्मीद है
+
+#used by org.w3c.css.properties.CssTextAlign
+warning.xsl: मूल्य \u201C%s\u201D केवल XSL पर लागू होता है
+
+#used by org.w3c.css.parser.analyzer.CssParser
+warning.medialist: मीडियालिस्ट को 'media :' \u201C%s\u201D के साथ शुरू करना चाहिए
+error.nocomb: कोम्बिनाटर \u201C%s\u201D चयनकर्ता की इस प्रोफ़ाइल या संस्करण में अनुमति नहीं है
+
+#used by org.w3c.css.properties.CssDirection
+warning.direction: ब्लॉक स्तर तत्व 'दिशा' की बजाय नए CSS3 'व्रितिंग-मोड़े' तत्व का  उपयोग करें
+
+# used by org.w3c.css.properties.CssTextDecoration
+error.same-value: \u201C%s\u201D दो बार प्रकट होरही है
+
+error.generic-family.quote: सामान्य परिवार के नाम खोजशब्द हैं, और इसलिए उद्धृत नहीं करना चाहिए.
+
+# used by org.w3c.css.properties.CssClip
+error.shape: अवैध आकृति परिभाषा(<top>,<right>,<bottom>,<left>)
+error.shape-separator: आकार परिभाषा में अवैध विभाजक. यह एक अल्पविराम होना चाहिए.
+
+# used by org.w3c.css.properties.CssContent
+error.attr: अवैध attr परिभाषा attr(X)
+error.function: अवैध गुण परिभाषा
+error.counter: अवैध काउंटर परिभाषा काउंटर(<identifier>[,<list-style-type>]?)
+error.counters: अवैध काउंटर परिभाषा काउंटर(<identifier>,<string>[,<list-style-type>]?)
+
+# used by org.w3c.css.font.Src
+error.format: अवैध प्रारूप परिभाषा प्रारूप(<string>[,<string>]*)
+error.local: अवैध प्रारूप परिभाषा स्थानीय(<string>|<ident>+)
+
+# used by org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength
+error.unit: \u201C%s\u201D एक गलत इकाई है
+
+# used by org.w3c.css.aural.ACssAzimuth
+error.degree: स्थिति डिग्री के संदर्भ में वर्णित किया जाना चाहिए.
+
+# used by org.w3c.css.aural.ACssElevation
+error.elevation.range: एक कोण के  उन्नयन को निर्दिष्ट करता है, '-90उपाधि' और '90उपाधि' के बीच मे.
+
+# used by org.w3c.css.aural.ACssPitchRange
+error.range: मूल्य सीमा से बाहर है.यह मूल्य '0' और '100' के बीच होना चाहिए.
+
+# used by org.w3c.css.properties.CssTextShadow
+error.two-lengths: एक ऑफसेट छाया दो <length> मूल्यों के साथ निर्दिष्ट किया जाता है (एक त्रिज्या कलंक वैकल्पिक छाया ऑफसेट करने के बाद निर्दिष्ट किया जा सकता है.)
+
+error.integer: यह संख्या एक पूर्णांक होना चाहिए.
+error.comma: अल्पविराम विभाजक मोजूद नही है .
+
+# used by org.w3c.css.values.CssPercentage
+error.percent: \u201C%s\u201D एक गलत प्रतिशत है
+
+# used by org.w3c.css.values.CssString
+error.string: एक गलत स्ट्रिंग है
+
+# used by org.w3c.css.values.CssURL
+error.url: एक गलत यूआरएल है
+
+# used by org.w3c.css.values.CssColor
+error.rgb: \u201C%s\u201D एक वैध रंग नहीं है 3 या 6 हेक्सादेसिमाल्स संख्या का
+error.angle: \u201C%s\u201D एक वैध कोण नहीं है. मूल्य 0 और 360 के बीच होना चाहिए
+
+# used by org.w3c.css.values.CssNumber
+error.zero: केवल 0 ही एक \u201C%s\u201D हो सकता है. आप अपनी संख्या के बाद एक इकाई डाले 
+warning.zero: केवल 0 ही एक \u201C%s\u201D हो सकता है. आप अपनी संख्या के बाद एक इकाई डाले 
+
+# used by org.w3c.css.parser.CssPropertyFactory
+error.noexistence-at-all: \u201C%s\u201D गुण मौजूद नहीं है
+error.noexistence-media: \u201C%s\u201D गुण मीडिया \u201C%s\u201D के लिए मौजूद नहीं है
+error.noexistence: \u201C%s\u201D गुण \u201C%s\u201D में मौजूद नहीं है लेकिन \u201C%s\u201D में मौजूद है
+warning.noexistence: \u201C%s\u201D गुण \u201C%s\u201D में मौजूद नहीं है लेकिन \u201C%s\u201D में मौजूद है
+warning.noexistence-media: \u201C%s\u201D गुण मीडिया \u201C%s\u201D के लिए मौजूद नहीं है
+warning.notforusermedium : \u201C%s\u201D गुण उसेर्मेदियम के लिए मौजूद नहीं है
+warning.noothermedium : अन्य मीडिया के लिए गुण उसेर्मेदियम के लिए काम नहीं कर सकता
+# used by org.w3c.css.parser.AtRule*
+error.noatruleyet: अन्य @rules  @import के आलावा CSS1 में समर्थित नहीं है \u201C%s\u201D
+# used by org.w3c.css.parser.analyzer.CssParser
+error.notforcss1: मूल्य \u201C%s\u201D CSS1 लिए मौजूद नहीं है
+warning.pseudo: अज्ञात प्सयूदो-तत्व या प्सयूदो-वर्ग \u201C%s\u201D की मूलभूत प्रोफाइल में (\u201C%s\u201D)
+warning.nocomb: इस प्रोफाइल में कोम्बिनाटर \u201C%s\u201D चयनकर्ताओं के बीच होने की अनुमति नहीं है (\u201C%s\u201D)
+warning.charsetspecial: इस प्रोफाइल के लिए एक बहुत विशिष्ट वाक्यविन्यास charset @ है:\
+@ Charset ठीक एक अंतरिक्ष के बाद,\
+उद्धरण में एन्कोडिंग का नाम के बाद एक अर्द्धविराम द्वारा तुरंत पालन किया.
+warning.notversion: \u201C%s\u201D इस CSS : \u201C%s\u201D के संस्करण के साथ इस्तेमाल नहीं कर सकते हैं
+
+# used by org.w3c.css.parser.CssFouffa
+error.unrecognize: बहुत सारे मूल्य या मूल्य मान्यता प्राप्त नहीं हैं
+
+# used by org.w3c.css.parser.CssFouffa
+generator.unrecognize: पार्स त्रुटि
+generator.dontmixhtml: पार्स त्रुटि. शैली पत्रक HTML सिंटेक्स को शामिल नहीं करना चाहिए.  
+
+# used by org.w3c.css.css.StyleSheetGeneratorHTML2
+error.unknown: अज्ञात त्रुटि
+
+# used by org.w3c.css.parser.CssSelectors
+error.pseudo-element: प्सयूदो-तत्व : \u201C%s\u201D, \u201C%s\u201D के संदर्भ में प्रकट नहीं कर सकते
+error.pseudo-class: प्सयूदो-वर्ग : \u201C%s\u201D ,HTML में \u201C%s\u201D के संदर्भ में प्रकट नहीं कर सकते
+error.pseudo: अज्ञात प्सयूदो-तत्व या प्सयूदो-वर्ग \u201C%s\u201D
+error.id: ID चयनकर्ता #\u201C%s\u201D अमान्य है! केवल एक ID चयनकर्ता एक साधारण चुनाव में निर्दिष्ट किया जा सकता है: \u201C%s\u201D.
+error.space: यदि गुण चयनकर्ता ~= प्रयोग किया जाता है, मूल्य \u201C%s\u201D में शब्द स्पेस नहीं होना चाहिए.
+error.todo : हमे खेद है सुविधा \u201C%s\u201D अभी तक लागू नहीं किया है.
+error.incompatible: \u201C%s\u201D और \u201C%s\u201D असंगत हैं
+warning.incompatible: \u201C%s\u201D और \u201C%s\u201D असंगत हैं
+error.notformobile: \u201C%s\u201D मोबाइल प्रोफाइल के साथ इस्तेमाल नहीं  कर सकते हैं
+error.notforatsc: \u201C%s\u201D ATSC प्रोफाइल के साथ इस्तेमाल नहीं  कर सकते हैं
+error.notfortv: \u201C%s\u201D TV प्रोफाइल के साथ इस्तेमाल नहीं  कर सकते हैं
+error.notversion: \u201C%s\u201D इस CSS : \u201C%s\u201D के संस्करण के साथ इस्तेमाल नहीं कर सकते हैं
+
+error.media: अपरिचित मीडिया \u201C%s\u201D 
+error.page: अपरिचित पृष्ठ प्सयूदो नाम \u201C%s\u201D
+
+error.unrecognized.link: अपरिचित लिंक तत्व या XML-स्त्य्लेशीत  PI.
+
+# used by StyleSheetGeneratorHTML
+generator.context: प्रसंग
+generator.request: एक त्रुटि अपनी शैली पत्रक के उत्पादन के दौरान हुई. \
+कृपया अपन अनुरोध सही करें या plh@w3.ओर्ग पर एक मेल भेज.
+generator.unrecognized: अपरिचित
+generator.invalid-number: अवैध संख्या
+generator.property: मूल्य त्रुटि
+generator.line: पंक्ति
+generator.not-found: फाइल नही मिली 
+
+generator.doc-html:   <!-- removed this confusing message olivier 2006-12-14 -->
+generator.doc:  <!-- removed this confusing message olivier 2006-12-14 -->
+
+
+# used by the parser
+parser.semi-colon: गुणों नाम के पहले एक अर्द्ध बृहदान्त्र खोजने के लिए प्रयास. उसे जोड़ना
+
+parser.unknown-dimension: अज्ञात आयाम
+
+parser.old_class: CSS1 में, एक वर्ग के नाम एक अंक ("#55ft"), साथ शुरू कर सकते \
+जब तक यह एक आयाम ("#55in")नहीं है. CSS2 में, इस तरह के आईडी  अज्ञात आयाम के रोप में विश्लेषित कर दिए जाते हैं \
+नई इकाइयों के भविष्य के परिवर्धन के लिए अनुमति देने के लिए). \
+\u201C%s\u201D को एक वैध वर्ग बनाने के लिए, CSS2 में पहले अंक ".\3\u201C%s\u201D" को हटाने की आवश्यकता होती है
+
+parser.old_id: CSS1 में, एक ID नाम एक अंक ("#55ft"), साथ शुरू कर सकते \
+जब तक यह एक आयाम ("#55in")नहीं है. CSS2 में, इस तरह के आईडी  अज्ञात आयाम के रोप में विश्लेषित कर दिए जाते हैं \
+नई इकाइयों के भविष्य के परिवर्धन के लिए अनुमति देने के लिए).
+
+parser.class_dim: CSS1 में, एक वर्ग के नाम एक अंक ("#55ft"), साथ शुरू कर सकते \
+जब तक यह एक आयाम ("#55in")नहीं है.
+
+parser.id_dim: CSS1 में, एक ID नाम एक अंक ("#55ft"), साथ शुरू कर सकते \
+जब तक यह एक आयाम ("#55in")नहीं है.
+
+parser.charset: @charset नियम केवल शैली पत्र  के शुरू में हो सकता है \
+कृपया जाँचें कि पहले कोई रिक्त स्थान नहीं हैं.
+
+parser.charsetspecial: इस प्रोफाइल के लिए एक बहुत विशिष्ट @charset वाक्यविन्यास है: \
+@charset उद्धरण में ठीक एक स्पेस के बाद कूटबन्धन का नाम \
+और फिर, अर्धविराम.
+
+warning.old_id: CSS1 में, एक ID नाम एक अंक ("#55ft"), साथ शुरू कर सकते \
+जब तक यह एक आयाम ("#55in")नहीं है. CSS2 में, इस तरह के आईडी  अज्ञात आयाम के रोप में विश्लेषित कर दिए जाते हैं \
+नई इकाइयों के भविष्य के परिवर्धन के लिए अनुमति देने के लिए).
+
+warning.old_class: CSS1 में, एक वर्ग के नाम एक अंक ("#55ft"), साथ शुरू कर सकते \
+जब तक यह एक आयाम ("#55in")नहीं है. CSS2 में, इस तरह के आईडी  अज्ञात आयाम के रोप में विश्लेषित कर दिए जाते हैं \
+नई इकाइयों के भविष्य के परिवर्धन के लिए अनुमति देने के लिए).
+
+# used by the servlet
+servlet.invalid-request: आपने एक अमान्य अनुरोध भेजा है.
+servlet.process: इस लक्ष्य की कार्यविधि नही होसकी
+
+warning.atsc: \u201C%s\u201D शायद atsc-tv मध्यम द्वारा समर्थित नहीं हो
+error.onlyATSC: \u201C%s\u201D वह केवल atsc-tv मध्यम के लिए है 
+
+warning.otherprofile: \u201C%s\u201D वह विशेषता इस प्रोफाइल के लिए मौजूद नहीं है, लेकिन किसी और प्रोफ़ाइल के अनुरूप वैधीकृत है
+
+warning.float-no-width: (x)HTML + सीएसएस में जारी, तत्वों के लिए एक चौड़ाई की घोश्र्ना आवश्यक है. केवल तत्व (html, img, input, textarea, select, or object) जिनमे आंतरिक चौड़ाई है प्रभावित नहीं होते
+
+parser.charsetcss1: @चारसेट नियमों CSS1 में उपयोग नहीं किया जा सकता
+parser.attrcss1: विशेषता चयनकर्ता CSS1 में अवैध हैं
+
+error.bg_order: CSS3 पृष्ठभूमि परिभाषा में 'bg_position',  'bg_size' से पहले हो, अगर दोनों मौजूद हैं
+error.strictly-positive: \u201C%s\u201D मान्य नहीं है, केवल मान 0 से अधिक की अनुमति है
+parser.import_not_allowed: @charset और @import की तुलना में किसी भी अन्य बयान के बाद @import की अनुमति नहीं कर रहे हैं.
+parser.invalid_id_selector: अमान्य आईडी चयनकर्ता
+vendorext: विक्रेता एक्सटेंशन
+vext_default: डिफ़ॉल्ट
+vext_errors: त्रुटियाँ
+vext_warnings: चेतावनी
+warning.link-type: आप 'text/css' के एक मूल्य के साथ एक 'type' विशेषता 'link' तत्व जोड़ने चाहिए
+warning.vendor-extension: संपत्ति \u201C%s\u201D एक अज्ञात विक्रेता एक्सटेंशन है
+
+error.nomodifiershortmedia: अमूल्य मीडिया सुविधाओं  के साथ कोई  उपसर्ग की अनुमति नहीं दी जाती है
+error.nomodifiermedia: मीडिया सुविधा \u201C%s\u201D उपसर्ग का समर्थन नहीं करता
+error.grid: केवल 0 और 1 ग्रिड के लिए स्वीकार्य मानय हैं

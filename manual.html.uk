@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+  <title>Посібник користувача сервісу перевірки CSS</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Home Page" />
+  <style type="text/css" media="all">
+    @import "style/base.css";    
+    @import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+    <div id="banner">
+     <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+     <a href="./"><span>Сервіс перевірки CSS</span></a></h1>
+     <p id="tagline">
+       Перевірка таблиць каскадних стилів (CSS) та документів (X)HTML з таблицями стилів
+     </p>
+    </div>
+
+<div id="main">
+<!-- This DIV encapsulates everything in this page - necessary for the positioning -->
+
+<div class="doc">
+<h2>Посібник користувача сервісу перевірки CSS</h2>
+
+<h3 id="TableOfContents">Зміст</h3>
+
+<div id="toc">
+<ul>
+  <li><a href="#use">Як використовувати сервіс перевірки CSS</a>
+    <ul>
+      <li><a href="#url">Перевірка по URL</a></li>
+      <li><a href="#fileupload">Перевірка завантаженого файлу</a></li>
+      <li><a href="#directinput">Перевірка безпосередньо уведеного коду</a></li>
+      <li><a href="#basicvalidation">Що робить основна перевірка?</a></li>
+    </ul>
+  </li>
+  <li><a href="#advanced">Розширена перевірка</a>
+    <ul>
+	<li><a href="#paramwarnings">Попередження</a></li>
+	<li><a href="#paramprofile">Настройка профіля</a></li>
+	<li><a href="#parammedium">Настройка носія інформації</a></li>
+    </ul>
+  </li>
+  <li><a href="#expert">Для спеціалістів</a>
+    <ul>
+	<li><a href="#requestformat">Формат запиту на перевірку</a></li>
+	<li><a href="#api">API веб-сервіса перевірки CSS</a></li>
+    </ul>
+   </li>
+</ul>
+</div>
+
+<p id="skip"></p>
+
+<h3 id="use">Як використовувати сервіс перевірки CSS</h3>
+
+<p>Найпростіший способ перевірки дає основний інтерфейс. На його сторінці ви знайдете опис трьох форм, що відповідають трьом способам перевірки:</p>
+
+<h4 id="url">Перевірка по URL</h4>
+<p>Просто введіть URL документа, що бажаєте перевірити. Документ може бути у форматі HTML або CSS.</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" src="./images/uri_basic.png" alt="Перевірка по URL" />
+
+<h4 id="fileupload">Перевірка завантаженого файла</h4>
+<p>Цей спосіб дозволяє вам завантажити файл до серверу й перевірити його. Натисніть кнопку «Перегляд...» та оберіть файл, що хочете перевірити.</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/file_upload_basic.png" 
+    alt="Перевірка завантаженого файлу" />
+
+<p>В цьому випадку допускаються лише документи CSS. Тобто ви не можете завантажити документи (X)HTML. Також потрібно врахувати наявність директив @import, тому що їх буде оброблено лише якщо вони явно посилаються на загальнодоступний ресурс (то не використовуйте в цьому варіанті перевірки відносні путі).</p>
+
+<h4 id="directinput">Перевірка безпосередньо введенного кода</h4>
+
+<p>Цей способ є ідеальним для перевірки частини CSS-файлу. Вам лише необхідно ввести код до текстового поля.</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" src="./images/direct_input_basic.png" alt="Перевірка безпосередньо уведеного коду" />
+
+<p>Справедливі приведені раніш зауваження. Замітьте, що цей способ є дуже зручним, якщо потрібна певна допомога інших людей. Також це зручно для відправлення повідомлень про помилку, оскільки ви можете створювати посилання на результати перевірки у якості тестового прикладу.</p>
+
+<h4 id="basicvalidation">Що робить основна перевірка?</h4>
+
+<p>При використанні спрощеного інтерфейсу, сервіс перевірить документи на відповідність <a href="https://www.w3.org/TR/CSS2">CSS&#x00a0;2</a>&#x00a0;— поточній технічній рекомендації для CSS.<br />
+Він видасть звіт до XHTML без абияких попереджень (буде лише інформація про помилки).<br />
+Опцію «середовище» буде встановлено у значення «all», що позначає відповідність усім пристроям (дивіться <a href="https://www.w3.org/TR/CSS2/media.html">http://www.w3.org/TR/CSS2/media.html</a> для повного опису середовищ).</p>
+
+<h3 id="advanced">Розширена перевірка</h3>
+
+<p>Якщо потрібна більш конкретна перевірка, можна використовувати розширений інтерфейс, що дозволяє вказати три параметра. Далі наводиться стисла довідка по кожному з них.</p>
+
+<h4 id="paramwarnings">Попередження</h4>
+
+<p>Цей параметр є корисним для налашування докладності звітів сервісу перевірки CSS. Дійсно, сервіс може видавати два типа повідомлень: помилки й попередження. Помилки видаються, коли CSS, що перевіряється, не відповідає рекомендації. Попередження відрізняються від помилок тим, що не відносяться до проблем виконання специфікації. Вони використовуються, щоб попередити (!) розробника CSS, що деякі аспекти можуть бути небезпечні та дивно оброблябитися користувацькими застосунками.</p>
+
+<p>Типове попередження стосується font-family: якщо ви не вкажете базовий тип шрифту, ви отримаєте попередження, що каже про те, що ви повинні додати такий до кінця відповідного правила CSS, або користувацьки застосунки, що не мають списків перерахованих у правилі шрифтів, перемикнуться до шрифту за замовчуванням, що може перекрутити відображення інформації.</p>
+
+<h4 id="paramprofile">Профіль</h4>
+
+<p>Сервіс перевірки може функціонувати з різними профілями CSS. Профіль перераховує усі особливості й можливости реалізації на конкретній платформі. Це визначення взято з <a href="https://www.w3.org/Style/2004/css-charter-long.html#modules-and-profiles0">сайта CSS</a>. Выбор за замовчуванням соответствует наиболее часто используемому, <a href="https://www.w3.org/TR/CSS2">CSS&#x00a0;2</a>.</p>
+
+<h4 id="parammedium">Носій</h4>
+
+<p>Завдання носія відповідає правилу @media, що застосовується до всього документу. Ви можете знайти більше інформації про носії за адресою <a href="https://www.w3.org/TR/CSS2/media.html">http://www.w3.org/TR/CSS2/media.html</a>.</p>
+
+<h3 id="expert">Лише для спеціалістів</h3>
+
+<h4 id="requestformat">Формат запиту на перевірку</h4>
+<p>Нижче приведено таблицю з параметрами, які ви можете використовувати в запитах до сервісу перевірки CSS від W3C.</p>
+
+<p>Якщо ви бажаєте використовувати спільний сервер перевірки W3C, то використовуйте приведені нижче параметри з основним URI<br />
+<kbd>http://jigsaw.w3.org/css-validator/validator</kbd><br />
+замініть його адресою свого сервера, якщо ви бажаєте звернутися до власного встановлення сервісу перевірки.</p>
+
+<p><strong>Примітка</strong>: якщо потрібно програмно викликати сервіс для великої кількості документів, то переконайтесь у тому, що ваші програми використовують затримку <strong>мінімум у 1 секунду</strong> між зверненнями.
+Сервіс перевірки надається безплатно усім, тому будемо вдячні за поважливе ставлення. Дякуємо за розуміння.</p>
+
+<table class="refdoc">
+  <tbody>
+    <tr>
+      <th>Параметр</th>
+      <th>Опис</th>
+      <th>Значення за замовчуванням</th>
+    </tr>
+    <tr>
+      <th>uri</th>
+      <td><acronym title="Universal Resource Locator">URL</acronym> документу для перевірки. Документ може бути у форматі HTML або CSS.</td>
+      <td>За замовчуванням не встановлено, однак для перевірки документу повинно бути вказано або цей параметр, або <code>text</code>.</td>
+    </tr>
+    <tr>
+      <th>text</th>
+      <td>Документ для перевірки; приймається лише формат CSS.</td>
+      <td>За замовчуванням не встановлено, однак для перевірки документу повинно бути вказано або цей параметр, або <code>uri</code>.</td>
+    </tr>
+    <tr>
+      <th>usermedium</th>
+      <td><a href="https://www.w3.org/TR/CSS2/media.html">Середовище</a>, що використовується для перевірки; наприклад. <code>screen</code>, <code>print</code>, <code>braille</code>...</td>
+      <td><code>all</code></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td>Перемикає різноманітні формати видачи результату перевірки. Можливі значення: <code>text/html</code> та <code>html</code> (документ XHTML, Content-Type: text/html), <code>application/xhtml+xml</code> та <code>xhtml</code> (документ XHTML, Content-Type: application/xhtml+xml), <code>application/soap+xml</code> та <code>soap12</code> (документ SOAP 1.2, Content-Type: application/soap+xml), <code>text/plain</code> та <code>text</code> (текстовий документ, Content-Type: text/plain), інші значення (документ XHTML document, Content-Type: text/html)</td>
+      <td>html</td>
+    </tr>
+    <tr>
+      <th>profile</th>
+      <td>Профіль CSS, що використовується для перевірки. Може приймати значення
+        <code>css1</code>, <code>css2</code>, <code>css21</code>,
+        <code>css3</code>, <code>svg</code>, <code>svgbasic</code>,
+        <code>svgtiny</code>, <code>mobile</code>, <code>atsc-tv</code>,
+        <code>tv</code> або <code>none</code></td>
+      <td>Остання рекомендація W3C: CSS&#x00a0;2</td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td>Мова звіту. На даний момент може приймати значення <code>en</code>, <code>fr</code>, <code>ja</code>, <code>es</code>, <code>zh-cn</code>, <code>nl</code>, <code>de</code>, <code>it</code>, <code>pl</code>.</td>
+      <td>Англійська (<code>en</code>).</td>
+    </tr>
+    <tr>
+      <th>warning</th>
+      <td>Рівень повідомлень про попередження: <code>no</code>&#x00a0;— для відключення попереджень, <code>0</code>&#x00a0;— для мінімальної кількості попереджень, <code>1</code> або <code>2</code>&#x00a0;— для подальших рівней.</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="api">API веб-сервісу перевірки CSS: документація для інтерфейсу SOAP&#x00a0;1.2 сервіса перевірки</h4>
+
+<p>Більш докладна технічна довідка, зокрема, по вивіду даних у SOAP&#x00a0;1.2, а також про усі можливі засоби виклику сервіса перевірки, дивіться <a href="./api.html">API веб-сервісу перевірки CSS</a>.</p>
+
+</div>
+</div>
+<!-- End of "main" DIV. -->
+
+
+
+   <ul class="navbar"  id="menu">
+   	<li><strong><a href="./" title="Головна сторінка сервісу W3C по перевірці CSS">Головна сторінка</a></strong> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="Документація по сервісу W3C для перевірки CSS">Документація</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Завантаження застосунку перевірки CSS">Завантаження</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="Як залишити відклик">Відклики</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Створювачи та учасники">Створювачи</a><span class="hideme">|</span></li>
+
+      </ul>
+
+      <ul id="lang_choice">
+           <li><a href="manual.html.de"
+               lang="de"
+               xml:lang="de"
+               hreflang="de"
+               rel="alternate">Deutsch</a></li>
+           <li><a href="manual.html.en"
+               lang="en"
+               xml:lang="en"
+           hreflang="en"
+           rel="alternate">English</a>  </li>
+           <li><a href="manual.html.es"
+           lang="es" xml:lang="es" hreflang="es"
+           rel="alternate">Español</a></li>
+           <li><a href="manual.html.fr"
+           lang="fr"
+           xml:lang="fr"
+           hreflang="fr"
+           rel="alternate">Français</a> </li>
+           <li><a href="manual.html.it"
+               lang="it"
+               xml:lang="it"
+               hreflang="it"
+               rel="alternate">Italiano</a> </li>
+           <li><a href="manual.html.nl"
+               lang="nl"
+               xml:lang="nl"
+               hreflang="nl"
+               rel="alternate">Nederlands</a> </li>
+           <li><a href="manual.html.ja"
+               lang="ja"
+               xml:lang="ja"
+               hreflang="ja"
+               rel="alternate">日本語</a> </li>
+           <li><a href="manual.html.pl-PL"
+               lang="pl"
+               xml:lang="pl"
+               hreflang="pl"
+               rel="alternate">Polski</a> </li>
+           <li><a href="manual.html.zh-cn"
+               lang="zh-hans"
+               xml:lang="zh-hans"
+               hreflang="zh-hans"
+               rel="alternate">中文</a></li>
+      </ul>
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="Дізнайтеся більше про CSS"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title="Validators Donation Program" />
+   </a>
+   </p>
+   
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>

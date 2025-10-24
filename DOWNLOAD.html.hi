@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="hi" xml:lang="hi" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title>सीएसएस मान्यकरण डाउनलोड और स्थापित करें</title>
+<link href="mailto:www-validator-css@w3.org" rev="made" />
+<link href="./" rev="start" title="Home Page" />
+<style media="all" type="text/css">
+@import url('style/base.css');
+@import url('style/docs.css');
+</style>
+<meta content="$Id$" name="revision" />
+<!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+
+<div id="banner">
+	<h1 id="title"><a href="https://www.w3.org/">
+	<img id="logo" alt="W3C" height="61" src="images/w3c.png" width="110" /></a>
+	<a href="./"><span>सीएसएस मान्यकरण सेवा</span></a></h1>
+	<p id="tagline">शैली (सीएसएस) शीट शैली पत्रक और के साथ (एक्स) HTML दस्तावेजों 
+	कास्केडिंग जाँच</p>
+</div>
+<div class="doc">
+	<h2>डाउनलोड और सीएसएस मान्यकर्ता स्थापित</h2>
+	<h3 id="download">सीएसएस मान्यकर्ता डाउनलोड करें</h3>
+	<p>सीएसएस मान्यकर्ता तीन अलग अलग पैकेजिंग में उपलब्ध है: डेवलपर्स जो बहुत नवीनतम 
+	संस्करण चाहते हैं CVS से, एक जार करने के लिए आवेदन का निर्माण और एक कमांड लाइन 
+	उपकरण के रूप में उपयोग के लिए संग्रह के रूप में, और (2009) के बाद से सर्वर साइड 
+	अनुप्रयोगों के लिए एक संग्रह के रूप में युद्ध.</p>
+	<h4 id="source">डाउनलोड स्रोत कोड</h4>
+	<p><a href="https://github.com/w3c/css-validator">सीएसएस मान्यकरण के 
+	CVS स्रोत</a> के साथ पुनः प्राप्त किया जा सकता है. करने के लिए W3C. CVS सर्वर 
+	से कनेक्ट करने के <a href="https://dev.w3.org/cvsweb/">निर्देशों का पालन करें</a>,और
+	<code>2002/css-मान्यकर्ता </code>मॉड्यूल पुनः प्राप्त. कृपया ध्यान दें कि सीएसएस 
+	मान्यकर्ता के लिए ऑनलाइन सेवा एक स्थिर जारी है, आम तौर पर एक छोटे से CVS के 
+	तहत पुराने संस्करण है, और उनके परिणाम और व्यवहार अलग हो सकता.</p>
+	<h4>जावा संग्रह को डाउनलोड करें (jar)</h4>
+	<p>
+	<a href="https://github.com/w3c/css-validator/releases/latest/download/css-validator.jar">
+	सीएसएस मान्यकर्ता.jar </a></p>
+	<h3>अधिष्ठापन गाइड</h3>
+	<p>सीएसएस मान्यकरण सेवा एक पार मंच जावा भाषा में लिखा सर्वलेट पर आधारित है, 
+	और किसी भी सर्वलेट मंच पर स्थापित किया जा सकता. जबकि W3C से सरकारी सेवा आरा 
+	(सर्वर है जो सिफारिश की स्थापना के तहत, हम सुविधा की खातिर जाएगा इस गाइड में 
+	है अपाचे सर्वलेट इंजन, बिलाव, साथ ही आरा और command line के लिए कुछ जल्दी निर्देशों 
+	के तहत स्थापना के उपयोग का वर्णन.</p>
+	<h4 id="prereq">आवश्यक शर्तें</h4>
+	<p>यह गाइड रखती है कि आप पहले से ही डाउनलोड किया है और सफलतापूर्वक स्थापित:</p>
+	<ul class="instructions">
+		<li>एक काम जावा वातावरण;</li>
+		<li><a href="https://ant.apache.org/">अंत </a>उपकरण का निर्माण जावा&nbsp;;</li>
+		<li><a href="https://www.w3.org/Jigsaw/">Jigsaw</a>,
+		<a href="https://tomcat.apache.org/">Tomcat</a> or
+		<a href="http://www.mortbay.org/">Jetty</a>के रूप में एक जावा सर्वलेट कंटेनर, 
+		यदि आप एक वेब सेवा के रूप में उपलब्ध कराने की योजना मान्यकर्ता.</li>
+	</ul>
+	<p id="prereq-libs">स्थापना करने के लिए एक शर्त के रूप में, आप के लिए जावा
+	<span class="file">servlet.jar</span> बुलाया लाइब्रेरी में पूर्ण पथ पता की जरूरत 
+	होगी. यह आमतौर पर है <span class="dir">[<span class="const">TOMCAT_DIR</span>]/common/lib/</span>में 
+	उपलब्ध हैं,<span class="dir">[<span class="const">TOMCAT_DIR</span>]</span>साथ 
+	पथ बिलाव जिसके तहत स्थापित किया जा रहा है. यह भी नाम servlet-api.jar के नीचे 
+	पाया जा सकता है.अगर आप यह नहीं मिल सकता है, यह
+	<a href="http://java.sun.com/products/servlet/DOWNLOAD.html">java.sun.com</a> 
+	होगा. </p>
+	<h4>सीएसएस मान्यकर्ता बिलाव के तहत स्थापना</h4>
+	<ol class="instructions">
+		<li>डाउनलोड CVS स्रोत के रूप में <a href="#source">ऊपर </a>समझाया;</li>
+		<li>संपादित फ़ाइल <span class="file">[<span class="const">VALIDATOR_DIR</span>]build.xml</span> 
+		बुलाया और पूरे पथ के साथ संपत्ति servlet.lib के मूल्य को बदलने के लिए
+		<span class="file">servlet.jar</span></li>
+		<li>अब आप स्रोत: निर्माण कर सकते हैं <span class="dir">[<span class="const">VALIDATOR_DIR</span> 
+		आदेश <kbd>ant war</kbd> से. चींटी रनिंग आवश्यक पुस्तकालयों की एक संख्या 
+		को डाउनलोड करना चाहिए और <span class="file">css-validator.war</span> नामक 
+		संग्रह का निर्माण.</span></li>
+		<li>नकल या स्थानांतरित <span class="file">css-validator.war</span> को
+		<span class="dir">[<span class="const">TOMCAT_DIR</span>]/webapps</span> 
+		करने के लिए. </li>
+		<li>अंत में, बिलाव इंजन को पुनः आरंभ:<br />
+		<kbd>&quot;cd <span class="dir">[<span class="const">TOMCAT_DIR</span>]</span>;
+		<span class="dir">./bin/</span><span class="file">shutdown.sh</span>;
+		<span class="dir">./bin/</span><span class="file">startup.sh</span>;&quot;</kbd>
+		</li>
+	</ol>
+	<h4>सीएसएस मान्यकर्ता के तहत आरा स्थापना</h4>
+	<ol class="instructions">
+		<li>डाउनलोड CVS स्रोत के रूप में पहले से समझाया, यह <span class="dir">[<span class="const">JIGSAW_DIR</span>]/WWW</span> 
+		के तहत बचाने और <kbd>ant jigsaw</kbd>&nbsp;के साथ स्रोत का निर्माण; </li>
+		<li>अगला, मान्यकर्ता के लिए रूट फ़ोल्डर कॉन्फ़िगर (ज्यादातर मामलों में यह 
+		सीएसएस validator कहा जाएगा में) यह एक servlet कंटेनर बनाने के लिए. आपके 
+		आरा स्थापना के भीतर, आरा व्यवस्थापक उपयोगिता, ब्राउज़ करने के लिए <code>
+		css-validator</code>लांच और HTTPFrame से यह Servlet निर्देशिका फ़्रेम बदलने;अगले 
+		कदम के लिए एक &quot;मान्यकर्ता &#39;Servlet आवरण वर्ग के रूप में&quot; संसाधन बनाने के 
+		लिए किया जाएगा. &#39;ए&#39; Servlet आवरण फ़्रेम automagically इसके लिए बनाया जाएगा. 
+		आप servlet वर्ग, के नाम प्रदान करना होगा जो सीएसएस Validator ओएस org.w3c.css.servlet.Cssमान्यकर्ता 
+		r के लिए. ध्यान दें कि एक फाइल &quot;&quot; मान्यकर्ता बुलाया पहले से ही मौजूद हो 
+		सकता है - तुम जरूरी यह नाम बदलने, मान्यकर्ता के रूप में करने के लिए बिल्कुल 
+		servlet आवरण के लिए इस नाम को लागू करने की जरूरत है;</li>
+		<li>सुनिश्चित करें कि <span class="dir">[<span class="const">JIGSAW_DIR</span>]/WWW/css-validator/lib</span>रहे 
+		हैं ठीक है आरा CLASSPATH सेटअप करने के लिए जोड़ा मान्यकर्ता फ़ोल्डर के भीतर 
+		सभी. जार पुस्तकालयों.</li>
+		<li>अंततः restart, आरा और मान्यकर्ता करने के लिए अपने ब्राउज़र बिंदु. यूआरआइ 
+		तरह कुछ किया जाना चाहिए:<br />
+		http://localhost:8001/css-validator/validator.html</li>
+	</ol>
+	<h3>कमांड लाइन का उपयोग</h3>
+	<p>जावा के साथ कोई कंप्यूटर भी टर्मिनल से मान्यकर्ता चला सकते हैं / एक commandline 
+	उपकरण के रूप में सांत्वना स्थापित. सीएसएस मान्यकर्ता .jar जार (संग्रह डाउनलोड 
+	या यह <kbd>ant jar</kbd>के साथ निर्माण) और के रूप में चलाने:<br />
+	<kbd>java -jar css-validator.jar http://www.w3.org/</kbd>.</p>
+	<p>Note सीएसएस मान्यकर्ता फ़ाइल के रूप में सटीक एक ही स्तर पर स्थित होना चाहिए 
+	/ फ़ोल्डर. ठीक से. काम करने के लिए </p>
+</div>
+<ul id="menu" class="navbar">
+	<li><strong>
+	<a href="./" title="Home page for the W3C CSS Validation Service">Home</a></strong>
+	<span class="hideme">|</span></li>
+	<li><a href="about.html" title="About this service">About</a>
+	<span class="hideme">|</span></li>
+	<li><a href="DOWNLOAD.html" title="Download the CSS validator">Download</a>
+	<span class="hideme">|</span></li>
+	<li><a href="Email.html" title="How to provide feedback on this service">Feedback</a>
+	<span class="hideme">|</span></li>
+	<li><a href="thanks.html" title="Credits and Acknowlegments">Credits</a><span class="hideme">|</span></li>
+</ul>
+<ul id="lang_choice">
+	<li>
+	<a href="DOWNLOAD.html.de" hreflang="de" lang="de" rel="alternate" xml:lang="de">
+	Deutsch</a> </li>
+	<li>
+	<a href="DOWNLOAD.html" hreflang="en" lang="en" rel="alternate" xml:lang="en">
+	English</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.es" hreflang="es" lang="es" rel="alternate" xml:lang="es">
+	Español</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.fr" hreflang="fr" lang="fr" rel="alternate" xml:lang="fr">
+	Français</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.ko" hreflang="ko" lang="ko" rel="alternate" xml:lang="ko">
+	한국어</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.it" hreflang="it" lang="it" rel="alternate" xml:lang="it">
+	Italiano</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.nl" hreflang="nl" lang="nl" rel="alternate" xml:lang="nl">
+	Nederlands</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.ja" hreflang="ja" lang="ja" rel="alternate" xml:lang="ja">
+	日本語</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.pl-PL" hreflang="pl-PL" lang="pl-PL" rel="alternate" xml:lang="pl-PL">
+	Polski</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.pt-BR" hreflang="pt-BR" lang="pt-BR" rel="alternate" xml:lang="pt-BR">
+	Português</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.ru" hreflang="ru" lang="ru" rel="alternate" xml:lang="ru">
+	Русский</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.sv" hreflang="sv" lang="sv" rel="alternate" xml:lang="sv">
+	Svenska</a> </li>
+	<li>
+	<a href="DOWNLOAD.html.zh-cn" hreflang="zh-cn" lang="zh-cn" rel="alternate" xml:lang="zh-cn">
+	简体中文</a> </li>
+</ul>
+<div id="footer">
+	<p id="activity_logos">
+	<a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img alt="CSS" src="images/woolly-icon" /></a>
+	</p>
+	<p id="support_logo"><a href="https://www.w3.org/donate/">
+	<img alt="I heart Validator logo" src="https://www.w3.org/QA/Tools/I_heart_validator" title=" Validators Donation Program" />
+	</a></p>
+
+	<p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+</div>
+
+</body>
+
+</html>

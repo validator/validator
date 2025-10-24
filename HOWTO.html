@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-fr" xml:lang="en-fr">
+  <head>
+    <title>CSS Validator Project</title>
+
+    <link href="style/page.css" type="text/css" rel="STYLESHEET" />
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+    <link rel="STYLESHEET" title="default" media="screen" href="style/general.css" type="text/css" />
+    <meta name="Generator" content="*emacs: emacs-css" />
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+</head>
+  <body>
+    <a class="left" href="https://www.w3.org"><img
+	src="http://www.w3.org/Icons/w3c_home" alt="w3c" border="0" /></a>
+    <a class="right" href="https://www.w3.org/Jigsaw/"><img
+	  src="http://jigsaw.w3.org/Icons/jigpower.gif" alt="Jigsaw Powered"
+	  border="0" width="94" height="52" /></a>
+    <br />
+
+    <div class="t1">CSS</div>
+    <div class="t2">Validator</div>
+
+    <h1 class="center">CSS Validator version 2.0 : 
+      How to add CSS properties in this validator ?</h1>
+    
+    <p>In first, you should create your properties.</p>
+      
+    <p>To do this, You should extend the class CSS.Properties.CssProperty. If you have
+      some macros, see <a href="docs/org.w3c.css.aural.ACssCueBefore.html">CSS.Properties.ACssCueBefore</a> for an example.
+      </p>
+    <p>An example for the name of a property : 
+      <code>CSS2.Printing.CssPageBreakBefore</code>
+      </p>
+    <p>Then, you should implements the interface 
+      <a href="docs/org.w3c.css.parser.CssStyle.html">org.w3c.css.parser.CssStyle</a>. For an example, you can see
+      <a href="docs/org.w3c.css.aural.ACssStyle.html">org.w3c.css.aural.ACssStyle</a>. In this
+      example, I added aural cascading style sheet to cascading style sheet level 1,
+      so I extends the style Css1Style that implements the CssStyle. Be careful, you
+      must have a public constructor with no parameters in your CssStyle !
+      </p>
+    <p>An example for the name of your style :
+      <code>CSS2.Printing.PCssStyle</code>
+      </p>
+    <p>Create two configuration properties file :</p>
+    <ol>
+      <li>Config.properties
+	<pre>
+# My parser config :
+style : CSS2.Printing.PCssStyle
+properties: CSS2Printing.properties
+# Note : the file CSS2Printing.properties should be in your style directory.
+
+# Activate the CSS2 parser
+extended-parser : true
+	</pre></li>
+      <li>CS2Printing.properties
+	<pre>
+# A property
+# Note : if you want to reuse CSS1 properties, you should add all properties !
+#        For an example, see <a
+	    href="org/w3c/css/aural/AuralProperties.properties">AuralProperties.properties</a>
+page-break-before : CSS2.Printing.CssPageBreakBefore
+	</pre></li>
+    </ol>
+    
+    <p>Now you are ready to parse your properties.</p>
+    <p>Finally, You should say where the parser can find your properties. This is
+      a sample code to parse your owns properties :</p>
+      
+    <pre>
+<span class="keyword">import</span> <span class="reference">java</span>.<span class="reference">util</span>.<span class="type">Properties</span>;
+<span class="keyword">import</span> <span class="reference">java</span>.<span class="reference">net</span>.<span class="type">URL</span>;
+
+<span class="keyword">import</span> <span class="reference">org</span>.<span class="reference">w3c</span>.<span class="reference">css</span>.<span class="reference">parser</span>.<span class="type">CssFouffa</span>;
+<span class="keyword">import</span> <span class="reference">org</span>.<span class="reference">w3c</span>.<span class="reference">css</span>.<span class="reference">css</span>.<span class="type">StyleSheetParser</span>;
+<span class="keyword">import</span> <span class="reference">org</span>.<span class="reference">w3c</span>.<span class="reference">css</span>.<span class="reference">css</span>.<span class="type">StyleSheetOrigin</span>;
+
+<span class="keyword">import</span> <span class="reference">CSS2</span>.<span class="reference">Printing</span>.<span class="type">PCssStyle</span>;
+
+<span class="keyword">class</span> <span class="function-name">MyStartUp</span> {
+
+ <span class="reference">public</span> <span class="type">static</span> <span class="type">void</span> <span class="function-name">main</span>(<span class="type">String</span>[] <span class="variable-name">args</span>) {
+
+  <span class="type">Properties</span> <span class="variable-name">properties</span> = <span class="keyword">new</span> <span class="type">Properties</span>();
+  <span class="keyword">try</span> {
+   <span class="type">Properties</span> <span class="variable-name">config</span> = <span class="keyword">new</span> <span class="type">Properties</span>();
+
+   <span class="comment">// try to load the file
+</span>   <span class="type">URL</span> <span class="variable-name">url</span> = PCssStyle.<span class="keyword">class</span>.getResource("<span class="string">CSS2Printing.properties</span>");
+
+   config.load(url.openStream());
+
+   <span class="comment">// set the parser
+</span>   CssFouffa.loadConfig(config);
+
+  } <span class="keyword">catch</span> (<span class="type">Exception</span> <span class="variable-name">e</span>) {
+   System.err.println("<span class="string">MyStartUp: couldn't load properties</span>");
+   System.err.println("<span class="string">  </span>" + e.toString() );
+   System.exit(1);
+  }
+
+  <span class="comment">// now the parser is ready !
+</span>
+  <span class="comment">// create a parser
+</span>  <span class="type">StyleSheetParser</span> <span class="variable-name">parser</span> = <span class="keyword">new</span> <span class="type">StyleSheetParser</span>();
+
+  <span class="comment">// parse an URL
+</span>  parser.parseURL(<span class="keyword">new</span> <span class="type">URL</span>("<span class="string">http://www.w3.org/Style</span>"), StyleSheetOrigin.AUTHOR);
+
+  <span class="comment">// output the result
+</span>  <span class="type">StyleSheetGenerator</span> <span class="variable-name">style</span> = 
+   <span class="keyword">new</span> <span class="type">StyleSheetGenerator</span>("<span class="string">My example</span>",           <span class="comment">// title
+</span>                           parser.getStyleSheet(), <span class="comment">// get the style sheet
+</span>                           "<span class="string">text</span>");                <span class="comment">// output format
+</span>  style.print(System.out);
+ }
+}
+
+    </pre>
+    
+    <p>There is an example for a new package for CSS2. In this example, I reuse
+      Aural properties.
+    </p>
+    <hr class="large" />
+    <img src="images/mwcss.gif" alt="made with CSS" />
+    <address class="right"><a href="Email.html">validator-css</a></address>
+  </body>
+</html>

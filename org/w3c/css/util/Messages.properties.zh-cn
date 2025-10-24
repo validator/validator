@@ -1,0 +1,395 @@
+# Chinese (simplified script) translation, last updated in sync with Messages.properties.en,v 1.31
+
+direction: ltr
+language_name: 简体中文
+more_options: 更多选项
+title_more_options: Show/Hide extra validation options
+all: 全部
+normal_report: 正常
+most_important: 最重要的
+no_warnings: 取消警告
+profile: 配置
+no_special_profile: 不指定配置文件
+css1: CSS 版本 1
+css2: CSS 版本 2
+css21: CSS 版本 2.1
+css3: CSS 版本 3
+css3svg: CSS 版本 3 + SVG
+svg: SVG
+svgbasic: SVG Basic
+svgtiny: SVG Tiny
+mobile: Mobile
+ATSC_TV_profile: ATSC TV profile
+TV_profile: TV profile
+medium: 媒介
+aural: 听觉设备
+braille: 布莱叶点字
+embossed: 浮雕
+handheld: 手持设备
+print: 印刷设备
+projection: 投影设备
+screen: 银幕
+tty: TTY
+tv: 电视
+presentation: 演示设备
+
+type: 类别
+no_special_type: 自动
+html_doc: HTML
+css_doc: CSS
+
+check: Check
+W3C_CSS_validation_service: W3C CSS 验证服务
+check_CSS: 检查层叠样式表(CSS)文档和HTML或者XHTML文档中的CSS内容
+by_URI: 通过指定URI
+by_file_upload: 通过文件上传
+by_direct_input: 通过直接输入
+validate_by_URI: 验证指定URI的CSS内容
+enter_uri: 输入你想验证的文档(带CSS的HTML文档或者CSS文档)的URI
+page_address: 要验证的页面地址
+address: URI地址
+submit_uri: Submit URI for validation
+validate_by_file_upload: 验证上传文件
+choose_document: 选择需要验证的文件
+choose_local_file: Choose a Local File to Upload and Validate
+local_CSS_file: 本地CSS文件
+submit_file: Submit file for validation
+validate_by_input: 验证直接输入的内容
+enter_CSS: 输入你要验证的CSS代码
+submit_input: Submit your input for validation
+note: 注意
+note_xhtml_valid: 如果你想验证一段嵌入在HTML或者XHTML文档中的CSS，你首先要<a href="https://validator.w3.org/">验证你的HTML或者XHTML文档</a>是正确的。
+# End of variables added along with Index page template
+
+W3C_validator_results: W3C CSS 校验器结果：  
+# file_title: <!-- provided by the user -->
+CSS_validation_service: CSS 验证服务
+jump_to: 查看
+# errors_count: <!-- generated on the fly -->
+errors: 错误 
+# warnings_count <!-- generated on the fly -->
+warnings: 警告 
+validated_CSS: 已经校验的层叠样式表
+congrats: 恭喜恭喜
+# The sentence defined by doc_validates_before_link and doc_validates_after_link variables goes: \
+# "This document validates as CSSXX!" where XX stands for the CSS version used \
+# Since the content of the link about the CSS version is generated on the fly, \
+# it is important to define what goes before the link and what goes afterwards in 2 separate \
+# variables because the position of the link in the sentence varies in different languages
+doc_validates_before_link: 恭喜恭喜，此文档已经通过
+doc_validates_after_link: 校验!
+no_errors_interoperable_msg: 为了告诉你的访客你曾致力于创建具有交互性的网页，你可以在任意经过检验的网页上显示这个图标。添加图标的HTML代码：
+valid_CSS: Valid CSS!
+# <!-- close the img tag with > instead of /> if using HTML<= 4.01 -->
+no_errors_close_tags_msg: close the img tag with &gt; instead of /&gt; if using HTML &lt;= 4.01
+no_errors_dl_local_msg: 如果你喜欢的话，你可以下载这个图象到你的网站目录下，并且改变以上的代码段以关联到你的当地图象而不是这个服务器。 
+no_errors_create_link_msg: 如果你愿意链接到此页（比如这个校验结果）以便以后更加容易地再校验此页，或者容许其它人校验你的网页，其 URI 是：
+no_errors_forHTML_only_msg: 仅使用于HTML文档
+no_errors_bookmark_msg: 或者，你可以把当前页添加到你的书签或列表中。
+note_valide_html: 如果你想验证一段嵌入在HTML或者XHTML文档中的CSS，你首先要<a href="https://validator.w3.org/">验证你的HTML或者XHTML文档</a>是正确的。 
+top: Top
+# hook_html_validator <!-- generated on the fly -->
+not-css1-style: /* 请注意！这不是CSS1的属性！ */
+errors_sorry_msg: 错误：
+# errors_list: <!-- generated on the fly -->
+# warnings_list: <!-- generated on the fly -->
+# rules_count: <!-- generated on the fly -->
+valid_CSS_info: 你已经校验的层叠样式表：
+# charset: <!-- generated on the fly -->
+# rules_list: <!-- generated on the fly -->
+CSS_not_found: 没有找到样式表
+home: 首页
+about: 关于
+doc: 文档
+dl: 下载
+feedback: 反馈
+credits: 感谢
+home_title: Home page for the W3C CSS Validation Service
+about_title: About this service
+doc_title: Documentation for the W3C CSS Validation Service
+dl_title: Download and install the CSS validator
+feedback_title: How to provide feedback on this service
+credits_title: Credits and Acknowlegments
+W3C_quality_msg: W3C's Quality Assurance Activity, bringing you free Web quality tools and more
+learn_more_msg: Learn more about Cascading Style Sheets
+support: Support this tool, become a
+supporter: W3C Supporter
+# End of variables added along with Velocity
+
+# Defines your own error and warning message here
+content-type: text/html; charset=utf-8
+content-language: zh
+output-encoding-name: utf-8
+
+# You can change the level warning like this (example) :
+# warning.redefinition.level: 5
+#  level is an integer between 0 and 9 (all others values are ignored)
+warning.redefinition: 重定义了\u201C%s\u201D
+
+# used by xml parser
+warning.style-inside-comment: 不要把样式表的规则放入HTML注释中，以避免被用户代理删掉。
+
+# used by org.w3c.css.properties.Css1Style
+warning.same-colors: 一样的颜色对于\u201C%s\u201D和\u201C%s\u201D
+warning.no-color: 你没有为你的背景色设置(前景)颜色
+#warning.color.mixed-capitalization is now obsolete
+#warning.color.mixed-capitalization: Although color names are case-insensitive, it is recommended to use the mixed capitalization, to make the names more legible: \u201C%s\u201D
+warning.no-background-color: 你没有为你的(前景)颜色设置背景色
+warning.no-generic-family: \u201C%s\u201D: 建议你指定一个种类族科作为最后的选择
+error.generic-family.quote: 总族名称是保留字，所以不能被引用。
+warning.with-space: 包含空白的族科名称应该包含于蔻蔻中。如果省略了，任何 \
+名字前或后的空白符号都会被忽略而名字中所有连续的空白 \
+符号会被转换为单一个空格。
+warning.no-padding: 建议你使用有背景色的浮白区域(padding area)
+warning.same-colors2: 颜色和背景颜色使用了相同的颜色\u201C%s\u201D和\u201C%s\u201D
+warning.relative-absolute: 你在 \u201C%s\u201D 使用了一些绝对和相对长度。这不是棒的样式表
+
+# used by org.w3c.css.properties.CssSelectors
+warning.unknown-html: \u201C%s\u201D不是HTML元素
+warning.html-inside: HTML 元素不能嵌在其它元素中
+warning.body-inside: BODY 元素不能嵌在除了HTML元素的其它元素中
+warning.pseudo-classes: 定位锚伪类\u201C%s\u201D除了对'A'外，在元素上没有效果
+
+# not used by org.w3c.css.properties.CssSelectors for the moment
+warning.noinside: \u201C%s\u201D不能嵌在内联元素中
+warning.withblock: 请小心。伪元素只能附于块级元素上
+warning.block-level: 这个属性应用于块级元素
+
+# used by org.w3c.css.parser.Frame
+warning.no-declaration: 在规则中没有声明
+
+# used by org.w3c.css.parser.CssFouffa 
+warning.unsupported-import: 通过直接输入及文件上传模式导入的样式表未经检查
+
+# used by org.w3c.css.values.CssColor
+warning.out-of-range: \u201C%s\u201D超出范围
+error.invalid-color: 无效的 RGB 函数
+warning.marker: Marker-offset属性对标有’display: marker’的元素有效。
+
+# used by org.w3c.css.properties.ACssStyle
+warning.relative: 在属性\u201C%s\u201D使用相对单位令样式表更加棒
+
+# used by org.w3c.css.css.StyleSheetParser and org.w3c.css.css.StyleSheetXMLParser
+error.at-rule: 无法识别 '@规则' \u201C%s\u201D
+warning.at-rule: 无法识别 '@规则' \u201C%s\u201D
+
+# used by all properties and values
+error.operator: \u201C%s\u201D是一个错误的运算符
+error.negative-value: \u201C%s\u201D不允许使用负值
+error.few-value: 属性\u201C%s\u201D的值太小
+
+# be careful here, values comes first
+# You can't write something like this : For the color, blue is an incorrect value
+error.value: \u201C%s\u201D不是一个\u201C%s\u201D值
+
+#used by org.w3c.css.properties3.CssToggleGroup
+error.groupname: \u201C%s\u201D不是正确的组名称. 请使用合法的标识符
+
+#used by org.w3c.css.properties3.CssGroupReset
+error.nogroup: \u201C%s\u201D没有在 toggle-group 属性中指定
+
+#used by org.w3c.css.properties3.CssTextKashidaSpace
+error.percentage: 预期是百分比数值
+
+#used by org.w3c.css.properties.CssTextAlign
+warning.xsl: 值\u201C%s\u201D仅在XSL中生效
+
+# used by org.w3c.css.properties.CssTextDecoration
+error.same-value: \u201C%s\u201D重复出现
+
+# used by org.w3c.css.properties.CssClip
+error.shape: 无效的形状定义 rect(<top>,<right>,<bottom>,<left>)
+error.shape-separator: 形状定义的分隔符无效，必须为逗号
+
+# used by org.w3c.css.properties.CssContent
+error.attr: 无效的属性定义 attr(X)
+error.function: 无效的函数定义
+error.counter: 无效的计数器定义 counter(<identifier>[,<list-style-type>]?)
+error.counters: 无效的计数器定义 counters(<identifier>,<string>[,<list-style-type>]?)
+
+# used by org.w3c.css.font.Src
+error.format: 无效的格式定义 format(<string>[,<string>]*)
+error.local: 无效的格式定义 local(<string>|<ident>+)
+
+#used by org.w3c.css.properties3.CssGlyphOrVert
+error.anglevalue: 值必须介于 -360 和 360 之间，并且能被 90 整除
+
+error.angle: \u201C%s\u201D不是有效的角度数值。值应该介于 0 和 360 之间
+
+# used by org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength
+error.unit: \u201C%s\u201D是错误的单位
+
+# used by org.w3c.css.aural.ACssAzimuth
+error.degree: 位置必须描述为有效的角度范围
+
+# used by org.w3c.css.aural.ACssElevation
+error.elevation.range: 请指定仰角(elevation)以一个角度值，在'-90deg'和'90deg'之间(\u201Cdeg\u201D为度).
+
+# used by org.w3c.css.aural.ACssPitchRange
+error.range: 此值超出范围。此值必须在'0'和'100'之间
+
+# used by org.w3c.css.properties.CssTextShadow
+error.two-lengths: 一个阴影位移由两个<length>值(一个模糊范围可以选择放于阴影位移之后)
+
+error.integer: This number should be an integer.
+error.comma: 缺少逗号分隔符
+
+# used by org.w3c.css.values.CssPercentage
+error.percent: \u201C%s\u201D是错误的百分比
+
+# used by org.w3c.css.values.CssString
+error.string: \u201C%s\u201D是错误的字符串
+
+# used by org.w3c.css.values.CssURL
+error.url: \u201C%s\u201D是错误的URL
+
+# used by org.w3c.css.values.CssColor
+error.rgb: \u201C%s\u201D不是有效的3或6伪十六进制数字的颜色
+
+# used by org.w3c.css.values.CssNumber
+error.zero: 只有0可以成为\u201C%s\u201D. 你必须在你的数字后加入单位
+warning.zero: 只有0可以成为\u201C%s\u201D. 你必须在你的数字后加入单位
+
+# used by org.w3c.css.parser.CssPropertyFactory 
+error.noexistence-at-all: 属性\u201C%s\u201D不存在
+error.noexistence-media: 媒体\u201C%s\u201D的属性\u201C%s\u201D不存在
+error.noexistence: 属性\u201C%s\u201D不存在于\u201C%s\u201D, 但存在于\u201C%s\u201D
+warning.noexistence: 属性\u201C%s\u201D不存在于\u201C%s\u201D, 但存在于\u201C%s\u201D
+warning.noexistence-media: 媒体\u201C%s\u201D的属性\u201C%s\u201D不存在
+error.notforcss1: 值\u201C%s\u201D不存在 CSS1 里
+warning.notforusermedium : 属性在该usermedium中不存在
+warning.noothermedium : 其他媒介中的属性在usermedium中未必正常工作
+error.noatruleyet: CSS1 没有支援 @import 以外的 @rule \u201C%s\u201D
+# used by org.w3c.css.parser.analyzer.CssParser
+warning.pseudo: 未知的伪元素或伪类\u201C%s\u201D出现在默认配置 (\u201C%s\u201D) 中
+warning.nocomb: 选择子之间的连接子\u201C%s\u201D不允许使用在该配置 (\u201C%s\u201D) 中
+warning.charsetspecial: 该配置的 @charset 具有特定的语法规则: 后边紧随一个空格, 之后紧随引号引起的编码名称, 最后跟一个分号.
+warning.notversion: \u201C%s\u201D不能用于该版本的CSS : \u201C%s\u201D
+
+
+
+# used by org.w3c.css.parser.CssFouffa
+error.unrecognize: 太多值不能识别
+error.unknown: 未知错误
+
+# used by org.w3c.css.parser.CssSelectors
+error.pseudo-element: 伪元素\u201C%s\u201D不能在次处的上下文\u201C%s\u201D中出现
+error.pseudo-class: 伪类 .\u201C%s\u201D不能在此处的HTML上下文\u201C%s\u201D中出现
+error.pseudo: 不识别的伪元素或伪类\u201C%s\u201D
+error.id: ID选择符 #\u201C%s\u201D 无效！只有一个ID选择符可以被指定到普通选择符: \u201C%s\u201D.
+error.space: 如果使用了属性选择符 ~= ，在值\u201C%s\u201D中的字必须不包含空格
+error.todo : 抱歉，特性\u201C%s\u201D还不能支持
+error.incompatible: \u201C%s\u201D和\u201C%s\u201D不兼容
+warning.incompatible: \u201C%s\u201D和\u201C%s\u201D不兼容
+error.notforatsc: \u201C%s\u201D不能在 ATSC 配置中使用
+error.notformobile: \u201C%s\u201D不能在 mobile 配置中使用
+error.notfortv: \u201C%s\u201D不能在 TV 配置中使用
+error.notversion: \u201C%s\u201D在这个 CSS 版本无法使用: \u201C%s\u201D
+error.media: 不能识别的媒体\u201C%s\u201D 
+error.page: 不能职别的伪命名页\u201C%s\u201D
+
+
+# used by StyleSheetGeneratorHTML
+generator.context: 上下文
+generator.request: 导出你的样式表时发生错误 \
+请更正你的请求或发送邮件到 plh@w3.org.
+generator.unrecognized: 不能识别的
+generator.unrecognize: 语法错误
+generator.dontmixhtml: 解析错误：样式表中不应包含HTML语法。 
+generator.invalid-number: 无效数字
+generator.property: 无效数字
+generator.line: 行
+generator.not-found: 找不到文件
+generator.doc-html: <!-- removed this confusing message olivier 2006-12-14 -->
+generator.doc:<!-- removed this confusing message olivier 2006-12-14 -->
+
+
+# used by the parser
+parser.semi-colon: 在属性名称\u201C%s\u201D之前缺少分号
+
+parser.unknown-dimension: 未知因素
+
+# Xu Ting commented out this translation @ 2006.6.9
+# I changed a little bit of this translation.
+#parser.old_class:在CSS1，类名应该以点开始 (".55ft"), \
+#除非它是一个尺寸值 (".55in")。在CSS2，以上的类 \
+#被解释为不识别的尺寸值(以允许将来加入新的单位)
+
+# Xu Ting's modification.
+parser.old_class:在CSS1，类名应该以点开始 (例如".55ft"), \
+但是不能是一个尺寸值 (例如".55in")。在CSS2，以上的类是不允许的，它会被解释成 \
+一个未知的尺寸(目的是为了以后可以增加新的单位)。
+
+# The following is translated by Xu Ting, you can contact me via tonny.xu@gmail.com
+
+parser.old_id:在CSS1中，一个id的名字可以是以数字开头(例如"#55ft")， \
+但是不能是一个尺寸值(例如"#55in")。 在CSS2中，这样的id是不允许的，它会被解释成 \
+一个未知的尺寸(目的是为了以后可以增加新的单位)。
+
+parser.class_dim:在CSS1中，一个类的名字可以是以数字开头(例如".55ft")， \
+但是不能是一个尺寸值(例如".55in")。
+
+parser.id_dim:在CSS1中，一个id的名字可以是以数字开头(例如"#55ft")，  \
+但是不能是一个尺寸值(例如"#55in")。
+
+parser.charset: @charset 条件只能在样式表的头部出现。 \
+请检查是否该条件前是否有空格。
+
+parser.charsetspecial:当前配置对@charset 而言，有个非常特殊的语法： \
+@charset 后面必须直接接一个空格，有且仅有一个空格，然后接上添加了引号的编码的名称 \
+在引号的后面直接接一个分号。
+
+warning.old_id:在CSS1中，一个id的名字可以是以数字开头(例如"#55ft")， \
+但是不能是一个尺寸值(例如"#55in")。 在CSS2中，这样的id是不允许的，它会被解释成 \
+一个未知的尺寸(目的是为了以后可以增加新的单位)。
+
+warning.old_class:在CSS1中，一个类的名字可以是以数字开头(例如".55ft")，\
+但是不能是一个尺寸值(例如".55in")。 在CSS2中，这样的类的名字是不允许的，它会被解释成 \
+一个未知的尺寸(目的是为了以后可以增加新的单位)。
+
+# used by the servlet
+servlet.invalid-request: 你发出了无效的请求
+servlet.process: 不能对对象进行处理
+
+error.unrecognized.link: 不可识别的链接元素或者XML样式 PI.
+
+#used by org.w3c.css.parser.analyzer.CssParser
+warning.medialist: 媒介列表应以 'media :' \u201C%s\u201D开始
+error.nocomb: 在现有版本或者配置中，不允许在选择子之间使用连接子\u201C%s\u201D 
+
+#used by org.w3c.css.properties.CssDirection
+warning.direction: 不应该在块级别的元素中使用 'direction' , 应使用新的 CSS3 属性 'writing-mode'
+
+
+warning.atsc: \u201C%s\u201D 也许没有被 atsc-tv 媒介所支持
+error.onlyATSC: \u201C%s\u201D 该函式只能在 atsc-tv 媒介中使用
+
+
+warning.otherprofile: 属性 \u201C%s\u201D 不存在于该配置中, 但在另一个配置中有效
+
+warning.float-no-width: 在 (x)HTML+CSS 框架下，浮动元素需要声明宽度。具有固有宽度的元素 (html, img, input, textarea, select 或 object) 不受影响
+parser.charsetcss1: @charset 条件不能在 CSS1 中使用
+parser.attrcss1: 属性选择符在 CSS1 中无效
+parser.invalid_id_selector: 无效的 ID 选择符
+parser.import_not_allowed: @import 不可以出现在除 @charset 和 @import 以外的任何有效语句之后。
+
+error.divzero: 除数为零
+error.greater: \u201C%s\u201D无效，只允许严格大于\u201C%s\u201D的值。
+error.greaterequal: \u201C%s\u201D无效，只允许大于或等于\u201C%s\u201D的值。
+error.incompatibletypes: 类型不兼容
+error.lower: \u201C%s\u201D无效，只允许严格低于\u201C%s\u201D的值。
+error.lowerequal: \u201C%s\u201D无效，只允许小于或等于\u201C%s\u201D的值。
+error.operandnumber: 一个操作数必须是数字
+error.selectorname: 无效的选择器名称\u201C%s\u201D
+error.strictly-positive: \u201C%s\u201D无效，只允许大于0的值。
+vext_errors: 错误
+vext_warnings: 警告
+
+error.divisortype: 除数必须为数字
+error.invalidtype: \u201C%s\u201D类型无效
+error.typevaluemismatch: 值\u201C%s\u201D与其类型定义\u201C%s\u201D不兼容
+
+error.linear-gradient-missing-to: \u201Clinear-gradient\u201D函数的第一个参数应该是\u201C%s\u201D，而不是\u201C%s\u201D
+error.pseudo-element-not-last: 选择器\u201C%s\u201D不能出现在伪元素选择器\u201C%s\u201D之后
+warning.negative: 负值\u201C%s\u201D将被解释为\u201C0\u201D
+warning.noexproperty: 属性\u201C%s\u201D不存在

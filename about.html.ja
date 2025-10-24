@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>W3C CSS 検証サービスについて</title>
+    <link rev="made" href="mailto:www-validator-css@w3.org" />
+    <link rev="start" href="./" title="ホーム" />
+    <style type="text/css" media="all">
+	@import "style/base.css";
+	@import "style/docs.css";
+    </style>
+    <meta name="revision" content="$Id$" />
+  </head>
+
+  <body>
+    <div id="banner">
+     <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+     <a href="./"><span>CSS 検証サービス</span></a></h1>
+     <p id="tagline">
+       Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+     </p>
+    </div>
+
+   <div class="doc">
+
+      <h2>CSS 検証サービスについて</h2>
+
+<h3 id="TableOfContents">目次</h3>
+<div id="toc">
+<ol>
+  <li>このサービスについて
+  <ol>
+<li><a href="#what">これは何? 私には必要?</a></li>
+<li><a href="#help">言ってる意味がよくわかんない! 助けて!</a></li>
+<li><a href="#reference">つまり、これはCSSが正しいかどうかについて検査する「権威」なわけですね?</a></li>
+<li><a href="#validCSS">「正当な CSS」つてどういう意味？　どの CSS のバージョンを使ったの？</a></li>
+<li><a href="#free">使うのにいくらかかるの?</a></li>
+<li><a href="#who">誰が作ったの? 誰が管理しているの?</a></li>
+<li><a href="#contact">作者にコンタクトをとるには? バグを報告するには?</a></li>
+<li><a href="#participate">何か手伝えることは?</a></li>
+  </ol>
+  </li>
+  <li>開発者向け
+  <ol>
+    <li><a href="#code">CSS 検証サービスは何で書かれているの? ソースはどこかで手に入る?</a></li>
+    <li><a href="#install">自分でも CSS 検証サービスをインストール・実行できる?</a></li>
+    <li><a href="#api">この CSS 検証サービスを使ってなにかアプリケーションを作れる? 何か API がある?</a></li>
+  </ol>
+  </li>
+</ol>
+</div><!-- toc -->
+<h3 id="about">このサービスについて</h3>
+
+<h4 id="what">これは何? 私には必要?</h4>
+
+<p>W3C CSS 検証サービスは、W3Cによって作られたフリーソフトウェアで、ウェブデザイナーやウェブ開発者が CSS (Cascading Style Sheets; カスケーディング・スタイルシート) をチェックするのに使うことができます。
+このサービスは、ウェブ上の<a href="./">フリーサービス</a>を通じて使ったり、ダウンロードして Java プログラムとして実行したりウェブサーバー上で Java サーブレットとして使ったりできます。</p>
+
+<p><em>あなた</em>に必要かどうか?
+もしあなたがウェブ開発者やウェブデザイナーなら、このツールがとても役立つでしょう。
+このツールは、あなたのスタイルシートを CSS 仕様と比較するだけではなく、エラーやタイプミス、CSS の誤用などを発見したり、
+あなたの書いた CSS が使い勝手を悪くするような場合に教えてくれたりします。
+</p>
+
+<h4 id="help">言ってる意味がよくわかんない! 助けて!</h4>
+<p>ウェブ上の文書のほとんどは、HTML と呼ばれるコンピュータ言語でかかれています。
+この言語は構造化された情報やリンク、マルチメディアオブジェクトなどをページ内に含めるのに使われています。
+色やレイアウトなどを表現するのにはスタイル言語である CSS ("Cascading Style Sheets" の略です) が用いられます。
+このツールは、CSS を使う人々が自分の CSS をチェックしたり必要に応じて修正するのを手助けするためのものです。</p>
+
+<h4 id="reference">つまり、これは CSS が正しいかどうかについて検査する「権威」なわけですね? </h4>
+<p>違います。
+確かにこれは便利で信頼できるツールですが、他のどんなソフトウェアもそうであるように、ソフトウェアである以上は<a href="https://github.com/w3c/css-validator/issues">バグと問題</a>&amp;<a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">バグと問題</a>があるかもしれません。
+カスケーディング・スタイルシートの絶対的な参考文献は、<a href="https://www.w3.org/Style/CSS/#specs">CSS の仕様書</a>です。</p>
+
+<h4 id="validCSS">「正当な CSS」つてどういう意味？　どの CSS のバージョンを使ったの？</h4>
+
+<p><a href="https://www.w3.org/TR/CSS21/conform.html#valid-style-sheet"
+title="CSS 2.1 Specification – Conformance: requirements and recommendations">CSS 2.1 仕様「3. 適合性」</a>によれば、<q cite="http://www.w3.org/TR/CSS21/conform.html">スタイルシートの正当性はスタイルシートに使用されるCSSのレベルに依存します。 … 正当な CSS 2.1 スタイルシートは CSS 2.1 の文法にしたがって書かなければなりません。また、この仕様で定義された、@規則、プロパティ名、およびその値だけを含まなければなりません。</q></p>
+
+<p>デフォルトでは、<a href="https://www.w3.org/TR/CSS21/"
+title="Cascading Style Sheets Level 2 Revision 1 (CSS&nbsp;2.1) Specification">CSS 2.1 仕様</a>に定義された、文法、プロパティ名、および値に対してスタイルシートを検証しますが、この検証ツールは、オプションを使用して、他のレベルの CSS をチェックできます。</p>
+
+<p>CSS は発展している言語です、そして、多くの人が「CSS」は(最新の仕様に基づき定義された)ただ一つの文法であり、多くのプロパティがあり、プロファイルごとに許容値が様々であると思っています。この検証ツールの将来のバージョンでは、デフォルトでその最新の「CSS文法」と数多の標準化されたCSSのプロパティ名と値に対してスタイルシートをチェックするようになるかもしれません。</p>
+
+<h4 id="free">使うのにいくらかかるの?</h4>
+<p>費用はかかりません。
+これは無償のサービスです。
+ソースは<a href="DOWNLOAD.html">オープン</a>で、自由にダウンロード・利用・修正・配布などすることができます (その他<a href="https://www.w3.org/Consortium/Legal/copyright-software">様々な使い方</a>ができます)。
+もしこのツールを気に入っていただけたのなら、<a href="#participate">このプロジェクトに参加</a>したり、<a href="https://www.w3.org/Consortium/sup">W3Cサポーター・プログラム</a>を使って W3C に寄付活動をすることができます。が、それは一切強制されるものではありません。</p>
+
+<h4 id="who">誰が作ったの? 誰が管理しているの?</h4>
+<p>
+W3C スタッフ、ボランティア開発者や翻訳者の協力の下、
+W3C がツールを管理・ホスティングしています。
+詳しくは、<a href="thanks.html">謝辞</a>のページをご覧下さい。
+<a href="#participate">あなたも何かできるはず</a>。</p>
+
+<h4 id="participate">何か手伝えることは?</h4>
+<p>もちろん。
+Java プログラマなら、CSS 検証サービスプロジェクトの<a href="#code">コード</a>をチェック・選別して<a href="https://github.com/w3c/css-validator/issues">バグ</a>&amp;<a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">バグ</a>を修正したり、新機能の構築を手伝っていただければ助かります。</p>
+<p>しかし、このツールの構築・運営に必要とされているのはプログラマだけではありません。文書を改良したり、CSS 検証サービスをあなたの言語に翻訳するのを手伝ったり、<a href="https://lists.w3.org/Archives/Public/www-validator-css/">メーリングリスト</a>に参加して議論したり他の参加者を手助けするのも、また大きな支援となります。</p>
+
+<h4 id="contact">作者にコンタクトをとるには? バグを報告するには?</h4>
+<p>CSS や CSS 検証サービスについての質問があるなら、<a href="Email">メーリングリストやフォーラム</a>を見てください。でもその前に、あなたの質問やコメントがすでに <a href="http://www.websitedev.de/css/validator-faq">CSS 検証サービス<acronym title="Frequently Asked Questions">FAQ</acronym></a> に登録されていないことを確認してください。</p>
+
+
+<h3 id="dev">開発者向け</h3>
+<h4 id="code">CSS 検証サービスは何で書かれているの? ソースはどこかで手に入る? </h4>
+<p>W3C CSS 検証サービスは、Java 言語を使って書かれています。
+ええ、もちろんコードも CVS で公開されています。
+<a href="https://github.com/w3c/css-validator">コードをオンラインで閲覧</a>することもできますし、リンク先のページの指示に従ってソースツリー全体をダウンロードすることもできます。
+CSS 検証サービスで使われているクラスなどの概要は、<a href="README.html">README</a> ファイルをご覧ください。</p>
+
+<h4 id="install">自分でも CSS 検証サービスをインストール・実行できる?</h4>
+<p>CSS 検証サービスは、ダウンロードしてインストールして、コマンドラインから起動することもウェブサーバー上でサーブレットとして実行することも可能です。
+インストールして利用するには、<a href="DOWNLOAD.html">ガイド</a>をお読みください。</p>
+
+<h4 id="api">この CSS 検証サービスを使ってなにかアプリケーションを作れる? 何か API がある?</h4>
+<p>はい。もう一つ、<a href="api.html">はい</a>。
+CSS 検証サービスには、平和的 (RESTful) な <a href="api.html">SOAP インターフェース</a>があり、(ウェブかどうかに限らず) アプリケーションの構築が合理的で簡単にできるようになっています。
+もちろん良いマナーと共有資源利用への配慮をお願いします: CSS 検証サービスを呼ぶ間に sleep() するか、もしくはあなた自身の CSS 検証サービスインスタンスをインストールして実行するよう心がけてください。
+</p>
+</div>
+   <ul class="navbar"  id="menu">
+        <li><strong><a href="./" title="W3C CSS 検証サービスのホーム">ホーム</a></strong> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="ドキュメント">ドキュメント</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="CSS 検証サービスのダウンロード">ダウンロード</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="このサービスへのフィードバック">フィードバック</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="クレジットと謝辞">謝辞</a><span class="hideme">|</span></li>
+      </ul>
+
+       <ul id="lang_choice">
+     
+     <li><a href="about.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="about.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+     
+     <li><a href="about.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+     
+     <li><a href="about.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+     
+     <li><a href="about.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+     
+     <li><a href="about.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+     
+     <li><a href="about.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+     
+     <li><a href="about.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+     
+     <li><a href="about.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+     
+     <li><a href="about.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+     
+     <li><a href="about.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+     
+     <li><a href="about.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+     
+     <li><a href="about.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+     
+     <li><a href="about.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="カスケーディング・スタイルシートについてもっと知るには"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>

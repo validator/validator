@@ -1,0 +1,363 @@
+# Korean translation, last updated at 2008-11-11 based on Messages.properties.en,v 1.31
+
+direction: ltr
+language_name: 한국어
+more_options: 추가 설정
+title_more_options: 추가 설정 표시/숨김
+all: 전부
+normal_report: 일반 보고서
+most_important: 매우 중요
+no_warnings: 경고 없음
+profile: 프로파일
+no_special_profile: 프로파일 없음
+css1: CSS 레벨 1
+css2: CSS 레벨 2
+css21: CSS 레벨 2.1
+css3: CSS 레벨 3
+svg: SVG
+svgbasic: SVG Basic
+svgtiny: SVG Tiny
+SVG_basic: <!-- SVG Basic , deprecated, see svgbasic  -->
+SVG_tiny: <!-- SVG Tiny , deprecated, see svgtiny -->
+mobile: 모바일
+ATSC_TV_profile: ATSC TV 프로필
+TV_profile: TV 프로필
+medium: 중간
+aural: 음성
+braille: 점자
+embossed: 엠보싱
+handheld: 휴대용
+print: 인쇄
+projection: 프로젝션
+screen: 화면
+tty: TTY
+tv: TV
+presentation: 프레젠테이션
+type: 형식
+no_special_type: 자동
+html_doc: HTML
+css_doc: CSS
+check: 검사
+W3C_CSS_validation_service: W3C CSS 검사 서비스
+check_CSS: 캐스케이딩 스타일시트 (CSS) 와 스타일시트를 포함한 (X)HTML 문법검사
+by_URI: URI
+by_file_upload: 파일 업로드
+by_direct_input: 직접 입력
+validate_by_URI: URI 검사
+enter_uri: 검사하고자 하는 (HTML과 CSS 또는 CSS만으로 이루어진) 문서의 URI를 입력하여 주십시오
+page_address: 검사할 웹 페이지의 주소
+address: 주소
+submit_uri: 검사를 위한 주소 저장
+validate_by_file_upload: 파일 업로드를 통한 검사
+choose_document: 검사를 할 문서를 선택하여 주십시오
+choose_local_file: 컴퓨터에 저장된 CSS 문서를 선택하여 주십시오
+local_CSS_file: 컴퓨터에 저장된 CSS 문서
+submit_file: 검사할 파일 업로드
+validate_by_input: 직접 입력을 통한 검사
+enter_CSS: 검사할 CSS를 입력하여 주십시오
+submit_input: 검사할 내용을 저장
+note: 주의
+note_xhtml_valid: (X)HTML 문서에 포함된 CSS 스타일시트를 검사하기 이전에, <a href="https://validator.w3.org/">(X)HTML 문법 검사</a>를 하는 것을 권장합니다.
+# End of variables added along with Index page template
+
+W3C_validator_results: W3C CSS 검사 결과
+# file_title: <!-- provided by the user -->
+CSS_validation_service: CSS 검사 서비스
+jump_to: 이동
+# errors_count: <!-- generated on the fly -->
+errors: 오류
+# warnings_count <!-- generated on the fly -->
+warnings: 경고
+validated_CSS: 검사 된 CSS
+congrats: 축하합니다! 발견된 오류가 없습니다.
+# The sentence defined by doc_validates_before_link and doc_validates_after_link variables goes: \
+# "This document validates as CSSXX!" where XX stands for the CSS version used \
+# Since the content of the link about the CSS version is generated on the fly, \
+# it is important to define what goes before the link and what goes afterwards in 2 separate \
+# variables because the position of the link in the sentence varies in different languages
+doc_validates_before_link: 이 문서는 다음 형식으로 검사되었습니다:
+doc_validates_after_link: !
+no_errors_interoperable_msg: 방문자들에게 상호 호환성이 있는 웹 페이지를 고려한 웹 페이지를 작성한 것을 알리기 위해, 검증된 웹 페이지에서 이 아이콘을 표시할 수 있습니다. 아래 XHTML 코드를 이용하여 아이콘을 웹 페이지에 추가할 수 있습니다:
+valid_CSS: 올바른 CSS입니다!
+# <!-- close the img tag with > instead of /> if using HTML<= 4.01 -->
+no_errors_close_tags_msg: HTML 4.01 이하에서는 /&gt; 대신에 &gt;로 img태그를 닫아야 합니다
+no_errors_dl_local_msg: 원하신다면, 이 이미지의 사본을 웹 사이트의 디렉토리에 저장하고, 위에 있는 XHTML 코드에서 사본으로 경로를 변경하는 것도 가능합니다.
+no_errors_create_link_msg: 향후 이 페이지를 쉽게 검사하거나 다른 사용자들이 검사를 해볼 수 있게 이 검사 결과에 대한 링크를 만들고 싶다면, 링크 URI는 다음과 같습니다:
+no_errors_forHTML_only_msg: HTML/XML 문서 전용
+no_errors_bookmark_msg: 또는, 이 페이지를 즐겨찾기 (또는 책갈피) 에 추가하여도 됩니다.
+note_valide_html: 정상적인 작동을 위해서, 스타일시트는 올바른 문서 구조를 가지고 있어야 합니다. 즉, <a href="https://validator.w3.org/">올바른 HTML</a>을 사용하여야 합니다.
+top: 최상위
+# hook_html_validator <!-- generated on the fly -->
+not-css1-style: /* 주의하세요 ! 이것은 CSS1 속성이 아닙니다 !  */
+errors_sorry_msg: 검사 결과, 다음과 같은 오류들이 발견되었습니다
+# errors_list: <!-- generated on the fly -->
+# warnings_list: <!-- generated on the fly -->
+# rules_count: <!-- generated on the fly -->
+valid_CSS_info: 올바른 CSS에 대한 정보
+# charset: <!-- generated on the fly -->
+# rules_list: <!-- generated on the fly -->
+CSS_not_found: 스타일시트 발견되지 않음
+home: 홈
+about: 정보
+doc: 설명서
+dl: 다운로드
+feedback: 의견/건의
+credits: 도움 주신 분
+home_title: W3C CSS 검사 서비스 홈페이지
+about_title: 이 서비스에 대하여
+doc_title: W3C CSS 검사 서비스에 대한 설명서
+dl_title: CSS 검사 도구 다운로드 받기
+feedback_title: 이 서비스에 대한 의견 또는 건의를 하는 방법
+credits_title: 제작자들과 도움 주신 분들
+W3C_quality_msg: W3C의 품질 검증 활동, 무료 웹 품질 검증 도구 제공
+learn_more_msg: CSS(캐스케이딩 스타일 시트)에 대하여 자세히 알아보기
+support: 이 서비스에 대한 지원으로
+supporter: W3C 서포터가 되기
+# End of variables added along with Velocity
+
+# Defines your own error and warning message here
+content-type: text/html; charset=utf-8
+content-language: en
+output-encoding-name: utf-8
+
+# You can change the level warning like this (example) :
+# warning.redefinition.level: 5
+#  level is an integer between 0 and 9 (all others values are ignored)
+warning.redefinition: \u201C%s\u201D에 대한 재정의
+
+# used by xml parser 
+warning.style-inside-comment: HTML 문서의 주석에 스타일 규칙을 넣으면 유저 에이전트(브라우저 등)에 의하여 누락될 수 있으므로 권장되지 않습니다
+
+# used by org.w3c.css.properties.Css1Style
+warning.same-colors: \u201C%s\u201D와 \u201C%s\u201D는 같은 색상
+warning.no-color: 색상을 설정하지 않았거나 투명으로 설정하였음에도 불구하고 배경색을 지정하였습니다. 색상 스타일의 상호 연결로 가독성이 보장되는지 확인하시기 바랍니다.
+warning.no-background-color: 배경색이 지정되지 않았거나 배경색이 투명으로 설정되었음에도 색상을 선정하였습니다. 색상 스타일의 상호 연결로 가독성이 보장되는지 확인하시기 바랍니다.
+#warning.color.mixed-capitalization is now obsolete
+#warning.color.mixed-capitalization: Although color names are case-insensitive, it is recommended to use the mixed capitalization, to make the names more legible: \u201C%s\u201D
+warning.no-generic-family: \u201C%s\u201D: 마지막 제공된 서체 후보 이외에도 일반적이 대안을 제공할 것을 권장합니다
+warning.with-space: 공백을 포함한 서체명은 따옴표로 구분을 지어야 합니다. 따옴표를 사용하지 않으면, 문자열 앞과 뒤에 오는 공백은 무시되며, 단어 사이의 공백들은 한개의 공백으로 변환됩니다.
+warning.no-padding: 배경색이 지정되었을 경우 내부 여백(padding)을 사용할 것을 권장합니다.
+warning.same-colors2: 전경색 \u201C%s\u201D 와 배경색 \u201C%s\u201D이 같습니
+warning.relative-absolute: \u201C%s\u201D 에서 크기에 대한 절대값과 상대값이 발견되었습니다. 혼용하는 것은 좋은 스타일시트가 못됩니다.
+# used by org.w3c.css.properties.CssSelectors
+warning.unknown-html: \u201C%s\u201D는 HTML 요소가 아닙니다
+warning.html-inside: HTML 요소는 다른 요사의 하위에 있어서는 안됩니다
+warning.body-inside: BODY 요소는 HTML 요소 이외의 요소에 종속될 수 없습니다
+warning.pseudo-classes: 비정규 앵커 클래스 \u201C%s\u201D 는 A 요소 이외에는 효가가 없습니다
+
+# not used by org.w3c.css.properties.CssSelectors for the moment
+warning.noinside: \u201C%s\u201D 는 인라인 요소에 존재할 수 없습니다
+warning.withblock: 주의 바랍니다. 비정규 요소는 블럭 단위 요소에서만 사용할 수 있습니다
+warning.block-level: 이 속성은 블럭 단위에 요소에서만 사용 가능합니다
+
+# used by org.w3c.css.parser.Frame
+warning.no-declaration: 규칙에 대한 정의가 없습니다
+
+# used by org.w3c.css.parser.CssFouffa
+warning.unsupported-import: 불러온 스타일시트가 직접 입력과 파일 업로드 모드에 대한 검사가 이루어지지 않았습니다
+
+# used by org.w3c.css.values.CssColor
+warning.out-of-range: \u201C%s\u201D 는 범주를 벗어난 값입니다
+error.invalid-color: 올바르지 않은 RGB 정의
+
+warning.marker: marker-offset속성은 'display: marker' 속성에만 적용됩니다
+
+# used by org.w3c.css.properties.ACssStyle
+warning.relative: 속성 \u201C%s\u201D 에서는 상대값을 사용하는 것으로 좋은 스타일시트를 만들 수 있습니다
+
+# used by org.w3c.css.css.StyleSheetParser and org.w3c.css.css.StyleSheetXMLParser
+error.at-rule: 죄송합니다. \u201C%s\u201D에 대한 at-rule은 구현되지 않았습니다
+warning.at-rule: 죄송합니다. \u201C%s\u201D에 대한 at-rule은 구현되지 않았습니다
+
+# used by all properties and values
+error.operator: \u201C%s\u201D는 올바른 연산자가 아닙니다
+error.negative-value: \u201C%s\u201D에서는 음수가 허용되지 않습니다
+error.few-value: 속성 \u201C%s\u201D에 대한 매개변수가 부족합니다
+
+# be careful here, values comes first
+# You can't write something like this : For the color, blue is an incorrect value
+error.value: \u201C%s\u201D 는 올바른 \u201C%s\u201D 값이 아닙니다
+
+#used by org.w3c.css.properties3.CssToggleGroup
+error.groupname: \u201C%s\u201D는 올바른 그룹 이름이 아닙니다. 올바른 이름을 사용하기 바랍니다
+
+#used by org.w3c.css.properties3.CssGroupReset
+error.nogroup: \u201C%s\u201D는 toggle-group속성에 대해 설정되지 않았습니다
+
+#used by org.w3c.css.properties3.CssGlyphOrVert
+error.anglevalue: 값이 -360에서 360 사이여야 하며, 90으로 나누어질 수 있어야 합니다
+
+#used by org.w3c.css.properties3.CssTextKashidaSpace
+error.percentage: 퍼센트 값이 필요합니다
+
+#used by org.w3c.css.properties.CssTextAlign
+warning.xsl: 값 \u201C%s\u201D는 XSL에서만 사용됩니다
+
+#used by org.w3c.css.parser.analyzer.CssParser
+warning.medialist: 매체 목록은 'media :' \u201C%s\u201D로 시작되어야 합니다
+error.nocomb: 이 프로파일 또는 버전에서 선택자에 대한 혼합자 \u201C%s\u201D는 허용되지 않습니다
+
+#used by org.w3c.css.properties.CssDirection
+warning.direction: 블럭 단위 요소에서는 'direction' 보다 CSS3의 새로운 'writing-mode' 속성을 사용하기 바랍니다
+
+# used by org.w3c.css.properties.CssTextDecoration
+error.same-value: \u201C%s\u201D가 중복되어 정의 되었습니다
+
+error.generic-family.quote: 일반적인 패밀리 명칭은 키워드이므로 따옴표로 묶어서는 안됩니다
+
+# used by org.w3c.css.properties.CssClip
+error.shape: rect(<top>,<right>,<bottom>,<left>)에 대한 도형 정의가 올바르지 않습니다
+error.shape-separator: 도형 정의에 구분자가 올바르지 않습니다. 구분자는 쉼표를 사용하여야 합니다
+
+# used by org.w3c.css.properties.CssContent
+error.attr: 올바르지 않은 attr 정의 attr(X)
+error.function: 올바르지 않은 함수 정의
+error.counter: 올바르지 않은 counter 정의 counter(<identifier>[,<list-style-type>]?)
+error.counters: 올바르지 않은 counters 정의 counters(<identifier>,<string>[,<list-style-type>]?)
+
+# used by org.w3c.css.font.Src
+error.format: 올바르지 않은 형식 정의 format(<string>[,<string>]*)
+error.local: 올바르지 않은 형식 정의 local(<string>|<ident>+)
+
+# used by org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength
+error.unit: \u201C%s\u201D 는 올바른 단위가 아닙니다
+
+# used by org.w3c.css.aural.ACssAzimuth
+error.degree: 위치는 각도로 표현되어야 합니다
+
+# used by org.w3c.css.aural.ACssElevation
+error.elevation.range: 고도를 각도로 표현하며, '-90deg' 와 '90deg' 사이의 값을 사용합니다.
+
+# used by org.w3c.css.aural.ACssPitchRange
+error.range: 값이 범위를 넘어갔습니다. 유효한 값은 '0'과 '100' 사이의 값만 허용됩니다.
+
+# used by org.w3c.css.properties.CssTextShadow
+error.two-lengths: 그림자 오프셋은 두 개의 길이 값으로 설정됩니다 (필요할 경우, 흐림 효과 반경에 대한 값은 그림자 오프셋 값 이후에 표현됩니다)
+
+error.integer: 이 값은 정수여야 합니다.
+error.comma: 쉼표 구분자가 없습니다.
+
+# used by org.w3c.css.values.CssPercentage
+error.percent: \u201C%s\u201D는 올바른 퍼센트 수치가 아닙니다
+
+# used by org.w3c.css.values.CssString
+error.string: \u201C%s\u201D는 올바른 문자열이 아닙니다
+
+# used by org.w3c.css.values.CssURL
+error.url: \u201C%s\u201D는 올바른 URL이 아닙니다
+
+# used by org.w3c.css.values.CssColor
+error.rgb: \u201C%s\u201D는 올바른 3자리 또는 6자리의 16진수로 표현된 색상이 아닙니다
+error.angle: \u201C%s\u201D는 올바른 각도가 아닙니다. 0과 360사이의 값만 허용됩니다
+
+# used by org.w3c.css.values.CssNumber
+error.zero: 오직 0만이 \u201C%s\u201D일 수 있습니다. 값 뒤에는 반드시 단위가 표현되어야 합니다
+warning.zero: 오직 0만이 \u201C%s\u201D일 수 있습니다. 값 뒤에는 반드시 단위가 표현되어야 합니다
+
+#used by org.w3c.css.properties.CssColumnCount
+error.strictly-positive: \u201C%s\u201D는 유효하지 않습니다. 0보다 큰 값만이 허용됩니다.
+
+# used by org.w3c.css.parser.CssPropertyFactory
+error.noexistence-at-all: 속성 \u201C%s\u201D는 존재하지 않는 속성입니다
+error.noexistence-media: 속성 \u201C%s\u201D는 매체 \u201C%s\u201D에 존재하지 않습니다
+error.noexistence: 속성 \u201C%s\u201D는 \u201C%s\u201D에 존재하지 않지만 \u201C%s\u201D에는 존재합니다
+warning.noexistence: 속성 \u201C%s\u201D는 \u201C%s\u201D에 존재하지 않지만 \u201C%s\u201D에는 존재합니다
+warning.noexistence-media: 속성 \u201C%s\u201D는 매체 \u201C%s\u201D에 존재하지 않습니다
+warning.notforusermedium : 속성 \u201C%s\u201D는 이 usermedium에 대하여 존재하지 않습니다
+warning.noothermedium : 다른 매체를 위한 속성은 usermedium에서 동작하지 않을 수 있습니다
+warning.vendor-extension: 속성 \u201C%s\u201D는 알 수 없는 벤더 확장입니다
+# used by org.w3c.css.parser.AtRule*
+error.noatruleyet: @import를 제외한 여타 @규칙은 CSS1 \u201C%s\u201D 에서 지원되지 않을 수 있습니다
+# used by org.w3c.css.parser.analyzer.CssParser
+error.notforcss1: 값 \u201C%s\u201D는 CSS1에서 존재하지 않습니다
+warning.pseudo: 알려지지 않은 비정규 요소 또는 비정규 클래스 \u201C%s\u201D가 기본 프로파일 (\u201C%s\u201D)에 포함되어 있습니다
+warning.nocomb: 혼합자 \u201C%s\u201D 는 이 프로파일 (\u201C%s\u201D) 에서는 지시자에 사용될 수 없습니다
+warning.charsetspecial: 이 프로파일은 @charset:에 대한 매우 엄격한 규칙이 있습니다. @charset 이후에 정확하게 한개의 공백이 있어야 하며, 그 직후에 따옴표로 묶인 인코딩 명 바로 뒤에 세미콜론을 사용하여야 합니다.
+warning.notversion: \u201C%s\u201D는 이 버전의 CSS에서 사용할 수 없습니다 : \u201C%s\u201D
+
+# used by org.w3c.css.parser.CssFouffa
+error.unrecognize: 너무 많은 값 또는 값이 인식되지 않습니다
+
+# used by org.w3c.css.parser.CssFouffa
+generator.unrecognize: 해석 오류
+generator.dontmixhtml:  해석 오류. 스타일 시트는 HTML 구문을 포함해서는 안된다.
+
+# used by org.w3c.css.css.StyleSheetGeneratorHTML2
+error.unknown: 알 수 없는 오류
+
+# used by org.w3c.css.parser.CssSelectors
+error.pseudo-element: 비정규 요소 \u201C%s\u201D는 \u201C%s\u201D에서 나타날 수 없습니다
+error.pseudo-class: 비정규 클래스 .\u201C%s\u201D는 HTML문서상 \u201C%s\u201D에서 나타날 수 없습니다
+error.pseudo: 알 수 없는 비정규 요소 또는 비정규 클래스 \u201C%s\u201D
+error.id: ID 지시지 #\u201C%s\u201D는 올바르지 않습니다 ! 단순 지시자에서는 한가지 ID지시자만 사용될 수 있습니다: \u201C%s\u201D.
+error.space: 속성 지시자 ~= 가 사용될 경우, 값 \u201C%s\u201D에 정의 된 값은 공백을 포함할 수 없습니다.
+error.todo : 죄송합니다. 기능 \u201C%s\u201D는 아직 구현되지 않았습니다.
+error.incompatible: \u201C%s\u201D와 \u201C%s\u201D 는 호환이 되지 않습니다
+warning.incompatible: \u201C%s\u201D와 \u201C%s\u201D 는 호환이 되지 않습니다
+error.notformobile: \u201C%s\u201D는 모바일 프로파일에서 사용될 수 없습니다
+error.notforatsc: \u201C%s\u201D는 ATSC 프로파일에서 사용될 수 없습니다
+error.notfortv: \u201C%s\u201D는 TV 프로파일에서 사용될 수 없습니다
+error.notversion: \u201C%s\u201D 는 이 버전의 CSS에서 사용할 수 없습니다 : \u201C%s\u201D
+
+error.media: 알 수 없는 매체 \u201C%s\u201D 
+error.page: 알 수 없는 비정규 명칭 페이지 \u201C%s\u201D
+
+error.unrecognized.link: 알 수 없는 link 요소 또는 xml-stylesheet PI.
+
+# used by StyleSheetGeneratorHTML
+generator.context: 내용
+generator.request: 스타일시트를 표시하는 도중 오류가 발생하였습니다. 요청 내용을 확인하시거나 plh@w3.org로 메일을 보내주시기 바랍니ㅏ.
+generator.unrecognized: 알려지지 않은
+generator.invalid-number: 올바르지 않은 숫자
+generator.property: 잘못 된 값
+generator.line: 행
+generator.not-found: 파일이 없습니다
+
+generator.doc-html:   <!-- removed this confusing message olivier 2006-12-14 -->
+generator.doc:  <!-- removed this confusing message olivier 2006-12-14 -->
+
+# used by the parser
+parser.semi-colon: 속성 앞에 세미콜론을 찾으려고 시도하였습니다. 추가하여 주시기 바랍니다
+parser.unknown-dimension: 알 수없는 차원의
+
+parser.old_class: CSS1에서는 클래스 이름이 길이가 아니었을 경우에 (".55in") 숫자로 시작될 수 있었습니다. (".55ft") 하지만 CSS2에서는 그러한 경우 추후에 추가될 단위를 고려, 모두 알 수 없는 길이로 인식돕니다. ".\u201C%s\u201D"를 올바른 클래스 이름으로 만들기 위해서 CSS2에서는 ".\3\u201C%s\u201D"와 같이 숫자 첫 자리에 역슬래시를 추가하여야 합니다.
+
+parser.old_id: CSS1에서는 ID 이름이 길이가 아니었을 경우에 ("#55in") 숫자로 시작될 수 있었습니다. ("#55ft") 하지만 CSS2에서는 그러한 경우 추후에 추가될 단위를 고려, 모두 알 수 없는 길이로 인식돕니다.
+
+parser.class_dim: CSS1에서는 클래스 이름이 길이가 아니었을 경우에 (".55in") 숫자로 시작될 수 있습니다. (".55ft")
+
+parser.id_dim: CSS1에서는 ID 이름이 길이가 아니었을 경우에 ("#55in") 숫자로 시작될 수 있습니다. ("#55ft")
+
+parser.charset: @charset 규칙은 스타일시트가 시작할때만 정의될 수 있습니다. 이때, 그 앞에 공백이 없는지 반드시 확인하기 바랍니다.
+
+parser.charsetspecial: 이 프로파일은 @charset:에 대한 매우 엄격한 규칙이 있습니다. @charset 이후에 정확하게 한개의 공백이 있어야 하며, 그 직후에 따옴표로 묶인 인코딩 명 바로 뒤에 세미콜론을 사용하여야 합니다.
+
+warning.old_id: CSS1에서는 ID 이름이 길이가 아니었을 경우에 ("#55in") 숫자로 시작될 수 있었습니다. ("#55ft") 하지만 CSS2에서는 그러한 경우 추후에 추가될 단위를 고려, 모두 알 수 없는 길이로 인식돕니다.
+
+warning.old_class: CSS1에서는 클래스 이름이 길이가 아니었을 경우에 (".55in") 숫자로 시작될 수 있었습니다. (".55ft") 하지만 CSS2에서는 그러한 경우 추후에 추가될 단위를 고려, 모두 알 수 없는 길이로 인식돕니다. ".\u201C%s\u201D"를 올바른 클래스 이름으로 만들기 위해서 CSS2에서는 ".\3\u201C%s\u201D"와 같이 숫자 첫 자리에 역슬래시를 추가하여야 합니다.
+
+# used by the servlet
+servlet.invalid-request: 올바르지 않은 요청을 하였습니다.
+servlet.process: 객체를 처리할 수 없습니다
+
+warning.atsc: \u201C%s\u201D는 atsc-tv 매체에서 지원되지 않을 수 있습니다
+error.onlyATSC: \u201C%s\u201D는 atsc-tv 매체에서만 사용 가능합니다
+
+warning.otherprofile: 속성 \u201C%s\u201D는 이 프로파일에 존재하지 않습니다만, 다른 프로파일에 의하여 유효하다고 검증되었습니다
+
+warning.float-no-width: (x)HTML+CSS에서는 플로팅된 요소에는 너비(width) 선언이 반드시 필요합니다. 고유의 너비를 갖는 요소(html, img, input, textarea, select, 또는 object)는 해당사항이 없습니다.
+
+parser.charsetcss1: @charset은 CSS1에는 존재하지 않습니다.
+parser.attrcss1: 속성선택자는 CSS1에는 존재하지 않습니다.
+parser.invalid_id_selector: 올바르지 않은 ID 선택자
+parser.import_not_allowed: @import는 @charset과 @import 이외의 유효한 절의 뒤에 올 수 없습니다.
+
+error.bg_order: CSS3 background 선언 시 'bg_position'과 'bg_size'가 동시에 존재하는 경우 'bg_position'이 / 'bg_size'보다 먼저 선언되어야 합니다.
+
+# vendor extensions
+vendorext: 제조사 확장
+vext_default: 기본값
+vext_errors: 오류
+vext_warnings: 경고
+
+warning.link-type: 'link' 요소에 'text/css' 값을 갖는 'type' 속성을 추가해야 합니다.

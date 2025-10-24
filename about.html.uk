@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+  <head>
+    <title>Про сервіс W3C для перевірки CSS</title>
+    <link rev="made" href="mailto:www-validator-css@w3.org" />
+    <link rev="start" href="./" title="Home Page" />
+    <style type="text/css" media="all">
+	@import "style/base.css";
+	@import "style/docs.css";
+    </style>
+    <meta name="revision" content="$Id$" />
+  </head>
+
+  <body>
+    <div id="banner">
+     <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+     <a href="./"><span>Сервіс перевірки CSS</span></a></h1>
+     <p id="tagline">
+       Перевірка таблиц каскадних стилів (CSS) і документів (X)HTML з таблицями стилів
+     </p>
+    </div>
+   <div class="doc">
+
+      <h2>Про сервіс перевірки CSS</h2>
+
+<h3 id="TableOfContents">Зміст</h3>
+<div id="toc">
+<ol>
+  <li>Про сервіс
+  <ol>
+<li><a href="#what">Що це? Навіщо це мені?</a></li>
+<li><a href="#help">Опис вище є надто заплутаним! Розтлумачте!</a></li>
+<li><a href="#reference">Чи це офіційна перевірка на коректність CSS?</a></li>
+<li><a href="#free">Скільки це коштує?</a></li>
+<li><a href="#who">Хто написав цей застосунок? Хто його підтримує?</a></li>
+<li><a href="#contact">Як мені св'язатися з авторами? Повідомити про помилку?</a></li>
+<li><a href="#participate">Чи можу я допомогти?</a></li>
+  </ol>
+  </li>
+  <li>Куток розробника
+  <ol>
+    <li><a href="#code">На чому написано сервіс перевірки CSS? Чи доступний програмний код?</a></li>
+    <li><a href="#install">Чи можу я встановити й запустити сервіс перевірки самостійно?</a></li>
+    <li><a href="#api">Чи можу я побудувати застосунок використовуючи даний сервіс? Чи є тут API?</a></li>
+  </ol>
+  </li>
+</ol>
+</div><!-- toc -->
+<h3 id="about">Про сервіс</h3>
+
+<h4 id="what">Що це? Навіщо це мені?</h4>
+
+<p>Сервіс перевірки CSS&#x00a0;— безплатний застосунок, створений організацією W3C для допомоги веб-дизайнерам і веб-розробникам у перевірці каскадних таблиць стилів (CSS). Він може бути використовуваний як <a href="./">безплатний сервіс</a> у Сіті або завантажений для запуску на веб-сервері у якості Java-застосунка або сервлета.</p>
+
+<p>Навіщо це <em>вам</em>? Якщо ви є веб-розробником або веб-дизайнером, то цей сервіс може стати неоціненним помічником: він не лише порівнює таблиці стилів зі специфікаціями та допомагає виявити помилки, друкарські помилки, неправильне використовування CSS, але й повідомляє про ризик виникнення проблем з доступністю контента.</p>
+
+<h4 id="help">Опис вище є надто заплутаним! Розтлумачте!</h4>
+<p>Більшість документів у Сіті написано комп'ютерною мовою HTML. Її може бути використано для створення сторінок зі структурованою інформаціею, посиланнями, мультимедійними об'єктами. Для кольорів, шрифтів та верстки HTML використовує мову описання стилів CSS («Cascade Style Sheets», «каскадні таблиці стилів»). Цей сервіс дозволяє людям перевіряти написані ними таблиці стилів і, якщо знадобиться, вводити до них змінення.</p>
+
+<h4 id="reference">Чи це офіційна перевірка на коректність CSS?</h4>
+<p>Ні. Це надійна й корисна утиліта, але це лише програма, та, як і будь-яке програмне забезпечення, вона має <a href="https://github.com/w3c/css-validator/issues">помилки й проблеми</a> &amp; <a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">помилки й проблеми</a>. Актуальний довідник по таблицях каскадних стилів є в <a href="https://www.w3.org/Style/CSS/#specs">спеціфікації</a>.</p>
+
+<h4 id="free">Скільки це коштує?</h4>
+<p>Аніскільки, це безплатний сервіс. Програмний код <a href="DOWNLOAD.html">є відкритим</a>, і ви можете вільно завантажити його, використати, модіфікувати, поширювати&#x00a0;— <a href="https://www.w3.org/Consortium/Legal/copyright-software">робити з ним що завгодно</a>.
+Якщо цей сервіс подобається вам, то ви можете <a href="#participate">долучитися до проекту</a> або добровільно спонсувати W3C через <a href="https://www.w3.org/Consortium/sup">програму підтримки</a>, проте ніхто не примушує вас це робити.</p>
+
+<h4 id="who">Хто написав цей застосунок? Хто його підтримує?</h4>
+<p>Даний сервіс розміщується й обслуговується на сервері W3C, завдяки внеску та праці членів W3C, добровільних розробників і перекладачів. Для докладної інформації дивіться сторінку <a href="thanks.html">створювачів і учасників</a>. Ви також можете <a href="#participate">зробити свій внесок</a>.</p>
+
+<h4 id="participate">Чи можу я допомогти?</h4>
+<p>Звісно. Якщо ви програмуєте на Java, то можете допомогти проекту, перевірюючи, покращуючи, <a href="https://github.com/w3c/css-validator/issues">виправляючи</a> &amp; <a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">виправляючи</a> початковий <a href="#code">код</a>, або додаючи нові функції.</p>
+<p>Для допомоги у розробці й підтримці вам не обов'язково бути програмістом&#x00a0;— ви можете допомогти покращити документацію, перекласти інтерфейс на свою мову або підписатися на <a href="https://lists.w3.org/Archives/Public/www-validator-css/">лист розсилання</a> для обговорення сервісу та допомоги іншим користувачам.</p>
+
+<h4 id="contact">Чи є ще питання?</h4>
+<p>Якщо у вас постають питання по CSS або сервісу перевірки CSS, задайте їх у доступних
+<a href="Email">розсиланнях і форумах</a>. Але перед цим переконайтеся, що відповіді немає у <a href="http://www.websitedev.de/css/validator-faq">FAQ сервісу перевірки CSS</a>.</p>
+
+
+<h3 id="dev">Куток розробника</h3>
+<h4 id="code">На чому написано сервіс перевірки CSS? Чи доступний програмний код?</h4>
+<p>Сервіс W3C для перевірки CSS написано на Java; програмний код є відкритим і досяжним через CVS. Ви можете
+<a href="https://github.com/w3c/css-validator">подивитися код у Сіті</a>, або завантажити його у відповідності з інструкціями. Для швидкого ознайомлення з використовуваними класами, ознайомтесь з файлом <a href="README.html">README</a>.</p>
+
+<h4 id="install">Чи можу я встановити й запустити сервіс перевірки самостійно?</h4>
+<p>Так, ви можете завантажити та встановити сервіс перевірки й запустити його, чи то з командного рядку, чи то як сервлет. Ознайомтесь з <a href="DOWNLOAD.html">інструкціями</a> по встановленню та запуску.</p>
+
+<h4 id="api">Чи можу я побудувати застосунок використовуючи даний сервіс? Чи є тут API?</h4>
+<p>Так, і ще раз <a href="api.html">так</a>. Сервіс перевірки має <a href="api.html">інтерфейс SOAP</a> (RESTful), за допомогою якого досить легко використовувати його в застосунках (веб- або будь-яких інших). Якщо ви користуєтесь доступом до спільного ресурсу, то враховуйте правила сітьового етикету: впевнитесь, що застосунок викликає функцію sleep() між викликами сервісу, або встановіть власну копію.</p>
+</div>
+   <ul class="navbar"  id="menu">
+	<li><strong><a href="./" title="Головна сторінка сервісу W3C по перевірці CSS">Головна сторінка</a></strong> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="Документація по сервісу W3C для перевірки CSS">Документація</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Завантаження застосунку перевірки CSS">Завантаження</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="Як залишити відгук">Відгуки</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Створювачі і учасники">Створювачі</a><span class="hideme">|</span></li>
+
+      </ul>
+
+       <ul id="lang_choice">
+           <li><a href="about.html.de"
+               lang="de"
+               xml:lang="de"
+               hreflang="de"
+               rel="alternate">Deutsch</a></li>
+           <li><a href="about.html.en"
+               lang="en"
+               xml:lang="en"
+           hreflang="en"
+           rel="alternate">English</a>  </li>
+           <li><a href="about.html.es"
+           lang="es" xml:lang="es" hreflang="es"
+           rel="alternate">Español</a></li>
+           <li><a href="about.html.fr"
+           lang="fr"
+           xml:lang="fr"
+           hreflang="fr"
+           rel="alternate">Français</a> </li>
+           <li><a href="about.html.it"
+               lang="it"
+               xml:lang="it"
+               hreflang="it"
+               rel="alternate">Italiano</a> </li>
+           <li><a href="about.html.nl"
+               lang="nl"
+               xml:lang="nl"
+               hreflang="nl"
+               rel="alternate">Nederlands</a> </li>
+           <li><a href="about.html.ja"
+               lang="ja"
+               xml:lang="ja"
+               hreflang="ja"
+               rel="alternate">日本語</a> </li>
+           <li><a href="about.html.pl-PL"
+               lang="pl"
+               xml:lang="pl"
+               hreflang="pl"
+               rel="alternate">Polski</a> </li>
+           <li><a href="about.html.zh-cn"
+               lang="zh-hans"
+               xml:lang="zh-hans"
+               hreflang="zh-hans"
+               rel="alternate">中文</a></li>
+      </ul>
+
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="Вивчіть більше про Cascading Style Sheets"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title="Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+
+</html>
