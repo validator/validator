@@ -1,6 +1,0 @@
-<module>
-  <depends module="util"/>
-  <depends module="datatype"/>
-  <java5/>
-  <compile/>
-</module>

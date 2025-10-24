@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang=en>
+<meta charset=utf-8>
+<title>valid popover attributes on button</title>
+<div id="test1" popover="auto">Popover content 1</div>
+<div id="test2" popover="manual">Popover content 2</div>
+<div id="test3" popover="hint">Popover content 3</div>
+<div id="test4" popover="">Popover content 4</div>
+<button popovertarget="test1">Toggle popover 1</button>
+<button popovertarget="test2" popovertargetaction="show">Show popover 2</button>
+<button popovertarget="test3" popovertargetaction="hide">Hide popover 3</button>
+<button popovertarget="test4" popovertargetaction="toggle">Toggle popover 4</button>
+<button type="button" popovertarget="test1" popovertargetaction="show">Button type button</button>
+<button type="submit" popovertarget="test2">Submit button</button>
+<button type="reset" popovertarget="test3">Reset button</button>
+<input type="button" popovertarget="test1" value="Input button">
+<input type="submit" popovertarget="test2" value="Input submit">
+<input type="reset" popovertarget="test3" value="Input reset">
+<input type="image" src="submit.png" alt="Submit" popovertarget="test4">
