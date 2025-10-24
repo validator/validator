@@ -1,0 +1,366 @@
+# Master localization string file: $Id$
+
+direction: ltr
+language_name: Magyar
+more_options: További lehetőségek
+title_more_options: További érvényesítési lehetőségek mutatása/elrejtése
+all: Mindegyik
+normal_report: Normál jelentés
+most_important: Legfontosabb
+no_warnings: Nincsenek figyelmeztetések
+profile: Profil
+no_special_profile: Nincs egyedi profil
+css1: CSS level 1
+css2: CSS level 2
+css21: CSS level 2.1
+css3: CSS level 3
+svg: SVG
+svgbasic: SVG Basic
+svgtiny: SVG tiny
+mobile: Mobil
+ATSC_TV_profile: ATSC TV profil
+TV_profile: TV profil
+medium: Közepes
+aural: hangos
+braille: braille
+embossed: domborított
+handheld: kézi
+print: nyomtatás
+projection: vetítés
+screen: képernyő
+tty: TTY
+tv: TV
+presentation: prezentáció
+type: Típus
+no_special_type: Automatikus
+html_doc: HTML
+css_doc: CSS
+check: Ellenőrzés
+W3C_CSS_validation_service: A W3C CSS érvényesítési szolgáltatása
+check_CSS: Cascading Style Sheets (CSS) és stíluslapokkal rendelkező (X)HTML dokumentumok ellenőrzése
+
+by_URI: URI segítségével
+by_file_upload: File feltöltéssel
+by_direct_input: Közvetlen bevitellel
+validate_by_URI: Érvényesítés URI segítségével
+enter_uri: Adja meg a dokumentum (HTML CSS-sel vagy csak CSS) URI-jét, melyet érvényesíteni szeretne
+page_address: Érvényesítendő oldal címe
+address: Cím
+submit_uri: URI küldése érvényesítésre
+validate_by_file_upload: Érvényesítés file feltöltéssel
+choose_document: Válassza ki az érvényesítendő dokumentumot
+choose_local_file: Válasszon ki egy helyi file-t a feltöltéshez és érvényesítéshez
+local_CSS_file: Helyi CSS file
+submit_file: Érvényesítésre küldés
+validate_by_input: Érvényesítés közvetlen bevitellel
+enter_CSS: Írja be a CSS-t, melyet érvényesíttetni szeretne
+submit_input: Bevitel érvényesítésre küldése
+note: Megjegyzés
+note_xhtml_valid: Ha CSS stíluslapját (X)HTML dokumentumba ágyazva szeretné érvényesíttetni, először <a href="https://validator.w3.org/">ellenőrizze, hogy a használt (X)HTML érvényes-e</a>
+
+# End of variables added along with Index page template
+
+W3C_validator_results: W3C CSS érvényesítő eredménye
+# file_title: <!-- provided by the user -->
+CSS_validation_service: CSS érvényesítő szolgáltatás
+jump_to: Ugrás
+# errors_count: <!-- generated on the fly -->
+errors: Hibák
+# warnings_count <!-- generated on the fly -->
+warnings: Figyelmeztetések
+validated_CSS: Érvényes CSS
+congrats: Gratulálunk! Nincsenek hibák
+# The sentence defined by doc_validates_before_link and doc_validates_after_link variables goes: \
+# "This document validates as CSSXX!" where XX stands for the CSS version used \
+# Since the content of the link about the CSS version is generated on the fly, \
+# it is important to define what goes before the link and what goes afterwards in 2 separate \
+# variables because the position of the link in the sentence varies in different languages
+doc_validates_before_link: A dokumentum érvényesítése
+doc_validates_after_link: alapján történik!
+no_errors_interoperable_msg: Hogy olvasói láthassák, gondot fordít arra, hogy weboldala mindenhol \
+olvasható legyen, ezt az ikont minden oldalra kiteheti, melyet érvényesítettünk. Itt az XHTML, \
+mellyel hozzáadhatja az ikont weboldalához:
+
+valid_CSS: Érvényes CSS!
+# <!-- close the img tag with > instead of /> if using HTML<= 4.01 -->
+no_errors_close_tags_msg: az img címkét &gt; zárja /&gt; helyett, ha HTML &lt;= 4.01 verziót használ
+no_errors_dl_local_msg: Ha szeretné, letöltheti a kép egy másolatát, hogy helyi web \
+könyvtárában tárolja, és megváltoztathatja a fenti XHTML részt, hogy a helyi képre mutasson, \
+és ne erre a szerverre.
+
+no_errors_create_link_msg: Ha szeretne hivatkozni erre az oldalra (pl. erre az érvényesítési \
+eredményre), hogy a későbbiekben könnyebben újra érvényesíthesse az oldalát vagy, hogy \
+mások érvényesíthessék oldalát, az URI a következő:
+
+no_errors_forHTML_only_msg: csak HTML/XML documenumhoz
+no_errors_bookmark_msg: De hozzá is adhatja ezt az oldalt a könyvjelzők vagy kedvencek közé.
+
+note_valide_html: Hogy az elvárásoknak megfelelően működjön, a CSS stíluslaphoz helyes dokumentum fa-struktúra szükséges. Ez azt jelenti, hogy <a href="https://validator.w3.org/">érvényes HTML-t</a> kell használnia.
+
+top: Tetejére
+# hook_html_validator <!-- generated on the fly -->
+not-css1-style:  /* FIGYELEM ! Ez nem CSS1 elem ! */
+errors_sorry_msg: Sajnájuk! Az alábbi hibákat találtuk
+# errors_list: <!-- generated on the fly -->
+# warnings_list: <!-- generated on the fly -->
+# rules_count: <!-- generated on the fly -->
+valid_CSS_info: Érvényes CSS információ
+# charset: <!-- generated on the fly -->
+# rules_list: <!-- generated on the fly -->
+CSS_not_found: Nem található stíluslap
+home: Főoldal
+about: Névjegy
+doc: Dokumentáció
+dl: Letöltés
+feedback: Visszajelzés
+credits: Impresszum
+home_title: A W3C CSS érvényesítő szolgáltatás honlapja
+about_title: A szolgáltatásról
+doc_title: A W3C CSS érvényesítő szolgáltatás dokumentációja
+dl_title: Töltse le és telepítse a CSS érvényesítőt
+feedback_title: Hogyan adhat visszajelzést a szolgáltatásról
+credits_title: Impresszum és köszönetnyilvánítás
+W3C_quality_msg: A W3C minőségbiztosítása segítségével ingyenesen biztosíthatja weboldala minőségét, sőt még többet
+learn_more_msg: További információk a CSS stíluslapokról
+support: Támogassa ezt az eszközt, legyen
+supporter: W3C támogató
+# End of variables added along with Velocity
+
+# Defines your own error and warning message here
+content-type: text/html; charset=utf-8
+content-language: en
+output-encoding-name: utf-8
+
+# You can change the level warning like this (example) :
+# warning.redefinition.level: 5
+#  level is an integer between 0 and 9 (all others values are ignored)
+warning.redefinition: \u201C%s\u201D újradefiniálása
+
+
+# used by xml parser 
+warning.style-inside-comment: Ne tegye a stílus szabályokat HTML megjegyzésekbe, mert a felhasználó rendszere eltávolíthatja
+
+# used by org.w3c.css.properties.Css1Style
+warning.same-colors: Ugyanolyan színű \u201C%s\u201D és \u201C%s\u201D
+warning.no-color: Nem állított be színt (vagy a színt átlátszóra állította), de meghatározta a háttér színét. Győződjön meg róla, hogy az egymáson lévő színektől olvasható-e a szöveg.
+warning.no-background-color: Nem állított be háttérszínt (vagy a színt átlátszóra állította), de meghatározta a színt. Győződjön meg róla, hogy az egymáson lévő színektől olvasható-e a szöveg.
+
+#warning.color.mixed-capitalization is now obsolete
+#warning.color.mixed-capitalization: Bár a szín neveknél számít a kis-/nagybetűs írásmód, javasolt a vegyes használat, hogy a nevek könnyen kivehetők legyenek: \u201C%s\u201D
+warning.no-generic-family: \u201C%s\u201D: Javasoljuk, hogy végső megoldásként általános családokat használjon
+warning.with-space: A térköz karaktert tartalmazó családneveket idézőjelbe kell tenni. Ha idézőjelet használ, egyik térköz karakter sem lesz figyelembe véve a név előtt vagy mögött, és a névben egymás után lévő térköz karaktereket egy szóközzel helyettesítjük. 
+
+warning.no-padding: Javasoljuk, hogy a padding területhez használjon háttérszínt
+warning.same-colors2: Ugyanaz a szín és a háttérszín két kontextusban: \u201C%s\u201D és \u201C%s\u201D
+warning.relative-absolute: \u201C%s\u201D tartalmaz abszolút és relatív hosszértéket is. Ez nem egy robusztus stíluslap.
+# used by org.w3c.css.properties.CssSelectors
+warning.unknown-html: \u201C%s\u201D nem egy HTML elem
+warning.html-inside: A HTML elem nem lehet másik elemen belül
+warning.body-inside: A BODY elem a HTML-t kivéve nem lehet másik elemen belül
+warning.pseudo-classes: A(z) \u201C%s\u201D horgony pseudo-osztály az 'A' elemen kívül másra nincs hatással
+
+# not used by org.w3c.css.properties.CssSelectors for the moment
+warning.noinside: \u201C%s\u201D nem lehet egy gyökérelemen belül
+warning.withblock: Figyelem. A pseudo-elemeket csak blokkszintű elemhez lehet csatolni
+warning.block-level: Ez a tulajdonság blokkszintű elemre vonatkozik
+
+# used by org.w3c.css.parser.Frame
+warning.no-declaration: Nincs deklaráció a szabályban
+
+# used by org.w3c.css.parser.CssFouffa
+warning.unsupported-import: Az importált stíluslapok nem kerülnek ellenőrzésre közvetlen bevitel és file feltöltés esetén
+
+# used by org.w3c.css.values.CssColor
+warning.out-of-range: \u201C%s\u201D a tartományon kívül esik
+error.invalid-color: Hibás RGB funkció
+
+warning.marker: A marker-offset tulajdonságok csak 'display: marker'-t tartalmazó elemekre vonatkoznak
+
+
+# used by org.w3c.css.properties.ACssStyle
+warning.relative: A relatív egységek használata robusztusabb stíluslapot eredményez a \u201C%s\u201D tulajdonságnál
+
+# used by org.w3c.css.css.StyleSheetParser and org.w3c.css.css.StyleSheetXMLParser
+error.at-rule: Sajnáljuk, a \u201C%s\u201D at-rule nincs végrehajtva.
+warning.at-rule: Sajnáljuk, a \u201C%s\u201D at-rule nincs végrehajtva.
+
+# used by all properties and values
+error.operator: \u201C%s\u201D helytelen operátor
+error.negative-value: \u201C%s\u201D negatív értékek nem megengedettek
+error.few-value: túl kevés érték a \u201C%s\u201D tulajdonsághoz
+
+# be careful here, values comes first
+# You can't write something like this : For the color, blue is an incorrect value
+error.value: \u201C%s\u201D nem egy \u201C%s\u201D érték
+
+
+#used by org.w3c.css.properties3.CssToggleGroup
+error.groupname: \u201C%s\u201D nem egy helyes csoport név. Használjon érvényes azonosítót
+
+#used by org.w3c.css.properties3.CssGroupReset
+error.nogroup: \u201C%s\u201D nem lett beállítva a kapcsoló-csoport tulajdonságban
+
+#used by org.w3c.css.properties3.CssGlyphOrVert
+error.anglevalue: Az értéknek -360 és 360 közöttinek, és 90-nel oszthatónak kell lennie
+
+#used by org.w3c.css.properties3.CssTextKashidaSpace
+error.percentage: százalékérték szükséges
+
+#used by org.w3c.css.properties.CssTextAlign
+warning.xsl: a \u201C%s\u201D érték csak XSL-re érvényes
+
+#used by org.w3c.css.parser.analyzer.CssParser
+warning.medialist: a médialista 'media :' \u201C%s\u201D
+error.nocomb: A szelektorok közti \u201C%s\u201D kombinátor nem megengedett ebben a profilban vagy verzióban
+
+#used by org.w3c.css.properties.CssDirection
+warning.direction: a blokk-szintű elemekhez a 'direction' helyett használja az új CSS3 'writing-mode' tulajdonságot
+
+# used by org.w3c.css.properties.CssTextDecoration
+error.same-value: \u201C%s\u201D kétszer szerepel
+
+error.generic-family.quote: Az alapvető családnevek kulcsszavak, ezért nem tehetők idézőjelbe.
+
+# used by org.w3c.css.properties.CssClip
+error.shape: Helytelen alakzat definíció rect(<top>,<right>,<bottom>,<left>)
+error.shape-separator: Helytelen elválasztás az alakzat megadásakor. Vesszőnek kell lennie.
+
+# used by org.w3c.css.properties.CssContent
+error.attr: Helytelen attr definíció attr(X)
+error.function: Helytelen function definíció
+error.counter: Helytelen counter definíció counter(<identifier>[,<list-style-type>]?)
+error.counters: Helytelen counters definíció counters(<identifier>,<string>[,<list-style-type>]?)
+
+# used by org.w3c.css.font.Src
+error.format: Helytelen format definíció format(<string>[,<string>]*) 
+error.local: Helytelen format definíció local(<string>|<ident>+)
+
+# used by org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength
+error.unit: \u201C%s\u201D helytelen egység
+
+# used by org.w3c.css.aural.ACssAzimuth
+error.degree: A pozíciót szögekben kell megadni
+
+# used by org.w3c.css.aural.ACssElevation
+error.elevation.range: Meghatározza az emelkedési szöget '-90deg' és '90deg' között.
+
+# used by org.w3c.css.aural.ACssPitchRange
+error.range: Az érték kívül esik a tartományon. Az értéknek '0' és '100' között kell lennie.
+
+# used by org.w3c.css.properties.CssTextShadow
+error.two-lengths: Az árnyék eltolását két <length> (hossz) érték határozza meg (Az elmosás sugara is megdható az árnyék eltolása után.)
+
+error.integer: A számnak egésznek kell lennie.
+error.comma: Hiányzik az elválasztó vessző.
+
+# used by org.w3c.css.values.CssPercentage
+error.percent: \u201C%s\u201D helytelen százalék
+
+# used by org.w3c.css.values.CssString
+error.string: \u201C%s\u201D helytelen szöveg
+
+# used by org.w3c.css.values.CssURL
+error.url: \u201C%s\u201D helytelen URL
+
+# used by org.w3c.css.values.CssColor
+error.rgb: \u201C%s\u201D nem helyes, 3 vagy 6 hexadecimális számjegyből álló szám
+error.angle: \u201C%s\u201D is nem helyes szög. Az értéknek 0 és 360 között kell lennie
+
+# used by org.w3c.css.values.CssNumber
+error.zero: 0 csak \u201C%s\u201D lehet. Mértékegységet kell megadni a szám után
+warning.zero: 0 csak \u201C%s\u201D lehet. Mértékegységet kell megadni a szám után
+
+# used by org.w3c.css.parser.CssPropertyFactory
+error.noexistence-at-all: A(z) \u201C%s\u201D tulajdonság nem létezik 
+error.noexistence-media: A(z) \u201C%s\u201D tulajdonság nem létezik a \u201C%s\u201D médiához
+error.noexistence: A(z) \u201C%s\u201D nem létezik \u201C%s\u201D -ban/-ben, de létezik \u201C%s\u201D -ban/-ben 
+warning.noexistence: A(z) \u201C%s\u201D nem létezik \u201C%s\u201D -ban/-ben, de létezik \u201C%s\u201D -ban/-ben
+warning.noexistence-media: A(z) \u201C%s\u201D tulajdonság nem létezik a \u201C%s\u201D médiához
+warning.notforusermedium : A(z) \u201C%s\u201D tulajdonság nem létezik ehhez a felhasználói médiumhoz
+warning.noothermedium : Más média tulajdonságai nem minden esetben működnek a felhasználói médiumhoz
+
+# used by org.w3c.css.parser.AtRule*
+error.noatruleyet: A @import az egyetlen támogatott @rule a CSS1-ben \u201C%s\u201D
+# used by org.w3c.css.parser.analyzer.CssParser
+error.notforcss1: A(z) \u201C%s\u201D érték nem létezik a CSS1-ben
+warning.pseudo: A(z) \u201C%s\u201D ismeretlen pseudo-elem vagy pseudo-class az alapértelmezett profilban (\u201C%s\u201D)
+warning.nocomb: A szelektorok közti \u201C%s\u201D kombinátor nem megengedett ebben a profilban (\u201C%s\u201D)
+warning.charsetspecial: Ennek a profilnak egyedi szintaxisa van az @charset-re vonatkozóan: @charset után pontosan egy szóköznek kell álnia, melyet a kódolás neve követ idézőjelben, mely után közvetlenül pontosvesszőt kell tenni.
+warning.notversion: \u201C%s\u201D nem használható a CSS ezen verziójával : \u201C%s\u201D
+
+# used by org.w3c.css.parser.CssFouffa
+error.unrecognize: Túl sok érték vagy nem felismerhető értékek
+
+# used by org.w3c.css.parser.CssFouffa
+generator.unrecognize: Elemzési hiba
+generator.dontmixhtml: Elemzési hiba. A stíluslapok nem tartalmazhatnak HTML szintaxist.
+
+# used by org.w3c.css.css.StyleSheetGeneratorHTML2
+error.unknown: Ismeretlen hiba
+
+# used by org.w3c.css.parser.CssSelectors
+error.pseudo-element: A :\u201C%s\u201D pseudo-elem nem szerepelhet itt a \u201C%s\u201D kontextusban
+error.pseudo-class: A .\u201C%s\u201D pseudo-osztály nem szerepelhet itt a \u201C%s\u201D HTML kontextusban
+error.pseudo: Ismeretlen pseudo-elem vagy pseudo-osztály \u201C%s\u201D
+error.id: A #\u201C%s\u201D ID szelektor érvénytelen! Csak egy ID szelektor határozható meg egy egyszerű szelektorban: \u201C%s\u201D.
+error.space: Ha a ~= attribútum szelektort használja, a \u201C%s\u201D értékben szereplő szó nem tartalmazhat szóközöket.
+error.todo : Sajnos a \u201C%s\u201D szolgáltatás még nem használható.
+error.incompatible: \u201C%s\u201D és \u201C%s\u201D nem kompatibilisek
+warning.incompatible: \u201C%s\u201D és \u201C%s\u201D nem kompatibilisek
+error.notformobile: \u201C%s\u201D nem használható a mobil profillal
+error.notforatsc: \u201C%s\u201D nem használható az ATSC profillal
+error.notfortv: \u201C%s\u201D nem használható a TV profillal
+error.notversion: \u201C%s\u201D nem használható a CSS ezen verziójával : \u201C%s\u201D
+
+error.media: ismeretlen média \u201C%s\u201D
+error.page: ismeretlen pseudo elnevezésű oldal \u201C%s\u201D
+
+error.unrecognized.link: Ismeretlen hivatkozás elem vagy xml-stíluslap PI.
+
+# used by StyleSheetGeneratorHTML
+generator.context: Kontextus
+generator.request: Hiba történt a stíluslapunk generálása közben. Kérjük javítsa kérését vagy küldjön egy e-mailt a plh@w3.org címre.
+generator.unrecognized: Ismeretlen
+generator.invalid-number: Érvénytelen szám
+generator.property: Értékhiba
+generator.line: Sor
+generator.not-found: File nem található
+
+generator.doc-html:   <!-- removed this confusing message olivier 2006-12-14 -->
+generator.doc:  <!-- removed this confusing message olivier 2006-12-14 -->
+
+
+# used by the parser
+parser.semi-colon: kísérlet pontosvessző keresésére a tulajdonság neve előtt. helyezze el
+
+parser.unknown-dimension: Ismeretlen méret
+
+parser.old_class: A CSS1-ben, az osztály nevét számjeggyel kell kezdeni (".55ft"), kivéve, ha az méret (".55in"). A CSS2-ben az ilyen osztályok ismeretlen méretként kerülnek elemzésre (hogy később új mértékegységeket lehessen hozzáadni). Hogy ".\u201C%s\u201D" érvényes osztály legyen, a CSS2-ben az első számjegyet escape karakterként kell megadni ".\3\u201C%s\u201D"
+
+parser.old_id: A CSS1-ben, egy id név kezdődhetett számjeggyel ("#55ft"), ha az nem méret volt ("#55in"). A CSS2-ben az ilyen id-k ismeretlen méretként kerülnek elemzésre (hogy később új mértékegységeket lehessen hozzáadni)
+
+parser.class_dim: A CSS1-ben, egy osztály neve kezdődhetett számjeggyel (".55ft"), ha az nem méret volt (".55in").
+
+parser.id_dim: A CSS1-ben, egy id neve kezdődhet számjeggyel ("#55ft"), ha az nem méret volt ("#55in").
+
+parser.charset: A @charset szabály csak a stíluslap elején lehet. Ellenőrizze, hogy nincsenek-e előtte szóközök.
+
+parser.charsetspecial: Ennek a profilnak egyedi szintaxisa van az @charset-re vonatkozóan: @charset után pontosan egy szóköznek kell álnia, melyet a kódolás neve követ idézőjelben, mely után közvetlenül pontosvesszőt kell tenni.
+
+warning.old_id: A CSS1-ben, egy id neve kezdődhet számjeggyel ("#55ft"), ha az nem méret ("#55in"). A CSS2-ben, az ilyen id-k ismeretlen méretként kerülnek elemzésre (hogy később új mértékegységeket lehessen hozzáadni)
+
+warning.old_class: A CSS1-ben, egy osztály neve kezdődhet számjeggyel ("#55ft"), ha az nem méret ("#55in"). A CSS2-ben, az ilyen id-k ismeretlen méretként kerülnek elemzésre (hogy később új mértékegységeket lehessen hozzáadni).
+
+# used by the servlet
+servlet.invalid-request: Érvénytelen kérést küldött.
+servlet.process: Nem lehet feldolgozni az objektumot
+
+warning.atsc: \u201C%s\u201D nem biztos, hogy támogatottt az atsc-tv médiumon
+error.onlyATSC: \u201C%s\u201D this function is only for the atsc-tv medium
+
+warning.otherprofile: A(z) \u201C%s\u201D tulajdonság nem létezik ehhez a profilhoz, de egy másik profilnak megfelelően érvényesítve lesz
+
+warning.float-no-width: A (x)HTML+CSS-ben, a lebegő elemek szélességét deklarálni kell. Csak valódi szélességgel rendelkező elemek (html, img, input, textarea, select, or object) nincsenek érintve
+
+parser.charsetcss1: @charset szabályok nem használhatók a CSS1-ben
+parser.attrcss1: Az attribútum szelektorok érvénytelenek a CSS1-ben

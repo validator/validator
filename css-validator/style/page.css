@@ -1,0 +1,63 @@
+H1 {
+  font-weight: bold; 
+  font-size: large; 
+  font-family: helvetica, sans-serif; 
+  color: rgb(136,0,0); 
+  margin-top: 3.0%; 
+}
+PRE {
+  white-space: pre;
+  color: black; 
+  background: silver; 
+  margin: 2.0%; 
+  padding: 2.0%; 
+  border-width: medium; 
+  border-style: solid; 
+  border-color: white; 
+  width: 100.0%; 
+}
+BODY {
+  color: black; 
+  background: white; 
+}
+DIV.box {
+  color: black; 
+  background: yellow; 
+  margin: 2.0%; 
+  padding: 2.0%; 
+  border-width: medium; 
+  border-style: solid; 
+  border-color: white; 
+  width: 100.0%; 
+}
+.center {
+  text-align: center; 
+  margin: 5%;
+}
+ADDRESS {
+  font-weight: bold; 
+  text-align: right; 
+  margin-top: -2.0em; 
+}
+HR {
+  text-align: center; 
+  margin-top: 3.0%; 
+  width: 50.0%; 
+}
+.large {
+  width: 100.0%; 
+}
+.t1 { 
+  color: silver;
+  text-align: center;
+  font: bold 10em Times, serif;
+  text-shadow: 0.2em 0.2em;
+}
+
+.t2 { 
+  color: rgb(0, 90, 156);
+  text-align: center;
+  margin-top: -9em;
+  font: italic 6em Times, serif;
+  text-shadow: 0.2em 0.2em;
+}

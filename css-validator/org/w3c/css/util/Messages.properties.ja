@@ -1,0 +1,361 @@
+# Japanese translation, last updated in sync with Messages.properties.en,v 1.31
+
+direction: ltr
+language_name: 日本語
+more_options: オプション
+title_more_options: その他の検査オプションを表示する/隠す
+all: 全て出力
+normal_report: 一般的なものを出力
+most_important: 重要なものだけ出力
+no_warnings: 出力しない
+profile: Profile
+no_special_profile: 特にプロファイルを指定しない
+css1: CSS レベル 1
+css2: CSS レベル 2
+css21: CSS レベル 2.1
+css3: CSS レベル 3
+svg: SVG
+svgbasic: SVG Basic
+svgtiny: SVG tiny
+mobile: Mobile
+ATSC_TV_profile: ATSC TV profile
+TV_profile: TV profile
+medium: Medium
+aural: Aural
+braille: Braille
+embossed: Embossed
+handheld: Handheld
+print: Print
+projection: Projection
+screen: Screen
+tty: TTY
+tv: TV
+presentation: Presentation
+
+type: 種類
+no_special_type: 自動
+html_doc: HTML
+css_doc: CSS
+
+check: 検証する
+W3C_CSS_validation_service: W3C CSS 検証サービス
+check_CSS: カスケーディングスタイルシート(CSS)を検証
+by_URI: URLを指定
+by_file_upload: アップロード
+by_direct_input: 直接入力
+validate_by_URI: URLで指定して検証
+enter_uri: 検証したい文書(CSSと組み合わせたHTML文書、もしくはCSS単体の文書)のURIを入力してください
+page_address: 検証対象のアドレスを入力してください
+address: アドレス
+submit_uri: 検証するためのURIを送信します
+validate_by_file_upload: ソースファイルをアップロードして検証
+choose_document: 検証したいCSS文書のソースファイル名を入力してください
+choose_local_file: アップロード・検証するローカルのファイルを選択します
+local_CSS_file: CSSファイル
+submit_file: 検証するファイルを送信します
+validate_by_input: テキストエリアに直接入力して検証
+enter_CSS: 検証したいCSSをテキストエリアに入力してください (CSSソースのみ)
+submit_input: 入力したテキストを検証するために送信します
+note: メモ
+note_xhtml_valid: CSSスタイルシートを意図した通りに機能させるには、正しい文書解析木が必要です。つまり、<a href="https://validator.w3.org/">正当なHTML</a>を用いるべきです。
+# End of variables added along with Index page template
+
+W3C_validator_results: CSS 検証サービス検証結果
+# file_title: <!-- provided by the user -->
+CSS_validation_service: CSS 検証サービス
+jump_to: 表示
+# errors_count: <!-- generated on the fly -->
+errors: エラー 
+# warnings_count <!-- generated on the fly -->
+warnings: 警告 
+validated_CSS: 入力されたCSS
+congrats: おめでとうございます！ エラーはありません。
+# The sentence defined by doc_validates_before_link and doc_validates_after_link variables goes: \
+# "This document validates as CSSXX!" where XX stands for the CSS version used \
+# Since the content of the link about the CSS version is generated on the fly, \
+# it is important to define what goes before the link and what goes afterwards in 2 separate \
+# variables because the position of the link in the sentence varies in different languages
+doc_validates_before_link: おめでとうございます！ この文書は正当な
+doc_validates_after_link: として検証できました!
+no_errors_interoperable_msg: あなたがこのWebページを作るにあたって、\
+高度な相互運用性<span lang="en" xml:lang="en">(Interoperability)</span>\
+に対する配慮を行った事を読者に示すため、このアイコンを張る事をお勧めします。\
+あなたのWebページにこのアイコンを張るためには、次のHTMLの断片を利用すると良いでしょう。
+valid_CSS: 正当なCSSです!
+# <!-- close the img tag with > instead of /> if using HTML<= 4.01 -->
+no_errors_close_tags_msg: HTML 4.01 以前を使用する場合は img タグを /&gt; ではなく &gt; で閉じてください。
+no_errors_dl_local_msg: この画像はローカルコピーを使っても構いません。\
+つまり、あなたのWebサーバにこの画像のコピーをダウンロードしてディレクトリに保存し、\
+上記のHTMLの断片について、ダウンロードしたものを参照するように変更して使う事もできます。
+no_errors_create_link_msg: この検証結果のページに対するリンクを作りたい場合、\
+以下のURIを利用して下さい。\
+リンクを組み込んでおく事で、後からもう一度このページの検証を行ったり、\
+他の人がこのページを検証する事が容易になります。
+no_errors_forHTML_only_msg: HTML/XML 文書のみに有効
+no_errors_bookmark_msg: もちろん、このページをブックマークやホットリストに追加したのでもよいでしょう。
+note_valide_html: あなたの CSSスタイルシートを意図した通りに機能させるには、正しい文書解析木が必要です。つまり、<a href="https://validator.w3.org/">正しいHTML</a>を用いるべきです。
+top: Top
+# hook_html_validator <!-- generated on the fly -->
+not-css1-style: /* 注意して下さい ! このプロパティはCSS1用ではありません ! */
+errors_sorry_msg: エラー: 以下のエラーが見つかりました。
+# errors_list: <!-- generated on the fly -->
+# warnings_list: <!-- generated on the fly -->
+# rules_count: <!-- generated on the fly -->
+valid_CSS_info: 検証したスタイルシートを以下に示します
+# charset: <!-- generated on the fly -->
+# rules_list: <!-- generated on the fly -->
+CSS_not_found: スタイルシートが見つかりませんでした。
+home: ホーム
+about: このサービスについて
+doc: ドキュメント
+dl: ダウンロード
+feedback: お問い合わせ
+credits: 謝辞
+home_title: W3C CSS 検証サービスのホーム
+about_title: CSS 検証サービスについて
+doc_title: CSS 検証サービスドキュメント: 目次
+dl_title: CSS 検証サービスのダウンロードとインストール
+feedback_title: フィードバック
+credits_title: 謝辞
+W3C_quality_msg: W3CのQuality Assurance Activityによって、フリーなウェブ品質ツールなどが提供されています。
+learn_more_msg: カスケーディングスタイルシートについてもっと知る
+support: 参加してこのツールを支援しましょう：
+supporter: W3C サポーター
+# End of variables added along with Velocity
+
+# Defines your own error and warning message here
+content-type: text/html; charset=utf-8
+content-language: ja
+output-encoding-name: utf-8
+
+# You can change the level warning like this (example) :
+# warning.redefinition.level: 5
+#  level is an integer between 0 and 9 (all others values are ignored)
+warning.redefinition: \u201C%s\u201D が再定義されています
+
+# used by xml parser
+warning.style-inside-comment: ユーザエージェントによって削除される可能性があるので、スタイルルールはHTMLコメントの中に記述しないでください
+
+# used by org.w3c.css.properties.Css1Style
+warning.same-colors: \u201C%s\u201D と \u201C%s\u201D は同じ色です
+warning.no-color: 指定された背景色(background-color)に対応する前面色(color)が指定されていません
+warning.no-background-color: 指定された前面色(color)に対応する背景色(background-color)が指定されていません
+#warning.color.mixed-capitalization is now obsolete
+#warning.color.mixed-capitalization: 色の名前に大文字／小文字の区別はありませんが、\
+名前をより区別しやすくするため、大文字を混ぜて使う事が推奨されます: \u201C%s\u201D
+warning.no-generic-family: \u201C%s\u201D: 一般フォントファミリー名\
+(generic font family)を最後の選択肢として付け加えておく事を推奨します
+warning.with-space: 空白文字を含むフォントファミリー名は引用符で囲む必要が\
+あります。引用符を省略した場合、名前の前後の空白文字は無視され、また\
+名前の途中に含まれる連続した空白文字は全て一つの空白文字に変換されます
+warning.no-padding: 背景色(background-color)を持った padding 領域を持たせる事を推奨します
+warning.same-colors2: 二つのコンテキスト \u201C%s\u201D と \u201C%s\u201D で、同じ色が前面色\
+(color) と背景色 (background-color) に使われています
+warning.relative-absolute: \u201C%s\u201D における長さ指定について、\
+絶対値指定と相対値指定がともに用いられています。\
+これはあまり堅牢(robust)なスタイルシートではありません
+
+# used by org.w3c.css.properties.CssSelectors
+warning.unknown-html: \u201C%s\u201D はHTMLの要素ではありません
+warning.html-inside: HTML 要素は他の要素中に含むことはできません
+warning.body-inside: BODY 要素は HTML 要素以外の他の要素中に含む事はできません
+warning.pseudo-classes: アンカー(Anchor) 疑似クラス \u201C%s\u201D は、'A' 要素以外の他の要素には効果がありません
+
+# not used by org.w3c.css.properties.CssSelectors for the moment
+warning.noinside: \u201C%s\u201D はインライン要素中に含むことはできません
+warning.withblock: 注意して下さい - 疑似要素はブロックレベル要素にのみ付ける事ができます
+warning.block-level: このプロパティはブロックレベル要素に適用されます
+
+# used by org.w3c.css.parser.Frame
+warning.no-declaration: 宣言(declarations)がルール中に存在しません
+
+# used by org.w3c.css.parser.CssFouffa
+warning.unsupported-import: @importでインポートされるスタイルシートは直接入力やファイルアップロードでは検証されません。
+
+# used by org.w3c.css.values.CssColor
+warning.out-of-range: \u201C%s\u201D は指定可能範囲を越えています
+error.invalid-color: 正しい RGB 関数の指定ではありません
+
+warning.marker: marker-offset プロパティは、'display: marker' 要素にのみ適用されます
+
+# used by org.w3c.css.properties.ACssStyle
+warning.relative: \u201C%s\u201D プロパティに相対指定の単位を使うことで、より強固なスタイルシートを作る事ができます
+
+# used by org.w3c.css.css.StyleSheetParser and org.w3c.css.css.StyleSheetXMLParser
+error.at-rule: 申し訳ありませんが、at-rule \u201C%s\u201D はまだ実装されていません。
+warning.at-rule: 申し訳ありませんが、at-rule \u201C%s\u201D はまだ実装されていません。
+
+# used by all properties and values
+error.operator: \u201C%s\u201D は正しい演算子 (operator) ではありません
+error.negative-value: \u201C%s\u201D に負の値は使えません
+error.few-value: \u201C%s\u201D プロパティの値が少なすぎます
+
+# be careful here, values comes first
+# You can't write something like this : For the color, blue is an incorrect value
+error.value: \u201C%s\u201D は \u201C%s\u201D で利用できる値ではありません
+
+# used by org.w3c.css.properties.CssTextDecoration
+error.same-value: \u201C%s\u201D は二回出現しました
+
+error.generic-family.quote: 一般フォントファミリー名(Generic font family)\
+はキーワードなので、引用符で囲む事はできません
+
+# used by org.w3c.css.properties.CssClip
+error.shape: 間違った形状指定が rect(<top>,<right>,<bottom>,<left>) になされています
+error.shape-separator: 形状指定の区切り文字が正しくありません。これはカンマ(,)である必要があります
+warning.shape-separator: 形状指定の区切り文字が正しくありません。これはカンマ(,)である必要があります
+
+# used by org.w3c.css.properties.CssContent
+error.attr: 属性の定義が間違っています attr(X)
+error.counter: カウンター定義が間違っています counter(<identifier>[,<list-style-type>]?)
+error.counters: カウンター定義が間違っています counters(<identifier>,<string>[,<list-style-type>]?)
+
+# used by org.w3c.css.font.Src
+error.format: フォーマット定義が間違っています format(<string>[,<string>]*)
+error.local: フォーマット定義が間違っています local(<string>|<ident>+)
+
+# used by org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength
+error.unit: \u201C%s\u201D は正しい単位ではありません
+
+# used by org.w3c.css.aural.ACssAzimuth
+error.degree: position は degrees で指定する必要があります。
+
+# used by org.w3c.css.aural.ACssElevation
+error.elevation.range: elevation は '-90deg' から '90deg' の範囲の角度で指定してください
+
+# used by org.w3c.css.aural.ACssPitchRange
+error.range: 値が指定可能範囲を越えています。この値は '0' から '100' の間で指定してください
+
+# used by org.w3c.css.properties.CssTextShadow
+error.two-lengths: shadow offset は二つの <legnth> 値で指定する必要があります。\
+(blur radius は、 shadow offset の後にオプションとして指定できます。)
+
+error.integer: この数字は整数である必要があります
+error.comma: カンマ(,)区切り文字がありません
+
+# used by org.w3c.css.values.CssPercentage
+error.percent: \u201C%s\u201D は正しいパーセント指定ではありません
+
+# used by org.w3c.css.values.CssString
+error.string: \u201C%s\u201D は正しい文字列ではありません
+
+# used by org.w3c.css.values.CssURL
+error.url: \u201C%s\u201D は正しいURLではありません
+
+# used by org.w3c.css.values.CssColor
+error.rgb: \u201C%s\u201D は、3または6つの16進数の数字による正しい色の指定ではありません
+
+# used by org.w3c.css.values.CssNumber
+error.zero: \u201C%s\u201D には 0 だけが使えます。数字の後には単位を入れる必要があります
+warning.zero: \u201C%s\u201D には 0 だけが使えます。数字の後には単位を入れる必要があります
+
+# used by org.w3c.css.parser.CssPropertyFactory 
+error.noexistence-at-all: プロパティ \u201C%s\u201D は存在しません
+error.noexistence-media: プロパティ \u201C%s\u201D はメディア \u201C%s\u201D には存在しません
+error.noexistence: プロパティ \u201C%s\u201D は \u201C%s\u201D に存在しませんが、\u201C%s\u201D に存在します
+warning.noexistence: プロパティ \u201C%s\u201D は \u201C%s\u201D に存在しませんが、\u201C%s\u201D に存在します
+warning.noexistence-media: プロパティ \u201C%s\u201D はメディア \u201C%s\u201D には存在しません
+
+# used by org.w3c.css.parser.CssFouffa
+error.unrecognize: 値が多すぎるか、もしくは値が解析できません
+
+# used by org.w3c.css.parser.CssFouffa
+generator.unrecognize: 文法解析エラーが発生しました
+generator.dontmixhtml: 文法解析エラーが発生しました. スタイルシートのHTML構文が含まれてはならない。
+
+# used by org.w3c.css.parser.CssSelectors
+error.pseudo-element: 疑似要素 \u201C%s\u201D はコンテキスト \u201C%s\u201D 中のこの場所では使えません
+error.pseudo-class: 疑似クラス .\u201C%s\u201D は HTMLコンテキスト \u201C%s\u201D 中のこの場所では使えません
+error.pseudo: \u201C%s\u201Dは未知の疑似要素または疑似クラスです
+warning.pseudo: 未知の疑似要素または疑似クラス \u201C%s\u201D がデフォルトプロファイル (\u201C%s\u201D) にあります
+error.id: ID セレクタ #\u201C%s\u201D は間違っています!\
+単純セレクタ (simple selector) \u201C%s\u201D には一つのIDセレクタしか指定できません
+error.space: 属性セレクタ (attribute selector) ~= が用いられている場合、\
+値 \u201C%s\u201D の中の語は空白文字を含む事はできません
+error.todo : 申し訳ありませんが、feature \u201C%s\u201D はまだ実装されていません
+error.incompatible: \u201C%s\u201D と \u201C%s\u201D は互換性がありません
+warning.incompatible: \u201C%s\u201D と \u201C%s\u201D は互換性がありません
+
+error.media: 認識できないメディア \u201C%s\u201D が指定されています
+error.page: 認識できない疑似名前付きページ(psuedo named page) \u201C%s\u201D が指定されています
+
+
+# used by StyleSheetGeneratorHTML
+generator.context: コンテキスト
+generator.request: 指定されてスタイルシートの出力中にエラーが発生しました。\
+リクエストを修正するか、plh@w3.org にメールを送ってください。
+generator.unrecognized: 認識できません
+generator.invalid-number: 正しい数字ではありません
+generator.property: 次のプロパティが正しくありません
+generator.line: 行番号
+generator.not-found: ファイルが見つかりません
+generator.doc-html: <!-- removed this confusing message olivier 2006-12-14 -->
+
+generator.doc:<!-- removed this confusing message olivier 2006-12-14 -->
+
+# used by the parser
+parser.semi-colon: プロパティ名の前にセミコロン(;)を追加してみて下さい
+
+parser.unknown-dimension: 未知の次元。
+
+parser.old_class: CSS1では、 クラス名はdimension (".55in" など) でない限り、数字から始める事ができました (".55ft" など)。\
+CSS2では、このようなクラスは未知の dimension として解析されます。(これは、将来新しい単位が追加される可能性を保つためです)
+
+parser.old_id: CSS1では、id名は dimension ("#55in"など) でない限り、数字から始めることができました ("#55ft" など)。 \
+CSS2では、このようなidは不明な dimension として解析されます。これは、将来新しい単位を追加できるようにするためです。
+
+parser.class_dim:CSS1では、 クラス名はdimension (".55in") でない限り、数字から始める事ができます (".55ft")
+
+parser.id_dim: CSS1では、id名は dimension ("#55in"など) でない限り、数字から始めることができます ("#55ft" など)。
+
+parser.charset:@charset 規則が指定できるのは、スタイルシートの最初の部分のみです。直前にスペースが入っていたりしないか確認してみてください。
+
+parser.charsetspecial:このプロファイルには、固有の @charset 構文があります。@charset のあとには1つのスペース、引用符つきのエンコーディングの名前、セミコロンを並べます。
+warning.charsetspecial: このプロファイルには、固有の @charset 構文があります。@charset のあとには1つのスペース、引用符つきのエンコーディングの名前、セミコロンを並べます。
+warning.old_id: CSS1では、id名は dimension ("#55in"など) でない限り、数字から始めることができました ("#55ft" など)。 \
+CSS2では、このようなidは不明な dimension として解析されます。これは、将来新しい単位を追加できるようにするためです。
+
+warning.old_class: CSS1では、 クラス名はdimension (".55in" など) でない限り、数字から始める事ができました (".55ft" など)。\
+CSS2では、このようなクラスは未知の dimension として解析されます。(これは、将来新しい単位が追加される可能性を保つためです)
+
+# used by the servlet
+servlet.invalid-request: 正しいリクエストではありません
+servlet.process: 指定されたオブジェクトは処理できません
+
+error.unrecognized.link: 認識できないリンク要素またはxml-stylesheet PIです。
+
+#used by org.w3c.css.parser.analyzer.CssParser
+error.nocomb: セレクタ間の結合子 \u201C%s\u201D はこのプロファイルまたはバージョンでは利用できません
+warning.nocomb: セレクタ間の結合子 \u201C%s\u201D はこのプロファイルまたはバージョンでは利用できません
+error.angle: \u201C%s\u201D は正しい角度ではありません。値は 0 から 360 の間である必要があります
+error.anglevalue: 値は -360 から 360 の間で、かつ 90 で割り切れる必要があります
+error.function: 正しくない関数定義です
+error.groupname: \u201C%s\u201D は正しくないgroupnameです。正しい identifier を使ってください
+error.noatruleyet: @import 以外の @rules は CSS1 \u201C%s\u201D ではサポートされていません
+error.nogroup: \u201C%s\u201D は toggle-group プロパティによって指定されていません
+error.notforatsc: \u201C%s\u201D は ATSC プロファイルでは利用できません
+error.notforcss1: 値 \u201C%s\u201D は CSS1 には存在しません
+error.notformobile: \u201C%s\u201D は mobile プロファイルでは利用できません
+error.notfortv: \u201C%s\u201D は TV プロファイルでは利用できません
+error.notversion: \u201C%s\u201D は CSS : \u201C%s\u201D バージョンでは利用できません
+error.onlyATSC: \u201C%s\u201D この関数は atsc-tv メディアでしか利用できません
+warning.atsc: \u201C%s\u201D は atsc-tv メディアでサポートされていない可能性があります
+error.percentage: パーセンテージ値が必要です
+error.unknown: 不明なエラー
+warning.direction: ブロックレベル要素には'direction'ではなく新しいCSS3の'writing-mode'プロパティを用いてください
+warning.medialist:  メディアリストは 'media :' \u201C%s\u201D で始まるべきです
+warning.noothermedium: 他のメディア用のプロパティは usermedium では動作しない可能性があります
+warning.notforusermedium: プロパティ \u201C%s\u201D はこの usermedium には存在しません
+warning.notversion: \u201C%s\u201D はこの CSS : \u201C%s\u201D バージョンでは利用できません
+warning.otherprofile: プロパティ \u201C%s\u201D はこのプロファイルには存在しませんが、他のプロファイルでは正当です
+warning.xsl: 値 \u201C%s\u201D は XSL にのみ適用可能です
+
+parser.unknown-dimension: 不明なディメンション
+generator.dontmixhtml: パースエラーが発生しました。スタイルシートにHTMLシンタックスが含まれています。
+
+warning.float-no-width: (X)HTML+CSSでは浮動要素には幅属性の宣言が必要です。固有の幅属性を持つ要素(すなわちhtml, img, input, textarea, select, またはobject)は対象外です。
+
+parser.charsetcss1: @charset は CSS1 には存在しません。
+parser.attrcss1: 属性選択子 は CSS1 には存在しません。
+parser.invalid_id_selector: 不正な ID 選択子です。
+parser.import_not_allowed: @charset と @import 以外の有効な文の後に @import は指定できません。

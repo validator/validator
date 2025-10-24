@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>CSS 検証サービスユーザー・マニュアル</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Home Page" />
+  <style type="text/css" media="all">
+    @import "style/base.css";    
+    @import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>CSS 検証サービス</span></a></h1>
+   <p id="tagline">
+     Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+   </p>
+  </div>
+
+
+<div id="main">
+<!-- This DIV encapsulates everything in this page - necessary for the positioning -->
+
+<div class="doc">
+<h2>CSS 検証サービスユーザー・マニュアル</h2>
+
+<h3 id="TableOfContents">目次</h3>
+
+<div id="toc">
+<ul>
+  <li><a href="#use">CSS 検証サービスの使い方</a>
+    <ul>
+      <li><a href="#url">URL を指定して検証</a></li>
+      <li><a href="#fileupload">ファイルをアップロードして検証</a></li>
+      <li><a href="#directinput">直接入力して検証</a></li>
+      <li><a href="#basicvalidation">基本的な検証で行われること</a></li>
+    </ul>
+  </li>
+  <li><a href="#advanced">応用的な使い方</a>
+    <ul>
+	<li><a href="#paramwarnings">「警告」パラメータ</a></li>
+	<li><a href="#paramprofile">「プロファイル」パラメータ</a></li>
+	<li><a href="#parammedium">「メディア」パラメータ</a></li>
+    </ul>
+  </li>
+  <li><a href="#expert">エキスパート向け</a>
+    <ul>
+	<li><a href="#requestformat">検査リクエストのフォーマット</a></li>
+	<li><a href="#api">CSS 検証ウェブサービス API</a></li>
+    </ul>
+   </li>
+</ul>
+</div>
+
+<p id="skip"></p>
+
+<h3 id="use">CSS 検証サービスの使い方</h3>
+
+<p>
+文書をチェックするには、基本インターフェースを使うのがもっとも簡単です。
+このページには、3つの方法に応じて3つのフォームがあります:
+</p>
+
+<h4 id="url">URL を指定して検証</h4>
+<p>
+    検証したい文書の URL を入力してください。
+    この「文書」は HTML でも CSS でも構いません。
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/uri_basic_ja.png" alt="Validation by URI form" />
+
+<h4 id="fileupload">ファイルをアップロードして検証</h4>
+<p>
+    この方法を使えば、ローカルなファイルをアップロードしてチェックすることができます。
+    「参照」ボタンをクリックし、チェックしたいファイルを選んでください。
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/file_upload_basic_ja.png" 
+    alt="Validation by File Upload" />
+<p>
+    この場合、CSS 文書のみチェック可能です。
+    つまり、(X)HTML 文書をアップロードすることはできません。
+    また、@import ルールはオンラインで公開されたURLを参照している場合のみ読み込まれますので注意が必要です。(したがって、相対パスを指定しないでください)
+</p>
+   
+<h4 id="directinput">直接入力して検証</h4>
+<p>
+    この方法は、CSS の一部分をテストするのに最も適しています。
+    テキストエリアに自分で CSS を入力してください。
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/direct_input_basic_ja.png" 
+    alt="Validation by direct input" />
+<p>
+    なお、先ほどのコメントはこの方法にも当てはまります。
+    この方法は、問題を抱えていてコミュニティに助けを求めるときには大変便利です。
+    また、結果が表示された URL そのものにリンクして問題のある CSS を直接伝えることができるので、バグ報告にも便利です。
+</p>    
+
+<h4 id="basicvalidation">基本的な検証で行われること</h4>
+
+<p>    
+    基本インターフェースを使うと、Validator は <a href="https://www.w3.org/TR/CSS21">CSS 2.1</a> に対する準拠具合を調べます。CSS2 は、現行の CSS に関する技術勧告です。<br />
+    基本インターフェースを使うと、CSS 検証サービスは <a href="https://www.w3.org/TR/CSS21">CSS 2.1</a> に対する準拠具合を調べます。CSS2 は、現行の CSS に関する技術勧告です。<br />
+
+    この画面では、警告を出さずに(エラーのみ表示されます) XHTML で結果を表示します。<br />
+    基本的な検証ではメディアは "all" に設定されますが、これはすべてのデバイスに適切なメディアです
+    (メディアについてのちゃんとした説明は <a href="https://www.w3.org/TR/CSS2/media.html">http://www.w3.org/TR/CSS2/media.html</a> を参照してください)。
+</p>
+
+<h3 id="advanced">応用的な使い方</h3>
+
+<p>
+    より詳細なチェックを行いたい場合、3つのパラメータを指定できる高度なインターフェースを使うことができます。ここでは、3つのパラメータそれぞれについて簡単な説明をします。
+</p>
+
+<h4 id="paramwarnings">「警告」パラメータ</h4>
+
+<p>
+    このパラメータは、CSS の冗長性 (verbosity) を設定するものです。
+    実際、CSS 検証サービスは、エラーと警告という2種類のメッセージを返します。
+    エラーは、チェックを受けた CSS が CSS 勧告に従っていない場合に出力されます。
+    警告は、エラーとは異なり仕様準拠に関する問題については言及しません。
+    警告は、CSS 開発者に対し、ユーザーエージェントによっては危険で奇妙な動作に陥ってしまう場合を警告するものです。
+</p>
+<p>
+    よくある警告は font-family: に関するものです。一般的ではないフォントを指定した場合、「ユーザーエージェントがどのフォントも利用できなかった場合にデフォルトのフォントが使われ、表示がおかしくなってしまうので、ルールの最後には一般的なフォントファミリを追加するようにすべき」という旨の警告が出ます。
+</p>
+
+<h4 id="paramprofile">「プロファイル」パラメータ</h4>
+
+<p>
+    CSS 検証サービスは、数種類の CSS プロファイルをチェックすることができます。
+    プロファイルとは、あるプラットフォームが実装していると想定している機能のリストです。
+    プロファイルの定義は、
+    <a href="https://www.w3.org/Style/2004/css-charter-long.html#modules-and-profiles0">CSS のサイト</a> にあります。
+    デフォルトでは、現在もっともよく使われている
+    <a href="https://www.w3.org/TR/CSS2">CSS 2</a> が用いられます。
+</p>
+
+<h4 id="parammedium">「メディア」パラメータ</h4>
+
+<p>
+    メディアパラメータは、@media ルールと等価で、すべての文書に適用されます。
+    メディアについての詳細は
+    <a href="https://www.w3.org/TR/CSS2/media.html">
+	http://www.w3.org/TR/CSS2/media.html
+    </a> にあります。
+</p>
+
+<h3 id="expert">エキスパート向け</h3>
+
+<h4 id="requestformat">検査リクエストのフォーマット</h4>
+<p>下表は、W3C CSS 検証サービスにクエリーを送る際に使えるパラメータの表です。</p>
+
+<p>もし W3C の一般向け検査サーバーを使いたいのであれば、
+ベース URI: <kbd>http://jigsaw.w3.org/css-validator/validator</kbd> と併せて下表のパラメータを用いてください。<br />
+(独自の CSS 検証サービスインスタンスを呼び出したい場合は、あなたのサーバーのアドレスで読み替えてください)</p>
+
+<p><strong>注意</strong>:
+複数の文書に対して CSS 検証サービスをプログラムから呼び出す際は、スクリプトがそれぞれのリクエストの間に <strong>少なくとも1秒以上</strong> <code>sleep</code> するように心がけてください。CSS 検査サービスはフリーで公のサービスです。ご理解ご協力をお願いします。</p>
+
+<table class="refdoc">
+  <tbody>
+    <tr>
+      <th>パラメータ</th>
+      <th>説明</th>
+      <th>デフォルト値</th>
+    </tr>
+    <tr>
+      <th>uri</th>
+      <td>検査する文書の <acronym title="Universal Resource Locator">URL</acronym>。
+        CSS および HTML 文書を指定できます。</td>
+      <td>なし。ただしこのパラメータないし <code>text</code> のいずれかを指定しなければならない。</td>
+    </tr>
+    <tr>
+      <th>text</th>
+      <td>検査する文書。CSS のみ指定できる。</td>
+      <td>なし。ただしこのパラメータないし <code>uri</code> のいずれかを指定しなければならない。</td>
+    </tr>
+    <tr>
+      <th>usermedium</th>
+      <td>検査するのに用いる<a href="https://www.w3.org/TR/CSS2/media.html">メディア</a>。
+          たとえば <code>screen</code>、<code>print</code>、<code>braille</code>…など。</td>
+      <td><code>all</code></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td>CSS 検証サービスの出力フォーマットを指定します。
+	対応するフォーマットは、
+	<code>text/html</code> と <code>html</code> (XHTML 文書。Content-Type: text/html)、
+	<code>application/xhtml+xml</code> と <code>xhtml</code> (XHTML 文書。Content-Type: application/xhtml+xml)、
+	<code>application/soap+xml</code> と <code>soap12</code> (SOAP 1.2 文書。Content-Type: application/soap+xml)、
+	<code>text/plain</code> と <code>text</code> (テキスト文書。Content-Type: text/plain)。
+	その他の値を指定すると XHTML 文書、Content-Type: text/plain となります。
+      </td>
+      <td>html</td>
+    </tr>
+    <tr>
+      <th>profile</th>
+      <td>検査に用いる CSS プロファイル。
+        <code>css1</code>、<code>css2</code>、<code>css21</code>、
+        <code>css3</code>、<code>svg</code>、<code>svgbasic</code>、
+        <code>svgtiny</code>、<code>mobile</code>、<code>atsc-tv</code>、
+        <code>tv</code>、および <code>none</code> を指定できる。</td>
+      <td>最も直近の W3C 勧告である CSS 2 (<code>en</code>)。</td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td>応答に用いられる言語。現在は <code>en</code>、
+        <code>fr</code>、<code>it</code>、<code>ko</code>、<code>ja</code>、<code>es</code>、
+        <code>zh-cn</code>、<code>nl</code>、<code>de</code> を指定できる。</td>
+      <td>英語 (<code>en</code>)。</td>
+    </tr>
+    <tr>
+      <th>warning</th>
+      <td>警告のレベル。<code>no</code> を指定すると警告を表示しない。
+        <code>0</code> で少なめの、
+        <code>1</code>、<code>2</code> を指定すると出される警告が増える。
+      </td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="api">CSS Validator ウェブサービス API: SOAP 1.2 検査インターフェースについての文書</h4>
+<p>    
+    より技術的なヘルプについて、特に SOAP 1.2 の出力や Validator の呼び出し方法などについては、
+    <a href="./api.html">CSS Validator Web Service API</a> をご覧下さい。
+
+<h4 id="api">CSS 検証ウェブサービス API: SOAP 1.2 検査インターフェースについての文書</h4>
+  <p>
+    より技術的なヘルプについて、特に SOAP 1.2 の出力や CSS 検証サービスの呼び出し方法などについては、
+    <a href="./api.html">CSS 検証ウェブサービス API</a> をご覧下さい。
+</p>
+
+</div>
+</div>
+<!-- End of "main" DIV. -->
+
+   <ul class="navbar"  id="menu">
+        <li><strong><a href="./" title="W3C CSS 検証サービスのホーム">ホーム</a></strong> <span class="hideme">|</span></li>
+	<li><a href="about.html" title="このサービスについて">このサービスについて</a> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="ドキュメント">ドキュメント</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="CSS 検証サービスのダウンロード">ダウンロード</a> <span class="hideme">|</span></li>
+
+        <li><a href="Email.html" title="このサービスへのフィードバック">フィードバック</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="クレジットと謝辞">謝辞</a><span class="hideme">|</span></li>
+      </ul>
+
+      <ul id="lang_choice">
+     
+     <li><a href="manual.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="manual.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+     
+     <li><a href="manual.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+     
+     <li><a href="manual.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+     
+     <li><a href="manual.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+     
+     <li><a href="manual.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+     
+     <li><a href="manual.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+     
+     <li><a href="manual.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+     
+     <li><a href="manual.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+     
+     <li><a href="manual.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+     
+     <li><a href="manual.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+     
+     <li><a href="manual.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+     
+     <li><a href="manual.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+     
+     <li><a href="manual.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+
+
+
+
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="カスケーディング・スタイルシートについてもっと知るには"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>

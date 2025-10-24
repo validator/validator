@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>CSS Validator automated test page</title>
+    <style type="text/css">
+      .valid { 
+	  background-color: #7f7;
+      }
+      .invalid { 
+	  background-color: #f77;
+      }
+      table {
+	  border-width: 2px; 
+	  border-color: black;
+	  border-style: solid;
+	  border-spacing: 0;
+	  border-collapse: collapse;
+      }
+      th, td {
+	  border-width: 2px 1px 2px 1px;
+	  border-color: black;
+	  border-style: solid;
+	  margin: 0px;
+	  text-align: center;
+	  vertical-align: center;
+      }
+    </style>
+    <script type="text/javascript" src="functions.js"></script>
+    <script type="text/javascript" src="checktests.js"></script>
+    <script type="text/javascript" src="buildtest.js"></script>
+    <script type="text/javascript">
+      function initAllTests() {
+	  getTestList('../testsuite/xml/bugs.xml');
+	  getTestList('../testsuite/xml/general.xml');
+	  getTestList('../testsuite/xml/propertiesCSS1.xml');
+	  getTestList('../testsuite/xml/propertiesCSS2.xml');
+	  getTestList('../testsuite/xml/propertiesCSS3.xml');
+	  getTestList('../testsuite/xml/prop-css1.xml');
+	  getTestList('../testsuite/xml/prop-css2.xml');
+	  getTestList('../testsuite/xml/prop-css21.xml');
+	  getTestList('../testsuite/xml/prop-css3.xml');
+      }
+    </script>
+  </head>
+  <body onload="initAllTests()">
+    <div id="controldiv">
+      <p>
+	<a href="javascript:checkAllTests()">Check all Tests</a>
+      </p>
+    </div>
+    <div id="tableanchor">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Informacje na temat usług walidatora CSS</title>
+    <link rev="made" href="mailto:www-validator-css@w3.org" />
+    <link rev="start" href="./" title="Strona Główna" />
+    <style type="text/css" media="all">
+	@import "style/base.css";
+	@import "style/docs.css";
+    </style>
+    <meta name="revision" content="$Id$" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    </head>
+
+  <body>
+    <div id="banner">
+     <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+     <a href="./"><span>Usługa Walidacji CSS</span></a></h1>
+     <p id="tagline">
+       Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+     </p>
+    </div>
+
+   <div class="doc">
+
+      <h2>Informacje na temat walidatora CSS</h2>
+
+<h3 id="TableOfContents">Spis treści</h3>
+<div id="toc">
+<ol>
+  <li>O usłudze
+    <ol>
+<li><a href="#what">Co to jest? Czy będę tego potrzebował?</a></li>
+<li><a href="#help">Powyższe wyjaśnienie jest niejasne! Potrzebuję dalszej pomocy!</a></li>
+<li><a href="#reference">Czy walidator jest  wyznacznikiem tego co jest poprawnym dokumentem CSS, a co nie jest?</a></li>
+<li><a href="#free">Ile to kosztuje?</a></li>
+<li><a href="#who">Kto jest autorem tego narzędzia? Kto je utrzymuje?</a></li>
+<li><a href="#contact">Jak skontaktować się z autorami? Jak zgłaszać błędy?</a></li>
+<li><a href="#participate">Czy mogę pomóc?</a></li>
+  </ol>
+  </li>
+  <li>Kącik dla Deweloperów
+    <ol>
+    <li><a href="#code">W jakim języku jest napisany walidator? Czy źródło jest gdzieś dostępne?</a></li>
+    <li><a href="#install">Czy mogę sam zainstalować i uruchomić walidator CSS?</a></li>
+    <li><a href="#api">Czy mogę zbudować aplikację opartą na walidatorze? Czy dostępny jest API?</a></li>
+  </ol>
+  </li>
+</ol>
+</div><!-- toc -->
+<h3 id="about">O usłudze</h3>
+
+<h4 id="what">Co to jest? Czy będę tego potrzebował?</h4>
+
+<p> Usługa Walidacji CSS W3C jest darmowym programem stworzonym przez  W3C, którego celem jest pomaganie projektantom stron i deweloperom w weryfikacji Kaskadowych Arkuszy Stylów (CSS). 
+Można z niego korzystać w sieci dzięki <a href="./">naszej darmowej usłudze</a> lub ściągnąć i korzystać z niego w formie programu napisanego w języku Java albo serwletu. </p>
+
+<p>Czy będę tego potrzebował? Jeśli jesteś projektantem witryn lub deweloperem, narzędzie to będzie Twoim nieodzownym sprzymierzeńcem. Nie tylko porówna ono arkusze stylu zaprojektowane przez Ciebie do specyfikacji CSS, pomoże Ci również znaleźć błędy, niewłaściwe zastosowanie CSS, jak również powie Ci czy Twoje arkusze stylów są funkcjonalne. </p>
+
+<h4 id="help">Powyższe wyjaśnienie jest niejasne! Potrzebuję dalszej pomocy!</h4>
+<p>Większość dokumentów internetowych napisana jest w języku zwanym HTML. Język ten jest używany do tworzenia stron internetowych zawierających informacje dotyczące struktury, linków i obiektów multimedialnych. HTML korzysta z języka stylów nazwanego CSS, skrót od "Cascading Style Sheets", do formatowania koloru, tekstu i layoutu dokumentów. Narzędzie nasze pomaga ludziom w sprawdzaniu poprawności CSS i ewentualnym poprawkom arkuszy stylów.</p>
+
+<h4 id="reference">Czy walidator jest wyznacznikiem tego co jest poprawnym dokumentem CSS, a co nie jest?</h4>
+<p>Nie. Jest pomocnym i przydatnym narzędziem, ale jedynie programem i jak każdy program ma pewne <a href="https://github.com/w3c/css-validator/issues">błędy i problemy</a> &amp; <a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">błędy i problemy</a>.
+Właściwymi referencjami odnośnie Kaskadowych Arkuszy Stylów są <a href="https://www.w3.org/Style/CSS/#specs">specyfikacje CSS</a>.</p>
+
+<h4 id="free">Ile to kosztuje?</h4>
+<p>Nic. Usługa jest darmowa. Program posiada  <a href="DOWNLOAD.html">otwarty dostęp do kodu źródłowego</a> i można go ściągnąć za darmo, używać, modyfikować, rozprowadzać i <a href="https://www.w3.org/Consortium/Legal/copyright-software">o wiele więcej</a>.
+Jeśli Ci się on podoba, zachęcamy do <a href="#participate">przyłączenia się do projektu</a> lub wsparcia finansowego  W3C poprzez <a href="https://www.w3.org/Consortium/sup">W3C supporters program</a>, ale nie jest to obligacją.</p>
+
+<h4 id="who">Kto jest autorem tego narzędzia? Kto je utrzymuje?</h4>
+<p>W3C utrzymuje i jest gospodarzem tego narzędzia dzięki pracy i wkładzie personelu W3C oraz ochotników takich jak deweloperzy i tłumacze. 
+Zobacz także <a href="thanks.html">stronę podziękowań i wyrazów uznania</a>
+po więcej szczegółów.<a href="#participate"> Ty również możesz pomóc</a>.</p>
+
+<h4 id="participate">Czy mogę pomóc?</h4>
+<p>Oczywiście. Jeśli jesteś programistą(ką) w języku Java, możesz pomóc w Projekcie Walidatora CSS poprzez sprawdzanie <a href="#code">kodu</a>,
+usuwanie <a href="https://github.com/w3c/css-validator/issues">błędów</a> &amp; <a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">błędów</a>
+lub budowanie nowych funkcji. </p>
+<p>Nie musisz być jednak programistą, aby pomóc w budowaniu i utrzymywaniu tego narzędzia: możesz również pomagać przy polepszaniu dokumentacji, tłumaczeniu Walidatora na inne języki lub poprzez wpisanie się na naszą <a href="https://lists.w3.org/Archives/Public/www-validator-css/">listę mailingową</a> w celu prowadzenia dyskusji na temat tego programu lub pomocy innym użytkownikom tego narzędzia. </p>
+
+<h4 id="contact">Inne pytania?</h4>
+<p>Jeśli masz jakiekolwiek pytania odnośnie CSS i walidatora CSS, sprawdź dostępne <a href="Email">listy mailingowe i fora</a>. Zanim to jednak uczynisz, upewnij się, czy jest już odpowiedź na twoje pytanie w <a href="http://www.websitedev.de/css/validator-faq">dokumencie najczęściej zadawanych pytań na temat walidatora CSS</a>.</p>
+
+
+<h3 id="dev">Kącik dla Deweloperów</h3>
+<h4 id="code">W jakim języku jest napisany walidator? Czy źródło jest gdzieś dostępne?</h4>
+<p> W3C Walidator CSS jest napisany w języku Java i oczywiście kod jest dostępny używając  CVS: możesz <a href="https://github.com/w3c/css-validator">przeglądnąć kod  online</a> 
+lub ściągnąć go według zamieszczonych instrukcji. Po szybki przegląd klas zastosowanych w kodzie walidatora CSS, sprawdź plik zatytułowany &quot; 
+<a href="README.html">README</a> &quot;.</p>
+
+<h4 id="install">Czy mogę sam zainstalować i uruchomić walidator CSS?</h4>
+<p>Możliwe jest 
+
+
+ściągnięcie
+
+ i zainstalowanie walidatora CSS jak również uruchomienie go poprzez &quot;command line&quot; lub jako serwletu na serwerze. Przeczytaj <a href="DOWNLOAD.html">instrukcje</a> instalacji i użycia.</p>
+
+<h4 id="api">Czy mogę zbudować aplikację opartą na walidatorze? Czy dostępny jest API?</h4>
+<p>Tak i <a href="api.html">tak</a>. Walidator CSS ma  (RESTful) <a href="api.html">SOAP interfejs,</a> co powinno znacznie ułatwić budowę aplikacji (sieciowych lub innych). Oczywiście dobre maniery i właściwe zastosowanie otwartych kodów źródłowych powinny być w zwyczaju: : upewnij się, że Twoje aplikacje nie korzystają z zasobów walidatora non-stop (powinny być one uśpione do czasu aktywacji) lub zainstaluj i uruchom swój własny walidator.</p>
+</div>
+   <ul class="navbar"  id="menu">
+        <li><a href="about.html" title="O serwisie">O nas</a> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="Dokumentacja Usługi Walidacji CSS">Dokumentacja</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Ściągnij i zainstaluj walidator CSS">Download</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="Jak wysłać opinię na temat tej usługi">Opinie</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Podziękowania">Podziękowania</a><span class="hideme">|</span></li>
+  </ul>
+
+
+   <ul id="lang_choice">
+     
+     <li><a href="about.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="about.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+     
+     <li><a href="about.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+     
+     <li><a href="about.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+     
+     <li><a href="about.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+     
+     <li><a href="about.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+     
+     <li><a href="about.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+     
+     <li><a href="about.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+     
+     <li><a href="about.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+     
+     <li><a href="about.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+     
+     <li><a href="about.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+     
+     <li><a href="about.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+     
+     <li><a href="about.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+     
+     <li><a href="about.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+
+
+
+     <div id="footer">
+   <p id="activity_logos">
+
+        <a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img src="images/woolly-icon" alt="CSS" /></a>
+     </p>
+
+     <p id="support_logo">
+     <a href="https://www.w3.org/donate/">
+     <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+     </a>
+     </p>
+
+    <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+
+</html>

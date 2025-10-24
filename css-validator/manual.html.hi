@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="hi" xml:lang="hi" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>सीएसएस मान्यकरण उपयोगकर्ता मैनुअल</title>
+<link href="mailto:www-validator-css@w3.org" rev="made" />
+<link href="./" rev="start" title="Home Page" />
+<style media="all" type="text/css">
+@import url('style/base.css');
+@import url('style/docs.css');
+</style>
+<meta content="$Id$" name="revision" />
+<!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+
+<div id="banner">
+	<h1 id="title"><a href="https://www.w3.org/">
+	<img id="logo" alt="W3C" height="61" src="images/w3c.png" width="110" /></a>
+	<a href="./"><span>सीएसएस मान्यकरण सेवा</span></h1>
+	<p id="tagline">शैली (सीएसएस) शीट शैली पत्रक और के साथ (एक्स) HTML दस्तावेजों 
+	केस्केडिंग जाँच </p>
+</div>
+<div id="main">
+	<!-- This DIV encapsulates everything in this page - necessary for the positioning -->
+	<div class="doc">
+		<h2>Validator उपयोगकर्ता के मैनुअल</h2>
+		<h3 id="TableOfContents">टेबल सामग्री</h3>
+		<div id="toc">
+			<ul>
+				<li><a href="#use">सीएसएस मान्यकर्ता का उपयोग कैसे करें,</a>
+				<ul>
+					<li><a href="#url">यूआरएल द्वारा मान्यता प्रतिक्रिया</a></li>
+					<li><a href="#fileupload">फ़ाइल अपलोड द्वारा मान्यकरण</a></li>
+					<li><a href="#directinput">प्रत्यक्ष निवेश से सत्यापन</a></li>
+					<li><a href="#basicvalidation">बुनियादी मान्यता क्या करता है?</a></li>
+				</ul>
+				</li>
+				<li><a href="#advanced">उन्नत सत्यापन</a>
+				<ul>
+					<li><a href="#paramwarnings">चेतावनी पैरामीटर</a></li>
+					<li><a href="#paramprofile">संक्षिप्त पैरामीटर</a></li>
+					<li><a href="#parammedium">मध्यम पैरामीटर</a></li>
+				</ul>
+				</li>
+				<li><a href="#expert">विशेषज्ञों के लिए</a>
+				<ul>
+					<li><a href="#requestformat">सत्यापन अनुरोध स्वरूप</a></li>
+					<li><a href="#api">सीएसएस मान्यकर्ता वेब सेवा एपीआई</a></li>
+				</ul>
+				</li>
+			</ul>
+		</div>
+		<p id="skip"></p>
+		<h3 id="use">सीएसएस मान्यकर्ता का उपयोग कैसे करें</h3>
+		<p>सरलतम एक दस्तावेज चेक तरीका बुनियादी अंतरफलक का उपयोग है. इस पेज में 
+		आप तीन तीन संभावनाओं करने के लिए इसी प्रकार मिलेगा: </p>
+		<h4 id="url">&nbsp;यूआरएल द्वारा सत्यापन </h4>
+		<p>केवल दस्तावेज़ के URL दर्ज करें आप को मान्य करना चाहते हैं. इस दस्तावेज़ 
+		को HTML या सीएसएस जा सकता है. </p>
+		<img alt="यूआरआइ द्वारा सत्यापन फार्म" src="images/uri_basic.png" style="display: block; margin-left: auto; margin-right: auto;" />
+		<h4 id="fileupload">मान्यकर्ता फ़ाइल अपलोड द्वारा</h4>
+		<p>यह समाधान आप अपलोड करने के लिए और एक स्थानीय फ़ाइल को चेक अनुमति देता 
+		है. &quot;ब्राउज क्लिक करें ...&quot; बटन और फ़ाइल को आप की जाँच करना चाहते हैं चुनें.
+		</p>
+		<img alt="फ़ाइल अपलोड द्वारा मान्यकरण" src="images/file_upload_basic.png" style="display: block; margin-left: auto; margin-right: auto;" />
+		<p>इस मामले में, केवल सीएसएस दस्तावेजों की अनुमति है. इसका मतलब है कि आप 
+		(एक्स) HTML दस्तावेजों को अपलोड नहीं कर सकते हैं. तुम भी साथ सावधान रहना 
+		चाहिए @ आयात नियमों के बाद से वे पीछा किया स्पष्ट केवल अगर वे एक सार्वजनिक 
+		(ताकि यूआरएल, इस संदर्भ के समाधान के साथ संबंधित पथ को भूल जाएगा)</p>
+		<h4 id="directinput">प्रत्यक्ष निवेश से सत्यापन</h4>
+
+		<p>इस विधि सीएसएस टुकड़े के परीक्षण के लिए एकदम सही है. तुम सिर्फ अपने सीएसएस 
+		पाठ क्षेत्र में लिखना है</p>
+		<img alt="प्रत्यक्ष निवेश से सत्यापन" src="images/direct_input_basic.png" style="display: block; margin-left: auto; margin-right: auto;" />
+		<p>के रूप में एक ही टिप्पणी करने से पहले लागू होते हैं. ध्यान दें कि यह 
+		समाधान बहुत आसान है अगर तुम एक समस्या है और समुदाय से कुछ मदद की जरूरत है. 
+		यह भी बहुत एक बग रिपोर्ट उपयोगी है, जब से तुम परिणामस्वरूप यूआरएल के लिए 
+		लिंक करने के लिए एक परीक्षण के मामले दे सकते हैं.</p>
+
+		<h4 id="basicvalidation">बुनियादी मान्यता क्या करता है?</h4>
+
+		<p>बुनियादी अंतरफलक का उपयोग कर, जब मान्यकर्ता <a href="https://www.w3.org/TR/CSS2">सीएसएस 2</a>, जो वर्तमान तकनीकी 
+		सिफारिश सीएसएस के खिलाफ अनुपालन की जाँच करेगा.<br />
+		यह किसी भी (आप केवल चेतावनी त्रुटियों देखेंगे बिना एक XHTML उत्पादन उपज) 
+		होगा.<br />
+		मध्यम पर सेट है "सभी" है, जो सभी उपकरणों के लिए उपयुक्त है माध्यम (मीडिया 
+		के पूर्ण विवरण के लिए <a href="https://www.w3.org/TR/CSS2/media.html">http://www.w3.org/TR/CSS2/media.html</a> देखें).</p>
+
+		<h3 id="advanced">उन्नत मान्यकर्ता</h3>
+
+		<p>अगर आप एक अधिक विशिष्ट जाँच करने की आवश्यकता है, तो आप उन्नत अंतरफलक 
+		है जिसमें से तीन पैरामीटर निर्दिष्ट की अनुमति देता का उपयोग कर सकते हैं. 
+		यहाँ इन मापदंडों में से प्रत्येक पर एक छोटी सी मदद है. </p>
+
+		<h4 id="paramwarnings">चेतावनी</h4>
+		<p>इस पैरामीटर को धुन करने के लिए उपयोगी सीएसएस मान्यकर्ता की शब्द - बाहुल्य 
+		है. वास्तव में, आप संदेश मान्यकर्ता के दो प्रकार: त्रुटियों और चेतावनियों 
+		को दे सकते हैं. त्रुटियों को दिया जाता है जब जाँच की सिफारिश सीएसएस सीएसएस 
+		का सम्मान नहीं करता है. चेतावनियाँ त्रुटियों से अलग हैं क्योंकि वे एक विनिर्देशन 
+		के बारे में समस्या नहीं राज्य नहीं है. वे यहाँ हैं चेतावनी (!) सीएसएस उपयोगकर्ता 
+		है कि कुछ अंक खतरनाक हो सकता है और कुछ उपयोगकर्ता एजेंटों पर एक अजीब व्यवहार 
+		करने के लिए नेतृत्व कर सकेगी.</p>
+		
+		<p>एक ठेठ चेतावनी चिंताओं font-परिवार: यदि आप एक सामान्य फ़ॉन्ट प्रदान नहीं 
+		करते हैं, तो आप एक कहावत है कि आप शासन की समाप्ति पर एक जोड़ है, अन्यथा 
+		चाहिए एक उपयोगकर्ता एजेंट है कि अन्य फ़ॉन्ट के किसी भी पता नहीं है चेतावनी 
+		मिल जाएगा यह करने के लिए एक डिफ़ॉल्ट स्विच, जो अजीब प्रदर्शन में परिणाम 
+		मई. </p>
+		<h4 id="paramprofile">प्रोफ़ाइल</h4>
+		<p>सीएसएस सीएसएस validator अलग प्रोफाइल देख सकते हैं. एक प्रोफ़ाइल एक विशेष 
+		मंच पर एक कार्यान्वयन लागू करने के लिए आशा है कि सभी सुविधाओं को सूचीबद्ध 
+		करती है. इस परिभाषा     <a href="https://www.w3.org/Style/2004/css-charter-long.html#modules-and-profiles0">
+सीएसएस साइट </a>से लिया जाता है. डिफ़ॉल्ट विकल्प सबसे मौजूदा 
+		एक प्रयोग किया जाता से मेल खाती है: <a href="https://www.w3.org/TR/CSS2">सीएसएस 2</a></p>
+
+<h4 id="parammedium">मध्यम</h4>
+
+		<p>मध्यम पैरामीटर @ मीडिया शासन के बराबर है, सभी दस्तावेज़ के लिए आवेदन. 
+		आप     <a href="https://www.w3.org/TR/CSS2/media.html">
+http://www.w3.org/TR/CSS2/media.html</a> में मीडिया के बारे में अधिक जानकारी 
+		मिल जाएगी.</p>
+		<h3 id="expert">केवल विशेषज्ञों</h3>
+
+		<h4 id="requestformat">सत्यापन अनुरोध स्वरूप</h4>
+		<p>नीचे दिए गए मापदंडों की एक मेज आप W3C सीएसएस मान्यकर्ता के लिए एक प्रश्न 
+		भेजने के लिए उपयोग कर सकते है.</p>
+		<p>यदि आप डब्ल्यू .3 सी. सार्वजनिक मान्यता सर्वर, का उपयोग निम्नलिखित आधार 
+		यूआरआइ के साथ संयोजन के रूप में नीचे मापदंडों का उपयोग करना चाहते हैं: <br /><kbd>http://jigsaw.w3.org/css-validator/validator</kbd><br />
+		अपने खुद के सर्वर के पते के साथ की जगह अगर आप मान्यकर्ता के एक निजी उदाहरण 
+		कॉल करना चाहते हैं.</p>
+		<p><strong>नोट:</strong> यदि आप करने के लिए मान्यकर्ता प्रोग्राम के दस्तावेजों के एक बैच के 
+		लिए, कॉल सुनिश्चित करें कि आपकी स्क्रिप्ट के लिए अनुरोध के बीच कम से कम 
+		1 सेकंड सोऊँगी बनाने कृपया चाहते हैं. सीएसएस मान्यकरण सेवा मुफ्त में, सभी 
+		के लिए सार्वजनिक सेवा है, अपने सम्मान की सराहना की है. धन्यवाद.</p>
+		<table class="refdoc">
+  <tbody>
+    <tr>
+		<th>पैरामीटर</th>
+				<th>विवरण</th>
+				<th>डिफ़ॉल्ट मूल्य</th>
+			</tr>
+			<tr>
+				<th>uri</th>
+				<td>दस्तावेज़ का <acronym title="यूनिवर्सल रिसोर्स लोकेटर">यूआरएल</acronym> मान्य करने के लिए. सीएसएस और HTML दस्तावेजों 
+				की अनुमति है.</td>
+				<td>कोई नहीं, लेकिन या तो इस पैरामीटर, या पाठ दी जानी चाहिए.</td>
+			</tr>
+			<tr>
+				<th>पाठ</th>
+				<td>दस्तावेज़, केवल सीएसएस मान्य करने की अनुमति दी है</td>
+				<td>कोई नहीं, लेकिन या तो इस पैरामीटर, या उड़ी दी जानी चाहिए</td>
+			</tr>
+			<tr>
+				<th>युसर्मेदियम</th>
+				<td><a href="https://www.w3.org/TR/CSS2/media.html">मध्यम</a> 
+				 सत्यापन के लिए प्रयोग किया जाता, जेसेकी <code>screen</code>, <code>print</code>,
+				<code>braille</code>...</td>
+				<td><code>all</code></td>
+			</tr>
+			<tr>
+				<th>उत्पादन</th>
+				<td>मान्यकर्ता के विभिन्न उत्पादन प्रारूपों. संभव प्रारूपों 
+				<code>text/html</code> and <code>html</code> (XHTML document, 
+	Content-Type: text/html), 
+	<code>application/xhtml+xml</code> and <code>xhtml</code> (XHTML 
+	document, Content-Type: application/xhtml+xml), 
+	<code>application/soap+xml</code> and <code>soap12</code> (SOAP 1.2 
+	document, Content-Type: application/soap+xml), 
+	<code>text/plain</code> and <code>text</code> (text document, 
+	Content-Type: text/plain),
+	everything else (XHTML document, Content-Type: text/html)</td>
+				<td>html</td>
+			</tr>
+			<tr>
+				<th>प्रोफ़ाइल</th>
+				<td>सीएसएस प्रोफ़ाइल सत्यापन के लिए इस्तेमाल किया. यह <code>css1</code>, <code>css2</code>, <code>css21</code>,
+        <code>css3</code>, <code>svg</code>, <code>svgbasic</code>,
+        <code>svgtiny</code>, <code>mobile</code>, <code>atsc-tv</code>,
+        <code>tv</code> or <code>none</code></td>
+				<td>सबसे हाल ही में W3C संस्तुति: CSS 2</td>
+			</tr>
+			<tr>
+				<th>lang</th>
+				<td>भाषा प्रतिक्रिया के लिए वर्तमान में, <code>en</code>,
+        <code>fr</code>, <code>ja</code>, <code>es</code>,
+        <code>zh-cn</code>, <code>nl</code>, <code>de</code>, <code>it</code>, 
+        <code>pl</code>का उपयोग किया जाता है.</td>
+				<td>अंग्रेजी (<code>en</code>).</td>
+			</tr>
+			<tr>
+				<th>warning</th>
+				<td>चेतावनी स्तर, <code>no</code> कोई चेतावनी न के लिए, <code>0</code> 
+				कम चेतावनी के लिए , <code>1</code>या <code>2</code> और अधिक चेतावनी के लिए 
+				</td>
+				<td>2</td>
+			</tr>
+		</table>
+		<h4 id="api">CSS मान्यकर्ता वेब सेवा API: सोप 1.2 अंतरफलक प्रलेखन सत्यापन</h4>
+		<p>अधिक तकनीकी मदद के लिए, विशेष रूप से सोप 1.2 सब और उत्पादन के बारे में 
+		संभव validator कॉल तरीके, <a href="api.html">सीएसएस मान्यकर्ता वेब सेवा 
+		एपीआई देखें</a>. </p>
+	</div>
+</div>
+<!-- End of "main" DIV. -->
+<ul id="menu" class="navbar">
+	<li><strong>
+	<a href="./" title="Home page for the W3C CSS Validation Service">Home</a></strong>
+	<span class="hideme">|</span></li>
+	<li><a href="about.html" title="About this service">About</a>
+	<span class="hideme">|</span></li>
+	<li><a href="DOWNLOAD.html" title="Download the CSS validator">Download</a>
+	<span class="hideme">|</span></li>
+	<li><a href="Email.html" title="How to provide feedback on this service">Feedback</a>
+	<span class="hideme">|</span></li>
+	<li><a href="thanks.html" title="Credits and Acknowlegments">Credits</a><span class="hideme">|</span></li>
+</ul>
+<ul id="lang_choice">
+	<li>
+	<a href="manual.html.de" hreflang="de" lang="de" rel="alternate" xml:lang="de">
+	Deutsch</a></li>
+	<li>
+	<a href="manual.html" hreflang="en" lang="en" rel="alternate" xml:lang="en">
+	English</a> </li>
+	<li>
+	<a href="manual.html.es" hreflang="es" lang="es" rel="alternate" xml:lang="es">
+	Español</a></li>
+	<li>
+	<a href="manual.html.fr" hreflang="fr" lang="fr" rel="alternate" xml:lang="fr">
+	Français</a> </li>
+	<li>
+	<a href="manual.html.it" hreflang="it" lang="it" rel="alternate" xml:lang="it">
+	Italiano</a> </li>
+	<li>
+	<a href="manual.html.nl" hreflang="nl" lang="nl" rel="alternate" xml:lang="nl">
+	Nederlands</a> </li>
+	<li>
+	<a href="manual.html.ja" hreflang="ja" lang="ja" rel="alternate" xml:lang="ja">
+	日本語</a> </li>
+	<li>
+	<a href="manual.html.pl-PL" hreflang="pl" lang="pl" rel="alternate" xml:lang="pl">
+	Polski</a> </li>
+	<li>
+	<a href="manual.html.zh-cn" hreflang="zh-hans" lang="zh-hans" rel="alternate" xml:lang="zh-hans">
+	中文</a></li>
+</ul>
+<div id="footer">
+	<p id="activity_logos">
+	<a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img alt="CSS" src="images/woolly-icon" /></a>
+	</p>
+
+	<p id="support_logo">
+        <a href="https://www.w3.org/donate/">
+        <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title="Validators Donation Program" />
+        </a>
+        </p>
+
+	<p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+//
+// Author: Yves Lafon <ylafon@w3.org>
+//
+// (c) COPYRIGHT MIT, ERCIM, Keio, Beihang, 2018.
+// Please first read the full copyright statement in file COPYRIGHT.html
+package org.w3c.css.properties.css3.fontface;
+
+import org.w3c.css.util.ApplContext;
+import org.w3c.css.util.InvalidParamException;
+import org.w3c.css.values.CssExpression;
+import org.w3c.css.values.CssIdent;
+import org.w3c.css.values.CssTypes;
+import org.w3c.css.values.CssValue;
+import org.w3c.css.values.CssValueList;
+
+import java.util.ArrayList;
+
+import static org.w3c.css.properties.css3.CssFontStretch.getAllowedValue;
+import static org.w3c.css.values.CssOperator.SPACE;
+
+/**
+ * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#descdef-font-face-font-stretch
+ * @see org.w3c.css.properties.css3.CssFontStretch
+ */
+public class CssFontStretch extends org.w3c.css.properties.css.fontface.CssFontStretch {
+
+    public static final CssIdent auto = CssIdent.getIdent("auto");
+
+    /**
+     * Create a new CssFontStretch
+     */
+    public CssFontStretch() {
+        value = initial;
+    }
+
+    /**
+     * Creates a new CssFontStretch
+     *
+     * @param expression The expression for this property
+     * @throws InvalidParamException Expressions are incorrect
+     */
+    public CssFontStretch(ApplContext ac, CssExpression expression, boolean check)
+            throws InvalidParamException {
+        if (check && expression.getCount() > 2) {
+            throw new InvalidParamException("unrecognize", ac);
+        }
+
+        setByUser();
+
+        char op;
+        CssValue val;
+        ArrayList<CssValue> values = new ArrayList<>();
+
+        while (!expression.end()) {
+            val = expression.getValue();
+            op = expression.getOperator();
+
+            switch (val.getType()) {
+                case CssTypes.CSS_PERCENTAGE:
+                    val.getCheckableValue().checkPositiveness(ac, getPropertyName());
+                    values.add(val);
+                    break;
+                case CssTypes.CSS_IDENT:
+                    CssIdent id = val.getIdent();
+                    if (auto.equals(id)) {
+                        if (expression.getCount() > 1) {
+                            throw new InvalidParamException("unrecognize", ac);
+                        }
+                        values.add(val);
+                        break;
+                    }
+                    if (getAllowedValue(id) != null) {
+                        values.add(val);
+                        break;
+                    }
+                default:
+                    throw new InvalidParamException("value",
+                            val.toString(),
+                            getPropertyName(), ac);
+            }
+            if (op != SPACE) {
+                throw new InvalidParamException("operator",
+                        Character.toString(op), ac);
+            }
+            expression.next();
+        }
+        if (values.isEmpty()) {
+            throw new InvalidParamException("few-value", getPropertyName(), ac);
+        }
+        value = (values.size() == 1) ? values.get(0) : new CssValueList(values);
+    }
+
+    public CssFontStretch(ApplContext ac, CssExpression expression)
+            throws InvalidParamException {
+        this(ac, expression, false);
+    }
+
+}
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Documentation for the W3C CSS Validator</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Home Page" />
+  <style type="text/css" media="all">
+    @import "style/base.css";    
+    @import "style/docs.css";    
+  </style>
+  <meta name="revision" content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>CSS Validation Service</span></a></h1>
+   <p id="tagline">
+     Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+   </p>
+  </div>
+
+
+<div id="main">
+<!-- This DIV encapsulates everything in this page - necessary for the positioning -->
+
+<div class="doc">
+<h2>Documentation index for the CSS Validator</h2>
+
+<p id="skip"></p>
+
+<h3 id="use">User Resources</h3>
+
+<dl>
+    <dt><a href="./manual.html">User's Manual</a></dt>
+    <dd>The documentation on how to use the CSS validator</dd>
+    <dt><a href="about.html">About this service</a></dt>
+    <dd>Informations about the CSS Validator, and answers to some general questions</dd>
+    <dt><a href="http://www.websitedev.de/css/validator-faq">
+	CSS Validator FAQ
+    </a></dt>
+    <dd>Answers to technical questions frequently asked.</dd>
+    
+</dl>
+
+<h3 id="translat">Translator's Corner</h3>
+<dl>
+    <dt><a href="./translations.html" title="CSS Validation Service Translation">Translation of the CSS Validator</a></dt>
+    <dd>Table of the state of all current translations, translations needing help, and instructions on making the validator available in an additional language.</dd>
+</dl>
+
+<h3 id="devel">Developer Resources</h3>
+
+
+<dl>
+    <dt><a href="DOWNLOAD.html">Download/Install</a></dt>
+    <dd>How to retrieve the source of the CSS validator and run it, either as a command line program or a Web Servlet.</dd>
+    
+    <dt><a href="README">developer's README</a></dt>
+    <dd>An overview of the code of the CSS Validator</dd>
+
+    <dt><a href="./api.html">Web Service API</a></dt>
+    <dd>SOAP 1.2 validation interface documentation</dd>
+    
+    <dt><a href="https://github.com/w3c/css-validator/issues">Bugs</a> &amp; <a href="https://www.w3.org/Bugs/Public/buglist.cgi?bug_status=__open__;product=CSSValidator">Legacy Bugs</a></dt>
+    <dd>Known issues in the current version of the validator, and an interface to submit new bugs and issues. 
+    See also <a href="Email.html">the feedback instructions</a>.</dd>
+
+</dl>
+
+
+
+</div>
+</div>
+<!-- End of "main" DIV. -->
+
+   <ul class="navbar"  id="menu">
+	<li><strong><a href="./" title="Home page for the W3C CSS Validation Service">Home</a></strong> <span class="hideme">|</span></li>
+	<li><a href="about.html" title="About this service">About</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Download the CSS validator">Download</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="How to provide feedback on this service">Feedback</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Credits and Acknowlegments">Credits</a><span class="hideme">|</span></li>
+      </ul>
+
+       <ul id="lang_choice">
+     
+     <li><a href="documentation.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="documentation.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+     
+     <li><a href="documentation.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+     
+     <li><a href="documentation.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+     
+     <li><a href="documentation.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+     
+     <li><a href="documentation.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+     
+     <li><a href="documentation.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+     
+     <li><a href="documentation.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+     
+     <li><a href="documentation.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+     
+     <li><a href="documentation.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+     
+     <li><a href="documentation.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+     
+     <li><a href="documentation.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+     
+     <li><a href="documentation.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+     
+     <li><a href="documentation.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+
+     
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>
+
+

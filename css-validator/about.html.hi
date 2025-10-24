@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="hi" xml:lang="hi" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title>W3C सीएसएस मान्यकरण सेवा के बारे में</title>
+<link href="mailto:www-validator-css@w3.org" rev="made" />
+<link href="./" rev="start" title="Home Page" />
+<style media="all" type="text/css">
+@import url('style/base.css');
+@import url('style/docs.css');
+</style>
+<meta content="$Id$" name="revision" />
+</head>
+
+<body>
+
+<div id="banner">
+	<h1 id="title"><a href="https://www.w3.org/">
+	<img id="logo" alt="W3C" height="61" src="images/w3c.png" width="110" /></a>
+	<a href="./"><span>सीएसएस मान्यकरण सेवा</span></a></h1>
+	<p id="tagline">कास्केडिंग शैली पत्रक (CSS) and (X)HTML दस्तावेजों शैली शीट्स 
+	की जाँच करें </p>
+</div>
+<div class="doc">
+	<h2>CSS मान्यकर्ता के विषय में</h2>
+	<h3 id="TableOfContents">सामग्री की तालिका</h3>
+	<div id="toc">
+		<ol>
+			<li>इस सेवा के बारे में
+			<ol>
+				<li><a href="#what">यह क्या है? क्या मुझे इसकी आवश्यकता है?</a>
+				</li>
+				<li><a href="#help">उपरोक्त विवरण समझ से बाहर है! कृपया मदद करें 
+				!</a> </li>
+				<li><a href="#reference">तो, क्या यह सही है की नहीं है सीएसएस पर 
+				अधिकार है? </a></li>
+				<li><a href="#validCSS">मान्य सीएसएस का क्या मतलब है? यह मान्यकर्ता 
+				कौन से सीएसएस संस्करण में का उपयोग करता है? </a></li>
+				<li><a href="#free">इस पर कितना खर्च होता है? </a></li>
+				<li><a href="#who">इस उपकरण को किसने लिखा? इसे कौन रखाव रखता है?</a>
+				</li>
+				<li><a href="#contact">मैं इसके लेखकों से कैसे संपर्क करूँ? एक बग 
+				रिपोर्ट? </a></li>
+				<li><a href="#participate">क्या मैं मदद कर सकता हूँ?</a></li>
+			</ol>
+			</li>
+			<li>डेवलपर्स के कोने
+			<ol>
+				<li><a href="#code">क्या सीएसएस मान्यकर्ता में लिखा है? की स्रोत 
+				कहीं उपलब्ध है?</a> </li>
+				<li><a href="#install">क्या मैं सीएसएस मान्यकर्ता को स्थापित करके 
+				अपने आप चला सकते हूँ?</a> </li>
+				<li><a href="#api">मैं इस मान्यकर्ता पर एक आवेदन का निर्माण कर सकता 
+				हूँ? क्या एपीआई एक है? </a></li>
+			</ol>
+			</li>
+		</ol>
+	</div>
+	<!-- toc -->
+	<h3 id="about">इसके सेवा के बारे में </h3>
+	<h4 id="what">यह क्या है? क्या मुझे इसकी आवश्यकता है?</h4>
+	<p>W3C सीएसएस मान्यकरण सेवा एक मुक्त W3C द्वारा बनाई जाँच करने के लिए स्टाइल 
+	शीट (सीएसएस कास्केडिंग वेब डिजाइनरों और वेब डेवलपर्स मदद के लिए सॉफ्टवेयर है)यह 
+	वेब, या डाउनलोड इस <a href="./">मुफ्त सेवा </a>पर इस्तेमाल किया जा सकता है और 
+	या तो एक जावा प्रोग्राम एक वेब सर्वर पर एक जावा सेर्वेलेट के रूप में या के रूप 
+	में इस्तेमाल की जाता है .</p>
+	<p><em>आप</em> को इसकी ज़रूरत है? यदि आप एक वेब डेवलपर या एक वेब डिजाइनर हैं, 
+	इस उपकरण का एक अमूल्य सहयोगी हो जाएगा. न केवल यह करने के लिए अपने विनिर्देशों 
+	सीएसएस शैली पत्रक तुलना करेंगे, तिय्पोस, या सीएसएस के गलत उपयोग व त्रुटियों 
+	को खोजने के लिए मदद करता है,यह भी आपको बता दे जब अपने सीएसएस प्रयोज्य के संदर्भ 
+	में कुछ जोखिम पोसिस जाएगा.</p>
+	<h4 id="help">उपरोक्त विवरण समझ से बाहर है! कृपया मदद करो! </h4>
+	<p>अधिकांश वेब पर दस्तावेज़ों को कंप्यूटर भाषा में लिखता है , जिसे HTML कहते 
+	है . इस भाषा के लिए संरचित जानकारी, लिंक के साथ पेज बनाने और मल्टीमीडिया वस्तुओं 
+	के लिए इस्तेमाल किया जा सकता है . HTML रंग के लिए, पाठ, और लेआउट, सीएसएस शैली 
+	भाषा का उपयोग होता है जिसे CSS कहते हैं , संछिप्त में &quot;कास्केडिंग शैली पत्रक&quot; 
+	. यह उपकरण क्या है लोगों की मदद सीएसएस जाँच संलेखन, और उनके सीएसएस शैली पत्रक 
+	यदि आवश्यक हो तो ठीक है </p>
+	<h4 id="reference">तो, क्या यह अधिकार सही है सीएसएस और क्या नहीं है? </h4>
+	<p>नहीं, यह एक उपयोगी और विश्वसनीय उपकरण है, लेकिन एक सॉफ्टवेयर उपकरण है, हर 
+	सॉफ्टवेयर की तरह और, यह
+	<a href="https://github.com/w3c/css-validator/issues">कुछ 
+	क़ी मुददा</a>
+	&amp; <a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">कुछ 
+	क़ी मुददा</a>
+	है शैली पत्रक कास्केडिंग पर वास्तविक संदर्भ
+	<a href="https://www.w3.org/Style/CSS/#specs">सीएसएस निर्दिष्टीकरण</a> हैं.</p>
+	<h4 id="validCSS">मान्य सीएसएस का क्या मतलब है? यह मान्यकर्ता कौन से सीएसएस 
+	संस्करण में का उपयोग करता है?</h4>
+	<p>
+	<a href="https://www.w3.org/TR/CSS21/conform.html#valid-style-sheet" title="सीएसएस 2.1 विनिर्देश – आवश्यकताओं: और सिफारिशें">
+	सीएसएस 2.1 विनिर्देश</a><q cite="http://www.w3.org/TR/CSS21/conform.html"> के 
+	अनुसार: एक शैली पत्रक की वैधता शैली पत्रक के लिए इस्तेमाल किया सीएसएस के स्तर 
+	पर निर्भर करता है. [...] मान्य सीएसएस 2,1 शैली पत्रक 2.1 सीएसएस के व्याकरण के 
+	हिसाब से लिखा होना चाहिए. इसके अलावा, यह केवल पर, नियम, संपत्ति के नाम, और संपत्ति 
+	मूल्यों इस विनिर्देशन में परिभाषित होना चाहिए.</q></p>
+	<p>डिफ़ॉल्ट रूप से, व्याकरण के खिलाफ इस मान्यकर्ता चेक शैली पत्रक, गुण और
+	<a href="https://www.w3.org/TR/CSS21/" title="शैली पत्रक स्तर 2 संशोधन 1 (2.1 सीएसएस) विशिष्टता">
+	सीएसएस 2.1</a> विनिर्देश में परिभाषित किया गया है लेकिन अन्य सीएसएस प्रोफाइल 
+	विकल्पों के खिलाफ प्रयोग करके के जाँच की जा सकती. </p>
+	<p>सीएसएस एक विकसित भाषा है, और यह द्वारा कई कि &quot;सीएसएस&quot; गुण और स्वीकार्य विभिन्न 
+	प्रोफाइल में परिभाषित किया मूल्यों का एक नंबर के साथ एक एकल व्याकरण (एक नवीनतम 
+	विनिर्देश में परिभाषित किया गया है) माना जाता है .इस मान्यकर्ता के भविष्य के 
+	संस्करण में, डिफ़ॉल्ट व्यवहार करने के लिए कि नवीनतम &quot;सीएसएस&quot; व्याकरण और सभी 
+	मानकीकृत सीएसएस गुण और मूल्यों के बादल के खिलाफ शैली पत्रक चेक किया जा सकता 
+	है .</p>
+	<h4 id="free">इस में कितना खर्च आता है? </h4>
+	<p>कुछ नहीं. सेवा मुफ़्त है. स्रोत <a href="DOWNLOAD.html.hi">खुला</a> है और 
+	आप इसे डाउनलोड करने के लिए स्वतंत्र हैं, इसका इस्तेमाल संशोधित, वितरित करने 
+	, इसे <a href="https://www.w3.org/Consortium/Legal/copyright-software">और अधिक</a> 
+	. तुम सच में इसे तरह अगर, आप के लिए परियोजना में <a href="#participate">शामिल 
+	होने </a>का स्वागत कर रहे हैं या <a href="https://www.w3.org/Consortium/sup">
+	W3C समर्थकों कार्यक्रम</a> है ,इस के माध्यम से W3C दान करने के लिए, लेकिन कोई 
+	भी तुमहे बलों को.</p>
+	<h4 id="who">कौन इस उपकरण को लिखा? रख रखाव करता है? </h4>
+	<p>W3C उपकरण को रखरखाव व होस्ट करता है, और डब्ल्यू .3 सी. स्टाफ, स्वयंसेवक डेवलपर्स 
+	और अनुवादकों द्वारा काम को योगदान के लिए धन्यवाद . विवरण के लिए
+	<a href="thanks.html">क्रेडिट और अच्क्नोलिग्मेंट पृष्ठ को देखें.</a>
+	<a href="#participate">आप भी मदद कर सकते है </a>.</p>
+	<h4 id="participate">मैं मदद कर सकता हूँ ?</h4>
+	<p>बेशक. यदि आप एक जावा प्रोग्रामर हैं, तो आप <a href="#code">कोड</a> बाहर की 
+	जाँच द्वारा सीएसएस मान्यकर्ता परियोजना मदद, अपनाने और
+	<a href="https://github.com/w3c/css-validator/issues">कीड़े 
+	फिक्सिंग</a>
+	&amp; <a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">कीड़े 
+	फिक्सिंग</a>, या नई सुविधाओं के निर्माण में मदद कर सकते हैं. </p>
+	<p>लेकिन आप एक मदद करने के लिए इस उपकरण का निर्माण और बनाए रखने के लिए सांकेतिक 
+	शब्दों में बदलनेवाला की आवश्यकता नहीं है: क्या आप भी मदद कर सकते है प्रलेखन 
+	में सुधार अपनी भाषा, या
+	<a href="https://lists.w3.org/Archives/Public/www-validator-css/">मेलिंग सूची</a> 
+	की सदस्यता में मान्यकर्ता के अनुवाद में भाग लेने के लिए और उपकरण या अन्य उपयोगकर्ताओं 
+	की मदद के बारे में चर्चा.</p>
+	<h4 id="contact">किसी भी अन्य प्रश्न?</h4>
+	<p>अगर आप किसी भी सीएसएस या सीएसएस मान्यकर्ता के बारे में सवाल करते है, बाहर 
+	उपलब्ध-<a href="Email">मेलिंग सूचियों</a> और मंचों की जांच करें . लेकिन उससे 
+	पहले यह सुनिश्चित करें कि आपके प्रश्न या टिप्पणी पहले से ही
+	<a href="http://www.websitedev.de/css/validator-faq">सीएसएस मान्यकर्ता<acronym title="अकसर किये गए"> 
+	अकसर किये गए </acronym>दस्तावेज़ के सवाल</a> में शामिल है क़ी नहीं है सुनिश्चित 
+	करें.</p>
+	<h3 id="dev">डेवलपर्स के कोने</h3>
+	<h4 id="code">क्या सीएसएस मान्यकर्ता में लिखा है? स्रोत कहीं उपलब्ध है?</h4>
+	<p>W3C सीएसएस मान्यकर्ता जावा भाषा का उपयोग करते हुए लिखा है, और हाँ,
+	<a href="https://github.com/w3c/css-validator">उसके स्रोत उपलब्ध </a>
+	है, CVS का उपयोग: आप कोड ऑनलाइन ब्राउज़ या निर्देशों का पालन करने के लिए वहाँ 
+	पूरी पेड़ स्रोत डाउनलोड कर सकते हैं . सीएसएस मान्यकर्ता कोड में इस्तेमाल किया 
+	कक्षाओं की एक त्वरित अवलोकन के लिए, बाहर <a href="README.html">मुझे पढे़</a> 
+	फ़ाइल की जाँच करें.</p>
+	<h4 id="install">मैं स्थापित करने और सीएसएस मान्यकर्ता अपने आप चला सकते हैं?</h4>
+	<p>यह संभव है को डाउनलोड करने और सीएसएस मान्यकर्ता स्थापित है, और यह कमांड लाइन, 
+	एक वेब सर्वर में एक सेर्वेलेट के रूप में या से या तो चलाते हैं. स्थापना और उपयोग 
+	के लिए <a href="DOWNLOAD.html">निर्देश</a> पढ़ें.</p>
+	<h4 id="api">मैं इस पर एक आवेदन का निर्माण कर सकतेमान्यकर्ता ? वहाँ एक एपीआई?</h4>
+	<p>हाँ, और <a href="api.html">हाँ</a>. सीएसएस मान्यकर्ता एक (शोकहारा)
+	<a href="api.html">सोप अंतरफलक</a> जो करना चाहिए यह काफी आसान अनुप्रयोगों का 
+	निर्माण करने के लिए इस पर (वेब या अन्यथा) है. शिष्टाचार और साझा संसाधनों का 
+	उपयोग सम्मान कोर्स कर रहे हैं प्रथागत: सुनिश्चित करें कि आपके आवेदन नींद मान्यकर्ता 
+	, या स्थापित करने के लिए कॉल और अपने मान्यकर्ता के अपने स्वयं के उदाहरण को चलाने 
+	के बीच बनाने के लिए.</p>
+</div>
+<ul id="menu" class="navbar">
+	<li><strong>
+	<a href="./" title="Home page for the W3C CSS Validation Service">Home</a></strong>
+	<span class="hideme">|</span></li>
+	<li><a href="about.html" title="About this service">About</a>
+	<span class="hideme">|</span></li>
+	<li><a href="DOWNLOAD.html" title="Download the CSS validator">Download</a>
+	<span class="hideme">|</span></li>
+	<li><a href="Email.html" title="How to provide feedback on this service">Feedback</a>
+	<span class="hideme">|</span></li>
+	<li><a href="thanks.html" title="Credits and Acknowlegments">Credits</a><span class="hideme">|</span></li>
+</ul>
+<ul id="lang_choice">
+	<li>
+	<a href="about.html.de" hreflang="de" lang="de" rel="alternate" xml:lang="de">
+	Deutsch</a> </li>
+	<li>
+	<a href="about.html" hreflang="en" lang="en" rel="alternate" xml:lang="en">English</a>
+	</li>
+	<li>
+	<a href="about.html.es" hreflang="es" lang="es" rel="alternate" xml:lang="es">
+	Español</a> </li>
+	<li>
+	<a href="about.html.fr" hreflang="fr" lang="fr" rel="alternate" xml:lang="fr">
+	Français</a> </li>
+	<li>
+	<a href="about.html.ko" hreflang="ko" lang="ko" rel="alternate" xml:lang="ko">
+	한국어</a> </li>
+	<li>
+	<a href="about.html.it" hreflang="it" lang="it" rel="alternate" xml:lang="it">
+	Italiano</a> </li>
+	<li>
+	<a href="about.html.nl" hreflang="nl" lang="nl" rel="alternate" xml:lang="nl">
+	Nederlands</a> </li>
+	<li>
+	<a href="about.html.ja" hreflang="ja" lang="ja" rel="alternate" xml:lang="ja">
+	日本語</a> </li>
+	<li>
+	<a href="about.html.pl-PL" hreflang="pl-PL" lang="pl-PL" rel="alternate" xml:lang="pl-PL">
+	Polski</a> </li>
+	<li>
+	<a href="about.html.pt-BR" hreflang="pt-BR" lang="pt-BR" rel="alternate" xml:lang="pt-BR">
+	Português</a> </li>
+	<li>
+	<a href="about.html.ru" hreflang="ru" lang="ru" rel="alternate" xml:lang="ru">
+	Русский</a> </li>
+	<li>
+	<a href="about.html.sv" hreflang="sv" lang="sv" rel="alternate" xml:lang="sv">
+	Svenska</a> </li>
+	<li>
+	<a href="about.html.zh-cn" hreflang="zh-cn" lang="zh-cn" rel="alternate" xml:lang="zh-cn">
+	简体中文</a> </li>
+</ul>
+<div id="footer">
+	<p id="activity_logos">
+        <a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img alt="CSS" src="images/woolly-icon" /></a>
+	</p>
+	<p id="support_logo"><a href="https://www.w3.org/donate/">
+	<img alt="I heart Validator logo" src="https://www.w3.org/QA/Tools/I_heart_validator" title=" Validators Donation Program" />
+	</a></p>
+
+	<p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+</div>
+
+</body>
+
+</html>

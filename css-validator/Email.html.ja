@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>W3C CSS 検証サービスに対するフィードバックの方法</title>
+    <link rev="made" href="mailto:www-validator-css@w3.org" />
+    <link rev="start" href="./" title="ホームページ" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <style type="text/css" media="all">
+	@import "style/base.css";
+	@import "style/docs.css";
+    </style>
+    <meta name="revision" content="$Id$" />
+  </head>
+
+  <body>
+    <div id="banner">
+     <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+     <a href="./"><span>CSS 検証サービス</span></a></h1>
+     <p id="tagline">
+       カスケーディングスタイルシート(CSS)およびスタイルシートを組み込んだ(X)HTML文書を検証
+     </p>
+    </div>
+
+   <div class="doc">
+
+      <h2>W3C CSS 検証サービスに対するフィードバックの方法</h2>
+
+    <p>
+      <strong>もし、あなたのCSSが検証されなくて、なぜか分からなかったか、CSS
+      検証サービスに対する疑問があったならば、</strong>
+    </p>
+
+    <p>
+      まず、<a
+      href='http://www.websitedev.de/css/validator-faq'>W3C CSS
+      検証サービス FAQ</a> を見て、あなたの疑問の答がないか探してください。<a
+      href='https://github.com/w3c/css-validator/issues'>報告された問題点</a>&amp;<a
+      href='http://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator'>報告された問題点</a>の一覧も助けになるでしょう。
+    </p>
+    <p>
+      いくつかの CSS 関連のメーリングリストがあるので、適切な場所を探して質問してください。
+    </p>
+    <dl>
+      <dt><a
+	  href="mailto:www-validator-css@w3.org">www-validator-css@w3.org</a></dt>
+      <dd>
+	<p>
+	  CSS 検証サービスに対するコメントやのバグの報告のためのメーリングリストです。
+	  CSS自体について質問するのに適切な場所ではありません。
+	</p>
+	<p>
+	  このメーリングリストの内容は、<em><a
+	  href='http://lists.w3.org/Archives/Public/www-validator-css/'>www-validator-css@w3.org
+	  Mail Archives</a></em> として公開保管されています。
+	</p>
+      </dd>
+      <dt><a href='mailto:www-style@w3.org'>www-style@w3.org</a></dt>
+      <dd>
+	<p>
+	  <a href="https://www.w3.org/Style/">Web Style Sheets</a>についての<em>技術的議論</em>のためのメーリングリストです。スタイルシートについての非常に高度な議論の場です。また、<a
+	  href="https://www.w3.org/Style/CSS/">カスケーディングスタイルシート
+	  (CSS)</a> についての W3C の作業部会が発行する<a
+	  href="https://www.w3.org/TR/">作業ドラフト</a>について議論する場でもあります。
+	</p>
+	<p>
+	  このメーリングストに対するすべてのポストは<em><a
+	  href='http://lists.w3.org/Archives/Public/www-style/'>www-style@w3.org Mail
+	  Archives</a></em> として公開保管されています。
+	</p>
+	<p>
+	  「ぼくはどうしたら・・・」という質問にはふさわしい場所では<em>ありません</em>。そのためには、
+	  Usenet newsgroup <a href="news:comp.infosystems.www.authoring.stylesheets">comp.infosystems.www.authoring.stylesheets</a>か、(HTML ライターギルドのための)<a
+	  href="http://www.hwg.org/lists/hwg-style/">hwg-style</a> や <a
+	  href="http://www.websitetips.com/css/#newsgroups">Website
+	  Tips</a> にもっと適切な場所へのリンクがあります。
+	</p>
+      </dd>
+    </dl>
+</div>
+       <ul class="navbar"  id="menu">
+        <li><strong><a href="./" title="W3C CSS 検証サービスのホーム">ホーム</a></strong> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="ドキュメント">ドキュメント</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="CSS Validator のダウンロード">ダウンロード</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="このサービスへのフィードバック">フィードバック</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="クレジットと謝辞">謝辞</a><span class="hideme">|</span></li>
+
+          </ul>
+
+       <ul id="lang_choice">
+
+
+     <li><a href="Email.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+
+     <li><a href="Email.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+
+     <li><a href="Email.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+
+</ul>
+
+
+       <div id="footer">
+   <p id="activity_logos">
+
+          <a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img src="images/woolly-icon" width="72" height="48" alt="CSS" /></a>
+       </p>
+
+       <p id="support_logo">
+       <a href="https://www.w3.org/donate/">
+       <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" width="80" height="15" title=" Validators Donation Program" />
+       </a>
+       </p>
+
+       <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+      </body>
+
+    </html>

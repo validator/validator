@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/xhtml" lang="fa"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>  <title>CSS بروشور راهنمای کاربر اعتبار سنج</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="صفحه اصلی" />
+  <style type="text/css" media="all">
+    @import "style/base.css";    
+    @import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+    <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a><span style="background-color: #365D95; background-repeat: repeat; background-position: 0 0" id="tit"><a href="./">سرویس اعتبار سنجی <span lang="en-us">CSS</span></a></span></h1>
+     <p id="tagline">
+     محک زدن شیوه نامه های آبشاری (CSS) و اسناد X)HTML) حاوی شیوه نامه ها
+     </p>
+    </div>
+
+<div id="main">
+<!-- This DIV encapsulates everything in this page - necessary for the positioning -->
+
+<div class="doc">
+<h2>بروشور راهنمای کاربر اعتبار سنج <span lang="en-us">CSS</span></h2>
+
+<h3 id="TableOfContents">فهرست مندرجات</h3>
+
+<div id="toc">
+<ul>
+  <li><a href="#use">اعتبار سنج CSS چگونه بکار گرفته می شود</a>
+    <ul>
+      <li><a href="#url">اعتبار سنجی با پاسخگویی URL</a></li>
+      <li><a href="#fileupload">اعتبار سنجی با آپلود فایل</a></li>
+      <li><a href="#directinput">اعتبار سنجی با ورودی مستقیم</a></li>
+      <li><a href="#basicvalidation">اعتبار سنجی اصلی چه کاری را انجام می دهد؟</a></li>
+    </ul>
+  </li>
+  <li><a href="#advanced">اعتبار سنجی پیشرفته</a>
+    <ul>
+	<li><a href="#paramwarnings">پارامتر اخطارها</a></li>
+	<li><a href="#paramprofile">پارامتر پروفایل</a></li>
+	<li><a href="#parammedium">پارامتر رسانه</a></li>
+    </ul>
+  </li>
+  <li><a href="#expert">برای متخصصین</a>
+    <ul>
+	<li><a href="#requestformat">ساختار درخواست اعتبار سنجی</a></li>
+	<li><a href="#api">اعتبار سنج CSS وب سرویس API</a></li>
+    </ul>
+   </li>
+</ul>
+</div>
+
+<p id="skip"></p>
+
+<h3 id="use">اعتبار سنج CSS چگونه بکار گرفته می شود</h3>
+
+<p>
+ساده ترین راه جهت بررسی یک سند، استفاده از واسط اصلی می باشد. در این صفحه شما سه 
+شکل متناظر با سه امکان اعتبار سنجی را می یابید:
+</p>
+
+<h4 id="url">اعتبار سنجی با URL</h4>
+<p>
+	URL سندی را که می خواهید تایید اعتبار کنید، بسادگی وارد نمایید. 
+    این سند می تواند HTML یا یک CSS باشد.
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;"     src="./images/uri_basic.png" alt="اعتبار سنجی بوسیله فرم URI" />
+
+<h4 id="fileupload">اعتبار سنجی با آپلود فایل</h4>    
+<p>
+    این گزینه به شما اجازه می دهد که یک فایل محلی (در سیستم خود را) آپلود نموده 
+	و محک زنید. کلید 
+    "<span lang="en-us">...Browse</span>" را کلیک کرده و فایلی را که می خواهید محک زنید، انتخاب نمایید.
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;"     src="./images/file_upload_basic.png"     alt="اعتبار سنجی با آپلود فایل" />
+<p>
+    در این مورد، تنها اسناد CSS مجازند. بدین معنا که شما نمی توانید اسناد X)HTML) 
+	را آپلود نمایید. شما همچنین باید مواظب دستورات @import باشید بخاطر اینکه 
+	تنها زمانی از آنها پیروی می شود که آنها به صراحت&nbsp; مرجعی برای
+	<span lang="en-us">URL</span> عمومی باشند (بنابراین، با این امکان از مسیرهای نسبی صرف نظر می شود).</p>
+   
+<h4 id="directinput">اعتبار سنجی با ورودی مستقیم</h4>
+<p>
+    &nbsp;این شیوه روش کاملی جهت تست اجزای <span lang="en-us">CSS</span> می باشد. شما 
+	فقط باید CSS خود را در ناحیه ی متن بنویسید.
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;"     src="./images/direct_input_basic.png"     alt="اعتبار سنجی با ورودی مستقیم" />
+<p>
+    همان
+    توضیحات مانند قبل بکار برده می شوند. تذکر اینکه این راه حل در صورتی که شما 
+	مشکلی دارید و نیازمند مقداری راهنمایی از انجمن هستید بسیار مناسب است.همچنین جهت گزارش یک اشکال بسیار مفید است، 
+	بخاطر اینکه شما می توانید به
+	<span lang="en-us">URL</span> نتیجه لینک دهید تا مورد تست قرار گیرد.
+</p>    
+
+<h4 id="basicvalidation">اعتبار سنجی اصلی چه کاری را انجام می دهد؟</h4>
+
+<p>    
+    هنگام کاربرد واسط اصلی، اعتبار سنج، مطلوبیت در برابر <a href="https://www.w3.org/TR/CSS2">CSS 2</a> 
+	را بررسی خواهد نمود که توصیه ی تخصصی فعلی <span lang="en-us">CSS</span> می 
+	باشد.<br />
+    اعتبار سنج یک خروجی XHTML را بدون هیچ اخطاری ایجاد می نماید (شما تنها خطاها 
+	را خواهید دید).<br />
+    رسانه مجموعه ای "جامع" است، که واسطه ی مناسب برای تمام دستگاهها می باشد (جهت 
+	توصیفی کامل از رسانه <a href="https://www.w3.org/TR/CSS2/media.html">
+    http://www.w3.org/TR/CSS2/media.html</a> را ببینید).
+</p>
+
+<h3 id="advanced">اعتبار سنجی پیشرفته</h3>
+
+<p>
+    اگر شما نیازمند بررسی خاصتری هستید، می توانید از واسط پیشرفته که اجازه می 
+	دهد سه پارامتر تبیین شود استفاده نمایید. در اینجا راهنمایی مختصری در مورد هر 
+	یک از این پارامترها وجود دارد.
+</p>
+
+<h4 id="paramwarnings">اخطارها</h4>
+
+<p>
+    این پارامتر جهت میزان کردن دراز نویسی اعتبار سنج CSS مفید است. در واقع، 
+	اعتبار سنج می تواند به شما دو نوع پیغام دهد: خطاها و اخطارها.
+    خطاها وقتی داده می شوند که <span lang="en-us">CSS </span>محک زده شده، توصیه ی
+	<span lang="en-us">CSS</span> را رعایت ننموده است. اخطارها متفاوت از خطاها 
+	هستند بخاطر اینکه یک مسئله را با توجه به مشخصات آن مطرح نمی کنند. آنها جهت 
+	هشدار دادن(!) به توسعه دهنده ی CSS اینجا هستند که بعضی از آنها می توانند نقاطی خطرناک باشند و امکان دارد به یک رفتار ناشناخته در تعدادی از 
+	مرورگرها منجر شوند.
+</p>
+<p>
+    یک اخطار نمونه font-family را مورد توجه قرار می دهد: اگر شما یک فونت عمومی را در دسترس 
+	قرار ندهید، با یک پیغام اخطار روبرو می شوید که باید یکی از فونتهای عمومی 
+	را در انتهای دستور اضافه نمایید، در غیر اینصورت یک مرورگر که هیچ یک از فونت 
+	های دیگر را تشخیص نمی دهد فونت ناشناخته را با فونت پیش فرضی که دارد جایگزین 
+	می نماید، که در نتیجه ممکن است بصورت عجیبی نمایش داده شود.
+</p>
+
+<h4 id="paramprofile">پروفایل</h4>
+
+<p>
+    اعتبار سنج CSS می تواند پروفایلهای متفاوت CSS را محک زند. یک فهرست پروفایل 
+	تمام ویژگی هایی که در یک پایگاه ویژه در انتظار اجرا می باشند را بکار می برد. 
+	این تعریف از
+	<a href="https://www.w3.org/Style/2004/css-charter-long.html#modules-and-profiles0">
+	سایت CSS</a> استنباط می شود. گزینه ی پیش فرض با پر کاربردترین مورد فعلی مطابقت می نماید: 
+    <a href="https://www.w3.org/TR/CSS2">CSS 2</a>.
+</p>
+
+<h4 id="parammedium">رسانه</h4>
+
+<p>
+    پارامتر رسانه برابر با دستور media@، قابل استفاده برای کل سند است. شما 
+	اطلاعات بیشتری را در مورد رسانه در 
+    <a href="https://www.w3.org/TR/CSS2/media.html">
+	http://www.w3.org/TR/CSS2/media.html
+    </a>&nbsp;می یابید.
+</p>
+
+<h3 id="expert">ویژه ی متخصصین</h3>
+
+<h4 id="requestformat">ساختار درخواست اعتبار سنجی</h4>
+<p>در ذیل جدولی از پارامترهایی که می توانید جهت ارسال یک پرس و جو به اعتبار سنج W3C
+CSS بکار برید وجود دارد.</p>
+
+<p>اگر بخواهید سرور اعتبار سنجی عمومی W3C را مورد استفاده قرار دهید، از پارامترهای 
+ذیل که مربوط به URI مبنای زیر می باشند استفاده نمایید:<br />
+<kbd>http://jigsaw.w3.org/css-validator/validator</kbd><br />
+در صورتی که بخواهید نمونه ای خصوصی از اعتبار سنج را فراخوانی کنید آنرا با آدرس 
+سرور خودتان جایگزین نمایید.</p>
+
+<p><strong>توجه</strong>: در صورت تمایل جهت فراخوانی اعتبار سنج طبق برنامه ریزی 
+برای دسته ای از سندها، لطفا مطمئن شوید که
+<code>sleep</code>&nbsp; اسکریپت شما برای <strong>حداقل 1 ثانیه</strong> در میان درخواستها 
+خواهد بود.
+سرویس اعتبار سنجی CSS سرویسی رایگان و عمومی برای همه است، توجه شما قابل قدردانی است. با 
+تشکر.</p>
+
+<table class="refdoc">
+  <tbody>
+    <tr>
+      <th>پارامتر</th>
+      <th>توضیحات</th>
+      <th>مقدار پیش فرض</th>
+    </tr>
+    <tr>
+      <th>uri</th>
+      <td>سند <acronym title="Universal Resource Locator">URL</acronym> جهت 
+		تایید اعتبار. اسناد CSS و HTML مجازند.</td>
+      <td>هیچ، اما این پارامتر یا <code>text</code> باید ارایه شود..</td>
+    </tr>
+    <tr>
+      <th>text</th>
+      <td>جهت تایید اعتبار، تنها سند CSS مجاز است.</td>
+      <td>هیج، اما این پارامتر یا <code>uri</code> باید ارایه شود.</td>
+    </tr>
+    <tr>
+      <th>usermedium</th>
+      <td>&nbsp;<a href="https://www.w3.org/TR/CSS2/media.html">رسانه</a> بکار 
+		رفته برای اعتبار سنجی، نظیر <code>screen</code>,
+	  <code>print</code>, <code>braille</code>...</td>
+      <td><code>all</code></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td>راه اندازی فرمتهای خروجی مختلف اعتبار سنج. فرمتهای 
+		مجاز 
+	<code>text/html</code> و <code>html</code> هستند(سندXHTML، نوع - 
+		محتوا: text/html)، 
+	<code>application/xhtml+xml</code> و <code>xhtml</code> (سندXHTML، نوع - 
+		محتوا: application/xhtml+xml), 
+	<code>application/soap+xml</code> و <code>soap12</code> (سند SOAP 1.2، نوع - 
+		محتوا: application/soap+xml), 
+	<code>text/plain</code> و <code>text</code> (سند text، نوع - محتوا: text/plain)، 
+		یا هر چیز دیگر (سند XHTML، نوع - محتوا: text/html)	
+      </td>
+      <td>html</td>
+    </tr>
+    <tr>
+      <th>profile</th>
+      <td>پروفایل CSS که برای اعتبار سنجی بکار رفته است، می تواند
+        <code>css1</code>, <code>css2</code>, <code>css21</code>,
+        <code>css3</code>, <code>svg</code>, <code>svgbasic</code>,
+        <code>svgtiny</code>, <code>mobile</code>, <code>atsc-tv</code>,
+        <code>tv</code> یا <code>none</code> باشد</td>
+      <td>جدیدترین توصیه ی W3C
+        (دبلیو ثری سی) : CSS 2</td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td>زبان مورد استفاده برای پاسخگویی، در حال حاضر، <code>en</code>,
+        <code>fr</code>, <code>ja</code>, <code>es</code>,
+        <code>zh-cn</code>, <code>nl</code>, <code>de</code>, <code>it</code>, 
+        <code>pl</code>.</td>
+      <td>انگلیسی (<code>en</code>).</td>
+    </tr>
+    <tr>
+      <th>warning</th>
+      <td>سطح هشدار دهنده، <code>no</code> بدون اخطار، <code>0</code> 
+		برای اخطارهای کمتر <code>1</code> یا <code>2</code> برای اخطارهای بیشتر
+      </td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="api">اعتبار سنج CSS وب سرویس API: مستند سازی واسط اعتبار سنجی SOAP 1.2</h4>
+<p>    
+    جهت راهنمایی تخصصی بیشتر، به ویژه راجع به خروجی SOAP 1.2 و تمام راههای ممکن 
+	جهت فراخوانی اعتبار سنج، <a href="api.html">سرویس وب API اعتبار سنج CSS</a> 
+	را ببینید.       
+</p>
+
+</div>
+</div>
+<!-- End of "main" DIV. -->
+
+   <ul class="navbar"  id="menu">
+	<li><strong>
+	<a title="Home page for the W3C CSS Validation Service" href="./">صفحه اصلی</a></strong> <span class="hideme">|</span></li>
+	<li><a title="About this service" href="about.html">در مورد سرویس</a> <span class="hideme">|</span></li>
+        <li>
+		<a title="Documentation for the W3C CSS Validation Service" href="documentation.html">
+		مستند سازی</a> <span class="hideme">|</span></li>
+        <li><a title="Download the CSS validator" href="DOWNLOAD.html">دانلود</a> <span class="hideme">|</span></li>
+        <li>
+		<a title="How to provide feedback on this service" href="Email.html">
+		بازخورد</a> <span class="hideme">|</span></li>
+        <li><a title="Credits and Acknowlegments" href="thanks.html">قدردانی</a><span class="hideme">|</span></li>
+      </ul>
+
+      <ul id="lang_choice">
+           <li><a href="manual.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="manual.html.de"
+               lang="de"
+               xml:lang="de"
+               hreflang="de"
+               rel="alternate">Deutsch</a></li>
+           <li><a href="manual.html.en"
+               lang="en"
+               xml:lang="en"
+           hreflang="en"
+           rel="alternate">English</a>  </li>
+           <li><a href="manual.html.es"
+           lang="es" xml:lang="es" hreflang="es"
+           rel="alternate">Español</a></li>
+           <li><a href="manual.html.fr"
+           lang="fr"
+           xml:lang="fr"
+           hreflang="fr"
+           rel="alternate">Français</a> </li>
+           <li><a href="manual.html.it"
+               lang="it"
+               xml:lang="it"
+               hreflang="it"
+               rel="alternate">Italiano</a> </li>
+           <li><a href="manual.html.nl"
+               lang="nl"
+               xml:lang="nl"
+               hreflang="nl"
+               rel="alternate">Nederlands</a> </li>
+           <li><a href="manual.html.ja"
+               lang="ja"
+               xml:lang="ja"
+               hreflang="ja"
+               rel="alternate">日本語</a> </li>
+           <li><a href="manual.html.pl-PL"
+               lang="pl"
+               xml:lang="pl"
+               hreflang="pl"
+               rel="alternate">Polski</a> </li>
+           <li><a href="manual.html.zh-cn"
+               lang="zh-hans"
+               xml:lang="zh-hans"
+               hreflang="zh-hans"
+               rel="alternate">中文</a></li>
+      </ul>
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="در مورد شیوه نامه های آبشاری بیشتر یاد بگیرید"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title="Validators Donation Program" />
+   </a>
+   </p>
+
+    <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>
+
+
+

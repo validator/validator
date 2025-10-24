@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+<title>Envoyer des commentaires sur le  service de validation CSS du W3C</title>
+<link rev="made" href="mailto:www-validator-css@w3.org" />
+<link rev="start" href="./" title="Accueil" />
+<style type="text/css" media="all">
+@import "style/base.css";
+@import "style/docs.css";
+</style>
+<meta name="revision" content="$Id$" />
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>CSS Validation Service</span></a></h1>
+   <p id="tagline">
+     Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+   </p>
+  </div>
+
+<div class="doc">
+
+<h2>Comment envoyer des commentaires sur le service de validation
+      CSS du W3C</h2>
+
+
+    <p>
+      <strong>Si votre document ne valide pas, et si vous ne savez pas pourquoi,
+      ou si vous avez une question sur le validateur CSS.</strong>
+    </p>
+
+    <p>
+      Avant toute chose, consultez la liste des <a
+      href='http://www.websitedev.de/css/validator-faq'>questions les
+      plus fr&eacute;quemment pos&eacute;es (FAQ)</a> pour
+      v&eacute;rifier si votre question n'y apparait pas. Une <a
+      href='https://github.com/w3c/css-validator/issues'>liste des probl&egrave;mes</a> &amp;
+      <a href='http://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator'>liste des probl&egrave;mes</a>
+      est
+      &eacute;galement disponible.
+    </p>
+    <p>
+      Il existe plusieurs forums de discussions sur CSS, veuillez s'il
+      vous pla&icirc;t utiliser le forum le plus appropri&eacute; pour
+      demander de l'aide ou des informations:
+    </p>
+    <dl>
+      <dt><a
+	  href="mailto:www-validator-css@w3.org">www-validator-css@w3.org</a></dt>
+      <dd>
+	<p>
+	  Ce forum est destin&eacute; &agrave; recevoir les commentaires
+	  ou des rapports d'erreurs sur le validateur CSS. Pour les
+	  questions relatives au langage CSS, ce n'est pas le forum le
+	  plus appropri&eacute;.
+	</p>
+	<p>
+	  L'archive de ce forum est disponible au <em><a
+	  href='http://lists.w3.org/Archives/Public/www-validator-css/'>public</a></em>.
+	</p>
+      </dd>
+      <dt><a href='mailto:www-style@w3.org'>www-style@w3.org</a></dt>
+      <dd>
+	<p>
+	  Ce forum est destin&eacute; aux discussions techniques
+	  relatives aux <a href="https://www.w3.org/Style/">feuille de
+	  style du Web</a> (&laquo;Web Style Sheets&raquo;). Ce forum
+	  est &eacute;galement destin&eacute; aux discussions sur les <a
+	  href="https://www.w3.org/TR/">documents de travail</a>
+	  publi&eacute;s par le groupe de travail du W3C <a
+	  href="https://www.w3.org/Style/CSS/">CSS (&laquo;Cascading
+	  Style Sheets&raquo;)</a>.
+	</p>
+	<p>
+	  L'archive de ce forum est disponible au <em><a
+	  href='http://lists.w3.org/Archives/Public/www-style/'>public</a></em>.
+	</p>
+	<p>
+	  Ce forum <em>n'est pas</em> appropri&eacute; pour les
+	  questions relatives &agrave; l'usage de CSS ("Comment puis-je
+	  faire ...?"). Pour ce type de questions, veuillez utiliser le
+	  forum de discussions <a
+	  href="news:comp.infosystems.www.authoring.stylesheets">
+	  comp.infosystems.www.authoring.stylesheets</a>, ou <a
+	  href="http://www.hwg.org/lists/hwg-style">hwg-style</a>
+	  (accessible aux membres du &laquo;HTML Writers
+	  Guild&raquo;). &laquo;<a
+	  href="http://www.websitetips.com/css/#newsgroups">Website
+	  Tips</a>&raquo; poss&egrave;de une liste de liens vers
+	  d'autres forums.
+	</p>
+      </dd>
+    </dl>
+</div>
+    <ul class="navbar"  id="menu">
+    <li><strong><a href="./" title="Accueil du service de validation CSS du W3C">Accueil</a></strong> <span class="hideme">|</span></li>
+    <li><a href="documentation.html" title="Documentation du service de validation CSS du W3C">Documentation</a> <span class="hideme">|</span></li>
+    <li><a href="DOWNLOAD.html" title="Télécharger le validateur CSS">Téléchargement</a> <span class="hideme">|</span></li>
+    <li><a href="Email.html" title="Donner un avis à propos de ce service">Commentaires</a> <span class="hideme">|</span></li>
+    <li><a href="thanks.html" title="Mentions et remerciements">Remerciements</a><span class="hideme">|</span></li>
+    </ul>
+
+       <ul id="lang_choice">
+
+
+     <li><a href="Email.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+
+     <li><a href="Email.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+
+     <li><a href="Email.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+
+</ul>
+
+    <div id="footer">
+   <p id="activity_logos">
+
+    <a href="https://www.w3.org/Style/CSS/learning" title="Plus d'informations concernant les feuilles de style en cascade"><img src="images/woolly-icon" alt="CSS" /></a>
+    </p>
+
+    <p id="support_logo">
+    <a href="https://www.w3.org/donate/">
+    <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+    </a>
+    </p>
+
+    <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+</div>
+    </body>
+    </html>

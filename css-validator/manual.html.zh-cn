@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>CSS验证器的用户手册</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Home Page" />
+  <style type="text/css" media="all">
+    @import "style/base.css";    
+    @import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>CSS Validation Service</span></a></h1>
+   <p id="tagline">
+     Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+   </p>
+  </div>
+
+<div id="main">
+<!-- This DIV encapsulates everything in this page - necessary for the positioning -->
+
+<div class="doc">
+<h2>CSS验证器的用户手册</h2>
+
+<h3 id="TableOfContents">目录</h3>
+
+<div id="toc">
+<ul>
+  <li><a href="#use">如何使用CSS验证器</a>
+    <ul>
+      <li><a href="#url">V通过URL的Response来验证</a></li>
+      <li><a href="#fileupload">通过上传文件来验证</a></li>
+      <li><a href="#directinput">通过直接输入的内容来验证</a></li>
+      <li><a href="#basicvalidation">基本验证都作了什么工作？</a></li>
+    </ul>
+  </li>
+  <li><a href="#advanced">高级验证</a>
+    <ul>
+	<li><a href="#paramwarnings">警告</a></li>
+	<li><a href="#paramprofile">配置</a></li>
+	<li><a href="#parammedium">媒介</a></li>
+    </ul>
+  </li>
+  <li><a href="#expert">写给专家的话</a>
+    <ul>
+	<li><a href="#requestformat">验证请求的格式</a></li>
+	<li><a href="#api">CSS验证器的Web Service的API</a></li>
+    </ul>
+   </li>
+</ul>
+</div>
+
+<p id="skip"></p>
+
+<h3 id="use">如何使用CSS验证器</h3>
+
+<p>
+使用验证器来验证一个CSS文档最简单的方法就是用基本界面。这里你会发现3种不同的页面，对应有3种不同的界面：
+</p>
+
+<h4 id="url">通过URL的Response来验证</h4>
+<p>
+    只需要指定一个你需要验证的文档的URL就可以验证该文档这个文档可以是HTML或者CSS文件
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/uri_basic_zh.png" alt="Validation by URI form" />
+
+<h4 id="fileupload">通过上传文件来验证</h4>    
+<p>
+    这个方法允许你上传然后验证你上传的文件。点击“浏览...”按钮，然后选择一个你的机器上的要进行验证的文件就可以进行验证
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/file_upload_basic_zh.png" 
+    alt="Validation by File Upload" />
+<p>
+    这种情况下，只允许使用CSS文档，也就是说，你不能上传HTML格式的文件。你还需要注意的一点是@import属性。只有当他们是一个明确的公开的URL的时候才会被验证(也就是说，不要使用相对路径)。 
+</p>
+   
+<h4 id="directinput">通过直接输入的内容来验证</h4>
+<p>
+    这个方法目的是为了测试一段CSS的代码。你只需要在文本输入框中输入你的CSS代码就可以了。
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/direct_input_basic_zh.png" 
+    alt="Validation by direct input" />
+<p>
+    和上一种方法一样需要注意只能使用CSS的代码并且只能使用绝对的URL路径。这种方法在你的某一段CSS代码有问题希望得到解决的时候非常有用，也非常方便。在报告某个bug的时候也很简单，因为你可以将验证结果的URL给我们。
+</p>    
+
+<h4 id="basicvalidation">基本验证都作了什么工作？</h4>
+
+<p>    
+    当使用基本界面的时候，验证器会和<a href="https://www.w3.org/TR/CSS2">CSS2的标准(目前最新的标准)</a>进行比较，<br />你会看到一个XHTML格式的Error输出(不会包括警告)。
+    <br />
+    媒介会设定到使用所有的设备媒介(对于媒介的描述请参考<a href="https://www.w3.org/TR/CSS2/media.html">
+    http://www.w3.org/TR/CSS2/media.html</a>)。
+</p>
+
+<h3 id="advanced">高级验证</h3>
+
+<p>
+    如果你需要一个更精确的验证，你可以使用高级验证界面，在高级验证界面中你可以设定三个参数，下面是对每个参数的简单说明。
+</p>
+
+<h4 id="paramwarnings">Warnings</h4>
+
+<p>
+    这个参数对控制CSS验证器的输出很有用。事实上，验证器能给出两种消息：错误和警告。错误是当被检查的CSS不符合CSS标准的要求的时候产生的，警告和错误不同，它不是说和标准不符合的问题，它们只是用来警告CSS的开发人员，某些CSS代码在不同的客户端上可能会有导致奇怪动作的危险。
+</p>
+<p>
+    一个典型的警告就是使用了font-family的时候：如果你不是提供一个通用字体，你将会得到一个警告，告诉你应该在最后添加一个通用字体，否则某个客户端上可能不能识别你所设定的字体，从而转为该客户端的默认字体。而这样可能会导致一个很奇怪的显示内容。
+</p>
+
+<h4 id="paramprofile">配置</h4>
+
+<p>
+    CSS验证器可以检查不同的CSS配置。所谓的配置列出了一系列某一个特定平台上的的特性。配置本身的定义可以参考
+    <a href="https://www.w3.org/Style/2004/css-charter-long.html#modules-and-profiles0">
+	CSS站点
+    </a>。默认的选择就是当前最常用的
+    <a href="https://www.w3.org/TR/CSS21">CSS 2.1标准</a>.
+</p>
+
+<h4 id="parammedium">媒介</h4>
+
+<p>
+    这个参数就等同于@media规则，适用于所有的文档。你可以在
+    <a href="https://www.w3.org/TR/CSS2/media.html">
+	http://www.w3.org/TR/CSS2/media.html
+    </a>找到更多的关于媒介的资料。
+</p>
+
+<h3 id="expert">写给专家的话</h3>
+
+<h4 id="requestformat">验证请求的URL格式</h4>
+<p>下面是某个发送给W3C的CSS验证服务器的URL请求中的参数列表</p>
+
+<p>如果你想使用W3C的公开验证服务器，使用下面的参数，连接在下面基本URI之后来组织一个URL：<br />
+<kbd>http://jigsaw.w3.org/css-validator/validator</kbd><br />
+(将地址替换成你自己的服务器地址也可以)。</p>
+
+<p><strong>注意</strong>: 如果你想这样在程序中调用验证器来验证一批文档，那么请一定在你的程序中设定每两次验证之间间隔
+<strong>至少1秒</strong>。CSS验证服务是给所有人免费的服务，大家会感谢你对公共资源的尊重。</p>
+
+<table class="refdoc">
+  <tbody>
+    <tr>
+      <th>参数</th>
+      <th>说明</th>
+      <th>默认值</th>
+    </tr>
+    <tr>
+      <th>uri</th>
+      <td>等待被验证的文档的<acronym title="Universal Resource Locator">URL</acronym> 。CSS或者HTML都可以</td>
+      <td>没有。但是这个参数和下面的<code>text</code>参数，至少有一个不为空。</td>
+    </tr>
+    <tr>
+      <th>text</th>
+      <td>被验证的CSS代码片断，只允许CSS代码</td>
+      <td>没有。但是这个参数和上面的<code>uri</code>参数，至少有一个不为空。</td>
+    </tr>
+    <tr>
+      <th>usermedium</th>
+      <td>指定用于被验证的媒介(<a href="https://www.w3.org/TR/CSS2/media.html">medium</a>)，例如<code>screen</code>,
+	  <code>print</code>, <code>braille</code>...</td>
+      <td><code>all</code></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td>设定验证器输出结果的格式。可能的格式有：
+	<code>text/html</code> and <code>html</code> (XHTML document, 
+	Content-Type: text/html), 
+	<code>application/xhtml+xml</code> and <code>xhtml</code> (XHTML 
+	document, Content-Type: application/xhtml+xml), 
+	<code>application/soap+xml</code> and <code>soap12</code> (SOAP 1.2 
+	document, Content-Type: application/soap+xml), 
+	<code>text/plain</code> and <code>text</code> (text document, 
+	Content-Type: text/plain),
+	everything else (XHTML document, Content-Type: text/plain)	
+      </td>
+      <td>html</td>
+    </tr>
+    <tr>
+      <th>profile</th>
+      <td>设定用于验证比较的标准CSS配置文件。可以是
+        <code>css1</code>, <code>css2</code>, <code>css21</code>,
+        <code>css3</code>, <code>svg</code>, <code>svgbasic</code>,
+        <code>svgtiny</code>, <code>mobile</code>, <code>atsc-tv</code>,
+        <code>tv</code> or <code>none</code></td>
+      <td>最新的W3C标准： CSS 2</td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td>输出结果的语言，目前支持<code>en</code>,
+        <code>fr</code>, <code>it</code>, <code>ko</code>, <code>ja</code>, <code>es</code>,
+        <code>zh-cn</code>, <code>nl</code>, <code>de</code>.</td>
+      <td>English (<code>en</code>).</td>
+    </tr>
+    <tr>
+      <th>warning</th>
+      <td>警告的级别：<code>no</code>  表示没有警告， <code>0</code> 
+	精简的警告信息, <code>1</code>或者 <code>2</code> 详细警告信息
+      </td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="api">CSS验证器的Web Service API: SOAP 1.2 验证接口文档</h4>
+<p>    
+    更多的技术帮助，特别是SOAP1.2的输出，以及所有可能调用验证的方法，请参考
+    <a href="./api.html">CSS 验证器 Web Service API</a>.       
+</p>
+
+</div>
+</div>
+<!-- End of "main" DIV. -->
+
+   <ul class="navbar"  id="menu">
+	<li><strong><a href="./" title="Home page for the W3C CSS Validation Service">首页</a></strong> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="Documentation for the W3C CSS Validation Service">文档</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Download the CSS validator">下载</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="How to provide feedback on this service">反馈</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Credits and Acknowlegments">创作者</a><span class="hideme">|</span></li>
+
+      </ul>
+
+      <ul id="lang_choice">
+     
+     <li><a href="manual.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="manual.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+     
+     <li><a href="manual.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+     
+     <li><a href="manual.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+     
+     <li><a href="manual.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+     
+     <li><a href="manual.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+     
+     <li><a href="manual.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+     
+     <li><a href="manual.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+     
+     <li><a href="manual.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+     
+     <li><a href="manual.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+     
+     <li><a href="manual.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+     
+     <li><a href="manual.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+     
+     <li><a href="manual.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+     
+     <li><a href="manual.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+
+
+
+
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>
+
+
+

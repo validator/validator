@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Download and Install the CSS Validator</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Home Page" />
+  <style type="text/css" media="all">
+    @import "style/base.css";  
+    @import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>Serviço de validação CSS</span></a></h1>
+   <p id="tagline">
+     Verifica folhas de estilo em cascata (CSS) e documentos (X)HTML com folhas de estilo</p>
+  </div>
+
+<div class="doc">
+
+<h2>Download e instalação do validador CSS</h2>
+
+<p>This translation of the installation guide for the CSS validator may be out of date. For a reliable, up-to-date guide, refer to the <a href="DOWNLOAD.html.en">English</a> or <a href="DOWNLOAD.html.fr">French</a> versions.</p>
+
+<h3 id="download">Download do validador CSS</h3>	
+
+	<h4 id="source">Download do código-fonte</h4>
+    <p>
+      O <a href='https://github.com/w3c/css-validator'>validator CSS</a> está disponível para download usando  CVS.
+      Siga as <a href='http://dev.w3.org/cvsweb/'>instruções</a> para acessar o serviço público CVS  do W3C e escolha o 2002/css-validator. Notar que a versão online do validador geralmente é mais antiga que a versão 
+      CVS
+      portanto não estranhe se houver pequenas diferenças de apresentação entre elas.</p>	
+	<h4>Download como um pacote java  (jar ou war)</h4>
+    <!--	<p>TBD... we just need a stable location to put jar/war archives on a regular basis</p>-->
+	<p><a href="https://github.com/w3c/css-validator/releases/latest/download/css-validator.jar">css-validator.jar</a></p>
+
+
+<h3>Guia de instalação </h3>
+<p>O serviço de validação CSS é um software tipo servlet escrito em Java. Ele pode ser instalado em qualquer engine para servlet, mas pode também ser usado via linha de comando. 
+O   Serviço oficial de validação CSS do W3C roda em servidor  Jigsaw, que é a configuração recomendada.
+Contudo, para simplificar a situação,  iremos explicar a instalação como um servlet online em Apache com engine  Tomcat.</p>
+
+<p>Seguem também algumas orientações sobre a instalação como servlet em Jigsaw, bem como para rodar com uso de linha de comando. </p>
+
+<h4 id="prereq">Prerequisitos</h4>
+
+<p>Esse guia de instalação considera que você baixou, instalou e testou o seguinte: </p>
+<ul class="instructions">
+	<li>Um ambiente java em funcionamento,</li>
+	<li>A ferramenta <a href="https://ant.apache.org/">Ant</a> para  desenvolvimento java</li>
+	<li>Um container para servlet java, tal como, <a href="https://www.w3.org/Jigsaw/">Jigsaw</a>, <a href="https://tomcat.apache.org/">Tomcat</a> ou
+		<a href="http://www.mortbay.org/">Jetty</a> caso você pretenda configurar um validador online. 
+		Esse guia contempla detalhes de instalação apenas para Tomcat e Jigsaw.</li>
+</ul>
+<p id="prereq-libs">Para instalar o validador no seu sistema  você precisa ter disponível algumas bibliotecas java como mostrado a seguir:</p>
+<ul class="instructions">
+	<li>servlet.jar
+	(se você tiver Tomcat instalado em [<span class="const">TOMCAT_DIR</span>],
+	 procure em [<span class="const">TOMCAT_DIR</span>]/common/lib/) possivelmente com o nome 
+	 servlet-api.jar. Caso contrário baixe em 
+	<a href="http://java.sun.com/products/servlet/DOWNLOAD.html">java.sun.com</a></li>
+	<li><a href="https://jigsaw.w3.org/Devel/classes-2.2/20060329/">jigsaw.jar</a></li>
+	<li>xercesImpl.jar e xml-apis.jar (podem ser baixados em
+	<a href="https://www.apache.org/dist/xml/xerces-j/">xerces-j-bin</a>).</li>
+	<li><a href="http://ccil.org/~cowan/XML/tagsoup/">tagsoup.jar</a></li>
+</ul>
+
+<h4>Instalação do validador CSS em Tomcat</h4>
+<ol class="instructions">
+	<li>
+		Baixe o validador como explicado <a href="#source">acima</a>.	</li>
+	<li>Insira uma cópia do diretório ("<span class="dir">.../css-validator/</span>"), com todo seu conteúdo,  no diretório <span class="dir">webapps</span>
+		da sua instalação do Tomcat. Normalmente está  em
+		<span class="dir">[<span class="const">TOMCAT_DIR</span>]/webapps/</span>.
+		O código do validador agora está em  <span class="dir">[<span class="const">TOMCAT_DIR</span>]/webapps/css-validator</span>,
+		que chamaremos de <span class="dir">[<span class="const">VALIDATOR_DIR</span>]</span>.	</li>
+	<li>No "<span class="dir">[<span class="const">VALIDATOR_DIR</span>]</span>" crie um diretório com o nome "<span class="dir">WEB-INF</span>", e em "<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/WEB-INF</span>" crie um diretório chamado "<span class="dir">lib</span>":<br />
+		<kbd>mkdir -p WEB-INF/lib</kbd>	</li>
+	<li>Copie todos os arquivos jar  (acima citados em <a href="#prereq-libs">prerequisitos</a>) para o diretório "<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/WEB-INF/lib</span>"</li>
+	<li>Compile o código do validador: a partir do diretório <span class="dir">[<span class="const">VALIDATOR_DIR</span>]</span>,
+		rode <kbd>ant</kbd>, mas esteja certo de que todos os arquivos jar que você baixou estão corretamente configurados na variável CLASSPATH do ambiente. 
+		Em geral é suficiente o seguinte:<br />
+		<kbd>CLASSPATH=.:./WEB-INF/lib:$CLASSPATH ant</kbd>	</li>
+	<li>Copie ou transfira  "<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/</span><span class="file">css-validator.jar</span>"
+	para "<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/WEB-INF/lib/</span>".</li>
+	<li>
+		Copie ou transfira o arquivo "<span class="file">web.xml</span>" de
+		"<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/</span>" para
+		"<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/WEB-INF/</span>".	</li>
+    <li>
+		Reinicie o servidor  Tomcat:<br />
+<kbd>"cd <span class="dir">[<span class="const">TOMCAT_DIR</span>]</span>; <span class="dir">./bin/</span><span class="file">shutdown.sh</span>; <span class="dir">./bin/</span><span class="file">startup.sh</span>;"</kbd>	</li>
+</ol>
+
+<h4>Instalação em servidor Jigsaw</h4>
+<ol class="instructions">
+<li>Baixe o código como explicado anteriormente, tenha todos os arquivos jars e monte o código com <kbd>ant</kbd>.</li>
+
+<li>Agora você precisa configurar o diretório   home do validador (em geral é o diretório
+css-validator) de modo a que ele possa funcionar como um container para  servlet. Para isso você precisa ter o Jigsaw instalado (ver a documentação do Jigsaw para instruções (é bem fácil)) e a seguir inicie Jigsaw Admin. Modifique
+HTTPFrame para ServletDirectoryFrame.</li>
+
+<li>A seguir crie um recurso "validator", com  a classe
+'ServletWrapper' e como 'ServletWrapperFrame'. O último se auto adicionará automagicamente. A classe do servlet é 
+org.w3c.css.servlet.CssValidator. Se já existir um arquivo chamado 
+'validator', por favor, renomeie ele. É importante que esse 'alias' tenha sempre o nome de 'validator'.</li>
+
+<li>Finalmente, inicie Jigsaw e rode o validador. Verifique qual o HTML que você deseja invocar. Usualmente sua URL terá o seguinte formato:<br />
+http://localhost:8001/css-validator/validator.html</li>
+</ol>
+
+<h3>Uso com linha de comando</h3>
+
+<p>O validador  CSS pode ainda ser usado como uma ferramenta iniciada via linha de comando, caso seu cumputador tenha java instalado. Construa o css-validator.jar como explicado anteriormente e rode assim:<br />
+<kbd>java -jar css-validator.jar http://www.w3.org/</kbd>
+</p>
+</div>
+   <ul class="navbar"  id="menu">
+	<li><strong><a href="./" title="Home page do serviço de validação CSS do W3C">Home</a></strong> <span class="hideme">|</span></li>
+	<li><a href="about.html" title="Sobre esse serviço">Sobre</a> <span class="hideme">|</span></li>
+
+        <li><a href="documentation.html" title="Documentação para o serviço de validação CSS">Documentação</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="Como enviar seu feedback sobre esse serviço">Feedback</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Créditos e agradecimentos">Créditos</a><span class="hideme">|</span></li>
+
+      </ul>
+ 
+      <ul id="lang_choice">
+     
+     <li><a href="DOWNLOAD.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="DOWNLOAD.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+     
+     <li><a href="DOWNLOAD.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="Saiba mais sobre folhas de estilo em cascata"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+
+</html>
+
+
+
+

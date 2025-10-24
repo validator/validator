@@ -1,0 +1,419 @@
+# Brazilian-Portuguese translation, last updated in sync with Messages.properties.en,v 1.31
+
+direction: ltr
+language_name: Português
+more_options: Mais opções
+title_more_options: Mostra/oculta opções extras de validação
+all: Todos
+normal_report: Relatório normal
+most_important: Mais importantes
+no_warnings: Sem alertas
+profile: Perfil
+no_special_profile: Nenhum perfil especial
+css1: CSS nível 1
+css2: CSS nível 2
+css21: CSS nível 2.1
+css3: CSS nível 3
+css3svg: CSS nível 3 + SVG
+svg: SVG
+svgbasic: SVG Basic
+SVG_basic: <!-- SVG Basic, deprecated, see svgbasic  -->
+svgtiny: SVG Tiny
+SVG_tiny: <!-- SVG Tiny, deprecated, see svgbasic  -->
+mobile: Móvel
+ATSC_TV_profile: Perfil TV ATSC 
+TV_profile: Perfil TV
+medium: Mídias
+aural: Auditiva
+braille: Escrita braille
+embossed: Impressora braille
+handheld: Dispositivos portáteis
+print: Impressa
+projection: Projeção
+screen: Tela
+tty: Teletipo
+tv: Televisão
+presentation: Apresentação
+type: Tipo
+no_special_type: Automático
+html_doc: HTML
+css_doc: CSS
+check: Verificar
+W3C_CSS_validation_service: Serviço de validação de CSS do W3C
+check_CSS: Analisa folhas de estilo em cascata (CSS) e documentos (X)HTML com folha de estilo
+by_URI: Por URI
+by_file_upload: Por upload de arquivo
+by_direct_input: Por entrada direta
+validate_by_URI: Validar por URI
+enter_uri: Entre a URI do documento (HTML com CSS ou somente CSS) a ser validado
+page_address: Endereço da página a ser validada
+address: Endereço
+submit_uri: Enviar URI para validação
+validate_by_file_upload: Validar por upload de arquivo
+choose_document: Escolha o documento que você gostaria de validar
+choose_local_file: Escolha o arquivo local que você gostaria de validar
+local_CSS_file: Arquivo CSS local
+submit_file: Enviar arquivo para validação
+validate_by_input: Validar por entrada direta
+enter_CSS: Entre as CSS que você gostaria de validar
+submit_input: Enviar CSS para validação
+note: Nota
+note_xhtml_valid: Para validar uma folha de estilo CSS incorporada a um documento (X)HTML você deverá, primeiramente, <a href="https://validator.w3.org/">verificar se a marcação (X)HTML é válida</a>
+# End of variables added along with Index page template
+
+W3C_validator_results: Resultados da validação CSS do W3C para
+# file_title: <!-- provided by user -->
+CSS_validation_service: Serviço de validação CSS
+jump_to: Ir para
+# errors_count: <!-- generated on the fly -->
+errors: Erros
+# warnings_count <!-- generated on the fly -->
+warnings: Alertas
+validated_CSS: CSS validada
+congrats: Parabéns! Não foram encontrados erros na sua folha de estilo.
+# The sentence defined by doc_validates_before_link and doc_validates_after_link variables goes: \
+# "This document validates as CSSXX!" where XX stands for the CSS version used \
+# Since the content of the link about the CSS version is generated on the fly, \
+# it is important to define what goes before the link and what goes afterwards in 2 separate \
+# variables because the position of the link in the sentence varies in different languages
+doc_validates_before_link: Este documento é válido para as
+doc_validates_after_link: !
+no_errors_interoperable_msg: Para mostrar aos seus leitores que você teve o cuidado de criar \
+ uma página web interoperável, você pode inserir um selo nas páginas válidas. Veja a seguir o \
+código XHTML a ser usado para mostrar na sua página o citado selo:
+valid_CSS: CSS válido!
+# <!-- close the img tag with > instead of /> if using HTML<= 4.01 -->
+no_errors_close_tags_msg: Se a sua marcação foi escrita com HTML versão 4.01 ou menor a \
+tag de fechamento do elemento img deverá ser &gt; no lugar de /&gt;, como mostrado.
+no_errors_dl_local_msg: Se você preferir, pode fazer o download da imagem do selo de validação \
+ e hospedá-la no seu servidor, mas neste caso não se esqueça de alterar o endereço da imagem no \
+ fragmento de código mostrado.
+no_errors_create_link_msg: se você quiser criar um link para esta página (isto é, o resultado da validação) \
+com a finalidade de facilitar futuras revalidações, ou mesmo permitir que seus leitores \
+verifiquem a validação da página, o endereço URI é mostrado a seguir:
+no_errors_forHTML_only_msg: Somente para documentos HTML/XML
+no_errors_bookmark_msg: Ou, você pode adicionar esta página à sua lista de favoritos.
+note_valide_html: Para surtir os efeitos de estilização pretendidos sua folha de estilo CSS precisa estar atrelada a um documento capaz de criar uma árvore possível de ser parseada. Em outras palavras: o documento deverá estar escrito em linguagem <a href="https://validator.w3.org/">HTML válida</a>.
+top: Topo
+# hook_html_validator <!-- generated on the fly -->
+not-css1-style: /* CUIDADO ! Essa não é uma propriedade CSS1 válida ! */
+errors_sorry_msg: Lamento! Encontramos os seguintes erros
+# errors_list: <!-- generated on the fly -->
+# warnings_list: <!-- generated on the fly -->
+# rules_count: <!-- generated on the fly -->
+valid_CSS_info: Informações CSS válidas
+# charset: <!-- generated on the fly -->
+# rules_list: <!-- generated on the fly -->
+CSS_not_found: Não foi encontrada folha de estilo
+home: Home
+about: Sobre
+doc: Documentação
+dl: Download
+feedback: Feedback
+credits: Créditos
+home_title: Home page do serviço de validação do W3C
+about_title: Sobre esse serviço
+doc_title: Documentação para o serviço de validação do W3C
+dl_title: Download e instalação do validador CSS
+feedback_title: Como enviar seu feedback para este serviço
+credits_title: Créditos e agradecimentos
+W3C_quality_msg: W3C's Quality Assurance Activity, trazendo até você ferramentas livres para qualidade web e muito mais
+learn_more_msg: Saiba mais sobre folhas de estilo em cascata
+support: Dê suporte a essa ferramenta, torne-se um
+supporter: Suporte ao W3C
+# End of variables added along with Velocity
+
+# Defines your own error and warning message here
+content-type: text/html; charset=utf-8
+content-language: pt-br
+output-encoding-name: utf-8
+
+# You can change the level warning like this (example) :
+# warning.redefinition.level: 5
+#  level is an integer between 0 and 9 (all others values are ignored)
+warning.redefinition: Redefinição de \u201C%s\u201D
+
+# used by xml parser 
+warning.style-inside-comment: Não coloque regras de estilo dentro de sinais de comentários para HTML, pois poderão ser  removidas pelo agente de usuário.
+
+# used by org.w3c.css.properties.Css1Style
+warning.same-colors: Algumas cores \u201C%s\u201D e \u201C%s\u201D
+warning.no-color: Você não definiu uma cor (ou definiu como transparente) de frente, mas definiu cor de fundo. Certifique-se de que o efeito cascata para cores garante um contraste legível para os textos.
+warning.no-background-color: Você não definiu uma cor de fundo (ou definiu como transparente) mas definiu uma cor de frente. Certifique-se de que o efeito cascata para cores garante um contraste legível para os textos.
+#warning.color.mixed-capitalization is now obsolete
+#warning.color.mixed-capitalization: Although color names are case-insensitive, it is recommended to use the mixed capitalization, to make the names more legible: \u201C%s\u201D
+warning.no-generic-family: \u201C%s\u201D: É recomendável definir uma família de fontes genérica como última alternativa.
+warning.with-space: Nomes para família de fontes contendo espaços em branco devem estar entre aspas. \ 
+Se as aspas forem omitidas os espaços em branco antes e depois do nome serão ignorados e qualquer sequencia \
+de espaços dentro do nome será convertida em espaço único. 
+warning.no-padding: É recomendável definir uma área de enchimento (padding) com uma cor de fundo
+warning.same-colors2: Mesma cor para fundo e frente em dois contextos \u201C%s\u201D e \u201C%s\u201D
+warning.relative-absolute: Você definiu algumas medidas em unidades absolutas e relativas em \u201C%s\u201D. Esta não é uma definição robusta para estilos.
+# used by org.w3c.css.properties.CssSelectors
+warning.unknown-html: \u201C%s\u201D não é um elemento HTML
+warning.html-inside: Elemento HTML não pode estar contido dentro de outro elemento
+warning.body-inside: O elemento BODY não pode estar contido dentro de outro elemento que não seja o elemento HTML
+warning.pseudo-classes: pseudo-classes para âncoras \u201C%s\u201D não causam efeito em elementos que não seja o elemento 'A'
+
+# not used by org.w3c.css.properties.CssSelectors for the moment
+warning.noinside: \u201C%s\u201D não pode estar contido em um elemento inline
+warning.withblock: Cuidado. Pseudo-elementos podem ser anexados somente a elementos nível de bloco
+warning.block-level: Esta propriedade aplica-se a elementos nível de bloco.
+
+# used by org.w3c.css.parser.Frame
+warning.no-declaration: Regra sem declarações
+
+# used by org.w3c.css.parser.CssFouffa
+warning.unsupported-import: Não é possível verificar folhas de estilo importadas quando se opta por verificação por entrada direta ou por upload.
+
+# used by org.w3c.css.values.CssColor
+warning.out-of-range: \u201C%s\u201D está fora da faixa
+error.invalid-color: Função RGB inválida
+
+warning.marker: A propriedade marker-offset aplica-se a elementos com a declaração 'display: marker'
+
+# used by org.w3c.css.properties.ACssStyle
+warning.relative: Usar unidade de medida relativa torna a estilização mais robusta para a propriedade \u201C%s\u201D
+
+# used by org.w3c.css.css.StyleSheetParser and org.w3c.css.css.StyleSheetXMLParser
+error.at-rule: Lamento, a at-rule \u201C%s\u201D não está implementada.
+warning.at-rule: Lamento, a at-rule \u201C%s\u201D não está implementada.
+
+# used by all properties and values
+error.operator: \u201C%s\u201D é um operador incorreto
+error.negative-value: \u201C%s\u201D valores negativos não são permitidos
+error.few-value: poucos valores para a propriedade \u201C%s\u201D
+
+# be careful here, values comes first
+# You can't write something like this : For the color, blue is an incorrect value
+error.value: \u201C%s\u201D não é um valor \u201C%s\u201D
+
+#used by org.w3c.css.properties3.CssToggleGroup
+error.groupname: \u201C%s\u201D não é um nome de grupo correto. Use um identificador válido
+
+#used by org.w3c.css.properties3.CssGroupReset
+error.nogroup: \u201C%s\u201D não foi definido pela propriedade toggle-group
+
+#used by org.w3c.css.properties3.CssGlyphOrVert
+error.anglevalue: O valor deve estar entre -360 e 360 e ser divisível por 90
+
+#used by org.w3c.css.properties3.CssTextKashidaSpace
+error.percentage: é esperado um valor em porcentagem 
+
+#used by org.w3c.css.properties.CssTextAlign
+warning.xsl: o valor \u201C%s\u201D aplica-se somente à XSL
+
+#used by org.w3c.css.parser.analyzer.CssParser
+warning.medialist: lista para mídia deve começar com 'media :' \u201C%s\u201D
+error.nocomb: O elemento de combinação \u201C%s\u201D, entre seletores, não é permitido neste perfil ou versão
+
+#used by org.w3c.css.properties.CssDirection
+warning.direction: em lugar de usar 'direction' para elementos nível de bloco use a nova propriedade CSS3 'writing-mode'
+
+# used by org.w3c.css.properties.CssTextDecoration
+error.same-value: \u201C%s\u201D aparece duas vezes
+
+error.generic-family.quote: Família de fontes genéricas é declarada com palavra-chave, assim não deve estar entre aspas.
+
+# used by org.w3c.css.properties.CssClip
+error.shape: Definição de forma inválida rect(<top>,<right>,<bottom>,<left>)
+error.shape-separator: O separador usado na definição de forma é inválido. O separador deve ser uma vírgula.
+
+# used by org.w3c.css.properties.CssContent
+error.attr: Definição inválida para attr attr(X)
+error.function: Definição inválida para função 
+error.counter: Definição inválida para counter counter(<identifier>[,<list-style-type>]?)
+error.counters: Definição inválida para counters counters(<identifier>,<string>[,<list-style-type>]?)
+
+# used by org.w3c.css.font.Src
+error.format: Definição inválida para format format(<string>[,<string>]*)
+error.local: Definição inválida para format  local(<string>|<ident>+)
+
+# used by org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength
+error.unit: \u201C%s\u201D é uma unidade incorreta
+
+# used by org.w3c.css.aural.ACssAzimuth
+error.degree: A posição deve ser definida em graus (degrees).
+
+# used by org.w3c.css.aural.ACssElevation
+error.elevation.range: Define a elevação (elevation) com um ângulo entre '-90graus' e '90graus'.
+
+# used by org.w3c.css.aural.ACssPitchRange
+error.range: O valor está fora da faixa. A faixa vai de '0' a '100'.
+
+# used by org.w3c.css.properties.CssTextShadow
+error.two-lengths: Offset para a sombra foi definido com uso de dois valores <length> (Opcionalmente, pode ser definido um raio para blur logo após o offset para a sombra.)
+
+error.integer: This number should be an integer.
+error.comma: Ausência da vírgula separadora.
+
+# used by org.w3c.css.values.CssPercentage
+error.percent: \u201C%s\u201D é um valor incorreto para porcentagem
+
+# used by org.w3c.css.values.CssString
+error.string: \u201C%s\u201D é uma string incorreta
+
+# used by org.w3c.css.values.CssURL
+error.url: \u201C%s\u201D é uma URL incorreta
+
+# used by org.w3c.css.values.CssColor
+error.rgb: \u201C%s\u201D é uma cor inválida 3 ou 6 números hexadecimais são requeridos
+error.angle: \u201C%s\u201D é um ângulo inválido. O valor deve estar entre 0 e 360
+
+# used by org.w3c.css.values.CssNumber
+error.zero: somente 0 pode ser um(a) \u201C%s\u201D. Você deve declarar uma unidade de medida para o número
+warning.zero: somente 0 pode ser um(a) \u201C%s\u201D. Você deve declarar uma unidade de medida para o número
+
+#used by org.w3c.css.properties.CssColumnCount
+error.strictly-positive: \u201C%s\u201D é um valor inválido. Somente valores maiores que 0 são permitidos.
+
+# used by org.w3c.css.parser.CssPropertyFactory
+error.noexistence-at-all: A propriedade \u201C%s\u201D não existe
+error.noexistence-media: A propriedade \u201C%s\u201D não existe para a mídia \u201C%s\u201D
+error.noexistence: A propriedade \u201C%s\u201D não existe em \u201C%s\u201D mas existe em \u201C%s\u201D
+warning.noexistence: A propriedade \u201C%s\u201D não existe em \u201C%s\u201D mas existe em \u201C%s\u201D
+warning.noexistence-media: A propriedade \u201C%s\u201D não existe para a mídia \u201C%s\u201D
+warning.notforusermedium : A propriedade \u201C%s\u201D não existe para esta mídia de usuário
+warning.noothermedium : Propriedades para outras mídias poderão não funcionar para mídia de usuário
+# used by org.w3c.css.parser.AtRule*
+error.noatruleyet: Outras @rules que não seja @import não são suportadas em CSS1 \u201C%s\u201D
+# used by org.w3c.css.parser.analyzer.CssParser
+error.notforcss1: O valor \u201C%s\u201D não existe em CSS1
+warning.pseudo: Pseudo-elemento ou pseudo classe \u201C%s\u201D no perfil padrão (\u201C%s\u201D)
+warning.nocomb: O elemento de combinação \u201C%s\u201D entre seletores não é permitido neste perfil (\u201C%s\u201D)
+warning.charsetspecial: Este perfil tem uma sintaxe bem específica para @charset: \
+@charset seguido por exatamente um espaço em branco, seguido pelo nome de uma codificação \
+entre aspas, imediatamente seguido por ponto-e-vírgula.
+warning.notversion: \u201C%s\u201D não pode ser usado(a) com esta versão CSS : \u201C%s\u201D
+
+# used by org.w3c.css.parser.CssFouffa
+error.unrecognize: Presença de muitos valores ou valores não reconhecidos
+
+# used by org.w3c.css.parser.CssFouffa
+generator.unrecognize: Erro de parseamento
+
+# used by org.w3c.css.css.StyleSheetGeneratorHTML2
+error.unknown: Erro desconhecido
+
+# used by org.w3c.css.parser.CssSelectors
+error.pseudo-element: O pseudo-elemento \u201C%s\u201D ão pode aparecer nesse contexto HTML \u201C%s\u201D
+error.pseudo-class: A pseudo classe .\u201C%s\u201D não pode aparecer nesse contexto HTML  \u201C%s\u201D
+error.pseudo: Pseudo-elemento ou pseudo classe \u201C%s\u201D desconhecido
+error.id: O seletor ID #\u201C%s\u201D é inválido! Somente um seletor ID pode ser definido em um seletor simples: \u201C%s\u201D.
+error.space: Se o seletor de atributo ~= é usado, a palavra no valor \u201C%s\u201D não deve conter espaços.
+error.todo : Lamento. A funcionalidade \u201C%s\u201D ainda não foi implementada.
+error.incompatible: \u201C%s\u201D e \u201C%s\u201D são incompatíveis
+warning.incompatible: \u201C%s\u201D e \u201C%s\u201D são incompatíveis
+error.notformobile: \u201C%s\u201D não pode ser usada com perfil mobile
+error.notforatsc: \u201C%s\u201D não pode ser usada com perfil ATSC 
+error.notfortv: \u201C%s\u201D não pode ser usada com perfil TV
+error.notversion: \u201C%s\u201D não pode ser usada com esta versão de CSS : \u201C%s\u201D
+
+error.media: unrecognized media \u201C%s\u201D 
+error.page: não reconhecido o pseudo nome da página page \u201C%s\u201D
+
+error.unrecognized.link: Elemento link não reconhecido ou xml-stylesheet PI.
+
+# used by StyleSheetGeneratorHTML
+generator.context: Contexto
+generator.request: Ocorreu um erro ao tentar carregar sua folha de estilo. \
+Por favor verifique sua requisição ou envie um e-mail para plh@w3.org.
+generator.unrecognized: Não reconhecido
+generator.invalid-number: Número inválido
+generator.property: Erro de valor
+generator.line: Linha
+generator.not-found: Arquivo não encontrado
+
+generator.doc-html:   <!-- removed this confusing message olivier 2006-12-14 -->
+generator.doc:  <!-- removed this confusing message olivier 2006-12-14 -->
+
+
+# used by the parser
+parser.semi-colon: tentativa de encontrar um ponto-e-vírgula antes da propriedade. Coloque o ponto-e-vírgula
+
+parser.old_class: Em CSS1, um nome de classe pode começar com um dígito (".55ft"), \
+a menos que seja uma dimensão (".55in"). Em CSS2, tais ids são parseadas como \
+dimensões desconhecidas (com a finalidade de permitir adições futuras de novas unidades). \
+Para que ".\u201C%s\u201D" seja uma classe válida, CSS2 requer que o primeiro dígito seja escapado ".\3\u201C%s\u201D"
+
+parser.old_id: Em CSS1, um nome de id pode começar com um dígito ("#55ft"), \
+a menos que seja uma dimensão ("#55in"). Em CSS2, tais ids são parseadas como \
+dimensões desconhecidas (com a finalidade de permitir adições futuras de novas unidades).
+
+parser.class_dim: Em CSS1, um nome de classe pode começar com um dígito (".55ft"), \
+a menos que seja uma dimensão (".55in").
+
+parser.id_dim: Em CSS1, um nome de id pode começar com um dígito ("#55ft"), \
+a menos que seja uma dimensão ("#55in").
+
+parser.charset: A diretiva @charset deve ser declarada no início da folha \
+de estilo. Por favor assegure-se de que não há espaços em branco antes da declaração.
+
+parser.charsetspecial: Este perfil tem uma sintaxe bem específica para @charset: \
+@charset seguido por exatamente um espaço em branco, seguido pelo nome de uma codificação \
+entre aspas, imediatamente seguido por ponto-e-vírgula.
+
+warning.old_id: Em CSS1, um id pode começar com um dígito ("#55ft"), \
+a menos que seja uma dimensão ("#55in"). Em CSS2, tais ids são parseadas como \
+dimensões desconhecidas (com a finalidade de permitir adições futuras de novas unidades).
+
+warning.old_class: Em CSS1, um nome de classe pode começar com um dígito ("#55ft"), \
+a menos que seja uma dimensão ("#55in"). Em CSS2, tais ids são parseadas como \
+dimensões desconhecidas (com a finalidade de permitir adições futuras de novas unidades).
+
+# used by the servlet
+servlet.invalid-request: Você enviou uma requisição inválida.
+servlet.process: Impossível processar o objeto
+
+warning.atsc: \u201C%s\u201D pode não ser suportada pela mídia atsc-tv
+error.onlyATSC: \u201C%s\u201D esta função é exclusiva para a mídia atsc-tv
+
+warning.otherprofile: A propriedade \u201C%s\u201D não existe nesse perfil, mas valida em outro perfil.
+parser.unknown-dimension: Dimensão desconhecida
+generator.dontmixhtml: Erro de parseamento. Sintaxe HTML não é permitida em folhas de estilo
+
+warning.float-no-width: Em (x)HTML+CSS elementos flutuados devem ter uma declaração de largura. Somente elementos flutuados que possuam largura explícita (html, img, input, textarea, select, ou object) dispensam a declaração.
+parser.charsetcss1: A diretiva @charset não é permitida nas CSS1
+parser.attrcss1: Seletores de atributo não são válidos nas CSS1
+parser.invalid_id_selector: Seletor ID inválido
+parser.import_not_allowed: Não é permitido o uso da diretiva @import após uma declaração que não seja @charset ou outra @import.
+
+error.bg_order:  Em CSS3 ao definir valores para a propriedade background o valor 'bg_position' deve preceder o valor 'bg_size' se ambos estiverem presentes na declaração.
+
+error.divisortype: O divisor deve ser um número
+error.divzero: Divisão por zero
+error.greater: \u201C%s\u201D é um valor inválido, somente valores maiores que \u201C%s\u201D são permitidos.
+error.greaterequal: \u201C%s\u201D é um valor inválido, somente valores maiores ou iguais a \u201C%s\u201D são permitidos.
+error.grid: Somente os valores 0 e 1 são aceitáveis para grid
+error.incompatibletypes: Os tipos são incompatíveis.
+error.invalidtype: Tipo inválido: \u201C%s\u201D
+error.lower: \u201C%s\u201D é um valor inválido, somente valores menores que \u201C%s\u201D são permitidos.
+error.lowerequal: \u201C%s\u201D é um valor inválido, somente valores menores ou iguais a \u201C%s\u201D são permitidos.
+error.nomediafeature: Funcionalidades de mídia não são definidas neste nível das CSS.
+error.nomediarestrictor: Restrições para mídia não são definidas neste nível das CSS.
+error.nomodifiermedia: A funcionalidade \u201C%s\u201D para mídia não suporta prefixos.
+error.nomodifiershortmedia: Funcionalidades de mídia sem valor declarado não admitem prefixos.
+error.operandnumber: Um dos operadores deve ser um número.
+error.selectorname: Nome de seletor inválido \u201C%s\u201D
+error.typevaluemismatch: O valor \u201C%s\u201D é incompatível com o tipo para ele definido <\u201C%s\u201D>
+parser.calcwhitespace: Em ambos os lados dos operadores '+' e '-' deve ser deixado um espaço em branco.
+vendorext: Extensões proprietárias
+vext_default: Default
+vext_errors: Erros
+vext_warnings: Alertas
+warning.deprecated: O valor '\u201C%s\u201D' está em desuso
+warning.deprecatedmedia: A mídia "\u201C%s\u201D" está em desuso
+error.deprecatedmedia: A mídia "\u201C%s\u201D" está em desuso
+warning.deprecatedproperty: A propriedade '\u201C%s\u201D' está em desuso
+warning.greaterequal: O valor \u201C%s\u201D será interpretado como \u201C%s\u201D
+warning.link-type: Deve ser declarado o atributo 'type' com valor 'text/css' para o elemento link
+warning.lowerequal: O valor \u201C%s\u201D será interpretado como \u201C%s\u201D
+warning.negative: Valor negativo \u201C%s\u201D será interpretado como 0 (zero)
+warning.noexproperty: A propriedade \u201C%s\u201D não existe
+warning.shape-separator: Separador inválido. O separador deveria ser uma vírgula.
+error.errortoken: Conteúdo inesperado "\u201C%s\u201D" na linha \u201C%s\u201D, o esperado era um token \u201C%s\u201D (skipped \u201C%s\u201D) 
+warning.vendor-ext-pseudo-class: \u201C%s\u201D não é reconhecida como uma pseudoclasse proprietária válida
+warning.vendor-ext-pseudo-element: \u201C%s\u201D não é reconhecido como um pseudoelemento  proprietário válido
+warning.vendor-extension: A propriedade  \u201C%s\u201D  é uma propriedade proprietária desconhecida
+
+warning.dynamic: Valores gerados dinâmicamente não podem ser checados se for especificada a unidade de medida. Por favor, especifique a unidade do valor.

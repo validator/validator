@@ -1,0 +1,6 @@
+[submodule "testsuite"]
+	path = testsuite
+	url = https://github.com/w3c/css-validator-testsuite.git
+[submodule "javacc"]
+	path = javacc
+	url = https://github.com/javacc/javacc.git

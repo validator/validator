@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ro" lang="ro">
+<head>
+  <title>Manualul utilizatorului pentru validatorul CSS</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="Pagina de start" />
+  <style type="text/css" media="all">
+    @import "style/base.css";    
+    @import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+   <a href="./"><span>Serviciul de validare CSS <span></a></h1>
+   <p id="tagline">
+     Verifica foile de lucru in cascada(CSS) si documentele (X)HTML 
+   </p>
+  </div>
+
+<div id="main">
+<!-- This DIV encapsulates everything in this page - necessary for the positioning -->
+
+<div class="doc">
+<h2>Manualul utilizatorului pentru validatorul CSS</h2>
+
+<h3 id="TableOfContents">Cuprins</h3>
+
+<div id="toc">
+<ul>
+  <li><a href="#use">Instructiuni de folosire a validatorului CSS</a>
+    <ul>
+      <li><a href="#url">Validare prin URL
+      response</a></li>
+      <li><a href="#fileupload">Validare prin incarcare fisier</a></li>
+      <li><a href="#directinput">Validare prin introducere directa a codului</a></li>
+      <li><a href="#basicvalidation">Ce face validarea de baza?</a></li>
+    </ul>
+  </li>
+  <li><a href="#advanced">Validare avansata</a>
+    <ul>
+	<li><a href="#paramwarnings">Parametru de avertizare</a></li>
+	<li><a href="#paramprofile">Parametru de profil</a></li>
+	<li><a href="#parammedium">Parametru mediu</a></li>
+    </ul>
+  </li>
+  <li><a href="#expert">Pentru experti</a>
+    <ul>
+	<li><a href="#requestformat">Format de cerere de validare</a></li>
+	<li><a href="#api">Serviciul web API de validare CSS</a></li>
+    </ul>
+   </li>
+</ul>
+</div>
+
+<p id="skip"></p>
+
+<h3 id="use">Cum se utilizeaza validatorul CSS</h3>
+
+<p>
+Cel mai usor mod de a verifica un document este sa folosesti interfata de baza. In aceasta pagina vei gasi trei formate corespunzatoare pentru trei posibilitati:
+</p>
+
+<h4 id="url">Validare prin URL</h4>
+<p>
+    Introdu pur si simplu URL-ul documentului pe care vrei sa il validezi. 
+    Acest document poate fi HTML sau CSS.
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/uri_basic.png" alt="Validare prin URL" />
+
+<h4 id="fileupload">Validare prin incarcare fisier</h4>    
+<p>
+    Aceasta solutie iti permite sa incarci si sa verifici un fisier local. Acceseaza butonul "Browse"si selecteaza fisierul pe care vrei sa il verifici.
+</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/file_upload_basic.png" 
+    alt="Validare prin incarcare fisier" />
+<p>
+    In acest caz, sunt permise numai fisierele CSS. Adica nu poti incarca documente (X)HTML. Trebuie de asemenea acordata atentie regulilor @import intrucat ele vor fi urmate numai daca se refera in mod explicit la un URL public.</p>
+   
+<h4 id="directinput">Validare prin introducerea directa a codului</h4>
+<p>
+    Aceasta metoda este perfecta pentru verificarea fragmentelor CSS. Trebuie pur si simplu sa scrii CSS-ul in aria pentru text.</p>
+<img style="display: block; margin-left:auto; margin-right: auto;" 
+    src="./images/direct_input_basic.png" 
+    alt="Validarea prin introducerea directa a codului" />
+<p>
+    Se aplica aceleasi comentarii ca si inainte. Aceasta  solutie se aplica foarte bine daca ai o problema si ai nevoie de ajutor din partea comunitatii. 
+    Este de asemenea foarte folositoare daca vrei sa raportezi o eroare, din moment ce poti face o legatura catre URL-ul rezultat pentru a il supune unui test de caz.
+</p>    
+
+<h4 id="basicvalidation">Ce face validarea de baza?</h4>
+
+<p>    
+    Cand se foloseste interfata de baza, validatorul va compara cu <a href="https://www.w3.org/TR/CSS2">CSS 2</a>, care este recomandarea tehnica curenta pentru CSS.<br />
+    Va produce un rezultat XHTML fara vreun avertisment (vei vedea numai erorile).<br />
+    Media este setata pentru "all", care este media indicata pentru toate dispozitivele(vezi <a href="https://www.w3.org/TR/CSS2/media.html">
+    http://www.w3.org/TR/CSS2/media.html</a> pentru o descriere completa a mediei).
+</p>
+
+<h3 id="advanced">Validare avansata</h3>
+
+<p>
+    Daca doresti o verificare mai amanuntita, poti folosi interfata avansata care permite sa specifici trei parametri. IN continuare, un mic ajutor pentru fiecare parametru:</p>
+
+<h4 id="paramwarnings">Avertizari</h4>
+
+<p>
+    Acest parametru este folositor pentru a regla prolixitatea validatorului CSS.Intr-adevar, validatorul poate sa ofere doua tipuri de mesaje: erori si avertismente. Erorile sunt date cand CSS-ul verificat nu respecta recomandarile CSS. 
+	Avertizarile sunt diferite de erori din moment ce ele nu indica o problema legata de specificatie. Ele sunt pentru a avertiza(!) dezvoltatorul CSS ca unele puncte pot fi periculoase si ar putea conduce la un comportament straniu asupra unora dintre utilizatori.</p>
+<p>
+    Un avertisment tipic se refera la familia de font : daca nu stabilesti un font generic, vei primi un avertisment care spune sa adaugi unul la sfarsitul regulii, altfel un utilizator care nu cunoaste vreun alt font folosit de tine il va inlocui cu font-ul pe care il foloseste prin default, ceea ce ar putea determina o afisare ciudata.</p>
+
+<h4 id="paramprofile">Profil</h4>
+
+<p>
+    Validatorul CSS poate verifica diferite profile CSS. Un profil afiseaza toate trasaturile pe care o implementare pe o platforma anume le va implementa. Aceasta definitie se gaseste pe 
+	<a href="https://www.w3.org/Style/2004/css-charter-long.html#modules-and-profiles0">
+	site-ul CSS.
+    </a> Cea mai folosita si mai noua este: <a href="https://www.w3.org/TR/CSS2">CSS 2</a>.
+</p>
+
+<h4 id="parammedium">Media</h4>
+
+<p>
+    Parametrul mediu este echivalentul regulii @media, care se aplica intregului document. Vei gasi mai multe informatii la 
+    <a href="https://www.w3.org/TR/CSS2/media.html">
+	http://www.w3.org/TR/CSS2/media.html
+    </a>.
+</p>
+
+<h3 id="expert">Pentru experti</h3>
+
+<h4 id="requestformat">Formatul cererii de validare</h4>
+<p>Mai jos este un tabel cu parametrii pe care ii poti folosi pentru a trimite o interogare validatorului W3C pentru CSS.</p>
+
+<p>Daca vrei sa folosesti serverul public de validare al W3C, foloseste parametrii de mai jos o data cu urmatorul URI de baza :<br />
+<kbd>http://jigsaw.w3.org/css-validator/validator</kbd><br />
+inlocuieste cu adresa propriului tau server daca vrei sa soliciti o versiune privata a validatorului.</p>
+
+<p><strong>Nota</strong>: Daca vrei sa apelezi la validator in mod programat pentru o serie de documente, asigura-te ca script-ul tau va face pauza (<code>sleep</code>) pentru <strong>cel putin o secunda</strong> intre cereri.
+Serviciul de validare CSS este un serviciu gratuit, public pentru oricine, iar respectul tau va fi apreciat. Multumim.</p>
+
+<table class="refdoc">
+  <tbody>
+    <tr>
+      <th>Parametru</th>
+      <th>Descriere</th>
+      <th>Valoare automata</th>
+    </tr>
+    <tr>
+      <th>uri</th>
+      <td><acronym title="Universal Resource Locator">URL</acronym>-ul documentului de validat. Sunt permise documentele CSS si HTML.</td>
+      <td>Nici una, dar fie parametrul, fie <code>textul</code> trebuie introduse.</td>
+    </tr>
+    <tr>
+      <th>text</th>
+      <td>Documentul de validat, numai CSS este permis.</td>
+      <td>Nici una, dar fie parametrul, fie <code>uri</code> trebuie introduse</td>
+    </tr>
+    <tr>
+      <th>usermedium</th>
+      <td><a href="https://www.w3.org/TR/CSS2/media.html">media</a> folosita pentru validare, ca <code>screen</code>,
+	  <code>print</code>, <code>braille</code>...</td>
+      <td><code>all</code></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td>Declanseaza diferite formate de rezultate ale validatorului. Formaturile posibile sunt <code>text/html</code> si<code>html</code> (document XHTML, 
+	Content-Type: text/html), 
+	<code>application/xhtml+xml</code> si <code>xhtml</code> (document XHTML, Content-Type: application/xhtml+xml), 
+	<code>application/soap+xml</code> si <code>soap12</code> (document SOAP 1.2, Content-Type: application/soap+xml), 
+	<code>text/plain</code> si <code>text</code> (document text, 
+	Content-Type: text/plain),
+	orice altceva (document XHTML, Content-Type: text/html)	
+      </td>
+      <td>html</td>
+    </tr>
+    <tr>
+      <th>profile</th>
+      <td>Profilul CSS folosit pentru validare. Poate fi 
+        <code>css1</code>, <code>css2</code>, <code>css21</code>,
+        <code>css3</code>, <code>svg</code>, <code>svgbasic</code>,
+        <code>svgtiny</code>, <code>mobile</code>, <code>atsc-tv</code>,
+        <code>tv</code> sau <code>none</code></td>
+      <td>cea mai recenta recomandare W3C: CSS 2</td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td>Limba folosita pentru raspuns, acum: <code>en</code>,
+        <code>fr</code>, <code>ja</code>, <code>es</code>,
+        <code>zh-cn</code>, <code>nl</code>, <code>de</code>, <code>it</code>, 
+        <code>pl</code>.</td>
+      <td>Engleza(<code>en</code>).</td>
+    </tr>
+    <tr>
+      <th>Avertisment</th>
+      <td>Nivelul de avertisment <code>no</code> pentru nici un avertisment, <code>0</code> pentru avertismente putine, <code>1</code>or <code>2</code> pentru avertismente mai multe.
+      </td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="api">Serviciul web API de validare CSS : documentatie de validare SOAP 1.2</h4>
+<p>    
+    PEntru mai mult ajutor tehnic, in special pentru rezultatele SOAP 1.2 si toate posibilele cai de a interoga validatorul, vezi     <a href="./api.html">Serviciul web API de validare a CSS</a>.       
+</p>
+
+</div>
+</div>
+<!-- End of "main" DIV. -->
+
+   <ul class="navbar"  id="menu">
+	<li><strong><a href="./" title="Home page for the W3C CSS Validation Service">Home</a></strong> <span class="hideme">|</span></li>
+	<li><a href="about.html" title="About this service">About</a> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="Documentation for the W3C CSS Validation Service">Documentation</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Download the CSS validator">Download</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="How to provide feedback on this service">Feedback</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Credits and Acknowlegments">Credits</a><span class="hideme">|</span></li>
+      </ul>
+
+      <ul id="lang_choice">
+          
+		   <li><a href="manual.html.ro"
+               lang="ro"
+               xml:lang="ro"
+               hreflang="ro"
+               rel="alternate">Romanian</a></li>
+			   
+		   <li><a href="manual.html.de"
+               lang="de"
+               xml:lang="de"
+               hreflang="de"
+               rel="alternate">Deutsch</a></li>
+           
+		   <li><a href="manual.html.en"
+               lang="en"
+               xml:lang="en"
+           hreflang="en"
+           rel="alternate">English</a>  </li>
+           <li><a href="manual.html.es"
+           lang="es" xml:lang="es" hreflang="es"
+           rel="alternate">Español</a></li>
+           <li><a href="manual.html.fr"
+           lang="fr"
+           xml:lang="fr"
+           hreflang="fr"
+           rel="alternate">Français</a> </li>
+           <li><a href="manual.html.it"
+               lang="it"
+               xml:lang="it"
+               hreflang="it"
+               rel="alternate">Italiano</a> </li>
+           <li><a href="manual.html.nl"
+               lang="nl"
+               xml:lang="nl"
+               hreflang="nl"
+               rel="alternate">Nederlands</a> </li>
+           <li><a href="manual.html.ja"
+               lang="ja"
+               xml:lang="ja"
+               hreflang="ja"
+               rel="alternate">日本語</a> </li>
+           <li><a href="manual.html.pl-PL"
+               lang="pl"
+               xml:lang="pl"
+               hreflang="pl"
+               rel="alternate">Polski</a> </li>
+           <li><a href="manual.html.zh-cn"
+               lang="zh-hans"
+               xml:lang="zh-hans"
+               hreflang="zh-hans"
+               rel="alternate">中文</a></li>
+      </ul>
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title="Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+</html>
+
+
+

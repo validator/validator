@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xml:lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/xhtml" lang="fa">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>CSS دانلود و نصب اعتبار سنج</title>
+  <link rev="made" href="mailto:www-validator-css@w3.org" />
+  <link rev="start" href="./" title="صفحه اصلی" />
+  <style type="text/css" media="all">
+    @import "style/base.css";  
+    @import "style/docs.css";
+  </style>
+  <meta name="revision"
+  content="$Id$" />
+  <!-- SSI Template Version: $Id$ -->
+
+</head>
+
+<body>
+  <div id="banner">
+   <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a><span id="tit"><span style="background-color: #365D95; background-repeat: repeat; background-position: 0 0"><a href="./">سرویس اعتبار سنجی <span lang="en-us">CSS</span></a></span></span></h1><p id="tagline">محک زدن شیوه نامه های آبشاری (CSS) و اسناد X)HTML) حاوی شیوه نامه ها</p></div>
+
+<div class="doc">
+<h2>دانلود و نصب اعتبار سنج CSS</h2>
+<h3 id="download">دانلود اعتبار سنج CSS</h3>	
+
+	<h4 id="source">دانلود منبع</h4>
+    <p>
+      &nbsp;<a href="https://github.com/w3c/css-validator">اعتبار سنج CSS</a> 
+		برای دانلود با استفاده از CVS در دسترس است.
+		<a href="https://dev.w3.org/cvsweb/">دستورالعمل ها</a> را جهت دسترسی به 
+		سرویس دهنده ی عمومی W3C CVS و بدست آوردن 2002/css-validator دنبال کنید. 
+		توجه داشته باشید نسخه ی آنلاین اعتبار سنج CSS بطور کلی قدیمی تر از نسخه 
+		ی CVS
+      است بنابراین نتایج و ظاهرشان ممکن است اندکی فرق داشته باشند ...
+    </p>	
+	<h4>دانلود بصورت بسته ی جاوا (jar یا war)</h4>
+<!--	<p>TBD... we just need a stable location to put jar/war archives on a regular basis</p>-->
+	<p><a href="https://github.com/w3c/css-validator/releases/latest/download/css-validator.jar">css-validator.jar</a></p>
+
+
+<h3>راهنمای نصب</h3>
+<p>سرویس اعتبار سنجی CSS یک نرم افزار سرولت (servlet)، نوشته شده در جاوا است. 
+احتمالا در هر موتور سرولت (servlet) نصب شده و همچنین می تواند بعنوان ابزار ساده 
+ی خط فرمان مورد استفاده قرار گرفته باشد. 
+سرویس اعتبار&nbsp; سنجی رسمی W3C CSS با سرور Jigsaw در حال اجرا می باشد که در 
+آغاز توصیه شده است.
+در هر صورت، به منظور سادگی، ما در این سند عمدتا جزئیات چگونگی نصب آن بعنوان یک 
+سرولت (servlet) آنلاین با موتور Tomcat سرولت آپاچی را فراهم خواهیم نمود.</p>
+
+<p>تعدادی دستورالعمل در مورد نصب سرولت با Jigsaw، 
+همچنین اجرای آن از یک محیط خط فرمان در زیر آورده شده است. </p>
+
+<h4 id="prereq">پیش نیازها</h4>
+
+<p>در این راهنمای نصب و راه اندازی فرض بر این است که شما موارد زیر را دانلود، نصب و تست نموده اید: </p>
+<ul class="instructions">
+	<li>یک محیط کاری جاوا،</li>
+	<li>ابزار ساختمان <a href="https://ant.apache.org/">غیر</a> جاوا</li>
+	<li>یک نگهدارنده ی سرولت (<span lang="en-us">servlet</span>) وب از قبیل 
+		<a href="https://www.w3.org/Jigsaw/">Jigsaw</a>، <a href="https://tomcat.apache.org/">Tomcat</a> 
+	یا
+		<a href="http://www.mortbay.org/">Jetty</a> در صورتی که شما طرح کاربرد 
+	اعتبار سنج بصورت سرویسی آنلاین را در نظر داشته باشید. 
+		این راهنما فقط در بر گیرنده ی Tomcat و Jigsaw با تمام جزئیات می باشد.</li>
+</ul>
+<p id="prereq-libs">برای نصب و راه اندازی اعتبار سنج روی سیستم شما، نیازمند آن 
+خواهید بود که دانلود و / یا در سیستم تان چند مجموعه برنامه ی جاوا را بیابید:</p>
+<ul class="instructions">
+	<li>servlet.jar
+	(که، اگر شما Tomcat نصب شده در [<span class="const">TOMCAT_DIR</span>] 
+	دارید، باید آنرا در [<span class="const">TOMCAT_DIR</span>]/common/lib/) 
+	احتمالا تحت نام servlet-api.jar یافته باشید. اگر نه، آنرا در
+	<a href="http://java.sun.com/products/servlet/download.html">java.sun.com</a> 
+	بدست آورید.</li>
+	<li><a href="https://jigsaw.w3.org/Devel/classes-2.2/20060329/">jigsaw.jar</a></li>
+	<li>xercesImpl.jar و xml-apis.jar (که می توان با
+	<a href="https://www.apache.org/dist/xml/xerces-j/">xerces-j-bin</a> دانلود 
+	شده باشد).</li>
+	<li><a href="http://ccil.org/~cowan/XML/tagsoup/">tagsoup.jar</a></li>
+</ul>
+
+<h4>نصب اعتبار سنج CSS با Tomcat</h4>
+<ol class="instructions">
+	<li>
+		اعتبار سنج را بصورتی که در <a href="#source">بالا</a> توضیح داده شد 
+		دانلود کنید.
+	</li>
+	<li>کل پوشه ی منبع  ("<span class="dir">.../css-validator/</span>&quot;) را به 
+	دایرکتوری <span class="dir">webapps</span>
+		درون محل نصب Tomcat تان کپی کنید. معمولا، بصورت 
+		<span class="dir">[<span class="const">TOMCAT_DIR</span>/webapps/] خواهد 
+	بود</span>.
+		منابع اعتبار سنج هم اکنون در <span class="dir">[<span class="const">TOMCAT_DIR</span>]/webapps/css-validator</span> 
+	هستند،&nbsp; که ما در حال حاضر آنرا <span class="dir">[<span class="const">VALIDATOR_DIR</span>] 
+	می نامیم</span>.
+	</li>
+	<li>در "<span class="dir">[<span class="const">VALIDATOR_DIR</span>]</span>" 
+	یک دایرکتوری "<span class="dir">WEB-INF</span>" ایجاد نمایید و در "<span class="dir">[<span class="const">VALIDATOR_DIR</span>/WEB-INF]</span>" 
+	یک دایرکتوری "<span class="dir">lib</span>" بسازید:<br />
+		<kbd>mkdir -p WEB-INF/lib</kbd>
+		</li>
+	<li>تمام فایلهای&nbsp; jar را (مطابق <a href="#prereq-libs">پیش نیازها</a>) 
+	به دایرکتوری "<span class="dir">[<span class="const">VALIDATOR_DIR</span>/WEB-INF/lib]</span>" 
+	کپی نمایید</li>
+	<li>منبع اعتبار سنج را کامپایل کنید: مطابق دایرکتوری <span class="dir">[<span class="const">VALIDATOR_DIR</span>]</span>، 
+	اجرای <kbd>ant</kbd>، تا اینکه مطمئن شوید که فایلهای <span lang="en-us">jar</span> 
+	دانلود شده ی شما بطور صحیح در متغیر محیطی CLASSPATH شما قرار گرفته اند. 
+		بطور کلی، مورد زیر موثر واقع خواهد شد:<br />
+		<kbd>CLASSPATH=.:./WEB-INF/lib:$CLASSPATH ant</kbd>
+	</li>
+	<li>"<span class="dir">[<span class="const">VALIDATOR_DIR</span>/</span><span class="file">css-validator.jar</span><span class="dir">]</span>" 
+	را
+	به "<span class="dir">[<span class="const">VALIDATOR_DIR</span>/WEB-INF/lib]/</span>" 
+	کپی یا انتقال دهید.</li>
+	<li>
+		فایل "<span class="file">web.xml</span>" را مطابق
+		"<span class="dir">[<span class="const">VALIDATOR_DIR</span>]/</span>" 
+		به
+		"<span class="dir">[<span class="const">VALIDATOR_DIR</span>/WEB-INF]/</span>" 
+		کپی یا انتقال دهید.
+	</li>
+    <li>
+		سرانجام، سرور Tomcat را دوباره بارگذاری نمایید:<br />
+<kbd>";cd <span class="dir">[<span class="const">TOMCAT_DIR</span>]</span>; <span class="dir">./bin/</span><span class="file">shutdown.sh</span>; <span class="dir">./bin/</span><span class="file">startup.sh</span>&quot;</kbd>
+	</li>
+</ol>
+
+<h4>نصب در وب سرور Jigsaw</h4>
+<ol class="instructions">
+<li>نخست، با دانلود منبع بطوری که در بالا تشریح شده است، <span lang="en-us">jar</span> 
+های لازم را بدست آورید و منبع همراه با <kbd>ant</kbd> را ایجاد نمایید.</li>
+
+<li>سپس دایرکتوری شخصی را ایجاد نمایید (این معمولا
+css-validator می باشد) برای اینکه بتواند بصورت یک محافظ سرولت (servlet) کار 
+کند. بدین منظور شما نیازمند Jigsaw نصب شده هستید (صفحات Jigsaw را برای یک دستور 
+العمل مختصر ببینید (واقعا ساده است)) و پس از آن Jigsaw Admin را آغاز نمایید. HTTPFrame 
+را به ServletDirectoryFrame تغییر دهید.</li>
+
+<li>مرحله ی بعدی ایجاد یک منبع پشتیبان "validator"، به عنوان کلاس
+'ServletWrapper' و بصورت فریم 'ServletWrapperFrame' می باشد. مورد اخیر باید خودش 
+را بصورت خودکار اضافه نماید. کلاس سرولت org.w3c.css.servlet.CssValidator است. 
+اگر در آنجا از قبل یک فایل مشخص &#39;validator&#39; وجود دارد، لطفا نام آنرا تغییر دهید. 
+مهم آن است که این &#39;alias&#39; همواره &#39;validator&#39; نامیده می شود.</li>
+
+<li>سرانجام،&nbsp; Jigsaw را شروع نموده و اعتبار سنج را اجرا نمایید. بررسی کنید 
+که کدام HTML 
+را می خواهید فراخوانید. معمولا URL شما مشابه این است:<br />
+http://localhost:8001/css-validator/validator.html</li>
+</ol>
+
+<h3>کاربرد خط فرمان</h3>
+
+<p>اعتبار سنج CSS همچنین در صورتی که کامپیوتر شما حاوی جاوای نصب شده است،&nbsp; 
+می تواند بصورت یک ابزار خط فرمان مورد استفاده قرار گیرد. css-validator.jar را بصورتی 
+که در بالا تشریح شده بسازید و بدین گونه اجرا نمایید:<br />
+<kbd>/java -jar css-validator.jar http://www.w3.org</kbd>
+</p>
+</div>
+   <ul class="navbar"  id="menu">
+	<li><strong>
+	<a title="صفحه اصلی برای سرویس اعتبار سنج W3C CSS" href="./">صفحه اصلی</a></strong> <span class="hideme">|</span></li>
+	<li><a title="در مورد این سرویس" href="about.html">در مورد سرویس</a> <span class="hideme">|</span></li>
+
+        <li>
+		<a title="مستند سازی برای سرویس اعتبار سنج W3C CSS" href="documentation.html">مستند سازی</a> <span class="hideme">|</span></li>
+        <li>
+		<a title="چکونگی تهیه ی بازخورد در این سرویس" href="Email.html">بازخورد</a> <span class="hideme">|</span></li>
+        <li><a title="قدردانی و سپاسگزاریها" href="thanks.html">قدردانی</a><span class="hideme">|</span></li>
+
+      </ul>
+ 
+      <ul id="lang_choice">
+           <li><a href="DOWNLOAD.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="DOWNLOAD.html.de"
+               lang="de"
+               xml:lang="de"
+               hreflang="de"
+               rel="alternate">Deutsch</a></li>
+           <li><a href="DOWNLOAD.html.en"
+               lang="en"
+               xml:lang="en"
+           hreflang="en"
+           rel="alternate">English</a>  </li>
+           <li><a href="DOWNLOAD.html.es"
+           lang="es" xml:lang="es" hreflang="es"
+           rel="alternate">Español</a></li>
+           <li><a href="DOWNLOAD.html.fr"
+           lang="fr"
+           xml:lang="fr"
+           hreflang="fr"
+           rel="alternate">Français</a> </li>
+           <li><a href="DOWNLOAD.html.it"
+               lang="it"
+               xml:lang="it"
+               hreflang="it"
+               rel="alternate">Italiano</a> </li>
+           <li><a href="DOWNLOAD.html.nl"
+               lang="nl"
+               xml:lang="nl"
+               hreflang="nl"
+               rel="alternate">Nederlands</a> </li>
+           <li><a href="DOWNLOAD.html.ja"
+               lang="ja"
+               xml:lang="ja"
+               hreflang="ja"
+               rel="alternate">日本語</a> </li>
+           <li><a href="DOWNLOAD.html.pl-PL"
+               lang="pl"
+               xml:lang="pl"
+               hreflang="pl"
+               rel="alternate">Polski</a> </li>
+           <li><a href="DOWNLOAD.html.zh-cn"
+               lang="zh-hans"
+               xml:lang="zh-hans"
+               hreflang="zh-hans"
+               rel="alternate">中文</a></li>
+      </ul>
+
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="در مورد شیوه نامه های آبشاری بیشتر یاد بگیرید"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title="Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+
+</html>
+
+
+
+

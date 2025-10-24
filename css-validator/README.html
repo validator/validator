@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-fr">
+  <head>
+    <title>CSS Validator Project</title>
+    <link href="style/page.css" rel="STYLESHEET" />
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+    <link rel="STYLESHEET" title="default" media="screen"
+href="style/general.css" />
+    <style title="default" media="all">
+	@import "style/base.css";
+    </style>
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+</head>
+  <body>
+    <a class="left" href="https://www.w3.org">
+      <img src="http://www.w3.org/Icons/w3c_home" border="0" alt="W3C" /></a>
+    <a class="right" href="https://www.w3.org/Jigsaw/"><img
+	  src="http://jigsaw.w3.org/Icons/jigpower.gif" alt="Jigsaw Powered"
+	  border="0" width="94" height="52" /></a>
+    <br />
+
+    <div class="t1">CSS</div>
+    <div class="t2">Validator</div>
+
+    <h1 class="center">CSS Validator version 2.1</h1>
+    
+    <p>
+    The latest development code for the CSS Validator is available through <a
+	href="https://github.com/w3c/css-validator">the GitHub Repository</a>.
+	</p>
+	<p>
+	
+	For a visual representation, see the <a 
+	href="docs/CSS_Validator_Sequence_Diagram.png">CSS Validator Sequence Diagram</a>,
+	which is available in <a href="docs/CSS_Validator_Sequence_Diagram.png">
+	png</a>, <a href="docs/CSS_Validator_Sequence_Diagram.graffle">graffle</a> and 
+	<a href="docs/CSS_Validator_Sequence_Diagram.svg">svg</a> formats.
+    </p>
+    
+    <p>
+    If you have any questions or problems with the validator, send us an <a
+	href="Email.html.en">email</a>.
+    </p>
+
+    <h2>Classes and Source overview</h2>
+
+    <p>This directory contains:</p>
+    <dl>
+      <dt>
+    <a href="org/w3c/css/parser/analyzer">org.w3c.css.parser.analyzer</a></dt>
+      <dd>
+    The parser generated with
+    <a href="http://www.suntest.com/JavaCC">JavaCC 0.7.1</a>.
+    You'll probably not want to see this directory.</dd>
+      <dt>
+    <a href="org/w3c/css/parser">org.w3c.css.parser</a></dt>
+      <dd>
+    The front-end of the parser</dd>
+      <dt>
+    <a href="org/w3c/css/values">org.w3c.css.values</a></dt>
+      <dd>
+    All values for the parser to construct an expression.</dd>
+      <dt>
+    <a href="org/w3c/css/properties">org.w3c.css.properties</a></dt>
+      <dd>
+    Configuration and profile properties files and classes handling their loading</dd>
+      <dt>
+    <a href="org/w3c/css/properties">org.w3c.css.properties.css1</a></dt>
+      <dd>
+    All cascading style sheet level 1 properties (+ css2 and some of css3).</dd>
+      <dt>
+    <a href="org/w3c/css/aural">org.w3c.css.properties.aural</a></dt>
+      <dd>
+    For Aural properties.</dd>
+      <dt>
+    <a href="org/w3c/css/table">org.w3c.css.properties.css2.table</a></dt>
+      <dd>
+    All CSS2 table properties.</dd>
+      <dt>
+    <a href="org/w3c/css/user">org.w3c.css.properties.css2.user</a></dt>
+      <dd>
+    All CSS2 user properties.</dd>
+      <dt>
+    <a href="org/w3c/css/font">org.w3c.css.properties.css2.font</a></dt>
+      <dd>
+    All CSS2 font properties.</dd>
+      <dt>
+    <a href="org/w3c/css/paged">org.w3c.css.properties.paged</a></dt>
+      <dd>
+    All CSS2 paged properties.</dd>
+      <dt>
+    <a href="org/w3c/css/css">org.w3c.css.css</a> </dt>
+      <dd>
+    The validator is here !</dd>
+      <dt>
+    <a href="org/w3c/css/util">org.w3c.css.util</a></dt>
+      <dd>
+    some utilities for a lot of classes</dd>
+      <dt>
+    <a href="org/w3c/css/servlet">org.w3c.css.servlet</a></dt>
+      <dd>
+    The validator servlet.
+    <div class="box">
+      <p>
+        In servlet mode, URL like file are desactivated. Be careful with
+        URL, you can put a URL request so if your site have special
+        authorization to access web pages, it should be dangerous to run the
+        validator on it. You can desactivated all URL request with the init
+        parameter 'import'. Set this parameter to 'false' (default) means
+        any URL request (except file:) are authorized.  see the <a
+          href="docs/org.w3c.css.servlet.CssValidator.html">javadoc documentation</a>
+        for more informations on the servlet.
+        </p>
+    </div></dd>
+      <dt>
+    docs</dt>
+      <dd>
+    the <a href="docs/packages.html">javadoc documentation</a>.</dd>
+      <dt>
+    <a href="HOWTO.html">HOWTO</a></dt>
+      <dd>
+    How can you add your owns properties ?</dd>
+      <dt>
+    <a href="DOWNLOAD.html">RUN</a></dt>
+      <dd>
+    How to launch the validator on your local system.</dd>
+    </dl>
+
+    <p>
+      You have a lot of configuration files in the validator (in Java, it means
+      properties).
+    </p>
+
+    <ul>
+      <li>package org.w3c.css.parser
+    <dl>
+      <dt>
+        <a href="org/w3c/css/properties/Config.properties">Config.properties</a></dt>
+      <dd>
+        The default CssStyle to use when parsing a document.</dd>
+      <dt>
+        <a href="org/w3c/css/parser/Elements.dtd4">Elements.dtd4</a></dt>
+      <dd>
+        All HTML elements recognized by a selector.</dd>
+    </dl></li>
+      <li>package org.w3c.css.util
+    <dl>
+      <dt>
+        <a href="org/w3c/css/util/Messages.properties">Messages.properties</a></dt>
+      <dd>
+        All warning and error messages used by the parser.</dd>
+    </dl></li>
+      <li>package org.w3c.css.properties
+    <dl>
+      <dt>
+        <a href="org/w3c/css/properties/css1/CSS1Default.properties">CSS1Default.properties</a></dt>
+      <dd>
+        Inheritance controls for all CSS1 properties.</dd>
+      <dt>
+        <a href="org/w3c/css/properties/CSS1Properties.properties">CSS1Properties.properties</a></dt>
+      <dd>
+        All CSS1 properties.</dd>
+    </dl></li>
+      <li>package org.w3c.css.css
+    <dl>
+      <dt>
+        <a href="org/w3c/css/css/format.properties">format.properties</a></dt>
+      <dd>
+        Available output format for the validator</dd>
+      <dt>
+        <a href="org/w3c/css/css/text.properties">text.properties</a></dt>
+      <dd>
+        text output format.</dd>
+      <dt>
+        <a href="org/w3c/css/css/html.properties">html.properties</a></dt>
+      <dd>
+        html output properties.</dd>
+    </dl></li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>关于W3C的CSS验证服务</title>
+    <link rev="made" href="mailto:www-validator-css@w3.org" />
+    <link rev="start" href="./" title="Home Page" />
+    <style type="text/css" media="all">
+	@import "style/base.css";
+	@import "style/docs.css";
+    </style>
+    <meta name="revision" content="$Id$" />
+  </head>
+
+  <body>
+    <div id="banner">
+     <h1 id="title"><a href="https://www.w3.org/"><img alt="W3C" width="110" height="61" id="logo" src="./images/w3c.png" /></a>
+     <a href="./"><span>CSS Validation Service</span></a></h1>
+     <p id="tagline">
+       Check Cascading Style Sheets (CSS) and (X)HTML documents with style sheets
+     </p>
+    </div>
+
+   <div class="doc">
+
+      <h2>关于CSS验证器</h2>
+
+<h3 id="TableOfContents">目录</h3>
+<div id="toc">
+<ol>
+  <li>关于这个服务
+  <ol>
+<li><a href="#what">这是什么？我需要它么？</a></li>
+<li><a href="#help">上面的解释我看不懂！求救！</a></li>
+<li><a href="#reference">那么，这个东西是判断一个CSS是正确与否的权威么？</a></li>
+<li><a href="#free">需要花费多少钱？</a></li>
+<li><a href="#who">谁写了这个工具？谁在维护这个工具？</a></li>
+<li><a href="#contact">我该如何联系作者？如何报告一个错误？</a></li>
+<li><a href="#participate">我能帮着做点什么呢？</a></li>
+  </ol>
+  </li>
+  <li>开发者园地
+  <ol>
+    <li><a href="#code">这个CSS验证器是用什么写的？源代码可以拿到么？</a></li>
+    <li><a href="#install">我能自己安装并运行这个验证器么？</a></li>
+    <li><a href="#api">我能在我的应用程序中运用这个验证器么？有什么API么？</a></li>
+  </ol>
+  </li>
+</ol>
+</div><!-- toc -->
+<h3 id="about">关于这个服务</h3>
+
+<h4 id="what">这是什么？我需要它么？</h4>
+
+<p>W3C CSS验证服务是由W3C制作的一个免费软件，用于帮助Web设计者检查层叠样式表(CSS)。你可以在W3C提供的<a href="http://qa-dev.w3.org:8001/css-validator/">免费在线服务</a>中使用，也可以下载后作为一个Java程序或者Servlet运行在自己的机器上。</p>
+
+<p><em>你</em>需要它么？如果你是一个web开发者或者web设计人员，这个工具将是一个强大的助手，它不仅会将你所写的css文件和css的标准进行比较，帮你找出错误，笔误，误用等等，它还可以告诉你你的css中可用性上的风险。</p>
+
+<h4 id="help">上面的解释我看不懂！求救！</h4>
+<p>大部分的网页是使用html的计算机语言编写的，这种语言能创建一个结构化划分信息，超链接，多媒体对象等。对于颜色，文字，布局等样式方面的问题，html采用css来解决，css是“层叠样式表”的简称。这个工具所做的事情就是帮助用户进行css的检查，并且在需要的时候可以做一些自动更正。</p>
+
+<h4 id="reference">那么，这个东西是判断一个css是正确与否的权威么？</h4>
+<p>不，它只是一个有用的可靠的软件工具，和所有的软件一样，它也有自己的<a href="https://github.com/w3c/css-validator/issues">bug和问题</a>&amp;<a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">legacy bug和问题</a>。真正的权威应该参考<a href="https://www.w3.org/Style/CSS/#specs">css标准</a>。</p>
+
+<h4 id="free">需要花费多少钱？</h4>
+<p>不需要。这个服务是免费的，并且<a href="DOWNLOAD.html">源代码</a>也是公开的，你可以自由的下载，使用，修改，分发<a href="https://www.w3.org/Consortium/Legal/copyright-software">等等</a>。 如果你很喜欢它，我们也欢迎你<a href="#participate">加入这个项目</a>，或者通过<a href="https://www.w3.org/Consortium/sup">w3c的支持者程序</a>来资助它，但是没有任何人可以强迫你这样做。</p>
+
+<h4 id="who">谁写了这个工具？谁在维护这个工具？</h4>
+<p>W3C维护并运行这个服务，感谢w3c的成员，志愿开发者和志愿翻译者所作的工作。更详细的信息请访问<a href="thanks.html">创作人员列表</a>。你也可以<a href="#participate">加入</a>进来。 </p>
+
+<h4 id="participate">我能帮着做点什么呢？</h4>
+<p>当然，如果你是一个Java的编程人员，你可以通过取得<a href="#code">源代码</a>，添加你的新代码或者改正<a href="https://github.com/w3c/css-validator/issues">bug</a>&amp;<a href="https://www.w3.org/Bugs/Public/buglist.cgi?product=CSSValidator">legacy bug</a>的代码。</p>
+<p>除此之外，你也可以通过改进文档，翻译，加入<a href="https://lists.w3.org/Archives/Public/www-validator-css/">mailinglist</a>去解答别人的疑问来帮助这个工具。</p>
+
+<h4 id="contact">还有别的问题？</h4>
+<p>如果你还有别的关于css或者css验证器的问题，请加入<a href="Email">mailinglist或者论坛</a>。但是在那之前，请仔细阅读一下<a href="http://www.websitedev.de/css/validator-faq">css验证器的常见问题及解答(<acronym title="Frequently Asked Questions">FAQ</acronym>)</a>，避免不必要的重复劳动和浪费别人的精力。</p>
+
+
+<h3 id="dev">开发者园地</h3>
+<h4 id="code">这个css验证器是用什么写的？源代码可以拿到么？</h4>
+<p>W3C的 css验证器是使用Java开发的，当然，还是开源的，你可以通过CVS：<a href="https://github.com/w3c/css-validator">在线察看代码</a>或者下载所有的代码。察看<a href="README.html">readme</a>文件可以快速的了解css验证器的概貌。</p>
+
+<h4 id="install">我能自己安装并运行这个验证器么？</h4>
+<p>当然可以，你还可以以命令行的形式或者安装到web服务器上以servlet的形式运行。你可以参考 <a href="DOWNLOAD.html">如何安装和运行</a> 。</p>
+
+<h4 id="api">我能在我的应用程序中运用这个验证器么？有什么API么？</h4>
+<p>当然可以，当然有  <a href="api.html">API</a>。css验证器还有一个<a href="api.html">SOAP接口</a>来提供更多便利。在自己的程序中使用css验证器的时候，最好做法是在调用css验证器前调用自己程序的sleep()函数，或者将验证器作为一个单独的实例来使用</p>
+</div>
+   <ul class="navbar"  id="menu">
+	<li><strong><a href="./" title="Home page for the W3C CSS Validation Service">首页</a></strong> <span class="hideme">|</span></li>
+        <li><a href="documentation.html" title="Documentation for the W3C CSS Validation Service">文档</a> <span class="hideme">|</span></li>
+        <li><a href="DOWNLOAD.html" title="Download the CSS validator">下载</a> <span class="hideme">|</span></li>
+        <li><a href="Email.html" title="How to provide feedback on this service">反馈</a> <span class="hideme">|</span></li>
+        <li><a href="thanks.html" title="Credits and Acknowlegments">创作者</a><span class="hideme">|</span></li>
+
+      </ul>
+
+       <ul id="lang_choice">
+     
+     <li><a href="about.html.bg"
+    lang="bg"
+    xml:lang="bg"
+    hreflang="bg"
+    rel="alternate">Български</a></li>
+  <li><a href="about.html.de"
+         lang="de"
+         xml:lang="de"
+         hreflang="de"
+         rel="alternate">Deutsch</a>
+     </li>
+     
+     <li><a href="about.html.en"
+         lang="en"
+         xml:lang="en"
+         hreflang="en"
+         rel="alternate">English</a>
+     </li>
+     
+     <li><a href="about.html.es"
+         lang="es"
+         xml:lang="es"
+         hreflang="es"
+         rel="alternate">Español</a>
+     </li>
+     
+     <li><a href="about.html.fr"
+         lang="fr"
+         xml:lang="fr"
+         hreflang="fr"
+         rel="alternate">Français</a>
+     </li>
+     
+     <li><a href="about.html.ko"
+         lang="ko"
+         xml:lang="ko"
+         hreflang="ko"
+         rel="alternate">한국어</a>
+     </li>
+     
+     <li><a href="about.html.it"
+         lang="it"
+         xml:lang="it"
+         hreflang="it"
+         rel="alternate">Italiano</a>
+     </li>
+     
+     <li><a href="about.html.nl"
+         lang="nl"
+         xml:lang="nl"
+         hreflang="nl"
+         rel="alternate">Nederlands</a>
+     </li>
+     
+     <li><a href="about.html.ja"
+         lang="ja"
+         xml:lang="ja"
+         hreflang="ja"
+         rel="alternate">日本語</a>
+     </li>
+     
+     <li><a href="about.html.pl-PL"
+         lang="pl-PL"
+         xml:lang="pl-PL"
+         hreflang="pl-PL"
+         rel="alternate">Polski</a>
+     </li>
+     
+     <li><a href="about.html.pt-BR"
+         lang="pt-BR"
+         xml:lang="pt-BR"
+         hreflang="pt-BR"
+         rel="alternate">Português</a>
+     </li>
+     
+     <li><a href="about.html.ru"
+         lang="ru"
+         xml:lang="ru"
+         hreflang="ru"
+         rel="alternate">Русский</a>
+     </li>
+     
+     <li><a href="about.html.sv"
+         lang="sv"
+         xml:lang="sv"
+         hreflang="sv"
+         rel="alternate">Svenska</a>
+     </li>
+     
+     <li><a href="about.html.zh-cn"
+         lang="zh-cn"
+         xml:lang="zh-cn"
+         hreflang="zh-cn"
+         rel="alternate">简体中文</a>
+     </li>
+</ul>
+
+   <div id="footer">
+   <p id="activity_logos">
+
+      <a href="https://www.w3.org/Style/CSS/learning" title="Learn more about Cascading Style Sheets"><img src="images/woolly-icon" alt="CSS" /></a>
+   </p>
+
+   <p id="support_logo">
+   <a href="https://www.w3.org/donate/">
+   <img src="https://www.w3.org/QA/Tools/I_heart_validator" alt="I heart Validator logo" title=" Validators Donation Program" />
+   </a>
+   </p>
+
+   <p class="copyright"><span lang="en" dir="ltr">Copyright &copy; 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>.<br> <abbr title="World Wide Web Consortium">W3C</abbr><sup>&reg;</sup> <a href="https://www.w3.org/policies/#disclaimers">liability</a>, <a href="https://www.w3.org/policies/#trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/copyright/document-license/" title="W3C Document License">permissive license</a> rules apply.</span></p>
+
+</div>
+  </body>
+
+</html>
