@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <processingInstruction target="target">foo</processingInstruction>
+  <processingInstruction target="target">foo </processingInstruction>
+  <processingInstruction target="target"></processingInstruction>
+  <processingInstruction target="target"></processingInstruction>
+</doctype>

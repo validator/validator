@@ -1,0 +1,11 @@
+<!ENTITY % e1 "INCLUDE">
+<!ENTITY % e2 "%e1;">
+<![ INCLUDE [
+<!-- this is included -->
+<!ENTITY % e3 "IGNORE">
+]]>
+<![ %e1; []]>
+<![%e2;[
+<!ELEMENT doc EMPTY>
+]]>
+<![%e3;[any random junk]]>

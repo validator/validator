@@ -1,0 +1,9 @@
+<!ENTITY e1 "val">
+<!ENTITY e2 "[&e1;]">
+<!ELEMENT doc EMPTY>
+<!ATTLIST doc
+  att1 CDATA "/&e2;/&e1;/"
+  att2 CDATA "
+" att3 CDATA "	"
+  att4 CDATA "&#xD;&#xA;&#x9;&#x20;"
+  att5 CDATA #FIXED "&e1;">

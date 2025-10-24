@@ -1,0 +1,9 @@
+<!ENTITY % TEI.XML 'INCLUDE'>
+<!ENTITY % teiwsd2.dtd SYSTEM "teiwsd2.dtd">
+<!ENTITY % figure 'IGNORE'>
+%teiwsd2.dtd;
+<!ELEMENT %n.figure; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.figure;  
+      %a.global;
+      notation CDATA #REQUIRED
+      TEIform CDATA 'figure' >

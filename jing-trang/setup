@@ -1,0 +1,6 @@
+#!/bin/sh
+cat >ant <<EOF
+#!/bin/sh
+"`dirname $0`/ant" "-Dbuild.dir=`pwd`/build" "\$@"
+EOF
+chmod +x ant

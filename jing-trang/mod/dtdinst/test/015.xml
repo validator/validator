@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <enumGroup name="e1"/>
+  <enumGroup name="e2">
+    <enum>foo</enum>
+    <enumGroupRef name="e1"/>
+  </enumGroup>
+  <attlist>
+    <name>doc</name>
+    <attribute>
+      <name>att</name>
+      <tokenized>
+        <enumGroupRef name="e2"/>
+      </tokenized>
+      <implied/>
+    </attribute>
+  </attlist>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+</doctype>

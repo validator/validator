@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="">
+  <!--
+    Target namespace is intentionally set to "" so as not to interfere with
+    prefix/URI bindings
+  -->
+  
+  <start>
+    <ref name="testSuite"/>
+  </start>
+
+  <define name="testSuite">
+    <element name="testSuite">
+      <ref name="header"/>
+      <zeroOrMore>
+        <choice>
+           <ref name="testSuite"/>
+           <ref name="testCase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="testCase">
+    <element name="testCase">
+      <ref name="header"/>
+      
+      <ref name="resources"/>
+
+      <choice>
+       
+        <!-- Incorrect schema -->
+        <element name="incorrect">
+          <ref name="dtd"/>
+          <ref name="anyElement"/>
+        </element>
+         
+        <!-- Correct schema and test cases -->
+        <group>
+          <ref name="correct"/>
+          <zeroOrMore>
+            <choice>
+              <!-- Valid test cases -->
+              <element name="valid">
+                <ref name="dtd"/>
+                <ref name="anyElement"/>
+              </element>
+              <!-- Invalid test cases -->
+              <element name="invalid">
+                <ref name="dtd"/>
+                <ref name="anyElement"/>
+              </element>
+            </choice>
+          </zeroOrMore>
+        </group>
+
+      </choice>
+
+    </element>
+  </define>
+
+  <define name="correct">
+    <element name="correct">
+      <ref name="dtd"/>
+      <externalRef href="relaxng.rng"/>
+    </element>
+  </define>
+
+  <define name="any">
+    <zeroOrMore>
+      <choice>
+        <ref name="anyElement"/>
+        <attribute>
+          <anyName/>
+          <text/>
+        </attribute>
+        <text/>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="anyElement">
+    <element>
+      <anyName/>
+      <ref name="any"/>
+    </element>
+  </define>
+
+  <define name="header">
+    <zeroOrMore>
+      <choice>
+        <element name="title">
+          <text/>
+        </element>
+	<element name="documentation">
+	  <text/>
+	</element>
+	<element name="author">
+	  <text/>
+	</element>
+        <!-- Email address for correspondence about test cases. -->
+	<element name="email">
+	  <text/>
+	</element>
+        <!-- Section of the specification being tested. -->
+        <element name="section">
+          <text/>
+        </element>
+        <element name="requires">
+          <attribute name="datatypeLibrary"/>
+        </element>
+        <element>
+          <anyName>
+            <except>
+              <nsName/>
+            </except>
+          </anyName>
+          <ref name="any"/>
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="resources">
+    <zeroOrMore>
+      <choice>
+	<element name="resource">
+	  <attribute name="name">
+            <ref name="pathSegment"/>
+          </attribute>
+          <ref name="dtd"/>
+          <choice>
+  	    <ref name="anyElement"/>
+            <text/>
+          </choice>
+	</element>
+        <element name="dir">
+          <attribute name="name">
+            <ref name="pathSegment"/>
+          </attribute>
+          <ref name="resources"/>
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="dtd">
+    <optional>
+      <attribute name="dtd"/>
+    </optional>
+  </define>
+ 
+  <!-- A relative URI segment. -->
+
+  <define name="pathSegment">
+    <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+          type="string">
+      <!-- one or more RFC 2396 pchars -->
+      <param name="pattern">([\-A-Za-z0-9:@&amp;=+$,_.!~*'()]|%[0-9a-fA-F][0-9a-fA-F])+</param>
+    </data>
+  </define>
+  
+</grammar>

@@ -1,0 +1,8 @@
+ID/IDREF testing.
+
+Support an <include/> element.
+
+Might have a checker specific to a particular namespace (eg RDF, XSLT,
+HTML).
+
+What to do about DTD information (unparsed entities)?

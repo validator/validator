@@ -1,0 +1,97 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DVE] 9.1: Base Tag Set for Verse -->
+
+<!--First, declare the default text structure, which
+is the same for verse as it is for other kinds of text.  (But declare
+it only if verse is the only base.)-->
+<![ %TEI.singleBase; [
+<!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' >
+%TEI.structure.dtd;
+]]>
+<!--Finally, declare the elements specific to this base
+tag set-->
+
+<!-- [DVEST] 9.2: Numbered line groups -->
+
+<!ENTITY % lg1 'INCLUDE' >
+<![ %lg1; [
+
+<!ELEMENT %n.lg1; %om.RO;
+ ((%m.Incl;)*, ((%n.head;), (%m.Incl;)*)?,(((%n.l;)|(%n.lg2;)),(%m.Incl;)*)+)> 
+<!ATTLIST %n.lg1;  
+      %a.global;
+      %a.metrical;
+      %a.divn;
+      TEIform CDATA 'lg1' >
+  
+]]>
+  
+<!ENTITY % lg2 'INCLUDE' >
+<![ %lg2; [
+
+<!ELEMENT %n.lg2; %om.RO;
+ ((%m.Incl;)*, ((%n.head;), (%m.Incl;)*)?,(((%n.l;)|(%n.lg3;)),(%m.Incl;)*)+)> 
+<!ATTLIST %n.lg2;  
+      %a.global;
+      %a.metrical;
+      %a.divn;
+      TEIform CDATA 'lg2' >
+  
+]]>
+  
+<!ENTITY % lg3 'INCLUDE' >
+<![ %lg3; [
+
+<!ELEMENT %n.lg3; %om.RO;  ((%m.Incl;)*, ((%n.head;), (%m.Incl;)*)?,(((%n.l;)|(%n.lg4;)),(%m.Incl;)*)+)> 
+<!ATTLIST %n.lg3;  
+      %a.global;
+      %a.metrical;
+      %a.divn;
+      TEIform CDATA 'lg3' >
+  
+]]>
+  
+<!ENTITY % lg4 'INCLUDE' >
+<![ %lg4; [
+
+<!ELEMENT %n.lg4; %om.RO;  ((%m.Incl;)*, ((%n.head;), (%m.Incl;)*)?,(((%n.l;)|(%n.lg5;)),(%m.Incl;)*)+)> 
+<!ATTLIST %n.lg4;  
+      %a.global;
+      %a.metrical;
+      %a.divn;
+      TEIform CDATA 'lg4' >
+  
+]]>
+  
+<!ENTITY % lg5 'INCLUDE' >
+<![ %lg5; [
+
+<!ELEMENT %n.lg5; %om.RO;  ((%m.Incl;)*, ((%n.head;), (%m.Incl;)*)?,((%n.l;),(%m.Incl;)*)+)> 
+<!ATTLIST %n.lg5;  
+      %a.global;
+      %a.metrical;
+      %a.divn;
+      TEIform CDATA 'lg5' >
+  
+]]>
+  
+<!-- end of [DVEST]  9.2-->
+
+
+<!-- [DVESE] 9.3: Caesura -->
+
+<!ENTITY % caesura 'INCLUDE' >
+<![ %caesura; [
+
+<!ELEMENT %n.caesura; %om.RO; EMPTY> 
+<!ATTLIST %n.caesura;  
+      %a.global;
+      TEIform CDATA 'caesura' >
+  
+]]>
+  
+<!-- end of [DVESE]  9.3-->
+
+<!-- end of [DVE]  9.1-->

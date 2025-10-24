@@ -1,0 +1,36 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DNDENT] 20.: Additional classes for names and dates -->
+
+
+
+<!ENTITY % x.personPart "" >
+<!ENTITY % m.personPart "%x.personPart; %n.addName; | %n.foreName; | %n.genName; | %n.nameLink; | %n.roleName; | %n.surname;"> 
+
+<!ENTITY % x.placePart "" >
+<!ENTITY % m.placePart "%x.placePart; %n.bloc; | %n.country; | %n.distance; | %n.geog; | %n.offSet; | %n.region; | %n.settlement;"> 
+
+<!ENTITY % x.temporalExpr "" >
+<!ENTITY % m.temporalExpr "%x.temporalExpr; %n.dateStruct; | %n.day; | %n.distance; | %n.hour; | %n.minute; | %n.month; | %n.occasion; | %n.offSet; | %n.second; | %n.timeStruct; | %n.week; | %n.year;"> 
+
+<!ENTITY % a.typed '
+      type CDATA #IMPLIED
+      subtype CDATA #IMPLIED'> 
+<!ENTITY % a.names '
+      key CDATA #IMPLIED
+      reg CDATA #IMPLIED'> 
+<!ENTITY % a.personPart '
+      %a.names;
+      type CDATA #IMPLIED
+      full (yes | abb | init) "yes"
+      sort CDATA #IMPLIED'> 
+<!ENTITY % a.placePart '
+      %a.names;
+      %a.typed;'> 
+<!ENTITY % a.temporalExpr '
+      %a.names;
+      %a.typed;
+      value CDATA #IMPLIED
+      full (yes | abb | init) "yes"'> 
+<!-- end of [DNDENT]  20.-->

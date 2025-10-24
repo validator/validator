@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1">bar), (baz</param>
+  <modelGroup name="e2">
+    <sequence>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+      <elementRef>
+        <name>baz</name>
+      </elementRef>
+    </sequence>
+  </modelGroup>
+  <element>
+    <name>foo</name>
+    <modelGroupRef name="e2"/>
+  </element>
+</doctype>
