@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>nu.validator</groupId>
+    <artifactId>langdetect</artifactId>
+    <version>1.2</version>
+    <packaging>jar</packaging>
+
+    <name>langdetect</name>
+    <description>Fork of the com.cybozu.labs.langdetect language-detection library</description>
+    <url>https://github.com/validator/language-detection</url>
+    <licenses>
+      <license>
+        <name>Apache License, Version 2.0</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <developers>
+      <developer>
+        <id>shuyo</id>
+        <name>Nakatani Shuyo</name>
+        <url>https://github.com/shuyo</url>
+      </developer>
+      <developer>
+        <id>sideshowbarker</id>
+        <name>Michael[tm] Smith</name>
+        <email>mike@w3.org</email>
+        <url>https://people.w3.org/mike/</url>
+      </developer>
+    </developers>
+
+    <issueManagement>
+      <system>GitHub Issues</system>
+      <url>https://github.com/validator/language-detection/issues</url>
+    </issueManagement>
+    <scm>
+      <connection>scm:git:git://github.com/validator/language-detection.git</connection>
+      <developerConnection>scm:git:git://github.com/validator/language-detection.git</developerConnection>
+      <url>https://github.com/validator/language-detection</url>
+    </scm>
+
+    <dependencies>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-util-ajax</artifactId>
+        <version>9.2.25.v20180606</version>
+      </dependency>
+    </dependencies>
+
+    <build>
+      <sourceDirectory>src</sourceDirectory>
+      <resources>
+          <resource>
+            <directory>src/com/cybozu/labs/langdetect/util</directory>
+              <includes>
+                  <include>messages.properties</include>
+              </includes>
+              <targetPath>com/cybozu/labs/langdetect/util</targetPath>
+          </resource>
+      </resources>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+</project>
