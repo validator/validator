@@ -1,0 +1,9 @@
+[submodule "testsuite"]
+	path = css-validator/testsuite
+	url = https://github.com/w3c/css-validator-testsuite.git
+[submodule "javacc"]
+	path = css-validator/javacc
+	url = https://github.com/javacc/javacc.git
+[submodule "test-src/test/resources/html5lib-tests"]
+        path = htmlparser/test-src/test/resources/html5lib-tests
+	url = https://github.com/html5lib/html5lib-tests.git
