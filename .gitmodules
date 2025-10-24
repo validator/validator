@@ -15,7 +15,7 @@
 [submodule "galimatias"]
 	path = galimatias
 	url = https://github.com/validator/galimatias.git
-[submodule "docs"]
+[submodule "wiki"]
 	path = docs/wiki
 	url = https://github.com/validator/validator.wiki.git
 [submodule "langdetect"]
