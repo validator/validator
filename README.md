@@ -1,241 +1,121 @@
-# The Nu Html Checker (vnu)
+galimatias
+==========
 
-With the Nu Html Checker (vnu), you can:
+[![Build Status](https://travis-ci.org/smola/galimatias.png?branch=master)](https://travis-ci.org/smola/galimatias)
+[![Coverage Status](https://coveralls.io/repos/smola/galimatias/badge.png?branch=master)](https://coveralls.io/r/smola/galimatias?branch=master)
 
-- [catch unintended mistakes in your HTML, CSS, and SVG][1]
-- [batch-check documents from the command line][2] and from other scripts/apps
-- [deploy your own instance of the vnu checker as a service][3] (like [validator.w3.org/nu][4])
+galimatias is a URL parsing and normalization library written in Java.
 
-   [1]: https://validator.w3.org/nu/about.html#why-validate
-   [2]: #usage
-   [3]: #standalone-web-server
-   [4]: https://validator.w3.org/nu/
+### Design goals
 
-## Usage
+- Parse URLs as browsers do, optionally enforcing compliance with old standards (i.e. RFC 3986,  RFC 2396).
+- Stay as close as possible to WHATWG's [URL Standard](http://url.spec.whatwg.org/).
+- Convenient fluent API with immutable URL objects.
+- Interoperable with java.net.URL and java.net.URI.
+- Minimal dependencies.
 
-You can run the vnu checker with one of the invocations from the [vnu manual page](docs/vnu.1.md). For example:
+### Gotchas 
 
-    java -jar ~/vnu.jar [OPTIONS]... FILES|DIRECTORY|URL...
+galimatias is not a generic URI parser. It can parse any URI, but only schemes defined in the URL Standard (i.e. http, https, ftp, ws, wss, gopher, file) will be parsed as hierarchical URIs. For example, in `git://github.com/smola/galimatias.git` you'll be able to extract scheme (i.e. `git`) and scheme data (i.e. `//github.com/smola/galimatias.git`), but not host (i.e. `github.com`). **This is intended.** We cannot guarantee that applying a set of generic rules won't break certain kind of URIs, so we do not try with them. **I will consider adding further support for other schemes if enough people provides solid use cases and testing. [You can check this issue](https://github.com/smola/galimatias/issues/8) if you are interested.**
 
-The [OPTIONS section of the vnu manual page](docs/vnu.1.md#options) has details on all available options.
+But, why?
+---------
 
-## Sources
+galimatias started out of frustration with java.net.URL and java.net.URI. Both of them are good for basic use cases, but severely broken for others:
 
-The vnu source code is available on [GitHub][5], as are [instructions on how to build, test, and run the code][6].
+- **[java.net.URL.equals() is broken.](http://stackoverflow.com/a/3771123/205607)**
 
-   [5]: https://github.com/validator/validator
-   [6]: #build-instructions
+- **java.net.URI can parse only RFC 2396 URI syntax.** `java.net.URI` will only parse a URI if it's strictly compliant with RFC 2396. Most URLs found in the wild do not comply with any syntax standard, and RFC 2396 is outdated anyway.
 
-## Binaries and packages
+- **java.net.URI is not protocol-aware.** `http://example.com`, `http://example.com/` and `http://example.com:80` are different entities.
 
-The Nu Html Checker (vnu) is released upstream in these formats:
+- **Manipulation is a pain.** I haven't seen any URL manipulation code using `java.net.URL` or `java.net.URI` that is simple and concise.
 
-- pre-compiled Linux, Windows, and macOS binaries that include an embedded Java runtime
-- `vnu.jar` — a portable version you can use on any system that has Java 11 or above installed
-- `vnu.war` — for [deploying the vnu checker service through a servlet container such as Tomcat][11]
+- **Not IDN ready.** Java has IDN support with `java.net.IDN`, but this does not apply to `java.net.URL` or `java.net.URI`.
 
-   [11]: #servlet-container
+Setup with Maven
+----------------
 
-> [!NOTE]
-> The `vnu.jar` and `vnu.war` files require you to have Java 11 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
+galimatias is available at Maven Central. Just add to your pom.xml `<dependencies>` section:
 
-A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8], [pip][9], and [brew][10] packages are also available.
+```xml
+<dependency>
+  <groupId>io.mola.galimatias</groupId>
+  <artifactId>galimatias</artifactId>
+  <version>0.2.1</version>
+</dependency>
+```
 
-   [7]: https://ghcr.io/validator/validator
-   [8]: https://www.npmjs.com/package/vnu-jar
-   [9]: https://github.com/svenkreiss/html5validator
-   [10]: https://formulae.brew.sh/formula/vnu
-   [36]: #pulling-the-docker-image
+Development snapshots are also available at Sonatype OSS Snapshots repository.
 
-You can [get the latest release][12] or run one of the following:
+Getting started
+---------------
 
-- [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13]
-- [`npm install vnu-jar`][14]
-- [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15]
-- [`brew install vnu`][16]
-- [`pip install html5validator`][17]
+### Parse a URL
 
-…and see the **[Usage](#usage)** and **[Web-based checking](#web-based-checking)** sections here. Or automate your checking with a frontend such as:
+```java
+// Parse
+String urlString = //...
+URL url;
+try {
+  url = URL.parse(urlString);
+} catch (GalimatiasParseException ex) {
+  // Do something with non-recoverable parsing error
+}
+```
 
-   [12]: https://github.com/validator/validator/releases/tag/latest
-   [13]: https://github.com/validator/validator/pkgs/container/validator
-   [14]: https://www.npmjs.com/package/vnu-jar
-   [15]: https://github.com/validator/validator/packages/892707
-   [16]: https://libraries.io/homebrew/vnu
-   [17]: https://github.com/svenkreiss/html5validator
+### Convert to java.net.URL
 
-- [Grunt plugin for HTML validation][18] or [Gulp plugin for HTML validation][19] or [Maven plugin for HTML validation][20]
-- [html5validator `pip` package][21] (for integration in Travis CI, CircleCI, CodeShip, Jekyll, Pelican, etc.)
-- [LMVTFY: Let Me Validate That For You][22] (auto-check JSFiddle/JSBin, etc., links in GitHub issue comments)
+```java
+URL url = //...
+java.net.URL javaURL;
+try {
+  javaURL = url.toJavaURL();
+} catch (MalformedURLException ex) {
+  // This can happen if scheme is not http, https, ftp, file or jar.
+}
+```
 
-   [18]: https://github.com/validator/grunt-html
-   [19]: https://github.com/validator/gulp-html
-   [20]: https://github.com/validator/maven-plugin
-   [21]: https://github.com/svenkreiss/html5validator
-   [22]: https://github.com/cvrebert/lmvtfy/
+### Convert to java.net.URI
 
-## Web-based checking
+```java
+URL url = //...
+java.net.URI javaURI;
+try {
+  javaURI = url.toJavaURI();
+} catch (URISyntaxException ex) {
+  // This will happen in rare cases such as "foo://"
+}
+```
 
-The Nu Html Checker (vnu) — along with being usable as [a standalone command-line client][24] — can be run as an HTTP service, similar to [validator.w3.org/nu][25], for browser-based checking of HTML documents, CSS stylesheets, and SVG images over the Web. To that end, the vnu checker is released as several separate packages:
+### Parse a URL with strict error handling
 
-   [24]: #usage
-   [25]: https://validator.w3.org/nu/
+You can use a strict error handler that will throw an exception
+on any invalid URL, even if it's a recovarable error.
 
-- Linux, Windows, and macOS binaries for deploying a self-contained service on any system
-- `vnu.jar` for deploying a self-contained service on a system with Java installed
-- `vnu.war` for deploying to a servlet container such as Tomcat
+```java
+URLParsingSettings settings = URLParsingSettings.create()
+  .withErrorHandler(StrictErrorHandler.getInstance());
+URL url = URL.parse(settings, urlString);
+```
 
-All deployments expose a REST API that enables checking of HTML documents, CSS stylesheets, and SVG images from other clients, not just web browsers. And the Linux, Windows, and macOS binaries and `vnu.jar` package also include a simple HTTP client that enables you to either send documents to a locally-running instance of the vnu checker HTTP service — for fast command-line checking — or to any remote instance of the vnu checker HTTP service running anywhere on the Web.
+Documentation
+-------------
 
-The [latest releases of the Linux, Windows, and macOS binaries and vnu.jar and vnu.war packages][26] are available from the `validator` project at github. The following are detailed instructions on using them.
+Check out the [Javadoc](http://galimatias.mola.io/apidocs/0.2.0/).
 
-   [26]: https://github.com/validator/validator/releases/tag/latest
+Contribute
+----------
 
-> [!NOTE]
-> Throughout these instructions, replace `~/vnu.jar` with the actual path to that jar file on your system, and replace `vnu-runtime-image/bin/java` and `vnu-runtime-image\bin\java.exe` with the actual path to the vnu `java` or `java.exe` program on your system — or if you add the `vnu-runtime-image/bin` or `vnu-runtime-image\bin` directory your system `PATH` environment variable, you can invoke the vnu checker with just `java nu.validator.servlet.Main 8888`.
+Did you find a bug? [Report it on GitHub](https://github.com/smola/galimatias/issues).
 
-### Standalone web server
+Did you write a patch? Send a pull request.
 
-See [vnu-server](docs/vnu-server.1.md) for invocation manual page.
+Something else? Email me at santi@mola.io.
 
-### Servlet container
+License
+-------
 
-To run the vnu checker inside of an existing servlet container such as Apache Tomcat you will need to deploy the `vnu.war` file to that server following its documentation. For example, on Apache Tomcat you could do this using the [Manager][30] application or simply by copying the file to the `webapps` directory (since that is the default `appBase` setting). Typically you would see a message similar to the following in the `catalina.out` log file.
+Copyright (c) 2013-2014 Santiago M. Mola <santi@mola.io>
 
-   [30]: https://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html
-
-    May 7, 2014 4:42:04 PM org.apache.catalina.startup.HostConfig deployWAR
-    INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
-
-Assuming your servlet container is configured to receive HTTP requests sent to `localhost` on port `80` and the context root of this application is `vnu` (often the default behavior is to use the WAR file's filename as the context root unless one is explicitly specified) you should be able to access the application by connecting to [http://localhost/vnu/][31].
-
-   [31]: http://localhost/vnu/
-
-> [!NOTE]
-> You may want to customize the `/WEB-INF/web.xml` file inside the WAR file (you can use any ZIP-handling program) to modify the servlet filter configuration. For example, if you wanted to disable the inbound-size-limit filter, you could comment out that filter like this:
-
-    <!--
-      <filter>
-          <filter-name>inbound-size-limit-filter</filter-name>
-          <filter-class>nu.validator.servlet.InboundSizeLimitFilter</filter-class>
-      </filter>
-      <filter-mapping>
-          <filter-name>inbound-size-limit-filter</filter-name>
-          <url-pattern>/*</url-pattern>
-      </filter-mapping>
-    -->
-
-### HTTP client (for fast command-line checking)
-
-The vnu checker is packaged with an HTTP client you can use from the command line to either send documents to a locally-running instance of the vnu checker HTTP service — for fast command-line checking — or to a remote instance anywhere on the Web.
-
-To check documents locally using the packaged HTTP client, do this:
-
-  1. Start up the vnu checker as a local HTTP service, as described in the [**Standalone web server**][37] section.
-
-  2. Invoke the HTTP client like from the commandline according to [vnu-client](docs/vnu-client.1.md) manual page.
-
-   [37]: #standalone-web-server
-
-## Pulling the Docker image
-
-You can pull the vnu Docker image from [https://ghcr.io/validator/validator][34] in the GitHub container registry.
-
-   [34]: https://ghcr.io/validator/validator
-
-To pull and run the latest version of the vnu checker:
-
-      docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest
-
-To pull and run a specific tag/version of the vnu checker from the container registry — for example, the `17.11.1` version:
-
-      docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:17.11.1
-
-To bind the vnu checker to a specific address (rather than have it listening on all interfaces):
-
-      docker run -it --rm -p 128.30.52.73:8888:8888 ghcr.io/validator/validator:latest
-
-To make the vnu checker run with a connection timeout and socket timeout different from the default 5 seconds, use the `CONNECTION_TIMEOUT_SECONDS` and `SOCKET_TIMEOUT_SECONDS` environment variables:
-
-      docker run -it --rm \
-         -e CONNECTION_TIMEOUT_SECONDS=15 \
-         -e SOCKET_TIMEOUT_SECONDS=15 \
-         -p 8888:8888 \
-         validator/validator
-
-To make the vnu checker run with particular Java system properties set, use the `JAVA_TOOL_OPTIONS` environment variable:
-
-      docker run -it --rm \
-         -e JAVA_TOOL_OPTIONS=-Dnu.validator.client.asciiquotes=yes  \
-         -p 8888:8888 \
-         validator/validator
-
-To define a service named `vnu` for use with `docker compose`, create a Compose file named `docker-compose.yml` (for example), with contents such as the following:
-
-      version: '2' services:
-        vnu:
-          image: validator/validator ports:
-            - "8888:8888"
-          network_mode: "host" #so "localhost" refers to the host machine.
-
-## Build instructions
-
-Follow the steps below to build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
-
-  1. Make sure you have git, python, JDK 8 or above and [ant](https://ant.apache.org/manual/install.html) installed.
-
-  2. Set the `JAVA_HOME` environment variable:
-
-         export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64    <-- Ubuntu, etc.
-
-         export JAVA_HOME=$(/usr/libexec/java_home)            <-- macOS
-
-  3. Create a working directory:
-
-         git clone https://github.com/validator/validator.git
-
-  4. Change into your working directory:
-
-         cd validator
-
-  5. Start the `checker.py` Python script:
-
-         python ./checker.py all
-
-The first time you run the `checker.py` Python script, you’ll need to be online and the build will need time to download several megabytes of dependencies.
-
-Alternatively, if you wish to first download all dependencies, and build later when **offline**:
-
-1. Use the `dldeps` task to download
-
-        python ./checker.py dldeps
-
-1. For all operations when offline, use the `--offline` option (place it before the task name)
-
-        python ./checker.py --offline all
-
-
-The steps above will build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
-
-> [!WARNING]
-> Future checker releases will bind by default to the address `127.0.0.1`. Your checker deployment might become unreachable unless you use the `--bind-address` option to bind to a different address:
-
-    python ./checker.py --bind-address=128.30.52.73 all
-
-Use `python ./checker.py --help` to see command-line options for controlling the behavior of the script, as well as build-target names you can call separately; e.g.:
-
-    python ./checker.py build       # to build only
-
-    python ./checker.py build test  # to build and test
-
-    python ./checker.py run         # to run only
-
-    python ./checker.py jar         # to compile vnu.jar
-
-    python ./checker.py update-shallow && \
-      python ./checker.py dldeps && \
-      python ./checker.py jar       # to compile vnu.jar faster
-
-## Additional documentation
-
-Additional documentation is available on the [vnu wiki](https://github.com/validator/validator/wiki/).
+galimatias is released under the terms of the MIT License.

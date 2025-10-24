@@ -1,3 +1,0 @@
-<!ENTITY % e "foo">
-<!ELEMENT doc (%e;)>
-<!ATTLIST doc a1 (%e;) #IMPLIED>

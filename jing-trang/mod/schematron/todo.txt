@@ -1,3 +1,0 @@
-Use system-id in LocationFilter
-
-dir elements should turn into appropriate Unicode
