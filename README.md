@@ -232,10 +232,6 @@ Use `python ./checker.py --help` to see command-line options for controlling the
 
     python ./checker.py jar         # to compile vnu.jar
 
-    python ./checker.py update-shallow && \
-      python ./checker.py dldeps && \
-      python ./checker.py jar       # to compile vnu.jar faster
-
 ## Additional documentation
 
 Additional documentation is available on the [vnu wiki](https://github.com/validator/validator/wiki/).
