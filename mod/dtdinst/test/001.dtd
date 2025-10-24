@@ -1,0 +1,4 @@
+<!ENTITY % e1 "value">
+<!ENTITY % e2 "'%e1;'">
+<!ELEMENT doc EMPTY>
+<!ATTLIST doc a CDATA %e2;>

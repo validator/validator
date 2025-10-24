@@ -1,0 +1,209 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>DTDinst</title>
+</head>
+<body>
+<h1>DTDinst</h1>
+
+<p>Copyright &#169; 2001-2003, 2008 Thai Open Source Software Center Ltd</p>
+
+<p>See the file <a href="copying.txt">copying.txt</a> for copying
+permission.</p>
+
+<h3>Version @VERSION@</h3>
+
+<p>DTDinst is a program for converting XML DTDs into an XML instance
+<a href="#format">format</a>.</p>
+
+<p>Previous versions of DTDinst could also convert XML DTDs into RELAX
+NG.  This functionality has now migrated
+into <a href="http://www.thaiopensource.com/relaxng/trang.html"
+>Trang</a>, which now shares the DTDinst code.</p>
+
+<p>The key feature of DTDinst is its handling of parameter entities.
+It is able to reliably turn parameter entity declarations and
+references into a variety of <a href="#constructs">higher-level
+semantic constructs</a>.  It can do this even in the presence of
+arbitrarily deep nesting of parameter entity references within
+parameter entity declarations.  At the same time, it accurately
+follows XML 1.0 rules on parameter entity expansion, so that any valid
+XML 1.0 DTD can be handled.  If a parameter entity is used in a way
+that does not correspond to any of the higher-level semantics
+constructs supported by DTDinst, then references to that parameter
+entity will be expanded in the DTDinst output.</p>
+
+<h2>Getting DTDinst</h2>
+
+<p>DTDinst is available for download as the
+file <a href="http://jing-trang.googlecode.com/files/dtdinst-@VERSION@.zip"
+>dtdinst-@VERSION@.zip</a>, which contains binaries, source code and
+documentation.  It requires a Java runtime compatible with the Java 2
+Platform, Standard Edition (J2SE) version 1.4 (or any later version),
+such as the Java Runtime Environment (JRE), which can be
+downloaded <a href="http://java.sun.com/j2se/downloads.html">here</a>.</p>
+
+<p>The latest version of DTDinst will always be available in
+the <a href="http://code.google.com/p/jing-trang/downloads/list">Downloads</a>
+section of the <a href="http://jing-trang.googlecode.com">project
+site</a>.</p>
+
+<h2>Running DTDinst</h2>
+
+<p>To run DTDinst, use a command of the form:</p>
+
+<pre>java -jar dtdinst.jar <var>DTD</var></pre>
+
+<p>The <code><var>DTD</var></code> argument can be either a file or a
+URL.</p>
+
+<p>DTDinst writes an XML representation of the DTD in <a
+href="#format">DTDinst format</a> to the standard output. For example,
+the command</p>
+
+<pre>java -jar dtdinst.jar http://www.w3.org/XML/1998/06/xmlspec-v21.dtd >xmlspec.xml</pre>
+
+<p>would write an XML representation of the W3C xmlspec DTD to the
+file <code>xmlspec.xml</code>.</p>
+
+<h2><a name="format">DTDinst format</a></h2>
+
+<p>The DTDinst format is designed to represent the parameterization of
+the DTD as fully as possible.</p>
+
+<p>There is a <a href="dtdinst.rnc.txt">schema</a> for this format
+in <a href="http://www.thaiopensource.com/relaxng/compact/">RELAX NG
+compact syntax</a>; the schema is also <a
+href="dtdinst.rng">available</a> in <a
+href="http://www.relaxng.org">RELAX NG</a> format.</p>
+
+<p><a name="constructs"></a>Each parameter entity declaration is
+represented by one of the following elements:</p>
+
+<ul>
+<li><code>modelGroup</code> is used for a parameter entity that
+represents all or part of the content model of an element (<a
+href="example/modelGroup.dtd.txt">example</a>, <a
+href="example/modelGroup.xml">DTDinst output</a>)</li>
+
+<li><code>attributeGroup</code> is used for a parameter entity
+containing zero or more attribute definitions, which can be
+referenced in an <code>ATTLIST</code> declaration (<a
+href="example/attributeGroup.dtd.txt">example</a>, <a
+href="example/attributeGroup.xml">DTDinst output</a>)</li>
+
+<li><code>attributeDefault</code> is used for a parameter entity
+that represents the default value of an attribute (<a
+href="example/attributeDefault.dtd.txt">example</a>, <a
+href="example/attributeDefault.xml">DTDinst output</a>)</li>
+
+<li><code>datatype</code> is used for a parameter entity
+that represents an attribute type (<a
+href="example/datatype.dtd.txt">example</a>, <a
+href="example/datatype.xml">DTDinst output</a>)</li>
+
+<li><code>enumGroup</code> is used for a parameter entity that
+contains zero or more enumerated values (<a
+href="example/enumGroup.dtd.txt">example</a>, <a
+href="example/enumGroup.xml">DTDinst output</a>)</li>
+
+<li><code>flag</code> is used for a parameter entity with replacement
+text <code>INCLUDE</code> or <code>IGNORE</code>, which can be used to
+control a conditional section (<a
+href="example/flag.dtd.txt">example</a>, <a
+href="example/flag.xml">DTDinst output</a>)</li>
+
+<li><code>nameSpec</code> is used for a parameter entity that represents
+the name of an element or attribute (<a
+href="example/nameSpec.dtd.txt">example</a>, <a
+href="example/nameSpec.xml">DTDinst output</a>)</li>
+
+<li><code>externalId</code> is used for an external parameter entity
+that does not fall into any of the above categories (<a
+href="example/externalId.dtd.txt">example</a>, <a
+href="example/externalId.xml">DTDinst output</a>)</li>
+
+<li><code>param</code> is used for an internal parameter entity
+that does not fall into any of the above categories (<a
+href="example/param.dtd.txt">example</a>, <a
+href="example/param.xml">DTDinst output</a>)</li>
+
+<li><code>overridden</code> is used for a parameter entity declaration
+that is overridden by an earlier declaration of the same parameter
+entity (<a href="example/overridden.dtd.txt">example</a>, <a
+href="example/overridden.xml">DTDinst output</a>)</li>
+
+</ul>
+
+<p>The element used to represent a parameter entity reference depends
+on the element used to represent the declaration of the parameter
+entity.</p>
+
+<ul>
+
+<li>If the declaration is represented by a <code>modelGroup</code>,
+<code>attributeGroup</code>, <code>attributeDefault</code>,
+<code>datatype</code>, <code>enumGroup</code>, <code>flag</code> or
+<code>nameSpec</code> element, then the reference will be represented
+by a <code>modelGroupRef</code>, <code>attributeGroupRef</code>,
+<code>attributeDefaultRef</code>, <code>datatypeRef</code>,
+<code>enumGroupRef</code>, <code>flagRef</code> or
+<code>nameSpecRef</code> element respectively.</li>
+
+<li>If the declaration is represented by <code>externalId</code> and
+the reference occurs at the declaration level (i.e. at a point where a
+declaration would be allowed), then the reference will be represented
+by a <code>externalIdRef</code> element containing the declarations
+from the external entity.</li>
+
+<li>Otherwise, the reference will be expanded and there will be no
+indication that a reference was originally used in the DTD.</li>
+
+</ul>
+
+<p>An XSLT <a href="dtdinst2rng.xsl">stylesheet</a> is available that
+converts DTDinst format to RELAX NG. It has many more limitations than
+the converter builtin to DTDinst, but it may be useful as a basis for
+XSLT-based processing of DTDinst format.</p>
+
+<h2>Sample DTDs</h2>
+
+<p>You may find it interesting to experiment with the following XML DTDs
+which are available online:</p>
+
+<ul>
+<li><a href="http://www.xml.gr.jp/relax/relaxCore.dtd">RELAX Core</a></li>
+<li><a href="http://www.w3.org/XML/1998/06/xmlspec-v21.dtd">XMLSpec</a></li>
+<li><a href="http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">DocBook</a></li>
+<li><a href="http://www.w3.org/TR/2001/REC-xhtml11-20010531/DTD/xhtml11.dtd">XHTML</a></li>
+<li><a href="http://www.voicexml.org/voicexml1-0.dtd">VoiceXML</a></li>
+</ul>
+
+<h2>Limitations</h2>
+
+<p>DTDinst does not attempt to understand the contents of ignored
+conditional sections: DTDinst format represents the contents of an
+ignored section as a string.  If you wish to preserve information
+about conditional sections, you should therefore make as many
+conditional sections as possible be included marked sections rather
+than ignored marked sections.  You can do this by creating a wrapper
+DTD that declares parameter entities as <code>INCLUDE</code> and then
+references the real DTD. For example, you might use this <a
+href="teixml.dtd.txt">wrapper DTD</a> to convert the <a
+href="http://www.tei-c.org/P4X/DTD/">TEI P4 DTD</a>.</p>
+
+<p>DTDinst does not attempt to understand the contents of parameter
+entities that are never referenced.</p>
+
+<h2>Reporting bugs</h2>
+
+<p>Please report bugs by creating a new issue in
+the <a href="http://code.google.com/p/jing-trang/issues/list">Issues</a>
+section of the project site. Be sure to attach a complete DTD for
+which DTDinst exhibits the bug.</p>
+
+<address>
+<a href="mailto:jjc@jclark.com">James Clark</a>
+</address>
+
+</body>
+</html>

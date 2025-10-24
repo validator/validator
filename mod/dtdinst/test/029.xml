@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1">foo|bar</param>
+  <modelGroup name="e2">
+    <choice>
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+      <zeroOrMore>
+        <elementRef>
+          <name>bar</name>
+        </elementRef>
+      </zeroOrMore>
+    </choice>
+  </modelGroup>
+  <element>
+    <name>doc</name>
+    <modelGroupRef name="e2"/>
+  </element>
+</doctype>

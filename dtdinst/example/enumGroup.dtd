@@ -1,0 +1,5 @@
+<!ENTITY % asia "JP|TH">
+<!ENTITY % europe "UK|FR|IT">
+<!ENTITY % world "%asia;|%europe;">
+<!ELEMENT employee (#PCDATA)>
+<!ATTLIST employee country (%world;) #IMPLIED>

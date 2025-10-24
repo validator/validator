@@ -1,0 +1,5 @@
+<!ENTITY % e1 "">
+<!ENTITY % e2 "%e1; foo,bar">
+<!ELEMENT doc (%e2;)>
+<!ELEMENT foo EMPTY>
+<!ELEMENT bar EMPTY>

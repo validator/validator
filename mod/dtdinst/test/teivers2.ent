@@ -1,0 +1,35 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DVEE] 9.1: Base Tag Set for Verse: entities -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--First, declare the class of
+components specific to verse -->
+
+<!ENTITY % x.comp.verse "" >
+<!ENTITY % m.comp.verse "%x.comp.verse; %n.lg1;"> 
+<!ENTITY  % mix.verse '| %m.comp.verse;' >
+<!--Next define attributes common to metrical elements-->
+<!ENTITY % a.metrical '
+      met CDATA %INHERITED;
+      real CDATA #IMPLIED
+      rhyme CDATA #IMPLIED'> 
+<!ENTITY % a.enjamb '
+      enjamb CDATA #IMPLIED'> 
+<!--Now, we define the class of elements which can appear
+only within metrical elements-->
+
+<!ENTITY % x.phrase.verse "" >
+<!ENTITY % m.phrase.verse "%x.phrase.verse; %n.caesura;"> 
+<!-- end of [DVEE]  9.1-->

@@ -1,0 +1,6 @@
+Detect unencodable characters in attribute names (from namespace
+prefixes) in XmlWriter.
+
+Would it be better to have a different representation for prefixes?  Perhaps
+a schema document level map with overrides.  What about when annotations get
+moved between documents?

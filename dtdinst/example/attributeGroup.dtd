@@ -1,0 +1,10 @@
+<!ENTITY % global.extra "">
+<!ENTITY % global "
+  id ID #IMPLIED
+  class NMTOKEN #IMPLIED
+  %global.extra;
+">
+<!ELEMENT foo (bar*)>
+<!ATTLIST foo %global;>
+<!ELEMENT bar EMPTY>
+<!ATTLIST bar %global;>

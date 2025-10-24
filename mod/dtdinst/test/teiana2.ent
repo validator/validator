@@ -1,0 +1,13 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DAIENT] 15.: Modifications to TEI class system for analysis -->
+
+
+<!-- [DAIGA] 15.2: Global attribute for analysis -->
+
+<!ENTITY % a.analysis '
+      ana IDREFS #IMPLIED'> 
+<!-- end of [DAIGA]  15.2-->
+
+<!-- end of [DAIENT]  15.-->

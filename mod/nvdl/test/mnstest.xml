@@ -1,0 +1,1652 @@
+<testSuite>
+<testCase>
+<incorrect>
+<thisIsJunk/>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng"/>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<invalid>
+<b/>
+</invalid>
+<invalid>
+<a xmlns:x="http://www.example.com" x:foo="whatever"/>
+</invalid>
+<valid>
+<a xmlns="http://www.example.com">
+  <a xmlns=""/>
+  <a xmlns=""/>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com">
+  <a xmlns=""/>
+  <b xmlns=""/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<attribute name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <text/>
+</attribute>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateAttributes ns="" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<group xmlns:eg="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="eg:a">
+    <value>aval</value>
+  </attribute>
+  <attribute name="eg:b">
+    <value>bval</value>
+  </attribute>
+</group>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateAttributes ns="http://www.example.com" schema="a.rng"/>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<foo/>
+</valid>
+<valid>
+<foo xmlns:eg="http://www.example.com" eg:a="aval" eg:b="bval"/>
+</valid>
+<invalid>
+<foo xmlns:eg="http://www.example.com" eg:a="aval"/>
+</invalid>
+<invalid>
+<foo xmlns:eg="http://www.example.com" eg:b="bval"/>
+</invalid>
+<invalid>
+<foo xmlns:eg="http://www.example.com" eg:a="aval" eg:b="aval"/>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="elements attributes"/>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<a xml:lang="en"/>
+</valid>
+<valid>
+<a>
+<b xmlns="http://www.example.com"/>
+</a>
+</valid>
+<invalid>
+<a>
+<b/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng"/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com">
+<a xmlns=""/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://www.example.com" schema="a.rng"/>
+</rules>
+</correct>
+<invalid>
+<b>
+<a xmlns="http://www.example.com"/>
+</b>
+</invalid>
+<valid>
+<a xmlns="http://www.example.com"/>
+</valid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns" ns="">
+  <validate ns="" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+<lax/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<valid>
+<a foo="bar" xml:lang="en">
+  <b xmlns="http://www.example.com"/>
+</a>
+</valid>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns=""/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://www.example.com/a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<resource name="b.rng">
+<attribute name="b:b" xmlns:b="http://www.example.com/b" xmlns="http://relaxng.org/ns/structure/1.0">
+  <text/>
+</attribute>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://www.example.com/a" schema="a.rng" prune="elements"/>
+  <validateAttributes ns="http://www.example.com/b" schema="b.rng"/>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://www.example.com/a"/>
+</valid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</valid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b:b xmlns:b="http://www.example.com/b" b:a="whatever"/>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="" xmlns:b="http://www.example.com/b" b:a="whatever"/>
+</a>
+</invalid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="" xmlns:b="http://www.example.com/b" b:b="whatever"/>
+</a>
+</valid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="">
+    <c xmlns:b="http://www.example.com/b" b:b="whatever"/>
+  </b>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="">
+    <c xmlns:b="http://www.example.com/b" b:c="whatever"/>
+  </b>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="eg:a" xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:eg="http://www.example.com">
+  <element name="b">
+    <empty/>
+  </element>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://www.example.com" schema="a.rng">
+    <cover ns=""/>
+  </validate>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<eg:a xmlns:eg="http://www.example.com">
+  <b/>
+</eg:a>
+</valid>
+<valid>
+<a>
+<eg:a xmlns:eg="http://www.example.com">
+  <b/>
+</eg:a>
+</a>
+</valid>
+<invalid>
+<eg:a xmlns:eg="http://www.example.com"/>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="http://www.example.com/a">
+  <element name="b" ns="http://www.example.com/b">
+    <empty/>
+  </element>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://www.example.com/a" schema="a.rng">
+    <cover ns="http://www.example.com/b"/>
+  </validate>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</valid>
+<invalid>
+<a>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</a>
+</invalid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"><c/></b>
+</a>
+</invalid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b" att="val"/>
+</a>
+</invalid>
+<invalid>
+<a xmlns="http://www.example.com/a" att="val">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="http://www.example.com/a">
+  <element name="b" ns="http://www.example.com/b">
+    <empty/>
+  </element>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://www.example.com/a" schema="a.rng" prune="elements">
+    <cover ns="http://www.example.com/b"/>
+  </validate>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b">
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+  </b>
+</a>
+</invalid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b">
+    <c xmlns="">
+      <a xmlns="http://www.example.com/a">
+	<b xmlns="http://www.example.com/b"/>
+      </a>
+    </c>
+  </b>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b">
+    <c xmlns="">
+      <a xmlns="http://www.example.com/a">
+	<b xmlns="http://www.example.com/b" att="val"/>
+      </a>
+    </c>
+  </b>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://example.com" schema="a.rng" useMode="a"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://example.com" schema="a.rng" useMode="a" prune="elements"/>
+  <lax inModes="a"/>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://example.com"/>
+</valid>
+<invalid>
+<b><a xmlns="http://example.com"/></b>
+</invalid>
+<valid>
+<a xmlns="http://example.com"><b xmlns=""/></a>
+</valid>
+<valid>
+<a xmlns="http://example.com">
+  <b xmlns="">
+     <c xmlns="http://example.com"/>
+  </b>
+</a>
+</valid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="http://example.com">
+<start>
+  <element name="a">
+    <ref name="any"/>
+  </element>
+</start>
+<define name="any">
+  <zeroOrMore>
+    <element>
+      <anyName/>
+      <ref name="any"/>
+    </element>
+  </zeroOrMore>
+</define>
+</grammar>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate inModes="#default a" ns="http://example.com" schema="a.rng" useMode="a"/>
+  <lax inModes="a"/>
+</rules>
+</correct>
+<valid>
+<eg:a xmlns:eg="http://example.com"/>
+</valid>
+<invalid>
+<eg:b xmlns:eg="http://example.com"/>
+</invalid>
+<invalid>
+<a>
+<eg:a xmlns:eg="http://example.com"/>
+</a>
+</invalid>
+<valid>
+<eg:a xmlns:eg="http://example.com">
+  <eg:b/>
+</eg:a>
+</valid>
+<invalid>
+<eg:a xmlns:eg="http://example.com">
+  <local>
+   <eg:b/>
+  </local>
+</eg:a>
+</invalid>
+<valid>
+<eg:a xmlns:eg="http://example.com">
+  <local>
+   <eg:a/>
+  </local>
+</eg:a>
+</valid>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <lax/>
+  <lax/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <lax inModes="a b"/>
+  <lax inModes="b c"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <lax inModes="a b a"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng#foo"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng#foo"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng"/>
+  <validate ns="" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<attribute xmlns:eg="http://example.com" name="eg:a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</attribute>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateAttributes ns="http://example.com" schema="a.rng"/>
+  <validateAttributes ns="http://example.com" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns" xmlns:x="http://example.com" x:foo="stuff">
+  <x:bar/>
+  <validate ns="" schema="a.rng" x:att="val">
+    <x:foo>
+      <validate/>
+    </x:foo>
+  </validate>
+  <x:baz/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<invalid>
+<b/>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="attributes elements"/>
+  <lax allow="attributes"/>
+</rules>
+</correct>
+<valid>
+<a xmlns:x="http://example.com" x:foo="bar"/>
+</valid>
+<invalid>
+<a xmlns:x="http://example.com">
+  <x:foo/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="attributes elements"/>
+  <lax allow="elements"/>
+</rules>
+</correct>
+<invalid>
+<a xmlns:x="http://example.com" x:foo="bar"/>
+</invalid>
+<valid>
+<a xmlns:x="http://example.com">
+  <x:foo/>
+</a>
+</valid>
+</testCase>
+<testCase>
+<resource name="ibtwsh6.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="all">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class">
+        <data datatypeLibrary="" type="token"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="title">
+        <text/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="i18n">
+    <optional>
+      <attribute name="xml:lang">
+        <text/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="basic">
+    <ref name="all"/>
+    <ref name="i18n"/>
+  </define>
+  <define name="horiz.model">
+    <interleave>
+      <ref name="basic"/>
+      <text/>
+      <zeroOrMore>
+        <ref name="horiz"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="vert.model">
+    <interleave>
+      <ref name="horiz.model"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="struct.model">
+    <interleave>
+      <ref name="basic"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="horiz">
+    <choice>
+      <ref name="a"/>
+      <ref name="br"/>
+      <ref name="horiz.other"/>
+    </choice>
+  </define>
+  <define name="a">
+    <element name="a">
+      <optional>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="name">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute>
+          <choice>
+            <name ns="">rel</name>
+            <name ns="">rev</name>
+          </choice>
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <ref name="all"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="horiz.other">
+    <element>
+      <choice>
+        <name>abbr</name>
+        <name>acronym</name>
+        <name>cite</name>
+        <name>code</name>
+        <name>dfn</name>
+        <name>em</name>
+        <name>img</name>
+        <name>kbd</name>
+        <name>q</name>
+        <name>samp</name>
+        <name>span</name>
+        <name>strong</name>
+        <name>var</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="vert">
+    <choice>
+      <ref name="header"/>
+      <ref name="List"/>
+      <ref name="table"/>
+      <ref name="vert.other"/>
+    </choice>
+  </define>
+  <define name="header">
+    <element>
+      <choice>
+        <name>h1</name>
+        <name>h2</name>
+        <name>h3</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="List">
+    <choice>
+      <element name="dl">
+        <ref name="basic"/>
+        <oneOrMore>
+          <element>
+            <choice>
+              <name>dt</name>
+              <name>dd</name>
+            </choice>
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+      <element>
+        <choice>
+          <name>ol</name>
+          <name>ul</name>
+        </choice>
+        <ref name="basic"/>
+        <oneOrMore>
+          <element name="li">
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="aligns">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>justified</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+          <value>baseline</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="table">
+    <element name="table">
+      <ref name="basic"/>
+      <optional>
+        <attribute name="summary">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="caption">
+          <ref name="horiz.model"/>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="tr">
+          <ref name="basic"/>
+          <ref name="aligns"/>
+          <oneOrMore>
+            <ref name="tabledata"/>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tabledata">
+    <element>
+      <choice>
+        <name>th</name>
+        <name>td</name>
+      </choice>
+      <ref name="aligns"/>
+      <optional>
+        <attribute name="abbr">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="axis">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="colspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="headers">
+          <data type="IDREFS"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="rowspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="scope">
+          <choice>
+            <value>row</value>
+            <value>col</value>
+            <value>rowgroup</value>
+            <value>colgroup</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="vert.model"/>
+    </element>
+  </define>
+  <define name="vert.other">
+    <choice>
+      <element name="address">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="blockquote">
+        <optional>
+          <attribute name="cite">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <ref name="struct.model"/>
+      </element>
+      <element name="div">
+        <ref name="struct.model"/>
+      </element>
+      <element name="p">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="pre">
+        <ref name="horiz.model"/>
+      </element>
+    </choice>
+  </define>
+  <start>
+    <element name="html">
+      <ref name="i18n"/>
+      <optional>
+        <attribute name="xml:base">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <choice>
+            <value>preserve</value>
+            <value>default</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="head"/>
+      <element name="body">
+        <ref name="basic"/>
+        <zeroOrMore>
+          <ref name="vert"/>
+        </zeroOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="head">
+    <element name="head">
+      <ref name="i18n"/>
+      <element name="title">
+        <ref name="i18n"/>
+        <text/>
+      </element>
+      <zeroOrMore>
+        <element name="meta">
+          <optional>
+            <attribute>
+              <choice>
+                <name ns="">name</name>
+                <name ns="">http-equiv</name>
+              </choice>
+              <data datatypeLibrary="" type="token"/>
+            </attribute>
+          </optional>
+          <attribute name="content">
+            <text/>
+          </attribute>
+          <empty/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+</resource>
+<resource name="xhtml.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <include href="ibtwsh6.rng" ns="http://www.w3.org/1999/xhtml"/>
+</grammar>
+</resource>
+<resource name="rdfxml.rng">
+<!--
+  
+  RELAX NG Compact Schema for RDF/XML Syntax
+  
+  This schema is for information only and NON-NORMATIVE
+  
+  It is based on one originally written by James Clark in
+  http://lists.w3.org/Archives/Public/www-rdf-comments/2001JulSep/0248.html
+  and updated with later changes.
+  
+-->
+<grammar xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ns="http://www.w3.org/XML/1998/namespace" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <ref name="doc"/>
+  </start>
+  <!-- I cannot seem to do this in RNGC so they are expanded in-line -->
+  <!--
+    coreSyntaxTerms = rdf:RDF | rdf:ID | rdf:about | rdf:bagID | rdf:parseType | rdf:resource | rdf:nodeID | rdf:datatype
+    syntaxTerms = coreSyntaxTerms | rdf:Description | rdf:li
+    oldTerms    = rdf:aboutEach | rdf:aboutEachPrefix
+    nodeElementURIs       = * - ( coreSyntaxTerms | rdf:li | oldTerms )
+    propertyElementURIs   = * - ( coreSyntaxTerms | rdf:Description | oldTerms )
+    propertyAttributeURIs = * - ( coreSyntaxTerms | rdf:Description | rdf:li | oldTerms )
+  -->
+  <!--
+    Also needed to allow rdf:li on all property element productions
+    since we can't capture the rdf:li rewriting to rdf_<n> in relaxng
+  -->
+  <!-- Need to add these explicitly -->
+  <define name="xmllang">
+    <attribute name="xml:lang"/>
+  </define>
+  <define name="xmlbase">
+    <attribute name="xml:base"/>
+  </define>
+  <!-- and to forbid every other xml:* attribute, element -->
+  <define name="doc">
+    <ref name="RDF"/>
+  </define>
+  <define name="RDF">
+    <element name="rdf:RDF">
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="nodeElementList"/>
+    </element>
+  </define>
+  <define name="nodeElementList">
+    <zeroOrMore>
+      <ref name="nodeElement"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    Should be something like:
+     ws* , (  nodeElement , ws* )*
+    but RELAXNG does this by default, ignoring whitespace separating tags.
+  -->
+  <define name="nodeElement">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:li</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <choice>
+          <ref name="idAttr"/>
+          <ref name="nodeIdAttr"/>
+          <ref name="aboutAttr"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="bagIdAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="propertyAttr"/>
+      </zeroOrMore>
+      <ref name="propertyEltList"/>
+    </element>
+  </define>
+  <!--
+    It is not possible to say "and not things
+    beginning with _ in the rdf: namespace" in RELAX NG.
+  -->
+  <define name="ws">
+    <value> </value>
+  </define>
+  <!--
+    Not used in this RELAX NG schema; but should be any legal XML
+    whitespace defined by http://www.w3.org/TR/2000/REC-xml-20001006#NT-S
+  -->
+  <define name="propertyEltList">
+    <zeroOrMore>
+      <ref name="propertyElt"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    Should be something like:
+     ws* , ( propertyElt , ws* )*
+    but RELAXNG does this by default, ignoring whitespace separating tags.
+  -->
+  <define name="propertyElt">
+    <choice>
+      <ref name="resourcePropertyElt"/>
+      <ref name="literalPropertyElt"/>
+      <ref name="parseTypeLiteralPropertyElt"/>
+      <ref name="parseTypeResourcePropertyElt"/>
+      <ref name="parseTypeCollectionPropertyElt"/>
+      <ref name="parseTypeOtherPropertyElt"/>
+      <ref name="emptyPropertyElt"/>
+    </choice>
+  </define>
+  <define name="resourcePropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="nodeElement"/>
+    </element>
+  </define>
+  <define name="literalPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <choice>
+          <ref name="idAttr"/>
+          <ref name="datatypeAttr"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="parseTypeLiteralPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <ref name="parseLiteral"/>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="literal"/>
+    </element>
+  </define>
+  <define name="parseTypeResourcePropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <ref name="parseResource"/>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="propertyEltList"/>
+    </element>
+  </define>
+  <define name="parseTypeCollectionPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="parseCollection"/>
+      <ref name="nodeElementList"/>
+    </element>
+  </define>
+  <define name="parseTypeOtherPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <ref name="parseOther"/>
+      <ref name="any"/>
+    </element>
+  </define>
+  <define name="emptyPropertyElt">
+    <element>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAttr"/>
+      </optional>
+      <optional>
+        <choice>
+          <ref name="resourceAttr"/>
+          <ref name="nodeIdAttr"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="bagIdAttr"/>
+      </optional>
+      <optional>
+        <ref name="xmllang"/>
+      </optional>
+      <optional>
+        <ref name="xmlbase"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="propertyAttr"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="idAttr">
+    <attribute name="rdf:ID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="nodeIdAttr">
+    <attribute name="rdf:nodeID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="aboutAttr">
+    <attribute name="rdf:about">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="bagIdAttr">
+    <attribute name="rdf:bagID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="propertyAttr">
+    <attribute>
+      <anyName>
+        <except>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+          <name>rdf:nodeID</name>
+          <name>rdf:datatype</name>
+          <name>rdf:li</name>
+          <name>rdf:Description</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:aboutEachPrefix</name>
+          <nsName/>
+        </except>
+      </anyName>
+      <data type="string" datatypeLibrary=""/>
+    </attribute>
+  </define>
+  <define name="resourceAttr">
+    <attribute name="rdf:resource">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="datatypeAttr">
+    <attribute name="rdf:datatype">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="parseLiteral">
+    <attribute name="rdf:parseType">
+      <value>Literal</value>
+    </attribute>
+  </define>
+  <define name="parseResource">
+    <attribute name="rdf:parseType">
+      <value>Resource</value>
+    </attribute>
+  </define>
+  <define name="parseCollection">
+    <attribute name="rdf:parseType">
+      <value>Collection</value>
+    </attribute>
+  </define>
+  <define name="parseOther">
+    <attribute name="rdf:parseType"/>
+  </define>
+  <define name="URI-reference">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="literal">
+    <ref name="any"/>
+  </define>
+  <define name="IDsymbol">
+    <data type="NMTOKEN"/>
+  </define>
+  <define name="any">
+    <mixed>
+      <zeroOrMore>
+        <element>
+          <anyName/>
+          <zeroOrMore>
+            <attribute>
+              <anyName/>
+            </attribute>
+          </zeroOrMore>
+          <ref name="any"/>
+        </element>
+      </zeroOrMore>
+    </mixed>
+  </define>
+</grammar>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns" startMode="xhtml">
+  <validate ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            schema="rdfxml.rng"
+            inModes="rdf"
+            useMode="anything"/>
+  <validate ns="http://www.w3.org/1999/xhtml"
+            schema="xhtml.rng"
+            inModes="xhtml"
+            prune="elements">
+    <context useMode="rdf">
+      <element name="head"/>
+    </context>
+  </validate>
+  <lax inModes="anything"/>
+</rules>
+</correct>
+<valid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>A title</title>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</valid>
+<valid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>A title</title>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</valid>
+<invalid>
+<randomJunk xmlns="http://example.org"/>
+</invalid>
+<invalid>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+</invalid>
+<invalid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>A title<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/></title>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</invalid>
+<invalid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+<head>
+<title>A title</title>
+</head>
+<body>
+<p>Hello.</p>
+</body>
+</html>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng">
+    <context>
+      <element name="a"/>
+    </context>
+    <context useMode="foo">
+      <element name="a"/>
+    </context>
+  </validate>
+  <lax inModes="foo"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://example.org" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="http://example.org" schema="a.rng">
+    <context>
+      <element name="a" ns="http://example.org"/>
+    </context>
+    <context useMode="foo">
+      <element name="a"/>
+    </context>
+  </validate>
+  <lax inModes="foo"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng">
+    <context>
+      <root>
+        <element name="a"/>
+      </root>
+      <root>
+        <element name="a"/>
+      </root>
+    </context>
+  </validate>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng">
+    <context ns="http://example.org">
+      <element name="a"/>
+    </context>
+  </validate>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
+  <element name="a">
+    <element name="b">
+      <empty/>
+    </element>
+  </element>
+  <element name="b">
+    <empty/>
+  </element>
+</choice>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="elements">
+    <context useMode="anythingGoes">
+      <element name="a">
+        <element name="b"/>
+      </element>
+    </context>
+  </validate>
+  <lax inModes="anythingGoes"/>
+</rules>
+</correct>
+<valid>
+<a>
+  <b>
+    <foo xmlns="http://example.org"/>
+  </b>
+</a>
+</valid>
+<invalid>
+<a>
+  <foo xmlns="http://example.org"/>
+  <b/>
+</a>
+</invalid>
+<invalid>
+<b>
+  <foo xmlns="http://example.org"/>
+</b>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
+  <element name="a">
+    <element name="b">
+      <empty/>
+    </element>
+  </element>
+  <element name="b">
+    <empty/>
+  </element>
+</choice>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="elements">
+    <context useMode="anythingGoes">
+      <root>
+        <element name="b"/>
+      </root>
+    </context>
+    <context>
+      <element name="b"/>
+      <element name="a">
+        <element name="b"/>
+      </element>
+    </context>
+  </validate>
+  <lax inModes="anythingGoes"/>
+</rules>
+</correct>
+<invalid>
+<a>
+  <b>
+    <foo xmlns="http://example.org"/>
+  </b>
+</a>
+</invalid>
+<valid>
+<b>
+  <foo xmlns="http://example.org"/>
+</b>
+</valid>
+</testCase>
+<testCase>
+<resource name="a.rnc">
+element a { empty }
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rnc" schemaType="application/x-rnc"/>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<invalid>
+<b/>
+</invalid>
+</testCase>
+</testSuite>

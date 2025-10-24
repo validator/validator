@@ -1,0 +1,5384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="TEI.XML">
+    <include/>
+  </flag>
+  <externalId name="teitsd2.dtd" system="teitsd2.dtd"/>
+  <externalIdRef name="teitsd2.dtd">
+    <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+    <comment> [DTD] 27.: File teitsd2.dtd:  Auxiliary DTD for Tag Set Documentation </comment>
+    <comment>Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.</comment>
+    <comment>Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.</comment>
+    <comment>These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+    <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+    <comment>Embed entities for TEI generic identifiers.</comment>
+    <externalId name="TEI.elementNames" system="teigis2.ent"/>
+    <externalIdRef name="TEI.elementNames">
+      <param name="n.TEI.2">TEI.2</param>
+      <nameSpec name="n.ab">
+        <name>ab</name>
+      </nameSpec>
+      <nameSpec name="n.abbr">
+        <name>abbr</name>
+      </nameSpec>
+      <param name="n.activity">activity</param>
+      <param name="n.actor">actor</param>
+      <nameSpec name="n.add">
+        <name>add</name>
+      </nameSpec>
+      <param name="n.addName">addName</param>
+      <nameSpec name="n.addSpan">
+        <name>addSpan</name>
+      </nameSpec>
+      <nameSpec name="n.addrLine">
+        <name>addrLine</name>
+      </nameSpec>
+      <nameSpec name="n.address">
+        <name>address</name>
+      </nameSpec>
+      <param name="n.admin">admin</param>
+      <param name="n.affiliation">affiliation</param>
+      <nameSpec name="n.alt">
+        <name>alt</name>
+      </nameSpec>
+      <nameSpec name="n.altGrp">
+        <name>altGrp</name>
+      </nameSpec>
+      <nameSpec name="n.analytic">
+        <name>analytic</name>
+      </nameSpec>
+      <nameSpec name="n.anchor">
+        <name>anchor</name>
+      </nameSpec>
+      <param name="n.any">any</param>
+      <nameSpec name="n.app">
+        <name>app</name>
+      </nameSpec>
+      <param name="n.arc">arc</param>
+      <nameSpec name="n.argument">
+        <name>argument</name>
+      </nameSpec>
+      <nameSpec name="n.att">
+        <name>att</name>
+      </nameSpec>
+      <nameSpec name="n.attDef">
+        <name>attDef</name>
+      </nameSpec>
+      <nameSpec name="n.attList">
+        <name>attList</name>
+      </nameSpec>
+      <nameSpec name="n.attName">
+        <name>attName</name>
+      </nameSpec>
+      <nameSpec name="n.attlDecl">
+        <name>attlDecl</name>
+      </nameSpec>
+      <nameSpec name="n.author">
+        <name>author</name>
+      </nameSpec>
+      <param name="n.authority">authority</param>
+      <param name="n.availability">availability</param>
+      <param name="n.back">back</param>
+      <param name="n.baseWsd">baseWsd</param>
+      <nameSpec name="n.bibl">
+        <name>bibl</name>
+      </nameSpec>
+      <nameSpec name="n.biblFull">
+        <name>biblFull</name>
+      </nameSpec>
+      <nameSpec name="n.biblScope">
+        <name>biblScope</name>
+      </nameSpec>
+      <nameSpec name="n.biblStruct">
+        <name>biblStruct</name>
+      </nameSpec>
+      <param name="n.bicond">bicond</param>
+      <param name="n.birth">birth</param>
+      <param name="n.bloc">bloc</param>
+      <param name="n.body">body</param>
+      <param name="n.broadcast">broadcast</param>
+      <nameSpec name="n.byline">
+        <name>byline</name>
+      </nameSpec>
+      <nameSpec name="n.c">
+        <name>c</name>
+      </nameSpec>
+      <nameSpec name="n.caesura">
+        <name>caesura</name>
+      </nameSpec>
+      <nameSpec name="n.camera">
+        <name>camera</name>
+      </nameSpec>
+      <nameSpec name="n.caption">
+        <name>caption</name>
+      </nameSpec>
+      <param name="n.case">case</param>
+      <param name="n.castGroup">castGroup</param>
+      <param name="n.castItem">castItem</param>
+      <nameSpec name="n.castList">
+        <name>castList</name>
+      </nameSpec>
+      <param name="n.catDesc">catDesc</param>
+      <param name="n.catRef">catRef</param>
+      <param name="n.category">category</param>
+      <nameSpec name="n.cb">
+        <name>cb</name>
+      </nameSpec>
+      <param name="n.cell">cell</param>
+      <nameSpec name="n.certainty">
+        <name>certainty</name>
+      </nameSpec>
+      <param name="n.change">change</param>
+      <param name="n.channel">channel</param>
+      <param name="n.character">character</param>
+      <param name="n.characters">characters</param>
+      <nameSpec name="n.children">
+        <name>children</name>
+      </nameSpec>
+      <nameSpec name="n.cit">
+        <name>cit</name>
+      </nameSpec>
+      <nameSpec name="n.cl">
+        <name>cl</name>
+      </nameSpec>
+      <nameSpec name="n.class">
+        <name>class</name>
+      </nameSpec>
+      <param name="n.classCode">classCode</param>
+      <param name="n.classDecl">classDecl</param>
+      <nameSpec name="n.classDoc">
+        <name>classDoc</name>
+      </nameSpec>
+      <nameSpec name="n.classes">
+        <name>classes</name>
+      </nameSpec>
+      <nameSpec name="n.closer">
+        <name>closer</name>
+      </nameSpec>
+      <param name="n.codedCharSet">codedCharSet</param>
+      <param name="n.col">col</param>
+      <param name="n.colloc">colloc</param>
+      <param name="n.cond">cond</param>
+      <param name="n.constitution">constitution</param>
+      <nameSpec name="n.corr">
+        <name>corr</name>
+      </nameSpec>
+      <param name="n.correction">correction</param>
+      <param name="n.country">country</param>
+      <param name="n.creation">creation</param>
+      <nameSpec name="n.damage">
+        <name>damage</name>
+      </nameSpec>
+      <nameSpec name="n.dataDesc">
+        <name>dataDesc</name>
+      </nameSpec>
+      <nameSpec name="n.datatype">
+        <name>datatype</name>
+      </nameSpec>
+      <nameSpec name="n.date">
+        <name>date</name>
+      </nameSpec>
+      <nameSpec name="n.dateRange">
+        <name>dateRange</name>
+      </nameSpec>
+      <nameSpec name="n.dateStruct">
+        <name>dateStruct</name>
+      </nameSpec>
+      <nameSpec name="n.dateline">
+        <name>dateline</name>
+      </nameSpec>
+      <param name="n.day">day</param>
+      <param name="n.declaration">declaration</param>
+      <param name="n.def">def</param>
+      <nameSpec name="n.default">
+        <name>default</name>
+      </nameSpec>
+      <nameSpec name="n.del">
+        <name>del</name>
+      </nameSpec>
+      <nameSpec name="n.delSpan">
+        <name>delSpan</name>
+      </nameSpec>
+      <param name="n.derivation">derivation</param>
+      <nameSpec name="n.desc">
+        <name>desc</name>
+      </nameSpec>
+      <param name="n.descrip">descrip</param>
+      <param name="n.dft">dft</param>
+      <nameSpec name="n.dictScrap">
+        <name>dictScrap</name>
+      </nameSpec>
+      <param name="n.direction">direction</param>
+      <param name="n.distance">distance</param>
+      <nameSpec name="n.distinct">
+        <name>distinct</name>
+      </nameSpec>
+      <param name="n.distributor">distributor</param>
+      <param name="n.div">div</param>
+      <param name="n.div0">div0</param>
+      <param name="n.div1">div1</param>
+      <param name="n.div2">div2</param>
+      <param name="n.div3">div3</param>
+      <param name="n.div4">div4</param>
+      <param name="n.div5">div5</param>
+      <param name="n.div6">div6</param>
+      <param name="n.div7">div7</param>
+      <nameSpec name="n.divGen">
+        <name>divGen</name>
+      </nameSpec>
+      <nameSpec name="n.docAuthor">
+        <name>docAuthor</name>
+      </nameSpec>
+      <nameSpec name="n.docDate">
+        <name>docDate</name>
+      </nameSpec>
+      <param name="n.docEdition">docEdition</param>
+      <param name="n.docImprint">docImprint</param>
+      <param name="n.docTitle">docTitle</param>
+      <param name="n.domain">domain</param>
+      <param name="n.eLeaf">eLeaf</param>
+      <nameSpec name="n.eTree">
+        <name>eTree</name>
+      </nameSpec>
+      <nameSpec name="n.edition">
+        <name>edition</name>
+      </nameSpec>
+      <nameSpec name="n.editionStmt">
+        <name>editionStmt</name>
+      </nameSpec>
+      <nameSpec name="n.editor">
+        <name>editor</name>
+      </nameSpec>
+      <param name="n.editorialDecl">editorialDecl</param>
+      <param name="n.education">education</param>
+      <nameSpec name="n.eg">
+        <name>eg</name>
+      </nameSpec>
+      <nameSpec name="n.elemDecl">
+        <name>elemDecl</name>
+      </nameSpec>
+      <nameSpec name="n.emph">
+        <name>emph</name>
+      </nameSpec>
+      <param name="n.encodingDesc">encodingDesc</param>
+      <nameSpec name="n.entDoc">
+        <name>entDoc</name>
+      </nameSpec>
+      <nameSpec name="n.entName">
+        <name>entName</name>
+      </nameSpec>
+      <param name="n.entitySet">entitySet</param>
+      <param name="n.entry">entry</param>
+      <param name="n.entryFree">entryFree</param>
+      <nameSpec name="n.epigraph">
+        <name>epigraph</name>
+      </nameSpec>
+      <param name="n.epilogue">epilogue</param>
+      <param name="n.equipment">equipment</param>
+      <nameSpec name="n.equiv">
+        <name>equiv</name>
+      </nameSpec>
+      <param name="n.etym">etym</param>
+      <param name="n.event">event</param>
+      <param name="n.exceptions">exceptions</param>
+      <nameSpec name="n.exemplum">
+        <name>exemplum</name>
+      </nameSpec>
+      <nameSpec name="n.expan">
+        <name>expan</name>
+      </nameSpec>
+      <param name="n.extFigure">extFigure</param>
+      <nameSpec name="n.extent">
+        <name>extent</name>
+      </nameSpec>
+      <param name="n.f">f</param>
+      <param name="n.fAlt">fAlt</param>
+      <param name="n.fDecl">fDecl</param>
+      <param name="n.fDescr">fDescr</param>
+      <nameSpec name="n.fLib">
+        <name>fLib</name>
+      </nameSpec>
+      <param name="n.factuality">factuality</param>
+      <param name="n.figDesc">figDesc</param>
+      <nameSpec name="n.figure">
+        <name>figure</name>
+      </nameSpec>
+      <param name="n.fileDesc">fileDesc</param>
+      <nameSpec name="n.files">
+        <name>files</name>
+      </nameSpec>
+      <param name="n.firstLang">firstLang</param>
+      <param name="n.foreName">foreName</param>
+      <nameSpec name="n.foreign">
+        <name>foreign</name>
+      </nameSpec>
+      <param name="n.forest">forest</param>
+      <param name="n.forestGrp">forestGrp</param>
+      <param name="n.form">form</param>
+      <nameSpec name="n.formula">
+        <name>formula</name>
+      </nameSpec>
+      <param name="n.front">front</param>
+      <nameSpec name="n.fs">
+        <name>fs</name>
+      </nameSpec>
+      <param name="n.fsConstraints">fsConstraints</param>
+      <param name="n.fsDecl">fsDecl</param>
+      <param name="n.fsDescr">fsDescr</param>
+      <nameSpec name="n.fsLib">
+        <name>fsLib</name>
+      </nameSpec>
+      <param name="n.fsdDecl">fsdDecl</param>
+      <param name="n.funder">funder</param>
+      <nameSpec name="n.fvLib">
+        <name>fvLib</name>
+      </nameSpec>
+      <nameSpec name="n.fw">
+        <name>fw</name>
+      </nameSpec>
+      <nameSpec name="n.gap">
+        <name>gap</name>
+      </nameSpec>
+      <param name="n.gen">gen</param>
+      <param name="n.genName">genName</param>
+      <param name="n.geog">geog</param>
+      <nameSpec name="n.geogName">
+        <name>geogName</name>
+      </nameSpec>
+      <nameSpec name="n.gi">
+        <name>gi</name>
+      </nameSpec>
+      <nameSpec name="n.gloss">
+        <name>gloss</name>
+      </nameSpec>
+      <param name="n.gram">gram</param>
+      <param name="n.gramGrp">gramGrp</param>
+      <nameSpec name="n.graph">
+        <name>graph</name>
+      </nameSpec>
+      <param name="n.group">group</param>
+      <param name="n.hand">hand</param>
+      <param name="n.handList">handList</param>
+      <nameSpec name="n.handShift">
+        <name>handShift</name>
+      </nameSpec>
+      <nameSpec name="n.head">
+        <name>head</name>
+      </nameSpec>
+      <nameSpec name="n.headItem">
+        <name>headItem</name>
+      </nameSpec>
+      <nameSpec name="n.headLabel">
+        <name>headLabel</name>
+      </nameSpec>
+      <nameSpec name="n.hi">
+        <name>hi</name>
+      </nameSpec>
+      <param name="n.hom">hom</param>
+      <param name="n.hour">hour</param>
+      <param name="n.hyph">hyph</param>
+      <param name="n.hyphenation">hyphenation</param>
+      <param name="n.iNode">iNode</param>
+      <nameSpec name="n.idno">
+        <name>idno</name>
+      </nameSpec>
+      <param name="n.if">if</param>
+      <param name="n.iff">iff</param>
+      <param name="n.ihs">ihs</param>
+      <param name="n.imprimatur">imprimatur</param>
+      <nameSpec name="n.imprint">
+        <name>imprint</name>
+      </nameSpec>
+      <nameSpec name="n.index">
+        <name>index</name>
+      </nameSpec>
+      <param name="n.interaction">interaction</param>
+      <nameSpec name="n.interp">
+        <name>interp</name>
+      </nameSpec>
+      <nameSpec name="n.interpGrp">
+        <name>interpGrp</name>
+      </nameSpec>
+      <param name="n.interpretation">interpretation</param>
+      <nameSpec name="n.item">
+        <name>item</name>
+      </nameSpec>
+      <param name="n.itype">itype</param>
+      <nameSpec name="n.join">
+        <name>join</name>
+      </nameSpec>
+      <nameSpec name="n.joinGrp">
+        <name>joinGrp</name>
+      </nameSpec>
+      <param name="n.keywords">keywords</param>
+      <param name="n.kinesic">kinesic</param>
+      <nameSpec name="n.l">
+        <name>l</name>
+      </nameSpec>
+      <nameSpec name="n.label">
+        <name>label</name>
+      </nameSpec>
+      <param name="n.lacunaEnd">lacunaEnd</param>
+      <param name="n.lacunaStart">lacunaStart</param>
+      <nameSpec name="n.lang">
+        <name>lang</name>
+      </nameSpec>
+      <param name="n.langKnown">langKnown</param>
+      <param name="n.langUsage">langUsage</param>
+      <param name="n.language">language</param>
+      <nameSpec name="n.lb">
+        <name>lb</name>
+      </nameSpec>
+      <param name="n.lbl">lbl</param>
+      <param name="n.leaf">leaf</param>
+      <param name="n.lem">lem</param>
+      <nameSpec name="n.lg">
+        <name>lg</name>
+      </nameSpec>
+      <param name="n.lg1">lg1</param>
+      <param name="n.lg2">lg2</param>
+      <param name="n.lg3">lg3</param>
+      <param name="n.lg4">lg4</param>
+      <param name="n.lg5">lg5</param>
+      <param name="n.line">line</param>
+      <nameSpec name="n.link">
+        <name>link</name>
+      </nameSpec>
+      <nameSpec name="n.linkGrp">
+        <name>linkGrp</name>
+      </nameSpec>
+      <nameSpec name="n.list">
+        <name>list</name>
+      </nameSpec>
+      <nameSpec name="n.listBibl">
+        <name>listBibl</name>
+      </nameSpec>
+      <param name="n.locale">locale</param>
+      <nameSpec name="n.m">
+        <name>m</name>
+      </nameSpec>
+      <nameSpec name="n.measure">
+        <name>measure</name>
+      </nameSpec>
+      <nameSpec name="n.meeting">
+        <name>meeting</name>
+      </nameSpec>
+      <nameSpec name="n.mentioned">
+        <name>mentioned</name>
+      </nameSpec>
+      <param name="n.metDecl">metDecl</param>
+      <nameSpec name="n.milestone">
+        <name>milestone</name>
+      </nameSpec>
+      <param name="n.minus">minus</param>
+      <param name="n.minute">minute</param>
+      <nameSpec name="n.monogr">
+        <name>monogr</name>
+      </nameSpec>
+      <param name="n.month">month</param>
+      <param name="n.mood">mood</param>
+      <nameSpec name="n.move">
+        <name>move</name>
+      </nameSpec>
+      <param name="n.msr">msr</param>
+      <nameSpec name="n.name">
+        <name>name</name>
+      </nameSpec>
+      <param name="n.nameLink">nameLink</param>
+      <param name="n.nbr">nbr</param>
+      <param name="n.node">node</param>
+      <param name="n.none">none</param>
+      <param name="n.normalization">normalization</param>
+      <nameSpec name="n.note">
+        <name>note</name>
+      </nameSpec>
+      <nameSpec name="n.notesStmt">
+        <name>notesStmt</name>
+      </nameSpec>
+      <param name="n.null">null</param>
+      <nameSpec name="n.num">
+        <name>num</name>
+      </nameSpec>
+      <param name="n.number">number</param>
+      <nameSpec name="n.oRef">
+        <name>oRef</name>
+      </nameSpec>
+      <nameSpec name="n.oVar">
+        <name>oVar</name>
+      </nameSpec>
+      <param name="n.occasion">occasion</param>
+      <param name="n.occupation">occupation</param>
+      <param name="n.offSet">offSet</param>
+      <param name="n.ofig">ofig</param>
+      <nameSpec name="n.opener">
+        <name>opener</name>
+      </nameSpec>
+      <param name="n.orgDivn">orgDivn</param>
+      <nameSpec name="n.orgName">
+        <name>orgName</name>
+      </nameSpec>
+      <param name="n.orgTitle">orgTitle</param>
+      <param name="n.orgType">orgType</param>
+      <nameSpec name="n.orig">
+        <name>orig</name>
+      </nameSpec>
+      <param name="n.orth">orth</param>
+      <param name="n.otherForm">otherForm</param>
+      <nameSpec name="n.p">
+        <name>p</name>
+      </nameSpec>
+      <nameSpec name="n.pRef">
+        <name>pRef</name>
+      </nameSpec>
+      <nameSpec name="n.pVar">
+        <name>pVar</name>
+      </nameSpec>
+      <param name="n.page">page</param>
+      <nameSpec name="n.parents">
+        <name>parents</name>
+      </nameSpec>
+      <nameSpec name="n.part">
+        <name>part</name>
+      </nameSpec>
+      <param name="n.particDesc">particDesc</param>
+      <param name="n.particLinks">particLinks</param>
+      <param name="n.pause">pause</param>
+      <nameSpec name="n.pb">
+        <name>pb</name>
+      </nameSpec>
+      <param name="n.per">per</param>
+      <param name="n.performance">performance</param>
+      <nameSpec name="n.persName">
+        <name>persName</name>
+      </nameSpec>
+      <param name="n.person">person</param>
+      <param name="n.personGrp">personGrp</param>
+      <nameSpec name="n.phr">
+        <name>phr</name>
+      </nameSpec>
+      <nameSpec name="n.placeName">
+        <name>placeName</name>
+      </nameSpec>
+      <param name="n.plus">plus</param>
+      <param name="n.pos">pos</param>
+      <nameSpec name="n.postBox">
+        <name>postBox</name>
+      </nameSpec>
+      <nameSpec name="n.postCode">
+        <name>postCode</name>
+      </nameSpec>
+      <param name="n.preparedness">preparedness</param>
+      <param name="n.principal">principal</param>
+      <param name="n.profileDesc">profileDesc</param>
+      <param name="n.projectDesc">projectDesc</param>
+      <param name="n.prologue">prologue</param>
+      <param name="n.pron">pron</param>
+      <nameSpec name="n.ptr">
+        <name>ptr</name>
+      </nameSpec>
+      <nameSpec name="n.pubPlace">
+        <name>pubPlace</name>
+      </nameSpec>
+      <nameSpec name="n.publicationStmt">
+        <name>publicationStmt</name>
+      </nameSpec>
+      <nameSpec name="n.publisher">
+        <name>publisher</name>
+      </nameSpec>
+      <param name="n.purpose">purpose</param>
+      <nameSpec name="n.q">
+        <name>q</name>
+      </nameSpec>
+      <param name="n.quotation">quotation</param>
+      <nameSpec name="n.quote">
+        <name>quote</name>
+      </nameSpec>
+      <param name="n.rate">rate</param>
+      <param name="n.rdg">rdg</param>
+      <param name="n.rdgGrp">rdgGrp</param>
+      <param name="n.re">re</param>
+      <param name="n.recording">recording</param>
+      <param name="n.recordingStmt">recordingStmt</param>
+      <nameSpec name="n.ref">
+        <name>ref</name>
+      </nameSpec>
+      <param name="n.refsDecl">refsDecl</param>
+      <nameSpec name="n.reg">
+        <name>reg</name>
+      </nameSpec>
+      <param name="n.region">region</param>
+      <param name="n.relation">relation</param>
+      <nameSpec name="n.remarks">
+        <name>remarks</name>
+      </nameSpec>
+      <param name="n.rendition">rendition</param>
+      <param name="n.residence">residence</param>
+      <nameSpec name="n.resp">
+        <name>resp</name>
+      </nameSpec>
+      <nameSpec name="n.respStmt">
+        <name>respStmt</name>
+      </nameSpec>
+      <nameSpec name="n.respons">
+        <name>respons</name>
+      </nameSpec>
+      <nameSpec name="n.restore">
+        <name>restore</name>
+      </nameSpec>
+      <param name="n.revisionDesc">revisionDesc</param>
+      <param name="n.role">role</param>
+      <param name="n.roleDesc">roleDesc</param>
+      <param name="n.roleName">roleName</param>
+      <param name="n.root">root</param>
+      <param name="n.row">row</param>
+      <nameSpec name="n.rs">
+        <name>rs</name>
+      </nameSpec>
+      <nameSpec name="n.s">
+        <name>s</name>
+      </nameSpec>
+      <nameSpec name="n.salute">
+        <name>salute</name>
+      </nameSpec>
+      <param name="n.samplingDecl">samplingDecl</param>
+      <param name="n.script">script</param>
+      <param name="n.scriptStmt">scriptStmt</param>
+      <param name="n.second">second</param>
+      <modelGroup name="n.seg">
+        <elementRef>
+          <name>seg</name>
+        </elementRef>
+      </modelGroup>
+      <param name="n.segmentation">segmentation</param>
+      <param name="n.sense">sense</param>
+      <nameSpec name="n.series">
+        <name>series</name>
+      </nameSpec>
+      <nameSpec name="n.seriesStmt">
+        <name>seriesStmt</name>
+      </nameSpec>
+      <param name="n.set">set</param>
+      <param name="n.setting">setting</param>
+      <param name="n.settingDesc">settingDesc</param>
+      <param name="n.settlement">settlement</param>
+      <param name="n.shift">shift</param>
+      <nameSpec name="n.sic">
+        <name>sic</name>
+      </nameSpec>
+      <nameSpec name="n.signed">
+        <name>signed</name>
+      </nameSpec>
+      <nameSpec name="n.soCalled">
+        <name>soCalled</name>
+      </nameSpec>
+      <param name="n.socecStatus">socecStatus</param>
+      <nameSpec name="n.sound">
+        <name>sound</name>
+      </nameSpec>
+      <nameSpec name="n.sourceDesc">
+        <name>sourceDesc</name>
+      </nameSpec>
+      <nameSpec name="n.sp">
+        <name>sp</name>
+      </nameSpec>
+      <nameSpec name="n.space">
+        <name>space</name>
+      </nameSpec>
+      <nameSpec name="n.span">
+        <name>span</name>
+      </nameSpec>
+      <nameSpec name="n.spanGrp">
+        <name>spanGrp</name>
+      </nameSpec>
+      <nameSpec name="n.speaker">
+        <name>speaker</name>
+      </nameSpec>
+      <param name="n.sponsor">sponsor</param>
+      <nameSpec name="n.stage">
+        <name>stage</name>
+      </nameSpec>
+      <param name="n.state">state</param>
+      <param name="n.stdVals">stdVals</param>
+      <param name="n.step">step</param>
+      <param name="n.str">str</param>
+      <nameSpec name="n.street">
+        <name>street</name>
+      </nameSpec>
+      <param name="n.stress">stress</param>
+      <nameSpec name="n.string">
+        <name>string</name>
+      </nameSpec>
+      <param name="n.subc">subc</param>
+      <param name="n.superentry">superentry</param>
+      <nameSpec name="n.supplied">
+        <name>supplied</name>
+      </nameSpec>
+      <param name="n.surname">surname</param>
+      <param name="n.syll">syll</param>
+      <param name="n.sym">sym</param>
+      <param name="n.symbol">symbol</param>
+      <nameSpec name="n.table">
+        <name>table</name>
+      </nameSpec>
+      <nameSpec name="n.tag">
+        <name>tag</name>
+      </nameSpec>
+      <nameSpec name="n.tagDoc">
+        <name>tagDoc</name>
+      </nameSpec>
+      <param name="n.tagUsage">tagUsage</param>
+      <param name="n.tagsDecl">tagsDecl</param>
+      <param name="n.taxonomy">taxonomy</param>
+      <nameSpec name="n.tech">
+        <name>tech</name>
+      </nameSpec>
+      <param name="n.teiCorpus.2">teiCorpus.2</param>
+      <param name="n.teiFsd2">teiFsd2</param>
+      <param name="n.teiHeader">teiHeader</param>
+      <nameSpec name="n.term">
+        <name>term</name>
+      </nameSpec>
+      <param name="n.termEntry">termEntry</param>
+      <nameSpec name="n.text">
+        <name>text</name>
+      </nameSpec>
+      <param name="n.textClass">textClass</param>
+      <param name="n.textDesc">textDesc</param>
+      <param name="n.then">then</param>
+      <param name="n.tig">tig</param>
+      <nameSpec name="n.time">
+        <name>time</name>
+      </nameSpec>
+      <nameSpec name="n.timeRange">
+        <name>timeRange</name>
+      </nameSpec>
+      <nameSpec name="n.timeStruct">
+        <name>timeStruct</name>
+      </nameSpec>
+      <nameSpec name="n.timeline">
+        <name>timeline</name>
+      </nameSpec>
+      <nameSpec name="n.title">
+        <name>title</name>
+      </nameSpec>
+      <param name="n.titlePage">titlePage</param>
+      <param name="n.titlePart">titlePart</param>
+      <nameSpec name="n.titleStmt">
+        <name>titleStmt</name>
+      </nameSpec>
+      <param name="n.tns">tns</param>
+      <param name="n.tr">tr</param>
+      <nameSpec name="n.trailer">
+        <name>trailer</name>
+      </nameSpec>
+      <param name="n.trans">trans</param>
+      <nameSpec name="n.tree">
+        <name>tree</name>
+      </nameSpec>
+      <param name="n.triangle">triangle</param>
+      <nameSpec name="n.tsd">
+        <name>tsd</name>
+      </nameSpec>
+      <param name="n.u">u</param>
+      <param name="n.uncertain">uncertain</param>
+      <nameSpec name="n.unclear">
+        <name>unclear</name>
+      </nameSpec>
+      <param name="n.usg">usg</param>
+      <param name="n.vAlt">vAlt</param>
+      <param name="n.vDefault">vDefault</param>
+      <param name="n.vRange">vRange</param>
+      <nameSpec name="n.val">
+        <name>val</name>
+      </nameSpec>
+      <nameSpec name="n.valDesc">
+        <name>valDesc</name>
+      </nameSpec>
+      <nameSpec name="n.valList">
+        <name>valList</name>
+      </nameSpec>
+      <param name="n.variantEncoding">variantEncoding</param>
+      <nameSpec name="n.view">
+        <name>view</name>
+      </nameSpec>
+      <param name="n.vocal">vocal</param>
+      <param name="n.vol">vol</param>
+      <nameSpec name="n.w">
+        <name>w</name>
+      </nameSpec>
+      <param name="n.week">week</param>
+      <param name="n.when">when</param>
+      <param name="n.wit">wit</param>
+      <nameSpec name="n.witDetail">
+        <name>witDetail</name>
+      </nameSpec>
+      <param name="n.witEnd">witEnd</param>
+      <nameSpec name="n.witList">
+        <name>witList</name>
+      </nameSpec>
+      <param name="n.witStart">witStart</param>
+      <param name="n.witness">witness</param>
+      <param name="n.writing">writing</param>
+      <nameSpec name="n.xptr">
+        <name>xptr</name>
+      </nameSpec>
+      <param name="n.xr">xr</param>
+      <nameSpec name="n.xref">
+        <name>xref</name>
+      </nameSpec>
+      <param name="n.year">year</param>
+    </externalIdRef>
+    <comment>Define entities for TEI keywords.</comment>
+    <externalId name="TEI.keywords.ent" system="teikey2.ent"/>
+    <externalIdRef name="TEI.keywords.ent">
+      <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+      <comment> [DSTKEYS] 3.8.5: TEI Keywords </comment>
+      <comment>I.  Declare TEI keywords for data types.</comment>
+      <comment>These parameter entities are used as keywords to express
+rules or constraints which cannot be fully expressed in SGML; their
+expansions show the nearest SGML equivalent.</comment>
+      <attributeDefault name="INHERITED">
+        <implied/>
+      </attributeDefault>
+      <param name="ISO-date">CDATA</param>
+      <param name="extPtr">CDATA</param>
+      <comment>II.  Declare keywords for tag-set selection.</comment>
+      <comment>Declare all bases and additional tag sets as 'IGNORE'.  The
+user can override this default by declaring the same entity with the
+replacement text 'INCLUDE', in the document's DTD
+subset.</comment>
+      <comment>Base tag sets first.</comment>
+      <flag name="TEI.prose">
+        <ignore/>
+      </flag>
+      <flag name="TEI.verse">
+        <ignore/>
+      </flag>
+      <flag name="TEI.drama">
+        <ignore/>
+      </flag>
+      <flag name="TEI.spoken">
+        <ignore/>
+      </flag>
+      <flag name="TEI.dictionaries">
+        <ignore/>
+      </flag>
+      <flag name="TEI.terminology">
+        <ignore/>
+      </flag>
+      <comment>Now the mixed
+bases.</comment>
+      <flag name="TEI.general">
+        <ignore/>
+      </flag>
+      <flag name="TEI.mixed">
+        <ignore/>
+      </flag>
+      <comment>Now additional tag
+sets.</comment>
+      <flag name="TEI.linking">
+        <ignore/>
+      </flag>
+      <flag name="TEI.analysis">
+        <ignore/>
+      </flag>
+      <param name="TEI.fs">IGNORE</param>
+      <param name="TEI.certainty">IGNORE</param>
+      <flag name="TEI.transcr">
+        <ignore/>
+      </flag>
+      <flag name="TEI.textcrit">
+        <ignore/>
+      </flag>
+      <flag name="TEI.names.dates">
+        <ignore/>
+      </flag>
+      <param name="TEI.nets">IGNORE</param>
+      <flag name="TEI.figures">
+        <ignore/>
+      </flag>
+      <param name="TEI.corpus">IGNORE</param>
+      <comment>III. Declare TEI.XML and associated omissibility
+indicators</comment>
+      <overridden>
+        <flag name="TEI.XML">
+          <ignore/>
+        </flag>
+      </overridden>
+      <includedSection flag="TEI.XML">
+        <param name="om.RO"></param>
+        <param name="om.RR"></param>
+      </includedSection>
+      <overridden>
+        <param name="om.RO">- o</param>
+      </overridden>
+      <overridden>
+        <param name="om.RR">- -</param>
+      </overridden>
+      <comment> end of [DSTKEYS]  3.8.5</comment>
+    </externalIdRef>
+    <comment>Define element classes for content models, shared
+attributes for element classes, and global attributes.  (This all
+happens within the file TEIclas2.ent.)</comment>
+    <externalId name="TEI.elementClasses" system="teiclas2.ent"/>
+    <externalIdRef name="TEI.elementClasses">
+      <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+      <comment> [DSTECOV] 3.7.3: Element classes for TEI DTDs </comment>
+      <comment>Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.</comment>
+      <comment>Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.</comment>
+      <comment>These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+      <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+      <comment>First, we declare the 'low-level' core classes:  these are
+classes of semantically and structurally similar elements declared as
+part of the core tag set, e.g. the classes 'data' or 'edit'.</comment>
+      <comment> [DSTECLO] 3.7.4: Low-level classes </comment>
+      <comment>Most of these elements are in the core tag set, but
+some may be from other tag sets.</comment>
+      <comment>Phrase-level classes</comment>
+      <modelGroup name="x.hqphrase">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.hqphrase">
+        <choice>
+          <modelGroupRef name="x.hqphrase"/>
+          <elementRef>
+            <nameSpecRef name="n.distinct"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.emph"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.foreign"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.gloss"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.hi"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.mentioned"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.soCalled"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.term"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.title"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <param name="x.date"></param>
+      <param name="m.date">%x.date; %n.date; | %n.dateRange; | %n.dateStruct;</param>
+      <modelGroup name="x.data">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.data">
+        <choice>
+          <modelGroupRef name="x.data"/>
+          <elementRef>
+            <nameSpecRef name="n.abbr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.address"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.date"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.dateRange"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.dateStruct"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.expan"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.geogName"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.lang"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.measure"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.name"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.num"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.orgName"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.persName"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.placeName"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.rs"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.time"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.timeRange"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.timeStruct"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.edit">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.edit">
+        <choice>
+          <modelGroupRef name="x.edit"/>
+          <elementRef>
+            <nameSpecRef name="n.add"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.app"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.corr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.damage"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.del"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.orig"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.reg"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.restore"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.sic"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.space"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.supplied"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.unclear"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.loc">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.loc">
+        <choice>
+          <modelGroupRef name="x.loc"/>
+          <elementRef>
+            <nameSpecRef name="n.ptr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.ref"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.xptr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.xref"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.seg">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.seg">
+        <choice>
+          <modelGroupRef name="x.seg"/>
+          <elementRef>
+            <nameSpecRef name="n.c"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.cl"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.m"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.phr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.s"/>
+          </elementRef>
+          <modelGroupRef name="n.seg"/>
+          <elementRef>
+            <nameSpecRef name="n.w"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.sgmlKeywords">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.sgmlKeywords">
+        <choice>
+          <modelGroupRef name="x.sgmlKeywords"/>
+          <elementRef>
+            <nameSpecRef name="n.att"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.gi"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.tag"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.val"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.phrase.verse">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.phrase.verse">
+        <choice>
+          <modelGroupRef name="x.phrase.verse"/>
+          <elementRef>
+            <nameSpecRef name="n.caesura"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.formPointers">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.formPointers">
+        <choice>
+          <modelGroupRef name="x.formPointers"/>
+          <elementRef>
+            <nameSpecRef name="n.oRef"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.oVar"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.pRef"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.pVar"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.metadata">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.metadata">
+        <choice>
+          <modelGroupRef name="x.metadata"/>
+          <elementRef>
+            <nameSpecRef name="n.alt"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.altGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.certainty"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fLib"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fs"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fsLib"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fvLib"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.index"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.interp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.interpGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.join"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.joinGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.link"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.linkGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.respons"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.span"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.spanGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.timeline"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.refsys">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.refsys">
+        <choice>
+          <modelGroupRef name="x.refsys"/>
+          <elementRef>
+            <nameSpecRef name="n.cb"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.lb"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.milestone"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.pb"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.editIncl">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.editIncl">
+        <choice>
+          <modelGroupRef name="x.editIncl"/>
+          <elementRef>
+            <nameSpecRef name="n.addSpan"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.delSpan"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.gap"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.Incl">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.Incl">
+        <choice>
+          <modelGroupRef name="x.Incl"/>
+          <elementRef>
+            <nameSpecRef name="n.anchor"/>
+          </elementRef>
+          <modelGroupRef name="m.editIncl"/>
+          <modelGroupRef name="m.metadata"/>
+          <modelGroupRef name="m.refsys"/>
+        </choice>
+      </modelGroup>
+      <comment>Inter-level classes
+</comment>
+      <modelGroup name="x.hqinter">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.hqinter">
+        <choice>
+          <modelGroupRef name="x.hqinter"/>
+          <elementRef>
+            <nameSpecRef name="n.cit"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.q"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.quote"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.bibl">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.bibl">
+        <choice>
+          <modelGroupRef name="x.bibl"/>
+          <elementRef>
+            <nameSpecRef name="n.bibl"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.biblFull"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.biblStruct"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.lists">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.lists">
+        <choice>
+          <modelGroupRef name="x.lists"/>
+          <elementRef>
+            <nameSpecRef name="n.label"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.list"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.listBibl"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.notes">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.notes">
+        <choice>
+          <modelGroupRef name="x.notes"/>
+          <elementRef>
+            <nameSpecRef name="n.note"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.witDetail"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.stageDirection">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.stageDirection">
+        <choice>
+          <modelGroupRef name="x.stageDirection"/>
+          <elementRef>
+            <nameSpecRef name="n.camera"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.caption"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.move"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.sound"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.tech"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.view"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <comment> end of [DSTECLO]  3.7.4</comment>
+      <comment> [DSTECMI] 3.7.9: Misc. Element Class Models </comment>
+      <param name="x.agent"></param>
+      <param name="m.agent">%x.agent; %n.name;</param>
+      <modelGroup name="x.addrPart">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.addrPart">
+        <choice>
+          <modelGroupRef name="x.addrPart"/>
+          <elementRef>
+            <nameSpecRef name="n.name"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.postBox"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.postCode"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.street"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.biblPart">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.biblPart">
+        <choice>
+          <modelGroupRef name="x.biblPart"/>
+          <elementRef>
+            <nameSpecRef name="n.analytic"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.author"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.biblScope"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.edition"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.editor"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.extent"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.idno"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.imprint"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.monogr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.note"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.publisher"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.pubPlace"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.respStmt"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.series"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <param name="x.demographic"></param>
+      <param name="m.demographic">%x.demographic; %n.affiliation; | %n.birth; | %n.education; | %n.firstLang; | %n.langKnown; | %n.occupation; | %n.persName; | %n.residence; | %n.socecStatus;</param>
+      <modelGroup name="x.divbot">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.divbot">
+        <choice>
+          <modelGroupRef name="x.divbot"/>
+          <elementRef>
+            <nameSpecRef name="n.byline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.closer"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.dateline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.epigraph"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.salute"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.signed"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.trailer"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.divtop">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.divtop">
+        <choice>
+          <modelGroupRef name="x.divtop"/>
+          <elementRef>
+            <nameSpecRef name="n.argument"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.byline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.dateline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.docAuthor"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.docDate"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.epigraph"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.head"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.opener"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.salute"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.signed"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <param name="x.dramafront"></param>
+      <param name="m.dramafront">%x.dramafront; %n.castList; | %n.epilogue; | %n.performance; | %n.prologue; | %n.set;</param>
+      <param name="x.front"></param>
+      <param name="m.front">%x.front; %n.divGen; | %m.dramafront; | %n.titlePage;</param>
+      <param name="x.personPart"></param>
+      <param name="m.personPart">%x.personPart; %n.addName; | %n.foreName; | %n.genName; | %n.nameLink; | %n.roleName; | %n.surname;</param>
+      <param name="x.placePart"></param>
+      <param name="m.placePart">%x.placePart; %n.bloc; | %n.country; | %n.distance; | %n.geog; | %n.offSet; | %n.region; | %n.settlement;</param>
+      <param name="x.tpParts"></param>
+      <param name="m.tpParts">%x.tpParts; %n.byline; | %n.docAuthor; | %n.docDate; | %n.docEdition; | %n.docImprint; | %n.docTitle; | %n.epigraph; | %n.figure; | %n.imprimatur; | %n.titlePart;</param>
+      <param name="x.fmchunk"></param>
+      <param name="m.fmchunk">%x.fmchunk; %n.argument; | %n.byline; | %n.docAuthor; | %n.docDate; | %n.docEdition; | %n.docImprint; | %n.docTitle; | %n.epigraph; | %n.head; | %n.titlePart;</param>
+      <comment> end of [DSTECMI]  3.7.9</comment>
+      <comment>Next, we declare the 'high-level' classes:  these group
+together all phrase-level elements, all inter-level elements, and all
+chunk-level elements in the core, and identify the 'common' component
+elements (chunks and inter-level elements), as opposed to the
+tagset-specific components.</comment>
+      <comment> [DSTECHI] 3.7.5: Common high-level classes </comment>
+      <comment>These are the three fundamental element classes.</comment>
+      <modelGroup name="x.phrase">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.phrase">
+        <choice>
+          <modelGroupRef name="x.phrase"/>
+          <modelGroupRef name="m.data"/>
+          <elementRef>
+            <nameSpecRef name="n.dictScrap"/>
+          </elementRef>
+          <modelGroupRef name="m.edit"/>
+          <modelGroupRef name="m.formPointers"/>
+          <elementRef>
+            <nameSpecRef name="n.formula"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fw"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.handShift"/>
+          </elementRef>
+          <modelGroupRef name="m.hqphrase"/>
+          <modelGroupRef name="m.loc"/>
+          <modelGroupRef name="m.phrase.verse"/>
+          <modelGroupRef name="m.seg"/>
+          <modelGroupRef name="m.sgmlKeywords"/>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.inter">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.inter">
+        <choice>
+          <modelGroupRef name="x.inter"/>
+          <modelGroupRef name="m.bibl"/>
+          <elementRef>
+            <nameSpecRef name="n.castList"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.figure"/>
+          </elementRef>
+          <modelGroupRef name="m.hqinter"/>
+          <modelGroupRef name="m.lists"/>
+          <modelGroupRef name="m.notes"/>
+          <elementRef>
+            <nameSpecRef name="n.stage"/>
+          </elementRef>
+          <modelGroupRef name="m.stageDirection"/>
+          <elementRef>
+            <nameSpecRef name="n.table"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.text"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <modelGroup name="x.chunk">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.chunk">
+        <choice>
+          <modelGroupRef name="x.chunk"/>
+          <elementRef>
+            <nameSpecRef name="n.ab"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.eTree"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.graph"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.l"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.lg"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.p"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.sp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.tree"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.witList"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <comment>This class isolates all the common
+component-level elements.</comment>
+      <modelGroup name="x.common">
+        <choice/>
+      </modelGroup>
+      <modelGroup name="m.common">
+        <choice>
+          <modelGroupRef name="x.common"/>
+          <modelGroupRef name="m.bibl"/>
+          <modelGroupRef name="m.chunk"/>
+          <modelGroupRef name="m.hqinter"/>
+          <modelGroupRef name="m.lists"/>
+          <modelGroupRef name="m.notes"/>
+          <elementRef>
+            <nameSpecRef name="n.stage"/>
+          </elementRef>
+        </choice>
+      </modelGroup>
+      <comment> end of [DSTECHI]  3.7.5</comment>
+      <comment>Next, we embed the portions of each base and additional tag
+set which declare relevant parameter entities.  Only those files are
+embedded which have been selected by the user in the DTD subset.  These
+files will declare parameter entities for their component-level
+elements, as well as for any global attributes they define.</comment>
+      <comment> [DSTECMK] 3.7.6: Embedding tag-set-specific entity definitions </comment>
+      <ignoredSection flag="TEI.verse">
+&lt;!ENTITY  % TEI.verse.ent SYSTEM 'teivers2.ent' &gt;
+%TEI.verse.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.drama">
+&lt;!ENTITY  % TEI.drama.ent SYSTEM 'teidram2.ent' &gt;
+%TEI.drama.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.spoken">
+&lt;!ENTITY  % TEI.spoken.ent SYSTEM 'teispok2.ent' &gt;
+%TEI.spoken.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.dictionaries">
+&lt;!ENTITY  % TEI.dictionaries.ent SYSTEM 'teidict2.ent' &gt;
+%TEI.dictionaries.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.terminology">
+&lt;!ENTITY  % TEI.terminology.ent SYSTEM 'teiterm2.ent' &gt;
+%TEI.terminology.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.linking">
+&lt;!ENTITY  % TEI.linking.ent SYSTEM 'teilink2.ent' &gt;
+%TEI.linking.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.analysis">
+&lt;!ENTITY  % TEI.analysis.ent SYSTEM 'teiana2.ent' &gt;
+%TEI.analysis.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.transcr">
+&lt;!ENTITY  % TEI.transcr.ent SYSTEM 'teitran2.ent' &gt;
+%TEI.transcr.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.textcrit">
+&lt;!ENTITY  % TEI.textcrit.ent SYSTEM 'teitc2.ent' &gt;
+%TEI.textcrit.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.names.dates">
+&lt;!ENTITY  % TEI.names.dates.ent SYSTEM 'teind2.ent' &gt;
+%TEI.names.dates.ent;
+</ignoredSection>
+      <ignoredSection flag="TEI.figures">
+&lt;!ENTITY  % TEI.figures.ent SYSTEM 'teifig2.ent' &gt;
+%TEI.figures.ent;
+</ignoredSection>
+      <comment> end of [DSTECMK]  3.7.6</comment>
+      <comment>We can now declare the standard content models; one of these
+varies with the base selected.</comment>
+      <comment> [DSTECST] 3.7.7: Standard Content Models </comment>
+      <comment>Here we declare the parameter entities phrase, phrase.seq,
+component, component.seq, paraContent, and specialPara, for use in the
+content models of element declarations.</comment>
+      <comment>The entities phrase and phrase.seq are the same in all bases.
+They may include elements specific to single tag sets; if the tag set is
+not selected, these elements are undefined and have no effect.</comment>
+      <modelGroup name="phrase">
+        <choice>
+          <pcdata/>
+          <modelGroupRef name="m.phrase"/>
+          <modelGroupRef name="m.Incl"/>
+        </choice>
+      </modelGroup>
+      <modelGroup name="phrase.seq">
+        <zeroOrMore>
+          <modelGroupRef name="phrase"/>
+        </zeroOrMore>
+      </modelGroup>
+      <comment>The entity component varies with the base.  The
+versions for the combined bases are declared first (so as to
+take precedence over the declarations in the individual
+bases).</comment>
+      <comment> [DSTECMX] 3.7.8: Definition of components for combined bases </comment>
+      <comment>Default declarations for the 'mix.' entities used for mixed
+and general bases.</comment>
+      <param name="mix.verse"></param>
+      <param name="mix.drama"></param>
+      <param name="mix.spoken"></param>
+      <param name="mix.dictionaries"></param>
+      <param name="mix.terminology"></param>
+      <ignoredSection flag="TEI.mixed">
+&lt;!ENTITY  % TEI.singleBase 'IGNORE' &gt;
+&lt;!--The mixed base allows components from any base; it does so by
+defining 'component' as including both common components and those
+specific to one tag set.--&gt;
+&lt;!ENTITY  % component '(%m.common; %mix.verse; %mix.drama; %mix.spoken;
+%mix.dictionaries; %mix.terminology;)' &gt;</ignoredSection>
+      <ignoredSection flag="TEI.general">
+&lt;!--The general base uses the same definition of component as the
+mixed base.--&gt;
+&lt;!ENTITY  % TEI.singleBase 'IGNORE' &gt;
+&lt;!ENTITY  % component '(%m.common; %mix.verse; %mix.drama; %mix.spoken;
+%mix.dictionaries; %mix.terminology;)' &gt;
+&lt;!--But it defines a special version of component.seq, which
+restricts each div of the text to a single base:  bases can shift only
+in embedded divs or at div boundaries.  This entity is constructed out
+of a series of smaller entities, one for each tag set.  If the tag set
+is not in use, its entity will expand to the empty string.--&gt;
+&lt;![ %TEI.verse; [
+&lt;!--If the verse base is in use, ...--&gt;
+&lt;!ENTITY  % gen.verse '((%m.comp.verse;), (%m.common; | %m.comp.verse;)*) |' &gt;]]&gt;
+&lt;![ %TEI.drama; [
+&lt;!--If the drama base is in use, ...--&gt;
+&lt;!ENTITY  % gen.drama '((%m.comp.drama;), (%m.common; | %m.comp.drama;)*) |' &gt;]]&gt;
+&lt;![ %TEI.spoken; [
+&lt;!--If the spoken base is in use, ...--&gt;
+&lt;!ENTITY  % gen.spoken '((%m.comp.spoken;), (%m.common; | %m.comp.spoken;)*) |' &gt;]]&gt;
+&lt;![ %TEI.dictionaries; [
+&lt;!--If the dictionary base is in use, ...--&gt;
+&lt;!ENTITY  % gen.dictionaries '((%m.comp.dictionaries;), (%m.common; | %m.comp.dictionaries;)*) |' &gt;]]&gt;
+&lt;![ %TEI.terminology; [
+&lt;!--If the terminology base is in use, ...--&gt;
+&lt;!ENTITY  % gen.terminology '((%m.comp.terminology;), (%m.common; | %m.comp.terminology;)*) |' &gt;]]&gt;
+&lt;!--Default declarations for all the entities gen.verse,
+etc.--&gt;
+&lt;!ENTITY  % gen.verse '' &gt;
+&lt;!ENTITY  % gen.drama '' &gt;
+&lt;!ENTITY  % gen.spoken '' &gt;
+&lt;!ENTITY  % gen.dictionaries '' &gt;
+&lt;!ENTITY  % gen.terminology '' &gt;
+&lt;!--Now we are ready to declare component.seq and
+component.plus for use in general base tag set.--&gt;
+&lt;!ENTITY  % component.seq '(%m.common;)*, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries; %gen.terminology; TEI...end)?' &gt;
+&lt;!ENTITY  % component.plus '(%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries; %gen.terminology; TEI...end)
+|
+( (%m.common;)+, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries;
+%gen.terminology; TEI...end)?' &gt;
+&lt;!--(End of marked section for general base.)--&gt;</ignoredSection>
+      <comment> end of [DSTECMX]  3.7.8</comment>
+      <ignoredSection flag="TEI.prose">
+&lt;!ENTITY  % component '(%m.common;)' &gt;
+&lt;!ENTITY  % TEI.singleBase 'INCLUDE' &gt;</ignoredSection>
+      <ignoredSection flag="TEI.verse">
+&lt;!ENTITY  % component '(%m.common; | %m.comp.verse;)' &gt;
+&lt;!ENTITY  % TEI.singleBase 'INCLUDE' &gt;</ignoredSection>
+      <ignoredSection flag="TEI.drama">
+&lt;!ENTITY  % component '(%m.common; | %m.comp.drama;)' &gt;
+&lt;!ENTITY  % TEI.singleBase 'INCLUDE' &gt;</ignoredSection>
+      <ignoredSection flag="TEI.spoken">
+&lt;!ENTITY  % component '(%m.common; | %m.comp.spoken;)' &gt;
+&lt;!ENTITY  % TEI.singleBase 'INCLUDE' &gt;</ignoredSection>
+      <ignoredSection flag="TEI.dictionaries">
+&lt;!ENTITY  % component '(%m.common; | %m.comp.dictionaries;)' &gt;
+&lt;!ENTITY  % TEI.singleBase 'INCLUDE' &gt;</ignoredSection>
+      <ignoredSection flag="TEI.terminology">
+&lt;!ENTITY  % component '(%m.common; | %m.comp.terminology;)' &gt;
+&lt;!ENTITY  % TEI.singleBase 'INCLUDE' &gt;</ignoredSection>
+      <comment>Default declaration.</comment>
+      <modelGroup name="component">
+        <modelGroupRef name="m.common"/>
+      </modelGroup>
+      <param name="TEI.singleBase">INCLUDE</param>
+      <comment>The entity component.seq is always a starred sequence of
+component elements.  Its definition does not vary with the base (unless
+we are using the general base, in which case it has already been defined
+above), but the meaning of the definition does.</comment>
+      <modelGroup name="component.seq">
+        <zeroOrMore>
+          <sequence>
+            <modelGroupRef name="component"/>
+            <zeroOrMore>
+              <modelGroupRef name="m.Incl"/>
+            </zeroOrMore>
+          </sequence>
+        </zeroOrMore>
+      </modelGroup>
+      <comment>The following entities do not vary with the base.</comment>
+      <modelGroup name="paraContent">
+        <zeroOrMore>
+          <choice>
+            <pcdata/>
+            <modelGroupRef name="m.phrase"/>
+            <modelGroupRef name="m.inter"/>
+            <modelGroupRef name="m.Incl"/>
+          </choice>
+        </zeroOrMore>
+      </modelGroup>
+      <modelGroup name="specialPara">
+        <zeroOrMore>
+          <choice>
+            <pcdata/>
+            <modelGroupRef name="m.phrase"/>
+            <modelGroupRef name="m.inter"/>
+            <modelGroupRef name="m.chunk"/>
+            <modelGroupRef name="m.Incl"/>
+          </choice>
+        </zeroOrMore>
+      </modelGroup>
+      <comment> end of [DSTECST]  3.7.7</comment>
+      <comment>Finally, we declare the attribute classes, including
+the global attributes.</comment>
+      <comment> [DSTECAT] 3.7.1: Attribute classes </comment>
+      <param name="a.declaring">
+      decls IDREFS #IMPLIED</param>
+      <attributeGroup name="a.declarable">
+        <attribute>
+          <name>default</name>
+          <tokenized>
+            <enum>YES</enum>
+            <enum>NO</enum>
+          </tokenized>
+          <default>NO</default>
+        </attribute>
+      </attributeGroup>
+      <param name="a.typed">
+      type CDATA #IMPLIED
+      subtype CDATA #IMPLIED</param>
+      <attributeGroup name="a.divn">
+        <attribute>
+          <name>type</name>
+          <cdata/>
+          <default>CDATA</default>
+        </attribute>
+        <attribute>
+          <name>org</name>
+          <tokenized>
+            <enum>composite</enum>
+            <enum>uniform</enum>
+          </tokenized>
+          <default>uniform</default>
+        </attribute>
+        <attribute>
+          <name>sample</name>
+          <tokenized>
+            <enum>initial</enum>
+            <enum>medial</enum>
+            <enum>final</enum>
+            <enum>unknown</enum>
+            <enum>complete</enum>
+          </tokenized>
+          <default>complete</default>
+        </attribute>
+        <attribute>
+          <name>part</name>
+          <tokenized>
+            <enum>Y</enum>
+            <enum>N</enum>
+            <enum>I</enum>
+            <enum>M</enum>
+            <enum>F</enum>
+          </tokenized>
+          <default>N</default>
+        </attribute>
+      </attributeGroup>
+      <attributeGroup name="a.enjamb">
+        <attribute>
+          <name>enjamb</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+      </attributeGroup>
+      <param name="a.interpret">
+      resp CDATA %INHERITED;
+      type CDATA %INHERITED;
+      inst IDREFS #IMPLIED</param>
+      <attributeGroup name="a.metrical">
+        <attribute>
+          <name>met</name>
+          <cdata/>
+          <attributeDefaultRef name="INHERITED"/>
+        </attribute>
+        <attribute>
+          <name>real</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>rhyme</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+      </attributeGroup>
+      <attributeGroup name="a.names">
+        <attribute>
+          <name>key</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>reg</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+      </attributeGroup>
+      <param name="a.personPart">
+      %a.names;
+      type CDATA #IMPLIED
+      full (yes | abb | init) &quot;yes&quot;
+      sort CDATA #IMPLIED</param>
+      <param name="a.placePart">
+      %a.names;
+      %a.typed;</param>
+      <attributeGroup name="a.pointer">
+        <attribute>
+          <name>type</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>resp</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>crdate</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>targType</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>targOrder</name>
+          <tokenized>
+            <enum>Y</enum>
+            <enum>N</enum>
+            <enum>U</enum>
+          </tokenized>
+          <default>U</default>
+        </attribute>
+        <attribute>
+          <name>evaluate</name>
+          <tokenized>
+            <enum>all</enum>
+            <enum>one</enum>
+            <enum>none</enum>
+          </tokenized>
+          <implied/>
+        </attribute>
+      </attributeGroup>
+      <param name="a.seg">
+      type CDATA #IMPLIED
+      function CDATA #IMPLIED
+      part (Y | N | I | M | F) &quot;N&quot;</param>
+      <param name="a.temporalExpr">
+      %a.names;
+      %a.typed;
+      value CDATA #IMPLIED
+      full (yes | abb | init) &quot;yes&quot;</param>
+      <param name="a.timed">
+      start IDREF #IMPLIED
+      end IDREF #IMPLIED
+      dur CDATA #IMPLIED</param>
+      <param name="a.xPointer">
+      %a.pointer;
+      doc ENTITY #IMPLIED
+      from %extPtr; &quot;ROOT&quot;
+      to %extPtr; &quot;DITTO&quot;</param>
+      <comment> end of [DSTECAT]  3.7.1</comment>
+      <comment> [DSTGA] 3.5: Global attributes </comment>
+      <comment>The global attributes are defined for every element in the TEI
+tag set; individual declarations may be overridden by local declarations
+for individual elements.</comment>
+      <comment>If the tag sets invoked by the user define extra global
+attributes (they do this in their .ent file), then they are inherited by
+GLOBAL; otherwise the parameter entities referred to expand to the empty
+string, as shown here.  </comment>
+      <attributeGroup name="a.analysis"/>
+      <attributeGroup name="a.linking"/>
+      <attributeGroup name="a.terminology"/>
+      <attributeGroup name="a.global">
+        <attributeGroupRef name="a.terminology"/>
+        <attributeGroupRef name="a.linking"/>
+        <attributeGroupRef name="a.analysis"/>
+        <attribute>
+          <name>id</name>
+          <tokenized name="ID"/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>n</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>lang</name>
+          <tokenized name="IDREF"/>
+          <attributeDefaultRef name="INHERITED"/>
+        </attribute>
+        <attribute>
+          <name>rend</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+      </attributeGroup>
+      <comment>The TEIform attribute is also global, but is declared
+individually for each element, not in a parameter entity
+declaration.</comment>
+      <comment> end of [DSTGA]  3.5</comment>
+      <comment> end of [DSTECOV]  3.7.3</comment>
+    </externalIdRef>
+    <comment>Embed the core tag set</comment>
+    <externalId name="TEI.core.dtd" system="teicore2.dtd"/>
+    <externalIdRef name="TEI.core.dtd">
+      <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+      <comment> [DCO] 6.12: Elements available in all forms of the TEI main DTD </comment>
+      <comment>Definition of elements, sub-group by sub-group.</comment>
+      <comment> [DCOPA] 6.1: Paragraph </comment>
+      <flag name="p">
+        <include/>
+      </flag>
+      <includedSection flag="p">
+        <element>
+          <nameSpecRef name="n.p"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.p"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>p</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOPA]  6.1</comment>
+      <comment> [DCOHQ] 6.3.2.1: Highlighted phrases </comment>
+      <flag name="foreign">
+        <include/>
+      </flag>
+      <includedSection flag="foreign">
+        <element>
+          <nameSpecRef name="n.foreign"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.foreign"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>foreign</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> [DCOHQ1] 6.3.2.2:  </comment>
+      <flag name="emph">
+        <include/>
+      </flag>
+      <includedSection flag="emph">
+        <element>
+          <nameSpecRef name="n.emph"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.emph"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>emph</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="hi">
+        <include/>
+      </flag>
+      <includedSection flag="hi">
+        <element>
+          <nameSpecRef name="n.hi"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.hi"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>hi</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOHQ1]  6.3.2.2</comment>
+      <comment> [DCOHQ3] 6.3.2.3:  </comment>
+      <flag name="distinct">
+        <include/>
+      </flag>
+      <includedSection flag="distinct">
+        <element>
+          <nameSpecRef name="n.distinct"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.distinct"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>time</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>space</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>social</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>distinct</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOHQ3]  6.3.2.3</comment>
+      <comment> [DCOHQQ] 6.3.3: Quotation </comment>
+      <flag name="q">
+        <include/>
+      </flag>
+      <includedSection flag="q">
+        <element>
+          <nameSpecRef name="n.q"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.q"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>direct</name>
+            <tokenized>
+              <enum>y</enum>
+              <enum>n</enum>
+              <enum>unspecified</enum>
+            </tokenized>
+            <default>unspecified</default>
+          </attribute>
+          <attribute>
+            <name>who</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>q</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="quote">
+        <include/>
+      </flag>
+      <includedSection flag="quote">
+        <element>
+          <nameSpecRef name="n.quote"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.quote"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>quote</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="cit">
+        <include/>
+      </flag>
+      <includedSection flag="cit">
+        <element>
+          <nameSpecRef name="n.cit"/>
+          <oneOrMore>
+            <choice>
+              <elementRef>
+                <nameSpecRef name="n.q"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.quote"/>
+              </elementRef>
+              <modelGroupRef name="m.bibl"/>
+              <modelGroupRef name="m.loc"/>
+              <modelGroupRef name="m.Incl"/>
+            </choice>
+          </oneOrMore>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.cit"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>cit</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="soCalled">
+        <include/>
+      </flag>
+      <includedSection flag="soCalled">
+        <element>
+          <nameSpecRef name="n.soCalled"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.soCalled"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>soCalled</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOHQQ]  6.3.3</comment>
+      <comment> [DCOHQU] 6.3.4: Terms, glosses, etc. </comment>
+      <flag name="term">
+        <include/>
+      </flag>
+      <includedSection flag="term">
+        <element>
+          <nameSpecRef name="n.term"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.term"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>term</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="mentioned">
+        <include/>
+      </flag>
+      <includedSection flag="mentioned">
+        <element>
+          <nameSpecRef name="n.mentioned"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.mentioned"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>mentioned</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="gloss">
+        <include/>
+      </flag>
+      <includedSection flag="gloss">
+        <element>
+          <nameSpecRef name="n.gloss"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.gloss"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>target</name>
+            <tokenized name="IDREF"/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>gloss</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOHQU]  6.3.4</comment>
+      <comment> end of [DCOHQ]  6.3.2.1</comment>
+      <comment> [DCONA] 6.4.1: Proper Nouns </comment>
+      <flag name="name">
+        <include/>
+      </flag>
+      <includedSection flag="name">
+        <element>
+          <nameSpecRef name="n.name"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.name"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.names"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>name</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="rs">
+        <include/>
+      </flag>
+      <includedSection flag="rs">
+        <element>
+          <nameSpecRef name="n.rs"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.rs"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.names"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>rs</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCONA]  6.4.1</comment>
+      <comment> [DCONU] 6.4.3: Numbers and measures </comment>
+      <flag name="num">
+        <include/>
+      </flag>
+      <includedSection flag="num">
+        <element>
+          <nameSpecRef name="n.num"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.num"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>value</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>num</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="measure">
+        <include/>
+      </flag>
+      <includedSection flag="measure">
+        <element>
+          <nameSpecRef name="n.measure"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.measure"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.names"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>measure</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCONU]  6.4.3</comment>
+      <comment> [DCODA] 6.4.4: Dates and times </comment>
+      <flag name="date">
+        <include/>
+      </flag>
+      <includedSection flag="date">
+        <element>
+          <nameSpecRef name="n.date"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.date"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>calendar</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>value</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>certainty</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>date</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="dateRange">
+        <include/>
+      </flag>
+      <includedSection flag="dateRange">
+        <element>
+          <nameSpecRef name="n.dateRange"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.dateRange"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>calendar</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>from</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>to</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>exact</name>
+            <tokenized>
+              <enum>to</enum>
+              <enum>from</enum>
+              <enum>both</enum>
+              <enum>none</enum>
+            </tokenized>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>dateRange</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="time">
+        <include/>
+      </flag>
+      <includedSection flag="time">
+        <element>
+          <nameSpecRef name="n.time"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.time"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>value</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>type</name>
+            <tokenized>
+              <enum>am</enum>
+              <enum>pm</enum>
+              <enum>24hour</enum>
+              <enum>descriptive</enum>
+            </tokenized>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>zone</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>time</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="timeRange">
+        <include/>
+      </flag>
+      <includedSection flag="timeRange">
+        <element>
+          <nameSpecRef name="n.timeRange"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.timeRange"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>from</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>to</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>exact</name>
+            <tokenized>
+              <enum>to</enum>
+              <enum>from</enum>
+              <enum>both</enum>
+              <enum>none</enum>
+            </tokenized>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>timeRange</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCODA]  6.4.4</comment>
+      <comment> [DCOAB] 6.4.5: Abbreviations </comment>
+      <flag name="abbr">
+        <include/>
+      </flag>
+      <includedSection flag="abbr">
+        <element>
+          <nameSpecRef name="n.abbr"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.abbr"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>expan</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>cert</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>abbr</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="expan">
+        <include/>
+      </flag>
+      <includedSection flag="expan">
+        <element>
+          <nameSpecRef name="n.expan"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.expan"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>abbr</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>cert</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>expan</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOAB]  6.4.5</comment>
+      <comment> [DCOEDC] 6.5.1: Editorial tags for correction </comment>
+      <flag name="sic">
+        <include/>
+      </flag>
+      <includedSection flag="sic">
+        <element>
+          <nameSpecRef name="n.sic"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.sic"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>corr</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>cert</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>sic</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="corr">
+        <include/>
+      </flag>
+      <includedSection flag="corr">
+        <element>
+          <nameSpecRef name="n.corr"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.corr"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>sic</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <cdata/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>cert</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>corr</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOEDC]  6.5.1</comment>
+      <comment> [DCOEDR] 6.5.2: Editorial tags for regularization </comment>
+      <flag name="reg">
+        <include/>
+      </flag>
+      <includedSection flag="reg">
+        <element>
+          <nameSpecRef name="n.reg"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.reg"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>orig</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>reg</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="orig">
+        <include/>
+      </flag>
+      <includedSection flag="orig">
+        <element>
+          <nameSpecRef name="n.orig"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.orig"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>reg</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>orig</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOEDR]  6.5.2</comment>
+      <comment> [DCOEDA] 6.5.3: Other editorial tags </comment>
+      <flag name="gap">
+        <include/>
+      </flag>
+      <includedSection flag="gap">
+        <element>
+          <nameSpecRef name="n.gap"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.gap"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>desc</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>reason</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>hand</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>agent</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>extent</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>gap</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="add">
+        <include/>
+      </flag>
+      <includedSection flag="add">
+        <element>
+          <nameSpecRef name="n.add"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.add"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>place</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>cert</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>hand</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>add</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="del">
+        <include/>
+      </flag>
+      <includedSection flag="del">
+        <element>
+          <nameSpecRef name="n.del"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.del"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>status</name>
+            <cdata/>
+            <default>unremarkable</default>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>cert</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>hand</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>del</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="unclear">
+        <include/>
+      </flag>
+      <includedSection flag="unclear">
+        <element>
+          <nameSpecRef name="n.unclear"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.unclear"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>reason</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <cdata/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>cert</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>hand</name>
+            <tokenized name="IDREF"/>
+            <attributeDefaultRef name="INHERITED"/>
+          </attribute>
+          <attribute>
+            <name>agent</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>unclear</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOEDA]  6.5.3</comment>
+      <comment> [DCOAD] 6.4.2: Addresses and their components </comment>
+      <flag name="address">
+        <include/>
+      </flag>
+      <includedSection flag="address">
+        <element>
+          <nameSpecRef name="n.address"/>
+          <sequence>
+            <zeroOrMore>
+              <modelGroupRef name="m.Incl"/>
+            </zeroOrMore>
+            <choice>
+              <oneOrMore>
+                <sequence>
+                  <elementRef>
+                    <nameSpecRef name="n.addrLine"/>
+                  </elementRef>
+                  <zeroOrMore>
+                    <modelGroupRef name="m.Incl"/>
+                  </zeroOrMore>
+                </sequence>
+              </oneOrMore>
+              <zeroOrMore>
+                <sequence>
+                  <modelGroupRef name="m.addrPart"/>
+                  <zeroOrMore>
+                    <modelGroupRef name="m.Incl"/>
+                  </zeroOrMore>
+                </sequence>
+              </zeroOrMore>
+            </choice>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.address"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>address</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="addrLine">
+        <include/>
+      </flag>
+      <includedSection flag="addrLine">
+        <element>
+          <nameSpecRef name="n.addrLine"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.addrLine"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>addrLine</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="street">
+        <include/>
+      </flag>
+      <includedSection flag="street">
+        <element>
+          <nameSpecRef name="n.street"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.street"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>street</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="postCode">
+        <include/>
+      </flag>
+      <includedSection flag="postCode">
+        <element>
+          <nameSpecRef name="n.postCode"/>
+          <pcdata/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.postCode"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>postCode</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="postBox">
+        <include/>
+      </flag>
+      <includedSection flag="postBox">
+        <element>
+          <nameSpecRef name="n.postBox"/>
+          <pcdata/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.postBox"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>postBox</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment>Other components of addresses should be represented
+using the general purpose NAME element</comment>
+      <comment> end of [DCOAD]  6.4.2</comment>
+      <comment> [DCOXR] 6.6: Simple cross references </comment>
+      <overridden>
+        <duplicate name="a.pointer"/>
+      </overridden>
+      <flag name="ptr">
+        <include/>
+      </flag>
+      <includedSection flag="ptr">
+        <element>
+          <nameSpecRef name="n.ptr"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.ptr"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.pointer"/>
+          <attribute>
+            <name>target</name>
+            <tokenized name="IDREFS"/>
+            <required/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>ptr</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="ref">
+        <include/>
+      </flag>
+      <includedSection flag="ref">
+        <element>
+          <nameSpecRef name="n.ref"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.ref"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.pointer"/>
+          <attribute>
+            <name>target</name>
+            <tokenized name="IDREFS"/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>ref</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOXR]  6.6</comment>
+      <comment> [DCOLI] 6.7: Lists and List Items </comment>
+      <flag name="list">
+        <include/>
+      </flag>
+      <includedSection flag="list">
+        <element>
+          <nameSpecRef name="n.list"/>
+          <sequence>
+            <zeroOrMore>
+              <modelGroupRef name="m.Incl"/>
+            </zeroOrMore>
+            <optional>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.head"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </optional>
+            <choice>
+              <zeroOrMore>
+                <sequence>
+                  <elementRef>
+                    <nameSpecRef name="n.item"/>
+                  </elementRef>
+                  <zeroOrMore>
+                    <modelGroupRef name="m.Incl"/>
+                  </zeroOrMore>
+                </sequence>
+              </zeroOrMore>
+              <sequence>
+                <optional>
+                  <sequence>
+                    <elementRef>
+                      <nameSpecRef name="n.headLabel"/>
+                    </elementRef>
+                    <zeroOrMore>
+                      <modelGroupRef name="m.Incl"/>
+                    </zeroOrMore>
+                  </sequence>
+                </optional>
+                <optional>
+                  <sequence>
+                    <elementRef>
+                      <nameSpecRef name="n.headItem"/>
+                    </elementRef>
+                    <zeroOrMore>
+                      <modelGroupRef name="m.Incl"/>
+                    </zeroOrMore>
+                  </sequence>
+                </optional>
+                <oneOrMore>
+                  <sequence>
+                    <elementRef>
+                      <nameSpecRef name="n.label"/>
+                    </elementRef>
+                    <zeroOrMore>
+                      <modelGroupRef name="m.Incl"/>
+                    </zeroOrMore>
+                    <elementRef>
+                      <nameSpecRef name="n.item"/>
+                    </elementRef>
+                    <zeroOrMore>
+                      <modelGroupRef name="m.Incl"/>
+                    </zeroOrMore>
+                  </sequence>
+                </oneOrMore>
+              </sequence>
+            </choice>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.list"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <default>simple</default>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>list</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="item">
+        <include/>
+      </flag>
+      <includedSection flag="item">
+        <element>
+          <nameSpecRef name="n.item"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.item"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>item</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="label">
+        <include/>
+      </flag>
+      <includedSection flag="label">
+        <element>
+          <nameSpecRef name="n.label"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.label"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>label</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="head">
+        <include/>
+      </flag>
+      <includedSection flag="head">
+        <element>
+          <nameSpecRef name="n.head"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.head"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>head</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="headLabel">
+        <include/>
+      </flag>
+      <includedSection flag="headLabel">
+        <element>
+          <nameSpecRef name="n.headLabel"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.headLabel"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>headLabel</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="headItem">
+        <include/>
+      </flag>
+      <includedSection flag="headItem">
+        <element>
+          <nameSpecRef name="n.headItem"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.headItem"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>headItem</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOLI]  6.7</comment>
+      <comment> [DCONO] 6.8.1: Annotation </comment>
+      <flag name="note">
+        <include/>
+      </flag>
+      <includedSection flag="note">
+        <element>
+          <nameSpecRef name="n.note"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.note"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>resp</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>place</name>
+            <cdata/>
+            <default>unspecified</default>
+          </attribute>
+          <attribute>
+            <name>anchored</name>
+            <tokenized>
+              <enum>yes</enum>
+              <enum>no</enum>
+            </tokenized>
+            <default>yes</default>
+          </attribute>
+          <attribute>
+            <name>target</name>
+            <tokenized name="IDREFS"/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>targetEnd</name>
+            <tokenized name="IDREFS"/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>note</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> [DCONOIX] 6.8.2: Index Entries </comment>
+      <flag name="index">
+        <include/>
+      </flag>
+      <includedSection flag="index">
+        <element>
+          <nameSpecRef name="n.index"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.index"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>index</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>level1</name>
+            <cdata/>
+            <required/>
+          </attribute>
+          <attribute>
+            <name>level2</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>level3</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>level4</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>index</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="divGen">
+        <include/>
+      </flag>
+      <includedSection flag="divGen">
+        <element>
+          <nameSpecRef name="n.divGen"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.divGen"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>divGen</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCONOIX]  6.8.2</comment>
+      <comment> end of [DCONO]  6.8.1</comment>
+      <comment> [DCORSM] 6.9.3: Milestone tags </comment>
+      <flag name="milestone">
+        <include/>
+      </flag>
+      <includedSection flag="milestone">
+        <element>
+          <nameSpecRef name="n.milestone"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.milestone"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>ed</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>unit</name>
+            <cdata/>
+            <required/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>milestone</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="pb">
+        <include/>
+      </flag>
+      <includedSection flag="pb">
+        <element>
+          <nameSpecRef name="n.pb"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.pb"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>ed</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>pb</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="lb">
+        <include/>
+      </flag>
+      <includedSection flag="lb">
+        <element>
+          <nameSpecRef name="n.lb"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.lb"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>ed</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>lb</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="cb">
+        <include/>
+      </flag>
+      <includedSection flag="cb">
+        <element>
+          <nameSpecRef name="n.cb"/>
+          <sequence/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.cb"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>ed</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>cb</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCORSM]  6.9.3</comment>
+      <comment> [DCOBI] 6.10.1: Tags for Bibliographic References </comment>
+      <flag name="bibl">
+        <include/>
+      </flag>
+      <includedSection flag="bibl">
+        <element>
+          <nameSpecRef name="n.bibl"/>
+          <zeroOrMore>
+            <choice>
+              <pcdata/>
+              <modelGroupRef name="m.phrase"/>
+              <modelGroupRef name="m.biblPart"/>
+              <modelGroupRef name="m.Incl"/>
+            </choice>
+          </zeroOrMore>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.bibl"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.declarable"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>bibl</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="biblStruct">
+        <include/>
+      </flag>
+      <includedSection flag="biblStruct">
+        <element>
+          <nameSpecRef name="n.biblStruct"/>
+          <sequence>
+            <zeroOrMore>
+              <modelGroupRef name="m.Incl"/>
+            </zeroOrMore>
+            <optional>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.analytic"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </optional>
+            <oneOrMore>
+              <sequence>
+                <sequence>
+                  <elementRef>
+                    <nameSpecRef name="n.monogr"/>
+                  </elementRef>
+                  <zeroOrMore>
+                    <modelGroupRef name="m.Incl"/>
+                  </zeroOrMore>
+                </sequence>
+                <zeroOrMore>
+                  <sequence>
+                    <elementRef>
+                      <nameSpecRef name="n.series"/>
+                    </elementRef>
+                    <zeroOrMore>
+                      <modelGroupRef name="m.Incl"/>
+                    </zeroOrMore>
+                  </sequence>
+                </zeroOrMore>
+              </sequence>
+            </oneOrMore>
+            <zeroOrMore>
+              <choice>
+                <sequence>
+                  <elementRef>
+                    <nameSpecRef name="n.note"/>
+                  </elementRef>
+                  <zeroOrMore>
+                    <modelGroupRef name="m.Incl"/>
+                  </zeroOrMore>
+                </sequence>
+                <sequence>
+                  <elementRef>
+                    <nameSpecRef name="n.idno"/>
+                  </elementRef>
+                  <zeroOrMore>
+                    <modelGroupRef name="m.Incl"/>
+                  </zeroOrMore>
+                </sequence>
+              </choice>
+            </zeroOrMore>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.biblStruct"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.declarable"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>biblStruct</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="biblFull">
+        <include/>
+      </flag>
+      <includedSection flag="biblFull">
+        <element>
+          <nameSpecRef name="n.biblFull"/>
+          <sequence>
+            <zeroOrMore>
+              <modelGroupRef name="m.Incl"/>
+            </zeroOrMore>
+            <sequence>
+              <elementRef>
+                <nameSpecRef name="n.titleStmt"/>
+              </elementRef>
+              <zeroOrMore>
+                <modelGroupRef name="m.Incl"/>
+              </zeroOrMore>
+            </sequence>
+            <optional>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.editionStmt"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </optional>
+            <optional>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.extent"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </optional>
+            <sequence>
+              <elementRef>
+                <nameSpecRef name="n.publicationStmt"/>
+              </elementRef>
+              <zeroOrMore>
+                <modelGroupRef name="m.Incl"/>
+              </zeroOrMore>
+            </sequence>
+            <optional>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.seriesStmt"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </optional>
+            <optional>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.notesStmt"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </optional>
+            <zeroOrMore>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.sourceDesc"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </zeroOrMore>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.biblFull"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.declarable"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>biblFull</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="listBibl">
+        <include/>
+      </flag>
+      <includedSection flag="listBibl">
+        <element>
+          <nameSpecRef name="n.listBibl"/>
+          <sequence>
+            <optional>
+              <elementRef>
+                <nameSpecRef name="n.head"/>
+              </elementRef>
+            </optional>
+            <oneOrMore>
+              <choice>
+                <elementRef>
+                  <nameSpecRef name="n.bibl"/>
+                </elementRef>
+                <elementRef>
+                  <nameSpecRef name="n.biblStruct"/>
+                </elementRef>
+                <elementRef>
+                  <name>biblFull</name>
+                </elementRef>
+              </choice>
+            </oneOrMore>
+            <optional>
+              <elementRef>
+                <nameSpecRef name="n.trailer"/>
+              </elementRef>
+            </optional>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.listBibl"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.declarable"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>listBibl</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> [DCOBILV] 6.10.2.1: Levels of bibliographic information </comment>
+      <flag name="analytic">
+        <include/>
+      </flag>
+      <includedSection flag="analytic">
+        <element>
+          <nameSpecRef name="n.analytic"/>
+          <zeroOrMore>
+            <choice>
+              <elementRef>
+                <nameSpecRef name="n.author"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.editor"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.respStmt"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.title"/>
+              </elementRef>
+              <modelGroupRef name="m.Incl"/>
+            </choice>
+          </zeroOrMore>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.analytic"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>analytic</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="monogr">
+        <include/>
+      </flag>
+      <includedSection flag="monogr">
+        <element>
+          <nameSpecRef name="n.monogr"/>
+          <sequence>
+            <optional>
+              <sequence>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+                <choice>
+                  <sequence>
+                    <choice>
+                      <elementRef>
+                        <nameSpecRef name="n.author"/>
+                      </elementRef>
+                      <elementRef>
+                        <nameSpecRef name="n.editor"/>
+                      </elementRef>
+                      <elementRef>
+                        <nameSpecRef name="n.respStmt"/>
+                      </elementRef>
+                    </choice>
+                    <zeroOrMore>
+                      <choice>
+                        <elementRef>
+                          <nameSpecRef name="n.author"/>
+                        </elementRef>
+                        <elementRef>
+                          <nameSpecRef name="n.editor"/>
+                        </elementRef>
+                        <elementRef>
+                          <nameSpecRef name="n.respStmt"/>
+                        </elementRef>
+                        <modelGroupRef name="m.Incl"/>
+                      </choice>
+                    </zeroOrMore>
+                    <oneOrMore>
+                      <sequence>
+                        <elementRef>
+                          <nameSpecRef name="n.title"/>
+                        </elementRef>
+                        <zeroOrMore>
+                          <modelGroupRef name="m.Incl"/>
+                        </zeroOrMore>
+                      </sequence>
+                    </oneOrMore>
+                    <zeroOrMore>
+                      <sequence>
+                        <choice>
+                          <elementRef>
+                            <nameSpecRef name="n.editor"/>
+                          </elementRef>
+                          <elementRef>
+                            <nameSpecRef name="n.respStmt"/>
+                          </elementRef>
+                        </choice>
+                        <zeroOrMore>
+                          <modelGroupRef name="m.Incl"/>
+                        </zeroOrMore>
+                      </sequence>
+                    </zeroOrMore>
+                  </sequence>
+                  <sequence>
+                    <oneOrMore>
+                      <sequence>
+                        <elementRef>
+                          <nameSpecRef name="n.title"/>
+                        </elementRef>
+                        <zeroOrMore>
+                          <modelGroupRef name="m.Incl"/>
+                        </zeroOrMore>
+                      </sequence>
+                    </oneOrMore>
+                    <zeroOrMore>
+                      <sequence>
+                        <choice>
+                          <elementRef>
+                            <nameSpecRef name="n.author"/>
+                          </elementRef>
+                          <elementRef>
+                            <nameSpecRef name="n.editor"/>
+                          </elementRef>
+                          <elementRef>
+                            <nameSpecRef name="n.respStmt"/>
+                          </elementRef>
+                        </choice>
+                        <zeroOrMore>
+                          <modelGroupRef name="m.Incl"/>
+                        </zeroOrMore>
+                      </sequence>
+                    </zeroOrMore>
+                  </sequence>
+                </choice>
+              </sequence>
+            </optional>
+            <zeroOrMore>
+              <sequence>
+                <choice>
+                  <elementRef>
+                    <nameSpecRef name="n.note"/>
+                  </elementRef>
+                  <elementRef>
+                    <nameSpecRef name="n.meeting"/>
+                  </elementRef>
+                </choice>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </zeroOrMore>
+            <zeroOrMore>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.edition"/>
+                </elementRef>
+                <zeroOrMore>
+                  <choice>
+                    <elementRef>
+                      <nameSpecRef name="n.editor"/>
+                    </elementRef>
+                    <elementRef>
+                      <nameSpecRef name="n.respStmt"/>
+                    </elementRef>
+                    <modelGroupRef name="m.Incl"/>
+                  </choice>
+                </zeroOrMore>
+              </sequence>
+            </zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.imprint"/>
+            </elementRef>
+            <zeroOrMore>
+              <choice>
+                <elementRef>
+                  <nameSpecRef name="n.imprint"/>
+                </elementRef>
+                <elementRef>
+                  <nameSpecRef name="n.extent"/>
+                </elementRef>
+                <elementRef>
+                  <nameSpecRef name="n.biblScope"/>
+                </elementRef>
+                <modelGroupRef name="m.Incl"/>
+              </choice>
+            </zeroOrMore>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.monogr"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>monogr</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="series">
+        <include/>
+      </flag>
+      <includedSection flag="series">
+        <element>
+          <nameSpecRef name="n.series"/>
+          <zeroOrMore>
+            <choice>
+              <pcdata/>
+              <elementRef>
+                <nameSpecRef name="n.title"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.editor"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.respStmt"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.biblScope"/>
+              </elementRef>
+              <modelGroupRef name="m.Incl"/>
+            </choice>
+          </zeroOrMore>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.series"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>series</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOBILV]  6.10.2.1</comment>
+      <comment> [DCOBICOR] 6.10.2.2: Author, title, etc. </comment>
+      <flag name="author">
+        <include/>
+      </flag>
+      <includedSection flag="author">
+        <element>
+          <nameSpecRef name="n.author"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.author"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>author</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="editor">
+        <include/>
+      </flag>
+      <includedSection flag="editor">
+        <element>
+          <nameSpecRef name="n.editor"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.editor"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>role</name>
+            <cdata/>
+            <default>editor</default>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>editor</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="respStmt">
+        <include/>
+      </flag>
+      <includedSection flag="respStmt">
+        <element>
+          <nameSpecRef name="n.respStmt"/>
+          <oneOrMore>
+            <choice>
+              <elementRef>
+                <nameSpecRef name="n.resp"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.name"/>
+              </elementRef>
+              <modelGroupRef name="m.Incl"/>
+            </choice>
+          </oneOrMore>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.respStmt"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>respStmt</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="resp">
+        <include/>
+      </flag>
+      <includedSection flag="resp">
+        <element>
+          <nameSpecRef name="n.resp"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.resp"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>resp</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="title">
+        <include/>
+      </flag>
+      <includedSection flag="title">
+        <element>
+          <nameSpecRef name="n.title"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.title"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>level</name>
+            <tokenized>
+              <enum>a</enum>
+              <enum>m</enum>
+              <enum>j</enum>
+              <enum>s</enum>
+              <enum>u</enum>
+            </tokenized>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>title</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="meeting">
+        <include/>
+      </flag>
+      <includedSection flag="meeting">
+        <element>
+          <nameSpecRef name="n.meeting"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.meeting"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>meeting</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOBICOR]  6.10.2.2</comment>
+      <comment> [DCOPUB] 6.10.2.3: Bibliographic subelements </comment>
+      <flag name="imprint">
+        <include/>
+      </flag>
+      <includedSection flag="imprint">
+        <element>
+          <nameSpecRef name="n.imprint"/>
+          <zeroOrMore>
+            <choice>
+              <elementRef>
+                <nameSpecRef name="n.pubPlace"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.publisher"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.date"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.biblScope"/>
+              </elementRef>
+              <modelGroupRef name="m.Incl"/>
+            </choice>
+          </zeroOrMore>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.imprint"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>imprint</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="publisher">
+        <include/>
+      </flag>
+      <includedSection flag="publisher">
+        <element>
+          <nameSpecRef name="n.publisher"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.publisher"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>publisher</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="biblScope">
+        <include/>
+      </flag>
+      <includedSection flag="biblScope">
+        <element>
+          <nameSpecRef name="n.biblScope"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.biblScope"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>biblScope</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="pubPlace">
+        <include/>
+      </flag>
+      <includedSection flag="pubPlace">
+        <element>
+          <nameSpecRef name="n.pubPlace"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.pubPlace"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.names"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>pubPlace</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment>Note and date are defined elsewhere, as are extent, address,
+and idno.</comment>
+      <comment> end of [DCOPUB]  6.10.2.3</comment>
+      <comment> end of [DCOBI]  6.10.1</comment>
+      <comment> [DCOVE] 6.11.1: Verse </comment>
+      <flag name="l">
+        <include/>
+      </flag>
+      <includedSection flag="l">
+        <element>
+          <nameSpecRef name="n.l"/>
+          <modelGroupRef name="paraContent"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.l"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.metrical"/>
+          <attributeGroupRef name="a.enjamb"/>
+          <attribute>
+            <name>part</name>
+            <tokenized>
+              <enum>Y</enum>
+              <enum>N</enum>
+              <enum>I</enum>
+              <enum>M</enum>
+              <enum>F</enum>
+            </tokenized>
+            <default>N</default>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>l</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="lg">
+        <include/>
+      </flag>
+      <includedSection flag="lg">
+        <element>
+          <nameSpecRef name="n.lg"/>
+          <sequence>
+            <zeroOrMore>
+              <choice>
+                <modelGroupRef name="m.divtop"/>
+                <modelGroupRef name="m.Incl"/>
+              </choice>
+            </zeroOrMore>
+            <choice>
+              <elementRef>
+                <nameSpecRef name="n.l"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.lg"/>
+              </elementRef>
+            </choice>
+            <zeroOrMore>
+              <choice>
+                <elementRef>
+                  <nameSpecRef name="n.l"/>
+                </elementRef>
+                <elementRef>
+                  <nameSpecRef name="n.lg"/>
+                </elementRef>
+                <modelGroupRef name="m.Incl"/>
+              </choice>
+            </zeroOrMore>
+            <zeroOrMore>
+              <sequence>
+                <modelGroupRef name="m.divbot"/>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </zeroOrMore>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.lg"/>
+          <attributeGroupRef name="a.global"/>
+          <attributeGroupRef name="a.metrical"/>
+          <attributeGroupRef name="a.divn"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>lg</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCOVE]  6.11.1</comment>
+      <comment> [DCODR] 6.11.2: Drama </comment>
+      <flag name="sp">
+        <include/>
+      </flag>
+      <includedSection flag="sp">
+        <element>
+          <nameSpecRef name="n.sp"/>
+          <sequence>
+            <zeroOrMore>
+              <modelGroupRef name="m.Incl"/>
+            </zeroOrMore>
+            <optional>
+              <sequence>
+                <elementRef>
+                  <nameSpecRef name="n.speaker"/>
+                </elementRef>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </optional>
+            <oneOrMore>
+              <sequence>
+                <choice>
+                  <elementRef>
+                    <nameSpecRef name="n.p"/>
+                  </elementRef>
+                  <elementRef>
+                    <nameSpecRef name="n.l"/>
+                  </elementRef>
+                  <elementRef>
+                    <nameSpecRef name="n.lg"/>
+                  </elementRef>
+                  <elementRef>
+                    <nameSpecRef name="n.ab"/>
+                  </elementRef>
+                  <elementRef>
+                    <name>seg</name>
+                  </elementRef>
+                  <elementRef>
+                    <nameSpecRef name="n.stage"/>
+                  </elementRef>
+                </choice>
+                <zeroOrMore>
+                  <modelGroupRef name="m.Incl"/>
+                </zeroOrMore>
+              </sequence>
+            </oneOrMore>
+          </sequence>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.sp"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>who</name>
+            <tokenized name="IDREFS"/>
+            <implied/>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>sp</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="speaker">
+        <include/>
+      </flag>
+      <includedSection flag="speaker">
+        <element>
+          <nameSpecRef name="n.speaker"/>
+          <modelGroupRef name="phrase.seq"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.speaker"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>speaker</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <flag name="stage">
+        <include/>
+      </flag>
+      <includedSection flag="stage">
+        <element>
+          <nameSpecRef name="n.stage"/>
+          <modelGroupRef name="specialPara"/>
+        </element>
+        <attlist>
+          <nameSpecRef name="n.stage"/>
+          <attributeGroupRef name="a.global"/>
+          <attribute>
+            <name>type</name>
+            <cdata/>
+            <default>mix</default>
+          </attribute>
+          <attribute>
+            <name>TEIform</name>
+            <cdata/>
+            <default>stage</default>
+          </attribute>
+        </attlist>
+      </includedSection>
+      <comment> end of [DCODR]  6.11.2</comment>
+      <comment> end of [DCO]  6.12</comment>
+    </externalIdRef>
+    <comment>Define the top-level element for this DTD</comment>
+    <flag name="tsd">
+      <include/>
+    </flag>
+    <includedSection flag="tsd">
+      <element>
+        <nameSpecRef name="n.tsd"/>
+        <oneOrMore>
+          <choice>
+            <elementRef>
+              <nameSpecRef name="n.tagDoc"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="n.entDoc"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="n.classDoc"/>
+            </elementRef>
+          </choice>
+        </oneOrMore>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.tsd"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>tsd</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment>Define some additions for the phrase level tags</comment>
+    <flag name="gi">
+      <include/>
+    </flag>
+    <includedSection flag="gi">
+      <element>
+        <nameSpecRef name="n.gi"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.gi"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEI</name>
+          <tokenized>
+            <enum>yes</enum>
+            <enum>no</enum>
+          </tokenized>
+          <default>yes</default>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>gi</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="tag">
+      <include/>
+    </flag>
+    <includedSection flag="tag">
+      <element>
+        <nameSpecRef name="n.tag"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.tag"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEI</name>
+          <tokenized>
+            <enum>yes</enum>
+            <enum>no</enum>
+          </tokenized>
+          <default>yes</default>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>tag</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="att">
+      <include/>
+    </flag>
+    <includedSection flag="att">
+      <element>
+        <nameSpecRef name="n.att"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.att"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEI</name>
+          <tokenized>
+            <enum>yes</enum>
+            <enum>no</enum>
+          </tokenized>
+          <default>yes</default>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>att</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="val">
+      <include/>
+    </flag>
+    <includedSection flag="val">
+      <element>
+        <nameSpecRef name="n.val"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.val"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>val</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment>Finally we define the elements specific to this DTD</comment>
+    <comment> [DTDTAG] 27.1: The TagDoc element </comment>
+    <flag name="tagDoc">
+      <include/>
+    </flag>
+    <includedSection flag="tagDoc">
+      <element>
+        <nameSpecRef name="n.tagDoc"/>
+        <sequence>
+          <elementRef>
+            <nameSpecRef name="n.gi"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.rs"/>
+            </elementRef>
+          </optional>
+          <elementRef>
+            <nameSpecRef name="n.desc"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.attList"/>
+            </elementRef>
+          </optional>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.exemplum"/>
+            </elementRef>
+          </zeroOrMore>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.remarks"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.part"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.classes"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.files"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.dataDesc"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.parents"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.children"/>
+            </elementRef>
+          </optional>
+          <elementRef>
+            <nameSpecRef name="n.elemDecl"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.attlDecl"/>
+            </elementRef>
+          </optional>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.ptr"/>
+            </elementRef>
+          </zeroOrMore>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.equiv"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.tagDoc"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>usage</name>
+          <tokenized>
+            <enum>req</enum>
+            <enum>mwa</enum>
+            <enum>rec</enum>
+            <enum>rwa</enum>
+            <enum>opt</enum>
+          </tokenized>
+          <default>opt</default>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>tagDoc</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment>RS and PTR are defined in the core</comment>
+    <comment>GI is defined above </comment>
+    <flag name="desc">
+      <include/>
+    </flag>
+    <includedSection flag="desc">
+      <element>
+        <nameSpecRef name="n.desc"/>
+        <modelGroupRef name="paraContent"/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.desc"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>desc</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="attList">
+      <include/>
+    </flag>
+    <includedSection flag="attList">
+      <element>
+        <nameSpecRef name="n.attList"/>
+        <zeroOrMore>
+          <elementRef>
+            <nameSpecRef name="n.attDef"/>
+          </elementRef>
+        </zeroOrMore>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.attList"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>attList</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="exemplum">
+      <include/>
+    </flag>
+    <includedSection flag="exemplum">
+      <element>
+        <nameSpecRef name="n.exemplum"/>
+        <sequence>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.p"/>
+            </elementRef>
+          </zeroOrMore>
+          <elementRef>
+            <nameSpecRef name="n.eg"/>
+          </elementRef>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.p"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.exemplum"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>exemplum</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="eg">
+      <include/>
+    </flag>
+    <includedSection flag="eg">
+      <element>
+        <nameSpecRef name="n.eg"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.eg"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>eg</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="remarks">
+      <include/>
+    </flag>
+    <includedSection flag="remarks">
+      <element>
+        <nameSpecRef name="n.remarks"/>
+        <modelGroupRef name="component.seq"/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.remarks"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>remarks</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="part">
+      <include/>
+    </flag>
+    <includedSection flag="part">
+      <element>
+        <nameSpecRef name="n.part"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.part"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>type</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>name</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>part</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="classes">
+      <include/>
+    </flag>
+    <includedSection flag="classes">
+      <element>
+        <nameSpecRef name="n.classes"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.classes"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>names</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>classes</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="files">
+      <include/>
+    </flag>
+    <includedSection flag="files">
+      <element>
+        <nameSpecRef name="n.files"/>
+        <sequence/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.files"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>names</name>
+          <cdata/>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>files</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="dataDesc">
+      <include/>
+    </flag>
+    <includedSection flag="dataDesc">
+      <element>
+        <nameSpecRef name="n.dataDesc"/>
+        <modelGroupRef name="phrase.seq"/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.dataDesc"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>dataDesc</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="parents">
+      <include/>
+    </flag>
+    <includedSection flag="parents">
+      <element>
+        <nameSpecRef name="n.parents"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.parents"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>parents</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="children">
+      <include/>
+    </flag>
+    <includedSection flag="children">
+      <element>
+        <nameSpecRef name="n.children"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.children"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>children</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="elemDecl">
+      <include/>
+    </flag>
+    <includedSection flag="elemDecl">
+      <element>
+        <nameSpecRef name="n.elemDecl"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.elemDecl"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>elemDecl</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="attlDecl">
+      <include/>
+    </flag>
+    <includedSection flag="attlDecl">
+      <element>
+        <nameSpecRef name="n.attlDecl"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.attlDecl"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>attlDecl</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="equiv">
+      <include/>
+    </flag>
+    <includedSection flag="equiv">
+      <element>
+        <nameSpecRef name="n.equiv"/>
+        <modelGroupRef name="specialPara"/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.equiv"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>scheme</name>
+          <cdata/>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>equiv</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> end of [DTDTAG]  27.1</comment>
+    <comment> [DTDATT] 27.1.1: Attribute documentation </comment>
+    <flag name="attDef">
+      <include/>
+    </flag>
+    <includedSection flag="attDef">
+      <element>
+        <nameSpecRef name="n.attDef"/>
+        <sequence>
+          <elementRef>
+            <nameSpecRef name="n.attName"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.rs"/>
+            </elementRef>
+          </optional>
+          <elementRef>
+            <nameSpecRef name="n.desc"/>
+          </elementRef>
+          <sequence>
+            <elementRef>
+              <nameSpecRef name="n.datatype"/>
+            </elementRef>
+            <optional>
+              <choice>
+                <elementRef>
+                  <nameSpecRef name="n.valList"/>
+                </elementRef>
+                <elementRef>
+                  <nameSpecRef name="n.valDesc"/>
+                </elementRef>
+              </choice>
+            </optional>
+          </sequence>
+          <elementRef>
+            <name>default</name>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.eg"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.remarks"/>
+            </elementRef>
+          </optional>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.equiv"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.attDef"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>usage</name>
+          <tokenized>
+            <enum>req</enum>
+            <enum>mwa</enum>
+            <enum>rec</enum>
+            <enum>rwa</enum>
+            <enum>opt</enum>
+          </tokenized>
+          <default>opt</default>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>attDef</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="attName">
+      <include/>
+    </flag>
+    <includedSection flag="attName">
+      <element>
+        <nameSpecRef name="n.attName"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.attName"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>attName</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="datatype">
+      <include/>
+    </flag>
+    <includedSection flag="datatype">
+      <element>
+        <nameSpecRef name="n.datatype"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.datatype"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>datatype</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="valList">
+      <include/>
+    </flag>
+    <includedSection flag="valList">
+      <element>
+        <nameSpecRef name="n.valList"/>
+        <zeroOrMore>
+          <sequence>
+            <elementRef>
+              <nameSpecRef name="n.val"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="n.desc"/>
+            </elementRef>
+          </sequence>
+        </zeroOrMore>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.valList"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>type</name>
+          <tokenized>
+            <enum>closed</enum>
+            <enum>semi</enum>
+            <enum>open</enum>
+          </tokenized>
+          <default>open</default>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>valList</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="valDesc">
+      <include/>
+    </flag>
+    <includedSection flag="valDesc">
+      <element>
+        <nameSpecRef name="n.valDesc"/>
+        <modelGroupRef name="phrase.seq"/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.valDesc"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>valDesc</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="default">
+      <include/>
+    </flag>
+    <includedSection flag="default">
+      <element>
+        <nameSpecRef name="n.default"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.default"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>default</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment> end of [DTDATT]  27.1.1</comment>
+    <comment> [DTDCLA] 27.2: Element classes </comment>
+    <flag name="classDoc">
+      <include/>
+    </flag>
+    <includedSection flag="classDoc">
+      <element>
+        <nameSpecRef name="n.classDoc"/>
+        <sequence>
+          <elementRef>
+            <nameSpecRef name="n.class"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.rs"/>
+            </elementRef>
+          </optional>
+          <elementRef>
+            <nameSpecRef name="n.desc"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.attList"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.remarks"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.part"/>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <name>classes</name>
+            </elementRef>
+          </optional>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.files"/>
+            </elementRef>
+          </optional>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.ptr"/>
+            </elementRef>
+          </zeroOrMore>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.equiv"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.classDoc"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>type</name>
+          <tokenized>
+            <enum>model</enum>
+            <enum>atts</enum>
+            <enum>both</enum>
+          </tokenized>
+          <implied/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>classDoc</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="class">
+      <include/>
+    </flag>
+    <includedSection flag="class">
+      <element>
+        <nameSpecRef name="n.class"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.class"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>class</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment>all other constituents are defined above</comment>
+    <comment> end of [DTDCLA]  27.2</comment>
+    <comment> [DTDENT] 27.3: Entity Documentation </comment>
+    <flag name="entDoc">
+      <include/>
+    </flag>
+    <includedSection flag="entDoc">
+      <element>
+        <nameSpecRef name="n.entDoc"/>
+        <sequence>
+          <elementRef>
+            <nameSpecRef name="n.entName"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.rs"/>
+            </elementRef>
+          </optional>
+          <elementRef>
+            <nameSpecRef name="n.desc"/>
+          </elementRef>
+          <optional>
+            <elementRef>
+              <nameSpecRef name="n.remarks"/>
+            </elementRef>
+          </optional>
+          <elementRef>
+            <nameSpecRef name="n.string"/>
+          </elementRef>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.ptr"/>
+            </elementRef>
+          </zeroOrMore>
+          <zeroOrMore>
+            <elementRef>
+              <nameSpecRef name="n.equiv"/>
+            </elementRef>
+          </zeroOrMore>
+        </sequence>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.entDoc"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>type</name>
+          <tokenized>
+            <enum>pe</enum>
+            <enum>ge</enum>
+          </tokenized>
+          <required/>
+        </attribute>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>entDoc</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="entName">
+      <include/>
+    </flag>
+    <includedSection flag="entName">
+      <element>
+        <nameSpecRef name="n.entName"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.entName"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>entName</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <flag name="string">
+      <include/>
+    </flag>
+    <includedSection flag="string">
+      <element>
+        <nameSpecRef name="n.string"/>
+        <pcdata/>
+      </element>
+      <attlist>
+        <nameSpecRef name="n.string"/>
+        <attributeGroupRef name="a.global"/>
+        <attribute>
+          <name>TEIform</name>
+          <cdata/>
+          <default>string</default>
+        </attribute>
+      </attlist>
+    </includedSection>
+    <comment>All other constituents are defined above</comment>
+    <comment> end of [DTDENT]  27.3</comment>
+    <comment> end of [DTD]  27.</comment>
+  </externalIdRef>
+</doctype>

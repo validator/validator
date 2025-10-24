@@ -1,0 +1,54 @@
+<testSuite>
+<testCase>
+<correct>
+<constraints xmlns="http://www.thaiopensource.com/validate/picl">
+ <constraint key=".//@id" ref=".//@idref"/>
+</constraints>
+</correct>
+<valid>
+<doc>
+<foo idref="morestuff" id="stuff"/>
+<bar id="morestuff"/>
+<baz idref="stuff"/>
+</doc>
+</valid>
+<invalid>
+<doc>
+<foo id="stuff"/>
+<bar id="stuff"/>
+</doc>
+</invalid>
+<invalid>
+<doc>
+<foo id="stuff"/>
+<bar idref="morestuff"/>
+</doc>
+</invalid>
+</testCase>
+<testCase>
+<correct>
+<constraints xmlns="http://www.thaiopensource.com/validate/picl">
+ <constraint key="foo/bar" ref="foo/baz"/>
+</constraints>
+</correct>
+<valid>
+<x/>
+</valid>
+<valid>
+<foo>
+<baz>forward</baz>
+<bar>xyzzy</bar>
+<bar>forward</bar>
+<baz>xyzzy</baz>
+</foo>
+</valid>
+<invalid>
+<foo>
+<baz>forward</baz>
+<bar>xyzzy</bar>
+<bar>forward</bar>
+<baz>xyzy</baz>
+</foo>
+</invalid>
+</testCase>
+</testSuite>

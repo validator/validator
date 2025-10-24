@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <nameSpec name="e.name">
+    <name>e</name>
+  </nameSpec>
+  <element>
+    <name>doc</name>
+    <elementRef>
+      <nameSpecRef name="e.name"/>
+    </elementRef>
+  </element>
+  <element>
+    <nameSpecRef name="e.name"/>
+    <sequence/>
+  </element>
+</doctype>

@@ -1,0 +1,5 @@
+<!ENTITY % inline.class "code|em">
+<!ENTITY % model "(#PCDATA|%inline.class;)*">
+<!ELEMENT para %model;>
+<!ELEMENT code %model;>
+<!ELEMENT em %model;>

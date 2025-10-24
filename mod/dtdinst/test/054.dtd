@@ -1,0 +1,4 @@
+<!ENTITY % e1 SYSTEM "054.ent">
+%e1;
+<!ENTITY % e2 SYSTEM "sub/054.ent">
+%e2;
