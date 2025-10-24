@@ -1,0 +1,5 @@
+a { cue: none url("foo.wav") }
+b { cue: url("foo.wav") none }
+c { cue: url("foo.wav") url("bar.aiff") }
+d { cue: none none }
+z { cue: inherit }

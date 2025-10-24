@@ -1,0 +1,12 @@
+a { cue: none url("foo.wav") }
+b { cue: url("foo.wav") none }
+c { cue: url("foo.wav") url("bar.aiff") }
+d { cue: none none }
+e { cue: url("foo.wav") +3.0dB }
+f { cue: url("foo.wav") -3.2dB none }
+g { cue: none url("foo.aiff") 0dB }
+h { cue: url("foo.wav") -2dB url("bar.aiff") +2.5dB }
+i { cue: url("foo.wav") url("bar.aiff") +2.5dB }
+j { cue: url("foo.wav") -2dB url("bar.aiff") }
+y { cue: initial }
+z { cue: inherit }

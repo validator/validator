@@ -1,0 +1,4 @@
+ul#navigation > li {
+	display: list-item !important;
+	list-style-type: inherit;
+}

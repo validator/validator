@@ -1,0 +1,83 @@
+h1   { azimuth: 30deg }
+td.a { azimuth: far-right }          /*  60deg */
+#a12  { azimuth: behind far-right }   /* 120deg */
+p.comment { azimuth: behind }        /* 180deg */
+
+h1 {
+    cue-before: url("pop.au");
+    cue-after: url("pop.au");
+    cue-before: none;
+    cue-after: none;
+}
+
+h1 {
+    cue: url("pop.au");
+    cue: url("pop.au") url("pop.wav");
+    cue: none none;
+}
+
+a {
+    elevation: 32deg;
+    elevation: below;
+    elevation: level;
+    elevation: above;
+    elevation: higher;
+    elevation: lower;
+}
+
+h3 { pause-after: 10% }
+h3 { pause-after: 10ms }
+h1 { pause: 20s }
+h2 { pause: 30ms 2% }
+
+a {
+    pitch-range: 80;
+    pitch: 1kHz;
+    pitch: x-low;
+    pitch: low;
+    pitch: medium;
+    pitch: high;
+    pitch: x-high;
+}
+
+blockquote.sad { play-during: url("violins.aiff") }
+blockquote Q   { play-during: url("harp.wav") mix }
+span.quiet     { play-during: none }
+span.auto      { play-during: auto }
+
+a {
+    richness: 20;
+    speak-header: once;
+    speak-header: always;
+    speak-numeral: digits;
+    speak-numeral: continuous;
+    speak-punctuation: code;
+    speak-punctuation: none;
+    speak: normal;
+    speak: none;
+    speak: spell-out;
+    speech-rate: 20;
+    speech-rate: x-slow;
+    speech-rate: slow;
+    speech-rate: medium;
+    speech-rate: fast;
+    speech-rate: x-fast;
+    speech-rate: faster;
+    speech-rate: slower;
+    stress: 20;
+}
+
+h1 { voice-family: announcer, male }
+p.part.romeo  { voice-family: romeo, male }
+p.part.juliet { voice-family: juliet, female }
+
+a {
+    volume: 20;
+    volume: 10%;
+    volume: silent;
+    volume: x-soft;
+    volume: soft;
+    volume: medium;
+    volume: loud;
+    volume: x-loud;
+}

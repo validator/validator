@@ -1,0 +1,37 @@
+ti1    { text-indent: 2px }
+ti2    { text-indent: 0 }
+ti3    { text-indent: 1.1em }
+ti4    { text-indent: 0% }
+ti5    { text-indent: 10% }
+ti6    { text-indent: -10% }
+ti7    { text-indent: -1cm }
+ti8    { text-indent: 2px each-line }
+ti9    { text-indent: 0 each-line }
+ti10   { text-indent: 1.1em each-line }
+ti11   { text-indent: 0% each-line }
+ti12   { text-indent: 10% each-line }
+ti13   { text-indent: -10% each-line }
+ti14   { text-indent: -1cm each-line }
+ti15   { text-indent: 2px hanging }
+ti16   { text-indent: 0 hanging }
+ti17   { text-indent: 1.1em hanging }
+ti18   { text-indent: 0% hanging }
+ti19   { text-indent: 10% hanging }
+ti20   { text-indent: -10% hanging }
+ti21   { text-indent: -1cm hanging }
+ti22   { text-indent: hanging 2px }
+ti23   { text-indent: hanging 0 }
+ti24   { text-indent: hanging 1.1em }
+ti25   { text-indent: hanging 0% }
+ti26   { text-indent: hanging 10% }
+ti27   { text-indent: hanging -10% }
+ti28   { text-indent: hanging -1cm }
+ti29   { text-indent: each-line 2px }
+ti30   { text-indent: each-line 0 }
+ti31   { text-indent: each-line 1.1em }
+ti32   { text-indent: each-line 0% }
+ti33   { text-indent: each-line 10% }
+ti34   { text-indent: each-line -10% }
+ti35   { text-indent: each-line -1cm }
+y { text-indent: initial }
+z { text-indent: inherit }

@@ -1,0 +1,8 @@
+a { font-synthesis: none; }
+b { font-synthesis: inherit; }
+c { font-synthesis: initial; }
+d { font-synthesis: style; }
+e { font-synthesis: weight; }
+f { font-synthesis: style weight; }
+g { font-synthesis: weight style; }
+

@@ -1,0 +1,112 @@
+z { border-top: inherit }
+border1 { border-top: dotted 1px transparent }
+border2 { border-top: dotted transparent }
+border3 { border-top: dotted transparent 1px }
+border4 { border-top: dotted transparent thin }
+border5 { border-top: dotted thin transparent }
+border6 { border-top: 1px dotted transparent }
+border7 { border-top: 1px none transparent }
+border8 { border-top: 1px transparent }
+border9 { border-top: 1px transparent dotted }
+border10 { border-top: 1px transparent none }
+border11 { border-top: none 1px transparent }
+border12 { border-top: none transparent }
+border13 { border-top: none transparent 1px }
+border14 { border-top: none transparent thin }
+border15 { border-top: none thin transparent }
+border16 { border-top: transparent }
+border17 { border-top: transparent dotted }
+border18 { border-top: transparent dotted 1px }
+border19 { border-top: transparent dotted thin }
+border20 { border-top: transparent 1px }
+border21 { border-top: transparent 1px dotted }
+border22 { border-top: transparent 1px none }
+border23 { border-top: transparent none }
+border24 { border-top: transparent none 1px }
+border25 { border-top: transparent none thin }
+border26 { border-top: transparent thin }
+border27 { border-top: transparent thin dotted }
+border28 { border-top: transparent thin none }
+border29 { border-top: thin dotted transparent }
+border30 { border-top: thin none transparent }
+border31 { border-top: thin transparent }
+border32 { border-top: thin transparent dotted }
+border33 { border-top: thin transparent none }
+border34 { border-top: #f00 }
+border35 { border-top: #f00 dotted }
+border36 { border-top: #f00 dotted 1px  }
+border37 { border-top: #f00 dotted thin }
+border38 { border-top: #f00 1px }
+border39 { border-top: #f00 1px dotted  }
+border40 { border-top: #f00 1px none }
+border41 { border-top: #f00 none }
+border42 { border-top: #f00 none 1px }
+border43 { border-top: #f00 none thin  }
+border44 { border-top: #f00 thin }
+border45 { border-top: #f00 thin dotted }
+border46 { border-top: #f00 thin none }
+border47 { border-top: dotted }
+border48 { border-top: dotted #f00 }
+border49 { border-top: dotted #f00 1px  }
+border50 { border-top: dotted #f00 thin }
+border51 { border-top: dotted 1px }
+border52 { border-top: dotted 1px  #f00 }
+border53 { border-top: dotted 1px red }
+border54 { border-top: dotted red }
+border55 { border-top: dotted red 1px }
+border56 { border-top: dotted red thin }
+border57 { border-top: dotted thin }
+border58 { border-top: dotted thin #f00 }
+border59 { border-top: dotted thin red }
+border60 { border-top: 1px }
+border61 { border-top: 1px #f00 }
+border62 { border-top: 1px #f00 dotted  }
+border63 { border-top: 1px #f00 none }
+border64 { border-top: 1px dotted }
+border65 { border-top: 1px dotted  #f00 }
+border66 { border-top: 1px dotted red }
+border67 { border-top: 1px none }
+border68 { border-top: 1px none #f00 }
+border69 { border-top: 1px none red }
+border70 { border-top: 1px red }
+border71 { border-top: 1px red dotted }
+border72 { border-top: 1px red none }
+border73 { border-top: none }
+border74 { border-top: none #f00 }
+border75 { border-top: none #f00 1px }
+border76 { border-top: none #f00 thin }
+border77 { border-top: none 1px }
+border78 { border-top: none 1px #f00 }
+border79 { border-top: none 1px red }
+border80 { border-top: none red }
+border81 { border-top: none red 1px }
+border82 { border-top: none red thin }
+border83 { border-top: none thin }
+border84 { border-top: none thin #f00 }
+border85 { border-top: none thin red }
+border86 { border-top: red }
+border87 { border-top: red dotted }
+border88 { border-top: red dotted 1px }
+border89 { border-top: red dotted thin }
+border90 { border-top: red 1px }
+border91 { border-top: red 1px dotted }
+border92 { border-top: red 1px none }
+border93 { border-top: red none }
+border94 { border-top: red none 1px }
+border95 { border-top: red none thin }
+border96 { border-top: red thin }
+border97 { border-top: red thin dotted }
+border98 { border-top: red thin none }
+border99 { border-top: thin }
+border100 { border-top: thin #f00 }
+border101 { border-top: thin #f00 dotted  }
+border102 { border-top: thin #f00 none }
+border103 { border-top: thin dotted }
+border104 { border-top: thin dotted  #f00 }
+border105 { border-top: thin dotted red }
+border106 { border-top: thin none }
+border107 { border-top: thin none #f00 }
+border108 { border-top: thin none red }
+border109 { border-top: thin red }
+border110 { border-top: thin red dotted }
+border111 { border-top: thin red none }

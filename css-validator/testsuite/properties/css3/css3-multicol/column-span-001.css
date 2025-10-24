@@ -1,0 +1,12 @@
+div {
+	column-span: inherit;
+}
+div {
+        column-span: initial;
+}
+div {
+        column-span: none;
+}
+div {
+	column-span: all;
+}

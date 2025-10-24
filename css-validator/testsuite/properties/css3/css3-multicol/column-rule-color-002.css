@@ -1,0 +1,20 @@
+/** 
+* Those test are for CSS3 colors
+* (some of them), more thorough test on colors should
+* be elsewhere */
+
+div {
+	column-rule-color: transparent;
+}
+div {
+        column-rule-color: rgb(255,0,0);
+}
+div {
+        column-rule-color: rgba(255,0,0,1);
+}
+div {
+        column-rule-color: rgba(100%,0%,0%,1);
+}
+div {
+	column-rule-color: hsla(240, 100%, 50%, 0.5);
+}

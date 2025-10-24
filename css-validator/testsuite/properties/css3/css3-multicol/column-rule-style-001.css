@@ -1,0 +1,35 @@
+div {
+	column-rule-style: inherit;
+}
+/* values from CSS21 http://www.w3.org/TR/CSS21/box.html#value-def-border-style */
+div {
+        column-rule-style: none;
+}
+div {
+        column-rule-style: hidden;
+}
+div {
+        column-rule-style: dotted;
+}
+div {
+        column-rule-style: dashed;
+}
+div {
+        column-rule-style: solid;
+}
+div {
+        column-rule-style: double;
+}
+div {
+        column-rule-style: groove;
+}
+div {
+        column-rule-style: ridge;
+}
+div {
+        column-rule-style: inset;
+}
+div {
+        column-rule-style: outset;
+}
+

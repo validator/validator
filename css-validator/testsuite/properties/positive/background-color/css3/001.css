@@ -1,0 +1,219 @@
+z { background-color: inherit }
+y { background-color: initial }
+w { background-color: currentColor }
+a { background-color: #f00 }
+b { background-color: transparent }
+c { background-color: rgb(255,0,0) }
+d { background-color: rgb(100%, 0%, 0%) }
+e { background-color: #ff0000 }
+f { background-color: rgb(110%, 120%, 0%) }
+f1 { background-color: rgb(255,-10,0) }
+f2 { background-color: rgb(300,10,0) }
+f3 {background-color: rgba(255,0,0,1) }
+f4 {background-color: rgba(100%,0%,0%,1) }
+f5 {background-color: rgba(0,0,255,0.5) }
+f6 {background-color: rgba(0,0,255,0.0) }
+f7 {background-color: rgba(255,0,0,1.0) }
+f8 {background-color: hsl(0, 100%, 50%) }
+f9 {background-color: hsl(120, 100%, 25%) }
+f10 {background-color: hsl(240, 0%, 10%) }
+f11 {background-color: hsl(360, 50%, 0%) }
+f12 {background-color: hsl(450, 50%, 0%) }
+f13 {background-color: hsla(360, 50%, 50%, 0.5) }
+f14 {background-color: hsla(360, 50%, 50%, 1.0) }
+f15 {background-color: hsla(360, 50%, 50%, 1) }
+f16 {background-color: hsla(360, 50%, 50%, 0.0) }
+f17 {background-color: hsla(360, 50%, 50%, 0) }
+f18 {background-color: hsla(-120, 50%, 50%, 0) }
+f19 {background-color: hsl(-120, 50%, 50%) }
+g { background-color: white }
+h { background-color: aqua }
+i { background-color: black }
+j {background-color: blue }
+k { background-color: fuchsia }
+l { background-color: gray }
+m { background-color: green }
+n { background-color: lime }
+o { background-color: maroon }
+p { background-color: navy }
+q { background-color: olive }
+r { background-color: purple }
+s { background-color: red }
+t { background-color: silver }
+u { background-color: teal }
+v { background-color: yellow }
+extcolkw1 { background-color: aliceblue	}
+extcolkw2 { background-color: antiquewhite	}
+extcolkw3 { background-color: aqua	}
+extcolkw4 { background-color: aquamarine	}
+extcolkw5 { background-color: azure	}
+extcolkw6 { background-color: beige	}
+extcolkw7 { background-color: bisque	}
+extcolkw8 { background-color: black	}
+extcolkw9 { background-color: blanchedalmond	}
+extcolkw10 { background-color: blue	}
+extcolkw11 { background-color: blueviolet	}
+extcolkw12 { background-color: brown	}
+extcolkw13 { background-color: burlywood	}
+extcolkw14 { background-color: cadetblue	}
+extcolkw15 { background-color: chartreuse	}
+extcolkw16 { background-color: chocolate	}
+extcolkw17 { background-color: coral	}
+extcolkw18 { background-color: cornflowerblue	}
+extcolkw19 { background-color: cornsilk	}
+extcolkw20 { background-color: crimson	}
+extcolkw21 { background-color: cyan	}
+extcolkw22 { background-color: darkblue	}
+extcolkw23 { background-color: darkcyan	}
+extcolkw24 { background-color: darkgoldenrod	}
+extcolkw25 { background-color: darkgray	}
+extcolkw26 { background-color: darkgreen	}
+extcolkw27 { background-color: darkgrey	}
+extcolkw28 { background-color: darkkhaki	}
+extcolkw29 { background-color: darkmagenta	}
+extcolkw30 { background-color: darkolivegreen	}
+extcolkw31 { background-color: darkorange	}
+extcolkw32 { background-color: darkorchid	}
+extcolkw33 { background-color: darkred	}
+extcolkw34 { background-color: darksalmon	}
+extcolkw35 { background-color: darkseagreen	}
+extcolkw36 { background-color: darkslateblue	}
+extcolkw37 { background-color: darkslategray	}
+extcolkw38 { background-color: darkslategrey	}
+extcolkw39 { background-color: darkturquoise	}
+extcolkw40 { background-color: darkviolet	}
+extcolkw41 { background-color: deeppink	}
+extcolkw42 { background-color: deepskyblue	}
+extcolkw43 { background-color: dimgray	}
+extcolkw44 { background-color: dimgrey	}
+extcolkw45 { background-color: dodgerblue	}
+extcolkw46 { background-color: firebrick	}
+extcolkw47 { background-color: floralwhite	}
+extcolkw48 { background-color: forestgreen	}
+extcolkw49 { background-color: fuchsia	}
+extcolkw50 { background-color: gainsboro	}
+extcolkw51 { background-color: ghostwhite	}
+extcolkw52 { background-color: gold	}
+extcolkw53 { background-color: goldenrod	}
+extcolkw54 { background-color: gray	}
+extcolkw55 { background-color: grey	}
+extcolkw56 { background-color: green	}
+extcolkw57 { background-color: greenyellow	}
+extcolkw58 { background-color: honeydew	}
+extcolkw59 { background-color: hotpink	}
+extcolkw60 { background-color: indianred	}
+extcolkw61 { background-color: indigo	}
+extcolkw62 { background-color: ivory	}
+extcolkw63 { background-color: khaki	}
+extcolkw64 { background-color: lavender	}
+extcolkw65 { background-color: lavenderblush	}
+extcolkw66 { background-color: lawngreen	}
+extcolkw67 { background-color: lemonchiffon	}
+extcolkw68 { background-color: lightblue	}
+extcolkw69 { background-color: lightcoral	}
+extcolkw70 { background-color: lightcyan	}
+extcolkw71 { background-color: lightgoldenrodyellow	}
+extcolkw72 { background-color: lightgray	}
+extcolkw73 { background-color: lightgreen	}
+extcolkw74 { background-color: lightgrey}
+extcolkw75 { background-color: lightpink	}
+extcolkw76 { background-color: lightsalmon	}
+extcolkw77 { background-color: lightseagreen	}
+extcolkw78 { background-color: lightskyblue	}
+extcolkw79 { background-color: lightslategray	}
+extcolkw80 { background-color: lightslategrey	}
+extcolkw81 { background-color: lightsteelblue	}
+extcolkw82 { background-color: lightyellow	}
+extcolkw83 { background-color: lime	}
+extcolkw84 { background-color: limegreen	}
+extcolkw85 { background-color: linen	}
+extcolkw86 { background-color: magenta	}
+extcolkw87 { background-color: maroon	}
+extcolkw88 { background-color: mediumaquamarine	}
+extcolkw89 { background-color: mediumblue	}
+extcolkw90 { background-color: mediumorchid	}
+extcolkw91 { background-color: mediumpurple	}
+extcolkw92 { background-color: mediumseagreen	}
+extcolkw93 { background-color: mediumslateblue	}
+extcolkw94 { background-color: mediumspringgreen	}
+extcolkw95 { background-color: mediumturquoise	}
+extcolkw96 { background-color: mediumvioletred	}
+extcolkw97 { background-color: midnightblue	}
+extcolkw98 { background-color: mintcream	}
+extcolkw99 { background-color: mistyrose	}
+extcolkw100 { background-color: moccasin	}
+extcolkw101 { background-color: navajowhite	}
+extcolkw102 { background-color: navy	}
+extcolkw103 { background-color: oldlace	}
+extcolkw104 { background-color: olive	}
+extcolkw105 { background-color: olivedrab	}
+extcolkw106 { background-color: orange	}
+extcolkw107 { background-color: orangered	}
+extcolkw108 { background-color: orchid	}
+extcolkw109 { background-color: palegoldenrod	}
+extcolkw110 { background-color: palegreen	}
+extcolkw111 { background-color: paleturquoise	}
+extcolkw112 { background-color: palevioletred	}
+extcolkw113 { background-color: papayawhip	}
+extcolkw114 { background-color: peachpuff	}
+extcolkw115 { background-color: peru	}
+extcolkw116 { background-color: pink	}
+extcolkw117 { background-color: plum	}
+extcolkw118 { background-color: powderblue	}
+extcolkw119 { background-color: purple	}
+extcolkw120 { background-color: red	}
+extcolkw121 { background-color: rosybrown	}
+extcolkw122 { background-color: royalblue	}
+extcolkw123 { background-color: saddlebrown	}
+extcolkw124 { background-color: salmon	}
+extcolkw125 { background-color: sandybrown	}
+extcolkw126 { background-color: seagreen	}
+extcolkw127 { background-color: seashell	}
+extcolkw128 { background-color: sienna	}
+extcolkw129 { background-color: silver	}
+extcolkw130 { background-color: skyblue	}
+extcolkw131 { background-color: slateblue	}
+extcolkw132 { background-color: slategray	}
+extcolkw133 { background-color: slategrey	}
+extcolkw134 { background-color: snow	}
+extcolkw135 { background-color: springgreen	}
+extcolkw136 { background-color: steelblue	}
+extcolkw137 { background-color: tan	}
+extcolkw138 { background-color: teal	}
+extcolkw139 { background-color: thistle	}
+extcolkw140 { background-color: tomato	}
+extcolkw141 { background-color: turquoise	}
+extcolkw142 { background-color: violet	}
+extcolkw143 { background-color: wheat	}
+extcolkw144 { background-color: white	}
+extcolkw145 { background-color: whitesmoke	}
+extcolkw146 { background-color: yellow	}
+extcolkw147 { background-color: yellowgreen}
+deprecatedsyscol1 { background-color: ActiveBorder }
+deprecatedsyscol2 { background-color: ActiveCaption }
+deprecatedsyscol3 { background-color: AppWorkspace }
+deprecatedsyscol4 { background-color: Background }
+deprecatedsyscol5 { background-color: ButtonFace }
+deprecatedsyscol6 { background-color: ButtonHighlight }
+deprecatedsyscol7 { background-color: ButtonShadow }
+deprecatedsyscol8 { background-color: ButtonText }
+deprecatedsyscol9 { background-color: CaptionText }
+deprecatedsyscol10 { background-color: GrayText }
+deprecatedsyscol11 { background-color: Highlight }
+deprecatedsyscol12 { background-color: HighlightText }
+deprecatedsyscol13 { background-color: InactiveBorder }
+deprecatedsyscol14 { background-color: InactiveCaption }
+deprecatedsyscol15 { background-color: InactiveCaptionText }
+deprecatedsyscol16 { background-color: InfoBackground }
+deprecatedsyscol17 { background-color: InfoText }
+deprecatedsyscol18 { background-color: Menu }
+deprecatedsyscol19 { background-color: MenuText }
+deprecatedsyscol20 { background-color: Scrollbar }
+deprecatedsyscol21 { background-color: ThreeDDarkShadow }
+deprecatedsyscol22 { background-color: ThreeDFace }
+deprecatedsyscol23 { background-color: ThreeDHighlight }
+deprecatedsyscol24 { background-color: ThreeDLightShadow }
+deprecatedsyscol25 { background-color: ThreeDShadow }
+deprecatedsyscol26 { background-color: Window }
+deprecatedsyscol27 { background-color: WindowFrame }
+deprecatedsyscol28 { background-color: WindowText }

@@ -1,0 +1,5 @@
+/* 0 is not allowed as a defined value (computing number of cols by dividing
+width by column-width would not be possible) */
+an { column-width: 0 }
+/* negative also forbidden of course */
+bn { column-width: -10px }

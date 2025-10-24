@@ -1,0 +1,62 @@
+y { border-image-slice: initial }
+z { border-image-slice: inherit }
+bimsl1 { border-image-slice: 10 }
+bimsl2 { border-image-slice: 10  10 }
+bimsl3 { border-image-slice: 10  10  10   }
+bimsl4 { border-image-slice: 10  10  10  10   }
+bimsl5 { border-image-slice: 10  10  10  10  fill }
+bimsl6 { border-image-slice: 10  10  10  5%   }
+bimsl7 { border-image-slice: 10  10  10  5%  fill }
+bimsl8 { border-image-slice: 10  10  10  fill }
+bimsl9 { border-image-slice: 10  10  5%   }
+bimsl10 { border-image-slice: 10  10  5%  10   }
+bimsl11 { border-image-slice: 10  10  5%  10  fill }
+bimsl12 { border-image-slice: 10  10  5%  5%   }
+bimsl13 { border-image-slice: 10  10  5%  5%  fill }
+bimsl14 { border-image-slice: 10  10  5%  fill }
+bimsl15 { border-image-slice: 10  10  fill }
+bimsl16 { border-image-slice: 10  5%   }
+bimsl17 { border-image-slice: 10  5%  10   }
+bimsl18 { border-image-slice: 10  5%  10  10   }
+bimsl19 { border-image-slice: 10  5%  10  10  fill }
+bimsl20 { border-image-slice: 10  5%  10  5%   }
+bimsl21 { border-image-slice: 10  5%  10  5%  fill }
+bimsl22 { border-image-slice: 10  5%  10  fill }
+bimsl23 { border-image-slice: 10  5%  5%   }
+bimsl24 { border-image-slice: 10  5%  5%  10   }
+bimsl25 { border-image-slice: 10  5%  5%  10  fill }
+bimsl26 { border-image-slice: 10  5%  5%  5%   }
+bimsl27 { border-image-slice: 10  5%  5%  5%  fill }
+bimsl28 { border-image-slice: 10  5%  5%  fill }
+bimsl29 { border-image-slice: 10  5%  fill }
+bimsl30 { border-image-slice: 10  fill }
+bimsl31 { border-image-slice: 5%   }
+bimsl32 { border-image-slice: 5%  10   }
+bimsl33 { border-image-slice: 5%  10  10   }
+bimsl34 { border-image-slice: 5%  10  10  10   }
+bimsl35 { border-image-slice: 5%  10  10  10  fill }
+bimsl36 { border-image-slice: 5%  10  10  5%   }
+bimsl37 { border-image-slice: 5%  10  10  5%  fill }
+bimsl38 { border-image-slice: 5%  10  10  fill }
+bimsl39 { border-image-slice: 5%  10  5%   }
+bimsl40 { border-image-slice: 5%  10  5%  10   }
+bimsl41 { border-image-slice: 5%  10  5%  10  fill }
+bimsl42 { border-image-slice: 5%  10  5%  5%   }
+bimsl43 { border-image-slice: 5%  10  5%  5%  fill }
+bimsl44 { border-image-slice: 5%  10  5%  fill }
+bimsl45 { border-image-slice: 5%  10  fill }
+bimsl46 { border-image-slice: 5%  5%   }
+bimsl47 { border-image-slice: 5%  5%  10   }
+bimsl48 { border-image-slice: 5%  5%  10  10   }
+bimsl49 { border-image-slice: 5%  5%  10  10  fill }
+bimsl50 { border-image-slice: 5%  5%  10  5%   }
+bimsl51 { border-image-slice: 5%  5%  10  5%  fill }
+bimsl52 { border-image-slice: 5%  5%  10  fill }
+bimsl53 { border-image-slice: 5%  5%  5%   }
+bimsl54 { border-image-slice: 5%  5%  5%  10   }
+bimsl55 { border-image-slice: 5%  5%  5%  10  fill }
+bimsl56 { border-image-slice: 5%  5%  5%  5%   }
+bimsl57 { border-image-slice: 5%  5%  5%  5%  fill }
+bimsl58 { border-image-slice: 5%  5%  5%  fill }
+bimsl59 { border-image-slice: 5%  5%  fill }
+bimsl60 { border-image-slice: 5%  fill }

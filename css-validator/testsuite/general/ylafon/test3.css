@@ -1,0 +1,14 @@
+p {
+	font: 24pt "verdana" ;
+}
+a { /*
+	font: foo;
+   */ color: white;
+/*       toto:titi;
+/*       background-color:red; */
+	margin-top: 0px;
+}
+body {
+background-color: white;
+}
+

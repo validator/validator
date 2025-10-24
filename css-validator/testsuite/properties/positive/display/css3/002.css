@@ -1,0 +1,19 @@
+/* tests according to http://www.w3.org/TR/2011/WD-css3-layout-20111129/#declaring-templates-the-display-property */
+/* just a few examples to start with, rest is TBD. Let's keep this as
+comment for future reference.
+a { display: "a" / 5em "@" / * "b" / auto }
+b { display: "a"/5em "@" "b"/intrinsic; }
+c { display: "A  A  A  A  A  A  A  A  A" / 5cm
+           ".  .  .  .  .  .  .  .  ." / 0.25cm
+           "B  .  C  C  C  C  C  C  C" / *
+           "B  .  C  C  C  C  C  C  C" / *
+           "B  .  C  C  C  C  C  C  C" / *
+           "B  .  C  C  C  C  C  C  C" / *
+           "B  .  C  C  C  C  C  C  C" / *
+           "B  .  D  D  D  D  D  D  D" / *
+           "B  .  D  D  D  D  D  D  D" / *
+           "B  .  E  E  E  .  F  F  F" / *
+           "B  .  E  E  E  .  F  F  F" / *
+           "B  .  E  E  E  .  F  F  F" / *
+            * 3em * 3em * 3em * 3em * }
+End */

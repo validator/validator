@@ -1,0 +1,10 @@
+a { speech-rate:  10 }
+b { speech-rate:  42.5 }
+c { speech-rate:  x-slow  }
+d { speech-rate:  slow  }
+e { speech-rate:  medium  }
+f { speech-rate:  fast  }
+g { speech-rate:  x-fast  }
+h { speech-rate:  faster  }
+i { speech-rate:  slower  }
+z { speech-rate:  inherit  }

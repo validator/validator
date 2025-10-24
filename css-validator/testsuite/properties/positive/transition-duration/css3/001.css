@@ -1,0 +1,10 @@
+y { transition-duration: initial }
+z { transition-duration: inherit }
+a { transition-duration: 0s }
+b { transition-duration: -10s }
+c { transition-duration: 1000ms }
+d { transition-duration: 1s }
+e { transition-duration: 1s, 0s, 10ms }
+f { transition-duration: 1s, -10s }
+g { transition-duration: -1s, 1000s }
+h { transition-duration: 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s }

@@ -1,0 +1,122 @@
+a { background-attachment: fixed }
+b { background-attachment: scroll }
+c { background-attachment: local }
+m1 { background-attachment: fixed, fixed }
+m2 { background-attachment: fixed, fixed, fixed }
+m3 { background-attachment: fixed, fixed, fixed, fixed }
+m4 { background-attachment: fixed, fixed, fixed, local }
+m5 { background-attachment: fixed, fixed, fixed, scroll }
+m6 { background-attachment: fixed, fixed, local }
+m7 { background-attachment: fixed, fixed, local, fixed }
+m8 { background-attachment: fixed, fixed, local, local }
+m9 { background-attachment: fixed, fixed, local, scroll }
+m10 { background-attachment: fixed, fixed, scroll }
+m11 { background-attachment: fixed, fixed, scroll, fixed }
+m12 { background-attachment: fixed, fixed, scroll, local }
+m13 { background-attachment: fixed, fixed, scroll, scroll }
+m14 { background-attachment: fixed, local }
+m15 { background-attachment: fixed, local, fixed }
+m16 { background-attachment: fixed, local, fixed, fixed }
+m17 { background-attachment: fixed, local, fixed, local }
+m18 { background-attachment: fixed, local, fixed, scroll }
+m19 { background-attachment: fixed, local, local }
+m20 { background-attachment: fixed, local, local, fixed }
+m21 { background-attachment: fixed, local, local, local }
+m22 { background-attachment: fixed, local, local, scroll }
+m23 { background-attachment: fixed, local, scroll }
+m24 { background-attachment: fixed, local, scroll, fixed }
+m25 { background-attachment: fixed, local, scroll, local }
+m26 { background-attachment: fixed, local, scroll, scroll }
+m27 { background-attachment: fixed, scroll }
+m28 { background-attachment: fixed, scroll, fixed }
+m29 { background-attachment: fixed, scroll, fixed, fixed }
+m30 { background-attachment: fixed, scroll, fixed, local }
+m31 { background-attachment: fixed, scroll, fixed, scroll }
+m32 { background-attachment: fixed, scroll, local }
+m33 { background-attachment: fixed, scroll, local, fixed }
+m34 { background-attachment: fixed, scroll, local, local }
+m35 { background-attachment: fixed, scroll, local, scroll }
+m36 { background-attachment: fixed, scroll, scroll }
+m37 { background-attachment: fixed, scroll, scroll, fixed }
+m38 { background-attachment: fixed, scroll, scroll, local }
+m39 { background-attachment: fixed, scroll, scroll, scroll }
+m40 { background-attachment: local, fixed }
+m41 { background-attachment: local, fixed, fixed }
+m42 { background-attachment: local, fixed, fixed, fixed }
+m43 { background-attachment: local, fixed, fixed, local }
+m44 { background-attachment: local, fixed, fixed, scroll }
+m45 { background-attachment: local, fixed, local }
+m46 { background-attachment: local, fixed, local, fixed }
+m47 { background-attachment: local, fixed, local, local }
+m48 { background-attachment: local, fixed, local, scroll }
+m49 { background-attachment: local, fixed, scroll }
+m50 { background-attachment: local, fixed, scroll, fixed }
+m51 { background-attachment: local, fixed, scroll, local }
+m52 { background-attachment: local, fixed, scroll, scroll }
+m53 { background-attachment: local, local }
+m54 { background-attachment: local, local, fixed }
+m55 { background-attachment: local, local, fixed, fixed }
+m56 { background-attachment: local, local, fixed, local }
+m57 { background-attachment: local, local, fixed, scroll }
+m58 { background-attachment: local, local, local }
+m59 { background-attachment: local, local, local, fixed }
+m60 { background-attachment: local, local, local, local }
+m61 { background-attachment: local, local, local, scroll }
+m62 { background-attachment: local, local, scroll }
+m63 { background-attachment: local, local, scroll, fixed }
+m64 { background-attachment: local, local, scroll, local }
+m65 { background-attachment: local, local, scroll, scroll }
+m66 { background-attachment: local, scroll }
+m67 { background-attachment: local, scroll, fixed }
+m68 { background-attachment: local, scroll, fixed, fixed }
+m69 { background-attachment: local, scroll, fixed, local }
+m70 { background-attachment: local, scroll, fixed, scroll }
+m71 { background-attachment: local, scroll, local }
+m72 { background-attachment: local, scroll, local, fixed }
+m73 { background-attachment: local, scroll, local, local }
+m74 { background-attachment: local, scroll, local, scroll }
+m75 { background-attachment: local, scroll, scroll }
+m76 { background-attachment: local, scroll, scroll, fixed }
+m77 { background-attachment: local, scroll, scroll, local }
+m78 { background-attachment: local, scroll, scroll, scroll }
+m79 { background-attachment: scroll, fixed }
+m80 { background-attachment: scroll, fixed, fixed }
+m81 { background-attachment: scroll, fixed, fixed, fixed }
+m82 { background-attachment: scroll, fixed, fixed, local }
+m83 { background-attachment: scroll, fixed, fixed, scroll }
+m84 { background-attachment: scroll, fixed, local }
+m85 { background-attachment: scroll, fixed, local, fixed }
+m86 { background-attachment: scroll, fixed, local, local }
+m87 { background-attachment: scroll, fixed, local, scroll }
+m88 { background-attachment: scroll, fixed, scroll }
+m89 { background-attachment: scroll, fixed, scroll, fixed }
+m90 { background-attachment: scroll, fixed, scroll, local }
+m91 { background-attachment: scroll, fixed, scroll, scroll }
+m92 { background-attachment: scroll, local }
+m93 { background-attachment: scroll, local, fixed }
+m94 { background-attachment: scroll, local, fixed, fixed }
+m95 { background-attachment: scroll, local, fixed, local }
+m96 { background-attachment: scroll, local, fixed, scroll }
+m97 { background-attachment: scroll, local, local }
+m98 { background-attachment: scroll, local, local, fixed }
+m99 { background-attachment: scroll, local, local, local }
+m100 { background-attachment: scroll, local, local, scroll }
+m101 { background-attachment: scroll, local, scroll }
+m102 { background-attachment: scroll, local, scroll, fixed }
+m103 { background-attachment: scroll, local, scroll, local }
+m104 { background-attachment: scroll, local, scroll, scroll }
+m105 { background-attachment: scroll, scroll }
+m106 { background-attachment: scroll, scroll, fixed }
+m107 { background-attachment: scroll, scroll, fixed, fixed }
+m108 { background-attachment: scroll, scroll, fixed, local }
+m109 { background-attachment: scroll, scroll, fixed, scroll }
+m110 { background-attachment: scroll, scroll, local }
+m111 { background-attachment: scroll, scroll, local, fixed }
+m112 { background-attachment: scroll, scroll, local, local }
+m113 { background-attachment: scroll, scroll, local, scroll }
+m114 { background-attachment: scroll, scroll, scroll }
+m115 { background-attachment: scroll, scroll, scroll, fixed }
+m116 { background-attachment: scroll, scroll, scroll, local }
+m117 { background-attachment: scroll, scroll, scroll, scroll }
+y { background-attachment: initial }
+z { background-attachment: inherit }

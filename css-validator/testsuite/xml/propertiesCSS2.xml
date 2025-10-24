@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+test markup also accepts 3 properties: warning, profile and medium
+-->
+<testsuite>
+  <type title="Valid_tests_of_all_properties_and_their_values_except_inherit_CSS2">
+    <test>
+      <file>testsuite/properties/ok/font.css</file>
+      <description>Font testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/color-background.css</file>
+      <description>Color and background testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/text.css</file>
+      <description>Text testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/box.css</file>
+      <description>Box testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/classification.css</file>
+      <description>Classification testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/aural.css</file>
+      <description>Aural testsuite/properties</description>
+      <result valid="true">
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/table.css</file>
+      <description>Table testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/generated-content.css</file>
+      <description>Generation contents testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/paged.css</file>
+      <description>Paged testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/ui.css</file>
+      <description>User Interface testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/ok/visual-effects.css</file>
+      <description>Visual effects testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+  </type>
+  <type title="Valid_inherit_CSS2">
+    <test>
+      <file>testsuite/properties/inherit/ok/font.css</file>
+      <description>Font testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/color-background.css</file>
+      <description>Color and background testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/text.css</file>
+      <description>Text testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/box.css</file>
+      <description>Box testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/classification.css</file>
+      <description>Classification testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/aural.css</file>
+      <description>Aural testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/table.css</file>
+      <description>Table testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/generated-content.css</file>
+      <description>Generation contents testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/paged.css</file>
+      <description>Paged testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/ui.css</file>
+      <description>User Interface testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/ok/visual-effects.css</file>
+      <description>Visual effects testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+  </type>
+  <type title="Invalid_inherit_CSS2">
+    <test>
+      <file>testsuite/properties/inherit/error/font.css</file>
+      <description>Font testsuite/properties</description>
+      <result valid="false">
+	<errors>22</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/color-background.css</file>
+      <description>Color and background testsuite/properties</description>
+      <result valid="false">
+	<errors>42</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/text.css</file>
+      <description>Text testsuite/properties</description>
+      <result valid="false">
+	<errors>9</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/box.css</file>
+      <description>Box testsuite/properties</description>
+      <result valid="false">
+	<errors>130</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/classification.css</file>
+      <description>Classification testsuite/properties</description>
+      <result valid="false">
+	<errors>9</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/aural.css</file>
+      <description>Aural testsuite/properties</description>
+      <result valid="false">
+	<errors>25</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/table.css</file>
+      <description>Table testsuite/properties</description>
+      <result valid="false">
+	<errors>2</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/generated-content.css</file>
+      <description>Generation contents testsuite/properties</description>
+      <result valid="false">
+	<errors>23</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/inherit/error/ui.css</file>
+      <description>User Interface testsuite/properties</description>
+      <result valid="false">
+	<errors>13</errors>
+      </result>
+    </test>
+  </type>
+  <type title="Invalid_CSS2_too_many_values">
+    <test>
+      <file>testsuite/properties/too-many-values/font.css</file>
+      <description>Font testsuite/properties</description>
+      <result valid="false">
+	<errors>23</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/color-background.css</file>
+      <description>Color and background testsuite/properties</description>
+      <result valid="false">
+	<errors>25</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/text.css</file>
+      <description>Text testsuite/properties</description>
+      <result valid="false">
+	<errors>35</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/box.css</file>
+      <description>Box testsuite/properties</description>
+      <result valid="false">
+	<errors>135</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/classification.css</file>
+      <description>Classification testsuite/properties</description>
+      <result valid="false">
+	<errors>21</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/aural.css</file>
+      <description>Aural testsuite/properties</description>
+      <result valid="false">
+	<errors>46</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/table.css</file>
+      <description>Table testsuite/properties</description>
+      <result valid="false">
+	<errors>14</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/generated-content.css</file>
+      <description>Generation contents testsuite/properties</description>
+      <result valid="false">
+	<errors>16</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/paged.css</file>
+      <description>Paged testsuite/properties</description>
+      <result valid="false">
+	<errors>10</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/ui.css</file>
+      <description>User Interface testsuite/properties</description>
+      <result valid="false">
+	<errors>14</errors>
+      </result>
+    </test>
+    <test>
+      <file>testsuite/properties/too-many-values/visual-effects.css</file>
+      <description>Visual effects testsuite/properties</description>
+      <result valid="false">
+	<errors>11</errors>
+      </result>
+    </test>
+  </type>
+</testsuite>

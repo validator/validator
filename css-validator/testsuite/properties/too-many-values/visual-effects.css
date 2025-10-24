@@ -1,0 +1,15 @@
+a {
+    clip: rect(10px, 100px, 100px, 5px) auto;
+    clip: auto rect(10px, 100px, 100px, 6px);
+    clip: rect(10px, 100px, 100px, 5px) rect(10px, 100px, 100px, 5px);
+    clip: auto auto;
+
+    overflow: visible hidden;
+    overflow: hidden scroll auto;
+    overflow: scroll hidden;
+    overflow: auto visible scroll hidden;
+
+    visibility: visible hidden;
+    visibility: hidden collapse visible;
+    visibility: collapse 1px;
+}

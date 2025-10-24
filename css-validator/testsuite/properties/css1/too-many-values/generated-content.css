@@ -1,0 +1,20 @@
+a {
+    content: normal none;
+    content: none "test";
+    content: "test" url("text.html") counter(par-num, upper-roman) attr(p) open-quote normal close-quote no-open-quote no-close-quote;
+
+    counter-increment: none section 3;
+    counter-increment: section 3 none;
+    counter-increment: section none;
+    counter-increment: section none
+
+    counter-reset: none section 3;
+    counter-reset: section 3 none;
+    counter-reset: section none;
+
+    quotes: none '"' '"';
+    quotes: '<' '>' none;
+    quotes: '<' '>' '"' none;
+    quotes: '<' '>' '"' white;
+    quotes: "'" none "'";
+}

@@ -1,0 +1,17 @@
+a { animation-timing-function:  ease  }
+b { animation-timing-function:  linear  }
+c { animation-timing-function:  ease-in  }
+d { animation-timing-function:  ease-out  }
+e { animation-timing-function:  ease-in-out  }
+f { animation-timing-function:  step-start  }
+g { animation-timing-function:  step-end  }
+h1 { animation-timing-function:  steps(10)  }
+h2 { animation-timing-function:  steps(10, start)  }
+h3 { animation-timing-function:  steps(10, end)  }
+i { animation-timing-function:  cubic-bezier(0.2,0.0,0.4,1.0) }
+j { animation-timing-function:  ease, linear, cubic-bezier(0.2,0.0,0.4,1.0)  }
+k { animation-timing-function:  ease-in, steps(10, end), steps(10)  }
+l { animation-timing-function:  steps(10, start), cubic-bezier(0.2,0.0,0.4,1.0), ease-out  }
+m { animation-timing-function:  ease-in-out, step-end, step-end, step-start, steps(10), cubic-bezier(0.2,0.0,0.4,1.0), linear  }
+y { animation-timing-function: initial }
+z { animation-timing-function: inherit }

@@ -1,0 +1,23 @@
+div {
+  background-origin: inherit;
+}
+
+div {
+  background-origin: padding-box;
+}
+
+div {
+  background-origin: border-box;
+}
+
+div {
+  background-origin: content-box;
+}
+
+div {
+  background-origin: padding-box, border-box, content-box;
+}
+
+div {
+  background-origin: border-box, padding-box, border-box, content-box;
+}

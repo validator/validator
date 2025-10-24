@@ -1,0 +1,7 @@
+a { text-transform: none }
+b { text-transform: capitalize }
+c { text-transform: uppercase }
+d { text-transform: lowercase }
+e { text-transform: full-width }
+z { text-transform: inherit }
+y { text-transform: initial }

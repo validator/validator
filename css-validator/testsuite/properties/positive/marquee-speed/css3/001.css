@@ -1,0 +1,6 @@
+a { marquee-speed: slow }
+b { marquee-speed: normal }
+c { marquee-speed: fast }
+y { marquee-speed: initial }
+z { marquee-speed: inherit }
+

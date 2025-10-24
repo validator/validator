@@ -1,0 +1,219 @@
+z { column-rule-color: inherit }
+y { column-rule-color: initial }
+w { column-rule-color: currentColor }
+crca { column-rule-color: #f00 }
+crcb { column-rule-color: transparent }
+crcc { column-rule-color: rgb(255,0,0) }
+crcd { column-rule-color: rgb(100%, 0%, 0%) }
+crce { column-rule-color: #ff0000 }
+crcf { column-rule-color: rgb(110%, 120%, 0%) }
+crcf1 { column-rule-color: rgb(255,-10,0) }
+crcf2 { column-rule-color: rgb(300,10,0) }
+crcf3 {column-rule-color: rgba(255,0,0,1) }
+crcf4 {column-rule-color: rgba(100%,0%,0%,1) }
+crcf5 {column-rule-color: rgba(0,0,255,0.5) }
+crcf6 {column-rule-color: rgba(0,0,255,0.0) }
+crcf7 {column-rule-color: rgba(255,0,0,1.0) }
+crcf8 {column-rule-color: hsl(0, 100%, 50%) }
+crcf9 {column-rule-color: hsl(120, 100%, 25%) }
+crcf10 {column-rule-color: hsl(240, 0%, 10%) }
+crcf11 {column-rule-color: hsl(360, 50%, 0%) }
+crcf12 {column-rule-color: hsl(450, 50%, 0%) }
+crcf13 {column-rule-color: hsla(360, 50%, 50%, 0.5) }
+crcf14 {column-rule-color: hsla(360, 50%, 50%, 1.0) }
+crcf15 {column-rule-color: hsla(360, 50%, 50%, 1) }
+crcf16 {column-rule-color: hsla(360, 50%, 50%, 0.0) }
+crcf17 {column-rule-color: hsla(360, 50%, 50%, 0) }
+crcf18 {column-rule-color: hsla(-120, 50%, 50%, 0) }
+crcf19 {column-rule-color: hsl(-120, 50%, 50%) }
+crcg { column-rule-color: white }
+crch { column-rule-color: aqua }
+crci { column-rule-color: black }
+crcj {column-rule-color: blue }
+crck { column-rule-color: fuchsia }
+crcl { column-rule-color: gray }
+crcm { column-rule-color: green }
+crcn { column-rule-color: lime }
+crco { column-rule-color: maroon }
+crcp { column-rule-color: navy }
+crcq { column-rule-color: olive }
+crcr { column-rule-color: purple }
+crcs { column-rule-color: red }
+crct { column-rule-color: silver }
+crcu { column-rule-color: teal }
+crcv { column-rule-color: yellow }
+crcextcolkw1 { column-rule-color: aliceblue	}
+crcextcolkw2 { column-rule-color: antiquewhite	}
+crcextcolkw3 { column-rule-color: aqua	}
+crcextcolkw4 { column-rule-color: aquamarine	}
+crcextcolkw5 { column-rule-color: azure	}
+crcextcolkw6 { column-rule-color: beige	}
+crcextcolkw7 { column-rule-color: bisque	}
+crcextcolkw8 { column-rule-color: black	}
+crcextcolkw9 { column-rule-color: blanchedalmond	}
+crcextcolkw10 { column-rule-color: blue	}
+crcextcolkw11 { column-rule-color: blueviolet	}
+crcextcolkw12 { column-rule-color: brown	}
+crcextcolkw13 { column-rule-color: burlywood	}
+crcextcolkw14 { column-rule-color: cadetblue	}
+crcextcolkw15 { column-rule-color: chartreuse	}
+crcextcolkw16 { column-rule-color: chocolate	}
+crcextcolkw17 { column-rule-color: coral	}
+crcextcolkw18 { column-rule-color: cornflowerblue	}
+crcextcolkw19 { column-rule-color: cornsilk	}
+crcextcolkw20 { column-rule-color: crimson	}
+crcextcolkw21 { column-rule-color: cyan	}
+crcextcolkw22 { column-rule-color: darkblue	}
+crcextcolkw23 { column-rule-color: darkcyan	}
+crcextcolkw24 { column-rule-color: darkgoldenrod	}
+crcextcolkw25 { column-rule-color: darkgray	}
+crcextcolkw26 { column-rule-color: darkgreen	}
+crcextcolkw27 { column-rule-color: darkgrey	}
+crcextcolkw28 { column-rule-color: darkkhaki	}
+crcextcolkw29 { column-rule-color: darkmagenta	}
+crcextcolkw30 { column-rule-color: darkolivegreen	}
+crcextcolkw31 { column-rule-color: darkorange	}
+crcextcolkw32 { column-rule-color: darkorchid	}
+crcextcolkw33 { column-rule-color: darkred	}
+crcextcolkw34 { column-rule-color: darksalmon	}
+crcextcolkw35 { column-rule-color: darkseagreen	}
+crcextcolkw36 { column-rule-color: darkslateblue	}
+crcextcolkw37 { column-rule-color: darkslategray	}
+crcextcolkw38 { column-rule-color: darkslategrey	}
+crcextcolkw39 { column-rule-color: darkturquoise	}
+crcextcolkw40 { column-rule-color: darkviolet	}
+crcextcolkw41 { column-rule-color: deeppink	}
+crcextcolkw42 { column-rule-color: deepskyblue	}
+crcextcolkw43 { column-rule-color: dimgray	}
+crcextcolkw44 { column-rule-color: dimgrey	}
+crcextcolkw45 { column-rule-color: dodgerblue	}
+crcextcolkw46 { column-rule-color: firebrick	}
+crcextcolkw47 { column-rule-color: floralwhite	}
+crcextcolkw48 { column-rule-color: forestgreen	}
+crcextcolkw49 { column-rule-color: fuchsia	}
+crcextcolkw50 { column-rule-color: gainsboro	}
+crcextcolkw51 { column-rule-color: ghostwhite	}
+crcextcolkw52 { column-rule-color: gold	}
+crcextcolkw53 { column-rule-color: goldenrod	}
+crcextcolkw54 { column-rule-color: gray	}
+crcextcolkw55 { column-rule-color: grey	}
+crcextcolkw56 { column-rule-color: green	}
+crcextcolkw57 { column-rule-color: greenyellow	}
+crcextcolkw58 { column-rule-color: honeydew	}
+crcextcolkw59 { column-rule-color: hotpink	}
+crcextcolkw60 { column-rule-color: indianred	}
+crcextcolkw61 { column-rule-color: indigo	}
+crcextcolkw62 { column-rule-color: ivory	}
+crcextcolkw63 { column-rule-color: khaki	}
+crcextcolkw64 { column-rule-color: lavender	}
+crcextcolkw65 { column-rule-color: lavenderblush	}
+crcextcolkw66 { column-rule-color: lawngreen	}
+crcextcolkw67 { column-rule-color: lemonchiffon	}
+crcextcolkw68 { column-rule-color: lightblue	}
+crcextcolkw69 { column-rule-color: lightcoral	}
+crcextcolkw70 { column-rule-color: lightcyan	}
+crcextcolkw71 { column-rule-color: lightgoldenrodyellow	}
+crcextcolkw72 { column-rule-color: lightgray	}
+crcextcolkw73 { column-rule-color: lightgreen	}
+crcextcolkw74 { column-rule-color: lightgrey}
+crcextcolkw75 { column-rule-color: lightpink	}
+crcextcolkw76 { column-rule-color: lightsalmon	}
+crcextcolkw77 { column-rule-color: lightseagreen	}
+crcextcolkw78 { column-rule-color: lightskyblue	}
+crcextcolkw79 { column-rule-color: lightslategray	}
+crcextcolkw80 { column-rule-color: lightslategrey	}
+crcextcolkw81 { column-rule-color: lightsteelblue	}
+crcextcolkw82 { column-rule-color: lightyellow	}
+crcextcolkw83 { column-rule-color: lime	}
+crcextcolkw84 { column-rule-color: limegreen	}
+crcextcolkw85 { column-rule-color: linen	}
+crcextcolkw86 { column-rule-color: magenta	}
+crcextcolkw87 { column-rule-color: maroon	}
+crcextcolkw88 { column-rule-color: mediumaquamarine	}
+crcextcolkw89 { column-rule-color: mediumblue	}
+crcextcolkw90 { column-rule-color: mediumorchid	}
+crcextcolkw91 { column-rule-color: mediumpurple	}
+crcextcolkw92 { column-rule-color: mediumseagreen	}
+crcextcolkw93 { column-rule-color: mediumslateblue	}
+crcextcolkw94 { column-rule-color: mediumspringgreen	}
+crcextcolkw95 { column-rule-color: mediumturquoise	}
+crcextcolkw96 { column-rule-color: mediumvioletred	}
+crcextcolkw97 { column-rule-color: midnightblue	}
+crcextcolkw98 { column-rule-color: mintcream	}
+crcextcolkw99 { column-rule-color: mistyrose	}
+crcextcolkw100 { column-rule-color: moccasin	}
+crcextcolkw101 { column-rule-color: navajowhite	}
+crcextcolkw102 { column-rule-color: navy	}
+crcextcolkw103 { column-rule-color: oldlace	}
+crcextcolkw104 { column-rule-color: olive	}
+crcextcolkw105 { column-rule-color: olivedrab	}
+crcextcolkw106 { column-rule-color: orange	}
+crcextcolkw107 { column-rule-color: orangered	}
+crcextcolkw108 { column-rule-color: orchid	}
+crcextcolkw109 { column-rule-color: palegoldenrod	}
+crcextcolkw110 { column-rule-color: palegreen	}
+crcextcolkw111 { column-rule-color: paleturquoise	}
+crcextcolkw112 { column-rule-color: palevioletred	}
+crcextcolkw113 { column-rule-color: papayawhip	}
+crcextcolkw114 { column-rule-color: peachpuff	}
+crcextcolkw115 { column-rule-color: peru	}
+crcextcolkw116 { column-rule-color: pink	}
+crcextcolkw117 { column-rule-color: plum	}
+crcextcolkw118 { column-rule-color: powderblue	}
+crcextcolkw119 { column-rule-color: purple	}
+crcextcolkw120 { column-rule-color: red	}
+crcextcolkw121 { column-rule-color: rosybrown	}
+crcextcolkw122 { column-rule-color: royalblue	}
+crcextcolkw123 { column-rule-color: saddlebrown	}
+crcextcolkw124 { column-rule-color: salmon	}
+crcextcolkw125 { column-rule-color: sandybrown	}
+crcextcolkw126 { column-rule-color: seagreen	}
+crcextcolkw127 { column-rule-color: seashell	}
+crcextcolkw128 { column-rule-color: sienna	}
+crcextcolkw129 { column-rule-color: silver	}
+crcextcolkw130 { column-rule-color: skyblue	}
+crcextcolkw131 { column-rule-color: slateblue	}
+crcextcolkw132 { column-rule-color: slategray	}
+crcextcolkw133 { column-rule-color: slategrey	}
+crcextcolkw134 { column-rule-color: snow	}
+crcextcolkw135 { column-rule-color: springgreen	}
+crcextcolkw136 { column-rule-color: steelblue	}
+crcextcolkw137 { column-rule-color: tan	}
+crcextcolkw138 { column-rule-color: teal	}
+crcextcolkw139 { column-rule-color: thistle	}
+crcextcolkw140 { column-rule-color: tomato	}
+crcextcolkw141 { column-rule-color: turquoise	}
+crcextcolkw142 { column-rule-color: violet	}
+crcextcolkw143 { column-rule-color: wheat	}
+crcextcolkw144 { column-rule-color: white	}
+crcextcolkw145 { column-rule-color: whitesmoke	}
+crcextcolkw146 { column-rule-color: yellow	}
+crcextcolkw147 { column-rule-color: yellowgreen}
+crcdeprecatedsyscol1 { column-rule-color: ActiveBorder }
+crcdeprecatedsyscol2 { column-rule-color: ActiveCaption }
+crcdeprecatedsyscol3 { column-rule-color: AppWorkspace }
+crcdeprecatedsyscol4 { column-rule-color: Background }
+crcdeprecatedsyscol5 { column-rule-color: ButtonFace }
+crcdeprecatedsyscol6 { column-rule-color: ButtonHighlight }
+crcdeprecatedsyscol7 { column-rule-color: ButtonShadow }
+crcdeprecatedsyscol8 { column-rule-color: ButtonText }
+crcdeprecatedsyscol9 { column-rule-color: CaptionText }
+crcdeprecatedsyscol10 { column-rule-color: GrayText }
+crcdeprecatedsyscol11 { column-rule-color: Highlight }
+crcdeprecatedsyscol12 { column-rule-color: HighlightText }
+crcdeprecatedsyscol13 { column-rule-color: InactiveBorder }
+crcdeprecatedsyscol14 { column-rule-color: InactiveCaption }
+crcdeprecatedsyscol15 { column-rule-color: InactiveCaptionText }
+crcdeprecatedsyscol16 { column-rule-color: InfoBackground }
+crcdeprecatedsyscol17 { column-rule-color: InfoText }
+crcdeprecatedsyscol18 { column-rule-color: Menu }
+crcdeprecatedsyscol19 { column-rule-color: MenuText }
+crcdeprecatedsyscol20 { column-rule-color: Scrollbar }
+crcdeprecatedsyscol21 { column-rule-color: ThreeDDarkShadow }
+crcdeprecatedsyscol22 { column-rule-color: ThreeDFace }
+crcdeprecatedsyscol23 { column-rule-color: ThreeDHighlight }
+crcdeprecatedsyscol24 { column-rule-color: ThreeDLightShadow }
+crcdeprecatedsyscol25 { column-rule-color: ThreeDShadow }
+crcdeprecatedsyscol26 { column-rule-color: Window }
+crcdeprecatedsyscol27 { column-rule-color: WindowFrame }
+crcdeprecatedsyscol28 { column-rule-color: WindowText }

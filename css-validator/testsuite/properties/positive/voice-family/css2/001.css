@@ -1,0 +1,6 @@
+a { voice-family: male, ted, timbl }
+b { voice-family: female, "inherit" }
+c { voice-family: "koalie when chairing a meeting", ted }
+d { voice-family: "old grumpy hippopotamus" }
+e { voice-family: hippopotame }
+z { voice-family: inherit }

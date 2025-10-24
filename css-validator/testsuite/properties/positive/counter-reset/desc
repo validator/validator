@@ -1,0 +1,8 @@
+/* spec information about this property
+name= counter-reset
+css1= NA
+css2= http://www.w3.org/TR/2008/REC-CSS2-20080411/generate.html#propdef-counter-reset
+css21= http://www.w3.org/TR/2011/REC-CSS2-20110607/generate.html#propdef-counter-reset 
+css3= http://www.w3.org/TR/2003/WD-css3-content-20030514/#counters
+other=
+*/

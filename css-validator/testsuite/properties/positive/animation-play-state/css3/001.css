@@ -1,0 +1,7 @@
+a { animation-play-state: running }
+b { animation-play-state: paused }
+c { animation-play-state: running, paused }
+d { animation-play-state: paused, running }
+e { animation-play-state: running, paused, running, running, paused, paused }
+y { animation-play-state: initial }
+z { animation-play-state: inherit }

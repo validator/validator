@@ -1,0 +1,5 @@
+/* this should not pass CSS 1 Validation
+http://www.w3.org/Bugs/Public/show_bug.cgi?id=3629 */
+
+.foo { color: r\65 d }
+

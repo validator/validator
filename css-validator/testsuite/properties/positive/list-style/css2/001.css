@@ -1,0 +1,713 @@
+lst1    { list-style:    url("goo.fif")    inside    disc   }
+lst2    { list-style:    inside    url("goo.fif")    disc   }
+lst3    { list-style:    url("goo.fif")    disc    inside   }
+lst4    { list-style:    disc    url("goo.fif")    inside   }
+lst5    { list-style:    inside    disc    url("goo.fif")   }
+lst6    { list-style:    disc    inside    url("goo.fif")   }
+lst7    { list-style:    url("goo.fif")    inside    circle   }
+lst8    { list-style:    inside    url("goo.fif")    circle   }
+lst9    { list-style:    url("goo.fif")    circle    inside   }
+lst10   { list-style:    circle    url("goo.fif")    inside   }
+lst11   { list-style:    inside    circle    url("goo.fif")   }
+lst12   { list-style:    circle    inside    url("goo.fif")   }
+lst13   { list-style:    url("goo.fif")    inside    square   }
+lst14   { list-style:    inside    url("goo.fif")    square   }
+lst15   { list-style:    url("goo.fif")    square    inside   }
+lst16   { list-style:    square    url("goo.fif")    inside   }
+lst17   { list-style:    inside    square    url("goo.fif")   }
+lst18   { list-style:    square    inside    url("goo.fif")   }
+lst19   { list-style:    url("goo.fif")    inside    decimal   }
+lst20   { list-style:    inside    url("goo.fif")    decimal   }
+lst21   { list-style:    url("goo.fif")    decimal    inside   }
+lst22   { list-style:    decimal    url("goo.fif")    inside   }
+lst23   { list-style:    inside    decimal    url("goo.fif")   }
+lst24   { list-style:    decimal    inside    url("goo.fif")   }
+lst25   { list-style:    url("goo.fif")    inside    lower-roman   }
+lst26   { list-style:    inside    url("goo.fif")    lower-roman   }
+lst27   { list-style:    url("goo.fif")    lower-roman    inside   }
+lst28   { list-style:    lower-roman    url("goo.fif")    inside   }
+lst29   { list-style:    inside    lower-roman    url("goo.fif")   }
+lst30   { list-style:    lower-roman    inside    url("goo.fif")   }
+lst31   { list-style:    url("goo.fif")    inside    upper-roman   }
+lst32   { list-style:    inside    url("goo.fif")    upper-roman   }
+lst33   { list-style:    url("goo.fif")    upper-roman    inside   }
+lst34   { list-style:    upper-roman    url("goo.fif")    inside   }
+lst35   { list-style:    inside    upper-roman    url("goo.fif")   }
+lst36   { list-style:    upper-roman    inside    url("goo.fif")   }
+lst37   { list-style:    url("goo.fif")    inside    lower-alpha   }
+lst38   { list-style:    inside    url("goo.fif")    lower-alpha   }
+lst39   { list-style:    url("goo.fif")    lower-alpha    inside   }
+lst40   { list-style:    lower-alpha    url("goo.fif")    inside   }
+lst41   { list-style:    inside    lower-alpha    url("goo.fif")   }
+lst42   { list-style:    lower-alpha    inside    url("goo.fif")   }
+lst43   { list-style:    url("goo.fif")    inside    upper-alpha   }
+lst44   { list-style:    inside    url("goo.fif")    upper-alpha   }
+lst45   { list-style:    url("goo.fif")    upper-alpha    inside   }
+lst46   { list-style:    upper-alpha    url("goo.fif")    inside   }
+lst47   { list-style:    inside    upper-alpha    url("goo.fif")   }
+lst48   { list-style:    upper-alpha    inside    url("goo.fif")   }
+lst49   { list-style:    url("goo.fif")    inside    none   }
+lst50   { list-style:    inside    url("goo.fif")    none   }
+lst51   { list-style:    url("goo.fif")    none    inside   }
+lst52   { list-style:    none    url("goo.fif")    inside   }
+lst53   { list-style:    inside    none    url("goo.fif")   }
+lst54   { list-style:    none    inside    url("goo.fif")   }
+lst55   { list-style:    url("goo.fif")    outside    disc   }
+lst56   { list-style:    outside    url("goo.fif")    disc   }
+lst57   { list-style:    url("goo.fif")    disc    outside   }
+lst58   { list-style:    disc    url("goo.fif")    outside   }
+lst59   { list-style:    outside    disc    url("goo.fif")   }
+lst60   { list-style:    disc    outside    url("goo.fif")   }
+lst61   { list-style:    url("goo.fif")    outside    circle   }
+lst62   { list-style:    outside    url("goo.fif")    circle   }
+lst63   { list-style:    url("goo.fif")    circle    outside   }
+lst64   { list-style:    circle    url("goo.fif")    outside   }
+lst65   { list-style:    outside    circle    url("goo.fif")   }
+lst66   { list-style:    circle    outside    url("goo.fif")   }
+lst67   { list-style:    url("goo.fif")    outside    square   }
+lst68   { list-style:    outside    url("goo.fif")    square   }
+lst69   { list-style:    url("goo.fif")    square    outside   }
+lst70   { list-style:    square    url("goo.fif")    outside   }
+lst71   { list-style:    outside    square    url("goo.fif")   }
+lst72   { list-style:    square    outside    url("goo.fif")   }
+lst73   { list-style:    url("goo.fif")    outside    decimal   }
+lst74   { list-style:    outside    url("goo.fif")    decimal   }
+lst75   { list-style:    url("goo.fif")    decimal    outside   }
+lst76   { list-style:    decimal    url("goo.fif")    outside   }
+lst77   { list-style:    outside    decimal    url("goo.fif")   }
+lst78   { list-style:    decimal    outside    url("goo.fif")   }
+lst79   { list-style:    url("goo.fif")    outside    lower-roman   }
+lst80   { list-style:    outside    url("goo.fif")    lower-roman   }
+lst81   { list-style:    url("goo.fif")    lower-roman    outside   }
+lst82   { list-style:    lower-roman    url("goo.fif")    outside   }
+lst83   { list-style:    outside    lower-roman    url("goo.fif")   }
+lst84   { list-style:    lower-roman    outside    url("goo.fif")   }
+lst85   { list-style:    url("goo.fif")    outside    upper-roman   }
+lst86   { list-style:    outside    url("goo.fif")    upper-roman   }
+lst87   { list-style:    url("goo.fif")    upper-roman    outside   }
+lst88   { list-style:    upper-roman    url("goo.fif")    outside   }
+lst89   { list-style:    outside    upper-roman    url("goo.fif")   }
+lst90   { list-style:    upper-roman    outside    url("goo.fif")   }
+lst91   { list-style:    url("goo.fif")    outside    lower-alpha   }
+lst92   { list-style:    outside    url("goo.fif")    lower-alpha   }
+lst93   { list-style:    url("goo.fif")    lower-alpha    outside   }
+lst94   { list-style:    lower-alpha    url("goo.fif")    outside   }
+lst95   { list-style:    outside    lower-alpha    url("goo.fif")   }
+lst96   { list-style:    lower-alpha    outside    url("goo.fif")   }
+lst97   { list-style:    url("goo.fif")    outside    upper-alpha   }
+lst98   { list-style:    outside    url("goo.fif")    upper-alpha   }
+lst99   { list-style:    url("goo.fif")    upper-alpha    outside   }
+lst100  { list-style:    upper-alpha    url("goo.fif")    outside   }
+lst101  { list-style:    outside    upper-alpha    url("goo.fif")   }
+lst102  { list-style:    upper-alpha    outside    url("goo.fif")   }
+lst103  { list-style:    url("goo.fif")    outside    none   }
+lst104  { list-style:    outside    url("goo.fif")    none   }
+lst105  { list-style:    url("goo.fif")    none    outside   }
+lst106  { list-style:    none    url("goo.fif")    outside   }
+lst107  { list-style:    outside    none    url("goo.fif")   }
+lst108  { list-style:    none    outside    url("goo.fif")   }
+lst109  { list-style:    none    inside    disc   }
+lst110  { list-style:    inside    none    disc   }
+lst111  { list-style:    none    disc    inside   }
+lst112  { list-style:    disc    none    inside   }
+lst113  { list-style:    inside    disc    none   }
+lst114  { list-style:    disc    inside    none   }
+lst115  { list-style:    none    inside    circle   }
+lst116  { list-style:    inside    none    circle   }
+lst117  { list-style:    none    circle    inside   }
+lst118  { list-style:    circle    none    inside   }
+lst119  { list-style:    inside    circle    none   }
+lst120  { list-style:    circle    inside    none   }
+lst121  { list-style:    none    inside    square   }
+lst122  { list-style:    inside    none    square   }
+lst123  { list-style:    none    square    inside   }
+lst124  { list-style:    square    none    inside   }
+lst125  { list-style:    inside    square    none   }
+lst126  { list-style:    square    inside    none   }
+lst127  { list-style:    none    inside    decimal   }
+lst128  { list-style:    inside    none    decimal   }
+lst129  { list-style:    none    decimal    inside   }
+lst130  { list-style:    decimal    none    inside   }
+lst131  { list-style:    inside    decimal    none   }
+lst132  { list-style:    decimal    inside    none   }
+lst133  { list-style:    none    inside    lower-roman   }
+lst134  { list-style:    inside    none    lower-roman   }
+lst135  { list-style:    none    lower-roman    inside   }
+lst136  { list-style:    lower-roman    none    inside   }
+lst137  { list-style:    inside    lower-roman    none   }
+lst138  { list-style:    lower-roman    inside    none   }
+lst139  { list-style:    none    inside    upper-roman   }
+lst140  { list-style:    inside    none    upper-roman   }
+lst141  { list-style:    none    upper-roman    inside   }
+lst142  { list-style:    upper-roman    none    inside   }
+lst143  { list-style:    inside    upper-roman    none   }
+lst144  { list-style:    upper-roman    inside    none   }
+lst145  { list-style:    none    inside    lower-alpha   }
+lst146  { list-style:    inside    none    lower-alpha   }
+lst147  { list-style:    none    lower-alpha    inside   }
+lst148  { list-style:    lower-alpha    none    inside   }
+lst149  { list-style:    inside    lower-alpha    none   }
+lst150  { list-style:    lower-alpha    inside    none   }
+lst151  { list-style:    none    inside    upper-alpha   }
+lst152  { list-style:    inside    none    upper-alpha   }
+lst153  { list-style:    none    upper-alpha    inside   }
+lst154  { list-style:    upper-alpha    none    inside   }
+lst155  { list-style:    inside    upper-alpha    none   }
+lst156  { list-style:    upper-alpha    inside    none   }
+lst157  { list-style:    none    outside    disc   }
+lst158  { list-style:    outside    none    disc   }
+lst159  { list-style:    none    disc    outside   }
+lst160  { list-style:    disc    none    outside   }
+lst161  { list-style:    outside    disc    none   }
+lst162  { list-style:    disc    outside    none   }
+lst163  { list-style:    none    outside    circle   }
+lst164  { list-style:    outside    none    circle   }
+lst165  { list-style:    none    circle    outside   }
+lst166  { list-style:    circle    none    outside   }
+lst167  { list-style:    outside    circle    none   }
+lst168  { list-style:    circle    outside    none   }
+lst169  { list-style:    none    outside    square   }
+lst170  { list-style:    outside    none    square   }
+lst171  { list-style:    none    square    outside   }
+lst172  { list-style:    square    none    outside   }
+lst173  { list-style:    outside    square    none   }
+lst174  { list-style:    square    outside    none   }
+lst175  { list-style:    none    outside    decimal   }
+lst176  { list-style:    outside    none    decimal   }
+lst177  { list-style:    none    decimal    outside   }
+lst178  { list-style:    decimal    none    outside   }
+lst179  { list-style:    outside    decimal    none   }
+lst180  { list-style:    decimal    outside    none   }
+lst181  { list-style:    none    outside    lower-roman   }
+lst182  { list-style:    outside    none    lower-roman   }
+lst183  { list-style:    none    lower-roman    outside   }
+lst184  { list-style:    lower-roman    none    outside   }
+lst185  { list-style:    outside    lower-roman    none   }
+lst186  { list-style:    lower-roman    outside    none   }
+lst187  { list-style:    none    outside    upper-roman   }
+lst188  { list-style:    outside    none    upper-roman   }
+lst189  { list-style:    none    upper-roman    outside   }
+lst190  { list-style:    upper-roman    none    outside   }
+lst191  { list-style:    outside    upper-roman    none   }
+lst192  { list-style:    upper-roman    outside    none   }
+lst193  { list-style:    none    outside    lower-alpha   }
+lst194  { list-style:    outside    none    lower-alpha   }
+lst195  { list-style:    none    lower-alpha    outside   }
+lst196  { list-style:    lower-alpha    none    outside   }
+lst197  { list-style:    outside    lower-alpha    none   }
+lst198  { list-style:    lower-alpha    outside    none   }
+lst199  { list-style:    none    outside    upper-alpha   }
+lst200  { list-style:    outside    none    upper-alpha   }
+lst201  { list-style:    none    upper-alpha    outside   }
+lst202  { list-style:    upper-alpha    none    outside   }
+lst203  { list-style:    outside    upper-alpha    none   }
+lst204  { list-style:    upper-alpha    outside    none   }
+lst205  { list-style:    circle    inside   }
+lst206  { list-style:    circle    none   }
+lst207  { list-style:    circle    outside   }
+lst208  { list-style:    circle    url("goo.fif")   }
+lst209  { list-style:    decimal    inside   }
+lst210  { list-style:    decimal    none   }
+lst211  { list-style:    decimal    outside   }
+lst212  { list-style:    decimal    url("goo.fif")   }
+lst213  { list-style:    disc    inside   }
+lst214  { list-style:    disc    none   }
+lst215  { list-style:    disc    outside   }
+lst216  { list-style:    disc    url("goo.fif")   }
+lst217  { list-style:    inside    circle   }
+lst218  { list-style:    inside    decimal   }
+lst219  { list-style:    inside    disc   }
+lst220  { list-style:    inside    lower-alpha   }
+lst221  { list-style:    inside    lower-roman   }
+lst222  { list-style:    inside    none   }
+lst223  { list-style:    inside    square   }
+lst224  { list-style:    inside    upper-alpha   }
+lst225  { list-style:    inside    upper-roman   }
+lst226  { list-style:    inside    url("goo.fif")   }
+lst227  { list-style:    lower-alpha    inside   }
+lst228  { list-style:    lower-alpha    none   }
+lst229  { list-style:    lower-alpha    outside   }
+lst230  { list-style:    lower-alpha    url("goo.fif")   }
+lst231  { list-style:    lower-roman    inside   }
+lst232  { list-style:    lower-roman    none   }
+lst233  { list-style:    lower-roman    outside   }
+lst234  { list-style:    lower-roman    url("goo.fif")   }
+lst235  { list-style:    none    circle   }
+lst236  { list-style:    none    decimal   }
+lst237  { list-style:    none    disc   }
+lst238  { list-style:    none    inside   }
+lst239  { list-style:    none    lower-alpha   }
+lst240  { list-style:    none    lower-roman   }
+lst241  { list-style:    none    outside   }
+lst242  { list-style:    none    square   }
+lst243  { list-style:    none    upper-alpha   }
+lst244  { list-style:    none    upper-roman   }
+lst245  { list-style:    none    url("goo.fif")   }
+lst246  { list-style:    outside    circle   }
+lst247  { list-style:    outside    decimal   }
+lst248  { list-style:    outside    disc   }
+lst249  { list-style:    outside    lower-alpha   }
+lst250  { list-style:    outside    lower-roman   }
+lst251  { list-style:    outside    none   }
+lst252  { list-style:    outside    square   }
+lst253  { list-style:    outside    upper-alpha   }
+lst254  { list-style:    outside    upper-roman   }
+lst255  { list-style:    outside    url("goo.fif")   }
+lst256  { list-style:    square    inside   }
+lst257  { list-style:    square    none   }
+lst258  { list-style:    square    outside   }
+lst259  { list-style:    square    url("goo.fif")   }
+lst260  { list-style:    upper-alpha    inside   }
+lst261  { list-style:    upper-alpha    none   }
+lst262  { list-style:    upper-alpha    outside   }
+lst263  { list-style:    upper-alpha    url("goo.fif")   }
+lst264  { list-style:    upper-roman    inside   }
+lst265  { list-style:    upper-roman    none   }
+lst266  { list-style:    upper-roman    outside   }
+lst267  { list-style:    upper-roman    url("goo.fif")   }
+lst268  { list-style:    url("goo.fif")    circle   }
+lst269  { list-style:    url("goo.fif")    decimal   }
+lst270  { list-style:    url("goo.fif")    disc   }
+lst271  { list-style:    url("goo.fif")    inside   }
+lst272  { list-style:    url("goo.fif")    lower-alpha   }
+lst273  { list-style:    url("goo.fif")    lower-roman   }
+lst274  { list-style:    url("goo.fif")    none   }
+lst275  { list-style:    url("goo.fif")    outside   }
+lst276  { list-style:    url("goo.fif")    square   }
+lst277  { list-style:    url("goo.fif")    upper-alpha   }
+lst278  { list-style:    url("goo.fif")    upper-roman   }
+lst279  { list-style:    circle   }
+lst280  { list-style:    decimal   }
+lst281  { list-style:    disc   }
+lst282  { list-style:    inside   }
+lst283  { list-style:    lower-alpha   }
+lst284  { list-style:    lower-roman   }
+lst285  { list-style:    none   }
+lst286  { list-style:    outside   }
+lst287  { list-style:    square   }
+lst288  { list-style:    upper-alpha   }
+lst289  { list-style:    upper-roman   }
+lst290  { list-style:    url("goo.fif")   }
+lst291  { list-style:    url("goo.fif")    inside    decimal-leading-zero   }
+lst292  { list-style:    inside    url("goo.fif")    decimal-leading-zero   }
+lst293  { list-style:    url("goo.fif")    decimal-leading-zero    inside   }
+lst294  { list-style:    decimal-leading-zero    url("goo.fif")    inside   }
+lst295  { list-style:    inside    decimal-leading-zero    url("goo.fif")   }
+lst296  { list-style:    decimal-leading-zero    inside    url("goo.fif")   }
+lst297  { list-style:    url("goo.fif")    outside    decimal-leading-zero   }
+lst298  { list-style:    outside    url("goo.fif")    decimal-leading-zero   }
+lst299  { list-style:    url("goo.fif")    decimal-leading-zero    outside   }
+lst300  { list-style:    decimal-leading-zero    url("goo.fif")    outside   }
+lst301  { list-style:    outside    decimal-leading-zero    url("goo.fif")   }
+lst302  { list-style:    decimal-leading-zero    outside    url("goo.fif")   }
+lst303  { list-style:    none    inside    decimal-leading-zero   }
+lst304  { list-style:    inside    none    decimal-leading-zero   }
+lst305  { list-style:    none    decimal-leading-zero    inside   }
+lst306  { list-style:    decimal-leading-zero    none    inside   }
+lst307  { list-style:    inside    decimal-leading-zero    none   }
+lst308  { list-style:    decimal-leading-zero    inside    none   }
+lst309  { list-style:    none    outside    decimal-leading-zero   }
+lst310  { list-style:    outside    none    decimal-leading-zero   }
+lst311  { list-style:    none    decimal-leading-zero    outside   }
+lst312  { list-style:    decimal-leading-zero    none    outside   }
+lst313  { list-style:    outside    decimal-leading-zero    none   }
+lst314  { list-style:    decimal-leading-zero    outside    none   }
+lst315  { list-style:    decimal-leading-zero    inside   }
+lst316  { list-style:    decimal-leading-zero    none   }
+lst317  { list-style:    decimal-leading-zero    outside   }
+lst318  { list-style:    decimal-leading-zero    url("goo.fif")   }
+lst319  { list-style:    inside    decimal-leading-zero   }
+lst320  { list-style:    none    decimal-leading-zero   }
+lst321  { list-style:    outside    decimal-leading-zero   }
+lst322  { list-style:    url("goo.fif")    decimal-leading-zero   }
+lst323  { list-style:    decimal-leading-zero   }
+lst324  { list-style:    url("goo.fif")    inside    lower-greek   }
+lst325  { list-style:    inside    url("goo.fif")    lower-greek   }
+lst326  { list-style:    url("goo.fif")    lower-greek    inside   }
+lst327  { list-style:    lower-greek    url("goo.fif")    inside   }
+lst328  { list-style:    inside    lower-greek    url("goo.fif")   }
+lst329  { list-style:    lower-greek    inside    url("goo.fif")   }
+lst330  { list-style:    url("goo.fif")    outside    lower-greek   }
+lst331  { list-style:    outside    url("goo.fif")    lower-greek   }
+lst332  { list-style:    url("goo.fif")    lower-greek    outside   }
+lst333  { list-style:    lower-greek    url("goo.fif")    outside   }
+lst334  { list-style:    outside    lower-greek    url("goo.fif")   }
+lst335  { list-style:    lower-greek    outside    url("goo.fif")   }
+lst336  { list-style:    none    inside    lower-greek   }
+lst337  { list-style:    inside    none    lower-greek   }
+lst338  { list-style:    none    lower-greek    inside   }
+lst339  { list-style:    lower-greek    none    inside   }
+lst340  { list-style:    inside    lower-greek    none   }
+lst341  { list-style:    lower-greek    inside    none   }
+lst342  { list-style:    none    outside    lower-greek   }
+lst343  { list-style:    outside    none    lower-greek   }
+lst344  { list-style:    none    lower-greek    outside   }
+lst345  { list-style:    lower-greek    none    outside   }
+lst346  { list-style:    outside    lower-greek    none   }
+lst347  { list-style:    lower-greek    outside    none   }
+lst348  { list-style:    lower-greek    inside   }
+lst349  { list-style:    lower-greek    none   }
+lst350  { list-style:    lower-greek    outside   }
+lst351  { list-style:    lower-greek    url("goo.fif")   }
+lst352  { list-style:    inside    lower-greek   }
+lst353  { list-style:    none    lower-greek   }
+lst354  { list-style:    outside    lower-greek   }
+lst355  { list-style:    url("goo.fif")    lower-greek   }
+lst356  { list-style:    lower-greek   }
+lst357  { list-style:    url("goo.fif")    inside    lower-latin   }
+lst358  { list-style:    inside    url("goo.fif")    lower-latin   }
+lst359  { list-style:    url("goo.fif")    lower-latin    inside   }
+lst360  { list-style:    lower-latin    url("goo.fif")    inside   }
+lst361  { list-style:    inside    lower-latin    url("goo.fif")   }
+lst362  { list-style:    lower-latin    inside    url("goo.fif")   }
+lst363  { list-style:    url("goo.fif")    outside    lower-latin   }
+lst364  { list-style:    outside    url("goo.fif")    lower-latin   }
+lst365  { list-style:    url("goo.fif")    lower-latin    outside   }
+lst366  { list-style:    lower-latin    url("goo.fif")    outside   }
+lst367  { list-style:    outside    lower-latin    url("goo.fif")   }
+lst368  { list-style:    lower-latin    outside    url("goo.fif")   }
+lst369  { list-style:    none    inside    lower-latin   }
+lst370  { list-style:    inside    none    lower-latin   }
+lst371  { list-style:    none    lower-latin    inside   }
+lst372  { list-style:    lower-latin    none    inside   }
+lst373  { list-style:    inside    lower-latin    none   }
+lst374  { list-style:    lower-latin    inside    none   }
+lst375  { list-style:    none    outside    lower-latin   }
+lst376  { list-style:    outside    none    lower-latin   }
+lst377  { list-style:    none    lower-latin    outside   }
+lst378  { list-style:    lower-latin    none    outside   }
+lst379  { list-style:    outside    lower-latin    none   }
+lst380  { list-style:    lower-latin    outside    none   }
+lst381  { list-style:    lower-latin    inside   }
+lst382  { list-style:    lower-latin    none   }
+lst383  { list-style:    lower-latin    outside   }
+lst384  { list-style:    lower-latin    url("goo.fif")   }
+lst385  { list-style:    inside    lower-latin   }
+lst386  { list-style:    none    lower-latin   }
+lst387  { list-style:    outside    lower-latin   }
+lst388  { list-style:    url("goo.fif")    lower-latin   }
+lst389  { list-style:    lower-latin   }
+lst390  { list-style:    url("goo.fif")    inside    upper-latin   }
+lst391  { list-style:    inside    url("goo.fif")    upper-latin   }
+lst392  { list-style:    url("goo.fif")    upper-latin    inside   }
+lst393  { list-style:    upper-latin    url("goo.fif")    inside   }
+lst394  { list-style:    inside    upper-latin    url("goo.fif")   }
+lst395  { list-style:    upper-latin    inside    url("goo.fif")   }
+lst396  { list-style:    url("goo.fif")    outside    upper-latin   }
+lst397  { list-style:    outside    url("goo.fif")    upper-latin   }
+lst398  { list-style:    url("goo.fif")    upper-latin    outside   }
+lst399  { list-style:    upper-latin    url("goo.fif")    outside   }
+lst400  { list-style:    outside    upper-latin    url("goo.fif")   }
+lst401  { list-style:    upper-latin    outside    url("goo.fif")   }
+lst402  { list-style:    none    inside    upper-latin   }
+lst403  { list-style:    inside    none    upper-latin   }
+lst404  { list-style:    none    upper-latin    inside   }
+lst405  { list-style:    upper-latin    none    inside   }
+lst406  { list-style:    inside    upper-latin    none   }
+lst407  { list-style:    upper-latin    inside    none   }
+lst408  { list-style:    none    outside    upper-latin   }
+lst409  { list-style:    outside    none    upper-latin   }
+lst410  { list-style:    none    upper-latin    outside   }
+lst411  { list-style:    upper-latin    none    outside   }
+lst412  { list-style:    outside    upper-latin    none   }
+lst413  { list-style:    upper-latin    outside    none   }
+lst414  { list-style:    upper-latin    inside   }
+lst415  { list-style:    upper-latin    none   }
+lst416  { list-style:    upper-latin    outside   }
+lst417  { list-style:    upper-latin    url("goo.fif")   }
+lst418  { list-style:    inside    upper-latin   }
+lst419  { list-style:    none    upper-latin   }
+lst420  { list-style:    outside    upper-latin   }
+lst421  { list-style:    url("goo.fif")    upper-latin   }
+lst422  { list-style:    upper-latin   }
+lst423  { list-style:    url("goo.fif")    inside    hebrew   }
+lst424  { list-style:    inside    url("goo.fif")    hebrew   }
+lst425  { list-style:    url("goo.fif")    hebrew    inside   }
+lst426  { list-style:    hebrew    url("goo.fif")    inside   }
+lst427  { list-style:    inside    hebrew    url("goo.fif")   }
+lst428  { list-style:    hebrew    inside    url("goo.fif")   }
+lst429  { list-style:    url("goo.fif")    outside    hebrew   }
+lst430  { list-style:    outside    url("goo.fif")    hebrew   }
+lst431  { list-style:    url("goo.fif")    hebrew    outside   }
+lst432  { list-style:    hebrew    url("goo.fif")    outside   }
+lst433  { list-style:    outside    hebrew    url("goo.fif")   }
+lst434  { list-style:    hebrew    outside    url("goo.fif")   }
+lst435  { list-style:    none    inside    hebrew   }
+lst436  { list-style:    inside    none    hebrew   }
+lst437  { list-style:    none    hebrew    inside   }
+lst438  { list-style:    hebrew    none    inside   }
+lst439  { list-style:    inside    hebrew    none   }
+lst440  { list-style:    hebrew    inside    none   }
+lst441  { list-style:    none    outside    hebrew   }
+lst442  { list-style:    outside    none    hebrew   }
+lst443  { list-style:    none    hebrew    outside   }
+lst444  { list-style:    hebrew    none    outside   }
+lst445  { list-style:    outside    hebrew    none   }
+lst446  { list-style:    hebrew    outside    none   }
+lst447  { list-style:    hebrew    inside   }
+lst448  { list-style:    hebrew    none   }
+lst449  { list-style:    hebrew    outside   }
+lst450  { list-style:    hebrew    url("goo.fif")   }
+lst451  { list-style:    inside    hebrew   }
+lst452  { list-style:    none    hebrew   }
+lst453  { list-style:    outside    hebrew   }
+lst454  { list-style:    url("goo.fif")    hebrew   }
+lst455  { list-style:    hebrew   }
+lst456  { list-style:    url("goo.fif")    inside    armenian   }
+lst457  { list-style:    inside    url("goo.fif")    armenian   }
+lst458  { list-style:    url("goo.fif")    armenian    inside   }
+lst459  { list-style:    armenian    url("goo.fif")    inside   }
+lst460  { list-style:    inside    armenian    url("goo.fif")   }
+lst461  { list-style:    armenian    inside    url("goo.fif")   }
+lst462  { list-style:    url("goo.fif")    outside    armenian   }
+lst463  { list-style:    outside    url("goo.fif")    armenian   }
+lst464  { list-style:    url("goo.fif")    armenian    outside   }
+lst465  { list-style:    armenian    url("goo.fif")    outside   }
+lst466  { list-style:    outside    armenian    url("goo.fif")   }
+lst467  { list-style:    armenian    outside    url("goo.fif")   }
+lst468  { list-style:    none    inside    armenian   }
+lst469  { list-style:    inside    none    armenian   }
+lst470  { list-style:    none    armenian    inside   }
+lst471  { list-style:    armenian    none    inside   }
+lst472  { list-style:    inside    armenian    none   }
+lst473  { list-style:    armenian    inside    none   }
+lst474  { list-style:    none    outside    armenian   }
+lst475  { list-style:    outside    none    armenian   }
+lst476  { list-style:    none    armenian    outside   }
+lst477  { list-style:    armenian    none    outside   }
+lst478  { list-style:    outside    armenian    none   }
+lst479  { list-style:    armenian    outside    none   }
+lst480  { list-style:    armenian    inside   }
+lst481  { list-style:    armenian    none   }
+lst482  { list-style:    armenian    outside   }
+lst483  { list-style:    armenian    url("goo.fif")   }
+lst484  { list-style:    inside    armenian   }
+lst485  { list-style:    none    armenian   }
+lst486  { list-style:    outside    armenian   }
+lst487  { list-style:    url("goo.fif")    armenian   }
+lst488  { list-style:    armenian   }
+lst489  { list-style:    url("goo.fif")    inside    georgian   }
+lst490  { list-style:    inside    url("goo.fif")    georgian   }
+lst491  { list-style:    url("goo.fif")    georgian    inside   }
+lst492  { list-style:    georgian    url("goo.fif")    inside   }
+lst493  { list-style:    inside    georgian    url("goo.fif")   }
+lst494  { list-style:    georgian    inside    url("goo.fif")   }
+lst495  { list-style:    url("goo.fif")    outside    georgian   }
+lst496  { list-style:    outside    url("goo.fif")    georgian   }
+lst497  { list-style:    url("goo.fif")    georgian    outside   }
+lst498  { list-style:    georgian    url("goo.fif")    outside   }
+lst499  { list-style:    outside    georgian    url("goo.fif")   }
+lst500  { list-style:    georgian    outside    url("goo.fif")   }
+lst501  { list-style:    none    inside    georgian   }
+lst502  { list-style:    inside    none    georgian   }
+lst503  { list-style:    none    georgian    inside   }
+lst504  { list-style:    georgian    none    inside   }
+lst505  { list-style:    inside    georgian    none   }
+lst506  { list-style:    georgian    inside    none   }
+lst507  { list-style:    none    outside    georgian   }
+lst508  { list-style:    outside    none    georgian   }
+lst509  { list-style:    none    georgian    outside   }
+lst510  { list-style:    georgian    none    outside   }
+lst511  { list-style:    outside    georgian    none   }
+lst512  { list-style:    georgian    outside    none   }
+lst513  { list-style:    georgian    inside   }
+lst514  { list-style:    georgian    none   }
+lst515  { list-style:    georgian    outside   }
+lst516  { list-style:    georgian    url("goo.fif")   }
+lst517  { list-style:    inside    georgian   }
+lst518  { list-style:    none    georgian   }
+lst519  { list-style:    outside    georgian   }
+lst520  { list-style:    url("goo.fif")    georgian   }
+lst521  { list-style:    georgian   }
+lst522  { list-style:    url("goo.fif")    inside    cjk-ideographic   }
+lst523  { list-style:    inside    url("goo.fif")    cjk-ideographic   }
+lst524  { list-style:    url("goo.fif")    cjk-ideographic    inside   }
+lst525  { list-style:    cjk-ideographic    url("goo.fif")    inside   }
+lst526  { list-style:    inside    cjk-ideographic    url("goo.fif")   }
+lst527  { list-style:    cjk-ideographic    inside    url("goo.fif")   }
+lst528  { list-style:    url("goo.fif")    outside    cjk-ideographic   }
+lst529  { list-style:    outside    url("goo.fif")    cjk-ideographic   }
+lst530  { list-style:    url("goo.fif")    cjk-ideographic    outside   }
+lst531  { list-style:    cjk-ideographic    url("goo.fif")    outside   }
+lst532  { list-style:    outside    cjk-ideographic    url("goo.fif")   }
+lst533  { list-style:    cjk-ideographic    outside    url("goo.fif")   }
+lst534  { list-style:    none    inside    cjk-ideographic   }
+lst535  { list-style:    inside    none    cjk-ideographic   }
+lst536  { list-style:    none    cjk-ideographic    inside   }
+lst537  { list-style:    cjk-ideographic    none    inside   }
+lst538  { list-style:    inside    cjk-ideographic    none   }
+lst539  { list-style:    cjk-ideographic    inside    none   }
+lst540  { list-style:    none    outside    cjk-ideographic   }
+lst541  { list-style:    outside    none    cjk-ideographic   }
+lst542  { list-style:    none    cjk-ideographic    outside   }
+lst543  { list-style:    cjk-ideographic    none    outside   }
+lst544  { list-style:    outside    cjk-ideographic    none   }
+lst545  { list-style:    cjk-ideographic    outside    none   }
+lst546  { list-style:    cjk-ideographic    inside   }
+lst547  { list-style:    cjk-ideographic    none   }
+lst548  { list-style:    cjk-ideographic    outside   }
+lst549  { list-style:    cjk-ideographic    url("goo.fif")   }
+lst550  { list-style:    inside    cjk-ideographic   }
+lst551  { list-style:    none    cjk-ideographic   }
+lst552  { list-style:    outside    cjk-ideographic   }
+lst553  { list-style:    url("goo.fif")    cjk-ideographic   }
+lst554  { list-style:    cjk-ideographic   }
+lst555  { list-style:    url("goo.fif")    inside    hiragana   }
+lst556  { list-style:    url("goo.fif")    inside    katakana   }
+lst557  { list-style:    inside    url("goo.fif")    katakana   }
+lst558  { list-style:    url("goo.fif")    katakana    inside   }
+lst559  { list-style:    katakana    url("goo.fif")    inside   }
+lst560  { list-style:    inside    katakana    url("goo.fif")   }
+lst561  { list-style:    katakana    inside    url("goo.fif")   }
+lst562  { list-style:    url("goo.fif")    outside    katakana   }
+lst563  { list-style:    outside    url("goo.fif")    katakana   }
+lst564  { list-style:    url("goo.fif")    katakana    outside   }
+lst565  { list-style:    katakana    url("goo.fif")    outside   }
+lst566  { list-style:    outside    katakana    url("goo.fif")   }
+lst567  { list-style:    katakana    outside    url("goo.fif")   }
+lst568  { list-style:    none    inside    katakana   }
+lst569  { list-style:    inside    none    katakana   }
+lst570  { list-style:    none    katakana    inside   }
+lst571  { list-style:    katakana    none    inside   }
+lst572  { list-style:    inside    katakana    none   }
+lst573  { list-style:    katakana    inside    none   }
+lst574  { list-style:    none    outside    katakana   }
+lst575  { list-style:    outside    none    katakana   }
+lst576  { list-style:    none    katakana    outside   }
+lst577  { list-style:    katakana    none    outside   }
+lst578  { list-style:    outside    katakana    none   }
+lst579  { list-style:    katakana    outside    none   }
+lst580  { list-style:    katakana    inside   }
+lst581  { list-style:    katakana    none   }
+lst582  { list-style:    katakana    outside   }
+lst583  { list-style:    katakana    url("goo.fif")   }
+lst584  { list-style:    inside    katakana   }
+lst585  { list-style:    none    katakana   }
+lst586  { list-style:    outside    katakana   }
+lst587  { list-style:    url("goo.fif")    katakana   }
+lst588  { list-style:    katakana   }
+lst589  { list-style:    inside    url("goo.fif")    hiragana   }
+lst590  { list-style:    url("goo.fif")    hiragana    inside   }
+lst591  { list-style:    hiragana    url("goo.fif")    inside   }
+lst592  { list-style:    inside    hiragana    url("goo.fif")   }
+lst593  { list-style:    hiragana    inside    url("goo.fif")   }
+lst594  { list-style:    url("goo.fif")    outside    hiragana   }
+lst595  { list-style:    outside    url("goo.fif")    hiragana   }
+lst596  { list-style:    url("goo.fif")    hiragana    outside   }
+lst597  { list-style:    hiragana    url("goo.fif")    outside   }
+lst598  { list-style:    outside    hiragana    url("goo.fif")   }
+lst599  { list-style:    hiragana    outside    url("goo.fif")   }
+lst600  { list-style:    none    inside    hiragana   }
+lst601  { list-style:    inside    none    hiragana   }
+lst602  { list-style:    none    hiragana    inside   }
+lst603  { list-style:    hiragana    none    inside   }
+lst604  { list-style:    inside    hiragana    none   }
+lst605  { list-style:    hiragana    inside    none   }
+lst606  { list-style:    none    outside    hiragana   }
+lst607  { list-style:    outside    none    hiragana   }
+lst608  { list-style:    none    hiragana    outside   }
+lst609  { list-style:    hiragana    none    outside   }
+lst610  { list-style:    outside    hiragana    none   }
+lst611  { list-style:    hiragana    outside    none   }
+lst612  { list-style:    hiragana    inside   }
+lst613  { list-style:    hiragana    none   }
+lst614  { list-style:    hiragana    outside   }
+lst615  { list-style:    hiragana    url("goo.fif")   }
+lst616  { list-style:    inside    hiragana   }
+lst617  { list-style:    none    hiragana   }
+lst618  { list-style:    outside    hiragana   }
+lst619  { list-style:    url("goo.fif")    hiragana   }
+lst620  { list-style:    hiragana   }
+lst621  { list-style:    url("goo.fif")    inside    hiragana-iroha   }
+lst622  { list-style:    inside    url("goo.fif")    hiragana-iroha   }
+lst623  { list-style:    url("goo.fif")    hiragana-iroha    inside   }
+lst624  { list-style:    hiragana-iroha    url("goo.fif")    inside   }
+lst625  { list-style:    inside    hiragana-iroha    url("goo.fif")   }
+lst626  { list-style:    hiragana-iroha    inside    url("goo.fif")   }
+lst627  { list-style:    url("goo.fif")    outside    hiragana-iroha   }
+lst628  { list-style:    outside    url("goo.fif")    hiragana-iroha   }
+lst629  { list-style:    url("goo.fif")    hiragana-iroha    outside   }
+lst630  { list-style:    hiragana-iroha    url("goo.fif")    outside   }
+lst631  { list-style:    outside    hiragana-iroha    url("goo.fif")   }
+lst632  { list-style:    hiragana-iroha    outside    url("goo.fif")   }
+lst633  { list-style:    none    inside    hiragana-iroha   }
+lst634  { list-style:    inside    none    hiragana-iroha   }
+lst635  { list-style:    none    hiragana-iroha    inside   }
+lst636  { list-style:    hiragana-iroha    none    inside   }
+lst637  { list-style:    inside    hiragana-iroha    none   }
+lst638  { list-style:    hiragana-iroha    inside    none   }
+lst639  { list-style:    none    outside    hiragana-iroha   }
+lst640  { list-style:    outside    none    hiragana-iroha   }
+lst641  { list-style:    none    hiragana-iroha    outside   }
+lst642  { list-style:    hiragana-iroha    none    outside   }
+lst643  { list-style:    outside    hiragana-iroha    none   }
+lst644  { list-style:    hiragana-iroha    outside    none   }
+lst645  { list-style:    hiragana-iroha    inside   }
+lst646  { list-style:    hiragana-iroha    none   }
+lst647  { list-style:    hiragana-iroha    outside   }
+lst648  { list-style:    hiragana-iroha    url("goo.fif")   }
+lst649  { list-style:    inside    hiragana-iroha   }
+lst650  { list-style:    none    hiragana-iroha   }
+lst651  { list-style:    outside    hiragana-iroha   }
+lst652  { list-style:    url("goo.fif")    hiragana-iroha   }
+lst653  { list-style:    hiragana-iroha   }
+lst654  { list-style:    url("goo.fif")    inside    katakana-iroha   }
+lst655  { list-style:    inside    url("goo.fif")    katakana-iroha   }
+lst656  { list-style:    url("goo.fif")    katakana-iroha    inside   }
+lst657  { list-style:    katakana-iroha    url("goo.fif")    inside   }
+lst658  { list-style:    inside    katakana-iroha    url("goo.fif")   }
+lst659  { list-style:    katakana-iroha    inside    url("goo.fif")   }
+lst660  { list-style:    url("goo.fif")    outside    katakana-iroha   }
+lst661  { list-style:    outside    url("goo.fif")    katakana-iroha   }
+lst662  { list-style:    url("goo.fif")    katakana-iroha    outside   }
+lst663  { list-style:    katakana-iroha    url("goo.fif")    outside   }
+lst664  { list-style:    outside    katakana-iroha    url("goo.fif")   }
+lst665  { list-style:    katakana-iroha    outside    url("goo.fif")   }
+lst666  { list-style:    none    inside    katakana-iroha   }
+lst667  { list-style:    inside    none    katakana-iroha   }
+lst668  { list-style:    none    katakana-iroha    inside   }
+lst669  { list-style:    katakana-iroha    none    inside   }
+lst670  { list-style:    inside    katakana-iroha    none   }
+lst671  { list-style:    katakana-iroha    inside    none   }
+lst672  { list-style:    none    outside    katakana-iroha   }
+lst673  { list-style:    outside    none    katakana-iroha   }
+lst674  { list-style:    none    katakana-iroha    outside   }
+lst675  { list-style:    katakana-iroha    none    outside   }
+lst676  { list-style:    outside    katakana-iroha    none   }
+lst677  { list-style:    katakana-iroha    outside    none   }
+lst678  { list-style:    katakana-iroha    inside   }
+lst679  { list-style:    katakana-iroha    none   }
+lst680  { list-style:    katakana-iroha    outside   }
+lst681  { list-style:    katakana-iroha    url("goo.fif")   }
+lst682  { list-style:    inside    katakana-iroha   }
+lst683  { list-style:    none    katakana-iroha   }
+lst684  { list-style:    outside    katakana-iroha   }
+lst685  { list-style:    url("goo.fif")    katakana-iroha   }
+lst686  { list-style:    katakana-iroha   }
+z { list-style: inherit }
+lstypenone1   { list-style:    url("goo.fif")    inside    none   }
+lstypenone2   { list-style:    inside    url("goo.fif")    none   }
+lstypenone3   { list-style:    url("goo.fif")    none    inside   }
+lstypenone4   { list-style:    none    url("goo.fif")    inside   }
+lstypenone5   { list-style:    inside    none    url("goo.fif")   }
+lstypenone6   { list-style:    none    inside    url("goo.fif")   }
+lstypenone7   { list-style:    url("goo.fif")    outside    none   }
+lstypenone8   { list-style:    outside    url("goo.fif")    none   }
+lstypenone9   { list-style:    url("goo.fif")    none    outside   }
+lstypenone10  { list-style:    none    url("goo.fif")    outside   }
+lstypenone11  { list-style:    outside    none    url("goo.fif")   }
+lstypenone12  { list-style:    none    outside    url("goo.fif")   }
+lstypenone13  { list-style:    none    inside    none   }
+lstypenone14  { list-style:    inside    none    none   }
+lstypenone15  { list-style:    none    none    inside   }
+lstypenone16  { list-style:    none    none    inside   }
+lstypenone17  { list-style:    inside    none    none   }
+lstypenone18  { list-style:    none    inside    none   }
+lstypenone19  { list-style:    none    outside    none   }
+lstypenone20  { list-style:    outside    none    none   }
+lstypenone21  { list-style:    none    none    outside   }
+lstypenone22  { list-style:    none    none    outside   }
+lstypenone23  { list-style:    outside    none    none   }
+lstypenone24  { list-style:    none    outside    none   }
+lstypenone25  { list-style:    none    none   }
+lstypenone26  { list-style:    none    url("goo.fif")   }

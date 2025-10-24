@@ -1,0 +1,12 @@
+a { volume: 0 }
+b { volume: 42 }
+c { volume: 100 }
+d { volume: 10% }
+e { volume: 100% }
+f { volume: silent }
+g { volume: x-soft }
+h { volume: soft }
+i { volume: medium }
+j { volume: loud }
+k { volume: x-loud }
+l { volume: inherit }

@@ -1,0 +1,35 @@
+/* from device-adaptation draft: */
+a { height: 0 }
+c { height: 0% }
+y { height: initial }
+z { height: inherit }
+heiDA1 { height:  100px  100px }
+heiDA2 { height:  100px  50% }
+heiDA3 { height:  100px auto }
+heiDA4 { height:  100px device-height }
+heiDA5 { height:  100px device-width }
+heiDA6 { height:  100px }
+heiDA7 { height:  50%  100px }
+heiDA8 { height:  50%  50% }
+heiDA9 { height:  50% auto }
+heiDA10 { height:  50% device-height }
+heiDA11 { height:  50% device-width }
+heiDA12 { height:  50% }
+heiDA13 { height: auto  100px }
+heiDA14 { height: auto  50% }
+heiDA15 { height: auto auto }
+heiDA16 { height: auto device-height }
+heiDA17 { height: auto device-width }
+heiDA18 { height: auto }
+heiDA19 { height: device-height  100px }
+heiDA20 { height: device-height  50% }
+heiDA21 { height: device-height auto }
+heiDA22 { height: device-height device-height }
+heiDA23 { height: device-height device-width }
+heiDA24 { height: device-height }
+heiDA25 { height: device-width  100px }
+heiDA26 { height: device-width  50% }
+heiDA27 { height: device-width auto }
+heiDA28 { height: device-width device-height }
+heiDA29 { height: device-width device-width }
+heiDA30 { height: device-width }

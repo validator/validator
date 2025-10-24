@@ -1,0 +1,193 @@
+a {
+    /* margin */
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin: 10px;
+    margin: 10px 11px;
+    margin: 10px 11px 12px;
+    margin: 10px 11px 12px 13px;
+
+    /* padding */
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding: 10px;
+    padding: 10px 11px;
+    padding: 10px 11px 12px;
+    padding: 10px 11px 12px 13px;
+
+    /* borders */
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-width: 10px;
+    border-width: 10px 11px;
+    border-width: 10px 11px 12px;
+    border-width: 10px 11px 12px 13px;
+
+    border-top-color: blue;
+    border-right-color: blue;
+    border-bottom-color: blue;
+    border-left-color: blue;
+    border-color: blue;
+    border-color: blue yellow;
+    border-color: blue yellow black;
+    border-color: blue yellow black red;
+    border-color: blue yellow black red;
+
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-style: solid hidden dotted dashed;
+    border-style: none double groove;
+    border-style: inset outset;
+    border-style: ridge;
+
+    border-top: 1px;
+    border-top: 1px solid;
+    border-top: 1px black;
+    border-top: 1px solid black;
+    border-top: 1px black solid;
+    border-top: solid;
+    border-top: solid 1px;
+    border-top: solid black;
+    border-top: solid 1px black;
+    border-top: solid black 1px;
+    border-top: black;
+    border-top: black 1px;
+    border-top: black solid;
+    border-top: black 1px solid;
+    border-top: black solid 1px;
+
+    border-right: 1px;
+    border-right: 1px solid;
+    border-right: 1px black;
+    border-right: 1px solid black;
+    border-right: 1px black solid;
+    border-right: solid;
+    border-right: solid 1px;
+    border-right: solid black;
+    border-right: solid 1px black;
+    border-right: solid black 1px;
+    border-right: black;
+    border-right: black 1px;
+    border-right: black solid;
+    border-right: black 1px solid;
+    border-right: black solid 1px;
+
+    border-bottom: 1px;
+    border-bottom: 1px solid;
+    border-bottom: 1px black;
+    border-bottom: 1px solid black;
+    border-bottom: 1px black solid;
+    border-bottom: solid;
+    border-bottom: solid 1px;
+    border-bottom: solid black;
+    border-bottom: solid 1px black;
+    border-bottom: solid black 1px;
+    border-bottom: black;
+    border-bottom: black 1px;
+    border-bottom: black solid;
+    border-bottom: black 1px solid;
+    border-bottom: black solid 1px;
+
+    border-left: 1px;
+    border-left: 1px solid;
+    border-left: 1px black;
+    border-left: 1px solid black;
+    border-left: 1px black solid;
+    border-left: solid;
+    border-left: solid 1px;
+    border-left: solid black;
+    border-left: solid 1px black;
+    border-left: solid black 1px;
+    border-left: black;
+    border-left: black 1px;
+    border-left: black solid;
+    border-left: black 1px solid;
+    border-left: black solid 1px;
+
+    border: 1px;
+    border: 1px solid;
+    border: 1px black;
+    border: 1px solid black;
+    border: 1px black solid;
+    border: solid;
+    border: solid 1px;
+    border: solid black;
+    border: solid 1px black;
+    border: solid black 1px;
+    border: black;
+    border: black 1px;
+    border: black solid;
+    border: black 1px solid;
+    border: black solid 1px;
+
+    /* positionning */
+    width: 10px;
+    width: 10%;
+    width: auto;
+
+    height: 10px;
+    height: 10%;
+    height: auto;
+
+    float: left;
+    float: right;
+    float: none;
+
+    clear: none;
+    clear: left;
+    clear: right;
+    clear: both;
+
+    top: 10px;
+    top: 10%;
+    top: auto;
+
+    right: 10px;
+    right: 10%;
+    right: auto;
+
+    bottom: 10px;
+    bottom: 10%;
+    bottom: auto;
+
+    left: 10px;
+    left: 10%;
+    left: auto;
+
+    position: static;
+    position: relative;
+    position: absolute;
+    position: fixed;
+
+    direction: ltr;
+    direction: rtl;
+
+    max-height: 10px;
+    max-height: 10%;
+    max-height: none;
+
+    max-width: 10px;
+    max-width: 10%;
+    max-width: none;
+
+    min-width: 10px;
+    min-width: 10%;
+
+    min-height: 10px;
+    min-height: 10%;
+
+    unicode-bidi: normal;
+    unicode-bidi: embed;
+    unicode-bidi: bidi-override;
+
+    z-index: auto;
+    z-index: 10;
+}

@@ -1,0 +1,32 @@
+y { border-image-outset: initial }
+z { border-image-outset: inherit }
+bimout1 { border-image-outset: 10 }
+bimout2 { border-image-outset: 10  10 }
+bimout3 { border-image-outset: 10  10  10 }
+bimout4 { border-image-outset: 10  10  10  10 }
+bimout5 { border-image-outset: 10  10  10  5pt }
+bimout6 { border-image-outset: 10  10  5pt }
+bimout7 { border-image-outset: 10  10  5pt  10 }
+bimout8 { border-image-outset: 10  10  5pt  5pt }
+bimout9 { border-image-outset: 10  5pt }
+bimout10 { border-image-outset: 10  5pt  10 }
+bimout11 { border-image-outset: 10  5pt  10  10 }
+bimout12 { border-image-outset: 10  5pt  10  5pt }
+bimout13 { border-image-outset: 10  5pt  5pt }
+bimout14 { border-image-outset: 10  5pt  5pt  10 }
+bimout15 { border-image-outset: 10  5pt  5pt  5pt }
+bimout16 { border-image-outset: 5pt }
+bimout17 { border-image-outset: 5pt  10 }
+bimout18 { border-image-outset: 5pt  10  10 }
+bimout19 { border-image-outset: 5pt  10  10  10 }
+bimout20 { border-image-outset: 5pt  10  10  5pt }
+bimout21 { border-image-outset: 5pt  10  5pt }
+bimout22 { border-image-outset: 5pt  10  5pt  10 }
+bimout23 { border-image-outset: 5pt  10  5pt  5pt }
+bimout24 { border-image-outset: 5pt  5pt }
+bimout25 { border-image-outset: 5pt  5pt  10 }
+bimout26 { border-image-outset: 5pt  5pt  10  10 }
+bimout27 { border-image-outset: 5pt  5pt  10  5pt }
+bimout28 { border-image-outset: 5pt  5pt  5pt }
+bimout29 { border-image-outset: 5pt  5pt  5pt  10 }
+bimout30 { border-image-outset: 5pt  5pt  5pt  5pt }

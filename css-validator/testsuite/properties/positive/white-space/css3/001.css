@@ -1,0 +1,8 @@
+a { white-space: normal }
+b { white-space: pre }
+c { white-space: nowrap }
+d { white-space: pre-wrap }
+e { white-space: pre-line }
+/* shorthand property: initial not defined yet, but... */
+y { white-space: initial }  
+z { white-space: inherit }

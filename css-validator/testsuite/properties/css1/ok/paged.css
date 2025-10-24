@@ -1,0 +1,19 @@
+@page {
+    orphans: 12;
+    widows: 5;
+
+    page-break-after: auto;
+    page-break-after: always;
+    page-break-after: avoid;
+    page-break-after: left;
+    page-break-after: right;
+
+    page-break-before: auto;
+    page-break-before: always;
+    page-break-before: avoid;
+    page-break-before: left;
+    page-break-before: right;
+
+    page-break-inside: avoid;
+    page-break-inside: auto;
+}

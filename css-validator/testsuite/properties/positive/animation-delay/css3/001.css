@@ -1,0 +1,10 @@
+y { animation-delay: initial }
+z { animation-delay: inherit }
+a { animation-delay: 0s }
+b { animation-delay: -10s }
+c { animation-delay: 1000ms }
+d { animation-delay: 1s }
+e { animation-delay: 1s, 0s, 10ms }
+f { animation-delay: 1s, -10s }
+g { animation-delay: -1s, 1000s }
+h { animation-delay: 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s }

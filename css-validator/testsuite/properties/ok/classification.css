@@ -1,0 +1,57 @@
+a {
+    display: inline;
+    display: block;
+    display: list-item;
+    display: table;
+    display: inline-table;
+    display: table-row-group;
+    display: table-header-group;
+    display: table-footer-group;
+    display: table-row;
+    display: table-column-group;
+    display: table-column;
+    display: table-cell;
+    display: table-caption;
+    display: none;
+
+    white-space: normal;
+    white-space: pre;
+    white-space: nowrap;
+
+    list-style-type: disc;
+    list-style-type: circle;
+    list-style-type: square;
+    list-style-type: decimal;
+    list-style-type: decimal-leading-zero;
+    list-style-type: lower-roman;
+    list-style-type: upper-roman;
+    list-style-type: lower-greek;
+    list-style-type: lower-latin;
+    list-style-type: upper-latin;
+    list-style-type: armenian;
+    list-style-type: georgian;
+    list-style-type: lower-alpha;
+    list-style-type: upper-alpha;
+    list-style-type: none;
+
+    list-style-image: url("image.png");
+    list-style-image: none;
+
+    list-style-position: inside;
+    list-style-position: outside;
+
+    list-style: disc;
+    list-style: circle;
+    list-style: square;
+    list-style: decimal inside;
+    list-style: decimal-leading-zero inside;
+    list-style: lower-roman outside;
+    list-style: upper-roman outside;
+    list-style: lower-greek url("image.png");
+    list-style: lower-latin url("image.png");
+    list-style: upper-latin url("image.png") outside;
+    list-style: url("image.png") armenian inside;
+    list-style: url("image.png") inside armenian;
+    list-style: inside armenian url("image.png");
+    list-style: armenian inside url("image.png");
+}

@@ -1,0 +1,219 @@
+z { border-bottom-color: inherit }
+y { border-bottom-color: initial }
+w { border-bottom-color: currentColor }
+a { border-bottom-color: #f00 }
+b { border-bottom-color: transparent }
+c { border-bottom-color: rgb(255,0,0) }
+d { border-bottom-color: rgb(100%, 0%, 0%) }
+e { border-bottom-color: #ff0000 }
+f { border-bottom-color: rgb(110%, 120%, 0%) }
+f1 { border-bottom-color: rgb(255,-10,0) }
+f2 { border-bottom-color: rgb(300,10,0) }
+f3 {border-bottom-color: rgba(255,0,0,1) }
+f4 {border-bottom-color: rgba(100%,0%,0%,1) }
+f5 {border-bottom-color: rgba(0,0,255,0.5) }
+f6 {border-bottom-color: rgba(0,0,255,0.0) }
+f7 {border-bottom-color: rgba(255,0,0,1.0) }
+f8 {border-bottom-color: hsl(0, 100%, 50%) }
+f9 {border-bottom-color: hsl(120, 100%, 25%) }
+f10 {border-bottom-color: hsl(240, 0%, 10%) }
+f11 {border-bottom-color: hsl(360, 50%, 0%) }
+f12 {border-bottom-color: hsl(450, 50%, 0%) }
+f13 {border-bottom-color: hsla(360, 50%, 50%, 0.5) }
+f14 {border-bottom-color: hsla(360, 50%, 50%, 1.0) }
+f15 {border-bottom-color: hsla(360, 50%, 50%, 1) }
+f16 {border-bottom-color: hsla(360, 50%, 50%, 0.0) }
+f17 {border-bottom-color: hsla(360, 50%, 50%, 0) }
+f18 {border-bottom-color: hsla(-120, 50%, 50%, 0) }
+f19 {border-bottom-color: hsl(-120, 50%, 50%) }
+g { border-bottom-color: white }
+h { border-bottom-color: aqua }
+i { border-bottom-color: black }
+j {border-bottom-color: blue }
+k { border-bottom-color: fuchsia }
+l { border-bottom-color: gray }
+m { border-bottom-color: green }
+n { border-bottom-color: lime }
+o { border-bottom-color: maroon }
+p { border-bottom-color: navy }
+q { border-bottom-color: olive }
+r { border-bottom-color: purple }
+s { border-bottom-color: red }
+t { border-bottom-color: silver }
+u { border-bottom-color: teal }
+v { border-bottom-color: yellow }
+extcolkw1 { border-bottom-color: aliceblue	}
+extcolkw2 { border-bottom-color: antiquewhite	}
+extcolkw3 { border-bottom-color: aqua	}
+extcolkw4 { border-bottom-color: aquamarine	}
+extcolkw5 { border-bottom-color: azure	}
+extcolkw6 { border-bottom-color: beige	}
+extcolkw7 { border-bottom-color: bisque	}
+extcolkw8 { border-bottom-color: black	}
+extcolkw9 { border-bottom-color: blanchedalmond	}
+extcolkw10 { border-bottom-color: blue	}
+extcolkw11 { border-bottom-color: blueviolet	}
+extcolkw12 { border-bottom-color: brown	}
+extcolkw13 { border-bottom-color: burlywood	}
+extcolkw14 { border-bottom-color: cadetblue	}
+extcolkw15 { border-bottom-color: chartreuse	}
+extcolkw16 { border-bottom-color: chocolate	}
+extcolkw17 { border-bottom-color: coral	}
+extcolkw18 { border-bottom-color: cornflowerblue	}
+extcolkw19 { border-bottom-color: cornsilk	}
+extcolkw20 { border-bottom-color: crimson	}
+extcolkw21 { border-bottom-color: cyan	}
+extcolkw22 { border-bottom-color: darkblue	}
+extcolkw23 { border-bottom-color: darkcyan	}
+extcolkw24 { border-bottom-color: darkgoldenrod	}
+extcolkw25 { border-bottom-color: darkgray	}
+extcolkw26 { border-bottom-color: darkgreen	}
+extcolkw27 { border-bottom-color: darkgrey	}
+extcolkw28 { border-bottom-color: darkkhaki	}
+extcolkw29 { border-bottom-color: darkmagenta	}
+extcolkw30 { border-bottom-color: darkolivegreen	}
+extcolkw31 { border-bottom-color: darkorange	}
+extcolkw32 { border-bottom-color: darkorchid	}
+extcolkw33 { border-bottom-color: darkred	}
+extcolkw34 { border-bottom-color: darksalmon	}
+extcolkw35 { border-bottom-color: darkseagreen	}
+extcolkw36 { border-bottom-color: darkslateblue	}
+extcolkw37 { border-bottom-color: darkslategray	}
+extcolkw38 { border-bottom-color: darkslategrey	}
+extcolkw39 { border-bottom-color: darkturquoise	}
+extcolkw40 { border-bottom-color: darkviolet	}
+extcolkw41 { border-bottom-color: deeppink	}
+extcolkw42 { border-bottom-color: deepskyblue	}
+extcolkw43 { border-bottom-color: dimgray	}
+extcolkw44 { border-bottom-color: dimgrey	}
+extcolkw45 { border-bottom-color: dodgerblue	}
+extcolkw46 { border-bottom-color: firebrick	}
+extcolkw47 { border-bottom-color: floralwhite	}
+extcolkw48 { border-bottom-color: forestgreen	}
+extcolkw49 { border-bottom-color: fuchsia	}
+extcolkw50 { border-bottom-color: gainsboro	}
+extcolkw51 { border-bottom-color: ghostwhite	}
+extcolkw52 { border-bottom-color: gold	}
+extcolkw53 { border-bottom-color: goldenrod	}
+extcolkw54 { border-bottom-color: gray	}
+extcolkw55 { border-bottom-color: grey	}
+extcolkw56 { border-bottom-color: green	}
+extcolkw57 { border-bottom-color: greenyellow	}
+extcolkw58 { border-bottom-color: honeydew	}
+extcolkw59 { border-bottom-color: hotpink	}
+extcolkw60 { border-bottom-color: indianred	}
+extcolkw61 { border-bottom-color: indigo	}
+extcolkw62 { border-bottom-color: ivory	}
+extcolkw63 { border-bottom-color: khaki	}
+extcolkw64 { border-bottom-color: lavender	}
+extcolkw65 { border-bottom-color: lavenderblush	}
+extcolkw66 { border-bottom-color: lawngreen	}
+extcolkw67 { border-bottom-color: lemonchiffon	}
+extcolkw68 { border-bottom-color: lightblue	}
+extcolkw69 { border-bottom-color: lightcoral	}
+extcolkw70 { border-bottom-color: lightcyan	}
+extcolkw71 { border-bottom-color: lightgoldenrodyellow	}
+extcolkw72 { border-bottom-color: lightgray	}
+extcolkw73 { border-bottom-color: lightgreen	}
+extcolkw74 { border-bottom-color: lightgrey}
+extcolkw75 { border-bottom-color: lightpink	}
+extcolkw76 { border-bottom-color: lightsalmon	}
+extcolkw77 { border-bottom-color: lightseagreen	}
+extcolkw78 { border-bottom-color: lightskyblue	}
+extcolkw79 { border-bottom-color: lightslategray	}
+extcolkw80 { border-bottom-color: lightslategrey	}
+extcolkw81 { border-bottom-color: lightsteelblue	}
+extcolkw82 { border-bottom-color: lightyellow	}
+extcolkw83 { border-bottom-color: lime	}
+extcolkw84 { border-bottom-color: limegreen	}
+extcolkw85 { border-bottom-color: linen	}
+extcolkw86 { border-bottom-color: magenta	}
+extcolkw87 { border-bottom-color: maroon	}
+extcolkw88 { border-bottom-color: mediumaquamarine	}
+extcolkw89 { border-bottom-color: mediumblue	}
+extcolkw90 { border-bottom-color: mediumorchid	}
+extcolkw91 { border-bottom-color: mediumpurple	}
+extcolkw92 { border-bottom-color: mediumseagreen	}
+extcolkw93 { border-bottom-color: mediumslateblue	}
+extcolkw94 { border-bottom-color: mediumspringgreen	}
+extcolkw95 { border-bottom-color: mediumturquoise	}
+extcolkw96 { border-bottom-color: mediumvioletred	}
+extcolkw97 { border-bottom-color: midnightblue	}
+extcolkw98 { border-bottom-color: mintcream	}
+extcolkw99 { border-bottom-color: mistyrose	}
+extcolkw100 { border-bottom-color: moccasin	}
+extcolkw101 { border-bottom-color: navajowhite	}
+extcolkw102 { border-bottom-color: navy	}
+extcolkw103 { border-bottom-color: oldlace	}
+extcolkw104 { border-bottom-color: olive	}
+extcolkw105 { border-bottom-color: olivedrab	}
+extcolkw106 { border-bottom-color: orange	}
+extcolkw107 { border-bottom-color: orangered	}
+extcolkw108 { border-bottom-color: orchid	}
+extcolkw109 { border-bottom-color: palegoldenrod	}
+extcolkw110 { border-bottom-color: palegreen	}
+extcolkw111 { border-bottom-color: paleturquoise	}
+extcolkw112 { border-bottom-color: palevioletred	}
+extcolkw113 { border-bottom-color: papayawhip	}
+extcolkw114 { border-bottom-color: peachpuff	}
+extcolkw115 { border-bottom-color: peru	}
+extcolkw116 { border-bottom-color: pink	}
+extcolkw117 { border-bottom-color: plum	}
+extcolkw118 { border-bottom-color: powderblue	}
+extcolkw119 { border-bottom-color: purple	}
+extcolkw120 { border-bottom-color: red	}
+extcolkw121 { border-bottom-color: rosybrown	}
+extcolkw122 { border-bottom-color: royalblue	}
+extcolkw123 { border-bottom-color: saddlebrown	}
+extcolkw124 { border-bottom-color: salmon	}
+extcolkw125 { border-bottom-color: sandybrown	}
+extcolkw126 { border-bottom-color: seagreen	}
+extcolkw127 { border-bottom-color: seashell	}
+extcolkw128 { border-bottom-color: sienna	}
+extcolkw129 { border-bottom-color: silver	}
+extcolkw130 { border-bottom-color: skyblue	}
+extcolkw131 { border-bottom-color: slateblue	}
+extcolkw132 { border-bottom-color: slategray	}
+extcolkw133 { border-bottom-color: slategrey	}
+extcolkw134 { border-bottom-color: snow	}
+extcolkw135 { border-bottom-color: springgreen	}
+extcolkw136 { border-bottom-color: steelblue	}
+extcolkw137 { border-bottom-color: tan	}
+extcolkw138 { border-bottom-color: teal	}
+extcolkw139 { border-bottom-color: thistle	}
+extcolkw140 { border-bottom-color: tomato	}
+extcolkw141 { border-bottom-color: turquoise	}
+extcolkw142 { border-bottom-color: violet	}
+extcolkw143 { border-bottom-color: wheat	}
+extcolkw144 { border-bottom-color: white	}
+extcolkw145 { border-bottom-color: whitesmoke	}
+extcolkw146 { border-bottom-color: yellow	}
+extcolkw147 { border-bottom-color: yellowgreen}
+deprecatedsyscol1 { border-bottom-color: ActiveBorder }
+deprecatedsyscol2 { border-bottom-color: ActiveCaption }
+deprecatedsyscol3 { border-bottom-color: AppWorkspace }
+deprecatedsyscol4 { border-bottom-color: Background }
+deprecatedsyscol5 { border-bottom-color: ButtonFace }
+deprecatedsyscol6 { border-bottom-color: ButtonHighlight }
+deprecatedsyscol7 { border-bottom-color: ButtonShadow }
+deprecatedsyscol8 { border-bottom-color: ButtonText }
+deprecatedsyscol9 { border-bottom-color: CaptionText }
+deprecatedsyscol10 { border-bottom-color: GrayText }
+deprecatedsyscol11 { border-bottom-color: Highlight }
+deprecatedsyscol12 { border-bottom-color: HighlightText }
+deprecatedsyscol13 { border-bottom-color: InactiveBorder }
+deprecatedsyscol14 { border-bottom-color: InactiveCaption }
+deprecatedsyscol15 { border-bottom-color: InactiveCaptionText }
+deprecatedsyscol16 { border-bottom-color: InfoBackground }
+deprecatedsyscol17 { border-bottom-color: InfoText }
+deprecatedsyscol18 { border-bottom-color: Menu }
+deprecatedsyscol19 { border-bottom-color: MenuText }
+deprecatedsyscol20 { border-bottom-color: Scrollbar }
+deprecatedsyscol21 { border-bottom-color: ThreeDDarkShadow }
+deprecatedsyscol22 { border-bottom-color: ThreeDFace }
+deprecatedsyscol23 { border-bottom-color: ThreeDHighlight }
+deprecatedsyscol24 { border-bottom-color: ThreeDLightShadow }
+deprecatedsyscol25 { border-bottom-color: ThreeDShadow }
+deprecatedsyscol26 { border-bottom-color: Window }
+deprecatedsyscol27 { border-bottom-color: WindowFrame }
+deprecatedsyscol28 { border-bottom-color: WindowText }

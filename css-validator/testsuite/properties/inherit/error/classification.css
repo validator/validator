@@ -1,0 +1,11 @@
+a {
+    list-style: inherit 0 url("http://image.png");
+    list-style: 0 inherit url("http://image.png");
+    list-style: 0 url("http://image.png") inherit;
+    list-style: inherit disc url("http://image.png");
+    list-style: disc inherit url("http://image.png");
+    list-style: disc url("http://image.png") inherit;
+    list-style: inherit disc 0;
+    list-style: disc inherit 0;
+    list-style: disc 0 inherit;
+}

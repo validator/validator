@@ -1,0 +1,8 @@
+/* This should not pass CSS 2 checking, see
+see http://www.w3.org/Bugs/Public/show_bug.cgi?id=3633 */
+
+.foo { background-image: url("myimage\") ; }
+
+.foo { background-image: url('myimage\') ; }
+
+selector { font-family: "MyFont3\",  Serif;  }

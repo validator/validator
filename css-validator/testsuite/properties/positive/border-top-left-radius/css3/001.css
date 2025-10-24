@@ -1,0 +1,7 @@
+a { border-top-left-radius: 10pt }
+b { border-top-left-radius: 5% }
+c { border-top-left-radius: 10pt 5% }
+d { border-top-left-radius: 5% 10pt }
+e { border-top-left-radius: 0 }
+y { border-top-left-radius: initial }
+z { border-top-left-radius: inherit }

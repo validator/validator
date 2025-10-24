@@ -1,0 +1,6 @@
+a { border-bottom-width: thin }
+b { border-bottom-width: medium }
+c { border-bottom-width: thick }
+d { border-bottom-width: 0.5em }
+e { border-bottom-width: 1px }
+z { border-bottom-width: inherit }

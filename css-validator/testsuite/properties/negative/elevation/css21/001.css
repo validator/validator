@@ -1,0 +1,6 @@
+/* elevation is between -90deg and 90deg. The following are out of range */
+an { elevation: 120deg }
+bn { elevation: -200grad}
+cn { elevation: 4rad}
+/* turn is not a valid angle unit in CSS2 nor 2.1 (introduced in CSS3) */
+dn { elevation: 0.25turn }

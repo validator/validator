@@ -1,0 +1,15 @@
+div {
+	column-gap: inherit;
+}
+div {
+	column-gap: 0;
+}
+div {
+	column-gap: 12cm;
+}
+div {
+	column-gap: 42px;
+}
+div {
+	column-gap: normal;
+}

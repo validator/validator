@@ -1,0 +1,7 @@
+a { float: left }
+b { float: right }
+c { float: none }
+z { float: inherit }
+y { float: initial }
+logical1 { float: inline-start }
+logical2 { float: inline-end }

@@ -1,0 +1,27 @@
+bs1 { vertical-align: sub  }
+bs2 { vertical-align: super  }
+bs3 { vertical-align: 150%  }
+bs4 { vertical-align: -100%  }
+bs5 { vertical-align: 0%  }
+bs6 { vertical-align: 0  }
+bs7 { vertical-align: 1cm }
+bs8 { vertical-align: -1cm }
+ab1  { vertical-align: baseline }
+ab2  { vertical-align: text-bottom }
+ab3  { vertical-align: alphabetic }
+ab4  { vertical-align: ideographic }
+ab5  { vertical-align: middle }
+ab6  { vertical-align: central }
+ab7  { vertical-align: mathematical }
+ab8  { vertical-align: text-top }
+ab9  { vertical-align: bottom }
+ab10 { vertical-align: center }
+ab11 { vertical-align: top }
+c1 { vertical-align: 0 bottom }
+c2 { vertical-align: text-top 0 }
+c3 { vertical-align: 150% alphabetic }
+c4 { vertical-align: baseline 100% }
+c5 { vertical-align: sub center }
+c6 { vertical-align: middle super }
+c7 { vertical-align: inherit }
+c8 { vertical-align: unset }

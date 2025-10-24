@@ -1,0 +1,112 @@
+z { border-top: inherit }
+bt1 { border-top: dotted 1px transparent }
+bt2 { border-top: dotted transparent }
+bt3 { border-top: dotted transparent 1px }
+bt4 { border-top: dotted transparent thin }
+bt5 { border-top: dotted thin transparent }
+bt6 { border-top: 1px dotted transparent }
+bt7 { border-top: 1px none transparent }
+bt8 { border-top: 1px transparent }
+bt9 { border-top: 1px transparent dotted }
+bt10 { border-top: 1px transparent none }
+bt11 { border-top: none 1px transparent }
+bt12 { border-top: none transparent }
+bt13 { border-top: none transparent 1px }
+bt14 { border-top: none transparent thin }
+bt15 { border-top: none thin transparent }
+bt16 { border-top: transparent }
+bt17 { border-top: transparent dotted }
+bt18 { border-top: transparent dotted 1px }
+bt19 { border-top: transparent dotted thin }
+bt20 { border-top: transparent 1px }
+bt21 { border-top: transparent 1px dotted }
+bt22 { border-top: transparent 1px none }
+bt23 { border-top: transparent none }
+bt24 { border-top: transparent none 1px }
+bt25 { border-top: transparent none thin }
+bt26 { border-top: transparent thin }
+bt27 { border-top: transparent thin dotted }
+bt28 { border-top: transparent thin none }
+bt29 { border-top: thin dotted transparent }
+bt30 { border-top: thin none transparent }
+bt31 { border-top: thin transparent }
+bt32 { border-top: thin transparent dotted }
+bt33 { border-top: thin transparent none }
+bt34 { border-top: #f00 }
+bt35 { border-top: #f00 dotted }
+bt36 { border-top: #f00 dotted 1px  }
+bt37 { border-top: #f00 dotted thin }
+bt38 { border-top: #f00 1px }
+bt39 { border-top: #f00 1px dotted  }
+bt40 { border-top: #f00 1px none }
+bt41 { border-top: #f00 none }
+bt42 { border-top: #f00 none 1px }
+bt43 { border-top: #f00 none thin  }
+bt44 { border-top: #f00 thin }
+bt45 { border-top: #f00 thin dotted }
+bt46 { border-top: #f00 thin none }
+bt47 { border-top: dotted }
+bt48 { border-top: dotted #f00 }
+bt49 { border-top: dotted #f00 1px  }
+bt50 { border-top: dotted #f00 thin }
+bt51 { border-top: dotted 1px }
+bt52 { border-top: dotted 1px  #f00 }
+bt53 { border-top: dotted 1px red }
+bt54 { border-top: dotted red }
+bt55 { border-top: dotted red 1px }
+bt56 { border-top: dotted red thin }
+bt57 { border-top: dotted thin }
+bt58 { border-top: dotted thin #f00 }
+bt59 { border-top: dotted thin red }
+bt60 { border-top: 1px }
+bt61 { border-top: 1px #f00 }
+bt62 { border-top: 1px #f00 dotted  }
+bt63 { border-top: 1px #f00 none }
+bt64 { border-top: 1px dotted }
+bt65 { border-top: 1px dotted  #f00 }
+bt66 { border-top: 1px dotted red }
+bt67 { border-top: 1px none }
+bt68 { border-top: 1px none #f00 }
+bt69 { border-top: 1px none red }
+bt70 { border-top: 1px red }
+bt71 { border-top: 1px red dotted }
+bt72 { border-top: 1px red none }
+bt73 { border-top: none }
+bt74 { border-top: none #f00 }
+bt75 { border-top: none #f00 1px }
+bt76 { border-top: none #f00 thin }
+bt77 { border-top: none 1px }
+bt78 { border-top: none 1px #f00 }
+bt79 { border-top: none 1px red }
+bt80 { border-top: none red }
+bt81 { border-top: none red 1px }
+bt82 { border-top: none red thin }
+bt83 { border-top: none thin }
+bt84 { border-top: none thin #f00 }
+bt85 { border-top: none thin red }
+bt86 { border-top: red }
+bt87 { border-top: red dotted }
+bt88 { border-top: red dotted 1px }
+bt89 { border-top: red dotted thin }
+bt90 { border-top: red 1px }
+bt91 { border-top: red 1px dotted }
+bt92 { border-top: red 1px none }
+bt93 { border-top: red none }
+bt94 { border-top: red none 1px }
+bt95 { border-top: red none thin }
+bt96 { border-top: red thin }
+bt97 { border-top: red thin dotted }
+bt98 { border-top: red thin none }
+bt99 { border-top: thin }
+bt100 { border-top: thin #f00 }
+bt101 { border-top: thin #f00 dotted  }
+bt102 { border-top: thin #f00 none }
+bt103 { border-top: thin dotted }
+bt104 { border-top: thin dotted  #f00 }
+bt105 { border-top: thin dotted red }
+bt106 { border-top: thin none }
+bt107 { border-top: thin none #f00 }
+bt108 { border-top: thin none red }
+bt109 { border-top: thin red }
+bt110 { border-top: thin red dotted }
+bt111 { border-top: thin red none }

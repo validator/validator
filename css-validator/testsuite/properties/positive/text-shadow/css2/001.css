@@ -1,0 +1,54 @@
+z { text-shadow: inherit }
+a { text-shadow: none }
+tshad1   { text-shadow: red 2px 0 }
+tshad2   { text-shadow: red 2px -1px }
+tshad3   { text-shadow: red 2px 0.5em }
+tshad4   { text-shadow: red -2px 0 0.5em}
+tshad5   { text-shadow: #f00 2px 0 }
+tshad6   { text-shadow: #f00 2px -1px }
+tshad7   { text-shadow: #f00 2px 0.5em }
+tshad8   { text-shadow: #f00 -2px 0 0.5em}
+tshad9   { text-shadow: rgb(100%,0%,0%) 2px 0 }
+tshad10  { text-shadow: rgb(100%,0%,0%) 2px -1px }
+tshad11  { text-shadow: rgb(100%,0%,0%) 2px 0.5em }
+tshad12  { text-shadow: rgb(100%,0%,0%) -2px 0 0.5em}
+tshad13  { text-shadow: rgb(255,0,0) 2px 0 }
+tshad14  { text-shadow: rgb(255,0,0) 2px -1px }
+tshad15  { text-shadow: rgb(255,0,0) 2px 0.5em }
+tshad16  { text-shadow: rgb(255,0,0) -2px 0 0.5em}
+tshad17  { text-shadow: 2px 0 }
+tshad18  { text-shadow: 2px -1px }
+tshad19  { text-shadow: 2px 0.5em }
+tshad20  { text-shadow: -2px 0 0.5em}
+tshad21  { text-shadow: 2px 0 red }
+tshad22  { text-shadow: 2px -1px red }
+tshad23  { text-shadow: 2px 0.5em red }
+tshad24  { text-shadow: -2px 0 0.5em red }
+tshad25  { text-shadow: 2px 0 #f00 }
+tshad26  { text-shadow: 2px -1px #f00 }
+tshad27  { text-shadow: 2px 0.5em #f00 }
+tshad28  { text-shadow: -2px 0 0.5em #f00 }
+tshad29  { text-shadow: 2px 0 rgb(100%,0%,0%) }
+tshad30  { text-shadow: 2px -1px rgb(100%,0%,0%) }
+tshad31  { text-shadow: 2px 0.5em rgb(100%,0%,0%) }
+tshad32  { text-shadow: -2px 0 0.5em rgb(100%,0%,0%) }
+tshad33  { text-shadow: 2px 0 rgb(255,0,0) }
+tshad34  { text-shadow: 2px -1px rgb(255,0,0) }
+tshad35  { text-shadow: 2px 0.5em rgb(255,0,0) }
+tshad36  { text-shadow: -2px 0 0.5em rgb(255,0,0) }
+tshad37  { text-shadow: 2px 0 red, #f00 2px 0 } 
+tshad38  { text-shadow: #f00 2px -1px, rgb(100%,0%,0%) 2px 0 }
+tshad39  { text-shadow: #f00 2px -1px, rgb(100%,0%,0%) 2px 0 0.5em}
+tshad40  { text-shadow: #f00 2px -1px, 2px 0 0.5em}
+tshad41  { text-shadow: #f00 2px -1px, 2px 0 }
+tshad42  { text-shadow: #f00 2px -1px 0.5em, 2px 0 }
+tshad43  { text-shadow: #f00 2px -1px 0.5em, 2px 0 0.5em }
+tshad44  { text-shadow: 2px -1px, 2px 0 0.5em #f00 }
+tshad45  { text-shadow: 2px -1px, 2px 0 #f00 }
+tshad46  { text-shadow: 2px -1px, rgb(100%,0%,0%) 2px 0 }
+tshad47  { text-shadow: 2px -1px, rgb(100%,0%,0%) 2px 0 0.5em}
+tshad48  { text-shadow: red 2px 0.5em, rgb(255,0,0) 2px -1px 1px }
+tshad49  { text-shadow: rgb(255,0,0) -2px 0 0.5em, 2px 0,  2px -1px red }
+tshad50  { text-shadow: 2px 0.5em red, -2px 0 #f00, 2px 0 0.5em #f00 }
+tshad51  { text-shadow: 2px 0 rgb(255,0,0), 2px -1px rgb(255,0,0), 2px 0 0.5em rgb(255,0,0) }
+tshad52  { text-shadow: rgb(100%,0%,0%) 2px 0.5em, rgb(255,0,0) 2px -1px 1px }

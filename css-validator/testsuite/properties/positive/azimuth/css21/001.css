@@ -1,0 +1,37 @@
+azim1  { azimuth: 10deg }
+azim2  { azimuth: -360deg }
+azim3  { azimuth: 0 }
+azim4  { azimuth: 400grad}
+azim5  { azimuth: 6rad}
+azim6  { azimuth: 0deg}
+azim7  { azimuth: left-side }
+azim8  { azimuth: far-left }
+azim9  { azimuth: left }
+azim10 { azimuth: center-left }
+azim11 { azimuth: center }
+azim12 { azimuth: center-right }
+azim13 { azimuth: right }
+azim14 { azimuth: far-right }
+azim15 { azimuth: right-side }
+azim16 { azimuth: left-side behind }
+azim17 { azimuth: far-left behind }
+azim18 { azimuth: left behind }
+azim19 { azimuth: center-left behind }
+azim20 { azimuth: center behind }
+azim21 { azimuth: center-right behind }
+azim22 { azimuth: right behind }
+azim23 { azimuth: far-right behind }
+azim24 { azimuth: right-side behind }
+azim25 { azimuth: behind left-side }
+azim26 { azimuth: behind far-left }
+azim27 { azimuth: behind left }
+azim28 { azimuth: behind center-left }
+azim29 { azimuth: behind center }
+azim30 { azimuth: behind center-right }
+azim31 { azimuth: behind right }
+azim32 { azimuth: behind far-right }
+azim33 { azimuth: behind right-side }
+azim34 { azimuth: leftwards }
+azim35 { azimuth: rightwards }
+azim36 { azimuth: behind }
+z { azimuth: inherit }

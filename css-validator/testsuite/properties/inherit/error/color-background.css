@@ -1,0 +1,50 @@
+a {
+    background-position: left inherit;
+    background-position: inherit left;
+    background-position: inherit top;
+    background-position: top inherit;
+    background-position: 20% inherit;
+    background-position: inherit 20%;
+
+    background: inherit url("df") repeat scroll left top;
+    background: url("df") inherit repeat scroll left top;
+    background: url("df") repeat inherit scroll left top;
+    background: url("df") repeat scroll inherit left top;
+    background: url("df") repeat scroll left inherit top;
+    background: url("df") repeat scroll left top inherit;
+
+    background: inherit white repeat scroll left top;
+    background: white inherit repeat scroll left top;
+    background: white repeat inherit scroll left top;
+    background: white repeat scroll inherit left top;
+    background: white repeat scroll left inherit top;
+    background: white repeat scroll left top inherit;
+
+    background: inherit white url("df") scroll left top;
+    background: white inherit url("df") scroll left top;
+    background: white url("df") inherit scroll left top;
+    background: white url("df") scroll inherit left top;
+    background: white url("df") scroll left inherit top;
+    background: white url("df") scroll left top inherit;
+
+    background: inherit white url("df") repeat left top;
+    background: white inherit url("df") repeat left top;
+    background: white url("df") inherit repeat left top;
+    background: white url("df") repeat inherit left top;
+    background: white url("df") repeat left inherit top;
+    background: white url("df") repeat left top inherit;
+
+    background: inherit white url("df") repeat scroll top;
+    background: white inherit url("df") repeat scroll top;
+    background: white url("df") inherit repeat scroll top;
+    background: white url("df") repeat inherit scroll top;
+    background: white url("df") repeat scroll inherit top;
+    background: white url("df") repeat scroll top inherit;
+
+    background: inherit white url("df") repeat scroll left;
+    background: white inherit url("df") repeat scroll left;
+    background: white url("df") inherit repeat scroll left;
+    background: white url("df") repeat inherit scroll left;
+    background: white url("df") repeat scroll inherit left;
+    background: white url("df") repeat scroll left inherit;
+}

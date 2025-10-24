@@ -1,0 +1,9 @@
+a { font-feature-settings: "dlig" 1;       /* dlig=1 enable discretionary ligatures */ }
+b { font-feature-settings: "smcp" on;      /* smcp=1 enable small caps */ }
+c { font-feature-settings: 'c2sc';         /* c2sc=1 enable caps to small caps */ }
+d { font-feature-settings: "liga" off;     /* liga=0 no common ligatures */ }
+e { font-feature-settings: "tnum", 'hist'; /* tnum=1, hist=1 enable tabular numbers and historical forms */ }
+f { font-feature-settings: "PKRN";         /* PKRN=1 enable custom feature */ }
+g { font-feature-settings: 'c2sc',"dlig" 1,"smcp" on }
+h { font-feature-settings: initial }
+i { font-feature-settings: inherit }

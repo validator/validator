@@ -1,0 +1,37 @@
+a {
+    display: inline;
+    display: block;
+    display: list-item;
+    display: none;
+
+    white-space: normal;
+    white-space: pre;
+    white-space: nowrap;
+
+    list-style-type: disc;
+    list-style-type: circle;
+    list-style-type: square;
+    list-style-type: decimal;
+    list-style-type: lower-roman;
+    list-style-type: upper-roman;
+    list-style-type: lower-alpha;
+    list-style-type: upper-alpha;
+    list-style-type: none;
+
+    list-style-image: url("image.png");
+    list-style-image: none;
+
+    list-style-position: inside;
+    list-style-position: outside;
+
+    list-style: disc;
+    list-style: circle;
+    list-style: square;
+    list-style: decimal inside;
+    list-style: lower-roman outside;
+    list-style: upper-roman outside;
+    list-style: url("image.png") lower-alpha inside;
+    list-style: url("image.png") inside lower-alpha;
+    list-style: inside lower-alpha url("image.png");
+    list-style: lower-alpha inside url("image.png");
+}

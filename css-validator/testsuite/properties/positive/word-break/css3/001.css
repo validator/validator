@@ -1,0 +1,5 @@
+a { word-break: normal }
+b { word-break: break-all }
+c { word-break: keep-all }
+y { word-break: initial }
+z { word-break: inherit }

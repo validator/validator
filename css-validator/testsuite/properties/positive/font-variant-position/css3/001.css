@@ -1,0 +1,5 @@
+a { font-variant-position: normal; }
+b { font-variant-position: super; }
+c { font-variant-position: sub; }
+e { font-variant-position: inherit; }
+f { font-variant-position: initial; }

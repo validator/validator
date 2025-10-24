@@ -1,0 +1,7 @@
+a { break-inside: auto }
+b { break-inside: avoid }
+c { break-inside: avoid-page }
+d { break-inside: avoid-column }
+e { break-inside: avoid-region }
+y { break-inside: initial }
+z { break-inside: inherit }

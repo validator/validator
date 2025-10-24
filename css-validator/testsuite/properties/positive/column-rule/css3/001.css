@@ -1,0 +1,278 @@
+z { column-rule: inherit }
+y { column-rule: initial }
+cr1 { column-rule: dotted 1px transparent }
+cr2 { column-rule: dotted transparent }
+cr3 { column-rule: dotted transparent 1px }
+cr4 { column-rule: dotted transparent thin }
+cr5 { column-rule: dotted thin transparent }
+cr6 { column-rule: 1px dotted transparent }
+cr7 { column-rule: 1px none transparent }
+cr8 { column-rule: 1px transparent }
+cr9 { column-rule: 1px transparent dotted }
+cr10 { column-rule: 1px transparent none }
+cr11 { column-rule: none 1px transparent }
+cr12 { column-rule: none transparent }
+cr13 { column-rule: none transparent 1px }
+cr14 { column-rule: none transparent thin }
+cr15 { column-rule: none thin transparent }
+cr16 { column-rule: transparent }
+cr17 { column-rule: transparent dotted }
+cr18 { column-rule: transparent dotted 1px }
+cr19 { column-rule: transparent dotted thin }
+cr20 { column-rule: transparent 1px }
+cr21 { column-rule: transparent 1px dotted }
+cr22 { column-rule: transparent 1px none }
+cr23 { column-rule: transparent none }
+cr24 { column-rule: transparent none 1px }
+cr25 { column-rule: transparent none thin }
+cr26 { column-rule: transparent thin }
+cr27 { column-rule: transparent thin dotted }
+cr28 { column-rule: transparent thin none }
+cr29 { column-rule: thin dotted transparent }
+cr30 { column-rule: thin none transparent }
+cr31 { column-rule: thin transparent }
+cr32 { column-rule: thin transparent dotted }
+cr33 { column-rule: thin transparent none }
+cr34 { column-rule: dotted 1px rgb(0,0,100) }
+cr35 { column-rule: dotted rgb(0,0,100) }
+cr36 { column-rule: dotted rgb(0,0,100) 1px }
+cr37 { column-rule: dotted rgb(0,0,100) thin }
+cr38 { column-rule: dotted thin rgb(0,0,100) }
+cr39 { column-rule: 1px dotted rgb(0,0,100) }
+cr40 { column-rule: 1px none rgb(0,0,100) }
+cr41 { column-rule: 1px rgb(0,0,100) }
+cr42 { column-rule: 1px rgb(0,0,100) dotted }
+cr43 { column-rule: 1px rgb(0,0,100) none }
+cr44 { column-rule: none 1px rgb(0,0,100) }
+cr45 { column-rule: none rgb(0,0,100) }
+cr46 { column-rule: none rgb(0,0,100) 1px }
+cr47 { column-rule: none rgb(0,0,100) thin }
+cr48 { column-rule: none thin rgb(0,0,100) }
+cr49 { column-rule: rgb(0,0,100) }
+cr50 { column-rule: rgb(0,0,100) dotted }
+cr51 { column-rule: rgb(0,0,100) dotted 1px }
+cr52 { column-rule: rgb(0,0,100) dotted thin }
+cr53 { column-rule: rgb(0,0,100) 1px }
+cr54 { column-rule: rgb(0,0,100) 1px dotted }
+cr55 { column-rule: rgb(0,0,100) 1px none }
+cr56 { column-rule: rgb(0,0,100) none }
+cr57 { column-rule: rgb(0,0,100) none 1px }
+cr58 { column-rule: rgb(0,0,100) none thin }
+cr59 { column-rule: rgb(0,0,100) thin }
+cr60 { column-rule: rgb(0,0,100) thin dotted }
+cr61 { column-rule: rgb(0,0,100) thin none }
+cr62 { column-rule: thin dotted rgb(0,0,100) }
+cr63 { column-rule: thin none rgb(0,0,100) }
+cr64 { column-rule: thin rgb(0,0,100) }
+cr65 { column-rule: thin rgb(0,0,100) dotted }
+cr66 { column-rule: thin rgb(0,0,100) none }
+cr67 { column-rule: dotted 1px hsla(360, 50%, 50%, 0.5) }
+cr68 { column-rule: dotted hsla(360, 50%, 50%, 0.5) }
+cr69 { column-rule: dotted hsla(360, 50%, 50%, 0.5) 1px }
+cr70 { column-rule: dotted hsla(360, 50%, 50%, 0.5) thin }
+cr71 { column-rule: dotted thin hsla(360, 50%, 50%, 0.5) }
+cr72 { column-rule: 1px dotted hsla(360, 50%, 50%, 0.5) }
+cr73 { column-rule: 1px none hsla(360, 50%, 50%, 0.5) }
+cr74 { column-rule: 1px hsla(360, 50%, 50%, 0.5) }
+cr75 { column-rule: 1px hsla(360, 50%, 50%, 0.5) dotted }
+cr76 { column-rule: 1px hsla(360, 50%, 50%, 0.5) none }
+cr77 { column-rule: none 1px hsla(360, 50%, 50%, 0.5) }
+cr78 { column-rule: none hsla(360, 50%, 50%, 0.5) }
+cr79 { column-rule: none hsla(360, 50%, 50%, 0.5) 1px }
+cr80 { column-rule: none hsla(360, 50%, 50%, 0.5) thin }
+cr81 { column-rule: none thin hsla(360, 50%, 50%, 0.5) }
+cr82 { column-rule: hsla(360, 50%, 50%, 0.5) }
+cr83 { column-rule: hsla(360, 50%, 50%, 0.5) dotted }
+cr84 { column-rule: hsla(360, 50%, 50%, 0.5) dotted 1px }
+cr85 { column-rule: hsla(360, 50%, 50%, 0.5) dotted thin }
+cr86 { column-rule: hsla(360, 50%, 50%, 0.5) 1px }
+cr87 { column-rule: hsla(360, 50%, 50%, 0.5) 1px dotted }
+cr88 { column-rule: hsla(360, 50%, 50%, 0.5) 1px none }
+cr89 { column-rule: hsla(360, 50%, 50%, 0.5) none }
+cr90 { column-rule: hsla(360, 50%, 50%, 0.5) none 1px }
+cr91 { column-rule: hsla(360, 50%, 50%, 0.5) none thin }
+cr92 { column-rule: hsla(360, 50%, 50%, 0.5) thin }
+cr93 { column-rule: hsla(360, 50%, 50%, 0.5) thin dotted }
+cr94 { column-rule: hsla(360, 50%, 50%, 0.5) thin none }
+cr95 { column-rule: thin dotted hsla(360, 50%, 50%, 0.5) }
+cr96 { column-rule: thin none hsla(360, 50%, 50%, 0.5) }
+cr97 { column-rule: thin hsla(360, 50%, 50%, 0.5) }
+cr98 { column-rule: thin hsla(360, 50%, 50%, 0.5) dotted }
+cr99 { column-rule: thin hsla(360, 50%, 50%, 0.5) none }
+cr100 { column-rule: dotted 1px hsl(240, 0%, 10%) }
+cr101 { column-rule: dotted hsl(240, 0%, 10%) }
+cr102 { column-rule: dotted hsl(240, 0%, 10%) 1px }
+cr103 { column-rule: dotted hsl(240, 0%, 10%) thin }
+cr104 { column-rule: dotted thin hsl(240, 0%, 10%) }
+cr105 { column-rule: 1px dotted hsl(240, 0%, 10%) }
+cr106 { column-rule: 1px none hsl(240, 0%, 10%) }
+cr107 { column-rule: 1px hsl(240, 0%, 10%) }
+cr108 { column-rule: 1px hsl(240, 0%, 10%) dotted }
+cr109 { column-rule: 1px hsl(240, 0%, 10%) none }
+cr110 { column-rule: none 1px hsl(240, 0%, 10%) }
+cr111 { column-rule: none hsl(240, 0%, 10%) }
+cr112 { column-rule: none hsl(240, 0%, 10%) 1px }
+cr113 { column-rule: none hsl(240, 0%, 10%) thin }
+cr114 { column-rule: none thin hsl(240, 0%, 10%) }
+cr115 { column-rule: hsl(240, 0%, 10%) }
+cr116 { column-rule: hsl(240, 0%, 10%) dotted }
+cr117 { column-rule: hsl(240, 0%, 10%) dotted 1px }
+cr118 { column-rule: hsl(240, 0%, 10%) dotted thin }
+cr119 { column-rule: hsl(240, 0%, 10%) 1px }
+cr120 { column-rule: hsl(240, 0%, 10%) 1px dotted }
+cr121 { column-rule: hsl(240, 0%, 10%) 1px none }
+cr122 { column-rule: hsl(240, 0%, 10%) none }
+cr123 { column-rule: hsl(240, 0%, 10%) none 1px }
+cr124 { column-rule: hsl(240, 0%, 10%) none thin }
+cr125 { column-rule: hsl(240, 0%, 10%) thin }
+cr126 { column-rule: hsl(240, 0%, 10%) thin dotted }
+cr127 { column-rule: hsl(240, 0%, 10%) thin none }
+cr128 { column-rule: thin dotted hsl(240, 0%, 10%) }
+cr129 { column-rule: thin none hsl(240, 0%, 10%) }
+cr130 { column-rule: thin hsl(240, 0%, 10%) }
+cr131 { column-rule: thin hsl(240, 0%, 10%) dotted }
+cr132 { column-rule: thin hsl(240, 0%, 10%) none }
+cr133 { column-rule: dotted 1px currentColor }
+cr134 { column-rule: dotted currentColor }
+cr135 { column-rule: dotted currentColor 1px }
+cr136 { column-rule: dotted currentColor thin }
+cr137 { column-rule: dotted thin currentColor }
+cr138 { column-rule: 1px dotted currentColor }
+cr139 { column-rule: 1px none currentColor }
+cr140 { column-rule: 1px currentColor }
+cr141 { column-rule: 1px currentColor dotted }
+cr142 { column-rule: 1px currentColor none }
+cr143 { column-rule: none 1px currentColor }
+cr144 { column-rule: none currentColor }
+cr145 { column-rule: none currentColor 1px }
+cr146 { column-rule: none currentColor thin }
+cr147 { column-rule: none thin currentColor }
+cr148 { column-rule: currentColor }
+cr149 { column-rule: currentColor dotted }
+cr150 { column-rule: currentColor dotted 1px }
+cr151 { column-rule: currentColor dotted thin }
+cr152 { column-rule: currentColor 1px }
+cr153 { column-rule: currentColor 1px dotted }
+cr154 { column-rule: currentColor 1px none }
+cr155 { column-rule: currentColor none }
+cr156 { column-rule: currentColor none 1px }
+cr157 { column-rule: currentColor none thin }
+cr158 { column-rule: currentColor thin }
+cr159 { column-rule: currentColor thin dotted }
+cr160 { column-rule: currentColor thin none }
+cr161 { column-rule: thin dotted currentColor }
+cr162 { column-rule: thin none currentColor }
+cr163 { column-rule: thin currentColor }
+cr164 { column-rule: thin currentColor dotted }
+cr165 { column-rule: thin currentColor none }
+cr166 { column-rule: dotted 1px tomato }
+cr167 { column-rule: dotted tomato }
+cr168 { column-rule: dotted tomato 1px }
+cr169 { column-rule: dotted tomato thin }
+cr170 { column-rule: dotted thin tomato }
+cr171 { column-rule: 1px dotted tomato }
+cr172 { column-rule: 1px none tomato }
+cr173 { column-rule: 1px tomato }
+cr174 { column-rule: 1px tomato dotted }
+cr175 { column-rule: 1px tomato none }
+cr176 { column-rule: none 1px tomato }
+cr177 { column-rule: none tomato }
+cr178 { column-rule: none tomato 1px }
+cr179 { column-rule: none tomato thin }
+cr180 { column-rule: none thin tomato }
+cr181 { column-rule: tomato }
+cr182 { column-rule: tomato dotted }
+cr183 { column-rule: tomato dotted 1px }
+cr184 { column-rule: tomato dotted thin }
+cr185 { column-rule: tomato 1px }
+cr186 { column-rule: tomato 1px dotted }
+cr187 { column-rule: tomato 1px none }
+cr188 { column-rule: tomato none }
+cr189 { column-rule: tomato none 1px }
+cr190 { column-rule: tomato none thin }
+cr191 { column-rule: tomato thin }
+cr192 { column-rule: tomato thin dotted }
+cr193 { column-rule: tomato thin none }
+cr194 { column-rule: thin dotted tomato }
+cr195 { column-rule: thin none tomato }
+cr196 { column-rule: thin tomato }
+cr197 { column-rule: thin tomato dotted }
+cr198 { column-rule: thin tomato none }
+cr199 { column-rule: #f00 }
+cr200 { column-rule: #f00 dotted }
+cr201 { column-rule: #f00 dotted 1px  }
+cr202 { column-rule: #f00 dotted thin }
+cr203 { column-rule: #f00 1px }
+cr204 { column-rule: #f00 1px dotted  }
+cr205 { column-rule: #f00 1px none }
+cr206 { column-rule: #f00 none }
+cr207 { column-rule: #f00 none 1px }
+cr208 { column-rule: #f00 none thin  }
+cr209 { column-rule: #f00 thin }
+cr210 { column-rule: #f00 thin dotted }
+cr211 { column-rule: #f00 thin none }
+cr212 { column-rule: dotted }
+cr213 { column-rule: dotted #f00 }
+cr214 { column-rule: dotted #f00 1px  }
+cr215 { column-rule: dotted #f00 thin }
+cr216 { column-rule: dotted 1px }
+cr217 { column-rule: dotted 1px  #f00 }
+cr218 { column-rule: dotted 1px red }
+cr219 { column-rule: dotted red }
+cr220 { column-rule: dotted red 1px }
+cr221 { column-rule: dotted red thin }
+cr222 { column-rule: dotted thin }
+cr223 { column-rule: dotted thin #f00 }
+cr224 { column-rule: dotted thin red }
+cr225 { column-rule: 1px }
+cr226 { column-rule: 1px #f00 }
+cr227 { column-rule: 1px #f00 dotted  }
+cr228 { column-rule: 1px #f00 none }
+cr229 { column-rule: 1px dotted }
+cr230 { column-rule: 1px dotted  #f00 }
+cr231 { column-rule: 1px dotted red }
+cr232 { column-rule: 1px none }
+cr233 { column-rule: 1px none #f00 }
+cr234 { column-rule: 1px none red }
+cr235 { column-rule: 1px red }
+cr236 { column-rule: 1px red dotted }
+cr237 { column-rule: 1px red none }
+cr238 { column-rule: none }
+cr239 { column-rule: none #f00 }
+cr240 { column-rule: none #f00 1px }
+cr241 { column-rule: none #f00 thin }
+cr242 { column-rule: none 1px }
+cr243 { column-rule: none 1px #f00 }
+cr244 { column-rule: none 1px red }
+cr245 { column-rule: none red }
+cr246 { column-rule: none red 1px }
+cr247 { column-rule: none red thin }
+cr248 { column-rule: none thin }
+cr249 { column-rule: none thin #f00 }
+cr250 { column-rule: none thin red }
+cr251 { column-rule: red }
+cr252 { column-rule: red dotted }
+cr253 { column-rule: red dotted 1px }
+cr254 { column-rule: red dotted thin }
+cr255 { column-rule: red 1px }
+cr256 { column-rule: red 1px dotted }
+cr257 { column-rule: red 1px none }
+cr258 { column-rule: red none }
+cr259 { column-rule: red none 1px }
+cr260 { column-rule: red none thin }
+cr261 { column-rule: red thin }
+cr262 { column-rule: red thin dotted }
+cr263 { column-rule: red thin none }
+cr264 { column-rule: thin }
+cr265 { column-rule: thin #f00 }
+cr266 { column-rule: thin #f00 dotted  }
+cr267 { column-rule: thin #f00 none }
+cr268 { column-rule: thin dotted }
+cr269 { column-rule: thin dotted  #f00 }
+cr270 { column-rule: thin dotted red }
+cr271 { column-rule: thin none }
+cr272 { column-rule: thin none #f00 }
+cr273 { column-rule: thin none red }
+cr274 { column-rule: thin red }
+cr275 { column-rule: thin red dotted }
+cr276 { column-rule: thin red none }

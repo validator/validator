@@ -1,0 +1,41 @@
+z { background-origin: inherit }
+y { background-origin: initial }
+bgorigin1 { background-origin: border-box }
+bgorigin2 { background-origin: border-box,  content-box }
+bgorigin3 { background-origin: border-box,  content-box,  content-box }
+bgorigin4 { background-origin: border-box,  content-box,  padding-box }
+bgorigin5 { background-origin: border-box,  content-box, border-box }
+bgorigin6 { background-origin: border-box,  padding-box }
+bgorigin7 { background-origin: border-box,  padding-box,  content-box }
+bgorigin8 { background-origin: border-box,  padding-box,  padding-box }
+bgorigin9 { background-origin: border-box,  padding-box, border-box }
+bgorigin10 { background-origin: border-box, border-box }
+bgorigin11 { background-origin: border-box, border-box,  content-box }
+bgorigin12 { background-origin: border-box, border-box,  padding-box }
+bgorigin13 { background-origin: border-box, border-box, border-box }
+bgorigin14 { background-origin: content-box }
+bgorigin15 { background-origin: content-box,  content-box }
+bgorigin16 { background-origin: content-box,  content-box,  content-box }
+bgorigin17 { background-origin: content-box,  content-box,  padding-box }
+bgorigin18 { background-origin: content-box,  content-box, border-box }
+bgorigin19 { background-origin: content-box,  padding-box }
+bgorigin20 { background-origin: content-box,  padding-box,  content-box }
+bgorigin21 { background-origin: content-box,  padding-box,  padding-box }
+bgorigin22 { background-origin: content-box,  padding-box, border-box }
+bgorigin23 { background-origin: content-box, border-box }
+bgorigin24 { background-origin: content-box, border-box,  content-box }
+bgorigin25 { background-origin: content-box, border-box,  padding-box }
+bgorigin26 { background-origin: content-box, border-box, border-box }
+bgorigin27 { background-origin: padding-box }
+bgorigin28 { background-origin: padding-box,  content-box }
+bgorigin29 { background-origin: padding-box,  content-box,  content-box }
+bgorigin30 { background-origin: padding-box,  content-box,  padding-box }
+bgorigin31 { background-origin: padding-box,  content-box, border-box }
+bgorigin32 { background-origin: padding-box,  padding-box }
+bgorigin33 { background-origin: padding-box,  padding-box,  content-box }
+bgorigin34 { background-origin: padding-box,  padding-box,  padding-box }
+bgorigin35 { background-origin: padding-box,  padding-box, border-box }
+bgorigin36 { background-origin: padding-box, border-box }
+bgorigin37 { background-origin: padding-box, border-box,  content-box }
+bgorigin38 { background-origin: padding-box, border-box,  padding-box }
+bgorigin39 { background-origin: padding-box, border-box, border-box }

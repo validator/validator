@@ -1,0 +1,8 @@
+﻿@media screen {
+body         { background-color:#FFFFFF }
+}
+@media print {
+.noprint {display:none}
+td {font-size:10pt; font-family:"Arial Narrow",Arial,Helvetica,San-Serif,default }
+}
+p            { font-family:tahoma,arial,sans-serif,default;font-size:10pt }

@@ -1,0 +1,8 @@
+/* spec information about this property
+name= min-height
+css1= NA
+css2= http://www.w3.org/TR/2008/REC-CSS2-20080411/visudet.html#propdef-min-height
+css21= http://www.w3.org/TR/2011/REC-CSS2-20110607/visudet.html#propdef-min-height
+css3= http://www.w3.org/TR/2007/WD-css3-box-20070809/#min-height
+other= http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#min-size-auto
+*/

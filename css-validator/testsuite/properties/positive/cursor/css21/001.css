@@ -1,0 +1,52 @@
+curs01 { cursor: progress }
+curs02 { cursor: url("foo"), progress }
+curs03 { cursor: url("foo"), url("bar"), progress }
+curs1  { cursor:  auto  }
+curs2  { cursor:  crosshair  }
+curs3  { cursor:  default  }
+curs4  { cursor:  pointer  }
+curs5  { cursor:  move  }
+curs6  { cursor:  e-resize  }
+curs7  { cursor:  ne-resize  }
+curs8  { cursor:  nw-resize  }
+curs9  { cursor:  n-resize  }
+curs10 { cursor:  se-resize  }
+curs11 { cursor:  sw-resize  }
+curs12 { cursor:  s-resize  }
+curs13 { cursor:  w-resize }
+curs14 { cursor:  text  }
+curs15 { cursor:  wait  }
+curs16 { cursor:  help  }
+curs17 { cursor: url("foo"), auto  }
+curs18 { cursor: url("foo"), crosshair  }
+curs19 { cursor: url("foo"), default  }
+curs20 { cursor: url("foo"), pointer  }
+curs21 { cursor: url("foo"), move  }
+curs22 { cursor: url("foo"), e-resize  }
+curs23 { cursor: url("foo"), ne-resize  }
+curs24 { cursor: url("foo"), nw-resize  }
+curs25 { cursor: url("foo"), n-resize  }
+curs26 { cursor: url("foo"), se-resize  }
+curs27 { cursor: url("foo"), sw-resize  }
+curs28 { cursor: url("foo"), s-resize  }
+curs29 { cursor: url("foo"), w-resize }
+curs30 { cursor: url("foo"), text  }
+curs31 { cursor: url("foo"), wait  }
+curs32 { cursor: url("foo"), help  }
+curs33 { cursor: url("foo"), url("bar"), auto  }
+curs34 { cursor: url("foo"), url("bar"), crosshair  }
+curs35 { cursor: url("foo"), url("bar"), default  }
+curs36 { cursor: url("foo"), url("bar"), pointer  }
+curs37 { cursor: url("foo"), url("bar"), move  }
+curs38 { cursor: url("foo"), url("bar"), e-resize  }
+curs39 { cursor: url("foo"), url("bar"), ne-resize  }
+curs40 { cursor: url("foo"), url("bar"), nw-resize  }
+curs41 { cursor: url("foo"), url("bar"), n-resize  }
+curs42 { cursor: url("foo"), url("bar"), se-resize  }
+curs43 { cursor: url("foo"), url("bar"), sw-resize  }
+curs44 { cursor: url("foo"), url("bar"), s-resize  }
+curs45 { cursor: url("foo"), url("bar"), w-resize }
+curs46 { cursor: url("foo"), url("bar"), text  }
+curs47 { cursor: url("foo"), url("bar"), wait  }
+curs48 { cursor: url("foo"), url("bar"), help  }
+z  { cursor: inherit }
