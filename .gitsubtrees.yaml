@@ -56,5 +56,5 @@ tests:
     remote_url: https://github.com/validator/tests.git
     remote_name: tests
     remote_branch: master
-    last_local_merge: 1c040e6e92cf7d86f51892fd313d89fe4ed2ceab
-    current_commit: 5f1d6b69cc7d90e00b3e10ef9c8590663e947543
+    last_local_merge: 2f72907bcded18e025a9a346c3db6b68adf163f9
+    current_commit: 11357f01eaad6199358a53a08fad58ac9162ea04
