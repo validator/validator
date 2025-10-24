@@ -1,0 +1,32 @@
+tes1   { text-emphasis-style:    sesame  }
+tes2   { text-emphasis-style:    sesame  filled   }
+tes3   { text-emphasis-style:    sesame  open   }
+tes4   { text-emphasis-style:    triangle  }
+tes5   { text-emphasis-style:    triangle  filled   }
+tes6   { text-emphasis-style:    triangle  open   }
+tes7   { text-emphasis-style:   circle  }
+tes8   { text-emphasis-style:   circle  filled   }
+tes9   { text-emphasis-style:   circle  open   }
+tes10  { text-emphasis-style:   dot  }
+tes11  { text-emphasis-style:   dot  filled   }
+tes12  { text-emphasis-style:   dot  open   }
+tes13  { text-emphasis-style:   double-circle  }
+tes14  { text-emphasis-style:   double-circle  filled   }
+tes15  { text-emphasis-style:   double-circle  open   }
+tes16  { text-emphasis-style:   filled   }
+tes17  { text-emphasis-style:   filled    sesame  }
+tes18  { text-emphasis-style:   filled    triangle  }
+tes19  { text-emphasis-style:   filled   circle  }
+tes20  { text-emphasis-style:   filled   dot  }
+tes21  { text-emphasis-style:   filled   double-circle  }
+tes22  { text-emphasis-style:   open   }
+tes23  { text-emphasis-style:   open    sesame  }
+tes24  { text-emphasis-style:   open    triangle  }
+tes25  { text-emphasis-style:   open   circle  }
+tes26  { text-emphasis-style:   open   dot  }
+tes27  { text-emphasis-style:   open   double-circle  }
+tes28  { text-emphasis-style:  'a'  }
+tes29  { text-emphasis-style:  "a"  }
+tes30  { text-emphasis-style: none  }
+y  { text-emphasis-style: initial }
+z  { text-emphasis-style: inherit }

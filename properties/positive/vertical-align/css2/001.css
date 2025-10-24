@@ -1,0 +1,15 @@
+a { vertical-align: baseline  }
+b { vertical-align: sub  }
+c { vertical-align: super  }
+d { vertical-align: top  }
+e { vertical-align: text-top  }
+f { vertical-align: middle  }
+g { vertical-align: bottom  }
+h { vertical-align: text-bottom  }
+i { vertical-align: 150%  }
+j { vertical-align: -100%  }
+k { vertical-align: 0%  }
+l { vertical-align: 0  }
+m { vertical-align: 1cm }
+n { vertical-align: -1cm }
+z { vertical-align: inherit }

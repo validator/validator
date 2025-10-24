@@ -1,0 +1,5 @@
+a { line-height: normal  }
+b { line-height: 1.2  }
+c { line-height: 1.2em  }
+d { line-height:  120%  }
+z { line-height: inherit }

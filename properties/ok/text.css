@@ -1,0 +1,49 @@
+a {
+    word-spacing: normal;
+    word-spacing: 3px;
+
+    letter-spacing: normal;
+    letter-spacing: 3em;
+
+    text-decoration: none;
+    text-decoration: underline;
+    text-decoration: overline;
+    text-decoration: line-through;
+    text-decoration: blink;
+    text-decoration: underline overline;
+    text-decoration: underline overline line-through;
+    text-decoration: underline overline line-through blink;
+
+    vertical-align: baseline;
+    vertical-align: sub;
+    vertical-align: super;
+    vertical-align: top;
+    vertical-align: text-top;
+    vertical-align: middle;
+    vertical-align: bottom;
+    vertical-align: text-bottom;
+    vertical-align: 12%;
+    vertical-align: 12ex;
+
+    text-transform: capitalize;
+    text-transform: uppercase;
+    text-transform: lowercase;
+    text-transform: none;
+
+    text-align: left;
+    text-align: right;
+    text-align: center;
+    text-align: justify;
+
+    text-indent: 10px;
+    text-indent: 10%;
+
+    line-height: normal;
+    line-height: 10;
+    line-height: 10px;
+    line-height: 10%;
+
+    white-space: normal;
+    white-space: pre;
+    white-space: nowrap;
+}

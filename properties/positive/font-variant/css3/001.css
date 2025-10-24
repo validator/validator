@@ -1,0 +1,45 @@
+z { font-variant: inherit }
+y { font-variant: initial }
+fontvar1    { font-variant: normal   }
+fontvar2    { font-variant: none  }
+fontvar3    { font-variant: common-ligatures   }
+fontvar4    { font-variant: no-common-ligatures  }
+fontvar5    { font-variant: discretionary-ligatures  }
+fontvar6    { font-variant: no-discretionary-ligatures }
+fontvar7    { font-variant: historical-ligatures   }
+fontvar8    { font-variant: no-historical-ligatures }
+fontvar9    { font-variant: contextual   }
+fontvar10   { font-variant: no-contextual }
+fontvar11   { font-variant: stylistic(machin)  }
+fontvar12   { font-variant: historical-forms  }
+fontvar13   { font-variant: styleset(machin, truc, bidule, chouette)  }
+fontvar14   { font-variant: character-variant(chocolat, cacao, vanille)  }
+fontvar15   { font-variant: swash(foo)  }
+fontvar16   { font-variant: ornaments(bar)  }
+fontvar17   { font-variant: annotation(baz)  }
+fontvar18   { font-variant: small-caps   }
+fontvar19   { font-variant: all-small-caps  }
+fontvar20   { font-variant: petite-caps  }
+fontvar21   { font-variant: all-petite-caps  }
+fontvar22   { font-variant: titling-caps  }
+fontvar23   { font-variant: unicase  }
+fontvar24   { font-variant: lining-nums }
+fontvar25   { font-variant: oldstyle-nums }
+fontvar26   { font-variant: proportional-nums  }
+fontvar27   { font-variant: tabular-nums }
+fontvar28   { font-variant: diagonal-fractions }
+fontvar29   { font-variant: stacked-fractions }
+fontvar30   { font-variant: ordinal  }
+fontvar31   { font-variant: slashed-zero  }
+fontvar32   { font-variant: jis78 }
+fontvar33   { font-variant: jis83 }
+fontvar34   { font-variant: jis90 }
+fontvar35   { font-variant: jis04 }
+fontvar36   { font-variant: simplified }
+fontvar37   { font-variant: traditional }
+fontvar38   { font-variant: full-width  }
+fontvar39   { font-variant: proportional-width }
+fontvar40   { font-variant: ruby  }
+fontvar41   { font-variant: no-common-ligatures no-historical-ligatures no-discretionary-ligatures character-variant(chocolat, cacao, vanille) petite-caps proportional-nums ordinal full-width ruby }
+fontvar42   { font-variant: ruby ornaments(bar) annotation(baz) styleset(machin, truc, bidule, chouette) contextual simplified oldstyle-nums stacked-fractions unicase slashed-zero }
+fontvar43   { font-variant: tabular-nums diagonal-fractions historical-forms swash(foo) }

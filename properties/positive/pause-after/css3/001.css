@@ -1,0 +1,11 @@
+a { pause-after:  500ms  }
+b { pause-after:  0s }
+c { pause-after:  2.1s }
+d { pause-after:  none  }
+e { pause-after:  x-weak  }
+f { pause-after:  weak  }
+g { pause-after:  medium  }
+h { pause-after:  strong  }
+i { pause-after:  x-strong  }
+y { pause-after: initial }
+z { pause-after: inherit }

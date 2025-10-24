@@ -1,0 +1,5 @@
+a { marquee-direction: forward }
+b { marquee-direction: reverse }
+y { marquee-direction: initial }
+z { marquee-direction: inherit }
+

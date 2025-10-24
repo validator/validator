@@ -1,0 +1,4 @@
+/* This is incorrect in CSS2, but used to be OK in CSS1
+see http://www.w3.org/Bugs/Public/show_bug.cgi?id=3628 */
+
+selector { color: r\0065d; }

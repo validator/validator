@@ -1,0 +1,18 @@
+tdl1   { text-decoration-line:  line-through  }
+tdl2   { text-decoration-line:  line-through overline  }
+tdl3   { text-decoration-line:  line-through overline underline  }
+tdl4   { text-decoration-line:  line-through underline  }
+tdl5   { text-decoration-line:  line-through underline overline  }
+tdl6   { text-decoration-line:  overline  }
+tdl7   { text-decoration-line:  overline line-through  }
+tdl8   { text-decoration-line:  overline line-through underline  }
+tdl9   { text-decoration-line:  overline underline  }
+tdl10  { text-decoration-line:  overline underline line-through  }
+tdl11  { text-decoration-line:  underline  }
+tdl12  { text-decoration-line:  underline line-through  }
+tdl13  { text-decoration-line:  underline line-through overline  }
+tdl14  { text-decoration-line:  underline overline  }
+tdl15  { text-decoration-line:  underline overline line-through  }
+tdl16  { text-decoration-line: none  }
+y { text-decoration-line: initial }
+z { text-decoration-line: inherit }

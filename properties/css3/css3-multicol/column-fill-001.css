@@ -1,0 +1,9 @@
+div {
+	column-fill: inherit;
+}
+div {
+	column-fill: auto;
+}
+div {
+	column-fill: balance;
+}

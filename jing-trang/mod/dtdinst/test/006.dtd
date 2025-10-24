@@ -1,3 +1,0 @@
-<!ENTITY % e.name "e">
-<!ELEMENT doc (%e.name;)>
-<!ELEMENT %e.name; EMPTY>

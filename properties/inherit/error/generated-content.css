@@ -1,0 +1,28 @@
+a {
+    content: inherit "fv" no-open-quote "fd" "dsf" close-quote;
+    content: "fv" inherit no-open-quote "fd" "dsf" close-quote;
+    content: "fv" no-open-quote inherit "fd" "dsf" close-quote;
+    content: "fv" no-open-quote "fd" inherit "dsf" close-quote;
+    content: "fv" no-open-quote "fd" "dsf" inherit close-quote;
+    content: "fv" no-open-quote "fd" "dsf" close-quote inherit;
+
+    counter-increment: inherit h1 2 h2 h3 h4 5;
+    counter-increment: h1 inherit 2 h2 h3 h4 5;
+    counter-increment: h1 2 inherit h2 h3 h4 5;
+    counter-increment: h1 2 h2 inherit h3 h4 5;
+    counter-increment: h1 2 h2 h3 inherit h4 5;
+    counter-increment: h1 2 h2 h3 h4 inherit 5;
+    counter-increment: h1 2 h2 h3 h4 5 inherit;
+
+    counter-reset: inherit h1 2 h2 h3 h4 5;
+    counter-reset: h1 inherit 2 h2 h3 h4 5;
+    counter-reset: h1 2 inherit h2 h3 h4 5;
+    counter-reset: h1 2 h2 inherit h3 h4 5;
+    counter-reset: h1 2 h2 h3 inherit h4 5;
+    counter-reset: h1 2 h2 h3 h4 inherit 5;
+    counter-reset: h1 2 h2 h3 h4 5 inherit;
+
+    quotes: inherit '"' '<' '>';
+    quotes: '"' inherit '<' '>';
+    quotes: '"' '<' '>' inherit;
+}

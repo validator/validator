@@ -1,4 +1,0 @@
-<!ENTITY % e SYSTEM "045.ent">
-<![ %e; [
-<!ELEMENT doc EMPTY>
-]]>

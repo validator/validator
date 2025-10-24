@@ -1,0 +1,8 @@
+a { position: static }
+b { position: relative }
+c { position: absolute }
+d { position: sticky }
+e { position: fixed }
+x { position: unset }
+y { position: initial }
+z { position: inherit }

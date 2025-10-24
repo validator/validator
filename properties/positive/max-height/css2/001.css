@@ -1,0 +1,5 @@
+a { max-height: 100px }
+b { max-height: 90% }
+c { max-height: 200% }
+d { max-height: none }
+z { max-height: inherit }

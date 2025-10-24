@@ -1,0 +1,5 @@
+a { background-image: url(test.jpg) }
+b { background-image: none }
+c { background-image: url(test.jpg), url(foo.gif), url(bidule.svg) }
+y { background-image: initial }
+z { background-image: inherit }

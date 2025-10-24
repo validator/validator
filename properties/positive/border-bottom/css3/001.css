@@ -1,0 +1,278 @@
+z { border-bottom: inherit }
+y { border-bottom: initial }
+bt1 { border-bottom: dotted 1px transparent }
+bt2 { border-bottom: dotted transparent }
+bt3 { border-bottom: dotted transparent 1px }
+bt4 { border-bottom: dotted transparent thin }
+bt5 { border-bottom: dotted thin transparent }
+bt6 { border-bottom: 1px dotted transparent }
+bt7 { border-bottom: 1px none transparent }
+bt8 { border-bottom: 1px transparent }
+bt9 { border-bottom: 1px transparent dotted }
+bt10 { border-bottom: 1px transparent none }
+bt11 { border-bottom: none 1px transparent }
+bt12 { border-bottom: none transparent }
+bt13 { border-bottom: none transparent 1px }
+bt14 { border-bottom: none transparent thin }
+bt15 { border-bottom: none thin transparent }
+bt16 { border-bottom: transparent }
+bt17 { border-bottom: transparent dotted }
+bt18 { border-bottom: transparent dotted 1px }
+bt19 { border-bottom: transparent dotted thin }
+bt20 { border-bottom: transparent 1px }
+bt21 { border-bottom: transparent 1px dotted }
+bt22 { border-bottom: transparent 1px none }
+bt23 { border-bottom: transparent none }
+bt24 { border-bottom: transparent none 1px }
+bt25 { border-bottom: transparent none thin }
+bt26 { border-bottom: transparent thin }
+bt27 { border-bottom: transparent thin dotted }
+bt28 { border-bottom: transparent thin none }
+bt29 { border-bottom: thin dotted transparent }
+bt30 { border-bottom: thin none transparent }
+bt31 { border-bottom: thin transparent }
+bt32 { border-bottom: thin transparent dotted }
+bt33 { border-bottom: thin transparent none }
+bt34 { border-bottom: dotted 1px rgb(0,0,100) }
+bt35 { border-bottom: dotted rgb(0,0,100) }
+bt36 { border-bottom: dotted rgb(0,0,100) 1px }
+bt37 { border-bottom: dotted rgb(0,0,100) thin }
+bt38 { border-bottom: dotted thin rgb(0,0,100) }
+bt39 { border-bottom: 1px dotted rgb(0,0,100) }
+bt40 { border-bottom: 1px none rgb(0,0,100) }
+bt41 { border-bottom: 1px rgb(0,0,100) }
+bt42 { border-bottom: 1px rgb(0,0,100) dotted }
+bt43 { border-bottom: 1px rgb(0,0,100) none }
+bt44 { border-bottom: none 1px rgb(0,0,100) }
+bt45 { border-bottom: none rgb(0,0,100) }
+bt46 { border-bottom: none rgb(0,0,100) 1px }
+bt47 { border-bottom: none rgb(0,0,100) thin }
+bt48 { border-bottom: none thin rgb(0,0,100) }
+bt49 { border-bottom: rgb(0,0,100) }
+bt50 { border-bottom: rgb(0,0,100) dotted }
+bt51 { border-bottom: rgb(0,0,100) dotted 1px }
+bt52 { border-bottom: rgb(0,0,100) dotted thin }
+bt53 { border-bottom: rgb(0,0,100) 1px }
+bt54 { border-bottom: rgb(0,0,100) 1px dotted }
+bt55 { border-bottom: rgb(0,0,100) 1px none }
+bt56 { border-bottom: rgb(0,0,100) none }
+bt57 { border-bottom: rgb(0,0,100) none 1px }
+bt58 { border-bottom: rgb(0,0,100) none thin }
+bt59 { border-bottom: rgb(0,0,100) thin }
+bt60 { border-bottom: rgb(0,0,100) thin dotted }
+bt61 { border-bottom: rgb(0,0,100) thin none }
+bt62 { border-bottom: thin dotted rgb(0,0,100) }
+bt63 { border-bottom: thin none rgb(0,0,100) }
+bt64 { border-bottom: thin rgb(0,0,100) }
+bt65 { border-bottom: thin rgb(0,0,100) dotted }
+bt66 { border-bottom: thin rgb(0,0,100) none }
+bt67 { border-bottom: dotted 1px hsla(360, 50%, 50%, 0.5) }
+bt68 { border-bottom: dotted hsla(360, 50%, 50%, 0.5) }
+bt69 { border-bottom: dotted hsla(360, 50%, 50%, 0.5) 1px }
+bt70 { border-bottom: dotted hsla(360, 50%, 50%, 0.5) thin }
+bt71 { border-bottom: dotted thin hsla(360, 50%, 50%, 0.5) }
+bt72 { border-bottom: 1px dotted hsla(360, 50%, 50%, 0.5) }
+bt73 { border-bottom: 1px none hsla(360, 50%, 50%, 0.5) }
+bt74 { border-bottom: 1px hsla(360, 50%, 50%, 0.5) }
+bt75 { border-bottom: 1px hsla(360, 50%, 50%, 0.5) dotted }
+bt76 { border-bottom: 1px hsla(360, 50%, 50%, 0.5) none }
+bt77 { border-bottom: none 1px hsla(360, 50%, 50%, 0.5) }
+bt78 { border-bottom: none hsla(360, 50%, 50%, 0.5) }
+bt79 { border-bottom: none hsla(360, 50%, 50%, 0.5) 1px }
+bt80 { border-bottom: none hsla(360, 50%, 50%, 0.5) thin }
+bt81 { border-bottom: none thin hsla(360, 50%, 50%, 0.5) }
+bt82 { border-bottom: hsla(360, 50%, 50%, 0.5) }
+bt83 { border-bottom: hsla(360, 50%, 50%, 0.5) dotted }
+bt84 { border-bottom: hsla(360, 50%, 50%, 0.5) dotted 1px }
+bt85 { border-bottom: hsla(360, 50%, 50%, 0.5) dotted thin }
+bt86 { border-bottom: hsla(360, 50%, 50%, 0.5) 1px }
+bt87 { border-bottom: hsla(360, 50%, 50%, 0.5) 1px dotted }
+bt88 { border-bottom: hsla(360, 50%, 50%, 0.5) 1px none }
+bt89 { border-bottom: hsla(360, 50%, 50%, 0.5) none }
+bt90 { border-bottom: hsla(360, 50%, 50%, 0.5) none 1px }
+bt91 { border-bottom: hsla(360, 50%, 50%, 0.5) none thin }
+bt92 { border-bottom: hsla(360, 50%, 50%, 0.5) thin }
+bt93 { border-bottom: hsla(360, 50%, 50%, 0.5) thin dotted }
+bt94 { border-bottom: hsla(360, 50%, 50%, 0.5) thin none }
+bt95 { border-bottom: thin dotted hsla(360, 50%, 50%, 0.5) }
+bt96 { border-bottom: thin none hsla(360, 50%, 50%, 0.5) }
+bt97 { border-bottom: thin hsla(360, 50%, 50%, 0.5) }
+bt98 { border-bottom: thin hsla(360, 50%, 50%, 0.5) dotted }
+bt99 { border-bottom: thin hsla(360, 50%, 50%, 0.5) none }
+bt100 { border-bottom: dotted 1px hsl(240, 0%, 10%) }
+bt101 { border-bottom: dotted hsl(240, 0%, 10%) }
+bt102 { border-bottom: dotted hsl(240, 0%, 10%) 1px }
+bt103 { border-bottom: dotted hsl(240, 0%, 10%) thin }
+bt104 { border-bottom: dotted thin hsl(240, 0%, 10%) }
+bt105 { border-bottom: 1px dotted hsl(240, 0%, 10%) }
+bt106 { border-bottom: 1px none hsl(240, 0%, 10%) }
+bt107 { border-bottom: 1px hsl(240, 0%, 10%) }
+bt108 { border-bottom: 1px hsl(240, 0%, 10%) dotted }
+bt109 { border-bottom: 1px hsl(240, 0%, 10%) none }
+bt110 { border-bottom: none 1px hsl(240, 0%, 10%) }
+bt111 { border-bottom: none hsl(240, 0%, 10%) }
+bt112 { border-bottom: none hsl(240, 0%, 10%) 1px }
+bt113 { border-bottom: none hsl(240, 0%, 10%) thin }
+bt114 { border-bottom: none thin hsl(240, 0%, 10%) }
+bt115 { border-bottom: hsl(240, 0%, 10%) }
+bt116 { border-bottom: hsl(240, 0%, 10%) dotted }
+bt117 { border-bottom: hsl(240, 0%, 10%) dotted 1px }
+bt118 { border-bottom: hsl(240, 0%, 10%) dotted thin }
+bt119 { border-bottom: hsl(240, 0%, 10%) 1px }
+bt120 { border-bottom: hsl(240, 0%, 10%) 1px dotted }
+bt121 { border-bottom: hsl(240, 0%, 10%) 1px none }
+bt122 { border-bottom: hsl(240, 0%, 10%) none }
+bt123 { border-bottom: hsl(240, 0%, 10%) none 1px }
+bt124 { border-bottom: hsl(240, 0%, 10%) none thin }
+bt125 { border-bottom: hsl(240, 0%, 10%) thin }
+bt126 { border-bottom: hsl(240, 0%, 10%) thin dotted }
+bt127 { border-bottom: hsl(240, 0%, 10%) thin none }
+bt128 { border-bottom: thin dotted hsl(240, 0%, 10%) }
+bt129 { border-bottom: thin none hsl(240, 0%, 10%) }
+bt130 { border-bottom: thin hsl(240, 0%, 10%) }
+bt131 { border-bottom: thin hsl(240, 0%, 10%) dotted }
+bt132 { border-bottom: thin hsl(240, 0%, 10%) none }
+bt133 { border-bottom: dotted 1px currentColor }
+bt134 { border-bottom: dotted currentColor }
+bt135 { border-bottom: dotted currentColor 1px }
+bt136 { border-bottom: dotted currentColor thin }
+bt137 { border-bottom: dotted thin currentColor }
+bt138 { border-bottom: 1px dotted currentColor }
+bt139 { border-bottom: 1px none currentColor }
+bt140 { border-bottom: 1px currentColor }
+bt141 { border-bottom: 1px currentColor dotted }
+bt142 { border-bottom: 1px currentColor none }
+bt143 { border-bottom: none 1px currentColor }
+bt144 { border-bottom: none currentColor }
+bt145 { border-bottom: none currentColor 1px }
+bt146 { border-bottom: none currentColor thin }
+bt147 { border-bottom: none thin currentColor }
+bt148 { border-bottom: currentColor }
+bt149 { border-bottom: currentColor dotted }
+bt150 { border-bottom: currentColor dotted 1px }
+bt151 { border-bottom: currentColor dotted thin }
+bt152 { border-bottom: currentColor 1px }
+bt153 { border-bottom: currentColor 1px dotted }
+bt154 { border-bottom: currentColor 1px none }
+bt155 { border-bottom: currentColor none }
+bt156 { border-bottom: currentColor none 1px }
+bt157 { border-bottom: currentColor none thin }
+bt158 { border-bottom: currentColor thin }
+bt159 { border-bottom: currentColor thin dotted }
+bt160 { border-bottom: currentColor thin none }
+bt161 { border-bottom: thin dotted currentColor }
+bt162 { border-bottom: thin none currentColor }
+bt163 { border-bottom: thin currentColor }
+bt164 { border-bottom: thin currentColor dotted }
+bt165 { border-bottom: thin currentColor none }
+bt166 { border-bottom: dotted 1px tomato }
+bt167 { border-bottom: dotted tomato }
+bt168 { border-bottom: dotted tomato 1px }
+bt169 { border-bottom: dotted tomato thin }
+bt170 { border-bottom: dotted thin tomato }
+bt171 { border-bottom: 1px dotted tomato }
+bt172 { border-bottom: 1px none tomato }
+bt173 { border-bottom: 1px tomato }
+bt174 { border-bottom: 1px tomato dotted }
+bt175 { border-bottom: 1px tomato none }
+bt176 { border-bottom: none 1px tomato }
+bt177 { border-bottom: none tomato }
+bt178 { border-bottom: none tomato 1px }
+bt179 { border-bottom: none tomato thin }
+bt180 { border-bottom: none thin tomato }
+bt181 { border-bottom: tomato }
+bt182 { border-bottom: tomato dotted }
+bt183 { border-bottom: tomato dotted 1px }
+bt184 { border-bottom: tomato dotted thin }
+bt185 { border-bottom: tomato 1px }
+bt186 { border-bottom: tomato 1px dotted }
+bt187 { border-bottom: tomato 1px none }
+bt188 { border-bottom: tomato none }
+bt189 { border-bottom: tomato none 1px }
+bt190 { border-bottom: tomato none thin }
+bt191 { border-bottom: tomato thin }
+bt192 { border-bottom: tomato thin dotted }
+bt193 { border-bottom: tomato thin none }
+bt194 { border-bottom: thin dotted tomato }
+bt195 { border-bottom: thin none tomato }
+bt196 { border-bottom: thin tomato }
+bt197 { border-bottom: thin tomato dotted }
+bt198 { border-bottom: thin tomato none }
+bt199 { border-bottom: #f00 }
+bt200 { border-bottom: #f00 dotted }
+bt201 { border-bottom: #f00 dotted 1px  }
+bt202 { border-bottom: #f00 dotted thin }
+bt203 { border-bottom: #f00 1px }
+bt204 { border-bottom: #f00 1px dotted  }
+bt205 { border-bottom: #f00 1px none }
+bt206 { border-bottom: #f00 none }
+bt207 { border-bottom: #f00 none 1px }
+bt208 { border-bottom: #f00 none thin  }
+bt209 { border-bottom: #f00 thin }
+bt210 { border-bottom: #f00 thin dotted }
+bt211 { border-bottom: #f00 thin none }
+bt212 { border-bottom: dotted }
+bt213 { border-bottom: dotted #f00 }
+bt214 { border-bottom: dotted #f00 1px  }
+bt215 { border-bottom: dotted #f00 thin }
+bt216 { border-bottom: dotted 1px }
+bt217 { border-bottom: dotted 1px  #f00 }
+bt218 { border-bottom: dotted 1px red }
+bt219 { border-bottom: dotted red }
+bt220 { border-bottom: dotted red 1px }
+bt221 { border-bottom: dotted red thin }
+bt222 { border-bottom: dotted thin }
+bt223 { border-bottom: dotted thin #f00 }
+bt224 { border-bottom: dotted thin red }
+bt225 { border-bottom: 1px }
+bt226 { border-bottom: 1px #f00 }
+bt227 { border-bottom: 1px #f00 dotted  }
+bt228 { border-bottom: 1px #f00 none }
+bt229 { border-bottom: 1px dotted }
+bt230 { border-bottom: 1px dotted  #f00 }
+bt231 { border-bottom: 1px dotted red }
+bt232 { border-bottom: 1px none }
+bt233 { border-bottom: 1px none #f00 }
+bt234 { border-bottom: 1px none red }
+bt235 { border-bottom: 1px red }
+bt236 { border-bottom: 1px red dotted }
+bt237 { border-bottom: 1px red none }
+bt238 { border-bottom: none }
+bt239 { border-bottom: none #f00 }
+bt240 { border-bottom: none #f00 1px }
+bt241 { border-bottom: none #f00 thin }
+bt242 { border-bottom: none 1px }
+bt243 { border-bottom: none 1px #f00 }
+bt244 { border-bottom: none 1px red }
+bt245 { border-bottom: none red }
+bt246 { border-bottom: none red 1px }
+bt247 { border-bottom: none red thin }
+bt248 { border-bottom: none thin }
+bt249 { border-bottom: none thin #f00 }
+bt250 { border-bottom: none thin red }
+bt251 { border-bottom: red }
+bt252 { border-bottom: red dotted }
+bt253 { border-bottom: red dotted 1px }
+bt254 { border-bottom: red dotted thin }
+bt255 { border-bottom: red 1px }
+bt256 { border-bottom: red 1px dotted }
+bt257 { border-bottom: red 1px none }
+bt258 { border-bottom: red none }
+bt259 { border-bottom: red none 1px }
+bt260 { border-bottom: red none thin }
+bt261 { border-bottom: red thin }
+bt262 { border-bottom: red thin dotted }
+bt263 { border-bottom: red thin none }
+bt264 { border-bottom: thin }
+bt265 { border-bottom: thin #f00 }
+bt266 { border-bottom: thin #f00 dotted  }
+bt267 { border-bottom: thin #f00 none }
+bt268 { border-bottom: thin dotted }
+bt269 { border-bottom: thin dotted  #f00 }
+bt270 { border-bottom: thin dotted red }
+bt271 { border-bottom: thin none }
+bt272 { border-bottom: thin none #f00 }
+bt273 { border-bottom: thin none red }
+bt274 { border-bottom: thin red }
+bt275 { border-bottom: thin red dotted }
+bt276 { border-bottom: thin red none }

@@ -1,0 +1,7 @@
+a { min-height: 1px }
+b { min-height: 0.01% }
+c { min-height: 0 }
+y { min-height: initial }
+z { min-height: inherit }
+/* and from http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#min-size-auto */
+d { min-height: auto }

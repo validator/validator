@@ -1,0 +1,171 @@
+body {
+    margin: 0px;
+    background-color: #000;
+    font-size: 0.9em;
+    font-family: "Garrison Sans", "Trebuchet MS", arial;
+    color: #fff;    
+}
+
+a:link {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff0000;
+    text-decoration: none;
+}
+
+a:active {
+    color: #fff;
+    text-decoration: none;
+}
+
+div.wrapper {
+    width: 650px;
+    height: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    position: absolute;
+    left: 50%;
+    margin-left: -325px;
+    border-left: 2px dotted #fff; 
+}
+
+div.header {
+    text-align: center;
+    padding-top: 5px;
+}
+
+div.contain {
+    padding-right: 5px;
+    margin-bottom: 10px;
+    border-top: 2px white dotted;
+    border-right: 2px white dotted;
+    border-bottom: 2px white dotted;
+}
+
+div.float {
+    clear: both;
+    padding-top: 5px;
+}
+
+div.footer {
+    clear: both;
+    width: 650px;
+    height: auto;;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 2px dotted #fff;
+    color: #fff;
+}
+
+div.legal {
+    text-align: center;
+}
+
+div.nav {
+    text-align: center;
+    margin: 0px;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 3px;
+}
+
+div.pricelist {
+    border: 2px outset #fff;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+
+ul.tabs {
+    display: inline;
+    margin-left: 0px;
+    padding-left: 0px;
+    text-align: center;
+}
+
+ul.pricing {
+    list-style: none;
+}
+
+ul.template {
+    list-style: none;
+}
+
+li.navbg {
+    display: inline;
+    margin-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 7px;
+    padding-right: 5px;
+    border-top: 2px outset #fff;
+    border-left: 2px outset #fff;
+    border-right: 2px solid #000;
+    list-style: none;
+    background-color: #808080;  
+}
+
+li.current {
+    display: inline;
+    margin-right: 5px;
+    padding-left: 7px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    border-top: 2px outset #fff;
+    border-left: 2px outset #fff;
+    border-right: 2px outset #000;
+    border-bottom: 1px solid #000;
+    list-style: none;
+    color: #ff0000;
+}
+
+img.index {
+    float: right;
+    width: 250px;
+    height: 300px;
+    border: 0px;
+}
+
+img.logo {
+    width: 646px;
+    height: 80px;
+    border: 0px;
+}
+
+img.templatethumb {
+    float: right;
+    width: 168px;
+    height: 160px;
+    border: 2px outset #808080;
+    margin-top: 5px;
+    margin-right: 100px;
+}
+
+h1, h2 {
+    font-size: 1.1em;
+    color: #ffd700;
+}
+
+p.error {
+    color: #fff;
+}
+
+p.main {
+    color: #fff;
+    text-indent: 2%;
+}
+
+.total {
+    color: #ffd700;
+}
+
+.rarr {
+    color:  #ffd700;
+}  

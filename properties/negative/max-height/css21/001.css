@@ -1,0 +1,3 @@
+/* negative values are illegal */
+an { max-height: -10px }
+bn { max-height: -10% }

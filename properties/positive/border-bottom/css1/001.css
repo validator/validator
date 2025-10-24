@@ -1,0 +1,78 @@
+bt1 { border-bottom: #f00  }
+bt2 { border-bottom: #f00 dotted  }
+bt3 { border-bottom: #f00 dotted 1px   }
+bt4 { border-bottom: #f00 dotted thin  }
+bt5 { border-bottom: #f00 1px  }
+bt6 { border-bottom: #f00 1px dotted   }
+bt7 { border-bottom: #f00 1px none  }
+bt8 { border-bottom: #f00 none  }
+bt9 { border-bottom: #f00 none 1px  }
+bt10 { border-bottom: #f00 none thin   }
+bt11 { border-bottom: #f00 thin  }
+bt12 { border-bottom: #f00 thin dotted  }
+bt13 { border-bottom: #f00 thin none  }
+bt14 { border-bottom: dotted  }
+bt15 { border-bottom: dotted #f00  }
+bt16 { border-bottom: dotted #f00 1px   }
+bt17 { border-bottom: dotted #f00 thin  }
+bt18 { border-bottom: dotted 1px  }
+bt19 { border-bottom: dotted 1px  #f00  }
+bt20 { border-bottom: dotted 1px red  }
+bt21 { border-bottom: dotted red  }
+bt22 { border-bottom: dotted red 1px  }
+bt23 { border-bottom: dotted red thin  }
+bt24 { border-bottom: dotted thin  }
+bt25 { border-bottom: dotted thin #f00  }
+bt26 { border-bottom: dotted thin red  }
+bt27 { border-bottom: 1px  }
+bt28 { border-bottom: 1px #f00  }
+bt29 { border-bottom: 1px #f00 dotted   }
+bt30 { border-bottom: 1px #f00 none  }
+bt31 { border-bottom: 1px dotted  }
+bt32 { border-bottom: 1px dotted  #f00  }
+bt33 { border-bottom: 1px dotted red  }
+bt34 { border-bottom: 1px none  }
+bt35 { border-bottom: 1px none #f00  }
+bt36 { border-bottom: 1px none red  }
+bt37 { border-bottom: 1px red  }
+bt38 { border-bottom: 1px red dotted  }
+bt39 { border-bottom: 1px red none  }
+bt40 { border-bottom: none  }
+bt41 { border-bottom: none #f00  }
+bt42 { border-bottom: none #f00 1px  }
+bt43 { border-bottom: none #f00 thin  }
+bt44 { border-bottom: none 1px  }
+bt45 { border-bottom: none 1px #f00  }
+bt46 { border-bottom: none 1px red  }
+bt47 { border-bottom: none red  }
+bt48 { border-bottom: none red 1px  }
+bt49 { border-bottom: none red thin  }
+bt50 { border-bottom: none thin  }
+bt51 { border-bottom: none thin #f00  }
+bt52 { border-bottom: none thin red  }
+bt53 { border-bottom: red  }
+bt54 { border-bottom: red dotted  }
+bt55 { border-bottom: red dotted 1px  }
+bt56 { border-bottom: red dotted thin  }
+bt57 { border-bottom: red 1px  }
+bt58 { border-bottom: red 1px dotted  }
+bt59 { border-bottom: red 1px none  }
+bt60 { border-bottom: red none  }
+bt61 { border-bottom: red none 1px  }
+bt62 { border-bottom: red none thin  }
+bt63 { border-bottom: red thin  }
+bt64 { border-bottom: red thin dotted  }
+bt65 { border-bottom: red thin none  }
+bt66 { border-bottom: thin  }
+bt67 { border-bottom: thin #f00  }
+bt68 { border-bottom: thin #f00 dotted   }
+bt69 { border-bottom: thin #f00 none  }
+bt70 { border-bottom: thin dotted  }
+bt71 { border-bottom: thin dotted  #f00  }
+bt72 { border-bottom: thin dotted red  }
+bt73 { border-bottom: thin none  }
+bt74 { border-bottom: thin none #f00  }
+bt75 { border-bottom: thin none red  }
+bt76 { border-bottom: thin red  }
+bt77 { border-bottom: thin red dotted  }
+bt78 { border-bottom: thin red none  }

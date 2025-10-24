@@ -1,0 +1,8 @@
+a { counter-reset: none }
+b { counter-reset: section }
+c { counter-reset: doublesection 2 }
+d { counter-reset: foo 0 }
+e { counter-reset: bar -1 }
+f { counter-reset: section para 1 foo 0 bar -10 }
+g { counter-reset: truc 0 bidule }
+z { counter-reset: inherit }

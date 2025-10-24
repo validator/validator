@@ -1,0 +1,10 @@
+a { pitch: +2.5kHz }
+b { pitch: -1000Hz }
+c { pitch: 250Hz }
+d { pitch: x-low  }
+e { pitch: low  }
+f { pitch: medium  }
+g { pitch: high  }
+h { pitch: x-high }
+i { pitch: 0 }
+z { pitch: inherit }

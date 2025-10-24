@@ -1,0 +1,33 @@
+ffl1  { flex-flow: nowrap  }
+ffl2  { flex-flow: nowrap column  }
+ffl3  { flex-flow: nowrap column-reverse  }
+ffl4  { flex-flow: nowrap row-reverse  }
+ffl5  { flex-flow: nowrap row  }
+ffl6  { flex-flow: wrap  }
+ffl7  { flex-flow: wrap column  }
+ffl8  { flex-flow: wrap column-reverse  }
+ffl9  { flex-flow: wrap row-reverse  }
+ffl10 { flex-flow: wrap row  }
+ffl11 { flex-flow: wrap-reverse  }
+ffl12 { flex-flow: wrap-reverse column  }
+ffl13 { flex-flow: wrap-reverse column-reverse  }
+ffl14 { flex-flow: wrap-reverse row-reverse  }
+ffl15 { flex-flow: wrap-reverse row  }
+ffl16 { flex-flow: column  }
+ffl17 { flex-flow: column nowrap  }
+ffl18 { flex-flow: column wrap  }
+ffl19 { flex-flow: column wrap-reverse  }
+ffl20 { flex-flow: column-reverse  }
+ffl21 { flex-flow: column-reverse nowrap  }
+ffl22 { flex-flow: column-reverse wrap  }
+ffl23 { flex-flow: column-reverse wrap-reverse  }
+ffl24 { flex-flow: row-reverse  }
+ffl25 { flex-flow: row-reverse nowrap  }
+ffl26 { flex-flow: row-reverse wrap  }
+ffl27 { flex-flow: row-reverse wrap-reverse  }
+ffl28 { flex-flow: row  }
+ffl29 { flex-flow: row nowrap  }
+ffl30 { flex-flow: row wrap  }
+ffl31 { flex-flow: row wrap-reverse  }
+y { flex-flow: initial }
+z { flex-flow: inherit }

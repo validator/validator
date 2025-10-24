@@ -1,0 +1,9 @@
+/* this style sheet must produce error when checking against
+
+   no special profile when CSS2.1 is the default because values are wrong
+
+   not because they don't exists */
+h1 {
+  text-shadow: foo bar;
+  font-size-adjust: foo bar;
+}

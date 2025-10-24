@@ -1,0 +1,6 @@
+a { tab-size: 0 }
+b { tab-size: 4 }
+c { tab-size: 10px }
+d { tab-size: 0.5em }
+y { tab-size: initial }
+z { tab-size: inherit }

@@ -1,0 +1,682 @@
+z { border-width: inherit }
+Y { border-width: initial }
+bw1 { border-width: 0.5em }
+bw2 { border-width: 0.5em 0.5em  }
+bw3 { border-width: 0.5em 0.5em 0.5em  }
+bw4 { border-width: 0.5em 0.5em 0.5em 0.5em  }
+bw5 { border-width: 0.5em 0.5em 0.5em medium  }
+bw6 { border-width: 0.5em 0.5em 0.5em thick  }
+bw7 { border-width: 0.5em 0.5em 0.5em thin  }
+bw8 { border-width: 0.5em 0.5em medium  }
+bw9 { border-width: 0.5em 0.5em medium 0.5em  }
+bw10 { border-width: 0.5em 0.5em medium medium  }
+bw11 { border-width: 0.5em 0.5em medium thick  }
+bw12 { border-width: 0.5em 0.5em medium thin  }
+bw13 { border-width: 0.5em 0.5em thick  }
+bw14 { border-width: 0.5em 0.5em thick 0.5em  }
+bw15 { border-width: 0.5em 0.5em thick medium  }
+bw16 { border-width: 0.5em 0.5em thick thick  }
+bw17 { border-width: 0.5em 0.5em thick thin  }
+bw18 { border-width: 0.5em 0.5em thin  }
+bw19 { border-width: 0.5em 0.5em thin 0.5em  }
+bw20 { border-width: 0.5em 0.5em thin medium  }
+bw21 { border-width: 0.5em 0.5em thin thick  }
+bw22 { border-width: 0.5em 0.5em thin thin  }
+bw23 { border-width: 0.5em medium  }
+bw24 { border-width: 0.5em medium 0.5em  }
+bw25 { border-width: 0.5em medium 0.5em 0.5em  }
+bw26 { border-width: 0.5em medium 0.5em medium  }
+bw27 { border-width: 0.5em medium 0.5em thick  }
+bw28 { border-width: 0.5em medium 0.5em thin  }
+bw29 { border-width: 0.5em medium medium  }
+bw30 { border-width: 0.5em medium medium 0.5em  }
+bw31 { border-width: 0.5em medium medium medium  }
+bw32 { border-width: 0.5em medium medium thick  }
+bw33 { border-width: 0.5em medium medium thin  }
+bw34 { border-width: 0.5em medium thick  }
+bw35 { border-width: 0.5em medium thick 0.5em  }
+bw36 { border-width: 0.5em medium thick medium  }
+bw37 { border-width: 0.5em medium thick thick  }
+bw38 { border-width: 0.5em medium thick thin  }
+bw39 { border-width: 0.5em medium thin  }
+bw40 { border-width: 0.5em medium thin 0.5em  }
+bw41 { border-width: 0.5em medium thin medium  }
+bw42 { border-width: 0.5em medium thin thick  }
+bw43 { border-width: 0.5em medium thin thin  }
+bw44 { border-width: 0.5em thick  }
+bw45 { border-width: 0.5em thick 0.5em  }
+bw46 { border-width: 0.5em thick 0.5em 0.5em  }
+bw47 { border-width: 0.5em thick 0.5em medium  }
+bw48 { border-width: 0.5em thick 0.5em thick  }
+bw49 { border-width: 0.5em thick 0.5em thin  }
+bw50 { border-width: 0.5em thick medium  }
+bw51 { border-width: 0.5em thick medium 0.5em  }
+bw52 { border-width: 0.5em thick medium medium  }
+bw53 { border-width: 0.5em thick medium thick  }
+bw54 { border-width: 0.5em thick medium thin  }
+bw55 { border-width: 0.5em thick thick  }
+bw56 { border-width: 0.5em thick thick 0.5em  }
+bw57 { border-width: 0.5em thick thick medium  }
+bw58 { border-width: 0.5em thick thick thick  }
+bw59 { border-width: 0.5em thick thick thin  }
+bw60 { border-width: 0.5em thick thin  }
+bw61 { border-width: 0.5em thick thin 0.5em  }
+bw62 { border-width: 0.5em thick thin medium  }
+bw63 { border-width: 0.5em thick thin thick  }
+bw64 { border-width: 0.5em thick thin thin  }
+bw65 { border-width: 0.5em thin  }
+bw66 { border-width: 0.5em thin 0.5em  }
+bw67 { border-width: 0.5em thin 0.5em 0.5em  }
+bw68 { border-width: 0.5em thin 0.5em medium  }
+bw69 { border-width: 0.5em thin 0.5em thick  }
+bw70 { border-width: 0.5em thin 0.5em thin  }
+bw71 { border-width: 0.5em thin medium  }
+bw72 { border-width: 0.5em thin medium 0.5em  }
+bw73 { border-width: 0.5em thin medium medium  }
+bw74 { border-width: 0.5em thin medium thick  }
+bw75 { border-width: 0.5em thin medium thin  }
+bw76 { border-width: 0.5em thin thick  }
+bw77 { border-width: 0.5em thin thick 0.5em  }
+bw78 { border-width: 0.5em thin thick medium  }
+bw79 { border-width: 0.5em thin thick thick  }
+bw80 { border-width: 0.5em thin thick thin  }
+bw81 { border-width: 0.5em thin thin  }
+bw82 { border-width: 0.5em thin thin 0.5em  }
+bw83 { border-width: 0.5em thin thin medium  }
+bw84 { border-width: 0.5em thin thin thick  }
+bw85 { border-width: 0.5em thin thin thin  }
+bw86 { border-width: medium  }
+bw87 { border-width: medium 0.5em  }
+bw88 { border-width: medium 0.5em 0.5em  }
+bw89 { border-width: medium 0.5em 0.5em 0.5em  }
+bw90 { border-width: medium 0.5em 0.5em medium  }
+bw91 { border-width: medium 0.5em 0.5em thick  }
+bw92 { border-width: medium 0.5em 0.5em thin  }
+bw93 { border-width: medium 0.5em medium  }
+bw94 { border-width: medium 0.5em medium 0.5em  }
+bw95 { border-width: medium 0.5em medium medium  }
+bw96 { border-width: medium 0.5em medium thick  }
+bw97 { border-width: medium 0.5em medium thin  }
+bw98 { border-width: medium 0.5em thick  }
+bw99 { border-width: medium 0.5em thick 0.5em  }
+bw100 { border-width: medium 0.5em thick medium  }
+bw101 { border-width: medium 0.5em thick thick  }
+bw102 { border-width: medium 0.5em thick thin  }
+bw103 { border-width: medium 0.5em thin  }
+bw104 { border-width: medium 0.5em thin 0.5em  }
+bw105 { border-width: medium 0.5em thin medium  }
+bw106 { border-width: medium 0.5em thin thick  }
+bw107 { border-width: medium 0.5em thin thin  }
+bw108 { border-width: medium medium  }
+bw109 { border-width: medium medium 0.5em  }
+bw110 { border-width: medium medium 0.5em 0.5em  }
+bw111 { border-width: medium medium 0.5em medium  }
+bw112 { border-width: medium medium 0.5em thick  }
+bw113 { border-width: medium medium 0.5em thin  }
+bw114 { border-width: medium medium medium  }
+bw115 { border-width: medium medium medium 0.5em  }
+bw116 { border-width: medium medium medium medium  }
+bw117 { border-width: medium medium medium thick  }
+bw118 { border-width: medium medium medium thin  }
+bw119 { border-width: medium medium thick  }
+bw120 { border-width: medium medium thick 0.5em  }
+bw121 { border-width: medium medium thick medium  }
+bw122 { border-width: medium medium thick thick  }
+bw123 { border-width: medium medium thick thin  }
+bw124 { border-width: medium medium thin  }
+bw125 { border-width: medium medium thin 0.5em  }
+bw126 { border-width: medium medium thin medium  }
+bw127 { border-width: medium medium thin thick  }
+bw128 { border-width: medium medium thin thin  }
+bw129 { border-width: medium thick  }
+bw130 { border-width: medium thick 0.5em  }
+bw131 { border-width: medium thick 0.5em 0.5em  }
+bw132 { border-width: medium thick 0.5em medium  }
+bw133 { border-width: medium thick 0.5em thick  }
+bw134 { border-width: medium thick 0.5em thin  }
+bw135 { border-width: medium thick medium  }
+bw136 { border-width: medium thick medium 0.5em  }
+bw137 { border-width: medium thick medium medium  }
+bw138 { border-width: medium thick medium thick  }
+bw139 { border-width: medium thick medium thin  }
+bw140 { border-width: medium thick thick  }
+bw141 { border-width: medium thick thick 0.5em  }
+bw142 { border-width: medium thick thick medium  }
+bw143 { border-width: medium thick thick thick  }
+bw144 { border-width: medium thick thick thin  }
+bw145 { border-width: medium thick thin  }
+bw146 { border-width: medium thick thin 0.5em  }
+bw147 { border-width: medium thick thin medium  }
+bw148 { border-width: medium thick thin thick  }
+bw149 { border-width: medium thick thin thin  }
+bw150 { border-width: medium thin  }
+bw151 { border-width: medium thin 0.5em  }
+bw152 { border-width: medium thin 0.5em 0.5em  }
+bw153 { border-width: medium thin 0.5em medium  }
+bw154 { border-width: medium thin 0.5em thick  }
+bw155 { border-width: medium thin 0.5em thin  }
+bw156 { border-width: medium thin medium  }
+bw157 { border-width: medium thin medium 0.5em  }
+bw158 { border-width: medium thin medium medium  }
+bw159 { border-width: medium thin medium thick  }
+bw160 { border-width: medium thin medium thin  }
+bw161 { border-width: medium thin thick  }
+bw162 { border-width: medium thin thick 0.5em  }
+bw163 { border-width: medium thin thick medium  }
+bw164 { border-width: medium thin thick thick  }
+bw165 { border-width: medium thin thick thin  }
+bw166 { border-width: medium thin thin  }
+bw167 { border-width: medium thin thin 0.5em  }
+bw168 { border-width: medium thin thin medium  }
+bw169 { border-width: medium thin thin thick  }
+bw170 { border-width: medium thin thin thin  }
+bw171 { border-width: thick  }
+bw172 { border-width: thick 0.5em  }
+bw173 { border-width: thick 0.5em 0.5em  }
+bw174 { border-width: thick 0.5em 0.5em 0.5em  }
+bw175 { border-width: thick 0.5em 0.5em medium  }
+bw176 { border-width: thick 0.5em 0.5em thick  }
+bw177 { border-width: thick 0.5em 0.5em thin  }
+bw178 { border-width: thick 0.5em medium  }
+bw179 { border-width: thick 0.5em medium 0.5em  }
+bw180 { border-width: thick 0.5em medium medium  }
+bw181 { border-width: thick 0.5em medium thick  }
+bw182 { border-width: thick 0.5em medium thin  }
+bw183 { border-width: thick 0.5em thick  }
+bw184 { border-width: thick 0.5em thick 0.5em  }
+bw185 { border-width: thick 0.5em thick medium  }
+bw186 { border-width: thick 0.5em thick thick  }
+bw187 { border-width: thick 0.5em thick thin  }
+bw188 { border-width: thick 0.5em thin  }
+bw189 { border-width: thick 0.5em thin 0.5em  }
+bw190 { border-width: thick 0.5em thin medium  }
+bw191 { border-width: thick 0.5em thin thick  }
+bw192 { border-width: thick 0.5em thin thin  }
+bw193 { border-width: thick medium  }
+bw194 { border-width: thick medium 0.5em  }
+bw195 { border-width: thick medium 0.5em 0.5em  }
+bw196 { border-width: thick medium 0.5em medium  }
+bw197 { border-width: thick medium 0.5em thick  }
+bw198 { border-width: thick medium 0.5em thin  }
+bw199 { border-width: thick medium medium  }
+bw200 { border-width: thick medium medium 0.5em  }
+bw201 { border-width: thick medium medium medium  }
+bw202 { border-width: thick medium medium thick  }
+bw203 { border-width: thick medium medium thin  }
+bw204 { border-width: thick medium thick  }
+bw205 { border-width: thick medium thick 0.5em  }
+bw206 { border-width: thick medium thick medium  }
+bw207 { border-width: thick medium thick thick  }
+bw208 { border-width: thick medium thick thin  }
+bw209 { border-width: thick medium thin  }
+bw210 { border-width: thick medium thin 0.5em  }
+bw211 { border-width: thick medium thin medium  }
+bw212 { border-width: thick medium thin thick  }
+bw213 { border-width: thick medium thin thin  }
+bw214 { border-width: thick thick  }
+bw215 { border-width: thick thick 0.5em  }
+bw216 { border-width: thick thick 0.5em 0.5em  }
+bw217 { border-width: thick thick 0.5em medium  }
+bw218 { border-width: thick thick 0.5em thick  }
+bw219 { border-width: thick thick 0.5em thin  }
+bw220 { border-width: thick thick medium  }
+bw221 { border-width: thick thick medium 0.5em  }
+bw222 { border-width: thick thick medium medium  }
+bw223 { border-width: thick thick medium thick  }
+bw224 { border-width: thick thick medium thin  }
+bw225 { border-width: thick thick thick  }
+bw226 { border-width: thick thick thick 0.5em  }
+bw227 { border-width: thick thick thick medium  }
+bw228 { border-width: thick thick thick thick  }
+bw229 { border-width: thick thick thick thin  }
+bw230 { border-width: thick thick thin  }
+bw231 { border-width: thick thick thin 0.5em  }
+bw232 { border-width: thick thick thin medium  }
+bw233 { border-width: thick thick thin thick  }
+bw234 { border-width: thick thick thin thin  }
+bw235 { border-width: thick thin  }
+bw236 { border-width: thick thin 0.5em  }
+bw237 { border-width: thick thin 0.5em 0.5em  }
+bw238 { border-width: thick thin 0.5em medium  }
+bw239 { border-width: thick thin 0.5em thick  }
+bw240 { border-width: thick thin 0.5em thin  }
+bw241 { border-width: thick thin medium  }
+bw242 { border-width: thick thin medium 0.5em  }
+bw243 { border-width: thick thin medium medium  }
+bw244 { border-width: thick thin medium thick  }
+bw245 { border-width: thick thin medium thin  }
+bw246 { border-width: thick thin thick  }
+bw247 { border-width: thick thin thick 0.5em  }
+bw248 { border-width: thick thin thick medium  }
+bw249 { border-width: thick thin thick thick  }
+bw250 { border-width: thick thin thick thin  }
+bw251 { border-width: thick thin thin  }
+bw252 { border-width: thick thin thin 0.5em  }
+bw253 { border-width: thick thin thin medium  }
+bw254 { border-width: thick thin thin thick  }
+bw255 { border-width: thick thin thin thin  }
+bw256 { border-width: thin  }
+bw257 { border-width: thin 0.5em  }
+bw258 { border-width: thin 0.5em 0.5em  }
+bw259 { border-width: thin 0.5em 0.5em 0.5em  }
+bw260 { border-width: thin 0.5em 0.5em medium  }
+bw261 { border-width: thin 0.5em 0.5em thick  }
+bw262 { border-width: thin 0.5em 0.5em thin  }
+bw263 { border-width: thin 0.5em medium  }
+bw264 { border-width: thin 0.5em medium 0.5em  }
+bw265 { border-width: thin 0.5em medium medium  }
+bw266 { border-width: thin 0.5em medium thick  }
+bw267 { border-width: thin 0.5em medium thin  }
+bw268 { border-width: thin 0.5em thick  }
+bw269 { border-width: thin 0.5em thick 0.5em  }
+bw270 { border-width: thin 0.5em thick medium  }
+bw271 { border-width: thin 0.5em thick thick  }
+bw272 { border-width: thin 0.5em thick thin  }
+bw273 { border-width: thin 0.5em thin  }
+bw274 { border-width: thin 0.5em thin 0.5em  }
+bw275 { border-width: thin 0.5em thin medium  }
+bw276 { border-width: thin 0.5em thin thick  }
+bw277 { border-width: thin 0.5em thin thin  }
+bw278 { border-width: thin medium  }
+bw279 { border-width: thin medium 0.5em  }
+bw280 { border-width: thin medium 0.5em 0.5em  }
+bw281 { border-width: thin medium 0.5em medium  }
+bw282 { border-width: thin medium 0.5em thick  }
+bw283 { border-width: thin medium 0.5em thin  }
+bw284 { border-width: thin medium medium  }
+bw285 { border-width: thin medium medium 0.5em  }
+bw286 { border-width: thin medium medium medium  }
+bw287 { border-width: thin medium medium thick  }
+bw288 { border-width: thin medium medium thin  }
+bw289 { border-width: thin medium thick  }
+bw290 { border-width: thin medium thick 0.5em  }
+bw291 { border-width: thin medium thick medium  }
+bw292 { border-width: thin medium thick thick  }
+bw293 { border-width: thin medium thick thin  }
+bw294 { border-width: thin medium thin  }
+bw295 { border-width: thin medium thin 0.5em  }
+bw296 { border-width: thin medium thin medium  }
+bw297 { border-width: thin medium thin thick  }
+bw298 { border-width: thin medium thin thin  }
+bw299 { border-width: thin thick  }
+bw300 { border-width: thin thick 0.5em  }
+bw301 { border-width: thin thick 0.5em 0.5em  }
+bw302 { border-width: thin thick 0.5em medium  }
+bw303 { border-width: thin thick 0.5em thick  }
+bw304 { border-width: thin thick 0.5em thin  }
+bw305 { border-width: thin thick medium  }
+bw306 { border-width: thin thick medium 0.5em  }
+bw307 { border-width: thin thick medium medium  }
+bw308 { border-width: thin thick medium thick  }
+bw309 { border-width: thin thick medium thin  }
+bw310 { border-width: thin thick thick  }
+bw311 { border-width: thin thick thick 0.5em  }
+bw312 { border-width: thin thick thick medium  }
+bw313 { border-width: thin thick thick thick  }
+bw314 { border-width: thin thick thick thin  }
+bw315 { border-width: thin thick thin  }
+bw316 { border-width: thin thick thin 0.5em  }
+bw317 { border-width: thin thick thin medium  }
+bw318 { border-width: thin thick thin thick  }
+bw319 { border-width: thin thick thin thin  }
+bw320 { border-width: thin thin  }
+bw321 { border-width: thin thin 0.5em  }
+bw322 { border-width: thin thin 0.5em 0.5em  }
+bw323 { border-width: thin thin 0.5em medium  }
+bw324 { border-width: thin thin 0.5em thick  }
+bw325 { border-width: thin thin 0.5em thin  }
+bw326 { border-width: thin thin medium  }
+bw327 { border-width: thin thin medium 0.5em  }
+bw328 { border-width: thin thin medium medium  }
+bw329 { border-width: thin thin medium thick  }
+bw330 { border-width: thin thin medium thin  }
+bw331 { border-width: thin thin thick  }
+bw332 { border-width: thin thin thick 0.5em  }
+bw333 { border-width: thin thin thick medium  }
+bw334 { border-width: thin thin thick thick  }
+bw335 { border-width: thin thin thick thin  }
+bw336 { border-width: thin thin thin  }
+bw337 { border-width: thin thin thin 0.5em  }
+bw338 { border-width: thin thin thin medium  }
+bw339 { border-width: thin thin thin thick  }
+bw340 { border-width: thin thin thin thin  }
+bw01 { border-width: 0 }
+bw02 { border-width: 0 0  }
+bw03 { border-width: 0 0 0  }
+bw04 { border-width: 0 0 0 0  }
+bw05 { border-width: 0 0 0 medium  }
+bw06 { border-width: 0 0 0 thick  }
+bw07 { border-width: 0 0 0 thin  }
+bw08 { border-width: 0 0 medium  }
+bw09 { border-width: 0 0 medium 0  }
+bw010 { border-width: 0 0 medium medium  }
+bw011 { border-width: 0 0 medium thick  }
+bw012 { border-width: 0 0 medium thin  }
+bw013 { border-width: 0 0 thick  }
+bw014 { border-width: 0 0 thick 0  }
+bw015 { border-width: 0 0 thick medium  }
+bw016 { border-width: 0 0 thick thick  }
+bw017 { border-width: 0 0 thick thin  }
+bw018 { border-width: 0 0 thin  }
+bw019 { border-width: 0 0 thin 0  }
+bw020 { border-width: 0 0 thin medium  }
+bw021 { border-width: 0 0 thin thick  }
+bw022 { border-width: 0 0 thin thin  }
+bw023 { border-width: 0 medium  }
+bw024 { border-width: 0 medium 0  }
+bw025 { border-width: 0 medium 0 0  }
+bw026 { border-width: 0 medium 0 medium  }
+bw027 { border-width: 0 medium 0 thick  }
+bw028 { border-width: 0 medium 0 thin  }
+bw029 { border-width: 0 medium medium  }
+bw030 { border-width: 0 medium medium 0  }
+bw031 { border-width: 0 medium medium medium  }
+bw032 { border-width: 0 medium medium thick  }
+bw033 { border-width: 0 medium medium thin  }
+bw034 { border-width: 0 medium thick  }
+bw035 { border-width: 0 medium thick 0  }
+bw036 { border-width: 0 medium thick medium  }
+bw037 { border-width: 0 medium thick thick  }
+bw038 { border-width: 0 medium thick thin  }
+bw039 { border-width: 0 medium thin  }
+bw040 { border-width: 0 medium thin 0  }
+bw041 { border-width: 0 medium thin medium  }
+bw042 { border-width: 0 medium thin thick  }
+bw043 { border-width: 0 medium thin thin  }
+bw044 { border-width: 0 thick  }
+bw045 { border-width: 0 thick 0  }
+bw046 { border-width: 0 thick 0 0  }
+bw047 { border-width: 0 thick 0 medium  }
+bw048 { border-width: 0 thick 0 thick  }
+bw049 { border-width: 0 thick 0 thin  }
+bw050 { border-width: 0 thick medium  }
+bw051 { border-width: 0 thick medium 0  }
+bw052 { border-width: 0 thick medium medium  }
+bw053 { border-width: 0 thick medium thick  }
+bw054 { border-width: 0 thick medium thin  }
+bw055 { border-width: 0 thick thick  }
+bw056 { border-width: 0 thick thick 0  }
+bw057 { border-width: 0 thick thick medium  }
+bw058 { border-width: 0 thick thick thick  }
+bw059 { border-width: 0 thick thick thin  }
+bw060 { border-width: 0 thick thin  }
+bw061 { border-width: 0 thick thin 0  }
+bw062 { border-width: 0 thick thin medium  }
+bw063 { border-width: 0 thick thin thick  }
+bw064 { border-width: 0 thick thin thin  }
+bw065 { border-width: 0 thin  }
+bw066 { border-width: 0 thin 0  }
+bw067 { border-width: 0 thin 0 0  }
+bw068 { border-width: 0 thin 0 medium  }
+bw069 { border-width: 0 thin 0 thick  }
+bw070 { border-width: 0 thin 0 thin  }
+bw071 { border-width: 0 thin medium  }
+bw072 { border-width: 0 thin medium 0  }
+bw073 { border-width: 0 thin medium medium  }
+bw074 { border-width: 0 thin medium thick  }
+bw075 { border-width: 0 thin medium thin  }
+bw076 { border-width: 0 thin thick  }
+bw077 { border-width: 0 thin thick 0  }
+bw078 { border-width: 0 thin thick medium  }
+bw079 { border-width: 0 thin thick thick  }
+bw080 { border-width: 0 thin thick thin  }
+bw081 { border-width: 0 thin thin  }
+bw082 { border-width: 0 thin thin 0  }
+bw083 { border-width: 0 thin thin medium  }
+bw084 { border-width: 0 thin thin thick  }
+bw085 { border-width: 0 thin thin thin  }
+bw086 { border-width: medium  }
+bw087 { border-width: medium 0  }
+bw088 { border-width: medium 0 0  }
+bw089 { border-width: medium 0 0 0  }
+bw090 { border-width: medium 0 0 medium  }
+bw091 { border-width: medium 0 0 thick  }
+bw092 { border-width: medium 0 0 thin  }
+bw093 { border-width: medium 0 medium  }
+bw094 { border-width: medium 0 medium 0  }
+bw095 { border-width: medium 0 medium medium  }
+bw096 { border-width: medium 0 medium thick  }
+bw097 { border-width: medium 0 medium thin  }
+bw098 { border-width: medium 0 thick  }
+bw099 { border-width: medium 0 thick 0  }
+bw0100 { border-width: medium 0 thick medium  }
+bw0101 { border-width: medium 0 thick thick  }
+bw0102 { border-width: medium 0 thick thin  }
+bw0103 { border-width: medium 0 thin  }
+bw0104 { border-width: medium 0 thin 0  }
+bw0105 { border-width: medium 0 thin medium  }
+bw0106 { border-width: medium 0 thin thick  }
+bw0107 { border-width: medium 0 thin thin  }
+bw0108 { border-width: medium medium  }
+bw0109 { border-width: medium medium 0  }
+bw0110 { border-width: medium medium 0 0  }
+bw0111 { border-width: medium medium 0 medium  }
+bw0112 { border-width: medium medium 0 thick  }
+bw0113 { border-width: medium medium 0 thin  }
+bw0114 { border-width: medium medium medium  }
+bw0115 { border-width: medium medium medium 0  }
+bw0116 { border-width: medium medium medium medium  }
+bw0117 { border-width: medium medium medium thick  }
+bw0118 { border-width: medium medium medium thin  }
+bw0119 { border-width: medium medium thick  }
+bw0120 { border-width: medium medium thick 0  }
+bw0121 { border-width: medium medium thick medium  }
+bw0122 { border-width: medium medium thick thick  }
+bw0123 { border-width: medium medium thick thin  }
+bw0124 { border-width: medium medium thin  }
+bw0125 { border-width: medium medium thin 0  }
+bw0126 { border-width: medium medium thin medium  }
+bw0127 { border-width: medium medium thin thick  }
+bw0128 { border-width: medium medium thin thin  }
+bw0129 { border-width: medium thick  }
+bw0130 { border-width: medium thick 0  }
+bw0131 { border-width: medium thick 0 0  }
+bw0132 { border-width: medium thick 0 medium  }
+bw0133 { border-width: medium thick 0 thick  }
+bw0134 { border-width: medium thick 0 thin  }
+bw0135 { border-width: medium thick medium  }
+bw0136 { border-width: medium thick medium 0  }
+bw0137 { border-width: medium thick medium medium  }
+bw0138 { border-width: medium thick medium thick  }
+bw0139 { border-width: medium thick medium thin  }
+bw0140 { border-width: medium thick thick  }
+bw0141 { border-width: medium thick thick 0  }
+bw0142 { border-width: medium thick thick medium  }
+bw0143 { border-width: medium thick thick thick  }
+bw0144 { border-width: medium thick thick thin  }
+bw0145 { border-width: medium thick thin  }
+bw0146 { border-width: medium thick thin 0  }
+bw0147 { border-width: medium thick thin medium  }
+bw0148 { border-width: medium thick thin thick  }
+bw0149 { border-width: medium thick thin thin  }
+bw0150 { border-width: medium thin  }
+bw0151 { border-width: medium thin 0  }
+bw0152 { border-width: medium thin 0 0  }
+bw0153 { border-width: medium thin 0 medium  }
+bw0154 { border-width: medium thin 0 thick  }
+bw0155 { border-width: medium thin 0 thin  }
+bw0156 { border-width: medium thin medium  }
+bw0157 { border-width: medium thin medium 0  }
+bw0158 { border-width: medium thin medium medium  }
+bw0159 { border-width: medium thin medium thick  }
+bw0160 { border-width: medium thin medium thin  }
+bw0161 { border-width: medium thin thick  }
+bw0162 { border-width: medium thin thick 0  }
+bw0163 { border-width: medium thin thick medium  }
+bw0164 { border-width: medium thin thick thick  }
+bw0165 { border-width: medium thin thick thin  }
+bw0166 { border-width: medium thin thin  }
+bw0167 { border-width: medium thin thin 0  }
+bw0168 { border-width: medium thin thin medium  }
+bw0169 { border-width: medium thin thin thick  }
+bw0170 { border-width: medium thin thin thin  }
+bw0171 { border-width: thick  }
+bw0172 { border-width: thick 0  }
+bw0173 { border-width: thick 0 0  }
+bw0174 { border-width: thick 0 0 0  }
+bw0175 { border-width: thick 0 0 medium  }
+bw0176 { border-width: thick 0 0 thick  }
+bw0177 { border-width: thick 0 0 thin  }
+bw0178 { border-width: thick 0 medium  }
+bw0179 { border-width: thick 0 medium 0  }
+bw0180 { border-width: thick 0 medium medium  }
+bw0181 { border-width: thick 0 medium thick  }
+bw0182 { border-width: thick 0 medium thin  }
+bw0183 { border-width: thick 0 thick  }
+bw0184 { border-width: thick 0 thick 0  }
+bw0185 { border-width: thick 0 thick medium  }
+bw0186 { border-width: thick 0 thick thick  }
+bw0187 { border-width: thick 0 thick thin  }
+bw0188 { border-width: thick 0 thin  }
+bw0189 { border-width: thick 0 thin 0  }
+bw0190 { border-width: thick 0 thin medium  }
+bw0191 { border-width: thick 0 thin thick  }
+bw0192 { border-width: thick 0 thin thin  }
+bw0193 { border-width: thick medium  }
+bw0194 { border-width: thick medium 0  }
+bw0195 { border-width: thick medium 0 0  }
+bw0196 { border-width: thick medium 0 medium  }
+bw0197 { border-width: thick medium 0 thick  }
+bw0198 { border-width: thick medium 0 thin  }
+bw0199 { border-width: thick medium medium  }
+bw0200 { border-width: thick medium medium 0  }
+bw0201 { border-width: thick medium medium medium  }
+bw0202 { border-width: thick medium medium thick  }
+bw0203 { border-width: thick medium medium thin  }
+bw0204 { border-width: thick medium thick  }
+bw0205 { border-width: thick medium thick 0  }
+bw0206 { border-width: thick medium thick medium  }
+bw0207 { border-width: thick medium thick thick  }
+bw0208 { border-width: thick medium thick thin  }
+bw0209 { border-width: thick medium thin  }
+bw0210 { border-width: thick medium thin 0  }
+bw0211 { border-width: thick medium thin medium  }
+bw0212 { border-width: thick medium thin thick  }
+bw0213 { border-width: thick medium thin thin  }
+bw0214 { border-width: thick thick  }
+bw0215 { border-width: thick thick 0  }
+bw0216 { border-width: thick thick 0 0  }
+bw0217 { border-width: thick thick 0 medium  }
+bw0218 { border-width: thick thick 0 thick  }
+bw0219 { border-width: thick thick 0 thin  }
+bw0220 { border-width: thick thick medium  }
+bw0221 { border-width: thick thick medium 0  }
+bw0222 { border-width: thick thick medium medium  }
+bw0223 { border-width: thick thick medium thick  }
+bw0224 { border-width: thick thick medium thin  }
+bw0225 { border-width: thick thick thick  }
+bw0226 { border-width: thick thick thick 0  }
+bw0227 { border-width: thick thick thick medium  }
+bw0228 { border-width: thick thick thick thick  }
+bw0229 { border-width: thick thick thick thin  }
+bw0230 { border-width: thick thick thin  }
+bw0231 { border-width: thick thick thin 0  }
+bw0232 { border-width: thick thick thin medium  }
+bw0233 { border-width: thick thick thin thick  }
+bw0234 { border-width: thick thick thin thin  }
+bw0235 { border-width: thick thin  }
+bw0236 { border-width: thick thin 0  }
+bw0237 { border-width: thick thin 0 0  }
+bw0238 { border-width: thick thin 0 medium  }
+bw0239 { border-width: thick thin 0 thick  }
+bw0240 { border-width: thick thin 0 thin  }
+bw0241 { border-width: thick thin medium  }
+bw0242 { border-width: thick thin medium 0  }
+bw0243 { border-width: thick thin medium medium  }
+bw0244 { border-width: thick thin medium thick  }
+bw0245 { border-width: thick thin medium thin  }
+bw0246 { border-width: thick thin thick  }
+bw0247 { border-width: thick thin thick 0  }
+bw0248 { border-width: thick thin thick medium  }
+bw0249 { border-width: thick thin thick thick  }
+bw0250 { border-width: thick thin thick thin  }
+bw0251 { border-width: thick thin thin  }
+bw0252 { border-width: thick thin thin 0  }
+bw0253 { border-width: thick thin thin medium  }
+bw0254 { border-width: thick thin thin thick  }
+bw0255 { border-width: thick thin thin thin  }
+bw0256 { border-width: thin  }
+bw0257 { border-width: thin 0  }
+bw0258 { border-width: thin 0 0  }
+bw0259 { border-width: thin 0 0 0  }
+bw0260 { border-width: thin 0 0 medium  }
+bw0261 { border-width: thin 0 0 thick  }
+bw0262 { border-width: thin 0 0 thin  }
+bw0263 { border-width: thin 0 medium  }
+bw0264 { border-width: thin 0 medium 0  }
+bw0265 { border-width: thin 0 medium medium  }
+bw0266 { border-width: thin 0 medium thick  }
+bw0267 { border-width: thin 0 medium thin  }
+bw0268 { border-width: thin 0 thick  }
+bw0269 { border-width: thin 0 thick 0  }
+bw0270 { border-width: thin 0 thick medium  }
+bw0271 { border-width: thin 0 thick thick  }
+bw0272 { border-width: thin 0 thick thin  }
+bw0273 { border-width: thin 0 thin  }
+bw0274 { border-width: thin 0 thin 0  }
+bw0275 { border-width: thin 0 thin medium  }
+bw0276 { border-width: thin 0 thin thick  }
+bw0277 { border-width: thin 0 thin thin  }
+bw0278 { border-width: thin medium  }
+bw0279 { border-width: thin medium 0  }
+bw0280 { border-width: thin medium 0 0  }
+bw0281 { border-width: thin medium 0 medium  }
+bw0282 { border-width: thin medium 0 thick  }
+bw0283 { border-width: thin medium 0 thin  }
+bw0284 { border-width: thin medium medium  }
+bw0285 { border-width: thin medium medium 0  }
+bw0286 { border-width: thin medium medium medium  }
+bw0287 { border-width: thin medium medium thick  }
+bw0288 { border-width: thin medium medium thin  }
+bw0289 { border-width: thin medium thick  }
+bw0290 { border-width: thin medium thick 0  }
+bw0291 { border-width: thin medium thick medium  }
+bw0292 { border-width: thin medium thick thick  }
+bw0293 { border-width: thin medium thick thin  }
+bw0294 { border-width: thin medium thin  }
+bw0295 { border-width: thin medium thin 0  }
+bw0296 { border-width: thin medium thin medium  }
+bw0297 { border-width: thin medium thin thick  }
+bw0298 { border-width: thin medium thin thin  }
+bw0299 { border-width: thin thick  }
+bw0300 { border-width: thin thick 0  }
+bw0301 { border-width: thin thick 0 0  }
+bw0302 { border-width: thin thick 0 medium  }
+bw0303 { border-width: thin thick 0 thick  }
+bw0304 { border-width: thin thick 0 thin  }
+bw0305 { border-width: thin thick medium  }
+bw0306 { border-width: thin thick medium 0  }
+bw0307 { border-width: thin thick medium medium  }
+bw0308 { border-width: thin thick medium thick  }
+bw0309 { border-width: thin thick medium thin  }
+bw0310 { border-width: thin thick thick  }
+bw0311 { border-width: thin thick thick 0  }
+bw0312 { border-width: thin thick thick medium  }
+bw0313 { border-width: thin thick thick thick  }
+bw0314 { border-width: thin thick thick thin  }
+bw0315 { border-width: thin thick thin  }
+bw0316 { border-width: thin thick thin 0  }
+bw0317 { border-width: thin thick thin medium  }
+bw0318 { border-width: thin thick thin thick  }
+bw0319 { border-width: thin thick thin thin  }
+bw0320 { border-width: thin thin  }
+bw0321 { border-width: thin thin 0  }
+bw0322 { border-width: thin thin 0 0  }
+bw0323 { border-width: thin thin 0 medium  }
+bw0324 { border-width: thin thin 0 thick  }
+bw0325 { border-width: thin thin 0 thin  }
+bw0326 { border-width: thin thin medium  }
+bw0327 { border-width: thin thin medium 0  }
+bw0328 { border-width: thin thin medium medium  }
+bw0329 { border-width: thin thin medium thick  }
+bw0330 { border-width: thin thin medium thin  }
+bw0331 { border-width: thin thin thick  }
+bw0332 { border-width: thin thin thick 0  }
+bw0333 { border-width: thin thin thick medium  }
+bw0334 { border-width: thin thin thick thick  }
+bw0335 { border-width: thin thin thick thin  }
+bw0336 { border-width: thin thin thin  }
+bw0337 { border-width: thin thin thin 0  }
+bw0338 { border-width: thin thin thin medium  }
+bw0339 { border-width: thin thin thin thick  }
+bw0340 { border-width: thin thin thin thin  }

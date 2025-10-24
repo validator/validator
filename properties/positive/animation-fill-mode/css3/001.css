@@ -1,0 +1,9 @@
+a { animation-fill-mode:  none }
+b { animation-fill-mode:  forwards }
+c { animation-fill-mode:  backwards }
+d { animation-fill-mode:  both }
+e { animation-fill-mode:  none, forwards }
+f { animation-fill-mode:  both, none, forwards }
+g { animation-fill-mode:  forwards, forwards, forwards, forwards, none, none, none }
+y { animation-fill-mode:  initial }
+z { animation-fill-mode:  inherit }

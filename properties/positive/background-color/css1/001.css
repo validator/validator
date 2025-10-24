@@ -1,0 +1,22 @@
+a { background-color: #f00 }
+b { background-color: transparent }
+c { background-color: rgb(255,0,0) }
+d { background-color: rgb(100%, 0%, 0%) }
+e { background-color: #ff0000 }
+f { background-color: rgb(110%, 120%, 0%) }
+g { background-color: white }
+h { background-color: aqua }
+i { background-color: black }
+j {background-color: blue }
+k { background-color: fuchsia }
+l { background-color: gray }
+m { background-color: green }
+n { background-color: lime }
+o { background-color: maroon }
+p { background-color: navy }
+q { background-color: olive }
+r { background-color: purple }
+s { background-color: red }
+t { background-color: silver }
+u { background-color: teal }
+v { background-color: yellow }

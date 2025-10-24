@@ -1,0 +1,67 @@
+tdsk1   { text-decoration-skip:  edges  }
+tdsk2   { text-decoration-skip:  edges ink  }
+tdsk3   { text-decoration-skip:  edges ink objects  }
+tdsk4   { text-decoration-skip:  edges ink objects spaces  }
+tdsk5   { text-decoration-skip:  edges ink spaces  }
+tdsk6   { text-decoration-skip:  edges ink spaces objects  }
+tdsk7   { text-decoration-skip:  edges objects  }
+tdsk8   { text-decoration-skip:  edges objects ink  }
+tdsk9   { text-decoration-skip:  edges objects ink spaces  }
+tdsk10  { text-decoration-skip:  edges objects spaces  }
+tdsk11  { text-decoration-skip:  edges objects spaces ink  }
+tdsk12  { text-decoration-skip:  edges spaces  }
+tdsk13  { text-decoration-skip:  edges spaces ink  }
+tdsk14  { text-decoration-skip:  edges spaces ink objects  }
+tdsk15  { text-decoration-skip:  edges spaces objects  }
+tdsk16  { text-decoration-skip:  edges spaces objects ink  }
+tdsk17  { text-decoration-skip:  ink  }
+tdsk18  { text-decoration-skip:  ink edges  }
+tdsk19  { text-decoration-skip:  ink edges objects  }
+tdsk20  { text-decoration-skip:  ink edges objects spaces  }
+tdsk21  { text-decoration-skip:  ink edges spaces  }
+tdsk22  { text-decoration-skip:  ink edges spaces objects  }
+tdsk23  { text-decoration-skip:  ink objects  }
+tdsk24  { text-decoration-skip:  ink objects edges  }
+tdsk25  { text-decoration-skip:  ink objects edges spaces  }
+tdsk26  { text-decoration-skip:  ink objects spaces  }
+tdsk27  { text-decoration-skip:  ink objects spaces edges  }
+tdsk28  { text-decoration-skip:  ink spaces  }
+tdsk29  { text-decoration-skip:  ink spaces edges  }
+tdsk30  { text-decoration-skip:  ink spaces edges objects  }
+tdsk31  { text-decoration-skip:  ink spaces objects  }
+tdsk32  { text-decoration-skip:  ink spaces objects edges  }
+tdsk33  { text-decoration-skip:  objects  }
+tdsk34  { text-decoration-skip:  objects edges  }
+tdsk35  { text-decoration-skip:  objects edges ink  }
+tdsk36  { text-decoration-skip:  objects edges ink spaces  }
+tdsk37  { text-decoration-skip:  objects edges spaces  }
+tdsk38  { text-decoration-skip:  objects edges spaces ink  }
+tdsk39  { text-decoration-skip:  objects ink  }
+tdsk40  { text-decoration-skip:  objects ink edges  }
+tdsk41  { text-decoration-skip:  objects ink edges spaces  }
+tdsk42  { text-decoration-skip:  objects ink spaces  }
+tdsk43  { text-decoration-skip:  objects ink spaces edges  }
+tdsk44  { text-decoration-skip:  objects spaces  }
+tdsk45  { text-decoration-skip:  objects spaces edges  }
+tdsk46  { text-decoration-skip:  objects spaces edges ink  }
+tdsk47  { text-decoration-skip:  objects spaces ink  }
+tdsk48  { text-decoration-skip:  objects spaces ink edges  }
+tdsk49  { text-decoration-skip:  spaces  }
+tdsk50  { text-decoration-skip:  spaces edges  }
+tdsk51  { text-decoration-skip:  spaces edges ink  }
+tdsk52  { text-decoration-skip:  spaces edges ink objects  }
+tdsk53  { text-decoration-skip:  spaces edges objects  }
+tdsk54  { text-decoration-skip:  spaces edges objects ink  }
+tdsk55  { text-decoration-skip:  spaces ink  }
+tdsk56  { text-decoration-skip:  spaces ink edges  }
+tdsk57  { text-decoration-skip:  spaces ink edges objects  }
+tdsk58  { text-decoration-skip:  spaces ink objects  }
+tdsk59  { text-decoration-skip:  spaces ink objects edges  }
+tdsk60  { text-decoration-skip:  spaces objects  }
+tdsk61  { text-decoration-skip:  spaces objects edges  }
+tdsk62  { text-decoration-skip:  spaces objects edges ink  }
+tdsk63  { text-decoration-skip:  spaces objects ink  }
+tdsk64  { text-decoration-skip:  spaces objects ink edges  }
+tdsk65  { text-decoration-skip: none  }
+y { text-decoration-skip: initial  }
+z { text-decoration-skip: inherit  }

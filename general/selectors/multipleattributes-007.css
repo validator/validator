@@ -1,0 +1,1 @@
+span[tst="foo"][tst^="foo"] { color: blue; }

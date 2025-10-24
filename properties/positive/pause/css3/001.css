@@ -1,0 +1,16 @@
+a { pause:  500ms  }
+b { pause:  0s }
+c { pause:  2.1s }
+d { pause:  none  }
+e { pause:  x-weak  }
+f { pause:  weak  }
+g { pause:  medium  }
+h { pause:  strong  }
+i { pause:  x-strong  }
+j { pause: 500ms 0s }
+k { pause: none weak }
+l { pause: 10s none }
+m { pause: 2.1s 0s }
+n { pause: 0s strong }
+y { pause: initial }
+z { pause: inherit }

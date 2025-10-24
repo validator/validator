@@ -1,0 +1,6 @@
+a { flex-direction: row }
+b { flex-direction: row-reverse }
+c { flex-direction: column }
+d { flex-direction: column-reverse }
+y { flex-direction: initial }
+z { flex-direction: inherit }

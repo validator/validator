@@ -1,0 +1,383 @@
+y { transition: initial }
+z { transition: inherit }
+tran1 { transition: none }
+tran2 { transition: transform }
+tran3   { transition:  cubic-bezier(1,0,0.5,-10)   }
+tran4   { transition:  cubic-bezier(1,0,0.5,-10)  1s   }
+tran5   { transition:  cubic-bezier(1,0,0.5,-10)  1s  -3s   }
+tran6   { transition:  cubic-bezier(1,0,0.5,-10)  1s  -3s  all   }
+tran7   { transition:  cubic-bezier(1,0,0.5,-10)  1s  -3s  chocolat   }
+tran8   { transition:  cubic-bezier(1,0,0.5,-10)  1s  -3s  none   }
+tran9   { transition:  cubic-bezier(1,0,0.5,-10)  1s  all   }
+tran10  { transition:  cubic-bezier(1,0,0.5,-10)  1s  all  -3s   }
+tran11  { transition:  cubic-bezier(1,0,0.5,-10)  1s  chocolat   }
+tran12  { transition:  cubic-bezier(1,0,0.5,-10)  1s  chocolat  -3s   }
+tran13  { transition:  cubic-bezier(1,0,0.5,-10)  1s  none   }
+tran14  { transition:  cubic-bezier(1,0,0.5,-10)  1s  none  -3s   }
+tran15  { transition:  cubic-bezier(1,0,0.5,-10)  3s   }
+tran16  { transition:  cubic-bezier(1,0,0.5,-10)  3s  -3s   }
+tran17  { transition:  cubic-bezier(1,0,0.5,-10)  3s  3s  all   }
+tran18  { transition:  cubic-bezier(1,0,0.5,-10)  3s  3s  chocolat   }
+tran19  { transition:  cubic-bezier(1,0,0.5,-10)  3s  -3s  none   }
+tran20  { transition:  cubic-bezier(1,0,0.5,-10)  3s  all   }
+tran21  { transition:  cubic-bezier(1,0,0.5,-10)  3s  all  -3s   }
+tran22  { transition:  cubic-bezier(1,0,0.5,-10)  3s  chocolat   }
+tran23  { transition:  cubic-bezier(1,0,0.5,-10)  3s  chocolat  3s   }
+tran24  { transition:  cubic-bezier(1,0,0.5,-10)  3s  none   }
+tran25  { transition:  cubic-bezier(1,0,0.5,-10)  3s  none  3s   }
+tran26  { transition:  cubic-bezier(1,0,0.5,-10)  all   }
+tran27  { transition:  cubic-bezier(1,0,0.5,-10)  all  1s   }
+tran28  { transition:  cubic-bezier(1,0,0.5,-10)  all  1s  3s   }
+tran29  { transition:  cubic-bezier(1,0,0.5,-10)  all  3s   }
+tran30  { transition:  cubic-bezier(1,0,0.5,-10)  all  3s  3s   }
+tran31  { transition:  cubic-bezier(1,0,0.5,-10)  chocolat   }
+tran32  { transition:  cubic-bezier(1,0,0.5,-10)  chocolat  1s   }
+tran33  { transition:  cubic-bezier(1,0,0.5,-10)  chocolat  1s  3s   }
+tran34  { transition:  cubic-bezier(1,0,0.5,-10)  chocolat  3s   }
+tran35  { transition:  cubic-bezier(1,0,0.5,-10)  chocolat  3s  3s   }
+tran36  { transition:  cubic-bezier(1,0,0.5,-10)  none   }
+tran37  { transition:  cubic-bezier(1,0,0.5,-10)  none  1s   }
+tran38  { transition:  cubic-bezier(1,0,0.5,-10)  none  1s  3s   }
+tran39  { transition:  cubic-bezier(1,0,0.5,-10)  none  3s   }
+tran40  { transition:  cubic-bezier(1,0,0.5,-10)  none  3s  3s   }
+tran41  { transition:  ease   }
+tran42  { transition:  ease  1s   }
+tran43  { transition:  ease  1s  3s   }
+tran44  { transition:  ease  1s  3s  all   }
+tran45  { transition:  ease  1s  3s  chocolat   }
+tran46  { transition:  ease  1s  3s  none   }
+tran47  { transition:  ease  1s  all   }
+tran48  { transition:  ease  1s  all  3s   }
+tran49  { transition:  ease  1s  chocolat   }
+tran50  { transition:  ease  1s  chocolat  3s   }
+tran51  { transition:  ease  1s  none   }
+tran52  { transition:  ease  1s  none  -3s   }
+tran53  { transition:  ease  3s   }
+tran54  { transition:  ease  3s  3s   }
+tran55  { transition:  ease  3s  3s  all   }
+tran56  { transition:  ease  3s  3s  chocolat   }
+tran57  { transition:  ease  3s  3s  none   }
+tran58  { transition:  ease  3s  all   }
+tran59  { transition:  ease  3s  all  3s   }
+tran60  { transition:  ease  3s  chocolat   }
+tran61  { transition:  ease  3s  chocolat  3s   }
+tran62  { transition:  ease  3s  none   }
+tran63  { transition:  ease  3s  none  3s   }
+tran64  { transition:  ease  all   }
+tran65  { transition:  ease  all  1s   }
+tran66  { transition:  ease  all  1s  3s   }
+tran67  { transition:  ease  all  3s   }
+tran68  { transition:  ease  all  3s  3s   }
+tran69  { transition:  ease  chocolat   }
+tran70  { transition:  ease  chocolat  1s   }
+tran71  { transition:  ease  chocolat  1s  3s   }
+tran72  { transition:  ease  chocolat  3s   }
+tran73  { transition:  ease  chocolat  3s  3s   }
+tran74  { transition:  ease  none   }
+tran75  { transition:  ease  none  1s   }
+tran76  { transition:  ease  none  1s  3s   }
+tran77  { transition:  ease  none  3s   }
+tran78  { transition:  ease  none  3s  -3s   }
+tran79  { transition:  steps(10, start)   }
+tran80  { transition:  steps(10, start)  1s   }
+tran81  { transition:  steps(10, start)  1s  -3s   }
+tran82  { transition:  steps(10, start)  1s  3s  all   }
+tran83  { transition:  steps(10, start)  1s  3s  chocolat   }
+tran84  { transition:  steps(10, start)  1s  3s  none   }
+tran85  { transition:  steps(10, start)  1s  all   }
+tran86  { transition:  steps(10, start)  1s  all  3s   }
+tran87  { transition:  steps(10, start)  1s  chocolat   }
+tran88  { transition:  steps(10, start)  1s  chocolat  3s   }
+tran89  { transition:  steps(10, start)  1s  none   }
+tran90  { transition:  steps(10, start)  1s  none  3s   }
+tran91  { transition:  steps(10, start)  3s   }
+tran92  { transition:  steps(10, start)  3s  3s   }
+tran93  { transition:  steps(10, start)  3s  3s  all   }
+tran94  { transition:  steps(10, start)  3s  3s  chocolat   }
+tran95  { transition:  steps(10, start)  3s  3s  none   }
+tran96  { transition:  steps(10, start)  3s  all   }
+tran97  { transition:  steps(10, start)  3s  all  3s   }
+tran98  { transition:  steps(10, start)  3s  chocolat   }
+tran99  { transition:  steps(10, start)  3s  chocolat  3s   }
+tran100 { transition:  steps(10, start)  3s  none   }
+tran101 { transition:  steps(10, start)  3s  none  3s   }
+tran102 { transition:  steps(10, start)  all   }
+tran103 { transition:  steps(10, start)  all  1s   }
+tran104 { transition:  steps(10, start)  all  1s  3s   }
+tran105 { transition:  steps(10, start)  all  3s   }
+tran106 { transition:  steps(10, start)  all  3s  -3s   }
+tran107 { transition:  steps(10, start)  chocolat   }
+tran108 { transition:  steps(10, start)  chocolat  1s   }
+tran109 { transition:  steps(10, start)  chocolat  1s  3s   }
+tran110 { transition:  steps(10, start)  chocolat  3s   }
+tran111 { transition:  steps(10, start)  chocolat  3s  3s   }
+tran112 { transition:  steps(10, start)  none   }
+tran113 { transition:  steps(10, start)  none  1s   }
+tran114 { transition:  steps(10, start)  none  1s  3s   }
+tran115 { transition:  steps(10, start)  none  3s   }
+tran116 { transition:  steps(10, start)  none  3s  3s   }
+tran117 { transition: 1s   }
+tran118 { transition: 1s   ease   }
+tran119 { transition: 1s   ease  3s   }
+tran120 { transition: 1s   ease  3s  all   }
+tran121 { transition: 1s   ease  3s  chocolat   }
+tran122 { transition: 1s   ease  3s  none   }
+tran123 { transition: 1s   ease  all   }
+tran124 { transition: 1s   ease  all  3s   }
+tran125 { transition: 1s   ease  chocolat   }
+tran126 { transition: 1s   ease  chocolat  3s   }
+tran127 { transition: 1s   ease  none   }
+tran128 { transition: 1s   ease  none  3s   }
+tran129 { transition: 1s   steps(10, start)   }
+tran130 { transition: 1s   steps(10, start)  3s   }
+tran131 { transition: 1s   steps(10, start)  3s  all   }
+tran132 { transition: 1s   steps(10, start)  3s  chocolat   }
+tran133 { transition: 1s   steps(10, start)  3s  none   }
+tran134 { transition: 1s   steps(10, start)  all   }
+tran135 { transition: 1s   steps(10, start)  all  3s   }
+tran136 { transition: 1s   steps(10, start)  chocolat   }
+tran137 { transition: 1s   steps(10, start)  chocolat  3s   }
+tran138 { transition: 1s   steps(10, start)  none   }
+tran139 { transition: 1s   steps(10, start)  none  3s   }
+tran140 { transition: 1s  3s   }
+tran141 { transition: 1s  3s   ease   }
+tran142 { transition: 1s  3s   ease  all   }
+tran143 { transition: 1s  3s   ease  chocolat   }
+tran144 { transition: 1s  3s   ease  none   }
+tran145 { transition: 1s  3s   steps(10, start)   }
+tran146 { transition: 1s  3s   steps(10, start)  all   }
+tran147 { transition: 1s  3s   steps(10, start)  chocolat   }
+tran148 { transition: 1s  3s   steps(10, start)  none   }
+tran149 { transition: 1s  3s  all   }
+tran150 { transition: 1s  3s  all   ease   }
+tran151 { transition: 1s  3s  all   steps(10, start)   }
+tran152 { transition: 1s  3s  chocolat   }
+tran153 { transition: 1s  3s  chocolat   ease   }
+tran154 { transition: 1s  3s  chocolat   steps(10, start)   }
+tran155 { transition: 1s  3s  none   }
+tran156 { transition: 1s  3s  none   ease   }
+tran157 { transition: 1s  3s  none   steps(10, start)   }
+tran158 { transition: 1s  all   }
+tran159 { transition: 1s  all   ease   }
+tran160 { transition: 1s  all   ease  3s   }
+tran161 { transition: 1s  all   steps(10, start)   }
+tran162 { transition: 1s  all   steps(10, start)  3s   }
+tran163 { transition: 1s  all  3s   }
+tran164 { transition: 1s  all  3s   ease   }
+tran165 { transition: 1s  all  3s   steps(10, start)   }
+tran166 { transition: 1s  chocolat   }
+tran167 { transition: 1s  chocolat   ease   }
+tran168 { transition: 1s  chocolat   ease  3s   }
+tran169 { transition: 1s  chocolat   steps(10, start)   }
+tran170 { transition: 1s  chocolat   steps(10, start)  3s   }
+tran171 { transition: 1s  chocolat  3s   }
+tran172 { transition: 1s  chocolat  3s   ease   }
+tran173 { transition: 1s  chocolat  3s   steps(10, start)   }
+tran174 { transition: 1s  none   }
+tran175 { transition: 1s  none   ease   }
+tran176 { transition: 1s  none   ease  3s   }
+tran177 { transition: 1s  none   steps(10, start)   }
+tran178 { transition: 1s  none   steps(10, start)  3s   }
+tran179 { transition: 1s  none  3s   }
+tran180 { transition: 1s  none  3s   ease   }
+tran181 { transition: 1s  none  3s   steps(10, start)   }
+tran182 { transition: 3s   }
+tran183 { transition: 3s   cubic-bezier(1,0,0.5,-10)   }
+tran184 { transition: 3s   cubic-bezier(1,0,0.5,-10)  3s   }
+tran185 { transition: 3s   cubic-bezier(1,0,0.5,-10)  3s  all   }
+tran186 { transition: 3s   cubic-bezier(1,0,0.5,-10)  3s  chocolat   }
+tran187 { transition: 3s   cubic-bezier(1,0,0.5,-10)  3s  none   }
+tran188 { transition: 3s   cubic-bezier(1,0,0.5,-10)  all   }
+tran189 { transition: 3s   cubic-bezier(1,0,0.5,-10)  all  3s   }
+tran190 { transition: 3s   cubic-bezier(1,0,0.5,-10)  chocolat   }
+tran191 { transition: 3s   cubic-bezier(1,0,0.5,-10)  chocolat  3s   }
+tran192 { transition: 3s   cubic-bezier(1,0,0.5,-10)  none   }
+tran193 { transition: 3s   cubic-bezier(1,0,0.5,-10)  none  3s   }
+tran194 { transition: 3s   ease   }
+tran195 { transition: 3s   ease  3s   }
+tran196 { transition: 3s   ease  3s  all   }
+tran197 { transition: 3s   ease  3s  chocolat   }
+tran198 { transition: 3s   ease  3s  none   }
+tran199 { transition: 3s   ease  all   }
+tran200 { transition: 3s   ease  all  3s   }
+tran201 { transition: 3s   ease  chocolat   }
+tran202 { transition: 3s   ease  chocolat  3s   }
+tran203 { transition: 3s   ease  none   }
+tran204 { transition: 3s   ease  none  3s   }
+tran205 { transition: 3s   steps(10, start)   }
+tran206 { transition: 3s   steps(10, start)  3s   }
+tran207 { transition: 3s   steps(10, start)  3s  all   }
+tran208 { transition: 3s   steps(10, start)  3s  chocolat   }
+tran209 { transition: 3s   steps(10, start)  3s  none   }
+tran210 { transition: 3s   steps(10, start)  all   }
+tran211 { transition: 3s   steps(10, start)  all  3s   }
+tran212 { transition: 3s   steps(10, start)  chocolat   }
+tran213 { transition: 3s   steps(10, start)  chocolat  3s   }
+tran214 { transition: 3s   steps(10, start)  none   }
+tran215 { transition: 3s   steps(10, start)  none  3s   }
+tran216 { transition: 3s  3s   }
+tran217 { transition: 3s  3s   cubic-bezier(1,0,0.5,-10)   }
+tran218 { transition: 3s  3s   cubic-bezier(1,0,0.5,-10)  all   }
+tran219 { transition: 3s  3s   cubic-bezier(1,0,0.5,-10)  chocolat   }
+tran220 { transition: 3s  3s   cubic-bezier(1,0,0.5,-10)  none   }
+tran221 { transition: 3s  3s   ease   }
+tran222 { transition: 3s  3s   ease  all   }
+tran223 { transition: 3s  3s   ease  chocolat   }
+tran224 { transition: 3s  3s   ease  none   }
+tran225 { transition: 3s  3s   steps(10, start)   }
+tran226 { transition: 3s  3s   steps(10, start)  all   }
+tran227 { transition: 3s  3s   steps(10, start)  chocolat   }
+tran228 { transition: 3s  3s   steps(10, start)  none   }
+tran229 { transition: 3s  3s  all   }
+tran230 { transition: 3s  3s  all   cubic-bezier(1,0,0.5,-10)   }
+tran231 { transition: 3s  3s  all   ease   }
+tran232 { transition: 3s  3s  all   steps(10, start)   }
+tran233 { transition: 3s  3s  chocolat   }
+tran234 { transition: 3s  3s  chocolat   cubic-bezier(1,0,0.5,-10)   }
+tran235 { transition: 3s  3s  chocolat   ease   }
+tran236 { transition: 3s  3s  chocolat   steps(10, start)   }
+tran237 { transition: 3s  3s  none   }
+tran238 { transition: 3s  3s  none   cubic-bezier(1,0,0.5,-10)   }
+tran239 { transition: 3s  3s  none   ease   }
+tran240 { transition: 3s  3s  none   steps(10, start)   }
+tran241 { transition: 3s  all   }
+tran242 { transition: 3s  all   cubic-bezier(1,0,0.5,-10)   }
+tran243 { transition: 3s  all   cubic-bezier(1,0,0.5,-10)  3s   }
+tran244 { transition: 3s  all   ease   }
+tran245 { transition: 3s  all   ease  3s   }
+tran246 { transition: 3s  all   steps(10, start)   }
+tran247 { transition: 3s  all   steps(10, start)  3s   }
+tran248 { transition: 3s  all  3s   }
+tran249 { transition: 3s  all  3s   cubic-bezier(1,0,0.5,-10)   }
+tran250 { transition: 3s  all  3s   ease   }
+tran251 { transition: 3s  all  3s   steps(10, start)   }
+tran252 { transition: 3s  chocolat   }
+tran253 { transition: 3s  chocolat   cubic-bezier(1,0,0.5,-10)   }
+tran254 { transition: 3s  chocolat   cubic-bezier(1,0,0.5,-10)  3s   }
+tran255 { transition: 3s  chocolat   ease   }
+tran256 { transition: 3s  chocolat   ease  3s   }
+tran257 { transition: 3s  chocolat   steps(10, start)   }
+tran258 { transition: 3s  chocolat   steps(10, start)  3s   }
+tran259 { transition: 3s  chocolat  3s   }
+tran260 { transition: 3s  chocolat  3s   cubic-bezier(1,0,0.5,-10)   }
+tran261 { transition: 3s  chocolat  3s   ease   }
+tran262 { transition: 3s  chocolat  3s   steps(10, start)   }
+tran263 { transition: 3s  none   }
+tran264 { transition: 3s  none   cubic-bezier(1,0,0.5,-10)   }
+tran265 { transition: 3s  none   cubic-bezier(1,0,0.5,-10)  3s   }
+tran266 { transition: 3s  none   ease   }
+tran267 { transition: 3s  none   ease  3s   }
+tran268 { transition: 3s  none   steps(10, start)   }
+tran269 { transition: 3s  none   steps(10, start)  3s   }
+tran270 { transition: 3s  none  3s   }
+tran271 { transition: 3s  none  3s   cubic-bezier(1,0,0.5,-10)   }
+tran272 { transition: 3s  none  3s   ease   }
+tran273 { transition: 3s  none  3s   steps(10, start)   }
+tran274 { transition: all   }
+tran275 { transition: all   cubic-bezier(1,0,0.5,-10)   }
+tran276 { transition: all   cubic-bezier(1,0,0.5,-10)  1s   }
+tran277 { transition: all   cubic-bezier(1,0,0.5,-10)  1s  3s   }
+tran278 { transition: all   cubic-bezier(1,0,0.5,-10)  3s   }
+tran279 { transition: all   cubic-bezier(1,0,0.5,-10)  3s  3s   }
+tran280 { transition: all   ease   }
+tran281 { transition: all   ease  1s   }
+tran282 { transition: all   ease  1s  3s   }
+tran283 { transition: all   ease  3s   }
+tran284 { transition: all   ease  3s  3s   }
+tran285 { transition: all   steps(10, start)   }
+tran286 { transition: all   steps(10, start)  1s   }
+tran287 { transition: all   steps(10, start)  1s  3s   }
+tran288 { transition: all   steps(10, start)  3s   }
+tran289 { transition: all   steps(10, start)  3s  3s   }
+tran290 { transition: all  1s   }
+tran291 { transition: all  1s   ease   }
+tran292 { transition: all  1s   ease  3s   }
+tran293 { transition: all  1s   steps(10, start)   }
+tran294 { transition: all  1s   steps(10, start)  3s   }
+tran295 { transition: all  1s  3s   }
+tran296 { transition: all  1s  3s   ease   }
+tran297 { transition: all  1s  3s   steps(10, start)   }
+tran298 { transition: all  3s   }
+tran299 { transition: all  3s   cubic-bezier(1,0,0.5,-10)   }
+tran300 { transition: all  3s   cubic-bezier(1,0,0.5,-10)  3s   }
+tran301 { transition: all  3s   ease   }
+tran302 { transition: all  3s   ease  3s   }
+tran303 { transition: all  3s   steps(10, start)   }
+tran304 { transition: all  3s   steps(10, start)  3s   }
+tran305 { transition: all  3s  3s   }
+tran306 { transition: all  3s  3s   cubic-bezier(1,0,0.5,-10)   }
+tran307 { transition: all  3s  3s   ease   }
+tran308 { transition: all  3s  3s   steps(10, start)   }
+tran309 { transition: chocolat   }
+tran310 { transition: chocolat   cubic-bezier(1,0,0.5,-10)   }
+tran311 { transition: chocolat   cubic-bezier(1,0,0.5,-10)  1s   }
+tran312 { transition: chocolat   cubic-bezier(1,0,0.5,-10)  1s  3s   }
+tran313 { transition: chocolat   cubic-bezier(1,0,0.5,-10)  3s   }
+tran314 { transition: chocolat   cubic-bezier(1,0,0.5,-10)  3s  3s   }
+tran315 { transition: chocolat   ease   }
+tran316 { transition: chocolat   ease  1s   }
+tran317 { transition: chocolat   ease  1s  3s   }
+tran318 { transition: chocolat   ease  3s   }
+tran319 { transition: chocolat   ease  3s  3s   }
+tran320 { transition: chocolat   steps(10, start)   }
+tran321 { transition: chocolat   steps(10, start)  1s   }
+tran322 { transition: chocolat   steps(10, start)  1s  3s   }
+tran323 { transition: chocolat   steps(10, start)  3s   }
+tran324 { transition: chocolat   steps(10, start)  3s  3s   }
+tran325 { transition: chocolat  1s   }
+tran326 { transition: chocolat  1s   ease   }
+tran327 { transition: chocolat  1s   ease  3s   }
+tran328 { transition: chocolat  1s   steps(10, start)   }
+tran329 { transition: chocolat  1s   steps(10, start)  3s   }
+tran330 { transition: chocolat  1s  3s   }
+tran331 { transition: chocolat  1s  3s   ease   }
+tran332 { transition: chocolat  1s  3s   steps(10, start)   }
+tran333 { transition: chocolat  3s   }
+tran334 { transition: chocolat  3s   cubic-bezier(1,0,0.5,-10)   }
+tran335 { transition: chocolat  3s   cubic-bezier(1,0,0.5,-10)  3s   }
+tran336 { transition: chocolat  3s   ease   }
+tran337 { transition: chocolat  3s   ease  3s   }
+tran338 { transition: chocolat  3s   steps(10, start)   }
+tran339 { transition: chocolat  3s   steps(10, start)  3s   }
+tran340 { transition: chocolat  3s  3s   }
+tran341 { transition: chocolat  3s  3s   cubic-bezier(1,0,0.5,-10)   }
+tran342 { transition: chocolat  3s  3s   ease   }
+tran343 { transition: chocolat  3s  3s   steps(10, start)   }
+tran344 { transition: none   }
+tran345 { transition: none   cubic-bezier(1,0,0.5,-10)   }
+tran346 { transition: none   cubic-bezier(1,0,0.5,-10)  1s   }
+tran347 { transition: none   cubic-bezier(1,0,0.5,-10)  1s  3s   }
+tran348 { transition: none   cubic-bezier(1,0,0.5,-10)  3s   }
+tran349 { transition: none   cubic-bezier(1,0,0.5,-10)  3s  3s   }
+tran350 { transition: none   ease   }
+tran351 { transition: none   ease  1s   }
+tran352 { transition: none   ease  1s  3s   }
+tran353 { transition: none   ease  3s   }
+tran354 { transition: none   ease  3s  3s   }
+tran355 { transition: none   steps(10, start)   }
+tran356 { transition: none   steps(10, start)  1s   }
+tran357 { transition: none   steps(10, start)  1s  3s   }
+tran358 { transition: none   steps(10, start)  3s   }
+tran359 { transition: none   steps(10, start)  3s  3s   }
+tran360 { transition: none  1s   }
+tran361 { transition: none  1s   ease   }
+tran362 { transition: none  1s   ease  3s   }
+tran363 { transition: none  1s   steps(10, start)   }
+tran364 { transition: none  1s   steps(10, start)  3s   }
+tran365 { transition: none  1s  3s   }
+tran366 { transition: none  1s  3s   ease   }
+tran367 { transition: none  1s  3s   steps(10, start)   }
+tran368 { transition: none  3s   }
+tran369 { transition: none  3s   cubic-bezier(1,0,0.5,-10)   }
+tran370 { transition: none  3s   cubic-bezier(1,0,0.5,-10)  3s   }
+tran371 { transition: none  3s   ease   }
+tran372 { transition: none  3s   ease  3s   }
+tran373 { transition: none  3s   steps(10, start)   }
+tran374 { transition: none  3s   steps(10, start)  3s   }
+tran375 { transition: none  3s  3s   }
+tran376 { transition: none  3s  3s   cubic-bezier(1,0,0.5,-10)   }
+tran377 { transition: none  3s  3s   ease   }
+tran378 { transition: none  3s  3s   steps(10, start)   }
+tran379 { transition:cubic-bezier(1,0,0.5,-10)  1s  3s  all , ease  1s  3s }
+tran380 { transition:cubic-bezier(1,0,0.5,-10)  chocolat, 1s  all  3s   steps(10, start) }
+tran381 { transition:1s  all, 3s   ease  all  3s, cubic-bezier(1,0,0.5,-10)  3s  all  3s, steps(10, start) }

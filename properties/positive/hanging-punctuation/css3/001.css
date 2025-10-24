@@ -1,0 +1,29 @@
+z { hanging-punctuation: inherit }
+y { hanging-punctuation: initial }
+hapu1   { hanging-punctuation: none }
+hapu2   { hanging-punctuation: first }
+hapu3   { hanging-punctuation: last }
+hapu4   { hanging-punctuation: first last }
+hapu5   { hanging-punctuation: last first }
+hapu6   { hanging-punctuation: force-end }
+hapu7   { hanging-punctuation: first force-end }
+hapu8   { hanging-punctuation: last force-end }
+hapu9   { hanging-punctuation: force-end first }
+hapu10  { hanging-punctuation: force-end last }
+hapu11  { hanging-punctuation: first last force-end }
+hapu12  { hanging-punctuation: last first force-end }
+hapu13  { hanging-punctuation: force-end last first }
+hapu14  { hanging-punctuation: force-end first last }
+hapu15  { hanging-punctuation: last force-end first }
+hapu16  { hanging-punctuation: first force-end last }
+hapu17  { hanging-punctuation: allow-end }
+hapu18  { hanging-punctuation: first allow-end }
+hapu19  { hanging-punctuation: last allow-end }
+hapu20  { hanging-punctuation: allow-end first }
+hapu21  { hanging-punctuation: allow-end last }
+hapu22  { hanging-punctuation: first last allow-end }
+hapu23  { hanging-punctuation: last first allow-end }
+hapu24  { hanging-punctuation: allow-end last first }
+hapu25  { hanging-punctuation: allow-end first last }
+hapu26  { hanging-punctuation: last allow-end first }
+hapu27  { hanging-punctuation: first allow-end last }

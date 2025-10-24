@@ -1,0 +1,22 @@
+a /**/>  b { color: green }
+
+b /**/ >  c { color: green }
+
+c/**/>  d { color: green }
+
+d/**/ >  e { color: green }
+
+e >/**/ f { color: green }
+
+f >/**/g { color: green }
+
+g /**/ /**/> h { color: green }
+
+h /**/ i { color: green }
+
+i/**/ j { color: green }
+
+j /**/k { color: green }
+
+
+

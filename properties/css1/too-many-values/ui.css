@@ -1,0 +1,20 @@
+a {
+    cursor: url("cursor1"), url("cursor2"), auto, help;
+    cursor: url("cursor1"), url("cursor2"), auto, crosshair, default, pointer, move, e-resize, ne-resize, nw-resize, n-resize, se-resize, sw-resize, s-resize, w-resize, text, wait, help, progress;
+
+    outline-color: black white;
+    outline-color: invert black;
+    outline-color: #ffffff white;
+    outline-color: rgb(50, 40, 54) invert black;
+
+    outline-style: none solid;
+    outline-style: dashed ridge dotted;
+
+    outline-width: 1px thin;
+    outline-width: thin 1px thick;
+    outline-width: 1px 2px;
+
+    outline: black white;
+    outline: black solid solid thin;    
+    outline: black solid 1px dashed;
+}

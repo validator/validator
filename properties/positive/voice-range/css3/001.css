@@ -1,0 +1,33 @@
+vr1 { voice-range: +150Hz absolute }
+vr2 { voice-range: absolute 180Hz }
+vr3 { voice-range: absolute -20Hz }
+vr4 { voice-range: +2kHz }
+vr5 { voice-range: -1000Hz }
+vr6 { voice-range: 250Hz }
+vr7 { voice-range: 20% }
+vr8 { voice-range: +25% }
+vr9 { voice-range: +1.2st }
+vr10 { voice-range: -0.8st }
+vr11 { voice-range: x-low  }
+vr12 { voice-range: low  }
+vr13 { voice-range: medium  }
+vr14 { voice-range: high  }
+vr15 { voice-range: x-high }
+vr16 { voice-range: +2kHz x-low }
+vr17 { voice-range: -1000Hz low }
+vr18 { voice-range: 250Hz medium }
+vr19 { voice-range: 20% high }
+vr20 { voice-range: +25% x-high }
+vr21 { voice-range: +1.2st medium }
+vr22 { voice-range: -0.8st low }
+vr23 { voice-range: low +2kHz }
+vr24 { voice-range: medium -1000Hz }
+vr25 { voice-range: x-low 250Hz }
+vr26 { voice-range: medium 20% }
+vr27 { voice-range: high +25% }
+vr28 { voice-range: high +1.2st }
+vr29 { voice-range: x-high -0.8st }
+vr30 { voice-range: 0.21kHz }
+vr31 { voice-range: absolute 0.21kHz }
+y  { voice-range: initial }
+z  { voice-range: inherit }

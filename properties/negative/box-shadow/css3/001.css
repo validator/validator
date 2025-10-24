@@ -1,0 +1,6 @@
+an { 10 px } /* min 2 length values required */
+bn { 10px red inset }  /* min 2 values required */
+cn { 5 pt red 5 pt } /* color not allowed between the values */
+dn { 5pt 5pt inset red } /* inset not allowed between values and color */
+en { 5pt 5pt -10px } /* 3rd value can't be negative */
+fn { 5px -10px -10px 0 blue } /* 3rd value can't be negative */

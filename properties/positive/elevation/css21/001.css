@@ -1,0 +1,12 @@
+elev1  { elevation: 10deg }
+elev2  { elevation: -90deg }
+elev3  { elevation: 0 }
+elev4  { elevation: 100grad}
+elev5  { elevation: 1.57rad}
+elev6  { elevation: 0deg}
+elev7  { elevation: below }
+elev8  { elevation: level }
+elev9  { elevation: above }
+elev10 { elevation: higher }
+elev11 { elevation: lower }
+z { elevation: inherit }

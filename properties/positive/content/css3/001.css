@@ -1,0 +1,18 @@
+/* no test for CSS3 GCM since it's an abandoned spec. all those
+tests come from CSS21 */
+a { content: 'texte' }
+b { content: "texte à la gomme" }
+c { content: url("http://w3.org/foo") }
+d { content: attr(alt) }
+e { content: open-quote "machin" close-quote }
+f { content: no-open-quote "truc bidule" no-close-quote }
+g { content: "Chapter " counter(chapter) ". " }
+h { content: counter(para, upper-roman) }
+i { content: counter(toto, decimal-leading-zero) url(foo.bar) }
+j { content: "[" counters(toto, "-") "]" }
+k { content: attr(chocolate) counters(bidule, "plop", none) } 
+l { content: none }
+m { content: normal }
+z { content: inherit }
+/* usual in CSS3 */
+y { content: initial } 

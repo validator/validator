@@ -1,0 +1,5 @@
+a { marquee-play-count: 0 }
+b { marquee-play-count: 2 }
+c { marquee-play-count: infinite }
+y { marquee-play-count: inherit }
+z { marquee-play-count: initial }

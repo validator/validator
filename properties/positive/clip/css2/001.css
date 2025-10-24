@@ -1,0 +1,7 @@
+a { clip: auto }
+b { clip: rect(5px, 10px, 10px, 5px) }
+c { clip: rect(5px, -10px, 10px, 5px) }
+d { clip: rect(0, -10px, 0px, auto) }
+e { clip: rect(auto, -10px, 10px, auto) }
+f { clip: rect(auto, auto, auto, auto) }
+z {clip: inherit }

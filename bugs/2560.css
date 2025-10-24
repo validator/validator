@@ -1,0 +1,7 @@
+@media Screen { p { margin: 0; } }
+
+@media sCreen { p { border-top: 12px; } }
+
+@media auraL { p { richness: 100; } }
+
+@media print { body { font-size: 10pt; } }
