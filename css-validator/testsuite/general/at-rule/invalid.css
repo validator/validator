@@ -1,7 +1,0 @@
-@three-dee {
-  @background-lighting {
-    azimuth: 30deg;
-    elevation: 190deg;
-  }
-  H1 { color: red }
-}

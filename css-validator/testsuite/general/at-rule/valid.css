@@ -1,4 +1,0 @@
-@import url("foo.css");
-@media print {
-    p { background-color: red; }
-}

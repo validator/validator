@@ -1,2 +1,0 @@
-<!ELEMENT x:foo EMPTY>
-<!ATTLIST x:foo xmlns:x CDATA "http://www.example.com">
