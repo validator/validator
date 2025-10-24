@@ -6,12 +6,10 @@ on code contributions. Please make sure to read it.
 
 ## Questions or problems? [![Nu Html Checker chat room](https://goo.gl/1kHqwI)][2]
 
-Along with using the [project issue tracker][1] you can get help in real time on the
-[validator project channel on Gitter][2] or [#whatwg channel on irc.freenode.net][3].
+Along with using the [project issue tracker][1] you can get help in real time in the [#whatwg chat room][2].
 
    [1]: https://github.com/validator/validator/issues
-   [2]: https://gitter.im/validator/validator
-   [3]: https://webchat.freenode.net/?channels=whatwg
+   [2]: https://matrix.to/#/#whatwg:matrix.org
 
 ## Want to build, test, and run the code?
 
@@ -39,49 +37,57 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 
 5. Start the build script:
 
-        python ./build/build.py all
+        python ./checker.py all
 
 The steps above will build, test, and run the checker such that you can open
 http://localhost:8888/ in a Web browser to use the checker Web UI.
 
-Use `python ./build/build.py --help` to see command-line options for controlling the
+Use `python ./checker.py --help` to see command-line options for controlling the
 behavior of the script, as well as build-target names you can call separately; e.g.:
 
-* `python ./build/build.py build` (to build only)
-* `python ./build/build.py build test` (to build and test)
-* `python ./build/build.py run` (to run only)
+* `python ./checker.py build` (to build only)
+* `python ./checker.py build test` (to build and test)
+* `python ./checker.py run` (to run only)
 
 ## Confused about the code? Don’t know where to look?
 
 If you’d like to contribute a bug fix or feature enhancement but aren’t sure where in
 the code to get started, here’s a brief annotated overview of the repository contents:
 
-* `build` - scripts for building, testing, and running the checker
-* `css-validator` - (submodule) CSS validator source code
-* `docs` - (submodule) https://github.com/validator/validator/wiki sources
-* `galimatias` - (submodule) URL parser
-* `htmlparser` - (submodule) HTML parser
-* `jing-trang` - (submodule) RelaxNG engine
-* `resources` - config files, caching-related catalogs, and some example code
-* `schema` - HTML+SVG+MathML RelaxNG schemas (used with jing in the checker backend)
-* `site` - JS & CSS for the checker frontend + code for generating the frontend HTML
+* `assets` — CSS and JavaScript sources for https://validator.github.io/validator/
+* `checker.py` — build script
+* `build` – scripts for building, testing, and running the checker
+* `css-validator` – (subtree) CSS validator source code
+* `docs` – vnu manual pages + makefile to generate actual (roff) man pages from them
+* `docs/wiki` – (subtree) https://github.com/validator/validator/wiki sources
+* `galimatias` – (subtree) URL parser
+* `htmlparser` – (subtree) HTML parser
+* `langdetect` – (subtree) language-detection library
+* `jing-trang` – (subtree) RelaxNG engine
+* `package.json` – build file for the npm package
+* `resources` – config files, caching-related catalogs, and some example code
+* `schema` – HTML+SVG+MathML RelaxNG schemas (used with jing in the checker backend)
+* `site` – JS & CSS for the checker frontend + code for generating the frontend HTML
 * `src/nu/validator`
-  * `checker` - non-schema checkers; `TableChecker`, `schematronequiv/Assertions`, …
-  * `client` - various clients; e.g., `SimpleCommandLineValidator`, `TestRunner`
-  * `collections` - sorting of collections (utility code)
-  * `datatype` - checking microsyntax of attribute values (datatype library)
-  * `gnu/xml/aelfred2` - processing XML (XML parser)
-  * `io` - variety of \*InputStream classes, `DataUri`, related exception classes
-  * `javascript` - parsing JavaScript; `JavaScriptParser`, related exception classes
-  * `json` - SAX-inspired streaming interface for writing JSON (utility code)
-  * `localentities` - fetching resources from local cache; `LocalCacheEntityResolver`
-  * `messages` - handling/emitting validation messages; `MessageEmitterAdapter`, etc.
-  * `servlet` - core service logic; `VerifierServletTransaction`, etc.
-  * `source` - handling/emitting "show source" output; `SourceHandler` & `SourceCode`
-  * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
-  * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
-  * `xml` - utility code of various kinds
-* `tests` - (submodule) valid/invalid HTML docs for (regression) testing the checker
+  * `checker` – non-schema checkers; `TableChecker`, `schematronequiv/Assertions`, …
+  * `client` – various clients; e.g., `SimpleCommandLineValidator`, `TestRunner`
+  * `collections` – sorting of collections (utility code)
+  * `datatype` – checking microsyntax of attribute values (datatype library)
+  * `gnu/xml/aelfred2` – processing XML (XML parser)
+  * `io` – variety of \*InputStream classes, `DataUri`, related exception classes
+  * `json` – SAX-inspired streaming interface for writing JSON (utility code)
+  * `localentities` – fetching resources from local cache; `LocalCacheEntityResolver`
+  * `messages` – handling/emitting validation messages; `MessageEmitterAdapter`, etc.
+  * `servlet` – core service logic; `VerifierServletTransaction`, etc.
+  * `site` — the web-based checker’s frontend/UI code
+  * `source` – handling/emitting "show source" output; `SourceHandler` & `SourceCode`
+  * `spec` – parsing the HTML spec & emitting spec excerpts in validation messages
+  * `validation` – entry point for 3rd-party code to use; `SimpleDocumentValidator`
+  * `xml` – utility code of various kinds
+* `tests` – (subtree) valid/invalid HTML docs for (regression) testing the checker
+* `vnu-jar.js` — driver file for the npm package
+* `_config.yml` — Jekyll config file https://validator.github.io/validator/
+* `_layouts` — Jekyll layout file for https://validator.github.io/validator/
 
 ## Grant of license
 
