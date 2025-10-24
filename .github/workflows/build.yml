@@ -2,218 +2,32 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-  workflow_dispatch:
 
 jobs:
-  prep:
-    name: Prepare the build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
   build:
-    name: Build on ${{ matrix.os }} with Java ${{ matrix.java }}
-    needs: prep
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
+        java: [24, 21, 17, 11.0.23]
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [25, 21, 17, 11.0.23]
-        exclude:
-          - os: macos-latest
-            java: 11.0.23
-          - os: windows-latest
-            java: 11.0.23
+    name: Java ${{ matrix.java }}
     steps:
-      - uses: actions/checkout@v5
-      - name: Set up Java JDK
-        uses: actions/setup-java@v5
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Set up java
+        uses: actions/setup-java@v3
         with:
           distribution: zulu
           java-version: ${{ matrix.java }}
-      - uses: actions/setup-python@v6
+      - name: Cache Maven packages
+        uses: actions/cache@v3
         with:
-          python-version: '3.13'
-      - name: Update submodules
-        run: python checker.py update
-      - name: Install dependencies
-        run: python checker.py dldeps
-      - name: Build
-        shell: bash
-        run: |
-          version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
-          python checker.py --version="$version" build
-          python checker.py --version="$version" jar
-          python checker.py --version="$version" image
-          python checker.py --version="$version" war
-      - name: Test
-        shell: bash
-        env:
-          TOMCAT_VERSION: 8.5.29
-        run: |
-          java -jar build/dist/vnu.jar build/dist/index.html
-          java -jar build/dist/vnu.jar site/nu-about.html
-          jar xf build/dist/vnu.jar && javap -verbose nu/validator/client/SimpleCommandLineValidator.class | grep "major version: 52"
-          curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v${{ env.TOMCAT_VERSION }}/bin/apache-tomcat-${{ env.TOMCAT_VERSION }}.zip
-          unzip apache-tomcat-${{ env.TOMCAT_VERSION }}.zip
-          chmod a+x apache-tomcat-${{ env.TOMCAT_VERSION }}/bin/*.sh
-          jar xf build/dist-war/vnu.war && javap -verbose WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "major version: 52"
-          apache-tomcat-${{ env.TOMCAT_VERSION }}/bin/catalina.sh start
-          cp build/dist-war/vnu.war apache-tomcat-${{ env.TOMCAT_VERSION }}/webapps/
-          sleep 15; tail apache-tomcat-${{ env.TOMCAT_VERSION }}/logs/catalina.out || true
-          curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
-          test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
-          # shellcheck disable=SC2181
-          if [ $? != 0 ]; then cat RESULTS; fi
-          python ./checker.py check
-          python ./checker.py test
-      - name: Import GPG signing key
-        if: matrix.java == 17 && github.ref == 'refs/heads/main'
-        uses: crazy-max/ghaction-import-gpg@v5
-        with:
-          gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
-          passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-      - name: Sign release artifacts
-        if: matrix.java == 17 && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign "$file"; done || true
-          for file in build/dist/*.jar*; do gpg --yes -ab --sign "$file"; done || true
-          for file in build/dist-war/*.war*; do gpg --yes -ab --sign "$file"; done || true
-      - name: Release new binary runtime image
-        if: matrix.java == 17 && github.ref == 'refs/heads/main'
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit: ${{ github.sha }}
-          allowUpdates: true
-          artifacts: build/dist/*.zip*
-          body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
-          omitName: true
-          tag: latest
-      - name: Release new jar and war
-        if: matrix.os == 'ubuntu-latest' && matrix.java == 17 && github.ref == 'refs/heads/main'
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          artifacts: build/dist/*.jar*,build/dist-war/*.war*
-          omitBodyDuringUpdate: true
-          omitName: true
-          tag: latest
-      - name: Update the 'latest' tag
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
-        run: |
-          git push origin :refs/tags/latest || true
-          git tag -m latest -fa latest || true
-          git push origin main --tags
-      - name: Release new maven package
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
-        shell: bash
-        run: |
-          python ./checker.py maven-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://npm.pkg.github.com'
-      - name: Install Node dependencies
-        run: npm install
-      - name: Release new npm package
-        if: >
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/main' &&
-          matrix.os == 'ubuntu-latest' &&
-          matrix.java == 25
-        shell: bash
-        run: |
-          python ./checker.py npm-release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  ant-build:
-    name: Ant build ${{ matrix.target }}
-    needs: prep
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [
-          build,
-          jar,
-          war,
-          cssvalidator-build,
-          galimatias-build,
-          htmlparser-build,
-          jing-build,
-          langdetect-build,
-          validator-artifacts,
-          validator-build,
-          validator-bundle,
-          validator-compare-full-and-merged-split,
-          validator-javadoc-jar,
-          validator-sources-jar,
-          validator-split-client,
-          validator-split-core,
-          validator-split-server,
-        ]
-    steps:
-      - uses: actions/checkout@v5
-      - name: Set up Java JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: zulu
-          java-version: 25
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.13'
-      - name: Update submodules
-        run: python checker.py update
-      - name: Run target ${{ matrix.target }}
-        run: ant -f build/build.xml ${{ matrix.target }}
-
-  ant-clean:
-    name: Ant clean
-    needs: prep
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - name: Set up Java JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: zulu
-          java-version: 25
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.13'
-      - name: Update submodules
-        run: python checker.py update
-      - name: Prepare experiment
-        run: |
-          tar -cf /tmp/archive.tar .
-          mkdir -p _reference
-          mkdir -p _experiment
-          tar -C _reference -xf /tmp/archive.tar
-          tar -C _experiment -xf /tmp/archive.tar
-      - name: Run experiment
-        run: |
-          cd _experiment
-          ant -f build/build.xml jar war
-          ant -f build/build.xml distclean
-      - name: Check differences
-        run: diff -r _reference _experiment
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build with Maven
+        run: mvn -B verify
