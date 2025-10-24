@@ -1,5 +1,0 @@
-<!ENTITY % e1 SYSTEM "046.ent">
-<!ENTITY % e2 "%e1;">
-<!ENTITY e3 "%e2;">
-<!ELEMENT doc EMPTY>
-
