@@ -1,4 +1,0 @@
-<!ENTITY % f "f">
-<!ENTITY % oo "oo">
-<!ENTITY % foo "%f;%oo;">
-<!ELEMENT %foo; EMPTY>

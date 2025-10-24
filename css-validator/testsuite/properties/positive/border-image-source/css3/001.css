@@ -1,4 +1,0 @@
-a { border-image-source: none }
-b { border-image-source: url(img/foo.jpg) }
-y { border-image-source: initial }
-z { border-image-source: inherit }
