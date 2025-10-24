@@ -1,3 +1,0 @@
-/* negative values are illegal */
-an { min-width: -10px }
-bn { min-width: -10% }

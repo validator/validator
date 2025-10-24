@@ -1,7 +1,0 @@
-a { overflow-wrap: normal; }
-b { overflow-wrap: break-word; }
-c { overflow-wrap: break-spaces; }
-d { overflow-wrap: break-word break-spaces; }
-e { overflow-wrap: break-spaces break-word; }
-y { overflow-wrap: inherit; }
-z { overflow-wrap: initial; }
