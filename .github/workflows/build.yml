@@ -217,3 +217,26 @@ jobs:
           ant -f build/build.xml distclean
       - name: Check differences
         run: diff -r _reference _experiment
+
+  test-message-check:
+    name: tests/message.json check
+    needs: prep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Java JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 25
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Update submodules
+        run: python checker.py update
+      - name: Build vnu.jar
+        run: python checker.py --version="$version" build
+      - name: Rebuild tests/messages.json
+        run: make VNUJAR=../build/dist/vnu.jar  -C tests/ messages.json
+      - name: Check if there are changes to messages.json
+        run: cd tests && git diff --exit-code messages.json
