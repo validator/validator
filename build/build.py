@@ -59,7 +59,6 @@ try:
 except ImportError:
     CAFILE = None
 from pathlib import Path
-import yaml
 
 javaTargetVersion = '8'
 dockerCmd = 'docker'
