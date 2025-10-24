@@ -1,0 +1,4 @@
+a { min-height: 1px }
+b { min-height: 0.01% }
+c { min-height: 0 }
+z { min-height: inherit }

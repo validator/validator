@@ -1,0 +1,146 @@
+a {
+    /* margin */
+    margin-top: 0 inherit;
+    margin-top: inherit 0;
+    margin-right: 0 inherit;
+    margin-right: inherit 0;
+    margin-bottom: 0 inherit;
+    margin-bottom: inherit 0;
+    margin-left: 0 inherit;
+    margin-left: inherit 0;
+
+    margin: 0 inherit;
+    margin: inherit 0;
+    margin: inherit 0 0;
+    margin: 0 inherit 0;
+    margin: 0 0 inherit;
+    margin: inherit 0 0 0;
+    margin: 0 inherit 0 0;
+    margin: 0 0 inherit 0;
+    margin: 0 0 0 inherit;
+
+    /* padding */
+    padding-top: 0 inherit;
+    padding-top: inherit 0;
+    padding-right: 0 inherit;
+    padding-right: inherit 0;
+    padding-bottom: 0 inherit;
+    padding-bottom: inherit 0;
+    padding-left: 0 inherit;
+    padding-left: inherit 0;
+
+    padding: 0 inherit;
+    padding: inherit 0;
+    padding: inherit 0 0;
+    padding: 0 inherit 0;
+    padding: 0 0 inherit;
+    padding: inherit 0 0 0;
+    padding: 0 inherit 0 0;
+    padding: 0 0 inherit 0;
+    padding: 0 0 0 inherit;
+
+    /* borders */
+    border-top-width: 0 inherit;
+    border-top-width: inherit 0;
+    border-right-width: 0 inherit;
+    border-right-width: inherit 0;
+    border-bottom-width: 0 inherit;
+    border-bottom-width: inherit 0;
+    border-left-width: 0 inherit;
+    border-left-width: inherit 0;
+
+    border-width: 0 inherit;
+    border-width: inherit 0;
+    border-width: inherit 0 0;
+    border-width: 0 inherit 0;
+    border-width: 0 0 inherit;
+    border-width: inherit 0 0 0;
+    border-width: 0 inherit 0 0;
+    border-width: 0 0 inherit 0;
+    border-width: 0 0 0 inherit;
+
+    border-top-color: #ffffff inherit;
+    border-top-color: inherit #ffffff;
+    border-right-color: #ffffff inherit;
+    border-right-color: inherit #ffffff;
+    border-bottom-color: #ffffff inherit;
+    border-bottom-color: inherit #ffffff;
+    border-left-color: #ffffff inherit;
+    border-left-color: inherit #ffffff;
+
+    border-color: inherit #ffffff;
+    border-color: #ffffff inherit;
+    border-color: inherit #ffffff #ffffff;
+    border-color: #ffffff inherit #ffffff;
+    border-color: #ffffff #ffffff inherit;
+    border-color: inherit #ffffff #ffffff #ffffff;
+    border-color: #ffffff inherit #ffffff #ffffff;
+    border-color: #ffffff #ffffff inherit #ffffff;
+    border-color: #ffffff #ffffff #ffffff inherit;
+
+    border-top-style: solid inherit;
+    border-top-style: inherit solid;
+    border-right-style: solid inherit;
+    border-right-style: inherit solid;
+    border-bottom-style: solid inherit;
+    border-bottom-style: inherit solid;
+    border-left-style: solid inherit;
+    border-left-style: inherit solid;
+
+    border-style: inherit solid;
+    border-style: solid inherit;
+    border-style: inherit solid solid;
+    border-style: solid inherit solid;
+    border-style: solid solid inherit;
+    border-style: inherit solid solid solid;
+    border-style: solid inherit solid solid;
+    border-style: solid solid inherit solid;
+    border-style: solid solid solid inherit;
+
+    border-top: inherit 0 solid;
+    border-top: 0 inherit solid;
+    border-top: 0 solid inherit;
+    border-top: inherit 0 #ffffff;
+    border-top: 0 inherit #ffffff;
+    border-top: 0 #ffffff inherit;
+    border-top: inherit #ffffff solid;
+    border-top: #ffffff inherit solid;
+    border-top: inherit solid #ffffff;
+    border-right: inherit 0 solid;
+    border-right: 0 inherit solid;
+    border-right: 0 solid inherit;
+    border-right: inherit 0 #ffffff;
+    border-right: 0 inherit #ffffff;
+    border-right: 0 #ffffff inherit;
+    border-right: inherit #ffffff solid;
+    border-right: #ffffff inherit solid;
+    border-right: inherit solid #ffffff;
+    border-bottom: inherit 0 solid;
+    border-bottom: 0 inherit solid;
+    border-bottom: 0 solid inherit;
+    border-bottom: inherit 0 #ffffff;
+    border-bottom: 0 inherit #ffffff;
+    border-bottom: 0 #ffffff inherit;
+    border-bottom: inherit #ffffff solid;
+    border-bottom: #ffffff inherit solid;
+    border-bottom: inherit solid #ffffff;
+    border-left: inherit 0 solid;
+    border-left: 0 inherit solid;
+    border-left: 0 solid inherit;
+    border-left: inherit 0 #ffffff;
+    border-left: 0 inherit #ffffff;
+    border-left: 0 #ffffff inherit;
+    border-left: inherit #ffffff solid;
+    border-left: #ffffff inherit solid;
+    border-left: inherit solid #ffffff;
+
+    border: inherit 0 solid;
+    border: 0 inherit solid;
+    border: 0 solid inherit;
+    border: inherit 0 #ffffff;
+    border: 0 inherit #ffffff;
+    border: 0 #ffffff inherit;
+    border: inherit #ffffff solid;
+    border: #ffffff inherit solid;
+    border: inherit solid #ffffff;
+}

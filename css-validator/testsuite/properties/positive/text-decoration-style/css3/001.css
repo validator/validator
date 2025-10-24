@@ -1,0 +1,7 @@
+tds1    { text-decoration-style: solid }
+tds2    { text-decoration-style: double }
+tds3    { text-decoration-style: dotted }
+tds4    { text-decoration-style: dashed }
+tds5    { text-decoration-style: wavy }
+y    { text-decoration-style: initial }
+z    { text-decoration-style: inherit }

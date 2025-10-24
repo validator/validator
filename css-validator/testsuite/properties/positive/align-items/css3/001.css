@@ -1,0 +1,7 @@
+a { align-items: flex-start }
+b { align-items: flex-end }
+c { align-items: center }
+d { align-items: baseline }
+e { align-items: stretch }
+y { align-items: initial }
+z { align-items: inherit }

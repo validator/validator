@@ -1,0 +1,316 @@
+z { background-size: inherit }
+y { background-size: initial }
+bgsize1 { background-size: 500px }
+bgsize2 { background-size: 500px 500px }
+bgsize3 { background-size: 500px 80% }
+bgsize4 { background-size: 500px auto }
+bgsize5 { background-size: 80% }
+bgsize6 { background-size: 80% 500px }
+bgsize7 { background-size: 80% 80% }
+bgsize8 { background-size: 80% auto }
+bgsize9 { background-size: auto }
+bgsize10 { background-size: auto 500px }
+bgsize11 { background-size: auto 80% }
+bgsize12 { background-size: auto auto }
+bgsize13 { background-size: contain }
+bgsize14 { background-size: cover }
+bgsize15 { background-size: 500px , 500px  }
+bgsize16 { background-size: 500px , 500px , 500px  }
+bgsize17 { background-size: 500px , 500px , contain }
+bgsize18 { background-size: 500px , 500px , cover }
+bgsize19 { background-size: 500px , contain }
+bgsize20 { background-size: 500px , contain, 500px  }
+bgsize21 { background-size: 500px , contain, contain }
+bgsize22 { background-size: 500px , contain, cover }
+bgsize23 { background-size: 500px , cover }
+bgsize24 { background-size: 500px , cover, 500px  }
+bgsize25 { background-size: 500px , cover, contain }
+bgsize26 { background-size: 500px , cover, cover }
+bgsize27 { background-size: 500px 500px , 500px 500px  }
+bgsize28 { background-size: 500px 500px , 500px 500px , 500px 500px  }
+bgsize29 { background-size: 500px 500px , 500px 500px , contain }
+bgsize30 { background-size: 500px 500px , 500px 500px , cover }
+bgsize31 { background-size: 500px 500px , contain }
+bgsize32 { background-size: 500px 500px , contain, 500px 500px  }
+bgsize33 { background-size: 500px 500px , contain, contain }
+bgsize34 { background-size: 500px 500px , contain, cover }
+bgsize35 { background-size: 500px 500px , cover }
+bgsize36 { background-size: 500px 500px , cover, 500px 500px  }
+bgsize37 { background-size: 500px 500px , cover, contain }
+bgsize38 { background-size: 500px 500px , cover, cover }
+bgsize39 { background-size: 500px 80% , 500px 80%  }
+bgsize40 { background-size: 500px 80% , 500px 80% , 500px 80%  }
+bgsize41 { background-size: 500px 80% , 500px 80% , contain }
+bgsize42 { background-size: 500px 80% , 500px 80% , cover }
+bgsize43 { background-size: 500px 80% , contain }
+bgsize44 { background-size: 500px 80% , contain, 500px 80%  }
+bgsize45 { background-size: 500px 80% , contain, contain }
+bgsize46 { background-size: 500px 80% , contain, cover }
+bgsize47 { background-size: 500px 80% , cover }
+bgsize48 { background-size: 500px 80% , cover, 500px 80%  }
+bgsize49 { background-size: 500px 80% , cover, contain }
+bgsize50 { background-size: 500px 80% , cover, cover }
+bgsize51 { background-size: 500px auto , 500px auto  }
+bgsize52 { background-size: 500px auto , 500px auto , 500px auto  }
+bgsize53 { background-size: 500px auto , 500px auto , contain }
+bgsize54 { background-size: 500px auto , 500px auto , cover }
+bgsize55 { background-size: 500px auto , contain }
+bgsize56 { background-size: 500px auto , contain, 500px auto  }
+bgsize57 { background-size: 500px auto , contain, contain }
+bgsize58 { background-size: 500px auto , contain, cover }
+bgsize59 { background-size: 500px auto , cover }
+bgsize60 { background-size: 500px auto , cover, 500px auto  }
+bgsize61 { background-size: 500px auto , cover, contain }
+bgsize62 { background-size: 500px auto , cover, cover }
+bgsize63 { background-size: 80% , 80%  }
+bgsize64 { background-size: 80% , 80% , 80%  }
+bgsize65 { background-size: 80% , 80% , contain }
+bgsize66 { background-size: 80% , 80% , cover }
+bgsize67 { background-size: 80% , contain }
+bgsize68 { background-size: 80% , contain, 80%  }
+bgsize69 { background-size: 80% , contain, contain }
+bgsize70 { background-size: 80% , contain, cover }
+bgsize71 { background-size: 80% , cover }
+bgsize72 { background-size: 80% , cover, 80%  }
+bgsize73 { background-size: 80% , cover, contain }
+bgsize74 { background-size: 80% , cover, cover }
+bgsize75 { background-size: 80% 500px , 80% 500px  }
+bgsize76 { background-size: 80% 500px , 80% 500px , 80% 500px  }
+bgsize77 { background-size: 80% 500px , 80% 500px , contain }
+bgsize78 { background-size: 80% 500px , 80% 500px , cover }
+bgsize79 { background-size: 80% 500px , contain }
+bgsize80 { background-size: 80% 500px , contain, 80% 500px  }
+bgsize81 { background-size: 80% 500px , contain, contain }
+bgsize82 { background-size: 80% 500px , contain, cover }
+bgsize83 { background-size: 80% 500px , cover }
+bgsize84 { background-size: 80% 500px , cover, 80% 500px  }
+bgsize85 { background-size: 80% 500px , cover, contain }
+bgsize86 { background-size: 80% 500px , cover, cover }
+bgsize87 { background-size: 80% 80% , 80% 80%  }
+bgsize88 { background-size: 80% 80% , 80% 80% , 80% 80%  }
+bgsize89 { background-size: 80% 80% , 80% 80% , contain }
+bgsize90 { background-size: 80% 80% , 80% 80% , cover }
+bgsize91 { background-size: 80% 80% , contain }
+bgsize92 { background-size: 80% 80% , contain, 80% 80%  }
+bgsize93 { background-size: 80% 80% , contain, contain }
+bgsize94 { background-size: 80% 80% , contain, cover }
+bgsize95 { background-size: 80% 80% , cover }
+bgsize96 { background-size: 80% 80% , cover, 80% 80%  }
+bgsize97 { background-size: 80% 80% , cover, contain }
+bgsize98 { background-size: 80% 80% , cover, cover }
+bgsize99 { background-size: 80% auto , 80% auto  }
+bgsize100 { background-size: 80% auto , 80% auto , 80% auto  }
+bgsize101 { background-size: 80% auto , 80% auto , contain }
+bgsize102 { background-size: 80% auto , 80% auto , cover }
+bgsize103 { background-size: 80% auto , contain }
+bgsize104 { background-size: 80% auto , contain, 80% auto  }
+bgsize105 { background-size: 80% auto , contain, contain }
+bgsize106 { background-size: 80% auto , contain, cover }
+bgsize107 { background-size: 80% auto , cover }
+bgsize108 { background-size: 80% auto , cover, 80% auto  }
+bgsize109 { background-size: 80% auto , cover, contain }
+bgsize110 { background-size: 80% auto , cover, cover }
+bgsize111 { background-size: auto , auto  }
+bgsize112 { background-size: auto , auto , auto  }
+bgsize113 { background-size: auto , auto , contain }
+bgsize114 { background-size: auto , auto , cover }
+bgsize115 { background-size: auto , contain }
+bgsize116 { background-size: auto , contain, auto  }
+bgsize117 { background-size: auto , contain, contain }
+bgsize118 { background-size: auto , contain, cover }
+bgsize119 { background-size: auto , cover }
+bgsize120 { background-size: auto , cover, auto  }
+bgsize121 { background-size: auto , cover, contain }
+bgsize122 { background-size: auto , cover, cover }
+bgsize123 { background-size: auto 500px , auto 500px  }
+bgsize124 { background-size: auto 500px , auto 500px , auto 500px  }
+bgsize125 { background-size: auto 500px , auto 500px , contain }
+bgsize126 { background-size: auto 500px , auto 500px , cover }
+bgsize127 { background-size: auto 500px , contain }
+bgsize128 { background-size: auto 500px , contain, auto 500px  }
+bgsize129 { background-size: auto 500px , contain, contain }
+bgsize130 { background-size: auto 500px , contain, cover }
+bgsize131 { background-size: auto 500px , cover }
+bgsize132 { background-size: auto 500px , cover, auto 500px  }
+bgsize133 { background-size: auto 500px , cover, contain }
+bgsize134 { background-size: auto 500px , cover, cover }
+bgsize135 { background-size: auto 80% , auto 80%  }
+bgsize136 { background-size: auto 80% , auto 80% , auto 80%  }
+bgsize137 { background-size: auto 80% , auto 80% , contain }
+bgsize138 { background-size: auto 80% , auto 80% , cover }
+bgsize139 { background-size: auto 80% , contain }
+bgsize140 { background-size: auto 80% , contain, auto 80%  }
+bgsize141 { background-size: auto 80% , contain, contain }
+bgsize142 { background-size: auto 80% , contain, cover }
+bgsize143 { background-size: auto 80% , cover }
+bgsize144 { background-size: auto 80% , cover, auto 80%  }
+bgsize145 { background-size: auto 80% , cover, contain }
+bgsize146 { background-size: auto 80% , cover, cover }
+bgsize147 { background-size: auto auto , auto auto  }
+bgsize148 { background-size: auto auto , auto auto , auto auto  }
+bgsize149 { background-size: auto auto , auto auto , contain }
+bgsize150 { background-size: auto auto , auto auto , cover }
+bgsize151 { background-size: auto auto , contain }
+bgsize152 { background-size: auto auto , contain, auto auto  }
+bgsize153 { background-size: auto auto , contain, contain }
+bgsize154 { background-size: auto auto , contain, cover }
+bgsize155 { background-size: auto auto , cover }
+bgsize156 { background-size: auto auto , cover, auto auto  }
+bgsize157 { background-size: auto auto , cover, contain }
+bgsize158 { background-size: auto auto , cover, cover }
+bgsize159 { background-size: contain, 500px  }
+bgsize160 { background-size: contain, 500px , 500px  }
+bgsize161 { background-size: contain, 500px , contain }
+bgsize162 { background-size: contain, 500px , cover }
+bgsize163 { background-size: contain, 500px 500px  }
+bgsize164 { background-size: contain, 500px 500px , 500px 500px  }
+bgsize165 { background-size: contain, 500px 500px , contain }
+bgsize166 { background-size: contain, 500px 500px , cover }
+bgsize167 { background-size: contain, 500px 80%  }
+bgsize168 { background-size: contain, 500px 80% , 500px 80%  }
+bgsize169 { background-size: contain, 500px 80% , contain }
+bgsize170 { background-size: contain, 500px 80% , cover }
+bgsize171 { background-size: contain, 500px auto  }
+bgsize172 { background-size: contain, 500px auto , 500px auto  }
+bgsize173 { background-size: contain, 500px auto , contain }
+bgsize174 { background-size: contain, 500px auto , cover }
+bgsize175 { background-size: contain, 80%  }
+bgsize176 { background-size: contain, 80% , 80%  }
+bgsize177 { background-size: contain, 80% , contain }
+bgsize178 { background-size: contain, 80% , cover }
+bgsize179 { background-size: contain, 80% 500px  }
+bgsize180 { background-size: contain, 80% 500px , 80% 500px  }
+bgsize181 { background-size: contain, 80% 500px , contain }
+bgsize182 { background-size: contain, 80% 500px , cover }
+bgsize183 { background-size: contain, 80% 80%  }
+bgsize184 { background-size: contain, 80% 80% , 80% 80%  }
+bgsize185 { background-size: contain, 80% 80% , contain }
+bgsize186 { background-size: contain, 80% 80% , cover }
+bgsize187 { background-size: contain, 80% auto  }
+bgsize188 { background-size: contain, 80% auto , 80% auto  }
+bgsize189 { background-size: contain, 80% auto , contain }
+bgsize190 { background-size: contain, 80% auto , cover }
+bgsize191 { background-size: contain, auto  }
+bgsize192 { background-size: contain, auto , auto  }
+bgsize193 { background-size: contain, auto , contain }
+bgsize194 { background-size: contain, auto , cover }
+bgsize195 { background-size: contain, auto 500px  }
+bgsize196 { background-size: contain, auto 500px , auto 500px  }
+bgsize197 { background-size: contain, auto 500px , contain }
+bgsize198 { background-size: contain, auto 500px , cover }
+bgsize199 { background-size: contain, auto 80%  }
+bgsize200 { background-size: contain, auto 80% , auto 80%  }
+bgsize201 { background-size: contain, auto 80% , contain }
+bgsize202 { background-size: contain, auto 80% , cover }
+bgsize203 { background-size: contain, auto auto  }
+bgsize204 { background-size: contain, auto auto , auto auto  }
+bgsize205 { background-size: contain, auto auto , contain }
+bgsize206 { background-size: contain, auto auto , cover }
+bgsize207 { background-size: contain, contain }
+bgsize208 { background-size: contain, contain, 500px  }
+bgsize209 { background-size: contain, contain, 500px 500px  }
+bgsize210 { background-size: contain, contain, 500px 80%  }
+bgsize211 { background-size: contain, contain, 500px auto  }
+bgsize212 { background-size: contain, contain, 80%  }
+bgsize213 { background-size: contain, contain, 80% 500px  }
+bgsize214 { background-size: contain, contain, 80% 80%  }
+bgsize215 { background-size: contain, contain, 80% auto  }
+bgsize216 { background-size: contain, contain, auto  }
+bgsize217 { background-size: contain, contain, auto 500px  }
+bgsize218 { background-size: contain, contain, auto 80%  }
+bgsize219 { background-size: contain, contain, auto auto  }
+bgsize220 { background-size: contain, contain, contain }
+bgsize221 { background-size: contain, contain, cover }
+bgsize222 { background-size: contain, cover }
+bgsize223 { background-size: contain, cover, 500px  }
+bgsize224 { background-size: contain, cover, 500px 500px  }
+bgsize225 { background-size: contain, cover, 500px 80%  }
+bgsize226 { background-size: contain, cover, 500px auto  }
+bgsize227 { background-size: contain, cover, 80%  }
+bgsize228 { background-size: contain, cover, 80% 500px  }
+bgsize229 { background-size: contain, cover, 80% 80%  }
+bgsize230 { background-size: contain, cover, 80% auto  }
+bgsize231 { background-size: contain, cover, auto  }
+bgsize232 { background-size: contain, cover, auto 500px  }
+bgsize233 { background-size: contain, cover, auto 80%  }
+bgsize234 { background-size: contain, cover, auto auto  }
+bgsize235 { background-size: contain, cover, contain }
+bgsize236 { background-size: contain, cover, cover }
+bgsize237 { background-size: cover, 500px  }
+bgsize238 { background-size: cover, 500px , 500px  }
+bgsize239 { background-size: cover, 500px , contain }
+bgsize240 { background-size: cover, 500px , cover }
+bgsize241 { background-size: cover, 500px 500px  }
+bgsize242 { background-size: cover, 500px 500px , 500px 500px  }
+bgsize243 { background-size: cover, 500px 500px , contain }
+bgsize244 { background-size: cover, 500px 500px , cover }
+bgsize245 { background-size: cover, 500px 80%  }
+bgsize246 { background-size: cover, 500px 80% , 500px 80%  }
+bgsize247 { background-size: cover, 500px 80% , contain }
+bgsize248 { background-size: cover, 500px 80% , cover }
+bgsize249 { background-size: cover, 500px auto  }
+bgsize250 { background-size: cover, 500px auto , 500px auto  }
+bgsize251 { background-size: cover, 500px auto , contain }
+bgsize252 { background-size: cover, 500px auto , cover }
+bgsize253 { background-size: cover, 80%  }
+bgsize254 { background-size: cover, 80% , 80%  }
+bgsize255 { background-size: cover, 80% , contain }
+bgsize256 { background-size: cover, 80% , cover }
+bgsize257 { background-size: cover, 80% 500px  }
+bgsize258 { background-size: cover, 80% 500px , 80% 500px  }
+bgsize259 { background-size: cover, 80% 500px , contain }
+bgsize260 { background-size: cover, 80% 500px , cover }
+bgsize261 { background-size: cover, 80% 80%  }
+bgsize262 { background-size: cover, 80% 80% , 80% 80%  }
+bgsize263 { background-size: cover, 80% 80% , contain }
+bgsize264 { background-size: cover, 80% 80% , cover }
+bgsize265 { background-size: cover, 80% auto  }
+bgsize266 { background-size: cover, 80% auto , 80% auto  }
+bgsize267 { background-size: cover, 80% auto , contain }
+bgsize268 { background-size: cover, 80% auto , cover }
+bgsize269 { background-size: cover, auto  }
+bgsize270 { background-size: cover, auto , auto  }
+bgsize271 { background-size: cover, auto , contain }
+bgsize272 { background-size: cover, auto , cover }
+bgsize273 { background-size: cover, auto 500px  }
+bgsize274 { background-size: cover, auto 500px , auto 500px  }
+bgsize275 { background-size: cover, auto 500px , contain }
+bgsize276 { background-size: cover, auto 500px , cover }
+bgsize277 { background-size: cover, auto 80%  }
+bgsize278 { background-size: cover, auto 80% , auto 80%  }
+bgsize279 { background-size: cover, auto 80% , contain }
+bgsize280 { background-size: cover, auto 80% , cover }
+bgsize281 { background-size: cover, auto auto  }
+bgsize282 { background-size: cover, auto auto , auto auto  }
+bgsize283 { background-size: cover, auto auto , contain }
+bgsize284 { background-size: cover, auto auto , cover }
+bgsize285 { background-size: cover, contain }
+bgsize286 { background-size: cover, contain, 500px  }
+bgsize287 { background-size: cover, contain, 500px 500px  }
+bgsize288 { background-size: cover, contain, 500px 80%  }
+bgsize289 { background-size: cover, contain, 500px auto  }
+bgsize290 { background-size: cover, contain, 80%  }
+bgsize291 { background-size: cover, contain, 80% 500px  }
+bgsize292 { background-size: cover, contain, 80% 80%  }
+bgsize293 { background-size: cover, contain, 80% auto  }
+bgsize294 { background-size: cover, contain, auto  }
+bgsize295 { background-size: cover, contain, auto 500px  }
+bgsize296 { background-size: cover, contain, auto 80%  }
+bgsize297 { background-size: cover, contain, auto auto  }
+bgsize298 { background-size: cover, contain, contain }
+bgsize299 { background-size: cover, contain, cover }
+bgsize300 { background-size: cover, cover }
+bgsize301 { background-size: cover, cover, 500px  }
+bgsize302 { background-size: cover, cover, 500px 500px  }
+bgsize303 { background-size: cover, cover, 500px 80%  }
+bgsize304 { background-size: cover, cover, 500px auto  }
+bgsize305 { background-size: cover, cover, 80%  }
+bgsize306 { background-size: cover, cover, 80% 500px  }
+bgsize307 { background-size: cover, cover, 80% 80%  }
+bgsize308 { background-size: cover, cover, 80% auto  }
+bgsize309 { background-size: cover, cover, auto  }
+bgsize310 { background-size: cover, cover, auto 500px  }
+bgsize311 { background-size: cover, cover, auto 80%  }
+bgsize312 { background-size: cover, cover, auto auto  }
+bgsize313 { background-size: cover, cover, contain }
+bgsize314 { background-size: cover, cover, cover }

@@ -1,0 +1,78 @@
+bt1 { border-left: #f00  }
+bt2 { border-left: #f00 dotted  }
+bt3 { border-left: #f00 dotted 1px   }
+bt4 { border-left: #f00 dotted thin  }
+bt5 { border-left: #f00 1px  }
+bt6 { border-left: #f00 1px dotted   }
+bt7 { border-left: #f00 1px none  }
+bt8 { border-left: #f00 none  }
+bt9 { border-left: #f00 none 1px  }
+bt10 { border-left: #f00 none thin   }
+bt11 { border-left: #f00 thin  }
+bt12 { border-left: #f00 thin dotted  }
+bt13 { border-left: #f00 thin none  }
+bt14 { border-left: dotted  }
+bt15 { border-left: dotted #f00  }
+bt16 { border-left: dotted #f00 1px   }
+bt17 { border-left: dotted #f00 thin  }
+bt18 { border-left: dotted 1px  }
+bt19 { border-left: dotted 1px  #f00  }
+bt20 { border-left: dotted 1px red  }
+bt21 { border-left: dotted red  }
+bt22 { border-left: dotted red 1px  }
+bt23 { border-left: dotted red thin  }
+bt24 { border-left: dotted thin  }
+bt25 { border-left: dotted thin #f00  }
+bt26 { border-left: dotted thin red  }
+bt27 { border-left: 1px  }
+bt28 { border-left: 1px #f00  }
+bt29 { border-left: 1px #f00 dotted   }
+bt30 { border-left: 1px #f00 none  }
+bt31 { border-left: 1px dotted  }
+bt32 { border-left: 1px dotted  #f00  }
+bt33 { border-left: 1px dotted red  }
+bt34 { border-left: 1px none  }
+bt35 { border-left: 1px none #f00  }
+bt36 { border-left: 1px none red  }
+bt37 { border-left: 1px red  }
+bt38 { border-left: 1px red dotted  }
+bt39 { border-left: 1px red none  }
+bt40 { border-left: none  }
+bt41 { border-left: none #f00  }
+bt42 { border-left: none #f00 1px  }
+bt43 { border-left: none #f00 thin  }
+bt44 { border-left: none 1px  }
+bt45 { border-left: none 1px #f00  }
+bt46 { border-left: none 1px red  }
+bt47 { border-left: none red  }
+bt48 { border-left: none red 1px  }
+bt49 { border-left: none red thin  }
+bt50 { border-left: none thin  }
+bt51 { border-left: none thin #f00  }
+bt52 { border-left: none thin red  }
+bt53 { border-left: red  }
+bt54 { border-left: red dotted  }
+bt55 { border-left: red dotted 1px  }
+bt56 { border-left: red dotted thin  }
+bt57 { border-left: red 1px  }
+bt58 { border-left: red 1px dotted  }
+bt59 { border-left: red 1px none  }
+bt60 { border-left: red none  }
+bt61 { border-left: red none 1px  }
+bt62 { border-left: red none thin  }
+bt63 { border-left: red thin  }
+bt64 { border-left: red thin dotted  }
+bt65 { border-left: red thin none  }
+bt66 { border-left: thin  }
+bt67 { border-left: thin #f00  }
+bt68 { border-left: thin #f00 dotted   }
+bt69 { border-left: thin #f00 none  }
+bt70 { border-left: thin dotted  }
+bt71 { border-left: thin dotted  #f00  }
+bt72 { border-left: thin dotted red  }
+bt73 { border-left: thin none  }
+bt74 { border-left: thin none #f00  }
+bt75 { border-left: thin none red  }
+bt76 { border-left: thin red  }
+bt77 { border-left: thin red dotted  }
+bt78 { border-left: thin red none  }

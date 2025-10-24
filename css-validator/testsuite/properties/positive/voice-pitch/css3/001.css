@@ -1,0 +1,33 @@
+vp1 { voice-pitch: +150Hz absolute }
+vp2 { voice-pitch: absolute 180Hz }
+vp3 { voice-pitch: absolute -20Hz }
+vp4 { voice-pitch: +2kHz }
+vp5 { voice-pitch: -1000Hz }
+vp6 { voice-pitch: 250Hz }
+vp7 { voice-pitch: 20% }
+vp8 { voice-pitch: +25% }
+vp9 { voice-pitch: +1.2st }
+vp10 { voice-pitch: -0.8st }
+vp11 { voice-pitch: x-low  }
+vp12 { voice-pitch: low  }
+vp13 { voice-pitch: medium  }
+vp14 { voice-pitch: high  }
+vp15 { voice-pitch: x-high }
+vp16 { voice-pitch: +2kHz x-low }
+vp17 { voice-pitch: -1000Hz low }
+vp18 { voice-pitch: 250Hz medium }
+vp19 { voice-pitch: 20% high }
+vp20 { voice-pitch: +25% x-high }
+vp21 { voice-pitch: +1.2st medium }
+vp22 { voice-pitch: -0.8st low }
+vp23 { voice-pitch: low +2kHz }
+vp24 { voice-pitch: medium -1000Hz }
+vp25 { voice-pitch: x-low 250Hz }
+vp26 { voice-pitch: medium 20% }
+vp27 { voice-pitch: high +25% }
+vp28 { voice-pitch: high +1.2st }
+vp29 { voice-pitch: x-high -0.8st }
+vp30 { voice-pitch: 0.21kHz }
+vp31 { voice-pitch: absolute 0.21kHz }
+y  { voice-pitch: initial }
+z  { voice-pitch: inherit }

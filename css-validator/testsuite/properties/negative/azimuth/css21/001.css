@@ -1,0 +1,6 @@
+/* azimuth is between -360deg and 360deg. The following are out of range */
+an { azimuth: 720deg }
+bn { azimuth: -120grad}
+cn { azimuth: 7rad}
+/* turn is not a valid angle unit in CSS2 nor 2.1 (introduced in CSS3) */
+dn { azimuth: 1turn }

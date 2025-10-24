@@ -1,0 +1,19 @@
+a {
+    cursor: inherit, url("dsf"), url("dsf"), auto;
+    cursor: url("dsf"), inherit, url("dsf"), auto;
+    cursor: url("dsf"), url("dsf"), inherit, auto;
+    cursor: url("dsf"), url("dsf"), url("dsf"), inherit;
+
+    outline: inherit solid 1px;
+    outline: solid inherit 1px;
+    outline: solid 1px inherit;
+
+    outline: inherit black 1px;
+    outline: black inherit 1px;
+    outline: black 1px inherit;
+
+    outline: inherit black solid;
+    outline: black inherit solid;
+    outline: black solid inherit;
+}
+    

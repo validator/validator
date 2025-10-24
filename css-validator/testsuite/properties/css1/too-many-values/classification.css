@@ -1,0 +1,28 @@
+a {
+    display: inline block;
+    display: block inline;
+    display: list-item none run-in;
+    display: run-in table table-row;
+
+    white-space: normal pre nowrap;
+    white-space: pre normal;
+    white-space: nowrap pre;
+
+    list-style-type: disc circle;
+    list-style-type: circle disc;
+    list-style-type: square none;
+    list-style-type: none square;
+    list-style-type: decimal georgian armenian circle;
+
+    list-style-image: url("image.png") none;
+    list-style-image: none url("image.png");
+
+    list-style-position: inside outside;
+    list-style-position: outside inside;
+
+    list-style: disc circle;
+    list-style: circle disc;
+    list-style: decimal inside outside;
+    list-style: upper-latin url("image.png") outside decimal;
+    list-style: url("image.png") armenian inside url("image2.png");
+}

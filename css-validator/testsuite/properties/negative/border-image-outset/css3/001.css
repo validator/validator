@@ -1,0 +1,4 @@
+a { border-image-outset: -10 }
+b { border-image-outset: 10 -10 }
+c { border-image-outset: 0 -10 10 5 }
+d { border-image-outset: -10pt }

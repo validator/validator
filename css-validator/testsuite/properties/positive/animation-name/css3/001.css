@@ -1,0 +1,8 @@
+a { animation-name: none }
+b { animation-name: none, none }
+c { animation-name: chocolat, -saucisson }
+d { animation-name: chocolat, none, saucisson }
+e { animation-name: none, saucisson, none }
+f { animation-name: chocolat, _01234 }
+y { animation-name: initial }
+z { animation-name: inherit }

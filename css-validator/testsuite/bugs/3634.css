@@ -1,0 +1,5 @@
+/* this should be illegal in CSS 2 and 2.1, see
+http://www.w3.org/Bugs/Public/show_bug.cgi?id=3634 */
+
+element {color:\ red; }
+

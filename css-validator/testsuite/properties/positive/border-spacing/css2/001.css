@@ -1,0 +1,7 @@
+a { border-spacing: 0 }
+b { border-spacing: 10pt}
+c { border-spacing: 0 0}
+d { border-spacing: 0 10px}
+e { border-spacing: 10em 0}
+f { border-spacing: 1em 10px}
+z { border-spacing: inherit}

@@ -1,0 +1,220 @@
+y { animation:   initial }
+z { animation:   inherit }
+anim1   { animation:   cubic-bezier(1,0,0.5,-10)  }
+anim2   { animation:   cubic-bezier(1,0,0.5,-10)  3s  }
+anim3   { animation:   cubic-bezier(1,0,0.5,-10)  3s  -1s  }
+anim4   { animation:   cubic-bezier(1,0,0.5,-10)  3s  3s  all  }
+anim5   { animation:   cubic-bezier(1,0,0.5,-10)  3s  -1s  chocolat  }
+anim6   { animation:   cubic-bezier(1,0,0.5,-10)  3s  3s  none  }
+anim7   { animation:   cubic-bezier(1,0,0.5,-10)  3s  all  }
+anim8   { animation:   cubic-bezier(1,0,0.5,-10)  3s  all  -1s  }
+anim9   { animation:   cubic-bezier(1,0,0.5,-10)  3s  chocolat  }
+anim10  { animation:   cubic-bezier(1,0,0.5,-10)  3s  chocolat  3s  }
+anim11  { animation:   cubic-bezier(1,0,0.5,-10)  3s  none  }
+anim12  { animation:   cubic-bezier(1,0,0.5,-10)  3s  none  -1s  }
+anim13  { animation:   cubic-bezier(1,0,0.5,-10)  all  }
+anim14  { animation:   cubic-bezier(1,0,0.5,-10)  all  3s  }
+anim15  { animation:   cubic-bezier(1,0,0.5,-10)  all  3s  3s  }
+anim16  { animation:   cubic-bezier(1,0,0.5,-10)  chocolat  }
+anim17  { animation:   cubic-bezier(1,0,0.5,-10)  chocolat  3s  }
+anim18  { animation:   cubic-bezier(1,0,0.5,-10)  chocolat  3s  -1s  }
+anim19  { animation:   cubic-bezier(1,0,0.5,-10)  none  }
+anim20  { animation:   cubic-bezier(1,0,0.5,-10)  none  3s  }
+anim21  { animation:   cubic-bezier(1,0,0.5,-10)  none  3s  3s  }
+anim22  { animation:   ease  }
+anim23  { animation:   ease  3s  }
+anim24  { animation:   ease  3s  -1s  }
+anim25  { animation:   ease  3s  3s  all  }
+anim26  { animation:   ease  3s  3s  chocolat  }
+anim27  { animation:   ease  3s  3s  none  }
+anim28  { animation:   ease  3s  all  }
+anim29  { animation:   ease  3s  all  3s  }
+anim30  { animation:   ease  3s  chocolat  }
+anim31  { animation:   ease  3s  chocolat  3s  }
+anim32  { animation:   ease  3s  none  }
+anim33  { animation:   ease  3s  none  3s  }
+anim34  { animation:   ease  all  }
+anim35  { animation:   ease  all  3s  }
+anim36  { animation:   ease  all  3s  3s  }
+anim37  { animation:   ease  chocolat  }
+anim38  { animation:   ease  chocolat  3s  }
+anim39  { animation:   ease  chocolat  3s  3s  }
+anim40  { animation:   ease  none  }
+anim41  { animation:   ease  none  3s  }
+anim42  { animation:   ease  none  3s  3s  }
+anim43  { animation:   steps(10, start)  }
+anim44  { animation:   steps(10, start)  3s  }
+anim45  { animation:   steps(10, start)  3s  3s  }
+anim46  { animation:   steps(10, start)  3s  3s  all  }
+anim47  { animation:   steps(10, start)  3s  3s  chocolat  }
+anim48  { animation:   steps(10, start)  3s  3s  none  }
+anim49  { animation:   steps(10, start)  3s  all  }
+anim50  { animation:   steps(10, start)  3s  all  3s  }
+anim51  { animation:   steps(10, start)  3s  chocolat  }
+anim52  { animation:   steps(10, start)  3s  chocolat  3s  }
+anim53  { animation:   steps(10, start)  3s  none  }
+anim54  { animation:   steps(10, start)  3s  none  3s  }
+anim55  { animation:   steps(10, start)  all  }
+anim56  { animation:   steps(10, start)  all  3s  }
+anim57  { animation:   steps(10, start)  all  3s  3s  }
+anim58  { animation:   steps(10, start)  chocolat  }
+anim59  { animation:   steps(10, start)  chocolat  3s  }
+anim60  { animation:   steps(10, start)  chocolat  3s  3s  }
+anim61  { animation:   steps(10, start)  none  }
+anim62  { animation:   steps(10, start)  none  3s  }
+anim63  { animation:   steps(10, start)  none  3s  3s  }
+anim64  { animation:  3s  }
+anim65  { animation:  3s   cubic-bezier(1,0,0.5,-10)  }
+anim66  { animation:  3s   cubic-bezier(1,0,0.5,-10)  3s  }
+anim67  { animation:  3s   cubic-bezier(1,0,0.5,-10)  3s  all  }
+anim68  { animation:  3s   cubic-bezier(1,0,0.5,-10)  3s  chocolat  }
+anim69  { animation:  3s   cubic-bezier(1,0,0.5,-10)  3s  none  }
+anim70  { animation:  3s   cubic-bezier(1,0,0.5,-10)  all  }
+anim71  { animation:  3s   cubic-bezier(1,0,0.5,-10)  all  3s  }
+anim72  { animation:  3s   cubic-bezier(1,0,0.5,-10)  chocolat  }
+anim73  { animation:  3s   cubic-bezier(1,0,0.5,-10)  chocolat  3s  }
+anim74  { animation:  3s   cubic-bezier(1,0,0.5,-10)  none  }
+anim75  { animation:  3s   cubic-bezier(1,0,0.5,-10)  none  3s  }
+anim76  { animation:  3s   ease  }
+anim77  { animation:  3s   ease  3s  }
+anim78  { animation:  3s   ease  3s  all  }
+anim79  { animation:  3s   ease  3s  chocolat  }
+anim80  { animation:  3s   ease  3s  none  }
+anim81  { animation:  3s   ease  all  }
+anim82  { animation:  3s   ease  all  3s  }
+anim83  { animation:  3s   ease  chocolat  }
+anim84  { animation:  3s   ease  chocolat  3s  }
+anim85  { animation:  3s   ease  none  }
+anim86  { animation:  3s   ease  none  3s  }
+anim87  { animation:  3s   steps(10, start)  }
+anim88  { animation:  3s   steps(10, start)  3s  }
+anim89  { animation:  3s   steps(10, start)  3s  all  }
+anim90  { animation:  3s   steps(10, start)  3s  chocolat  }
+anim91  { animation:  3s   steps(10, start)  3s  none  }
+anim92  { animation:  3s   steps(10, start)  all  }
+anim93  { animation:  3s   steps(10, start)  all  3s  }
+anim94  { animation:  3s   steps(10, start)  chocolat  }
+anim95  { animation:  3s   steps(10, start)  chocolat  3s  }
+anim96  { animation:  3s   steps(10, start)  none  }
+anim97  { animation:  3s   steps(10, start)  none  3s  }
+anim98  { animation:  3s  3s  }
+anim99  { animation:  3s  3s   cubic-bezier(1,0,0.5,-10)  }
+anim100 { animation:  3s  3s   cubic-bezier(1,0,0.5,-10)  all  }
+anim101 { animation:  3s  3s   cubic-bezier(1,0,0.5,-10)  chocolat  }
+anim102 { animation:  3s  3s   cubic-bezier(1,0,0.5,-10)  none  }
+anim103 { animation:  3s  3s   ease  }
+anim104 { animation:  3s  3s   ease  all  }
+anim105 { animation:  3s  3s   ease  chocolat  }
+anim106 { animation:  3s  3s   ease  none  }
+anim107 { animation:  3s  3s   steps(10, start)  }
+anim108 { animation:  3s  3s   steps(10, start)  all  }
+anim109 { animation:  3s  3s   steps(10, start)  chocolat  }
+anim110 { animation:  3s  3s   steps(10, start)  none  }
+anim111 { animation:  3s  3s  all  }
+anim112 { animation:  3s  3s  all   cubic-bezier(1,0,0.5,-10)  }
+anim113 { animation:  3s  3s  all   ease  }
+anim114 { animation:  3s  3s  all   steps(10, start)  }
+anim115 { animation:  3s  3s  chocolat  }
+anim116 { animation:  3s  3s  chocolat   cubic-bezier(1,0,0.5,-10)  }
+anim117 { animation:  3s  3s  chocolat   ease  }
+anim118 { animation:  3s  3s  chocolat   steps(10, start)  }
+anim119 { animation:  3s  3s  none  }
+anim120 { animation:  3s  3s  none   cubic-bezier(1,0,0.5,-10)  }
+anim121 { animation:  3s  3s  none   ease  }
+anim122 { animation:  3s  3s  none   steps(10, start)  }
+anim123 { animation:  3s  all  }
+anim124 { animation:  3s  all   cubic-bezier(1,0,0.5,-10)  }
+anim125 { animation:  3s  all   cubic-bezier(1,0,0.5,-10)  3s  }
+anim126 { animation:  3s  all   ease  }
+anim127 { animation:  3s  all   ease  3s  }
+anim128 { animation:  3s  all   steps(10, start)  }
+anim129 { animation:  3s  all   steps(10, start)  3s  }
+anim130 { animation:  3s  all  3s  }
+anim131 { animation:  3s  all  3s   cubic-bezier(1,0,0.5,-10)  }
+anim132 { animation:  3s  all  3s   ease  }
+anim133 { animation:  3s  all  3s   steps(10, start)  }
+anim134 { animation:  3s  chocolat  }
+anim135 { animation:  3s  chocolat   cubic-bezier(1,0,0.5,-10)  }
+anim136 { animation:  3s  chocolat   cubic-bezier(1,0,0.5,-10)  3s  }
+anim137 { animation:  3s  chocolat   ease  }
+anim138 { animation:  3s  chocolat   ease  3s  }
+anim139 { animation:  3s  chocolat   steps(10, start)  }
+anim140 { animation:  3s  chocolat   steps(10, start)  3s  }
+anim141 { animation:  3s  chocolat  3s  }
+anim142 { animation:  3s  chocolat  3s   cubic-bezier(1,0,0.5,-10)  }
+anim143 { animation:  3s  chocolat  3s   ease  }
+anim144 { animation:  3s  chocolat  3s   steps(10, start)  }
+anim145 { animation:  3s  none  }
+anim146 { animation:  3s  none   cubic-bezier(1,0,0.5,-10)  }
+anim147 { animation:  3s  none   cubic-bezier(1,0,0.5,-10)  3s  }
+anim148 { animation:  3s  none   ease  }
+anim149 { animation:  3s  none   ease  3s  }
+anim150 { animation:  3s  none   steps(10, start)  }
+anim151 { animation:  3s  none   steps(10, start)  3s  }
+anim152 { animation:  3s  none  3s  }
+anim153 { animation:  3s  none  3s   cubic-bezier(1,0,0.5,-10)  }
+anim154 { animation:  3s  none  3s   ease  }
+anim155 { animation:  3s  none  3s   steps(10, start)  }
+anim156 { animation:  all  }
+anim157 { animation:  all   cubic-bezier(1,0,0.5,-10)  }
+anim158 { animation:  all   cubic-bezier(1,0,0.5,-10)  3s  }
+anim159 { animation:  all   cubic-bezier(1,0,0.5,-10)  3s  3s  }
+anim160 { animation:  all   ease  }
+anim161 { animation:  all   ease  3s  }
+anim162 { animation:  all   ease  3s  3s  }
+anim163 { animation:  all   steps(10, start)  }
+anim164 { animation:  all   steps(10, start)  3s  }
+anim165 { animation:  all   steps(10, start)  3s  3s  }
+anim166 { animation:  all  3s  }
+anim167 { animation:  all  3s   cubic-bezier(1,0,0.5,-10)  }
+anim168 { animation:  all  3s   cubic-bezier(1,0,0.5,-10)  3s  }
+anim169 { animation:  all  3s   ease  }
+anim170 { animation:  all  3s   ease  3s  }
+anim171 { animation:  all  3s   steps(10, start)  }
+anim172 { animation:  all  3s   steps(10, start)  3s  }
+anim173 { animation:  all  3s  3s  }
+anim174 { animation:  all  3s  3s   cubic-bezier(1,0,0.5,-10)  }
+anim175 { animation:  all  3s  3s   ease  }
+anim176 { animation:  all  3s  3s   steps(10, start)  }
+anim177 { animation:  chocolat  }
+anim178 { animation:  chocolat   cubic-bezier(1,0,0.5,-10)  }
+anim179 { animation:  chocolat   cubic-bezier(1,0,0.5,-10)  3s  }
+anim180 { animation:  chocolat   cubic-bezier(1,0,0.5,-10)  3s  3s  }
+anim181 { animation:  chocolat   ease  }
+anim182 { animation:  chocolat   ease  3s  }
+anim183 { animation:  chocolat   ease  3s  3s  }
+anim184 { animation:  chocolat   steps(10, start)  }
+anim185 { animation:  chocolat   steps(10, start)  3s  }
+anim186 { animation:  chocolat   steps(10, start)  3s  3s  }
+anim187 { animation:  chocolat  3s  }
+anim188 { animation:  chocolat  3s   cubic-bezier(1,0,0.5,-10)  }
+anim189 { animation:  chocolat  3s   cubic-bezier(1,0,0.5,-10)  3s  }
+anim190 { animation:  chocolat  3s   ease  }
+anim191 { animation:  chocolat  3s   ease  3s  }
+anim192 { animation:  chocolat  3s   steps(10, start)  }
+anim193 { animation:  chocolat  3s   steps(10, start)  3s  }
+anim194 { animation:  chocolat  3s  3s  }
+anim195 { animation:  chocolat  3s  3s   cubic-bezier(1,0,0.5,-10)  }
+anim196 { animation:  chocolat  3s  3s   ease  }
+anim197 { animation:  chocolat  3s  3s   steps(10, start)  }
+anim198 { animation:  none  }
+anim199 { animation:  none   cubic-bezier(1,0,0.5,-10)  }
+anim200 { animation:  none   cubic-bezier(1,0,0.5,-10)  3s  }
+anim201 { animation:  none   cubic-bezier(1,0,0.5,-10)  3s  3s  }
+anim202 { animation:  none   ease  }
+anim203 { animation:  none   ease  3s  }
+anim204 { animation:  none   ease  3s  3s  }
+anim205 { animation:  none   steps(10, start)  }
+anim206 { animation:  none   steps(10, start)  3s  }
+anim207 { animation:  none   steps(10, start)  3s  3s  }
+anim208 { animation:  none  3s  }
+anim209 { animation:  none  3s   cubic-bezier(1,0,0.5,-10)  }
+anim210 { animation:  none  3s   cubic-bezier(1,0,0.5,-10)  3s  }
+anim211 { animation:  none  3s   ease  }
+anim212 { animation:  none  3s   ease  3s  }
+anim213 { animation:  none  3s   steps(10, start)  }
+anim214 { animation:  none  3s   steps(10, start)  3s  }
+anim215 { animation:  none  3s  3s  }
+anim216 { animation:  none  3s  3s   cubic-bezier(1,0,0.5,-10)  }
+anim217 { animation:  none  3s  3s   ease  }
+anim218 { animation:  none  3s  3s   steps(10, start)  }

@@ -1,0 +1,29 @@
+a {
+    font-family: inherit, Arial, serif;
+    font-family: Arial, inherit, serif;
+    font-family: Arial, serif, inherit;
+
+    font: inherit small-caps bold 10%/20% Verdana, Arial, serif;
+    font: small-caps inherit bold 10%/20% Verdana, Arial, serif;
+    font: small-caps bold inherit 10%/20% Verdana, Arial, serif;
+    font: small-caps bold 10%/20% inherit Verdana, Arial, serif;
+
+    font: inherit italic bold 10%/20% Verdana, Arial, serif;
+    font: italic inherit bold 10%/20% Verdana, Arial, serif;
+    font: italic bold inherit 10%/20% Verdana, Arial, serif;
+    font: italic bold 10%/20% inherit Verdana, Arial, serif;
+
+    font: inherit italic small-caps 10%/20% Verdana, Arial, serif;
+    font: italic inherit small-caps 10%/20% Verdana, Arial, serif;
+    font: italic small-caps inherit 10%/20% Verdana, Arial, serif;
+    font: italic small-caps 10%/20% inherit Verdana, Arial, serif;
+
+    font: inherit/20% italic small-caps bold Verdana, Arial, serif;
+    font: italic inherit/20% small-caps bold Verdana, Arial, serif;
+    font: italic small-caps inherit/20% bold Verdana, Arial, serif;
+    font: italic small-caps bold inherit/20% Verdana, Arial, serif;
+
+    font: small-caps bold 10%/20% inherit, Arial, serif;
+    font: small-caps bold 10%/20% Arial, inherit, serif;
+    font: small-caps bold 10%/20% Arial, serif, inherit;
+}

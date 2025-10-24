@@ -1,0 +1,10 @@
+a { pause:  500ms 0s }
+b { pause:  0s 10s }
+c { pause:  2.1s 10s }
+d { pause: 10% 5% }
+e { pause: 10% 10s }
+f { pause: 10s 10% }
+g { pause: 10% }
+h { pause: 10s }
+i { pause: 0s }
+z { pause: inherit }

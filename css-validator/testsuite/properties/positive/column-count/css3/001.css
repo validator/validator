@@ -1,0 +1,6 @@
+a { column-count: 1 }
+b { column-count: 5 }
+c { column-count: auto }
+y { column-count: initial }
+z { column-count: inherit }
+

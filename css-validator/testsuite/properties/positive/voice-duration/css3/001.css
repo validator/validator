@@ -1,0 +1,8 @@
+a { voice-duration: auto }
+b { voice-duration: 1s }
+c { voice-duration: 0s }
+d { voice-duration: +4.2ms }
+e { voice-duration: 10000ms }
+f { voice-duration: auto }
+y { voice-duration: initial }
+z { voice-duration: inherit }

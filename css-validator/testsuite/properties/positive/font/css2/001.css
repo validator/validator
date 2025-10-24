@@ -1,0 +1,91 @@
+font1   { font: 10px /110% verdana, sans-serif }
+font2   { font: 10px /normal  verdana, sans-serif }
+font3   { font: 10px verdana, sans-serif }
+font4   { font: 80% /110% verdana, sans-serif }
+font5   { font: 80% /normal  verdana, sans-serif }
+font6   { font: 80% verdana, sans-serif }
+font7   { font: italic small-caps 100 10px /110% verdana, sans-serif }
+font8   { font: italic small-caps 100 10px /normal  verdana, sans-serif }
+font9   { font: italic small-caps 100 10px verdana, sans-serif }
+font10  { font: italic small-caps 100 80% /110% verdana, sans-serif }
+font11  { font: italic small-caps 100 80% /normal  verdana, sans-serif }
+font12  { font: italic small-caps 100 80% verdana, sans-serif }
+font13  { font: italic small-caps 100 medium /110% verdana, sans-serif }
+font14  { font: italic small-caps 100 medium /normal  verdana, sans-serif }
+font15  { font: italic small-caps 100 medium verdana, sans-serif }
+font16  { font: italic small-caps 100 xx-small /110% verdana, sans-serif }
+font17  { font: italic small-caps 100 xx-small /normal  verdana, sans-serif }
+font18  { font: italic small-caps 100 xx-small verdana, sans-serif }
+font19  { font: italic small-caps bolder 10px /110% verdana, sans-serif }
+font20  { font: italic small-caps bolder 10px /normal  verdana, sans-serif }
+font21  { font: italic small-caps bolder 10px verdana, sans-serif }
+font22  { font: italic small-caps bolder 80% /110% verdana, sans-serif }
+font23  { font: italic small-caps bolder 80% /normal  verdana, sans-serif }
+font24  { font: italic small-caps bolder 80% verdana, sans-serif }
+font25  { font: italic small-caps bolder medium /110% verdana, sans-serif }
+font26  { font: italic small-caps bolder medium /normal  verdana, sans-serif }
+font27  { font: italic small-caps bolder medium verdana, sans-serif }
+font28  { font: italic small-caps bolder xx-small /110% verdana, sans-serif }
+font29  { font: italic small-caps bolder xx-small /normal  verdana, sans-serif }
+font30  { font: italic small-caps bolder xx-small verdana, sans-serif }
+font31  { font: medium /110% verdana, sans-serif }
+font32  { font: medium /normal  verdana, sans-serif }
+font33  { font: medium verdana, sans-serif }
+font34  { font: normal small-caps 100 10px /110% verdana, sans-serif }
+font35  { font: normal small-caps 100 10px /normal  verdana, sans-serif }
+font36  { font: normal small-caps 100 10px verdana, sans-serif }
+font37  { font: normal small-caps 100 80% /110% verdana, sans-serif }
+font38  { font: normal small-caps 100 80% /normal  verdana, sans-serif }
+font39  { font: normal small-caps 100 80% verdana, sans-serif }
+font40  { font: normal small-caps 100 medium /110% verdana, sans-serif }
+font41  { font: normal small-caps 100 medium /normal  verdana, sans-serif }
+font42  { font: normal small-caps 100 medium verdana, sans-serif }
+font43  { font: normal small-caps 100 xx-small /110% verdana, sans-serif }
+font44  { font: normal small-caps 100 xx-small /normal  verdana, sans-serif }
+font45  { font: normal small-caps 100 xx-small verdana, sans-serif }
+font46  { font: normal small-caps bolder 10px /110% verdana, sans-serif }
+font47  { font: normal small-caps bolder 10px /normal  verdana, sans-serif }
+font48  { font: normal small-caps bolder 10px verdana, sans-serif }
+font49  { font: normal small-caps bolder 80% /110% verdana, sans-serif }
+font50  { font: normal small-caps bolder 80% /normal  verdana, sans-serif }
+font51  { font: normal small-caps bolder 80% verdana, sans-serif }
+font52  { font: normal small-caps bolder medium /110% verdana, sans-serif }
+font53  { font: normal small-caps bolder medium /normal  verdana, sans-serif }
+font54  { font: normal small-caps bolder medium verdana, sans-serif }
+font55  { font: normal small-caps bolder xx-small /110% verdana, sans-serif }
+font56  { font: normal small-caps bolder xx-small /normal  verdana, sans-serif }
+font57  { font: normal small-caps bolder xx-small verdana, sans-serif }
+font58  { font: oblique small-caps 100 10px /110% verdana, sans-serif }
+font59  { font: oblique small-caps 100 10px /normal  verdana, sans-serif }
+font60  { font: oblique small-caps 100 10px verdana, sans-serif }
+font61  { font: oblique small-caps 100 80% /110% verdana, sans-serif }
+font62  { font: oblique small-caps 100 80% /normal  verdana, sans-serif }
+font63  { font: oblique small-caps 100 80% verdana, sans-serif }
+font64  { font: oblique small-caps 100 medium /110% verdana, sans-serif }
+font65  { font: oblique small-caps 100 medium /normal  verdana, sans-serif }
+font66  { font: oblique small-caps 100 medium verdana, sans-serif }
+font67  { font: oblique small-caps 100 xx-small /110% verdana, sans-serif }
+font68  { font: oblique small-caps 100 xx-small /normal  verdana, sans-serif }
+font69  { font: oblique small-caps 100 xx-small verdana, sans-serif }
+font70  { font: oblique small-caps bolder 10px /110% verdana, sans-serif }
+font71  { font: oblique small-caps bolder 10px /normal  verdana, sans-serif }
+font72  { font: oblique small-caps bolder 10px verdana, sans-serif }
+font73  { font: oblique small-caps bolder 80% /110% verdana, sans-serif }
+font74  { font: oblique small-caps bolder 80% /normal  verdana, sans-serif }
+font75  { font: oblique small-caps bolder 80% verdana, sans-serif }
+font76  { font: oblique small-caps bolder medium /110% verdana, sans-serif }
+font77  { font: oblique small-caps bolder medium /normal  verdana, sans-serif }
+font78  { font: oblique small-caps bolder medium verdana, sans-serif }
+font79  { font: oblique small-caps bolder xx-small /110% verdana, sans-serif }
+font80  { font: oblique small-caps bolder xx-small /normal  verdana, sans-serif }
+font81  { font: oblique small-caps bolder xx-small verdana, sans-serif }
+font82  { font: xx-small /110% verdana, sans-serif }
+font83  { font: xx-small /normal  verdana, sans-serif }
+font84  { font: xx-small verdana, sans-serif }
+a { font: caption }
+b { font: icon }
+c { font: menu }
+d { font: message-box }
+e { font: small-caption }
+f { font: status-bar }
+z { font: inherit }

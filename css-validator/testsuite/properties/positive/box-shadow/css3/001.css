@@ -1,0 +1,246 @@
+z { box-shadow: inherit }
+y { box-shadow: initial }
+a { box-shadow: none }
+boxshad0   { box-shadow:  red 1cm 5pt 4em 2px }
+boxshad1   { box-shadow:  1cm 5pt 4em 2px red }
+boxshad2   { box-shadow: red 1cm 5pt 4em 2px  }
+boxshad3   { box-shadow: 1cm 5pt 4em 2px red  }
+boxshad4   { box-shadow:  red -1cm -5pt 4em -2px }
+boxshad5   { box-shadow:  -1cm -5pt 4em -2px red }
+boxshad6   { box-shadow: red -1cm -5pt 4em -2px  }
+boxshad7   { box-shadow: -1cm -5pt 4em -2px red  }
+boxshad8   { box-shadow:  red 1cm 5pt 4em }
+boxshad9   { box-shadow:  1cm 5pt 4em red }
+boxshad10  { box-shadow: red 1cm 5pt 4em  }
+boxshad11  { box-shadow: 1cm 5pt 4em red  }
+boxshad12  { box-shadow:  red -1cm 5pt 4em }
+boxshad13  { box-shadow:  -1cm 5pt 4em red }
+boxshad14  { box-shadow: red 1cm -5pt 4em  }
+boxshad15  { box-shadow: -1cm -5pt 4em red  }
+boxshad16  { box-shadow:  red 1cm 5pt }
+boxshad17  { box-shadow:  1cm 5pt red }
+boxshad18  { box-shadow: red 1cm 5pt  }
+boxshad19  { box-shadow: 1cm 5pt red  }
+boxshad20  { box-shadow:  red -1cm -5pt }
+boxshad21  { box-shadow:  -1cm -5pt red }
+boxshad22  { box-shadow: red -1cm -5pt  }
+boxshad23  { box-shadow: -1cm -5pt red  }
+boxshad24  { box-shadow: inset red 1cm 5pt 4em 2px }
+boxshad25  { box-shadow: inset 1cm 5pt 4em 2px red }
+boxshad26  { box-shadow: red 1cm 5pt 4em 2px inset }
+boxshad27  { box-shadow: 1cm 5pt 4em 2px red inset }
+boxshad28  { box-shadow: inset red -1cm -5pt 4em -2px }
+boxshad29  { box-shadow: inset -1cm -5pt 4em -2px red }
+boxshad30  { box-shadow: red -1cm -5pt 4em -2px inset }
+boxshad31  { box-shadow: -1cm -5pt 4em -2px red inset }
+boxshad32  { box-shadow: inset red 1cm 5pt 4em }
+boxshad33  { box-shadow: inset 1cm 5pt 4em red }
+boxshad34  { box-shadow: red 1cm 5pt 4em inset }
+boxshad35  { box-shadow: 1cm 5pt 4em red inset }
+boxshad36  { box-shadow: inset red -1cm 5pt 4em }
+boxshad37  { box-shadow: inset -1cm 5pt 4em red }
+boxshad38  { box-shadow: red 1cm -5pt 4em inset }
+boxshad39  { box-shadow: -1cm -5pt 4em red inset }
+boxshad40  { box-shadow: inset red 1cm 5pt }
+boxshad41  { box-shadow: inset 1cm 5pt red }
+boxshad42  { box-shadow: red 1cm 5pt inset }
+boxshad43  { box-shadow: 1cm 5pt red inset }
+boxshad44  { box-shadow: inset red -1cm -5pt }
+boxshad45  { box-shadow: inset -1cm -5pt red }
+boxshad46  { box-shadow: red -1cm -5pt inset }
+boxshad47  { box-shadow: -1cm -5pt red inset }
+boxshad48  { box-shadow:   1cm 5pt 4em 2px }
+boxshad49  { box-shadow:  1cm 5pt 4em 2px  }
+boxshad50  { box-shadow:  1cm 5pt 4em 2px  }
+boxshad51  { box-shadow: 1cm 5pt 4em 2px   }
+boxshad52  { box-shadow:   -1cm -5pt 4em -2px }
+boxshad53  { box-shadow:  -1cm -5pt 4em -2px  }
+boxshad54  { box-shadow:  -1cm -5pt 4em -2px  }
+boxshad55  { box-shadow: -1cm -5pt 4em -2px   }
+boxshad56  { box-shadow:   1cm 5pt 4em }
+boxshad57  { box-shadow:  1cm 5pt 4em  }
+boxshad58  { box-shadow:  1cm 5pt 4em  }
+boxshad59  { box-shadow: 1cm 5pt 4em   }
+boxshad60  { box-shadow:   -1cm 5pt 4em }
+boxshad61  { box-shadow:  -1cm 5pt 4em  }
+boxshad62  { box-shadow:  1cm -5pt 4em  }
+boxshad63  { box-shadow: -1cm -5pt 4em   }
+boxshad64  { box-shadow:   1cm 5pt }
+boxshad65  { box-shadow:  1cm 5pt  }
+boxshad66  { box-shadow:  1cm 5pt  }
+boxshad67  { box-shadow: 1cm 5pt   }
+boxshad68  { box-shadow:   -1cm -5pt }
+boxshad69  { box-shadow:  -1cm -5pt  }
+boxshad70  { box-shadow:  -1cm -5pt  }
+boxshad71  { box-shadow: -1cm -5pt   }
+boxshad72  { box-shadow: inset  1cm 5pt 4em 2px }
+boxshad73  { box-shadow: inset 1cm 5pt 4em 2px  }
+boxshad74  { box-shadow:  1cm 5pt 4em 2px inset }
+boxshad75  { box-shadow: 1cm 5pt 4em 2px  inset }
+boxshad76  { box-shadow: inset  -1cm -5pt 4em -2px }
+boxshad77  { box-shadow: inset -1cm -5pt 4em -2px  }
+boxshad78  { box-shadow:  -1cm -5pt 4em -2px inset }
+boxshad79  { box-shadow: -1cm -5pt 4em -2px  inset }
+boxshad80  { box-shadow: inset  1cm 5pt 4em }
+boxshad81  { box-shadow: inset 1cm 5pt 4em  }
+boxshad82  { box-shadow:  1cm 5pt 4em inset }
+boxshad83  { box-shadow: 1cm 5pt 4em  inset }
+boxshad84  { box-shadow: inset  -1cm 5pt 4em }
+boxshad85  { box-shadow: inset -1cm 5pt 4em  }
+boxshad86  { box-shadow:  1cm -5pt 4em inset }
+boxshad87  { box-shadow: -1cm -5pt 4em  inset }
+boxshad88  { box-shadow: inset  1cm 5pt }
+boxshad89  { box-shadow: inset 1cm 5pt  }
+boxshad90  { box-shadow:  1cm 5pt inset }
+boxshad91  { box-shadow: 1cm 5pt  inset }
+boxshad92  { box-shadow: inset  -1cm -5pt }
+boxshad93  { box-shadow: inset -1cm -5pt  }
+boxshad94  { box-shadow:  -1cm -5pt inset }
+boxshad95  { box-shadow: -1cm -5pt  inset }
+boxshad96  { box-shadow:  #f00 1cm 5pt 4em 2px }
+boxshad97  { box-shadow:  1cm 5pt 4em 2px #f00 }
+boxshad98  { box-shadow: #f00 1cm 5pt 4em 2px  }
+boxshad99  { box-shadow: 1cm 5pt 4em 2px #f00  }
+boxshad100 { box-shadow:  #f00 -1cm -5pt 4em -2px }
+boxshad101 { box-shadow:  -1cm -5pt 4em -2px #f00 }
+boxshad102 { box-shadow: #f00 -1cm -5pt 4em -2px  }
+boxshad103 { box-shadow: -1cm -5pt 4em -2px #f00  }
+boxshad104 { box-shadow:  #f00 1cm 5pt 4em }
+boxshad105 { box-shadow:  1cm 5pt 4em #f00 }
+boxshad106 { box-shadow: #f00 1cm 5pt 4em  }
+boxshad107 { box-shadow: 1cm 5pt 4em #f00  }
+boxshad108 { box-shadow:  #f00 -1cm 5pt 4em }
+boxshad109 { box-shadow:  -1cm 5pt 4em #f00 }
+boxshad110 { box-shadow: #f00 1cm -5pt 4em  }
+boxshad111 { box-shadow: -1cm -5pt 4em #f00  }
+boxshad112 { box-shadow:  #f00 1cm 5pt }
+boxshad113 { box-shadow:  1cm 5pt #f00 }
+boxshad114 { box-shadow: #f00 1cm 5pt  }
+boxshad115 { box-shadow: 1cm 5pt #f00  }
+boxshad116 { box-shadow:  #f00 -1cm -5pt }
+boxshad117 { box-shadow:  -1cm -5pt #f00 }
+boxshad118 { box-shadow: #f00 -1cm -5pt  }
+boxshad119 { box-shadow: -1cm -5pt #f00  }
+boxshad120 { box-shadow: inset #f00 1cm 5pt 4em 2px }
+boxshad121 { box-shadow: inset 1cm 5pt 4em 2px #f00 }
+boxshad122 { box-shadow: #f00 1cm 5pt 4em 2px inset }
+boxshad123 { box-shadow: 1cm 5pt 4em 2px #f00 inset }
+boxshad124 { box-shadow: inset #f00 -1cm -5pt 4em -2px }
+boxshad125 { box-shadow: inset -1cm -5pt 4em -2px #f00 }
+boxshad126 { box-shadow: #f00 -1cm -5pt 4em -2px inset }
+boxshad127 { box-shadow: -1cm -5pt 4em -2px #f00 inset }
+boxshad128 { box-shadow: inset #f00 1cm 5pt 4em }
+boxshad129 { box-shadow: inset 1cm 5pt 4em #f00 }
+boxshad130 { box-shadow: #f00 1cm 5pt 4em inset }
+boxshad131 { box-shadow: 1cm 5pt 4em #f00 inset }
+boxshad132 { box-shadow: inset #f00 -1cm 5pt 4em }
+boxshad133 { box-shadow: inset -1cm 5pt 4em #f00 }
+boxshad134 { box-shadow: #f00 1cm -5pt 4em inset }
+boxshad135 { box-shadow: -1cm -5pt 4em #f00 inset }
+boxshad136 { box-shadow: inset #f00 1cm 5pt }
+boxshad137 { box-shadow: inset 1cm 5pt #f00 }
+boxshad138 { box-shadow: #f00 1cm 5pt inset }
+boxshad139 { box-shadow: 1cm 5pt #f00 inset }
+boxshad140 { box-shadow: inset #f00 -1cm -5pt }
+boxshad141 { box-shadow: inset -1cm -5pt #f00 }
+boxshad142 { box-shadow: #f00 -1cm -5pt inset }
+boxshad143 { box-shadow: -1cm -5pt #f00 inset }
+boxshad144 { box-shadow:  currentColor 1cm 5pt 4em 2px }
+boxshad145 { box-shadow:  1cm 5pt 4em 2px currentColor }
+boxshad146 { box-shadow: currentColor 1cm 5pt 4em 2px  }
+boxshad147 { box-shadow: 1cm 5pt 4em 2px currentColor  }
+boxshad148 { box-shadow:  currentColor -1cm -5pt 4em -2px }
+boxshad149 { box-shadow:  -1cm -5pt 4em -2px currentColor }
+boxshad150 { box-shadow: currentColor -1cm -5pt 4em -2px  }
+boxshad151 { box-shadow: -1cm -5pt 4em -2px currentColor  }
+boxshad152 { box-shadow:  currentColor 1cm 5pt 4em }
+boxshad153 { box-shadow:  1cm 5pt 4em currentColor }
+boxshad154 { box-shadow: currentColor 1cm 5pt 4em  }
+boxshad155 { box-shadow: 1cm 5pt 4em currentColor  }
+boxshad156 { box-shadow:  currentColor -1cm 5pt 4em }
+boxshad157 { box-shadow:  -1cm 5pt 4em currentColor }
+boxshad158 { box-shadow: currentColor 1cm -5pt 4em  }
+boxshad159 { box-shadow: -1cm -5pt 4em currentColor  }
+boxshad160 { box-shadow:  currentColor 1cm 5pt }
+boxshad161 { box-shadow:  1cm 5pt currentColor }
+boxshad162 { box-shadow: currentColor 1cm 5pt  }
+boxshad163 { box-shadow: 1cm 5pt currentColor  }
+boxshad164 { box-shadow:  currentColor -1cm -5pt }
+boxshad165 { box-shadow:  -1cm -5pt currentColor }
+boxshad166 { box-shadow: currentColor -1cm -5pt  }
+boxshad167 { box-shadow: -1cm -5pt currentColor  }
+boxshad168 { box-shadow: inset currentColor 1cm 5pt 4em 2px }
+boxshad169 { box-shadow: inset 1cm 5pt 4em 2px currentColor }
+boxshad170 { box-shadow: currentColor 1cm 5pt 4em 2px inset }
+boxshad171 { box-shadow: 1cm 5pt 4em 2px currentColor inset }
+boxshad172 { box-shadow: inset currentColor -1cm -5pt 4em -2px }
+boxshad173 { box-shadow: inset -1cm -5pt 4em -2px currentColor }
+boxshad174 { box-shadow: currentColor -1cm -5pt 4em -2px inset }
+boxshad175 { box-shadow: -1cm -5pt 4em -2px currentColor inset }
+boxshad176 { box-shadow: inset currentColor 1cm 5pt 4em }
+boxshad177 { box-shadow: inset 1cm 5pt 4em currentColor }
+boxshad178 { box-shadow: currentColor 1cm 5pt 4em inset }
+boxshad179 { box-shadow: 1cm 5pt 4em currentColor inset }
+boxshad180 { box-shadow: inset currentColor -1cm 5pt 4em }
+boxshad181 { box-shadow: inset -1cm 5pt 4em currentColor }
+boxshad182 { box-shadow: currentColor 1cm -5pt 4em inset }
+boxshad183 { box-shadow: -1cm -5pt 4em currentColor inset }
+boxshad184 { box-shadow: inset currentColor 1cm 5pt }
+boxshad185 { box-shadow: inset 1cm 5pt currentColor }
+boxshad186 { box-shadow: currentColor 1cm 5pt inset }
+boxshad187 { box-shadow: 1cm 5pt currentColor inset }
+boxshad188 { box-shadow: inset currentColor -1cm -5pt }
+boxshad189 { box-shadow: inset -1cm -5pt currentColor }
+boxshad190 { box-shadow: currentColor -1cm -5pt inset }
+boxshad191 { box-shadow: -1cm -5pt currentColor inset }
+boxshad192 { box-shadow:  hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em 2px }
+boxshad193 { box-shadow:  1cm 5pt 4em 2px hsla(120, 100%, 50%, 0.4) }
+boxshad194 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em 2px  }
+boxshad195 { box-shadow: 1cm 5pt 4em 2px hsla(120, 100%, 50%, 0.4)  }
+boxshad196 { box-shadow:  hsla(120, 100%, 50%, 0.4) -1cm -5pt 4em -2px }
+boxshad197 { box-shadow:  -1cm -5pt 4em -2px hsla(120, 100%, 50%, 0.4) }
+boxshad198 { box-shadow: hsla(120, 100%, 50%, 0.4) -1cm -5pt 4em -2px  }
+boxshad199 { box-shadow: -1cm -5pt 4em -2px hsla(120, 100%, 50%, 0.4)  }
+boxshad200 { box-shadow:  hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em }
+boxshad201 { box-shadow:  1cm 5pt 4em hsla(120, 100%, 50%, 0.4) }
+boxshad202 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em  }
+boxshad203 { box-shadow: 1cm 5pt 4em hsla(120, 100%, 50%, 0.4)  }
+boxshad204 { box-shadow:  hsla(120, 100%, 50%, 0.4) -1cm 5pt 4em }
+boxshad205 { box-shadow:  -1cm 5pt 4em hsla(120, 100%, 50%, 0.4) }
+boxshad206 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm -5pt 4em  }
+boxshad207 { box-shadow: -1cm -5pt 4em hsla(120, 100%, 50%, 0.4)  }
+boxshad208 { box-shadow:  hsla(120, 100%, 50%, 0.4) 1cm 5pt }
+boxshad209 { box-shadow:  1cm 5pt hsla(120, 100%, 50%, 0.4) }
+boxshad210 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm 5pt  }
+boxshad211 { box-shadow: 1cm 5pt hsla(120, 100%, 50%, 0.4)  }
+boxshad212 { box-shadow:  hsla(120, 100%, 50%, 0.4) -1cm -5pt }
+boxshad213 { box-shadow:  -1cm -5pt hsla(120, 100%, 50%, 0.4) }
+boxshad214 { box-shadow: hsla(120, 100%, 50%, 0.4) -1cm -5pt  }
+boxshad215 { box-shadow: -1cm -5pt hsla(120, 100%, 50%, 0.4)  }
+boxshad216 { box-shadow: inset hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em 2px }
+boxshad217 { box-shadow: inset 1cm 5pt 4em 2px hsla(120, 100%, 50%, 0.4) }
+boxshad218 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em 2px inset }
+boxshad219 { box-shadow: 1cm 5pt 4em 2px hsla(120, 100%, 50%, 0.4) inset }
+boxshad220 { box-shadow: inset hsla(120, 100%, 50%, 0.4) -1cm -5pt 4em -2px }
+boxshad221 { box-shadow: inset -1cm -5pt 4em -2px hsla(120, 100%, 50%, 0.4) }
+boxshad222 { box-shadow: hsla(120, 100%, 50%, 0.4) -1cm -5pt 4em -2px inset }
+boxshad223 { box-shadow: -1cm -5pt 4em -2px hsla(120, 100%, 50%, 0.4) inset }
+boxshad224 { box-shadow: inset hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em }
+boxshad225 { box-shadow: inset 1cm 5pt 4em hsla(120, 100%, 50%, 0.4) }
+boxshad226 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em inset }
+boxshad227 { box-shadow: 1cm 5pt 4em hsla(120, 100%, 50%, 0.4) inset }
+boxshad228 { box-shadow: inset hsla(120, 100%, 50%, 0.4) -1cm 5pt 4em }
+boxshad229 { box-shadow: inset -1cm 5pt 4em hsla(120, 100%, 50%, 0.4) }
+boxshad230 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm -5pt 4em inset }
+boxshad231 { box-shadow: -1cm -5pt 4em hsla(120, 100%, 50%, 0.4) inset }
+boxshad232 { box-shadow: inset hsla(120, 100%, 50%, 0.4) 1cm 5pt }
+boxshad233 { box-shadow: inset 1cm 5pt hsla(120, 100%, 50%, 0.4) }
+boxshad234 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm 5pt inset }
+boxshad235 { box-shadow: 1cm 5pt hsla(120, 100%, 50%, 0.4) inset }
+boxshad236 { box-shadow: inset hsla(120, 100%, 50%, 0.4) -1cm -5pt }
+boxshad237 { box-shadow: inset -1cm -5pt hsla(120, 100%, 50%, 0.4) }
+boxshad238 { box-shadow: hsla(120, 100%, 50%, 0.4) -1cm -5pt inset }
+boxshad239 { box-shadow: -1cm -5pt hsla(120, 100%, 50%, 0.4) inset }
+boxshad240 { box-shadow: red 1cm 5pt 4em 2px, inset  -1cm -5pt 4em -2px }
+boxshad241 { box-shadow: inset -1cm -5pt 4em -2px, #f00 1cm 5pt 4em 2px, currentColor -1cm -5pt }
+boxshad242 { box-shadow: hsla(120, 100%, 50%, 0.4) 1cm 5pt 4em 2px, inset -1cm -5pt, 5px 1px }

@@ -1,0 +1,5 @@
+a { max-width: 100px }
+b { max-width: 90% }
+c { max-width: 200% }
+d { max-width: none }
+z { max-width: inherit }

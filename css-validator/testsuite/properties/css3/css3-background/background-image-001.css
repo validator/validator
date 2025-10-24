@@ -1,0 +1,29 @@
+div {
+ background-image: inherit;
+}
+
+div {
+ background-image: none; 
+}
+
+div {
+ background-image: url("marble.svg"); 
+}
+
+div {
+ background-image: none, url("marble.svg"); 
+}
+
+div {
+ background-image: url("marble.svg"), none; 
+}
+
+div {
+ background-image: url("paper.svg"), url("rock.png"), url("cissors.jpg"); 
+}
+
+div {
+ background-image: none, none, none; 
+}
+
+

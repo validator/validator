@@ -1,0 +1,34 @@
+a {
+    cursor: url("cursor1"), url("cursor2"), auto;
+    cursor: url("cursor1"), url("cursor2"), crosshair;
+    cursor: url("cursor1"), url("cursor2"), default;
+    cursor: url("cursor1"), url("cursor2"), pointer;
+    cursor: url("cursor1"), url("cursor2"), move;
+    cursor: url("cursor1"), url("cursor2"), e-resize;
+    cursor: url("cursor1"), url("cursor2"), ne-resize;
+    cursor: url("cursor1"), url("cursor2"), nw-resize;
+    cursor: url("cursor1"), url("cursor2"), n-resize;
+    cursor: url("cursor1"), url("cursor2"), se-resize;
+    cursor: url("cursor1"), url("cursor2"), sw-resize;
+    cursor: url("cursor1"), url("cursor2"), s-resize;
+    cursor: url("cursor1"), url("cursor2"), w-resize;
+    cursor: url("cursor1"), url("cursor2"), text;
+    cursor: url("cursor1"), url("cursor2"), wait;
+    cursor: url("cursor1"), url("cursor2"), help;
+    cursor: url("cursor1"), url("cursor2"), progress;
+
+    outline-color: black;
+    outline-color: invert;
+
+    outline-style: solid;
+
+    outline-width: 1px;
+
+    outline: black;
+    outline: solid;
+    outline: 1px;
+    outline: black solid;
+    outline: black 1px;
+    outline: solid 1px;
+    outline: black solid 1px;
+}

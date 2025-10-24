@@ -1,0 +1,9 @@
+a { animation-direction:  normal }
+b { animation-direction:  reverse }
+c { animation-direction:  alternate }
+d { animation-direction:  alternate-reverse }
+e { animation-direction:  normal, reverse }
+f { animation-direction:  alternate-reverse, normal, reverse }
+g { animation-direction:  reverse, reverse, reverse, reverse, normal, normal, normal }
+y { animation-direction:  initial }
+z { animation-direction:  inherit }

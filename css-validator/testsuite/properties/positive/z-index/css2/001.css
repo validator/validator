@@ -1,0 +1,10 @@
+a { z-index: auto; }
+b { z-index:0; }
+c { z-index:    1  ; }
+d { z-index: -2 ; }
+e { z-index: inherit; }
+f { z-index: 123456789; }
+g { z-index: 2147483647; }
+h { z-index: -2147483647; }
+i { z-index: 42; }
+j { z-index: -42; }

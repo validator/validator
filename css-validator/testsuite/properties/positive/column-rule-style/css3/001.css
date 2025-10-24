@@ -1,0 +1,12 @@
+a { column-rule-style: none }
+b { column-rule-style: hidden }
+c { column-rule-style: dotted }
+d { column-rule-style: dashed }
+e { column-rule-style: solid }
+f { column-rule-style: double }
+g { column-rule-style: groove }
+h { column-rule-style: ridge }
+i { column-rule-style: inset }
+j { column-rule-style: outset }
+y { column-rule-style: initial }
+z { column-rule-style: inherit }

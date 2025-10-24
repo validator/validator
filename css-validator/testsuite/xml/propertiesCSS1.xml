@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+test markup also accepts 3 properties: warning, profile and medium
+-->
+<testsuite>
+  <type title="Valid_tests_of_all_properties_and_their_values_except_inherit_CSS1">
+    <test profile="css1">
+      <file>testsuite/properties/css1/ok/font.css</file>
+      <description>Font testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/ok/color-background.css</file>
+      <description>Color and background testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/ok/text.css</file>
+      <description>Text testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/ok/box.css</file>
+      <description>Box testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/ok/classification.css</file>
+      <description>Classification testsuite/properties</description>
+      <result valid="true"/>
+    </test>
+  </type>
+  <type title="Invalid_CSS1_too_many_values">
+    <test profile="css1">
+      <file>testsuite/properties/css1/too-many-values/font.css</file>
+      <description>Font testsuite/properties</description>
+      <result valid="false">
+	<errors>23</errors>
+      </result>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/too-many-values/color-background.css</file>
+      <description>Color and background testsuite/properties</description>
+      <result valid="false">
+	<errors>25</errors>
+      </result>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/too-many-values/text.css</file>
+      <description>Text testsuite/properties</description>
+      <result valid="false">
+	<errors>35</errors>
+      </result>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/too-many-values/box.css</file>
+      <description>Box testsuite/properties</description>
+      <result valid="false">
+	<errors>66</errors>
+      </result>
+    </test>
+    <test profile="css1">
+      <file>testsuite/properties/css1/too-many-values/classification.css</file>
+      <description>Classification testsuite/properties</description>
+      <result valid="false">
+	<errors>21</errors>
+      </result>
+    </test>
+  </type>
+</testsuite>

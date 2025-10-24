@@ -1,0 +1,17 @@
+a { transition-timing-function:  ease  }
+b { transition-timing-function:  linear  }
+c { transition-timing-function:  ease-in  }
+d { transition-timing-function:  ease-out  }
+e { transition-timing-function:  ease-in-out  }
+f { transition-timing-function:  step-start  }
+g { transition-timing-function:  step-end  }
+h1 { transition-timing-function:  steps(10)  }
+h2 { transition-timing-function:  steps(10, start)  }
+h3 { transition-timing-function:  steps(10, end)  }
+i { transition-timing-function:  cubic-bezier(0.2,0.0,0.4,1.0) }
+j { transition-timing-function:  ease, linear, cubic-bezier(0.2,0.0,0.4,1.0)  }
+k { transition-timing-function:  ease-in, steps(10, end), steps(10)  }
+l { transition-timing-function:  steps(10, start), cubic-bezier(0.2,0.0,0.4,1.0), ease-out  }
+m { transition-timing-function:  ease-in-out, step-end, step-end, step-start, steps(10), cubic-bezier(0.2,0.0,0.4,1.0), linear  }
+y { transition-timing-function: initial }
+z { transition-timing-function: inherit }

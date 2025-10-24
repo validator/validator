@@ -1,0 +1,4 @@
+y { backface-visibility: initial }
+z { backface-visibility: inherit }
+a { backface-visibility: visible }
+b { backface-visibility: hidden }

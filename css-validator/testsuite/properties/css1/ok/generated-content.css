@@ -1,0 +1,26 @@
+a {
+    content: normal;
+    content: none;
+    content: "test" url("text.html") counter(par-num, upper-roman) attr(p) open-quote close-quote no-open-quote no-close-quote;
+    content: open-quote;
+    content: no-open-quote;
+    content: close-quote;
+    content: no-close-quote;
+    content: "test";
+    content: url("test");
+    content: counter(par-num, upper-roman);
+    content: attr(p);
+
+    counter-increment: none;
+    counter-increment: section 3;
+    counter-increment: section;
+    counter-increment: section 3 chapter;
+    counter-increment: section chapter 2;
+    counter-reset: section 3;
+    counter-reset: section;
+    counter-reset: section 3 chapter;
+    counter-reset: section chapter 2;
+    quotes: none;
+    quotes: '<' '>';
+    quotes: "'" "'";
+}

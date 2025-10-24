@@ -1,0 +1,18 @@
+a { voice-family: preserve }
+y { voice-family: initial }
+z { voice-family: inherit }
+b { voice-family: koalie, "Mike S", "ted" }
+c { voice-family: male }
+d { voice-family: female }
+e { voice-family: neutral }
+c1 { voice-family: child male }
+d1 { voice-family: young female }
+e1 { voice-family: old neutral }
+c2 { voice-family: male 1 }
+d2 { voice-family: female 2 }
+e2 { voice-family: neutral 3 }
+c3 { voice-family: old male 4 }
+d3 { voice-family: child female 2 }
+e3 { voice-family: young neutral 1 }
+f { voice-family: old female 1, "koalie chair", "inherit"}
+g { voice-family: "initial", young male, bidule }

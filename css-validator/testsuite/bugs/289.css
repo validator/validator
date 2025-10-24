@@ -1,0 +1,21 @@
+a {
+  background: 1 "", 0deg / x;
+  border: 1 "", 0deg / url(r) x;
+  border-bottom: 1 "", 0deg / url(r) x;
+  border-color: 1 "", 0deg / url(r) x;
+  border-left: 1 "", 0deg / url(r) x;
+  border-right: 1 "", 0deg / url(r) x;
+  border-style: 1 "", 0deg / url(r) x;
+  border-top: 1 "", 0deg / url(r) x;
+  border-width: 1 "", 0deg / url(r) x;
+  font: foo, 0deg / url(r) x;
+  font: foo 1em serif;
+  font: url(r) 1em serif;
+  font: foo-1 foo-2 foo-3 1em serif;
+  font: foo-1 foo-2 foo-3 foo-4 1em serif;
+  list-style: 1 "", 0deg / x;
+  margin: 1 "", 0deg / url(r) x;
+  outline: 1 "", 0deg / url(r) x;
+  padding: 1 "", 0deg / url(r) x;
+  text-decoration: 1 "", 0deg / url(r) x;
+  }

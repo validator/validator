@@ -1,0 +1,9 @@
+a {  font-variant-caps : inherit; }
+b {  font-variant-caps : initial; }
+c {  font-variant-caps : small-caps; }
+d {  font-variant-caps : all-small-caps; }
+e {  font-variant-caps : petite-caps; }
+f {  font-variant-caps : all-petite-caps; }
+g {  font-variant-caps : titling-caps; }
+h {  font-variant-caps : unicase; }
+i {  font-variant-caps : normal; }

@@ -1,0 +1,5 @@
+a { pause-after:  500ms  }
+b { pause-after:  0s }
+c { pause-after:  2.1s }
+d { pause-after: 10% }
+z { pause-after: inherit }

@@ -1,0 +1,44 @@
+div {
+  background-repeat: inherit;
+}
+
+div {
+  background-repeat: repeat-x;
+}
+
+div {
+  background-repeat: repeat-y;
+}
+
+div {
+  background-repeat: repeat;
+}
+
+div {
+  background-repeat: no-repeat;
+}
+
+div {
+  background-repeat: space;
+}
+
+div {
+  background-repeat: round;
+}
+
+div {
+  background-repeat: space repeat;
+}
+
+div {
+  background-repeat: round space;
+}
+
+div {
+  background-repeat: no-repeat repeat;
+}
+
+div {
+  background-repeat: space repeat, round, repeat-x, round space;
+}
+

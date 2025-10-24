@@ -1,0 +1,79 @@
+z { border-bottom: inherit }
+border1 { border-bottom: #f00  }
+border2 { border-bottom: #f00 dotted  }
+border3 { border-bottom: #f00 dotted 1px   }
+border4 { border-bottom: #f00 dotted thin  }
+border5 { border-bottom: #f00 1px  }
+border6 { border-bottom: #f00 1px dotted   }
+border7 { border-bottom: #f00 1px none  }
+border8 { border-bottom: #f00 none  }
+border9 { border-bottom: #f00 none 1px  }
+border10 { border-bottom: #f00 none thin   }
+border11 { border-bottom: #f00 thin  }
+border12 { border-bottom: #f00 thin dotted  }
+border13 { border-bottom: #f00 thin none  }
+border14 { border-bottom: dotted  }
+border15 { border-bottom: dotted #f00  }
+border16 { border-bottom: dotted #f00 1px   }
+border17 { border-bottom: dotted #f00 thin  }
+border18 { border-bottom: dotted 1px  }
+border19 { border-bottom: dotted 1px  #f00  }
+border20 { border-bottom: dotted 1px red  }
+border21 { border-bottom: dotted red  }
+border22 { border-bottom: dotted red 1px  }
+border23 { border-bottom: dotted red thin  }
+border24 { border-bottom: dotted thin  }
+border25 { border-bottom: dotted thin #f00  }
+border26 { border-bottom: dotted thin red  }
+border27 { border-bottom: 1px  }
+border28 { border-bottom: 1px #f00  }
+border29 { border-bottom: 1px #f00 dotted   }
+border30 { border-bottom: 1px #f00 none  }
+border31 { border-bottom: 1px dotted  }
+border32 { border-bottom: 1px dotted  #f00  }
+border33 { border-bottom: 1px dotted red  }
+border34 { border-bottom: 1px none  }
+border35 { border-bottom: 1px none #f00  }
+border36 { border-bottom: 1px none red  }
+border37 { border-bottom: 1px red  }
+border38 { border-bottom: 1px red dotted  }
+border39 { border-bottom: 1px red none  }
+border40 { border-bottom: none  }
+border41 { border-bottom: none #f00  }
+border42 { border-bottom: none #f00 1px  }
+border43 { border-bottom: none #f00 thin  }
+border44 { border-bottom: none 1px  }
+border45 { border-bottom: none 1px #f00  }
+border46 { border-bottom: none 1px red  }
+border47 { border-bottom: none red  }
+border48 { border-bottom: none red 1px  }
+border49 { border-bottom: none red thin  }
+border50 { border-bottom: none thin  }
+border51 { border-bottom: none thin #f00  }
+border52 { border-bottom: none thin red  }
+border53 { border-bottom: red  }
+border54 { border-bottom: red dotted  }
+border55 { border-bottom: red dotted 1px  }
+border56 { border-bottom: red dotted thin  }
+border57 { border-bottom: red 1px  }
+border58 { border-bottom: red 1px dotted  }
+border59 { border-bottom: red 1px none  }
+border60 { border-bottom: red none  }
+border61 { border-bottom: red none 1px  }
+border62 { border-bottom: red none thin  }
+border63 { border-bottom: red thin  }
+border64 { border-bottom: red thin dotted  }
+border65 { border-bottom: red thin none  }
+border66 { border-bottom: thin  }
+border67 { border-bottom: thin #f00  }
+border68 { border-bottom: thin #f00 dotted   }
+border69 { border-bottom: thin #f00 none  }
+border70 { border-bottom: thin dotted  }
+border71 { border-bottom: thin dotted  #f00  }
+border72 { border-bottom: thin dotted red  }
+border73 { border-bottom: thin none  }
+border74 { border-bottom: thin none #f00  }
+border75 { border-bottom: thin none red  }
+border76 { border-bottom: thin red  }
+border77 { border-bottom: thin red dotted  }
+border78 { border-bottom: thin red none  }

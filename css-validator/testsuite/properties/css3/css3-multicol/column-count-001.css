@@ -1,0 +1,13 @@
+div {
+	column-count: 1;
+}
+div {
+        column-count: 19292934;
+}
+div {
+	column-count: auto;
+}
+div {
+	column-count: inherit;
+}
+

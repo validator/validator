@@ -1,0 +1,5 @@
+a { list-style-position: inside }
+b { list-style-position: outside }
+x { list-style-position: initial }
+y { list-style-position: unset }
+z { list-style-position: inherit }

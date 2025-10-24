@@ -1,0 +1,36 @@
+div {
+  background-size: inherit ;
+}
+div {
+  background-size: 0;
+}
+div {
+  background-size: 12em;
+}
+div {
+  background-size: 42px;
+}
+div {
+  background-size: 12%;
+}
+div {
+  background-size: auto;
+}
+div {
+  background-size: 12em auto;
+}
+div {
+  background-size: auto 42%;
+}
+div {
+  background-size: 12px 42%;
+}
+div {
+  background-size: cover;
+}
+div {
+  background-size: contain;
+}
+div {
+  background-size: auto, auto auto, 12px 42%, cover, contain, 12em;
+}

@@ -1,0 +1,26 @@
+div {
+	column-rule-width: inherit;
+}
+div {
+        column-rule-width: thin;
+}
+div {
+        column-rule-width: medium;
+}
+div {
+        column-rule-width: thick;
+}
+div {
+        column-rule-width: 0;
+}
+div {
+        column-rule-width: 1em;
+}
+div {
+        column-rule-width: 12cm;
+}
+div {
+        column-rule-width: 42px;
+}
+
+

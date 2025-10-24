@@ -1,0 +1,23 @@
+div {
+  background-attachment: inherit;
+}
+
+div {
+  background-attachment: scroll;
+}
+
+div {
+  background-attachment: fixed;
+}
+
+div {
+  background-attachment: local;
+}
+
+div {
+  background-attachment: local, local;
+}
+
+div {
+  background-attachment: scroll, fixed, local, local, scroll;
+}

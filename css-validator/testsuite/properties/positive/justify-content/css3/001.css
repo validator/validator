@@ -1,0 +1,7 @@
+a { justify-content: flex-start }
+b { justify-content: flex-end }
+c { justify-content: center }
+d { justify-content: space-between }
+e { justify-content: space-around }
+y { justify-content: initial }
+z { justify-content: inherit }

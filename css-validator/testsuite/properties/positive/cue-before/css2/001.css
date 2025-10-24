@@ -1,0 +1,4 @@
+a { cue-before: none }
+b { cue-before: url("foo.wav") }
+c { cue-before: url("bar.aiff") }
+z { cue-before: inherit }

@@ -1,0 +1,39 @@
+div {
+        break-after: inherit;
+}
+div {
+	break-after: auto;
+}
+div {
+        break-after: avoid;
+}
+div {   
+        break-after: avoid-page;
+}
+div {
+	break-after: page;
+}
+div {
+        break-after: left;
+}
+div {
+        break-after: right;
+}
+div {
+        break-after: recto;
+}
+div {
+        break-after: verso;
+}
+div {
+        break-after: avoid-column;
+}
+div {
+        break-after: column;
+}
+div {
+        break-after: avoid-region;
+}
+div {
+        break-after: region;
+}

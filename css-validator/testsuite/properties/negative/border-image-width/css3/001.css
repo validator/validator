@@ -1,0 +1,5 @@
+a { border-image-width: -10pt }
+b { border-image-width: -10 }
+c { border-image-width: 0 10 -10pt }
+d { border-image-width: 10pt -10pt 20 5}
+

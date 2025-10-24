@@ -1,0 +1,64 @@
+a {
+    /* margin */
+    margin-top: inherit;
+    margin-right: inherit;
+    margin-bottom: inherit;
+    margin-left: inherit;
+    margin: inherit; /* shorthand */
+
+    /* padding */
+    padding-top: inherit;
+    padding-right: inherit;
+    padding-bottom: inherit;
+    padding-left: inherit;
+    padding: inherit; /* shorthand */
+
+    /* borders */
+    border-top-width: inherit;
+    border-right-width: inherit;
+    border-bottom-width: inherit;
+    border-left-width: inherit;
+    border-width: inherit; /* shorthand */
+
+    border-top-color: inherit;
+    border-right-color: inherit;
+    border-bottom-color: inherit;
+    border-left-color: inherit;
+    border-color: inherit; /* shorthand */
+
+    border-top-style: inherit;
+    border-right-style: inherit;
+    border-bottom-style: inherit;
+    border-left-style: inherit;
+    border-style: inherit; /* shorthand */
+
+    border-top: inherit; /* shorthand */
+    border-right: inherit; /* shorthand */
+    border-bottom: inherit; /* shorthand */
+    border-left: inherit; /* shorthand */
+
+    border: inherit; /* shorthand */
+
+    /* positionning */
+    width: inherit;
+    height: inherit;
+    float: inherit;
+    clear: inherit;
+    right: inherit;
+    top: inherit;
+    bottom: inherit;
+    left: inherit;
+    position: inherit;
+
+    direction: inherit;
+
+    max-height: inherit;
+    max-width: inherit;
+    min-height: inherit;
+    min-width: inherit;
+
+    unicode-bidi: inherit;
+
+
+    z-index: inherit;
+}

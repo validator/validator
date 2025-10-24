@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+test markup also accepts 3 properties: warning, profile and medium
+-->
+<testsuite>
+  <type title="CSS3_Colors">
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl001.css</file>
+      <description>color: Valid HSL</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl002.css</file>
+      <description>color: Valid HSL, Hue value over 360</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl003.css</file>
+      <description>color: Valid HSL, Saturation value over 100%</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl004.css</file>
+      <description>color: Valid HSL, Lightness value negative</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl005.css</file>
+      <description>color: Valid HSL, all values out of bounds</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>3</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl006.css</file>
+      <description>color: Invalid HSL, Hue as percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl007.css</file>
+      <description>color: Invalid HSL, Saturation as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl008.css</file>
+      <description>color: Invalid HSL, Lightness as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl009.css</file>
+      <description>color: Valid HSL, according to css-color-4</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl010.css</file>
+      <description>color: Invalid HSL, not enough values</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl011.css</file>
+      <description>background-color: Valid HSL</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl012.css</file>
+      <description>background-color: Valid HSL, Hue value over 360</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl013.css</file>
+      <description>background-color: Valid HSL, Saturation value over 100%</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl014.css</file>
+      <description>background-color: Valid HSL, Lightness value negative</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl015.css</file>
+      <description>background-color: Valid HSL, all values out of bounds</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>3</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl016.css</file>
+      <description>background-color: Invalid HSL, Hue as percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl017.css</file>
+      <description>background-color: Invalid HSL, Saturation as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl018.css</file>
+      <description>background-color: Invalid HSL, Lightness as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl019.css</file>
+      <description>background-color: Valid HSL (optional alpha)</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl020.css</file>
+      <description>background-color: Invalid HSL, not enough values</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla001.css</file>
+      <description>valid HSLa construct</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla002.css</file>
+      <description>valid HSLa construct but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla003.css</file>
+      <description>valid HSLa construct but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla004.css</file>
+      <description>valid HSLa construct but two values out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>2</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla005.css</file>
+      element { color: hsla(1000, -50%, 150%, -0.1) }
+      <description>valid HSLa construct but all values out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>4</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla006.css</file>
+      <description>invalid HSLa construct - first value should not be percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla007.css</file>
+      <description>invalid HSLa construct - second value should be percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla008.css</file>
+      <description>invalid HSLa construct - third value should be percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb001.css</file>
+      <description>valid RGB construct</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb002.css</file>
+      <description>valid RGB construct - but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb003.css</file>
+      <description>valid RGB construct - but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb004.css</file>
+      <description>valid RGB construct - but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb005.css</file>
+      <description>valid RGB construct - but all values out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>3</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb006.css</file>
+      <description>invalid RGB construct - cannot mix numbers and percentages</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb007.css</file>
+      <description>invalid RGB construct - cannot mix numbers and percentages</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb008.css</file>
+      <description>invalid RGB construct - cannot mix numbers and percentages</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb009.css</file>
+      <description>Valid RGB construct - alpha channel is possible in css-color-4 for rgb()</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb020.css</file>
+      <description>invalid RGB construct - missing one value</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba001.css</file>
+      <description>invalid RGBa construct - n't mix percentages and numbers and 0 is not 0%, apparently </description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba002.css</file>
+      <description>valid RGBa construct - but one value out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba003.css</file>
+      <description>valid RGBa construct - but one value out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba004.css</file>
+      <description>valid RGBa construct - but one value out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba005.css</file>
+      <description>valid RGBa construct - but all values out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>4</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba006.css</file>
+      <description>valid RGBa construct</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba007.css</file>
+      <description>invalid RGBa construct - mixing percentage and numbers</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba008.css</file>
+      <description>invalid RGBa construct - mixing percentage and numbers</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+ </type>
+</testsuite>

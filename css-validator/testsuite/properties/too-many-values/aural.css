@@ -1,0 +1,66 @@
+h1   { azimuth: 30deg far-right }
+td.a { azimuth: far-right 30deg }
+#12  { azimuth: behind far-right left-side }
+p.comment { azimuth: behind leftwards }
+p.comment { azimuth: leftwards behind }
+
+h1 {
+    cue-before: url("pop.au") none;
+    cue-after: url("pop.au") url("pop2.au");
+    cue-before: none none;
+    cue-after: none url("pop.au");
+}
+
+h1 {
+    cue: url("pop.au") none url("pop.au");
+    cue: url("pop.au") url("pop.wav") url("pop.au");
+    cue: none none none url("pop.au");
+}
+
+a {
+    elevation: 32deg below;
+    elevation: below 32deg;
+    elevation: level above higher lower;
+}
+
+h3 { pause-after: 10% 10ms}
+h3 { pause-after: 10ms 10%}
+h1 { pause: 20s 10ms 1s 10%}
+
+a {
+    pitch-range: 80 20;
+    pitch: 1kHz x-low;
+    pitch: x-low 1kHz;
+    pitch: low medium high x-high;
+}
+
+blockquote.sad { play-during: url("violins.aiff") url("violins2.aiff") }
+blockquote Q   { play-during: url("harp.wav") mix repeat mix }
+span.quiet     { play-during: none mix}
+span.auto      { play-during: auto url("violins.aiff") repeat}
+
+a {
+    richness: 20 10;
+    speak-header: once always;
+    speak-header: always once;
+    speak-numeral: digits continuous;
+    speak-numeral: continuous digits;
+    speak-punctuation: code none;
+    speak-punctuation: none code;
+    speak: normal none;
+    speak: none normal;
+    speak: spell-out normal none;
+    speech-rate: 20 10;
+    speech-rate: x-slow 20 slow;
+    speech-rate: slow x-slow;
+    speech-rate: medium medium;
+    speech-rate: fast slow 10;
+    stress: 20 10 5;
+}
+
+a {
+    volume: 20 10%;
+    volume: 10% 20;
+    volume: silent x-soft medium;
+    volume: x-loud 20;
+}

@@ -1,0 +1,1209 @@
+z { border-image: inherit }
+y { border-image: initial }
+bimg1 { border-image: 10 5% 20 2% }
+bimg2 { border-image: 10 5% 20 2% / 50 }
+bimg3 { border-image: 10 5% 20 2% /  /10px 20 30 40px }
+bimg4 { border-image: 10 5% 20 2% /  /10px 20 30 40px url(foo.png) }
+bimg5 { border-image: 10 5% 20 2% /  /10px 20 30 40px url(foo.png) stretch space }
+bimg6 { border-image: 10 5% 20 2% /  /10px 20 30 40px none }
+bimg7 { border-image: 10 5% 20 2% /  /10px 20 30 40px none stretch space }
+bimg8 { border-image: 10 5% 20 2% /  /10px 20 30 40px stretch space }
+bimg9 { border-image: 10 5% 20 2% /  /10px 20 30 40px stretch space url(foo.png) }
+bimg10 { border-image: 10 5% 20 2% /  /10px 20 30 40px stretch space none }
+bimg11 { border-image: 10 5% 20 2% /  /10px 20px }
+bimg12 { border-image: 10 5% 20 2% /  /10px 20px url(foo.png) }
+bimg13 { border-image: 10 5% 20 2% /  /10px 20px url(foo.png) stretch space }
+bimg14 { border-image: 10 5% 20 2% /  /10px 20px none }
+bimg15 { border-image: 10 5% 20 2% /  /10px 20px none stretch space }
+bimg16 { border-image: 10 5% 20 2% /  /10px 20px stretch space }
+bimg17 { border-image: 10 5% 20 2% /  /10px 20px stretch space url(foo.png) }
+bimg18 { border-image: 10 5% 20 2% /  /10px 20px stretch space none }
+bimg19 { border-image: 10 5% 20 2% /  /50 }
+bimg20 { border-image: 10 5% 20 2% /  /50 url(foo.png) }
+bimg21 { border-image: 10 5% 20 2% /  /50 url(foo.png) stretch space }
+bimg22 { border-image: 10 5% 20 2% /  /50 none }
+bimg23 { border-image: 10 5% 20 2% /  /50 none stretch space }
+bimg24 { border-image: 10 5% 20 2% /  /50 stretch space }
+bimg25 { border-image: 10 5% 20 2% /  /50 stretch space url(foo.png) }
+bimg26 { border-image: 10 5% 20 2% /  /50 stretch space none }
+bimg27 { border-image: 10 5% 20 2% / 50 url(foo.png) }
+bimg28 { border-image: 10 5% 20 2% / 50 url(foo.png) stretch space }
+bimg29 { border-image: 10 5% 20 2% / 50 none }
+bimg30 { border-image: 10 5% 20 2% / 50 none stretch space }
+bimg31 { border-image: 10 5% 20 2% / 50 stretch space }
+bimg32 { border-image: 10 5% 20 2% / 50 stretch space url(foo.png) }
+bimg33 { border-image: 10 5% 20 2% / 50 stretch space none }
+bimg34 { border-image: 10 5% 20 2% / 10 10 10 10 }
+bimg35 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg36 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px url(foo.png) }
+bimg37 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px url(foo.png) stretch space }
+bimg38 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px none }
+bimg39 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px none stretch space }
+bimg40 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg41 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px stretch space url(foo.png) }
+bimg42 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px stretch space none }
+bimg43 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg44 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px url(foo.png) }
+bimg45 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px url(foo.png) stretch space }
+bimg46 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px none }
+bimg47 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px none stretch space }
+bimg48 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px stretch space }
+bimg49 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px stretch space url(foo.png) }
+bimg50 { border-image: 10 5% 20 2% / 10 10 10 10 /10px 20px stretch space none }
+bimg51 { border-image: 10 5% 20 2% / 10 10 10 10 /50 }
+bimg52 { border-image: 10 5% 20 2% / 10 10 10 10 /50 url(foo.png) }
+bimg53 { border-image: 10 5% 20 2% / 10 10 10 10 /50 url(foo.png) stretch space }
+bimg54 { border-image: 10 5% 20 2% / 10 10 10 10 /50 none }
+bimg55 { border-image: 10 5% 20 2% / 10 10 10 10 /50 none stretch space }
+bimg56 { border-image: 10 5% 20 2% / 10 10 10 10 /50 stretch space }
+bimg57 { border-image: 10 5% 20 2% / 10 10 10 10 /50 stretch space url(foo.png) }
+bimg58 { border-image: 10 5% 20 2% / 10 10 10 10 /50 stretch space none }
+bimg59 { border-image: 10 5% 20 2% / 10 10 10 10 url(foo.png) }
+bimg60 { border-image: 10 5% 20 2% / 10 10 10 10 url(foo.png) stretch space }
+bimg61 { border-image: 10 5% 20 2% / 10 10 10 10 none }
+bimg62 { border-image: 10 5% 20 2% / 10 10 10 10 none stretch space }
+bimg63 { border-image: 10 5% 20 2% / 10 10 10 10 stretch space }
+bimg64 { border-image: 10 5% 20 2% / 10 10 10 10 stretch space url(foo.png) }
+bimg65 { border-image: 10 5% 20 2% / 10 10 10 10 stretch space none }
+bimg66 { border-image: 10 5% 20 2% / 10px 2% auto }
+bimg67 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg68 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px url(foo.png) }
+bimg69 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px url(foo.png) stretch space }
+bimg70 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px none }
+bimg71 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px none stretch space }
+bimg72 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px stretch space }
+bimg73 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px stretch space url(foo.png) }
+bimg74 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20 30 40px stretch space none }
+bimg75 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg76 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px url(foo.png) }
+bimg77 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px url(foo.png) stretch space }
+bimg78 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px none }
+bimg79 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px none stretch space }
+bimg80 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px stretch space }
+bimg81 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px stretch space url(foo.png) }
+bimg82 { border-image: 10 5% 20 2% / 10px 2% auto /10px 20px stretch space none }
+bimg83 { border-image: 10 5% 20 2% / 10px 2% auto /50 }
+bimg84 { border-image: 10 5% 20 2% / 10px 2% auto /50 url(foo.png) }
+bimg85 { border-image: 10 5% 20 2% / 10px 2% auto /50 url(foo.png) stretch space }
+bimg86 { border-image: 10 5% 20 2% / 10px 2% auto /50 none }
+bimg87 { border-image: 10 5% 20 2% / 10px 2% auto /50 none stretch space }
+bimg88 { border-image: 10 5% 20 2% / 10px 2% auto /50 stretch space }
+bimg89 { border-image: 10 5% 20 2% / 10px 2% auto /50 stretch space url(foo.png) }
+bimg90 { border-image: 10 5% 20 2% / 10px 2% auto /50 stretch space none }
+bimg91 { border-image: 10 5% 20 2% / 10px 2% auto url(foo.png) }
+bimg92 { border-image: 10 5% 20 2% / 10px 2% auto url(foo.png) stretch space }
+bimg93 { border-image: 10 5% 20 2% / 10px 2% auto none }
+bimg94 { border-image: 10 5% 20 2% / 10px 2% auto none stretch space }
+bimg95 { border-image: 10 5% 20 2% / 10px 2% auto stretch space }
+bimg96 { border-image: 10 5% 20 2% / 10px 2% auto stretch space url(foo.png) }
+bimg97 { border-image: 10 5% 20 2% / 10px 2% auto stretch space none }
+bimg98 { border-image: 10 5% 20 2% / 5% }
+bimg99 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg100 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px url(foo.png) }
+bimg101 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px url(foo.png) stretch space }
+bimg102 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px none }
+bimg103 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px none stretch space }
+bimg104 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px stretch space }
+bimg105 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px stretch space url(foo.png) }
+bimg106 { border-image: 10 5% 20 2% / 5% /10px 20 30 40px stretch space none }
+bimg107 { border-image: 10 5% 20 2% / 5% /10px 20px }
+bimg108 { border-image: 10 5% 20 2% / 5% /10px 20px url(foo.png) }
+bimg109 { border-image: 10 5% 20 2% / 5% /10px 20px url(foo.png) stretch space }
+bimg110 { border-image: 10 5% 20 2% / 5% /10px 20px none }
+bimg111 { border-image: 10 5% 20 2% / 5% /10px 20px none stretch space }
+bimg112 { border-image: 10 5% 20 2% / 5% /10px 20px stretch space }
+bimg113 { border-image: 10 5% 20 2% / 5% /10px 20px stretch space url(foo.png) }
+bimg114 { border-image: 10 5% 20 2% / 5% /10px 20px stretch space none }
+bimg115 { border-image: 10 5% 20 2% / 5% /50 }
+bimg116 { border-image: 10 5% 20 2% / 5% /50 url(foo.png) }
+bimg117 { border-image: 10 5% 20 2% / 5% /50 url(foo.png) stretch space }
+bimg118 { border-image: 10 5% 20 2% / 5% /50 none }
+bimg119 { border-image: 10 5% 20 2% / 5% /50 none stretch space }
+bimg120 { border-image: 10 5% 20 2% / 5% /50 stretch space }
+bimg121 { border-image: 10 5% 20 2% / 5% /50 stretch space url(foo.png) }
+bimg122 { border-image: 10 5% 20 2% / 5% /50 stretch space none }
+bimg123 { border-image: 10 5% 20 2% / 5% url(foo.png) }
+bimg124 { border-image: 10 5% 20 2% / 5% url(foo.png) stretch space }
+bimg125 { border-image: 10 5% 20 2% / 5% none }
+bimg126 { border-image: 10 5% 20 2% / 5% none stretch space }
+bimg127 { border-image: 10 5% 20 2% / 5% stretch space }
+bimg128 { border-image: 10 5% 20 2% / 5% stretch space url(foo.png) }
+bimg129 { border-image: 10 5% 20 2% / 5% stretch space none }
+bimg130 { border-image: 10 5% 20 2% url(foo.png) }
+bimg131 { border-image: 10 5% 20 2% url(foo.png) stretch space }
+bimg132 { border-image: 10 5% 20 2% none }
+bimg133 { border-image: 10 5% 20 2% none stretch space }
+bimg134 { border-image: 10 5% 20 2% stretch space }
+bimg135 { border-image: 10 5% 20 2% stretch space url(foo.png) }
+bimg136 { border-image: 10 5% 20 2% stretch space none }
+bimg137 { border-image: 10% }
+bimg138 { border-image: 10% / 50 }
+bimg139 { border-image: 10% /  /10px 20 30 40px }
+bimg140 { border-image: 10% /  /10px 20 30 40px url(foo.png) }
+bimg141 { border-image: 10% /  /10px 20 30 40px url(foo.png) stretch space }
+bimg142 { border-image: 10% /  /10px 20 30 40px none }
+bimg143 { border-image: 10% /  /10px 20 30 40px none stretch space }
+bimg144 { border-image: 10% /  /10px 20 30 40px stretch space }
+bimg145 { border-image: 10% /  /10px 20 30 40px stretch space url(foo.png) }
+bimg146 { border-image: 10% /  /10px 20 30 40px stretch space none }
+bimg147 { border-image: 10% /  /10px 20px }
+bimg148 { border-image: 10% /  /10px 20px url(foo.png) }
+bimg149 { border-image: 10% /  /10px 20px url(foo.png) stretch space }
+bimg150 { border-image: 10% /  /10px 20px none }
+bimg151 { border-image: 10% /  /10px 20px none stretch space }
+bimg152 { border-image: 10% /  /10px 20px stretch space }
+bimg153 { border-image: 10% /  /10px 20px stretch space url(foo.png) }
+bimg154 { border-image: 10% /  /10px 20px stretch space none }
+bimg155 { border-image: 10% /  /50 }
+bimg156 { border-image: 10% /  /50 url(foo.png) }
+bimg157 { border-image: 10% /  /50 url(foo.png) stretch space }
+bimg158 { border-image: 10% /  /50 none }
+bimg159 { border-image: 10% /  /50 none stretch space }
+bimg160 { border-image: 10% /  /50 stretch space }
+bimg161 { border-image: 10% /  /50 stretch space url(foo.png) }
+bimg162 { border-image: 10% /  /50 stretch space none }
+bimg163 { border-image: 10% / 50 url(foo.png) }
+bimg164 { border-image: 10% / 50 url(foo.png) stretch space }
+bimg165 { border-image: 10% / 50 none }
+bimg166 { border-image: 10% / 50 none stretch space }
+bimg167 { border-image: 10% / 50 stretch space }
+bimg168 { border-image: 10% / 50 stretch space url(foo.png) }
+bimg169 { border-image: 10% / 50 stretch space none }
+bimg170 { border-image: 10% / 10 10 10 10 }
+bimg171 { border-image: 10% / 10 10 10 10 /10px 20 30 40px }
+bimg172 { border-image: 10% / 10 10 10 10 /10px 20 30 40px url(foo.png) }
+bimg173 { border-image: 10% / 10 10 10 10 /10px 20 30 40px url(foo.png) stretch space }
+bimg174 { border-image: 10% / 10 10 10 10 /10px 20 30 40px none }
+bimg175 { border-image: 10% / 10 10 10 10 /10px 20 30 40px none stretch space }
+bimg176 { border-image: 10% / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg177 { border-image: 10% / 10 10 10 10 /10px 20 30 40px stretch space url(foo.png) }
+bimg178 { border-image: 10% / 10 10 10 10 /10px 20 30 40px stretch space none }
+bimg179 { border-image: 10% / 10 10 10 10 /10px 20px }
+bimg180 { border-image: 10% / 10 10 10 10 /10px 20px url(foo.png) }
+bimg181 { border-image: 10% / 10 10 10 10 /10px 20px url(foo.png) stretch space }
+bimg182 { border-image: 10% / 10 10 10 10 /10px 20px none }
+bimg183 { border-image: 10% / 10 10 10 10 /10px 20px none stretch space }
+bimg184 { border-image: 10% / 10 10 10 10 /10px 20px stretch space }
+bimg185 { border-image: 10% / 10 10 10 10 /10px 20px stretch space url(foo.png) }
+bimg186 { border-image: 10% / 10 10 10 10 /10px 20px stretch space none }
+bimg187 { border-image: 10% / 10 10 10 10 /50 }
+bimg188 { border-image: 10% / 10 10 10 10 /50 url(foo.png) }
+bimg189 { border-image: 10% / 10 10 10 10 /50 url(foo.png) stretch space }
+bimg190 { border-image: 10% / 10 10 10 10 /50 none }
+bimg191 { border-image: 10% / 10 10 10 10 /50 none stretch space }
+bimg192 { border-image: 10% / 10 10 10 10 /50 stretch space }
+bimg193 { border-image: 10% / 10 10 10 10 /50 stretch space url(foo.png) }
+bimg194 { border-image: 10% / 10 10 10 10 /50 stretch space none }
+bimg195 { border-image: 10% / 10 10 10 10 url(foo.png) }
+bimg196 { border-image: 10% / 10 10 10 10 url(foo.png) stretch space }
+bimg197 { border-image: 10% / 10 10 10 10 none }
+bimg198 { border-image: 10% / 10 10 10 10 none stretch space }
+bimg199 { border-image: 10% / 10 10 10 10 stretch space }
+bimg200 { border-image: 10% / 10 10 10 10 stretch space url(foo.png) }
+bimg201 { border-image: 10% / 10 10 10 10 stretch space none }
+bimg202 { border-image: 10% / 10px 2% auto }
+bimg203 { border-image: 10% / 10px 2% auto /10px 20 30 40px }
+bimg204 { border-image: 10% / 10px 2% auto /10px 20 30 40px url(foo.png) }
+bimg205 { border-image: 10% / 10px 2% auto /10px 20 30 40px url(foo.png) stretch space }
+bimg206 { border-image: 10% / 10px 2% auto /10px 20 30 40px none }
+bimg207 { border-image: 10% / 10px 2% auto /10px 20 30 40px none stretch space }
+bimg208 { border-image: 10% / 10px 2% auto /10px 20 30 40px stretch space }
+bimg209 { border-image: 10% / 10px 2% auto /10px 20 30 40px stretch space url(foo.png) }
+bimg210 { border-image: 10% / 10px 2% auto /10px 20 30 40px stretch space none }
+bimg211 { border-image: 10% / 10px 2% auto /10px 20px }
+bimg212 { border-image: 10% / 10px 2% auto /10px 20px url(foo.png) }
+bimg213 { border-image: 10% / 10px 2% auto /10px 20px url(foo.png) stretch space }
+bimg214 { border-image: 10% / 10px 2% auto /10px 20px none }
+bimg215 { border-image: 10% / 10px 2% auto /10px 20px none stretch space }
+bimg216 { border-image: 10% / 10px 2% auto /10px 20px stretch space }
+bimg217 { border-image: 10% / 10px 2% auto /10px 20px stretch space url(foo.png) }
+bimg218 { border-image: 10% / 10px 2% auto /10px 20px stretch space none }
+bimg219 { border-image: 10% / 10px 2% auto /50 }
+bimg220 { border-image: 10% / 10px 2% auto /50 url(foo.png) }
+bimg221 { border-image: 10% / 10px 2% auto /50 url(foo.png) stretch space }
+bimg222 { border-image: 10% / 10px 2% auto /50 none }
+bimg223 { border-image: 10% / 10px 2% auto /50 none stretch space }
+bimg224 { border-image: 10% / 10px 2% auto /50 stretch space }
+bimg225 { border-image: 10% / 10px 2% auto /50 stretch space url(foo.png) }
+bimg226 { border-image: 10% / 10px 2% auto /50 stretch space none }
+bimg227 { border-image: 10% / 10px 2% auto url(foo.png) }
+bimg228 { border-image: 10% / 10px 2% auto url(foo.png) stretch space }
+bimg229 { border-image: 10% / 10px 2% auto none }
+bimg230 { border-image: 10% / 10px 2% auto none stretch space }
+bimg231 { border-image: 10% / 10px 2% auto stretch space }
+bimg232 { border-image: 10% / 10px 2% auto stretch space url(foo.png) }
+bimg233 { border-image: 10% / 10px 2% auto stretch space none }
+bimg234 { border-image: 10% / 5% }
+bimg235 { border-image: 10% / 5% /10px 20 30 40px }
+bimg236 { border-image: 10% / 5% /10px 20 30 40px url(foo.png) }
+bimg237 { border-image: 10% / 5% /10px 20 30 40px url(foo.png) stretch space }
+bimg238 { border-image: 10% / 5% /10px 20 30 40px none }
+bimg239 { border-image: 10% / 5% /10px 20 30 40px none stretch space }
+bimg240 { border-image: 10% / 5% /10px 20 30 40px stretch space }
+bimg241 { border-image: 10% / 5% /10px 20 30 40px stretch space url(foo.png) }
+bimg242 { border-image: 10% / 5% /10px 20 30 40px stretch space none }
+bimg243 { border-image: 10% / 5% /10px 20px }
+bimg244 { border-image: 10% / 5% /10px 20px url(foo.png) }
+bimg245 { border-image: 10% / 5% /10px 20px url(foo.png) stretch space }
+bimg246 { border-image: 10% / 5% /10px 20px none }
+bimg247 { border-image: 10% / 5% /10px 20px none stretch space }
+bimg248 { border-image: 10% / 5% /10px 20px stretch space }
+bimg249 { border-image: 10% / 5% /10px 20px stretch space url(foo.png) }
+bimg250 { border-image: 10% / 5% /10px 20px stretch space none }
+bimg251 { border-image: 10% / 5% /50 }
+bimg252 { border-image: 10% / 5% /50 url(foo.png) }
+bimg253 { border-image: 10% / 5% /50 url(foo.png) stretch space }
+bimg254 { border-image: 10% / 5% /50 none }
+bimg255 { border-image: 10% / 5% /50 none stretch space }
+bimg256 { border-image: 10% / 5% /50 stretch space }
+bimg257 { border-image: 10% / 5% /50 stretch space url(foo.png) }
+bimg258 { border-image: 10% / 5% /50 stretch space none }
+bimg259 { border-image: 10% / 5% url(foo.png) }
+bimg260 { border-image: 10% / 5% url(foo.png) stretch space }
+bimg261 { border-image: 10% / 5% none }
+bimg262 { border-image: 10% / 5% none stretch space }
+bimg263 { border-image: 10% / 5% stretch space }
+bimg264 { border-image: 10% / 5% stretch space url(foo.png) }
+bimg265 { border-image: 10% / 5% stretch space none }
+bimg266 { border-image: 10% url(foo.png) }
+bimg267 { border-image: 10% url(foo.png) stretch space }
+bimg268 { border-image: 10% none }
+bimg269 { border-image: 10% none stretch space }
+bimg270 { border-image: 10% stretch space }
+bimg271 { border-image: 10% stretch space url(foo.png) }
+bimg272 { border-image: 10% stretch space none }
+bimg273 { border-image: 20 }
+bimg274 { border-image: 20 / 50 }
+bimg275 { border-image: 20 /  /10px 20 30 40px }
+bimg276 { border-image: 20 /  /10px 20 30 40px url(foo.png) }
+bimg277 { border-image: 20 /  /10px 20 30 40px url(foo.png) stretch space }
+bimg278 { border-image: 20 /  /10px 20 30 40px none }
+bimg279 { border-image: 20 /  /10px 20 30 40px none stretch space }
+bimg280 { border-image: 20 /  /10px 20 30 40px stretch space }
+bimg281 { border-image: 20 /  /10px 20 30 40px stretch space url(foo.png) }
+bimg282 { border-image: 20 /  /10px 20 30 40px stretch space none }
+bimg283 { border-image: 20 /  /10px 20px }
+bimg284 { border-image: 20 /  /10px 20px url(foo.png) }
+bimg285 { border-image: 20 /  /10px 20px url(foo.png) stretch space }
+bimg286 { border-image: 20 /  /10px 20px none }
+bimg287 { border-image: 20 /  /10px 20px none stretch space }
+bimg288 { border-image: 20 /  /10px 20px stretch space }
+bimg289 { border-image: 20 /  /10px 20px stretch space url(foo.png) }
+bimg290 { border-image: 20 /  /10px 20px stretch space none }
+bimg291 { border-image: 20 /  /50 }
+bimg292 { border-image: 20 /  /50 url(foo.png) }
+bimg293 { border-image: 20 /  /50 url(foo.png) stretch space }
+bimg294 { border-image: 20 /  /50 none }
+bimg295 { border-image: 20 /  /50 none stretch space }
+bimg296 { border-image: 20 /  /50 stretch space }
+bimg297 { border-image: 20 /  /50 stretch space url(foo.png) }
+bimg298 { border-image: 20 /  /50 stretch space none }
+bimg299 { border-image: 20 / 50 url(foo.png) }
+bimg300 { border-image: 20 / 50 url(foo.png) stretch space }
+bimg301 { border-image: 20 / 50 none }
+bimg302 { border-image: 20 / 50 none stretch space }
+bimg303 { border-image: 20 / 50 stretch space }
+bimg304 { border-image: 20 / 50 stretch space url(foo.png) }
+bimg305 { border-image: 20 / 50 stretch space none }
+bimg306 { border-image: 20 / 10 10 10 10 }
+bimg307 { border-image: 20 / 10 10 10 10 /10px 20 30 40px }
+bimg308 { border-image: 20 / 10 10 10 10 /10px 20 30 40px url(foo.png) }
+bimg309 { border-image: 20 / 10 10 10 10 /10px 20 30 40px url(foo.png) stretch space }
+bimg310 { border-image: 20 / 10 10 10 10 /10px 20 30 40px none }
+bimg311 { border-image: 20 / 10 10 10 10 /10px 20 30 40px none stretch space }
+bimg312 { border-image: 20 / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg313 { border-image: 20 / 10 10 10 10 /10px 20 30 40px stretch space url(foo.png) }
+bimg314 { border-image: 20 / 10 10 10 10 /10px 20 30 40px stretch space none }
+bimg315 { border-image: 20 / 10 10 10 10 /10px 20px }
+bimg316 { border-image: 20 / 10 10 10 10 /10px 20px url(foo.png) }
+bimg317 { border-image: 20 / 10 10 10 10 /10px 20px url(foo.png) stretch space }
+bimg318 { border-image: 20 / 10 10 10 10 /10px 20px none }
+bimg319 { border-image: 20 / 10 10 10 10 /10px 20px none stretch space }
+bimg320 { border-image: 20 / 10 10 10 10 /10px 20px stretch space }
+bimg321 { border-image: 20 / 10 10 10 10 /10px 20px stretch space url(foo.png) }
+bimg322 { border-image: 20 / 10 10 10 10 /10px 20px stretch space none }
+bimg323 { border-image: 20 / 10 10 10 10 /50 }
+bimg324 { border-image: 20 / 10 10 10 10 /50 url(foo.png) }
+bimg325 { border-image: 20 / 10 10 10 10 /50 url(foo.png) stretch space }
+bimg326 { border-image: 20 / 10 10 10 10 /50 none }
+bimg327 { border-image: 20 / 10 10 10 10 /50 none stretch space }
+bimg328 { border-image: 20 / 10 10 10 10 /50 stretch space }
+bimg329 { border-image: 20 / 10 10 10 10 /50 stretch space url(foo.png) }
+bimg330 { border-image: 20 / 10 10 10 10 /50 stretch space none }
+bimg331 { border-image: 20 / 10 10 10 10 url(foo.png) }
+bimg332 { border-image: 20 / 10 10 10 10 url(foo.png) stretch space }
+bimg333 { border-image: 20 / 10 10 10 10 none }
+bimg334 { border-image: 20 / 10 10 10 10 none stretch space }
+bimg335 { border-image: 20 / 10 10 10 10 stretch space }
+bimg336 { border-image: 20 / 10 10 10 10 stretch space url(foo.png) }
+bimg337 { border-image: 20 / 10 10 10 10 stretch space none }
+bimg338 { border-image: 20 / 10px 2% auto }
+bimg339 { border-image: 20 / 10px 2% auto /10px 20 30 40px }
+bimg340 { border-image: 20 / 10px 2% auto /10px 20 30 40px url(foo.png) }
+bimg341 { border-image: 20 / 10px 2% auto /10px 20 30 40px url(foo.png) stretch space }
+bimg342 { border-image: 20 / 10px 2% auto /10px 20 30 40px none }
+bimg343 { border-image: 20 / 10px 2% auto /10px 20 30 40px none stretch space }
+bimg344 { border-image: 20 / 10px 2% auto /10px 20 30 40px stretch space }
+bimg345 { border-image: 20 / 10px 2% auto /10px 20 30 40px stretch space url(foo.png) }
+bimg346 { border-image: 20 / 10px 2% auto /10px 20 30 40px stretch space none }
+bimg347 { border-image: 20 / 10px 2% auto /10px 20px }
+bimg348 { border-image: 20 / 10px 2% auto /10px 20px url(foo.png) }
+bimg349 { border-image: 20 / 10px 2% auto /10px 20px url(foo.png) stretch space }
+bimg350 { border-image: 20 / 10px 2% auto /10px 20px none }
+bimg351 { border-image: 20 / 10px 2% auto /10px 20px none stretch space }
+bimg352 { border-image: 20 / 10px 2% auto /10px 20px stretch space }
+bimg353 { border-image: 20 / 10px 2% auto /10px 20px stretch space url(foo.png) }
+bimg354 { border-image: 20 / 10px 2% auto /10px 20px stretch space none }
+bimg355 { border-image: 20 / 10px 2% auto /50 }
+bimg356 { border-image: 20 / 10px 2% auto /50 url(foo.png) }
+bimg357 { border-image: 20 / 10px 2% auto /50 url(foo.png) stretch space }
+bimg358 { border-image: 20 / 10px 2% auto /50 none }
+bimg359 { border-image: 20 / 10px 2% auto /50 none stretch space }
+bimg360 { border-image: 20 / 10px 2% auto /50 stretch space }
+bimg361 { border-image: 20 / 10px 2% auto /50 stretch space url(foo.png) }
+bimg362 { border-image: 20 / 10px 2% auto /50 stretch space none }
+bimg363 { border-image: 20 / 10px 2% auto url(foo.png) }
+bimg364 { border-image: 20 / 10px 2% auto url(foo.png) stretch space }
+bimg365 { border-image: 20 / 10px 2% auto none }
+bimg366 { border-image: 20 / 10px 2% auto none stretch space }
+bimg367 { border-image: 20 / 10px 2% auto stretch space }
+bimg368 { border-image: 20 / 10px 2% auto stretch space url(foo.png) }
+bimg369 { border-image: 20 / 10px 2% auto stretch space none }
+bimg370 { border-image: 20 / 5% }
+bimg371 { border-image: 20 / 5% /10px 20 30 40px }
+bimg372 { border-image: 20 / 5% /10px 20 30 40px url(foo.png) }
+bimg373 { border-image: 20 / 5% /10px 20 30 40px url(foo.png) stretch space }
+bimg374 { border-image: 20 / 5% /10px 20 30 40px none }
+bimg375 { border-image: 20 / 5% /10px 20 30 40px none stretch space }
+bimg376 { border-image: 20 / 5% /10px 20 30 40px stretch space }
+bimg377 { border-image: 20 / 5% /10px 20 30 40px stretch space url(foo.png) }
+bimg378 { border-image: 20 / 5% /10px 20 30 40px stretch space none }
+bimg379 { border-image: 20 / 5% /10px 20px }
+bimg380 { border-image: 20 / 5% /10px 20px url(foo.png) }
+bimg381 { border-image: 20 / 5% /10px 20px url(foo.png) stretch space }
+bimg382 { border-image: 20 / 5% /10px 20px none }
+bimg383 { border-image: 20 / 5% /10px 20px none stretch space }
+bimg384 { border-image: 20 / 5% /10px 20px stretch space }
+bimg385 { border-image: 20 / 5% /10px 20px stretch space url(foo.png) }
+bimg386 { border-image: 20 / 5% /10px 20px stretch space none }
+bimg387 { border-image: 20 / 5% /50 }
+bimg388 { border-image: 20 / 5% /50 url(foo.png) }
+bimg389 { border-image: 20 / 5% /50 url(foo.png) stretch space }
+bimg390 { border-image: 20 / 5% /50 none }
+bimg391 { border-image: 20 / 5% /50 none stretch space }
+bimg392 { border-image: 20 / 5% /50 stretch space }
+bimg393 { border-image: 20 / 5% /50 stretch space url(foo.png) }
+bimg394 { border-image: 20 / 5% /50 stretch space none }
+bimg395 { border-image: 20 / 5% url(foo.png) }
+bimg396 { border-image: 20 / 5% url(foo.png) stretch space }
+bimg397 { border-image: 20 / 5% none }
+bimg398 { border-image: 20 / 5% none stretch space }
+bimg399 { border-image: 20 / 5% stretch space }
+bimg400 { border-image: 20 / 5% stretch space url(foo.png) }
+bimg401 { border-image: 20 / 5% stretch space none }
+bimg402 { border-image: 20 url(foo.png) }
+bimg403 { border-image: 20 url(foo.png) stretch space }
+bimg404 { border-image: 20 none }
+bimg405 { border-image: 20 none stretch space }
+bimg406 { border-image: 20 stretch space }
+bimg407 { border-image: 20 stretch space url(foo.png) }
+bimg408 { border-image: 20 stretch space none }
+bimg409 { border-image: url(foo.png) }
+bimg410 { border-image: url(foo.png) 10 5% 20 2% }
+bimg411 { border-image: url(foo.png) 10 5% 20 2% / 50 }
+bimg412 { border-image: url(foo.png) 10 5% 20 2% /  /10px 20 30 40px }
+bimg413 { border-image: url(foo.png) 10 5% 20 2% /  /10px 20 30 40px stretch space }
+bimg414 { border-image: url(foo.png) 10 5% 20 2% /  /10px 20px }
+bimg415 { border-image: url(foo.png) 10 5% 20 2% /  /10px 20px stretch space }
+bimg416 { border-image: url(foo.png) 10 5% 20 2% /  /50 }
+bimg417 { border-image: url(foo.png) 10 5% 20 2% /  /50 stretch space }
+bimg418 { border-image: url(foo.png) 10 5% 20 2% / 50 stretch space }
+bimg419 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 }
+bimg420 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg421 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg422 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg423 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 /10px 20px stretch space }
+bimg424 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 /50 }
+bimg425 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 /50 stretch space }
+bimg426 { border-image: url(foo.png) 10 5% 20 2% / 10 10 10 10 stretch space }
+bimg427 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto }
+bimg428 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg429 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto /10px 20 30 40px stretch space }
+bimg430 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg431 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto /10px 20px stretch space }
+bimg432 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto /50 }
+bimg433 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto /50 stretch space }
+bimg434 { border-image: url(foo.png) 10 5% 20 2% / 10px 2% auto stretch space }
+bimg435 { border-image: url(foo.png) 10 5% 20 2% / 5% }
+bimg436 { border-image: url(foo.png) 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg437 { border-image: url(foo.png) 10 5% 20 2% / 5% /10px 20 30 40px stretch space }
+bimg438 { border-image: url(foo.png) 10 5% 20 2% / 5% /10px 20px }
+bimg439 { border-image: url(foo.png) 10 5% 20 2% / 5% /10px 20px stretch space }
+bimg440 { border-image: url(foo.png) 10 5% 20 2% / 5% /50 }
+bimg441 { border-image: url(foo.png) 10 5% 20 2% / 5% /50 stretch space }
+bimg442 { border-image: url(foo.png) 10 5% 20 2% / 5% stretch space }
+bimg443 { border-image: url(foo.png) 10 5% 20 2% stretch space }
+bimg444 { border-image: url(foo.png) 10% }
+bimg445 { border-image: url(foo.png) 10% / 50 }
+bimg446 { border-image: url(foo.png) 10% /  /10px 20 30 40px }
+bimg447 { border-image: url(foo.png) 10% /  /10px 20 30 40px stretch space }
+bimg448 { border-image: url(foo.png) 10% /  /10px 20px }
+bimg449 { border-image: url(foo.png) 10% /  /10px 20px stretch space }
+bimg450 { border-image: url(foo.png) 10% /  /50 }
+bimg451 { border-image: url(foo.png) 10% /  /50 stretch space }
+bimg452 { border-image: url(foo.png) 10% / 50 stretch space }
+bimg453 { border-image: url(foo.png) 10% / 10 10 10 10 }
+bimg454 { border-image: url(foo.png) 10% / 10 10 10 10 /10px 20 30 40px }
+bimg455 { border-image: url(foo.png) 10% / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg456 { border-image: url(foo.png) 10% / 10 10 10 10 /10px 20px }
+bimg457 { border-image: url(foo.png) 10% / 10 10 10 10 /10px 20px stretch space }
+bimg458 { border-image: url(foo.png) 10% / 10 10 10 10 /50 }
+bimg459 { border-image: url(foo.png) 10% / 10 10 10 10 /50 stretch space }
+bimg460 { border-image: url(foo.png) 10% / 10 10 10 10 stretch space }
+bimg461 { border-image: url(foo.png) 10% / 10px 2% auto }
+bimg462 { border-image: url(foo.png) 10% / 10px 2% auto /10px 20 30 40px }
+bimg463 { border-image: url(foo.png) 10% / 10px 2% auto /10px 20 30 40px stretch space }
+bimg464 { border-image: url(foo.png) 10% / 10px 2% auto /10px 20px }
+bimg465 { border-image: url(foo.png) 10% / 10px 2% auto /10px 20px stretch space }
+bimg466 { border-image: url(foo.png) 10% / 10px 2% auto /50 }
+bimg467 { border-image: url(foo.png) 10% / 10px 2% auto /50 stretch space }
+bimg468 { border-image: url(foo.png) 10% / 10px 2% auto stretch space }
+bimg469 { border-image: url(foo.png) 10% / 5% }
+bimg470 { border-image: url(foo.png) 10% / 5% /10px 20 30 40px }
+bimg471 { border-image: url(foo.png) 10% / 5% /10px 20 30 40px stretch space }
+bimg472 { border-image: url(foo.png) 10% / 5% /10px 20px }
+bimg473 { border-image: url(foo.png) 10% / 5% /10px 20px stretch space }
+bimg474 { border-image: url(foo.png) 10% / 5% /50 }
+bimg475 { border-image: url(foo.png) 10% / 5% /50 stretch space }
+bimg476 { border-image: url(foo.png) 10% / 5% stretch space }
+bimg477 { border-image: url(foo.png) 10% stretch space }
+bimg478 { border-image: url(foo.png) 20 }
+bimg479 { border-image: url(foo.png) 20 / 50 }
+bimg480 { border-image: url(foo.png) 20 /  /10px 20 30 40px }
+bimg481 { border-image: url(foo.png) 20 /  /10px 20 30 40px stretch space }
+bimg482 { border-image: url(foo.png) 20 /  /10px 20px }
+bimg483 { border-image: url(foo.png) 20 /  /10px 20px stretch space }
+bimg484 { border-image: url(foo.png) 20 /  /50 }
+bimg485 { border-image: url(foo.png) 20 /  /50 stretch space }
+bimg486 { border-image: url(foo.png) 20 / 50 stretch space }
+bimg487 { border-image: url(foo.png) 20 / 10 10 10 10 }
+bimg488 { border-image: url(foo.png) 20 / 10 10 10 10 /10px 20 30 40px }
+bimg489 { border-image: url(foo.png) 20 / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg490 { border-image: url(foo.png) 20 / 10 10 10 10 /10px 20px }
+bimg491 { border-image: url(foo.png) 20 / 10 10 10 10 /10px 20px stretch space }
+bimg492 { border-image: url(foo.png) 20 / 10 10 10 10 /50 }
+bimg493 { border-image: url(foo.png) 20 / 10 10 10 10 /50 stretch space }
+bimg494 { border-image: url(foo.png) 20 / 10 10 10 10 stretch space }
+bimg495 { border-image: url(foo.png) 20 / 10px 2% auto }
+bimg496 { border-image: url(foo.png) 20 / 10px 2% auto /10px 20 30 40px }
+bimg497 { border-image: url(foo.png) 20 / 10px 2% auto /10px 20 30 40px stretch space }
+bimg498 { border-image: url(foo.png) 20 / 10px 2% auto /10px 20px }
+bimg499 { border-image: url(foo.png) 20 / 10px 2% auto /10px 20px stretch space }
+bimg500 { border-image: url(foo.png) 20 / 10px 2% auto /50 }
+bimg501 { border-image: url(foo.png) 20 / 10px 2% auto /50 stretch space }
+bimg502 { border-image: url(foo.png) 20 / 10px 2% auto stretch space }
+bimg503 { border-image: url(foo.png) 20 / 5% }
+bimg504 { border-image: url(foo.png) 20 / 5% /10px 20 30 40px }
+bimg505 { border-image: url(foo.png) 20 / 5% /10px 20 30 40px stretch space }
+bimg506 { border-image: url(foo.png) 20 / 5% /10px 20px }
+bimg507 { border-image: url(foo.png) 20 / 5% /10px 20px stretch space }
+bimg508 { border-image: url(foo.png) 20 / 5% /50 }
+bimg509 { border-image: url(foo.png) 20 / 5% /50 stretch space }
+bimg510 { border-image: url(foo.png) 20 / 5% stretch space }
+bimg511 { border-image: url(foo.png) 20 stretch space }
+bimg512 { border-image: url(foo.png) stretch space }
+bimg513 { border-image: url(foo.png) stretch space 10 5% 20 2% }
+bimg514 { border-image: url(foo.png) stretch space 10 5% 20 2% / 50 }
+bimg515 { border-image: url(foo.png) stretch space 10 5% 20 2% /  /10px 20 30 40px }
+bimg516 { border-image: url(foo.png) stretch space 10 5% 20 2% /  /10px 20px }
+bimg517 { border-image: url(foo.png) stretch space 10 5% 20 2% /  /50 }
+bimg518 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10 10 10 10 }
+bimg519 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg520 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg521 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10 10 10 10 /50 }
+bimg522 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10px 2% auto }
+bimg523 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg524 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg525 { border-image: url(foo.png) stretch space 10 5% 20 2% / 10px 2% auto /50 }
+bimg526 { border-image: url(foo.png) stretch space 10 5% 20 2% / 5% }
+bimg527 { border-image: url(foo.png) stretch space 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg528 { border-image: url(foo.png) stretch space 10 5% 20 2% / 5% /10px 20px }
+bimg529 { border-image: url(foo.png) stretch space 10 5% 20 2% / 5% /50 }
+bimg530 { border-image: url(foo.png) stretch space 10% }
+bimg531 { border-image: url(foo.png) stretch space 10% / 50 }
+bimg532 { border-image: url(foo.png) stretch space 10% /  /10px 20 30 40px }
+bimg533 { border-image: url(foo.png) stretch space 10% /  /10px 20px }
+bimg534 { border-image: url(foo.png) stretch space 10% /  /50 }
+bimg535 { border-image: url(foo.png) stretch space 10% / 10 10 10 10 }
+bimg536 { border-image: url(foo.png) stretch space 10% / 10 10 10 10 /10px 20 30 40px }
+bimg537 { border-image: url(foo.png) stretch space 10% / 10 10 10 10 /10px 20px }
+bimg538 { border-image: url(foo.png) stretch space 10% / 10 10 10 10 /50 }
+bimg539 { border-image: url(foo.png) stretch space 10% / 10px 2% auto }
+bimg540 { border-image: url(foo.png) stretch space 10% / 10px 2% auto /10px 20 30 40px }
+bimg541 { border-image: url(foo.png) stretch space 10% / 10px 2% auto /10px 20px }
+bimg542 { border-image: url(foo.png) stretch space 10% / 10px 2% auto /50 }
+bimg543 { border-image: url(foo.png) stretch space 10% / 5% }
+bimg544 { border-image: url(foo.png) stretch space 10% / 5% /10px 20 30 40px }
+bimg545 { border-image: url(foo.png) stretch space 10% / 5% /10px 20px }
+bimg546 { border-image: url(foo.png) stretch space 10% / 5% /50 }
+bimg547 { border-image: url(foo.png) stretch space 20 }
+bimg548 { border-image: url(foo.png) stretch space 20 / 50 }
+bimg549 { border-image: url(foo.png) stretch space 20 /  /10px 20 30 40px }
+bimg550 { border-image: url(foo.png) stretch space 20 /  /10px 20px }
+bimg551 { border-image: url(foo.png) stretch space 20 /  /50 }
+bimg552 { border-image: url(foo.png) stretch space 20 / 10 10 10 10 }
+bimg553 { border-image: url(foo.png) stretch space 20 / 10 10 10 10 /10px 20 30 40px }
+bimg554 { border-image: url(foo.png) stretch space 20 / 10 10 10 10 /10px 20px }
+bimg555 { border-image: url(foo.png) stretch space 20 / 10 10 10 10 /50 }
+bimg556 { border-image: url(foo.png) stretch space 20 / 10px 2% auto }
+bimg557 { border-image: url(foo.png) stretch space 20 / 10px 2% auto /10px 20 30 40px }
+bimg558 { border-image: url(foo.png) stretch space 20 / 10px 2% auto /10px 20px }
+bimg559 { border-image: url(foo.png) stretch space 20 / 10px 2% auto /50 }
+bimg560 { border-image: url(foo.png) stretch space 20 / 5% }
+bimg561 { border-image: url(foo.png) stretch space 20 / 5% /10px 20 30 40px }
+bimg562 { border-image: url(foo.png) stretch space 20 / 5% /10px 20px }
+bimg563 { border-image: url(foo.png) stretch space 20 / 5% /50 }
+bimg564 { border-image: none }
+bimg565 { border-image: none 10 5% 20 2% }
+bimg566 { border-image: none 10 5% 20 2% / 50 }
+bimg567 { border-image: none 10 5% 20 2% /  /10px 20 30 40px }
+bimg568 { border-image: none 10 5% 20 2% /  /10px 20 30 40px stretch space }
+bimg569 { border-image: none 10 5% 20 2% /  /10px 20px }
+bimg570 { border-image: none 10 5% 20 2% /  /10px 20px stretch space }
+bimg571 { border-image: none 10 5% 20 2% /  /50 }
+bimg572 { border-image: none 10 5% 20 2% /  /50 stretch space }
+bimg573 { border-image: none 10 5% 20 2% / 50 stretch space }
+bimg574 { border-image: none 10 5% 20 2% / 10 10 10 10 }
+bimg575 { border-image: none 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg576 { border-image: none 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg577 { border-image: none 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg578 { border-image: none 10 5% 20 2% / 10 10 10 10 /10px 20px stretch space }
+bimg579 { border-image: none 10 5% 20 2% / 10 10 10 10 /50 }
+bimg580 { border-image: none 10 5% 20 2% / 10 10 10 10 /50 stretch space }
+bimg581 { border-image: none 10 5% 20 2% / 10 10 10 10 stretch space }
+bimg582 { border-image: none 10 5% 20 2% / 10px 2% auto }
+bimg583 { border-image: none 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg584 { border-image: none 10 5% 20 2% / 10px 2% auto /10px 20 30 40px stretch space }
+bimg585 { border-image: none 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg586 { border-image: none 10 5% 20 2% / 10px 2% auto /10px 20px stretch space }
+bimg587 { border-image: none 10 5% 20 2% / 10px 2% auto /50 }
+bimg588 { border-image: none 10 5% 20 2% / 10px 2% auto /50 stretch space }
+bimg589 { border-image: none 10 5% 20 2% / 10px 2% auto stretch space }
+bimg590 { border-image: none 10 5% 20 2% / 5% }
+bimg591 { border-image: none 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg592 { border-image: none 10 5% 20 2% / 5% /10px 20 30 40px stretch space }
+bimg593 { border-image: none 10 5% 20 2% / 5% /10px 20px }
+bimg594 { border-image: none 10 5% 20 2% / 5% /10px 20px stretch space }
+bimg595 { border-image: none 10 5% 20 2% / 5% /50 }
+bimg596 { border-image: none 10 5% 20 2% / 5% /50 stretch space }
+bimg597 { border-image: none 10 5% 20 2% / 5% stretch space }
+bimg598 { border-image: none 10 5% 20 2% stretch space }
+bimg599 { border-image: none 10% }
+bimg600 { border-image: none 10% / 50 }
+bimg601 { border-image: none 10% /  /10px 20 30 40px }
+bimg602 { border-image: none 10% /  /10px 20 30 40px stretch space }
+bimg603 { border-image: none 10% /  /10px 20px }
+bimg604 { border-image: none 10% /  /10px 20px stretch space }
+bimg605 { border-image: none 10% /  /50 }
+bimg606 { border-image: none 10% /  /50 stretch space }
+bimg607 { border-image: none 10% / 50 stretch space }
+bimg608 { border-image: none 10% / 10 10 10 10 }
+bimg609 { border-image: none 10% / 10 10 10 10 /10px 20 30 40px }
+bimg610 { border-image: none 10% / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg611 { border-image: none 10% / 10 10 10 10 /10px 20px }
+bimg612 { border-image: none 10% / 10 10 10 10 /10px 20px stretch space }
+bimg613 { border-image: none 10% / 10 10 10 10 /50 }
+bimg614 { border-image: none 10% / 10 10 10 10 /50 stretch space }
+bimg615 { border-image: none 10% / 10 10 10 10 stretch space }
+bimg616 { border-image: none 10% / 10px 2% auto }
+bimg617 { border-image: none 10% / 10px 2% auto /10px 20 30 40px }
+bimg618 { border-image: none 10% / 10px 2% auto /10px 20 30 40px stretch space }
+bimg619 { border-image: none 10% / 10px 2% auto /10px 20px }
+bimg620 { border-image: none 10% / 10px 2% auto /10px 20px stretch space }
+bimg621 { border-image: none 10% / 10px 2% auto /50 }
+bimg622 { border-image: none 10% / 10px 2% auto /50 stretch space }
+bimg623 { border-image: none 10% / 10px 2% auto stretch space }
+bimg624 { border-image: none 10% / 5% }
+bimg625 { border-image: none 10% / 5% /10px 20 30 40px }
+bimg626 { border-image: none 10% / 5% /10px 20 30 40px stretch space }
+bimg627 { border-image: none 10% / 5% /10px 20px }
+bimg628 { border-image: none 10% / 5% /10px 20px stretch space }
+bimg629 { border-image: none 10% / 5% /50 }
+bimg630 { border-image: none 10% / 5% /50 stretch space }
+bimg631 { border-image: none 10% / 5% stretch space }
+bimg632 { border-image: none 10% stretch space }
+bimg633 { border-image: none 20 }
+bimg634 { border-image: none 20 / 50 }
+bimg635 { border-image: none 20 /  /10px 20 30 40px }
+bimg636 { border-image: none 20 /  /10px 20 30 40px stretch space }
+bimg637 { border-image: none 20 /  /10px 20px }
+bimg638 { border-image: none 20 /  /10px 20px stretch space }
+bimg639 { border-image: none 20 /  /50 }
+bimg640 { border-image: none 20 /  /50 stretch space }
+bimg641 { border-image: none 20 / 50 stretch space }
+bimg642 { border-image: none 20 / 10 10 10 10 }
+bimg643 { border-image: none 20 / 10 10 10 10 /10px 20 30 40px }
+bimg644 { border-image: none 20 / 10 10 10 10 /10px 20 30 40px stretch space }
+bimg645 { border-image: none 20 / 10 10 10 10 /10px 20px }
+bimg646 { border-image: none 20 / 10 10 10 10 /10px 20px stretch space }
+bimg647 { border-image: none 20 / 10 10 10 10 /50 }
+bimg648 { border-image: none 20 / 10 10 10 10 /50 stretch space }
+bimg649 { border-image: none 20 / 10 10 10 10 stretch space }
+bimg650 { border-image: none 20 / 10px 2% auto }
+bimg651 { border-image: none 20 / 10px 2% auto /10px 20 30 40px }
+bimg652 { border-image: none 20 / 10px 2% auto /10px 20 30 40px stretch space }
+bimg653 { border-image: none 20 / 10px 2% auto /10px 20px }
+bimg654 { border-image: none 20 / 10px 2% auto /10px 20px stretch space }
+bimg655 { border-image: none 20 / 10px 2% auto /50 }
+bimg656 { border-image: none 20 / 10px 2% auto /50 stretch space }
+bimg657 { border-image: none 20 / 10px 2% auto stretch space }
+bimg658 { border-image: none 20 / 5% }
+bimg659 { border-image: none 20 / 5% /10px 20 30 40px }
+bimg660 { border-image: none 20 / 5% /10px 20 30 40px stretch space }
+bimg661 { border-image: none 20 / 5% /10px 20px }
+bimg662 { border-image: none 20 / 5% /10px 20px stretch space }
+bimg663 { border-image: none 20 / 5% /50 }
+bimg664 { border-image: none 20 / 5% /50 stretch space }
+bimg665 { border-image: none 20 / 5% stretch space }
+bimg666 { border-image: none 20 stretch space }
+bimg667 { border-image: none stretch space }
+bimg668 { border-image: none stretch space 10 5% 20 2% }
+bimg669 { border-image: none stretch space 10 5% 20 2% / 50 }
+bimg670 { border-image: none stretch space 10 5% 20 2% /  /10px 20 30 40px }
+bimg671 { border-image: none stretch space 10 5% 20 2% /  /10px 20px }
+bimg672 { border-image: none stretch space 10 5% 20 2% /  /50 }
+bimg673 { border-image: none stretch space 10 5% 20 2% / 10 10 10 10 }
+bimg674 { border-image: none stretch space 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg675 { border-image: none stretch space 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg676 { border-image: none stretch space 10 5% 20 2% / 10 10 10 10 /50 }
+bimg677 { border-image: none stretch space 10 5% 20 2% / 10px 2% auto }
+bimg678 { border-image: none stretch space 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg679 { border-image: none stretch space 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg680 { border-image: none stretch space 10 5% 20 2% / 10px 2% auto /50 }
+bimg681 { border-image: none stretch space 10 5% 20 2% / 5% }
+bimg682 { border-image: none stretch space 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg683 { border-image: none stretch space 10 5% 20 2% / 5% /10px 20px }
+bimg684 { border-image: none stretch space 10 5% 20 2% / 5% /50 }
+bimg685 { border-image: none stretch space 10% }
+bimg686 { border-image: none stretch space 10% / 50 }
+bimg687 { border-image: none stretch space 10% /  /10px 20 30 40px }
+bimg688 { border-image: none stretch space 10% /  /10px 20px }
+bimg689 { border-image: none stretch space 10% /  /50 }
+bimg690 { border-image: none stretch space 10% / 10 10 10 10 }
+bimg691 { border-image: none stretch space 10% / 10 10 10 10 /10px 20 30 40px }
+bimg692 { border-image: none stretch space 10% / 10 10 10 10 /10px 20px }
+bimg693 { border-image: none stretch space 10% / 10 10 10 10 /50 }
+bimg694 { border-image: none stretch space 10% / 10px 2% auto }
+bimg695 { border-image: none stretch space 10% / 10px 2% auto /10px 20 30 40px }
+bimg696 { border-image: none stretch space 10% / 10px 2% auto /10px 20px }
+bimg697 { border-image: none stretch space 10% / 10px 2% auto /50 }
+bimg698 { border-image: none stretch space 10% / 5% }
+bimg699 { border-image: none stretch space 10% / 5% /10px 20 30 40px }
+bimg700 { border-image: none stretch space 10% / 5% /10px 20px }
+bimg701 { border-image: none stretch space 10% / 5% /50 }
+bimg702 { border-image: none stretch space 20 }
+bimg703 { border-image: none stretch space 20 / 50 }
+bimg704 { border-image: none stretch space 20 /  /10px 20 30 40px }
+bimg705 { border-image: none stretch space 20 /  /10px 20px }
+bimg706 { border-image: none stretch space 20 /  /50 }
+bimg707 { border-image: none stretch space 20 / 10 10 10 10 }
+bimg708 { border-image: none stretch space 20 / 10 10 10 10 /10px 20 30 40px }
+bimg709 { border-image: none stretch space 20 / 10 10 10 10 /10px 20px }
+bimg710 { border-image: none stretch space 20 / 10 10 10 10 /50 }
+bimg711 { border-image: none stretch space 20 / 10px 2% auto }
+bimg712 { border-image: none stretch space 20 / 10px 2% auto /10px 20 30 40px }
+bimg713 { border-image: none stretch space 20 / 10px 2% auto /10px 20px }
+bimg714 { border-image: none stretch space 20 / 10px 2% auto /50 }
+bimg715 { border-image: none stretch space 20 / 5% }
+bimg716 { border-image: none stretch space 20 / 5% /10px 20 30 40px }
+bimg717 { border-image: none stretch space 20 / 5% /10px 20px }
+bimg718 { border-image: none stretch space 20 / 5% /50 }
+bimg719 { border-image: stretch space }
+bimg720 { border-image: stretch space  10 5% 20 2% }
+bimg721 { border-image: stretch space  10 5% 20 2% / 50 }
+bimg722 { border-image: stretch space  10 5% 20 2% /  /10px 20 30 40px }
+bimg723 { border-image: stretch space  10 5% 20 2% /  /10px 20 30 40px none }
+bimg724 { border-image: stretch space  10 5% 20 2% /  /10px 20px }
+bimg725 { border-image: stretch space  10 5% 20 2% /  /10px 20px none }
+bimg726 { border-image: stretch space  10 5% 20 2% /  /50 }
+bimg727 { border-image: stretch space  10 5% 20 2% /  /50 none }
+bimg728 { border-image: stretch space  10 5% 20 2% / 50 none }
+bimg729 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 }
+bimg730 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg731 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 /10px 20 30 40px none }
+bimg732 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg733 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 /10px 20px none }
+bimg734 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 /50 }
+bimg735 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 /50 none }
+bimg736 { border-image: stretch space  10 5% 20 2% / 10 10 10 10 none }
+bimg737 { border-image: stretch space  10 5% 20 2% / 10px 2% auto }
+bimg738 { border-image: stretch space  10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg739 { border-image: stretch space  10 5% 20 2% / 10px 2% auto /10px 20 30 40px none }
+bimg740 { border-image: stretch space  10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg741 { border-image: stretch space  10 5% 20 2% / 10px 2% auto /10px 20px none }
+bimg742 { border-image: stretch space  10 5% 20 2% / 10px 2% auto /50 }
+bimg743 { border-image: stretch space  10 5% 20 2% / 10px 2% auto /50 none }
+bimg744 { border-image: stretch space  10 5% 20 2% / 10px 2% auto none }
+bimg745 { border-image: stretch space  10 5% 20 2% / 5% }
+bimg746 { border-image: stretch space  10 5% 20 2% / 5% /10px 20 30 40px }
+bimg747 { border-image: stretch space  10 5% 20 2% / 5% /10px 20 30 40px none }
+bimg748 { border-image: stretch space  10 5% 20 2% / 5% /10px 20px }
+bimg749 { border-image: stretch space  10 5% 20 2% / 5% /10px 20px none }
+bimg750 { border-image: stretch space  10 5% 20 2% / 5% /50 }
+bimg751 { border-image: stretch space  10 5% 20 2% / 5% /50 none }
+bimg752 { border-image: stretch space  10 5% 20 2% / 5% none }
+bimg753 { border-image: stretch space  10 5% 20 2% none }
+bimg754 { border-image: stretch space  10% }
+bimg755 { border-image: stretch space  10% / 50 }
+bimg756 { border-image: stretch space  10% /  /10px 20 30 40px }
+bimg757 { border-image: stretch space  10% /  /10px 20 30 40px none }
+bimg758 { border-image: stretch space  10% /  /10px 20px }
+bimg759 { border-image: stretch space  10% /  /10px 20px none }
+bimg760 { border-image: stretch space  10% /  /50 }
+bimg761 { border-image: stretch space  10% /  /50 none }
+bimg762 { border-image: stretch space  10% / 50 none }
+bimg763 { border-image: stretch space  10% / 10 10 10 10 }
+bimg764 { border-image: stretch space  10% / 10 10 10 10 /10px 20 30 40px }
+bimg765 { border-image: stretch space  10% / 10 10 10 10 /10px 20 30 40px none }
+bimg766 { border-image: stretch space  10% / 10 10 10 10 /10px 20px }
+bimg767 { border-image: stretch space  10% / 10 10 10 10 /10px 20px none }
+bimg768 { border-image: stretch space  10% / 10 10 10 10 /50 }
+bimg769 { border-image: stretch space  10% / 10 10 10 10 /50 none }
+bimg770 { border-image: stretch space  10% / 10 10 10 10 none }
+bimg771 { border-image: stretch space  10% / 10px 2% auto }
+bimg772 { border-image: stretch space  10% / 10px 2% auto /10px 20 30 40px }
+bimg773 { border-image: stretch space  10% / 10px 2% auto /10px 20 30 40px none }
+bimg774 { border-image: stretch space  10% / 10px 2% auto /10px 20px }
+bimg775 { border-image: stretch space  10% / 10px 2% auto /10px 20px none }
+bimg776 { border-image: stretch space  10% / 10px 2% auto /50 }
+bimg777 { border-image: stretch space  10% / 10px 2% auto /50 none }
+bimg778 { border-image: stretch space  10% / 10px 2% auto none }
+bimg779 { border-image: stretch space  10% / 5% }
+bimg780 { border-image: stretch space  10% / 5% /10px 20 30 40px }
+bimg781 { border-image: stretch space  10% / 5% /10px 20 30 40px none }
+bimg782 { border-image: stretch space  10% / 5% /10px 20px }
+bimg783 { border-image: stretch space  10% / 5% /10px 20px none }
+bimg784 { border-image: stretch space  10% / 5% /50 }
+bimg785 { border-image: stretch space  10% / 5% /50 none }
+bimg786 { border-image: stretch space  10% / 5% none }
+bimg787 { border-image: stretch space  10% none }
+bimg788 { border-image: stretch space  20 }
+bimg789 { border-image: stretch space  20 / 50 }
+bimg790 { border-image: stretch space  20 /  /10px 20 30 40px }
+bimg791 { border-image: stretch space  20 /  /10px 20 30 40px none }
+bimg792 { border-image: stretch space  20 /  /10px 20px }
+bimg793 { border-image: stretch space  20 /  /10px 20px none }
+bimg794 { border-image: stretch space  20 /  /50 }
+bimg795 { border-image: stretch space  20 /  /50 none }
+bimg796 { border-image: stretch space  20 / 50 none }
+bimg797 { border-image: stretch space  20 / 10 10 10 10 }
+bimg798 { border-image: stretch space  20 / 10 10 10 10 /10px 20 30 40px }
+bimg799 { border-image: stretch space  20 / 10 10 10 10 /10px 20 30 40px none }
+bimg800 { border-image: stretch space  20 / 10 10 10 10 /10px 20px }
+bimg801 { border-image: stretch space  20 / 10 10 10 10 /10px 20px none }
+bimg802 { border-image: stretch space  20 / 10 10 10 10 /50 }
+bimg803 { border-image: stretch space  20 / 10 10 10 10 /50 none }
+bimg804 { border-image: stretch space  20 / 10 10 10 10 none }
+bimg805 { border-image: stretch space  20 / 10px 2% auto }
+bimg806 { border-image: stretch space  20 / 10px 2% auto /10px 20 30 40px }
+bimg807 { border-image: stretch space  20 / 10px 2% auto /10px 20 30 40px none }
+bimg808 { border-image: stretch space  20 / 10px 2% auto /10px 20px }
+bimg809 { border-image: stretch space  20 / 10px 2% auto /10px 20px none }
+bimg810 { border-image: stretch space  20 / 10px 2% auto /50 }
+bimg811 { border-image: stretch space  20 / 10px 2% auto /50 none }
+bimg812 { border-image: stretch space  20 / 10px 2% auto none }
+bimg813 { border-image: stretch space  20 / 5% }
+bimg814 { border-image: stretch space  20 / 5% /10px 20 30 40px }
+bimg815 { border-image: stretch space  20 / 5% /10px 20 30 40px none }
+bimg816 { border-image: stretch space  20 / 5% /10px 20px }
+bimg817 { border-image: stretch space  20 / 5% /10px 20px none }
+bimg818 { border-image: stretch space  20 / 5% /50 }
+bimg819 { border-image: stretch space  20 / 5% /50 none }
+bimg820 { border-image: stretch space  20 / 5% none }
+bimg821 { border-image: stretch space  20 none }
+bimg822 { border-image: stretch space  url(foo.png) }
+bimg823 { border-image: stretch space  url(foo.png) 10 5% 20 2% }
+bimg824 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 50 }
+bimg825 { border-image: stretch space  url(foo.png) 10 5% 20 2% /  /10px 20 30 40px }
+bimg826 { border-image: stretch space  url(foo.png) 10 5% 20 2% /  /10px 20px }
+bimg827 { border-image: stretch space  url(foo.png) 10 5% 20 2% /  /50 }
+bimg828 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10 10 10 10 }
+bimg829 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg830 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg831 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10 10 10 10 /50 }
+bimg832 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10px 2% auto }
+bimg833 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg834 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg835 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 10px 2% auto /50 }
+bimg836 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 5% }
+bimg837 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg838 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 5% /10px 20px }
+bimg839 { border-image: stretch space  url(foo.png) 10 5% 20 2% / 5% /50 }
+bimg840 { border-image: stretch space  url(foo.png) 10% }
+bimg841 { border-image: stretch space  url(foo.png) 10% / 50 }
+bimg842 { border-image: stretch space  url(foo.png) 10% /  /10px 20 30 40px }
+bimg843 { border-image: stretch space  url(foo.png) 10% /  /10px 20px }
+bimg844 { border-image: stretch space  url(foo.png) 10% /  /50 }
+bimg845 { border-image: stretch space  url(foo.png) 10% / 10 10 10 10 }
+bimg846 { border-image: stretch space  url(foo.png) 10% / 10 10 10 10 /10px 20 30 40px }
+bimg847 { border-image: stretch space  url(foo.png) 10% / 10 10 10 10 /10px 20px }
+bimg848 { border-image: stretch space  url(foo.png) 10% / 10 10 10 10 /50 }
+bimg849 { border-image: stretch space  url(foo.png) 10% / 10px 2% auto }
+bimg850 { border-image: stretch space  url(foo.png) 10% / 10px 2% auto /10px 20 30 40px }
+bimg851 { border-image: stretch space  url(foo.png) 10% / 10px 2% auto /10px 20px }
+bimg852 { border-image: stretch space  url(foo.png) 10% / 10px 2% auto /50 }
+bimg853 { border-image: stretch space  url(foo.png) 10% / 5% }
+bimg854 { border-image: stretch space  url(foo.png) 10% / 5% /10px 20 30 40px }
+bimg855 { border-image: stretch space  url(foo.png) 10% / 5% /10px 20px }
+bimg856 { border-image: stretch space  url(foo.png) 10% / 5% /50 }
+bimg857 { border-image: stretch space  url(foo.png) 20 }
+bimg858 { border-image: stretch space  url(foo.png) 20 / 50 }
+bimg859 { border-image: stretch space  url(foo.png) 20 /  /10px 20 30 40px }
+bimg860 { border-image: stretch space  url(foo.png) 20 /  /10px 20px }
+bimg861 { border-image: stretch space  url(foo.png) 20 /  /50 }
+bimg862 { border-image: stretch space  url(foo.png) 20 / 10 10 10 10 }
+bimg863 { border-image: stretch space  url(foo.png) 20 / 10 10 10 10 /10px 20 30 40px }
+bimg864 { border-image: stretch space  url(foo.png) 20 / 10 10 10 10 /10px 20px }
+bimg865 { border-image: stretch space  url(foo.png) 20 / 10 10 10 10 /50 }
+bimg866 { border-image: stretch space  url(foo.png) 20 / 10px 2% auto }
+bimg867 { border-image: stretch space  url(foo.png) 20 / 10px 2% auto /10px 20 30 40px }
+bimg868 { border-image: stretch space  url(foo.png) 20 / 10px 2% auto /10px 20px }
+bimg869 { border-image: stretch space  url(foo.png) 20 / 10px 2% auto /50 }
+bimg870 { border-image: stretch space  url(foo.png) 20 / 5% }
+bimg871 { border-image: stretch space  url(foo.png) 20 / 5% /10px 20 30 40px }
+bimg872 { border-image: stretch space  url(foo.png) 20 / 5% /10px 20px }
+bimg873 { border-image: stretch space  url(foo.png) 20 / 5% /50 }
+bimg874 { border-image: stretch space  none }
+bimg875 { border-image: stretch space  none 10 5% 20 2% }
+bimg876 { border-image: stretch space  none 10 5% 20 2% / 50 }
+bimg877 { border-image: stretch space  none 10 5% 20 2% /  /10px 20 30 40px }
+bimg878 { border-image: stretch space  none 10 5% 20 2% /  /10px 20px }
+bimg879 { border-image: stretch space  none 10 5% 20 2% /  /50 }
+bimg880 { border-image: stretch space  none 10 5% 20 2% / 10 10 10 10 }
+bimg881 { border-image: stretch space  none 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg882 { border-image: stretch space  none 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg883 { border-image: stretch space  none 10 5% 20 2% / 10 10 10 10 /50 }
+bimg884 { border-image: stretch space  none 10 5% 20 2% / 10px 2% auto }
+bimg885 { border-image: stretch space  none 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg886 { border-image: stretch space  none 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg887 { border-image: stretch space  none 10 5% 20 2% / 10px 2% auto /50 }
+bimg888 { border-image: stretch space  none 10 5% 20 2% / 5% }
+bimg889 { border-image: stretch space  none 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg890 { border-image: stretch space  none 10 5% 20 2% / 5% /10px 20px }
+bimg891 { border-image: stretch space  none 10 5% 20 2% / 5% /50 }
+bimg892 { border-image: stretch space  none 10% }
+bimg893 { border-image: stretch space  none 10% / 50 }
+bimg894 { border-image: stretch space  none 10% /  /10px 20 30 40px }
+bimg895 { border-image: stretch space  none 10% /  /10px 20px }
+bimg896 { border-image: stretch space  none 10% /  /50 }
+bimg897 { border-image: stretch space  none 10% / 10 10 10 10 }
+bimg898 { border-image: stretch space  none 10% / 10 10 10 10 /10px 20 30 40px }
+bimg899 { border-image: stretch space  none 10% / 10 10 10 10 /10px 20px }
+bimg900 { border-image: stretch space  none 10% / 10 10 10 10 /50 }
+bimg901 { border-image: stretch space  none 10% / 10px 2% auto }
+bimg902 { border-image: stretch space  none 10% / 10px 2% auto /10px 20 30 40px }
+bimg903 { border-image: stretch space  none 10% / 10px 2% auto /10px 20px }
+bimg904 { border-image: stretch space  none 10% / 10px 2% auto /50 }
+bimg905 { border-image: stretch space  none 10% / 5% }
+bimg906 { border-image: stretch space  none 10% / 5% /10px 20 30 40px }
+bimg907 { border-image: stretch space  none 10% / 5% /10px 20px }
+bimg908 { border-image: stretch space  none 10% / 5% /50 }
+bimg909 { border-image: stretch space  none 20 }
+bimg910 { border-image: stretch space  none 20 / 50 }
+bimg911 { border-image: stretch space  none 20 /  /10px 20 30 40px }
+bimg912 { border-image: stretch space  none 20 /  /10px 20px }
+bimg913 { border-image: stretch space  none 20 /  /50 }
+bimg914 { border-image: stretch space  none 20 / 10 10 10 10 }
+bimg915 { border-image: stretch space  none 20 / 10 10 10 10 /10px 20 30 40px }
+bimg916 { border-image: stretch space  none 20 / 10 10 10 10 /10px 20px }
+bimg917 { border-image: stretch space  none 20 / 10 10 10 10 /50 }
+bimg918 { border-image: stretch space  none 20 / 10px 2% auto }
+bimg919 { border-image: stretch space  none 20 / 10px 2% auto /10px 20 30 40px }
+bimg920 { border-image: stretch space  none 20 / 10px 2% auto /10px 20px }
+bimg921 { border-image: stretch space  none 20 / 10px 2% auto /50 }
+bimg922 { border-image: stretch space  none 20 / 5% }
+bimg923 { border-image: stretch space  none 20 / 5% /10px 20 30 40px }
+bimg924 { border-image: stretch space  none 20 / 5% /10px 20px }
+bimg925 { border-image: stretch space  none 20 / 5% /50 }
+bimg926 { border-image: stretch space 10 5% 20 2% }
+bimg927 { border-image: stretch space 10 5% 20 2% / 50 }
+bimg928 { border-image: stretch space 10 5% 20 2% /  /10px 20 30 40px }
+bimg929 { border-image: stretch space 10 5% 20 2% /  /10px 20 30 40px url(foo.png) }
+bimg930 { border-image: stretch space 10 5% 20 2% /  /10px 20px }
+bimg931 { border-image: stretch space 10 5% 20 2% /  /10px 20px url(foo.png) }
+bimg932 { border-image: stretch space 10 5% 20 2% /  /50 }
+bimg933 { border-image: stretch space 10 5% 20 2% /  /50 url(foo.png) }
+bimg934 { border-image: stretch space 10 5% 20 2% / 50 url(foo.png) }
+bimg935 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 }
+bimg936 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px }
+bimg937 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 /10px 20 30 40px url(foo.png) }
+bimg938 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 /10px 20px }
+bimg939 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 /10px 20px url(foo.png) }
+bimg940 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 /50 }
+bimg941 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 /50 url(foo.png) }
+bimg942 { border-image: stretch space 10 5% 20 2% / 10 10 10 10 url(foo.png) }
+bimg943 { border-image: stretch space 10 5% 20 2% / 10px 2% auto }
+bimg944 { border-image: stretch space 10 5% 20 2% / 10px 2% auto /10px 20 30 40px }
+bimg945 { border-image: stretch space 10 5% 20 2% / 10px 2% auto /10px 20 30 40px url(foo.png) }
+bimg946 { border-image: stretch space 10 5% 20 2% / 10px 2% auto /10px 20px }
+bimg947 { border-image: stretch space 10 5% 20 2% / 10px 2% auto /10px 20px url(foo.png) }
+bimg948 { border-image: stretch space 10 5% 20 2% / 10px 2% auto /50 }
+bimg949 { border-image: stretch space 10 5% 20 2% / 10px 2% auto /50 url(foo.png) }
+bimg950 { border-image: stretch space 10 5% 20 2% / 10px 2% auto url(foo.png) }
+bimg951 { border-image: stretch space 10 5% 20 2% / 5% }
+bimg952 { border-image: stretch space 10 5% 20 2% / 5% /10px 20 30 40px }
+bimg953 { border-image: stretch space 10 5% 20 2% / 5% /10px 20 30 40px url(foo.png) }
+bimg954 { border-image: stretch space 10 5% 20 2% / 5% /10px 20px }
+bimg955 { border-image: stretch space 10 5% 20 2% / 5% /10px 20px url(foo.png) }
+bimg956 { border-image: stretch space 10 5% 20 2% / 5% /50 }
+bimg957 { border-image: stretch space 10 5% 20 2% / 5% /50 url(foo.png) }
+bimg958 { border-image: stretch space 10 5% 20 2% / 5% url(foo.png) }
+bimg959 { border-image: stretch space 10 5% 20 2% url(foo.png) }
+bimg960 { border-image: stretch space 10% }
+bimg961 { border-image: stretch space 10% / 50 }
+bimg962 { border-image: stretch space 10% /  /10px 20 30 40px }
+bimg963 { border-image: stretch space 10% /  /10px 20 30 40px url(foo.png) }
+bimg964 { border-image: stretch space 10% /  /10px 20px }
+bimg965 { border-image: stretch space 10% /  /10px 20px url(foo.png) }
+bimg966 { border-image: stretch space 10% /  /50 }
+bimg967 { border-image: stretch space 10% /  /50 url(foo.png) }
+bimg968 { border-image: stretch space 10% / 50 url(foo.png) }
+bimg969 { border-image: stretch space 10% / 10 10 10 10 }
+bimg970 { border-image: stretch space 10% / 10 10 10 10 /10px 20 30 40px }
+bimg971 { border-image: stretch space 10% / 10 10 10 10 /10px 20 30 40px url(foo.png) }
+bimg972 { border-image: stretch space 10% / 10 10 10 10 /10px 20px }
+bimg973 { border-image: stretch space 10% / 10 10 10 10 /10px 20px url(foo.png) }
+bimg974 { border-image: stretch space 10% / 10 10 10 10 /50 }
+bimg975 { border-image: stretch space 10% / 10 10 10 10 /50 url(foo.png) }
+bimg976 { border-image: stretch space 10% / 10 10 10 10 url(foo.png) }
+bimg977 { border-image: stretch space 10% / 10px 2% auto }
+bimg978 { border-image: stretch space 10% / 10px 2% auto /10px 20 30 40px }
+bimg979 { border-image: stretch space 10% / 10px 2% auto /10px 20 30 40px url(foo.png) }
+bimg980 { border-image: stretch space 10% / 10px 2% auto /10px 20px }
+bimg981 { border-image: stretch space 10% / 10px 2% auto /10px 20px url(foo.png) }
+bimg982 { border-image: stretch space 10% / 10px 2% auto /50 }
+bimg983 { border-image: stretch space 10% / 10px 2% auto /50 url(foo.png) }
+bimg984 { border-image: stretch space 10% / 10px 2% auto url(foo.png) }
+bimg985 { border-image: stretch space 10% / 5% }
+bimg986 { border-image: stretch space 10% / 5% /10px 20 30 40px }
+bimg987 { border-image: stretch space 10% / 5% /10px 20 30 40px url(foo.png) }
+bimg988 { border-image: stretch space 10% / 5% /10px 20px }
+bimg989 { border-image: stretch space 10% / 5% /10px 20px url(foo.png) }
+bimg990 { border-image: stretch space 10% / 5% /50 }
+bimg991 { border-image: stretch space 10% / 5% /50 url(foo.png) }
+bimg992 { border-image: stretch space 10% / 5% url(foo.png) }
+bimg993 { border-image: stretch space 10% url(foo.png) }
+bimg994 { border-image: stretch space 20 }
+bimg995 { border-image: stretch space 20 / 50 }
+bimg996 { border-image: stretch space 20 /  /10px 20 30 40px }
+bimg997 { border-image: stretch space 20 /  /10px 20 30 40px url(foo.png) }
+bimg998 { border-image: stretch space 20 /  /10px 20px }
+bimg999 { border-image: stretch space 20 /  /10px 20px url(foo.png) }
+bimg1000 { border-image: stretch space 20 /  /50 }
+bimg1001 { border-image: stretch space 20 /  /50 url(foo.png) }
+bimg1002 { border-image: stretch space 20 / 50 url(foo.png) }
+bimg1003 { border-image: stretch space 20 / 10 10 10 10 }
+bimg1004 { border-image: stretch space 20 / 10 10 10 10 /10px 20 30 40px }
+bimg1005 { border-image: stretch space 20 / 10 10 10 10 /10px 20 30 40px url(foo.png) }
+bimg1006 { border-image: stretch space 20 / 10 10 10 10 /10px 20px }
+bimg1007 { border-image: stretch space 20 / 10 10 10 10 /10px 20px url(foo.png) }
+bimg1008 { border-image: stretch space 20 / 10 10 10 10 /50 }
+bimg1009 { border-image: stretch space 20 / 10 10 10 10 /50 url(foo.png) }
+bimg1010 { border-image: stretch space 20 / 10 10 10 10 url(foo.png) }
+bimg1011 { border-image: stretch space 20 / 10px 2% auto }
+bimg1012 { border-image: stretch space 20 / 10px 2% auto /10px 20 30 40px }
+bimg1013 { border-image: stretch space 20 / 10px 2% auto /10px 20 30 40px url(foo.png) }
+bimg1014 { border-image: stretch space 20 / 10px 2% auto /10px 20px }
+bimg1015 { border-image: stretch space 20 / 10px 2% auto /10px 20px url(foo.png) }
+bimg1016 { border-image: stretch space 20 / 10px 2% auto /50 }
+bimg1017 { border-image: stretch space 20 / 10px 2% auto /50 url(foo.png) }
+bimg1018 { border-image: stretch space 20 / 10px 2% auto url(foo.png) }
+bimg1019 { border-image: stretch space 20 / 5% }
+bimg1020 { border-image: stretch space 20 / 5% /10px 20 30 40px }
+bimg1021 { border-image: stretch space 20 / 5% /10px 20 30 40px url(foo.png) }
+bimg1022 { border-image: stretch space 20 / 5% /10px 20px }
+bimg1023 { border-image: stretch space 20 / 5% /10px 20px url(foo.png) }
+bimg1024 { border-image: stretch space 20 / 5% /50 }
+bimg1025 { border-image: stretch space 20 / 5% /50 url(foo.png) }
+bimg1026 { border-image: stretch space 20 / 5% url(foo.png) }
+bimg1027 { border-image: stretch space 20 url(foo.png) }
+bimg1028 { border-image: 10 5% 20 2% // 10px 20 30 40px }
+bimg1029 { border-image: 10 5% 20 2% // 10px 20 30 40px url(foo.png) }
+bimg1030 { border-image: 10 5% 20 2% // 10px 20 30 40px url(foo.png) stretch space }
+bimg1031 { border-image: 10 5% 20 2% // 10px 20 30 40px none }
+bimg1032 { border-image: 10 5% 20 2% // 10px 20 30 40px none stretch space }
+bimg1033 { border-image: 10 5% 20 2% // 10px 20 30 40px stretch space }
+bimg1034 { border-image: 10 5% 20 2% // 10px 20 30 40px stretch space url(foo.png) }
+bimg1035 { border-image: 10 5% 20 2% // 10px 20 30 40px stretch space none }
+bimg1036 { border-image: 10 5% 20 2% // 10px 20px }
+bimg1037 { border-image: 10 5% 20 2% // 10px 20px url(foo.png) }
+bimg1038 { border-image: 10 5% 20 2% // 10px 20px url(foo.png) stretch space }
+bimg1039 { border-image: 10 5% 20 2% // 10px 20px none }
+bimg1040 { border-image: 10 5% 20 2% // 10px 20px none stretch space }
+bimg1041 { border-image: 10 5% 20 2% // 10px 20px stretch space }
+bimg1042 { border-image: 10 5% 20 2% // 10px 20px stretch space url(foo.png) }
+bimg1043 { border-image: 10 5% 20 2% // 10px 20px stretch space none }
+bimg1044 { border-image: 10 5% 20 2% // 50 }
+bimg1045 { border-image: 10 5% 20 2% // 50 url(foo.png) }
+bimg1046 { border-image: 10 5% 20 2% // 50 url(foo.png) stretch space }
+bimg1047 { border-image: 10 5% 20 2% // 50 none }
+bimg1048 { border-image: 10 5% 20 2% // 50 none stretch space }
+bimg1049 { border-image: 10 5% 20 2% // 50 stretch space }
+bimg1050 { border-image: 10 5% 20 2% // 50 stretch space url(foo.png) }
+bimg1051 { border-image: 10 5% 20 2% // 50 stretch space none }
+bimg1052 { border-image: 10% // 10px 20 30 40px }
+bimg1053 { border-image: 10% // 10px 20 30 40px url(foo.png) }
+bimg1054 { border-image: 10% // 10px 20 30 40px url(foo.png) stretch space }
+bimg1055 { border-image: 10% // 10px 20 30 40px none }
+bimg1056 { border-image: 10% // 10px 20 30 40px none stretch space }
+bimg1057 { border-image: 10% // 10px 20 30 40px stretch space }
+bimg1058 { border-image: 10% // 10px 20 30 40px stretch space url(foo.png) }
+bimg1059 { border-image: 10% // 10px 20 30 40px stretch space none }
+bimg1060 { border-image: 10% // 10px 20px }
+bimg1061 { border-image: 10% // 10px 20px url(foo.png) }
+bimg1062 { border-image: 10% // 10px 20px url(foo.png) stretch space }
+bimg1063 { border-image: 10% // 10px 20px none }
+bimg1064 { border-image: 10% // 10px 20px none stretch space }
+bimg1065 { border-image: 10% // 10px 20px stretch space }
+bimg1066 { border-image: 10% // 10px 20px stretch space url(foo.png) }
+bimg1067 { border-image: 10% // 10px 20px stretch space none }
+bimg1068 { border-image: 10% // 50 }
+bimg1069 { border-image: 10% // 50 url(foo.png) }
+bimg1070 { border-image: 10% // 50 url(foo.png) stretch space }
+bimg1071 { border-image: 10% // 50 none }
+bimg1072 { border-image: 10% // 50 none stretch space }
+bimg1073 { border-image: 10% // 50 stretch space }
+bimg1074 { border-image: 10% // 50 stretch space url(foo.png) }
+bimg1075 { border-image: 10% // 50 stretch space none }
+bimg1076 { border-image: 20 // 10px 20 30 40px }
+bimg1077 { border-image: 20 // 10px 20 30 40px url(foo.png) }
+bimg1078 { border-image: 20 // 10px 20 30 40px url(foo.png) stretch space }
+bimg1079 { border-image: 20 // 10px 20 30 40px none }
+bimg1080 { border-image: 20 // 10px 20 30 40px none stretch space }
+bimg1081 { border-image: 20 // 10px 20 30 40px stretch space }
+bimg1082 { border-image: 20 // 10px 20 30 40px stretch space url(foo.png) }
+bimg1083 { border-image: 20 // 10px 20 30 40px stretch space none }
+bimg1084 { border-image: 20 // 10px 20px }
+bimg1085 { border-image: 20 // 10px 20px url(foo.png) }
+bimg1086 { border-image: 20 // 10px 20px url(foo.png) stretch space }
+bimg1087 { border-image: 20 // 10px 20px none }
+bimg1088 { border-image: 20 // 10px 20px none stretch space }
+bimg1089 { border-image: 20 // 10px 20px stretch space }
+bimg1090 { border-image: 20 // 10px 20px stretch space url(foo.png) }
+bimg1091 { border-image: 20 // 10px 20px stretch space none }
+bimg1092 { border-image: 20 // 50 }
+bimg1093 { border-image: 20 // 50 url(foo.png) }
+bimg1094 { border-image: 20 // 50 url(foo.png) stretch space }
+bimg1095 { border-image: 20 // 50 none }
+bimg1096 { border-image: 20 // 50 none stretch space }
+bimg1097 { border-image: 20 // 50 stretch space }
+bimg1098 { border-image: 20 // 50 stretch space url(foo.png) }
+bimg1099 { border-image: 20 // 50 stretch space none }
+bimg1100 { border-image: url(foo.png) 10 5% 20 2% // 10px 20 30 40px }
+bimg1101 { border-image: url(foo.png) 10 5% 20 2% // 10px 20 30 40px stretch space }
+bimg1102 { border-image: url(foo.png) 10 5% 20 2% // 10px 20px }
+bimg1103 { border-image: url(foo.png) 10 5% 20 2% // 10px 20px stretch space }
+bimg1104 { border-image: url(foo.png) 10 5% 20 2% // 50 }
+bimg1105 { border-image: url(foo.png) 10 5% 20 2% // 50 stretch space }
+bimg1106 { border-image: url(foo.png) 10% // 10px 20 30 40px }
+bimg1107 { border-image: url(foo.png) 10% // 10px 20 30 40px stretch space }
+bimg1108 { border-image: url(foo.png) 10% // 10px 20px }
+bimg1109 { border-image: url(foo.png) 10% // 10px 20px stretch space }
+bimg1110 { border-image: url(foo.png) 10% // 50 }
+bimg1111 { border-image: url(foo.png) 10% // 50 stretch space }
+bimg1112 { border-image: url(foo.png) 20 // 10px 20 30 40px }
+bimg1113 { border-image: url(foo.png) 20 // 10px 20 30 40px stretch space }
+bimg1114 { border-image: url(foo.png) 20 // 10px 20px }
+bimg1115 { border-image: url(foo.png) 20 // 10px 20px stretch space }
+bimg1116 { border-image: url(foo.png) 20 // 50 }
+bimg1117 { border-image: url(foo.png) 20 // 50 stretch space }
+bimg1118 { border-image: url(foo.png) stretch space 10 5% 20 2% // 10px 20 30 40px }
+bimg1119 { border-image: url(foo.png) stretch space 10 5% 20 2% // 10px 20px }
+bimg1120 { border-image: url(foo.png) stretch space 10 5% 20 2% // 50 }
+bimg1121 { border-image: url(foo.png) stretch space 10% // 10px 20 30 40px }
+bimg1122 { border-image: url(foo.png) stretch space 10% // 10px 20px }
+bimg1123 { border-image: url(foo.png) stretch space 10% // 50 }
+bimg1124 { border-image: url(foo.png) stretch space 20 // 10px 20 30 40px }
+bimg1125 { border-image: url(foo.png) stretch space 20 // 10px 20px }
+bimg1126 { border-image: url(foo.png) stretch space 20 // 50 }
+bimg1127 { border-image: none 10 5% 20 2% // 10px 20 30 40px }
+bimg1128 { border-image: none 10 5% 20 2% // 10px 20 30 40px stretch space }
+bimg1129 { border-image: none 10 5% 20 2% // 10px 20px }
+bimg1130 { border-image: none 10 5% 20 2% // 10px 20px stretch space }
+bimg1131 { border-image: none 10 5% 20 2% // 50 }
+bimg1132 { border-image: none 10 5% 20 2% // 50 stretch space }
+bimg1133 { border-image: none 10% // 10px 20 30 40px }
+bimg1134 { border-image: none 10% // 10px 20 30 40px stretch space }
+bimg1135 { border-image: none 10% // 10px 20px }
+bimg1136 { border-image: none 10% // 10px 20px stretch space }
+bimg1137 { border-image: none 10% // 50 }
+bimg1138 { border-image: none 10% // 50 stretch space }
+bimg1139 { border-image: none 20 // 10px 20 30 40px }
+bimg1140 { border-image: none 20 // 10px 20 30 40px stretch space }
+bimg1141 { border-image: none 20 // 10px 20px }
+bimg1142 { border-image: none 20 // 10px 20px stretch space }
+bimg1143 { border-image: none 20 // 50 }
+bimg1144 { border-image: none 20 // 50 stretch space }
+bimg1145 { border-image: none stretch space 10 5% 20 2% // 10px 20 30 40px }
+bimg1146 { border-image: none stretch space 10 5% 20 2% // 10px 20px }
+bimg1147 { border-image: none stretch space 10 5% 20 2% // 50 }
+bimg1148 { border-image: none stretch space 10% // 10px 20 30 40px }
+bimg1149 { border-image: none stretch space 10% // 10px 20px }
+bimg1150 { border-image: none stretch space 10% // 50 }
+bimg1151 { border-image: none stretch space 20 // 10px 20 30 40px }
+bimg1152 { border-image: none stretch space 20 // 10px 20px }
+bimg1153 { border-image: none stretch space 20 // 50 }
+bimg1154 { border-image: stretch space  10 5% 20 2% // 10px 20 30 40px }
+bimg1155 { border-image: stretch space  10 5% 20 2% // 10px 20 30 40px none }
+bimg1156 { border-image: stretch space  10 5% 20 2% // 10px 20px }
+bimg1157 { border-image: stretch space  10 5% 20 2% // 10px 20px none }
+bimg1158 { border-image: stretch space  10 5% 20 2% // 50 }
+bimg1159 { border-image: stretch space  10 5% 20 2% // 50 none }
+bimg1160 { border-image: stretch space  10% // 10px 20 30 40px }
+bimg1161 { border-image: stretch space  10% // 10px 20 30 40px none }
+bimg1162 { border-image: stretch space  10% // 10px 20px }
+bimg1163 { border-image: stretch space  10% // 10px 20px none }
+bimg1164 { border-image: stretch space  10% // 50 }
+bimg1165 { border-image: stretch space  10% // 50 none }
+bimg1166 { border-image: stretch space  20 // 10px 20 30 40px }
+bimg1167 { border-image: stretch space  20 // 10px 20 30 40px none }
+bimg1168 { border-image: stretch space  20 // 10px 20px }
+bimg1169 { border-image: stretch space  20 // 10px 20px none }
+bimg1170 { border-image: stretch space  20 // 50 }
+bimg1171 { border-image: stretch space  20 // 50 none }
+bimg1172 { border-image: stretch space  url(foo.png) 10 5% 20 2% // 10px 20 30 40px }
+bimg1173 { border-image: stretch space  url(foo.png) 10 5% 20 2% // 10px 20px }
+bimg1174 { border-image: stretch space  url(foo.png) 10 5% 20 2% // 50 }
+bimg1175 { border-image: stretch space  url(foo.png) 10% // 10px 20 30 40px }
+bimg1176 { border-image: stretch space  url(foo.png) 10% // 10px 20px }
+bimg1177 { border-image: stretch space  url(foo.png) 10% // 50 }
+bimg1178 { border-image: stretch space  url(foo.png) 20 // 10px 20 30 40px }
+bimg1179 { border-image: stretch space  url(foo.png) 20 // 10px 20px }
+bimg1180 { border-image: stretch space  url(foo.png) 20 // 50 }
+bimg1181 { border-image: stretch space  none 10 5% 20 2% // 10px 20 30 40px }
+bimg1182 { border-image: stretch space  none 10 5% 20 2% // 10px 20px }
+bimg1183 { border-image: stretch space  none 10 5% 20 2% // 50 }
+bimg1184 { border-image: stretch space  none 10% // 10px 20 30 40px }
+bimg1185 { border-image: stretch space  none 10% // 10px 20px }
+bimg1186 { border-image: stretch space  none 10% // 50 }
+bimg1187 { border-image: stretch space  none 20 // 10px 20 30 40px }
+bimg1188 { border-image: stretch space  none 20 // 10px 20px }
+bimg1189 { border-image: stretch space  none 20 // 50 }
+bimg1190 { border-image: stretch space 10 5% 20 2% // 10px 20 30 40px }
+bimg1191 { border-image: stretch space 10 5% 20 2% // 10px 20 30 40px url(foo.png) }
+bimg1192 { border-image: stretch space 10 5% 20 2% // 10px 20px }
+bimg1193 { border-image: stretch space 10 5% 20 2% // 10px 20px url(foo.png) }
+bimg1194 { border-image: stretch space 10 5% 20 2% // 50 }
+bimg1195 { border-image: stretch space 10 5% 20 2% // 50 url(foo.png) }
+bimg1196 { border-image: stretch space 10% // 10px 20 30 40px }
+bimg1197 { border-image: stretch space 10% // 10px 20 30 40px url(foo.png) }
+bimg1198 { border-image: stretch space 10% // 10px 20px }
+bimg1199 { border-image: stretch space 10% // 10px 20px url(foo.png) }
+bimg1200 { border-image: stretch space 10% // 50 }
+bimg1201 { border-image: stretch space 10% // 50 url(foo.png) }
+bimg1202 { border-image: stretch space 20 // 10px 20 30 40px }
+bimg1203 { border-image: stretch space 20 // 10px 20 30 40px url(foo.png) }
+bimg1204 { border-image: stretch space 20 // 10px 20px }
+bimg1205 { border-image: stretch space 20 // 10px 20px url(foo.png) }
+bimg1206 { border-image: stretch space 20 // 50 }
+bimg1207 { border-image: stretch space 20 // 50 url(foo.png) }

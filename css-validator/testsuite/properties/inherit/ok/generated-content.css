@@ -1,0 +1,6 @@
+a {
+    content: inherit;
+    counter-increment: inherit;
+    counter-reset: inherit;
+    quotes: inherit;
+}

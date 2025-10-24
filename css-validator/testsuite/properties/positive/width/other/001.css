@@ -1,0 +1,35 @@
+/* from device-adaptation draft: */
+a { width: 0 }
+c { width: 0% }
+y { width: initial }
+z { width: inherit }
+widDA1 { width:  100px  100px }
+widDA2 { width:  100px  50% }
+widDA3 { width:  100px auto }
+widDA4 { width:  100px device-height }
+widDA5 { width:  100px device-width }
+widDA6 { width:  100px }
+widDA7 { width:  50%  100px }
+widDA8 { width:  50%  50% }
+widDA9 { width:  50% auto }
+widDA10 { width:  50% device-height }
+widDA11 { width:  50% device-width }
+widDA12 { width:  50% }
+widDA13 { width: auto  100px }
+widDA14 { width: auto  50% }
+widDA15 { width: auto auto }
+widDA16 { width: auto device-height }
+widDA17 { width: auto device-width }
+widDA18 { width: auto }
+widDA19 { width: device-height  100px }
+widDA20 { width: device-height  50% }
+widDA21 { width: device-height auto }
+widDA22 { width: device-height device-height }
+widDA23 { width: device-height device-width }
+widDA24 { width: device-height }
+widDA25 { width: device-width  100px }
+widDA26 { width: device-width  50% }
+widDA27 { width: device-width auto }
+widDA28 { width: device-width device-height }
+widDA29 { width: device-width device-width }
+widDA30 { width: device-width }

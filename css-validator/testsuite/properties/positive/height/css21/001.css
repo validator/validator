@@ -1,0 +1,6 @@
+a { height: 0 }
+b { height: 100px }
+c { height: 0% }
+d { height: 10% }
+e { height: auto }
+z { height: inherit }

@@ -1,0 +1,4 @@
+a { visibility: visible }
+b { visibility: hidden }
+c { visibility: collapse  }
+z { visibility: inherit }

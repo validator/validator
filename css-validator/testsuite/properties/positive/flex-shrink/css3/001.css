@@ -1,0 +1,7 @@
+a { flex-shrink: 0 }
+b { flex-shrink: 1 }
+c { flex-shrink: 10000000000000000000000000000000000000000000 }
+d { flex-shrink: 2.25 }
+e { flex-shrink: 0.25 }
+y { flex-shrink: initial }
+z { flex-shrink: inherit }

@@ -1,0 +1,18 @@
+a { display:  inline }
+b { display:  block }
+c { display:  list-item }
+d { display:  run-in }
+e { display:  compact }
+f { display:  marker }
+g { display:  table }
+h { display:  inline-table }
+i { display:  table-row-group }
+j { display:  table-header-group }
+k { display:  table-footer-group }
+l { display:  table-row }
+m { display:  table-column-group }
+n { display:  table-column }
+o { display:  table-cell }
+p { display:  table-caption }
+q { display:  none }
+z { display:  inherit}

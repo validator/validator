@@ -1,0 +1,7 @@
+/* spec information about this property
+name= float
+css1= http://www.w3.org/TR/2008/REC-CSS1-20080411/#float
+css2= http://www.w3.org/TR/2008/REC-CSS2-20080411/visuren.html#propdef-float
+css21= http://www.w3.org/TR/2011/REC-CSS2-20110607/visuren.html#propdef-float
+css3= https://www.w3.org/TR/2018/WD-css-logical-1-20180827/#float-clear
+*/

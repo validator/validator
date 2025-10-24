@@ -1,0 +1,11 @@
+a { border-right-style: none }
+b { border-right-style: hidden }
+c { border-right-style: dotted }
+d { border-right-style: dashed }
+e { border-right-style: solid }
+f { border-right-style: double }
+g { border-right-style: groove }
+h { border-right-style: ridge }
+i { border-right-style: inset }
+j { border-right-style: outset }
+z { border-right-style: inherit }

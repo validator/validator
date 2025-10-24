@@ -1,0 +1,41 @@
+z { background-clip: inherit }
+y { background-clip: initial }
+bgclip1 { background-clip: border-box }
+bgclip2 { background-clip: border-box,  content-box }
+bgclip3 { background-clip: border-box,  content-box,  content-box }
+bgclip4 { background-clip: border-box,  content-box,  padding-box }
+bgclip5 { background-clip: border-box,  content-box, border-box }
+bgclip6 { background-clip: border-box,  padding-box }
+bgclip7 { background-clip: border-box,  padding-box,  content-box }
+bgclip8 { background-clip: border-box,  padding-box,  padding-box }
+bgclip9 { background-clip: border-box,  padding-box, border-box }
+bgclip10 { background-clip: border-box, border-box }
+bgclip11 { background-clip: border-box, border-box,  content-box }
+bgclip12 { background-clip: border-box, border-box,  padding-box }
+bgclip13 { background-clip: border-box, border-box, border-box }
+bgclip14 { background-clip: content-box }
+bgclip15 { background-clip: content-box,  content-box }
+bgclip16 { background-clip: content-box,  content-box,  content-box }
+bgclip17 { background-clip: content-box,  content-box,  padding-box }
+bgclip18 { background-clip: content-box,  content-box, border-box }
+bgclip19 { background-clip: content-box,  padding-box }
+bgclip20 { background-clip: content-box,  padding-box,  content-box }
+bgclip21 { background-clip: content-box,  padding-box,  padding-box }
+bgclip22 { background-clip: content-box,  padding-box, border-box }
+bgclip23 { background-clip: content-box, border-box }
+bgclip24 { background-clip: content-box, border-box,  content-box }
+bgclip25 { background-clip: content-box, border-box,  padding-box }
+bgclip26 { background-clip: content-box, border-box, border-box }
+bgclip27 { background-clip: padding-box }
+bgclip28 { background-clip: padding-box,  content-box }
+bgclip29 { background-clip: padding-box,  content-box,  content-box }
+bgclip30 { background-clip: padding-box,  content-box,  padding-box }
+bgclip31 { background-clip: padding-box,  content-box, border-box }
+bgclip32 { background-clip: padding-box,  padding-box }
+bgclip33 { background-clip: padding-box,  padding-box,  content-box }
+bgclip34 { background-clip: padding-box,  padding-box,  padding-box }
+bgclip35 { background-clip: padding-box,  padding-box, border-box }
+bgclip36 { background-clip: padding-box, border-box }
+bgclip37 { background-clip: padding-box, border-box,  content-box }
+bgclip38 { background-clip: padding-box, border-box,  padding-box }
+bgclip39 { background-clip: padding-box, border-box, border-box }

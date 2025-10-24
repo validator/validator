@@ -1,0 +1,4 @@
+a { unicode-bidi:  normal  }
+b { unicode-bidi:  embed  }
+c { unicode-bidi:  bidi-override  }
+z { unicode-bidi:  inherit }

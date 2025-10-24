@@ -1,0 +1,22 @@
+a {
+    azimuth: inherit;
+    cue-after: inherit;
+    cue-before: inherit;
+    cue: inherit;
+    elevation: inherit;
+    pause-after: inherit;
+    pause-before: inherit;
+    pause: inherit;
+    pitch-range: inherit;
+    pitch: inherit;
+    play-during: inherit;
+    richness: inherit;
+    speak-header: inherit;
+    speak-numeral: inherit;
+    speak-punctuation: inherit;
+    speak: inherit;
+    speech-rate: inherit;
+    stress: inherit;
+    voice-family: inherit;
+    volume: inherit;    
+}

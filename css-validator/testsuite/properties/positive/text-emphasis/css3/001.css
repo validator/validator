@@ -1,0 +1,186 @@
+te1   { text-emphasis:    sesame  }
+te2   { text-emphasis:    sesame  filled   }
+te3   { text-emphasis:    sesame  open   }
+te4   { text-emphasis:    triangle  }
+te5   { text-emphasis:    triangle  filled   }
+te6   { text-emphasis:    triangle  open   }
+te7   { text-emphasis:   circle  }
+te8   { text-emphasis:   circle  filled   }
+te9   { text-emphasis:   circle  open   }
+te10  { text-emphasis:   dot  }
+te11  { text-emphasis:   dot  filled   }
+te12  { text-emphasis:   dot  open   }
+te13  { text-emphasis:   double-circle  }
+te14  { text-emphasis:   double-circle  filled   }
+te15  { text-emphasis:   double-circle  open   }
+te16  { text-emphasis:   filled   }
+te17  { text-emphasis:   filled    sesame  }
+te18  { text-emphasis:   filled    triangle  }
+te19  { text-emphasis:   filled   circle  }
+te20  { text-emphasis:   filled   dot  }
+te21  { text-emphasis:   filled   double-circle  }
+te22  { text-emphasis:   open   }
+te23  { text-emphasis:   open    sesame  }
+te24  { text-emphasis:   open    triangle  }
+te25  { text-emphasis:   open   circle  }
+te26  { text-emphasis:   open   dot  }
+te27  { text-emphasis:   open   double-circle  }
+te28  { text-emphasis:  'a'  }
+te29  { text-emphasis:  "a"  }
+te30  { text-emphasis: none  }
+te31  { text-emphasis:    sesame  red }
+te32  { text-emphasis:    sesame  filled   red }
+te33  { text-emphasis:    sesame  open   red }
+te34  { text-emphasis:    triangle  red }
+te35  { text-emphasis:    triangle  filled   red }
+te36  { text-emphasis:    triangle  open   red }
+te37  { text-emphasis:   circle  red }
+te38  { text-emphasis:   circle  filled   red }
+te39  { text-emphasis:   circle  open   red }
+te40  { text-emphasis:   dot  red }
+te41  { text-emphasis:   dot  filled   red }
+te42  { text-emphasis:   dot  open   red }
+te43  { text-emphasis:   double-circle  red }
+te44  { text-emphasis:   double-circle  filled   red }
+te45  { text-emphasis:   double-circle  open   red }
+te46  { text-emphasis:   filled   red }
+te47  { text-emphasis:   filled    sesame  red }
+te48  { text-emphasis:   filled    triangle  red }
+te49  { text-emphasis:   filled   circle  red }
+te50  { text-emphasis:   filled   dot  red }
+te51  { text-emphasis:   filled   double-circle  red }
+te52  { text-emphasis:   open   red }
+te53  { text-emphasis:   open    sesame  red }
+te54  { text-emphasis:   open    triangle  red }
+te55  { text-emphasis:   open   circle  red }
+te56  { text-emphasis:   open   dot  red }
+te57  { text-emphasis:   open   double-circle  red }
+te58  { text-emphasis:  'a'  red }
+te59  { text-emphasis:  "a"  red }
+te60  { text-emphasis: none  red }
+te61  { text-emphasis:    sesame  #f00 }
+te62  { text-emphasis:    sesame  filled   #f00 }
+te63  { text-emphasis:    sesame  open   #f00 }
+te64  { text-emphasis:    triangle  #f00 }
+te65  { text-emphasis:    triangle  filled   #f00 }
+te66  { text-emphasis:    triangle  open   #f00 }
+te67  { text-emphasis:   circle  #f00 }
+te68  { text-emphasis:   circle  filled   #f00 }
+te69  { text-emphasis:   circle  open   #f00 }
+te70  { text-emphasis:   dot  #f00 }
+te71  { text-emphasis:   dot  filled   #f00 }
+te72  { text-emphasis:   dot  open   #f00 }
+te73  { text-emphasis:   double-circle  #f00 }
+te74  { text-emphasis:   double-circle  filled   #f00 }
+te75  { text-emphasis:   double-circle  open   #f00 }
+te76  { text-emphasis:   filled   #f00 }
+te77  { text-emphasis:   filled    sesame  #f00 }
+te78  { text-emphasis:   filled    triangle  #f00 }
+te79  { text-emphasis:   filled   circle  #f00 }
+te80  { text-emphasis:   filled   dot  #f00 }
+te81  { text-emphasis:   filled   double-circle  #f00 }
+te82  { text-emphasis:   open   #f00 }
+te83  { text-emphasis:   open    sesame  #f00 }
+te84  { text-emphasis:   open    triangle  #f00 }
+te85  { text-emphasis:   open   circle  #f00 }
+te86  { text-emphasis:   open   dot  #f00 }
+te87  { text-emphasis:   open   double-circle  #f00 }
+te88  { text-emphasis:  'a'  #f00 }
+te89  { text-emphasis:  "a"  #f00 }
+te90  { text-emphasis: none  #f00 }
+te91  { text-emphasis:    sesame  rgb(255,0,0)}
+te92  { text-emphasis:    sesame  filled   rgb(255,0,0)}
+te93  { text-emphasis:    sesame  open   rgb(255,0,0)}
+te94  { text-emphasis:    triangle  rgb(255,0,0)}
+te95  { text-emphasis:    triangle  filled   rgb(255,0,0)}
+te96  { text-emphasis:    triangle  open   rgb(255,0,0)}
+te97  { text-emphasis:   circle  rgb(255,0,0)}
+te98  { text-emphasis:   circle  filled   rgb(255,0,0)}
+te99  { text-emphasis:   circle  open   rgb(255,0,0)}
+te100 { text-emphasis:   dot  rgb(255,0,0)}
+te101 { text-emphasis:   dot  filled   rgb(255,0,0)}
+te102 { text-emphasis:   dot  open   rgb(255,0,0)}
+te103 { text-emphasis:   double-circle  rgb(255,0,0)}
+te104 { text-emphasis:   double-circle  filled   rgb(255,0,0)}
+te105 { text-emphasis:   double-circle  open   rgb(255,0,0)}
+te106 { text-emphasis:   filled   rgb(255,0,0)}
+te107 { text-emphasis:   filled    sesame  rgb(255,0,0)}
+te108 { text-emphasis:   filled    triangle  rgb(255,0,0)}
+te109 { text-emphasis:   filled   circle  rgb(255,0,0)}
+te110 { text-emphasis:   filled   dot  rgb(255,0,0)}
+te111 { text-emphasis:   filled   double-circle  rgb(255,0,0)}
+te112 { text-emphasis:   open   rgb(255,0,0)}
+te113 { text-emphasis:   open    sesame  rgb(255,0,0)}
+te114 { text-emphasis:   open    triangle  rgb(255,0,0)}
+te115 { text-emphasis:   open   circle  rgb(255,0,0)}
+te116 { text-emphasis:   open   dot  rgb(255,0,0)}
+te117 { text-emphasis:   open   double-circle  rgb(255,0,0)}
+te118 { text-emphasis:  'a'  rgb(255,0,0)}
+te119 { text-emphasis:  "a"  rgb(255,0,0)}
+te120 { text-emphasis: none  rgb(255,0,0)}
+te121 { text-emphasis:  chocolate   sesame  }
+te122 { text-emphasis:  chocolate   sesame  filled   }
+te123 { text-emphasis:  chocolate   sesame  open   }
+te124 { text-emphasis:  chocolate   triangle  }
+te125 { text-emphasis:  chocolate   triangle  filled   }
+te126 { text-emphasis:  chocolate   triangle  open   }
+te127 { text-emphasis:  chocolate  circle  }
+te128 { text-emphasis:  chocolate  circle  filled   }
+te129 { text-emphasis:  chocolate  circle  open   }
+te130 { text-emphasis:  chocolate  dot  }
+te131 { text-emphasis:  chocolate  dot  filled   }
+te132 { text-emphasis:  chocolate  dot  open   }
+te133 { text-emphasis:  chocolate  double-circle  }
+te134 { text-emphasis:  chocolate  double-circle  filled   }
+te135 { text-emphasis:  chocolate  double-circle  open   }
+te136 { text-emphasis:  chocolate  filled   }
+te137 { text-emphasis:  chocolate  filled    sesame  }
+te138 { text-emphasis:  chocolate  filled    triangle  }
+te139 { text-emphasis:  chocolate  filled   circle  }
+te140 { text-emphasis:  chocolate  filled   dot  }
+te141 { text-emphasis:  chocolate  filled   double-circle  }
+te142 { text-emphasis:  chocolate  open   }
+te143 { text-emphasis:  chocolate  open    sesame  }
+te144 { text-emphasis:  chocolate  open    triangle  }
+te145 { text-emphasis:  chocolate  open   circle  }
+te146 { text-emphasis:  chocolate  open   dot  }
+te147 { text-emphasis:  chocolate  open   double-circle  }
+te148 { text-emphasis:  chocolate 'a'  }
+te149 { text-emphasis:  chocolate "a"  }
+te150 { text-emphasis:  chocolate none  }
+te151 { text-emphasis:  transparent   sesame  }
+te152 { text-emphasis:  transparent   sesame  filled   }
+te153 { text-emphasis:  transparent   sesame  open   }
+te154 { text-emphasis:  transparent   triangle  }
+te155 { text-emphasis:  transparent   triangle  filled   }
+te156 { text-emphasis:  transparent   triangle  open   }
+te157 { text-emphasis:  transparent  circle  }
+te158 { text-emphasis:  transparent  circle  filled   }
+te159 { text-emphasis:  transparent  circle  open   }
+te160 { text-emphasis:  transparent  dot  }
+te161 { text-emphasis:  transparent  dot  filled   }
+te162 { text-emphasis:  transparent  dot  open   }
+te163 { text-emphasis:  transparent  double-circle  }
+te164 { text-emphasis:  transparent  double-circle  filled   }
+te165 { text-emphasis:  transparent  double-circle  open   }
+te166 { text-emphasis:  transparent  filled   }
+te167 { text-emphasis:  transparent  filled    sesame  }
+te168 { text-emphasis:  transparent  filled    triangle  }
+te169 { text-emphasis:  transparent  filled   circle  }
+te170 { text-emphasis:  transparent  filled   dot  }
+te171 { text-emphasis:  transparent  filled   double-circle  }
+te172 { text-emphasis:  transparent  open   }
+te173 { text-emphasis:  transparent  open    sesame  }
+te174 { text-emphasis:  transparent  open    triangle  }
+te175 { text-emphasis:  transparent  open   circle  }
+te176 { text-emphasis:  transparent  open   dot  }
+te177 { text-emphasis:  transparent  open   double-circle  }
+te178 { text-emphasis:  transparent 'a'  }
+te179 { text-emphasis:  transparent "a"  }
+te180 { text-emphasis:  transparent none  }
+te181 { text-emphasis:  transparent }
+te182 { text-emphasis:  red }
+te183 { text-emphasis:  rgb(255,0,0) }
+te184 { text-emphasis:  chocolate }
+y { text-emphasis: initial }
+z { text-emphasis: inherit }

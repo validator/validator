@@ -1,0 +1,17 @@
+a {background-position: inherit }
+b {background-position: top }
+c {background-position: center }
+d {background-position: left }
+e {background-position: 12% }
+f {background-position: 12em }
+g {background-position: 0 }
+h {background-position: 12% center}
+i {background-position: top left }
+j {background-position: left top }
+k {background-position: left 50% }
+l {background-position: 50px bottom }
+m {background-position: top 12% center }
+n {background-position: center left 12% }
+o {background-position: left 12% top }
+p {background-position: left, top, left}
+q {background-position: left center, top left, left -42px top 12cm, top 12cm left -42px}

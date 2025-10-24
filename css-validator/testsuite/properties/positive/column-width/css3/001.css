@@ -1,0 +1,4 @@
+a { column-width: 10px }
+b { column-width: auto }
+y { column-width: initial }
+z { column-width: inherit }

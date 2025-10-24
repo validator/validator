@@ -1,0 +1,9 @@
+a { text-align-last: left }
+b { text-align-last: right }
+c { text-align-last: center }
+d { text-align-last: justify }
+e { text-align-last: auto }
+f { text-align-last: start }
+g { text-align-last: end }
+y { text-align-last: initial }
+z { text-align-last: inherit }

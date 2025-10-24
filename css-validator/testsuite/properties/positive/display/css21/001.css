@@ -1,0 +1,16 @@
+a { display: inline   }
+b { display: block  }
+c { display: list-item  }
+d { display: inline-block  }
+e { display: table  }
+f { display: inline-table  }
+g { display: table-row-group  }
+h { display: table-header-group  }
+i { display: table-footer-group  }
+j { display: table-row  }
+k { display: table-column-group  }
+l { display: table-column  }
+m { display: table-cell  }
+n { display: table-caption  }
+o { display: none  }
+z { display: inherit }

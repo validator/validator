@@ -1,0 +1,8 @@
+a { align-self: flex-start }
+b { align-self: flex-end }
+c { align-self: center }
+d { align-self: baseline }
+e { align-self: stretch }
+f { align-self: auto }
+y { align-self: initial }
+z { align-self: inherit }

@@ -1,0 +1,20 @@
+a { voice-volume: silent  }
+b { voice-volume: x-soft  }
+c { voice-volume: soft  }
+d { voice-volume: medium  }
+e { voice-volume: loud  }
+f { voice-volume: x-loud  }
+g { voice-volume: x-soft  -2.0dB }
+h { voice-volume: soft  -2.0dB }
+i { voice-volume: medium  -2.0dB }
+j { voice-volume: loud  -2.0dB }
+k { voice-volume: x-loud  -2.0dB }
+l { voice-volume: +3.1dB x-soft  }
+m { voice-volume: +3.1dB soft  }
+n { voice-volume: +3.1dB medium  }
+o { voice-volume: +3.1dB loud  }
+p { voice-volume: +3.1dB x-loud  }
+q { voice-volume: +2dB }
+r { voice-volume: -2dB }
+z { voice-volume: inherit }
+y { voice-volume: initial  }

@@ -1,0 +1,6 @@
+a { text-emphasis-position: over right }
+b { text-emphasis-position: over left }
+c { text-emphasis-position: under right }
+d { text-emphasis-position: under left }
+y { text-emphasis-position: initial }
+z { text-emphasis-position: inherit }

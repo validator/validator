@@ -1,0 +1,7 @@
+a { text-indent: 2px }
+b { text-indent: 0 }
+c { text-indent: 1.1em }
+d { text-indent: 0% }
+e { text-indent: 10% }
+f { text-indent: -10% }
+g { text-indent: -1cm }

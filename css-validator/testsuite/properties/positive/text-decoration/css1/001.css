@@ -1,0 +1,66 @@
+a { text-decoration: none }
+b { text-decoration: underline }
+c { text-decoration: overline }
+cb { text-decoration: overline underline }
+d { text-decoration: line-through }
+db { text-decoration: line-through underline }
+e { text-decoration:  blink }
+eb { text-decoration:  blink underline }
+bc { text-decoration: underline overline }
+dc { text-decoration: line-through overline }
+dcb { text-decoration: line-through overline underline }
+ec { text-decoration:  blink overline }
+ecb { text-decoration:  blink overline underline }
+bd { text-decoration: underline line-through }
+cd { text-decoration: overline line-through }
+cdb { text-decoration: overline line-through underline }
+ed { text-decoration:  blink line-through }
+edb { text-decoration:  blink line-through underline }
+be { text-decoration: underline  blink }
+ce { text-decoration: overline  blink }
+ceb { text-decoration: overline  blink underline }
+de { text-decoration: line-through  blink }
+deb { text-decoration: line-through  blink underline }
+dbc { text-decoration: line-through underline overline }
+ebc { text-decoration:  blink underline overline }
+bdc { text-decoration: underline line-through overline }
+edc { text-decoration:  blink line-through overline }
+bec { text-decoration: underline  blink overline }
+dec { text-decoration: line-through  blink overline }
+cbd { text-decoration: overline underline line-through }
+ebd { text-decoration:  blink underline line-through }
+bcd { text-decoration: underline overline line-through }
+ecd { text-decoration:  blink overline line-through }
+bed { text-decoration: underline  blink line-through }
+ced { text-decoration: overline  blink line-through }
+cbe { text-decoration: overline underline  blink }
+dbe { text-decoration: line-through underline  blink }
+bce { text-decoration: underline overline  blink }
+dce { text-decoration: line-through overline  blink }
+bde { text-decoration: underline line-through  blink }
+cde { text-decoration: overline line-through  blink }
+bcde { text-decoration: underline overline line-through blink }
+g1 { text-decoration:  blink line-through overline underline  }
+g2 { text-decoration: line-through  blink overline underline  }
+g3 { text-decoration:  blink overline line-through underline  }
+g4 { text-decoration: overline  blink line-through underline  }
+g5 { text-decoration: line-through overline  blink underline  }
+g6 { text-decoration: overline line-through  blink underline  }
+g7 { text-decoration:  blink line-through underline overline  }
+g8 { text-decoration: line-through  blink underline overline  }
+g9 { text-decoration:  blink underline line-through overline  }
+g10 { text-decoration: underline  blink line-through overline  }
+g11 { text-decoration: line-through underline  blink overline  }
+g12 { text-decoration: underline line-through  blink overline  }
+g13 { text-decoration:  blink overline underline line-through  }
+g14 { text-decoration: overline  blink underline line-through  }
+g15 { text-decoration:  blink underline overline line-through  }
+g16 { text-decoration: underline  blink overline line-through  }
+g17 { text-decoration: overline underline  blink line-through  }
+g18 { text-decoration: underline overline  blink line-through  }
+g19 { text-decoration: line-through overline underline  blink  }
+g20 { text-decoration: overline line-through underline  blink  }
+g21 { text-decoration: line-through underline overline  blink  }
+g22 { text-decoration: underline line-through overline  blink  }
+g23 { text-decoration: overline underline line-through  blink  }
+g24 { text-decoration: underline overline line-through  blink  }

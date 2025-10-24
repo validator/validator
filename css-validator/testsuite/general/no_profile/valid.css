@@ -1,0 +1,6 @@
+/* this style sheet must be valid even when CSS 2.1 is the default profile */
+
+h1 {
+  text-shadow: 0.2em 0.2em;
+  font-size-adjust: 0.5;
+}
