@@ -1,0 +1,204 @@
+/**
+ * name:            DTDParser.jj
+ * modified:        Apr 2, 2001
+ * author:          John Gebbie
+ * email:           j_gebbie@yahoo.com
+ */
+
+options {
+	DEBUG_PARSER = false;
+}
+
+PARSER_BEGIN(DTDParser)
+
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public class DTDParser
+{
+	public static void parse(InputStream aInSt) throws ParseException {
+		// create a parser (this object)
+		DTDParser parser = new DTDParser(aInSt);
+		// parse!
+		parser.dtd();
+	}
+
+	public static void main(String[] args) throws ParseException, FileNotFoundException {
+		parse(new FileInputStream(args[0]));
+	}
+}
+
+PARSER_END(DTDParser)
+
+TOKEN :
+{
+	<LETTER:	[ "A"-"Z", "a"-"z" ]					>
+|	<DIGIT:		[ "0"-"9" ]						>
+|	<NAMECHAR:	( <LETTER> | <DIGIT> | "." | "-" | "_" | ":" )		>
+|	<FIXED:		"#FIXED"						>
+|	<IMPLIED:	"#IMPLIED"						>
+|	<PCDATA:	"#PCDATA"						>
+|	<REQUIRED:	"#REQUIRED"						>
+|	<CDATA:		"CDATA"							>
+|	<ANY:		"ANY"							>
+|	<EMPTY:		"EMPTY"							>
+|	<ID:		"ID"							>
+|	<IDREF:		"IDREF"							>
+|	<IDREFS:	"IDREFS"						>
+|	<ENTITY:	"ENTITY"						>
+|	<ENTITIES:	"ENTITIES"						>
+|	<NMTOKEN:	"NMTOKEN"						>
+|	<NMTOKENS:	"NMTOKENS"						>
+|	<NOTATION:	"NOTATION"						>
+|	<NAME:		( <LETTER> | "_" | ":" ) ( <NAMECHAR> )*		>
+|	<QUOTEDSTR:	( "'" (~["'"])* "'" ) | (  "\"" (~["\""])* "\"")	>
+}
+
+SKIP :
+{
+	<	( " " | "\t" | "\n" | "\r" )+					>
+		// comment decl updated by Gagandeep Bhatia [mailto:gagan@ebprovider.com]
+|	<	"<!--" ( ~["-"] | ( "-" ~["-"] ) )* "-->"			>
+|	<	"<?"   (~[">"])* ">"						>
+}
+
+void dtd() :
+{
+}
+{
+	( elementDecl() | attListDecl() )* <EOF>
+}
+
+void elementDecl() :
+{
+}
+{
+	"<!ELEMENT" <NAME> contentSpec() ">"
+}
+
+void contentSpec() :
+{
+}
+{
+	<EMPTY> | <ANY> | LOOKAHEAD(2) mixed() | children()
+}
+
+void mixed() :
+{
+}
+{
+	"(" <PCDATA> ( ( "|" <NAME> )* ")*" | ")" )
+}
+
+void children() :
+{
+}
+{
+	seqchoice() [ modifier() ]
+}
+
+void seqchoice() :
+{
+}
+{
+	"(" cp() ( choice() | seq() ) ")"
+}
+
+void choice() :
+{
+}
+{
+	( "|" cp() )+
+}
+
+void seq() :
+{
+}
+{
+	( "," cp() )*
+}
+
+void cp() :
+{
+}
+{
+	( <NAME> | seqchoice() ) [ modifier() ]
+}
+
+void modifier() :
+{
+}
+{
+	"*" | "+" | "?"
+}
+
+void attListDecl() :
+{
+}
+{
+	"<!ATTLIST" <NAME> ( attribDef() )* ">"
+}
+
+void attribDef() :
+{
+}
+{
+	<NAME> attribType() defaultDecl()
+}
+
+void attribType() :
+{
+}
+{
+	stringType() | tokenizedType() | enumeratedType()
+}
+
+void stringType() :
+{
+}
+{
+	<CDATA>
+}
+
+void tokenizedType() :
+{
+}
+{
+	<ID> | <IDREF> | <IDREFS> | <ENTITY> | <ENTITIES> | <NMTOKEN> | <NMTOKENS>
+}
+
+void enumeratedType() :
+{
+}
+{
+	( notationType() | enumeration() )
+}
+
+void notationType() :
+{
+}
+{
+	<NOTATION> "(" <NAME> ( "|" <NAME> )* ")"
+}
+
+void enumeration() :
+{
+}
+{
+	"(" <NAME> ( "|" <NAME> )* ")"
+}
+
+void defaultDecl() :
+{
+}
+{
+	<REQUIRED> | <IMPLIED> | ( [ <FIXED> ] attribValue() )
+}
+
+void attribValue() :
+{
+}
+{
+	<QUOTEDSTR>
+}

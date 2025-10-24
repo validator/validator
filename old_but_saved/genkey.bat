@@ -1,0 +1,1 @@
+"%java_home%\bin\keytool" -importkeystore -srckeystore keystore -destkeystore keystore -deststoretype pkcs12 -genkeypair -dname "cn=JavaCC, ou=Release, o=JavaCC, c=US" -alias release -keypass javacc -keystore keystore -storepass javacc -validity 3650

@@ -1,9 +1,0 @@
-a { line-height: normal  }
-b { line-height: 1.2  }
-c { line-height: 1.2em  }
-d { line-height: 120%  }
-e { line-height: var(--undef, 42) }
-f { line-height: calc(42 + 12) }
-x { line-height: unset}
-y { line-height: initial}
-z { line-height: inherit }

@@ -1,0 +1,719 @@
+/*
+ *
+ *  ASN.1 grammar  for JavaCC
+ *
+ *  Contributed by Helena Sarin (hsarin@lucent.com)
+ *
+ *  Derived in part from the following work: snacc - a freeware ASN.1 to C or C++ compiler, v 1.3,
+ *  yacc/lex source code ( parse-asn1.y, lex-asn1.l), 
+ *  the free software, which is covered by GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or later
+ *
+ *  I tested it against several ASN.1 files used by CMIP;
+ *  Additional work is reguired to fully support SNMP MIBs parsing
+ *   
+ *  Please let me know if you use this grammar: i'm using it to develop ASN.1/IDL compiler
+ *  
+ */
+
+options {
+SANITY_CHECK=true;
+DEBUG_PARSER=false;
+DEBUG_TOKEN_MANAGER=false;
+}
+
+PARSER_BEGIN(AsnParser)
+
+import java.util.*;
+
+public class AsnParser {
+
+
+  public static void main(String args[]) throws ParseException {
+
+    AsnParser parser;	
+    parser = new AsnParser(System.in);
+    try {
+        parser.Input();	
+        System.out.println("ASN.1 file parsed successfully.");
+      }
+      catch(ParseException e){
+        System.out.println(e.toString());
+      }
+  }
+
+  private static String usefulTypes[] = { 
+        "GraphicString",  "NumericString", "PrintableString",
+	"TeletexString", "T61String", "VideotexString", "IA5String",
+	"VisibleString", "ISO646String", "GeneralizedTime", "UniversalString", "BMPString" };
+}
+
+PARSER_END(AsnParser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+SPECIAL_TOKEN :
+{
+  "--" : WithinASNComment
+}
+
+<WithinASNComment> SPECIAL_TOKEN :
+{
+  <("--" | "\n" | "\r" | "\r\n" )> : DEFAULT
+}
+
+<WithinASNComment> MORE :
+{
+  <~[]>
+}
+
+TOKEN : 
+{
+ <OBJECT_IDENTIFIER_TKN: "OBJECT" ([" ","\n","\t","\r"])? "IDENTIFIER">
+}
+
+TOKEN : 
+{
+ <BSTRING_TKN: "\'" (["0"-"1"])* "\'B">
+}
+
+TOKEN : 
+{
+ <HSTRING_TKN: "\'" (["0"-"9","A"-"F","a"-"f"])* "\'H">
+}
+
+TOKEN : 
+{
+ <CSTRING_TKN: "\"" ( ~["\""] )* "\"" >
+}
+
+TOKEN : 
+{
+ <NUMBER_ERANGE_TKN: ["1"-"9"](["0"-"9"])*>
+}
+
+TOKEN : 
+{
+ <NUMBER_TKN: "0">
+}
+
+TOKEN :
+{
+  <DOT_TKN: ".">
+| <COMMA_TKN: ",">
+| <LEFTBRACE_TKN: "{">
+| <RIGHTBRACE_TKN: "}">
+| <LEFTPAREN_TKN: "(">
+| <RIGHTPAREN_TKN: ")">
+| <LEFTBRACKET_TKN: "[">
+| <RIGHTBRACKET_TKN: "]">
+| <LESSTHAN_TKN: "<">
+| <MINUS_TKN: "-">
+| <GETS_TKN: "::=">
+| <BAR_TKN: "|">
+| <SEMI_COLON_TKN: ";">
+| <SELECTOR_TKN: ":">
+| <TAGS_TKN: "TAGS">
+| <BOOLEAN_TKN: "BOOLEAN">
+| <INTEGER_TKN: "INTEGER">
+| <BIT_TKN: "BIT">
+| <STRING_TKN: "STRING">
+| <OCTET_TKN: "OCTET">
+| <NULL_TKN: "NULL">
+| <SEQUENCE_TKN: "SEQUENCE">
+| <OF_TKN: "OF">
+| <SET_TKN: "SET">
+| <IMPLICIT_TKN: "IMPLICIT">
+| <CHOICE_TKN: "CHOICE">
+| <ANY_TKN: "ANY">
+| <OPTIONAL_TKN: "OPTIONAL">
+| <DEFAULT_TKN: "DEFAULT">
+| <COMPONENTS_TKN: "COMPONENTS">
+| <UNIVERSAL_TKN: "UNIVERSAL">
+| <APPLICATION_TKN: "APPLICATION">
+| <PRIVATE_TKN: "PRIVATE">
+| <TRUE_TKN: "TRUE">
+| <FALSE_TKN: "FALSE">
+| <BEGIN_TKN: "BEGIN">
+| <END_TKN: "END">
+| <DEFINITIONS_TKN: "DEFINITIONS">
+| <EXPLICIT_TKN: "EXPLICIT">
+| <ENUMERATED_TKN: "ENUMERATED">
+| <EXTERNAL_TKN: "EXTERNAL">
+| <EXPORTS_TKN: "EXPORTS">
+| <IMPORTS_TKN: "IMPORTS">
+| <REAL_TKN: "REAL">
+| <INCLUDES_TKN: "INCLUDES">
+| <MIN_TKN: "MIN">
+| <MAX_TKN: "MAX">
+| <SIZE_TKN: "SIZE">
+| <FROM_TKN: "FROM">
+| <WITH_TKN: "WITH">
+| <COMPONENT_TKN: "COMPONENT">
+| <PRESENT_TKN: "PRESENT">
+| <ABSENT_TKN: "ABSENT">
+| <DEFINED_TKN: "DEFINED">
+| <BY_TKN: "BY">
+| <PLUS_INFINITY_TKN: "PLUS-INFINITY">
+| <MINUS_INFINITY_TKN: "MINUS-INFINITY">
+| <OBJECTTYPE_TKN: "OBJECT-TYPE">
+| <SYNTAX_TKN: "SYNTAX">
+| <ACCESS_TKN: "ACCESS">
+| <STATUS_TKN: "STATUS">
+| <DESCRIPTION_TKN: "DESCRIPTION">
+| <REFERENCE_TKN: "REFERENCE">
+| <INDEX_TKN: "INDEX">
+| <DEFVAL_TKN: "DEFVAL">
+| <DHINT: "DISPLAY-HINT">
+| <TC_TKN: "TEXTUAL-CONVENTION"> 
+| <MACRO_TKN: "MACRO"> 
+}
+
+TOKEN : 
+{
+ <LCASEFIRST_IDENT_TKN: ["a"-"z"] (("-"["a"-"z","A"-"Z","0"-"9"])|["a"-"z","A"-"Z","0"-"9"])*>
+}
+
+
+TOKEN : 
+{
+ <UCASEFIRST_IDENT_TKN: ["A"-"Z"](("-"["a"-"z","A"-"Z","0"-"9"])|["a"-"z","A"-"Z","0"-"9"])*>
+}
+
+void Input() : {} 
+{ 
+ (ModuleDefinition())*
+}
+
+void ModuleDefinition() : {} 
+{ 
+  ModuleIdentifier() <DEFINITIONS_TKN> [TagDefault()] <GETS_TKN> <BEGIN_TKN> ModuleBody() <END_TKN> 
+}
+
+void TagDefault() : {} 
+{ 	
+   (<EXPLICIT_TKN> |  <IMPLICIT_TKN> ) <TAGS_TKN> 
+}
+
+void ModuleIdentifier() : {  } 
+{ 
+   modulereference() [AssignedIdentifier()]
+}
+
+void AssignedIdentifier() : {} 
+{ 
+   ObjectIdentifierValue() 
+}
+
+void ModuleBody() : {} 
+{ 
+  [Exports()] [Imports()] [AssignmentList()] 
+}
+
+void Exports() : {} 
+{ 
+  <EXPORTS_TKN> [SymbolsExported()] <SEMI_COLON_TKN> 
+}
+
+void SymbolsExported() : {} 
+{ 
+   ExportSymbolList() 
+}
+
+void ExportSymbolList() : {} 
+{ 
+   Symbol() (<COMMA_TKN> Symbol())*
+}
+
+void Imports() : {} 
+{ 
+   <IMPORTS_TKN> [SymbolsImported()] <SEMI_COLON_TKN> 
+}
+
+void SymbolsImported() : {} 
+{ 
+   SymbolsFromModuleList() 
+}
+
+void SymbolsFromModuleList() : {} 
+{ 
+   SymbolsFromModule() (SymbolsFromModule())*
+}
+
+void SymbolsFromModule() : { String module; } 
+{ 
+   SymbolList() <FROM_TKN>  ModuleIdentifier() 
+}
+
+void SymbolList() : {} 
+{ 
+   Symbol() (<COMMA_TKN> Symbol())* 
+}
+
+void Symbol() : {} 
+{ 
+   typereference()
+ | identifier() 
+ | DefinedMacroName() 
+}
+
+void AssignmentList() : {} 
+{ 
+  Assignment() [<SEMI_COLON_TKN>] ( Assignment() [<SEMI_COLON_TKN>] )*
+}
+
+void Assignment() : {} 
+{ 
+   LOOKAHEAD(2)  MacroDefinition() |  TypeAssignment() |  ValueAssignment()
+}
+
+void MacroDefinition() : { } 
+{
+   (<TC_TKN> | <OBJECTTYPE_TKN> | typereference()) <MACRO_TKN> <GETS_TKN> 
+	<BEGIN_TKN>  MacroBody() <END_TKN>
+}
+
+JAVACODE
+void MacroBody() {	
+  Token tok;
+  int nesting = 1;
+  while (true) {
+    tok = getToken(1);
+    if (tok.kind == END_TKN) {
+	break;	
+    }
+    tok = getNextToken();
+  }
+}
+
+void MacroReference() : {} 
+{ 
+   typereference() | DefinedMacroName() 
+}
+
+void TypeAssignment() : { }
+{
+   typereference()  <GETS_TKN>   GlobalType()
+}
+
+void GlobalType() : { }
+{
+  Type() |  DefinedMacroType() 
+}
+
+void Type() : { }
+{ 
+   (LOOKAHEAD(2) BuiltinType() |  DefinedType())  [LOOKAHEAD(2) SubtypeSpec()] 
+}
+
+void DefinedType() : { } 
+{  
+  [LOOKAHEAD(2) modulereference() <DOT_TKN>]  typereference() 
+}
+
+void BuiltinType() : {} 
+{ 
+  IntegerType() 
+| BitStringType() 
+| LOOKAHEAD(2) SetOrSequenceType()
+| SetOrSequenceOfType()
+| ChoiceType() 
+| SelectionType() 
+| TaggedType() 
+| AnyType() 
+| EnumeratedType() 
+| <OCTET_TKN> <STRING_TKN> 
+| <OBJECT_IDENTIFIER_TKN>
+| <REAL_TKN>
+| <BOOLEAN_TKN>
+| <NULL_TKN> 
+| <EXTERNAL_TKN>  
+}
+
+void EnumeratedType() : {} 
+{ 
+   <ENUMERATED_TKN> <LEFTBRACE_TKN> NamedNumberList() <RIGHTBRACE_TKN> 
+}
+
+void IntegerType() : {} 
+{ 
+ <INTEGER_TKN> [ <LEFTBRACE_TKN> NamedNumberList() <RIGHTBRACE_TKN> ]
+}
+
+void BitStringType() : {} 
+{ 
+  <BIT_TKN> <STRING_TKN> [ <LEFTBRACE_TKN> NamedNumberList()  <RIGHTBRACE_TKN> ] 
+}
+
+void NamedNumberList() : {  } 
+{ 
+  NamedNumber() (<COMMA_TKN> NamedNumber())*
+}
+
+void NamedNumber() : { } 
+{ 
+  identifier() <LEFTPAREN_TKN> ( SignedNumber() | DefinedValue()) 
+                            <RIGHTPAREN_TKN> 
+}
+
+void SignedNumber() : { } 
+{ 
+  [<MINUS_TKN>  ] ( <NUMBER_TKN> | <NUMBER_ERANGE_TKN> ) 
+}
+
+void SetOrSequenceOfType() : { }
+{ 
+   ( <SET_TKN> | <SEQUENCE_TKN> ) [[<LEFTPAREN_TKN>] SizeConstraint() [<RIGHTPAREN_TKN>]] <OF_TKN> 
+    Type()
+}
+
+void SetOrSequenceType() : { } 
+{ 
+  (<SET_TKN> | <SEQUENCE_TKN>) <LEFTBRACE_TKN> [ ElementTypeList() ] <RIGHTBRACE_TKN>
+}
+
+void ChoiceType() : { } 
+{ 
+   <CHOICE_TKN> <LEFTBRACE_TKN> ElementTypeList() <RIGHTBRACE_TKN> 
+}
+
+void ElementTypeList() : {} 
+{ 
+   ElementType() (<COMMA_TKN> ElementType())*
+}
+
+void ElementType() : {} 
+{ 
+  ( NamedType()  [     ( <OPTIONAL_TKN>   ) | ( <DEFAULT_TKN> NamedValue() ) ] )
+| ComponentsType()
+}
+
+void ComponentsType() : {  }
+{
+  <COMPONENTS_TKN> <OF_TKN>  Type() 
+
+}
+
+void NamedType() : { } 
+{ 
+  [LOOKAHEAD(2) identifier()]  Type() 
+}
+
+void SelectionType() : {} 
+{ 
+   identifier() <LESSTHAN_TKN> Type() 
+}
+
+void TaggedType() : { } 
+{ 
+  Tag() [ <EXPLICIT_TKN> | <IMPLICIT_TKN> ] Type() 
+}
+
+void Tag() : {} 
+{ 
+   <LEFTBRACKET_TKN> [Class()] ClassNumber() <RIGHTBRACKET_TKN> 
+}
+
+void ClassNumber() : {} 
+{ 
+   number() | DefinedValue() 
+}
+
+void Class() : {} 
+{ 
+   <UNIVERSAL_TKN> | <APPLICATION_TKN> | <PRIVATE_TKN> 
+}
+
+void AnyType() : {} 
+{ 
+  <ANY_TKN> 
+  [ <DEFINED_TKN> <BY_TKN> identifier()   ]
+}
+
+void SubtypeSpec() : {} 
+{ 
+   <LEFTPAREN_TKN> SubtypeValueSetList() <RIGHTPAREN_TKN> 
+}
+
+void SubtypeValueSetList() : {} 
+{ 
+   SubtypeValueSet() (<BAR_TKN> SubtypeValueSet())* 
+}
+
+void SubtypeValueSet() : {} 
+{ 
+ (
+  ValueRange() | ContainedSubtype() | PermittedAlphabet() | SizeConstraint() | InnerTypeConstraints() )
+}
+
+
+void ContainedSubtype() : {} 
+{ 
+   <INCLUDES_TKN> Type() 
+}
+
+void SingleValue() : {} 
+{ 
+   Value() 
+}
+
+void ValueRange() : {} 
+{ 
+ ( Value() | <MIN_TKN> ) [ [ <LESSTHAN_TKN> ]  <DOT_TKN> <DOT_TKN> [ <LESSTHAN_TKN> ] (Value() | <MAX_TKN> ) ]
+}
+
+void SizeConstraint() : {} 
+{ 
+   <SIZE_TKN> SubtypeSpec() 
+}
+
+void PermittedAlphabet() : {} 
+{ 
+   <FROM_TKN> SubtypeSpec() 
+}
+
+void InnerTypeConstraints() : {} 
+{ 
+  <WITH_TKN> ((<COMPONENT_TKN> SingleTypeConstraint() ) | ( <COMPONENTS_TKN>  MultipleTypeConstraints()))
+}
+
+void SingleTypeConstraint() : {} 
+{ 
+   SubtypeSpec() 
+}
+
+void MultipleTypeConstraints() : {} 
+{ 
+  <LEFTBRACE_TKN> [ <DOT_TKN> <DOT_TKN> <DOT_TKN> <COMMA_TKN> ] TypeConstraints() <RIGHTBRACE_TKN> 
+}
+
+void TypeConstraints() : {} 
+{ 
+   NamedConstraint() (<COMMA_TKN> NamedConstraint())*
+}
+
+void NamedConstraint() : {} 
+{ 
+    [identifier() ] Constraint() 
+}
+
+void Constraint() : {} 
+{ 
+  [ValueConstraint()] [PresenceConstraint()] 
+}
+
+void ValueConstraint() : {} 
+{ 
+   SubtypeSpec() 
+}
+
+void PresenceConstraint() : {} 
+{ 
+   <PRESENT_TKN> | <ABSENT_TKN> | <OPTIONAL_TKN> 
+}
+
+
+
+void ValueAssignment() : { } 
+{     
+    identifier() 
+    GlobalType() <GETS_TKN> [ LOOKAHEAD(2) identifier() [<SELECTOR_TKN>] ] [  BuiltinValue() ]
+   
+}
+
+void Value() : {} 
+{ 
+   LOOKAHEAD(2) BuiltinValue() | DefinedValue() 
+}
+
+void DefinedValue() : {} 
+{ 
+ [ modulereference() <DOT_TKN> ] identifier()
+}
+
+void BuiltinValue() : {} 
+{ 
+   BooleanValue() 
+| NullValue() 
+| SpecialRealValue() 
+| SignedNumber() 
+| HexString() 
+| BinaryString() 
+| CharString() 
+| CompoundValue()
+}
+
+void CompoundValue() : {}
+{
+   <LEFTBRACE_TKN> ( ObjIdComponentList() | skip_to_matching_brace() ) <RIGHTBRACE_TKN> 
+}
+
+JAVACODE
+void skip_to_matching_brace() {
+  Token tok;
+  int nesting = 1;
+  while (true) {
+    tok = getToken(1);
+    if (tok.kind == LEFTBRACE_TKN) nesting++;
+    if (tok.kind == RIGHTBRACE_TKN) {
+      nesting--;
+         if (nesting == 0) break;
+    }
+    tok = getNextToken();
+  }
+}
+
+void BooleanValue() : {} 
+{ 
+   <TRUE_TKN> | <FALSE_TKN> 
+}
+
+void SpecialRealValue() : {} 
+{ 
+   <PLUS_INFINITY_TKN> | <MINUS_INFINITY_TKN> 
+}
+
+void NullValue() : {} 
+{ 
+   <NULL_TKN> 
+}
+
+void NamedValue() : {} 
+{ 
+  [ LOOKAHEAD(2) identifier() ] Value() 
+}
+
+void ObjectIdentifierValue() : {} 
+{ 
+   <LEFTBRACE_TKN> ObjIdComponentList() <RIGHTBRACE_TKN> 
+}
+
+void ObjIdComponentList() : {} 
+{ 
+   ObjIdComponent() (ObjIdComponent())*
+}
+
+void ObjIdComponent() : {} 
+{ 
+  ( NumberForm() |   NameAndNumberForm())
+}
+
+void NumberForm() : {} 
+{ 
+   number() 
+}
+
+
+void NameAndNumberForm() : {} 
+{ 
+  identifier() [<LEFTPAREN_TKN> (NumberForm() | DefinedValue()) <RIGHTPAREN_TKN>] 
+}
+
+void BinaryString() : {} 
+{ 
+   <BSTRING_TKN> 
+}
+
+void HexString() : {} 
+{ 
+   <HSTRING_TKN> 
+}
+
+void CharString() : {} 
+{ 
+   <CSTRING_TKN> 
+}
+
+void number() : { } 
+{ 
+   <NUMBER_TKN> | <NUMBER_ERANGE_TKN>
+}
+
+void identifier() : {} 
+{ 
+   <LCASEFIRST_IDENT_TKN> 
+}
+
+void modulereference() : {} 
+{ 
+   <UCASEFIRST_IDENT_TKN> 
+}
+
+void typereference() : {} 
+{ 
+   <UCASEFIRST_IDENT_TKN>
+}
+
+void DefinedMacroType() : {} 
+{ 
+  TextualConventionMacroType() 
+| SnmpObjectTypeMacroType()
+}
+
+void DefinedMacroName() : {} 
+{ 
+  <OBJECTTYPE_TKN> 
+| <TC_TKN>
+}
+
+void SnmpObjectTypeMacroType() : {} 
+{ 
+   <OBJECTTYPE_TKN> <SYNTAX_TKN> Type() <ACCESS_TKN> SnmpAccess() <STATUS_TKN> SnmpStatus() [SnmpDescrPart()] [SnmpReferPart()] 
+       [SnmpIndexPart()] [SnmpDefValPart()] 
+}
+
+void SnmpAccess() : {} 
+{ 
+   identifier() 
+}
+
+void SnmpStatus() : {} 
+{ 
+  identifier() 
+}
+
+void SnmpDescrPart() : {} 
+{ 
+   <DESCRIPTION_TKN> <CSTRING_TKN>
+}
+
+void SnmpReferPart() : {} 
+{ 
+   <REFERENCE_TKN> <CSTRING_TKN>
+}
+
+void SnmpIndexPart() : {} 
+{ 
+   <INDEX_TKN> <LEFTBRACE_TKN> TypeOrValueList() <RIGHTBRACE_TKN> 
+}
+
+void TypeOrValueList() : {} 
+{ 
+  TypeOrValue() (<COMMA_TKN> TypeOrValue())*
+}
+
+void TypeOrValue() : {} 
+{ 
+  LOOKAHEAD(3) Type() | Value()
+}
+
+void SnmpDefValPart() : {} 
+{ 
+   <DEFVAL_TKN> <LEFTBRACE_TKN> Value() <RIGHTBRACE_TKN> 
+}
+
+void TextualConventionMacroType() : {}
+{
+   <TC_TKN> [DisplayHint()] <STATUS_TKN> SnmpStatus() [SnmpDescrPart()] [SnmpReferPart()] <SYNTAX_TKN> Type()
+}
+
+void DisplayHint() : {}
+{
+  <DHINT> <CSTRING_TKN>
+}

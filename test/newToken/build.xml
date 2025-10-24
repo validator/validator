@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+
+<!--
+
+Copyright (c) 2007, Paul Cager.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+
+<project name="test-newtoken" default="test" basedir=".">
+
+  <target name="test" depends="" description="run functional test cases">
+
+    <!--
+      Note: the test relies on org.javacc.parser.JavaFiles.getVersion.
+      In other words, it expects that JavaCC detects "new enough" parser version
+      in the generated Token.java, and it would produce "4.09+ code"
+    -->
+    <delete dir="out-dir" />
+
+    <java failonerror="true" fork="true" classname="javacc" classpath="${basedir}/../../target/javacc.jar" >
+      <arg line="Parser.jj" />
+    </java>
+
+    <loadfile property="plainTokens" srcFile="out-dir/ParserTokenManager.java" />
+  	<echo message="${plainTokens}" file="out-dir/plainTokens.txt"/>
+
+    <!-- Now with a pre-existing, old-format Token.java... -->
+    <delete file="out-dir/Token.java" />
+    <copy file="OldToken.java" tofile="out-dir/Token.java" />
+
+    <java failonerror="true" fork="true" classname="javacc" classpath="${basedir}/../../target/javacc.jar" >
+      <arg line="Parser.jj" />
+    </java>
+
+    <loadfile property="oldTokens" srcFile="out-dir/ParserTokenManager.java" />
+  	<echo message="${oldTokens}" file="out-dir/oldTokens.txt"/>
+
+    <!-- Now with a Token Factory -->
+    <delete file="out-dir/Token.java" />
+
+    <java failonerror="true" fork="true" classname="javacc" classpath="${basedir}/../../target/javacc.jar" >
+      <arg line="ParserTokenFactory.jj" />
+    </java>
+
+    <loadfile property="tokenFactory" srcFile="out-dir/ParserTokenManager.java" />
+  	<echo message="${tokenFactory}" file="out-dir/tokenFactory.txt"/>
+
+
+    <fail message="newToken failed">
+     <condition>
+       <or>
+        <not> <contains string="${plainTokens}" substring="t = Token.newToken(jjmatchedKind, curTokenImage);" /> </not>
+        <not> <contains string="${oldTokens}" substring="t = Token.newToken(jjmatchedKind);" /> </not>
+        <not> <contains string="${tokenFactory}" substring="t = my.token.Factory.newToken(jjmatchedKind, curTokenImage);" /> </not>
+       </or>
+     </condition>
+    </fail>
+
+  </target>
+
+  <target name="clean">
+    <delete dir="out-dir" />
+  </target>
+
+</project>

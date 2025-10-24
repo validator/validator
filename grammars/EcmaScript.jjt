@@ -1,0 +1,2328 @@
+/*
+      Copyright (c) 2004-2005, The Dojo Foundation
+      All Rights Reserved.
+
+      Licensed under the Academic Free License version 2.1 or above OR the
+      modified BSD license. For more information on Dojo licensing, see:
+
+              http://dojotoolkit.org/community/licensing.shtml <http://dojotoolkit.org/community/licensing.shtml>
+
+      Code donated to the Dojo Foundation by AOL LLC under the terms of
+      the Dojo CCLA (http://dojotoolkit.org/ccla.txt).
+
+ */
+
+options {
+
+	/*
+	 * Default value is true. If true, all methods and class variables 
+	 * are specified as static in the generated parser and token manager. This allows only 
+	 * one parser object to be present, but it improves the performance of the parser.
+	 */
+	STATIC = false;
+
+	/*
+	 * Options for obtaining debugging information
+	 */
+	DEBUG_PARSER = false;
+
+	DEBUG_TOKEN_MANAGER = false;
+
+	/*
+	 * Default value is false. When set to true, the generated parser 
+	 * uses an input stream object that processes Java Unicode escapes before 
+	 * sending characters to the token manager. 
+	 */
+	JAVA_UNICODE_ESCAPE = true;
+
+	/*
+	 * Default value is false. When set to true, the generated parser 
+	 * uses uses an input stream object that reads Unicode files. By default, ASCII files 
+	 * are assumed. 
+	 */
+	UNICODE_INPUT = true;
+
+	/*
+	 * Default value is false. Generate a multi mode parse tree. 
+	 * The default for this is false, generating a simple mode parse tree.
+	 */
+	MULTI=true;
+
+	/*
+	 * Default value is false. Instead of making each non-decorated 
+	 * production an indefinite node, make it void instead.
+	 */
+	NODE_DEFAULT_VOID=true;
+
+	/*
+	 * The package to generate the node classes into. 
+	 */
+	NODE_PACKAGE = "org.dojo.jsl.parser";
+
+	/*
+	 * Default value is false. Insert a jjtAccept() method in the 
+	 * node classes, and generate a visitor implementation with an entry for every 
+	 * node type used in the grammar.
+	 */
+	VISITOR=true;
+
+	/*
+	 * Default value is false. Insert calls to user-defined parser 
+	 * methods on entry and exit of every node scope. See Node Scope Hooks above.
+	 */
+	NODE_SCOPE_HOOK=true;
+
+	/*
+	 * JDK Version
+	 */
+	JDK_VERSION = "1.5";
+}
+
+PARSER_BEGIN(EcmaScript)
+
+package org.dojo.jsl.parser;
+
+import java.io.*;
+import java.util.*;
+
+public class EcmaScript {
+
+	public static void main(String args[]){
+		EcmaScript parser;
+		if(args.length == 0){
+			System.out.println("EcmaScript Parser:  Reading from standard input . . .");
+			parser = new EcmaScript(System.in);
+		} else if(args.length == 1){
+			System.out.println("EcmaScript Parser:  Reading from file " + args[0] + " . . .");
+			try {
+				parser = new EcmaScript(new FileInputStream(args[0]), "UTF-8");
+			} catch(java.io.FileNotFoundException e){
+				System.out.println("EcmaScript Parser:  File " + args[0] + " not found.");
+				return;
+			}
+		} else {
+			System.out.println("EcmaScript Parser:  Usage is one of:");
+			System.out.println("         EcmaScript < inputfile");
+			System.out.println("OR");
+			System.out.println("         EcmaScript inputfile");
+			return;
+		}
+		try {
+			SimpleNode n = parser.Program();
+			System.out.println("EcmaScript parser:  EcmaScript program parsed successfully.");
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+			System.out.println("EcmaScript parser:  Encountered errors during parse.");
+		}
+	}
+
+	void jjtreeOpenNodeScope(Node n){
+		Token t = getToken(1);
+		if(t != null){
+			((SimpleNode) n).setBeginToken(t);
+		}
+	}
+
+	void jjtreeCloseNodeScope(Node n){
+		Token t = getToken(0);
+		if(t != null){
+			((SimpleNode) n).setEndToken(t);
+		}
+	}
+}
+PARSER_END(EcmaScript)
+
+TOKEN_MGR_DECLS : { 
+	public int htmlTokenNestingLevel = 0;
+	public boolean expectActionScript = false;
+}
+
+
+/*****************************************
+ * LEXICAL & REGEXP GRAMMARS STARTS HERE *
+ *****************************************/
+/* 
+
+
+
+/* Section 7 : Lexical Conventions */
+
+
+
+/*
+
+TOKEN:
+{
+  < SOURCE_CHAR: ["\u0000"-"\uFFFE"] >
+}
+
+
+MORE :
+{
+  < INPUT_ELEMENT_DIV:
+	  <WHITE_SPACE>
+	| <LINE_TERMINATOR>
+	| <COMMENT>
+	| <_TOKEN>
+	| <DIV_PUNCTUATOR>
+  >
+}
+
+MORE:
+{
+  < INPUTELEMENTREGEXP:
+	  <WHITE_SPACE>
+	| <LINE_TERMINATOR>
+	| <COMMENT>
+	| <_TOKEN>
+	| <REGULAR_EXPRESSION_LITERAL>
+  >
+}
+
+*/
+
+/* Section 7.2 : White Space */
+
+<DEFAULT, IN_REGEX>
+SPECIAL_TOKEN :
+{
+	<WHITE_SPACE: <TAB> | <VT> | <FF> | <SP> | <NBSP> >
+| 
+	< #TAB: "\u0009" | "\t" > /* TAB */
+|
+	< #VT: "\u000B" > /* Vertical Tab */
+| 
+	< #FF: "\u000C" | "\f"> /* Form Feed */
+| 
+	< #SP: "\u0020" | " " > /* Space */
+| 
+	< #NBSP: "\u00A0" > /* No-break space */
+| 
+	< #USP: /* Other Unicode space separator */
+		["\u2000"] 
+		| ["\u2001"] 
+		| ["\u2002"] 
+		| ["\u2003"] 
+		| ["\u2004"] 
+		| ["\u2005"] 
+		| ["\u2006"] 
+		| ["\u2007"]
+		| ["\u2008"] 
+		| ["\u2009"] 
+		| ["\u200A"] 
+		| ["\u200B"]
+		| ["\u3000"]
+	>
+}
+
+/* Section 7.3 : Line Terminators */
+
+<DEFAULT, IN_REGEX>
+SPECIAL_TOKEN :
+{
+	<LINE_TERMINATOR: <LF> | <CR> | <LS> | <PS> >
+| 
+	< #LF: "\n" > /* Line Feed */
+| 
+	< #CR: "\r" > /* Carriage Return */
+| 
+	< #LS: "\u2028" > /* Line separator */
+| 
+	< #PS: "\u2029" > /* Paragraph separator */
+}
+
+
+/* Comments */
+
+<DEFAULT, IN_REGEX>
+MORE :
+{
+	"//" : IN_SINGLE_LINE_COMMENT
+|
+	"/*" : IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+	<SINGLE_LINE_COMMENT: (~["\n","\r"])* ("\n"|"\r"|"\r\n")? > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+	<MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_MULTI_LINE_COMMENT, IN_PATTERN>
+MORE :
+{
+	< ~[] >
+}
+
+
+
+/* Section 7.5.1: Reserved Words */
+
+<DEFAULT, IN_REGEX>
+TOKEN :
+{
+	< BREAK: "break" > : DEFAULT
+| 
+	< CONTINUE: "continue" > : DEFAULT
+| 
+	< DELETE: "delete" > : DEFAULT
+| 
+	< ELSE: "else" > : DEFAULT
+| 
+	< FOR: "for" > : DEFAULT
+| 
+	< FUNCTION: "function" > : DEFAULT
+| 
+	< IF: "if" > : DEFAULT
+| 
+	< IN: "in" > : DEFAULT
+| 
+	< NEW: "new" > : DEFAULT
+| 
+	< RETURN: "return" > : DEFAULT
+| 
+	< THIS: "this" > : IN_REGEX
+| 
+	< TYPEOF: "typeof" > : DEFAULT
+| 
+	< VAR: "var" > : DEFAULT
+| 
+	< VOID: "void" > : DEFAULT
+| 
+	< WHILE: "while" > : DEFAULT
+| 
+	< WITH: "with" > : DEFAULT
+| 
+	< CASE: "case" > : DEFAULT
+| 
+	< CATCH: "catch" > : DEFAULT
+| 
+	< CLASS: "class" > : DEFAULT
+| 
+	< CONST: "const" > : DEFAULT
+| 
+	< DEBUGGER: "debugger" > : DEFAULT
+| 
+	< _DEFAULT: "default" > : DEFAULT
+| 
+	< DO: "do" > : DEFAULT
+| 
+	< ENUM: "enum" > : DEFAULT
+| 
+	< EXPORT: "export" > : DEFAULT
+| 
+	< EXTENDS: "extends" > : DEFAULT
+| 
+	< FINALLY: "finally" > : DEFAULT
+| 
+	< IMPORT: "import" > : DEFAULT
+| 
+	< SUPER: "super" > : DEFAULT
+| 
+	< SWITCH: "switch" > : DEFAULT
+| 
+	< THROW: "throw" > : DEFAULT
+| 
+	< TRY: "try" > : DEFAULT
+}
+
+
+/* JScript .NET Tokens
+
+TOKEN :
+{
+	< BYTE: "byte" >
+	| < SBYTE: "sbyte" >
+	| < SHORT: "short" >
+	| < USHORT: "ushort" >
+	| < UINT: "uint" >
+	| < LONG: "long" >
+	| < ULONG: "ulong" >
+	| < FLOAT: "float" >
+	| < NUMBER: "Number" >
+	| < DOUBLE: "double" >
+	| < DECIMAL: "decimal" >
+	| < BOOLEAN: "boolean" >
+	| < STRING: "String" >
+	| < CHAR: "char" >
+}
+
+*/
+
+
+/* Section 7.7: Punctuators */
+
+<DEFAULT, IN_REGEX>
+TOKEN :
+{
+	< LBRACE: "{" > : DEFAULT
+|
+	< RBRACE: "}" > : IN_REGEX
+|
+	< LPAREN: "(" > : DEFAULT
+|
+	< RPAREN: ")" > : IN_REGEX
+|
+	< LBRACKET: "[" > : DEFAULT
+|
+	< RBRACKET: "]" > : IN_REGEX
+|
+	< DOT: "." > : DEFAULT
+|
+	< SEMICOLON: ";" > : DEFAULT
+|
+	< COMMA: "," > : DEFAULT
+|
+	< LT: "<" > : DEFAULT
+|
+	< GT: ">" > : DEFAULT
+|
+	< LE: "<=" > : DEFAULT
+|
+	< GE: ">=" > : DEFAULT
+|
+	< EQ: "==" > : DEFAULT
+|
+	< NE: "!=" > : DEFAULT
+|
+	< SEQ: "===" > : DEFAULT /* Strict Equals Operator */
+|
+	< SNEQ: "!==" >	 : DEFAULT /* Strict Does-not-equal Operator */
+|
+	< PLUS: "+" > : DEFAULT
+|
+	< MINUS: "-" > : DEFAULT
+|
+	< STAR: "*" > : DEFAULT
+|
+	< REM: "%" > : DEFAULT
+|
+	< INCR: "++" > : IN_REGEX
+|
+	< DECR: "--" > : IN_REGEX
+|
+	< LSHIFT: "<<" > : DEFAULT
+|
+	< RSHIFT: ">>" > : DEFAULT
+|
+	< RUNSHIFT: ">>>" > : DEFAULT /* Unsigned Right Shift Operator */
+|
+	< BIT_AND: "&" > : DEFAULT
+|
+	< BIT_OR: "|" > : DEFAULT
+|
+	< XOR: "^" > : DEFAULT
+|
+	< BANG: "!" > : DEFAULT
+|
+	< TILDE: "~" > : IN_REGEX
+|
+	< SC_AND: "&&" > : DEFAULT
+|
+	< SC_OR: "||" > : DEFAULT
+|
+	< HOOK: "?" > : DEFAULT
+|
+	< COLON: ":" > : DEFAULT
+|
+	< ASSIGN: "=" > : DEFAULT
+|
+	< PLUSASSIGN: "+=" > : DEFAULT
+|
+	< MINUSASSIGN: "-=" > : DEFAULT
+|
+	< STARASSIGN: "*=" > : DEFAULT
+|
+	< REMASSIGN: "%=" > : DEFAULT
+|
+	< LSHIFTASSIGN: "<<=" > : DEFAULT
+|
+	< RSIGNEDSHIFTASSIGN: ">>=" > : DEFAULT
+|
+	< RUNSIGNEDSHIFTASSIGN: ">>>=" > : DEFAULT
+|
+	< ANDASSIGN: "&=" > : DEFAULT
+|
+	< ORASSIGN: "|=" > : DEFAULT
+|
+	< XORASSIGN: "^=" > : DEFAULT
+|
+	< INTANCE_OF: "instanceof" > : DEFAULT
+}
+
+
+/* Section 7.8.3: Numeric Literals */
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{ 
+	< DECIMAL_LITERAL :
+		<DECIMAL_INTEGER_LITERAL> "." (<DECIMAL_DIGITS>)? (<EXPONENT_PART>)?
+	| 
+		"." <DECIMAL_DIGITS> (<EXPONENT_PART>)?
+	| 
+		<DECIMAL_INTEGER_LITERAL> (<EXPONENT_PART>)? 
+	>  : IN_REGEX
+|  
+	< #NON_ZERO_DIGIT: ["1"-"9"] >
+|
+	< #EXPONENT_PART: ("e" | "E") (["+","-"])? <DECIMAL_DIGITS> >
+}
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{
+	< DECIMAL_INTEGER_LITERAL: 
+		"0" | <NON_ZERO_DIGIT> (<DECIMAL_DIGITS>)?
+	> : IN_REGEX
+}
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{
+	< HEX_INTEGER_LITERAL: "0" ["x","X"] (<HEX_DIGIT>)+ > : IN_REGEX
+}
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{  < DECIMAL_DIGITS: (<DECIMAL_DIGIT>)+ > : IN_REGEX }
+
+TOKEN:
+{
+	< DECIMAL_DIGIT: ["0"-"9"] >
+}
+
+
+/* Section 7.8: Literals */
+/*
+
+MORE:
+{ 
+  < LITERAL:
+	  <NULL_LITERAL>
+	| <BOOLEAN_LITERAL>
+	| <NUMERIC_LITERAL>
+	| <STRING_LITERAL>
+  >
+}
+
+*/
+
+
+/* Section 7.8.1: NULL Literals */
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{ 
+	< NULL_LITERAL: "null" > : IN_REGEX
+}
+
+/* Section 7.8.2: Boolean Literals */
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{ 
+	< BOOLEAN_LITERAL: "true" | "false" > : IN_REGEX
+}
+
+
+
+/* Section 7.8.4: String Literals */
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{
+	< STRING_LITERAL:
+		"\"" (<DOUBLE_STRING_CHARACTERS>)? "\""  | "'" (<SINGLE_STRING_CHARACTERS>)? "'"
+	>	 : IN_REGEX
+|
+	< #DOUBLE_STRING_CHARACTERS: (<DOUBLE_STRING_CHARACTER>)* >
+|
+	< #SINGLE_STRING_CHARACTERS: (<SINGLE_STRING_CHARACTER>)* >
+|
+	< #DOUBLE_STRING_CHARACTER:
+		(~["\"","\\","\n","\r","\u2028","\u2029"])* 
+		| "\\" <ESCAPE_SEQUENCE>
+	>
+|
+	< #SINGLE_STRING_CHARACTER:
+		(~["'","\\","\n","\r","\u2028","\u2029"]) 
+		| "\\" <ESCAPE_SEQUENCE>
+	> 
+|
+	< #ESCAPE_SEQUENCE:
+		<CHARACTER_ESCAPE_SEQUENCE>
+		| 
+			"0" 
+		| 
+			<HEX_ESCAPE_SEQUENCE>
+		| 
+			<UNICODE_ESCAPE_SEQUENCE>
+	>
+|
+	< #CHARACTER_ESCAPE_SEQUENCE:
+		<SINGLE_ESCAPE_CHARACTER> | <NON_ESCAPE_CHARACTER>
+	>
+|
+	< #SINGLE_ESCAPE_CHARACTER: ["'" , "\"" , "\\" , "b" , "f" , "n" , "r" , "t" , "v"] >
+|
+	< #NON_ESCAPE_CHARACTER: 
+		~["\n","\r","\u2028","\u2029"]
+	| 
+		~["'" , "\"" , "\\" , "b" , "f" , "n" , "r" , "t" , "v", "x", "u"]
+	| 
+		~["0"-"9"]
+	>
+}
+
+TOKEN:
+{
+	< HEX_ESCAPE_SEQUENCE: "x" <HEX_DIGIT> <HEX_DIGIT> >
+}
+
+/*
+TOKEN:
+{
+  < ESCAPE_CHARACTER:
+	  ["'" , "\"" , "\\" , "b" , "f" , "n" , "r" , "t" , "v"]
+	| ["0"-"9"]
+	| "x"
+	| "u"
+  >
+}
+*/
+
+/* Section 7.6: Identifiers */
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{
+	< IDENTIFIER_NAME: <IDENTIFIER_START> (<IDENTIFIER_PART>)* > : IN_REGEX
+|
+	< #IDENTIFIER_START:
+		<UNICODE_LETTER>
+	| 
+		<DOLLAR_SIGN>
+	| 
+		<UNDER_SCORE>
+	| 
+		<UNICODE_ESCAPE_SEQUENCE>
+	>
+|
+	< #IDENTIFIER_PART: 
+		<IDENTIFIER_START>
+	| 
+		<UNICODE_COMBINING_MARK>
+	| 
+		<UNICODE_DIGIT>
+	| 
+		<UNICODE_CONNECTOR_PUNCTUATION>
+	| 
+		<UNICODE_ESCAPE_SEQUENCE>
+	>
+|
+	< #DOLLAR_SIGN: "$" >
+|  
+	< #UNDER_SCORE: "_" >
+|
+	< #UNICODE_LETTER: 
+		["A"-"Z"]
+		| ["a"-"z"]
+		| ["\u0041"-"\u005A"] 
+		| ["\u0061"-"\u007A"] 
+		| ["\u00AA"] 
+		| ["\u00B5"]
+		| ["\u00BA"] 
+		| ["\u00C0"-"\u00D6"] 
+		| ["\u00D8"-"\u00F6"] 
+		| ["\u00F8"-"\u021F"]
+		| ["\u0222"-"\u0233"] 
+		| ["\u0250"-"\u02AD"] 
+		| ["\u02B0"-"\u02B8"] 
+		| ["\u02BB"-"\u02C1"]
+		| ["\u02D0"-"\u02D1"] 
+		| ["\u02E0"-"\u02E4"] 
+		| ["\u02EE"] 
+		| ["\u037A"]
+		| ["\u0386"] 
+		| ["\u0388"-"\u038A"]
+		| ["\u038C"]
+		| ["\u038E"-"\u03A1"]
+		| ["\u03A3"-"\u03CE"] 
+		| ["\u03D0"-"\u03D7"] 
+		| ["\u03DA"-"\u03F3"]
+		| ["\u0400"-"\u0481"]
+		| ["\u048C"-"\u04C4"]
+		| ["\u04C7"-"\u04C8"]
+		| ["\u04CB"-"\u04CC"] 
+		| ["\u04D0"-"\u04F5"]
+		| ["\u04F8"-"\u04F9"]
+		| ["\u0531"-"\u0556"]
+		| ["\u0559"]
+		| ["\u0561"-"\u0587"]
+		| ["\u05D0"-"\u05EA"]
+		| ["\u05F0"-"\u05F2"] 
+		| ["\u0621"-"\u063A"] 
+		| ["\u0640"-"\u064A"]
+		| ["\u0671"-"\u06D3"]
+		| ["\u06D5"] 
+		| ["\u06E5"-"\u06E6"] 
+		| ["\u06FA"-"\u06FC"]
+		| ["\u0710"] 
+		| ["\u0712"-"\u072C"] 
+		| ["\u0780"-"\u07A5"] 
+		| ["\u0905"-"\u0939"]
+		| ["\u093D"] 
+		| ["\u0950"] 
+		| ["\u0958"-"\u0961"] 
+		| ["\u0985"-"\u098C"]
+		| ["\u098F"-"\u0990"] 
+		| ["\u0993"-"\u09A8"] 
+		| ["\u09AA"-"\u09B0"] 
+		| ["\u09B2"]
+		| ["\u09B6"-"\u09B9"] 
+		| ["\u09DC"-"\u09DD"] 
+		| ["\u09DF"-"\u09E1"] 
+		| ["\u09F0"-"\u09F1"]
+		| ["\u0A05"-"\u0A0A"] 
+		| ["\u0A0F"-"\u0A10"] 
+		| ["\u0A13"-"\u0A28"] 
+		| ["\u0A2A"-"\u0A30"]
+		| ["\u0A32"-"\u0A33"] 
+		| ["\u0A35"-"\u0A36"] 
+		| ["\u0A38"-"\u0A39"] 
+		| ["\u0A59"-"\u0A5C"]
+		| ["\u0A5E"] 
+		| ["\u0A72"-"\u0A74"] 
+		| ["\u0A85"-"\u0A8B"] 
+		| ["\u0A8D"]
+		| ["\u0A8F"-"\u0A91"] 
+		| ["\u0A93"-"\u0AA8"] 
+		| ["\u0AAA"-"\u0AB0"] 
+		| ["\u0AB2"-"\u0AB3"]
+		| ["\u0AB5"-"\u0AB9"] 
+		| ["\u0ABD"] 
+		| ["\u0AD0"] 
+		| ["\u0AE0"]
+		| ["\u0B05"-"\u0B0C"] 
+		| ["\u0B0F"-"\u0B10"] 
+		| ["\u0B13"-"\u0B28"] 
+		| ["\u0B2A"-"\u0B30"]
+		| ["\u0B32"-"\u0B33"] 
+		| ["\u0B36"-"\u0B39"] 
+		| ["\u0B3D"] 
+		| ["\u0B5C"-"\u0B5D"]
+		| ["\u0B5F"-"\u0B61"] 
+		| ["\u0B85"-"\u0B8A"]
+		| ["\u0B8E"-"\u0B90"] 
+		| ["\u0B92"-"\u0B95"]
+		| ["\u0B99"-"\u0B9A"] 
+		| ["\u0B9C"] 
+		| ["\u0B9E"-"\u0B9F"] 
+		| ["\u0BA3"-"\u0BA4"]
+		| ["\u0BA8"-"\u0BAA"] 
+		| ["\u0BAE"-"\u0BB5"] 
+		| ["\u0BB7"-"\u0BB9"] 
+		| ["\u0C05"-"\u0C0C"]
+		| ["\u0C0E"-"\u0C10"] 
+		| ["\u0C12"-"\u0C28"]
+		| ["\u0C2A"-"\u0C33"]
+		| ["\u0C35"-"\u0C39"]
+		| ["\u0C60"-"\u0C61"]
+		| ["\u0C85"-"\u0C8C"]
+		| ["\u0C8E"-"\u0C90"]
+		| ["\u0C92"-"\u0CA8"]
+		| ["\u0CAA"-"\u0CB3"]
+		| ["\u0CB5"-"\u0CB9"]
+		| ["\u0CDE"]
+		| ["\u0CE0"-"\u0CE1"]
+		| ["\u0D05"-"\u0D0C"]
+		| ["\u0D0E"-"\u0D10"]
+		| ["\u0D12"-"\u0D28"]
+		| ["\u0D2A"-"\u0D39"]
+		| ["\u0D60"-"\u0D61"]
+		| ["\u0D85"-"\u0D96"]
+		| ["\u0D9A"-"\u0DB1"]
+		| ["\u0DB3"-"\u0DBB"]
+		| ["\u0DBD"]
+		| ["\u0DC0"-"\u0DC6"]
+		| ["\u0E01"-"\u0E30"]
+		| ["\u0E32"-"\u0E33"]
+		| ["\u0E40"-"\u0E46"]
+		| ["\u0E81"-"\u0E82"]
+		| ["\u0E84"]
+		| ["\u0E87"-"\u0E88"]
+		| ["\u0E8A"]
+		| ["\u0E8D"]
+		| ["\u0E94"-"\u0E97"]
+		| ["\u0E99"-"\u0E9F"]
+		| ["\u0EA1"-"\u0EA3"]
+		| ["\u0EA5"]
+		| ["\u0EA7"]
+		| ["\u0EAA"-"\u0EAB"]
+		| ["\u0EAD"-"\u0EB0"]
+		| ["\u0EB2"-"\u0EB3"]
+		| ["\u0EBD"-"\u0EC4"]
+		| ["\u0EC6"]
+		| ["\u0EDC"-"\u0EDD"]
+		| ["\u0F00"]
+		| ["\u0F40"-"\u0F6A"]
+		| ["\u0F88"-"\u0F8B"]
+		| ["\u1000"-"\u1021"]
+		| ["\u1023"-"\u1027"]
+		| ["\u1029"-"\u102A"]
+		| ["\u1050"-"\u1055"]
+		| ["\u10A0"-"\u10C5"]
+		| ["\u10D0"-"\u10F6"]
+		| ["\u1100"-"\u1159"]
+		| ["\u115F"-"\u11A2"]
+		| ["\u11A8"-"\u11F9"]
+		| ["\u1200"-"\u1206"]
+		| ["\u1208"-"\u1246"]
+		| ["\u1248"]
+		| ["\u124A"-"\u124D"]
+		| ["\u1250"-"\u1256"]
+		| ["\u1258"]
+		| ["\u125A"-"\u125D"]
+		| ["\u1260"-"\u1286"]
+		| ["\u1288"]
+		| ["\u128A"-"\u128D"]
+		| ["\u1290"-"\u12AE"]
+		| ["\u12B0"]
+		| ["\u12B2"-"\u12B5"]
+		| ["\u12B8"-"\u12BE"]
+		| ["\u12C0"]
+		| ["\u12C2"-"\u12C5"]
+		| ["\u12C8"-"\u12CE"]
+		| ["\u12D0"-"\u12D6"]
+		| ["\u12D8"-"\u12EE"]
+		| ["\u12F0"-"\u130E"]
+		| ["\u1310"]
+		| ["\u1312"-"\u1315"]
+		| ["\u1318"-"\u131E"]
+		| ["\u1320"-"\u1346"]
+		| ["\u1348"-"\u135A"]
+		| ["\u13A0"-"\u13B0"]
+		| ["\u13B1"-"\u13F4"]
+		| ["\u1401"-"\u1676"]
+		| ["\u1681"-"\u169A"]
+		| ["\u16A0"-"\u16EA"]
+		| ["\u1780"-"\u17B3"]
+		| ["\u1820"-"\u1877"]
+		| ["\u1880"-"\u18A8"]
+		| ["\u1E00"-"\u1E9B"]
+		| ["\u1EA0"-"\u1EE0"]
+		| ["\u1EE1"-"\u1EF9"]
+		| ["\u1F00"-"\u1F15"]
+		| ["\u1F18"-"\u1F1D"]
+		| ["\u1F20"-"\u1F39"]
+		| ["\u1F3A"-"\u1F45"]
+		| ["\u1F48"-"\u1F4D"]
+		| ["\u1F50"-"\u1F57"]
+		| ["\u1F59"]
+		| ["\u1F5B"]
+		| ["\u1F5D"]
+		| ["\u1F5F"-"\u1F7D"]
+		| ["\u1F80"-"\u1FB4"]
+		| ["\u1FB6"-"\u1FBC"]
+		| ["\u1FBE"]
+		| ["\u1FC2"-"\u1FC4"]
+		| ["\u1FC6"-"\u1FCC"]
+		| ["\u1FD0"-"\u1FD3"]
+		| ["\u1FD6"-"\u1FDB"]
+		| ["\u1FE0"-"\u1FEC"]
+		| ["\u1FF2"-"\u1FF4"]
+		| ["\u1FF6"-"\u1FFC"]
+		| ["\u207F"]
+		| ["\u2102"]
+		| ["\u2107"]
+		| ["\u210A"-"\u2113"]
+		| ["\u2115"]
+		| ["\u2119"-"\u211D"]
+		| ["\u2124"]
+		| ["\u2126"]
+		| ["\u2128"]
+		| ["\u212A"-"\u212D"]
+		| ["\u212F"-"\u2131"]
+		| ["\u2133"-"\u2139"]
+		| ["\u2160"-"\u2183"]
+		| ["\u3005"-"\u3007"]
+		| ["\u3021"-"\u3029"]
+		| ["\u3031"-"\u3035"]
+		| ["\u3038"-"\u303A"]
+		| ["\u3041"-"\u3094"]
+		| ["\u309D"-"\u309E"]
+		| ["\u30A1"-"\u30FA"]
+		| ["\u30FC"-"\u30FE"]
+		| ["\u3105"-"\u312C"]
+		| ["\u3131"-"\u318E"]
+		| ["\u31A0"-"\u31B7"]
+		| ["\u3400"]
+		| ["\u4DB5"]
+		| ["\u4E00"]
+		| ["\u9FA5"]
+		| ["\uA000"-"\uA48C"]
+		| ["\uAC00"]
+		| ["\uD7A3"]
+		| ["\uF900"-"\uFA2D"]
+		| ["\uFB00"-"\uFB06"]
+		| ["\uFB13"-"\uFB17"]
+		| ["\uFB1D"]
+		| ["\uFB1F"-"\uFB28"]
+		| ["\uFB2A"-"\uFB36"]
+		| ["\uFB38"-"\uFB3C"]
+		| ["\uFB3E"]
+		| ["\uFB40"-"\uFB41"]
+		| ["\uFB43"-"\uFB44"]
+		| ["\uFB46"-"\uFBB1"]
+		| ["\uFBD3"-"\uFD3D"]
+		| ["\uFD50"-"\uFD8F"]
+		| ["\uFD92"-"\uFDC7"]
+		| ["\uFDF0"-"\uFDFB"]
+		| ["\uFE70"-"\uFE72"]
+		| ["\uFE74"]
+		| ["\uFE76"-"\uFEFC"]
+		| ["\uFF21"-"\uFF3A"]
+		| ["\uFF41"-"\uFF5A"]
+		| ["\uFF66"-"\uFFBE"]
+		| ["\uFFC2"-"\uFFC7"]
+		| ["\uFFCA"-"\uFFCF"]
+		| ["\uFFD2"-"\uFFD7"]
+		| ["\uFFDA"-"\uFFDC"]
+	>
+} 
+
+/*
+ * Unicode categories Non-spacing mark (MN) OR Combining spacing mark (MC)
+ */
+MORE:
+{
+	< UNICODE_COMBINING_MARK: <MN> | <MC> >
+}
+
+
+TOKEN:
+{
+	< MC: 
+		["\u0903"]
+		| ["\u093E"]
+		| ["\u093F"]
+		| ["\u0940"]
+		| ["\u0949"]
+		| ["\u094A"]
+		| ["\u094B"]
+		| ["\u094C"]
+		| ["\u0982"]
+		| ["\u0983"]
+		| ["\u09BE"]
+		| ["\u09BF"]
+		| ["\u09C0"]
+		| ["\u09C7"]
+		| ["\u09C8"]
+		| ["\u09CB"]
+		| ["\u09CC"]
+		| ["\u09D7"]
+		| ["\u0A03"]
+		| ["\u0A3E"]
+		| ["\u0A3F"]
+		| ["\u0A40"]
+		| ["\u0A83"]
+		| ["\u0ABE"]
+		| ["\u0ABF"]
+		| ["\u0AC0"]
+		| ["\u0AC9"]
+		| ["\u0ACB"]
+		| ["\u0ACC"]
+		| ["\u0B02"]
+		| ["\u0B03"]
+		| ["\u0B3E"]
+		| ["\u0B40"]
+		| ["\u0B47"]
+		| ["\u0B48"]
+		| ["\u0B4B"]
+		| ["\u0B4C"]
+		| ["\u0B57"]
+		| ["\u0BBE"]
+		| ["\u0BBF"]
+		| ["\u0BC1"]
+		| ["\u0BC2"]
+		| ["\u0BC6"]
+		| ["\u0BC7"]
+		| ["\u0BC8"]
+		| ["\u0BCA"]
+		| ["\u0BCB"]
+		| ["\u0BCC"]
+		| ["\u0BD7"]
+		| ["\u0C01"]
+		| ["\u0C02"]
+		| ["\u0C03"]
+		| ["\u0C41"]
+		| ["\u0C42"]
+		| ["\u0C43"]
+		| ["\u0C44"]
+		| ["\u0C82"]
+		| ["\u0C83"]
+		| ["\u0CBE"]
+		| ["\u0CC0"]
+		| ["\u0CC1"]
+		| ["\u0CC2"]
+		| ["\u0CC3"]
+		| ["\u0CC4"]
+		| ["\u0CC7"]
+		| ["\u0CC8"]
+		| ["\u0CCA"]
+		| ["\u0CCB"]
+		| ["\u0CD5"]
+		| ["\u0CD6"]
+		| ["\u0D02"]
+		| ["\u0D03"]
+		| ["\u0D3E"]
+		| ["\u0D3F"]
+		| ["\u0D40"]
+		| ["\u0D46"]
+		| ["\u0D47"]
+		| ["\u0D48"]
+		| ["\u0D4A"]
+		| ["\u0D4B"]
+		| ["\u0D4C"]
+		| ["\u0D57"]
+		| ["\u0D82"]
+		| ["\u0D83"]
+		| ["\u0DCF"]
+		| ["\u0DD0"]
+		| ["\u0DD1"]
+		| ["\u0DD8"]
+		| ["\u0DD9"]
+		| ["\u0DDA"]
+		| ["\u0DDB"]
+		| ["\u0DDC"]
+		| ["\u0DDD"]
+		| ["\u0DDE"]
+		| ["\u0DDF"]
+		| ["\u0DF2"]
+		| ["\u0DF3"]
+		| ["\u0F3E"]
+		| ["\u0F3F"]
+		| ["\u0F7F"]
+		| ["\u102C"]
+		| ["\u1031"]
+		| ["\u1038"]
+		| ["\u1056"]
+		| ["\u1057"]
+		| ["\u17B6"]
+		| ["\u17BE"]
+		| ["\u17BF"]
+		| ["\u17C0"]
+		| ["\u17C1"]
+		| ["\u17C2"]
+		| ["\u17C3"]
+		| ["\u17C4"]
+		| ["\u17C5"]
+		| ["\u17C7"]
+		| ["\u17C8"]
+		| ["\u1923"]
+		| ["\u1924"]
+		| ["\u1925"]
+		| ["\u1926"]
+		| ["\u1929"]
+		| ["\u192A"]
+		| ["\u192B"]
+		| ["\u1930"]
+		| ["\u1931"]
+		| ["\u1933"]
+		| ["\u1934"]
+		| ["\u1935"]
+		| ["\u1936"]
+		| ["\u1937"]
+		| ["\u1938"]
+		| ["\u19B0"]
+		| ["\u19B1"]
+		| ["\u19B2"]
+		| ["\u19B3"]
+		| ["\u19B4"]
+		| ["\u19B5"]
+		| ["\u19B6"]
+		| ["\u19B7"]
+		| ["\u19B8"]
+		| ["\u19B9"]
+		| ["\u19BA"]
+		| ["\u19BB"]
+		| ["\u19BC"]
+		| ["\u19BD"]
+		| ["\u19BE"]
+		| ["\u19BF"]
+		| ["\u19C0"]
+		| ["\u19C8"]
+		| ["\u19C9"]
+		| ["\u1A19"]
+		| ["\u1A1A"]
+		| ["\u1A1B"]
+		| ["\uA802"]
+		| ["\uA823"]
+		| ["\uA824"]
+		| ["\uA827"]
+		| ["\u1D16"]
+		| ["\u1D16"]
+		| ["\u1D16"]
+		| ["\u1D16"]
+		| ["\u1D16"]
+		| ["\u1D17"]
+		| ["\u1D17"]
+		| ["\u1D17"] 
+	>
+|
+	< MN: 
+		["\u0300"-"\u034E"] 
+		| ["\u0360"-"\u0362"] 
+		| ["\u0483"-"\u0486"] 
+		| ["\u0591"-"\u05A1"]
+		| ["\u05A3"-"\u05B9"] 
+		| ["\u05BB"-"\u05BD"] 
+		| ["\u05BF"]
+		| ["\u05C1"-"\u05C2"]
+		| ["\u05C4"]
+		| ["\u064B"-"\u0655"] 
+		| ["\u0670"]
+		| ["\u06D6"-"\u06DC"]
+		| ["\u06DF"-"\u06E4"] 
+		| ["\u06E7"-"\u06E8"] 
+		| ["\u06EA"-"\u06ED"] 
+		| ["\u0711"]
+		| ["\u0730"-"\u074A"] 
+		| ["\u07A6"-"\u07B0"] 
+		| ["\u0901"-"\u0903"] 
+		| ["\u093C"]
+		| ["\u093E"-"\u094D"] 
+		| ["\u0951"-"\u0954"] 
+		| ["\u0962"-"\u0963"] 
+		| ["\u0981"-"\u0983"]
+		| ["\u09BC"-"\u09C4"] 
+		| ["\u09C7"-"\u09C8"] 
+		| ["\u09CB"-"\u09CD"] 
+		| ["\u09D7"]
+		| ["\u09E2"-"\u09E3"] 
+		| ["\u0A02"]
+		| ["\u0A3C"]
+		| ["\u0A3E"-"\u0A42"]
+		| ["\u0A47"-"\u0A48"] 
+		| ["\u0A4B"-"\u0A4D"] 
+		| ["\u0A70"-"\u0A71"] 
+		| ["\u0A81"-"\u0A83"]
+		| ["\u0ABC"]
+		| ["\u0ABE"-"\u0AC5"] 
+		| ["\u0AC7"-"\u0AC9"] 
+		| ["\u0ACB"-"\u0ACD"]
+		| ["\u0B01"-"\u0B03"] 
+		| ["\u0B3C"]
+		| ["\u0B3E"-"\u0B43"] 
+		| ["\u0B47"-"\u0B48"]
+		| ["\u0B4B"-"\u0B4D"] 
+		| ["\u0B56"-"\u0B57"] 
+		| ["\u0B82"-"\u0B83"] 
+		| ["\u0BBE"-"\u0BC2"]
+		| ["\u0BC6"-"\u0BC8"] 
+		| ["\u0BCA"-"\u0BCD"] 
+		| ["\u0BD7"]
+		| ["\u0C01"-"\u0C03"]
+		| ["\u0C3E"-"\u0C44"] 
+		| ["\u0C46"-"\u0C48"] 
+		| ["\u0C4A"-"\u0C4D"] 
+		| ["\u0C55"-"\u0C56"]
+		| ["\u0C82"-"\u0C83"] 
+		| ["\u0CBE"-"\u0CC4"] 
+		| ["\u0CC6"-"\u0CC8"] 
+		| ["\u0CCA"-"\u0CCD"]
+		| ["\u0CD5"-"\u0CD6"] 
+		| ["\u0D02"-"\u0D03"] 
+		| ["\u0D3E"-"\u0D43"] 
+		| ["\u0D46"-"\u0D48"]
+		| ["\u0D4A"-"\u0D4D"] 
+		| ["\u0D57"]
+		| ["\u0D82"-"\u0D83"] 
+		| ["\u0DCA"]
+		| ["\u0DCF"-"\u0DD4"] 
+		| ["\u0DD6"]
+		| ["\u0DD8"-"\u0DDF"] 
+		| ["\u0DF2"-"\u0DF3"]
+		| ["\u0E31"]
+		| ["\u0E34"-"\u0E3A"] 
+		| ["\u0E47"-"\u0E4E"] 
+		| ["\u0EB1"]
+		| ["\u0EB4"-"\u0EB9"] 
+		| ["\u0EBB"-"\u0EBC"] 
+		| ["\u0EC8"-"\u0ECD"] 
+		| ["\u0F18"-"\u0F19"]
+		| ["\u0F35"]
+		| ["\u0F37"]
+		| ["\u0F39"]
+		| ["\u0F3E"-"\u0F3F"]
+		| ["\u0F71"-"\u0F84"] 
+		| ["\u0F86"-"\u0F87"] 
+		| ["\u0F90"-"\u0F97"] 
+		| ["\u0F99"-"\u0FBC"]
+		| ["\u0FC6"]
+		| ["\u102C"-"\u1032"] 
+		| ["\u1036"-"\u1039"] 
+		| ["\u1056"-"\u1059"]
+		| ["\u17B4"-"\u17D3"] 
+		| ["\u18A9"]
+		| ["\u20D0"-"\u20DC"] 
+		| ["\u20E1"]
+		| ["\u302A"-"\u302F"] 
+		| ["\u3099"-"\u309A"] 
+		| ["\uFB1E"]
+		| ["\uFE20"-"\uFE23"]
+	>
+}
+
+TOKEN:
+{
+	< UNICODE_DIGIT: 
+		["\u0030"-"\u0039"] 
+		| ["\u0660"-"\u0669"] 
+		| ["\u06F0"-"\u06F9"] 
+		| ["\u0966"-"\u096F"]
+		| ["\u09E6"-"\u09EF"] 
+		| ["\u0A66"-"\u0A6F"] 
+		| ["\u0AE6"-"\u0AEF"] 
+		| ["\u0B66"-"\u0B6F"]
+		| ["\u0BE7"-"\u0BEF"] 
+		| ["\u0C66"-"\u0C6F"] 
+		| ["\u0CE6"-"\u0CEF"] 
+		| ["\u0D66"-"\u0D6F"]
+		| ["\u0E50"-"\u0E59"] 
+		| ["\u0ED0"-"\u0ED9"] 
+		| ["\u0F20"-"\u0F29"] 
+		| ["\u1040"-"\u1049"]
+		| ["\u1369"-"\u1371"] 
+		| ["\u17E0"-"\u17E9"] 
+		| ["\u1810"-"\u1819"] 
+		| ["\uFF10"-"\uFF19"] 
+  >
+}
+
+TOKEN:
+{
+	< UNICODE_CONNECTOR_PUNCTUATION: 
+		["\u005F"] 
+	| 
+		["\u203F"-"\u2040"]
+	| 
+		["\u30FB"] 
+	| 
+		["\uFE33"-"\uFE34"]
+	| 
+		["\uFE4D"-"\uFE4F"]
+	| 
+		["\uFF3F"]
+	| 
+		["\uFF65"]
+	>
+}
+
+TOKEN:
+{
+	< UNICODE_ESCAPE_SEQUENCE: "u" <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> >
+}
+
+TOKEN:
+{
+	< HEX_DIGIT: ["0"-"9"] | ["a"-"f"] | ["A"-"F"] >
+}
+
+
+
+<IN_REGEX>
+TOKEN :
+{
+	< SLASHASSIGN: "/=" > : DEFAULT
+|
+	< SLASH: "/" > : DEFAULT
+}
+
+
+/* Section 7.8.5: Regular Expression Literals */
+
+<DEFAULT>
+TOKEN :
+{
+	< REGULAR_EXPRESSION_LITERAL:
+		"/" ( (~["\n","\r","\\","/","*"]) | <BACKSLASH_SEQUENCE> ) 
+		( (~["\n","\r","\\","/"]) | <BACKSLASH_SEQUENCE> )* "/" (<IDENTIFIER_PART>)*
+	> : IN_REGEX
+|
+	< #BACKSLASH_SEQUENCE:
+		"\\" (~["\n","\r"])
+	>
+}
+
+
+/*
+
+<DEFAULT>
+TOKEN:
+{
+	< REGULAR_EXPRESSION_LITERAL: 
+		"/" <REGULAR_EXPRESSION_BODY> "/" <REGULAR_EXPRESSION_FLAGS>
+	> : IN_REGEX
+|
+	< #REGULAR_EXPRESSION_BODY: <REGULAR_EXPRESSION_FIRSTCHAR> <REGULAR_EXPRESSION_CHARS> >
+|
+	< #REGULAR_EXPRESSION_CHARS: (<REGULAR_EXPRESSION_CHAR>)* >
+| 
+	< #REGULAR_EXPRESSION_FIRSTCHAR:
+	// ~["*","\\","/"] <NON_TERMINATOR>	
+	<NON_TERMINATOR_FIRSTCHAR>	
+	| <BACKSLASH_SEQUENCE>
+	> 
+| 
+	< #REGULAR_EXPRESSION_CHAR:
+		//~["\\","/"] <NON_TERMINATOR> <NON_TERMINATOR_CHAR> 
+		| <BACKSLASH_SEQUENCE>
+	>
+|
+	< #BACKSLASH_SEQUENCE: "\\" <NON_TERMINATOR> >
+| 
+	< #NON_TERMINATOR_FIRSTCHAR: ~["\n","\r","\u2028","\u2029","*","\\","/"] >  
+|
+	< #NON_TERMINATOR_CHAR: ~["\n","\r","\u2028","\u2029","\\","/"] >	 
+|
+	< #NON_TERMINATOR: ~["\n","\r","\u2028","\u2029"] >  
+|
+	< #REGULAR_EXPRESSION_FLAGS: (<IDENTIFIER_PART>)* >
+}
+
+*/
+
+
+/*****************************************
+ *	NUMERIC STRING GRAMMAR	STARTS HERE	 *
+ *****************************************/
+
+/* Section 9.3: String-to-Number Conversion */
+
+/*
+MORE:
+{
+	<STRING_NUMERIC_LITERAL: (<STR_WHITESPACE>)? (<STR_NUMERIC_LITERAL> (<STR_WHITESPACE>)?)? >
+}
+
+MORE:
+{
+	< STR_WHITESPACE: (<STR_WHITESPACE_CHAR>)+ >
+}
+
+MORE:
+{
+	< STR_WHITESPACE_CHAR: 
+		<TAB>
+		| <SP>
+		| <NBSP>
+		| <FF>
+		| <VT>
+		| <CR>
+		| <LF>
+		| <LS>
+		| <PS>
+		| <USP>
+	>
+}
+
+
+MORE:
+{
+	< STR_NUMERIC_LITERAL:
+		<STR_DECIMAL_LITERAL> | <HEX_INTEGER_LITERAL>
+	>
+}
+
+MORE:
+{
+	<STR_DECIMAL_LITERAL: <STR_UNSIGNED_DECIMAL_LITERAL> ("+" | "-") <STR_UNSIGNED_DECIMAL_LITERAL>	>
+}
+
+MORE:
+{
+	< STR_UNSIGNED_DECIMAL_LITERAL:
+	"Infinity"
+	| <DECIMAL_DIGITS> "." (<DECIMAL_DIGITS>)* (<EXPONENT_PART>)*
+	>
+}
+
+*/
+
+
+/* A.6 Universal Resource Identifier Character Classes */
+
+
+/*
+
+TOKEN:
+{
+	< URIRESERVED : [";" , "/" , "?" , ":" , "@" , "&" , "=" , "+" , "$" , ","] >
+}
+
+TOKEN:
+{
+	< URI_ALPHA : ["a"-"z","A"-"Z"] >
+}
+
+TOKEN:
+{
+	< URI_MARK : ["-" , "_" , "." , "!" , "~" , "*" , "'" , "(" , ")"] >
+}
+
+void uri() : 
+{}
+{ 
+	(uriCharacters())?
+}
+
+void uriCharacters() : 
+{}
+{
+	(uriCharacter())+ 
+}
+
+void uriCharacter() :
+{}
+{
+	<URIRESERVED>
+	| uriUnescaped()
+	| uriEscaped()
+}
+
+void uriUnescaped() :
+{}
+{
+	<URI_ALPHA>
+	| <DECIMAL_DIGIT>
+	| <URI_MARK>
+}
+
+void uriEscaped() :
+{}
+{
+	"%" <HEX_DIGIT> <HEX_DIGIT>
+}
+
+*/
+ 
+/* A.7 Regular Expressions */
+
+/*
+
+MORE :
+{
+	"/^" : INSIDE_PATTERN
+}
+
+<INSIDE_PATTERN, IN_PATTERN>
+TOKEN:
+{
+	< PATTERN : <DISJUNCTION> > : DEFAULT
+|
+	< #DISJUNCTION : (<ALTERNATIVE>)+ > 
+|
+	< #ALTERNATIVE : (<TERM>)* >
+|
+	< #TERM : <ASSERTION> | <ATOM> (<QUANTIFIER>)? >
+|
+	< #ASSERTION : 
+		"^"
+		| "$"
+		| "\\" ("b" | "B")
+	>
+|
+	< #QUANTIFIER : <QUANTIFIERPREFIX> ("?")? >
+|
+	< #QUANTIFIERPREFIX : "*" | "+" | "?" | ( "{" <DECIMAL_DIGITS> ("," (<DECIMAL_DIGITS>)?)? "}" ) >
+|
+	< #ATOM :
+		<PATTERN_CHARACTER>
+		| "."
+		| "\\" <ATOMESCAPE>
+		| <CHARACTERCLASS>
+		//| "(" ("?" (":" | "=" | "!"))?	 <DISJUNCTION> ")"
+		| "(" ("?" (":" | "=" | "!"))?  ")"
+	>
+|
+	< #PATTERN_CHARACTER : ~["^", "$", "\\", ".", "*", "+", "?", "(", ")", "[", "]", "{", "}", "|"] >
+|
+	< #ATOMESCAPE : <DECIMALESCAPE> | <CHARACTERESCAPE> | <CHARACTER_CLASS_ESCAPE> >
+|
+	< #CHARACTER_CLASS_ESCAPE : ["d", "D", "s", "S", "w", "W"] >
+|
+	< #CHARACTERESCAPE :
+		<CONTROL_ESCAPE> 
+		| "c" <CONTROL_LETTER>
+		| <HEX_ESCAPE_SEQUENCE>
+		| <UNICODE_ESCAPE_SEQUENCE>
+		| <IDENTITY_ESCAPE>
+	>
+|
+	< #CONTROL_ESCAPE : ["f" , "n" , "r" , "t" , "v"] >
+|
+	< #CONTROL_LETTER : ["a"-"z","A"-"Z"] >
+| 
+	< #IDENTITY_ESCAPE : ~["0"-"9", "A"-"Z", "a"-"z","-"] >
+|
+	< #DECIMALESCAPE : <DECIMAL_INTEGER_LITERAL> >
+|
+	< #CHARACTERCLASS : "[" ("^")? <CLASSRANGES> "]" >
+|
+	< #CLASSRANGES : (<NONEMPTYCLASSRANGES>)? >
+| 
+	//< #NONEMPTYCLASSRANGES : <CLASSATOM> (<NONEMPTYCLASSRANGESNODASH> | "-" <CLASSATOM> <CLASSRANGES>) >
+	< #NONEMPTYCLASSRANGES : <CLASSATOM> (<NONEMPTYCLASSRANGESNODASH> | "-" <CLASSATOM>) >
+|
+	//< #NONEMPTYCLASSRANGESNODASH : <CLASSATOM> | <CLASSATOMNODASH> ( <NONEMPTYCLASSRANGESNODASH> | "-" <CLASSATOM> <CLASSRANGES> ) >
+	< #NONEMPTYCLASSRANGESNODASH : <CLASSATOM> | <CLASSATOMNODASH> ( <CLASSATOM> | "-" <CLASSATOM> ) >
+|
+	< #CLASSATOM : "-" <CLASSATOMNODASH> >
+|
+	< #CLASSATOMNODASH : <CLASS_ATOM_NODASH_TOKEN> | "\\" <CLASSESCAPE> >
+|
+	< #CLASS_ATOM_NODASH_TOKEN : ~["\\", "]", "-"] >
+| 
+	< #CLASSESCAPE : 
+		<DECIMALESCAPE> 
+		| "b"
+		| <CHARACTERESCAPE>
+		| <CHARACTER_CLASS_ESCAPE>
+	>
+}
+
+*/
+
+/*****************************************
+ * ECMA SYNTACTIC GRAMMARS  STARTS HERE  *
+ *****************************************/
+
+	/* Section 11.1: Primary Expressions */
+
+	void PrimaryExpression() #void :
+	{}
+	{
+		LOOKAHEAD("this") "this" #ThisReference
+		| LOOKAHEAD("{") ObjectLiteral()
+		| LOOKAHEAD("(") ( "(" Expression() ")" ) #ParenExpression
+		| LOOKAHEAD(Identifier()) Identifier()
+		| LOOKAHEAD("[") ArrayLiteral()
+		| LOOKAHEAD(2) Literal() 
+	}
+
+	/* Section 7.8: Literals */
+
+	void Literal() #Literal :
+	{
+	  Token t;
+	  Map objLiteral;
+	  List arrayLiteral;
+	}
+	{
+		t = <DECIMAL_LITERAL> 
+		{
+			jjtThis.setDecimalValue(t.image);
+		}
+	|
+		t = <HEX_INTEGER_LITERAL>
+		{
+			jjtThis.setHexValue(t.image);
+		}
+	|
+		t = <STRING_LITERAL>
+		{
+			jjtThis.setStringValue(t.image);
+		}
+	|
+		t = <BOOLEAN_LITERAL>
+		{
+			jjtThis.setBooleanValue(t.image);
+		}
+	|
+		t = <NULL_LITERAL>
+		{
+			jjtThis.setNullValue();
+		}
+	| 
+		t = <REGULAR_EXPRESSION_LITERAL>
+		{
+			jjtThis.setRegexValue(t.image);
+		}
+	}
+
+
+	void Identifier() #Identifier :
+	{
+	  Token t;
+	}
+	{
+	  t=<IDENTIFIER_NAME>
+	  {
+	    jjtThis.setName(t.image);
+	  }
+	}
+
+	/* Section 11.1.4: Array Initialiser */
+
+	void ArrayLiteral() #ArrayLiteral : 
+	{}
+	{
+		"[" (
+				LOOKAHEAD(2) ( Elision() )? "]" 
+						| LOOKAHEAD(ElementList() Elision()) ElementList() Elision() "]" 
+						| ( ElementList() )? "]" 
+		)
+	}		 
+
+	void ElementList() #void :
+	{}
+	{
+		( Elision() )? AssignmentExpression() ( LOOKAHEAD(Elision()	AssignmentExpression()) Elision()  AssignmentExpression())*
+	}
+
+	void Elision() #void :
+	{}
+	{
+		(",")+
+	}
+
+	/* Section 11.1.5: Object Initialiser */
+
+	void ObjectLiteral() #ObjectLiteral :
+	{}
+	{
+		"{" ( PropertyNameAndValueList() )? "}"
+	}
+
+	void PropertyNameAndValueList() #void :
+	{}
+	{
+		PropertyNameAndValue() ( LOOKAHEAD( "," PropertyNameAndValue()) "," PropertyNameAndValue() | "," )* 
+	}
+
+	void PropertyNameAndValue() #LiteralField :
+	{}
+	{
+		PropertyName() ":" AssignmentExpression() 
+	}
+
+	void PropertyName() #void :
+	{}
+	{
+		Identifier() 
+		| 
+		<STRING_LITERAL> #Literal
+		| 
+		<DECIMAL_LITERAL> #Literal
+	}
+
+
+	/* Section 11.2: Left-Hand-Side Expressions */
+
+	void MemberExpression() #void :
+	{}
+	{ 
+		( ( 
+				LOOKAHEAD("function") FunctionExpression()
+				| PrimaryExpression()  
+		) (LOOKAHEAD(2) MemberExpressionPart())*	 ) #CompositeReference(>1)
+		|	 AllocationExpression()
+	}
+
+	void MemberExpressionForIn() #void :
+	{}
+	{ 
+		( ( 
+				LOOKAHEAD("function") FunctionExpression()
+				| PrimaryExpression()  
+		) (LOOKAHEAD(2) MemberExpressionPart())*	 ) #CompositeReference(>1)
+	}
+
+	void AllocationExpression() #AllocationExpression :
+	{}
+	{
+		( "new" MemberExpression() ( (LOOKAHEAD(Arguments()) Arguments() (LOOKAHEAD(2) MemberExpressionPart())* ) * ) ) #CompositeReference(>1)
+	}
+
+	void MemberExpressionPart() #void :
+	{}
+	{
+		( "[" Expression() "]" ) #PropertyValueReference | ( "." Identifier() ) #PropertyIdentifierReference
+
+	}
+
+	void CallExpression() #CompositeReference(>1) : 
+	{}
+	{
+		MemberExpression() Arguments() ( LOOKAHEAD(2) CallExpressionPart() )*
+	}
+
+	void CallExpressionForIn() #CompositeReference(>1) : 
+	{}
+	{
+		MemberExpressionForIn() Arguments() ( LOOKAHEAD(2) CallExpressionPart() )*
+	}
+
+	void CallExpressionPart() #void :
+	{}
+	{
+		Arguments() | ( "[" Expression() "]" ) #PropertyValueReference | ( "." Identifier() ) #PropertyIdentifierReference
+	}
+
+	void Arguments() #FunctionCallParameters :
+	{}
+	{
+		"(" (ArgumentList())? ")"
+	}
+
+
+	void ArgumentList() #void :
+	{}
+	{
+		AssignmentExpression() ("," AssignmentExpression())*
+	}
+
+
+	void LeftHandSideExpression() #void : 
+	{}
+	{
+		LOOKAHEAD(MemberExpression() "(") CallExpression() | MemberExpression() 
+	}
+
+
+	void LeftHandSideExpressionForIn() #void : 
+	{}
+	{
+		LOOKAHEAD(CallExpression()) CallExpressionForIn() | MemberExpressionForIn() 
+	}
+
+	/* Section 11.3 Postfix Expressions */
+
+	void PostfixExpression() #PostfixExpression(>1) :
+	{}
+	{
+		LeftHandSideExpression() [ LOOKAHEAD(1) PostfixOperator() ]
+	}
+
+	void PostfixOperator() #Operator :
+	{}
+	{
+		( "++" | "--")
+	} 
+
+
+	/* Section 11.4 Unary Operators */
+
+	void UnaryExpression() #UnaryExpression(>1) :
+	{}
+	{ 
+		PostfixExpression() | ( LOOKAHEAD(1) UnaryOperator() UnaryExpression() )+
+	}
+
+	void UnaryOperator() #Operator :
+	{}
+	{
+		("delete" | "void" | "typeof" | "++" | "--" | "+" | "-" | "~" | "!")
+	}
+
+
+	/* Section 11.5: Multiplicative Operators */
+
+
+	void MultiplicativeExpression() #BinaryExpressionSequence(>1) :
+	{}
+	{ 
+		UnaryExpression() ( MultiplicativeOperator() UnaryExpression() )*
+	}
+
+
+	void MultiplicativeOperator() #Operator :
+	{}
+	{
+		("*" | <SLASH> | "%")
+	}
+
+	/* Section 11.6: Additive Operators */
+
+	void AdditiveExpression() #BinaryExpressionSequence(>1) : 
+	{}
+	{
+		MultiplicativeExpression() ( LOOKAHEAD(1) AdditiveOperator() MultiplicativeExpression())*
+	}
+
+	void AdditiveOperator() #Operator :
+	{}
+	{
+		("+" | "-")
+	}
+
+
+	/* Section 11.7: Bitwise Shift Operators */
+
+	void ShiftExpression() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		AdditiveExpression() ( ShiftOperator() AdditiveExpression() )*
+	}
+
+	void ShiftOperator() #Operator :
+	{}
+	{
+		("<<" | ">>" | ">>>")
+	}
+
+	/* Section 11.4: Relational Operators */
+
+	void RelationalExpression() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		ShiftExpression() ( RelationalOperator() ShiftExpression() )*
+	}
+
+	void RelationalOperator() #Operator :
+	{}
+	{
+		("<" | ">" | "<=" | ">=" | "instanceof" | "in")
+	}
+
+	void RelationalExpressionNoIn() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		ShiftExpression() ( RelationalNoInOperator() ShiftExpression() )*
+	}
+
+
+	void RelationalNoInOperator() #Operator :
+	{}
+	{
+		("<" | ">" | "<=" | ">=" | "instanceof")
+	}
+
+	/* Section 11.9: Equality Operators */
+
+	void EqualityExpression() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		RelationalExpression() ( EqualityOperator() RelationalExpression() )*
+	}
+
+	void EqualityExpressionNoIn() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		RelationalExpressionNoIn() ( EqualityOperator() RelationalExpressionNoIn())*
+	}
+
+	void EqualityOperator() #Operator :
+	{}
+	{
+		("==" | "!=" | "===" | "!==")
+	}
+
+	/* Section 11.10: Binary Bitwise Operators */
+
+	void BitwiseANDExpression() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		EqualityExpression() ( BitwiseANDOperator() EqualityExpression())*
+	}
+
+	void BitwiseANDExpressionNoIn() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		EqualityExpressionNoIn() (BitwiseANDOperator() EqualityExpressionNoIn())*
+	}
+
+	void BitwiseANDOperator() #Operator :
+	{}
+	{
+		"&"
+	}
+
+	void BitwiseXORExpression() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		BitwiseANDExpression() (BitwiseXOROperator() BitwiseANDExpression())*
+	}
+
+	void BitwiseXORExpressionNoIn() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		BitwiseANDExpressionNoIn() (BitwiseXOROperator() BitwiseANDExpressionNoIn())*
+	}
+
+	void BitwiseXOROperator() #Operator :
+	{}
+	{
+		"^"
+	}
+
+	void BitwiseORExpression() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		BitwiseXORExpression() (BitwiseOROperator() BitwiseXORExpression())*
+	}
+
+	void BitwiseORExpressionNoIn() #BinaryExpressionSequence(>1) :
+	{}
+	{
+		BitwiseXORExpressionNoIn() (BitwiseOROperator() BitwiseXORExpressionNoIn())*
+	}
+
+	void BitwiseOROperator() #Operator :
+	{}
+	{
+		"|"
+	}
+	/* Section 11.11: Binary Logical Operators */
+
+	void LogicalANDExpression() #AndExpressionSequence(>1) :
+	{}
+	{
+		BitwiseORExpression() (LogicalANDOperator() BitwiseORExpression())*
+	}
+
+	void LogicalANDExpressionNoIn() #AndExpressionSequence(>1) :
+	{}
+	{ 
+		BitwiseORExpressionNoIn() (LogicalANDOperator() BitwiseORExpressionNoIn())*
+	}
+
+	void LogicalANDOperator() #Operator :
+	{}
+	{
+		"&&"
+	}
+
+	void LogicalORExpression() #OrExpressionSequence(>1) :
+	{}
+	{
+		LogicalANDExpression() (LogicalOROperator() LogicalANDExpression())*
+	}
+
+	void LogicalORExpressionNoIn() #OrExpressionSequence(>1) :
+	{}
+	{
+		LogicalANDExpressionNoIn() (LogicalOROperator() LogicalANDExpressionNoIn())*
+	}
+
+	void LogicalOROperator() #Operator :
+	{}
+	{
+		"||"
+	}
+
+	/* Section 11.12: Conditional Operator */
+
+	void ConditionalExpression() #ConditionalExpression(>1) :
+	{}
+	{
+		LogicalORExpression() [ "?" AssignmentExpression() ":" AssignmentExpression() ]
+	}
+
+	void ConditionalExpressionNoIn() #ConditionalExpression(>1) :
+	{}
+	{
+		LogicalORExpressionNoIn() [ "?" AssignmentExpression() ":" AssignmentExpressionNoIn() ]
+	}
+
+
+	/* Section 11.13: Assignment Operators */
+
+	void AssignmentExpression() #AssignmentExpression(>1) :
+	{}
+	{
+		LOOKAHEAD(LeftHandSideExpression() AssignmentOperator()) LeftHandSideExpression() AssignmentOperator() AssignmentExpression() 
+		| ConditionalExpression() 
+	}
+
+	void AssignmentExpressionNoIn() #AssignmentExpression(>1) : 
+	{}
+	{
+		LOOKAHEAD(LeftHandSideExpression() AssignmentOperator()) LeftHandSideExpression() AssignmentOperator() AssignmentExpressionNoIn()
+		| ConditionalExpressionNoIn() 
+	}
+
+	void AssignmentOperator() #Operator :
+	{}
+	{
+		("=" | "*=" | <SLASHASSIGN> | "%=" | "+=" | "-=" | "<<=" | ">>=" | ">>>=" | "&=" | "^=" | "|=")
+	}
+
+
+	/* Section 11.14: Comma Operator */
+
+	void Expression() #ExpressionList(>1) :
+	{}
+	{
+		AssignmentExpression() ( "," AssignmentExpression() )*
+	}
+
+	void ExpressionNoIn() :
+	{}
+	{
+		AssignmentExpressionNoIn() ( "," AssignmentExpressionNoIn() )*
+	}
+
+
+
+	/* Section 12: STATEMENTS */
+
+	void Statement() #void :
+	{}
+	{
+		LOOKAHEAD(Block()) Block()	  
+		| LOOKAHEAD("var" Identifier() ":") JScriptVarStatement() // JScript .NET declaratrion
+		| LOOKAHEAD("var" Identifier()) VariableStatement()
+		| EmptyStatement()
+		| LOOKAHEAD(Identifier() ":") LabelledStatement()
+		| LOOKAHEAD(ExpressionStatement())  ExpressionStatement()
+		| LOOKAHEAD("if" "(") IfStatement()
+		| IterationStatement()
+		| LOOKAHEAD("continue") ContinueStatement()
+		| LOOKAHEAD("break") BreakStatement()
+		| LOOKAHEAD("import") ImportStatement()
+		| ReturnStatement()
+		| WithStatement()
+		| SwitchStatement()
+		| ThrowStatement()
+		| TryStatement()
+	}
+
+
+	/* 12.1 Block Statement */
+
+	void Block() #Block :
+	{}
+	{
+		"{" ( StatementList() )? "}"
+	}
+
+	void StatementList() #StatementList(>1) : 
+	{}
+	{
+		( Statement() )+
+	}
+
+
+	/* Section 12.2: Variable statement */
+
+	void VariableStatement() #VariableStatement :
+	{}
+	{
+		"var" VariableDeclarationList() (LOOKAHEAD(2) ";")?
+	}
+
+	void VariableDeclarationList() #VariableDeclarationList(>1) :
+	{}
+	{
+		VariableDeclaration() ( "," VariableDeclaration() )*
+	}
+
+	void VariableDeclarationListNoIn() #VariableDeclarationList(>1) :
+	{}
+	{
+		VariableDeclarationNoIn() ( "," VariableDeclarationNoIn() )*
+	}
+
+	void VariableDeclaration() #VariableDeclaration :
+	{}
+	{
+		Identifier() ( Initialiser() )?
+	}
+
+	void VariableDeclarationNoIn() :
+	{}
+	{
+		Identifier() ( InitialiserNoIn() )? #EmptyExpression(jjtree.nodeArity()==0)
+	}
+
+	void Initialiser() #void :
+	{}
+	{
+		"=" AssignmentExpression()
+	}
+
+	void InitialiserNoIn() #void :
+	{}
+	{
+		"=" AssignmentExpressionNoIn()
+	}
+
+
+	/* Section 12.3: Empty Statement */
+
+	void EmptyStatement() #EmptyStatement :
+	{}
+	{
+		";"
+	}
+
+
+	/* Section 12.4: Expression Statement */
+
+	void ExpressionStatement() #ExpressionStatement :
+	{}
+	{
+		Expression() (LOOKAHEAD(2) ";")?
+	}
+
+
+	/* Section 12.5: The if Statement */
+
+	void IfStatement() #IfStatement :
+	{}
+	{
+		"if" "(" Expression() ")" Statement() [ LOOKAHEAD(1) "else" Statement() ]
+	}
+
+
+	/* Section 12.6: Iteration Statements */
+
+	void IterationStatement() #void :
+	{}
+	{
+		( "do" Statement() "while" "(" Expression() ")" (LOOKAHEAD(2) ";")? ) #DoStatement
+		| ( "while" "(" Expression() ")" Statement() ) #WhileStatement
+		| LOOKAHEAD("for" "(" (ExpressionNoIn())? ";") ( "for" "(" ( ExpressionNoIn() )? #EmptyExpression(jjtree.nodeArity()==0) ";" ( Expression() )? #EmptyExpression(jjtree.nodeArity()==0) ";" ( Expression() )? #EmptyExpression(jjtree.nodeArity()==0) ")" Statement() ) #ForStatement 
+		| LOOKAHEAD("for" "(" "var" VariableDeclarationList() ";") ( "for" "(" "var" VariableDeclarationList() ";" ( Expression() )? #EmptyExpression(jjtree.nodeArity()==0) ";" ( Expression() )? #EmptyExpression(jjtree.nodeArity()==0) ")" Statement() ) #ForVarStatement
+		| LOOKAHEAD("for" "(" "var" VariableDeclarationNoIn() "in") ( "for" "(" "var" VariableDeclarationNoIn() "in" Expression() ")" Statement() ) #ForVarInStatement
+		| ( "for" "(" LeftHandSideExpressionForIn() "in" Expression() ")" Statement() ) #ForInStatement
+	}
+
+
+	/* Section 12.7: The continue Statement */
+
+	void ContinueStatement() #ContinueStatement :
+	{}
+	{
+		"continue" ( LOOKAHEAD(Identifier()) Identifier() )? (LOOKAHEAD(";") ";")?
+	}
+
+
+	/* Section 12.8: The break Statement */
+
+	void BreakStatement() #BreakStatement :
+	{}
+	{
+		"break" ( LOOKAHEAD(Identifier()) Identifier() )? (LOOKAHEAD(";") ";")?
+	}
+
+
+	/* Section 12.9 The return Statement */
+
+	void ReturnStatement() #ReturnStatement :
+	{}
+	{
+		"return" ( LOOKAHEAD(Expression()) Expression() )? #EmptyExpression(jjtree.nodeArity()==0) (LOOKAHEAD(";") ";")?
+	}
+
+
+	/* Section 12.10: The with Statement */
+
+	void WithStatement() #WithStatement :
+	{}
+	{
+		"with" "(" Expression() ")" Statement()
+	}
+
+
+	/* 12.11 The switch Statement */
+
+	void SwitchStatement() #SwitchStatement :
+	{}
+	{
+		"switch" "(" Expression() ")" CaseBlock()
+	}
+
+	void CaseBlock() #CaseGroups :
+	{}
+	{
+		"{" ( CaseClauses() )? 
+				( 
+						"}" | DefaultClause() ( CaseClauses() )? "}" 
+				)
+	}
+
+	void CaseClauses() #void :
+	{}
+	{
+		( CaseClause() )+
+	}
+
+	void CaseClause()  #CaseGroup :
+	{}
+	{
+		( ( "case" Expression() ":" ) #CaseGuard ) ( StatementList() )?
+	}
+
+	void DefaultClause() #CaseGroup :
+	{}
+	{
+		( ( "default" ":" ) #CaseGuard ) ( StatementList() )?
+	}
+
+
+	/* Section 12.12: Labelled Statements */
+
+	void LabelledStatement() :
+	{}
+	{
+		Identifier() ":" Statement()
+	}
+
+	void ThrowStatement() #ThrowStatement :
+	{}
+	{
+		"throw" Expression() (LOOKAHEAD(";") ";")?
+	}
+
+	void TryStatement() #TryStatement : 
+	{}
+	{
+		"try" Block() 
+		( 
+				( Finally() | Catch() [Finally()])
+		)
+	}  
+
+	void Catch() #CatchClause :
+	{}
+	{
+		"catch" "(" Identifier() ")" Block()
+	}
+
+	void Finally() #FinallyClause :
+	{}
+	{
+		"finally" Block()
+	}
+
+	/* Section 13: Function Definition */
+
+	void FunctionDeclaration() #FunctionDeclaration :
+	{}
+	{
+		"function" Identifier() ( "(" ( FormalParameterList() )? ")" ) #FormalParameterList FunctionBody()  
+	}
+
+	void FunctionExpression() #FunctionDeclaration :
+	{}
+	{
+		"function" ( Identifier() )? ( "(" ( FormalParameterList() )? ")" ) #FormalParameterList FunctionBody()
+	}
+
+	void FormalParameterList() #void :
+	{}
+	{
+		Identifier() ( "," Identifier() )*
+	}
+
+	void FunctionBody() #Block :
+	{}
+	{
+		"{" (SourceElements())? "}" 
+	}
+
+
+	/* Section 14: Program */
+
+	ASTProgram Program() #Program :
+	{}
+	{  
+		(SourceElements())?
+				<EOF>
+		{ return jjtThis; }
+	}
+
+	void SourceElements() #void :
+	{}
+	{
+		(SourceElement())+ 
+	}
+
+	void SourceElement() #void :
+	{}
+	{
+		LOOKAHEAD(FunctionDeclaration()) FunctionDeclaration() | Statement()
+	}
+
+
+	/*
+	 * Grammar for parsing JScript .NET constructs: ( import System; var contents :
+	 * String = reader.ReadToEnd(); ) Refer: src/hostenv_jsc.js
+	 */
+
+	void ImportStatement():
+	{}
+	{
+		"import" Name() [ "." "*" ] ";"
+	}
+
+
+	void Name():
+	{}
+	{
+		<IDENTIFIER_NAME> ( LOOKAHEAD(2) "." <IDENTIFIER_NAME> )*
+	}
+
+
+	void JScriptVarStatement() #VariableStatement :
+	{}
+	{
+		"var" JScriptVarDeclarationList() (LOOKAHEAD(2) ";")?
+	}
+
+	void JScriptVarDeclarationList() #VariableDeclarationList(>1) :
+	{}
+	{
+		JScriptVarDeclaration() ( "," JScriptVarDeclaration() )*
+	}
+
+	/*
+	 * void JScriptVarDeclaration() #VariableDeclaration : {} { Identifier() ":" (
+	 * "byte" | "sbyte" | "short" | "ushort" | "uint" | "long" | "ulong" |
+	 * "float" | "Number" | "double" | "decimal" | "boolean" | "String" | "char" ) (
+	 * Initialiser() )? }
+	 */
+
+	void JScriptVarDeclaration() #VariableDeclaration :
+	{}
+	{
+		Identifier() ":" <IDENTIFIER_NAME> ( Initialiser() )?
+	}
+
+	JAVACODE
+	void insertSemiColon(){
+
+		Token inputToken = getToken(1);
+		if(inputToken.kind == SEMICOLON){
+			inputToken = getNextToken();
+		} else if((inputToken.kind != EOF) && (inputToken.kind != RBRACE)){
+			if(inputToken.specialToken != null){
+				boolean foundLineSeparator = false;
+				Token specialT = inputToken.specialToken;	 
+
+				while((specialT != null) && (! foundLineSeparator)){
+					if((specialT.kind == LINE_TERMINATOR) || (specialT.kind == SINGLE_LINE_COMMENT)){
+						foundLineSeparator = true;
+					}
+
+					specialT = specialT.specialToken;
+				}
+
+				if(! foundLineSeparator){
+					throw generateParseException();
+				}
+			} else {
+				throw generateParseException();
+			}
+		} 
+	}

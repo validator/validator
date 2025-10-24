@@ -1,0 +1,837 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd
+                      ">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.java.dev.javacc</groupId>
+  <artifactId>javacc</artifactId>
+  <name>JavaCC</name>
+  <version>7.0.14-SNAPSHOT</version>
+
+  <description>JavaCC is a parser/scanner generator for java. </description>
+  <url>https://github.com/javacc/javacc</url>
+  <issueManagement>
+    <system>JIRA</system>
+    <url>https://github.com/javacc/javacc/issues</url>
+  </issueManagement>
+  <inceptionYear>1996</inceptionYear>
+  <organization>
+    <name>javacc.org</name>
+    <url>https://javacc.github.io/javacc/</url>
+  </organization>
+  <scm>
+    <url>https://github.com/javacc/javacc</url>
+    <connection>scm:git:https://github.com/javacc/javacc.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/javacc/javacc.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  <mailingLists>
+    <mailingList>
+      <name>Google user group</name>
+      <archive>https://groups.google.com/forum/#!forum/javacc-users</archive>
+    </mailingList>
+  </mailingLists>
+  
+  <developers>
+    <developer>
+      <name>Sreenivasa Viswanadha</name>
+      <id>sreeni</id>
+      <email>support@javacc.org</email>
+      <roles>
+        <role>Owner</role>
+      </roles>
+      <timezone>0</timezone>
+      <organization>javacc.org</organization>
+      <organizationUrl>https://javacc.org</organizationUrl>
+    </developer>
+
+    <developer>
+      <name>Chris Ainsley</name>
+      <id>ainsleyc</id>
+      <email>ainsleyc At dev.java.net</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>0</timezone>
+      <organization>java.net</organization>
+      <organizationUrl>http://www.java.net/</organizationUrl>
+    </developer>
+
+    <developer>
+      <name>Tim Pizey</name>
+      <id>timp</id>
+      <email>timp AT paneris.org</email>
+      <roles>
+        <role>Maven maven</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>0</timezone>
+      <url>http://paneris.org/~timp</url>
+      <organization>Context Computing</organization>
+      <organizationUrl>http://www.context-computing.co.uk/</organizationUrl>
+    </developer>
+
+    <developer>
+      <name>Francis ANDRE</name>
+      <id>zosrothko</id>
+      <email>zosrothko AT orange.fr</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>0</timezone>
+      <url>http://www.kampbell.net</url>
+      <organization>Kampbell</organization>
+      <organizationUrl>https://github.com/Kampbell/</organizationUrl>
+    </developer>
+
+    <developer>
+      <name>Marc Mazas</name>
+      <email>marc.mazas AT gmail.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>0</timezone>
+    </developer>
+  </developers>
+  
+  <contributors>
+    <contributor>
+      <name>Markus Brigl</name>
+      <email />
+    </contributor>
+    <contributor>
+      <name>Martin Swanson</name>
+    </contributor>
+    <contributor>
+      <name>Anton Rybochkin</name>
+    </contributor>
+    <contributor>
+      <name>Jean-Bernard DAMIANO</name>
+    </contributor>
+    <contributor>
+      <name>Dusan Malusev</name>
+    </contributor>
+    <contributor>
+      <name>Dave Benson</name>
+    </contributor>
+    <contributor>
+      <name>Eric Spishak-Thomas</name>
+    </contributor>
+    <contributor>
+      <name>Roman Leventov</name>
+    </contributor>
+    <contributor>
+      <name>Philip Helger</name>
+    </contributor>
+    <contributor>
+      <name>Eitan Adler</name>
+    </contributor>
+    <contributor>
+      <name>Marc Mazas</name>
+    </contributor>
+  </contributors>
+  <licenses>
+    <license>
+      <name>Berkeley Software Distribution (BSD) License</name>
+      <url>http://www.opensource.org/licenses/bsd-license.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <keystore.path>keystore</keystore.path>
+    <keystore.type>PKCS12</keystore.type>
+    <keystore.alias>release</keystore.alias>
+    <keystore.password>javacc</keystore.password>
+    <keystore.store.password>javacc</keystore.store.password>
+    <keystore.key.password>javacc</keystore.key.password>
+  </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <name>Sonatype snapshot repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <!-- enables using maven toolchains plugin to not depend of current JAVA_HOME setting -->
+      <id>with-toolchains</id>
+      <activation>
+        <file>
+          <exists>${env.USERPROFILE}/.m2/toolchains.xml</exists>
+        </file>
+      </activation>
+      <properties> </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-toolchains-plugin</artifactId>
+              <version>1.1</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-toolchains-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>toolchain</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <toolchains>
+                <jdk>
+                  <!-- github action setup-java@v4 uses 8; generated toolchains.xml files use 1.8 -->
+                  <version>[1.8,8]</version>
+                </jdk>
+              </toolchains>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <build>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>javacc-maven-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.2</version>
+        </plugin>
+        <!--        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+-->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nexus-staging-maven-plugin</artifactId>
+          <version>1.6.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jarsigner-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.6</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>javacc-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>jjt</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>jjtree-javacc</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/parser/**</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jcc</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>javacc</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <forkMode>once</forkMode>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes> </excludes>
+          <argLine>-noverify</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>tests</id>
+            <phase>test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+
+                <!-- Place any ant task here. You can add anything you can add between <target> and
+                </target>
+                in a build.xml. -->
+                <mkdir dir="test.tmp" />
+
+                <echo />
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/CORBA-IDL" />
+                  <arg line="examples/CORBA-IDL/IDL.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/CORBA-IDL" />
+                <copy todir="test.tmp/CORBA-IDL/">
+                  <fileset dir="examples/CORBA-IDL">
+                    <include name="*.idl" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="IDLParser"
+                  classpath="test.tmp/CORBA-IDL/"
+                  outputproperty="test.corba.out">
+                  <arg line="test.tmp/CORBA-IDL/Hello.idl" />
+                </java>
+                <echo>${test.corba.out}</echo>
+                <fail message="CORBA failed">
+                  <condition>
+                    <not>
+                      <contains string="${test.corba.out}" substring="IDL file parsed successfully" />
+                    </not>
+                  </condition>
+                </fail>
+                <echo />
+                <copy todir="test.tmp/GUIParsing/ParserVersion">
+                  <fileset dir="examples/GUIParsing/ParserVersion">
+                    <include name="*.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/GUIParsing/ParserVersion" />
+                  <arg line="examples/GUIParsing/ParserVersion/CalcInput.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/GUIParsing/ParserVersion" />
+                <!--
+                <echo />
+                <copy todir="test.tmp/GUIParsing/TokenMgrVersion">
+                  <fileset dir="examples/GUIParsing/TokenMgrVersion">
+                    <include name="*.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/GUIParsing/TokenMgrVersion" />
+                  <arg line="examples/GUIParsing/TokenMgrVersion/CalcInput.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/GUIParsing/TokenMgrVersion" />
+                 -->
+                <echo />
+                <copy todir="test.tmp/Interpreter">
+                  <fileset dir="examples/Interpreter">
+                    <include name="*.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="jjtree" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Interpreter " />
+                  <arg line="examples/Interpreter/SPL.jjt" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Interpreter " />
+                  <arg line="test.tmp/Interpreter/SPL.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/Interpreter" />
+                <copy todir="test.tmp/Interpreter/">
+                  <fileset dir="examples/Interpreter/">
+                    <include name="*.spl" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="SPL"
+                  classpath="test.tmp/Interpreter/"
+                  inputstring="3" outputproperty="spl.out1">
+                  <arg line="test.tmp/Interpreter/fact.spl" />
+                </java>
+                <echo>${spl.out1}</echo>
+                <fail message="SPL fact parse failed">
+                  <condition>
+                    <not>
+                      <contains string="${spl.out1}" substring="Value of fact : 6" />
+                    </not>
+                  </condition>
+                </fail>
+                <java failonerror="true" fork="true" classname="SPL"
+                  classpath="test.tmp/Interpreter/"
+                  inputstring="3" outputproperty="spl.out2">
+                  <arg line="test.tmp/Interpreter/odd.spl" />
+                </java>
+                <echo>${spl.out2}</echo>
+                <fail message="SPL odd parse failed">
+                  <condition>
+                    <not>
+                      <contains string="${spl.out2}" substring="Value of odd : true" />
+                    </not>
+                  </condition>
+                </fail>
+                <java failonerror="true" fork="true" classname="SPL"
+                  classpath="test.tmp/Interpreter/"
+                  inputstring="9" outputproperty="spl.out3">
+                  <arg line="test.tmp/Interpreter/sqrt.spl" />
+                </java>
+                <echo>${spl.out3}</echo>
+                <fail message="SPL sqrt parse failed">
+                  <condition>
+                    <not>
+                      <contains string="${spl.out3}" substring="Value of sqrt : 3" />
+                    </not>
+                  </condition>
+                </fail>
+                <echo />
+                <java failonerror="true" fork="true" classname="jjtree" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg1" />
+                  <arg line="examples/JJTreeExamples/java/eg1.jjt" />
+                </java>
+                <java fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg1" />
+                  <arg line="test.tmp/JJTreeExamples.eg1/eg1.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/JJTreeExamples.eg1" />
+                <java failonerror="true" fork="true" classname="Eg1"
+                  classpath="test.tmp/JJTreeExamples.eg1/"
+                  inputstring="(a + b) * (c + 1);" outputproperty="jjtree.eg1.out"> </java>
+                <echo>${jjtree.eg1.out}</echo>
+                <fail message="JJTree eg1 parse failed">
+                  <condition>
+                    <not>
+                      <contains string="${jjtree.eg1.out}" substring="Thank you." />
+                    </not>
+                  </condition>
+                </fail>
+                <echo />
+                <copy todir="test.tmp/JJTreeExamples.eg2">
+                  <fileset dir="examples/JJTreeExamples/java">
+                    <include name="*.java" />
+                    <exclude name="Eg4DumpVisitor.java" />
+                    <exclude name="ASTMyOtherID.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="jjtree" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg2" />
+                  <arg line="examples/JJTreeExamples/java/eg2.jjt" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg2" />
+                  <arg line="test.tmp/JJTreeExamples.eg2/eg2.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/JJTreeExamples.eg2" />
+                <java failonerror="true" fork="true" classname="Eg2"
+                  classpath="test.tmp/JJTreeExamples.eg2/"
+                  inputstring="(a + b) * (c + 1);" outputproperty="jjtree.eg2.out"> </java>
+                <echo>${jjtree.eg2.out}</echo>
+                <fail message="JJTree eg2 parse failed">
+                  <condition>
+                    <not>
+                      <contains string="${jjtree.eg2.out}" substring="Thank you." />
+                    </not>
+                  </condition>
+                </fail>
+                <echo />
+                <copy todir="test.tmp/JJTreeExamples.eg3">
+                  <fileset dir="examples/JJTreeExamples/java">
+                    <include name="*.java" />
+                    <exclude name="Eg4DumpVisitor.java" />
+                    <exclude name="ASTMyOtherID.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="jjtree" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg3" />
+                  <arg line="examples/JJTreeExamples/java/eg3.jjt" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg3" />
+                  <arg line="test.tmp/JJTreeExamples.eg3/eg3.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/JJTreeExamples.eg3" />
+                <java failonerror="true" fork="true" classname="Eg3"
+                  classpath="test.tmp/JJTreeExamples.eg3/"
+                  inputstring="(a + b) * (c + 1);" outputproperty="jjtree.eg3.out"> </java>
+                <echo>${jjtree.eg3.out}</echo>
+                <fail message="JJTree eg3 parse failed">
+                  <condition>
+                    <not>
+                      <contains string="${jjtree.eg3.out}" substring="Thank you." />
+                    </not>
+                  </condition>
+                </fail>
+                <echo />
+                <copy todir="test.tmp/JJTreeExamples.eg4">
+                  <fileset dir="examples/JJTreeExamples/java">
+                    <include name="*.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="jjtree" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg4" />
+                  <arg line="examples/JJTreeExamples/java/eg4.jjt" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JJTreeExamples.eg4" />
+                  <arg line="test.tmp/JJTreeExamples.eg4/eg4.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/JJTreeExamples.eg4" />
+                <java failonerror="true" fork="true" classname="Eg4"
+                  classpath="test.tmp/JJTreeExamples.eg4/"
+                  inputstring="(a + b) * (c + 1);" outputproperty="jjtree.eg4.out"> </java>
+                <echo>${jjtree.eg4.out}</echo>
+                <fail message="JJTree eg4 parse failed">
+                  <condition>
+                    <not>
+                      <contains string="${jjtree.eg4.out}" substring="Thank you." />
+                    </not>
+                  </condition>
+                </fail>
+                <echo />
+
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/JavaCCGrammar" />
+                  <arg line="examples/JavaCCGrammar/JavaCC.jj" />
+                </java>
+
+                <javac fork="true" srcdir="test.tmp/JavaCCGrammar" />
+                <!-- TODO, test cases for JavaGrammars -->
+                <echo />
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg1" />
+                  <arg line="examples/Lookahead/Example1.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg2" />
+                  <arg line="examples/Lookahead/Example2.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg3" />
+                  <arg line="examples/Lookahead/Example3.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg4" />
+                  <arg line="examples/Lookahead/Example4.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg5" />
+                  <arg line="examples/Lookahead/Example5.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg6" />
+                  <arg line="examples/Lookahead/Example6.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg7" />
+                  <arg line="examples/Lookahead/Example7.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg8" />
+                  <arg line="examples/Lookahead/Example8.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg9" />
+                  <arg line="examples/Lookahead/Example9.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Lookahead.eg10" />
+                  <arg line="examples/Lookahead/Example10.jj" />
+                </java>
+                <echo />
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/MailProcessing" />
+                  <arg line="examples/MailProcessing/Digest.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/MailProcessing" />
+                  <arg line="examples/MailProcessing/Faq.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/MailProcessing" />
+                <echo />
+                <copy todir="test.tmp/Obfuscator">
+                  <fileset dir="examples/Obfuscator">
+                    <include name="*.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Obfuscator" />
+                  <arg line="examples/Obfuscator/Java1.1.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Obfuscator" />
+                  <arg line="examples/Obfuscator/IdsFile.jj" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Obfuscator" />
+                  <arg line="examples/Obfuscator/MapFile.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/Obfuscator" />
+
+                <echo />
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/gwtTemplate" />
+                  <arg line="test/gwtTemplate/Parser.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/gwtTemplate" />
+
+                <echo />
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/gwtUnicodeTemplate" />
+                  <arg line="test/gwtUnicodeTemplate/Parser.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/gwtUnicodeTemplate" />
+
+                <!-- TODO, test cases for SimpleExamples -->
+                <echo />
+                <copy todir="test.tmp/Transformer">
+                  <fileset dir="examples/Transformer">
+                    <include name="*.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="jjtree" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Transformer" />
+                  <arg line="examples/Transformer/ToyJava.jjt" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/Transformer" />
+                  <arg line="test.tmp/Transformer/ToyJava.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/Transformer" />
+                <echo />
+                <copy todir="test.tmp/VTransformer">
+                  <fileset dir="examples/VTransformer">
+                    <include name="*.java" />
+                  </fileset>
+                </copy>
+                <java failonerror="true" fork="true" classname="jjtree" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/VTransformer" />
+                  <arg line="examples/VTransformer/Java1.1.jjt" />
+                </java>
+                <java failonerror="true" fork="true" classname="javacc" classpath="target/classes">
+                  <arg line="-OUTPUT_DIRECTORY=test.tmp/VTransformer" />
+                  <arg line="test.tmp/VTransformer/Java1.1.jj" />
+                </java>
+                <javac fork="true" srcdir="test.tmp/VTransformer" />
+
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate sources jar</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate javadoc jar</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <minmemory>128m</minmemory>
+          <maxmemory>512m</maxmemory>
+          <level>protected</level>
+          <doclint>none</doclint>
+          <quiet>true</quiet>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        <plugin>
+        <artifactId>maven-jarsigner-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <keystore>${keystore.path}</keystore>
+          <storetype>${keystore.type}</storetype>
+          <alias>${keystore.alias}</alias>
+          <storepass>${keystore.store.password}</storepass>
+          <keypass>${keystore.key.password}</keypass>
+          <archiveDirectory>${project.build.directory}</archiveDirectory>
+        </configuration>
+      </plugin>
+-->
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+    </plugins>
+
+  </build>
+
+  <reporting>
+    <plugins>
+      <!--      <plugin>-->
+      <!--        <groupId>org.apache.maven.plugins</groupId>-->
+      <!--        <artifactId>maven-pmd-plugin</artifactId>-->
+      <!--        <version>3.12.0</version>-->
+      <!--        <configuration>-->
+      <!--          <rulesets>-->
+      <!--            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>-->
+      <!--          </rulesets>-->
+      <!--          <minmemory>128m</minmemory>-->
+      <!--          <maxmemory>256m</maxmemory>-->
+      <!--          <format>xml</format>-->
+      <!--          <linkXref>true</linkXref>-->
+      <!--          <sourceEncoding>utf-8</sourceEncoding>-->
+      <!--          <minimumTokens>100</minimumTokens>-->
+      <!--        </configuration>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.codehaus.mojo</groupId>-->
+      <!--        <artifactId>jdepend-maven-plugin</artifactId>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.codehaus.mojo</groupId>-->
+      <!--        <artifactId>taglist-maven-plugin</artifactId>-->
+      <!--        <configuration>-->
+      <!--          <tags>-->
+      <!--            <tag>@todo</tag>-->
+      <!--            <tag>FIXME</tag>-->
+      <!--            <tag>@deprecated</tag>-->
+      <!--            <tag>HACK</tag>-->
+      <!--            <tag>NOTE</tag>-->
+      <!--          </tags>-->
+      <!--        </configuration>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.apache.maven.plugins</groupId>-->
+      <!--        <artifactId>maven-jxr-plugin</artifactId>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.codehaus.mojo</groupId>-->
+      <!--        <artifactId>cobertura-maven-plugin</artifactId>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.apache.maven.plugins</groupId>-->
+      <!--        <artifactId>maven-surefire-report-plugin</artifactId>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.apache.maven.plugins</groupId>-->
+      <!--        <artifactId>maven-site-plugin</artifactId>-->
+      <!--        <configuration>-->
+      <!--          <siteDirectory>www</siteDirectory>-->
+      <!--          <locales>en</locales>-->
+      <!--        </configuration>-->
+      <!--      </plugin>-->
+    </plugins>
+  </reporting>
+</project>

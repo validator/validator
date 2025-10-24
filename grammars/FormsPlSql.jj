@@ -1,0 +1,1153 @@
+/* ................................................................... *
+ * FILE: FormsPlSql.jj                                                 *
+ *                                                                     *
+ * DESCRIPTION: This file contains the entire grammar for PLSQL inside *
+ * Oracle*Forms 4.5(i.e. PlSql 1.x)                                    *
+ *                                                                     *
+ * HISTORY: 07-APR-1997 Created  Ramanathan .S (sramji@rocketmail.com) *
+ *                                                                     *
+ * NOTE: Read the file FormsPlSql.readme for more info                 *
+ * ................................................................... */
+
+
+options{
+    IGNORE_CASE=true ;
+//  DEBUG_LOOKAHEAD= true ;
+}
+
+PARSER_BEGIN(FormsPlSql)
+
+import java.io.* ;
+
+class FormsPlSql {
+    public static void main( String args[] )
+        throws ParseException
+        {
+
+        FormsPlSql p = null ;
+        if ( args.length < 1  ) {
+            System.out.println("Reading from stdin") ;
+            p = new FormsPlSql(System.in) ;
+        }
+        else {
+            try {
+                p = new FormsPlSql(new DataInputStream(
+                                new FileInputStream(args[0]))) ;
+            }
+            catch (FileNotFoundException e) {
+                System.out.println("File " + args[0] +
+                                " not found. Reading from stdin") ;
+                p = new FormsPlSql(System.in) ;
+            }
+        } // else ends here
+
+        if ( args.length > 0 ) {
+            System.out.println(args[0]) ;
+        }
+        p.CompilationUnit() ;
+        System.out.println("Parse Successful") ;
+
+    } // main ends here
+} // class FormsPlSql ends here
+
+PARSER_END(FormsPlSql)
+
+
+SKIP:
+{
+    " "
+|   "\t"
+|   "\r"
+|   "\n"
+}
+
+/* Prefix      Meaning
+    -------------------
+    K_          Keyword
+    O_          Operator
+    S_          Substitutes
+*/
+
+TOKEN: /* SQL and PLSQL Keywords. prefixed with K_ to avoid name clashes */
+{
+    <K_ALL: "ALL">
+|   <K_AND: "AND">
+|   <K_ANY: "ANY">
+|   <K_AS: "AS">
+|   <K_ASC:"ASC">
+|   <K_BEGIN: "BEGIN">
+|   <K_BETWEEN:"BETWEEN">
+|   <K_BINARY_INTEGER: "BINARY_INTEGER">
+|   <K_BOOLEAN:"BOOLEAN">
+|   <K_BY:"BY">
+|   <K_CHAR:"CHAR">
+|   <K_CLOSE:"CLOSE">
+|   <K_COMMENT:"COMMENT">
+|   <K_COMMIT:"COMMIT">
+|   <K_CONNECT:"CONNECT">
+|   <K_CONSTANT:"CONSTANT">
+|   <K_CURRENT:"CURRENT">
+|   <K_CURSOR:"CURSOR">
+|   <K_DATE:"DATE">
+|   <K_DECIMAL:"DECIMAL">
+|   <K_DECLARE:"DECLARE">
+|   <K_DEFAULT:"DEFAULT">
+|   <K_DELETE:"DELETE">
+|   <K_DESC:"DESC">
+|   <K_DISTINCT:"DISTINCT">
+|   <K_DO:"DO">
+|   <K_ELSE:"ELSE">
+|   <K_ELSIF:"ELSIF">
+|   <K_END:"END">
+|   <K_EXCEPTION:"EXCEPTION">
+|   <K_EXCEPTION_INIT:"EXCEPTION_INIT">
+|   <K_EXCLUSIVE:"EXCLUSIVE">
+|   <K_EXISTS:"EXISTS">
+|   <K_EXIT:"EXIT">
+|   <K_FETCH:"FETCH">
+|   <K_FLOAT:"FLOAT">
+|   <K_FOR:"FOR">
+|   <K_FROM:"FROM">
+|   <K_FUNCTION:"FUNCTION">
+|   <K_GOTO:"GOTO">
+|   <K_GROUP:"GROUP">
+|   <K_HAVING:"HAVING">
+|   <K_IF:"IF">
+|   <K_IN:"IN">
+|   <K_INDEX:"INDEX">
+|   <K_INSERT:"INSERT">
+|   <K_INTEGER:"INTEGER">
+|   <K_INTERSECT:"INTERSECT">
+|   <K_INTO:"INTO">
+|   <K_IS:"IS">
+|   <K_LEVEL:"LEVEL">
+|   <K_LIKE:"LIKE">
+|   <K_LOCK:"LOCK">
+|   <K_LOOP:"LOOP">
+|   <K_MINUS:"MINUS">
+|   <K_MODE:"MODE">
+|   <K_NATURAL:"NATURAL">
+|   <K_NOT:"NOT">
+|   <K_NOWAIT:"NOWAIT">
+|   <K_NULL:"NULL">
+|   <K_NUMBER:"NUMBER">
+|   <K_OF:"OF">
+|   <K_ONLY:"ONLY">
+|   <K_OPEN:"OPEN">
+|   <K_OR:"OR">
+|   <K_ORDER:"ORDER">
+|   <K_OTHERS:"OTHERS">
+|   <K_OUT:"OUT">
+|   <K_PACKAGE:"PACKAGE">
+|   <K_POSITIVE:"POSITIVE">
+|   <K_PRAGMA:"PRAGMA">
+|   <K_PRIOR:"PRIOR">
+|   <K_PROCEDURE:"PROCEDURE">
+|   <K_RAISE:"RAISE">
+|   <K_READ:"READ">
+|   <K_REAL:"REAL">
+|   <K_RECORD:"RECORD">
+|   <K_REF:"REF">
+|   <K_RETURN:"RETURN">
+|   <K_REVERSE:"REVERSE">
+|   <K_ROLLBACK:"ROLLBACK">
+|   <K_ROW:"ROW">
+|   <K_SAVEPOINT:"SAVEPOINT">
+|   <K_SEGMENT:"SEGMENT">
+|   <K_SELECT:"SELECT">
+|   <K_SET:"SET">
+|   <K_SHARE:"SHARE">
+|   <K_SMALLINT:"SMALLINT">
+|   <K_SQL:"SQL">
+|   <K_START:"START">
+|   <K_TABLE:"TABLE">
+|   <K_THEN:"THEN">
+|   <K_TO:"TO">
+|   <K_TRANSACTION:"TRANSACTION">
+|   <K_UNION:"UNION">
+|   <K_UPDATE:"UPDATE">
+|   <K_USE:"USE">
+|   <K_VALUES:"VALUES">
+|   <K_VARCHAR2:"VARCHAR2">
+|   <K_VARCHAR:"VARCHAR">
+|   <K_WHEN:"WHEN">
+|   <K_WHERE:"WHERE">
+|   <K_WHILE:"WHILE">
+|   <K_WITH:"WITH">
+|   <K_WORK:"WORK">
+|   <K_WRITE:"WRITE">
+}
+
+TOKEN : /* Numeric Constants */
+{
+	< S_NUMBER: <FLOAT>
+	    | <FLOAT> ( ["e","E"] ([ "-","+"])? <FLOAT> )?
+    	>
+  | 	< #FLOAT: <INTEGER>
+	    | <INTEGER> ( "." <INTEGER> )?
+	    | "." <INTEGER>
+    	>
+  | 	< #INTEGER: ( <DIGIT> )+ >
+  | 	< #DIGIT: ["0" - "9"] >
+}
+
+SPECIAL_TOKEN:
+{
+   <LINE_COMMENT: "--"(~["\r","\n"])*>
+|  <MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
+}
+
+
+TOKEN:
+{
+	< S_IDENTIFIER: ( <LETTER> )+ ( <DIGIT> | <LETTER> |<SPECIAL_CHARS>)* >
+| 	< #LETTER: ["a"-"z", "A"-"Z"] >
+|   < #SPECIAL_CHARS: "$" | "_">
+|   < S_BIND: ":" <S_IDENTIFIER> ("." <S_IDENTIFIER>)? >
+|   < S_CHAR_LITERAL: "'" (~["'"])* "'" ("'" (~["'"])* "'")*>
+|   < S_QUOTED_IDENTIFIER: "\"" (~["\n","\r","\""])* "\"" >
+}
+
+/* Represents a PLSQL code block. */
+void CompilationUnit():
+{}
+{
+    ProcedureDeclaration()
+|   FunctionDeclaration()
+|   SequenceOfStatements()
+}
+
+void DeclarationSection():
+{}
+{
+    "DECLARE" Declarations()
+
+}
+
+void Declarations():
+{}
+{
+
+    (( IdentifierDeclaration() // Variable or Constant Declaration
+       |
+       CursorDeclaration()
+       |
+       PragmaDeclaration()
+     )
+     ";"
+    )+
+
+    ( ProcedureDeclaration()
+      |
+      FunctionDeclaration()
+    )*
+}
+
+void IdentifierDeclaration():
+{}
+{
+    <S_IDENTIFIER>
+
+    ( ConstantDeclaration()
+      |
+      VariableDeclaration()
+      |
+      ExceptionDeclaration()
+    )
+}
+
+void CursorDeclaration():
+{}
+{
+   "CURSOR" <S_IDENTIFIER> ["(" ParameterList() ")" ]
+        "IS" SelectStatement()
+}
+
+void ProcedureDeclaration():
+{}
+{
+    "PROCEDURE" <S_IDENTIFIER> [ "(" ParameterList() ")" ]
+    ( ";"  // Procedure Specification
+      |
+      "IS" ProcedureBody()
+    )
+}
+
+void ProcedureBody():
+{}
+{
+    [ Declarations() ]
+    BeginEndBlock()
+}
+
+void FunctionDeclaration():
+{}
+{
+    "FUNCTION" <S_IDENTIFIER> [ "(" ParameterList() ")" ]
+    "RETURN" TypeDeclaration()
+    ( ";" // FunctionSpecification
+      |
+      "IS" FunctionBody()
+    )
+}
+
+void FunctionBody():
+{}
+{
+    [ Declarations() ]
+    BeginEndBlock()
+}
+
+void PragmaDeclaration():
+{}
+{
+    "PRAGMA" "EXCEPTION_INIT" "(" NumOrID() "," NumOrID() ")"
+}
+
+void VariableDeclaration():
+{}
+{
+    TypeDeclaration() [ "NOT" "NULL" ]
+                        [ (":=" | "DEFAULT" ) PlSqlExpression() ]
+}
+
+void ConstantDeclaration():
+{}
+{
+    "CONSTANT" TypeDeclaration() [ "NOT" "NULL" ]
+                        (":=" | "DEFAULT" ) PlSqlExpression()
+}
+
+void TypeDeclaration():
+{}
+{
+    BasicDataTypeDeclaration()
+    |
+    LOOKAHEAD(2) (<S_IDENTIFIER> ("%TYPE" | "%ROWTYPE"))
+    |
+    LOOKAHEAD(TableColumn() "%TYPE")TableColumn()"%TYPE"
+    |
+    <S_IDENTIFIER>  // For Alert declarations etc, in Forms
+}
+
+
+
+void BasicDataTypeDeclaration():
+{}
+{
+    (       "CHAR"
+        |   "VARCHAR"
+        |   "VARCHAR2"
+        |   "INTEGER"
+        |   "NUMBER"
+        |   "NATURAL"
+        |   "REAL"
+        |   "FLOAT"
+    ) [ "(" <S_NUMBER> [ "," <S_NUMBER> ] ")" ]
+
+    |   "DATE"
+    |   "BINARY_INTEGER"
+    |   "BOOLEAN"
+}
+
+
+void ExceptionDeclaration():
+{}
+{
+    "EXCEPTION"
+}
+
+/* ---------------- DECLARATIONS SECTION ends here ------------------ */
+
+/* ---------------- Code Section starts here ---------------------- */
+                                
+void BeginEndBlock():
+{}
+{
+    "BEGIN"
+    SequenceOfStatements()
+    [ ExceptionBlock()]
+    "END" [<S_IDENTIFIER>] ";"
+}
+
+void SequenceOfStatements():
+{}
+{
+    (PLSQLStatement())+
+}
+
+void ExceptionBlock():
+{}
+{
+    "EXCEPTION"
+    (ExceptionHandler())+
+}
+
+void ExceptionHandler():
+{}
+{
+    "WHEN" ( <S_IDENTIFIER> ("OR" <S_IDENTIFIER>)*
+             |
+             "OTHERS"
+           )
+    "THEN" SequenceOfStatements()
+}
+
+void PLSQLStatement():
+{}
+{
+    LOOKAHEAD(SubroutineCall()) SubroutineCall()
+    |
+    AssignmentStatement()
+    |
+    ExitStatement()
+    |
+    GotoStatement()
+    |
+    IfStatement()
+    |
+    LoopStatement()
+    |
+    NullStatement()
+    |
+    RaiseStatement()
+    |
+    ReturnStatement()
+    |
+    SQLStatement()
+    |
+    LabelDeclaration()
+    |
+    [DeclarationSection()] BeginEndBlock()
+}
+
+void LabelDeclaration():
+{}
+{
+    "<<" <S_IDENTIFIER> ">>"
+}
+
+void SQLStatement():
+{}
+{
+    CloseStatement()
+    |
+    CommitStatement()
+    |
+    DeleteStatement()
+    |
+    FetchStatement()
+    |
+    InsertStatement()
+    |
+    LockTableStatement()
+    |
+    OpenStatement()
+    |
+    RollbackStatement()
+    |
+    SavepointStatement()
+    |
+    QueryStatement()
+    |
+    SetTransactionStatement()
+    |
+    UpdateStatement()
+}
+
+void SubroutineCall():
+{}
+{
+    <S_IDENTIFIER>["."<S_IDENTIFIER>] [ "(" Arguments() ")" ] ";"
+}
+
+void AssignmentStatement():
+{}
+{
+      // <var> = <value> and <cursor>.<var> = <value>
+    ( (<S_IDENTIFIER> ["." <S_IDENTIFIER>] ":=" PlSqlExpression())
+      |
+      (<S_BIND> ":=" PlSqlExpression())
+    )
+    ";"
+}
+
+
+void ExitStatement():
+{}
+{
+    "EXIT" [ <S_IDENTIFIER>] ["WHEN" PlSqlExpression()] ";"
+}
+
+void GotoStatement():
+{}
+{
+    "GOTO" <S_IDENTIFIER> ";"
+}
+
+void IfStatement():
+{}
+{
+    "IF" PlSqlExpression()
+    "THEN"
+          SequenceOfStatements()
+    ("ELSIF" PlSqlExpression()
+     "THEN"
+             SequenceOfStatements()
+    )*
+    ["ELSE"
+            SequenceOfStatements()
+    ]
+    "END" "IF" [<S_IDENTIFIER>] ";"
+}
+
+void LoopStatement():
+{}
+{
+    NormalLoop()
+    |
+    WhileLoop()
+    |
+    ForLoop()
+}
+
+void NormalLoop():
+{}
+{
+    "LOOP"
+        SequenceOfStatements()
+    "END" "LOOP" [<S_IDENTIFIER>] ";"
+}
+
+void WhileLoop():
+{}
+{
+    "WHILE"  PlSqlExpression()
+     NormalLoop()
+}
+
+void ForLoop():
+{}
+{
+    LOOKAHEAD(NumericForLoopLookahead())
+    NumericForLoop()
+    |
+    CursorForLoop()
+}
+
+void NumericForLoopLookahead():
+{}
+{
+    "FOR" <S_IDENTIFIER> "IN" ["REVERSE"]
+          PlSqlSimpleExpression() ".."
+}
+
+void NumericForLoop():
+{}
+{
+    "FOR" <S_IDENTIFIER> "IN" ["REVERSE"]
+          PlSqlSimpleExpression() ".." PlSqlSimpleExpression()
+    NormalLoop()
+
+}
+
+void CursorForLoop():
+{}
+{
+  "FOR" <S_IDENTIFIER> "IN" ( <S_IDENTIFIER> [ "(" Arguments() ")"]
+                              | "(" SelectStatement() ")"
+                            )
+  NormalLoop()
+}
+
+void NullStatement():
+{}
+{
+    "NULL" ";"
+}
+
+void RaiseStatement():
+{}
+{
+    "RAISE" [<S_IDENTIFIER>] ";"
+}
+
+
+void ReturnStatement():
+{}
+{
+    "RETURN" [ PlSqlExpression() ] ";"
+}
+
+
+void CloseStatement():
+{}
+{
+    "CLOSE" <S_IDENTIFIER> ";"
+}
+
+void CommitStatement():
+{}
+{
+    "COMMIT" ["WORK"] ["COMMENT" <S_CHAR_LITERAL>] ";"
+}
+
+void FetchStatement():
+{}
+{
+    "FETCH" (<S_IDENTIFIER>)
+    "INTO" (<S_IDENTIFIER> | <S_BIND>) ("," (<S_IDENTIFIER> | <S_BIND>))* ";"
+}
+
+void LockTableStatement():
+{}
+{
+    "LOCK" "TABLE" TableReference() ("," TableReference())*
+    "IN" LockMode() "MODE" ["NOWAIT"] ";"
+}
+
+void OpenStatement():
+{}
+{
+    "OPEN" <S_IDENTIFIER> ["(" Arguments() ")"] ";"
+}
+
+void RollbackStatement():
+{}
+{
+    "ROLLBACK" ["WORK"] ["TO" ["SAVEPOINT"] <S_IDENTIFIER>]
+    ["COMMENT" <S_CHAR_LITERAL>] ";"
+}
+
+void SetTransactionStatement():
+{}
+{
+    "SET" "TRANSACTION" (("READ" ("ONLY" | "WRITE"))
+                          |("USE" "ROLLBACK" "SEGMENT" <S_IDENTIFIER>)
+                        )
+    ";"
+}
+
+
+
+void LockMode():
+{}
+{
+    ("ROW" ("SHARE" | "EXCLUSIVE"))
+|   ("SHARE" ["UPDATE" | ("ROW" "EXCLUSIVE")])
+|   ("EXCLUSIVE")
+}
+
+void SavepointStatement():
+{}
+{
+    "SAVEPOINT" <S_IDENTIFIER> ";"
+}
+
+void UpdateStatement():
+{}
+{
+    "UPDATE" TableReference() [<S_IDENTIFIER>]
+    "SET" ColumnValues()
+   [ "WHERE" ( SQLExpression() | "CURRENT" "OF" <S_IDENTIFIER> )] ";"
+}
+
+void ColumnValues():
+{}
+{
+  TableColumn() "=" UpdatedValue()
+  ("," TableColumn() "=" UpdatedValue())*
+}
+
+void UpdatedValue(): // Can be a subquery or a expression
+{}
+{
+  LOOKAHEAD(("(")+ "SELECT")
+  "(" SelectStatement() ")"
+  |
+  PlSqlExpression()
+}
+
+void InsertStatement():
+{}
+{
+    "INSERT" "INTO" TableReference()
+     [ "(" TableColumn() ("," TableColumn())* ")" ]
+    ( "VALUES" "(" PlSqlExpressionList() ")"
+      |
+      SelectStatement()
+    )
+
+    ";"
+}
+
+
+void DeleteStatement():
+{}
+{
+    "DELETE" ["FROM"] TableReference() [<S_IDENTIFIER>]
+    ["WHERE" (SQLExpression() | "CURRENT" "OF" <S_IDENTIFIER> ) ] ";"
+}
+
+
+void QueryStatement():
+{}
+{
+    SelectStatement()
+    ";"
+}
+
+// PLSQL Expression and it's children
+
+void PlSqlExpression():
+{}
+{
+    PlSqlAndExpression() ("OR" PlSqlAndExpression())*
+}
+
+void PlSqlAndExpression():
+{}
+{
+    PlSqlUnaryLogicalExpression() ( "AND" PlSqlUnaryLogicalExpression())*
+}
+
+void PlSqlUnaryLogicalExpression():
+{}
+{
+  ["NOT"] PlSqlRelationalExpression()
+}
+
+void PlSqlRelationalExpression():
+{}
+{
+    PlSqlSimpleExpression()
+
+    ( Relop() PlSqlSimpleExpression()
+      |
+      LOOKAHEAD(2) PlSqlInClause()
+      |
+      LOOKAHEAD(2) PlSqlBetweenClause()
+      |
+      LOOKAHEAD(2) PlSqlLikeClause()
+      |
+      IsNullClause()
+   )?
+}
+
+void PlSqlExpressionList():
+{}
+{
+    PlSqlExpression() ("," PlSqlExpression())*
+}
+
+void PlSqlInClause():
+{}
+{
+    ["NOT"] "IN" "(" PlSqlExpressionList()")"
+}
+
+void PlSqlBetweenClause():
+{}
+{
+    ["NOT"] "BETWEEN" PlSqlSimpleExpression() "AND" PlSqlSimpleExpression()
+}
+
+void PlSqlLikeClause():
+{}
+{
+    ["NOT"] "LIKE" PlSqlSimpleExpression()
+}
+
+void IsNullClause():
+{}
+{
+    "IS" ["NOT"] "NULL"
+}
+
+
+void PlSqlSimpleExpression():
+{}
+{
+    PlSqlMultiplicativeExpression() ( ("+" | "-" | "||")
+                                 PlSqlMultiplicativeExpression()
+                               )*
+}
+
+
+void PlSqlMultiplicativeExpression():
+{}
+{
+    PlSqlExpotentExpression() ( ("*" | "/") PlSqlExpotentExpression())*
+}
+
+void PlSqlExpotentExpression():
+{}
+{
+    PlSqlUnaryExpression() ( "**" PlSqlUnaryExpression())*
+}
+
+void PlSqlUnaryExpression():
+{}
+{
+    (("+" | "-") PlSqlPrimaryExpression())
+|
+    PlSqlPrimaryExpression()
+}
+
+
+void PlSqlPrimaryExpression():
+{}
+{
+
+    "NULL"
+    | LOOKAHEAD(2)
+    (<S_IDENTIFIER>("%FOUND" | "%NOTFOUND" | "%ISOPEN" | "%ROWCOUNT"))
+    | LOOKAHEAD(2)
+    (<S_IDENTIFIER> "(" Arguments() ")" )
+    |
+    (<S_IDENTIFIER> ["." <S_IDENTIFIER>])  // cursor.var
+    |
+    ("SQL" ("%FOUND" | "%NOTFOUND" | "%ISOPEN" | "%ROWCOUNT"))
+    |
+    <S_NUMBER>
+    |
+    <S_CHAR_LITERAL>
+    |
+    <S_BIND>
+    |
+    "(" PlSqlExpression() ")"
+}
+
+/* ----------------------- PLSQL Code Block Ends here -------------- */
+
+/* ---------------- General Productions --------------------- */
+
+void TableColumn():
+{}
+{
+    // user.table.column
+    OracleObjectName() [ "." OracleObjectName() ["." OracleObjectName()]]
+}
+
+void OracleObjectName():
+{}
+{
+    <S_IDENTIFIER> | <S_QUOTED_IDENTIFIER>
+}
+
+void Relop():
+{}
+{
+  "=" | "!=" | "#" | "<>" | ">" | ">=" | "<" | "<="
+}
+
+void TableReference():
+{}
+{
+    OracleObjectName() ["." OracleObjectName()]
+}
+
+void ParameterList():
+{}
+{
+    Parameter() ( "," Parameter() )*
+}
+
+void NumOrID():
+{}
+{
+    <S_IDENTIFIER> | (["+" | "-"] <S_NUMBER>)
+}
+
+void Parameter():
+{}
+{
+    <S_IDENTIFIER> [ ["IN"] ["OUT"] TypeDeclaration()
+                             [(":=" | "DEFAULT" ) PlSqlExpression()] ]
+}
+
+// Just a synonym for PlSqlExpressionList for better readability
+void Arguments():
+{}
+{
+    PlSqlExpressionList()
+}
+
+/* --------------- General Productions ends here --------------- */
+
+/* ----------- SQL productions start here ----------------- */
+
+void SelectStatement():
+{}
+{
+    SelectWithoutOrder()
+    [ OrderByClause() ]
+    [ ForUpdateClause() ]
+
+}
+
+void SelectWithoutOrder():
+{}
+{
+     "SELECT" [ "ALL" | "DISTINCT" ] SelectList()
+    [IntoClause()]
+    FromClause()
+    [ WhereClause() ]
+    [ ConnectClause() ]
+    [ GroupByClause() ]
+    [ SetClause() ]
+}
+
+
+/* Checks for whatever follows  SELECT */
+void SelectList():
+{}
+{
+    "*" | SelectItem() ("," SelectItem())*
+}
+
+void SelectItem():
+{}
+{
+    LOOKAHEAD(2)
+    OracleObjectName()".*"  /* table.* */
+|   LOOKAHEAD(4)
+    OracleObjectName()"." OracleObjectName() ".*" /* schema.table.* */
+|   SQLSimpleExpression()    // Column or Expression
+
+    [<S_IDENTIFIER>] // Column Alias
+}
+
+void IntoClause():
+{}
+{
+   "INTO" IntoItem() ("," IntoItem())*
+}
+
+void IntoItem():
+{}
+{
+   (<S_IDENTIFIER> ["." <S_IDENTIFIER>] )
+|  (<S_BIND>)
+}
+
+void FromClause():
+{}
+{
+    "FROM" FromItem() ( "," FromItem())*
+}
+
+void FromItem():
+{}
+{
+  TableReference()
+  [ <S_IDENTIFIER> ]        /** Alias Name **/
+}
+
+
+void WhereClause():
+{}
+{
+    "WHERE" SQLExpression()
+}
+
+void ConnectClause():
+{}
+{
+    // The following grammar will take 2 "START WITH" expressions
+    // which is not correct. But alright, because only valid statements
+    // will be given.
+   (["START" "WITH" SQLExpression()] "CONNECT" "BY" SQLExpression()
+    ["START" "WITH" SQLExpression()])
+}
+
+void GroupByClause():
+{}
+{
+    "GROUP" "BY" SQLExpressionList()
+    ["HAVING" SQLExpression()]
+}
+
+void SetClause():
+{}
+{
+    (("UNION" ["ALL"]) | "INTERSECT" | "MINUS")
+    // LOOKAHEAD("(") because Oracle supports "(" after a UNION
+    (LOOKAHEAD("(") ("(" SelectWithoutOrder() ")")
+        | SelectWithoutOrder()
+    )
+}
+
+void OrderByClause():
+{}
+{
+    "ORDER" "BY" SQLSimpleExpression() ["ASC" | "DESC" ]
+        ("," SQLSimpleExpression() ["ASC" | "DESC"])*
+}
+
+void ForUpdateClause():
+{}
+{
+    "FOR" "UPDATE" "OF" TableColumn() ("," TableColumn())*
+}
+
+void SQLExpression():
+{}
+{
+    SQLAndExpression() ("OR" SQLAndExpression())*
+}
+
+void SQLAndExpression():
+{}
+{
+    SQLUnaryLogicalExpression() ( "AND" SQLUnaryLogicalExpression())*
+}
+
+void SQLUnaryLogicalExpression():
+{}
+{
+    LOOKAHEAD(2) ExistsClause()
+|   (["NOT"] SQLRelationalExpression())
+}
+
+void ExistsClause():
+{}
+{
+    ["NOT"] "EXISTS" "(" SubQuery() ")"
+}
+
+void SQLRelationalExpression():
+{}
+{
+    /* Only after looking past "(", Expression() and "," we will know that
+       it is expression list */
+
+    (LOOKAHEAD("(" SQLSimpleExpression() ",")
+     "(" SQLExpressionList() ")"
+|
+    (["PRIOR"] SQLSimpleExpression()))
+
+    /* Lookahead(2) is required because of NOT IN,NOT BETWEEN and NOT LIKE */
+   ( SQLRelationalOperatorExpression() |  LOOKAHEAD(2) (SQLInClause())
+                                    |  LOOKAHEAD(2) (SQLBetweenClause())
+                                    |  LOOKAHEAD(2) (SQLLikeClause())
+                                    |  IsNullClause()
+   )?
+}
+
+void SQLExpressionList():
+{}
+{
+    SQLSimpleExpression() ("," SQLSimpleExpression())*
+}
+
+void SQLRelationalOperatorExpression():
+{}
+{
+
+    Relop()
+
+    /* Only after seeing an ANY/ALL or "(" followed by a SubQuery() we can
+    determine that is is a sub-query
+    */
+    (   LOOKAHEAD("ANY" | "ALL" | "(" "SELECT")
+        (["ALL" | "ANY"] "(" SubQuery() ")")
+        |
+        ["PRIOR"] SQLSimpleExpression()
+    )
+}
+
+void SQLInClause():
+{}
+{
+    ["NOT"] "IN" "(" (SQLExpressionList() | SubQuery()) ")"
+}
+
+void SQLBetweenClause():
+{}
+{
+    ["NOT"] "BETWEEN" SQLSimpleExpression() "AND" SQLSimpleExpression()
+}
+
+void SQLLikeClause():
+{}
+{
+    ["NOT"] "LIKE" SQLSimpleExpression()
+}
+
+void SQLSimpleExpression():
+{}
+{
+    SQLMultiplicativeExpression() ( ("+" | "-" | "||") SQLMultiplicativeExpression())*
+}
+
+
+void SQLMultiplicativeExpression():
+{}
+{
+    SQLExpotentExpression() ( ("*" | "/") SQLExpotentExpression())*
+}
+
+void SQLExpotentExpression():
+{}
+{
+    SQLUnaryExpression() ( "**" SQLUnaryExpression())*
+}
+
+void SQLUnaryExpression():
+{}
+{
+    ["+" | "-"] SQLPrimaryExpression()
+}
+
+
+void SQLPrimaryExpression():
+{}
+{
+
+    "NULL"
+|    LOOKAHEAD(FunctionCall()) FunctionCall()
+|    LOOKAHEAD(OuterJoinExpression()) OuterJoinExpression()
+|    TableColumn()
+|   <S_NUMBER>
+|   <S_CHAR_LITERAL>
+|   <S_BIND>
+|   "(" SQLExpression() ")"
+}
+
+void FunctionCall():
+{}
+{
+    // caters the following
+    // function(args)
+    // package.function(args)
+    // user.package.function(args)
+
+    // however note that "distinct/all/*" can be only used with
+    // inbuilt functions but no distinction is made between inbuilt
+    // function and custom functions
+
+    OracleObjectName() [ "." OracleObjectName() ["." OracleObjectName()]]
+    "(" [ ["DISTINCT" | "ALL"] (SQLArguments() | "*") ] ")"
+}
+
+void SQLArguments():
+{}
+{
+    SQLExpressionList()
+}
+
+
+void OuterJoinExpression():
+{}
+{
+    // user.table.col
+    OracleObjectName() [ "." OracleObjectName() ["." OracleObjectName()]]
+    "(" "+" ")"
+}
+
+void SubQuery():
+{}
+{
+    SelectWithoutOrder()
+}

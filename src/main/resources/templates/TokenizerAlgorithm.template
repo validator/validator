@@ -1,0 +1,146 @@
+// Bit vector to track possible kinds. maxLongs = MAX(kind) / 64 + 1;
+private ${STATIC?static :}final long[] jjcurActive = new long[${maxLongs}];
+private ${STATIC?static :}final long[] jjnewActive = new long[${maxLongs}];
+private ${STATIC?static :}final int jjRunDfa() {
+  int curPos = 0;
+  for (int i = 0; i < ${maxLongs}; i++) jjcurActive[i] = 0xffffffffffffffffL;
+  do {
+    // Algorithm: Keep trying to match a DFA as long as there is one
+    // possible and in the end, start the NFA if the string literal token
+    // match can also be a prefix of non-string literal token.
+
+    if (finalStates[curPos].containsKey((char)curChar)) {
+      // The current input character at the current position marks the end
+      // of a literal token match e.g., pos == 2 and curChar == 'r' can
+      // potentially mark the token "for" in Java grammar.
+      final int[] kindAndNext= finalStates[curPos].get((char)curChar);
+      for (int i = 0; i < kindAndNext.length; i += 2) {
+        int kind = kindAndNext[i];
+        // See if this kind is feasible based on the prefix. So for examaple,
+        // in Java grammar, pos == 3 and curChar == 'e' can indicate the match
+        // of one the 4 tokens - "byte", "case", "else", "true".
+        // The jjcurActive bit mask tracks the feasible ones as we go through
+        // input. So if the kind is one of the currently active kinds to 
+        // be matched, we match it.
+        if ((jjcurActive[kind >> 6] & (1L << (kind % 64))) != 0L) {
+          // Store the kind matched so far.
+          jjmatchedPos = curPos;
+          jjmatchedKind = kind;
+          int nfaState = kindAndNext[i + 1];
+          if (nfaState != -1) {
+            return jjStartNfaWithStates_0(curPos, kind, nfaState);
+          }
+        }
+      }
+    }
+
+    // curChar at curPos is a prefix of another string literal token.
+    // So for example in Java grammar, curChar == 't' and and
+    // curPos == '2', then this could end up begin the "interface" token.
+    boolean continueDfa = false;
+    if (validKinds[curPos].containsKey((char)curChar)) {
+      int[] validKind = validKinds[curPos].get((char)curChar);
+      for (final int kind : validKind) {
+        if ((jjcurActive[kind >> 6] & (1L << (kind % 64))) != 0L) {
+          continueDfa = true;
+          break;
+        }
+      }
+
+      if (continueDfa) {
+        for (int i = 0; i < ${maxLongs}; i++) jjnewActive[i] = 0L;
+        for (final int kind : validKind) {
+          jjnewActive[kind >> 6] |= 1L << (kind % 64);
+        }
+        for (int i = 0; i < ${maxLongs}; i++) jjcurActive[i] &= jjnewActive[i];
+      }
+    }
+
+    if (!continueDfa) {
+      if (curPos == 0) return jjMoveNfa(0, 0);
+      return jjStartNfa_0(curPos - 1, jjcurActive);
+    }
+
+    int i = 0;
+    for (; i < ${maxLongs}; i++) {
+      if (jjcurActive[i] != 0L) break;
+    }
+    if (i == ${maxLongs}) {
+      // No more NFA or DFS possible so just return. For example, in Java
+      // grammar, when curPos == 1 and curChar == "|" it will return a
+      // "||" token as it is not a prefix of any other token.
+      return curPos + 1;
+    }
+
+    // Move to the next character.
+    try {
+      // We cannot update curChar unless we can actually advance the stream.
+      curChar = input_stream.readChar();
+    } catch(java.io.IOException e) {
+      // No more input so curPos and curChar are used to start the NFA.
+      return jjStopStringLiteralDfa_0(curPos, jjcurActive);
+    }
+    curPos++;
+  } while(true);
+}
+
+private ${STATIC?static :}final int jjMoveNfa(int startState, int curPos) {
+  if (startState<0) {
+    return curPos + 1;
+  }
+
+  java.util.Stack<Integer> stateSet = new java.util.Stack<Integer>();
+  java.util.Stack<Integer> newStateSet = new java.util.Stack<Integer>();
+  final java.util.BitSet added = new java.util.BitSet(67);
+  final java.util.BitSet done = new java.util.BitSet(67);
+  int kind = 0x7fffffff;
+  stateSet.push(startState);
+  done.set(startState);
+  for (int s : jjcompositeState[state]) { 
+    if (!done.get(s)) stateSet.push(s);
+    done.set(s);
+  }
+  do {
+    added.clear();
+    done.clear();
+    do {
+      final int state = stateSet.pop();
+      done.set(state);
+      if (jjChars[state].get(curChar)) {
+        for (int newState : jjnextStateSet[state]) {
+          if (added.get(newState)) continue;
+          added.set(newState);
+          newStateSet.push(newState);
+        }
+        final int newKind = jjmatchKinds[state];
+        if (kind > newKind) kind = newKind;
+      }
+    } while (!stateSet.empty());
+
+    if (kind != 0x7fffffff) {
+       if (jjmatchedPos != curPos || jjmatchedKind > kind) {
+         jjmatchedKind = kind;
+       }
+       jjmatchedPos = curPos;
+       kind = 0x7fffffff;
+    }
+    ++curPos;
+    if (newStateSet.empty()) {
+      return curPos;
+    }
+
+    java.util.Stack<Integer> tmp = stateSet;
+    stateSet = newStateSet;
+    newStateSet = tmp;
+    try {
+      curChar = input_stream.readChar();
+    } catch(java.io.IOException e) {
+      return curPos;
+    }
+  } while (!stateSet.empty());
+
+  assert(false) :
+      "Internal error. Please submit a bug at: https://github.com/javacc/javacc/issues";
+  return curPos;
+}
+#fi

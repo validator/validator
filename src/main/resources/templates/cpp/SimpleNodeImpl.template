@@ -1,0 +1,140 @@
+
+  SimpleNode::SimpleNode(int i)
+#if NODE_EXTENDS
+   : ${NODE_EXTENDS}(), parent(nullptr), value(nullptr)
+#fi
+{
+    id = i;
+    parser = nullptr;
+    value = nullptr;
+  }
+
+  SimpleNode::SimpleNode(${PARSER_NAME} *p, int i)
+#if NODE_EXTENDS
+   : ${NODE_EXTENDS}(), parent(nullptr), value(nullptr)
+#fi
+{
+    id = i;
+    parser = p;
+    value = nullptr;
+  }
+
+  void SimpleNode::jjtOpen() const {
+  }
+
+  void SimpleNode::jjtClose() const {
+  }
+
+  void SimpleNode::jjtSetParent(Node *n) { parent = n; }
+  Node *SimpleNode::jjtGetParent() const { return parent; }
+
+  void SimpleNode::jjtAddChild(Node *n, int i) {
+    if (i >= children.size()) {
+      children.resize(i + 1, nullptr);
+    }
+
+    children[i] = n;
+  }
+
+  Node *SimpleNode::jjtGetChild(int i) const {
+    return i < children.size() ? children[i] : nullptr;
+  }
+
+  int SimpleNode::jjtGetNumChildren() const {
+    return children.size();
+  }
+
+  void SimpleNode::jjtSetValue(void * value) { this->value = value; }
+  void * SimpleNode::jjtGetValue() const { return value; }
+
+#if TRACK_TOKENS
+  Token* SimpleNode::jjtGetFirstToken() const { return firstToken; }
+  void SimpleNode::jjtSetFirstToken(Token* token) { this->firstToken = token; }
+  Token* SimpleNode::jjtGetLastToken() const { return lastToken; }
+  void SimpleNode::jjtSetLastToken(Token* token) { this->lastToken = token; }
+
+#fi
+#if VISITOR
+  /** Accept the visitor. **/
+  ${VISITOR_RETURN_TYPE} SimpleNode::jjtAccept(${PARSER_NAME}Visitor *visitor, ${VISITOR_DATA_TYPE:-void *} data) const
+{
+#if VISITOR_RETURN_TYPE_VOID
+    visitor->visit(this, data);
+#else
+    return visitor->visit(this, data);
+#fi
+  }
+
+  /** Accept the visitor. **/
+  void SimpleNode::childrenAccept(${PARSER_NAME}Visitor *visitor, ${VISITOR_DATA_TYPE:-void *} data) const {
+    for (int i = 0; i < children.size(); ++i) {
+      children[i]->jjtAccept(visitor, data);
+    }
+  }
+
+#fi
+  /* You can override these two methods in subclasses of SimpleNode to
+     customize the way the node appears when the tree is dumped.  If
+     your output uses more than one line you should override
+     toString(string), otherwise overriding toString() is probably all
+     you need to do. */
+
+  JJString SimpleNode::toString() const { return jjtNodeName[id]; }
+  JJString SimpleNode::toString(const JJString& prefix) const { return prefix + toString(); }
+
+  static JJChar space_char_arr_[] = { ' ', '\0' };
+  static JJChar newline_char_arr_[] = { '\n', '\0' };
+  static JJString space = space_char_arr_;
+  static JJString newline = newline_char_arr_;
+
+  /* Override this method if you want to customize how the node dumps
+     out its children. */
+
+  void SimpleNode::dumpToBuffer(const JJString& prefix, const JJString& separator, JJString *buffer) const {
+    buffer->append(toString(prefix));
+    buffer->append(separator);
+    for (int i = 0; i < children.size(); ++i) {
+      SimpleNode *n = (SimpleNode*)children[i];
+      if (n != nullptr) {
+        n->dumpToBuffer(prefix + space, separator, buffer);
+      }
+    }
+  }
+
+  void SimpleNode::dump(const JJString& prefix) const {
+    JJString *buffer = new JJString();
+    dumpToBuffer(prefix, newline, buffer);
+    for (int i = 0; i < buffer->size(); i++) {
+      printf("%c", (*buffer)[i]);
+    }
+    delete buffer;
+  }
+
+  // Clear list of children, and return children that we have before.
+  // Used in destructor to do linear destruction of tree.
+  std::vector<Node *> SimpleNode::jjtExtractChildrenForDestruction() {
+    std::vector<Node*> ret;
+    ret.swap(children);
+    return ret;
+  }
+
+  // When tree generated, it deepness can be high, so trying to destruct it
+  // with simple recursive destruction can cause stack overflow. Thus we get
+  // each node's children, put them into destruction queue and destruct node.
+  // That is linear, non-recursive process, unsing memory instead of stack.
+  SimpleNode::~SimpleNode() {
+    std::vector<Node*> tree = children;
+    std::vector<Node*> nodes;
+    for (int i = 0; i < tree.size(); ++i) {
+      if (tree[i]) {
+        nodes = tree[i]->jjtExtractChildrenForDestruction();
+        for (Node* child : nodes) {
+          tree.push_back(child);
+        }
+      }
+    }
+
+    for (Node* node : tree) {
+      delete node;
+    }
+  }
