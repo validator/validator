@@ -1348,12 +1348,35 @@ def loadGitSubtreesFile(path: Path):
     if not path.exists():
         print(f"Error: {path} not found.", file=sys.stderr)
         sys.exit(1)
-    return yaml.safe_load(path.read_text())
+
+    result = {}
+    current_section = None
+
+    for line in path.read_text().splitlines():
+        if not line.strip() or line.strip().startswith("#"):
+            continue
+        if not line.startswith(" "):  # new top-level key
+            if not line.endswith(":"):
+                print(f"Error: malformed section header: {line}", file=sys.stderr)  # nopep8
+                sys.exit(1)
+            current_section = line.rstrip(":").strip()
+            result[current_section] = {}
+        else:
+            if current_section is None:
+                print(f"Error: key-value pair outside section: {line}", file=sys.stderr)  # nopep8
+                sys.exit(1)
+            key, _, value = line.strip().partition(":")
+            result[current_section][key.strip()] = value.strip()
+    return result
 
 
 def saveGitSubtreesFile(path: Path, data):
-    path.write_text(yaml.safe_dump(data, default_flow_style=False,
-                                   sort_keys=False))
+    lines = []
+    for section, values in data.items():
+        lines.append(f"{section}:")
+        for key, value in values.items():
+            lines.append(f"    {key}: {value}")
+    path.write_text("\n".join(lines) + "\n")
 
 
 def getLastCommit(prefix: str):
