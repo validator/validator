@@ -1,0 +1,52 @@
+  ${STATIC?static :}int kindCnt = 0;
+  protected ${STATIC?static :}final String jjKindsForBitVector(int i, long vec)
+  {
+    String retVal = "";
+    if (i == 0)
+       kindCnt = 0;
+    for (int j = 0; j < 64; j++)
+    {
+       if ((vec & (1L << j)) != 0L)
+       {
+          if (kindCnt++ > 0)
+             retVal += ", ";
+          if (kindCnt % 5 == 0)
+             retVal += "\n     ";
+          retVal += tokenImage[i * 64 + j];
+       }
+    }
+    return retVal;
+  }
+
+
+  protected ${STATIC?static :}final String jjKindsForStateVector(int lexState, int[] vec, int start, int end)
+  {
+    boolean[] kindDone = new boolean[${maxOrdinal}];
+    String retVal = "";
+    int cnt = 0;
+    for (int i = start; i < end; i++)
+    {
+     if (vec[i] == -1)
+       continue;
+     int[] stateSet = statesForState[curLexState][vec[i]];
+     for (int j = 0; j < stateSet.length; j++)
+     {
+       int state = stateSet[j];
+       if (!kindDone[kindForState[lexState][state]])
+       {
+          kindDone[kindForState[lexState][state]] = true;
+          if (cnt++ > 0)
+             retVal += ", ";
+          if (cnt % 5 == 0)
+             retVal += "\n     ";
+          retVal += tokenImage[kindForState[lexState][state]];
+       }
+     }
+    }
+    if (cnt == 0)
+       return "{  }";
+    else
+       return "{ " + retVal + " }";
+  }
+
+

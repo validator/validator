@@ -1,0 +1,1411 @@
+/***************************************************************************************************************************************
+** DESCRIPTION: EXPRESS Grammar and Scanner to be used with JavaCC
+** FILENAME:    ExpressParser.jj
+** DATE:        MAR 1998 - <jag164@psu.edu>                (Initial grammar)
+** UPDATE:	OCT 1998 - <Singva.Ma@leg.ensieg.inpg.fr>  (Production 294 correction)
+** 
+** Contributed by Jason Goodman - jag164@hotmail.com
+*************************************************************************************************************************************/
+
+options {
+        LOOKAHEAD = 2;
+        STATIC = false;
+}
+
+PARSER_BEGIN(ExpressParser)
+
+public class ExpressParser{
+
+        
+        // 
+        // MAIN class used for command line parsing
+        //
+        public static void main(String args[]) {
+                
+                ExpressParser parser;
+                                
+                if (args.length == 0) {
+                        System.out.println("ExpressParser:  Reading from standard input . . .");
+                        parser = new ExpressParser(System.in);
+                } 
+                else if (args.length == 1) {
+                        System.out.println("ExpressParser:  Reading from file " + args[0] + " . . .");
+                        try {
+                                parser = new ExpressParser(new java.io.FileInputStream(args[0]));
+                        } 
+                        catch (java.io.FileNotFoundException e) {
+                                System.out.println("Express Parser:  File " + args[0] + " not found.");
+                                return;
+                        }                       
+                } 
+                else {
+                        System.out.println("ExpressParser:  Usage is one of:");
+                        System.out.println("         java ExpressParser < inputfile");
+                        System.out.println("OR");
+                        System.out.println("         java ExpressParser inputfile");
+                        return;
+                }
+                try {
+                        
+                        parser.syntax();
+                                System.out.println("ExpressParser: source parsed successfully.");
+                } 
+                catch (ParseException e) {
+                        System.out.println(e.getMessage());
+                        System.out.println("ExpressParser:  Encountered errors during parse.");
+                }
+        } // end main
+
+} // end class ExpressParser
+
+PARSER_END(ExpressParser)
+
+
+
+/************************************************
+*************************************************
+** Tokens
+*************************************************
+************************************************/
+
+SKIP : /* WHITE SPACE */
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+
+
+SPECIAL_TOKEN : /* COMMENTS */
+{
+  <TAIL_REMARK: "--" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+| <EMBEDDED_REMARK: "(*" (~["*"])* "*" ("*" | (~["*",")"] (~["*"])* "*"))* ")">
+}
+
+
+TOKEN : {
+        <ABS: "ABS">
+|       <ABSTRACT: "ABSTRACT">
+|       <ACOS: "ACOS">
+|       <AGGREGATE: "AGGREGATE">
+|       <ALIAS: "ALIAS">
+|       <AND: "AND">
+|       <ANDOR: "ANDOR">
+|       <ARRAY: "ARRAY">
+|       <AS: "AS">
+|       <ASIN: "ASIN">
+|       <ATAN: "ATAN">
+|       <BAG: "BAG">
+|       <BEGIN: "BEGIN">
+|       <BINARY: "BINARY">
+|       <BLENGTH: "BLENGTH">
+|       <BOOLEAN: "BOOLEAN">
+|       <BY: "BY">
+|       <CASE: "CASE">
+|       <CONSTANT: "CONSTANT">
+|       <CONTEXT: "CONTEXT">
+|       <COS: "COS">
+|       <DERIVE: "DERIVE">
+|       <DIV: "DIV">
+|       <ELSE: "ELSE">
+|       <END: "END">
+|       <ENTITY: "ENTITY">
+|       <ENUMERATION: "ENUMERATION">
+|       <ESCAPE: "ESCAPE">
+|       <EXISTS: "EXISTS">
+|       <EXP: "EXP">
+|       <FALSE: "FALSE">
+|       <FIXED: "FIXED">
+|       <FOR: "FOR">
+|       <FORMAT: "FORMAT">
+|       <FROM : "FROM">
+|       <FUNCTION: "FUNCTION">
+|       <GENERIC: "GENERIC">
+|       <HIBOUND: "HIBOUND">
+|       <HIINDEX: "HIINDEX">
+|       <IF: "IF">
+|       <IN: "IN">
+|       <INSERT: "INSERT">
+|       <INTEGER: "INTEGER">
+|       <INVERSE: "INVERSE">
+|       <LENGTH: "LENGTH">
+|       <LIKE: "LIKE">
+|       <LIST: "LIST">
+|       <LOBOUND: "LOBOUND">
+|       <LOINDEX: "LOINDEX">
+|       <LOCAL: "LOCAL">
+|       <LOG: "LOG">
+|       <LOG10: "LOG10">
+|       <LOG2: "LOG2">
+|       <LOGICAL: "LOGICAL">
+|       <MOD: "MOD">
+|       <MODEL: "MODEL">
+|       <NOT: "NOT">
+|       <NUMBER: "NUMBER">
+|       <NVL: "NVL">
+|       <ODD: "ODD">
+|       <OF: "OF">
+|       <ONEOF: "ONEOF">
+|       <OPTIONAL: "OPTIONAL">
+|       <OR: "OR">
+|       <OTHERWISE: "OTHERWISE">
+|       <PI: "PI">
+|       <PROCEDURE: "PROCEDURE">
+|       <QUERY: "QUERY">
+|       <REAL: "REAL">
+|       <REFERENCE: "REFERENCE">
+|       <REMOVE: "REMOVE">
+|       <REPEAT: "REPEAT">
+|       <RETURN: "RETURN">
+|       <ROLESOF: "ROLESOF">
+|       <RULE: "RULE">
+|       <SCHEMA: "SCHEMA">
+|       <SELECT: "SELECT">
+|       <SELF: "SELF">
+|       <SET: "SET">
+|       <SIN: "SIN">
+|       <SIZEOF: "SIZEOF">
+|       <SKIP_E: "SKIP">
+|       <SQRT: "SQRT">
+|       <STRING: "STRING">
+|       <SUBTYPE: "SUBTYPE">
+|       <SUPERTYPE: "SUPERTYPE">
+|       <TAN: "TAN">
+|       <THEN: "THEN">
+|       <TO: "TO">
+|       <TRUE: "TRUE">
+|       <TYPE: "TYPE">
+|       <TYPEOF: "TYPEOF">
+|       <UNIQUE: "UNIQUE">
+|       <UNKNOWN: "UNKNOWN">
+|       <UNTIL: "UNTIL">
+|       <USE: "USE">
+|       <USEDIN: "USEDIN">
+|       <VALUE: "VALUE">
+|       <VAR: "VAR">
+|       <WHERE: "WHERE">
+|       <WHILE: "WHILE">
+|       <XOR: "XOR">
+|       <CONST_E: "CONST_E">
+|       <END_ALIAS: "END_ALIAS">
+|       <END_CASE: "END_CASE">
+|       <END_CONSTANT: "END_CONSTANT">
+|       <END_CONTEXT: "END_CONTEXT">
+|       <END_ENTITY: "END_ENTITY">
+|       <END_FUNCTION: "END_FUNCTION">
+|       <END_IF: "END_IF">
+|       <END_LOCAL: "END_LOCAL">
+|       <END_MODEL: "END_MODEL">
+|       <END_PROCEDURE: "END_PROCEDURE">
+|       <END_REPEAT: "END_REPEAT">
+|       <END_RULE: "END_RULE">
+|       <END_SCHEMA: "END_SCHEMA">
+|       <END_TYPE: "END_TYPE">
+|       <VALUE_IN: "VALUE_IN">
+|       <VALUE_UNIQUE: "VALUE_UNIQUE">
+}
+
+
+TOKEN : {
+   <INTEGER_LITERAL: (["+","-"])? ["0"-"9"] (["0"-"9"])*>
+|  <#HEX_LITERAL: "0" ["x","X"] (<HEX_DIGIT>)+>
+|  <#HEX_DIGIT: ["0"-"9","a"-"f","A"-"F"]>
+|  <#OCTAL_LITERAL: "0" (["0"-"7"])*>
+|  <REAL_LITERAL: (["+","-"])? (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? >
+|  <#EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+>
+|  <SIMPLE_STRING_LITERAL: "\'" (<DIGIT> | <LETTER> | <ESCAPED_CHAR> | <PRINT_CHAR> | " " )*  "\'" >
+|  <#ESCAPED_CHAR: "\\" (["n","t","b","r","f","\\","\'","\""]) >
+|  <#PRINT_CHAR: "~" | "!" | "@" | "#" | "$" | "%" | "^" |"&" | "*" | "(" | <RPAREN> | "_" | "-" | "+" | "=" | "|" | "{" | "}" | "[" | "]" | ":" | ";" | "," | "." | "<" | ">" | "/" | "?" | "~" | "`" >
+|  <ENCODED_STRING_LITERAL: "\"" (<ENCODED_CHARACTER>)+ "\"">
+|  <BINARY_LITERAL: "%" (["0","1"])* >
+|  <OCTET: <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> >
+|  <#ENCODED_CHARACTER: <OCTET> <OCTET> <OCTET> <OCTET> >
+|  <SIMPLE_ID: <LETTER> (<LETTER> | <DIGIT> | "_")*>
+|  <#LETTER: ["A"-"Z", "a"-"z"]>
+|  <#DIGIT: ["0"-"9"]>
+}
+
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < SEMICOLON: ";" >
+| < COLON: ":" >
+| < COMMA: "," >
+| < DOT: "."  >
+}
+
+TOKEN :
+{
+  < ASSIGN: ":=" >
+| < GT: ">" >
+| < LT: "<" >
+| < LTE: "<=" >
+| < GTE: ">=" >
+| < QMARK: "?" >
+| < POWER: "**" >
+| < BSLASH: "\\" >
+| < NE: "<>" >
+| < EQ: "=" >
+| < ASSIGN_NE: ":<>:">
+| < ASSIGN_EQ: ":=:">
+| < PLUS: "+" >
+| < MINUS: "-" >
+| < STAR: "*">
+| < SLASH: "/">
+| < SC_OR: "||" >
+| < SRS: "<*" >
+| < BIT_OR: "|" >
+}
+
+/************************************************
+*************************************************
+** Grammar
+*************************************************
+************************************************/
+
+
+/********** PRODUCTION 140 **********/
+void simple_id() : {}
+{
+        <SIMPLE_ID>
+}
+
+
+/********** PRODUCTION 145 **********/
+
+void attribute_ref() : {}
+{
+        attribute_id()
+}
+
+/********** PRODUCTION 146 **********/
+
+void constant_ref() : {}
+{
+        constant_id()
+}
+
+/********** PRODUCTION 147 **********/
+
+void entity_ref() : {}
+{
+        entity_id()
+}
+
+
+/********** PRODUCTION 148 **********/
+
+void enumeration_ref() : {}
+{
+        enumeration_id()
+}
+
+/********** PRODUCTION 149 **********/
+
+void function_ref() : {}
+{
+        function_id()
+}
+
+
+/********** PRODUCTION 150 **********/
+
+void parameter_ref() : {}
+{
+        parameter_id()
+}
+
+/********** PRODUCTION 151 **********/
+
+void procedure_ref() : {}
+{
+        procedure_id()
+}
+
+/********** PRODUCTION 152 **********/
+
+void schema_ref() : {}
+{
+        schema_id()
+}
+
+/********** PRODUCTION 153 **********/
+
+void type_label_ref() : {}
+{
+        type_label_id()
+}
+
+
+/********** PRODUCTION 154 **********/
+
+void type_ref() : {}
+{
+        type_id()
+}
+
+/********** PRODUCTION 155 **********/
+
+void variable_ref() : {}
+{
+        variable_id()
+}
+
+/********** PRODUCTION 156 **********/
+
+void abstract_supertype_declaration() : {}
+{
+        <ABSTRACT> <SUPERTYPE> (subtype_constraint())?
+}
+
+/********** PRODUCTION 157 **********/
+
+void actual_parameter_list() : {}
+{
+        <LPAREN> parameter() (<COMMA> parameter())* <RPAREN>
+}
+
+/********** PRODUCTION 158 **********/
+void add_like_op() : {}
+{
+        <PLUS> | <MINUS> | <OR> | <XOR>
+}
+
+/********** PRODUCTION 159 **********/
+void aggregate_initializer() : {}
+{
+        <LBRACKET> (element() (<COMMA> element())*)?  <RBRACKET>
+}
+
+/********** PRODUCTION 160 **********/
+void aggregate_source() : {}
+{
+        simple_expression()
+}
+
+/********** PRODUCTION 161 **********/
+void aggregate_type() : {}
+{
+        <AGGREGATE> (<COLON> type_label())? <OF> parameter_type() 
+}
+
+/********** PRODUCTION 162 **********/
+void aggregation_types() : {}
+{
+        array_type() 
+        | bag_type()  
+        | list_type() 
+        | set_type() 
+}
+
+/********** PRODUCTION 163 **********/
+void algorithm_head() : {}
+{
+        (declaration())* (constant_decl())? (local_decl()) 
+}
+
+/********** PRODUCTION 164 **********/
+void alias_stmt() : {}
+{
+        <ALIAS> variable_id() <FOR> general_ref() (qualifier())* <SEMICOLON> (stmt())+ <END_ALIAS> <SEMICOLON>
+}
+
+/********** PRODUCTION 165 **********/
+void array_type() : {}
+{
+        <ARRAY> bound_spec() <OF> (<OPTIONAL>)? (<UNIQUE>)? base_type() 
+} 
+
+/********** PRODUCTION 166 **********/
+void assignment_stmt() : {}
+{
+        general_ref() (qualifier())* <ASSIGN> expression() <SEMICOLON> 
+}
+
+/********** PRODUCTION 167 **********/
+void attribute_decl() : {}
+{
+        attribute_id() | qualified_attribute() 
+}
+
+/********** PRODUCTION 168 **********/
+void attribute_id() : {}
+{
+        simple_id()
+}
+/********** PRODUCTION 169 **********/
+void attribute_qualifier() : {}
+{
+        <DOT> attribute_ref() 
+}
+
+/********** PRODUCTION 170 **********/
+void bag_type() : {}
+{
+        <BAG> (bound_spec())? <OF> base_type()
+}
+
+/********** PRODUCTION 171 **********/
+void base_type() : {}
+{
+        aggregation_types() 
+        | simple_types() 
+        | named_types() 
+
+
+}
+
+
+/********** PRODUCTION 172 **********/
+void binary_type() : {}
+{
+        <BINARY> (width_spec())?
+}
+
+/********** PRODUCTION 173 **********/
+void boolean_type() : {}
+{
+        <BOOLEAN> 
+}
+
+/********** PRODUCTION 174 **********/
+void bound_1() : {}
+{
+        numeric_expression()
+}
+
+/********** PRODUCTION 175 **********/
+void bound_2() : {}     
+{
+        numeric_expression()
+}
+
+/********** PRODUCTION 176 **********/
+void bound_spec() : {}
+{
+        <LBRACKET> bound_1() <COLON> bound_2() <RBRACKET> 
+}
+
+/********** PRODUCTION 177 **********/
+void built_in_constant() : {}
+{
+        <CONST_E> | <PI> | <SELF> | <QMARK> 
+}
+
+/********** PRODUCTION 178 **********/
+void built_in_function() : {}
+{
+        <ABS> | <ACOS> | <ASIN> | <ATAN> | <BLENGTH> | <COS>  |
+        <EXISTS> | <EXP> | <FORMAT> | <HIBOUND> | <HIINDEX> |
+        <LENGTH> | <LOBOUND> | <LOINDEX> | <LOG> | <LOG2>   | 
+        <LOG10> | <NVL> | <ODD> | <ROLESOF> | <SIN> | <SIZEOF> |
+        <SQRT> | <TAN> | <TYPEOF> | <USEDIN> | <VALUE> |
+        <VALUE_IN> | <VALUE_UNIQUE> 
+}
+
+/********** PRODUCTION 179 **********/
+void built_in_procedure() : {}
+{
+        <INSERT> | <REMOVE>
+}
+
+/********** PRODUCTION 180 **********/
+void case_action() : {}
+{
+        case_label() (<COMMA> case_label())* <COLON> stmt() 
+}
+
+/********** PRODUCTION 181 **********/
+void case_label() : {}
+{
+        expression() 
+}
+
+/********** PRODUCTION 182 **********/
+void case_stmt() : {}
+{
+        <CASE> selector() <OF> (case_action())* (<OTHERWISE> <COLON> stmt())? <END_CASE> <SEMICOLON> 
+}
+
+/********** PRODUCTION 183 **********/
+void compound_stmt() : {}
+{
+        <BEGIN> (stmt())+ <END> <SEMICOLON> 
+}
+
+/********** PRODUCTION 184 **********/
+void constant_body() : {}
+{
+        constant_id() <COLON> base_type() <ASSIGN> expression() <SEMICOLON> 
+}
+
+/********** PRODUCTION 185 **********/
+void constant_decl() : {}
+{
+        <CONSTANT> (constant_body())+ <END_CONSTANT> <SEMICOLON> 
+}
+
+/********** PRODUCTION 186 **********/
+void constant_factor() : {}
+{
+        built_in_constant() | constant_ref() 
+}
+
+/********** PRODUCTION 187 **********/
+void constant_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 188 **********/
+void constructed_types() : {}
+{
+        enumeration_type() | select_type() 
+}
+
+/********** PRODUCTION 189 **********/
+void declaration() : {}
+{
+        entity_decl() | function_decl() | procedure_decl() | type_decl() 
+}
+
+/********** PRODUCTION 190 **********/
+void derived_attr() : {}
+{
+        attribute_decl() <COLON> base_type() <ASSIGN> expression() <SEMICOLON> 
+}
+
+/********** PRODUCTION 191 **********/
+void derive_clause() : {}
+{
+        <DERIVE> (derived_attr())+
+}
+
+/********** PRODUCTION 192 **********/
+void domain_rule() : {}
+{
+        (label() <COLON>)? expression()
+}
+
+/********** PRODUCTION 193 **********/
+void element() : {}
+{
+        expression() (<COLON> repetition())? 
+}
+
+/********** PRODUCTION 194 **********/
+void entity_body() : {}
+{
+        (explicit_attr())* (derive_clause())? (inverse_clause())? (unique_clause())? (where_clause())?
+}
+
+/********** PRODUCTION 195 **********/
+void entity_constructor() : {}
+{
+        entity_ref() <LPAREN> (expression() (<COMMA> expression())*)? <RPAREN> 
+}
+
+/********** PRODUCTION 196 **********/
+void entity_decl() : { }
+{
+        entity_head() entity_body() <END_ENTITY> <SEMICOLON> 
+}
+
+/********** PRODUCTION 197 **********/
+void entity_head() : { }
+{
+        <ENTITY> entity_id() (subsuper())? <SEMICOLON>
+}
+
+/********** PRODUCTION 198 **********/
+void entity_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 199 **********/
+void enumeration_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 200 **********/
+void enumeration_reference() : {}
+{
+        (type_ref() <DOT>)? enumeration_ref() 
+}    
+
+/********** PRODUCTION 201 **********/
+void enumeration_type() : {}
+{
+        <ENUMERATION> <OF> <LPAREN> enumeration_id() (<COMMA> enumeration_id())* <RPAREN> 
+}
+
+/********** PRODUCTION 202 **********/
+void escape_stmt() : {}
+{
+        <ESCAPE> <SEMICOLON> 
+}
+
+/********** PRODUCTION 203 **********/
+void explicit_attr() : {}
+{
+
+        attribute_decl() 
+        (<COMMA> attribute_decl())*
+        <COLON> (<OPTIONAL>)? 
+        base_type()                     
+        <SEMICOLON>
+
+}
+
+/********** PRODUCTION 204 **********/
+void expression() : {}
+{
+        simple_expression() (rel_op_extended() simple_expression())? 
+}
+
+/********** PRODUCTION 205 **********/
+void factor() : {}
+{
+        simple_factor() (<POWER> simple_factor())?
+}
+
+/********** PRODUCTION 206 **********/
+void formal_parameter() : {}
+{
+        parameter_id() (<COMMA> parameter_id())* <COLON> parameter_type() 
+}
+
+/********** PRODUCTION 207 **********/
+void function_call() : {}
+{
+        (built_in_function() | function_ref()) (actual_parameter_list())? 
+}
+
+/********** PRODUCTION 208 **********/
+void function_decl() : {}
+{
+        function_head() (algorithm_head())? (stmt())+ <END_FUNCTION> <SEMICOLON> 
+}
+
+/********** PRODUCTION 209 **********/
+void function_head() : {}
+{
+        <FUNCTION> function_id() (<LPAREN> formal_parameter() (<SEMICOLON> formal_parameter())* <RPAREN>)? <COLON> parameter_type()  <SEMICOLON> 
+}
+
+/********** PRODUCTION 210 **********/
+void function_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 211 **********/
+void generalized_types() : {}
+{
+        aggregate_type() 
+        | general_aggregation_types() 
+        | generic_type() 
+}
+
+/********** PRODUCTION 212 **********/
+void general_aggregation_types() : {}
+{
+          general_array_type() 
+        | general_bag_type() 
+        | general_list_type() 
+        | general_set_type() 
+}
+
+/********** PRODUCTION 213 **********/
+void general_array_type() : {}
+{
+        <ARRAY>  (bound_spec())? <OF> (<OPTIONAL> )? (<UNIQUE>)? parameter_type() 
+
+}
+
+/********** PRODUCTION 214 **********/
+void general_bag_type() : {}
+{
+        <BAG> (bound_spec())? <OF> parameter_type() 
+}
+
+/********** PRODUCTION 215 **********/
+void general_list_type() : {}
+{
+        <LIST> (bound_spec())? <OF> (<UNIQUE>)? parameter_type() 
+}
+
+/********** PRODUCTION 216 **********/
+void general_ref() : {}
+{
+          parameter_ref() 
+        | variable_ref() 
+}
+
+/********** PRODUCTION 217 **********/
+void general_set_type() : {}
+{
+        <SET> (bound_spec())? <OF> parameter_type() 
+}
+
+/********** PRODUCTION 218 **********/
+void generic_type() : {}
+{
+        <GENERIC> (<COLON> type_label())? 
+}
+
+/********** PRODUCTION 219 **********/
+void group_qualifier() : {}
+{
+        <BSLASH> entity_ref() 
+}
+
+/********** PRODUCTION 220 **********/
+void if_stmt() : {}
+{
+        <IF> expression() <THEN> (stmt())+ (<ELSE> (stmt())+)? <END_IF> <SEMICOLON> 
+}
+
+/********** PRODUCTION 221 **********/
+void increment() : {}
+{
+        numeric_expression() 
+}
+
+/********** PRODUCTION 222 **********/
+void increment_control() : {}
+{
+        variable_id() <ASSIGN> bound_1() <TO> bound_2() (<BY> increment())?
+}
+
+/********** PRODUCTION 223 **********/
+void index() : {}
+{
+        numeric_expression() 
+}
+
+/********** PRODUCTION 224 **********/
+void index_1() : {}
+{
+        index() 
+}
+
+/********** PRODUCTION 225 **********/
+void index_2() : {}
+{
+        index() 
+}
+
+/********** PRODUCTION 226 **********/
+void index_qualifier() : {}
+{
+        <LBRACKET> index_1() (<COLON> index_2())? <RBRACKET> 
+}
+
+/********** PRODUCTION 227 **********/
+void integer_type() : {}
+{
+        <INTEGER> 
+}
+
+/********** PRODUCTION 228 **********/
+void interface_specification() : {}
+{
+          reference_clause() 
+        | use_clause() 
+}
+
+/********** PRODUCTION 229 **********/
+void interval() : {}
+{
+        <LBRACE> interval_low() interval_op() interval_item() interval_op() interval_high() <RBRACE> 
+}
+
+/********** PRODUCTION 230 **********/
+void interval_high() : {}
+{
+        simple_expression() 
+}
+
+/********** PRODUCTION 231 **********/
+void interval_item() : {}
+{
+        simple_expression() 
+}
+
+/********** PRODUCTION 232 **********/
+void interval_low() : {}
+{
+        simple_expression() 
+}
+
+
+/********** PRODUCTION 233 **********/
+void interval_op() : {}
+{
+        <LT> | <LTE>
+}
+
+/********** PRODUCTION 234 **********/
+void inverse_attr() : {}
+{
+        attribute_decl() <COLON> ((<SET>|<BAG>) (bound_spec())? <OF>)? entity_ref() <FOR> attribute_ref() <SEMICOLON> 
+}
+
+/********** PRODUCTION 235 **********/
+void inverse_clause() : {}
+{
+        <INVERSE> (inverse_attr())+
+}
+
+/********** PRODUCTION 236 **********/
+void label() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 237 **********/
+void list_type() : {}
+{
+        <LIST>  (bound_spec())? <OF> (<UNIQUE>)? base_type() 
+}
+
+/********** PRODUCTION 238 **********/
+void literal() : {}
+{
+        <BINARY_LITERAL> | <INTEGER_LITERAL> | logical_literal() | <REAL_LITERAL> | string_literal()
+}
+
+/********** PRODUCTION 239 **********/
+void local_decl() : {}
+{
+        <LOCAL> local_variable() (local_variable())* <END_LOCAL> <SEMICOLON> 
+}
+
+/********** PRODUCTION 240 **********/
+void local_variable() : {}
+{
+        variable_id() (<COMMA> variable_id())* <COLON> parameter_type() (<ASSIGN> expression())? <SEMICOLON> 
+}
+
+/********** PRODUCTION 241 **********/
+void logical_expression() : {}
+{
+        expression() 
+}
+
+/********** PRODUCTION 242 **********/
+void logical_literal() : {}
+{
+        <FALSE> | <TRUE> | <UNKNOWN> 
+}
+
+/********** PRODUCTION 243 **********/
+void logical_type() : {}
+{
+        <LOGICAL>
+}
+
+/********** PRODUCTION 244 **********/
+void multiplication_like_op() : {}
+{
+        <STAR> | <SLASH> | <DIV> | <MOD> | <AND> | <SC_OR> 
+}
+
+/********** PRODUCTION 245 **********/
+void named_types() : {}
+{
+        entity_ref() | type_ref() 
+}
+
+/********** PRODUCTION 246 **********/
+void named_type_or_rename() : {}
+{
+        named_types() (<AS> (entity_id() | type_id()))? 
+}
+
+/********** PRODUCTION 247 **********/
+void null_stmt() : {}
+{
+        <SEMICOLON> 
+}
+
+/********** PRODUCTION 248 **********/
+void number_type() : {}
+{
+        <NUMBER> 
+}
+
+/********** PRODUCTION 249 **********/
+void numeric_expression() : {}
+{
+        simple_expression() 
+}
+
+/********** PRODUCTION 250 **********/
+void one_of() : {}
+{
+        <ONEOF> <LPAREN> supertype_expression() (<COMMA> supertype_expression())* <RPAREN> 
+}
+
+/********** PRODUCTION 251 **********/
+void parameter() : {}
+{
+        expression() 
+}
+
+/********** PRODUCTION 252 **********/
+void parameter_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 253 **********/
+void parameter_type() : {}
+{
+        generalized_types() | named_types() | simple_types() 
+}
+
+/********** PRODUCTION 254 **********/
+void population() : {}
+{
+        entity_ref() 
+}
+
+/********** PRODUCTION 255 **********/
+void precision_spec() : {}
+{
+        numeric_expression() 
+}
+
+/********** PRODUCTION 256 **********/
+void primary() : {}
+{
+        literal() | (qualifiable_factor() (qualifier())*) 
+}
+
+/********** PRODUCTION 257 **********/
+void procedure_call_stmt() : {}
+{
+        (built_in_procedure() | procedure_ref()) (actual_parameter_list())? <SEMICOLON> 
+}
+
+/********** PRODUCTION 258 **********/
+void procedure_decl() : {}
+{
+        procedure_head() (algorithm_head())? (stmt())* <END_PROCEDURE> <SEMICOLON> 
+}
+
+/********** PRODUCTION 259 **********/
+void procedure_head() : {}
+{
+        <PROCEDURE> procedure_id() (<LPAREN> (<VAR>)? formal_parameter() (<SEMICOLON> (<VAR>)? formal_parameter())* <RPAREN>)? <SEMICOLON> 
+}
+
+/********** PRODUCTION 260 **********/
+void procedure_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 261 **********/
+void qualifiable_factor() : {}
+{
+          attribute_ref()
+        | constant_factor()
+        | function_call()
+        | general_ref()
+        | population()
+}
+
+/********** PRODUCTION 262 **********/
+void qualified_attribute() : {}
+{
+        <SELF> group_qualifier() attribute_qualifier() 
+}
+
+/********** PRODUCTION 263 **********/
+void qualifier() : {}
+{
+          attribute_qualifier()
+        | group_qualifier()     
+        | index_qualifier() 
+}
+
+/********** PRODUCTION 264 **********/
+void query_expression() : {}
+{
+        <QUERY> <LPAREN> variable_id() <SRS> aggregate_source() <BIT_OR> logical_expression() <RPAREN> 
+}
+
+/********** PRODUCTION 265 **********/
+void real_type() : {}
+{
+        <REAL> (<LPAREN> precision_spec() <RPAREN>)? 
+}
+
+/********** PRODUCTION 266 **********/
+void referenced_attribute() : {}
+{
+          attribute_ref()
+        | qualified_attribute() 
+}
+
+/********** PRODUCTION 267 **********/
+void reference_clause() : {}
+{
+        <REFERENCE> <FROM> schema_ref() (<LPAREN> resource_or_rename() (<COMMA> resource_or_rename())* <RPAREN> )? <SEMICOLON> 
+}
+
+/********** PRODUCTION 268 **********/
+void rel_op() : {}
+{
+        <LT> | <GT> | <LTE> | <GTE> | <NE> | <EQ> | <ASSIGN_NE> | <ASSIGN_EQ>
+}
+
+/********** PRODUCTION 269 **********/
+void rel_op_extended() : {}
+{
+        rel_op() | <IN> | <LIKE> 
+}
+
+/********** PRODUCTION 270 **********/
+void rename_id() : {}
+{
+          constant_id()
+        | entity_id()
+        | function_id()
+        | procedure_id()
+        | type_id() 
+}
+
+/********** PRODUCTION 271 **********/
+void repeat_control() : {}
+{
+        (increment_control())? (while_control())? (until_control())?
+}
+
+/********** PRODUCTION 272 **********/
+void repeat_stmt() : {}
+{
+        <REPEAT> repeat_control() <SEMICOLON> (stmt())+ <END_REPEAT> <SEMICOLON> 
+}
+
+/********** PRODUCTION 273 **********/
+void repetition() : {}
+{
+        numeric_expression() 
+}
+
+/********** PRODUCTION 274 **********/
+void resource_or_rename() : {}
+{
+        resource_ref() (<AS> rename_id())? 
+}
+
+/********** PRODUCTION 275 **********/
+void resource_ref() : {}
+{
+          constant_ref()
+        | entity_ref()
+        | function_ref()        
+        | procedure_ref()
+        | type_ref() 
+}
+
+/********** PRODUCTION 276 **********/
+void return_stmt() : {}
+{
+        <RETURN> (<LPAREN> expression() <RPAREN>)? <SEMICOLON> 
+}
+
+/********** PRODUCTION 277 **********/
+void rule_decl() : {}
+{
+        rule_head() (algorithm_head())? (stmt())* where_clause() <END_RULE> <SEMICOLON> 
+}
+
+/********** PRODUCTION 278 **********/
+void rule_head() : {}
+{
+        <RULE> rule_id() <FOR> <LPAREN> entity_ref() (<COMMA> entity_ref())* <RPAREN> <SEMICOLON> 
+}
+
+/********** PRODUCTION 279 **********/
+void rule_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 280 **********/
+void schema_body() : {}
+{
+        (interface_specification())* (constant_decl())? ( declaration() | rule_decl() )* 
+}
+
+/********** PRODUCTION 281 **********/
+void schema_decl() : {}
+{
+        <SCHEMA> schema_id() <SEMICOLON> schema_body() <END_SCHEMA> <SEMICOLON> 
+}
+
+/********** PRODUCTION 282 **********/
+void schema_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 283 **********/
+void selector() : {}
+{
+        expression() 
+}
+
+/********** PRODUCTION 284 **********/
+void select_type() : {}
+{
+        <SELECT> <LPAREN> named_types() (<COMMA> named_types() )* <RPAREN> 
+}
+
+/********** PRODUCTION 285 **********/
+void set_type() : {}
+{
+        <SET> (bound_spec())? <OF> base_type() 
+}
+
+/********** PRODUCTION 286 **********/
+void sign() : {}
+{
+        <PLUS> | <MINUS> 
+}
+
+/********** PRODUCTION 287 **********/
+void simple_expression() : {}
+{
+        term() (add_like_op() term())* 
+}
+
+/********** PRODUCTION 288 **********/
+void simple_factor() : {}
+{
+        LOOKAHEAD(3)
+          aggregate_initializer() 
+        | entity_constructor() 
+        | enumeration_reference()
+        | interval()
+        | query_expression()
+        | ( (unary_op())? ( <LPAREN> expression() <RPAREN> | primary() ) ) 
+}
+
+/********** PRODUCTION 289 **********/
+void simple_types() : {}
+{
+          binary_type() 
+        | boolean_type() 
+        | integer_type() 
+        | logical_type() 
+        | number_type() 
+        | real_type() 
+        | string_type() 
+}
+
+/********** PRODUCTION 290 **********/
+void skip_stmt() : {}
+{
+        <SKIP_E> <SEMICOLON> 
+}
+
+/********** PRODUCTION 291 **********/
+void stmt() : {}
+{
+          alias_stmt() 
+        | assignment_stmt() 
+        | case_stmt() 
+        | compound_stmt() 
+        | escape_stmt()
+        | if_stmt()
+        | null_stmt() 
+        | procedure_call_stmt() 
+        | repeat_stmt() 
+        | return_stmt() 
+        | skip_stmt() 
+}
+
+/********** PRODUCTION 292 **********/
+void string_literal() : {}
+{
+        <SIMPLE_STRING_LITERAL> | <ENCODED_STRING_LITERAL> 
+}
+
+/********** PRODUCTION 293 **********/
+void string_type() : {}
+{
+        <STRING> (width_spec())? 
+}
+
+/********** PRODUCTION 294 **********/
+void subsuper() : {}
+{
+        (supertype_constraint())? (subtype_declaration())?
+}
+
+/********** PRODUCTION 295 **********/
+void subtype_constraint() : {}
+{
+        <OF> <LPAREN> supertype_expression() <RPAREN> 
+}
+
+/********** PRODUCTION 296 **********/
+void subtype_declaration() : {}
+{
+        <SUBTYPE> <OF> <LPAREN> entity_ref() (<COMMA> entity_ref() )* <RPAREN> 
+}
+
+/********** PRODUCTION 297 **********/
+void supertype_constraint() : {}
+{
+          abstract_supertype_declaration() 
+        | supertype_rule() 
+}
+
+/********** PRODUCTION 298 **********/
+void supertype_expression() : {}
+{
+        supertype_factor() (<ANDOR> supertype_factor())* 
+}
+
+/********** PRODUCTION 299 **********/
+void supertype_factor() : {}
+{
+        supertype_term() (<AND> supertype_term())* 
+}
+
+/********** PRODUCTION 300 **********/
+void supertype_rule() : {}
+{
+        <SUPERTYPE> subtype_constraint() 
+}
+
+/********** PRODUCTION 301 **********/
+void supertype_term() : {}
+{
+          entity_ref()
+        | one_of() 
+        | <LPAREN> supertype_expression() <RPAREN> 
+}
+
+/********** PRODUCTION 302 **********/
+void syntax() : {}
+{
+        (schema_decl())+
+}
+
+/********** PRODUCTION 303 **********/
+void term() : {}
+{
+        factor() (multiplication_like_op() factor())* 
+}
+
+/********** PRODUCTION 304 **********/
+void type_decl() : {}
+{
+        <TYPE> type_id() <EQ> underlying_type() <SEMICOLON> (where_clause())? <END_TYPE> <SEMICOLON>
+}
+
+/********** PRODUCTION 305 **********/
+void type_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 306 **********/
+void type_label() : {}
+{
+          type_label_id()
+        | type_label_ref() 
+}
+
+/********** PRODUCTION 307 **********/
+void type_label_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 308 **********/
+void unary_op() : {}
+{
+        <PLUS> | <MINUS> | <NOT> 
+}
+
+/********** PRODUCTION 309 **********/
+void underlying_type() : {}
+{
+          constructed_types() 
+        | aggregation_types() 
+        | simple_types() 
+        | type_ref() 
+}
+
+/********** PRODUCTION 310 **********/
+void unique_clause() : {}
+{
+        <UNIQUE> unique_rule() <SEMICOLON> (unique_rule() <SEMICOLON>)* 
+}
+
+/********** PRODUCTION 311 **********/
+void unique_rule() : {}
+{
+        (label() <COLON>)? referenced_attribute() (<COMMA> referenced_attribute())* 
+}
+
+/********** PRODUCTION 312 **********/
+void until_control() : {}
+{
+        <UNTIL> expression() 
+}
+
+/********** PRODUCTION 313 **********/
+void use_clause() : {}
+{
+        <USE> <FROM> schema_ref() (<LPAREN> named_type_or_rename() (<COMMA> named_type_or_rename())* <RPAREN> )? <SEMICOLON> 
+}
+
+/********** PRODUCTION 314 **********/
+void variable_id() : {}
+{
+        simple_id()
+}
+
+/********** PRODUCTION 315 **********/
+void where_clause() : {}
+{
+        <WHERE> domain_rule() <SEMICOLON> (domain_rule() <SEMICOLON> )* 
+}
+
+/********** PRODUCTION 316 **********/
+void while_control() : {}
+{
+        <WHILE> logical_expression() 
+}
+
+/********** PRODUCTION 317 **********/
+void width() : {}
+{
+        numeric_expression() 
+}
+
+/********** PRODUCTION 318 **********/
+void width_spec() : {}
+{
+        <LPAREN> width() <RPAREN> (<FIXED>)? 
+}

@@ -1,0 +1,33 @@
+Hello, world
+#if falseArg
+   Shouldn't be here.
+#else
+   But this should
+   -->${stringValue}<--
+#fi
+
+#if true
+	True1
+	${stringValue:-Should not be here}
+	${noSuchVar:-Should be here}
+	#if trueArg
+	  True2
+	#else
+	  False 1
+	#fi
+#else
+	False 2
+	#if true
+	  Not expected
+	#else
+	  Not expected 2
+	#fi
+#fi
+	
+This should say no: ${falseArg?yes:no}
+This should say yes: ${trueArg?yes:no}
+
+This should say someString: ${trueArg?${stringValue}:}
+This should say xxsomeStringxx: ${not_found?${stringValue}:xx${stringValue}xx}
+
+The end.

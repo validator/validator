@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+
+<!--
+
+Copyright (c) 2006, Sun Microsystems, Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Sun Microsystems, Inc. nor the names of its
+      contributors may be used to endorse or promote products derived from
+      this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+
+<project name="test-linenumbers" default="test" basedir=".">
+
+  <target name="test" depends="" description="run functional test cases">
+
+    <java failonerror="true" fork="true" classname="jjtree" classpath="../../target/javacc.jar">
+      <arg line="JJTree.jjt" />
+    </java>
+
+    <java failonerror="true" fork="true" classname="javacc" outputProperty="test.out" classpath="../../target/javacc.jar" >
+      <arg line="out-dir/JJTree.jj" />
+    </java>
+
+    <echo>${test.out}</echo>
+
+    <fail message="Line Numbers failed">
+     <condition>
+       <or>
+        <not>
+         <contains string="${test.out}" substring="Line 364, Column 18: Encountered LOOKAHEAD" />
+        </not>
+        <not>
+         <contains string="${test.out}" substring="Line 1197, Column 20: Encountered LOOKAHEAD" />
+        </not>
+        <not>
+         <contains string="${test.out}" substring="Line 1962, Column 19: Encountered LOOKAHEAD" />
+        </not>
+       </or>
+     </condition>
+    </fail>
+
+  </target>
+
+  <target name="clean">
+    <delete dir="out-dir" />
+  </target>
+
+</project>

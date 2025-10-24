@@ -1,0 +1,795 @@
+options {
+    STATIC=false;       // change to true for static instance of kbparser
+    DEBUG_PARSER=true;  // change to false to remove method trace
+}
+
+PARSER_BEGIN(RuleCompiler)
+package infosapient.rulecompiler;
+/* 
+ * Copyright (c) 2001,2002 Workplace Performance Tools, All Rights Reserved.
+ * 
+ * LICENSE TO USE THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF 
+ * THE COMMON PUBLIC LICENSE 0.5 ("AGREEMENT"). 
+ * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES 
+ * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ */
+import  infosapient.opr.*;
+import  infosapient.hdg.*;
+import  infosapient.resolution.*;
+import  infosapient.system.*;
+import  java.io.*;
+import  java.util.Enumeration;
+import  java.util.Hashtable;
+import  java.util.Observable;
+import  java.util.Stack;
+import  java.util.Vector;
+/**
+ * <h4>Created by Sun Microsystems JavaCC(java compiler compiler version 2.1) from isrulegrammar.jj. </h4>
+ * <b><i>WARNING:</i> Do NOT modify RuleCompiler, RuleCompilerTokenManager, RuleCompilerConstants  as they are machine generated. Code is subject to change without notice.</b>
+ * <h4> Limitations: currently does not support creation of unconditional rules. </h4>
+ * <p>
+ * If you find it necessary to change RuleCompiler, RuleCompilerTokenManager, or RuleCompilerConstants: 
+ * <i>modify</i> isrulegrammar.jj and then re-generate the RuleCompiler.java classes. <b>Even though the license does not require it -- I would appreciate your sending me the changes you made.</b>
+ * JavaCC is now supported by and, can be obtained from: <b><href http://www.webgain.com/products/metamata/java_doc.html>"Metamata"</href></b></p>
+ * @author Michael McConnell - delta-vee@users.sourceforge.net
+ * @version $Revision: 1.1 $ 
+ * <code>
+ * Change log:
+ * 20020109 - brought isrulegrammar.jj into compilance with JavaCC v2.1
+ *          - Corrected references to FzyKnowledgebase
+ *          - Removed duplicate references to trace_enabled, trace_indent, trace_token(),
+ *            trace_scan(),trace_call(),trace_return()
+ * </code>
+ */
+public class RuleCompiler 
+{
+  
+    private Observable handler;
+    private int errors = 0;
+    private String kbName;
+    private FzyKnowledgebase theKB;
+    private Vector hedgeCollection = null;
+    private Vector setNames = new Vector();
+    private Vector attribNames = new Vector();
+    private Vector ruleNames = new Vector();
+    private Hashtable referringRules = new Hashtable(4);
+    private Hashtable deducingRules  = new Hashtable(4);
+    private Hashtable solutionSetDict  = new Hashtable(4);
+    public void setKB(FzyKnowledgebase kb) {
+      theKB = kb;
+    }
+    /**
+     * Reinitialize the compiler without having to create a new one.
+     * (Creates a new TokenManager).
+     * @param String - rule represented as a String.
+     */
+    public void ReInit(String aRule){
+      SimpleCharStream stream =
+            new SimpleCharStream( new ByteArrayInputStream(aRule.getBytes()),
+                         1,
+                         1);
+      RuleCompilerTokenManager tm = new RuleCompilerTokenManager(stream);
+      ReInit(tm);
+      
+    }
+    public FzyKnowledgebase getKB() {
+      return theKB;
+    }
+    public Observable getHandler() {
+      if (handler == null) handler = new Observable();
+      return handler;
+    }
+    public void addObserver(java.util.Observer o) {
+      getHandler().addObserver(o);
+    }
+    /** 
+     * Factory method to create a new ruleCompiler
+     * @param FzyKnowledgebase - the existing knowledgebase
+     * @param String - string representation of a rule.
+     * @return RuleCompiler
+     */
+    public static RuleCompiler newCompiler(infosapient.system.FzyKnowledgebase kb, String ruleAsString)  {
+      SimpleCharStream stream =
+      new SimpleCharStream( new ByteArrayInputStream(ruleAsString.getBytes()),
+                   1,
+                   1);
+      RuleCompilerTokenManager tm = new RuleCompilerTokenManager(stream);
+      return (new RuleCompiler(kb, tm));
+    }
+    public RuleCompiler(infosapient.system.FzyKnowledgebase kb, RuleCompilerTokenManager tm) {
+      this(tm);
+      setKB(kb);
+      referringRules = kb.referringRules();
+      deducingRules = kb.getDeducingRules();
+    }
+    private void addReferringRule(FzyRule r, FzyAttribute aac2) {
+      Vector refList = null;
+      boolean f = true;
+      refList = (Vector)referringRules.get(aac2.getName());
+      if (refList == null) {
+        refList = new Vector(2);
+        referringRules.put(aac2.getName(), refList);
+      } else {
+        for (Enumeration dl = refList.elements(); dl.hasMoreElements();)
+          if (r.equals((FzyRule)dl.nextElement())) f = false;
+      }
+      if (f) {
+        refList.addElement(r);
+        referringRules.put(aac2.getName(), refList);
+      }
+      
+    }
+      
+    private void addDeducingRule(FzyRule r, FzyAttribute aac) {
+      Vector dedList = null;
+      boolean f = true;
+      dedList = (Vector)deducingRules.get(aac.getName());
+      if (dedList == null) {
+        dedList = new Vector(2);
+      } else {
+        for (Enumeration dl = dedList.elements(); dl.hasMoreElements();) {
+          FzyRule re = (FzyRule)dl.nextElement();
+          if ((r == re) || (r.equals(re))) f = false;
+        }
+      }
+      if (f) {
+        dedList.addElement(r);
+        deducingRules.put(aac.getName(), dedList);
+      }
+      
+    }
+}
+PARSER_END(RuleCompiler)
+
+SKIP :
+{
+  " "
+|
+  "\r"
+|
+  "\t"
+|
+  "\n"
+|
+  "//" : IN_LINE_COMMENT
+|
+  "/*" : IN_COMMENT
+
+}
+
+<IN_LINE_COMMENT> SKIP:
+{
+   "\n" : DEFAULT
+}
+
+<IN_LINE_COMMENT> MORE:
+{
+  < ~[] >
+}
+
+<IN_COMMENT> SKIP:
+{
+   "*/" : DEFAULT
+}
+
+<IN_COMMENT> MORE:
+{
+  < ~[] >
+}
+
+TOKEN :
+{
+
+    < ABOUT:        "about" >                               |
+    < ABOVE:        "above" >                               |
+    < ADDAGGREGATION:  "addAggregation" >                   |
+    < AFTER:        "after" >                               |
+    < ALPHACUT:     "alphaCut" >                            |
+    < AND:          "and" >                                 |
+    < ARE:          "are" >                                 |
+    < AROUND:       "around" >                              |
+    < ATTRIBUTES:   "attributes" >                          |
+    < AVERAGEMAX:   "averageMaximum" >                      |
+    < AVERAGEACE: "averageace" >                        |
+    < AVERAGESUPPORT: "averageSupport" >                    |
+    < BACKWARDCHAIN: "backwardChain" >                      |
+    < BE:           "be" >                                  |
+    < BEFORE:       "before" >                              |
+    < BELOW:        "below" >                               |
+    < BETA:         "beta" >                                |
+    < BETAWEIGHT:   "betaWeight" >                          |
+    < BESTEVIDENCE: "bestEvidence" >                        |
+    < BOOLEANATTRIBUTE: "booleanAttribute" >                |
+    < BOUNDED_ADD:  "boundedAdd" >                          |
+    < BOUNDED_AND:  "boundedAnd" >                          |
+    < BOUNDED_MEAN: "boundedMean" >                         |
+    < CENTROID:     "centroid" >                            |
+    < CENTER:       "center" >                              |
+    < CLOSE:        "closeTo" >                             |
+    < CMEMBERSHIP:  "100%Membership" >                      |
+    < CORRELATIONMETHOD: "correlationMethod" >              |
+    < COSINE_NOT:   "cosineNot" >                           |
+    < CURRENTVALUE: "currentValue" >                        |
+    < DECIMALPT:    "." >                                   |
+    < DECREASED:    "decreased" >                           |
+    < DEFINITELY:   "definitely" >                          |
+    < ELSE:         "else" >                                |
+    < EXTREMELY:    "extremely" >                           |
+    < FLEXPOINT:    "flexPoint" >                           |
+    < GAUSSIAN:     "gaussian" >                            |
+    < GENERALLY:    "generally" >                           |
+    < GTOREQLS:     ">="   >                                |
+    < HIGHDOMAIN:   "highDomain" >                          |
+    < IF:           "if" >                                  |
+    < IMPLICATIONMETHOD: "implicationMethod" >              |
+    < INCREASED:    "increased" >                           |
+    < VICINITY:     "in the vicinity of" >                  |
+    < IS:           "is" >                                  |
+    < KNOWLEDGEBASE: "knowledgeBase" >                      |
+    < LEAST_ENTROPY: "leastEntropy" >                       |
+    < LESSTHANOREQLS: "<="  >                               |
+    < LOWDOMAIN:    "lowDomain" >                           |
+    < MAXIMUM:      "maximum" >                             |
+    < MEAN_AND:     "meanAnd" >                             |
+    < MEAN_OR:      "meanOr" >                              |
+    < MINUS:        "-" >                                   |
+    < MINIMUM:      "minimum" >                             |
+    < MINMAX:       "minMax" >                              |
+    < MOSTLY:       "mostly" >                              |
+    < MUST:         "must" >                                |
+    < MY:           "my" >                                  |
+    < NEAR:         "near" >                                |
+    < NEGATIVE:     "negative" >                            |
+    < NEGATIVELY:   "negatively" >                          |
+    < NOT:          "not" >                                 |
+    < OR:           "or" >                                  |
+    < OUR:          "our" >                                 |
+    < PI:           "pi" >                                  |
+    < PLUS:         "+" >                                   |
+    < POSITIVE:     "positive" >                            |
+    < POSITIVELY:   "positively" >                          |
+    < PRODUCT:      "product" >                             |
+    < PRODUCT_AND:  "productAnd" >                          |
+    < PRODUCT_OR:   "productOr" >                           |
+    < RESOLUTIONMETHOD: "resolutionMethod" >                |
+    < ROUGHLY:      "roughly" >                             |
+    < RULES:        "rules" >                               |
+    < RUNUNCONDITIONALS: "runUnconditionalRulesBefore" >    |
+    < SC:           ";" >                                   |
+    < SETTYPE:      "setType" >                             |
+    < SHOULD:       "should" >                              |
+    < SINGLETON:    "singleton" >                           |
+    < SINUSOIDAL:   "sinusoidal" >                          |
+    < SLASH:        "/" >                                   |
+    < SLIGHTLY:     "slightly" >                            |
+    < SOMEWHAT:     "somewhat" >                            |
+    < LAT:        "*" >                                   |
+    < SUGENO_NOT:   "sugenoNot" >                           |
+    < THE:          "the" >                                 |
+    < THEN:         "then" >                                |
+    < THRESHOLD_NOT: "thresholdNot" >                       |
+    < TO:           "to" >                                  |
+    < TRIANGLE:     "triangle" >                            |
+    < VERY:         "very" >                                |
+    < VOTE_BOUNDED: "voteBounded" >                         |
+    < WEIGHTEDBETA: "weightedBeta" >                        |
+    < WIDTH:        "width"  >                              |
+    < YAGER_AND:    "yagerAnd" >                            |
+    < YAGER_NOT:    "yagerNot" >                            |
+    < YAGER_OR:     "yagerOr" >
+}
+
+TOKEN : /* LITERALS */
+{
+    < FP_LITERAL: <NPN> | <PN> | <NP> |  <N>        >
+    |
+    < NPN: ( "-" )? (["0"-"9"])+  "."  (["0"-"9"])+ >
+    |
+    < PN:  ( "-" )? "." (["0"-"9"])+                >
+    |
+    < NP:  ( "-" )? (["0"-"9"])+  "."               >
+    |
+    < N:   ( "-" )? (["0"-"9"])+                    >
+}
+TOKEN : /* IDENTIFIERS */
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < LETTER: [ "a"-"z", "A"-"Z", "_", "$", "@" ] >
+|
+  < DIGIT: [ "0"-"9" ] >
+}
+/**
+ * Build a fuzzy rule by visiting each node. 
+ * @return FzyRule - the rule as object
+ */
+FzyRule compileRule()        :
+{
+    String rName                = null;
+    String rText                = null;
+    FzyRule r                   = new FzyRule();
+    FzyPremise tPremise         = null;
+    FzyConsequent tConseq       = null;
+    FzyConsequent tAltConseq    = null;
+}
+{
+    rName=ruleId()
+    tPremise = premise(r)       { r.addPremise(tPremise);
+                                  rText = tPremise.toText();
+                                }
+    tConseq = consequent(r)     { r.addConsequent(tConseq);
+                                  rText = rText + " " + tConseq.toText();
+                                }
+
+    ";"                         { rText = rText + ";";
+                                  r.setName(rName);
+                                  r.setText(rText);
+                                  getKB().setDeducingRules(deducingRules);
+                                  getKB().referringRules(referringRules);
+                                  return r;
+                                }
+}
+
+FzyPremise premise(FzyRule r)        :
+{
+  Token t                         = null;
+  StringBuffer premiseTxt         = null;
+  FzyPremise premise              = new FzyPremise(r);
+  FzyClauseComponent  eClause     = null;
+}
+{
+    t = "if"                      { premiseTxt = new StringBuffer(t.image);}
+
+   eClause = expression(r)        { premiseTxt = premiseTxt.append(" ").append(eClause.toText());
+                                    premise.setComponent(eClause);
+                                  }
+  {
+    premise.setText(premiseTxt.toString());
+    return premise;
+  }
+}
+FzyConsequent consequent(FzyRule r)        :
+{
+    boolean f                                       = true;
+    Object[] array                                  = null;
+    Token t                                         = null;
+    String conseqTxt                                = null;
+    FzyConsequent conseq                            = new FzyConsequent(r);
+    infosapient.system.FzyAttribute fa               = null;
+    infosapient.hdg.FzyHedge rh                      = null;
+    FzyAttribClause aac                             = null;
+    
+}
+{
+    t = <THEN>                    { conseqTxt = " "  + t.image;}
+    aac 
+        = attributeClause(r)      { conseqTxt = conseqTxt + " " +aac.toText();
+                                    conseq.setConsequentGoal(aac);
+                                    theKB.addConseqClause(aac);
+                                  }
+    {
+      addDeducingRule(r, aac.getAttribute());
+      infosapient.system.FzySolutionSet fss = (infosapient.system.FzySolutionSet)solutionSetDict.get(aac.getAttribute());
+      if (fss != null) aac.setSolutionSet(fss);
+      else {
+        fss = new infosapient.system.FzySolutionSet(aac.getAttribute());
+        solutionSetDict.put(aac.getAttribute(), fss);
+      }
+    }
+    (
+    t = <ELSE>                    { conseqTxt = conseqTxt + " "  + t.image;}
+     aac
+        = attributeClause(r)      { conseqTxt = conseqTxt + " " + aac.toText();
+                                    conseq.setAltConseqGoal(aac);
+                                  }
+    )?
+    {
+      addDeducingRule(r, aac.getAttribute());
+      fss = (infosapient.system.FzySolutionSet)solutionSetDict.get(aac.getAttribute());
+      if (fss != null) aac.setSolutionSet(fss);
+      else {
+        fss = new infosapient.system.FzySolutionSet(aac.getAttribute());
+        solutionSetDict.put(aac.getAttribute(), fss);
+      }
+      conseq.setText(conseqTxt);
+      return conseq;
+    }
+}
+FzyClauseComponent expression(FzyRule r)                 :
+{
+  boolean f = false;
+  infosapient.opr.FzyOperator opr  = null;
+  Stack stack = new Stack();
+  FzyClauseComponent fcc = null;
+  Token t = null;
+
+}
+
+{
+  fcc = parenClause(r)         {   
+                                   stack.push(fcc);
+                                   
+                               }
+                                    
+  (((t = "and") | (t="or") )   {    try {opr = FzyOperator.CreateOperatorFor(t.image);}
+                                      catch(FzySystemException fse) {}
+                                   if (!stack.isEmpty()) {
+                                     opr.setLeftChild((infosapient.system.FzyClauseComponent)stack.pop());
+                                     stack.push(opr);
+                                   }
+                               }
+                               
+  
+  
+  fcc =parenClause(r)          {  
+                                   if (!stack.isEmpty()) {
+                                     if (stack.peek() instanceof infosapient.opr.FzyOperator) {
+                                       ((infosapient.opr.FzyOperator)stack.peek()).setRightChild(fcc);
+                                     }
+                                   }
+                               }
+                                    
+  
+  )*
+  {
+    return((FzyClauseComponent)stack.pop());
+  }
+
+}
+FzyClauseComponent parenClause(FzyRule r) :
+{
+  FzyClauseComponent fcc;
+  StringBuffer text = new StringBuffer(10);
+  
+}
+{
+    ("(" 
+                               { 
+                                  text.append("(");
+                               }
+     fcc = expression(r)       {
+                                  text.append(fcc.toText());
+                               }
+    ")"                        { 
+                                  text.append(")");
+                                  fcc.setText(text);                           
+                                  return fcc;
+                               }
+                              
+    )
+    |
+     (fcc = attributeClause(r) )  { addReferringRule( r,((FzyAttribClause)fcc).getAttribute()); }
+    {                           
+      return fcc;
+    }
+}
+
+FzyAttribClause attributeClause(FzyRule r)               :
+{
+  
+  Double n            = null;
+  FzyAttribClause fac = new FzyAttribClause();
+  FzyHedge rh         = null;
+  Object[] array      = null;
+  Token   t           = null;
+  Vector hedges       = null;
+}
+{
+ 
+
+  array = id(null)             { fac.append((String) array[0]);
+                                 if (array[1] instanceof FzyAttribute){
+                                   fac.setName((String) array[0]);
+                                   fac.setAttribute((infosapient.system.FzyAttribute) array[1]);
+                                 } else throw new ParseException("Expected attribute name.");
+                               }
+  (t = "is" | t="are" )          {  
+                                 fac.append(" ").append(t.image);
+                               }
+  
+  (hedges = hedgeCollection())? 
+                               { 
+                                   if ((hedges != null)&&(!hedges.isEmpty())){
+                                      fac.setHedges(hedges);
+                                      for (Enumeration e = hedges.elements(); e.hasMoreElements();){
+                                        fac.append(" ").append(((FzyHedge) e.nextElement()).getName());
+                                      }
+                                   }
+                               }
+  
+  
+  (
+  array = id(fac.getAttribute())
+   
+                                  
+                                 { fac.append(" ").append(array[0]);
+                                  if (array[1] instanceof FzyAttribute) {
+                                    fac.setGoalAttribute((FzyAttribute) array[1]);
+                                  } else {
+                                    if (fac.getAttribute() != null) {
+                                      if (fac.getAttribute().containsSetNamed((String)array[0])) {
+                                        fac.setGoal(fac.getAttribute().getSetNamed((String)array[0]));
+  
+                                      } else throw new ParseException(" There is no set within attribute '"
+                                        + fac.getAttribute().getName() + "' named '"
+                                        + (String)array[0] + "'.");
+                                    } else throw new ParseException(" There is no attribute defined as name '"
+                                                                    + fac.getAttribute().getName() + "'.");
+                                  }
+                               }
+  |
+  n=nLiteral()
+                               {  
+                                  fac.append(" ").append(n.toString());
+                                  try {
+                                    fac.setGoal(new FzySingleton(fac.getAttribute(), n.doubleValue()));
+                                    try {
+                                      fac.getGoal().setName(n.toString());
+                                    } catch (CloneNotSupportedException cnse) {
+                                      throw new ParseException(cnse.getMessage());
+                                    }
+                                  } catch (infosapient.system.FzySystemException fse) {
+                                    throw new ParseException(fse.getMessage());
+                                  }
+                                  
+                               }
+  |
+  
+    rh =
+      restrictionHedge()    { fac.append(" " + rh.getName());}
+  )
+
+  
+  {return fac;} 
+
+}
+
+
+Vector hedgeCollection()        :
+{
+    FzyHedge h;
+    hedgeCollection = null;
+}
+{
+    ( h=hedge() )+
+    {
+        if (hedgeCollection instanceof Vector) hedgeCollection.addElement(h);
+        else {
+            hedgeCollection = new Vector();
+            hedgeCollection.addElement(h);
+        }
+        return hedgeCollection;
+    }
+}
+FzyHedge restrictionHedge()        :
+{
+    FzyHedge h;
+}
+{
+   (
+   "increased"                    { h = new FzyHdgINCREASE();}
+   |
+   "decreased"                    { h = new FzyHdgDECREASE();}
+   )
+   { return h; }
+}
+FzyHedge hedge()         :
+{
+    Token t;
+    FzyHedge h;
+}
+{
+    (
+     
+     "about" { h = new FzyHdgABOUT();}                              |
+     "above" { h = new FzyHdgABOVE();}                              |
+     "after" { h = new FzyHdgAFTER();}                              |
+     "around" {h = new FzyHdgAROUND();}                             |
+     "before" {h = new FzyHdgBEFORE(); }                            |
+     "below" { h = new FzyHdgBELOW(); }                             |
+     "closeTo" { h = new FzyHdgCLOSE(); }                           |
+     "definitely" { h = new FzyHdgDEFINITELY(); }                   |
+     "extremely" {h = new FzyHdgEXTREMELY(); }                      |
+     "generally" { h = new FzyHdgGENERALLY(); }                     |
+     "inVicinityOf" { h = new FzyHdgVICINITY();}                    |
+     "mostly" { h = new FzyHdgMOSTLY(); }                           |
+     "must" { h = new FzyHdgEXTREMELY(); }                          |
+     "near"     { h = new FzyHdgNEAR();  }                          |
+     ( "negative" | "negatively" )  { h = new FzyHdgNEGATIVE();  }  |
+     "not"      { h = new FzyHdgNOT(); }                            |
+     ( "positive" | "positively" )  { h = new FzyHdgPOSITIVE();  }  |
+     "roughly" { h = new FzyHdgROUGHLY();   }                       |
+     "should" { h = new FzyHdgSOMEWHAT();   }                       |
+     "slightly" { h = new FzyHdgSLIGHTLY(); }                       |
+     "somewhat" { h = new FzyHdgSOMEWHAT(); }                       |
+     "very" { h = new FzyHdgVERY(); }                               
+     
+    )
+    {
+        return h;
+    }
+}
+
+FzyOperator operator()         :
+{
+    Token t;
+    FzyOperator o;
+}
+{
+    ( 
+    
+    "and" {  o = new FzyOprAND(); } 
+    
+    |
+    
+    "or"    {  o = new FzyOprOR();  }       
+    
+    )
+
+    {
+        return o;
+    }
+}
+Double nLiteral()        :
+{
+    Token t     =   null;
+    Double d    =   null;
+}
+{
+    ( t =  <FP_LITERAL>  )
+    {
+        try {
+            d = new Double(t.image);
+            if (d == null) throw new ParseException(" Error encountered attempting to convert '"
+                                                      +t.image+ "' to Double. ");
+        } catch (Exception nfe) {
+            System.out.println(nfe.getMessage());
+            throw new ParseException(nfe.getMessage());
+        }
+        return d;
+    }
+
+}
+/**
+ * Return an identifier of some sort.
+ * If FzyAttribute is  null, then I expect the identifier to be an attribute name.
+ * If FzyAttribute is not null, then I expect the identifier to be a fzyset name within the attribute ecified.
+ * @param FzyAttribute fa - the fuzzy attribute
+ * @return Object[] - an array with 2 values: the actual name found as a string, and the object that is named. (FzyAttribute or FzySet).
+ * @exception ParseException 
+ */
+
+Object[] id(FzyAttribute fa)        :
+{
+    Object array[] = new Object[2];
+    FzySet fs;
+    Token t;
+    Enumeration e;
+
+}
+{
+    t = <IDENTIFIER>
+    {
+        e = getKB().ruleKeys();
+        for (; e.hasMoreElements(); ) {
+            String rname = (String) e.nextElement();
+            if (rname.equalsIgnoreCase(t.image)) {
+                ParseException pe = new ParseException(" Expected a set name. The rule name '"
+                                                       + t.image
+                                                       + "' cannot be used within an attribute expression.");
+                throw pe;
+            }
+        }
+        e = getKB().attributeKeys();
+        for (; e.hasMoreElements(); ) {
+            String sname = (String) e.nextElement();
+            if (sname.equals(t.image)) {
+                array[0] = t.image;
+                array[1] = theKB.getAttribute(t.image);
+
+                return array;
+            }
+        }
+        e = getKB().getAttributeSetNames();
+        for (; e.hasMoreElements(); ) {
+            String sname = (String) e.nextElement();
+            if (sname.equals(t.image)) {
+                if(fa instanceof FzyAttribute){
+                    String n = fa.getName();
+                    if (fa.containsSetNamed(t.image)){
+                        array[0] = t.image;
+                        array[1] = fa.getSetNamed(t.image);
+
+                        return array;
+                    } else {
+                        throw new ParseException(" Expected a set named '"
+                                            + t.image
+                                            + "' within the attribute '"
+                                            + n
+                                            + "', but did not find it. ");
+                    }
+                }else throw new ParseException ("Unable to proceed. Have found an existing set '" + t.image
+                                                + "' without a correonding attribute. ");
+            }
+        }
+        if (kbName.equals(t.image)) throw
+                new ParseException(" The name '" + t.image + "' has been previously defined as the knowledgeBase name.");
+        return array;
+    }
+}
+String setId()        :
+{
+    Token t;
+    boolean snfound = false;
+}
+{
+    t = <IDENTIFIER>
+    {
+
+        Enumeration e = getKB().getAttributeSetNames();
+        for ( ; e.hasMoreElements(); ) {
+            String name = (String) e.nextElement();
+            if (name.equalsIgnoreCase(t.image)) throw new
+                ParseException("Duplicate set declaration. The name of this set is used as another set definition '" + t.image + "'.");
+        }
+        if (!snfound) setNames.addElement(t.image);
+        return t.image;
+    }
+}
+String attribId()        :
+{
+    Token t;
+    boolean anfound = false;
+}
+{
+    t = <IDENTIFIER>
+    {
+        Enumeration e = attribNames.elements();
+        for ( ; e.hasMoreElements(); ) {
+            try {
+                String name = (String) e.nextElement();
+                if (name.equalsIgnoreCase(t.image)) throw new
+                    ParseException(" Duplicate attribute declaration. The name '" + t.image + "'; of this attribute has been previously defined. ");
+            } catch(ParseException see) {
+                anfound = true;
+                throw new ParseException(see.getMessage());
+            }
+        }
+        if (!anfound) attribNames.addElement(t.image);
+        return t.image;
+    }
+}
+String kbId()        :
+{
+    Token t;
+    boolean kbnfound = false;
+}
+{
+    t = <IDENTIFIER>
+    {
+
+        if (!kbnfound) kbnfound = true;
+        else throw new ParseException("Duplicate Knowledgebase declaration. Found " + t.image + " as a knowledgebase name./n"
+                                    +" The knowledgeBase name has already been declared.");
+        return t.image;
+    }
+}
+String ruleId()        :
+{
+    Token t;
+    boolean rnfound = false;
+}
+{
+    t = <IDENTIFIER>
+    {
+        Enumeration e = ruleNames.elements();
+        for ( ; e.hasMoreElements(); ) {
+        String name = (String) e.nextElement();
+        if (name.equalsIgnoreCase(t.image)) throw new
+            ParseException("Duplicate rule declaration. The name of this rule is used for another rule definition: " + t.image);
+        }
+        if (!rnfound) ruleNames.addElement(t.image);
+        return t.image;
+    }
+}
+

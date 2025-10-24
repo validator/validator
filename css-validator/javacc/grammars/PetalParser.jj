@@ -1,0 +1,257 @@
+PARSER_BEGIN(PetalParser)
+package cb.parser;
+
+import cb.petal.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Stack;
+
+/**
+ * Parser for Rational Rose Petal files.
+ *
+ * @version $Id: PetalParser.jj,v 1.11 2001/06/18 15:20:05 dahm Exp $
+ * @author  <A HREF="mailto:markus.dahm@berlin.de">M. Dahm</A>
+ */
+public class PetalParser {
+  private static PetalNode current_parent = null;
+  private static Stack parent_stack = new Stack(); // Stack<PetalNode>
+
+  private static PetalParser instance;
+  private static ObjectFactory factory = ObjectFactory.getInstance();
+
+  public static PetalFile parse(String file_name)
+    throws IOException, ParseException
+  {
+    return parse(new FileInputStream(file_name));
+  }
+
+  public static PetalFile parse(java.net.URL url)
+    throws IOException, ParseException
+  {
+    return parse(url.openStream());
+  }
+
+  public static PetalFile parse(File file)
+    throws IOException, ParseException
+  {
+    return parse(new FileInputStream(file));
+  }
+
+  public static PetalFile parse(InputStream stream) throws ParseException {
+    if(instance == null)
+      instance = new PetalParser(stream);
+    else
+      instance.ReInit(stream);
+
+    return instance.parse();
+  }
+
+  private static void saveParent(PetalNode new_parent) {
+    parent_stack.push(current_parent);
+    current_parent = new_parent;
+  }
+
+  private static void restoreParent() {
+    current_parent = (PetalNode)parent_stack.pop();
+  }
+
+}
+PARSER_END(PetalParser)
+
+<DEFAULT> SKIP : /* WHITE SPACE */
+{
+  " " | "\t" | "\f"
+}
+
+/* \r and \n are not just skipped because they may be significant
+ * in recognizing multi-line strings (starting with |)
+ */
+SPECIAL_TOKEN : { <NEWLINE: "\n"> | <CR: "\r"> }
+
+/** Top level construct are always petal and design objects
+ */
+PetalFile parse() :
+{
+  PetalObject petal, design;
+  PetalFile file = new PetalFile();
+  current_parent = file;
+}
+{
+  petal  = parseObject()
+  design = parseObject()
+  {
+    file.setPetal((Petal)petal);
+    file.setDesign((Design)design);
+    return file;
+  }
+}
+
+/* Example: (object ClassView "Class" "Use Case View::Student" @76	
+ *             location   	(160, 176))
+ */
+PetalObject parseObject() :
+{
+  PetalObject obj;
+  ArrayList   docs = new ArrayList();
+  Token       t1, t2=null, t3=null, t4=null;
+  PetalNode prop;
+}
+{
+  /* Object header
+   */
+  "(object" t1 = <IDENTIFIER> 
+    (t2 = <STRING> { docs.add(t2.image); })*
+    [t3 = <TAG>] {
+      obj = factory.createObject(current_parent, t1.image, docs,
+				 t3 == null? null : t3.image);
+      saveParent(obj);
+    }
+
+  /* List of properties
+   */
+  (t4   = <IDENTIFIER>
+   prop = parseValue()
+   { obj.addProperty(t4.image, prop); })*
+  
+  ")"
+  {
+    restoreParent();
+    obj.init();
+    return obj;
+  }
+}
+
+PetalNode parseValue() :
+{
+  PetalNode p;
+}
+{
+   ( (p = parseObject())
+   | (p = parseList()) 
+   | LOOKAHEAD(2) (p = parseLiteral())
+   | (p = parseTuple())
+   | (p = parseValueObject()))
+   {
+     return p; 
+   }
+}
+
+/* Example: (list unit_reference_list (object Module_Diagram "Main"
+ *		quid       	"35CB163B03CF"))
+ *
+ */
+List parseList() :
+{
+  List      list;
+  Token     t=null;
+  PetalNode obj;
+}
+{
+  "(list" [t = <IDENTIFIER>] {
+    list = factory.createList(t == null ? null : t.image);
+  }
+
+  (obj = parseValue() { list.add(obj); })*
+  ")"
+  {
+    return list;
+  }
+}
+
+Value parseValueObject() :
+{
+  StringLiteral str;
+  Token         t1;
+  Value         value;
+}
+{
+  "(value" t1 = <IDENTIFIER> str = parseString() ")"
+  {
+    value = factory.createValue(t1.image, str);
+    return value;
+  }
+}
+
+Tuple parseTuple() :
+{
+  Token t1, t2;
+}
+{
+  "(" t1 = <STRING> t2 = <INTEGER> ")"
+  {
+    return factory.createTuple(t1.image, t2.image);
+  }
+}
+
+PetalNode parseLiteral() :
+{
+  Token t, t1, t2;
+  StringLiteral str;
+}
+{
+  str = parseString()  { return str; }
+|
+  t = <INTEGER> { return factory.createInteger(t.image); }
+|
+  t = <FLOAT>   { return factory.createFloat(t.image); }
+|
+  t = <BOOLEAN> { return factory.createBoolean(t.image); }
+|
+  t = <TAG>   { return factory.createTag(t.image); }
+|
+  "(" t1 = <INTEGER> "," t2 = <INTEGER> ")"
+  {
+    return factory.createLocation(t1.image, t2.image);
+  }
+}
+
+StringLiteral parseString() :
+{
+  Token t;
+}
+{
+  t = <STRING> { return factory.createString(t.image, false); }
+| 
+  t = <MULTI_STRING> { return factory.createString(t.image, true); }
+}
+
+TOKEN : /* LITERALS */
+{
+  < INTEGER:    <PLUSMINUS> (<DIGIT>)+ >
+|
+  < FLOAT:      <PLUSMINUS> (<DIGIT>)+ "." (<DIGIT>)* >
+|
+  < BOOLEAN:    ("FALSE" | "TRUE") >
+|
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < TAG:      "@" (<DIGIT>)+ >
+|
+  < STRING: ("\"") (<IN_STRING>)* ("\"") >
+|
+  /* Parse special case, like in:
+   * (value Text 
+   * |// $package
+   * |#include "$file"
+   * |
+   * )
+   */
+  < MULTI_STRING: ("|" (<ANY>)* (<CR><NEWLINE>|<NEWLINE>))+ >
+|
+  < #IN_STRING: ((~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      ) >
+|
+  < #LETTER:    [ "a"-"z", "A"-"Z", "_", "$" ] >
+|
+  < #ANY:    ~["\n","\r"] >
+|
+  < #DIGIT:     [ "0"-"9"] >
+|
+  < #PLUSMINUS: (["+", "-"])? >
+}

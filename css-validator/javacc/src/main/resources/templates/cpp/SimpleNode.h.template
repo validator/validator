@@ -1,0 +1,91 @@
+\#ifndef JAVACC_SIMPLENODE_H
+\#define JAVACC_SIMPLENODE_H
+
+\#include <vector>
+\#include "JavaCC.h"
+\#include "Token.h"
+\#include "Node.h"
+\#include "${PARSER_NAME}TreeConstants.h"
+#if NODE_EXTENDS
+\#include "${NODE_EXTENDS}.h"
+#fi
+
+#if NAMESPACE
+namespace ${NAMESPACE_OPEN}
+#fi
+#if VISITOR
+class ${PARSER_NAME}Visitor;
+#fi
+
+class ${PARSER_NAME};
+
+#if NODE_EXTENDS
+class SimpleNode : public ${NODE_EXTENDS}, public Node {
+#else
+class SimpleNode : public Node {
+#fi
+protected: 
+  std::vector<Node*> children;
+  Node*              parent = nullptr;
+  void*              value  = nullptr;
+//int                numChildren;
+#if TRACK_TOKENS
+  Token*             firstToken = nullptr;
+  Token*             lastToken  = nullptr;
+#fi
+  ${PARSER_NAME}*    parser = nullptr;
+  int                id = 0;
+
+public: 
+           SimpleNode(int id);
+           SimpleNode(${PARSER_NAME}* parser, int id);
+  virtual ~SimpleNode();
+
+//#if !NODE_FACTORY
+//\#define jjtCreate(id) new SimpleNode(id)
+//\#define jjtCreate(p, id) new SimpleNode(p, id)
+//#fi
+
+  virtual void           jjtOpen() const;
+  virtual void           jjtClose() const;
+  virtual void           jjtSetParent(Node *n);
+  virtual Node*          jjtGetParent() const;
+  virtual void           jjtAddChild(Node *n, int i);
+  virtual Node*          jjtGetChild(int i) const;
+  virtual int            jjtGetNumChildren() const;
+  virtual void           jjtSetValue(void * value);
+  virtual void*          jjtGetValue() const;
+
+#if TRACK_TOKENS
+  virtual Token*         jjtGetFirstToken() const;
+  virtual Token*         jjtGetLastToken() const;
+  virtual void           jjtSetFirstToken(Token* token);
+  virtual void           jjtSetLastToken(Token* token);
+
+#fi
+#if VISITOR
+  virtual ${VISITOR_RETURN_TYPE:-void} jjtAccept(${PARSER_NAME}Visitor *visitor, ${VISITOR_DATA_TYPE:-void *} data) const;
+  virtual void           jjtChildrenAccept(${PARSER_NAME}Visitor *visitor, ${VISITOR_DATA_TYPE:-void *} data) const;
+  virtual void           jjtChildAccept(int childNo, ${PARSER_NAME}Visitor *visitor, ${VISITOR_DATA_TYPE:-void *} data) const;
+#fi
+
+  /* You can override these two methods in subclasses of SimpleNode to
+     customize the way the node appears when the tree is dumped.  If
+     your output uses more than one line you should override
+     toString(string), otherwise overriding toString() is probably all
+     you need to do. */
+     
+  virtual JJString toString() const;
+  virtual JJString toString(const JJString& prefix) const;
+
+  /* Override this method if you want to customize how the node dumps
+     out its children. */
+  virtual void          dump(const JJString& prefix) const;
+  virtual void          dumpToBuffer(const JJString& prefix, const JJString& separator, JJString *sb) const;
+  virtual int           getId() const { return id;  }
+};
+#if NAMESPACE
+${NAMESPACE_CLOSE}
+#fi
+
+\#endif

@@ -1,0 +1,33 @@
+
+options {
+  STATIC = true;
+  DEBUG_PARSER = false;
+  DEBUG_LOOKAHEAD = false;
+  TOKEN_MANAGER_USES_PARSER = true;
+}
+
+PARSER_BEGIN(TestTokenManagerUsesParser)
+
+
+public class TestTokenManagerUsesParser {
+
+}
+
+PARSER_END(TestTokenManagerUsesParser)
+
+SPECIAL_TOKEN :
+{
+      < WHITESPACE: " " | "\t" | "\n" | "\r" >
+}
+TOKEN :
+{
+      < FOUR: "four" >
+    | < FIVE: "five" >
+    | < SIX:  "six" >
+}
+
+void parse() : {}
+{
+    ( < FOUR > | < FIVE > | < SIX >)+
+    < EOF >
+}
