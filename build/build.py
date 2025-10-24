@@ -58,6 +58,8 @@ try:
     CAFILE = certifi.where()
 except ImportError:
     CAFILE = None
+from pathlib import Path
+import yaml
 
 javaTargetVersion = '8'
 dockerCmd = 'docker'
@@ -98,6 +100,7 @@ aboutFile = os.path.join("site", "about.html")
 stylesheetFile = os.path.join("site", "style.css")
 scriptFile = os.path.join("site", "script.js")
 filterFile = os.path.join("resources", "message-filters.txt")
+gitSubtreesFile = os.path.join(buildRoot, ".gitsubtrees.yaml")
 
 bindAddress = '0.0.0.0'
 portNumber = '8888'
@@ -1334,16 +1337,107 @@ def zipExtract(zipArch, targetDir):
             o.close()
 
 
-def updateSubmodules():
-    if offline:
-        runCmd([gitCmd, 'submodule', 'update', '--merge', '--init'])
-    else:
-        runCmd([gitCmd, 'submodule', 'update', '--remote', '--merge',
-                '--init'])
+def runGit(*args, check=True, capture_output=True, text=True):
+    """Run a git command and return stdout."""
+    return subprocess.run(
+        [gitCmd, *args], check=check, capture_output=capture_output, text=text
+    ).stdout.strip()
 
 
-def updateSubmodulesShallow():
-    runCmd([gitCmd, 'submodule', 'update', '--init', '--depth', '1'])
+def loadGitSubtreesFile(path: Path):
+    if not path.exists():
+        print(f"Error: {path} not found.", file=sys.stderr)
+        sys.exit(1)
+    return yaml.safe_load(path.read_text())
+
+
+def saveGitSubtreesFile(path: Path, data):
+    path.write_text(yaml.safe_dump(data, default_flow_style=False,
+                                   sort_keys=False))
+
+
+def getLastCommit(prefix: str):
+    """Return the last commit SHA in the subtree prefix."""
+    try:
+        return runGit("log", "-1", "--format=%H", "--", prefix)
+    except subprocess.CalledProcessError:
+        return None
+
+
+def updateSubtree(dir_name, info):
+    remote_url = info.get("remote_url")
+    remote_name = info.get("remote_name", Path(dir_name).name)
+    branch = info.get("remote_branch", "master")
+    last_local_merge = info.get("last_local_merge")
+    last_remote_commit = info.get("current_commit")
+
+    if not remote_url:
+        print(f"⚠️ Skipping {dir_name}: no remote URL")
+        return False, last_local_merge, last_remote_commit
+
+    print(f"\n==> Checking {dir_name} ({branch})...")
+
+    try:
+        runGit("remote", "add", "-f", remote_name, remote_url)
+    except subprocess.CalledProcessError:
+        pass
+
+    try:
+        runGit("fetch", remote_name,
+               f"+refs/heads/*:refs/remotes/{remote_name}/*")
+    except subprocess.CalledProcessError:
+        print(f"⚠️ Failed to fetch remote {remote_name}, skipping {dir_name}")
+        return False, last_local_merge, last_remote_commit
+
+    try:
+        remote_sha = runGit("rev-parse",
+                            f"refs/remotes/{remote_name}/{branch}")
+    except subprocess.CalledProcessError:
+        available = runGit("branch", "-r")
+        print(f"⚠️ Remote branch '{branch}' not found for {dir_name}, skipping")  # nopep8
+        print(f"    Available remote branches:\n{available}")
+        return False, last_local_merge, last_remote_commit
+
+    current_last = getLastCommit(dir_name)
+
+    print(f"    Last local commit in subtree: {current_last}")
+    print(f"    Last local merge commit:      {last_local_merge}")
+    print(f"    Last pulled remote commit:    {last_remote_commit}")
+    print(f"    Remote HEAD commit:           {remote_sha}")
+
+    if current_last != last_local_merge:
+        print(f"⏭️ {dir_name} has local commits ahead of last merge; skipping update")  # nopep8
+        return False, last_local_merge, last_remote_commit
+
+    if last_remote_commit == remote_sha:
+        print(f"✅ {dir_name} is already up to date")
+        return False, last_local_merge, last_remote_commit
+
+    print(f"🔄 Updating {dir_name} from {remote_name}/{branch}")
+    runGit("subtree", "pull", "--prefix", dir_name, remote_name, branch, "--squash")  # nopep8
+
+    new_merge_commit = getLastCommit(dir_name)
+    return True, new_merge_commit, remote_sha
+
+
+def updateSubtrees():
+    data = loadGitSubtreesFile(Path(gitSubtreesFile))
+    updated_count = 0
+
+    for dir_name, info in data.items():
+        updated, new_local_merge, new_remote_commit = updateSubtree(dir_name, info)  # nopep8
+        if updated:
+            updated_count += 1
+            info["last_local_merge"] = new_local_merge
+            info["current_commit"] = new_remote_commit
+
+    if updated_count:
+        saveGitSubtreesFile(Path(gitSubtreesFile), data)
+
+    print(
+        f"\nSummary: {updated_count} subtree(s) updated, "
+        f"{len(data) - updated_count} already up to date or skipped due to local commits."  # nopep8
+    )
 
 
 def downloadExtras():
@@ -1646,10 +1740,8 @@ def main(argv):
                 verbose = True
             elif arg == '--help':
                 printHelp()
-            elif arg == 'update':
-                updateSubmodules()
-            elif arg == 'update-shallow':
-                updateSubmodulesShallow()
+            elif arg == 'update-subtrees':
+                updateSubtrees()
             elif arg == 'dldeps':
                 downloadDependencies()
             elif arg == 'checkout':
@@ -1719,7 +1811,7 @@ def main(argv):
                     icon = 'icon.png'
                 release.runValidator()
             elif arg == 'all':
-                updateSubmodules()
+                updateSubtrees()
                 release.buildAll()
                 release.runTests()
                 if not stylesheet:
