@@ -1,0 +1,39 @@
+jar signing has been replaced by gpg signing and is no more used as well as the keystore
+
+.  <properties>
+
+    <keystore.path>keystore</keystore.path>
+    <keystore.type>PKCS12</keystore.type>
+    <keystore.alias>release</keystore.alias>
+    <keystore.password>javacc</keystore.password>
+    <keystore.store.password>javacc</keystore.store.password>
+    <keystore.key.password>javacc</keystore.key.password>
+
+  </properties>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-jarsigner-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <keystore>${keystore.path}</keystore>
+          <storetype>${keystore.type}</storetype>
+          <alias>${keystore.alias}</alias>
+          <storepass>${keystore.store.password}</storepass>
+          <keypass>${keystore.key.password}</keypass>
+          <archiveDirectory>${project.build.directory}</archiveDirectory>
+        </configuration>
+
+      </plugin>
+    </plugins>
+  </build>

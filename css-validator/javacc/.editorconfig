@@ -1,0 +1,29 @@
+root = true
+
+[*]
+trim_trailing_whitespace = true
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+
+[*.md]
+indent_size = 2
+trim_trailing_whitespace = false
+
+[{*.sh,gradlew}]
+end_of_line = lf
+
+[{*.bat,*.cmd}]
+end_of_line = crlf
+
+[{*.kts,*.kt}]
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+ij_kotlin_name_count_to_use_star_import = 999
+ij_kotlin_name_count_to_use_star_import_for_members = 999
+
+[*.java]
+# Doc: https://youtrack.jetbrains.com/issue/IDEA-170643#focus=streamItem-27-3708697.0-0
+#"static ", "java.", "org.javacc.", ""
+ij_java_imports_layout = $*,|,java.**,|,org.javacc.**,|,*
+#ij_java_use_single_class_imports = true
+indent_size = 2

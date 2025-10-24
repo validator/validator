@@ -1,0 +1,1079 @@
+/*
+ * Copyright (C) 2001 eTranslate, Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ * Contact: <eric@etranslate.com>
+ */
+
+options {
+  STATIC = false;
+  // DEBUG_PARSER = true;
+  // DEBUG_TOKEN_MANAGER=true;
+  UNICODE_INPUT = false;
+  JAVA_UNICODE_ESCAPE = false;
+}
+ 
+PARSER_BEGIN(RTFParser)
+
+package com.etranslate.tm.processing.rtf;
+
+import java.io.*;
+import java.util.*;
+
+public class RTFParser implements RTFParserDelegate {
+
+  /**
+   * This value will be passed to Delegate if there was no value specified with the CONTROL_WORD.
+   * This is to allow Delegate to be able to differentiate between commands like \b and \b0.
+   */
+  public static final int VALUE_NOT_SPECIFIED = Integer.MIN_VALUE + 12;
+
+  /* maps windows character sets to java encoding names */
+  /* note: sparse array */
+  private static final String[] CHARSET_ENCODING_TABLE = new String[256];
+  static {
+        CHARSET_ENCODING_TABLE[0] = "Cp1252";     // ANSI
+        CHARSET_ENCODING_TABLE[1] = "Cp1252";     // Default
+        CHARSET_ENCODING_TABLE[2] = "Cp1252";     // Symbol
+        CHARSET_ENCODING_TABLE[3] = null;         // Invalid
+        CHARSET_ENCODING_TABLE[77] = "MacRoman";  // Mac
+        CHARSET_ENCODING_TABLE[128] = "MS932";    // Shift JIS
+        CHARSET_ENCODING_TABLE[129] = "MS949";    // Hangul
+        CHARSET_ENCODING_TABLE[130] = "Johab";    // Johab
+        CHARSET_ENCODING_TABLE[134] = "MS936";    // GB2312
+        CHARSET_ENCODING_TABLE[136] = "MS950";    // Big5
+        CHARSET_ENCODING_TABLE[161] = "Cp1253";   // Greek
+        CHARSET_ENCODING_TABLE[162] = "Cp1254";   // Turkish
+        CHARSET_ENCODING_TABLE[163] = "Cp1258";   // Vietnamese
+        CHARSET_ENCODING_TABLE[177] = "Cp1255";   // Hebrew
+        CHARSET_ENCODING_TABLE[178] = "Cp1256";   // Arabic
+        CHARSET_ENCODING_TABLE[179] = "Cp1256";   // Arabic Traditional
+        CHARSET_ENCODING_TABLE[180] = "Cp1256";   // Arabic User
+        CHARSET_ENCODING_TABLE[181] = "Cp1255";   // Hebrew User
+        CHARSET_ENCODING_TABLE[186] = "Cp1257";   // Baltic
+        CHARSET_ENCODING_TABLE[204] = "Cp1251";   // Russian
+        CHARSET_ENCODING_TABLE[222] = "MS874";    // Thai
+        CHARSET_ENCODING_TABLE[238] = "Cp1250";   // East European
+        CHARSET_ENCODING_TABLE[254] = "Cp437";    // PC 437
+        CHARSET_ENCODING_TABLE[255] = "Cp437";    // OEM, still 437
+  }
+
+  /*
+   * These next two tables map windows codepages to java encoding names.
+   * The codepage ints are too large to do a sparse array, so we have
+   * two parallel arrays and do a binary search to find the common offset.
+   */
+
+  private static final int[] RTF_CODEPAGE = {
+        437, // United States IBM 
+
+        /*  Not supported by JDK 1.3.1
+        708, // Arabic (ASMO 708) 
+        709, // Arabic (ASMO 449+, BCON V4) 
+        710, // Arabic (transparent Arabic) 
+        711, // Arabic (Nafitha Enhanced) 
+        720, // Arabic (transparent ASMO) 
+        */
+
+        819, // Windows 3.1 (United States and Western Europe) 
+        850, // IBM multilingual 
+        852, // Eastern European 
+        860, // Portuguese 
+        862, // Hebrew 
+        863, // French Canadian 
+        864, // Arabic 
+        865, // Norwegian 
+        866, // Soviet Union 
+        874, // Thai 
+        932, // Japanese 
+        936, // Simplified Chinese 
+        949, // Korean 
+        950, // Traditional Chinese 
+        1250, // Windows 3.1 (Eastern European) 
+        1251, // Windows 3.1 (Cyrillic) 
+        1252, // Western European 
+        1253, // Greek 
+        1254, // Turkish 
+        1255, // Hebrew 
+        1256, // Arabic 
+        1257, // Baltic 
+        1258, // Vietnamese 
+        1361  // Johab
+  };
+
+  private static final String[] JAVA_ENCODINGS = {
+        "Cp437", // United States IBM 
+        /*  Not supported by JDK 1.3.1
+        "Cp708", // Arabic (ASMO 708) 
+        "Cp709", // Arabic (ASMO 449+, BCON V4) 
+        "Cp710", // Arabic (transparent Arabic) 
+        "Cp711", // Arabic (Nafitha Enhanced) 
+        "Cp720", // Arabic (transparent ASMO) 
+        */
+        "Cp819", // Windows 3.1 (United States and Western Europe) 
+        "Cp850", // IBM multilingual 
+        "Cp852", // Eastern European 
+        "Cp860", // Portuguese 
+        "Cp862", // Hebrew 
+        "Cp863", // French Canadian 
+        "Cp864", // Arabic 
+        "Cp865", // Norwegian 
+        "Cp866", // Soviet Union 
+        "MS874", // Thai 
+        "MS932", // Japanese 
+        "MS936", // Simplified Chinese 
+        "MS949", // Korean 
+        "MS950", // Traditional Chinese 
+        "Cp1250", // Windows 3.1 (Eastern European) 
+        "Cp1251", // Windows 3.1 (Cyrillic) 
+        "Cp1252", // Western European 
+        "Cp1253", // Greek 
+        "Cp1254", // Turkish 
+        "Cp1255", // Hebrew 
+        "Cp1256", // Arabic 
+        "Cp1257", // Baltic 
+        "Cp1258", // Vietnamese 
+        "Johab"  // Johab
+  };
+
+  /**
+   * Searches RTF_CODEPAGE table for the offset of rtfCodepage and returns
+   * the corresponding encoding name from the JAVA_ENCODINGS table, or
+   * null if none is present.
+   */
+  private static final String getJavaEncoding(int rtfCodepage) {
+    int offset = Arrays.binarySearch(RTF_CODEPAGE, rtfCodepage);
+    return offset < 0 ? null : JAVA_ENCODINGS[offset];
+  }
+
+  /* support for skipping bytes after a unicode character.
+   * TODO: handle \bin
+   */
+  // the default number of bytes to skip after a unicode character
+  private static final Integer DEFAULT_SKIP_STATE = new Integer(1);
+  // the current number of bytes to skip after a unicode character
+  private Integer _currentSkipState = DEFAULT_SKIP_STATE;
+  // a stack of skip states for bytes following a unicode character
+  private final Stack _ucSkipStates = new Stack();
+
+  // the default encoding for all RTF documents
+  private static final String DEFAULT_ENCODING = "Cp1252";
+  // the document encoding for this RTF document
+  private String _documentEncoding = DEFAULT_ENCODING;
+
+  /* support for parsing the \fonttbl to discover font codes and
+   * their assigned encodings
+   */
+  // this holds the (\deffN) default font number
+  private int _defaultFont = 0;
+  // this holds the font table key (\fN) while we're waiting for the
+  // font name (text) declaration in the font table.
+  private int _currentFontValue = 0;
+  // this holds the font table charset (\fcharsetN) while we're waiting for the
+  // font name (text) declaration in the font table.
+  private int _currentCharsetValue = 0;
+  // this maps font codes (\fN) to the encodings assigned (\fcharsetN)
+  // in the fonttbl
+  private final Map _fontEncodingMap = new HashMap();
+
+  /** support for encoding changes via references to the font table */
+  // the current text encoding
+  private String _currentEncoding = DEFAULT_ENCODING;
+  // a stack of text encodings across groups
+  private final Stack _fontEncodingStack = new Stack();
+
+  private int _currentStyleValue = 0;
+  private final Map _styleMap = new HashMap();
+  private final Stack _styleStack = new Stack();
+  private String _currentStyle = NO_STYLE;
+
+  private int _where = IN_DOCUMENT;
+  private int _rtfDepth = 1;
+
+  private int _braceDepth = 0;
+  private String _newline = "\n";
+
+  // The delegate to which the parser forwards productions.
+  // Unless setDelegate is called, this will be the parser
+  // itself, which supplies a no-op implementation (see below).
+  // this enables us to avoid doing null checks in the delegate
+  // calls.
+
+  private RTFParserDelegate _delegate = this;
+
+  public static void main(String args[]) throws ParseException {
+    RTFParser parser = RTFParser.createParser(new InputStreamReader(System.in));
+    parser.parse();
+  }
+
+  public void reinitialize(Reader reader) {
+    ReInit(reader);
+  }
+
+  public static RTFParser createParser(Reader reader) {
+    return new RTFParser(reader);
+  }
+
+  public void parse() throws ParseException {
+    try {
+      document();
+    } catch (UnsupportedEncodingException uee) {
+      throw new ParseException("Could not decode bytes in encoding: " +
+                               uee.getMessage());
+    }
+  }
+
+  public void setDelegate(RTFParserDelegate delegate) {
+    _delegate = delegate;
+  }
+
+  public String getNewLine() {
+    return _newline;
+  }
+
+  public void setNewLine(String newline) {
+    _newline = newline;
+  }
+
+  /**
+   * Returns a numbered font which supports the encoding.
+   * This data is gleaned from the RTF fonttbl, and so
+   * is not available until after the fonttbl has been
+   * parsed.  No guarantees are made about which font
+   * will be returned if multiple fonts support the
+   * encoding.
+   *
+   * @return a font control word value.
+   */
+  public int getFontForEncoding(String encoding) {
+    for (Iterator i = _fontEncodingMap.entrySet().iterator(); i.hasNext();) {
+        Map.Entry entry = (Map.Entry)i.next();
+        if (entry.getValue().equals(encoding)) {
+           return ((Integer)entry.getKey()).intValue();
+        }
+    }
+    return -1;
+  }
+
+  // no-op implementation of RTFParserDelegate interface, for cases
+  // when delegate is not set.
+  public void text(String text, String style, int context) {}
+
+  public OutputStream getNextOutputStream(int context) {return null;}
+
+  public void controlSymbol(String controlSymbol, int context) {}
+
+  public void controlWord(String controlWord, int value, int context) {}
+
+  public void openGroup(int depth) {}
+
+  public void closeGroup(int depth) {}
+
+  public void styleList(List styles) {}
+
+  public void startDocument() {}
+
+  public void endDocument() {}
+
+
+  protected String getEncodingForCharsetAndFontName(int charset, String fontName) {
+  	return CHARSET_ENCODING_TABLE[charset];
+  }
+  
+  private void setCurrentEncoding(String encoding) {
+    if (null == encoding) {
+       throw new IllegalArgumentException("current encoding cannot be null");
+    }
+    _currentEncoding = encoding;
+  }
+
+  private String getCurrentEncoding() {
+    if (_where == IN_DOCUMENT) {
+      return _currentEncoding;
+    } else {
+      return _documentEncoding;
+    }
+  }
+
+  private String getCurrentStyle() {
+    return _currentStyle;
+  }
+
+  private void setCurrentStyle(String style) {
+    _currentStyle = style;
+  }
+
+  private Integer getCurrentSkipState() {
+    return _currentSkipState;
+  }
+
+  private void setCurrentSkipState(Integer skipState) {
+    _currentSkipState = skipState;
+  }
+
+  private void setDocumentEncoding(String encoding) {
+    if (null == encoding) {
+       throw new IllegalArgumentException("document encoding cannot be null");
+    }
+    _documentEncoding = encoding;
+  }
+
+  /**
+   * convenience method which downcasts the chars in str to a byte
+   * array without attempting to decode them.
+   */
+  private byte[] stringToBytes(String str) {
+    char[] cbuf = str.toCharArray();
+    byte[] buf = new byte[cbuf.length];
+    for (int i = 0; i < cbuf.length; i++) {
+      buf[i] = (byte)cbuf[i];
+    }
+    return buf;
+  }
+}
+ 
+PARSER_END(RTFParser)
+
+/*************************************/
+/* lexical specification begins here */
+/*************************************/
+
+// backslash introduces a control, sending us into that lexical state.
+// backslash followed by single quote introduces a hex-encoded character,
+// which we process in the HEX state.  This allows us to distinguish
+// hex-escaped characters from RTF controls on the basis of a string
+// literal (using the parser's DFA) rather than a regular expression
+// (which uses the parser's NFA).
+// see <http://www.cs.albany.edu/~sreeni/JavaCC/lexertips.html>
+// for details on this topic.
+<*>
+MORE:
+{
+  <BACKSLASH: "\\"> : CONTROL
+}
+
+<*>
+MORE:
+{
+  <HEX_ESCAPE: "\\'"> : HEX
+}
+
+// newlines and tab literals are ignored in the default state.
+// Note that space characters are *not* ignored, since they are text.
+<DEFAULT>
+SKIP :
+{
+  "\n"
+| "\r"
+| "\t"
+| "\u0000"
+}
+
+// braces begin/end a group and put us into the DEFAULT lexical state
+<*>
+TOKEN:
+{
+  <LBRACE: "{"> : DEFAULT
+| <RBRACE: "}"> : DEFAULT
+}
+
+// apart from {, }, and \, everything else (less skipped whitespace) in 
+// the DEFAULT state is (1) text; or (2) a control symbol.
+
+// these control symbol literals are escaped special characters
+<DEFAULT>
+TOKEN:
+{
+  <NON_BREAKING_SPACE: "\\~">  { matchedToken.image = "\u00A0"; }
+| <OPTIONAL_HYPHEN: "\\-">     { matchedToken.image = "\u00ad"; }
+| <NON_BREAKING_HYPHEN: "\\_"> { matchedToken.image = "\u2011"; }
+}
+
+// the RTF spec allows writers to emit a backslash (newline|carriage return)
+// token and requires us to treat it as a \par token.  See the fine
+// print on page 89 of the 1.6 spec.
+// Since \par is user-configurable (see setNewLine()), we cannot change
+// the matched value here; rather, this is done in the parser, which has
+// access to the user's EOL String.
+<*>
+TOKEN:
+{
+  <ESCAPED_NEWLINE: "\\\n"> : DEFAULT
+| <ESCAPED_CARRIAGE_RETURN: "\\\r"> : DEFAULT
+}
+
+// these control symbol literals are not handled in this parser (except
+// to pass them onto the delegate), but we specify them as literals
+// so that they can be matched quickly.
+<DEFAULT>
+TOKEN:
+{
+  <IGNORABLE_DESTINATION: "\\*">
+| <FORMULA_CHARACTER: "\\|">
+| <INDEX_SUBENTRY: "\\:">
+}
+
+// escaped braces and backslashes are text
+<*>
+TOKEN:
+{
+  <ESCAPED_LBRACE: "\\{">     { matchedToken.image = "{"; } : DEFAULT
+| <ESCAPED_RBRACE: "\\}">     { matchedToken.image = "}"; } : DEFAULT
+| <ESCAPED_BACKSLASH: "\\\\"> { matchedToken.image = "\\"; } : DEFAULT
+}
+
+// the patterns for matching control symbols that we forward to the delegate
+// and text.
+<DEFAULT>
+TOKEN:
+{
+  <CONTROL_SYM: "\\" ~["a"-"z", "A"-"Z", "0"-"9", " ",
+                       "\u0000", "\n", "\r", "\t", "}", "{", "\\"]>
+| <TEXT: (~["\\","{","}", "\u0000", "\n","\r", "\t"])+>
+}
+
+// end of DEFAULT lexical state specification
+
+// we handle hex characters in their own lexical state, with a single
+// pattern.  When matched, this gets combined with the MORE \' match
+// that sent us into this state to begin with.  We don't use the
+// CONTROL state because the hex characters mean something else there.
+<HEX>
+TOKEN:
+{
+  <#HEX_DIGIT: ["0"-"9","a"-"f","A"-"F"]>
+| <HEX_CHAR: <HEX_DIGIT> <HEX_DIGIT>> : DEFAULT
+}
+
+// end of HEX lexical state specification
+
+// In the CONTROL state, whitespace is semantically meaningless; 
+// syntactically, however, it marks the end of whatever control we're
+// lexing, putting us back in the DEFAULT state.
+//
+// For example: given input like this: "\control1 \control2" the intervening
+// space is not semantically part of either control token, but it does
+// delimit them.
+//
+// N.B. This input - "\control1    \control2" - is different. The first
+// intervening space is ignorable.  The subsequent spaces, however, are
+// text and must be accumulated in a TEXT token in the DEFAULT state.
+<CONTROL>
+SKIP:
+{
+  " " : DEFAULT
+| "\n" : DEFAULT
+| "\r" : DEFAULT
+| "\t" : DEFAULT
+| "\u0000" : DEFAULT
+}
+ 
+/* Line breaking controls */
+<CONTROL>
+TOKEN:
+{
+  <PAR: "par"> 
+| <LINE: "line">
+}
+
+/* Unicode character value control word literal */
+<CONTROL>
+TOKEN:
+{
+  <U: "u">
+}
+
+/* Unicode skipping directive control word literal */
+<CONTROL>
+TOKEN:
+{
+ <UC: "uc">
+}
+
+/* style, font, and font charset control word literals */
+<CONTROL>
+TOKEN:
+{
+  <F: "f">
+| <CS: "cs">
+| <FCHARSET: "fcharset">
+| <PLAIN: "plain">
+}
+
+/* Document encoding control word literals */
+<CONTROL>
+TOKEN:
+{
+  <PC: "pc">
+| <PCA: "pca">
+| <MAC: "mac">
+| <RTF: "rtf">
+| <ANSI: "ansi">
+| <ANSICPG: "ansicpg">
+| <DEFF: "deff">
+| <FROMTEXT: "fromtext">
+| <FROMHTML: "fromhtml">
+| <FBIDIS: "fbidis">
+}
+
+/* Document table declaration control word literals */
+<CONTROL>
+TOKEN:
+{
+  <INFO: "info">
+| <REVTBL: "revtbl">
+| <PNTEXT: "pntext">
+| <FONTTBL: "fonttbl">
+| <COLORTBL: "colortbl">
+| <PNSECLVL: "pnseclvl">
+| <LISTTABLE: "listtable">
+| <STYLESHEET: "stylesheet">
+}
+
+/* control word literals which designate special characters */
+<CONTROL>
+TOKEN:
+{
+  <TAB: "tab"> 
+| <ZWJ: "zwj"> 
+| <ZWNJ: "zwnj"> 
+| <EMDASH: "emdash"> 
+| <ENDASH: "endash"> 
+| <EMSPACE: "emspace"> 
+| <ENSPACE: "enspace"> 
+| <QMSPACE: "qmspace"> 
+| <BULLET: "bullet"> 
+| <LQUOTE: "lquote"> 
+| <RQUOTE: "rquote"> 
+| <LTRMARK: "ltrmark"> 
+| <RTLMARK: "rtlmark"> 
+| <LDBLQUOTE: "ldblquote"> 
+| <RDBLQUOTE: "rdblquote"> 
+}
+
+/* control word literals which designate binary data */
+<CONTROL>
+TOKEN:
+{
+  <BIN: "bin">
+}
+
+/* control words which we don't handle (but which we forward to the
+ * delegate nonetheless).
+ */
+<CONTROL>
+TOKEN:
+{
+  <CONTROL_WORD: (["a"-"z", "A"-"Z"])+>
+}
+
+/* control parameters: note that they may be negative values */
+<CONTROL>
+TOKEN:
+{
+  <#DIGIT: ["0"-"9"]>
+| <CW_VAL: (["-"])? (<DIGIT>)+>
+}
+
+/* any character which wasn't matched as part of a control word or its
+ * value terminates the control (sending us back into the DEFAULT state)
+ * but is not actually part of the control.  However the data needs to be
+ * processed as raw text.
+ */
+<CONTROL>
+TOKEN:
+{
+ <TEXT_CONTROL_DELIMITER: ~[]> : DEFAULT
+}
+
+// end of CONTROL lexical specification
+
+/**************************************/
+/* grammatical productions begin here */
+/**************************************/
+
+/**
+ *  Sends the parser delegate a block of unicode text along with
+ *  the name of the style in which it was found and the location
+ *  in the document where it occurred.
+ *  All text encoding is resolved here so the delegate doesn't need
+ *  to concern itself with the various ways in which RTF encodes
+ *  non-ASCII strings.
+ */
+void text() throws UnsupportedEncodingException :
+{
+  StringBuilder buf = new StringBuilder();
+  StringBuilder cbuf = new StringBuilder();
+  ByteArrayOutputStream baos = new ByteArrayOutputStream();
+  byte b;
+  byte[] raw;
+}
+{
+  (
+    (
+      u(cbuf) raw=skip_after_unicode()
+      {
+        if (raw != null) {
+          cbuf.append(new String(raw, getCurrentEncoding()));
+        }
+      }
+      | escaped(cbuf)
+      | special_character(cbuf)
+      | textual_control_symbol(cbuf)
+    ) {
+      if (baos.size() > 0) {
+        buf.append(baos.toString(getCurrentEncoding()));
+        baos.reset();
+      }
+      buf.append(cbuf.toString());
+      cbuf.setLength(0);
+    }
+    | b=hex()        { baos.write(b); }
+    | raw=raw_text() { baos.write(raw,0,raw.length); }
+  )+ 
+  {
+    if (baos.size() > 0) {
+      buf.append(baos.toString(getCurrentEncoding()));
+      baos.reset();
+    }
+    if (_where == IN_STYLESHEET) {
+      _styleMap.put(new Integer(_currentStyleValue), buf.toString());
+    } else if (_where == IN_FONTTBL) {
+      String encoding = getEncodingForCharsetAndFontName(_currentCharsetValue, buf.toString());
+      _fontEncodingMap.put(new Integer(_currentFontValue), encoding); 
+    }
+    _delegate.text(buf.toString(), getCurrentStyle(), _where);
+  }
+}
+
+byte[] raw_text() throws UnsupportedEncodingException :
+{
+  Token tok;
+}
+{
+  (
+      tok=<TEXT>
+    | tok=<TEXT_CONTROL_DELIMITER>
+  ) { 
+    return stringToBytes(tok.image);
+  }
+}
+
+void escaped(StringBuilder buf) :
+{
+  Token tok;
+}
+{
+  (
+      tok=<ESCAPED_BACKSLASH>
+    | tok=<ESCAPED_LBRACE>
+    | tok=<ESCAPED_RBRACE>
+  ) {
+    buf.append(tok.image.charAt(0));
+  }
+}
+
+void textual_control_symbol(StringBuilder buf) :
+{
+  Token tok;
+}
+{
+  (
+    tok=<NON_BREAKING_SPACE>
+  | tok=<OPTIONAL_HYPHEN>
+  | tok=<NON_BREAKING_HYPHEN> 
+  ) {
+    buf.append(tok.image);
+  }
+}
+
+byte hex() :
+{
+  Token hex;
+}
+{
+  hex=<HEX_CHAR>
+  {
+    byte b = (byte)Integer.parseInt(hex.image.substring(2), 16);
+    return b;
+  }
+}
+
+void special_character(StringBuilder buf) :
+{
+}
+{
+  (
+      <TAB>        { buf.append('\t'); }
+    | <EMDASH>     { buf.append('\u2014'); }
+    | <ENDASH>     { buf.append('\u2013'); }
+    | <EMSPACE>    { buf.append('\u2003'); }
+    | <ENSPACE>    { buf.append('\u2002'); }
+    | <QMSPACE>    { buf.append('\u2005'); }
+    | <BULLET>     { buf.append('\u2022'); }
+    | <LQUOTE>     { buf.append('\u2018'); }
+    | <RQUOTE>     { buf.append('\u2019'); }
+    | <LDBLQUOTE>  { buf.append('\u201c'); }
+    | <RDBLQUOTE>  { buf.append('\u201d'); }
+    | <LTRMARK>    { buf.append('\u200e'); }
+    | <RTLMARK>    { buf.append('\u200f'); }
+    | <ZWJ>        { buf.append('\u200d'); }
+    | <ZWNJ>       { buf.append('\u200c'); }
+  )
+}
+
+void line_breaks() :
+{
+  Token word = null;
+}
+{
+  (   word = <PAR>
+      | word = <LINE>
+      | word = <ESCAPED_NEWLINE>
+      | word = <ESCAPED_CARRIAGE_RETURN>
+  ) { 
+    _delegate.text(getNewLine(), getCurrentStyle(), _where);
+    _delegate.controlWord(word.image, VALUE_NOT_SPECIFIED, _where);
+  }
+}
+
+void lbrace() :
+{
+}
+{
+  <LBRACE>
+  {
+    _fontEncodingStack.push(getCurrentEncoding());
+    _ucSkipStates.push(getCurrentSkipState());
+    _styleStack.push(getCurrentStyle());
+    _delegate.openGroup(++_braceDepth);
+  }
+}
+
+void rbrace() :
+{
+}
+{
+  <RBRACE>
+  {
+    setCurrentSkipState((Integer)_ucSkipStates.pop());
+    setCurrentEncoding((String)_fontEncodingStack.pop());
+    setCurrentStyle((String)_styleStack.pop());
+    _delegate.closeGroup(_braceDepth);
+    if (_rtfDepth == --_braceDepth) { // leaving a table
+      if (_where == IN_STYLESHEET) {
+        _delegate.styleList(new ArrayList(_styleMap.values()));
+      }
+      _where = IN_DOCUMENT;
+    }
+  }
+}
+
+void table_declaration() :
+{
+  Token word = null, val = null;
+}
+{
+  (
+      word = <INFO>                   { _where = IN_INFO; }
+    | word = <FONTTBL>                { _where = IN_FONTTBL; }
+    | word = <COLORTBL>               { _where = IN_COLORTBL; }
+    | word = <STYLESHEET>             { _where = IN_STYLESHEET; }
+    | word = <LISTTABLE>              { _where = IN_LISTTABLE; }
+    | word = <REVTBL>                 { _where = IN_REVTBL; }
+    | word = <PNTEXT> [ val = <CW_VAL> ]    { _where = IN_PNTEXT; }
+    | word = <PNSECLVL> [ val = <CW_VAL> ]  { _where = IN_PNTEXT; }
+  ) {
+    int v = null == val ? VALUE_NOT_SPECIFIED : Integer.parseInt(val.image);
+    _delegate.controlWord(word.image, v, _where);
+  }
+}
+
+void control_symbol() :
+{
+  Token sym = null;
+}
+{
+  (
+    sym=<CONTROL_SYM>
+  | sym=<FORMULA_CHARACTER>
+  | sym=<INDEX_SUBENTRY>
+  ) {
+    _delegate.controlSymbol(sym.image, _where);
+  }
+}
+
+void control_word() :
+{
+  Token word = null, val = null;
+}
+{
+  (
+      word=<IGNORABLE_DESTINATION>
+    | word=<CONTROL_WORD> [ val=<CW_VAL> ]
+  ) {
+    int v = null == val ? VALUE_NOT_SPECIFIED : Integer.parseInt(val.image);
+    _delegate.controlWord(word.image, v, _where);
+  }
+}
+
+void u(StringBuilder buf) :
+{
+  Token val;
+}
+{
+  <U>
+  val=<CW_VAL> {
+    int ucValue = Integer.parseInt(val.image);
+    // correct RTF negative unicode char value
+    if (ucValue < 0) {
+      ucValue += 65536;
+    }
+    buf.append((char)ucValue);
+  }
+}
+
+JAVACODE
+byte[] skip_after_unicode() throws UnsupportedEncodingException {
+  Token tok;
+  byte[] raw = null;
+
+  for (int skip = getCurrentSkipState().intValue(); skip != 0; skip--) {
+    tok = getNextToken();
+    switch (tok.kind) {
+    case HEX_CHAR:
+      break; // buh bye!
+    case TEXT:
+    case TEXT_CONTROL_DELIMITER:
+      if (tok.image.length() > skip) {
+         byte[] tmp = stringToBytes(tok.image);
+         raw = new byte[ tmp.length - skip ];
+         System.arraycopy(tmp,skip,raw,0,raw.length);
+         return raw;
+      }
+      break; // the text was exactly what we needed: buh bye!
+    default:
+      throw new IllegalStateException("unexpected token while skipping");
+    }
+  }
+  return raw;
+}
+
+void uc() :
+{
+  Token word = null, val = null;
+}
+{
+  word=<UC>
+  val=<CW_VAL>
+  {
+    int bytesToSkip = null == val ? 0 : Integer.parseInt(val.image);
+    setCurrentSkipState(new Integer(bytesToSkip));
+  }
+}
+
+void fcharset() :
+{
+  Token word = null, val = null;
+}
+{
+  word=<FCHARSET>
+  val=<CW_VAL>
+  {
+    _currentCharsetValue = null == val ? 0 : Integer.parseInt(val.image);
+    _delegate.controlWord(word.image, _currentCharsetValue, _where);
+  }
+}
+
+void deff() :
+{
+  Token val = null;
+}
+{
+  <DEFF>
+  val=<CW_VAL>
+  {
+    // need to figure out if this really has to be handled.
+    _defaultFont = null == val ? 0 : Integer.parseInt(val.image);
+    _delegate.controlWord("\\deff", _defaultFont, _where);
+  }
+}
+
+void f() :
+{
+  Token val;
+}
+{
+  <F>
+  val=<CW_VAL>
+  {
+    int font = null == val ? 0 : Integer.parseInt(val.image);
+    if (IN_FONTTBL == _where) {
+      _currentFontValue = font;
+    } else if (IN_DOCUMENT == _where) {
+      String encoding = (String)_fontEncodingMap.get(new Integer(font));
+      setCurrentEncoding(null == encoding ? DEFAULT_ENCODING : encoding);
+    }
+    _delegate.controlWord("\\f", font, _where);
+  }
+}
+
+void cs() :
+{
+  Token val = null;
+}
+{
+  <CS>
+  val=<CW_VAL>
+  {
+    int style = null == val ? 0 : Integer.parseInt(val.image);
+    if (IN_STYLESHEET == _where) {
+      _currentStyleValue = style;
+    } else if (IN_DOCUMENT == _where) {
+      setCurrentStyle((String)_styleMap.get(new Integer(style)));
+    }
+    _delegate.controlWord("\\cs", style, _where);
+  }
+}
+
+void plain() :
+{
+}
+{
+  <PLAIN> { 
+  	setCurrentStyle(NO_STYLE); 
+    _delegate.controlWord("\\plain", VALUE_NOT_SPECIFIED, _where);
+  }
+}
+
+
+/* these productions identify the document encoding; note that they
+ * are almost always clobbered by an \ansicpg or by unicode characters */
+void document_charset() :
+{
+}
+{
+  (
+      <PC>  { setDocumentEncoding(getJavaEncoding(437)); }
+    | <PCA> { setDocumentEncoding(getJavaEncoding(850)); }
+    | <MAC> { setDocumentEncoding("MacRoman"); }
+    | <ANSI> { setDocumentEncoding(getJavaEncoding(1252)); }
+  )
+}
+
+/* specifies the ANSI codepage to use as the document's encoding. Subject
+ * to local overrides. */
+void ansicpg() :
+{
+  Token val = null;
+}
+{
+  <ANSICPG>
+  val=<CW_VAL>
+  {
+    // must be a value in the map - we should throw if it isn't there.
+    int cp = null == val ? 0 : Integer.parseInt(val.image);
+    setDocumentEncoding(getJavaEncoding(cp));
+  }
+}
+
+void bin() throws ParseException :
+{
+  Token val = null;
+}
+{
+  <BIN>
+  val=<CW_VAL>
+  {
+    int nbytes = null == val ? 0 : Integer.parseInt(val.image);
+    byte[] data = new byte[nbytes];
+    OutputStream os = _delegate.getNextOutputStream(_where);
+    try
+    {
+        try
+        {
+            // Skip leading space.
+	    jj_input_stream.readChar();
+            for (int i = 0; i < nbytes; i++)
+            {
+                // Will only return 8-bit characters.
+                byte b = (byte)jj_input_stream.readChar();
+                if (os != null)
+                {
+                    os.write(b);
+                }
+            }
+        }
+        finally
+        {
+            if (os != null)
+            {
+                os.close();
+            }
+        }
+    }
+    catch (IOException e)
+    {
+        throw new ParseException("Unable to process binary data");
+        e.printStackTrace();
+    }
+  }
+}
+
+// TODO: consider collecting special characters in a buffer
+
+void group() throws UnsupportedEncodingException :
+{
+  Token word = null, val = null;
+}
+{
+  lbrace()
+  (
+      (word = <RTF> val = <CW_VAL> (<FBIDIS>)?) { 
+      	_rtfDepth = _braceDepth; 
+      	_delegate.controlWord(word.image, Integer.parseInt(val.image), _where);
+      }
+    | document_charset()
+    | <FROMTEXT>
+    | <FROMHTML> (<CW_VAL>)?
+    | ansicpg()
+    | deff()
+    | table_declaration() // fonttbl, filetbl, info, stylesheet, etc.
+    | uc()
+    | f()
+    | fcharset()
+    | cs()
+    | plain()
+    | bin()
+    | line_breaks()
+    | control_word() // this is the catch-all for controls we don't 
+                     // explicitly handle in the grammar.
+    | control_symbol()
+    | group()
+    | text()
+  )*
+  rbrace()
+}
+
+void document() throws UnsupportedEncodingException :
+{
+}
+{
+  { _delegate.startDocument(); }
+  group()
+  { _delegate.endDocument(); }
+  <EOF>
+}

@@ -1,0 +1,611 @@
+//
+// JavaCC GDMO Parser
+// This parser was originally designed to read GDMO Managed Objects and
+// to build an AST which could be used for translation to UML.
+//
+// The GRAMMAR has been tested against a number of standard Managed Object
+// models but has one or two known quirks. The main one is that at present
+// only the double quote terminator for BEHAVIOUR and other description texts
+// is supported. It's not hard to change this but I just have not done it.
+//
+// %W% dated %E% at %U%
+// 
+// Dermot Dwyer (dermot@cognesis.com) 
+// Cognesis Limited
+// The Portergate
+// Ecclesall Road
+// Sheffield
+// S11 8NX United Kingdom
+//
+// Tel: +44 114 209 6039
+//
+options {
+	 LOOKAHEAD = 1;
+	 CHOICE_AMBIGUITY_CHECK=1;
+	 OTHER_AMBIGUITY_CHECK=1;
+	 STATIC=false;
+	 // Parser debug options - comment back in to generate a version which dumps
+	 // out a trace as the parse progresses
+	 // DEBUG_PARSER = true;
+	 // DEBUG_LOOKAHEAD = true;
+}
+
+PARSER_BEGIN(GdmoTranslator)
+
+import syntaxtree.*;
+import visitor.*;
+
+
+
+public class GdmoTranslator {
+
+	// Main method as this is currently a Java application
+	// Possible use as an applet or bean is for further study
+	public static void main(String args[]) throws ParseException {
+
+	// Construct an instance of the translator
+	GdmoTranslator parser = new GdmoTranslator(System.in);
+	parser.go();
+	System.out.println("Parse Complete - UML Production Begins");
+	// Visitor code goes here
+	}
+/**
+ * This method was created in VisualAge.
+ */
+public final void go() {
+	try // The Parser classes can throw a parse exception
+	{
+		// All JAVACC specifications have the same level of hierarchy
+		// therefore any of them may be used as a target production. Here
+		// we try to ecvaluate the production DocumentSpecification()
+		Node root = DocumentSpecification();
+
+
+		// Prepare the GdmoVisitor class to perform UML generation
+		// GdmoVisitor gdmov = new GdmoDeclarationVisitor();
+		// root.accept(gdmov);
+		// return gdmov;
+	} 
+	catch (ParseException p)
+	{ 
+		// Uses a slightly modified version of ParseException which
+		// provides a better level of feed back to the user
+		System.out.println("Ooops.");
+		System.out.println(p.getMessage());
+		// return null;
+	}
+	catch (Exception e) {
+		// Parse Error so tell the world about it
+		System.out.println("Ooops.");
+		System.out.println(e.getMessage());
+		e.printStackTrace();
+		// return null;
+	}
+}
+}
+
+PARSER_END(GdmoTranslator)
+
+// White space is not significant in Gdmo so it is simply
+// Skipped by the translator
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"						// Comments are broken out into a lexer state
+| "--" : ONE_LINE_COMMENT			// As are single line comments and ...
+}
+
+// Handle one-line ASN.1 style comments which are introduced by the characters "--"
+// and end at the next newline
+<ONE_LINE_COMMENT> SKIP:			// A one-line comment simply discards text until
+{						// the next newline character is detected
+  <( "\n" | "--" )> : DEFAULT
+}
+<ONE_LINE_COMMENT> MORE:			// Just keep going.....
+{
+  < ~[] >
+}
+
+// Gdmo comments are stripped by the lexical analyser. This is a temporary measure as in future
+// comments will have to be caried over into the UML. To do this an AST node will have to be
+// created which associates a comment block with a code segment
+//
+// Basic Gdmo tokeniser stuff. The keywords recognised by this parser are
+// listed in the following token table. Note that tokens are specified in order
+// of increasing string length which "persuades" the lexer to optimise the DFA
+// bit vectors.
+//
+TOKEN :
+{	<COLON:		":">				// Special character symbols
+|	<COMMA:		",">
+|	<DOT:		".">
+|	<EQUAL:		"=">
+|	<LBRACE:	"{">
+|	<LPAREN:	"(">
+|	<RBRACE:	"}">
+|	<RPAREN:	")">
+|	<SCOLON:	";">
+|	<AS:		"AS">				// Two character tokens
+|	<BY:		"BY">
+|	<IF:		"IF">
+|	<ADD:		"ADD">				// Three character tokens
+|	<AND:		"AND">
+|	<FOR:		"FOR">
+|	<GET:		"GET">
+|	<IDS:		"IDS">
+|	<FROM:		"FROM">				// Four character tokens
+|	<NAME:		"NAME">
+|	<WITH:		"WITH">
+|	<MODE:		"MODE">
+|	<CLASS:		"CLASS">			// Five character tokens
+|	<FIXED:		"FIXED">
+|	<GROUP:		"GROUP">
+|	<NAMED:		"NAMED">
+|	<REPLY:		"REPLY">
+|	<VALUE:		"VALUE">
+|	<ACTION:	"ACTION">			// Six character tokens
+|	<CREATE:	"CREATE">
+|	<DELETE:	"DELETE">
+|	<GROUPS:	"GROUPS">
+|	<OBJECT:	"OBJECT">
+|	<REMOVE:	"REMOVE">
+|	<SYNTAX:	"SYNTAX">
+|	<VALUES:	"VALUES">
+|	<ACTIONS:	"ACTIONS">			// Seven character tokens
+|	<BINDING:	"BINDING">
+|	<CONTEXT:	"CONTEXT">
+|	<TOK_DEFAULT:	"DEFAULT">
+|	<DEFINED:	"DEFINED">
+|	<DERIVED:	"DERIVED">
+|	<INITIAL:	"INITIAL">
+|	<MANAGED:	"MANAGED">
+|	<MATCHES:	"MATCHES">
+|	<PACKAGE:	"PACKAGE">
+|	<PRESENT:	"PRESENT">
+|	<REPLACE:	"REPLACE">
+|	<EQUALITY:	"EQUALITY">
+|	<ELEMENTS:	"ELEMENTS">
+|	<ORDERING:	"ORDERING">
+|	<PACKAGES:	"PACKAGES">
+|	<REQUIRED:	"REQUIRED">
+|	<SUPERIOR:	"SUPERIOR">			// Eight character tokens
+|	<ATTRIBUTE:	"ATTRIBUTE">
+|	<CONFIRMED:	"CONFIRMED">
+|	<PARAMETER:	"PARAMETER">
+|	<PERMITTED:	"PERMITTED">
+|	<ADDREMOVE:	"ADD-REMOVE">
+|	<ATTRIBUTES:	"ATTRIBUTES">
+|	<EVENTINFO:	"EVENT-INFO">
+|	<REGISTERED:	"REGISTERED">
+|	<PARAMETERS:	"PARAMETERS">
+|	<SUBCLASSES:	"SUBCLASSES">
+|	<SUBSTRINGS:	"SUBSTRINGS">
+|	<ACTIONINFO:	"ACTION-INFO">
+|	<CONDITIONAL:	"CONDITIONAL">
+|	<EVENTREPLY:	"EVENT-REPLY">
+|	<GETREPLACE:	"GET-REPLACE">
+|	<DESCRIPTION:	"DESCRIPTION">
+|	<INFORMATION:	"INFORMATION">
+|	<SUBORDINATE:	"SUBORDINATE">
+|	<ACTIONREPLY:	"ACTION-REPLY">
+|	<NOTIFICATION:	"NOTIFICATION">
+|	<NOTIFICATIONS:	"NOTIFICATIONS">
+|	<SETCOMPARISON:	"SET-COMPARISON">
+|	<SPECIFICERR:	"SPECIFIC-ERROR">
+|	<SETINTERSECT:	"SET-INTERSECTION">
+|	<REPLACE_DEF:	"REPLACE-WITH-DEFAULT">
+|	<WITH_REF:	"WITH-REFERENCE-OBJECT">
+|	<DELETE_FORCE:	"DELETES-CONTAINED-OBJECTS">
+|	<DELETE_EMPTY:	"ONLY-IF-NO-CONTAINED-OBJECTS">
+|	<AUTO_INST:	"WITH-AUTOMATIC-INSTANCE-NAMING">
+//
+// Certain nationalities struggle with the spelling of BEHAVIOUR so
+// Lets accept both. This would be better done with a rule in the
+// grammar but I'm far from perfect
+//
+|	<BEHAVIOUR:	("BEHAVIOUR" | "BEHAVIOR")>
+//
+// Multinational approach to the spelling of CHARACTERISED as well
+|	<CHARACTERISED:	"CHARACTERI"["S","Z"]"ED">
+}
+
+// LITERALS
+TOKEN :
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "'" (["0"-"9","a"-"f","A"-"F"])+ "'H" >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+|
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])?
+      | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])?
+      | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])?
+      | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]
+  >
+|
+  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+  < STRING_LITERAL:
+      "\""
+      (   (~["\"","\\"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "\""
+  >
+| // The descriptive texts should really be allowed to be delimited by a range of
+  // different characters including quote, shriek etc. For now I've handled only the
+  // the two I need - quote and shriek. This would be much better done by recognising
+  // the introducer character and then consuming input up to the matching delimiter.
+  // The whole lot does need to be buffered, however, as I want to whack the text into
+  // my UML models.
+  < SHRIEK_LITERAL:
+      "!"
+      (   (~["!","\\"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'"]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "!"
+  >
+}
+
+// ID is the basic recogniser for an identifier. In particular it requires that an
+// identifier starts with an upercase alphameric. ASN.1 Types, which are used to describe
+// the attribute syntax of Managed Object attributes, conform to this definition of ID
+//
+TOKEN :
+{
+	< ID: ["A"-"Z"] ( ["a"-"z","A"-"Z","-","0"-"9"] )*>
+}
+
+// I have re-used the ASN.1 definitions for an ID and a LABEL. A LABEL begins
+// with a lower-case alphameric
+TOKEN:
+{
+	< LABEL: ["a"-"z"] ( ["a"-"z","A"-"Z","-","0"-"9"] )*>
+}
+
+// This is the fundamental Non-terminal that we are seeking to build in
+// Parsing the GDMO input. At present it is assumed that the basic
+// translation unit is a Template. The label for each template has been
+// factored from the template to avoid a LOOKAHEAD of 2 as the very first
+// thing we do
+void DocumentSpecification () : { }
+	{ ( <LABEL> Template() )* <EOF> }
+
+// Here are the productions for all the basic templates used in GDMO
+// to define Managed Objects and their attributes
+void Template () : { }
+	{ ManagedObjectClassTemplate()
+	| PackageTemplate()
+	| ParameterTemplate()
+	| NameBindingTemplate()
+	| BehaviourTemplate()
+	| ActionTemplate()
+	| NotificationTemplate()
+// LOOKAHEAD needed here to distinguish between the ATTRIBUTE and ATTRIBUTE GROUP templates
+	| LOOKAHEAD(2) AttributeTemplate()
+	| LOOKAHEAD(2) AttributeGroupTemplate()
+	 }
+
+// Introduces a new MANAGED OBJECT class into the inheritance hierarchy
+void ManagedObjectClassTemplate () : { }
+	{ "MANAGED" "OBJECT" "CLASS" ManagedObjectClassBody() ";" }
+
+// Identifies a collection of ATTRIBUTES, ACTIONS and NOTIFICATIONS which can be used as a
+// building block within a particular MANAGED OBJECT
+void PackageTemplate () : { }
+	{ "PACKAGE" PackageBody() ";" }
+	
+// A BEHAVIOUR template carries the natural language description of the semantics of a Managed
+// Object or associated attributes
+void BehaviourTemplate () : { }
+	{ <BEHAVIOUR> DefinedAs() ";" }
+
+// The NAME BINDING template introduces a new rule for describing the containment hierarchy which
+// controls the relationships between Managed Objects. This relationship will be mapped onto an
+// Aggregation in UML
+void NameBindingTemplate () : { }
+	{  "NAME" "BINDING" NameBindingBody() ";" }
+
+// Introduces a new ATTRIBUTE which can be encapsulated into a PACKAGE and thence into a Managed
+// Object
+void AttributeTemplate () : { }
+	{ "ATTRIBUTE" AttributeBody() ";" }
+
+// Introduces a named ATTRIBUTE grouping
+void AttributeGroupTemplate () : { }
+	{ "ATTRIBUTE" "GROUP" AttributeGroupBody() ";" }
+
+// Declaration of a PARAMETER for use in, for example, a NOTIFICATION or ACTION
+void ParameterTemplate () : { }
+	{ "PARAMETER" ParameterBody() ";" }
+
+// A NOTIFICATION is an event issued by a Managed Object to an instance of an EventForwardingDiscriminator
+// object which will potentially be forwarded to an associated Management System
+void NotificationTemplate () : { }
+	{ "NOTIFICATION" NotificationBody() ";" }
+
+// ACTIONs implement the closest to a generic method which can be applied to a Managed Object
+void ActionTemplate () : { }
+	{ "ACTION" ActionBody() ";" }
+
+void ManagedObjectClassBody () : { }
+	{ [ DerivedFrom() ] [ CharacterisedBy() ] [ConditionalPackages() ] RegisteredAs() }
+
+void PackageBody () : { }
+	{ [ Behaviour() ] [ Attributes() ] [ AttributeGroups() ] [ Actions() ]
+	  [ Notifications() ] [ RegisteredAs() ] }
+
+
+void NameBindingBody () : { }
+	{ SubordinateClassDefinition() SuperiorClassDefinition() WithAttribute()
+	  [ Behaviour() ] [ CreateConstraints() ] [DeleteConstraints() ]
+	  RegisteredAs() }
+
+void AttributeBody () : { }
+	{ DerivedOrSyntax() [ MatchesFor() ] [ Behaviour() ]
+	  [ ParameterReferences() ]
+	  [ RegisteredAs() ] }
+
+void AttributeGroupBody () : { }
+	{ [ GroupElements() ] [ "FIXED" ";" ] [ Description() ] RegisteredAs() }
+
+void ParameterBody () : { }
+	{ "CONTEXT" ParameterContext() ";"
+	  ParameterSyntaxSpecification() [ Behaviour() ] [ RegisteredAs() ] }
+
+void NotificationBody () : { }
+	{ [ Behaviour() ]
+	  [ "MODE" "CONFIRMED" ";" ]
+	  [ ParameterReferences() ] 
+// Both the INFORMATION and REPLY syntaxes are introduced by the keyword WITH hence the
+// LOOKAHEAD
+	  [ LOOKAHEAD(2) InformationSyntax() ] 
+	  [ LOOKAHEAD(2) ReplySyntax() ] RegisteredAs() }
+
+void ActionBody () : { }
+	{ [ Behaviour() ]
+	  [ "MODE" "CONFIRMED" ";" ]
+	  [ "PARAMETERS" ParameterReferences() ";" ]
+// Both the INFORMATION and REPLY syntaxes are introduced by the keyword WITH hence the
+// LOOKAHEAD
+	  [ LOOKAHEAD(2) InformationSyntax() ]
+	  [ LOOKAHEAD(2) ReplySyntax() ] RegisteredAs() }
+
+void InformationSyntax () : { }
+	{ "WITH" "INFORMATION" "SYNTAX" Asn1TypeReference() [ AttributeIds() ] ";" }
+
+void ReplySyntax () : { }
+	{ "WITH" "REPLY" "SYNTAX" Asn1TypeReference() ";" }
+
+void AttributeIds () : { }
+	{ "AND" "ATTRIBUTE" "IDS" <LABEL> AttributeReference() ("," <LABEL> AttributeReference())* }
+
+// Parameter can be used in an ACTION, an EVENT, as a mechanism to describe a particular error
+// condition or as a mechanism to describe elements in an attribute syntax
+void ParameterContext () : { }
+	{ "ACTION-INFO"
+	| "ACTION-REPLY"
+	| "EVENT-INFO"
+	| "EVENT-REPLY"
+	| "SPECIFIC-ERROR"
+	| <LABEL> }
+
+void ParameterSyntaxSpecification () : { }
+	{ "WITH" "SYNTAX" Asn1TypeReference() ";"
+	| "ATTRIBUTE" AttributeReference() ";" }
+
+void GroupElements () : { }
+	{ "GROUP" "ELEMENTS" AttributeReference() ("," AttributeReference())* ";" }
+
+void Description () : { }
+	{ "DESCRIPTION" ( <STRING_LITERAL> | <SHRIEK_LITERAL> )  ";" }
+
+void DerivedOrSyntax () : { }
+	{ "DERIVED" "FROM" AttributeReference() ";"
+	| "WITH" "ATTRIBUTE" "SYNTAX" Asn1TypeReference() ";" }
+
+void MatchesFor () : { }
+	{ "MATCHES" "FOR" Match() ("," Match())* ";" }
+
+// Attribute matching conditions
+void Match () : { }
+	{ "EQUALITY"
+	| "ORDERING"
+	| "SUBSTRINGS"
+	| "SET-COMPARISON"
+	| "SET-INTERSECTION" }
+
+void SubordinateClassDefinition () : { }
+	{ "SUBORDINATE" "OBJECT" "CLASS" Reference() [ "AND" "SUBCLASSES" ] ";" }
+
+void SuperiorClassDefinition () : { }
+	{ "NAMED" "BY" "SUPERIOR" "OBJECT" "CLASS" Reference() [ "AND" "SUBCLASSES" ] ";"}
+
+void WithAttribute () : { }
+	{ "WITH" "ATTRIBUTE" AttributeReference() ";" }
+
+// Can the Managed Object be dynamically created by a remote Management System
+void CreateConstraints () : { }
+	{ "CREATE" [ CreateModifiers() ] [ ParameterReferences() ] ";" }
+
+void CreateModifiers () : { }
+	{ CreateModifier() ("," CreateModifier())* }
+
+// The automatic instance naming option allows an agent to choose the value inserted
+// into the naming attribute rather requiring that the Manager provides a valid instance
+// name
+void CreateModifier () : { }
+	{ "WITH-REFERENCE-OBJECT"
+	| "WITH-AUTOMATIC-INSTANCE-NAMING" }
+
+// Can the Managed Object be destroyed by operations from a remote Management System
+void DeleteConstraints () : { }
+	{ "DELETE" [DeleteModifiers() ] [ ParameterReferences() ] ";" }
+
+void DeleteModifiers () : { }
+	{ DeleteModifier() ("," DeleteModifier())* }
+
+// Specify what happens if an attempt is made to delete a managed object which may contain
+// instances of other objects
+void DeleteModifier () : { }
+	{ "ONLY-IF-NO-CONTAINED-OBJECTS"
+	| "DELETES-CONTAINED-OBJECTS" }
+
+void Attributes () : { }
+	{ "ATTRIBUTES" AttributeDescription() ("," AttributeDescription() )* ";" }
+
+void AttributeReference () : { }
+	{ LOOKAHEAD(2) <LABEL> AttributeTemplate()
+	| Reference() }
+
+void AttributeDescription () : { }
+	{ Reference() PropertyList() }
+
+// What can we do to an attribute
+void PropertyList () : { }
+	{ [ ReplaceWithDefault() ] [ DefaultValue() ] [ InitialValue() ]
+	  [ PermittedValues() ] [ RequiredValues() ] [ GetReplace() ]
+	  [ AddRemove() ] }
+
+
+void ReplaceWithDefault () : { }
+	{ "REPLACE-WITH-DEFAULT" }
+
+void DefaultValue () : { }
+	{ <TOK_DEFAULT> "VALUE" Asn1ValueReference() }
+
+// External reference to an ASN.1 value
+void Asn1ValueReference () : { }
+	{ <ID> "." <LABEL> }
+
+void InitialValue () : { }
+	{ "INITIAL" "VALUE" }
+
+void PermittedValues () : { }
+	{ "PERMITTED" "VALUES" Asn1TypeReference() }
+
+// External reference to an ASN.1 type
+void Asn1TypeReference () : { }
+	{ <ID> "." <ID> }
+
+void RequiredValues () : { }
+	{ "REQUIRED" "VALUES" Asn1TypeReference() }
+
+void GetReplace () : { }
+	{ "GET"
+	| "REPLACE"
+	| "GET-REPLACE" }
+
+void AddRemove () : { }
+	{ "ADD"
+	| "REMOVE"
+	| "ADD-REMOVE" }
+
+// The next three productions describe the specific attributes, actions and events
+// that are associated with a package which can be imported into a managed object
+// definition
+void AttributeGroups () : { }
+	{ "ATTRIBUTE" "GROUPS" ReferenceList() ";" }
+
+void Actions () : { }
+	{ "ACTIONS" ReferenceList() ";" }
+
+void Notifications () : { }
+	{ "NOTIFICATIONS" NotificationReferences() ";" }
+
+void Behaviour () : { }
+	{ <BEHAVIOUR> BehaviourReferenceList() ";" }
+
+void BehaviourReferenceList () : { }
+	{ BehaviourReference() ("," BehaviourReference())* }
+
+void BehaviourReference () : { }
+	{ LOOKAHEAD(2) <LABEL> BehaviourTemplate()
+	| Reference() }
+
+// Inheritance definition for Managed Objects. Note that multiple inheritance is
+// quite normal
+void DerivedFrom () : { }
+	{ "DERIVED" "FROM" ReferenceList() ";" }
+
+void NotificationReferences () : { }
+	{ NotificationReference() [ ParameterReferences() ] 
+		("," NotificationReference()  [ ParameterReferences()] )* }
+
+void NotificationReference () : { }
+	{ LOOKAHEAD(2) <LABEL> NotificationTemplate()
+	| Reference() }
+
+void ParameterReferences () : { }
+	{ ParameterReference() (ParameterReference())* }
+
+void ParameterReference () : { }
+	{ LOOKAHEAD(2) <LABEL> ParameterTemplate()
+	| Reference() }
+
+void ReferenceList () : { }
+	{ Reference() ("," Reference())* }
+
+void Reference () : { }
+	{ [ DocumentReference() ] <LABEL> }
+
+void DocumentReference () : { }
+	{ <STRING_LITERAL> ":" }
+
+void CharacterisedBy () : { }
+	{ <CHARACTERISED> "BY" PackageReferenceList() ";" }
+
+void PackageReferenceList () : { }
+	{ PackageReference() ("," PackageReference())* }
+
+void PackageReference () : { }
+	{ LOOKAHEAD(2) <LABEL> PackageTemplate()
+	| Reference() }
+
+void ConditionalPackages () : { }
+	{ "CONDITIONAL" "PACKAGES" PackageReference() PresentIf() 
+			("," PackageReference() PresentIf())* ";" }
+
+// Define the conditions under which a particular instance of a Managed Object
+// will contain a defined CONDITIONAL PACKAGE
+void PresentIf () : { }
+	{ "PRESENT" "IF" <STRING_LITERAL> }
+
+void DefinedAs () : { }
+	{ "DEFINED" "AS" ( <STRING_LITERAL> | <SHRIEK_LITERAL> ) }
+
+void RegisteredAs () : { }
+	{ "REGISTERED" "AS" "{" ObjectIdentifier() "}" }
+//
+// I think that there is a fundamental problem with the use of OBJECT IDENTIFIERS in
+// GDMO. I've just copied the usage through from X.700 but there is an issue surrounding
+// whether OID NAMES are global or not. Since many of the standards reference them without
+// their associated ASN.1 module name there is an implied assumption that the names are
+// global. Sadly, however, there are some duplicates so clearly they are not!
+void ObjectIdentifier () : { }
+	{ OIDElement() (OIDElement())* }
+
+void OIDElement () : { }
+	{  <INTEGER_LITERAL> [ "(" <LABEL> ")" ]
+	|  <LABEL>
+	}

@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+
+<!--
+
+Copyright (c) 2007, Paul Cager
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+
+<project name="test-javafiles" default="test" basedir=".">
+
+  <target name="test" depends="" description="run functional test cases">
+
+
+    <delete dir="out-dir" />
+    <mkdir dir="out-dir" />
+    <mkdir dir="out-dir/non-static" />
+    <mkdir dir="out-dir/static" />
+
+    <echo>Test 1 - Initial Creation</echo>
+    <java failonerror="true" fork="true" classname="javacc" outputproperty="test1.out" classpath="../../target/javacc.jar">
+      <arg line="StaticParser.jj" />
+    </java>
+    <echo>${test1.out}</echo>
+
+    <fail message="Creation Failed">
+     <condition>
+        <not> <contains string="${test1.out}" substring="File &quot;SimpleCharStream.java&quot; does not exist.  Will create one." /> </not>
+     </condition>
+    </fail>
+
+    <javac srcdir="out-dir" destdir="out-dir/static" source="1.7" debug="true" includeantruntime='false'
+           classpath="../../target/javacc.jar">
+    </javac>
+    <java fork="true" classname="Parser" classpath="out-dir/static" inputstring="A" failonerror="true"> </java>
+
+
+    <echo></echo>
+    <echo>Test 2 - Recreate Unchanged</echo>
+    <java failonerror="true" fork="true" outputproperty="test2.out" classname="javacc" classpath="../../target/javacc.jar">
+      <arg line="Parser.jj" />
+    </java>
+    <echo>${test2.out}</echo>
+
+    <fail message="Recreate Failed">
+     <condition>
+        <not> <contains string="${test2.out}" substring="File &quot;SimpleCharStream.java&quot; is being rebuilt." /> </not>
+     </condition>
+    </fail>
+
+    <javac srcdir="out-dir"  destdir="out-dir/non-static"  source="1.7" debug="true" includeantruntime='false'
+           classpath="../../target/javacc.jar">
+    </javac>
+    <java fork="true" classname="Parser" classpath="out-dir/non-static" inputstring="A" failonerror="true"> </java>
+
+    <echo></echo>
+    <echo>Test 3 - Compatible Modified.</echo>
+
+    <delete file="out-dir/SimpleCharStream.java" />
+    <copy file="ModifiedSimpleCharStream.java" tofile="out-dir/SimpleCharStream.java" />
+
+    <java failonerror="true" fork="true" outputproperty="test3.out" classname="javacc" classpath="../../target/javacc.jar">
+      <arg line="Parser.jj" />
+    </java>
+    <echo>${test3.out}</echo>
+
+    <fail message="Compat Modified Failed">
+     <condition>
+        <contains string="${test3.out}" substring="File &quot;SimpleCharStream.java&quot; is being rebuilt." />
+     </condition>
+    </fail>
+
+    <javac srcdir="out-dir" destdir="out-dir/non-static" source="1.7" debug="true" includeantruntime='false'
+           classpath="../../target/javacc.jar">
+    </javac>
+    <java fork="true" classname="Parser" classpath="out-dir/non-static" inputstring="A" failonerror="true"> </java>
+
+
+    <echo></echo>
+    <echo>Test 4 - Modified Old.</echo>
+
+    <delete file="out-dir/SimpleCharStream.java" />
+    <copy file="ModifiedOldSimpleCharStream.java" tofile="out-dir/SimpleCharStream.java" />
+
+    <java failonerror="true" fork="true" outputproperty="test4.out" classname="javacc" classpath="../../target/javacc.jar">
+      <arg line="Parser.jj" />
+    </java>
+    <echo>${test4.out}</echo>
+
+    <fail message="Modified old Failed">
+     <condition>
+        <not> <contains string="${test4.out}" substring="Warning: SimpleCharStream.java: File is obsolete.  Please rename or delete this file so that a new one can be generated for you." /> </not>
+     </condition>
+    </fail>
+
+
+    <javac srcdir="out-dir" destdir="out-dir/non-static" source="1.7" debug="true" includeantruntime='false'
+           classpath="../../target/javacc.jar">
+    </javac>
+    <java fork="true" classname="Parser" classpath="out-dir/non-static" inputstring="A" failonerror="true"> </java>
+
+    <echo></echo>
+    <echo>Test 5 - Changed Options.</echo>
+
+    <delete file="out-dir/SimpleCharStream.java" />
+    <copy file="ChangedOptionsSimpleCharStream.java" tofile="out-dir/SimpleCharStream.java" />
+
+    <java failonerror="true" fork="true" outputproperty="test5.out" classname="javacc" classpath="../../target/javacc.jar">
+      <arg line="Parser.jj" />
+    </java>
+    <echo>${test5.out}</echo>
+
+    <fail message="Changed Options Failed">
+     <condition>
+        <not> <contains string="${test5.out}" substring="Warning: SimpleCharStream.java: Generated using incompatible options. Please rename or delete this file so that a new one can be generated for you." /> </not>
+     </condition>
+    </fail>
+
+
+    <javac srcdir="out-dir" destdir="out-dir/non-static" source="1.7" debug="true" includeantruntime='false'
+           classpath="../../target/javacc.jar">
+    </javac>
+    <java fork="true" classname="Parser" classpath="out-dir/non-static" inputstring="A" failonerror="true"> </java>
+
+    <echo></echo>
+    <echo>Test 6 - Create JJtree Nodes</echo>
+
+    <java failonerror="true" fork="true" outputproperty="test6.out" classname="jjtree" classpath="../../target/javacc.jar">
+      <arg line="Tree.jjt" />
+    </java>
+    <echo>${test6.out}</echo>
+
+    <fail message="JJtree Nodes Failed">
+     <condition>
+        <not> <contains string="${test6.out}" substring="File &quot;SimpleNode.java&quot; does not exist.  Will create one." /> </not>
+     </condition>
+    </fail>
+
+    <echo></echo>
+    <echo>Test 7 - Create JJtree Nodes</echo>
+
+    <java failonerror="true" fork="true" outputproperty="test7.out" classname="jjtree" classpath="../../target/javacc.jar">
+      <arg line="Tree.jjt" />
+    </java>
+    <echo>${test7.out}</echo>
+
+    <fail message="JJtree Nodes Failed">
+     <condition>
+        <not> <contains string="${test7.out}" substring="File &quot;SimpleNode.java&quot; is being rebuilt." /> </not>
+     </condition>
+    </fail>
+
+
+    <echo></echo>
+    <echo>Test 8 - Regenerate JJtree Nodes</echo>
+
+    <delete file="out-dir/SimpleNode.java" />
+    <copy file="ModifiedSimpleNode.java" tofile="out-dir/SimpleNode.java" />
+
+    <java failonerror="true" fork="true" outputproperty="test8.out" classname="jjtree" classpath="../../target/javacc.jar">
+      <arg line="Tree.jjt" />
+    </java>
+    <echo>${test8.out}</echo>
+
+    <fail message="Regenerate JJtree Nodes Failed">
+     <condition>
+        <contains string="${test8.out}" substring="File &quot;SimpleNode.java&quot; is being rebuilt." />
+     </condition>
+    </fail>
+
+    <echo></echo>
+    <echo>Test 9 - Incompatible JJtree Nodes</echo>
+
+    <delete file="out-dir/SimpleNode.java" />
+    <copy file="IncompatSimpleNode.java" tofile="out-dir/SimpleNode.java" />
+
+    <java failonerror="true" fork="true" outputproperty="test9.out" classname="jjtree" classpath="../../target/javacc.jar">
+      <arg line="Tree.jjt" />
+    </java>
+    <echo>${test9.out}</echo>
+
+    <fail message="Incompatible JJtree Nodes Failed">
+     <condition>
+        <not> <contains string="${test9.out}" substring="Warning: SimpleNode.java: Generated using incompatible options. Please rename or delete this file so that a new one can be generated for you." />  </not>
+     </condition>
+    </fail>
+
+
+
+  </target>
+
+  <target name="clean">
+    <delete dir="out-dir" />
+  </target>
+
+</project>

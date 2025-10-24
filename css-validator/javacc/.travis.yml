@@ -1,0 +1,6 @@
+language: java
+jdk: openjdk8
+install:
+  - skip
+script:
+  - mvn test -B -Dgpg.skip=true

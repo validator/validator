@@ -1,0 +1,16 @@
+Hello, world
+   But this should
+   -->someString<--
+
+	True1
+	someString
+	Should be here
+	  True2
+	
+This should say no: no
+This should say yes: yes
+
+This should say someString: someString
+This should say xxsomeStringxx: xxsomeStringxx
+
+The end.

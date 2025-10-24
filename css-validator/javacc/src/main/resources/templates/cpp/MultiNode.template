@@ -1,0 +1,24 @@
+
+class ${NODE_TYPE} : public ${NODE_CLASS:-SimpleNode} {
+public:
+  ${NODE_TYPE}(int id) : ${NODE_CLASS:-SimpleNode}(id){
+  }
+  ${NODE_TYPE}(${PARSER_NAME} *parser, int id) : ${NODE_CLASS:-SimpleNode}(parser, id) {
+  }
+  virtual ~${NODE_TYPE}(){
+
+#if VISITOR
+  /** Accept the visitor. **/
+  ${VISITOR_RETURN_TYPE} jjtAccept(${PARSER_NAME}Visitor *visitor, ${VISITOR_DATA_TYPE:-void *} data) const {
+#if !VISITOR_RETURN_TYPE_VOID
+  return 
+#fi
+#if VISITOR_METHOD_NAME_INCLUDES_TYPE_NAME
+  visitor->visit${NODE_TYPE}(this, data);
+#else
+  visitor->visit(this, data);
+#fi
+  }
+  }
+#fi
+};

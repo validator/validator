@@ -1,0 +1,51 @@
+  const JJSimpleString ${tokMgrClassName}::jjKindsForBitVector(int i, unsigned long long vec)
+  {
+    int kindCnt = 0;
+    JJSimpleString retVal;
+    if (i == 0)
+       kindCnt = 0;
+    for (int j = 0; j < 64; j++)
+    {
+       if ((vec & (1L << j)) != 0L)
+       {
+          if (kindCnt++ > 0)
+             retVal += ", ";
+          if (kindCnt % 5 == 0)
+             retVal += "\n     ";
+          retVal += addUnicodeEscapes(tokenImage[i * 64 + j]);
+       }
+    }
+
+    return retVal;
+  }
+
+  const JJSimpleString ${tokMgrClassName}::jjKindsForStateVector(int lexState, int vec[], int start, int end)
+  {
+    bool kindDone[${maxOrdinal}];
+    JJSimpleString retVal;
+    int cnt = 0;
+    for (int i = start; i < end; i++)
+    {
+     if (vec[i] == -1)
+       continue;
+     const int *stateSet = statesForState[curLexState][vec[i]];
+     for (int j = 0; j < ${stateSetSize}; j++)
+     {
+       int state = stateSet[j];
+       if (!kindDone[kindForState[lexState][state]])
+       {
+          kindDone[kindForState[lexState][state]] = true;
+          if (cnt++ > 0)
+             retVal += ", ";
+          if (cnt % 5 == 0)
+             retVal += "\n     ";
+          retVal += addUnicodeEscapes(tokenImage[kindForState[lexState][state]]);
+       }
+     }
+    }
+    if (cnt == 0)
+       return "{  }";
+    else
+       return "{ " + retVal + " }";
+  }
+

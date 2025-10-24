@@ -1,0 +1,539 @@
+#if TOKEN_MANAGER_USES_PARSER && !STATIC
+    /** Constructor with parser. */
+    public ${tokMgrClassName} (${cu_name} parserArg, ${charStreamName} stream){
+    parser = parserArg;
+#else
+    /** Constructor. */
+    public ${tokMgrClassName}(${charStreamName} stream){
+#fi
+
+#if STATIC && !USER_CHAR_STREAM
+      if (input_stream != null)
+        throw new ${LEGACY_EXCEPTION_HANDLING?TokenMgrError:TokenMgrException}("ERROR: Second call to constructor of static lexer. You must use ReInit() to initialize the static variables.", ${LEGACY_EXCEPTION_HANDLING?TokenMgrError:TokenMgrException}.STATIC_LEXER_ERROR);
+#elif !USER_CHAR_STREAM
+    #if JAVA_UNICODE_ESCAPE
+      if (JavaCharStream.staticFlag)
+    #else
+      if (SimpleCharStream.staticFlag)
+    #fi
+            throw new ${LEGACY_EXCEPTION_HANDLING?Error:RuntimeException}("ERROR: Cannot use a static CharStream class with a non-static lexical analyzer.");
+#fi
+
+    input_stream = stream;
+  }
+
+#if TOKEN_MANAGER_USES_PARSER && !STATIC
+  /** Constructor with parser. */
+  public ${tokMgrClassName} (${cu_name} parserArg, ${charStreamName} stream, int lexState){
+    ReInit(parserArg, stream);
+  }
+#else
+  /** Constructor. */
+  public ${tokMgrClassName} (${charStreamName} stream, int lexState){
+    ReInit(stream);
+    SwitchTo(lexState);
+  }
+#fi
+
+  /** Reinitialise parser. */
+  
+#if TOKEN_MANAGER_USES_PARSER && !STATIC
+  public void ReInit(${cu_name} parserArg, ${charStreamName} stream)
+#else
+  ${STATIC?static :}public void ReInit(${charStreamName} stream)
+#fi
+  {
+#if TOKEN_MANAGER_USES_PARSER && !STATIC
+	this.parser = parserArg;
+#else
+
+#fi
+
+    jjmatchedPos =
+#if !TABLE_DRIVEN
+    jjnewStateCnt =
+#fi
+    0;
+    curLexState = defaultLexState;
+    input_stream = stream;
+#if !TABLE_DRIVEN
+    ReInitRounds();
+#fi
+  }
+
+#if !TABLE_DRIVEN
+  ${STATIC?static :}private void ReInitRounds()
+  {
+    int i;
+    jjround = 0x80000001;
+    for (i = ${stateSetSize}; i-- > 0;)
+      jjrounds[i] = 0x80000000;
+  }
+#fi
+
+  /** Reinitialise parser. */
+#if TOKEN_MANAGER_USES_PARSER && !STATIC
+  public void ReInit( ${cu_name} parserArg, ${charStreamName} stream, int lexState)
+#else
+  ${STATIC?static :}public void ReInit(${charStreamName} stream, int lexState)
+#fi
+  
+  {
+#if TOKEN_MANAGER_USES_PARSER && !STATIC
+    ReInit(parserArg, stream);
+#else
+    ReInit(stream);
+#fi
+    SwitchTo(lexState);
+  }
+
+  /** Switch to specified lex state. */
+  public ${STATIC?static :}void SwitchTo(int lexState)
+  {
+    if (lexState >= ${lexStateNameLength} || lexState < 0)
+      throw new ${LEGACY_EXCEPTION_HANDLING?TokenMgrError:TokenMgrException}("Error: Ignoring invalid lexical state : " + lexState + ". State unchanged.", ${LEGACY_EXCEPTION_HANDLING?TokenMgrError:TokenMgrException}.INVALID_LEXICAL_STATE);
+    else
+      curLexState = lexState;
+  }
+
+#if TABLE_DRIVEN
+
+#if !NO_DFA
+private ${STATIC?static :}final int jjRunStringLiteralMatch() {
+  int curPos = 0;
+  final int key = (int)curLexState << 16 | curChar;
+  final int[] arr = startAndSize.get(key);
+  int startState = jjInitStates[curLexState];
+  if (arr != null) {
+    int index = arr[0];
+    for (int i = 0; i < arr[1]; i++) {
+      final int len = stringLiterals[index++];
+#if DEBUG_TOKEN_MANAGER
+      System.err.println(
+          "Looking for string literal match of kind: " +
+          stringLiterals[index + len] +
+          "; token image: " + tokenImage[stringLiterals[index + len]]);
+#fi
+      do {
+#if DEBUG_TOKEN_MANAGER
+      System.err.println("Cur char: '" + (char)curChar + "'");
+#fi
+        if (curChar != stringLiterals[index + curPos]) break;
+        if (++curPos == len) break;
+        try {
+          curChar = input_stream.readChar();
+        } catch(java.io.IOException e) {
+          --curPos;
+          break;
+        }
+      } while(curPos < len);
+      if (curPos == len) {
+        jjmatchedKind = stringLiterals[index + len];
+        jjmatchedPos = curPos;
+        startState = stringLiterals[index + len + 1];
+#if DEBUG_TOKEN_MANAGER
+        System.err.println(
+            "Currently matched the first: " + jjmatchedPos +
+            " chars as kind: " + stringLiterals[index + len] +
+            "; with image: " + tokenImage[jjmatchedKind]);
+#fi
+        try {
+          curChar = input_stream.readChar();
+        } catch(java.io.IOException e) {
+          return curPos;
+        }
+        curPos++;
+        break;
+      } else {
+        index += len + 2;
+        input_stream.backup(curPos + 1);
+        curPos = 0;
+        try {
+          curChar = input_stream.readChar();
+          } catch(java.io.IOException e) {
+          assert(false);
+        }
+      }
+    }
+  } else {
+#if DEBUG_TOKEN_MANAGER
+      System.err.println(
+          "No string literal start with char: '" + (char)curChar + "'");
+#fi
+  }
+  return jjMoveNfa(startState, curPos);
+}
+#fi
+
+// NFA related data, initialization and code.
+private static final long[][] jjChars =
+    new long[${generatedStates}][(Character.MAX_VALUE >> 6) + 1];
+static {
+  for (int i = 0; i < ${generatedStates}; i++) {
+    int ind = 0;
+    for (int j = 0; j < jjCharData[i].length; j += 2) {
+      for (int k = 0; k < (int)jjCharData[i][j]; k++) {
+        jjChars[i][ind++] = jjCharData[i][j + 1];
+      }
+    }
+  }
+}
+
+private static  int[] stateSet = new int[${generatedStates}];
+private static  int[] newStateSet = new int[${generatedStates}];
+private static  final long[] moved = new long[${generatedStates}];
+private static long moveIndex = 0L;
+
+private ${STATIC?static :}final int jjMoveNfa(int startState, int curPos) {
+
+  if (startState < 0) {
+#if DEBUG_TOKEN_MANAGER
+  System.err.println("No NFA state at pos: " + curPos);
+#fi
+    return curPos;
+  }
+
+  // We have a long array indexed by the NFA state number to roughly indicate
+  // the input position so when the input reaches part Long.MAX_VALUE (which
+  // should be extremely rare), we need to reset them all back to zero.
+  if (++moveIndex == Long.MAX_VALUE) {
+    for (int i = 0; i < ${generatedStates}; i++) moved[i] = 0L;
+    moveIndex = 1L;
+  }
+
+  // We initialize the kind to MAX value so that when a match is found, we can
+  // simply check if it's less than the current match and store it in that
+  // case. This helps implement the 'first occurring' rule properly.
+  int kind = Integer.MAX_VALUE;
+  stateSet[0] = startState;
+  moved[startState] = moveIndex;
+  int cnt = 1;
+ 
+  // Some NFA states have epsilon transitions (move on empty string). So we
+  // just start with all of them. Note that the nextStates array already adds
+  // the epsilon closure. Only the initial state needs to do this explicitly.
+  for (int s : jjcompositeState[startState]) { 
+    if (moved[s] != moveIndex) {
+      stateSet[cnt++] = s;
+      moved[s] = moveIndex;
+    }
+  }
+
+#if DEBUG_TOKEN_MANAGER
+  System.err.println("Starting NFA with start state: " + startState);
+#fi
+  do {
+#if DEBUG_TOKEN_MANAGER
+    System.err.println("Cur char: '" + (char)curChar + "'");
+#fi
+    int newCnt = 0;
+    if (++moveIndex == Long.MAX_VALUE) {
+      for (int i = 0; i < ${generatedStates}; i++) moved[i] = 0L;
+      moveIndex = 1L;
+    }
+    final int vectorIndex = curChar >> 6;
+    final long bitpattern = (1L << (curChar & 077));
+    do {
+      final int state = stateSet[--cnt];
+#if DEBUG_TOKEN_MANAGER
+      System.err.println(
+         "Looking to move from state: " + state + "; for: " +
+         (jjmatchKinds[state] != Integer.MAX_VALUE
+              ? tokenImage[jjmatchKinds[state]] : " <UNKNOWN>"));
+#fi
+      if ((jjChars[state][vectorIndex] & bitpattern) != 0L) {
+        // Current input character can move this NFA state. So add all the
+        // next states of the current states for use with the next input char.
+        for (int newState : jjnextStateSet[state]) {
+          if (moved[newState] != moveIndex) {
+            // We add each state only once.
+            newStateSet[newCnt++] = newState;
+            moved[newState] = moveIndex;
+          }
+        }
+        final int newKind = jjmatchKinds[state];
+        if (kind > newKind) {
+          // It's a final state so store the matched kind if it's smaller than
+          // what's already matched.
+          kind = newKind;
+#if DEBUG_TOKEN_MANAGER
+          System.err.println(
+              "Found a match of kind: " + kind + "; kind: " +
+              tokenImage[kind] + " using the first: " + curPos +
+              " characters.");
+#fi
+        }
+      }
+    } while (cnt > 0);
+
+    if (kind != Integer.MAX_VALUE) {
+      // We found a match. So remember the kind and position of the match.
+      jjmatchedKind = kind;
+      jjmatchedPos = curPos;
+      // Reset the kind to max value so we can continue looking for a longer
+      // match.
+      kind = Integer.MAX_VALUE;
+    }
+
+    // Swap the current and next state sets.
+    int[] tmp = stateSet;
+    stateSet = newStateSet;
+    newStateSet = tmp;
+    // Reset the number of states.
+    cnt = newCnt;
+    if (newCnt == 0) {
+      // There were no transitions from any of the current states on the
+      // current input. So we are done.
+#if DEBUG_TOKEN_MANAGER
+      System.err.println("Done with NFA at pos: " + curPos);
+#fi
+      return curPos;
+    }
+    // Read the next character and try to continue running the NFA.
+    try {
+      curChar = input_stream.readChar();
+    } catch(java.io.IOException e) {
+      // EOF reached!
+#if DEBUG_TOKEN_MANAGER
+      System.err.println("Reached EOF here at pos: " + curPos);
+#fi
+      return curPos;
+    }
+    ++curPos;
+  } while (cnt > 0);
+
+  assert(false) :
+      "Internal error. Please submit a bug at: https://github.com/javacc/javacc/issues";
+  return curPos;
+}
+
+private ${STATIC?static :} int defaultLexState = ${defaultLexState};
+private ${STATIC?static :} int curLexState = ${defaultLexState};
+private ${STATIC?static :} int jjmatchedPos = 0;
+private ${STATIC?static :} int jjmatchedKind = 0;
+// private ${STATIC?static :} int lengthOfMatch = 0;;
+// private ${STATIC?static :} String image;
+// private ${STATIC?static :} int jjimageLen = 0;
+
+public static final boolean isToken(int kind) {
+  return (jjtoToken[kind >> 6] & (1L << (kind & 077))) != 0L;
+}
+
+public static final boolean isSkip(int kind) {
+  return (jjtoSkip[kind >> 6] & (1L << (kind & 077))) != 0L;
+}
+
+public static final boolean isSpecial(int kind) {
+  return (jjtoSpecial[kind >> 6] & (1L << (kind & 077))) != 0L;
+}
+
+public static final boolean isMore(int kind) {
+  return (jjtoMore[kind >> 6] & (1L << (kind & 077))) != 0L;
+}
+
+protected ${STATIC?static :} Token jjFillToken() {
+  final Token t;
+  final String curTokenImage;
+#if KEEP_LINE_COLUMN
+  final int beginLine;
+  final int endLine;
+  final int beginColumn;
+  final int endColumn;
+#fi
+  if (jjmatchedPos < 0) {
+    if (image == null) {
+      curTokenImage = "";
+    } else {
+      curTokenImage = image.toString();
+    }
+#if KEEP_LINE_COLUMN
+    beginLine = endLine = input_stream.getEndLine();
+    beginColumn = endColumn = input_stream.getEndColumn();
+#fi
+  } else {
+    String im = jjstrLiteralImages[jjmatchedKind];
+    curTokenImage = (im == null) ? input_stream.GetImage() : im;
+#if KEEP_LINE_COLUMN
+    beginLine = input_stream.getBeginLine();
+    beginColumn = input_stream.getBeginColumn();
+    endLine = input_stream.getEndLine();
+    endColumn = input_stream.getEndColumn();
+#fi
+  }
+
+#if TOKEN_FACTORY
+    t = ${TOKEN_FACTORY}.newToken(jjmatchedKind, curTokenImage);
+#elif BINARY_NEW_TOKEN
+    t = Token.newToken(jjmatchedKind, curTokenImage);
+#else
+   t = Token.newToken(jjmatchedKind);
+   t.kind = jjmatchedKind;
+   t.image = curTokenImage;
+#fi
+
+#if KEEP_LINE_COLUMN
+   t.beginLine = beginLine;
+   t.endLine = endLine;
+   t.beginColumn = beginColumn;
+   t.endColumn = endColumn;
+#fi
+
+   return t;
+}
+
+/** Get the next Token. */
+public ${STATIC?static :} Token getNextToken() {
+  Token specialToken = null;
+  Token matchedToken;
+  int lastReadPosition = 0;
+
+  EOFLoop:
+  for (;;) {
+    // First see if we have any input at all.
+    try {
+      curChar = input_stream.BeginToken();
+    } catch(Exception e) {
+#if DEBUG_TOKEN_MANAGER
+    if (lexStateNames.length > 1) {
+      System.err.print("<" + lexStateNames[curLexState] + "> ");
+    }
+    System.err.println("Reached EOF at " +
+                       input_stream.getBeginLine() + ":" +
+                       input_stream.getBeginColumn());
+#fi
+      // No input. So return EOF token.
+      jjmatchedKind = EOF;
+      jjmatchedPos = -1;
+      matchedToken = jjFillToken();
+      matchedToken.specialToken = specialToken;
+      return matchedToken;
+    }
+#if DEBUG_TOKEN_MANAGER
+    if (lexStateNames.length > 1) {
+      System.err.print("<" + lexStateNames[curLexState] + "> ");
+    }
+    System.err.println("Current input char: '" + (char)curChar + "' at " +
+                       input_stream.getBeginLine() + ":" +
+                       input_stream.getBeginColumn());
+#fi
+
+    // Set matched kind to a MAX VALUE to implement largest, first occurring rule
+    // i.e., smallest kind value matched should be used.
+    image = jjimage;
+    image.setLength(0);
+    jjimageLen = 0;
+
+    MoreLoop: for (;;) {
+      jjmatchedKind = Integer.MAX_VALUE;
+      jjmatchedPos = 0;
+#if DEBUG_TOKEN_MANAGER
+    if (lexStateNames.length > 1) {
+      System.err.print("<" + lexStateNames[curLexState] + "> ");
+    }
+    System.err.println("Current input char: '" + (char)curChar + "' at " +
+                       input_stream.getBeginLine() + ":" +
+                       input_stream.getBeginColumn());
+#fi
+#if !NO_DFA
+      lastReadPosition = jjRunStringLiteralMatch();
+#else
+      lastReadPosition = jjMoveNfa(0, 0);
+#fi
+      if (jjmatchedPos == 0 && jjmatchedKind > canMatchAnyChar[curLexState]) {
+        jjmatchedKind = canMatchAnyChar[curLexState];
+#if DEBUG_TOKEN_MANAGER
+        System.err.println(
+            "Matched current char: '" + (char)curChar +
+            "' as a wildcard kind: " + jjmatchedKind);
+#fi
+      }
+      if (jjmatchedKind != Integer.MAX_VALUE) {
+        // We have a match!
+  
+        // Put back any characters looked ahead.
+        input_stream.backup(lastReadPosition - jjmatchedPos);
+        if (isToken(jjmatchedKind)) {
+#if DEBUG_TOKEN_MANAGER
+          System.err.println("Returning token.");
+#fi
+          // Matched kind is a real TOKEN.
+          matchedToken = jjFillToken();
+          matchedToken.specialToken = specialToken;
+          TokenLexicalActions(matchedToken);
+          if (jjnewLexState[jjmatchedKind] != -1) {
+            curLexState = jjnewLexState[jjmatchedKind];
+          }
+#if COMMON_TOKEN_ACTION
+          CommonTokenAction(matchedToken);
+#fi
+          return matchedToken;
+        } else if (isSkip(jjmatchedKind)) {
+#if DEBUG_TOKEN_MANAGER
+          System.err.println("Found a SKIP match.");
+#fi
+          // Matched kind is a SKIP or SPECIAL_TOKEN.
+          if (isSpecial(jjmatchedKind)) {
+            matchedToken = jjFillToken();
+            if (specialToken == null) {
+              specialToken = matchedToken;
+            } else {
+              matchedToken.specialToken = specialToken;
+              specialToken = (specialToken.next = matchedToken);
+            }
+            SkipLexicalActions(matchedToken);
+          } else {
+            SkipLexicalActions(null);
+          }
+          if (jjnewLexState[jjmatchedKind] != -1) {
+            curLexState = jjnewLexState[jjmatchedKind];
+          }
+          continue EOFLoop;
+        }
+#if DEBUG_TOKEN_MANAGER
+        System.err.println("Found a MORE match.");
+#fi
+        // Here it's a MORE.
+        MoreLexicalActions();
+        if (jjnewLexState[jjmatchedKind] != -1) {
+          curLexState = jjnewLexState[jjmatchedKind];
+        }
+        lastReadPosition = 0;
+        jjmatchedKind = 0x7fffffff;
+        try {
+          curChar = input_stream.readChar();
+          continue;
+        }
+        catch (java.io.IOException e1) { }
+      }
+      reportError(lastReadPosition);
+    }
+  }
+}
+
+protected ${STATIC?static :} void reportError(int lastReadPosition) {
+  int error_line = input_stream.getEndLine();
+  int error_column = input_stream.getEndColumn();
+  String error_after = null;
+  boolean EOFSeen = false;
+  try {
+    input_stream.readChar();
+    input_stream.backup(1);
+  } catch (java.io.IOException e1) {
+    EOFSeen = true;
+    error_after = lastReadPosition <= 1 ? "" : input_stream.GetImage();
+    if (curChar == '\n' || curChar == '\r') {
+       error_line++;
+       error_column = 0;
+    }
+    else
+       error_column++;
+  }
+  if (!EOFSeen) {
+    input_stream.backup(1);
+    error_after = lastReadPosition <= 1 ? "" : input_stream.GetImage();
+  }
+  throw new TokenMgrError(EOFSeen, curLexState, error_line, error_column,
+                          error_after, curChar, TokenMgrError.LEXICAL_ERROR);
+}
+
+#fi
