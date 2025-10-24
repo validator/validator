@@ -1,0 +1,118 @@
+a { list-style-image: url("foo.png") }
+b { list-style-image: none }
+c { list-style-image: image( 'chocolat tomate', 'chocolat vanille', black ) }
+d { list-style-image: image( 'sprites.svg#xywh=40,0,20,20', #f00 ) }
+e { list-style-image: image( 'toto', 'sprites.svg#xywh=40,0,20,20', hsla(360, 50%, 50%, 1) ) }
+f { list-style-image: image( rgba(100%,0%,0%,1) ) }
+g { list-style-image: image( "truc", currentColor) }
+z { list-style-image: inherit }
+y { list-style-image: initial }
+lingrad1   { list-style-image: linear-gradient( 90deg, chocolate 10%, orange ) }
+lingrad2   { list-style-image: linear-gradient( 0deg, chocolate 10%, orange ) }
+lingrad3   { list-style-image: linear-gradient( to left, chocolate 10%, orange ) }
+lingrad4   { list-style-image: linear-gradient( to right, chocolate 10%, orange ) }
+lingrad5   { list-style-image: linear-gradient( to top, chocolate 10%, orange ) }
+lingrad6   { list-style-image: linear-gradient( to bottom, chocolate 10%, orange ) }
+lingrad7   { list-style-image: linear-gradient( to left top, chocolate 10%, orange ) }
+lingrad8   { list-style-image: linear-gradient( to left bottom, chocolate 10%, orange ) }
+lingrad9   { list-style-image: linear-gradient( to bottom right, chocolate 10%, orange ) }
+lingrad10  { list-style-image: linear-gradient( to top right, chocolate 10%, orange ) }
+lingrad11  { list-style-image: linear-gradient( 90deg, chocolate 0.5cm, orange 10px ) }
+lingrad12  { list-style-image: linear-gradient( 0deg, chocolate 0.5cm, orange 10px ) }
+lingrad13  { list-style-image: linear-gradient( to left, chocolate 0.5cm, orange 10px ) }
+lingrad14  { list-style-image: linear-gradient( to right, chocolate 0.5cm, orange 10px ) }
+lingrad15  { list-style-image: linear-gradient( to top, chocolate 0.5cm, orange 10px ) }
+lingrad16  { list-style-image: linear-gradient( to bottom, chocolate 0.5cm, orange 10px ) }
+lingrad17  { list-style-image: linear-gradient( to left top, chocolate 0.5cm, orange 10px ) }
+lingrad18  { list-style-image: linear-gradient( to left bottom, chocolate 0.5cm, orange 10px ) }
+lingrad19  { list-style-image: linear-gradient( to bottom right, chocolate 0.5cm, orange 10px ) }
+lingrad20  { list-style-image: linear-gradient( to top right, chocolate 0.5cm, orange 10px ) }
+lingrad21  { list-style-image: linear-gradient( 90deg, chocolate , #f00 1px, orange 10% ) }
+lingrad22  { list-style-image: linear-gradient( 0deg, chocolate , #f00 1px, orange 10% ) }
+lingrad23  { list-style-image: linear-gradient( to left, chocolate , #f00 1px, orange 10% ) }
+lingrad24  { list-style-image: linear-gradient( to right, chocolate , #f00 1px, orange 10% ) }
+lingrad25  { list-style-image: linear-gradient( to top, chocolate , #f00 1px, orange 10% ) }
+lingrad26  { list-style-image: linear-gradient( to bottom, chocolate , #f00 1px, orange 10% ) }
+lingrad27  { list-style-image: linear-gradient( to left top, chocolate , #f00 1px, orange 10% ) }
+lingrad28  { list-style-image: linear-gradient( to left bottom, chocolate , #f00 1px, orange 10% ) }
+lingrad29  { list-style-image: linear-gradient( to bottom right, chocolate , #f00 1px, orange 10% ) }
+lingrad30  { list-style-image: linear-gradient( to top right, chocolate , #f00 1px, orange 10% ) }
+lingrad31  { list-style-image: linear-gradient( 90deg, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad32  { list-style-image: linear-gradient( 0deg, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad33  { list-style-image: linear-gradient( to left, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad34  { list-style-image: linear-gradient( to right, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad35  { list-style-image: linear-gradient( to top, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad36  { list-style-image: linear-gradient( to bottom, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad37  { list-style-image: linear-gradient( to left top, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad38  { list-style-image: linear-gradient( to left bottom, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad39  { list-style-image: linear-gradient( to bottom right, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad40  { list-style-image: linear-gradient( to top right, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+lingrad41  { list-style-image: linear-gradient( currentColor, chocolate ) }
+lingrad42  { list-style-image: linear-gradient( currentColor, chocolate .5cm ) }
+lingrad43  { list-style-image: linear-gradient( #f00, hsl(360, 50%, 50%) ) }
+lingrad44  { list-style-image: linear-gradient( tomato, #ff0000, yellow ) }
+lingrad45  { list-style-image: linear-gradient( black, #f00 1px, chocolate ) }
+lingrad46  { list-style-image: linear-gradient( yellow, black, white, blue, red ) }
+lingrad47  { list-style-image: linear-gradient( chocolate, fuchsia 10%, tomato 10px  ) }
+lingrad48  { list-style-image: linear-gradient( #ff0000, black ) }
+lingrad49  { list-style-image: linear-gradient( #ff0000 1px, black ) }
+lingrad50  { list-style-image: linear-gradient( hsla(360, 50%, 50%, 1), rgb(100%, 0%, 0%) ) }
+lingrad51  { list-style-image: linear-gradient( rgb(100%, 0%, 0%) 10px, rgb(100%, 0%, 0%) 10% ) }
+lingrad52  { list-style-image: linear-gradient( chocolate 10%, #f00, rgb(100%, 0%, 0%) ) }
+lingrad53  { list-style-image: linear-gradient( chocolate 0.5cm, #f00, rgb(100%, 0%, 0%) ) }
+lingrad54  { list-style-image: linear-gradient( chocolate 10% , #f00 1px, rgb(100%, 0%, 0%) 10% ) }
+lingrad55  { list-style-image: linear-gradient( hsl(360, 50%, 50%) 10.0px , #f00 1px, rgb(100%, 0%, 0%), tomato 10%) }
+rlingrad1   { list-style-image: repeating-linear-gradient( 90deg, chocolate 10%, orange ) }
+rlingrad2   { list-style-image: repeating-linear-gradient( 0deg, chocolate 10%, orange ) }
+rlingrad3   { list-style-image: repeating-linear-gradient( to left, chocolate 10%, orange ) }
+rlingrad4   { list-style-image: repeating-linear-gradient( to right, chocolate 10%, orange ) }
+rlingrad5   { list-style-image: repeating-linear-gradient( to top, chocolate 10%, orange ) }
+rlingrad6   { list-style-image: repeating-linear-gradient( to bottom, chocolate 10%, orange ) }
+rlingrad7   { list-style-image: repeating-linear-gradient( to left top, chocolate 10%, orange ) }
+rlingrad8   { list-style-image: repeating-linear-gradient( to left bottom, chocolate 10%, orange ) }
+rlingrad9   { list-style-image: repeating-linear-gradient( to bottom right, chocolate 10%, orange ) }
+rlingrad10  { list-style-image: repeating-linear-gradient( to top right, chocolate 10%, orange ) }
+rlingrad11  { list-style-image: repeating-linear-gradient( 90deg, chocolate 0.5cm, orange 10px ) }
+rlingrad12  { list-style-image: repeating-linear-gradient( 0deg, chocolate 0.5cm, orange 10px ) }
+rlingrad13  { list-style-image: repeating-linear-gradient( to left, chocolate 0.5cm, orange 10px ) }
+rlingrad14  { list-style-image: repeating-linear-gradient( to right, chocolate 0.5cm, orange 10px ) }
+rlingrad15  { list-style-image: repeating-linear-gradient( to top, chocolate 0.5cm, orange 10px ) }
+rlingrad16  { list-style-image: repeating-linear-gradient( to bottom, chocolate 0.5cm, orange 10px ) }
+rlingrad17  { list-style-image: repeating-linear-gradient( to left top, chocolate 0.5cm, orange 10px ) }
+rlingrad18  { list-style-image: repeating-linear-gradient( to left bottom, chocolate 0.5cm, orange 10px ) }
+rlingrad19  { list-style-image: repeating-linear-gradient( to bottom right, chocolate 0.5cm, orange 10px ) }
+rlingrad20  { list-style-image: repeating-linear-gradient( to top right, chocolate 0.5cm, orange 10px ) }
+rlingrad21  { list-style-image: repeating-linear-gradient( 90deg, chocolate , #f00 1px, orange 10% ) }
+rlingrad22  { list-style-image: repeating-linear-gradient( 0deg, chocolate , #f00 1px, orange 10% ) }
+rlingrad23  { list-style-image: repeating-linear-gradient( to left, chocolate , #f00 1px, orange 10% ) }
+rlingrad24  { list-style-image: repeating-linear-gradient( to right, chocolate , #f00 1px, orange 10% ) }
+rlingrad25  { list-style-image: repeating-linear-gradient( to top, chocolate , #f00 1px, orange 10% ) }
+rlingrad26  { list-style-image: repeating-linear-gradient( to bottom, chocolate , #f00 1px, orange 10% ) }
+rlingrad27  { list-style-image: repeating-linear-gradient( to left top, chocolate , #f00 1px, orange 10% ) }
+rlingrad28  { list-style-image: repeating-linear-gradient( to left bottom, chocolate , #f00 1px, orange 10% ) }
+rlingrad29  { list-style-image: repeating-linear-gradient( to bottom right, chocolate , #f00 1px, orange 10% ) }
+rlingrad30  { list-style-image: repeating-linear-gradient( to top right, chocolate , #f00 1px, orange 10% ) }
+rlingrad31  { list-style-image: repeating-linear-gradient( 90deg, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad32  { list-style-image: repeating-linear-gradient( 0deg, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad33  { list-style-image: repeating-linear-gradient( to left, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad34  { list-style-image: repeating-linear-gradient( to right, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad35  { list-style-image: repeating-linear-gradient( to top, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad36  { list-style-image: repeating-linear-gradient( to bottom, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad37  { list-style-image: repeating-linear-gradient( to left top, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad38  { list-style-image: repeating-linear-gradient( to left bottom, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad39  { list-style-image: repeating-linear-gradient( to bottom right, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad40  { list-style-image: repeating-linear-gradient( to top right, hsl(360, 50%, 50%) 10.0px , #f00 1px ) }
+rlingrad41  { list-style-image: repeating-linear-gradient( currentColor, chocolate ) }
+rlingrad42  { list-style-image: repeating-linear-gradient( currentColor, chocolate .5cm ) }
+rlingrad43  { list-style-image: repeating-linear-gradient( #f00, hsl(360, 50%, 50%) ) }
+rlingrad44  { list-style-image: repeating-linear-gradient( tomato, #ff0000, yellow ) }
+rlingrad45  { list-style-image: repeating-linear-gradient( black, #f00 1px, chocolate ) }
+rlingrad46  { list-style-image: repeating-linear-gradient( yellow, black, white, blue, red ) }
+rlingrad47  { list-style-image: repeating-linear-gradient( chocolate, fuchsia 10%, tomato 10px  ) }
+rlingrad48  { list-style-image: repeating-linear-gradient( #ff0000, black ) }
+rlingrad49  { list-style-image: repeating-linear-gradient( #ff0000 1px, black ) }
+rlingrad50  { list-style-image: repeating-linear-gradient( hsla(360, 50%, 50%, 1), rgb(100%, 0%, 0%) ) }
+rlingrad51  { list-style-image: repeating-linear-gradient( rgb(100%, 0%, 0%) 10px, rgb(100%, 0%, 0%) 10% ) }
+rlingrad52  { list-style-image: repeating-linear-gradient( chocolate 10%, #f00, rgb(100%, 0%, 0%) ) }
+rlingrad53  { list-style-image: repeating-linear-gradient( chocolate 0.5cm, #f00, rgb(100%, 0%, 0%) ) }
+rlingrad54  { list-style-image: repeating-linear-gradient( chocolate 10% , #f00 1px, rgb(100%, 0%, 0%) 10% ) }

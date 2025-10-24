@@ -1,0 +1,11 @@
+p.correct { color: red }
+    p.incorrect { color: green }
+    p#numnumpercent { color: rgb(255, 0, 0%) }
+    p#percentnumnum { color: rgb(100%, 0, 0) }
+    p#percentpercentnum { color: rgb(100%, 0%, 0) }
+    p#percentnumpercent { color: rgb(100%, 0, 0%) }
+    p#floatnumnum { color: rgb(255.0, 0, 0) }
+    p#numfloatnum { color: rgb(0, 128.0, 0) }
+    p#numnumnum { color: rgb(0, 128, 0) }
+    p#percentpercentpercent1 { color: rgb(0%, 50%, 0%) }
+    p#percentpercentpercent2 { color: rgb(0%, 49.99%, 0%) }

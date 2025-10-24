@@ -1,0 +1,8 @@
+a { align-content: flex-start }
+b { align-content: flex-end }
+c { align-content: center }
+d { align-content: space-between }
+e { align-content: space-around }
+f { align-content: stretch }
+y { align-content: initial }
+z { align-content: inherit }

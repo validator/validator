@@ -1,0 +1,34 @@
+em { color: #f00 white}
+em { color: #ff0000 #000}
+em { color: rgb(255,0,0) black }
+em { color: rgb(100%, 0%, 0%) #fff}
+em { color: white red rgb(0,0,0)}
+
+a {
+    background-color: transparent #f00;
+    background-color: #f00 transparent;
+    background-color: #ff0000 rgb(0,0,0);
+    background-color: rgb(255,0,0) black;
+    background-color: rgb(100%, 0%, 0%) red;
+    background-color: white #fdf;
+
+    background-image: url("image.png") none;
+    background-image: none url("image.png");
+    background-image: url("image.png") url("image2.png");
+    background-image: none none;
+
+
+    background-repeat: repeat repeat-x;
+    background-repeat: repeat-x repeat;
+    background-repeat: repeat-y repeat repeat-x no-repeat;
+
+    background-attachment: scroll fixed;
+    background-attachment: fixed scroll;
+
+    background-position: 10% 10% 10%;
+    background-position: 10px 10px 10px;
+    background-position: right bottom 10%;
+    background-position: right center bottom;
+
+    background: rgb(80%, 10%, 10%) url("image.png") no-repeat fixed left top rgb(70%,20%,10%);
+}

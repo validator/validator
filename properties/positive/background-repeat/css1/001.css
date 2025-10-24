@@ -1,0 +1,4 @@
+a { background-repeat: repeat }
+b { background-repeat: repeat-x }
+c { background-repeat: repeat-y }
+d { background-repeat: no-repeat }

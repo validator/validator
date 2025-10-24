@@ -1,0 +1,8 @@
+a { left: 10px }
+b { left: 0px }
+c { left: 0 }
+d { left: 5% }
+e { left: 0% }
+f { left: auto }
+Y { left: initial }
+z { left: inherit }

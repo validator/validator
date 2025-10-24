@@ -1,0 +1,68 @@
+y { perspective-origin: initial }
+z { perspective-origin: inherit }
+peror1   { perspective-origin: 10% }
+peror2   { perspective-origin: 10px }
+peror3   { perspective-origin: 0 }
+peror4   { perspective-origin: 0% }
+peror5   { perspective-origin: -100em }
+peror6   { perspective-origin: -10% }
+peror7   { perspective-origin: left }
+peror8   { perspective-origin: right }
+peror9   { perspective-origin: center }
+peror10  { perspective-origin: top }
+peror11  { perspective-origin: bottom }
+peror189 { perspective-origin:  -10%  -10%  }
+peror190 { perspective-origin:  -10%  0  }
+peror191 { perspective-origin:  -10%  10px  }
+peror192 { perspective-origin:  -10%  bottom  }
+peror193 { perspective-origin:  -10%  center  }
+peror194 { perspective-origin:  -10%  left  }
+peror195 { perspective-origin:  -10%  right  }
+peror196 { perspective-origin:  -10%  top  }
+peror197 { perspective-origin:  0  -10%  }
+peror198 { perspective-origin:  0  0  }
+peror199 { perspective-origin:  0  10px  }
+peror200 { perspective-origin:  0  bottom  }
+peror201 { perspective-origin:  0  center  }
+peror202 { perspective-origin:  0  left  }
+peror203 { perspective-origin:  0  right  }
+peror204 { perspective-origin:  0  top  }
+peror205 { perspective-origin:  10px  -10%  }
+peror206 { perspective-origin:  10px  0  }
+peror207 { perspective-origin:  10px  10px  }
+peror208 { perspective-origin:  10px  bottom  }
+peror209 { perspective-origin:  10px  center  }
+peror210 { perspective-origin:  10px  left  }
+peror211 { perspective-origin:  10px  right  }
+peror212 { perspective-origin:  10px  top  }
+peror213 { perspective-origin:  bottom  -10%  }
+peror214 { perspective-origin:  bottom  0  }
+peror215 { perspective-origin:  bottom  10px  }
+peror216 { perspective-origin:  bottom  center  }
+peror217 { perspective-origin:  bottom  left  }
+peror218 { perspective-origin:  bottom  right  }
+peror220 { perspective-origin:  center  -10%  }
+peror221 { perspective-origin:  center  0  }
+peror222 { perspective-origin:  center  10px  }
+peror223 { perspective-origin:  center  bottom  }
+peror224 { perspective-origin:  center  left  }
+peror225 { perspective-origin:  center  right  }
+peror226 { perspective-origin:  center  top  }
+peror227 { perspective-origin:  left  -10%  }
+peror228 { perspective-origin:  left  0  }
+peror229 { perspective-origin:  left  10px  }
+peror230 { perspective-origin:  left  bottom  }
+peror231 { perspective-origin:  left  center  }
+peror233 { perspective-origin:  left  top  }
+peror234 { perspective-origin:  right  -10%  }
+peror235 { perspective-origin:  right  0  }
+peror236 { perspective-origin:  right  10px  }
+peror237 { perspective-origin:  right  bottom  }
+peror238 { perspective-origin:  right  center  }
+peror240 { perspective-origin:  right  top  }
+peror241 { perspective-origin:  top  -10%  }
+peror242 { perspective-origin:  top  0  }
+peror243 { perspective-origin:  top  10px  }
+peror245 { perspective-origin:  top  center  }
+peror246 { perspective-origin:  top  left  }
+peror247 { perspective-origin:  top  right  }

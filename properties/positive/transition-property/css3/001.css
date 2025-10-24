@@ -1,0 +1,9 @@
+a { transition-property: none }
+b { transition-property: all }
+c { transition-property: all, all }
+d { transition-property: all, all, font }
+e { transition-property: all, background-image, all }
+f { transition-property: opacity, left, right }
+g { transition-property: transform }
+y { transition-property: initial }
+z { transition-property: inherit }

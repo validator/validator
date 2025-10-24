@@ -1,0 +1,3 @@
+a { list-style-image: url("foo.png") }
+b { list-style-image: none }
+z { list-style-image: inherit }

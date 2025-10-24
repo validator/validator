@@ -1,0 +1,278 @@
+z { border-bottom: inherit }
+y { border-bottom: initial }
+border1 { border-bottom: dotted 1px transparent }
+border2 { border-bottom: dotted transparent }
+border3 { border-bottom: dotted transparent 1px }
+border4 { border-bottom: dotted transparent thin }
+border5 { border-bottom: dotted thin transparent }
+border6 { border-bottom: 1px dotted transparent }
+border7 { border-bottom: 1px none transparent }
+border8 { border-bottom: 1px transparent }
+border9 { border-bottom: 1px transparent dotted }
+border10 { border-bottom: 1px transparent none }
+border11 { border-bottom: none 1px transparent }
+border12 { border-bottom: none transparent }
+border13 { border-bottom: none transparent 1px }
+border14 { border-bottom: none transparent thin }
+border15 { border-bottom: none thin transparent }
+border16 { border-bottom: transparent }
+border17 { border-bottom: transparent dotted }
+border18 { border-bottom: transparent dotted 1px }
+border19 { border-bottom: transparent dotted thin }
+border20 { border-bottom: transparent 1px }
+border21 { border-bottom: transparent 1px dotted }
+border22 { border-bottom: transparent 1px none }
+border23 { border-bottom: transparent none }
+border24 { border-bottom: transparent none 1px }
+border25 { border-bottom: transparent none thin }
+border26 { border-bottom: transparent thin }
+border27 { border-bottom: transparent thin dotted }
+border28 { border-bottom: transparent thin none }
+border29 { border-bottom: thin dotted transparent }
+border30 { border-bottom: thin none transparent }
+border31 { border-bottom: thin transparent }
+border32 { border-bottom: thin transparent dotted }
+border33 { border-bottom: thin transparent none }
+border34 { border-bottom: dotted 1px rgb(0,0,100) }
+border35 { border-bottom: dotted rgb(0,0,100) }
+border36 { border-bottom: dotted rgb(0,0,100) 1px }
+border37 { border-bottom: dotted rgb(0,0,100) thin }
+border38 { border-bottom: dotted thin rgb(0,0,100) }
+border39 { border-bottom: 1px dotted rgb(0,0,100) }
+border40 { border-bottom: 1px none rgb(0,0,100) }
+border41 { border-bottom: 1px rgb(0,0,100) }
+border42 { border-bottom: 1px rgb(0,0,100) dotted }
+border43 { border-bottom: 1px rgb(0,0,100) none }
+border44 { border-bottom: none 1px rgb(0,0,100) }
+border45 { border-bottom: none rgb(0,0,100) }
+border46 { border-bottom: none rgb(0,0,100) 1px }
+border47 { border-bottom: none rgb(0,0,100) thin }
+border48 { border-bottom: none thin rgb(0,0,100) }
+border49 { border-bottom: rgb(0,0,100) }
+border50 { border-bottom: rgb(0,0,100) dotted }
+border51 { border-bottom: rgb(0,0,100) dotted 1px }
+border52 { border-bottom: rgb(0,0,100) dotted thin }
+border53 { border-bottom: rgb(0,0,100) 1px }
+border54 { border-bottom: rgb(0,0,100) 1px dotted }
+border55 { border-bottom: rgb(0,0,100) 1px none }
+border56 { border-bottom: rgb(0,0,100) none }
+border57 { border-bottom: rgb(0,0,100) none 1px }
+border58 { border-bottom: rgb(0,0,100) none thin }
+border59 { border-bottom: rgb(0,0,100) thin }
+border60 { border-bottom: rgb(0,0,100) thin dotted }
+border61 { border-bottom: rgb(0,0,100) thin none }
+border62 { border-bottom: thin dotted rgb(0,0,100) }
+border63 { border-bottom: thin none rgb(0,0,100) }
+border64 { border-bottom: thin rgb(0,0,100) }
+border65 { border-bottom: thin rgb(0,0,100) dotted }
+border66 { border-bottom: thin rgb(0,0,100) none }
+border67 { border-bottom: dotted 1px hsla(360, 50%, 50%, 0.5) }
+border68 { border-bottom: dotted hsla(360, 50%, 50%, 0.5) }
+border69 { border-bottom: dotted hsla(360, 50%, 50%, 0.5) 1px }
+border70 { border-bottom: dotted hsla(360, 50%, 50%, 0.5) thin }
+border71 { border-bottom: dotted thin hsla(360, 50%, 50%, 0.5) }
+border72 { border-bottom: 1px dotted hsla(360, 50%, 50%, 0.5) }
+border73 { border-bottom: 1px none hsla(360, 50%, 50%, 0.5) }
+border74 { border-bottom: 1px hsla(360, 50%, 50%, 0.5) }
+border75 { border-bottom: 1px hsla(360, 50%, 50%, 0.5) dotted }
+border76 { border-bottom: 1px hsla(360, 50%, 50%, 0.5) none }
+border77 { border-bottom: none 1px hsla(360, 50%, 50%, 0.5) }
+border78 { border-bottom: none hsla(360, 50%, 50%, 0.5) }
+border79 { border-bottom: none hsla(360, 50%, 50%, 0.5) 1px }
+border80 { border-bottom: none hsla(360, 50%, 50%, 0.5) thin }
+border81 { border-bottom: none thin hsla(360, 50%, 50%, 0.5) }
+border82 { border-bottom: hsla(360, 50%, 50%, 0.5) }
+border83 { border-bottom: hsla(360, 50%, 50%, 0.5) dotted }
+border84 { border-bottom: hsla(360, 50%, 50%, 0.5) dotted 1px }
+border85 { border-bottom: hsla(360, 50%, 50%, 0.5) dotted thin }
+border86 { border-bottom: hsla(360, 50%, 50%, 0.5) 1px }
+border87 { border-bottom: hsla(360, 50%, 50%, 0.5) 1px dotted }
+border88 { border-bottom: hsla(360, 50%, 50%, 0.5) 1px none }
+border89 { border-bottom: hsla(360, 50%, 50%, 0.5) none }
+border90 { border-bottom: hsla(360, 50%, 50%, 0.5) none 1px }
+border91 { border-bottom: hsla(360, 50%, 50%, 0.5) none thin }
+border92 { border-bottom: hsla(360, 50%, 50%, 0.5) thin }
+border93 { border-bottom: hsla(360, 50%, 50%, 0.5) thin dotted }
+border94 { border-bottom: hsla(360, 50%, 50%, 0.5) thin none }
+border95 { border-bottom: thin dotted hsla(360, 50%, 50%, 0.5) }
+border96 { border-bottom: thin none hsla(360, 50%, 50%, 0.5) }
+border97 { border-bottom: thin hsla(360, 50%, 50%, 0.5) }
+border98 { border-bottom: thin hsla(360, 50%, 50%, 0.5) dotted }
+border99 { border-bottom: thin hsla(360, 50%, 50%, 0.5) none }
+border100 { border-bottom: dotted 1px hsl(240, 0%, 10%) }
+border101 { border-bottom: dotted hsl(240, 0%, 10%) }
+border102 { border-bottom: dotted hsl(240, 0%, 10%) 1px }
+border103 { border-bottom: dotted hsl(240, 0%, 10%) thin }
+border104 { border-bottom: dotted thin hsl(240, 0%, 10%) }
+border105 { border-bottom: 1px dotted hsl(240, 0%, 10%) }
+border106 { border-bottom: 1px none hsl(240, 0%, 10%) }
+border107 { border-bottom: 1px hsl(240, 0%, 10%) }
+border108 { border-bottom: 1px hsl(240, 0%, 10%) dotted }
+border109 { border-bottom: 1px hsl(240, 0%, 10%) none }
+border110 { border-bottom: none 1px hsl(240, 0%, 10%) }
+border111 { border-bottom: none hsl(240, 0%, 10%) }
+border112 { border-bottom: none hsl(240, 0%, 10%) 1px }
+border113 { border-bottom: none hsl(240, 0%, 10%) thin }
+border114 { border-bottom: none thin hsl(240, 0%, 10%) }
+border115 { border-bottom: hsl(240, 0%, 10%) }
+border116 { border-bottom: hsl(240, 0%, 10%) dotted }
+border117 { border-bottom: hsl(240, 0%, 10%) dotted 1px }
+border118 { border-bottom: hsl(240, 0%, 10%) dotted thin }
+border119 { border-bottom: hsl(240, 0%, 10%) 1px }
+border120 { border-bottom: hsl(240, 0%, 10%) 1px dotted }
+border121 { border-bottom: hsl(240, 0%, 10%) 1px none }
+border122 { border-bottom: hsl(240, 0%, 10%) none }
+border123 { border-bottom: hsl(240, 0%, 10%) none 1px }
+border124 { border-bottom: hsl(240, 0%, 10%) none thin }
+border125 { border-bottom: hsl(240, 0%, 10%) thin }
+border126 { border-bottom: hsl(240, 0%, 10%) thin dotted }
+border127 { border-bottom: hsl(240, 0%, 10%) thin none }
+border128 { border-bottom: thin dotted hsl(240, 0%, 10%) }
+border129 { border-bottom: thin none hsl(240, 0%, 10%) }
+border130 { border-bottom: thin hsl(240, 0%, 10%) }
+border131 { border-bottom: thin hsl(240, 0%, 10%) dotted }
+border132 { border-bottom: thin hsl(240, 0%, 10%) none }
+border133 { border-bottom: dotted 1px currentColor }
+border134 { border-bottom: dotted currentColor }
+border135 { border-bottom: dotted currentColor 1px }
+border136 { border-bottom: dotted currentColor thin }
+border137 { border-bottom: dotted thin currentColor }
+border138 { border-bottom: 1px dotted currentColor }
+border139 { border-bottom: 1px none currentColor }
+border140 { border-bottom: 1px currentColor }
+border141 { border-bottom: 1px currentColor dotted }
+border142 { border-bottom: 1px currentColor none }
+border143 { border-bottom: none 1px currentColor }
+border144 { border-bottom: none currentColor }
+border145 { border-bottom: none currentColor 1px }
+border146 { border-bottom: none currentColor thin }
+border147 { border-bottom: none thin currentColor }
+border148 { border-bottom: currentColor }
+border149 { border-bottom: currentColor dotted }
+border150 { border-bottom: currentColor dotted 1px }
+border151 { border-bottom: currentColor dotted thin }
+border152 { border-bottom: currentColor 1px }
+border153 { border-bottom: currentColor 1px dotted }
+border154 { border-bottom: currentColor 1px none }
+border155 { border-bottom: currentColor none }
+border156 { border-bottom: currentColor none 1px }
+border157 { border-bottom: currentColor none thin }
+border158 { border-bottom: currentColor thin }
+border159 { border-bottom: currentColor thin dotted }
+border160 { border-bottom: currentColor thin none }
+border161 { border-bottom: thin dotted currentColor }
+border162 { border-bottom: thin none currentColor }
+border163 { border-bottom: thin currentColor }
+border164 { border-bottom: thin currentColor dotted }
+border165 { border-bottom: thin currentColor none }
+border166 { border-bottom: dotted 1px tomato }
+border167 { border-bottom: dotted tomato }
+border168 { border-bottom: dotted tomato 1px }
+border169 { border-bottom: dotted tomato thin }
+border170 { border-bottom: dotted thin tomato }
+border171 { border-bottom: 1px dotted tomato }
+border172 { border-bottom: 1px none tomato }
+border173 { border-bottom: 1px tomato }
+border174 { border-bottom: 1px tomato dotted }
+border175 { border-bottom: 1px tomato none }
+border176 { border-bottom: none 1px tomato }
+border177 { border-bottom: none tomato }
+border178 { border-bottom: none tomato 1px }
+border179 { border-bottom: none tomato thin }
+border180 { border-bottom: none thin tomato }
+border181 { border-bottom: tomato }
+border182 { border-bottom: tomato dotted }
+border183 { border-bottom: tomato dotted 1px }
+border184 { border-bottom: tomato dotted thin }
+border185 { border-bottom: tomato 1px }
+border186 { border-bottom: tomato 1px dotted }
+border187 { border-bottom: tomato 1px none }
+border188 { border-bottom: tomato none }
+border189 { border-bottom: tomato none 1px }
+border190 { border-bottom: tomato none thin }
+border191 { border-bottom: tomato thin }
+border192 { border-bottom: tomato thin dotted }
+border193 { border-bottom: tomato thin none }
+border194 { border-bottom: thin dotted tomato }
+border195 { border-bottom: thin none tomato }
+border196 { border-bottom: thin tomato }
+border197 { border-bottom: thin tomato dotted }
+border198 { border-bottom: thin tomato none }
+border199 { border-bottom: #f00 }
+border200 { border-bottom: #f00 dotted }
+border201 { border-bottom: #f00 dotted 1px  }
+border202 { border-bottom: #f00 dotted thin }
+border203 { border-bottom: #f00 1px }
+border204 { border-bottom: #f00 1px dotted  }
+border205 { border-bottom: #f00 1px none }
+border206 { border-bottom: #f00 none }
+border207 { border-bottom: #f00 none 1px }
+border208 { border-bottom: #f00 none thin  }
+border209 { border-bottom: #f00 thin }
+border210 { border-bottom: #f00 thin dotted }
+border211 { border-bottom: #f00 thin none }
+border212 { border-bottom: dotted }
+border213 { border-bottom: dotted #f00 }
+border214 { border-bottom: dotted #f00 1px  }
+border215 { border-bottom: dotted #f00 thin }
+border216 { border-bottom: dotted 1px }
+border217 { border-bottom: dotted 1px  #f00 }
+border218 { border-bottom: dotted 1px red }
+border219 { border-bottom: dotted red }
+border220 { border-bottom: dotted red 1px }
+border221 { border-bottom: dotted red thin }
+border222 { border-bottom: dotted thin }
+border223 { border-bottom: dotted thin #f00 }
+border224 { border-bottom: dotted thin red }
+border225 { border-bottom: 1px }
+border226 { border-bottom: 1px #f00 }
+border227 { border-bottom: 1px #f00 dotted  }
+border228 { border-bottom: 1px #f00 none }
+border229 { border-bottom: 1px dotted }
+border230 { border-bottom: 1px dotted  #f00 }
+border231 { border-bottom: 1px dotted red }
+border232 { border-bottom: 1px none }
+border233 { border-bottom: 1px none #f00 }
+border234 { border-bottom: 1px none red }
+border235 { border-bottom: 1px red }
+border236 { border-bottom: 1px red dotted }
+border237 { border-bottom: 1px red none }
+border238 { border-bottom: none }
+border239 { border-bottom: none #f00 }
+border240 { border-bottom: none #f00 1px }
+border241 { border-bottom: none #f00 thin }
+border242 { border-bottom: none 1px }
+border243 { border-bottom: none 1px #f00 }
+border244 { border-bottom: none 1px red }
+border245 { border-bottom: none red }
+border246 { border-bottom: none red 1px }
+border247 { border-bottom: none red thin }
+border248 { border-bottom: none thin }
+border249 { border-bottom: none thin #f00 }
+border250 { border-bottom: none thin red }
+border251 { border-bottom: red }
+border252 { border-bottom: red dotted }
+border253 { border-bottom: red dotted 1px }
+border254 { border-bottom: red dotted thin }
+border255 { border-bottom: red 1px }
+border256 { border-bottom: red 1px dotted }
+border257 { border-bottom: red 1px none }
+border258 { border-bottom: red none }
+border259 { border-bottom: red none 1px }
+border260 { border-bottom: red none thin }
+border261 { border-bottom: red thin }
+border262 { border-bottom: red thin dotted }
+border263 { border-bottom: red thin none }
+border264 { border-bottom: thin }
+border265 { border-bottom: thin #f00 }
+border266 { border-bottom: thin #f00 dotted  }
+border267 { border-bottom: thin #f00 none }
+border268 { border-bottom: thin dotted }
+border269 { border-bottom: thin dotted  #f00 }
+border270 { border-bottom: thin dotted red }
+border271 { border-bottom: thin none }
+border272 { border-bottom: thin none #f00 }
+border273 { border-bottom: thin none red }
+border274 { border-bottom: thin red }
+border275 { border-bottom: thin red dotted }
+border276 { border-bottom: thin red none }

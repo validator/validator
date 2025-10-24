@@ -1,0 +1,6 @@
+a { hyphens: none; }
+b { hyphens: manual; }
+c { hyphens: auto; }
+d { hyphens: inherit; }
+e { hyphens: initial; }
+

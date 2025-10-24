@@ -1,0 +1,85 @@
+a {
+    /* margin */
+    margin-top: 10px 9px;
+    margin-right: 10px 9px;
+    margin-bottom: 10px 9px;
+    margin-left: 10px 9px;
+    margin: 10px 11px 12px 13px 14px 15px;
+
+    /* padding */
+    padding-top: 10px 9px;
+    padding-right: 10px 9px;
+    padding-bottom: 10px 9px;
+    padding-left: 10px 9px;
+    padding: 10px 11px 12px 13px 14px 15px;
+
+    /* borders */
+    border-top-width: 10px 9px;
+    border-right-width: 10px 9px;
+    border-bottom-width: 10px 9px;
+    border-left-width: 10px 9px;
+    border-width: 10px 11px 12px 13px 14px 15px;
+
+    border-color: blue yellow black red rgb(80%,10%,10%);
+
+    border-style: solid hidden dotted dashed ridge;
+
+    border-top: 1px solid black 2px;
+    border-top: 1px black solid dashed;
+    border-top: solid 1px black #fff;
+    border-top: solid black 1px rgb(255,0,0);
+    border-top: black 1px solid yellow;
+    border-top: black solid 1px dotted;
+
+    border-right: 1px solid black 2px;
+    border-right: 1px black solid dashed;
+    border-right: solid 1px black #fff;
+    border-right: solid black 1px rgb(255,0,0);
+    border-right: black 1px solid yellow;
+    border-right: black solid 1px dotted;
+
+    border-bottom: 1px solid black 2px;
+    border-bottom: 1px black solid dashed;
+    border-bottom: solid 1px black #fff;
+    border-bottom: solid black 1px rgb(255,0,0);
+    border-bottom: black 1px solid yellow;
+    border-bottom: black solid 1px dotted;
+
+    border-left: 1px solid black 2px;
+    border-left: 1px black solid dashed;
+    border-left: solid 1px black #fff;
+    border-left: solid black 1px rgb(255,0,0);
+    border-left: black 1px solid yellow;
+    border-left: black solid 1px dotted;
+
+    border: 1px solid black 2px;
+    border: 1px black solid dashed;
+    border: solid 1px black #fff;
+    border: solid black 1px rgb(255,0,0);
+    border: black 1px solid yellow;
+    border: black solid 1px dotted;
+
+    /* positionning */
+    width: 10px 11px;
+    width: 10% 10%;
+    width: 10% 10px;
+    width: 10px 10%;
+    width: auto 10px;
+
+    height: 10px 11px;
+    height: 10% 10%;
+    height: 10% 10px;
+    height: 10px 10%;
+    height: auto 10px;
+
+    float: left right;
+    float: right left;
+    float: none left;
+    float: left none;
+
+    clear: none left;
+    clear: left none;
+    clear: left right;
+    clear: right both;
+    clear: both right;
+}

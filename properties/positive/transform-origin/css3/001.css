@@ -1,0 +1,233 @@
+y { transform-origin: initial }
+z { transform-origin: inherit }
+tror1   { transform-origin: 10% }
+tror2   { transform-origin: 10px }
+tror3   { transform-origin: 0 }
+tror4   { transform-origin: 0% }
+tror5   { transform-origin: -100em }
+tror6   { transform-origin: -10% }
+tror7   { transform-origin: left }
+tror8   { transform-origin: right }
+tror9   { transform-origin: center }
+tror10  { transform-origin: top }
+tror11  { transform-origin: bottom }
+tror12  { transform-origin:  -10%  -10%  100px }
+tror13  { transform-origin:  -10%  0  100px }
+tror14  { transform-origin:  -10%  10px  100px }
+tror15  { transform-origin:  -10%  bottom  100px }
+tror16  { transform-origin:  -10%  center  100px }
+tror17  { transform-origin:  -10%  left  100px }
+tror18  { transform-origin:  -10%  right  100px }
+tror19  { transform-origin:  -10%  top  100px }
+tror20  { transform-origin:  0  -10%  100px }
+tror21  { transform-origin:  0  0  100px }
+tror22  { transform-origin:  0  10px  100px }
+tror23  { transform-origin:  0  bottom  100px }
+tror24  { transform-origin:  0  center  100px }
+tror25  { transform-origin:  0  left  100px }
+tror26  { transform-origin:  0  right  100px }
+tror27  { transform-origin:  0  top  100px }
+tror28  { transform-origin:  10px  -10%  100px }
+tror29  { transform-origin:  10px  0  100px }
+tror30  { transform-origin:  10px  10px  100px }
+tror31  { transform-origin:  10px  bottom  100px }
+tror32  { transform-origin:  10px  center  100px }
+tror33  { transform-origin:  10px  left  100px }
+tror34  { transform-origin:  10px  right  100px }
+tror35  { transform-origin:  10px  top  100px }
+tror36  { transform-origin:  bottom  -10%  100px }
+tror37  { transform-origin:  bottom  0  100px }
+tror38  { transform-origin:  bottom  10px  100px }
+tror39  { transform-origin:  bottom  center  100px }
+tror40  { transform-origin:  bottom  left  100px }
+tror41  { transform-origin:  bottom  right  100px }
+tror43  { transform-origin:  center  -10%  100px }
+tror44  { transform-origin:  center  0  100px }
+tror45  { transform-origin:  center  10px  100px }
+tror46  { transform-origin:  center  bottom  100px }
+tror47  { transform-origin:  center  left  100px }
+tror48  { transform-origin:  center  right  100px }
+tror49  { transform-origin:  center  top  100px }
+tror50  { transform-origin:  left  -10%  100px }
+tror51  { transform-origin:  left  0  100px }
+tror52  { transform-origin:  left  10px  100px }
+tror53  { transform-origin:  left  bottom  100px }
+tror54  { transform-origin:  left  center  100px }
+tror56  { transform-origin:  left  top  100px }
+tror57  { transform-origin:  right  -10%  100px }
+tror58  { transform-origin:  right  0  100px }
+tror59  { transform-origin:  right  10px  100px }
+tror60  { transform-origin:  right  bottom  100px }
+tror61  { transform-origin:  right  center  100px }
+tror63  { transform-origin:  right  top  100px }
+tror64  { transform-origin:  top  -10%  100px }
+tror65  { transform-origin:  top  0  100px }
+tror66  { transform-origin:  top  10px  100px }
+tror68  { transform-origin:  top  center  100px }
+tror69  { transform-origin:  top  left  100px }
+tror70  { transform-origin:  top  right  100px }
+tror71  { transform-origin:  -10%  -10%  -10cm }
+tror72  { transform-origin:  -10%  0  -10cm }
+tror73  { transform-origin:  -10%  10px  -10cm }
+tror74  { transform-origin:  -10%  bottom  -10cm }
+tror75  { transform-origin:  -10%  center  -10cm }
+tror76  { transform-origin:  -10%  left  -10cm }
+tror77  { transform-origin:  -10%  right  -10cm }
+tror78  { transform-origin:  -10%  top  -10cm }
+tror79  { transform-origin:  0  -10%  -10cm }
+tror80  { transform-origin:  0  0  -10cm }
+tror81  { transform-origin:  0  10px  -10cm }
+tror82  { transform-origin:  0  bottom  -10cm }
+tror83  { transform-origin:  0  center  -10cm }
+tror84  { transform-origin:  0  left  -10cm }
+tror85  { transform-origin:  0  right  -10cm }
+tror86  { transform-origin:  0  top  -10cm }
+tror87  { transform-origin:  10px  -10%  -10cm }
+tror88  { transform-origin:  10px  0  -10cm }
+tror89  { transform-origin:  10px  10px  -10cm }
+tror90  { transform-origin:  10px  bottom  -10cm }
+tror91  { transform-origin:  10px  center  -10cm }
+tror92  { transform-origin:  10px  left  -10cm }
+tror93  { transform-origin:  10px  right  -10cm }
+tror94  { transform-origin:  10px  top  -10cm }
+tror95  { transform-origin:  bottom  -10%  -10cm }
+tror96  { transform-origin:  bottom  0  -10cm }
+tror97  { transform-origin:  bottom  10px  -10cm }
+tror98  { transform-origin:  bottom  center  -10cm }
+tror99  { transform-origin:  bottom  left  -10cm }
+tror100 { transform-origin:  bottom  right  -10cm }
+tror102 { transform-origin:  center  -10%  -10cm }
+tror103 { transform-origin:  center  0  -10cm }
+tror104 { transform-origin:  center  10px  -10cm }
+tror105 { transform-origin:  center  bottom  -10cm }
+tror106 { transform-origin:  center  left  -10cm }
+tror107 { transform-origin:  center  right  -10cm }
+tror108 { transform-origin:  center  top  -10cm }
+tror109 { transform-origin:  left  -10%  -10cm }
+tror110 { transform-origin:  left  0  -10cm }
+tror111 { transform-origin:  left  10px  -10cm }
+tror112 { transform-origin:  left  bottom  -10cm }
+tror113 { transform-origin:  left  center  -10cm }
+tror115 { transform-origin:  left  top  -10cm }
+tror116 { transform-origin:  right  -10%  -10cm }
+tror117 { transform-origin:  right  0  -10cm }
+tror118 { transform-origin:  right  10px  -10cm }
+tror119 { transform-origin:  right  bottom  -10cm }
+tror120 { transform-origin:  right  center  -10cm }
+tror122 { transform-origin:  right  top  -10cm }
+tror123 { transform-origin:  top  -10%  -10cm }
+tror124 { transform-origin:  top  0  -10cm }
+tror125 { transform-origin:  top  10px  -10cm }
+tror127 { transform-origin:  top  center  -10cm }
+tror128 { transform-origin:  top  left  -10cm }
+tror129 { transform-origin:  top  right  -10cm }
+tror130 { transform-origin:  -10%  -10%  0 }
+tror131 { transform-origin:  -10%  0  0 }
+tror132 { transform-origin:  -10%  10px  0 }
+tror133 { transform-origin:  -10%  bottom  0 }
+tror134 { transform-origin:  -10%  center  0 }
+tror135 { transform-origin:  -10%  left  0 }
+tror136 { transform-origin:  -10%  right  0 }
+tror137 { transform-origin:  -10%  top  0 }
+tror138 { transform-origin:  0  -10%  0 }
+tror139 { transform-origin:  0  0  0 }
+tror140 { transform-origin:  0  10px  0 }
+tror141 { transform-origin:  0  bottom  0 }
+tror142 { transform-origin:  0  center  0 }
+tror143 { transform-origin:  0  left  0 }
+tror144 { transform-origin:  0  right  0 }
+tror145 { transform-origin:  0  top  0 }
+tror146 { transform-origin:  10px  -10%  0 }
+tror147 { transform-origin:  10px  0  0 }
+tror148 { transform-origin:  10px  10px  0 }
+tror149 { transform-origin:  10px  bottom  0 }
+tror150 { transform-origin:  10px  center  0 }
+tror151 { transform-origin:  10px  left  0 }
+tror152 { transform-origin:  10px  right  0 }
+tror153 { transform-origin:  10px  top  0 }
+tror154 { transform-origin:  bottom  -10%  0 }
+tror155 { transform-origin:  bottom  0  0 }
+tror156 { transform-origin:  bottom  10px  0 }
+tror157 { transform-origin:  bottom  center  0 }
+tror158 { transform-origin:  bottom  left  0 }
+tror159 { transform-origin:  bottom  right  0 }
+tror161 { transform-origin:  center  -10%  0 }
+tror162 { transform-origin:  center  0  0 }
+tror163 { transform-origin:  center  10px  0 }
+tror164 { transform-origin:  center  bottom  0 }
+tror165 { transform-origin:  center  left  0 }
+tror166 { transform-origin:  center  right  0 }
+tror167 { transform-origin:  center  top  0 }
+tror168 { transform-origin:  left  -10%  0 }
+tror169 { transform-origin:  left  0  0 }
+tror170 { transform-origin:  left  10px  0 }
+tror171 { transform-origin:  left  bottom  0 }
+tror172 { transform-origin:  left  center  0 }
+tror174 { transform-origin:  left  top  0 }
+tror175 { transform-origin:  right  -10%  0 }
+tror176 { transform-origin:  right  0  0 }
+tror177 { transform-origin:  right  10px  0 }
+tror178 { transform-origin:  right  bottom  0 }
+tror179 { transform-origin:  right  center  0 }
+tror181 { transform-origin:  right  top  0 }
+tror182 { transform-origin:  top  -10%  0 }
+tror183 { transform-origin:  top  0  0 }
+tror184 { transform-origin:  top  10px  0 }
+tror186 { transform-origin:  top  center  0 }
+tror187 { transform-origin:  top  left  0 }
+tror188 { transform-origin:  top  right  0 }
+tror189 { transform-origin:  -10%  -10%  }
+tror190 { transform-origin:  -10%  0  }
+tror191 { transform-origin:  -10%  10px  }
+tror192 { transform-origin:  -10%  bottom  }
+tror193 { transform-origin:  -10%  center  }
+tror194 { transform-origin:  -10%  left  }
+tror195 { transform-origin:  -10%  right  }
+tror196 { transform-origin:  -10%  top  }
+tror197 { transform-origin:  0  -10%  }
+tror198 { transform-origin:  0  0  }
+tror199 { transform-origin:  0  10px  }
+tror200 { transform-origin:  0  bottom  }
+tror201 { transform-origin:  0  center  }
+tror202 { transform-origin:  0  left  }
+tror203 { transform-origin:  0  right  }
+tror204 { transform-origin:  0  top  }
+tror205 { transform-origin:  10px  -10%  }
+tror206 { transform-origin:  10px  0  }
+tror207 { transform-origin:  10px  10px  }
+tror208 { transform-origin:  10px  bottom  }
+tror209 { transform-origin:  10px  center  }
+tror210 { transform-origin:  10px  left  }
+tror211 { transform-origin:  10px  right  }
+tror212 { transform-origin:  10px  top  }
+tror213 { transform-origin:  bottom  -10%  }
+tror214 { transform-origin:  bottom  0  }
+tror215 { transform-origin:  bottom  10px  }
+tror216 { transform-origin:  bottom  center  }
+tror217 { transform-origin:  bottom  left  }
+tror218 { transform-origin:  bottom  right  }
+tror220 { transform-origin:  center  -10%  }
+tror221 { transform-origin:  center  0  }
+tror222 { transform-origin:  center  10px  }
+tror223 { transform-origin:  center  bottom  }
+tror224 { transform-origin:  center  left  }
+tror225 { transform-origin:  center  right  }
+tror226 { transform-origin:  center  top  }
+tror227 { transform-origin:  left  -10%  }
+tror228 { transform-origin:  left  0  }
+tror229 { transform-origin:  left  10px  }
+tror230 { transform-origin:  left  bottom  }
+tror231 { transform-origin:  left  center  }
+tror233 { transform-origin:  left  top  }
+tror234 { transform-origin:  right  -10%  }
+tror235 { transform-origin:  right  0  }
+tror236 { transform-origin:  right  10px  }
+tror237 { transform-origin:  right  bottom  }
+tror238 { transform-origin:  right  center  }
+tror240 { transform-origin:  right  top  }
+tror241 { transform-origin:  top  -10%  }
+tror242 { transform-origin:  top  0  }
+tror243 { transform-origin:  top  10px  }
+tror245 { transform-origin:  top  center  }
+tror246 { transform-origin:  top  left  }
+tror247 { transform-origin:  top  right  }

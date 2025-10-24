@@ -1,0 +1,12 @@
+a { voice-balance: -100 }
+b { voice-balance: 100 }
+c { voice-balance: 0 }
+d { voice-balance: 14.2 }
+e { voice-balance:  left  }
+f { voice-balance:  center  }
+g { voice-balance:  right  }
+h { voice-balance:  leftwards  }
+i { voice-balance:  rightwards  }
+j { voice-balance: -42.0000000 }
+y { voice-balance: initial }
+z { voice-balance: inherit }

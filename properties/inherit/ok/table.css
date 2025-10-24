@@ -1,0 +1,13 @@
+table-caption {
+    caption-side: inherit;
+}
+
+table {
+    table-layout: inherit;
+    border-collapse: inherit;
+    border-spacing: inherit;
+}
+
+table-cell {
+    empty-cells: inherit;
+}

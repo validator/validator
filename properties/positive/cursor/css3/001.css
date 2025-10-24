@@ -1,0 +1,172 @@
+curs1   { cursor:  auto  }
+curs2   { cursor:  default  }
+curs3   { cursor:  none  }
+curs4   { cursor:  context-menu  }
+curs5   { cursor:  help  }
+curs6   { cursor:  pointer  }
+curs7   { cursor:  progress  }
+curs8   { cursor:  wait  }
+curs9   { cursor:  cell  }
+curs10  { cursor:  crosshair  }
+curs11  { cursor:  text  }
+curs12  { cursor:  vertical-text  }
+curs13  { cursor:  alias  }
+curs14  { cursor:  copy  }
+curs15  { cursor:  move  }
+curs16  { cursor:  no-drop  }
+curs17  { cursor:  not-allowed  }
+curs18  { cursor:  e-resize  }
+curs19  { cursor:  n-resize  }
+curs20  { cursor:  ne-resize  }
+curs21  { cursor:  nw-resize  }
+curs22  { cursor:  s-resize  }
+curs23  { cursor:  se-resize  }
+curs24  { cursor:  sw-resize  }
+curs25  { cursor:  w-resize  }
+curs26  { cursor:  ew-resize  }
+curs27  { cursor:  ns-resize  }
+curs28  { cursor:  nesw-resize  }
+curs29  { cursor:  nwse-resize  }
+curs30  { cursor:  col-resize  }
+curs31  { cursor:  row-resize  }
+curs32  { cursor:  all-scroll  }
+curs33  { cursor:  zoom-in  }
+curs34  { cursor:  zoom-out }
+curs35  { cursor: url("foo"), auto  }
+curs36  { cursor: url("foo"), default  }
+curs37  { cursor: url("foo"), none  }
+curs38  { cursor: url("foo"), context-menu  }
+curs39  { cursor: url("foo"), help  }
+curs40  { cursor: url("foo"), pointer  }
+curs41  { cursor: url("foo"), progress  }
+curs42  { cursor: url("foo"), wait  }
+curs43  { cursor: url("foo"), cell  }
+curs44  { cursor: url("foo"), crosshair  }
+curs45  { cursor: url("foo"), text  }
+curs46  { cursor: url("foo"), vertical-text  }
+curs47  { cursor: url("foo"), alias  }
+curs48  { cursor: url("foo"), copy  }
+curs49  { cursor: url("foo"), move  }
+curs50  { cursor: url("foo"), no-drop  }
+curs51  { cursor: url("foo"), not-allowed  }
+curs52  { cursor: url("foo"), e-resize  }
+curs53  { cursor: url("foo"), n-resize  }
+curs54  { cursor: url("foo"), ne-resize  }
+curs55  { cursor: url("foo"), nw-resize  }
+curs56  { cursor: url("foo"), s-resize  }
+curs57  { cursor: url("foo"), se-resize  }
+curs58  { cursor: url("foo"), sw-resize  }
+curs59  { cursor: url("foo"), w-resize  }
+curs60  { cursor: url("foo"), ew-resize  }
+curs61  { cursor: url("foo"), ns-resize  }
+curs62  { cursor: url("foo"), nesw-resize  }
+curs63  { cursor: url("foo"), nwse-resize  }
+curs64  { cursor: url("foo"), col-resize  }
+curs65  { cursor: url("foo"), row-resize  }
+curs66  { cursor: url("foo"), all-scroll  }
+curs67  { cursor: url("foo"), zoom-in  }
+curs68  { cursor: url("foo"), zoom-out }
+curs69  { cursor: url("bar"), url("foo"), auto  }
+curs70  { cursor: url("bar"), url("foo"), default  }
+curs71  { cursor: url("bar"), url("foo"), none  }
+curs72  { cursor: url("bar"), url("foo"), context-menu  }
+curs73  { cursor: url("bar"), url("foo"), help  }
+curs74  { cursor: url("bar"), url("foo"), pointer  }
+curs75  { cursor: url("bar"), url("foo"), progress  }
+curs76  { cursor: url("bar"), url("foo"), wait  }
+curs77  { cursor: url("bar"), url("foo"), cell  }
+curs78  { cursor: url("bar"), url("foo"), crosshair  }
+curs79  { cursor: url("bar"), url("foo"), text  }
+curs80  { cursor: url("bar"), url("foo"), vertical-text  }
+curs81  { cursor: url("bar"), url("foo"), alias  }
+curs82  { cursor: url("bar"), url("foo"), copy  }
+curs83  { cursor: url("bar"), url("foo"), move  }
+curs84  { cursor: url("bar"), url("foo"), no-drop  }
+curs85  { cursor: url("bar"), url("foo"), not-allowed  }
+curs86  { cursor: url("bar"), url("foo"), e-resize  }
+curs87  { cursor: url("bar"), url("foo"), n-resize  }
+curs88  { cursor: url("bar"), url("foo"), ne-resize  }
+curs89  { cursor: url("bar"), url("foo"), nw-resize  }
+curs90  { cursor: url("bar"), url("foo"), s-resize  }
+curs91  { cursor: url("bar"), url("foo"), se-resize  }
+curs92  { cursor: url("bar"), url("foo"), sw-resize  }
+curs93  { cursor: url("bar"), url("foo"), w-resize  }
+curs94  { cursor: url("bar"), url("foo"), ew-resize  }
+curs95  { cursor: url("bar"), url("foo"), ns-resize  }
+curs96  { cursor: url("bar"), url("foo"), nesw-resize  }
+curs97  { cursor: url("bar"), url("foo"), nwse-resize  }
+curs98  { cursor: url("bar"), url("foo"), col-resize  }
+curs99  { cursor: url("bar"), url("foo"), row-resize  }
+curs100 { cursor: url("bar"), url("foo"), all-scroll  }
+curs101 { cursor: url("bar"), url("foo"), zoom-in  }
+curs102 { cursor: url("bar"), url("foo"), zoom-out }
+curs103 { cursor: url("foo") 10.2 -25.4, auto  }
+curs104 { cursor: url("foo") 10.2 -25.4, default  }
+curs105 { cursor: url("foo") 10.2 -25.4, none  }
+curs106 { cursor: url("foo") 10.2 -25.4, context-menu  }
+curs107 { cursor: url("foo") 10.2 -25.4, help  }
+curs108 { cursor: url("foo") 10.2 -25.4, pointer  }
+curs109 { cursor: url("foo") 10.2 -25.4, progress  }
+curs110 { cursor: url("foo") 10.2 -25.4, wait  }
+curs111 { cursor: url("foo") 10.2 -25.4, cell  }
+curs112 { cursor: url("foo") 10.2 -25.4, crosshair  }
+curs113 { cursor: url("foo") 10.2 -25.4, text  }
+curs114 { cursor: url("foo") 10.2 -25.4, vertical-text  }
+curs115 { cursor: url("foo") 10.2 -25.4, alias  }
+curs116 { cursor: url("foo") 10.2 -25.4, copy  }
+curs117 { cursor: url("foo") 10.2 -25.4, move  }
+curs118 { cursor: url("foo") 10.2 -25.4, no-drop  }
+curs119 { cursor: url("foo") 10.2 -25.4, not-allowed  }
+curs120 { cursor: url("foo") 10.2 -25.4, e-resize  }
+curs121 { cursor: url("foo") 10.2 -25.4, n-resize  }
+curs122 { cursor: url("foo") 10.2 -25.4, ne-resize  }
+curs123 { cursor: url("foo") 10.2 -25.4, nw-resize  }
+curs124 { cursor: url("foo") 10.2 -25.4, s-resize  }
+curs125 { cursor: url("foo") 10.2 -25.4, se-resize  }
+curs126 { cursor: url("foo") 10.2 -25.4, sw-resize  }
+curs127 { cursor: url("foo") 10.2 -25.4, w-resize  }
+curs128 { cursor: url("foo") 10.2 -25.4, ew-resize  }
+curs129 { cursor: url("foo") 10.2 -25.4, ns-resize  }
+curs130 { cursor: url("foo") 10.2 -25.4, nesw-resize  }
+curs131 { cursor: url("foo") 10.2 -25.4, nwse-resize  }
+curs132 { cursor: url("foo") 10.2 -25.4, col-resize  }
+curs133 { cursor: url("foo") 10.2 -25.4, row-resize  }
+curs134 { cursor: url("foo") 10.2 -25.4, all-scroll  }
+curs135 { cursor: url("foo") 10.2 -25.4, zoom-in  }
+curs136 { cursor: url("foo") 10.2 -25.4, zoom-out }
+curs137 { cursor: url("bar"), url("foo") 10.2 -25.4, auto  }
+curs138 { cursor: url("bar"), url("foo") 10.2 -25.4, default  }
+curs139 { cursor: url("bar"), url("foo") 10.2 -25.4, none  }
+curs140 { cursor: url("bar"), url("foo") 10.2 -25.4, context-menu  }
+curs141 { cursor: url("bar"), url("foo") 10.2 -25.4, help  }
+curs142 { cursor: url("bar"), url("foo") 10.2 -25.4, pointer  }
+curs143 { cursor: url("bar"), url("foo") 10.2 -25.4, progress  }
+curs144 { cursor: url("bar"), url("foo") 10.2 -25.4, wait  }
+curs145 { cursor: url("bar"), url("foo") 10.2 -25.4, cell  }
+curs146 { cursor: url("bar"), url("foo") 10.2 -25.4, crosshair  }
+curs147 { cursor: url("bar"), url("foo") 10.2 -25.4, text  }
+curs148 { cursor: url("bar"), url("foo") 10.2 -25.4, vertical-text  }
+curs149 { cursor: url("bar"), url("foo") 10.2 -25.4, alias  }
+curs150 { cursor: url("bar"), url("foo") 10.2 -25.4, copy  }
+curs151 { cursor: url("bar"), url("foo") 10.2 -25.4, move  }
+curs152 { cursor: url("bar"), url("foo") 10.2 -25.4, no-drop  }
+curs153 { cursor: url("bar"), url("foo") 10.2 -25.4, not-allowed  }
+curs154 { cursor: url("bar"), url("foo") 10.2 -25.4, e-resize  }
+curs155 { cursor: url("bar"), url("foo") 10.2 -25.4, n-resize  }
+curs156 { cursor: url("bar"), url("foo") 10.2 -25.4, ne-resize  }
+curs157 { cursor: url("bar"), url("foo") 10.2 -25.4, nw-resize  }
+curs158 { cursor: url("bar"), url("foo") 10.2 -25.4, s-resize  }
+curs159 { cursor: url("bar"), url("foo") 10.2 -25.4, se-resize  }
+curs160 { cursor: url("bar"), url("foo") 10.2 -25.4, sw-resize  }
+curs161 { cursor: url("bar"), url("foo") 10.2 -25.4, w-resize  }
+curs162 { cursor: url("bar"), url("foo") 10.2 -25.4, ew-resize  }
+curs163 { cursor: url("bar"), url("foo") 10.2 -25.4, ns-resize  }
+curs164 { cursor: url("bar"), url("foo") 10.2 -25.4, nesw-resize  }
+curs165 { cursor: url("bar"), url("foo") 10.2 -25.4, nwse-resize  }
+curs166 { cursor: url("bar"), url("foo") 10.2 -25.4, col-resize  }
+curs167 { cursor: url("bar"), url("foo") 10.2 -25.4, row-resize  }
+curs168 { cursor: url("bar"), url("foo") 10.2 -25.4, all-scroll  }
+curs169 { cursor: url("bar"), url("foo") 10.2 -25.4, zoom-in  }
+curs170 { cursor: url("bar"), url("foo") 10.2 -25.4, zoom-out }
+y { cursor:  initial }
+z { cursor:  inherit  }

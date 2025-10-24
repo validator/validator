@@ -1,0 +1,8 @@
+a {
+    display: inherit;
+    white-space: inherit;
+    list-style-type: inherit;
+    list-style-image: inherit;
+    list-style-position: inherit;
+    list-style: inherit; /* shorthand */
+}

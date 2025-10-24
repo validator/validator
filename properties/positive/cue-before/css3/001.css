@@ -1,0 +1,7 @@
+a { cue-before: none }
+b { cue-before: url("foo.wav") }
+c { cue-before: url("foo.wav") +3.0dB }
+d { cue-before: url("foo.wav") -3.2dB }
+e { cue-before: url("foo.aiff") 0dB }
+y { cue-before: initial }
+z { cue-before: inherit }

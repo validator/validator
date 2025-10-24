@@ -1,0 +1,5 @@
+a { stress: 0 }
+b { stress: 100 }
+c { stress: 10.42 }
+d { stress: 50 }
+z { stress: inherit }

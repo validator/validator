@@ -1,0 +1,8 @@
+/* --- start of test case --- */
+
+a valid rule {color: red; }
+
+a broken rule {
+ /* look-out: too many values! */
+ margin: 0 0 0 0 0 0 0 0;
+}

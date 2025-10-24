@@ -1,0 +1,6 @@
+a { word-spacing: normal }
+b { word-spacing: 1em  }
+c { word-spacing: 0em  }
+d { word-spacing: 0 }
+e { word-spacing: -2mm }
+z { word-spacing: inherit }

@@ -1,0 +1,4 @@
+/* Should not be valid, here is not a valid value */
+img {
+    float: left here
+}  /* "here" is not a value of 'float' */

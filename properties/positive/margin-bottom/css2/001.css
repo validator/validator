@@ -1,0 +1,9 @@
+a { margin-bottom: 10px }
+b { margin-bottom: 0px }
+c { margin-bottom: 0 }
+d { margin-bottom: 5% }
+e { margin-bottom: 0% }
+f { margin-bottom: auto }
+g { margin-bottom: -10px }
+h { margin-bottom: -10% }
+z { margin-bottom: inherit }

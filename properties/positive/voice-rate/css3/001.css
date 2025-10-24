@@ -1,0 +1,22 @@
+a { voice-rate: normal  }
+b { voice-rate: x-slow  }
+c { voice-rate: slow  }
+d { voice-rate: medium  }
+e { voice-rate: fast  }
+f { voice-rate: x-fast }
+g { voice-rate: +10% }
+h { voice-rate: 120% }
+i { voice-rate: 10% normal  }
+j { voice-rate: 10% x-slow  }
+k { voice-rate: 10% slow  }
+l { voice-rate: +10% medium  }
+m { voice-rate: +10% fast  }
+n { voice-rate: +10% x-fast }
+o { voice-rate: normal 120%  }
+p { voice-rate: x-slow 120%  }
+q { voice-rate: slow  120%  }
+r { voice-rate: medium 120%  }
+s { voice-rate: fast 120%  }
+t { voice-rate: x-fast 120%  }
+y { voice-rate: initial }
+z { voice-rate: inherit }

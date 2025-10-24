@@ -1,0 +1,11 @@
+a { rest-after:  500ms  }
+b { rest-after:  0s }
+c { rest-after:  2.1s }
+d { rest-after:  none  }
+e { rest-after:  x-weak  }
+f { rest-after:  weak  }
+g { rest-after:  medium  }
+h { rest-after:  strong  }
+i { rest-after:  x-strong  }
+y { rest-after: initial }
+z { rest-after: inherit }

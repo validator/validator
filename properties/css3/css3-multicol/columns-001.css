@@ -1,0 +1,21 @@
+div {
+	columns: inherit;
+}
+div {
+columns: 12em;      /* column-width: 12em; column-count: auto */
+}
+div {
+columns: auto 12em; /* column-width: 12em; column-count: auto */
+}
+div {
+columns: 2;         /* column-width: auto; column-count: 2 */
+}
+div {
+columns: 2 auto;    /* column-width: auto; column-count: 2 */
+}
+div {
+columns: auto;      /* column-width: auto; column-count: auto */
+}
+div {
+columns: auto auto; /* column-width: auto; column-count: auto */
+}

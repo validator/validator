@@ -1,0 +1,13 @@
+a {
+    text-decoration: inherit underline;
+    text-decoration: underline inherit;
+
+    text-decoration: inherit underline overline;
+    text-decoration: underline inherit overline;
+    text-decoration: underline overline inherit;
+
+    text-decoration: inherit underline overline blink;
+    text-decoration: underline inherit overline blink;
+    text-decoration: underline overline inherit blink;
+    text-decoration: underline overline blink inherit;
+}

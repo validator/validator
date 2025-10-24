@@ -1,0 +1,31 @@
+a {
+    azimuth: inherit 0;
+    azimuth: 0 inherit;
+    azimuth: inherit left-side;
+    azimuth: left-side inherit;
+    azimuth: inherit left-side behind;
+    azimuth: left-side inherit behind;
+    azimuth: left-side behind inherit;
+    azimuth: inherit leftwards;
+    azimuth: leftwards inherit;
+
+    cue: inherit none;
+    cue: none inherit;
+
+    pause: inherit 0;
+    pause: 0 inherit;
+
+    play-during: inherit url("http://sound.wav") 0;
+    play-during: url("http://sound.wav") inherit 0;
+    play-during: url("http://sound.wav") 0 inherit;
+    play-during: inherit url("http://sound.wav");
+    play-during: inherit 0;
+    play-during: url("http://sound.wav") inherit;
+    play-during: 0 inherit;
+
+    voice-family: inherit, announcer, romeo, juliet, male;
+    voice-family: announcer, inherit, romeo, juliet, male;
+    voice-family: announcer, romeo, inherit, juliet, male;
+    voice-family: announcer, romeo, juliet, inherit, male;
+    voice-family: announcer, romeo, juliet, male, inherit;
+}

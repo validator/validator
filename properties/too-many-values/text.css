@@ -1,0 +1,44 @@
+a {
+    word-spacing: normal 3px;
+    word-spacing: 3px normal;
+    word-spacing: 3px thin;
+    word-spacing: thick 3px;
+
+    letter-spacing: normal 3px;
+    letter-spacing: 3px normal;
+    letter-spacing: 3px thin;
+    letter-spacing: thick 3px;
+
+    text-decoration: none underline;
+    text-decoration: underline none;
+    text-decoration: overline underline none;
+    text-decoration: overline none underline;
+    text-decoration: underline overline line-through blonk underline;
+
+    vertical-align: baseline sub;
+    vertical-align: 12% middle;
+    vertical-align: 12ex 3%;
+    vertical-align: middle 12%;
+    vertical-align: 3% 12ex;
+
+    text-transform: capitalize none;
+    text-transform: none uppercase;
+    text-transform: lowercase capitalize uppercase none;
+    text-align: left right;
+    text-align: right left;
+    text-align: center left right justify;
+
+    text-indent: 10px 10%;
+    text-indent: 10% 10px;
+    text-indent: 10% 10px 10em;
+
+    line-height: normal 10;
+    line-height: 10 normal;
+    line-height: normal 10px;
+    line-height: normal 10%;
+    line-height: 10px 10 normal 10%;
+
+    white-space: normal pre;
+    white-space: pre normal;
+    white-space: nowrap normal pre;
+}

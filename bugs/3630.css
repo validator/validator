@@ -1,0 +1,5 @@
+/* this should not pass CSS2 or CSS2.1 test, see
+http://www.w3.org/Bugs/Public/show_bug.cgi?id=3630 */
+
+
+.foo {color : red;  }\

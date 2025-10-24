@@ -1,0 +1,4 @@
+a { box-decoration-break: slice }
+b { box-decoration-break: clone }
+y { box-decoration-break: initial }
+z { box-decoration-break: inherit }

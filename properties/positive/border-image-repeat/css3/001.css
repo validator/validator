@@ -1,0 +1,22 @@
+y { border-image-repeat: initial  }
+z { border-image-repeat: inherit  }
+bimrep1 { border-image-repeat: repeat  }
+bimrep2 { border-image-repeat: repeat  repeat  }
+bimrep3 { border-image-repeat: repeat  round  }
+bimrep4 { border-image-repeat: repeat  space  }
+bimrep5 { border-image-repeat: repeat  stretch  }
+bimrep6 { border-image-repeat: round  }
+bimrep7 { border-image-repeat: round  repeat  }
+bimrep8 { border-image-repeat: round  round  }
+bimrep9 { border-image-repeat: round  space  }
+bimrep10 { border-image-repeat: round  stretch  }
+bimrep11 { border-image-repeat: space  }
+bimrep12 { border-image-repeat: space  repeat  }
+bimrep13 { border-image-repeat: space  round  }
+bimrep14 { border-image-repeat: space  space  }
+bimrep15 { border-image-repeat: space  stretch  }
+bimrep16 { border-image-repeat: stretch  }
+bimrep17 { border-image-repeat: stretch  repeat  }
+bimrep18 { border-image-repeat: stretch  round  }
+bimrep19 { border-image-repeat: stretch  space  }
+bimrep20 { border-image-repeat: stretch  stretch  }

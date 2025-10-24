@@ -1,0 +1,219 @@
+z { border-right-color: inherit }
+y { border-right-color: initial }
+w { border-right-color: currentColor }
+a { border-right-color: #f00 }
+b { border-right-color: transparent }
+c { border-right-color: rgb(255,0,0) }
+d { border-right-color: rgb(100%, 0%, 0%) }
+e { border-right-color: #ff0000 }
+f { border-right-color: rgb(110%, 120%, 0%) }
+f1 { border-right-color: rgb(255,-10,0) }
+f2 { border-right-color: rgb(300,10,0) }
+f3 {border-right-color: rgba(255,0,0,1) }
+f4 {border-right-color: rgba(100%,0%,0%,1) }
+f5 {border-right-color: rgba(0,0,255,0.5) }
+f6 {border-right-color: rgba(0,0,255,0.0) }
+f7 {border-right-color: rgba(255,0,0,1.0) }
+f8 {border-right-color: hsl(0, 100%, 50%) }
+f9 {border-right-color: hsl(120, 100%, 25%) }
+f10 {border-right-color: hsl(240, 0%, 10%) }
+f11 {border-right-color: hsl(360, 50%, 0%) }
+f12 {border-right-color: hsl(450, 50%, 0%) }
+f13 {border-right-color: hsla(360, 50%, 50%, 0.5) }
+f14 {border-right-color: hsla(360, 50%, 50%, 1.0) }
+f15 {border-right-color: hsla(360, 50%, 50%, 1) }
+f16 {border-right-color: hsla(360, 50%, 50%, 0.0) }
+f17 {border-right-color: hsla(360, 50%, 50%, 0) }
+f18 {border-right-color: hsla(-120, 50%, 50%, 0) }
+f19 {border-right-color: hsl(-120, 50%, 50%) }
+g { border-right-color: white }
+h { border-right-color: aqua }
+i { border-right-color: black }
+j {border-right-color: blue }
+k { border-right-color: fuchsia }
+l { border-right-color: gray }
+m { border-right-color: green }
+n { border-right-color: lime }
+o { border-right-color: maroon }
+p { border-right-color: navy }
+q { border-right-color: olive }
+r { border-right-color: purple }
+s { border-right-color: red }
+t { border-right-color: silver }
+u { border-right-color: teal }
+v { border-right-color: yellow }
+extcolkw1 { border-right-color: aliceblue	}
+extcolkw2 { border-right-color: antiquewhite	}
+extcolkw3 { border-right-color: aqua	}
+extcolkw4 { border-right-color: aquamarine	}
+extcolkw5 { border-right-color: azure	}
+extcolkw6 { border-right-color: beige	}
+extcolkw7 { border-right-color: bisque	}
+extcolkw8 { border-right-color: black	}
+extcolkw9 { border-right-color: blanchedalmond	}
+extcolkw10 { border-right-color: blue	}
+extcolkw11 { border-right-color: blueviolet	}
+extcolkw12 { border-right-color: brown	}
+extcolkw13 { border-right-color: burlywood	}
+extcolkw14 { border-right-color: cadetblue	}
+extcolkw15 { border-right-color: chartreuse	}
+extcolkw16 { border-right-color: chocolate	}
+extcolkw17 { border-right-color: coral	}
+extcolkw18 { border-right-color: cornflowerblue	}
+extcolkw19 { border-right-color: cornsilk	}
+extcolkw20 { border-right-color: crimson	}
+extcolkw21 { border-right-color: cyan	}
+extcolkw22 { border-right-color: darkblue	}
+extcolkw23 { border-right-color: darkcyan	}
+extcolkw24 { border-right-color: darkgoldenrod	}
+extcolkw25 { border-right-color: darkgray	}
+extcolkw26 { border-right-color: darkgreen	}
+extcolkw27 { border-right-color: darkgrey	}
+extcolkw28 { border-right-color: darkkhaki	}
+extcolkw29 { border-right-color: darkmagenta	}
+extcolkw30 { border-right-color: darkolivegreen	}
+extcolkw31 { border-right-color: darkorange	}
+extcolkw32 { border-right-color: darkorchid	}
+extcolkw33 { border-right-color: darkred	}
+extcolkw34 { border-right-color: darksalmon	}
+extcolkw35 { border-right-color: darkseagreen	}
+extcolkw36 { border-right-color: darkslateblue	}
+extcolkw37 { border-right-color: darkslategray	}
+extcolkw38 { border-right-color: darkslategrey	}
+extcolkw39 { border-right-color: darkturquoise	}
+extcolkw40 { border-right-color: darkviolet	}
+extcolkw41 { border-right-color: deeppink	}
+extcolkw42 { border-right-color: deepskyblue	}
+extcolkw43 { border-right-color: dimgray	}
+extcolkw44 { border-right-color: dimgrey	}
+extcolkw45 { border-right-color: dodgerblue	}
+extcolkw46 { border-right-color: firebrick	}
+extcolkw47 { border-right-color: floralwhite	}
+extcolkw48 { border-right-color: forestgreen	}
+extcolkw49 { border-right-color: fuchsia	}
+extcolkw50 { border-right-color: gainsboro	}
+extcolkw51 { border-right-color: ghostwhite	}
+extcolkw52 { border-right-color: gold	}
+extcolkw53 { border-right-color: goldenrod	}
+extcolkw54 { border-right-color: gray	}
+extcolkw55 { border-right-color: grey	}
+extcolkw56 { border-right-color: green	}
+extcolkw57 { border-right-color: greenyellow	}
+extcolkw58 { border-right-color: honeydew	}
+extcolkw59 { border-right-color: hotpink	}
+extcolkw60 { border-right-color: indianred	}
+extcolkw61 { border-right-color: indigo	}
+extcolkw62 { border-right-color: ivory	}
+extcolkw63 { border-right-color: khaki	}
+extcolkw64 { border-right-color: lavender	}
+extcolkw65 { border-right-color: lavenderblush	}
+extcolkw66 { border-right-color: lawngreen	}
+extcolkw67 { border-right-color: lemonchiffon	}
+extcolkw68 { border-right-color: lightblue	}
+extcolkw69 { border-right-color: lightcoral	}
+extcolkw70 { border-right-color: lightcyan	}
+extcolkw71 { border-right-color: lightgoldenrodyellow	}
+extcolkw72 { border-right-color: lightgray	}
+extcolkw73 { border-right-color: lightgreen	}
+extcolkw74 { border-right-color: lightgrey}
+extcolkw75 { border-right-color: lightpink	}
+extcolkw76 { border-right-color: lightsalmon	}
+extcolkw77 { border-right-color: lightseagreen	}
+extcolkw78 { border-right-color: lightskyblue	}
+extcolkw79 { border-right-color: lightslategray	}
+extcolkw80 { border-right-color: lightslategrey	}
+extcolkw81 { border-right-color: lightsteelblue	}
+extcolkw82 { border-right-color: lightyellow	}
+extcolkw83 { border-right-color: lime	}
+extcolkw84 { border-right-color: limegreen	}
+extcolkw85 { border-right-color: linen	}
+extcolkw86 { border-right-color: magenta	}
+extcolkw87 { border-right-color: maroon	}
+extcolkw88 { border-right-color: mediumaquamarine	}
+extcolkw89 { border-right-color: mediumblue	}
+extcolkw90 { border-right-color: mediumorchid	}
+extcolkw91 { border-right-color: mediumpurple	}
+extcolkw92 { border-right-color: mediumseagreen	}
+extcolkw93 { border-right-color: mediumslateblue	}
+extcolkw94 { border-right-color: mediumspringgreen	}
+extcolkw95 { border-right-color: mediumturquoise	}
+extcolkw96 { border-right-color: mediumvioletred	}
+extcolkw97 { border-right-color: midnightblue	}
+extcolkw98 { border-right-color: mintcream	}
+extcolkw99 { border-right-color: mistyrose	}
+extcolkw100 { border-right-color: moccasin	}
+extcolkw101 { border-right-color: navajowhite	}
+extcolkw102 { border-right-color: navy	}
+extcolkw103 { border-right-color: oldlace	}
+extcolkw104 { border-right-color: olive	}
+extcolkw105 { border-right-color: olivedrab	}
+extcolkw106 { border-right-color: orange	}
+extcolkw107 { border-right-color: orangered	}
+extcolkw108 { border-right-color: orchid	}
+extcolkw109 { border-right-color: palegoldenrod	}
+extcolkw110 { border-right-color: palegreen	}
+extcolkw111 { border-right-color: paleturquoise	}
+extcolkw112 { border-right-color: palevioletred	}
+extcolkw113 { border-right-color: papayawhip	}
+extcolkw114 { border-right-color: peachpuff	}
+extcolkw115 { border-right-color: peru	}
+extcolkw116 { border-right-color: pink	}
+extcolkw117 { border-right-color: plum	}
+extcolkw118 { border-right-color: powderblue	}
+extcolkw119 { border-right-color: purple	}
+extcolkw120 { border-right-color: red	}
+extcolkw121 { border-right-color: rosybrown	}
+extcolkw122 { border-right-color: royalblue	}
+extcolkw123 { border-right-color: saddlebrown	}
+extcolkw124 { border-right-color: salmon	}
+extcolkw125 { border-right-color: sandybrown	}
+extcolkw126 { border-right-color: seagreen	}
+extcolkw127 { border-right-color: seashell	}
+extcolkw128 { border-right-color: sienna	}
+extcolkw129 { border-right-color: silver	}
+extcolkw130 { border-right-color: skyblue	}
+extcolkw131 { border-right-color: slateblue	}
+extcolkw132 { border-right-color: slategray	}
+extcolkw133 { border-right-color: slategrey	}
+extcolkw134 { border-right-color: snow	}
+extcolkw135 { border-right-color: springgreen	}
+extcolkw136 { border-right-color: steelblue	}
+extcolkw137 { border-right-color: tan	}
+extcolkw138 { border-right-color: teal	}
+extcolkw139 { border-right-color: thistle	}
+extcolkw140 { border-right-color: tomato	}
+extcolkw141 { border-right-color: turquoise	}
+extcolkw142 { border-right-color: violet	}
+extcolkw143 { border-right-color: wheat	}
+extcolkw144 { border-right-color: white	}
+extcolkw145 { border-right-color: whitesmoke	}
+extcolkw146 { border-right-color: yellow	}
+extcolkw147 { border-right-color: yellowgreen}
+deprecatedsyscol1 { border-right-color: ActiveBorder }
+deprecatedsyscol2 { border-right-color: ActiveCaption }
+deprecatedsyscol3 { border-right-color: AppWorkspace }
+deprecatedsyscol4 { border-right-color: Background }
+deprecatedsyscol5 { border-right-color: ButtonFace }
+deprecatedsyscol6 { border-right-color: ButtonHighlight }
+deprecatedsyscol7 { border-right-color: ButtonShadow }
+deprecatedsyscol8 { border-right-color: ButtonText }
+deprecatedsyscol9 { border-right-color: CaptionText }
+deprecatedsyscol10 { border-right-color: GrayText }
+deprecatedsyscol11 { border-right-color: Highlight }
+deprecatedsyscol12 { border-right-color: HighlightText }
+deprecatedsyscol13 { border-right-color: InactiveBorder }
+deprecatedsyscol14 { border-right-color: InactiveCaption }
+deprecatedsyscol15 { border-right-color: InactiveCaptionText }
+deprecatedsyscol16 { border-right-color: InfoBackground }
+deprecatedsyscol17 { border-right-color: InfoText }
+deprecatedsyscol18 { border-right-color: Menu }
+deprecatedsyscol19 { border-right-color: MenuText }
+deprecatedsyscol20 { border-right-color: Scrollbar }
+deprecatedsyscol21 { border-right-color: ThreeDDarkShadow }
+deprecatedsyscol22 { border-right-color: ThreeDFace }
+deprecatedsyscol23 { border-right-color: ThreeDHighlight }
+deprecatedsyscol24 { border-right-color: ThreeDLightShadow }
+deprecatedsyscol25 { border-right-color: ThreeDShadow }
+deprecatedsyscol26 { border-right-color: Window }
+deprecatedsyscol27 { border-right-color: WindowFrame }
+deprecatedsyscol28 { border-right-color: WindowText }

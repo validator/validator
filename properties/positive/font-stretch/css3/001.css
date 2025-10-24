@@ -1,0 +1,11 @@
+fstrtch1   { font-stretch: normal }
+fstrtch2   { font-stretch: ultra-condensed }
+fstrtch3   { font-stretch: extra-condensed }
+fstrtch4   { font-stretch: condensed }
+fstrtch5   { font-stretch: semi-condensed }
+fstrtch6   { font-stretch: semi-expanded }
+fstrtch7   { font-stretch: expanded }
+fstrtch8   { font-stretch: extra-expanded }
+fstrtch9   { font-stretch: ultra-expanded }
+y { font-stretch: initial }
+z { font-stretch: inherit }

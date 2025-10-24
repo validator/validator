@@ -1,0 +1,6 @@
+a { letter-spacing: normal }
+b { letter-spacing: 1em  }
+c { letter-spacing: 0em  }
+d { letter-spacing: 0 }
+e { letter-spacing: -2mm }
+z { letter-spacing: inherit }

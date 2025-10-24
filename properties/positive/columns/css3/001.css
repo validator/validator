@@ -1,0 +1,10 @@
+a { columns: 10px }
+b { columns: auto }
+c { columns: 2 }
+d { columns: auto 2 }
+e { columns: 2 auto }
+f { columns: auto 10px }
+g { columns: 10px auto }
+h { columns: auto auto }
+y { columns: initial }
+z { columns: inherit }

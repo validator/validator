@@ -1,0 +1,9 @@
+a { margin-right: 10px }
+b { margin-right: 0px }
+c { margin-right: 0 }
+d { margin-right: 5% }
+e { margin-right: 0% }
+f { margin-right: auto }
+g { margin-right: -10px }
+h { margin-right: -10% }
+z { margin-right: inherit }

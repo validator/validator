@@ -1,0 +1,2066 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+test markup also accepts 3 properties: warning, profile and medium
+-->
+<testsuite>
+  <type title="CSS3_Colors">
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl001.css</file>
+      <description>color: Valid HSL</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl002.css</file>
+      <description>color: Valid HSL, Hue value over 360</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl003.css</file>
+      <description>color: Valid HSL, Saturation value over 100%</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl004.css</file>
+      <description>color: Valid HSL, Lightness value negative</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl005.css</file>
+      <description>color: Valid HSL, all values out of bounds</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>3</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl006.css</file>
+      <description>color: Invalid HSL, Hue as percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl007.css</file>
+      <description>color: Invalid HSL, Saturation as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl008.css</file>
+      <description>color: Invalid HSL, Lightness as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl009.css</file>
+      <description>color: Valid HSL, optional alpha (css-color-4)</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl010.css</file>
+      <description>color: Invalid HSL, not enough values</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl011.css</file>
+      <description>background-color: Valid HSL</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl012.css</file>
+      <description>background-color: Valid HSL, Hue value over 360</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl013.css</file>
+      <description>background-color: Valid HSL, Saturation value over 100%</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl014.css</file>
+      <description>background-color: Valid HSL, Lightness value negative</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl015.css</file>
+      <description>background-color: Valid HSL, all values out of bounds</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>3</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl016.css</file>
+      <description>background-color: Invalid HSL, Hue as percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl017.css</file>
+      <description>background-color: Invalid HSL, Saturation as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl018.css</file>
+      <description>background-color: Invalid HSL, Lightness as number</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl019.css</file>
+      <description>background-color: Valid HSL, (optional alpha)</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsl020.css</file>
+      <description>background-color: Invalid HSL, not enough values</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla001.css</file>
+      <description>valid HSLa construct</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla002.css</file>
+      <description>valid HSLa construct but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla003.css</file>
+      <description>valid HSLa construct but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla004.css</file>
+      <description>valid HSLa construct but two values out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>2</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla005.css</file>
+      element { color: hsla(1000, -50%, 150%, -0.1) }
+      <description>valid HSLa construct but all values out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>4</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla006.css</file>
+      <description>invalid HSLa construct - first value should not be percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla007.css</file>
+      <description>invalid HSLa construct - second value should be percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/hsla008.css</file>
+      <description>invalid HSLa construct - third value should be percentage</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb001.css</file>
+      <description>valid RGB construct</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb002.css</file>
+      <description>valid RGB construct - but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb003.css</file>
+      <description>valid RGB construct - but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb004.css</file>
+      <description>valid RGB construct - but one value out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb005.css</file>
+      <description>valid RGB construct - but all values out of range</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>3</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb006.css</file>
+      <description>invalid RGB construct - cannot mix numbers and percentages</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb007.css</file>
+      <description>invalid RGB construct - cannot mix numbers and percentages</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb008.css</file>
+      <description>invalid RGB construct - cannot mix numbers and percentages</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb009.css</file>
+      <description>Valid RGB construct - alpha channel is possible in css-color-4 for rgb()</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgb020.css</file>
+      <description>invalid RGB construct - missing one value</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba001.css</file>
+      <description>invalid RGBa construct - n't mix percentages and numbers and 0 is not 0%, apparently </description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba002.css</file>
+      <description>valid RGBa construct - but one value out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba003.css</file>
+      <description>valid RGBa construct - but one value out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba004.css</file>
+      <description>valid RGBa construct - but one value out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>1</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba005.css</file>
+      <description>valid RGBa construct - but all values out of range </description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>4</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba006.css</file>
+      <description>valid RGBa construct</description>
+      <result valid="true">
+	<errors>0</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba007.css</file>
+      <description>invalid RGBa construct - mixing percentage and numbers</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+
+    <test profile="css3">
+      <file>testsuite/properties/css3/rgba008.css</file>
+      <description>invalid RGBa construct - mixing percentage and numbers</description>
+      <result valid="false">
+	<errors>1</errors>
+	<warnings>0</warnings>
+      </result>
+    </test>
+ </type>
+
+<!-- CSS3 test suite http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/ -->
+<type title="CSS3 Selectors test suite at http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/">
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-1.html</url>
+    <description>Groups of selectors (#1)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-2.html</url>
+    <description>Type element selectors (#2)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-3a.html</url>
+    <description>Universal selector (no namespaces) (#3a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-4.html</url>
+    <description>Omitted universal selector (#4)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-5.html</url>
+    <description>Attribute existence selector (#5)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-6.html</url>
+    <description>Attribute value selector (#6)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-7.html</url>
+    <description>Attribute multivalue selector (#7)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-7b.html</url>
+    <description>Attribute multivalue selector (#7b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>1</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-8.html</url>
+    <description>Attribute value selectors (hyphen-separated attributes) (#8)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-9.html</url>
+    <description>Substring matching attribute selector (beginning) (#9)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-10.html</url>
+    <description>Substring matching attribute selector (end) (#10)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-11.html</url>
+    <description>Substring matching attribute selector (contains) (#11)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-13.html</url>
+    <description>Class selectors (#13)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-14.html</url>
+    <description>More than one class selector (#14)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>4</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-14b.html</url>
+    <description>More than one class selector (#14b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-14c.html</url>
+    <description>More than one class selector (#14c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-14d.html</url>
+    <description>NEGATED More than one class selector (#14d)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-14e.html</url>
+    <description>NEGATED More than one class selector (#14e)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-15.html</url>
+    <description>ID selectors (#15)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-15b.html</url>
+    <description>Multiple ID selectors (#15b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-16.html</url>
+    <description>:link pseudo-class (#16)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-17.html</url>
+    <description>:visited pseudo-class (#17)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-18.html</url>
+    <description>:hover pseudo-class (#18)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-18a.html</url>
+    <description>:hover pseudo-class on links (#18a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-18b.html</url>
+    <description>:hover pseudo-class (#18b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-18c.html</url>
+    <description>:hover pseudo-class on links (#18c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-19.html</url>
+    <description>:active pseudo-class (#19)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-19b.html</url>
+    <description>:active pseudo-class on controls (#19b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-20.html</url>
+    <description>:focus pseudo-class (#20)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-21.html</url>
+    <description>:target pseudo-class (#21)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-21b.html</url>
+    <description>:target pseudo-class (#21b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-21c.html</url>
+    <description>:target pseudo-class (#21c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-22.html</url>
+    <description>:lang() pseudo-class (#22)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-23.html</url>
+    <description>:enabled pseudo-class (#23)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-24.html</url>
+    <description>:disabled pseudo-class (#24)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-25.html</url>
+    <description>:checked pseudo-class (#25)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-27.html</url>
+    <description>:root pseudo-class (#27)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-27a.html</url>
+    <description>Impossible rules (:root:first-child, etc) (#27a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-27b.html</url>
+    <description>Impossible rules (* html, * :root) (#27b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-28.html</url>
+    <description>:nth-child() pseudo-class (#28)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-28b.html</url>
+    <description>:nth-child() pseudo-class (#28b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-29.html</url>
+    <description>:nth-last-child() pseudo-class (#29)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-29b.html</url>
+    <description>:nth-last-child() pseudo-class (#29b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-30.html</url>
+    <description>:nth-of-type() pseudo-class (#30)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-31.html</url>
+    <description>:nth-last-of-type() pseudo-class (#31)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-32.html</url>
+    <description>:first-child pseudo-class (#32)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-33.html</url>
+    <description>:last-child pseudo-class (#33)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-34.html</url>
+    <description>:first-of-type pseudo-class (#34)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-35.html</url>
+    <description>:last-of-type pseudo-class (#35)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-36.html</url>
+    <description>:only-child pseudo-class (#36)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-37.html</url>
+    <description>:only-of-type pseudo-class (#37)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-38.html</url>
+    <description>::first-line pseudo-element (#38)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-39.html</url>
+    <description>::first-letter pseudo-element (#39)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-39a.html</url>
+    <description>::first-letter pseudo-element with ::before pseudo-element (#39a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-39b.html</url>
+    <description>::first-letter pseudo-element (#39b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-39c.html</url>
+    <description>::first-letter pseudo-element with ::before pseudo-element (#39c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-41.html</url>
+    <description>::before pseudo-element (#41)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-41a.html</url>
+    <description>:before pseudo-element (#41a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-42.html</url>
+    <description>::after pseudo-element (#42)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-42a.html</url>
+    <description>:after pseudo-element (#42a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-43.html</url>
+    <description>Descendant combinator (#43)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-43b.html</url>
+    <description>Descendant combinator (#43b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-44.html</url>
+    <description>Child combinator (#44)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-44b.html</url>
+    <description>Child combinator (#44b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-44c.html</url>
+    <description>Child combinator and classes (#44c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-44d.html</url>
+    <description>Child combinatior and IDs (#44d)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-45.html</url>
+    <description>Direct adjacent combinator (#45)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-45b.html</url>
+    <description>Direct adjacent combinator (#45b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-45c.html</url>
+    <description>Direct adjacent combinator and classes (#45c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-46.html</url>
+    <description>Indirect adjacent combinator (#46)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-46b.html</url>
+    <description>Indirect adjacent combinator (#46b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-54.html</url>
+    <description>NEGATED substring matching attribute selector on beginning (#54)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-55.html</url>
+    <description>NEGATED substring matching attribute selector on end (#55)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-56.html</url>
+    <description>NEGATED substring matching attribute selector on middle (#56)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-59.html</url>
+    <description>NEGATED class selector (#59)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-60.html</url>
+    <description>NEGATED ID selector (#60)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-61.html</url>
+    <description>NEGATED :link pseudo-class (#61)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-62.html</url>
+    <description>NEGATED :visited pseudo-class (#62)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-63.html</url>
+    <description>NEGATED :hover pseudo-class (#63)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-64.html</url>
+    <description>NEGATED :active pseudo-class (#64)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-65.html</url>
+    <description>NEGATED :focus pseudo-class (#65)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-66.html</url>
+    <description>NEGATED :target pseudo-class (#66)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-66b.html</url>
+    <description>NEGATED :target pseudo-class (#66b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-67.html</url>
+    <description>NEGATED :lang() pseudo-class (#67)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-68.html</url>
+    <description>NEGATED :enabled pseudo-class (#68)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-69.html</url>
+    <description>NEGATED :disabled pseudo-class (#69)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-70.html</url>
+    <description>NEGATED :checked pseudo-class (#70)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-72.html</url>
+    <description>NEGATED :root pseudo-class (#72)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-72b.html</url>
+    <description>NEGATED :root pseudo-class (#72b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-73.html</url>
+    <description>NEGATED :nth-child() pseudo-class (#73)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-73b.html</url>
+    <description>NEGATED :nth-child() pseudo-class (#73b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-74.html</url>
+    <description>NEGATED :nth-last-child() pseudo-class (#74)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-74b.html</url>
+    <description>NEGATED :nth-last-child() pseudo-class (#74b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-75.html</url>
+    <description>NEGATED :nth-of-type() pseudo-class (#75)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-75b.html</url>
+    <description>NEGATED :nth-of-type() pseudo-class (#75b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-76.html</url>
+    <description>NEGATED :nth-last-of-type() pseudo-class (#76)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-76b.html</url>
+    <description>NEGATED :nth-last-of-type() pseudo-class (#76b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-77.html</url>
+    <description>NEGATED :first-child pseudo-class (#77)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-77b.html</url>
+    <description>NEGATED :first-child pseudo-class (#77b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-78.html</url>
+    <description>NEGATED :last-child pseudo-class (#78)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-78b.html</url>
+    <description>NEGATED :last-child pseudo-class (#78b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-79.html</url>
+    <description>NEGATED :first-of-type pseudo-class (#79)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-80.html</url>
+    <description>NEGATED :last-of-type pseudo-class (#80)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-81.html</url>
+    <description>NEGATED :only-child pseudo-class (#81)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-81b.html</url>
+    <description>NEGATED :only-child pseudo-class (#81b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-82.html</url>
+    <description>NEGATED :only-of-type pseudo-class (#82)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-82b.html</url>
+    <description>NEGATED :only-of-type pseudo-class (#82b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-83.html</url>
+    <description>Negation pseudo-class cannot be an argument of itself (#83)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-86.html</url>
+    <description>Nondeterministic matching of descendant and child combinators (#86)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-87.html</url>
+    <description>Nondeterministic matching of direct and indirect adjacent combinators (#87)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-87b.html</url>
+    <description>Nondeterministic matching of direct and indirect adjacent combinators (#87b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-88.html</url>
+    <description>Nondeterministic matching of descendant and direct adjacent combinators (#88)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-88b.html</url>
+    <description>Nondeterministic matching of descendant and direct adjacent combinators (#88b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-89.html</url>
+    <description>Simple combination of descendant and child combinators (#89)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-90.html</url>
+    <description>Simple combination of direct and indirect adjacent combinators (#90)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-90b.html</url>
+    <description>Simple combination of direct and indirect adjacent combinators (#90b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-144.html</url>
+    <description>NEGATED :enabled:disabled pseudo-classes (#144)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-148.html</url>
+    <description>:empty pseudo-class and text (#148)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-149.html</url>
+    <description>:empty pseudo-class and empty elements (#149)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-149b.html</url>
+    <description>:empty pseudo-class and empty elements (#149b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-150.html</url>
+    <description>:empty pseudo-class and XML/SGML constructs (#150)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-151.html</url>
+    <description>:empty pseudo-class and whitespace (#151)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-152.html</url>
+    <description>:empty pseudo-class and elements (#152)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-154.html</url>
+    <description>Syntax and parsing (#154)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-155.html</url>
+    <description>Syntax and parsing (#155)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-155a.html</url>
+    <description>Syntax and parsing (#155a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-155b.html</url>
+    <description>Syntax and parsing (#155b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-155c.html</url>
+    <description>Syntax and parsing (#155c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-155d.html</url>
+    <description>Syntax and parsing (#155d)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-156.html</url>
+    <description>Syntax and parsing (#156)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-156b.html</url>
+    <description>Syntax and parsing (#156b)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-156c.html</url>
+    <description>Syntax and parsing (#156c)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-157.html</url>
+    <description>Syntax and parsing (#157)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-158.html</url>
+    <description>Syntax and parsing (#158)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-159.html</url>
+    <description>Syntax and parsing of new pseudo-elements (#159)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-160.html</url>
+    <description>Syntax and parsing of unknown pseudo-classes (#160)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-161.html</url>
+    <description>Syntax and parsing of unknown pseudo-classes and pseudo-elements (#161)</description>
+    <result valid="false">
+      <errors>12</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-166.html</url>
+    <description>:first-letter with ::first-letter (#166)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-166a.html</url>
+    <description>:first-letter with ::first-letter (#166a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-167.html</url>
+    <description>:first-line with ::first-line (#167)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-167a.html</url>
+    <description>:first-line with ::first-line (#167a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-168.html</url>
+    <description>:before with ::before (#168)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-168a.html</url>
+    <description>:before with ::before (#168a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-169.html</url>
+    <description>:after with ::after (#169)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-169a.html</url>
+    <description>:after with ::after (#169a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-170.html</url>
+    <description>Long chains of selectors (#170)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-170a.html</url>
+    <description>Long chains of selectors (#170a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-170b.html</url>
+    <description>Long chains of selectors (#170b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-170c.html</url>
+    <description>Long chains of selectors (#170c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-170d.html</url>
+    <description>Long chains of selectors (#170d)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-175a.html</url>
+    <description>Parsing: Numbers in classes (#175a)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-175b.html</url>
+    <description>Parsing: Numbers in classes (#175b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-175c.html</url>
+    <description>Parsing: Numbers in classes (#175c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-176.html</url>
+    <description>Combinations: classes and IDs (#176)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-177a.html</url>
+    <description>Parsing : vs :: (#177a)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-177b.html</url>
+    <description>Parsing : vs :: (#177b)</description>
+    <result valid="false">
+      <errors>1</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-178.html</url>
+    <description>Parsing: :not and pseudo-elements (#178)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-179.html</url>
+    <description>::first-line on inlines (#179)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-179a.html</url>
+    <description>::first-line after &lt;br&gt; (#179a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-180a.html</url>
+    <description>::first-letter after &lt;br&gt; (#180a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3" warning="0" medium="all">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-181.html</url>
+    <description>Case sensitivity (#181)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-183.html</url>
+    <description>Syntax and parsing of class selectors (#183)</description>
+    <result valid="false">
+      <errors>3</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-184a.html</url>
+    <description>Ends-with attribute selector with empty value (#184a)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-184b.html</url>
+    <description>Starts-with attribute selector with empty value (#184b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-184c.html</url>
+    <description>Contains attribute selector with empty value (#184c)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-184d.html</url>
+    <description>NEGATED ends-with attribute selector with empty value (#184d)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-184e.html</url>
+    <description>NEGATED starts-with attribute selector with empty value (#184e)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-184f.html</url>
+    <description>NEGATED contains attribute selector with empty value (#184f)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-d1.html</url>
+    <description>NEGATED Dynamic handling of :empty (#d1)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-d1b.html</url>
+    <description>Dynamic handling of :empty (#d1b)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-d2.html</url>
+    <description>Dynamic handling of combinators (#d2)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+  <test profile="css3">
+    <url>http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/tests/css3-modsel-d4.html</url>
+    <description>Dynamic updating of :first-child and :last-child (#d4)</description>
+    <result valid="true">
+      <errors>0</errors>
+      <warnings>0</warnings>
+    </result>
+  </test>
+
+ </type>
+
+  <type title="CSS3_Multicol">
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/break-after-001.css</file>
+      <description>css3-multicol: Valid 'break-after' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/break-before-001.css</file>
+      <description>css3-multicol: Valid 'break-before' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/break-inside-001.css</file>
+      <description>css3-multicol: Valid 'break-inside' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-count-001.css</file>
+      <description>css3-multicol: Valid 'column-count' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-fill-001.css</file>
+      <description>css3-multicol: Valid 'column-fill' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-gap-001.css</file>
+      <description>css3-multicol: Valid 'column-gap' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-001.css</file>
+      <description>css3-multicol: Valid 'column-rule' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-color-001.css</file>
+      <description>css3-multicol: Valid 'column-rule-color' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-color-002.css</file>
+      <description>css3-multicol: Valid 'column-rule-color' values using CSS3 colors</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-style-001.css</file>
+      <description>css3-multicol: Valid 'column-rule-style' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-width-001.css</file>
+      <description>css3-multicol: Valid 'column-rule-width' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-span-001.css</file>
+      <description>css3-multicol: Valid 'column-span' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-width-001.css</file>
+      <description>css3-multicol: Valid 'column-width' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/columns-001.css</file>
+      <description>css3-multicol: Valid 'columns' values</description>
+      <result valid="true"/>
+    </test>
+  </type>
+
+  <type title="CSS3_Background_Borders">
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-attachment-001.css</file>
+      <description>css3-background: Valid 'background-attachment' values</description>
+      <result valid="true"/>
+    </test>
+   <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-clip-001.css</file>
+      <description>css3-background: Valid 'background-clip' values</description>
+      <result valid="true"/>
+    </test>
+   <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-image-001.css</file>
+      <description>css3-background: Valid 'background-image' values</description>
+      <result valid="true"/>
+    </test>
+   <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-origin-001.css</file>
+      <description>css3-background: Valid 'background-origin' values</description>
+      <result valid="true"/>
+    </test>
+   <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-repeat-001.css</file>
+      <description>css3-background: Valid 'background-repeat' values</description>
+      <result valid="true"/>
+    </test>
+   <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-size-001.css</file>
+      <description>css3-background: Valid 'background-size' values</description>
+      <result valid="true"/>
+    </test>
+   <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-position-001.css</file>
+      <description>css3-background: Valid 'background-position' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-background/background-001.css</file>
+      <description>css3-background: Valid 'background' values</description>
+      <result valid="true"/>
+    </test>
+ </type>
+
+</testsuite>

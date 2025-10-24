@@ -1,0 +1,55 @@
+flex1   { flex: 0 }
+flex2   { flex: 0  10% }
+flex3   { flex: 0  10px }
+flex4   { flex: 0  auto }
+flex5   { flex: 0 0 }
+flex6   { flex: 0 0  10% }
+flex7   { flex: 0 0  10px }
+flex8   { flex: 0 0  auto }
+flex9   { flex: 0 0 0  }
+flex10  { flex: 0px 0 1.25  }
+flex11  { flex: 0 0px }
+flex12  { flex: 0 1.25 }
+flex13  { flex: 0 1.25  0 }
+flex14  { flex: 0 1.25  10% }
+flex15  { flex: 0 1.25  10px }
+flex16  { flex: 0 1.25  auto }
+flex17  { flex: 0px 1.25 2.25  }
+flex18  { flex: 0px 0  }
+flex19  { flex: 0px 1.25  }
+flex20  { flex: 10% 0  }
+flex21  { flex: 10% 0 0  }
+flex22  { flex: 10% 0 1.25  }
+flex23  { flex: 10% 1.25  }
+flex24  { flex: 10% 1.25 0  }
+flex25  { flex: 10% 1.25 2.25  }
+flex26  { flex: 10px 0  }
+flex27  { flex: 10px 0 0  }
+flex28  { flex: 10px 0 1.25  }
+flex29  { flex: 10px 1.25  }
+flex30  { flex: 10px 1.25 0  }
+flex31  { flex: 10px 1.25 2.25  }
+flex32  { flex: 1.25 }
+flex33  { flex: 1.25  0 }
+flex34  { flex: 1.25  10% }
+flex35  { flex: 1.25  10px }
+flex36  { flex: 1.25  auto }
+flex37  { flex: 1.25 0  0 }
+flex38  { flex: 1.25 0  10% }
+flex39  { flex: 1.25 0  10px }
+flex40  { flex: 1.25 0  auto }
+flex41  { flex: 1.25 0px}
+flex42  { flex: 1.25 2.25 }
+flex43  { flex: 1.25 2.25  0 }
+flex44  { flex: 1.25 2.25  10% }
+flex45  { flex: 1.25 2.25  10px }
+flex46  { flex: 1.25 2.25  auto }
+flex47  { flex: auto 0  }
+flex48  { flex: auto 0 0  }
+flex49  { flex: auto 0 1.25  }
+flex50  { flex: auto 1.25  }
+flex51  { flex: auto 1.25 0  }
+flex52  { flex: auto 1.25 2.25  }
+flex53  { flex: none }
+y { flex: initial }
+z { flex: inherit }

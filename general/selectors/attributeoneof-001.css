@@ -1,0 +1,2 @@
+div[tst~="foo"] { color: green; }
+div[tst~="foo bar"] { color: orange; }

@@ -1,0 +1,29 @@
+a {
+    font-style: normal italic;
+    font-style: italic normal;
+    font-style: oblique normal italic;
+
+    font-variant: normal small-caps;
+    font-variant: small-caps normal;
+
+    font-weight: normal bold;
+    font-weight: bold 200;
+    font-weight: bolder bold;
+    font-weight: lighter 900;
+    font-weight: 100 200 300 400 500 bold 600 700 lighter 800;
+
+    font-size: x-small small;
+    font-size: small x-small;
+    font-size: medium larger smaller;
+    font-size: large 10px;
+    font-size: x-large 3%;
+    font-size: larger 3%;
+    font-size: smaller 10px;
+    font-size: 10px medium larger;
+    font-size: 3% smaller large;
+
+    font: italic medium small-caps 200 normal larger Arial, serif;
+    font: caption icon;
+    font: icon small-caps;
+    font: menu 200 normal Arial, Serif;
+}

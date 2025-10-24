@@ -1,0 +1,12 @@
+a { animation-iteration-count: infinite }
+b { animation-iteration-count: 100 }
+c { animation-iteration-count: 0 }
+d { animation-iteration-count: 0.5 }
+e { animation-iteration-count: 40.2 }
+f { animation-iteration-count: infinite, 10 }
+g { animation-iteration-count: 10, infinite }
+h { animation-iteration-count: infinite, 0.5, 1 }
+i { animation-iteration-count: 0.5, 1, infinite }
+j { animation-iteration-count: infinite, infinite, infinite, infinite, 10 }
+y { animation-iteration-count: initial }
+z { animation-iteration-count: inherit }

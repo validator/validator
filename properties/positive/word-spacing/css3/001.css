@@ -1,0 +1,16 @@
+a { word-spacing: normal }
+b { word-spacing: 1em  }
+b1 { word-spacing: -1em  }
+c { word-spacing: 50%  }
+c1 { word-spacing: -50%  }
+d { word-spacing: normal 10%  }
+e { word-spacing: normal 10% 10% }
+f { word-spacing: normal 1em }
+g { word-spacing: normal 1em 1px }
+h { word-spacing: normal normal normal }
+i { word-spacing: 1em normal normal }
+j { word-spacing: 10% normal normal }
+k { word-spacing: 0em -1em 1em }
+k1 { word-spacing: 0 -1em 1em }
+y { word-spacing: initial }
+z { word-spacing: inherit }

@@ -1,0 +1,27 @@
+div {
+	column-rule: inherit;
+}
+div {
+	column-rule: thin;
+}
+div {
+        column-rule: solid;
+}
+div {
+        column-rule: black;
+}
+div {
+  column-rule: thin solid black;
+}
+div {
+  column-rule: solid 4px green;
+}
+div {
+	column-rule: thin black;
+}
+div {
+	column-rule: black solid;
+}
+div {
+	column-rule: solid thin;
+}

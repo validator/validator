@@ -1,0 +1,9 @@
+a { text-align: left }
+b { text-align: right }
+c { text-align: center }
+d { text-align: justify }
+e { text-align: 'a' }
+f { text-align: "a" }
+g { text-align: "foo" }
+h { text-align: 'deux mots' }
+z { text-align: inherit }

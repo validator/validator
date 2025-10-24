@@ -1,0 +1,15 @@
+div {
+	column-rule-color: inherit;
+}
+div {
+        column-rule-color: green;
+}
+div {
+        column-rule-color: orange;
+}
+div {
+        column-rule-color: #BE3;
+}
+div {
+        column-rule-color: #D3AB3E;
+}

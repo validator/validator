@@ -1,0 +1,5 @@
+a { column-gap: 1px }
+b { column-gap: 0 }
+c { column-gap: normal }
+y { column-gap: initial }
+z { column-gap: inherit }

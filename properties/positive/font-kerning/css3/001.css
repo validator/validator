@@ -1,0 +1,10 @@
+a { font-kerning: inherit; }
+b { font-kerning: initial; }
+c { font-kerning: auto; }
+d { font-kerning: normal; }
+e { font-kerning: none; }
+ca { font-kerning: iNhEriT; }
+cb { font-kerning: InitiaL; }
+cc { font-kerning: aUTo; }
+cd { font-kerning: nOrmAl; }
+ce { font-kerning: nOne; }

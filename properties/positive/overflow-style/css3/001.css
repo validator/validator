@@ -1,0 +1,5 @@
+a { overflow-style: auto }
+b { overflow-style: marquee-line }
+c { overflow-style: marquee-block }
+y { overflow-style: initial }
+z { overflow-style: inherit }

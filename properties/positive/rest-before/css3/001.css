@@ -1,0 +1,11 @@
+a { rest-before:  500ms  }
+b { rest-before:  0s }
+c { rest-before:  2.1s }
+d { rest-before:  none  }
+e { rest-before:  x-weak  }
+f { rest-before:  weak  }
+g { rest-before:  medium  }
+h { rest-before:  strong  }
+i { rest-before:  x-strong  }
+y { rest-before: initial }
+z { rest-before: inherit }

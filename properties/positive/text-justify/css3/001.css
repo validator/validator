@@ -1,0 +1,9 @@
+a { text-justify: auto }
+b { text-justify: none }
+c { text-justify: inter-word }
+d { text-justify: inter-ideograph }
+e { text-justify: inter-cluster }
+f { text-justify: distribute }
+g { text-justify: kashida }
+y { text-justify: initial }
+z { text-justify: inherit }

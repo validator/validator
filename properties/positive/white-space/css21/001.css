@@ -1,0 +1,6 @@
+a { white-space: normal }
+b { white-space: pre }
+c { white-space: nowrap }
+d { white-space: pre-wrap }
+e { white-space: pre-line }
+z { white-space: inherit }

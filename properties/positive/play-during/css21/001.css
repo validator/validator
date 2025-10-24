@@ -1,0 +1,7 @@
+a { play-during: url("foo.wav") mix }
+b { play-during: url("foo.wav") repeat }
+c { play-during: url("foo.wav") mix repeat }
+d { play-during: url("foo.wav") repeat mix }
+e { play-during: auto  }
+f { play-during: none  }
+z { play-during: inherit }

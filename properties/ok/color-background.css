@@ -1,0 +1,41 @@
+em { color: #f00 } /* #rgb */
+em { color: #ff0000 } /* #rrggbb */
+em { color: rgb(255,0,0) }
+em { color: rgb(100%, 0%, 0%) }
+em { color: white }
+
+a {
+    background-color: transparent;
+    background-color: #f00;
+    background-color: #ff0000;
+    background-color: rgb(255,0,0);
+    background-color: rgb(100%, 0%, 0%);
+    background-color: white;
+
+    background-image: url("image.png");
+    background-image: none;
+
+    background-repeat: repeat;
+    background-repeat: repeat-x;
+    background-repeat: repeat-y;
+    background-repeat: no-repeat;
+
+    background-attachment: scroll;
+    background-attachment: fixed;
+
+    background-position: 10%;
+    background-position: 10px;
+    background-position: left;
+    background-position: center;
+    background-position: top;
+    background-position: bottom;
+    background-position: center;
+    background-position: right;
+    background-position: right 10%;
+    background-position: right 10px;
+    background-position: right top;
+    background-position: right bottom;
+    background-position: right center;
+
+    background: rgb(80%, 10%, 10%) url("image.png") no-repeat fixed left top;
+}

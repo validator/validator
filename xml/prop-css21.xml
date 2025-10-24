@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+test markup also accepts 3 properties: warning, profile and medium
+like <test profile="css2" medium="all" warning="0">
+where warning means warninglevel in use (0 => normal, no => none).
+-->
+<testsuite>
+  <type title="Valid_azimuth">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/azimuth/css21/001.css</file>
+      <description>Valid azimuth level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_background">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/001.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-aa.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ab.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ac.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ad.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ae.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-af.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ag.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ah.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ai.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-aj.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ak.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-al.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-am.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-an.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ao.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ap.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-aq.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/002-ar.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/003-aa.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background/css21/003-ab.css</file>
+      <description>Valid background level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_background-attachment">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background-attachment/css21/001.css</file>
+      <description>Valid background-attachment level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_background-color">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background-color/css21/001.css</file>
+      <description>Valid background-color level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_background-image">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background-image/css21/001.css</file>
+      <description>Valid background-image level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_background-position">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background-position/css21/001.css</file>
+      <description>Valid background-position level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_background-repeat">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/background-repeat/css21/001.css</file>
+      <description>Valid background-repeat level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border/css21/001.css</file>
+      <description>Valid border level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-bottom">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-bottom/css21/001.css</file>
+      <description>Valid border-bottom level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-bottom-color">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-bottom-color/css21/001.css</file>
+      <description>Valid border-bottom-color level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-bottom-style">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-bottom-style/css21/001.css</file>
+      <description>Valid border-bottom-style level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-bottom-width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-bottom-width/css21/001.css</file>
+      <description>Valid border-bottom-width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-collapse">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-collapse/css21/001.css</file>
+      <description>Valid border-collapse level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-color">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-aa.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ab.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ac.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ad.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ae.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-af.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ag.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ah.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ai.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-aj.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ak.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-al.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-am.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-an.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ao.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ap.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-aq.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ar.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-as.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-at.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-au.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-av.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-aw.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ax.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ay.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-az.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-ba.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-bb.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-color/css21/001-bc.css</file>
+      <description>Valid border-color level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-left">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-left/css21/001.css</file>
+      <description>Valid border-left level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-left-color">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-left-color/css21/001.css</file>
+      <description>Valid border-left-color level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-left-style">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-left-style/css21/001.css</file>
+      <description>Valid border-left-style level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-left-width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-left-width/css21/001.css</file>
+      <description>Valid border-left-width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-right">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-right/css21/001.css</file>
+      <description>Valid border-right level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-right-color">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-right-color/css21/001.css</file>
+      <description>Valid border-right-color level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-right-style">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-right-style/css21/001.css</file>
+      <description>Valid border-right-style level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-right-width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-right-width/css21/001.css</file>
+      <description>Valid border-right-width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-spacing">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-spacing/css21/001.css</file>
+      <description>Valid border-spacing level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-style">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-style/css21/001.css</file>
+      <description>Valid border-style level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-top">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-top/css21/001.css</file>
+      <description>Valid border-top level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-top-color">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-top-color/css21/001.css</file>
+      <description>Valid border-top-color level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-top-style">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-top-style/css21/001.css</file>
+      <description>Valid border-top-style level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-top-width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-top-width/css21/001.css</file>
+      <description>Valid border-top-width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_border-width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/border-width/css21/001.css</file>
+      <description>Valid border-width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_bottom">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/bottom/css21/001.css</file>
+      <description>Valid bottom level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_caption-side">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/caption-side/css21/001.css</file>
+      <description>Valid caption-side level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_clear">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/clear/css21/001.css</file>
+      <description>Valid clear level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_clip">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/clip/css21/001.css</file>
+      <description>Valid clip level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_color">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/color/css21/001.css</file>
+      <description>Valid color level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_content">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/content/css21/001.css</file>
+      <description>Valid content level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_counter-increment">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/counter-increment/css21/001.css</file>
+      <description>Valid counter-increment level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_counter-reset">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/counter-reset/css21/001.css</file>
+      <description>Valid counter-reset level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_cue">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/cue/css21/001.css</file>
+      <description>Valid cue level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_cue-after">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/cue-after/css21/001.css</file>
+      <description>Valid cue-after level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_cue-before">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/cue-before/css21/001.css</file>
+      <description>Valid cue-before level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_cursor">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/cursor/css21/001.css</file>
+      <description>Valid cursor level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_direction">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/direction/css21/001.css</file>
+      <description>Valid direction level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_display">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/display/css21/001.css</file>
+      <description>Valid display level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_elevation">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/elevation/css21/001.css</file>
+      <description>Valid elevation level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_empty-cells">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/empty-cells/css21/001.css</file>
+      <description>Valid empty-cells level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_float">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/float/css21/001.css</file>
+      <description>Valid float level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_font">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/font/css21/001.css</file>
+      <description>Valid font level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_font-family">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/font-family/css21/001.css</file>
+      <description>Valid font-family level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_font-size">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/font-size/css21/001.css</file>
+      <description>Valid font-size level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_font-style">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/font-style/css21/001.css</file>
+      <description>Valid font-style level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_font-variant">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/font-variant/css21/001.css</file>
+      <description>Valid font-variant level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_font-weight">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/font-weight/css21/001.css</file>
+      <description>Valid font-weight level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_height">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/height/css21/001.css</file>
+      <description>Valid height level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_left">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/left/css21/001.css</file>
+      <description>Valid left level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_letter-spacing">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/letter-spacing/css21/001.css</file>
+      <description>Valid letter-spacing level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_line-height">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/line-height/css21/001.css</file>
+      <description>Valid line-height level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_list-style">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/list-style/css21/001.css</file>
+      <description>Valid list-style level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_list-style-image">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/list-style-image/css21/001.css</file>
+      <description>Valid list-style-image level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_list-style-position">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/list-style-position/css21/001.css</file>
+      <description>Valid list-style-position level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_list-style-type">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/list-style-type/css21/001.css</file>
+      <description>Valid list-style-type level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_margin">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/margin/css21/001.css</file>
+      <description>Valid margin level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_margin-bottom">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/margin-bottom/css21/001.css</file>
+      <description>Valid margin-bottom level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_margin-left">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/margin-left/css21/001.css</file>
+      <description>Valid margin-left level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_margin-right">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/margin-right/css21/001.css</file>
+      <description>Valid margin-right level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_margin-top">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/margin-top/css21/001.css</file>
+      <description>Valid margin-top level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_max-height">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/max-height/css21/001.css</file>
+      <description>Valid max-height level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_max-width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/max-width/css21/001.css</file>
+      <description>Valid max-width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_min-height">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/min-height/css21/001.css</file>
+      <description>Valid min-height level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_min-width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/min-width/css21/001.css</file>
+      <description>Valid min-width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_orphans">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/orphans/css21/001.css</file>
+      <description>Valid orphans level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_pause">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/pause/css21/001.css</file>
+      <description>Valid pause level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_pause-after">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/pause-after/css21/001.css</file>
+      <description>Valid pause-after level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_pause-before">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/pause-before/css21/001.css</file>
+      <description>Valid pause-before level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_pitch">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/pitch/css21/001.css</file>
+      <description>Valid pitch level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_pitch-range">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/pitch-range/css21/001.css</file>
+      <description>Valid pitch-range level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_play-during">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/play-during/css21/001.css</file>
+      <description>Valid play-during level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_position">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/position/css21/001.css</file>
+      <description>Valid position level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_richness">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/richness/css21/001.css</file>
+      <description>Valid richness level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_right">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/right/css21/001.css</file>
+      <description>Valid right level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_speak">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/speak/css21/001.css</file>
+      <description>Valid speak level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_speak-header">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/speak-header/css21/001.css</file>
+      <description>Valid speak-header level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_speak-numeral">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/speak-numeral/css21/001.css</file>
+      <description>Valid speak-numeral level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_speak-punctuation">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/speak-punctuation/css21/001.css</file>
+      <description>Valid speak-punctuation level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_speech-rate">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/speech-rate/css21/001.css</file>
+      <description>Valid speech-rate level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_stress">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/stress/css21/001.css</file>
+      <description>Valid stress level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_text-align">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/text-align/css21/001.css</file>
+      <description>Valid text-align level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_text-decoration">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/text-decoration/css21/001.css</file>
+      <description>Valid text-decoration level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_text-indent">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/text-indent/css21/001.css</file>
+      <description>Valid text-indent level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_text-transform">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/text-transform/css21/001.css</file>
+      <description>Valid text-transform level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_top">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/top/css21/001.css</file>
+      <description>Valid top level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_unicode-bidi">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/unicode-bidi/css21/001.css</file>
+      <description>Valid unicode-bidi level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_vertical-align">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/vertical-align/css21/001.css</file>
+      <description>Valid vertical-align level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_visibility">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/visibility/css21/001.css</file>
+      <description>Valid visibility level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_voice-family">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/voice-family/css21/001.css</file>
+      <description>Valid voice-family level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_volume">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/volume/css21/001.css</file>
+      <description>Valid volume level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_white-space">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/white-space/css21/001.css</file>
+      <description>Valid white-space level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_widows">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/widows/css21/001.css</file>
+      <description>Valid widows level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_width">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/width/css21/001.css</file>
+      <description>Valid width level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_word-spacing">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/word-spacing/css21/001.css</file>
+      <description>Valid word-spacing level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+  <type title="Valid_z-index">
+    <test profile="css21" warning="no">
+      <file>testsuite/properties/positive/z-index/css21/001.css</file>
+      <description>Valid z-index level css21</description>
+      <result valid="true" />
+    </test>
+  </type>
+<!--
+test markup also accepts 3 properties: warning, profile and medium
+like <test profile="css2" medium="all" warning="0">
+where warning means warninglevel in use (0 => none).
+-->
+</testsuite>

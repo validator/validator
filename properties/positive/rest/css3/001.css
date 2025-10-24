@@ -1,0 +1,16 @@
+a { rest:  500ms  }
+b { rest:  0s }
+c { rest:  2.1s }
+d { rest:  none  }
+e { rest:  x-weak  }
+f { rest:  weak  }
+g { rest:  medium  }
+h { rest:  strong  }
+i { rest:  x-strong  }
+j { rest: 500ms 0s }
+k { rest: none weak }
+l { rest: 10s none }
+m { rest: 2.1s 0s }
+n { rest: 0s strong }
+y { rest: initial }
+z { rest: inherit }

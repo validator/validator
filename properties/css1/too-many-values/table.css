@@ -1,0 +1,24 @@
+table-caption {
+    caption-side: top bottom;
+    caption-side: bottom top;
+    caption-side: bottom top top;
+    caption-side: bottom top 10px;
+}
+
+table {
+    table-layout: auto fixed;
+    table-layout: fixed auto;
+    table-layout: fixed auto 1px;
+    table-layout: fixed 1px auto;
+
+    border-collapse: collapse separate;
+    border-collapse: separate collapse;
+
+    border-spacing: 2px 2em 3px;
+    border-spacing: 2ex 1px 1em;
+}
+
+table-cell {
+    empty-cells: show hide;
+    empty-cells: hide show;
+}

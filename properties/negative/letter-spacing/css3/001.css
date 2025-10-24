@@ -1,0 +1,6 @@
+/* in the spec wording, % as a <spacing-limit> is not allowed in letter-spacing */
+an { letter-spacing: 1% }
+bn { letter-spacing: 1% normal }
+cn { letter-spacing: normal 1% }
+dn { letter-spacing: 10px 0 1% }
+en { letter-spacing: -10px 1% 10px }

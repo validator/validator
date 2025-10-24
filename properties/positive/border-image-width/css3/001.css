@@ -1,0 +1,342 @@
+y { border-image-width: initial }
+z { border-image-width: inherit }
+bimwid1 { border-image-width: 10 }
+bimwid2 { border-image-width: 10  10 }
+bimwid3 { border-image-width: 10  10  10 }
+bimwid4 { border-image-width: 10  10  10  10 }
+bimwid5 { border-image-width: 10  10  10  20px }
+bimwid6 { border-image-width: 10  10  10  5% }
+bimwid7 { border-image-width: 10  10  10  auto}
+bimwid8 { border-image-width: 10  10  20px }
+bimwid9 { border-image-width: 10  10  20px  10 }
+bimwid10 { border-image-width: 10  10  20px  20px }
+bimwid11 { border-image-width: 10  10  20px  5% }
+bimwid12 { border-image-width: 10  10  20px  auto}
+bimwid13 { border-image-width: 10  10  5% }
+bimwid14 { border-image-width: 10  10  5%  10 }
+bimwid15 { border-image-width: 10  10  5%  20px }
+bimwid16 { border-image-width: 10  10  5%  5% }
+bimwid17 { border-image-width: 10  10  5%  auto}
+bimwid18 { border-image-width: 10  10  auto}
+bimwid19 { border-image-width: 10  10  auto 10 }
+bimwid20 { border-image-width: 10  10  auto 20px }
+bimwid21 { border-image-width: 10  10  auto 5% }
+bimwid22 { border-image-width: 10  10  auto auto}
+bimwid23 { border-image-width: 10  20px }
+bimwid24 { border-image-width: 10  20px  10 }
+bimwid25 { border-image-width: 10  20px  10  10 }
+bimwid26 { border-image-width: 10  20px  10  20px }
+bimwid27 { border-image-width: 10  20px  10  5% }
+bimwid28 { border-image-width: 10  20px  10  auto}
+bimwid29 { border-image-width: 10  20px  20px }
+bimwid30 { border-image-width: 10  20px  20px  10 }
+bimwid31 { border-image-width: 10  20px  20px  20px }
+bimwid32 { border-image-width: 10  20px  20px  5% }
+bimwid33 { border-image-width: 10  20px  20px  auto}
+bimwid34 { border-image-width: 10  20px  5% }
+bimwid35 { border-image-width: 10  20px  5%  10 }
+bimwid36 { border-image-width: 10  20px  5%  20px }
+bimwid37 { border-image-width: 10  20px  5%  5% }
+bimwid38 { border-image-width: 10  20px  5%  auto}
+bimwid39 { border-image-width: 10  20px  auto}
+bimwid40 { border-image-width: 10  20px  auto 10 }
+bimwid41 { border-image-width: 10  20px  auto 20px }
+bimwid42 { border-image-width: 10  20px  auto 5% }
+bimwid43 { border-image-width: 10  20px  auto auto}
+bimwid44 { border-image-width: 10  5% }
+bimwid45 { border-image-width: 10  5%  10 }
+bimwid46 { border-image-width: 10  5%  10  10 }
+bimwid47 { border-image-width: 10  5%  10  20px }
+bimwid48 { border-image-width: 10  5%  10  5% }
+bimwid49 { border-image-width: 10  5%  10  auto}
+bimwid50 { border-image-width: 10  5%  20px }
+bimwid51 { border-image-width: 10  5%  20px  10 }
+bimwid52 { border-image-width: 10  5%  20px  20px }
+bimwid53 { border-image-width: 10  5%  20px  5% }
+bimwid54 { border-image-width: 10  5%  20px  auto}
+bimwid55 { border-image-width: 10  5%  5% }
+bimwid56 { border-image-width: 10  5%  5%  10 }
+bimwid57 { border-image-width: 10  5%  5%  20px }
+bimwid58 { border-image-width: 10  5%  5%  5% }
+bimwid59 { border-image-width: 10  5%  5%  auto}
+bimwid60 { border-image-width: 10  5%  auto}
+bimwid61 { border-image-width: 10  5%  auto 10 }
+bimwid62 { border-image-width: 10  5%  auto 20px }
+bimwid63 { border-image-width: 10  5%  auto 5% }
+bimwid64 { border-image-width: 10  5%  auto auto}
+bimwid65 { border-image-width: 10  auto}
+bimwid66 { border-image-width: 10  auto 10 }
+bimwid67 { border-image-width: 10  auto 10  10 }
+bimwid68 { border-image-width: 10  auto 10  20px }
+bimwid69 { border-image-width: 10  auto 10  5% }
+bimwid70 { border-image-width: 10  auto 10  auto}
+bimwid71 { border-image-width: 10  auto 20px }
+bimwid72 { border-image-width: 10  auto 20px  10 }
+bimwid73 { border-image-width: 10  auto 20px  20px }
+bimwid74 { border-image-width: 10  auto 20px  5% }
+bimwid75 { border-image-width: 10  auto 20px  auto}
+bimwid76 { border-image-width: 10  auto 5% }
+bimwid77 { border-image-width: 10  auto 5%  10 }
+bimwid78 { border-image-width: 10  auto 5%  20px }
+bimwid79 { border-image-width: 10  auto 5%  5% }
+bimwid80 { border-image-width: 10  auto 5%  auto}
+bimwid81 { border-image-width: 10  auto auto}
+bimwid82 { border-image-width: 10  auto auto 10 }
+bimwid83 { border-image-width: 10  auto auto 20px }
+bimwid84 { border-image-width: 10  auto auto 5% }
+bimwid85 { border-image-width: 10  auto auto auto}
+bimwid86 { border-image-width: 20px }
+bimwid87 { border-image-width: 20px  10 }
+bimwid88 { border-image-width: 20px  10  10 }
+bimwid89 { border-image-width: 20px  10  10  10 }
+bimwid90 { border-image-width: 20px  10  10  20px }
+bimwid91 { border-image-width: 20px  10  10  5% }
+bimwid92 { border-image-width: 20px  10  10  auto}
+bimwid93 { border-image-width: 20px  10  20px }
+bimwid94 { border-image-width: 20px  10  20px  10 }
+bimwid95 { border-image-width: 20px  10  20px  20px }
+bimwid96 { border-image-width: 20px  10  20px  5% }
+bimwid97 { border-image-width: 20px  10  20px  auto}
+bimwid98 { border-image-width: 20px  10  5% }
+bimwid99 { border-image-width: 20px  10  5%  10 }
+bimwid100 { border-image-width: 20px  10  5%  20px }
+bimwid101 { border-image-width: 20px  10  5%  5% }
+bimwid102 { border-image-width: 20px  10  5%  auto}
+bimwid103 { border-image-width: 20px  10  auto}
+bimwid104 { border-image-width: 20px  10  auto 10 }
+bimwid105 { border-image-width: 20px  10  auto 20px }
+bimwid106 { border-image-width: 20px  10  auto 5% }
+bimwid107 { border-image-width: 20px  10  auto auto}
+bimwid108 { border-image-width: 20px  20px }
+bimwid109 { border-image-width: 20px  20px  10 }
+bimwid110 { border-image-width: 20px  20px  10  10 }
+bimwid111 { border-image-width: 20px  20px  10  20px }
+bimwid112 { border-image-width: 20px  20px  10  5% }
+bimwid113 { border-image-width: 20px  20px  10  auto}
+bimwid114 { border-image-width: 20px  20px  20px }
+bimwid115 { border-image-width: 20px  20px  20px  10 }
+bimwid116 { border-image-width: 20px  20px  20px  20px }
+bimwid117 { border-image-width: 20px  20px  20px  5% }
+bimwid118 { border-image-width: 20px  20px  20px  auto}
+bimwid119 { border-image-width: 20px  20px  5% }
+bimwid120 { border-image-width: 20px  20px  5%  10 }
+bimwid121 { border-image-width: 20px  20px  5%  20px }
+bimwid122 { border-image-width: 20px  20px  5%  5% }
+bimwid123 { border-image-width: 20px  20px  5%  auto}
+bimwid124 { border-image-width: 20px  20px  auto}
+bimwid125 { border-image-width: 20px  20px  auto 10 }
+bimwid126 { border-image-width: 20px  20px  auto 20px }
+bimwid127 { border-image-width: 20px  20px  auto 5% }
+bimwid128 { border-image-width: 20px  20px  auto auto}
+bimwid129 { border-image-width: 20px  5% }
+bimwid130 { border-image-width: 20px  5%  10 }
+bimwid131 { border-image-width: 20px  5%  10  10 }
+bimwid132 { border-image-width: 20px  5%  10  20px }
+bimwid133 { border-image-width: 20px  5%  10  5% }
+bimwid134 { border-image-width: 20px  5%  10  auto}
+bimwid135 { border-image-width: 20px  5%  20px }
+bimwid136 { border-image-width: 20px  5%  20px  10 }
+bimwid137 { border-image-width: 20px  5%  20px  20px }
+bimwid138 { border-image-width: 20px  5%  20px  5% }
+bimwid139 { border-image-width: 20px  5%  20px  auto}
+bimwid140 { border-image-width: 20px  5%  5% }
+bimwid141 { border-image-width: 20px  5%  5%  10 }
+bimwid142 { border-image-width: 20px  5%  5%  20px }
+bimwid143 { border-image-width: 20px  5%  5%  5% }
+bimwid144 { border-image-width: 20px  5%  5%  auto}
+bimwid145 { border-image-width: 20px  5%  auto}
+bimwid146 { border-image-width: 20px  5%  auto 10 }
+bimwid147 { border-image-width: 20px  5%  auto 20px }
+bimwid148 { border-image-width: 20px  5%  auto 5% }
+bimwid149 { border-image-width: 20px  5%  auto auto}
+bimwid150 { border-image-width: 20px  auto}
+bimwid151 { border-image-width: 20px  auto 10 }
+bimwid152 { border-image-width: 20px  auto 10  10 }
+bimwid153 { border-image-width: 20px  auto 10  20px }
+bimwid154 { border-image-width: 20px  auto 10  5% }
+bimwid155 { border-image-width: 20px  auto 10  auto}
+bimwid156 { border-image-width: 20px  auto 20px }
+bimwid157 { border-image-width: 20px  auto 20px  10 }
+bimwid158 { border-image-width: 20px  auto 20px  20px }
+bimwid159 { border-image-width: 20px  auto 20px  5% }
+bimwid160 { border-image-width: 20px  auto 20px  auto}
+bimwid161 { border-image-width: 20px  auto 5% }
+bimwid162 { border-image-width: 20px  auto 5%  10 }
+bimwid163 { border-image-width: 20px  auto 5%  20px }
+bimwid164 { border-image-width: 20px  auto 5%  5% }
+bimwid165 { border-image-width: 20px  auto 5%  auto}
+bimwid166 { border-image-width: 20px  auto auto}
+bimwid167 { border-image-width: 20px  auto auto 10 }
+bimwid168 { border-image-width: 20px  auto auto 20px }
+bimwid169 { border-image-width: 20px  auto auto 5% }
+bimwid170 { border-image-width: 20px  auto auto auto}
+bimwid171 { border-image-width: 5% }
+bimwid172 { border-image-width: 5%  10 }
+bimwid173 { border-image-width: 5%  10  10 }
+bimwid174 { border-image-width: 5%  10  10  10 }
+bimwid175 { border-image-width: 5%  10  10  20px }
+bimwid176 { border-image-width: 5%  10  10  5% }
+bimwid177 { border-image-width: 5%  10  10  auto}
+bimwid178 { border-image-width: 5%  10  20px }
+bimwid179 { border-image-width: 5%  10  20px  10 }
+bimwid180 { border-image-width: 5%  10  20px  20px }
+bimwid181 { border-image-width: 5%  10  20px  5% }
+bimwid182 { border-image-width: 5%  10  20px  auto}
+bimwid183 { border-image-width: 5%  10  5% }
+bimwid184 { border-image-width: 5%  10  5%  10 }
+bimwid185 { border-image-width: 5%  10  5%  20px }
+bimwid186 { border-image-width: 5%  10  5%  5% }
+bimwid187 { border-image-width: 5%  10  5%  auto}
+bimwid188 { border-image-width: 5%  10  auto}
+bimwid189 { border-image-width: 5%  10  auto 10 }
+bimwid190 { border-image-width: 5%  10  auto 20px }
+bimwid191 { border-image-width: 5%  10  auto 5% }
+bimwid192 { border-image-width: 5%  10  auto auto}
+bimwid193 { border-image-width: 5%  20px }
+bimwid194 { border-image-width: 5%  20px  10 }
+bimwid195 { border-image-width: 5%  20px  10  10 }
+bimwid196 { border-image-width: 5%  20px  10  20px }
+bimwid197 { border-image-width: 5%  20px  10  5% }
+bimwid198 { border-image-width: 5%  20px  10  auto}
+bimwid199 { border-image-width: 5%  20px  20px }
+bimwid200 { border-image-width: 5%  20px  20px  10 }
+bimwid201 { border-image-width: 5%  20px  20px  20px }
+bimwid202 { border-image-width: 5%  20px  20px  5% }
+bimwid203 { border-image-width: 5%  20px  20px  auto}
+bimwid204 { border-image-width: 5%  20px  5% }
+bimwid205 { border-image-width: 5%  20px  5%  10 }
+bimwid206 { border-image-width: 5%  20px  5%  20px }
+bimwid207 { border-image-width: 5%  20px  5%  5% }
+bimwid208 { border-image-width: 5%  20px  5%  auto}
+bimwid209 { border-image-width: 5%  20px  auto}
+bimwid210 { border-image-width: 5%  20px  auto 10 }
+bimwid211 { border-image-width: 5%  20px  auto 20px }
+bimwid212 { border-image-width: 5%  20px  auto 5% }
+bimwid213 { border-image-width: 5%  20px  auto auto}
+bimwid214 { border-image-width: 5%  5% }
+bimwid215 { border-image-width: 5%  5%  10 }
+bimwid216 { border-image-width: 5%  5%  10  10 }
+bimwid217 { border-image-width: 5%  5%  10  20px }
+bimwid218 { border-image-width: 5%  5%  10  5% }
+bimwid219 { border-image-width: 5%  5%  10  auto}
+bimwid220 { border-image-width: 5%  5%  20px }
+bimwid221 { border-image-width: 5%  5%  20px  10 }
+bimwid222 { border-image-width: 5%  5%  20px  20px }
+bimwid223 { border-image-width: 5%  5%  20px  5% }
+bimwid224 { border-image-width: 5%  5%  20px  auto}
+bimwid225 { border-image-width: 5%  5%  5% }
+bimwid226 { border-image-width: 5%  5%  5%  10 }
+bimwid227 { border-image-width: 5%  5%  5%  20px }
+bimwid228 { border-image-width: 5%  5%  5%  5% }
+bimwid229 { border-image-width: 5%  5%  5%  auto}
+bimwid230 { border-image-width: 5%  5%  auto}
+bimwid231 { border-image-width: 5%  5%  auto 10 }
+bimwid232 { border-image-width: 5%  5%  auto 20px }
+bimwid233 { border-image-width: 5%  5%  auto 5% }
+bimwid234 { border-image-width: 5%  5%  auto auto}
+bimwid235 { border-image-width: 5%  auto}
+bimwid236 { border-image-width: 5%  auto 10 }
+bimwid237 { border-image-width: 5%  auto 10  10 }
+bimwid238 { border-image-width: 5%  auto 10  20px }
+bimwid239 { border-image-width: 5%  auto 10  5% }
+bimwid240 { border-image-width: 5%  auto 10  auto}
+bimwid241 { border-image-width: 5%  auto 20px }
+bimwid242 { border-image-width: 5%  auto 20px  10 }
+bimwid243 { border-image-width: 5%  auto 20px  20px }
+bimwid244 { border-image-width: 5%  auto 20px  5% }
+bimwid245 { border-image-width: 5%  auto 20px  auto}
+bimwid246 { border-image-width: 5%  auto 5% }
+bimwid247 { border-image-width: 5%  auto 5%  10 }
+bimwid248 { border-image-width: 5%  auto 5%  20px }
+bimwid249 { border-image-width: 5%  auto 5%  5% }
+bimwid250 { border-image-width: 5%  auto 5%  auto}
+bimwid251 { border-image-width: 5%  auto auto}
+bimwid252 { border-image-width: 5%  auto auto 10 }
+bimwid253 { border-image-width: 5%  auto auto 20px }
+bimwid254 { border-image-width: 5%  auto auto 5% }
+bimwid255 { border-image-width: 5%  auto auto auto}
+bimwid256 { border-image-width: auto}
+bimwid257 { border-image-width: auto 10 }
+bimwid258 { border-image-width: auto 10  10 }
+bimwid259 { border-image-width: auto 10  10  10 }
+bimwid260 { border-image-width: auto 10  10  20px }
+bimwid261 { border-image-width: auto 10  10  5% }
+bimwid262 { border-image-width: auto 10  10  auto}
+bimwid263 { border-image-width: auto 10  20px }
+bimwid264 { border-image-width: auto 10  20px  10 }
+bimwid265 { border-image-width: auto 10  20px  20px }
+bimwid266 { border-image-width: auto 10  20px  5% }
+bimwid267 { border-image-width: auto 10  20px  auto}
+bimwid268 { border-image-width: auto 10  5% }
+bimwid269 { border-image-width: auto 10  5%  10 }
+bimwid270 { border-image-width: auto 10  5%  20px }
+bimwid271 { border-image-width: auto 10  5%  5% }
+bimwid272 { border-image-width: auto 10  5%  auto}
+bimwid273 { border-image-width: auto 10  auto}
+bimwid274 { border-image-width: auto 10  auto 10 }
+bimwid275 { border-image-width: auto 10  auto 20px }
+bimwid276 { border-image-width: auto 10  auto 5% }
+bimwid277 { border-image-width: auto 10  auto auto}
+bimwid278 { border-image-width: auto 20px }
+bimwid279 { border-image-width: auto 20px  10 }
+bimwid280 { border-image-width: auto 20px  10  10 }
+bimwid281 { border-image-width: auto 20px  10  20px }
+bimwid282 { border-image-width: auto 20px  10  5% }
+bimwid283 { border-image-width: auto 20px  10  auto}
+bimwid284 { border-image-width: auto 20px  20px }
+bimwid285 { border-image-width: auto 20px  20px  10 }
+bimwid286 { border-image-width: auto 20px  20px  20px }
+bimwid287 { border-image-width: auto 20px  20px  5% }
+bimwid288 { border-image-width: auto 20px  20px  auto}
+bimwid289 { border-image-width: auto 20px  5% }
+bimwid290 { border-image-width: auto 20px  5%  10 }
+bimwid291 { border-image-width: auto 20px  5%  20px }
+bimwid292 { border-image-width: auto 20px  5%  5% }
+bimwid293 { border-image-width: auto 20px  5%  auto}
+bimwid294 { border-image-width: auto 20px  auto}
+bimwid295 { border-image-width: auto 20px  auto 10 }
+bimwid296 { border-image-width: auto 20px  auto 20px }
+bimwid297 { border-image-width: auto 20px  auto 5% }
+bimwid298 { border-image-width: auto 20px  auto auto}
+bimwid299 { border-image-width: auto 5% }
+bimwid300 { border-image-width: auto 5%  10 }
+bimwid301 { border-image-width: auto 5%  10  10 }
+bimwid302 { border-image-width: auto 5%  10  20px }
+bimwid303 { border-image-width: auto 5%  10  5% }
+bimwid304 { border-image-width: auto 5%  10  auto}
+bimwid305 { border-image-width: auto 5%  20px }
+bimwid306 { border-image-width: auto 5%  20px  10 }
+bimwid307 { border-image-width: auto 5%  20px  20px }
+bimwid308 { border-image-width: auto 5%  20px  5% }
+bimwid309 { border-image-width: auto 5%  20px  auto}
+bimwid310 { border-image-width: auto 5%  5% }
+bimwid311 { border-image-width: auto 5%  5%  10 }
+bimwid312 { border-image-width: auto 5%  5%  20px }
+bimwid313 { border-image-width: auto 5%  5%  5% }
+bimwid314 { border-image-width: auto 5%  5%  auto}
+bimwid315 { border-image-width: auto 5%  auto}
+bimwid316 { border-image-width: auto 5%  auto 10 }
+bimwid317 { border-image-width: auto 5%  auto 20px }
+bimwid318 { border-image-width: auto 5%  auto 5% }
+bimwid319 { border-image-width: auto 5%  auto auto}
+bimwid320 { border-image-width: auto auto}
+bimwid321 { border-image-width: auto auto 10 }
+bimwid322 { border-image-width: auto auto 10  10 }
+bimwid323 { border-image-width: auto auto 10  20px }
+bimwid324 { border-image-width: auto auto 10  5% }
+bimwid325 { border-image-width: auto auto 10  auto}
+bimwid326 { border-image-width: auto auto 20px }
+bimwid327 { border-image-width: auto auto 20px  10 }
+bimwid328 { border-image-width: auto auto 20px  20px }
+bimwid329 { border-image-width: auto auto 20px  5% }
+bimwid330 { border-image-width: auto auto 20px  auto}
+bimwid331 { border-image-width: auto auto 5% }
+bimwid332 { border-image-width: auto auto 5%  10 }
+bimwid333 { border-image-width: auto auto 5%  20px }
+bimwid334 { border-image-width: auto auto 5%  5% }
+bimwid335 { border-image-width: auto auto 5%  auto}
+bimwid336 { border-image-width: auto auto auto}
+bimwid337 { border-image-width: auto auto auto 10 }
+bimwid338 { border-image-width: auto auto auto 20px }
+bimwid339 { border-image-width: auto auto auto 5% }
+bimwid340 { border-image-width: auto auto auto auto}

@@ -1,0 +1,14 @@
+a { break-before:  auto  }
+c { break-before:  avoid  }
+d { break-before:  left  }
+e { break-before:  right  }
+f { break-before:  page  }
+g { break-before:  column  }
+h { break-before:  avoid-page  }
+i { break-before:  avoid-column  }
+j { break-before:  region }
+k { break-before:  avoid-region }
+l { break-before:  recto }
+m { break-before:  verso }
+y { break-before:  initial  }
+z { break-before:  inherit  }

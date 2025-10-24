@@ -1,0 +1,6 @@
+a { border-right-width: thin }
+b { border-right-width: medium }
+c { border-right-width: thick }
+d { border-right-width: 0.5em }
+e { border-right-width: 1px }
+z { border-right-width: inherit }

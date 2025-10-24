@@ -1,0 +1,4 @@
+/* this should not pass CSS2 checking, see
+http://www.w3.org/Bugs/Public/show_bug.cgi?id=3632 */
+
+.foo { background-image: url(myimage\) ; }

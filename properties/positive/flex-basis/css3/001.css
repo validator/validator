@@ -1,0 +1,7 @@
+a { flex-basis: 0 }
+b { flex-basis: 100px }
+c { flex-basis: 0% }
+d { flex-basis: 10% }
+e { flex-basis: auto }
+y { flex-basis: initial }
+z { flex-basis: inherit }

@@ -1,0 +1,7 @@
+a { flex-grow: 0 }
+b { flex-grow: 1 }
+c { flex-grow: 10000000000000000000000000000000000000000000 }
+d { flex-grow: 2.25 }
+e { flex-grow: 0.25 }
+y { flex-grow: initial }
+z { flex-grow: inherit }

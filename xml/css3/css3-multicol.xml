@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+test markup also accepts 3 properties: warning, profile and medium
+-->
+<testsuite>
+  <type title="CSS3_Multicol">
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/break-after-001.css</file>
+      <description>css3-multicol: Valid 'break-after' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/break-before-001.css</file>
+      <description>css3-multicol: Valid 'break-before' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/break-inside-001.css</file>
+      <description>css3-multicol: Valid 'break-inside' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-count-001.css</file>
+      <description>css3-multicol: Valid 'column-count' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-fill-001.css</file>
+      <description>css3-multicol: Valid 'column-fill' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-gap-001.css</file>
+      <description>css3-multicol: Valid 'column-gap' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-001.css</file>
+      <description>css3-multicol: Valid 'column-rule' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-color-001.css</file>
+      <description>css3-multicol: Valid 'column-rule-color' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-color-002.css</file>
+      <description>css3-multicol: Valid 'column-rule-color' values using CSS3 colors</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-style-001.css</file>
+      <description>css3-multicol: Valid 'column-rule-style' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-rule-width-001.css</file>
+      <description>css3-multicol: Valid 'column-rule-width' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-span-001.css</file>
+      <description>css3-multicol: Valid 'column-span' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/column-width-001.css</file>
+      <description>css3-multicol: Valid 'column-width' values</description>
+      <result valid="true"/>
+    </test>
+    <test profile="css3">
+      <file>testsuite/properties/css3/css3-multicol/columns-001.css</file>
+      <description>css3-multicol: Valid 'columns' values</description>
+      <result valid="true"/>
+    </test>
+  </type>
+</testsuite>

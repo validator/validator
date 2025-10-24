@@ -1,0 +1,5 @@
+a { pitch-range: 0 }
+b { pitch-range: 100 }
+c { pitch-range: 10.42 }
+d { pitch-range: 50 }
+z { pitch-range: inherit }

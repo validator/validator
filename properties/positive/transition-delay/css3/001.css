@@ -1,0 +1,10 @@
+y { transition-delay: initial }
+z { transition-delay: inherit }
+a { transition-delay: 0s }
+b { transition-delay: -10s }
+c { transition-delay: 1000ms }
+d { transition-delay: 1s }
+e { transition-delay: 1s, 0s, 10ms }
+f { transition-delay: 1s, -10s }
+g { transition-delay: -1s, 1000s }
+h { transition-delay: 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s }

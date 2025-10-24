@@ -1,0 +1,9 @@
+a { column-rule-width: thin }
+b { column-rule-width: medium }
+c { column-rule-width: thick }
+d { column-rule-width: 0.5em }
+e { column-rule-width: 1px }
+y { column-rule-width: initial }
+z { column-rule-width: inherit }
+
+

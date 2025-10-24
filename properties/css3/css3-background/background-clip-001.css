@@ -1,0 +1,19 @@
+div {
+  background-clip: inherit;
+}
+
+div {
+  background-clip: border-box;
+}
+
+div {
+  background-clip: padding-box;
+}
+
+div {
+  background-clip: border-box, padding-box;
+}
+
+div {
+  background-clip: border-box, border-box, padding-box, padding-box;
+}

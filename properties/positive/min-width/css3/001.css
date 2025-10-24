@@ -1,0 +1,7 @@
+a { min-width: 1px }
+b { min-width: 0.01% }
+c { min-width: 0 }
+y { min-width: initial }
+z { min-width: inherit }
+/* and from http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#min-size-auto */
+d { min-width: auto }

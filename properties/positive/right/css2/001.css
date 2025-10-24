@@ -1,0 +1,7 @@
+a { right: 10px }
+b { right: 0px }
+c { right: 0 }
+d { right: 5% }
+e { right: 0% }
+f { right: auto }
+z { right: inherit }

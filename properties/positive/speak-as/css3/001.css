@@ -1,0 +1,17 @@
+sa1  { speak-as: normal  }
+sa2  { speak-as: spell-out digits  }
+sa3  { speak-as: digits spell-out }
+sa4  { speak-as: spell-out digits literal-punctuation }
+sa5  { speak-as: digits spell-out literal-punctuation }
+sa6  { speak-as: literal-punctuation spell-out digits  }
+sa7  { speak-as: literal-punctuation digits spell-out }
+sa8  { speak-as: spell-out literal-punctuation digits  }
+sa9  { speak-as: digits literal-punctuation spell-out }
+sa10 { speak-as: spell-out digits no-punctuation }
+sa11 { speak-as: digits spell-out no-punctuation }
+sa12 { speak-as: no-punctuation spell-out digits  }
+sa13 { speak-as: no-punctuation digits spell-out }
+sa14 { speak-as: spell-out no-punctuation digits  }
+sa15 { speak-as: digits no-punctuation spell-out }
+z { speak-as: inherit }
+y { speak-as: initial }

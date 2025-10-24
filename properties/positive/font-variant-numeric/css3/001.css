@@ -1,0 +1,1921 @@
+t1 { font-variant-numeric: lining-nums proportional-nums diagonal-fractions ordinal slashed-zero; }
+t2 { font-variant-numeric: lining-nums proportional-nums diagonal-fractions slashed-zero ordinal; }
+t3 { font-variant-numeric: lining-nums proportional-nums ordinal diagonal-fractions slashed-zero; }
+t4 { font-variant-numeric: lining-nums proportional-nums ordinal slashed-zero diagonal-fractions; }
+t5 { font-variant-numeric: lining-nums proportional-nums slashed-zero diagonal-fractions ordinal; }
+t6 { font-variant-numeric: lining-nums proportional-nums slashed-zero ordinal diagonal-fractions; }
+t7 { font-variant-numeric: lining-nums diagonal-fractions proportional-nums ordinal slashed-zero; }
+t8 { font-variant-numeric: lining-nums diagonal-fractions proportional-nums slashed-zero ordinal; }
+t9 { font-variant-numeric: lining-nums diagonal-fractions ordinal proportional-nums slashed-zero; }
+t10 { font-variant-numeric: lining-nums diagonal-fractions ordinal slashed-zero proportional-nums; }
+t11 { font-variant-numeric: lining-nums diagonal-fractions slashed-zero proportional-nums ordinal; }
+t12 { font-variant-numeric: lining-nums diagonal-fractions slashed-zero ordinal proportional-nums; }
+t13 { font-variant-numeric: lining-nums ordinal proportional-nums diagonal-fractions slashed-zero; }
+t14 { font-variant-numeric: lining-nums ordinal proportional-nums slashed-zero diagonal-fractions; }
+t15 { font-variant-numeric: lining-nums ordinal diagonal-fractions proportional-nums slashed-zero; }
+t16 { font-variant-numeric: lining-nums ordinal diagonal-fractions slashed-zero proportional-nums; }
+t17 { font-variant-numeric: lining-nums ordinal slashed-zero proportional-nums diagonal-fractions; }
+t18 { font-variant-numeric: lining-nums ordinal slashed-zero diagonal-fractions proportional-nums; }
+t19 { font-variant-numeric: lining-nums slashed-zero proportional-nums diagonal-fractions ordinal; }
+t20 { font-variant-numeric: lining-nums slashed-zero proportional-nums ordinal diagonal-fractions; }
+t21 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions proportional-nums ordinal; }
+t22 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions ordinal proportional-nums; }
+t23 { font-variant-numeric: lining-nums slashed-zero ordinal proportional-nums diagonal-fractions; }
+t24 { font-variant-numeric: lining-nums slashed-zero ordinal diagonal-fractions proportional-nums; }
+t25 { font-variant-numeric: proportional-nums lining-nums diagonal-fractions ordinal slashed-zero; }
+t26 { font-variant-numeric: proportional-nums lining-nums diagonal-fractions slashed-zero ordinal; }
+t27 { font-variant-numeric: proportional-nums lining-nums ordinal diagonal-fractions slashed-zero; }
+t28 { font-variant-numeric: proportional-nums lining-nums ordinal slashed-zero diagonal-fractions; }
+t29 { font-variant-numeric: proportional-nums lining-nums slashed-zero diagonal-fractions ordinal; }
+t30 { font-variant-numeric: proportional-nums lining-nums slashed-zero ordinal diagonal-fractions; }
+t31 { font-variant-numeric: proportional-nums diagonal-fractions lining-nums ordinal slashed-zero; }
+t32 { font-variant-numeric: proportional-nums diagonal-fractions lining-nums slashed-zero ordinal; }
+t33 { font-variant-numeric: proportional-nums diagonal-fractions ordinal lining-nums slashed-zero; }
+t34 { font-variant-numeric: proportional-nums diagonal-fractions ordinal slashed-zero lining-nums; }
+t35 { font-variant-numeric: proportional-nums diagonal-fractions slashed-zero lining-nums ordinal; }
+t36 { font-variant-numeric: proportional-nums diagonal-fractions slashed-zero ordinal lining-nums; }
+t37 { font-variant-numeric: proportional-nums ordinal lining-nums diagonal-fractions slashed-zero; }
+t38 { font-variant-numeric: proportional-nums ordinal lining-nums slashed-zero diagonal-fractions; }
+t39 { font-variant-numeric: proportional-nums ordinal diagonal-fractions lining-nums slashed-zero; }
+t40 { font-variant-numeric: proportional-nums ordinal diagonal-fractions slashed-zero lining-nums; }
+t41 { font-variant-numeric: proportional-nums ordinal slashed-zero lining-nums diagonal-fractions; }
+t42 { font-variant-numeric: proportional-nums ordinal slashed-zero diagonal-fractions lining-nums; }
+t43 { font-variant-numeric: proportional-nums slashed-zero lining-nums diagonal-fractions ordinal; }
+t44 { font-variant-numeric: proportional-nums slashed-zero lining-nums ordinal diagonal-fractions; }
+t45 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions lining-nums ordinal; }
+t46 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions ordinal lining-nums; }
+t47 { font-variant-numeric: proportional-nums slashed-zero ordinal lining-nums diagonal-fractions; }
+t48 { font-variant-numeric: proportional-nums slashed-zero ordinal diagonal-fractions lining-nums; }
+t49 { font-variant-numeric: diagonal-fractions proportional-nums lining-nums ordinal slashed-zero; }
+t50 { font-variant-numeric: diagonal-fractions proportional-nums lining-nums slashed-zero ordinal; }
+t51 { font-variant-numeric: diagonal-fractions proportional-nums ordinal lining-nums slashed-zero; }
+t52 { font-variant-numeric: diagonal-fractions proportional-nums ordinal slashed-zero lining-nums; }
+t53 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero lining-nums ordinal; }
+t54 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero ordinal lining-nums; }
+t55 { font-variant-numeric: diagonal-fractions lining-nums proportional-nums ordinal slashed-zero; }
+t56 { font-variant-numeric: diagonal-fractions lining-nums proportional-nums slashed-zero ordinal; }
+t57 { font-variant-numeric: diagonal-fractions lining-nums ordinal proportional-nums slashed-zero; }
+t58 { font-variant-numeric: diagonal-fractions lining-nums ordinal slashed-zero proportional-nums; }
+t59 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero proportional-nums ordinal; }
+t60 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero ordinal proportional-nums; }
+t61 { font-variant-numeric: diagonal-fractions ordinal proportional-nums lining-nums slashed-zero; }
+t62 { font-variant-numeric: diagonal-fractions ordinal proportional-nums slashed-zero lining-nums; }
+t63 { font-variant-numeric: diagonal-fractions ordinal lining-nums proportional-nums slashed-zero; }
+t64 { font-variant-numeric: diagonal-fractions ordinal lining-nums slashed-zero proportional-nums; }
+t65 { font-variant-numeric: diagonal-fractions ordinal slashed-zero proportional-nums lining-nums; }
+t66 { font-variant-numeric: diagonal-fractions ordinal slashed-zero lining-nums proportional-nums; }
+t67 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums lining-nums ordinal; }
+t68 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums ordinal lining-nums; }
+t69 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums proportional-nums ordinal; }
+t70 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums ordinal proportional-nums; }
+t71 { font-variant-numeric: diagonal-fractions slashed-zero ordinal proportional-nums lining-nums; }
+t72 { font-variant-numeric: diagonal-fractions slashed-zero ordinal lining-nums proportional-nums; }
+t73 { font-variant-numeric: ordinal proportional-nums diagonal-fractions lining-nums slashed-zero; }
+t74 { font-variant-numeric: ordinal proportional-nums diagonal-fractions slashed-zero lining-nums; }
+t75 { font-variant-numeric: ordinal proportional-nums lining-nums diagonal-fractions slashed-zero; }
+t76 { font-variant-numeric: ordinal proportional-nums lining-nums slashed-zero diagonal-fractions; }
+t77 { font-variant-numeric: ordinal proportional-nums slashed-zero diagonal-fractions lining-nums; }
+t78 { font-variant-numeric: ordinal proportional-nums slashed-zero lining-nums diagonal-fractions; }
+t79 { font-variant-numeric: ordinal diagonal-fractions proportional-nums lining-nums slashed-zero; }
+t80 { font-variant-numeric: ordinal diagonal-fractions proportional-nums slashed-zero lining-nums; }
+t81 { font-variant-numeric: ordinal diagonal-fractions lining-nums proportional-nums slashed-zero; }
+t82 { font-variant-numeric: ordinal diagonal-fractions lining-nums slashed-zero proportional-nums; }
+t83 { font-variant-numeric: ordinal diagonal-fractions slashed-zero proportional-nums lining-nums; }
+t84 { font-variant-numeric: ordinal diagonal-fractions slashed-zero lining-nums proportional-nums; }
+t85 { font-variant-numeric: ordinal lining-nums proportional-nums diagonal-fractions slashed-zero; }
+t86 { font-variant-numeric: ordinal lining-nums proportional-nums slashed-zero diagonal-fractions; }
+t87 { font-variant-numeric: ordinal lining-nums diagonal-fractions proportional-nums slashed-zero; }
+t88 { font-variant-numeric: ordinal lining-nums diagonal-fractions slashed-zero proportional-nums; }
+t89 { font-variant-numeric: ordinal lining-nums slashed-zero proportional-nums diagonal-fractions; }
+t90 { font-variant-numeric: ordinal lining-nums slashed-zero diagonal-fractions proportional-nums; }
+t91 { font-variant-numeric: ordinal slashed-zero proportional-nums diagonal-fractions lining-nums; }
+t92 { font-variant-numeric: ordinal slashed-zero proportional-nums lining-nums diagonal-fractions; }
+t93 { font-variant-numeric: ordinal slashed-zero diagonal-fractions proportional-nums lining-nums; }
+t94 { font-variant-numeric: ordinal slashed-zero diagonal-fractions lining-nums proportional-nums; }
+t95 { font-variant-numeric: ordinal slashed-zero lining-nums proportional-nums diagonal-fractions; }
+t96 { font-variant-numeric: ordinal slashed-zero lining-nums diagonal-fractions proportional-nums; }
+t97 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions ordinal lining-nums; }
+t98 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions lining-nums ordinal; }
+t99 { font-variant-numeric: slashed-zero proportional-nums ordinal diagonal-fractions lining-nums; }
+t100 { font-variant-numeric: slashed-zero proportional-nums ordinal lining-nums diagonal-fractions; }
+t101 { font-variant-numeric: slashed-zero proportional-nums lining-nums diagonal-fractions ordinal; }
+t102 { font-variant-numeric: slashed-zero proportional-nums lining-nums ordinal diagonal-fractions; }
+t103 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums ordinal lining-nums; }
+t104 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums lining-nums ordinal; }
+t105 { font-variant-numeric: slashed-zero diagonal-fractions ordinal proportional-nums lining-nums; }
+t106 { font-variant-numeric: slashed-zero diagonal-fractions ordinal lining-nums proportional-nums; }
+t107 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums proportional-nums ordinal; }
+t108 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums ordinal proportional-nums; }
+t109 { font-variant-numeric: slashed-zero ordinal proportional-nums diagonal-fractions lining-nums; }
+t110 { font-variant-numeric: slashed-zero ordinal proportional-nums lining-nums diagonal-fractions; }
+t111 { font-variant-numeric: slashed-zero ordinal diagonal-fractions proportional-nums lining-nums; }
+t112 { font-variant-numeric: slashed-zero ordinal diagonal-fractions lining-nums proportional-nums; }
+t113 { font-variant-numeric: slashed-zero ordinal lining-nums proportional-nums diagonal-fractions; }
+t114 { font-variant-numeric: slashed-zero ordinal lining-nums diagonal-fractions proportional-nums; }
+t115 { font-variant-numeric: slashed-zero lining-nums proportional-nums diagonal-fractions ordinal; }
+t116 { font-variant-numeric: slashed-zero lining-nums proportional-nums ordinal diagonal-fractions; }
+t117 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions proportional-nums ordinal; }
+t118 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions ordinal proportional-nums; }
+t119 { font-variant-numeric: slashed-zero lining-nums ordinal proportional-nums diagonal-fractions; }
+t120 { font-variant-numeric: slashed-zero lining-nums ordinal diagonal-fractions proportional-nums; }
+t121 { font-variant-numeric: lining-nums proportional-nums stacked-fractions ordinal slashed-zero; }
+t122 { font-variant-numeric: lining-nums proportional-nums stacked-fractions slashed-zero ordinal; }
+t123 { font-variant-numeric: lining-nums proportional-nums ordinal stacked-fractions slashed-zero; }
+t124 { font-variant-numeric: lining-nums proportional-nums ordinal slashed-zero stacked-fractions; }
+t125 { font-variant-numeric: lining-nums proportional-nums slashed-zero stacked-fractions ordinal; }
+t126 { font-variant-numeric: lining-nums proportional-nums slashed-zero ordinal stacked-fractions; }
+t127 { font-variant-numeric: lining-nums stacked-fractions proportional-nums ordinal slashed-zero; }
+t128 { font-variant-numeric: lining-nums stacked-fractions proportional-nums slashed-zero ordinal; }
+t129 { font-variant-numeric: lining-nums stacked-fractions ordinal proportional-nums slashed-zero; }
+t130 { font-variant-numeric: lining-nums stacked-fractions ordinal slashed-zero proportional-nums; }
+t131 { font-variant-numeric: lining-nums stacked-fractions slashed-zero proportional-nums ordinal; }
+t132 { font-variant-numeric: lining-nums stacked-fractions slashed-zero ordinal proportional-nums; }
+t133 { font-variant-numeric: lining-nums ordinal proportional-nums stacked-fractions slashed-zero; }
+t134 { font-variant-numeric: lining-nums ordinal proportional-nums slashed-zero stacked-fractions; }
+t135 { font-variant-numeric: lining-nums ordinal stacked-fractions proportional-nums slashed-zero; }
+t136 { font-variant-numeric: lining-nums ordinal stacked-fractions slashed-zero proportional-nums; }
+t137 { font-variant-numeric: lining-nums ordinal slashed-zero proportional-nums stacked-fractions; }
+t138 { font-variant-numeric: lining-nums ordinal slashed-zero stacked-fractions proportional-nums; }
+t139 { font-variant-numeric: lining-nums slashed-zero proportional-nums stacked-fractions ordinal; }
+t140 { font-variant-numeric: lining-nums slashed-zero proportional-nums ordinal stacked-fractions; }
+t141 { font-variant-numeric: lining-nums slashed-zero stacked-fractions proportional-nums ordinal; }
+t142 { font-variant-numeric: lining-nums slashed-zero stacked-fractions ordinal proportional-nums; }
+t143 { font-variant-numeric: lining-nums slashed-zero ordinal proportional-nums stacked-fractions; }
+t144 { font-variant-numeric: lining-nums slashed-zero ordinal stacked-fractions proportional-nums; }
+t145 { font-variant-numeric: proportional-nums lining-nums stacked-fractions ordinal slashed-zero; }
+t146 { font-variant-numeric: proportional-nums lining-nums stacked-fractions slashed-zero ordinal; }
+t147 { font-variant-numeric: proportional-nums lining-nums ordinal stacked-fractions slashed-zero; }
+t148 { font-variant-numeric: proportional-nums lining-nums ordinal slashed-zero stacked-fractions; }
+t149 { font-variant-numeric: proportional-nums lining-nums slashed-zero stacked-fractions ordinal; }
+t150 { font-variant-numeric: proportional-nums lining-nums slashed-zero ordinal stacked-fractions; }
+t151 { font-variant-numeric: proportional-nums stacked-fractions lining-nums ordinal slashed-zero; }
+t152 { font-variant-numeric: proportional-nums stacked-fractions lining-nums slashed-zero ordinal; }
+t153 { font-variant-numeric: proportional-nums stacked-fractions ordinal lining-nums slashed-zero; }
+t154 { font-variant-numeric: proportional-nums stacked-fractions ordinal slashed-zero lining-nums; }
+t155 { font-variant-numeric: proportional-nums stacked-fractions slashed-zero lining-nums ordinal; }
+t156 { font-variant-numeric: proportional-nums stacked-fractions slashed-zero ordinal lining-nums; }
+t157 { font-variant-numeric: proportional-nums ordinal lining-nums stacked-fractions slashed-zero; }
+t158 { font-variant-numeric: proportional-nums ordinal lining-nums slashed-zero stacked-fractions; }
+t159 { font-variant-numeric: proportional-nums ordinal stacked-fractions lining-nums slashed-zero; }
+t160 { font-variant-numeric: proportional-nums ordinal stacked-fractions slashed-zero lining-nums; }
+t161 { font-variant-numeric: proportional-nums ordinal slashed-zero lining-nums stacked-fractions; }
+t162 { font-variant-numeric: proportional-nums ordinal slashed-zero stacked-fractions lining-nums; }
+t163 { font-variant-numeric: proportional-nums slashed-zero lining-nums stacked-fractions ordinal; }
+t164 { font-variant-numeric: proportional-nums slashed-zero lining-nums ordinal stacked-fractions; }
+t165 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions lining-nums ordinal; }
+t166 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions ordinal lining-nums; }
+t167 { font-variant-numeric: proportional-nums slashed-zero ordinal lining-nums stacked-fractions; }
+t168 { font-variant-numeric: proportional-nums slashed-zero ordinal stacked-fractions lining-nums; }
+t169 { font-variant-numeric: stacked-fractions proportional-nums lining-nums ordinal slashed-zero; }
+t170 { font-variant-numeric: stacked-fractions proportional-nums lining-nums slashed-zero ordinal; }
+t171 { font-variant-numeric: stacked-fractions proportional-nums ordinal lining-nums slashed-zero; }
+t172 { font-variant-numeric: stacked-fractions proportional-nums ordinal slashed-zero lining-nums; }
+t173 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero lining-nums ordinal; }
+t174 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero ordinal lining-nums; }
+t175 { font-variant-numeric: stacked-fractions lining-nums proportional-nums ordinal slashed-zero; }
+t176 { font-variant-numeric: stacked-fractions lining-nums proportional-nums slashed-zero ordinal; }
+t177 { font-variant-numeric: stacked-fractions lining-nums ordinal proportional-nums slashed-zero; }
+t178 { font-variant-numeric: stacked-fractions lining-nums ordinal slashed-zero proportional-nums; }
+t179 { font-variant-numeric: stacked-fractions lining-nums slashed-zero proportional-nums ordinal; }
+t180 { font-variant-numeric: stacked-fractions lining-nums slashed-zero ordinal proportional-nums; }
+t181 { font-variant-numeric: stacked-fractions ordinal proportional-nums lining-nums slashed-zero; }
+t182 { font-variant-numeric: stacked-fractions ordinal proportional-nums slashed-zero lining-nums; }
+t183 { font-variant-numeric: stacked-fractions ordinal lining-nums proportional-nums slashed-zero; }
+t184 { font-variant-numeric: stacked-fractions ordinal lining-nums slashed-zero proportional-nums; }
+t185 { font-variant-numeric: stacked-fractions ordinal slashed-zero proportional-nums lining-nums; }
+t186 { font-variant-numeric: stacked-fractions ordinal slashed-zero lining-nums proportional-nums; }
+t187 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums lining-nums ordinal; }
+t188 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums ordinal lining-nums; }
+t189 { font-variant-numeric: stacked-fractions slashed-zero lining-nums proportional-nums ordinal; }
+t190 { font-variant-numeric: stacked-fractions slashed-zero lining-nums ordinal proportional-nums; }
+t191 { font-variant-numeric: stacked-fractions slashed-zero ordinal proportional-nums lining-nums; }
+t192 { font-variant-numeric: stacked-fractions slashed-zero ordinal lining-nums proportional-nums; }
+t193 { font-variant-numeric: ordinal proportional-nums stacked-fractions lining-nums slashed-zero; }
+t194 { font-variant-numeric: ordinal proportional-nums stacked-fractions slashed-zero lining-nums; }
+t195 { font-variant-numeric: ordinal proportional-nums lining-nums stacked-fractions slashed-zero; }
+t196 { font-variant-numeric: ordinal proportional-nums lining-nums slashed-zero stacked-fractions; }
+t197 { font-variant-numeric: ordinal proportional-nums slashed-zero stacked-fractions lining-nums; }
+t198 { font-variant-numeric: ordinal proportional-nums slashed-zero lining-nums stacked-fractions; }
+t199 { font-variant-numeric: ordinal stacked-fractions proportional-nums lining-nums slashed-zero; }
+t200 { font-variant-numeric: ordinal stacked-fractions proportional-nums slashed-zero lining-nums; }
+t201 { font-variant-numeric: ordinal stacked-fractions lining-nums proportional-nums slashed-zero; }
+t202 { font-variant-numeric: ordinal stacked-fractions lining-nums slashed-zero proportional-nums; }
+t203 { font-variant-numeric: ordinal stacked-fractions slashed-zero proportional-nums lining-nums; }
+t204 { font-variant-numeric: ordinal stacked-fractions slashed-zero lining-nums proportional-nums; }
+t205 { font-variant-numeric: ordinal lining-nums proportional-nums stacked-fractions slashed-zero; }
+t206 { font-variant-numeric: ordinal lining-nums proportional-nums slashed-zero stacked-fractions; }
+t207 { font-variant-numeric: ordinal lining-nums stacked-fractions proportional-nums slashed-zero; }
+t208 { font-variant-numeric: ordinal lining-nums stacked-fractions slashed-zero proportional-nums; }
+t209 { font-variant-numeric: ordinal lining-nums slashed-zero proportional-nums stacked-fractions; }
+t210 { font-variant-numeric: ordinal lining-nums slashed-zero stacked-fractions proportional-nums; }
+t211 { font-variant-numeric: ordinal slashed-zero proportional-nums stacked-fractions lining-nums; }
+t212 { font-variant-numeric: ordinal slashed-zero proportional-nums lining-nums stacked-fractions; }
+t213 { font-variant-numeric: ordinal slashed-zero stacked-fractions proportional-nums lining-nums; }
+t214 { font-variant-numeric: ordinal slashed-zero stacked-fractions lining-nums proportional-nums; }
+t215 { font-variant-numeric: ordinal slashed-zero lining-nums proportional-nums stacked-fractions; }
+t216 { font-variant-numeric: ordinal slashed-zero lining-nums stacked-fractions proportional-nums; }
+t217 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions ordinal lining-nums; }
+t218 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions lining-nums ordinal; }
+t219 { font-variant-numeric: slashed-zero proportional-nums ordinal stacked-fractions lining-nums; }
+t220 { font-variant-numeric: slashed-zero proportional-nums ordinal lining-nums stacked-fractions; }
+t221 { font-variant-numeric: slashed-zero proportional-nums lining-nums stacked-fractions ordinal; }
+t222 { font-variant-numeric: slashed-zero proportional-nums lining-nums ordinal stacked-fractions; }
+t223 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums ordinal lining-nums; }
+t224 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums lining-nums ordinal; }
+t225 { font-variant-numeric: slashed-zero stacked-fractions ordinal proportional-nums lining-nums; }
+t226 { font-variant-numeric: slashed-zero stacked-fractions ordinal lining-nums proportional-nums; }
+t227 { font-variant-numeric: slashed-zero stacked-fractions lining-nums proportional-nums ordinal; }
+t228 { font-variant-numeric: slashed-zero stacked-fractions lining-nums ordinal proportional-nums; }
+t229 { font-variant-numeric: slashed-zero ordinal proportional-nums stacked-fractions lining-nums; }
+t230 { font-variant-numeric: slashed-zero ordinal proportional-nums lining-nums stacked-fractions; }
+t231 { font-variant-numeric: slashed-zero ordinal stacked-fractions proportional-nums lining-nums; }
+t232 { font-variant-numeric: slashed-zero ordinal stacked-fractions lining-nums proportional-nums; }
+t233 { font-variant-numeric: slashed-zero ordinal lining-nums proportional-nums stacked-fractions; }
+t234 { font-variant-numeric: slashed-zero ordinal lining-nums stacked-fractions proportional-nums; }
+t235 { font-variant-numeric: slashed-zero lining-nums proportional-nums stacked-fractions ordinal; }
+t236 { font-variant-numeric: slashed-zero lining-nums proportional-nums ordinal stacked-fractions; }
+t237 { font-variant-numeric: slashed-zero lining-nums stacked-fractions proportional-nums ordinal; }
+t238 { font-variant-numeric: slashed-zero lining-nums stacked-fractions ordinal proportional-nums; }
+t239 { font-variant-numeric: slashed-zero lining-nums ordinal proportional-nums stacked-fractions; }
+t240 { font-variant-numeric: slashed-zero lining-nums ordinal stacked-fractions proportional-nums; }
+t241 { font-variant-numeric: lining-nums tabular-nums diagonal-fractions ordinal slashed-zero; }
+t242 { font-variant-numeric: lining-nums tabular-nums diagonal-fractions slashed-zero ordinal; }
+t243 { font-variant-numeric: lining-nums tabular-nums ordinal diagonal-fractions slashed-zero; }
+t244 { font-variant-numeric: lining-nums tabular-nums ordinal slashed-zero diagonal-fractions; }
+t245 { font-variant-numeric: lining-nums tabular-nums slashed-zero diagonal-fractions ordinal; }
+t246 { font-variant-numeric: lining-nums tabular-nums slashed-zero ordinal diagonal-fractions; }
+t247 { font-variant-numeric: lining-nums diagonal-fractions tabular-nums ordinal slashed-zero; }
+t248 { font-variant-numeric: lining-nums diagonal-fractions tabular-nums slashed-zero ordinal; }
+t249 { font-variant-numeric: lining-nums diagonal-fractions ordinal tabular-nums slashed-zero; }
+t250 { font-variant-numeric: lining-nums diagonal-fractions ordinal slashed-zero tabular-nums; }
+t251 { font-variant-numeric: lining-nums diagonal-fractions slashed-zero tabular-nums ordinal; }
+t252 { font-variant-numeric: lining-nums diagonal-fractions slashed-zero ordinal tabular-nums; }
+t253 { font-variant-numeric: lining-nums ordinal tabular-nums diagonal-fractions slashed-zero; }
+t254 { font-variant-numeric: lining-nums ordinal tabular-nums slashed-zero diagonal-fractions; }
+t255 { font-variant-numeric: lining-nums ordinal diagonal-fractions tabular-nums slashed-zero; }
+t256 { font-variant-numeric: lining-nums ordinal diagonal-fractions slashed-zero tabular-nums; }
+t257 { font-variant-numeric: lining-nums ordinal slashed-zero tabular-nums diagonal-fractions; }
+t258 { font-variant-numeric: lining-nums ordinal slashed-zero diagonal-fractions tabular-nums; }
+t259 { font-variant-numeric: lining-nums slashed-zero tabular-nums diagonal-fractions ordinal; }
+t260 { font-variant-numeric: lining-nums slashed-zero tabular-nums ordinal diagonal-fractions; }
+t261 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions tabular-nums ordinal; }
+t262 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions ordinal tabular-nums; }
+t263 { font-variant-numeric: lining-nums slashed-zero ordinal tabular-nums diagonal-fractions; }
+t264 { font-variant-numeric: lining-nums slashed-zero ordinal diagonal-fractions tabular-nums; }
+t265 { font-variant-numeric: tabular-nums lining-nums diagonal-fractions ordinal slashed-zero; }
+t266 { font-variant-numeric: tabular-nums lining-nums diagonal-fractions slashed-zero ordinal; }
+t267 { font-variant-numeric: tabular-nums lining-nums ordinal diagonal-fractions slashed-zero; }
+t268 { font-variant-numeric: tabular-nums lining-nums ordinal slashed-zero diagonal-fractions; }
+t269 { font-variant-numeric: tabular-nums lining-nums slashed-zero diagonal-fractions ordinal; }
+t270 { font-variant-numeric: tabular-nums lining-nums slashed-zero ordinal diagonal-fractions; }
+t271 { font-variant-numeric: tabular-nums diagonal-fractions lining-nums ordinal slashed-zero; }
+t272 { font-variant-numeric: tabular-nums diagonal-fractions lining-nums slashed-zero ordinal; }
+t273 { font-variant-numeric: tabular-nums diagonal-fractions ordinal lining-nums slashed-zero; }
+t274 { font-variant-numeric: tabular-nums diagonal-fractions ordinal slashed-zero lining-nums; }
+t275 { font-variant-numeric: tabular-nums diagonal-fractions slashed-zero lining-nums ordinal; }
+t276 { font-variant-numeric: tabular-nums diagonal-fractions slashed-zero ordinal lining-nums; }
+t277 { font-variant-numeric: tabular-nums ordinal lining-nums diagonal-fractions slashed-zero; }
+t278 { font-variant-numeric: tabular-nums ordinal lining-nums slashed-zero diagonal-fractions; }
+t279 { font-variant-numeric: tabular-nums ordinal diagonal-fractions lining-nums slashed-zero; }
+t280 { font-variant-numeric: tabular-nums ordinal diagonal-fractions slashed-zero lining-nums; }
+t281 { font-variant-numeric: tabular-nums ordinal slashed-zero lining-nums diagonal-fractions; }
+t282 { font-variant-numeric: tabular-nums ordinal slashed-zero diagonal-fractions lining-nums; }
+t283 { font-variant-numeric: tabular-nums slashed-zero lining-nums diagonal-fractions ordinal; }
+t284 { font-variant-numeric: tabular-nums slashed-zero lining-nums ordinal diagonal-fractions; }
+t285 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions lining-nums ordinal; }
+t286 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions ordinal lining-nums; }
+t287 { font-variant-numeric: tabular-nums slashed-zero ordinal lining-nums diagonal-fractions; }
+t288 { font-variant-numeric: tabular-nums slashed-zero ordinal diagonal-fractions lining-nums; }
+t289 { font-variant-numeric: diagonal-fractions tabular-nums lining-nums ordinal slashed-zero; }
+t290 { font-variant-numeric: diagonal-fractions tabular-nums lining-nums slashed-zero ordinal; }
+t291 { font-variant-numeric: diagonal-fractions tabular-nums ordinal lining-nums slashed-zero; }
+t292 { font-variant-numeric: diagonal-fractions tabular-nums ordinal slashed-zero lining-nums; }
+t293 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero lining-nums ordinal; }
+t294 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero ordinal lining-nums; }
+t295 { font-variant-numeric: diagonal-fractions lining-nums tabular-nums ordinal slashed-zero; }
+t296 { font-variant-numeric: diagonal-fractions lining-nums tabular-nums slashed-zero ordinal; }
+t297 { font-variant-numeric: diagonal-fractions lining-nums ordinal tabular-nums slashed-zero; }
+t298 { font-variant-numeric: diagonal-fractions lining-nums ordinal slashed-zero tabular-nums; }
+t299 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero tabular-nums ordinal; }
+t300 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero ordinal tabular-nums; }
+t301 { font-variant-numeric: diagonal-fractions ordinal tabular-nums lining-nums slashed-zero; }
+t302 { font-variant-numeric: diagonal-fractions ordinal tabular-nums slashed-zero lining-nums; }
+t303 { font-variant-numeric: diagonal-fractions ordinal lining-nums tabular-nums slashed-zero; }
+t304 { font-variant-numeric: diagonal-fractions ordinal lining-nums slashed-zero tabular-nums; }
+t305 { font-variant-numeric: diagonal-fractions ordinal slashed-zero tabular-nums lining-nums; }
+t306 { font-variant-numeric: diagonal-fractions ordinal slashed-zero lining-nums tabular-nums; }
+t307 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums lining-nums ordinal; }
+t308 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums ordinal lining-nums; }
+t309 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums tabular-nums ordinal; }
+t310 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums ordinal tabular-nums; }
+t311 { font-variant-numeric: diagonal-fractions slashed-zero ordinal tabular-nums lining-nums; }
+t312 { font-variant-numeric: diagonal-fractions slashed-zero ordinal lining-nums tabular-nums; }
+t313 { font-variant-numeric: ordinal tabular-nums diagonal-fractions lining-nums slashed-zero; }
+t314 { font-variant-numeric: ordinal tabular-nums diagonal-fractions slashed-zero lining-nums; }
+t315 { font-variant-numeric: ordinal tabular-nums lining-nums diagonal-fractions slashed-zero; }
+t316 { font-variant-numeric: ordinal tabular-nums lining-nums slashed-zero diagonal-fractions; }
+t317 { font-variant-numeric: ordinal tabular-nums slashed-zero diagonal-fractions lining-nums; }
+t318 { font-variant-numeric: ordinal tabular-nums slashed-zero lining-nums diagonal-fractions; }
+t319 { font-variant-numeric: ordinal diagonal-fractions tabular-nums lining-nums slashed-zero; }
+t320 { font-variant-numeric: ordinal diagonal-fractions tabular-nums slashed-zero lining-nums; }
+t321 { font-variant-numeric: ordinal diagonal-fractions lining-nums tabular-nums slashed-zero; }
+t322 { font-variant-numeric: ordinal diagonal-fractions lining-nums slashed-zero tabular-nums; }
+t323 { font-variant-numeric: ordinal diagonal-fractions slashed-zero tabular-nums lining-nums; }
+t324 { font-variant-numeric: ordinal diagonal-fractions slashed-zero lining-nums tabular-nums; }
+t325 { font-variant-numeric: ordinal lining-nums tabular-nums diagonal-fractions slashed-zero; }
+t326 { font-variant-numeric: ordinal lining-nums tabular-nums slashed-zero diagonal-fractions; }
+t327 { font-variant-numeric: ordinal lining-nums diagonal-fractions tabular-nums slashed-zero; }
+t328 { font-variant-numeric: ordinal lining-nums diagonal-fractions slashed-zero tabular-nums; }
+t329 { font-variant-numeric: ordinal lining-nums slashed-zero tabular-nums diagonal-fractions; }
+t330 { font-variant-numeric: ordinal lining-nums slashed-zero diagonal-fractions tabular-nums; }
+t331 { font-variant-numeric: ordinal slashed-zero tabular-nums diagonal-fractions lining-nums; }
+t332 { font-variant-numeric: ordinal slashed-zero tabular-nums lining-nums diagonal-fractions; }
+t333 { font-variant-numeric: ordinal slashed-zero diagonal-fractions tabular-nums lining-nums; }
+t334 { font-variant-numeric: ordinal slashed-zero diagonal-fractions lining-nums tabular-nums; }
+t335 { font-variant-numeric: ordinal slashed-zero lining-nums tabular-nums diagonal-fractions; }
+t336 { font-variant-numeric: ordinal slashed-zero lining-nums diagonal-fractions tabular-nums; }
+t337 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions ordinal lining-nums; }
+t338 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions lining-nums ordinal; }
+t339 { font-variant-numeric: slashed-zero tabular-nums ordinal diagonal-fractions lining-nums; }
+t340 { font-variant-numeric: slashed-zero tabular-nums ordinal lining-nums diagonal-fractions; }
+t341 { font-variant-numeric: slashed-zero tabular-nums lining-nums diagonal-fractions ordinal; }
+t342 { font-variant-numeric: slashed-zero tabular-nums lining-nums ordinal diagonal-fractions; }
+t343 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums ordinal lining-nums; }
+t344 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums lining-nums ordinal; }
+t345 { font-variant-numeric: slashed-zero diagonal-fractions ordinal tabular-nums lining-nums; }
+t346 { font-variant-numeric: slashed-zero diagonal-fractions ordinal lining-nums tabular-nums; }
+t347 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums tabular-nums ordinal; }
+t348 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums ordinal tabular-nums; }
+t349 { font-variant-numeric: slashed-zero ordinal tabular-nums diagonal-fractions lining-nums; }
+t350 { font-variant-numeric: slashed-zero ordinal tabular-nums lining-nums diagonal-fractions; }
+t351 { font-variant-numeric: slashed-zero ordinal diagonal-fractions tabular-nums lining-nums; }
+t352 { font-variant-numeric: slashed-zero ordinal diagonal-fractions lining-nums tabular-nums; }
+t353 { font-variant-numeric: slashed-zero ordinal lining-nums tabular-nums diagonal-fractions; }
+t354 { font-variant-numeric: slashed-zero ordinal lining-nums diagonal-fractions tabular-nums; }
+t355 { font-variant-numeric: slashed-zero lining-nums tabular-nums diagonal-fractions ordinal; }
+t356 { font-variant-numeric: slashed-zero lining-nums tabular-nums ordinal diagonal-fractions; }
+t357 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions tabular-nums ordinal; }
+t358 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions ordinal tabular-nums; }
+t359 { font-variant-numeric: slashed-zero lining-nums ordinal tabular-nums diagonal-fractions; }
+t360 { font-variant-numeric: slashed-zero lining-nums ordinal diagonal-fractions tabular-nums; }
+t361 { font-variant-numeric: lining-nums tabular-nums stacked-fractions ordinal slashed-zero; }
+t362 { font-variant-numeric: lining-nums tabular-nums stacked-fractions slashed-zero ordinal; }
+t363 { font-variant-numeric: lining-nums tabular-nums ordinal stacked-fractions slashed-zero; }
+t364 { font-variant-numeric: lining-nums tabular-nums ordinal slashed-zero stacked-fractions; }
+t365 { font-variant-numeric: lining-nums tabular-nums slashed-zero stacked-fractions ordinal; }
+t366 { font-variant-numeric: lining-nums tabular-nums slashed-zero ordinal stacked-fractions; }
+t367 { font-variant-numeric: lining-nums stacked-fractions tabular-nums ordinal slashed-zero; }
+t368 { font-variant-numeric: lining-nums stacked-fractions tabular-nums slashed-zero ordinal; }
+t369 { font-variant-numeric: lining-nums stacked-fractions ordinal tabular-nums slashed-zero; }
+t370 { font-variant-numeric: lining-nums stacked-fractions ordinal slashed-zero tabular-nums; }
+t371 { font-variant-numeric: lining-nums stacked-fractions slashed-zero tabular-nums ordinal; }
+t372 { font-variant-numeric: lining-nums stacked-fractions slashed-zero ordinal tabular-nums; }
+t373 { font-variant-numeric: lining-nums ordinal tabular-nums stacked-fractions slashed-zero; }
+t374 { font-variant-numeric: lining-nums ordinal tabular-nums slashed-zero stacked-fractions; }
+t375 { font-variant-numeric: lining-nums ordinal stacked-fractions tabular-nums slashed-zero; }
+t376 { font-variant-numeric: lining-nums ordinal stacked-fractions slashed-zero tabular-nums; }
+t377 { font-variant-numeric: lining-nums ordinal slashed-zero tabular-nums stacked-fractions; }
+t378 { font-variant-numeric: lining-nums ordinal slashed-zero stacked-fractions tabular-nums; }
+t379 { font-variant-numeric: lining-nums slashed-zero tabular-nums stacked-fractions ordinal; }
+t380 { font-variant-numeric: lining-nums slashed-zero tabular-nums ordinal stacked-fractions; }
+t381 { font-variant-numeric: lining-nums slashed-zero stacked-fractions tabular-nums ordinal; }
+t382 { font-variant-numeric: lining-nums slashed-zero stacked-fractions ordinal tabular-nums; }
+t383 { font-variant-numeric: lining-nums slashed-zero ordinal tabular-nums stacked-fractions; }
+t384 { font-variant-numeric: lining-nums slashed-zero ordinal stacked-fractions tabular-nums; }
+t385 { font-variant-numeric: tabular-nums lining-nums stacked-fractions ordinal slashed-zero; }
+t386 { font-variant-numeric: tabular-nums lining-nums stacked-fractions slashed-zero ordinal; }
+t387 { font-variant-numeric: tabular-nums lining-nums ordinal stacked-fractions slashed-zero; }
+t388 { font-variant-numeric: tabular-nums lining-nums ordinal slashed-zero stacked-fractions; }
+t389 { font-variant-numeric: tabular-nums lining-nums slashed-zero stacked-fractions ordinal; }
+t390 { font-variant-numeric: tabular-nums lining-nums slashed-zero ordinal stacked-fractions; }
+t391 { font-variant-numeric: tabular-nums stacked-fractions lining-nums ordinal slashed-zero; }
+t392 { font-variant-numeric: tabular-nums stacked-fractions lining-nums slashed-zero ordinal; }
+t393 { font-variant-numeric: tabular-nums stacked-fractions ordinal lining-nums slashed-zero; }
+t394 { font-variant-numeric: tabular-nums stacked-fractions ordinal slashed-zero lining-nums; }
+t395 { font-variant-numeric: tabular-nums stacked-fractions slashed-zero lining-nums ordinal; }
+t396 { font-variant-numeric: tabular-nums stacked-fractions slashed-zero ordinal lining-nums; }
+t397 { font-variant-numeric: tabular-nums ordinal lining-nums stacked-fractions slashed-zero; }
+t398 { font-variant-numeric: tabular-nums ordinal lining-nums slashed-zero stacked-fractions; }
+t399 { font-variant-numeric: tabular-nums ordinal stacked-fractions lining-nums slashed-zero; }
+t400 { font-variant-numeric: tabular-nums ordinal stacked-fractions slashed-zero lining-nums; }
+t401 { font-variant-numeric: tabular-nums ordinal slashed-zero lining-nums stacked-fractions; }
+t402 { font-variant-numeric: tabular-nums ordinal slashed-zero stacked-fractions lining-nums; }
+t403 { font-variant-numeric: tabular-nums slashed-zero lining-nums stacked-fractions ordinal; }
+t404 { font-variant-numeric: tabular-nums slashed-zero lining-nums ordinal stacked-fractions; }
+t405 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions lining-nums ordinal; }
+t406 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions ordinal lining-nums; }
+t407 { font-variant-numeric: tabular-nums slashed-zero ordinal lining-nums stacked-fractions; }
+t408 { font-variant-numeric: tabular-nums slashed-zero ordinal stacked-fractions lining-nums; }
+t409 { font-variant-numeric: stacked-fractions tabular-nums lining-nums ordinal slashed-zero; }
+t410 { font-variant-numeric: stacked-fractions tabular-nums lining-nums slashed-zero ordinal; }
+t411 { font-variant-numeric: stacked-fractions tabular-nums ordinal lining-nums slashed-zero; }
+t412 { font-variant-numeric: stacked-fractions tabular-nums ordinal slashed-zero lining-nums; }
+t413 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero lining-nums ordinal; }
+t414 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero ordinal lining-nums; }
+t415 { font-variant-numeric: stacked-fractions lining-nums tabular-nums ordinal slashed-zero; }
+t416 { font-variant-numeric: stacked-fractions lining-nums tabular-nums slashed-zero ordinal; }
+t417 { font-variant-numeric: stacked-fractions lining-nums ordinal tabular-nums slashed-zero; }
+t418 { font-variant-numeric: stacked-fractions lining-nums ordinal slashed-zero tabular-nums; }
+t419 { font-variant-numeric: stacked-fractions lining-nums slashed-zero tabular-nums ordinal; }
+t420 { font-variant-numeric: stacked-fractions lining-nums slashed-zero ordinal tabular-nums; }
+t421 { font-variant-numeric: stacked-fractions ordinal tabular-nums lining-nums slashed-zero; }
+t422 { font-variant-numeric: stacked-fractions ordinal tabular-nums slashed-zero lining-nums; }
+t423 { font-variant-numeric: stacked-fractions ordinal lining-nums tabular-nums slashed-zero; }
+t424 { font-variant-numeric: stacked-fractions ordinal lining-nums slashed-zero tabular-nums; }
+t425 { font-variant-numeric: stacked-fractions ordinal slashed-zero tabular-nums lining-nums; }
+t426 { font-variant-numeric: stacked-fractions ordinal slashed-zero lining-nums tabular-nums; }
+t427 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums lining-nums ordinal; }
+t428 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums ordinal lining-nums; }
+t429 { font-variant-numeric: stacked-fractions slashed-zero lining-nums tabular-nums ordinal; }
+t430 { font-variant-numeric: stacked-fractions slashed-zero lining-nums ordinal tabular-nums; }
+t431 { font-variant-numeric: stacked-fractions slashed-zero ordinal tabular-nums lining-nums; }
+t432 { font-variant-numeric: stacked-fractions slashed-zero ordinal lining-nums tabular-nums; }
+t433 { font-variant-numeric: ordinal tabular-nums stacked-fractions lining-nums slashed-zero; }
+t434 { font-variant-numeric: ordinal tabular-nums stacked-fractions slashed-zero lining-nums; }
+t435 { font-variant-numeric: ordinal tabular-nums lining-nums stacked-fractions slashed-zero; }
+t436 { font-variant-numeric: ordinal tabular-nums lining-nums slashed-zero stacked-fractions; }
+t437 { font-variant-numeric: ordinal tabular-nums slashed-zero stacked-fractions lining-nums; }
+t438 { font-variant-numeric: ordinal tabular-nums slashed-zero lining-nums stacked-fractions; }
+t439 { font-variant-numeric: ordinal stacked-fractions tabular-nums lining-nums slashed-zero; }
+t440 { font-variant-numeric: ordinal stacked-fractions tabular-nums slashed-zero lining-nums; }
+t441 { font-variant-numeric: ordinal stacked-fractions lining-nums tabular-nums slashed-zero; }
+t442 { font-variant-numeric: ordinal stacked-fractions lining-nums slashed-zero tabular-nums; }
+t443 { font-variant-numeric: ordinal stacked-fractions slashed-zero tabular-nums lining-nums; }
+t444 { font-variant-numeric: ordinal stacked-fractions slashed-zero lining-nums tabular-nums; }
+t445 { font-variant-numeric: ordinal lining-nums tabular-nums stacked-fractions slashed-zero; }
+t446 { font-variant-numeric: ordinal lining-nums tabular-nums slashed-zero stacked-fractions; }
+t447 { font-variant-numeric: ordinal lining-nums stacked-fractions tabular-nums slashed-zero; }
+t448 { font-variant-numeric: ordinal lining-nums stacked-fractions slashed-zero tabular-nums; }
+t449 { font-variant-numeric: ordinal lining-nums slashed-zero tabular-nums stacked-fractions; }
+t450 { font-variant-numeric: ordinal lining-nums slashed-zero stacked-fractions tabular-nums; }
+t451 { font-variant-numeric: ordinal slashed-zero tabular-nums stacked-fractions lining-nums; }
+t452 { font-variant-numeric: ordinal slashed-zero tabular-nums lining-nums stacked-fractions; }
+t453 { font-variant-numeric: ordinal slashed-zero stacked-fractions tabular-nums lining-nums; }
+t454 { font-variant-numeric: ordinal slashed-zero stacked-fractions lining-nums tabular-nums; }
+t455 { font-variant-numeric: ordinal slashed-zero lining-nums tabular-nums stacked-fractions; }
+t456 { font-variant-numeric: ordinal slashed-zero lining-nums stacked-fractions tabular-nums; }
+t457 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions ordinal lining-nums; }
+t458 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions lining-nums ordinal; }
+t459 { font-variant-numeric: slashed-zero tabular-nums ordinal stacked-fractions lining-nums; }
+t460 { font-variant-numeric: slashed-zero tabular-nums ordinal lining-nums stacked-fractions; }
+t461 { font-variant-numeric: slashed-zero tabular-nums lining-nums stacked-fractions ordinal; }
+t462 { font-variant-numeric: slashed-zero tabular-nums lining-nums ordinal stacked-fractions; }
+t463 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums ordinal lining-nums; }
+t464 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums lining-nums ordinal; }
+t465 { font-variant-numeric: slashed-zero stacked-fractions ordinal tabular-nums lining-nums; }
+t466 { font-variant-numeric: slashed-zero stacked-fractions ordinal lining-nums tabular-nums; }
+t467 { font-variant-numeric: slashed-zero stacked-fractions lining-nums tabular-nums ordinal; }
+t468 { font-variant-numeric: slashed-zero stacked-fractions lining-nums ordinal tabular-nums; }
+t469 { font-variant-numeric: slashed-zero ordinal tabular-nums stacked-fractions lining-nums; }
+t470 { font-variant-numeric: slashed-zero ordinal tabular-nums lining-nums stacked-fractions; }
+t471 { font-variant-numeric: slashed-zero ordinal stacked-fractions tabular-nums lining-nums; }
+t472 { font-variant-numeric: slashed-zero ordinal stacked-fractions lining-nums tabular-nums; }
+t473 { font-variant-numeric: slashed-zero ordinal lining-nums tabular-nums stacked-fractions; }
+t474 { font-variant-numeric: slashed-zero ordinal lining-nums stacked-fractions tabular-nums; }
+t475 { font-variant-numeric: slashed-zero lining-nums tabular-nums stacked-fractions ordinal; }
+t476 { font-variant-numeric: slashed-zero lining-nums tabular-nums ordinal stacked-fractions; }
+t477 { font-variant-numeric: slashed-zero lining-nums stacked-fractions tabular-nums ordinal; }
+t478 { font-variant-numeric: slashed-zero lining-nums stacked-fractions ordinal tabular-nums; }
+t479 { font-variant-numeric: slashed-zero lining-nums ordinal tabular-nums stacked-fractions; }
+t480 { font-variant-numeric: slashed-zero lining-nums ordinal stacked-fractions tabular-nums; }
+t481 { font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions ordinal slashed-zero; }
+t482 { font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions slashed-zero ordinal; }
+t483 { font-variant-numeric: oldstyle-nums proportional-nums ordinal diagonal-fractions slashed-zero; }
+t484 { font-variant-numeric: oldstyle-nums proportional-nums ordinal slashed-zero diagonal-fractions; }
+t485 { font-variant-numeric: oldstyle-nums proportional-nums slashed-zero diagonal-fractions ordinal; }
+t486 { font-variant-numeric: oldstyle-nums proportional-nums slashed-zero ordinal diagonal-fractions; }
+t487 { font-variant-numeric: oldstyle-nums diagonal-fractions proportional-nums ordinal slashed-zero; }
+t488 { font-variant-numeric: oldstyle-nums diagonal-fractions proportional-nums slashed-zero ordinal; }
+t489 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal proportional-nums slashed-zero; }
+t490 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal slashed-zero proportional-nums; }
+t491 { font-variant-numeric: oldstyle-nums diagonal-fractions slashed-zero proportional-nums ordinal; }
+t492 { font-variant-numeric: oldstyle-nums diagonal-fractions slashed-zero ordinal proportional-nums; }
+t493 { font-variant-numeric: oldstyle-nums ordinal proportional-nums diagonal-fractions slashed-zero; }
+t494 { font-variant-numeric: oldstyle-nums ordinal proportional-nums slashed-zero diagonal-fractions; }
+t495 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions proportional-nums slashed-zero; }
+t496 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions slashed-zero proportional-nums; }
+t497 { font-variant-numeric: oldstyle-nums ordinal slashed-zero proportional-nums diagonal-fractions; }
+t498 { font-variant-numeric: oldstyle-nums ordinal slashed-zero diagonal-fractions proportional-nums; }
+t499 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums diagonal-fractions ordinal; }
+t500 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums ordinal diagonal-fractions; }
+t501 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions proportional-nums ordinal; }
+t502 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions ordinal proportional-nums; }
+t503 { font-variant-numeric: oldstyle-nums slashed-zero ordinal proportional-nums diagonal-fractions; }
+t504 { font-variant-numeric: oldstyle-nums slashed-zero ordinal diagonal-fractions proportional-nums; }
+t505 { font-variant-numeric: proportional-nums oldstyle-nums diagonal-fractions ordinal slashed-zero; }
+t506 { font-variant-numeric: proportional-nums oldstyle-nums diagonal-fractions slashed-zero ordinal; }
+t507 { font-variant-numeric: proportional-nums oldstyle-nums ordinal diagonal-fractions slashed-zero; }
+t508 { font-variant-numeric: proportional-nums oldstyle-nums ordinal slashed-zero diagonal-fractions; }
+t509 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero diagonal-fractions ordinal; }
+t510 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero ordinal diagonal-fractions; }
+t511 { font-variant-numeric: proportional-nums diagonal-fractions oldstyle-nums ordinal slashed-zero; }
+t512 { font-variant-numeric: proportional-nums diagonal-fractions oldstyle-nums slashed-zero ordinal; }
+t513 { font-variant-numeric: proportional-nums diagonal-fractions ordinal oldstyle-nums slashed-zero; }
+t514 { font-variant-numeric: proportional-nums diagonal-fractions ordinal slashed-zero oldstyle-nums; }
+t515 { font-variant-numeric: proportional-nums diagonal-fractions slashed-zero oldstyle-nums ordinal; }
+t516 { font-variant-numeric: proportional-nums diagonal-fractions slashed-zero ordinal oldstyle-nums; }
+t517 { font-variant-numeric: proportional-nums ordinal oldstyle-nums diagonal-fractions slashed-zero; }
+t518 { font-variant-numeric: proportional-nums ordinal oldstyle-nums slashed-zero diagonal-fractions; }
+t519 { font-variant-numeric: proportional-nums ordinal diagonal-fractions oldstyle-nums slashed-zero; }
+t520 { font-variant-numeric: proportional-nums ordinal diagonal-fractions slashed-zero oldstyle-nums; }
+t521 { font-variant-numeric: proportional-nums ordinal slashed-zero oldstyle-nums diagonal-fractions; }
+t522 { font-variant-numeric: proportional-nums ordinal slashed-zero diagonal-fractions oldstyle-nums; }
+t523 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums diagonal-fractions ordinal; }
+t524 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums ordinal diagonal-fractions; }
+t525 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions oldstyle-nums ordinal; }
+t526 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions ordinal oldstyle-nums; }
+t527 { font-variant-numeric: proportional-nums slashed-zero ordinal oldstyle-nums diagonal-fractions; }
+t528 { font-variant-numeric: proportional-nums slashed-zero ordinal diagonal-fractions oldstyle-nums; }
+t529 { font-variant-numeric: diagonal-fractions proportional-nums oldstyle-nums ordinal slashed-zero; }
+t530 { font-variant-numeric: diagonal-fractions proportional-nums oldstyle-nums slashed-zero ordinal; }
+t531 { font-variant-numeric: diagonal-fractions proportional-nums ordinal oldstyle-nums slashed-zero; }
+t532 { font-variant-numeric: diagonal-fractions proportional-nums ordinal slashed-zero oldstyle-nums; }
+t533 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero oldstyle-nums ordinal; }
+t534 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero ordinal oldstyle-nums; }
+t535 { font-variant-numeric: diagonal-fractions oldstyle-nums proportional-nums ordinal slashed-zero; }
+t536 { font-variant-numeric: diagonal-fractions oldstyle-nums proportional-nums slashed-zero ordinal; }
+t537 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal proportional-nums slashed-zero; }
+t538 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal slashed-zero proportional-nums; }
+t539 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero proportional-nums ordinal; }
+t540 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero ordinal proportional-nums; }
+t541 { font-variant-numeric: diagonal-fractions ordinal proportional-nums oldstyle-nums slashed-zero; }
+t542 { font-variant-numeric: diagonal-fractions ordinal proportional-nums slashed-zero oldstyle-nums; }
+t543 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums proportional-nums slashed-zero; }
+t544 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums slashed-zero proportional-nums; }
+t545 { font-variant-numeric: diagonal-fractions ordinal slashed-zero proportional-nums oldstyle-nums; }
+t546 { font-variant-numeric: diagonal-fractions ordinal slashed-zero oldstyle-nums proportional-nums; }
+t547 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums oldstyle-nums ordinal; }
+t548 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums ordinal oldstyle-nums; }
+t549 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums proportional-nums ordinal; }
+t550 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums ordinal proportional-nums; }
+t551 { font-variant-numeric: diagonal-fractions slashed-zero ordinal proportional-nums oldstyle-nums; }
+t552 { font-variant-numeric: diagonal-fractions slashed-zero ordinal oldstyle-nums proportional-nums; }
+t553 { font-variant-numeric: ordinal proportional-nums diagonal-fractions oldstyle-nums slashed-zero; }
+t554 { font-variant-numeric: ordinal proportional-nums diagonal-fractions slashed-zero oldstyle-nums; }
+t555 { font-variant-numeric: ordinal proportional-nums oldstyle-nums diagonal-fractions slashed-zero; }
+t556 { font-variant-numeric: ordinal proportional-nums oldstyle-nums slashed-zero diagonal-fractions; }
+t557 { font-variant-numeric: ordinal proportional-nums slashed-zero diagonal-fractions oldstyle-nums; }
+t558 { font-variant-numeric: ordinal proportional-nums slashed-zero oldstyle-nums diagonal-fractions; }
+t559 { font-variant-numeric: ordinal diagonal-fractions proportional-nums oldstyle-nums slashed-zero; }
+t560 { font-variant-numeric: ordinal diagonal-fractions proportional-nums slashed-zero oldstyle-nums; }
+t561 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums proportional-nums slashed-zero; }
+t562 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums slashed-zero proportional-nums; }
+t563 { font-variant-numeric: ordinal diagonal-fractions slashed-zero proportional-nums oldstyle-nums; }
+t564 { font-variant-numeric: ordinal diagonal-fractions slashed-zero oldstyle-nums proportional-nums; }
+t565 { font-variant-numeric: ordinal oldstyle-nums proportional-nums diagonal-fractions slashed-zero; }
+t566 { font-variant-numeric: ordinal oldstyle-nums proportional-nums slashed-zero diagonal-fractions; }
+t567 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions proportional-nums slashed-zero; }
+t568 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions slashed-zero proportional-nums; }
+t569 { font-variant-numeric: ordinal oldstyle-nums slashed-zero proportional-nums diagonal-fractions; }
+t570 { font-variant-numeric: ordinal oldstyle-nums slashed-zero diagonal-fractions proportional-nums; }
+t571 { font-variant-numeric: ordinal slashed-zero proportional-nums diagonal-fractions oldstyle-nums; }
+t572 { font-variant-numeric: ordinal slashed-zero proportional-nums oldstyle-nums diagonal-fractions; }
+t573 { font-variant-numeric: ordinal slashed-zero diagonal-fractions proportional-nums oldstyle-nums; }
+t574 { font-variant-numeric: ordinal slashed-zero diagonal-fractions oldstyle-nums proportional-nums; }
+t575 { font-variant-numeric: ordinal slashed-zero oldstyle-nums proportional-nums diagonal-fractions; }
+t576 { font-variant-numeric: ordinal slashed-zero oldstyle-nums diagonal-fractions proportional-nums; }
+t577 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions ordinal oldstyle-nums; }
+t578 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions oldstyle-nums ordinal; }
+t579 { font-variant-numeric: slashed-zero proportional-nums ordinal diagonal-fractions oldstyle-nums; }
+t580 { font-variant-numeric: slashed-zero proportional-nums ordinal oldstyle-nums diagonal-fractions; }
+t581 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums diagonal-fractions ordinal; }
+t582 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums ordinal diagonal-fractions; }
+t583 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums ordinal oldstyle-nums; }
+t584 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums oldstyle-nums ordinal; }
+t585 { font-variant-numeric: slashed-zero diagonal-fractions ordinal proportional-nums oldstyle-nums; }
+t586 { font-variant-numeric: slashed-zero diagonal-fractions ordinal oldstyle-nums proportional-nums; }
+t587 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums proportional-nums ordinal; }
+t588 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums ordinal proportional-nums; }
+t589 { font-variant-numeric: slashed-zero ordinal proportional-nums diagonal-fractions oldstyle-nums; }
+t590 { font-variant-numeric: slashed-zero ordinal proportional-nums oldstyle-nums diagonal-fractions; }
+t591 { font-variant-numeric: slashed-zero ordinal diagonal-fractions proportional-nums oldstyle-nums; }
+t592 { font-variant-numeric: slashed-zero ordinal diagonal-fractions oldstyle-nums proportional-nums; }
+t593 { font-variant-numeric: slashed-zero ordinal oldstyle-nums proportional-nums diagonal-fractions; }
+t594 { font-variant-numeric: slashed-zero ordinal oldstyle-nums diagonal-fractions proportional-nums; }
+t595 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums diagonal-fractions ordinal; }
+t596 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums ordinal diagonal-fractions; }
+t597 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions proportional-nums ordinal; }
+t598 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions ordinal proportional-nums; }
+t599 { font-variant-numeric: slashed-zero oldstyle-nums ordinal proportional-nums diagonal-fractions; }
+t600 { font-variant-numeric: slashed-zero oldstyle-nums ordinal diagonal-fractions proportional-nums; }
+t601 { font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions ordinal slashed-zero; }
+t602 { font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions slashed-zero ordinal; }
+t603 { font-variant-numeric: oldstyle-nums proportional-nums ordinal stacked-fractions slashed-zero; }
+t604 { font-variant-numeric: oldstyle-nums proportional-nums ordinal slashed-zero stacked-fractions; }
+t605 { font-variant-numeric: oldstyle-nums proportional-nums slashed-zero stacked-fractions ordinal; }
+t606 { font-variant-numeric: oldstyle-nums proportional-nums slashed-zero ordinal stacked-fractions; }
+t607 { font-variant-numeric: oldstyle-nums stacked-fractions proportional-nums ordinal slashed-zero; }
+t608 { font-variant-numeric: oldstyle-nums stacked-fractions proportional-nums slashed-zero ordinal; }
+t609 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal proportional-nums slashed-zero; }
+t610 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal slashed-zero proportional-nums; }
+t611 { font-variant-numeric: oldstyle-nums stacked-fractions slashed-zero proportional-nums ordinal; }
+t612 { font-variant-numeric: oldstyle-nums stacked-fractions slashed-zero ordinal proportional-nums; }
+t613 { font-variant-numeric: oldstyle-nums ordinal proportional-nums stacked-fractions slashed-zero; }
+t614 { font-variant-numeric: oldstyle-nums ordinal proportional-nums slashed-zero stacked-fractions; }
+t615 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions proportional-nums slashed-zero; }
+t616 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions slashed-zero proportional-nums; }
+t617 { font-variant-numeric: oldstyle-nums ordinal slashed-zero proportional-nums stacked-fractions; }
+t618 { font-variant-numeric: oldstyle-nums ordinal slashed-zero stacked-fractions proportional-nums; }
+t619 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums stacked-fractions ordinal; }
+t620 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums ordinal stacked-fractions; }
+t621 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions proportional-nums ordinal; }
+t622 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions ordinal proportional-nums; }
+t623 { font-variant-numeric: oldstyle-nums slashed-zero ordinal proportional-nums stacked-fractions; }
+t624 { font-variant-numeric: oldstyle-nums slashed-zero ordinal stacked-fractions proportional-nums; }
+t625 { font-variant-numeric: proportional-nums oldstyle-nums stacked-fractions ordinal slashed-zero; }
+t626 { font-variant-numeric: proportional-nums oldstyle-nums stacked-fractions slashed-zero ordinal; }
+t627 { font-variant-numeric: proportional-nums oldstyle-nums ordinal stacked-fractions slashed-zero; }
+t628 { font-variant-numeric: proportional-nums oldstyle-nums ordinal slashed-zero stacked-fractions; }
+t629 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero stacked-fractions ordinal; }
+t630 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero ordinal stacked-fractions; }
+t631 { font-variant-numeric: proportional-nums stacked-fractions oldstyle-nums ordinal slashed-zero; }
+t632 { font-variant-numeric: proportional-nums stacked-fractions oldstyle-nums slashed-zero ordinal; }
+t633 { font-variant-numeric: proportional-nums stacked-fractions ordinal oldstyle-nums slashed-zero; }
+t634 { font-variant-numeric: proportional-nums stacked-fractions ordinal slashed-zero oldstyle-nums; }
+t635 { font-variant-numeric: proportional-nums stacked-fractions slashed-zero oldstyle-nums ordinal; }
+t636 { font-variant-numeric: proportional-nums stacked-fractions slashed-zero ordinal oldstyle-nums; }
+t637 { font-variant-numeric: proportional-nums ordinal oldstyle-nums stacked-fractions slashed-zero; }
+t638 { font-variant-numeric: proportional-nums ordinal oldstyle-nums slashed-zero stacked-fractions; }
+t639 { font-variant-numeric: proportional-nums ordinal stacked-fractions oldstyle-nums slashed-zero; }
+t640 { font-variant-numeric: proportional-nums ordinal stacked-fractions slashed-zero oldstyle-nums; }
+t641 { font-variant-numeric: proportional-nums ordinal slashed-zero oldstyle-nums stacked-fractions; }
+t642 { font-variant-numeric: proportional-nums ordinal slashed-zero stacked-fractions oldstyle-nums; }
+t643 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums stacked-fractions ordinal; }
+t644 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums ordinal stacked-fractions; }
+t645 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions oldstyle-nums ordinal; }
+t646 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions ordinal oldstyle-nums; }
+t647 { font-variant-numeric: proportional-nums slashed-zero ordinal oldstyle-nums stacked-fractions; }
+t648 { font-variant-numeric: proportional-nums slashed-zero ordinal stacked-fractions oldstyle-nums; }
+t649 { font-variant-numeric: stacked-fractions proportional-nums oldstyle-nums ordinal slashed-zero; }
+t650 { font-variant-numeric: stacked-fractions proportional-nums oldstyle-nums slashed-zero ordinal; }
+t651 { font-variant-numeric: stacked-fractions proportional-nums ordinal oldstyle-nums slashed-zero; }
+t652 { font-variant-numeric: stacked-fractions proportional-nums ordinal slashed-zero oldstyle-nums; }
+t653 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero oldstyle-nums ordinal; }
+t654 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero ordinal oldstyle-nums; }
+t655 { font-variant-numeric: stacked-fractions oldstyle-nums proportional-nums ordinal slashed-zero; }
+t656 { font-variant-numeric: stacked-fractions oldstyle-nums proportional-nums slashed-zero ordinal; }
+t657 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal proportional-nums slashed-zero; }
+t658 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal slashed-zero proportional-nums; }
+t659 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero proportional-nums ordinal; }
+t660 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero ordinal proportional-nums; }
+t661 { font-variant-numeric: stacked-fractions ordinal proportional-nums oldstyle-nums slashed-zero; }
+t662 { font-variant-numeric: stacked-fractions ordinal proportional-nums slashed-zero oldstyle-nums; }
+t663 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums proportional-nums slashed-zero; }
+t664 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums slashed-zero proportional-nums; }
+t665 { font-variant-numeric: stacked-fractions ordinal slashed-zero proportional-nums oldstyle-nums; }
+t666 { font-variant-numeric: stacked-fractions ordinal slashed-zero oldstyle-nums proportional-nums; }
+t667 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums oldstyle-nums ordinal; }
+t668 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums ordinal oldstyle-nums; }
+t669 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums proportional-nums ordinal; }
+t670 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums ordinal proportional-nums; }
+t671 { font-variant-numeric: stacked-fractions slashed-zero ordinal proportional-nums oldstyle-nums; }
+t672 { font-variant-numeric: stacked-fractions slashed-zero ordinal oldstyle-nums proportional-nums; }
+t673 { font-variant-numeric: ordinal proportional-nums stacked-fractions oldstyle-nums slashed-zero; }
+t674 { font-variant-numeric: ordinal proportional-nums stacked-fractions slashed-zero oldstyle-nums; }
+t675 { font-variant-numeric: ordinal proportional-nums oldstyle-nums stacked-fractions slashed-zero; }
+t676 { font-variant-numeric: ordinal proportional-nums oldstyle-nums slashed-zero stacked-fractions; }
+t677 { font-variant-numeric: ordinal proportional-nums slashed-zero stacked-fractions oldstyle-nums; }
+t678 { font-variant-numeric: ordinal proportional-nums slashed-zero oldstyle-nums stacked-fractions; }
+t679 { font-variant-numeric: ordinal stacked-fractions proportional-nums oldstyle-nums slashed-zero; }
+t680 { font-variant-numeric: ordinal stacked-fractions proportional-nums slashed-zero oldstyle-nums; }
+t681 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums proportional-nums slashed-zero; }
+t682 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums slashed-zero proportional-nums; }
+t683 { font-variant-numeric: ordinal stacked-fractions slashed-zero proportional-nums oldstyle-nums; }
+t684 { font-variant-numeric: ordinal stacked-fractions slashed-zero oldstyle-nums proportional-nums; }
+t685 { font-variant-numeric: ordinal oldstyle-nums proportional-nums stacked-fractions slashed-zero; }
+t686 { font-variant-numeric: ordinal oldstyle-nums proportional-nums slashed-zero stacked-fractions; }
+t687 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions proportional-nums slashed-zero; }
+t688 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions slashed-zero proportional-nums; }
+t689 { font-variant-numeric: ordinal oldstyle-nums slashed-zero proportional-nums stacked-fractions; }
+t690 { font-variant-numeric: ordinal oldstyle-nums slashed-zero stacked-fractions proportional-nums; }
+t691 { font-variant-numeric: ordinal slashed-zero proportional-nums stacked-fractions oldstyle-nums; }
+t692 { font-variant-numeric: ordinal slashed-zero proportional-nums oldstyle-nums stacked-fractions; }
+t693 { font-variant-numeric: ordinal slashed-zero stacked-fractions proportional-nums oldstyle-nums; }
+t694 { font-variant-numeric: ordinal slashed-zero stacked-fractions oldstyle-nums proportional-nums; }
+t695 { font-variant-numeric: ordinal slashed-zero oldstyle-nums proportional-nums stacked-fractions; }
+t696 { font-variant-numeric: ordinal slashed-zero oldstyle-nums stacked-fractions proportional-nums; }
+t697 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions ordinal oldstyle-nums; }
+t698 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions oldstyle-nums ordinal; }
+t699 { font-variant-numeric: slashed-zero proportional-nums ordinal stacked-fractions oldstyle-nums; }
+t700 { font-variant-numeric: slashed-zero proportional-nums ordinal oldstyle-nums stacked-fractions; }
+t701 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums stacked-fractions ordinal; }
+t702 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums ordinal stacked-fractions; }
+t703 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums ordinal oldstyle-nums; }
+t704 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums oldstyle-nums ordinal; }
+t705 { font-variant-numeric: slashed-zero stacked-fractions ordinal proportional-nums oldstyle-nums; }
+t706 { font-variant-numeric: slashed-zero stacked-fractions ordinal oldstyle-nums proportional-nums; }
+t707 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums proportional-nums ordinal; }
+t708 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums ordinal proportional-nums; }
+t709 { font-variant-numeric: slashed-zero ordinal proportional-nums stacked-fractions oldstyle-nums; }
+t710 { font-variant-numeric: slashed-zero ordinal proportional-nums oldstyle-nums stacked-fractions; }
+t711 { font-variant-numeric: slashed-zero ordinal stacked-fractions proportional-nums oldstyle-nums; }
+t712 { font-variant-numeric: slashed-zero ordinal stacked-fractions oldstyle-nums proportional-nums; }
+t713 { font-variant-numeric: slashed-zero ordinal oldstyle-nums proportional-nums stacked-fractions; }
+t714 { font-variant-numeric: slashed-zero ordinal oldstyle-nums stacked-fractions proportional-nums; }
+t715 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums stacked-fractions ordinal; }
+t716 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums ordinal stacked-fractions; }
+t717 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions proportional-nums ordinal; }
+t718 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions ordinal proportional-nums; }
+t719 { font-variant-numeric: slashed-zero oldstyle-nums ordinal proportional-nums stacked-fractions; }
+t720 { font-variant-numeric: slashed-zero oldstyle-nums ordinal stacked-fractions proportional-nums; }
+t721 { font-variant-numeric: oldstyle-nums tabular-nums diagonal-fractions ordinal slashed-zero; }
+t722 { font-variant-numeric: oldstyle-nums tabular-nums diagonal-fractions slashed-zero ordinal; }
+t723 { font-variant-numeric: oldstyle-nums tabular-nums ordinal diagonal-fractions slashed-zero; }
+t724 { font-variant-numeric: oldstyle-nums tabular-nums ordinal slashed-zero diagonal-fractions; }
+t725 { font-variant-numeric: oldstyle-nums tabular-nums slashed-zero diagonal-fractions ordinal; }
+t726 { font-variant-numeric: oldstyle-nums tabular-nums slashed-zero ordinal diagonal-fractions; }
+t727 { font-variant-numeric: oldstyle-nums diagonal-fractions tabular-nums ordinal slashed-zero; }
+t728 { font-variant-numeric: oldstyle-nums diagonal-fractions tabular-nums slashed-zero ordinal; }
+t729 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal tabular-nums slashed-zero; }
+t730 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal slashed-zero tabular-nums; }
+t731 { font-variant-numeric: oldstyle-nums diagonal-fractions slashed-zero tabular-nums ordinal; }
+t732 { font-variant-numeric: oldstyle-nums diagonal-fractions slashed-zero ordinal tabular-nums; }
+t733 { font-variant-numeric: oldstyle-nums ordinal tabular-nums diagonal-fractions slashed-zero; }
+t734 { font-variant-numeric: oldstyle-nums ordinal tabular-nums slashed-zero diagonal-fractions; }
+t735 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions tabular-nums slashed-zero; }
+t736 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions slashed-zero tabular-nums; }
+t737 { font-variant-numeric: oldstyle-nums ordinal slashed-zero tabular-nums diagonal-fractions; }
+t738 { font-variant-numeric: oldstyle-nums ordinal slashed-zero diagonal-fractions tabular-nums; }
+t739 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums diagonal-fractions ordinal; }
+t740 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums ordinal diagonal-fractions; }
+t741 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions tabular-nums ordinal; }
+t742 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions ordinal tabular-nums; }
+t743 { font-variant-numeric: oldstyle-nums slashed-zero ordinal tabular-nums diagonal-fractions; }
+t744 { font-variant-numeric: oldstyle-nums slashed-zero ordinal diagonal-fractions tabular-nums; }
+t745 { font-variant-numeric: tabular-nums oldstyle-nums diagonal-fractions ordinal slashed-zero; }
+t746 { font-variant-numeric: tabular-nums oldstyle-nums diagonal-fractions slashed-zero ordinal; }
+t747 { font-variant-numeric: tabular-nums oldstyle-nums ordinal diagonal-fractions slashed-zero; }
+t748 { font-variant-numeric: tabular-nums oldstyle-nums ordinal slashed-zero diagonal-fractions; }
+t749 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero diagonal-fractions ordinal; }
+t750 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero ordinal diagonal-fractions; }
+t751 { font-variant-numeric: tabular-nums diagonal-fractions oldstyle-nums ordinal slashed-zero; }
+t752 { font-variant-numeric: tabular-nums diagonal-fractions oldstyle-nums slashed-zero ordinal; }
+t753 { font-variant-numeric: tabular-nums diagonal-fractions ordinal oldstyle-nums slashed-zero; }
+t754 { font-variant-numeric: tabular-nums diagonal-fractions ordinal slashed-zero oldstyle-nums; }
+t755 { font-variant-numeric: tabular-nums diagonal-fractions slashed-zero oldstyle-nums ordinal; }
+t756 { font-variant-numeric: tabular-nums diagonal-fractions slashed-zero ordinal oldstyle-nums; }
+t757 { font-variant-numeric: tabular-nums ordinal oldstyle-nums diagonal-fractions slashed-zero; }
+t758 { font-variant-numeric: tabular-nums ordinal oldstyle-nums slashed-zero diagonal-fractions; }
+t759 { font-variant-numeric: tabular-nums ordinal diagonal-fractions oldstyle-nums slashed-zero; }
+t760 { font-variant-numeric: tabular-nums ordinal diagonal-fractions slashed-zero oldstyle-nums; }
+t761 { font-variant-numeric: tabular-nums ordinal slashed-zero oldstyle-nums diagonal-fractions; }
+t762 { font-variant-numeric: tabular-nums ordinal slashed-zero diagonal-fractions oldstyle-nums; }
+t763 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums diagonal-fractions ordinal; }
+t764 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums ordinal diagonal-fractions; }
+t765 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions oldstyle-nums ordinal; }
+t766 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions ordinal oldstyle-nums; }
+t767 { font-variant-numeric: tabular-nums slashed-zero ordinal oldstyle-nums diagonal-fractions; }
+t768 { font-variant-numeric: tabular-nums slashed-zero ordinal diagonal-fractions oldstyle-nums; }
+t769 { font-variant-numeric: diagonal-fractions tabular-nums oldstyle-nums ordinal slashed-zero; }
+t770 { font-variant-numeric: diagonal-fractions tabular-nums oldstyle-nums slashed-zero ordinal; }
+t771 { font-variant-numeric: diagonal-fractions tabular-nums ordinal oldstyle-nums slashed-zero; }
+t772 { font-variant-numeric: diagonal-fractions tabular-nums ordinal slashed-zero oldstyle-nums; }
+t773 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero oldstyle-nums ordinal; }
+t774 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero ordinal oldstyle-nums; }
+t775 { font-variant-numeric: diagonal-fractions oldstyle-nums tabular-nums ordinal slashed-zero; }
+t776 { font-variant-numeric: diagonal-fractions oldstyle-nums tabular-nums slashed-zero ordinal; }
+t777 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal tabular-nums slashed-zero; }
+t778 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal slashed-zero tabular-nums; }
+t779 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero tabular-nums ordinal; }
+t780 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero ordinal tabular-nums; }
+t781 { font-variant-numeric: diagonal-fractions ordinal tabular-nums oldstyle-nums slashed-zero; }
+t782 { font-variant-numeric: diagonal-fractions ordinal tabular-nums slashed-zero oldstyle-nums; }
+t783 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums tabular-nums slashed-zero; }
+t784 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums slashed-zero tabular-nums; }
+t785 { font-variant-numeric: diagonal-fractions ordinal slashed-zero tabular-nums oldstyle-nums; }
+t786 { font-variant-numeric: diagonal-fractions ordinal slashed-zero oldstyle-nums tabular-nums; }
+t787 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums oldstyle-nums ordinal; }
+t788 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums ordinal oldstyle-nums; }
+t789 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums tabular-nums ordinal; }
+t790 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums ordinal tabular-nums; }
+t791 { font-variant-numeric: diagonal-fractions slashed-zero ordinal tabular-nums oldstyle-nums; }
+t792 { font-variant-numeric: diagonal-fractions slashed-zero ordinal oldstyle-nums tabular-nums; }
+t793 { font-variant-numeric: ordinal tabular-nums diagonal-fractions oldstyle-nums slashed-zero; }
+t794 { font-variant-numeric: ordinal tabular-nums diagonal-fractions slashed-zero oldstyle-nums; }
+t795 { font-variant-numeric: ordinal tabular-nums oldstyle-nums diagonal-fractions slashed-zero; }
+t796 { font-variant-numeric: ordinal tabular-nums oldstyle-nums slashed-zero diagonal-fractions; }
+t797 { font-variant-numeric: ordinal tabular-nums slashed-zero diagonal-fractions oldstyle-nums; }
+t798 { font-variant-numeric: ordinal tabular-nums slashed-zero oldstyle-nums diagonal-fractions; }
+t799 { font-variant-numeric: ordinal diagonal-fractions tabular-nums oldstyle-nums slashed-zero; }
+t800 { font-variant-numeric: ordinal diagonal-fractions tabular-nums slashed-zero oldstyle-nums; }
+t801 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums tabular-nums slashed-zero; }
+t802 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums slashed-zero tabular-nums; }
+t803 { font-variant-numeric: ordinal diagonal-fractions slashed-zero tabular-nums oldstyle-nums; }
+t804 { font-variant-numeric: ordinal diagonal-fractions slashed-zero oldstyle-nums tabular-nums; }
+t805 { font-variant-numeric: ordinal oldstyle-nums tabular-nums diagonal-fractions slashed-zero; }
+t806 { font-variant-numeric: ordinal oldstyle-nums tabular-nums slashed-zero diagonal-fractions; }
+t807 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions tabular-nums slashed-zero; }
+t808 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions slashed-zero tabular-nums; }
+t809 { font-variant-numeric: ordinal oldstyle-nums slashed-zero tabular-nums diagonal-fractions; }
+t810 { font-variant-numeric: ordinal oldstyle-nums slashed-zero diagonal-fractions tabular-nums; }
+t811 { font-variant-numeric: ordinal slashed-zero tabular-nums diagonal-fractions oldstyle-nums; }
+t812 { font-variant-numeric: ordinal slashed-zero tabular-nums oldstyle-nums diagonal-fractions; }
+t813 { font-variant-numeric: ordinal slashed-zero diagonal-fractions tabular-nums oldstyle-nums; }
+t814 { font-variant-numeric: ordinal slashed-zero diagonal-fractions oldstyle-nums tabular-nums; }
+t815 { font-variant-numeric: ordinal slashed-zero oldstyle-nums tabular-nums diagonal-fractions; }
+t816 { font-variant-numeric: ordinal slashed-zero oldstyle-nums diagonal-fractions tabular-nums; }
+t817 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions ordinal oldstyle-nums; }
+t818 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions oldstyle-nums ordinal; }
+t819 { font-variant-numeric: slashed-zero tabular-nums ordinal diagonal-fractions oldstyle-nums; }
+t820 { font-variant-numeric: slashed-zero tabular-nums ordinal oldstyle-nums diagonal-fractions; }
+t821 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums diagonal-fractions ordinal; }
+t822 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums ordinal diagonal-fractions; }
+t823 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums ordinal oldstyle-nums; }
+t824 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums oldstyle-nums ordinal; }
+t825 { font-variant-numeric: slashed-zero diagonal-fractions ordinal tabular-nums oldstyle-nums; }
+t826 { font-variant-numeric: slashed-zero diagonal-fractions ordinal oldstyle-nums tabular-nums; }
+t827 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums tabular-nums ordinal; }
+t828 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums ordinal tabular-nums; }
+t829 { font-variant-numeric: slashed-zero ordinal tabular-nums diagonal-fractions oldstyle-nums; }
+t830 { font-variant-numeric: slashed-zero ordinal tabular-nums oldstyle-nums diagonal-fractions; }
+t831 { font-variant-numeric: slashed-zero ordinal diagonal-fractions tabular-nums oldstyle-nums; }
+t832 { font-variant-numeric: slashed-zero ordinal diagonal-fractions oldstyle-nums tabular-nums; }
+t833 { font-variant-numeric: slashed-zero ordinal oldstyle-nums tabular-nums diagonal-fractions; }
+t834 { font-variant-numeric: slashed-zero ordinal oldstyle-nums diagonal-fractions tabular-nums; }
+t835 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums diagonal-fractions ordinal; }
+t836 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums ordinal diagonal-fractions; }
+t837 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions tabular-nums ordinal; }
+t838 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions ordinal tabular-nums; }
+t839 { font-variant-numeric: slashed-zero oldstyle-nums ordinal tabular-nums diagonal-fractions; }
+t840 { font-variant-numeric: slashed-zero oldstyle-nums ordinal diagonal-fractions tabular-nums; }
+t841 { font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal slashed-zero; }
+t842 { font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions slashed-zero ordinal; }
+t843 { font-variant-numeric: oldstyle-nums tabular-nums ordinal stacked-fractions slashed-zero; }
+t844 { font-variant-numeric: oldstyle-nums tabular-nums ordinal slashed-zero stacked-fractions; }
+t845 { font-variant-numeric: oldstyle-nums tabular-nums slashed-zero stacked-fractions ordinal; }
+t846 { font-variant-numeric: oldstyle-nums tabular-nums slashed-zero ordinal stacked-fractions; }
+t847 { font-variant-numeric: oldstyle-nums stacked-fractions tabular-nums ordinal slashed-zero; }
+t848 { font-variant-numeric: oldstyle-nums stacked-fractions tabular-nums slashed-zero ordinal; }
+t849 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal tabular-nums slashed-zero; }
+t850 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal slashed-zero tabular-nums; }
+t851 { font-variant-numeric: oldstyle-nums stacked-fractions slashed-zero tabular-nums ordinal; }
+t852 { font-variant-numeric: oldstyle-nums stacked-fractions slashed-zero ordinal tabular-nums; }
+t853 { font-variant-numeric: oldstyle-nums ordinal tabular-nums stacked-fractions slashed-zero; }
+t854 { font-variant-numeric: oldstyle-nums ordinal tabular-nums slashed-zero stacked-fractions; }
+t855 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions tabular-nums slashed-zero; }
+t856 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions slashed-zero tabular-nums; }
+t857 { font-variant-numeric: oldstyle-nums ordinal slashed-zero tabular-nums stacked-fractions; }
+t858 { font-variant-numeric: oldstyle-nums ordinal slashed-zero stacked-fractions tabular-nums; }
+t859 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums stacked-fractions ordinal; }
+t860 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums ordinal stacked-fractions; }
+t861 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions tabular-nums ordinal; }
+t862 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions ordinal tabular-nums; }
+t863 { font-variant-numeric: oldstyle-nums slashed-zero ordinal tabular-nums stacked-fractions; }
+t864 { font-variant-numeric: oldstyle-nums slashed-zero ordinal stacked-fractions tabular-nums; }
+t865 { font-variant-numeric: tabular-nums oldstyle-nums stacked-fractions ordinal slashed-zero; }
+t866 { font-variant-numeric: tabular-nums oldstyle-nums stacked-fractions slashed-zero ordinal; }
+t867 { font-variant-numeric: tabular-nums oldstyle-nums ordinal stacked-fractions slashed-zero; }
+t868 { font-variant-numeric: tabular-nums oldstyle-nums ordinal slashed-zero stacked-fractions; }
+t869 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero stacked-fractions ordinal; }
+t870 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero ordinal stacked-fractions; }
+t871 { font-variant-numeric: tabular-nums stacked-fractions oldstyle-nums ordinal slashed-zero; }
+t872 { font-variant-numeric: tabular-nums stacked-fractions oldstyle-nums slashed-zero ordinal; }
+t873 { font-variant-numeric: tabular-nums stacked-fractions ordinal oldstyle-nums slashed-zero; }
+t874 { font-variant-numeric: tabular-nums stacked-fractions ordinal slashed-zero oldstyle-nums; }
+t875 { font-variant-numeric: tabular-nums stacked-fractions slashed-zero oldstyle-nums ordinal; }
+t876 { font-variant-numeric: tabular-nums stacked-fractions slashed-zero ordinal oldstyle-nums; }
+t877 { font-variant-numeric: tabular-nums ordinal oldstyle-nums stacked-fractions slashed-zero; }
+t878 { font-variant-numeric: tabular-nums ordinal oldstyle-nums slashed-zero stacked-fractions; }
+t879 { font-variant-numeric: tabular-nums ordinal stacked-fractions oldstyle-nums slashed-zero; }
+t880 { font-variant-numeric: tabular-nums ordinal stacked-fractions slashed-zero oldstyle-nums; }
+t881 { font-variant-numeric: tabular-nums ordinal slashed-zero oldstyle-nums stacked-fractions; }
+t882 { font-variant-numeric: tabular-nums ordinal slashed-zero stacked-fractions oldstyle-nums; }
+t883 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums stacked-fractions ordinal; }
+t884 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums ordinal stacked-fractions; }
+t885 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions oldstyle-nums ordinal; }
+t886 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions ordinal oldstyle-nums; }
+t887 { font-variant-numeric: tabular-nums slashed-zero ordinal oldstyle-nums stacked-fractions; }
+t888 { font-variant-numeric: tabular-nums slashed-zero ordinal stacked-fractions oldstyle-nums; }
+t889 { font-variant-numeric: stacked-fractions tabular-nums oldstyle-nums ordinal slashed-zero; }
+t890 { font-variant-numeric: stacked-fractions tabular-nums oldstyle-nums slashed-zero ordinal; }
+t891 { font-variant-numeric: stacked-fractions tabular-nums ordinal oldstyle-nums slashed-zero; }
+t892 { font-variant-numeric: stacked-fractions tabular-nums ordinal slashed-zero oldstyle-nums; }
+t893 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero oldstyle-nums ordinal; }
+t894 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero ordinal oldstyle-nums; }
+t895 { font-variant-numeric: stacked-fractions oldstyle-nums tabular-nums ordinal slashed-zero; }
+t896 { font-variant-numeric: stacked-fractions oldstyle-nums tabular-nums slashed-zero ordinal; }
+t897 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal tabular-nums slashed-zero; }
+t898 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal slashed-zero tabular-nums; }
+t899 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero tabular-nums ordinal; }
+t900 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero ordinal tabular-nums; }
+t901 { font-variant-numeric: stacked-fractions ordinal tabular-nums oldstyle-nums slashed-zero; }
+t902 { font-variant-numeric: stacked-fractions ordinal tabular-nums slashed-zero oldstyle-nums; }
+t903 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums tabular-nums slashed-zero; }
+t904 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums slashed-zero tabular-nums; }
+t905 { font-variant-numeric: stacked-fractions ordinal slashed-zero tabular-nums oldstyle-nums; }
+t906 { font-variant-numeric: stacked-fractions ordinal slashed-zero oldstyle-nums tabular-nums; }
+t907 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums oldstyle-nums ordinal; }
+t908 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums ordinal oldstyle-nums; }
+t909 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums tabular-nums ordinal; }
+t910 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums ordinal tabular-nums; }
+t911 { font-variant-numeric: stacked-fractions slashed-zero ordinal tabular-nums oldstyle-nums; }
+t912 { font-variant-numeric: stacked-fractions slashed-zero ordinal oldstyle-nums tabular-nums; }
+t913 { font-variant-numeric: ordinal tabular-nums stacked-fractions oldstyle-nums slashed-zero; }
+t914 { font-variant-numeric: ordinal tabular-nums stacked-fractions slashed-zero oldstyle-nums; }
+t915 { font-variant-numeric: ordinal tabular-nums oldstyle-nums stacked-fractions slashed-zero; }
+t916 { font-variant-numeric: ordinal tabular-nums oldstyle-nums slashed-zero stacked-fractions; }
+t917 { font-variant-numeric: ordinal tabular-nums slashed-zero stacked-fractions oldstyle-nums; }
+t918 { font-variant-numeric: ordinal tabular-nums slashed-zero oldstyle-nums stacked-fractions; }
+t919 { font-variant-numeric: ordinal stacked-fractions tabular-nums oldstyle-nums slashed-zero; }
+t920 { font-variant-numeric: ordinal stacked-fractions tabular-nums slashed-zero oldstyle-nums; }
+t921 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums tabular-nums slashed-zero; }
+t922 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums slashed-zero tabular-nums; }
+t923 { font-variant-numeric: ordinal stacked-fractions slashed-zero tabular-nums oldstyle-nums; }
+t924 { font-variant-numeric: ordinal stacked-fractions slashed-zero oldstyle-nums tabular-nums; }
+t925 { font-variant-numeric: ordinal oldstyle-nums tabular-nums stacked-fractions slashed-zero; }
+t926 { font-variant-numeric: ordinal oldstyle-nums tabular-nums slashed-zero stacked-fractions; }
+t927 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions tabular-nums slashed-zero; }
+t928 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions slashed-zero tabular-nums; }
+t929 { font-variant-numeric: ordinal oldstyle-nums slashed-zero tabular-nums stacked-fractions; }
+t930 { font-variant-numeric: ordinal oldstyle-nums slashed-zero stacked-fractions tabular-nums; }
+t931 { font-variant-numeric: ordinal slashed-zero tabular-nums stacked-fractions oldstyle-nums; }
+t932 { font-variant-numeric: ordinal slashed-zero tabular-nums oldstyle-nums stacked-fractions; }
+t933 { font-variant-numeric: ordinal slashed-zero stacked-fractions tabular-nums oldstyle-nums; }
+t934 { font-variant-numeric: ordinal slashed-zero stacked-fractions oldstyle-nums tabular-nums; }
+t935 { font-variant-numeric: ordinal slashed-zero oldstyle-nums tabular-nums stacked-fractions; }
+t936 { font-variant-numeric: ordinal slashed-zero oldstyle-nums stacked-fractions tabular-nums; }
+t937 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions ordinal oldstyle-nums; }
+t938 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions oldstyle-nums ordinal; }
+t939 { font-variant-numeric: slashed-zero tabular-nums ordinal stacked-fractions oldstyle-nums; }
+t940 { font-variant-numeric: slashed-zero tabular-nums ordinal oldstyle-nums stacked-fractions; }
+t941 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums stacked-fractions ordinal; }
+t942 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums ordinal stacked-fractions; }
+t943 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums ordinal oldstyle-nums; }
+t944 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums oldstyle-nums ordinal; }
+t945 { font-variant-numeric: slashed-zero stacked-fractions ordinal tabular-nums oldstyle-nums; }
+t946 { font-variant-numeric: slashed-zero stacked-fractions ordinal oldstyle-nums tabular-nums; }
+t947 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums tabular-nums ordinal; }
+t948 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums ordinal tabular-nums; }
+t949 { font-variant-numeric: slashed-zero ordinal tabular-nums stacked-fractions oldstyle-nums; }
+t950 { font-variant-numeric: slashed-zero ordinal tabular-nums oldstyle-nums stacked-fractions; }
+t951 { font-variant-numeric: slashed-zero ordinal stacked-fractions tabular-nums oldstyle-nums; }
+t952 { font-variant-numeric: slashed-zero ordinal stacked-fractions oldstyle-nums tabular-nums; }
+t953 { font-variant-numeric: slashed-zero ordinal oldstyle-nums tabular-nums stacked-fractions; }
+t954 { font-variant-numeric: slashed-zero ordinal oldstyle-nums stacked-fractions tabular-nums; }
+t955 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums stacked-fractions ordinal; }
+t956 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums ordinal stacked-fractions; }
+t957 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions tabular-nums ordinal; }
+t958 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions ordinal tabular-nums; }
+t959 { font-variant-numeric: slashed-zero oldstyle-nums ordinal tabular-nums stacked-fractions; }
+t960 { font-variant-numeric: slashed-zero oldstyle-nums ordinal stacked-fractions tabular-nums; }
+t961 { font-variant-numeric: lining-nums proportional-nums diagonal-fractions ordinal; }
+t962 { font-variant-numeric: lining-nums proportional-nums diagonal-fractions ordinal; }
+t963 { font-variant-numeric: lining-nums diagonal-fractions proportional-nums ordinal; }
+t964 { font-variant-numeric: lining-nums diagonal-fractions ordinal proportional-nums; }
+t965 { font-variant-numeric: lining-nums ordinal proportional-nums diagonal-fractions; }
+t966 { font-variant-numeric: lining-nums ordinal diagonal-fractions proportional-nums; }
+t967 { font-variant-numeric: proportional-nums lining-nums diagonal-fractions ordinal; }
+t968 { font-variant-numeric: proportional-nums lining-nums ordinal diagonal-fractions; }
+t969 { font-variant-numeric: proportional-nums diagonal-fractions lining-nums ordinal; }
+t970 { font-variant-numeric: proportional-nums diagonal-fractions ordinal lining-nums; }
+t971 { font-variant-numeric: proportional-nums ordinal lining-nums diagonal-fractions; }
+t972 { font-variant-numeric: proportional-nums ordinal diagonal-fractions lining-nums; }
+t973 { font-variant-numeric: diagonal-fractions lining-nums proportional-nums ordinal; }
+t974 { font-variant-numeric: diagonal-fractions lining-nums ordinal proportional-nums; }
+t975 { font-variant-numeric: diagonal-fractions proportional-nums lining-nums ordinal; }
+t976 { font-variant-numeric: diagonal-fractions proportional-nums ordinal lining-nums; }
+t977 { font-variant-numeric: diagonal-fractions ordinal lining-nums proportional-nums; }
+t978 { font-variant-numeric: diagonal-fractions ordinal proportional-nums lining-nums; }
+t979 { font-variant-numeric: ordinal lining-nums proportional-nums diagonal-fractions; }
+t980 { font-variant-numeric: ordinal lining-nums diagonal-fractions proportional-nums; }
+t981 { font-variant-numeric: ordinal proportional-nums lining-nums diagonal-fractions; }
+t982 { font-variant-numeric: ordinal proportional-nums diagonal-fractions lining-nums; }
+t983 { font-variant-numeric: ordinal diagonal-fractions lining-nums proportional-nums; }
+t984 { font-variant-numeric: ordinal diagonal-fractions proportional-nums lining-nums; }
+t985 { font-variant-numeric: lining-nums proportional-nums stacked-fractions ordinal; }
+t986 { font-variant-numeric: lining-nums proportional-nums stacked-fractions ordinal; }
+t987 { font-variant-numeric: lining-nums stacked-fractions proportional-nums ordinal; }
+t988 { font-variant-numeric: lining-nums stacked-fractions ordinal proportional-nums; }
+t989 { font-variant-numeric: lining-nums ordinal proportional-nums stacked-fractions; }
+t990 { font-variant-numeric: lining-nums ordinal stacked-fractions proportional-nums; }
+t991 { font-variant-numeric: proportional-nums lining-nums stacked-fractions ordinal; }
+t992 { font-variant-numeric: proportional-nums lining-nums ordinal stacked-fractions; }
+t993 { font-variant-numeric: proportional-nums stacked-fractions lining-nums ordinal; }
+t994 { font-variant-numeric: proportional-nums stacked-fractions ordinal lining-nums; }
+t995 { font-variant-numeric: proportional-nums ordinal lining-nums stacked-fractions; }
+t996 { font-variant-numeric: proportional-nums ordinal stacked-fractions lining-nums; }
+t997 { font-variant-numeric: stacked-fractions lining-nums proportional-nums ordinal; }
+t998 { font-variant-numeric: stacked-fractions lining-nums ordinal proportional-nums; }
+t999 { font-variant-numeric: stacked-fractions proportional-nums lining-nums ordinal; }
+t1000 { font-variant-numeric: stacked-fractions proportional-nums ordinal lining-nums; }
+t1001 { font-variant-numeric: stacked-fractions ordinal lining-nums proportional-nums; }
+t1002 { font-variant-numeric: stacked-fractions ordinal proportional-nums lining-nums; }
+t1003 { font-variant-numeric: ordinal lining-nums proportional-nums stacked-fractions; }
+t1004 { font-variant-numeric: ordinal lining-nums stacked-fractions proportional-nums; }
+t1005 { font-variant-numeric: ordinal proportional-nums lining-nums stacked-fractions; }
+t1006 { font-variant-numeric: ordinal proportional-nums stacked-fractions lining-nums; }
+t1007 { font-variant-numeric: ordinal stacked-fractions lining-nums proportional-nums; }
+t1008 { font-variant-numeric: ordinal stacked-fractions proportional-nums lining-nums; }
+t1009 { font-variant-numeric: lining-nums tabular-nums diagonal-fractions ordinal; }
+t1010 { font-variant-numeric: lining-nums tabular-nums diagonal-fractions ordinal; }
+t1011 { font-variant-numeric: lining-nums diagonal-fractions tabular-nums ordinal; }
+t1012 { font-variant-numeric: lining-nums diagonal-fractions ordinal tabular-nums; }
+t1013 { font-variant-numeric: lining-nums ordinal tabular-nums diagonal-fractions; }
+t1014 { font-variant-numeric: lining-nums ordinal diagonal-fractions tabular-nums; }
+t1015 { font-variant-numeric: tabular-nums lining-nums diagonal-fractions ordinal; }
+t1016 { font-variant-numeric: tabular-nums lining-nums ordinal diagonal-fractions; }
+t1017 { font-variant-numeric: tabular-nums diagonal-fractions lining-nums ordinal; }
+t1018 { font-variant-numeric: tabular-nums diagonal-fractions ordinal lining-nums; }
+t1019 { font-variant-numeric: tabular-nums ordinal lining-nums diagonal-fractions; }
+t1020 { font-variant-numeric: tabular-nums ordinal diagonal-fractions lining-nums; }
+t1021 { font-variant-numeric: diagonal-fractions lining-nums tabular-nums ordinal; }
+t1022 { font-variant-numeric: diagonal-fractions lining-nums ordinal tabular-nums; }
+t1023 { font-variant-numeric: diagonal-fractions tabular-nums lining-nums ordinal; }
+t1024 { font-variant-numeric: diagonal-fractions tabular-nums ordinal lining-nums; }
+t1025 { font-variant-numeric: diagonal-fractions ordinal lining-nums tabular-nums; }
+t1026 { font-variant-numeric: diagonal-fractions ordinal tabular-nums lining-nums; }
+t1027 { font-variant-numeric: ordinal lining-nums tabular-nums diagonal-fractions; }
+t1028 { font-variant-numeric: ordinal lining-nums diagonal-fractions tabular-nums; }
+t1029 { font-variant-numeric: ordinal tabular-nums lining-nums diagonal-fractions; }
+t1030 { font-variant-numeric: ordinal tabular-nums diagonal-fractions lining-nums; }
+t1031 { font-variant-numeric: ordinal diagonal-fractions lining-nums tabular-nums; }
+t1032 { font-variant-numeric: ordinal diagonal-fractions tabular-nums lining-nums; }
+t1033 { font-variant-numeric: lining-nums tabular-nums stacked-fractions ordinal; }
+t1034 { font-variant-numeric: lining-nums tabular-nums stacked-fractions ordinal; }
+t1035 { font-variant-numeric: lining-nums stacked-fractions tabular-nums ordinal; }
+t1036 { font-variant-numeric: lining-nums stacked-fractions ordinal tabular-nums; }
+t1037 { font-variant-numeric: lining-nums ordinal tabular-nums stacked-fractions; }
+t1038 { font-variant-numeric: lining-nums ordinal stacked-fractions tabular-nums; }
+t1039 { font-variant-numeric: tabular-nums lining-nums stacked-fractions ordinal; }
+t1040 { font-variant-numeric: tabular-nums lining-nums ordinal stacked-fractions; }
+t1041 { font-variant-numeric: tabular-nums stacked-fractions lining-nums ordinal; }
+t1042 { font-variant-numeric: tabular-nums stacked-fractions ordinal lining-nums; }
+t1043 { font-variant-numeric: tabular-nums ordinal lining-nums stacked-fractions; }
+t1044 { font-variant-numeric: tabular-nums ordinal stacked-fractions lining-nums; }
+t1045 { font-variant-numeric: stacked-fractions lining-nums tabular-nums ordinal; }
+t1046 { font-variant-numeric: stacked-fractions lining-nums ordinal tabular-nums; }
+t1047 { font-variant-numeric: stacked-fractions tabular-nums lining-nums ordinal; }
+t1048 { font-variant-numeric: stacked-fractions tabular-nums ordinal lining-nums; }
+t1049 { font-variant-numeric: stacked-fractions ordinal lining-nums tabular-nums; }
+t1050 { font-variant-numeric: stacked-fractions ordinal tabular-nums lining-nums; }
+t1051 { font-variant-numeric: ordinal lining-nums tabular-nums stacked-fractions; }
+t1052 { font-variant-numeric: ordinal lining-nums stacked-fractions tabular-nums; }
+t1053 { font-variant-numeric: ordinal tabular-nums lining-nums stacked-fractions; }
+t1054 { font-variant-numeric: ordinal tabular-nums stacked-fractions lining-nums; }
+t1055 { font-variant-numeric: ordinal stacked-fractions lining-nums tabular-nums; }
+t1056 { font-variant-numeric: ordinal stacked-fractions tabular-nums lining-nums; }
+t1057 { font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions ordinal; }
+t1058 { font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions ordinal; }
+t1059 { font-variant-numeric: oldstyle-nums diagonal-fractions proportional-nums ordinal; }
+t1060 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal proportional-nums; }
+t1061 { font-variant-numeric: oldstyle-nums ordinal proportional-nums diagonal-fractions; }
+t1062 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions proportional-nums; }
+t1063 { font-variant-numeric: proportional-nums oldstyle-nums diagonal-fractions ordinal; }
+t1064 { font-variant-numeric: proportional-nums oldstyle-nums ordinal diagonal-fractions; }
+t1065 { font-variant-numeric: proportional-nums diagonal-fractions oldstyle-nums ordinal; }
+t1066 { font-variant-numeric: proportional-nums diagonal-fractions ordinal oldstyle-nums; }
+t1067 { font-variant-numeric: proportional-nums ordinal oldstyle-nums diagonal-fractions; }
+t1068 { font-variant-numeric: proportional-nums ordinal diagonal-fractions oldstyle-nums; }
+t1069 { font-variant-numeric: diagonal-fractions oldstyle-nums proportional-nums ordinal; }
+t1070 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal proportional-nums; }
+t1071 { font-variant-numeric: diagonal-fractions proportional-nums oldstyle-nums ordinal; }
+t1072 { font-variant-numeric: diagonal-fractions proportional-nums ordinal oldstyle-nums; }
+t1073 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums proportional-nums; }
+t1074 { font-variant-numeric: diagonal-fractions ordinal proportional-nums oldstyle-nums; }
+t1075 { font-variant-numeric: ordinal oldstyle-nums proportional-nums diagonal-fractions; }
+t1076 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions proportional-nums; }
+t1077 { font-variant-numeric: ordinal proportional-nums oldstyle-nums diagonal-fractions; }
+t1078 { font-variant-numeric: ordinal proportional-nums diagonal-fractions oldstyle-nums; }
+t1079 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums proportional-nums; }
+t1080 { font-variant-numeric: ordinal diagonal-fractions proportional-nums oldstyle-nums; }
+t1081 { font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions ordinal; }
+t1082 { font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions ordinal; }
+t1083 { font-variant-numeric: oldstyle-nums stacked-fractions proportional-nums ordinal; }
+t1084 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal proportional-nums; }
+t1085 { font-variant-numeric: oldstyle-nums ordinal proportional-nums stacked-fractions; }
+t1086 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions proportional-nums; }
+t1087 { font-variant-numeric: proportional-nums oldstyle-nums stacked-fractions ordinal; }
+t1088 { font-variant-numeric: proportional-nums oldstyle-nums ordinal stacked-fractions; }
+t1089 { font-variant-numeric: proportional-nums stacked-fractions oldstyle-nums ordinal; }
+t1090 { font-variant-numeric: proportional-nums stacked-fractions ordinal oldstyle-nums; }
+t1091 { font-variant-numeric: proportional-nums ordinal oldstyle-nums stacked-fractions; }
+t1092 { font-variant-numeric: proportional-nums ordinal stacked-fractions oldstyle-nums; }
+t1093 { font-variant-numeric: stacked-fractions oldstyle-nums proportional-nums ordinal; }
+t1094 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal proportional-nums; }
+t1095 { font-variant-numeric: stacked-fractions proportional-nums oldstyle-nums ordinal; }
+t1096 { font-variant-numeric: stacked-fractions proportional-nums ordinal oldstyle-nums; }
+t1097 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums proportional-nums; }
+t1098 { font-variant-numeric: stacked-fractions ordinal proportional-nums oldstyle-nums; }
+t1099 { font-variant-numeric: ordinal oldstyle-nums proportional-nums stacked-fractions; }
+t1100 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions proportional-nums; }
+t1101 { font-variant-numeric: ordinal proportional-nums oldstyle-nums stacked-fractions; }
+t1102 { font-variant-numeric: ordinal proportional-nums stacked-fractions oldstyle-nums; }
+t1103 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums proportional-nums; }
+t1104 { font-variant-numeric: ordinal stacked-fractions proportional-nums oldstyle-nums; }
+t1105 { font-variant-numeric: oldstyle-nums tabular-nums diagonal-fractions ordinal; }
+t1106 { font-variant-numeric: oldstyle-nums tabular-nums diagonal-fractions ordinal; }
+t1107 { font-variant-numeric: oldstyle-nums diagonal-fractions tabular-nums ordinal; }
+t1108 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal tabular-nums; }
+t1109 { font-variant-numeric: oldstyle-nums ordinal tabular-nums diagonal-fractions; }
+t1110 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions tabular-nums; }
+t1111 { font-variant-numeric: tabular-nums oldstyle-nums diagonal-fractions ordinal; }
+t1112 { font-variant-numeric: tabular-nums oldstyle-nums ordinal diagonal-fractions; }
+t1113 { font-variant-numeric: tabular-nums diagonal-fractions oldstyle-nums ordinal; }
+t1114 { font-variant-numeric: tabular-nums diagonal-fractions ordinal oldstyle-nums; }
+t1115 { font-variant-numeric: tabular-nums ordinal oldstyle-nums diagonal-fractions; }
+t1116 { font-variant-numeric: tabular-nums ordinal diagonal-fractions oldstyle-nums; }
+t1117 { font-variant-numeric: diagonal-fractions oldstyle-nums tabular-nums ordinal; }
+t1118 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal tabular-nums; }
+t1119 { font-variant-numeric: diagonal-fractions tabular-nums oldstyle-nums ordinal; }
+t1120 { font-variant-numeric: diagonal-fractions tabular-nums ordinal oldstyle-nums; }
+t1121 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums tabular-nums; }
+t1122 { font-variant-numeric: diagonal-fractions ordinal tabular-nums oldstyle-nums; }
+t1123 { font-variant-numeric: ordinal oldstyle-nums tabular-nums diagonal-fractions; }
+t1124 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions tabular-nums; }
+t1125 { font-variant-numeric: ordinal tabular-nums oldstyle-nums diagonal-fractions; }
+t1126 { font-variant-numeric: ordinal tabular-nums diagonal-fractions oldstyle-nums; }
+t1127 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums tabular-nums; }
+t1128 { font-variant-numeric: ordinal diagonal-fractions tabular-nums oldstyle-nums; }
+t1129 { font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal; }
+t1130 { font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal; }
+t1131 { font-variant-numeric: oldstyle-nums stacked-fractions tabular-nums ordinal; }
+t1132 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal tabular-nums; }
+t1133 { font-variant-numeric: oldstyle-nums ordinal tabular-nums stacked-fractions; }
+t1134 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions tabular-nums; }
+t1135 { font-variant-numeric: tabular-nums oldstyle-nums stacked-fractions ordinal; }
+t1136 { font-variant-numeric: tabular-nums oldstyle-nums ordinal stacked-fractions; }
+t1137 { font-variant-numeric: tabular-nums stacked-fractions oldstyle-nums ordinal; }
+t1138 { font-variant-numeric: tabular-nums stacked-fractions ordinal oldstyle-nums; }
+t1139 { font-variant-numeric: tabular-nums ordinal oldstyle-nums stacked-fractions; }
+t1140 { font-variant-numeric: tabular-nums ordinal stacked-fractions oldstyle-nums; }
+t1141 { font-variant-numeric: stacked-fractions oldstyle-nums tabular-nums ordinal; }
+t1142 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal tabular-nums; }
+t1143 { font-variant-numeric: stacked-fractions tabular-nums oldstyle-nums ordinal; }
+t1144 { font-variant-numeric: stacked-fractions tabular-nums ordinal oldstyle-nums; }
+t1145 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums tabular-nums; }
+t1146 { font-variant-numeric: stacked-fractions ordinal tabular-nums oldstyle-nums; }
+t1147 { font-variant-numeric: ordinal oldstyle-nums tabular-nums stacked-fractions; }
+t1148 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions tabular-nums; }
+t1149 { font-variant-numeric: ordinal tabular-nums oldstyle-nums stacked-fractions; }
+t1150 { font-variant-numeric: ordinal tabular-nums stacked-fractions oldstyle-nums; }
+t1151 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums tabular-nums; }
+t1152 { font-variant-numeric: ordinal stacked-fractions tabular-nums oldstyle-nums; }
+t1153 { font-variant-numeric: lining-nums proportional-nums diagonal-fractions slashed-zero; }
+t1154 { font-variant-numeric: lining-nums proportional-nums diagonal-fractions slashed-zero; }
+t1155 { font-variant-numeric: lining-nums diagonal-fractions proportional-nums slashed-zero; }
+t1156 { font-variant-numeric: lining-nums diagonal-fractions slashed-zero proportional-nums; }
+t1157 { font-variant-numeric: lining-nums slashed-zero proportional-nums diagonal-fractions; }
+t1158 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions proportional-nums; }
+t1159 { font-variant-numeric: proportional-nums lining-nums diagonal-fractions slashed-zero; }
+t1160 { font-variant-numeric: proportional-nums lining-nums slashed-zero diagonal-fractions; }
+t1161 { font-variant-numeric: proportional-nums diagonal-fractions lining-nums slashed-zero; }
+t1162 { font-variant-numeric: proportional-nums diagonal-fractions slashed-zero lining-nums; }
+t1163 { font-variant-numeric: proportional-nums slashed-zero lining-nums diagonal-fractions; }
+t1164 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions lining-nums; }
+t1165 { font-variant-numeric: diagonal-fractions lining-nums proportional-nums slashed-zero; }
+t1166 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero proportional-nums; }
+t1167 { font-variant-numeric: diagonal-fractions proportional-nums lining-nums slashed-zero; }
+t1168 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero lining-nums; }
+t1169 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums proportional-nums; }
+t1170 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums lining-nums; }
+t1171 { font-variant-numeric: slashed-zero lining-nums proportional-nums diagonal-fractions; }
+t1172 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions proportional-nums; }
+t1173 { font-variant-numeric: slashed-zero proportional-nums lining-nums diagonal-fractions; }
+t1174 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions lining-nums; }
+t1175 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums proportional-nums; }
+t1176 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums lining-nums; }
+t1177 { font-variant-numeric: lining-nums proportional-nums stacked-fractions slashed-zero; }
+t1178 { font-variant-numeric: lining-nums proportional-nums stacked-fractions slashed-zero; }
+t1179 { font-variant-numeric: lining-nums stacked-fractions proportional-nums slashed-zero; }
+t1180 { font-variant-numeric: lining-nums stacked-fractions slashed-zero proportional-nums; }
+t1181 { font-variant-numeric: lining-nums slashed-zero proportional-nums stacked-fractions; }
+t1182 { font-variant-numeric: lining-nums slashed-zero stacked-fractions proportional-nums; }
+t1183 { font-variant-numeric: proportional-nums lining-nums stacked-fractions slashed-zero; }
+t1184 { font-variant-numeric: proportional-nums lining-nums slashed-zero stacked-fractions; }
+t1185 { font-variant-numeric: proportional-nums stacked-fractions lining-nums slashed-zero; }
+t1186 { font-variant-numeric: proportional-nums stacked-fractions slashed-zero lining-nums; }
+t1187 { font-variant-numeric: proportional-nums slashed-zero lining-nums stacked-fractions; }
+t1188 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions lining-nums; }
+t1189 { font-variant-numeric: stacked-fractions lining-nums proportional-nums slashed-zero; }
+t1190 { font-variant-numeric: stacked-fractions lining-nums slashed-zero proportional-nums; }
+t1191 { font-variant-numeric: stacked-fractions proportional-nums lining-nums slashed-zero; }
+t1192 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero lining-nums; }
+t1193 { font-variant-numeric: stacked-fractions slashed-zero lining-nums proportional-nums; }
+t1194 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums lining-nums; }
+t1195 { font-variant-numeric: slashed-zero lining-nums proportional-nums stacked-fractions; }
+t1196 { font-variant-numeric: slashed-zero lining-nums stacked-fractions proportional-nums; }
+t1197 { font-variant-numeric: slashed-zero proportional-nums lining-nums stacked-fractions; }
+t1198 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions lining-nums; }
+t1199 { font-variant-numeric: slashed-zero stacked-fractions lining-nums proportional-nums; }
+t1200 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums lining-nums; }
+t1201 { font-variant-numeric: lining-nums tabular-nums diagonal-fractions slashed-zero; }
+t1202 { font-variant-numeric: lining-nums tabular-nums diagonal-fractions slashed-zero; }
+t1203 { font-variant-numeric: lining-nums diagonal-fractions tabular-nums slashed-zero; }
+t1204 { font-variant-numeric: lining-nums diagonal-fractions slashed-zero tabular-nums; }
+t1205 { font-variant-numeric: lining-nums slashed-zero tabular-nums diagonal-fractions; }
+t1206 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions tabular-nums; }
+t1207 { font-variant-numeric: tabular-nums lining-nums diagonal-fractions slashed-zero; }
+t1208 { font-variant-numeric: tabular-nums lining-nums slashed-zero diagonal-fractions; }
+t1209 { font-variant-numeric: tabular-nums diagonal-fractions lining-nums slashed-zero; }
+t1210 { font-variant-numeric: tabular-nums diagonal-fractions slashed-zero lining-nums; }
+t1211 { font-variant-numeric: tabular-nums slashed-zero lining-nums diagonal-fractions; }
+t1212 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions lining-nums; }
+t1213 { font-variant-numeric: diagonal-fractions lining-nums tabular-nums slashed-zero; }
+t1214 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero tabular-nums; }
+t1215 { font-variant-numeric: diagonal-fractions tabular-nums lining-nums slashed-zero; }
+t1216 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero lining-nums; }
+t1217 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums tabular-nums; }
+t1218 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums lining-nums; }
+t1219 { font-variant-numeric: slashed-zero lining-nums tabular-nums diagonal-fractions; }
+t1220 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions tabular-nums; }
+t1221 { font-variant-numeric: slashed-zero tabular-nums lining-nums diagonal-fractions; }
+t1222 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions lining-nums; }
+t1223 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums tabular-nums; }
+t1224 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums lining-nums; }
+t1225 { font-variant-numeric: lining-nums tabular-nums stacked-fractions slashed-zero; }
+t1226 { font-variant-numeric: lining-nums tabular-nums stacked-fractions slashed-zero; }
+t1227 { font-variant-numeric: lining-nums stacked-fractions tabular-nums slashed-zero; }
+t1228 { font-variant-numeric: lining-nums stacked-fractions slashed-zero tabular-nums; }
+t1229 { font-variant-numeric: lining-nums slashed-zero tabular-nums stacked-fractions; }
+t1230 { font-variant-numeric: lining-nums slashed-zero stacked-fractions tabular-nums; }
+t1231 { font-variant-numeric: tabular-nums lining-nums stacked-fractions slashed-zero; }
+t1232 { font-variant-numeric: tabular-nums lining-nums slashed-zero stacked-fractions; }
+t1233 { font-variant-numeric: tabular-nums stacked-fractions lining-nums slashed-zero; }
+t1234 { font-variant-numeric: tabular-nums stacked-fractions slashed-zero lining-nums; }
+t1235 { font-variant-numeric: tabular-nums slashed-zero lining-nums stacked-fractions; }
+t1236 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions lining-nums; }
+t1237 { font-variant-numeric: stacked-fractions lining-nums tabular-nums slashed-zero; }
+t1238 { font-variant-numeric: stacked-fractions lining-nums slashed-zero tabular-nums; }
+t1239 { font-variant-numeric: stacked-fractions tabular-nums lining-nums slashed-zero; }
+t1240 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero lining-nums; }
+t1241 { font-variant-numeric: stacked-fractions slashed-zero lining-nums tabular-nums; }
+t1242 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums lining-nums; }
+t1243 { font-variant-numeric: slashed-zero lining-nums tabular-nums stacked-fractions; }
+t1244 { font-variant-numeric: slashed-zero lining-nums stacked-fractions tabular-nums; }
+t1245 { font-variant-numeric: slashed-zero tabular-nums lining-nums stacked-fractions; }
+t1246 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions lining-nums; }
+t1247 { font-variant-numeric: slashed-zero stacked-fractions lining-nums tabular-nums; }
+t1248 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums lining-nums; }
+t1249 { font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions slashed-zero; }
+t1250 { font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions slashed-zero; }
+t1251 { font-variant-numeric: oldstyle-nums diagonal-fractions proportional-nums slashed-zero; }
+t1252 { font-variant-numeric: oldstyle-nums diagonal-fractions slashed-zero proportional-nums; }
+t1253 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums diagonal-fractions; }
+t1254 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions proportional-nums; }
+t1255 { font-variant-numeric: proportional-nums oldstyle-nums diagonal-fractions slashed-zero; }
+t1256 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero diagonal-fractions; }
+t1257 { font-variant-numeric: proportional-nums diagonal-fractions oldstyle-nums slashed-zero; }
+t1258 { font-variant-numeric: proportional-nums diagonal-fractions slashed-zero oldstyle-nums; }
+t1259 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums diagonal-fractions; }
+t1260 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions oldstyle-nums; }
+t1261 { font-variant-numeric: diagonal-fractions oldstyle-nums proportional-nums slashed-zero; }
+t1262 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero proportional-nums; }
+t1263 { font-variant-numeric: diagonal-fractions proportional-nums oldstyle-nums slashed-zero; }
+t1264 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero oldstyle-nums; }
+t1265 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums proportional-nums; }
+t1266 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums oldstyle-nums; }
+t1267 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums diagonal-fractions; }
+t1268 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions proportional-nums; }
+t1269 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums diagonal-fractions; }
+t1270 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions oldstyle-nums; }
+t1271 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums proportional-nums; }
+t1272 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums oldstyle-nums; }
+t1273 { font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions slashed-zero; }
+t1274 { font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions slashed-zero; }
+t1275 { font-variant-numeric: oldstyle-nums stacked-fractions proportional-nums slashed-zero; }
+t1276 { font-variant-numeric: oldstyle-nums stacked-fractions slashed-zero proportional-nums; }
+t1277 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums stacked-fractions; }
+t1278 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions proportional-nums; }
+t1279 { font-variant-numeric: proportional-nums oldstyle-nums stacked-fractions slashed-zero; }
+t1280 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero stacked-fractions; }
+t1281 { font-variant-numeric: proportional-nums stacked-fractions oldstyle-nums slashed-zero; }
+t1282 { font-variant-numeric: proportional-nums stacked-fractions slashed-zero oldstyle-nums; }
+t1283 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums stacked-fractions; }
+t1284 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions oldstyle-nums; }
+t1285 { font-variant-numeric: stacked-fractions oldstyle-nums proportional-nums slashed-zero; }
+t1286 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero proportional-nums; }
+t1287 { font-variant-numeric: stacked-fractions proportional-nums oldstyle-nums slashed-zero; }
+t1288 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero oldstyle-nums; }
+t1289 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums proportional-nums; }
+t1290 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums oldstyle-nums; }
+t1291 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums stacked-fractions; }
+t1292 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions proportional-nums; }
+t1293 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums stacked-fractions; }
+t1294 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions oldstyle-nums; }
+t1295 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums proportional-nums; }
+t1296 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums oldstyle-nums; }
+t1297 { font-variant-numeric: oldstyle-nums tabular-nums diagonal-fractions slashed-zero; }
+t1298 { font-variant-numeric: oldstyle-nums tabular-nums diagonal-fractions slashed-zero; }
+t1299 { font-variant-numeric: oldstyle-nums diagonal-fractions tabular-nums slashed-zero; }
+t1300 { font-variant-numeric: oldstyle-nums diagonal-fractions slashed-zero tabular-nums; }
+t1301 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums diagonal-fractions; }
+t1302 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions tabular-nums; }
+t1303 { font-variant-numeric: tabular-nums oldstyle-nums diagonal-fractions slashed-zero; }
+t1304 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero diagonal-fractions; }
+t1305 { font-variant-numeric: tabular-nums diagonal-fractions oldstyle-nums slashed-zero; }
+t1306 { font-variant-numeric: tabular-nums diagonal-fractions slashed-zero oldstyle-nums; }
+t1307 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums diagonal-fractions; }
+t1308 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions oldstyle-nums; }
+t1309 { font-variant-numeric: diagonal-fractions oldstyle-nums tabular-nums slashed-zero; }
+t1310 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero tabular-nums; }
+t1311 { font-variant-numeric: diagonal-fractions tabular-nums oldstyle-nums slashed-zero; }
+t1312 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero oldstyle-nums; }
+t1313 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums tabular-nums; }
+t1314 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums oldstyle-nums; }
+t1315 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums diagonal-fractions; }
+t1316 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions tabular-nums; }
+t1317 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums diagonal-fractions; }
+t1318 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions oldstyle-nums; }
+t1319 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums tabular-nums; }
+t1320 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums oldstyle-nums; }
+t1321 { font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions slashed-zero; }
+t1322 { font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions slashed-zero; }
+t1323 { font-variant-numeric: oldstyle-nums stacked-fractions tabular-nums slashed-zero; }
+t1324 { font-variant-numeric: oldstyle-nums stacked-fractions slashed-zero tabular-nums; }
+t1325 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums stacked-fractions; }
+t1326 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions tabular-nums; }
+t1327 { font-variant-numeric: tabular-nums oldstyle-nums stacked-fractions slashed-zero; }
+t1328 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero stacked-fractions; }
+t1329 { font-variant-numeric: tabular-nums stacked-fractions oldstyle-nums slashed-zero; }
+t1330 { font-variant-numeric: tabular-nums stacked-fractions slashed-zero oldstyle-nums; }
+t1331 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums stacked-fractions; }
+t1332 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions oldstyle-nums; }
+t1333 { font-variant-numeric: stacked-fractions oldstyle-nums tabular-nums slashed-zero; }
+t1334 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero tabular-nums; }
+t1335 { font-variant-numeric: stacked-fractions tabular-nums oldstyle-nums slashed-zero; }
+t1336 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero oldstyle-nums; }
+t1337 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums tabular-nums; }
+t1338 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums oldstyle-nums; }
+t1339 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums stacked-fractions; }
+t1340 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions tabular-nums; }
+t1341 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums stacked-fractions; }
+t1342 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions oldstyle-nums; }
+t1343 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums tabular-nums; }
+t1344 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums oldstyle-nums; }
+t1345 { font-variant-numeric: lining-nums proportional-nums ordinal slashed-zero; }
+t1346 { font-variant-numeric: lining-nums proportional-nums ordinal slashed-zero; }
+t1347 { font-variant-numeric: lining-nums ordinal proportional-nums slashed-zero; }
+t1348 { font-variant-numeric: lining-nums ordinal slashed-zero proportional-nums; }
+t1349 { font-variant-numeric: lining-nums slashed-zero proportional-nums ordinal; }
+t1350 { font-variant-numeric: lining-nums slashed-zero ordinal proportional-nums; }
+t1351 { font-variant-numeric: proportional-nums lining-nums ordinal slashed-zero; }
+t1352 { font-variant-numeric: proportional-nums lining-nums slashed-zero ordinal; }
+t1353 { font-variant-numeric: proportional-nums ordinal lining-nums slashed-zero; }
+t1354 { font-variant-numeric: proportional-nums ordinal slashed-zero lining-nums; }
+t1355 { font-variant-numeric: proportional-nums slashed-zero lining-nums ordinal; }
+t1356 { font-variant-numeric: proportional-nums slashed-zero ordinal lining-nums; }
+t1357 { font-variant-numeric: ordinal lining-nums proportional-nums slashed-zero; }
+t1358 { font-variant-numeric: ordinal lining-nums slashed-zero proportional-nums; }
+t1359 { font-variant-numeric: ordinal proportional-nums lining-nums slashed-zero; }
+t1360 { font-variant-numeric: ordinal proportional-nums slashed-zero lining-nums; }
+t1361 { font-variant-numeric: ordinal slashed-zero lining-nums proportional-nums; }
+t1362 { font-variant-numeric: ordinal slashed-zero proportional-nums lining-nums; }
+t1363 { font-variant-numeric: slashed-zero lining-nums proportional-nums ordinal; }
+t1364 { font-variant-numeric: slashed-zero lining-nums ordinal proportional-nums; }
+t1365 { font-variant-numeric: slashed-zero proportional-nums lining-nums ordinal; }
+t1366 { font-variant-numeric: slashed-zero proportional-nums ordinal lining-nums; }
+t1367 { font-variant-numeric: slashed-zero ordinal lining-nums proportional-nums; }
+t1368 { font-variant-numeric: slashed-zero ordinal proportional-nums lining-nums; }
+t1369 { font-variant-numeric: lining-nums tabular-nums ordinal slashed-zero; }
+t1370 { font-variant-numeric: lining-nums tabular-nums ordinal slashed-zero; }
+t1371 { font-variant-numeric: lining-nums ordinal tabular-nums slashed-zero; }
+t1372 { font-variant-numeric: lining-nums ordinal slashed-zero tabular-nums; }
+t1373 { font-variant-numeric: lining-nums slashed-zero tabular-nums ordinal; }
+t1374 { font-variant-numeric: lining-nums slashed-zero ordinal tabular-nums; }
+t1375 { font-variant-numeric: tabular-nums lining-nums ordinal slashed-zero; }
+t1376 { font-variant-numeric: tabular-nums lining-nums slashed-zero ordinal; }
+t1377 { font-variant-numeric: tabular-nums ordinal lining-nums slashed-zero; }
+t1378 { font-variant-numeric: tabular-nums ordinal slashed-zero lining-nums; }
+t1379 { font-variant-numeric: tabular-nums slashed-zero lining-nums ordinal; }
+t1380 { font-variant-numeric: tabular-nums slashed-zero ordinal lining-nums; }
+t1381 { font-variant-numeric: ordinal lining-nums tabular-nums slashed-zero; }
+t1382 { font-variant-numeric: ordinal lining-nums slashed-zero tabular-nums; }
+t1383 { font-variant-numeric: ordinal tabular-nums lining-nums slashed-zero; }
+t1384 { font-variant-numeric: ordinal tabular-nums slashed-zero lining-nums; }
+t1385 { font-variant-numeric: ordinal slashed-zero lining-nums tabular-nums; }
+t1386 { font-variant-numeric: ordinal slashed-zero tabular-nums lining-nums; }
+t1387 { font-variant-numeric: slashed-zero lining-nums tabular-nums ordinal; }
+t1388 { font-variant-numeric: slashed-zero lining-nums ordinal tabular-nums; }
+t1389 { font-variant-numeric: slashed-zero tabular-nums lining-nums ordinal; }
+t1390 { font-variant-numeric: slashed-zero tabular-nums ordinal lining-nums; }
+t1391 { font-variant-numeric: slashed-zero ordinal lining-nums tabular-nums; }
+t1392 { font-variant-numeric: slashed-zero ordinal tabular-nums lining-nums; }
+t1393 { font-variant-numeric: oldstyle-nums proportional-nums ordinal slashed-zero; }
+t1394 { font-variant-numeric: oldstyle-nums proportional-nums ordinal slashed-zero; }
+t1395 { font-variant-numeric: oldstyle-nums ordinal proportional-nums slashed-zero; }
+t1396 { font-variant-numeric: oldstyle-nums ordinal slashed-zero proportional-nums; }
+t1397 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums ordinal; }
+t1398 { font-variant-numeric: oldstyle-nums slashed-zero ordinal proportional-nums; }
+t1399 { font-variant-numeric: proportional-nums oldstyle-nums ordinal slashed-zero; }
+t1400 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero ordinal; }
+t1401 { font-variant-numeric: proportional-nums ordinal oldstyle-nums slashed-zero; }
+t1402 { font-variant-numeric: proportional-nums ordinal slashed-zero oldstyle-nums; }
+t1403 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums ordinal; }
+t1404 { font-variant-numeric: proportional-nums slashed-zero ordinal oldstyle-nums; }
+t1405 { font-variant-numeric: ordinal oldstyle-nums proportional-nums slashed-zero; }
+t1406 { font-variant-numeric: ordinal oldstyle-nums slashed-zero proportional-nums; }
+t1407 { font-variant-numeric: ordinal proportional-nums oldstyle-nums slashed-zero; }
+t1408 { font-variant-numeric: ordinal proportional-nums slashed-zero oldstyle-nums; }
+t1409 { font-variant-numeric: ordinal slashed-zero oldstyle-nums proportional-nums; }
+t1410 { font-variant-numeric: ordinal slashed-zero proportional-nums oldstyle-nums; }
+t1411 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums ordinal; }
+t1412 { font-variant-numeric: slashed-zero oldstyle-nums ordinal proportional-nums; }
+t1413 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums ordinal; }
+t1414 { font-variant-numeric: slashed-zero proportional-nums ordinal oldstyle-nums; }
+t1415 { font-variant-numeric: slashed-zero ordinal oldstyle-nums proportional-nums; }
+t1416 { font-variant-numeric: slashed-zero ordinal proportional-nums oldstyle-nums; }
+t1417 { font-variant-numeric: oldstyle-nums tabular-nums ordinal slashed-zero; }
+t1418 { font-variant-numeric: oldstyle-nums tabular-nums ordinal slashed-zero; }
+t1419 { font-variant-numeric: oldstyle-nums ordinal tabular-nums slashed-zero; }
+t1420 { font-variant-numeric: oldstyle-nums ordinal slashed-zero tabular-nums; }
+t1421 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums ordinal; }
+t1422 { font-variant-numeric: oldstyle-nums slashed-zero ordinal tabular-nums; }
+t1423 { font-variant-numeric: tabular-nums oldstyle-nums ordinal slashed-zero; }
+t1424 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero ordinal; }
+t1425 { font-variant-numeric: tabular-nums ordinal oldstyle-nums slashed-zero; }
+t1426 { font-variant-numeric: tabular-nums ordinal slashed-zero oldstyle-nums; }
+t1427 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums ordinal; }
+t1428 { font-variant-numeric: tabular-nums slashed-zero ordinal oldstyle-nums; }
+t1429 { font-variant-numeric: ordinal oldstyle-nums tabular-nums slashed-zero; }
+t1430 { font-variant-numeric: ordinal oldstyle-nums slashed-zero tabular-nums; }
+t1431 { font-variant-numeric: ordinal tabular-nums oldstyle-nums slashed-zero; }
+t1432 { font-variant-numeric: ordinal tabular-nums slashed-zero oldstyle-nums; }
+t1433 { font-variant-numeric: ordinal slashed-zero oldstyle-nums tabular-nums; }
+t1434 { font-variant-numeric: ordinal slashed-zero tabular-nums oldstyle-nums; }
+t1435 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums ordinal; }
+t1436 { font-variant-numeric: slashed-zero oldstyle-nums ordinal tabular-nums; }
+t1437 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums ordinal; }
+t1438 { font-variant-numeric: slashed-zero tabular-nums ordinal oldstyle-nums; }
+t1439 { font-variant-numeric: slashed-zero ordinal oldstyle-nums tabular-nums; }
+t1440 { font-variant-numeric: slashed-zero ordinal tabular-nums oldstyle-nums; }
+t1441 { font-variant-numeric: lining-nums diagonal-fractions ordinal slashed-zero; }
+t1442 { font-variant-numeric: lining-nums diagonal-fractions ordinal slashed-zero; }
+t1443 { font-variant-numeric: lining-nums ordinal diagonal-fractions slashed-zero; }
+t1444 { font-variant-numeric: lining-nums ordinal slashed-zero diagonal-fractions; }
+t1445 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions ordinal; }
+t1446 { font-variant-numeric: lining-nums slashed-zero ordinal diagonal-fractions; }
+t1447 { font-variant-numeric: diagonal-fractions lining-nums ordinal slashed-zero; }
+t1448 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero ordinal; }
+t1449 { font-variant-numeric: diagonal-fractions ordinal lining-nums slashed-zero; }
+t1450 { font-variant-numeric: diagonal-fractions ordinal slashed-zero lining-nums; }
+t1451 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums ordinal; }
+t1452 { font-variant-numeric: diagonal-fractions slashed-zero ordinal lining-nums; }
+t1453 { font-variant-numeric: ordinal lining-nums diagonal-fractions slashed-zero; }
+t1454 { font-variant-numeric: ordinal lining-nums slashed-zero diagonal-fractions; }
+t1455 { font-variant-numeric: ordinal diagonal-fractions lining-nums slashed-zero; }
+t1456 { font-variant-numeric: ordinal diagonal-fractions slashed-zero lining-nums; }
+t1457 { font-variant-numeric: ordinal slashed-zero lining-nums diagonal-fractions; }
+t1458 { font-variant-numeric: ordinal slashed-zero diagonal-fractions lining-nums; }
+t1459 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions ordinal; }
+t1460 { font-variant-numeric: slashed-zero lining-nums ordinal diagonal-fractions; }
+t1461 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums ordinal; }
+t1462 { font-variant-numeric: slashed-zero diagonal-fractions ordinal lining-nums; }
+t1463 { font-variant-numeric: slashed-zero ordinal lining-nums diagonal-fractions; }
+t1464 { font-variant-numeric: slashed-zero ordinal diagonal-fractions lining-nums; }
+t1465 { font-variant-numeric: lining-nums stacked-fractions ordinal slashed-zero; }
+t1466 { font-variant-numeric: lining-nums stacked-fractions ordinal slashed-zero; }
+t1467 { font-variant-numeric: lining-nums ordinal stacked-fractions slashed-zero; }
+t1468 { font-variant-numeric: lining-nums ordinal slashed-zero stacked-fractions; }
+t1469 { font-variant-numeric: lining-nums slashed-zero stacked-fractions ordinal; }
+t1470 { font-variant-numeric: lining-nums slashed-zero ordinal stacked-fractions; }
+t1471 { font-variant-numeric: stacked-fractions lining-nums ordinal slashed-zero; }
+t1472 { font-variant-numeric: stacked-fractions lining-nums slashed-zero ordinal; }
+t1473 { font-variant-numeric: stacked-fractions ordinal lining-nums slashed-zero; }
+t1474 { font-variant-numeric: stacked-fractions ordinal slashed-zero lining-nums; }
+t1475 { font-variant-numeric: stacked-fractions slashed-zero lining-nums ordinal; }
+t1476 { font-variant-numeric: stacked-fractions slashed-zero ordinal lining-nums; }
+t1477 { font-variant-numeric: ordinal lining-nums stacked-fractions slashed-zero; }
+t1478 { font-variant-numeric: ordinal lining-nums slashed-zero stacked-fractions; }
+t1479 { font-variant-numeric: ordinal stacked-fractions lining-nums slashed-zero; }
+t1480 { font-variant-numeric: ordinal stacked-fractions slashed-zero lining-nums; }
+t1481 { font-variant-numeric: ordinal slashed-zero lining-nums stacked-fractions; }
+t1482 { font-variant-numeric: ordinal slashed-zero stacked-fractions lining-nums; }
+t1483 { font-variant-numeric: slashed-zero lining-nums stacked-fractions ordinal; }
+t1484 { font-variant-numeric: slashed-zero lining-nums ordinal stacked-fractions; }
+t1485 { font-variant-numeric: slashed-zero stacked-fractions lining-nums ordinal; }
+t1486 { font-variant-numeric: slashed-zero stacked-fractions ordinal lining-nums; }
+t1487 { font-variant-numeric: slashed-zero ordinal lining-nums stacked-fractions; }
+t1488 { font-variant-numeric: slashed-zero ordinal stacked-fractions lining-nums; }
+t1489 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal slashed-zero; }
+t1490 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal slashed-zero; }
+t1491 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions slashed-zero; }
+t1492 { font-variant-numeric: oldstyle-nums ordinal slashed-zero diagonal-fractions; }
+t1493 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions ordinal; }
+t1494 { font-variant-numeric: oldstyle-nums slashed-zero ordinal diagonal-fractions; }
+t1495 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal slashed-zero; }
+t1496 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero ordinal; }
+t1497 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums slashed-zero; }
+t1498 { font-variant-numeric: diagonal-fractions ordinal slashed-zero oldstyle-nums; }
+t1499 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums ordinal; }
+t1500 { font-variant-numeric: diagonal-fractions slashed-zero ordinal oldstyle-nums; }
+t1501 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions slashed-zero; }
+t1502 { font-variant-numeric: ordinal oldstyle-nums slashed-zero diagonal-fractions; }
+t1503 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums slashed-zero; }
+t1504 { font-variant-numeric: ordinal diagonal-fractions slashed-zero oldstyle-nums; }
+t1505 { font-variant-numeric: ordinal slashed-zero oldstyle-nums diagonal-fractions; }
+t1506 { font-variant-numeric: ordinal slashed-zero diagonal-fractions oldstyle-nums; }
+t1507 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions ordinal; }
+t1508 { font-variant-numeric: slashed-zero oldstyle-nums ordinal diagonal-fractions; }
+t1509 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums ordinal; }
+t1510 { font-variant-numeric: slashed-zero diagonal-fractions ordinal oldstyle-nums; }
+t1511 { font-variant-numeric: slashed-zero ordinal oldstyle-nums diagonal-fractions; }
+t1512 { font-variant-numeric: slashed-zero ordinal diagonal-fractions oldstyle-nums; }
+t1513 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal slashed-zero; }
+t1514 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal slashed-zero; }
+t1515 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions slashed-zero; }
+t1516 { font-variant-numeric: oldstyle-nums ordinal slashed-zero stacked-fractions; }
+t1517 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions ordinal; }
+t1518 { font-variant-numeric: oldstyle-nums slashed-zero ordinal stacked-fractions; }
+t1519 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal slashed-zero; }
+t1520 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero ordinal; }
+t1521 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums slashed-zero; }
+t1522 { font-variant-numeric: stacked-fractions ordinal slashed-zero oldstyle-nums; }
+t1523 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums ordinal; }
+t1524 { font-variant-numeric: stacked-fractions slashed-zero ordinal oldstyle-nums; }
+t1525 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions slashed-zero; }
+t1526 { font-variant-numeric: ordinal oldstyle-nums slashed-zero stacked-fractions; }
+t1527 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums slashed-zero; }
+t1528 { font-variant-numeric: ordinal stacked-fractions slashed-zero oldstyle-nums; }
+t1529 { font-variant-numeric: ordinal slashed-zero oldstyle-nums stacked-fractions; }
+t1530 { font-variant-numeric: ordinal slashed-zero stacked-fractions oldstyle-nums; }
+t1531 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions ordinal; }
+t1532 { font-variant-numeric: slashed-zero oldstyle-nums ordinal stacked-fractions; }
+t1533 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums ordinal; }
+t1534 { font-variant-numeric: slashed-zero stacked-fractions ordinal oldstyle-nums; }
+t1535 { font-variant-numeric: slashed-zero ordinal oldstyle-nums stacked-fractions; }
+t1536 { font-variant-numeric: slashed-zero ordinal stacked-fractions oldstyle-nums; }
+t1537 { font-variant-numeric: proportional-nums diagonal-fractions ordinal slashed-zero; }
+t1538 { font-variant-numeric: proportional-nums diagonal-fractions ordinal slashed-zero; }
+t1539 { font-variant-numeric: proportional-nums ordinal diagonal-fractions slashed-zero; }
+t1540 { font-variant-numeric: proportional-nums ordinal slashed-zero diagonal-fractions; }
+t1541 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions ordinal; }
+t1542 { font-variant-numeric: proportional-nums slashed-zero ordinal diagonal-fractions; }
+t1543 { font-variant-numeric: diagonal-fractions proportional-nums ordinal slashed-zero; }
+t1544 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero ordinal; }
+t1545 { font-variant-numeric: diagonal-fractions ordinal proportional-nums slashed-zero; }
+t1546 { font-variant-numeric: diagonal-fractions ordinal slashed-zero proportional-nums; }
+t1547 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums ordinal; }
+t1548 { font-variant-numeric: diagonal-fractions slashed-zero ordinal proportional-nums; }
+t1549 { font-variant-numeric: ordinal proportional-nums diagonal-fractions slashed-zero; }
+t1550 { font-variant-numeric: ordinal proportional-nums slashed-zero diagonal-fractions; }
+t1551 { font-variant-numeric: ordinal diagonal-fractions proportional-nums slashed-zero; }
+t1552 { font-variant-numeric: ordinal diagonal-fractions slashed-zero proportional-nums; }
+t1553 { font-variant-numeric: ordinal slashed-zero proportional-nums diagonal-fractions; }
+t1554 { font-variant-numeric: ordinal slashed-zero diagonal-fractions proportional-nums; }
+t1555 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions ordinal; }
+t1556 { font-variant-numeric: slashed-zero proportional-nums ordinal diagonal-fractions; }
+t1557 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums ordinal; }
+t1558 { font-variant-numeric: slashed-zero diagonal-fractions ordinal proportional-nums; }
+t1559 { font-variant-numeric: slashed-zero ordinal proportional-nums diagonal-fractions; }
+t1560 { font-variant-numeric: slashed-zero ordinal diagonal-fractions proportional-nums; }
+t1561 { font-variant-numeric: proportional-nums stacked-fractions ordinal slashed-zero; }
+t1562 { font-variant-numeric: proportional-nums stacked-fractions ordinal slashed-zero; }
+t1563 { font-variant-numeric: proportional-nums ordinal stacked-fractions slashed-zero; }
+t1564 { font-variant-numeric: proportional-nums ordinal slashed-zero stacked-fractions; }
+t1565 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions ordinal; }
+t1566 { font-variant-numeric: proportional-nums slashed-zero ordinal stacked-fractions; }
+t1567 { font-variant-numeric: stacked-fractions proportional-nums ordinal slashed-zero; }
+t1568 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero ordinal; }
+t1569 { font-variant-numeric: stacked-fractions ordinal proportional-nums slashed-zero; }
+t1570 { font-variant-numeric: stacked-fractions ordinal slashed-zero proportional-nums; }
+t1571 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums ordinal; }
+t1572 { font-variant-numeric: stacked-fractions slashed-zero ordinal proportional-nums; }
+t1573 { font-variant-numeric: ordinal proportional-nums stacked-fractions slashed-zero; }
+t1574 { font-variant-numeric: ordinal proportional-nums slashed-zero stacked-fractions; }
+t1575 { font-variant-numeric: ordinal stacked-fractions proportional-nums slashed-zero; }
+t1576 { font-variant-numeric: ordinal stacked-fractions slashed-zero proportional-nums; }
+t1577 { font-variant-numeric: ordinal slashed-zero proportional-nums stacked-fractions; }
+t1578 { font-variant-numeric: ordinal slashed-zero stacked-fractions proportional-nums; }
+t1579 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions ordinal; }
+t1580 { font-variant-numeric: slashed-zero proportional-nums ordinal stacked-fractions; }
+t1581 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums ordinal; }
+t1582 { font-variant-numeric: slashed-zero stacked-fractions ordinal proportional-nums; }
+t1583 { font-variant-numeric: slashed-zero ordinal proportional-nums stacked-fractions; }
+t1584 { font-variant-numeric: slashed-zero ordinal stacked-fractions proportional-nums; }
+t1585 { font-variant-numeric: tabular-nums diagonal-fractions ordinal slashed-zero; }
+t1586 { font-variant-numeric: tabular-nums diagonal-fractions ordinal slashed-zero; }
+t1587 { font-variant-numeric: tabular-nums ordinal diagonal-fractions slashed-zero; }
+t1588 { font-variant-numeric: tabular-nums ordinal slashed-zero diagonal-fractions; }
+t1589 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions ordinal; }
+t1590 { font-variant-numeric: tabular-nums slashed-zero ordinal diagonal-fractions; }
+t1591 { font-variant-numeric: diagonal-fractions tabular-nums ordinal slashed-zero; }
+t1592 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero ordinal; }
+t1593 { font-variant-numeric: diagonal-fractions ordinal tabular-nums slashed-zero; }
+t1594 { font-variant-numeric: diagonal-fractions ordinal slashed-zero tabular-nums; }
+t1595 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums ordinal; }
+t1596 { font-variant-numeric: diagonal-fractions slashed-zero ordinal tabular-nums; }
+t1597 { font-variant-numeric: ordinal tabular-nums diagonal-fractions slashed-zero; }
+t1598 { font-variant-numeric: ordinal tabular-nums slashed-zero diagonal-fractions; }
+t1599 { font-variant-numeric: ordinal diagonal-fractions tabular-nums slashed-zero; }
+t1600 { font-variant-numeric: ordinal diagonal-fractions slashed-zero tabular-nums; }
+t1601 { font-variant-numeric: ordinal slashed-zero tabular-nums diagonal-fractions; }
+t1602 { font-variant-numeric: ordinal slashed-zero diagonal-fractions tabular-nums; }
+t1603 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions ordinal; }
+t1604 { font-variant-numeric: slashed-zero tabular-nums ordinal diagonal-fractions; }
+t1605 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums ordinal; }
+t1606 { font-variant-numeric: slashed-zero diagonal-fractions ordinal tabular-nums; }
+t1607 { font-variant-numeric: slashed-zero ordinal tabular-nums diagonal-fractions; }
+t1608 { font-variant-numeric: slashed-zero ordinal diagonal-fractions tabular-nums; }
+t1609 { font-variant-numeric: tabular-nums stacked-fractions ordinal slashed-zero; }
+t1610 { font-variant-numeric: tabular-nums stacked-fractions ordinal slashed-zero; }
+t1611 { font-variant-numeric: tabular-nums ordinal stacked-fractions slashed-zero; }
+t1612 { font-variant-numeric: tabular-nums ordinal slashed-zero stacked-fractions; }
+t1613 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions ordinal; }
+t1614 { font-variant-numeric: tabular-nums slashed-zero ordinal stacked-fractions; }
+t1615 { font-variant-numeric: stacked-fractions tabular-nums ordinal slashed-zero; }
+t1616 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero ordinal; }
+t1617 { font-variant-numeric: stacked-fractions ordinal tabular-nums slashed-zero; }
+t1618 { font-variant-numeric: stacked-fractions ordinal slashed-zero tabular-nums; }
+t1619 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums ordinal; }
+t1620 { font-variant-numeric: stacked-fractions slashed-zero ordinal tabular-nums; }
+t1621 { font-variant-numeric: ordinal tabular-nums stacked-fractions slashed-zero; }
+t1622 { font-variant-numeric: ordinal tabular-nums slashed-zero stacked-fractions; }
+t1623 { font-variant-numeric: ordinal stacked-fractions tabular-nums slashed-zero; }
+t1624 { font-variant-numeric: ordinal stacked-fractions slashed-zero tabular-nums; }
+t1625 { font-variant-numeric: ordinal slashed-zero tabular-nums stacked-fractions; }
+t1626 { font-variant-numeric: ordinal slashed-zero stacked-fractions tabular-nums; }
+t1627 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions ordinal; }
+t1628 { font-variant-numeric: slashed-zero tabular-nums ordinal stacked-fractions; }
+t1629 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums ordinal; }
+t1630 { font-variant-numeric: slashed-zero stacked-fractions ordinal tabular-nums; }
+t1631 { font-variant-numeric: slashed-zero ordinal tabular-nums stacked-fractions; }
+t1632 { font-variant-numeric: slashed-zero ordinal stacked-fractions tabular-nums; }
+t1633 { font-variant-numeric: lining-nums proportional-nums diagonal-fractions; }
+t1634 { font-variant-numeric: lining-nums diagonal-fractions proportional-nums; }
+t1635 { font-variant-numeric: proportional-nums lining-nums diagonal-fractions; }
+t1636 { font-variant-numeric: proportional-nums diagonal-fractions lining-nums; }
+t1637 { font-variant-numeric: diagonal-fractions lining-nums proportional-nums; }
+t1638 { font-variant-numeric: diagonal-fractions proportional-nums lining-nums; }
+t1639 { font-variant-numeric: lining-nums proportional-nums stacked-fractions; }
+t1640 { font-variant-numeric: lining-nums stacked-fractions proportional-nums; }
+t1641 { font-variant-numeric: proportional-nums lining-nums stacked-fractions; }
+t1642 { font-variant-numeric: proportional-nums stacked-fractions lining-nums; }
+t1643 { font-variant-numeric: stacked-fractions lining-nums proportional-nums; }
+t1644 { font-variant-numeric: stacked-fractions proportional-nums lining-nums; }
+t1645 { font-variant-numeric: lining-nums tabular-nums diagonal-fractions; }
+t1646 { font-variant-numeric: lining-nums diagonal-fractions tabular-nums; }
+t1647 { font-variant-numeric: tabular-nums lining-nums diagonal-fractions; }
+t1648 { font-variant-numeric: tabular-nums diagonal-fractions lining-nums; }
+t1649 { font-variant-numeric: diagonal-fractions lining-nums tabular-nums; }
+t1650 { font-variant-numeric: diagonal-fractions tabular-nums lining-nums; }
+t1651 { font-variant-numeric: lining-nums tabular-nums stacked-fractions; }
+t1652 { font-variant-numeric: lining-nums stacked-fractions tabular-nums; }
+t1653 { font-variant-numeric: tabular-nums lining-nums stacked-fractions; }
+t1654 { font-variant-numeric: tabular-nums stacked-fractions lining-nums; }
+t1655 { font-variant-numeric: stacked-fractions lining-nums tabular-nums; }
+t1656 { font-variant-numeric: stacked-fractions tabular-nums lining-nums; }
+t1657 { font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions; }
+t1658 { font-variant-numeric: oldstyle-nums diagonal-fractions proportional-nums; }
+t1659 { font-variant-numeric: proportional-nums oldstyle-nums diagonal-fractions; }
+t1660 { font-variant-numeric: proportional-nums diagonal-fractions oldstyle-nums; }
+t1661 { font-variant-numeric: diagonal-fractions oldstyle-nums proportional-nums; }
+t1662 { font-variant-numeric: diagonal-fractions proportional-nums oldstyle-nums; }
+t1663 { font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions; }
+t1664 { font-variant-numeric: oldstyle-nums stacked-fractions proportional-nums; }
+t1665 { font-variant-numeric: proportional-nums oldstyle-nums stacked-fractions; }
+t1666 { font-variant-numeric: proportional-nums stacked-fractions oldstyle-nums; }
+t1667 { font-variant-numeric: stacked-fractions oldstyle-nums proportional-nums; }
+t1668 { font-variant-numeric: stacked-fractions proportional-nums oldstyle-nums; }
+t1669 { font-variant-numeric: oldstyle-nums tabular-nums diagonal-fractions; }
+t1670 { font-variant-numeric: oldstyle-nums diagonal-fractions tabular-nums; }
+t1671 { font-variant-numeric: tabular-nums oldstyle-nums diagonal-fractions; }
+t1672 { font-variant-numeric: tabular-nums diagonal-fractions oldstyle-nums; }
+t1673 { font-variant-numeric: diagonal-fractions oldstyle-nums tabular-nums; }
+t1674 { font-variant-numeric: diagonal-fractions tabular-nums oldstyle-nums; }
+t1675 { font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions; }
+t1676 { font-variant-numeric: oldstyle-nums stacked-fractions tabular-nums; }
+t1677 { font-variant-numeric: tabular-nums oldstyle-nums stacked-fractions; }
+t1678 { font-variant-numeric: tabular-nums stacked-fractions oldstyle-nums; }
+t1679 { font-variant-numeric: stacked-fractions oldstyle-nums tabular-nums; }
+t1680 { font-variant-numeric: stacked-fractions tabular-nums oldstyle-nums; }
+t1681 { font-variant-numeric: lining-nums proportional-nums ordinal; }
+t1682 { font-variant-numeric: lining-nums ordinal proportional-nums; }
+t1683 { font-variant-numeric: proportional-nums lining-nums ordinal; }
+t1684 { font-variant-numeric: proportional-nums ordinal lining-nums; }
+t1685 { font-variant-numeric: ordinal lining-nums proportional-nums; }
+t1686 { font-variant-numeric: ordinal proportional-nums lining-nums; }
+t1687 { font-variant-numeric: lining-nums tabular-nums ordinal; }
+t1688 { font-variant-numeric: lining-nums ordinal tabular-nums; }
+t1689 { font-variant-numeric: tabular-nums lining-nums ordinal; }
+t1690 { font-variant-numeric: tabular-nums ordinal lining-nums; }
+t1691 { font-variant-numeric: ordinal lining-nums tabular-nums; }
+t1692 { font-variant-numeric: ordinal tabular-nums lining-nums; }
+t1693 { font-variant-numeric: oldstyle-nums proportional-nums ordinal; }
+t1694 { font-variant-numeric: oldstyle-nums ordinal proportional-nums; }
+t1695 { font-variant-numeric: proportional-nums oldstyle-nums ordinal; }
+t1696 { font-variant-numeric: proportional-nums ordinal oldstyle-nums; }
+t1697 { font-variant-numeric: ordinal oldstyle-nums proportional-nums; }
+t1698 { font-variant-numeric: ordinal proportional-nums oldstyle-nums; }
+t1699 { font-variant-numeric: oldstyle-nums tabular-nums ordinal; }
+t1700 { font-variant-numeric: oldstyle-nums ordinal tabular-nums; }
+t1701 { font-variant-numeric: tabular-nums oldstyle-nums ordinal; }
+t1702 { font-variant-numeric: tabular-nums ordinal oldstyle-nums; }
+t1703 { font-variant-numeric: ordinal oldstyle-nums tabular-nums; }
+t1704 { font-variant-numeric: ordinal tabular-nums oldstyle-nums; }
+t1705 { font-variant-numeric: lining-nums proportional-nums slashed-zero; }
+t1706 { font-variant-numeric: lining-nums slashed-zero proportional-nums; }
+t1707 { font-variant-numeric: proportional-nums lining-nums slashed-zero; }
+t1708 { font-variant-numeric: proportional-nums slashed-zero lining-nums; }
+t1709 { font-variant-numeric: slashed-zero lining-nums proportional-nums; }
+t1710 { font-variant-numeric: slashed-zero proportional-nums lining-nums; }
+t1711 { font-variant-numeric: lining-nums tabular-nums slashed-zero; }
+t1712 { font-variant-numeric: lining-nums slashed-zero tabular-nums; }
+t1713 { font-variant-numeric: tabular-nums lining-nums slashed-zero; }
+t1714 { font-variant-numeric: tabular-nums slashed-zero lining-nums; }
+t1715 { font-variant-numeric: slashed-zero lining-nums tabular-nums; }
+t1716 { font-variant-numeric: slashed-zero tabular-nums lining-nums; }
+t1717 { font-variant-numeric: oldstyle-nums proportional-nums slashed-zero; }
+t1718 { font-variant-numeric: oldstyle-nums slashed-zero proportional-nums; }
+t1719 { font-variant-numeric: proportional-nums oldstyle-nums slashed-zero; }
+t1720 { font-variant-numeric: proportional-nums slashed-zero oldstyle-nums; }
+t1721 { font-variant-numeric: slashed-zero oldstyle-nums proportional-nums; }
+t1722 { font-variant-numeric: slashed-zero proportional-nums oldstyle-nums; }
+t1723 { font-variant-numeric: oldstyle-nums tabular-nums slashed-zero; }
+t1724 { font-variant-numeric: oldstyle-nums slashed-zero tabular-nums; }
+t1725 { font-variant-numeric: tabular-nums oldstyle-nums slashed-zero; }
+t1726 { font-variant-numeric: tabular-nums slashed-zero oldstyle-nums; }
+t1727 { font-variant-numeric: slashed-zero oldstyle-nums tabular-nums; }
+t1728 { font-variant-numeric: slashed-zero tabular-nums oldstyle-nums; }
+t1729 { font-variant-numeric: lining-nums diagonal-fractions ordinal; }
+t1730 { font-variant-numeric: lining-nums ordinal diagonal-fractions; }
+t1731 { font-variant-numeric: diagonal-fractions lining-nums ordinal; }
+t1732 { font-variant-numeric: diagonal-fractions ordinal lining-nums; }
+t1733 { font-variant-numeric: ordinal lining-nums diagonal-fractions; }
+t1734 { font-variant-numeric: ordinal diagonal-fractions lining-nums; }
+t1735 { font-variant-numeric: lining-nums stacked-fractions ordinal; }
+t1736 { font-variant-numeric: lining-nums ordinal stacked-fractions; }
+t1737 { font-variant-numeric: stacked-fractions lining-nums ordinal; }
+t1738 { font-variant-numeric: stacked-fractions ordinal lining-nums; }
+t1739 { font-variant-numeric: ordinal lining-nums stacked-fractions; }
+t1740 { font-variant-numeric: ordinal stacked-fractions lining-nums; }
+t1741 { font-variant-numeric: oldstyle-nums diagonal-fractions ordinal; }
+t1742 { font-variant-numeric: oldstyle-nums ordinal diagonal-fractions; }
+t1743 { font-variant-numeric: diagonal-fractions oldstyle-nums ordinal; }
+t1744 { font-variant-numeric: diagonal-fractions ordinal oldstyle-nums; }
+t1745 { font-variant-numeric: ordinal oldstyle-nums diagonal-fractions; }
+t1746 { font-variant-numeric: ordinal diagonal-fractions oldstyle-nums; }
+t1747 { font-variant-numeric: oldstyle-nums stacked-fractions ordinal; }
+t1748 { font-variant-numeric: oldstyle-nums ordinal stacked-fractions; }
+t1749 { font-variant-numeric: stacked-fractions oldstyle-nums ordinal; }
+t1750 { font-variant-numeric: stacked-fractions ordinal oldstyle-nums; }
+t1751 { font-variant-numeric: ordinal oldstyle-nums stacked-fractions; }
+t1752 { font-variant-numeric: ordinal stacked-fractions oldstyle-nums; }
+t1753 { font-variant-numeric: lining-nums diagonal-fractions slashed-zero; }
+t1754 { font-variant-numeric: lining-nums slashed-zero diagonal-fractions; }
+t1755 { font-variant-numeric: diagonal-fractions lining-nums slashed-zero; }
+t1756 { font-variant-numeric: diagonal-fractions slashed-zero lining-nums; }
+t1757 { font-variant-numeric: slashed-zero lining-nums diagonal-fractions; }
+t1758 { font-variant-numeric: slashed-zero diagonal-fractions lining-nums; }
+t1759 { font-variant-numeric: lining-nums stacked-fractions slashed-zero; }
+t1760 { font-variant-numeric: lining-nums slashed-zero stacked-fractions; }
+t1761 { font-variant-numeric: stacked-fractions lining-nums slashed-zero; }
+t1762 { font-variant-numeric: stacked-fractions slashed-zero lining-nums; }
+t1763 { font-variant-numeric: slashed-zero lining-nums stacked-fractions; }
+t1764 { font-variant-numeric: slashed-zero stacked-fractions lining-nums; }
+t1765 { font-variant-numeric: oldstyle-nums diagonal-fractions slashed-zero; }
+t1766 { font-variant-numeric: oldstyle-nums slashed-zero diagonal-fractions; }
+t1767 { font-variant-numeric: diagonal-fractions oldstyle-nums slashed-zero; }
+t1768 { font-variant-numeric: diagonal-fractions slashed-zero oldstyle-nums; }
+t1769 { font-variant-numeric: slashed-zero oldstyle-nums diagonal-fractions; }
+t1770 { font-variant-numeric: slashed-zero diagonal-fractions oldstyle-nums; }
+t1771 { font-variant-numeric: oldstyle-nums stacked-fractions slashed-zero; }
+t1772 { font-variant-numeric: oldstyle-nums slashed-zero stacked-fractions; }
+t1773 { font-variant-numeric: stacked-fractions oldstyle-nums slashed-zero; }
+t1774 { font-variant-numeric: stacked-fractions slashed-zero oldstyle-nums; }
+t1775 { font-variant-numeric: slashed-zero oldstyle-nums stacked-fractions; }
+t1776 { font-variant-numeric: slashed-zero stacked-fractions oldstyle-nums; }
+t1777 { font-variant-numeric: lining-nums ordinal slashed-zero; }
+t1778 { font-variant-numeric: lining-nums slashed-zero ordinal; }
+t1779 { font-variant-numeric: ordinal lining-nums slashed-zero; }
+t1780 { font-variant-numeric: ordinal slashed-zero lining-nums; }
+t1781 { font-variant-numeric: slashed-zero lining-nums ordinal; }
+t1782 { font-variant-numeric: slashed-zero ordinal lining-nums; }
+t1783 { font-variant-numeric: oldstyle-nums ordinal slashed-zero; }
+t1784 { font-variant-numeric: oldstyle-nums slashed-zero ordinal; }
+t1785 { font-variant-numeric: ordinal oldstyle-nums slashed-zero; }
+t1786 { font-variant-numeric: ordinal slashed-zero oldstyle-nums; }
+t1787 { font-variant-numeric: slashed-zero oldstyle-nums ordinal; }
+t1788 { font-variant-numeric: slashed-zero ordinal oldstyle-nums; }
+t1789 { font-variant-numeric: proportional-nums diagonal-fractions ordinal; }
+t1790 { font-variant-numeric: proportional-nums ordinal diagonal-fractions; }
+t1791 { font-variant-numeric: diagonal-fractions proportional-nums ordinal; }
+t1792 { font-variant-numeric: diagonal-fractions ordinal proportional-nums; }
+t1793 { font-variant-numeric: ordinal proportional-nums diagonal-fractions; }
+t1794 { font-variant-numeric: ordinal diagonal-fractions proportional-nums; }
+t1795 { font-variant-numeric: proportional-nums stacked-fractions ordinal; }
+t1796 { font-variant-numeric: proportional-nums ordinal stacked-fractions; }
+t1797 { font-variant-numeric: stacked-fractions proportional-nums ordinal; }
+t1798 { font-variant-numeric: stacked-fractions ordinal proportional-nums; }
+t1799 { font-variant-numeric: ordinal proportional-nums stacked-fractions; }
+t1800 { font-variant-numeric: ordinal stacked-fractions proportional-nums; }
+t1801 { font-variant-numeric: tabular-nums diagonal-fractions ordinal; }
+t1802 { font-variant-numeric: tabular-nums ordinal diagonal-fractions; }
+t1803 { font-variant-numeric: diagonal-fractions tabular-nums ordinal; }
+t1804 { font-variant-numeric: diagonal-fractions ordinal tabular-nums; }
+t1805 { font-variant-numeric: ordinal tabular-nums diagonal-fractions; }
+t1806 { font-variant-numeric: ordinal diagonal-fractions tabular-nums; }
+t1807 { font-variant-numeric: tabular-nums stacked-fractions ordinal; }
+t1808 { font-variant-numeric: tabular-nums ordinal stacked-fractions; }
+t1809 { font-variant-numeric: stacked-fractions tabular-nums ordinal; }
+t1810 { font-variant-numeric: stacked-fractions ordinal tabular-nums; }
+t1811 { font-variant-numeric: ordinal tabular-nums stacked-fractions; }
+t1812 { font-variant-numeric: ordinal stacked-fractions tabular-nums; }
+t1813 { font-variant-numeric: proportional-nums diagonal-fractions slashed-zero; }
+t1814 { font-variant-numeric: proportional-nums slashed-zero diagonal-fractions; }
+t1815 { font-variant-numeric: diagonal-fractions proportional-nums slashed-zero; }
+t1816 { font-variant-numeric: diagonal-fractions slashed-zero proportional-nums; }
+t1817 { font-variant-numeric: slashed-zero proportional-nums diagonal-fractions; }
+t1818 { font-variant-numeric: slashed-zero diagonal-fractions proportional-nums; }
+t1819 { font-variant-numeric: proportional-nums stacked-fractions slashed-zero; }
+t1820 { font-variant-numeric: proportional-nums slashed-zero stacked-fractions; }
+t1821 { font-variant-numeric: stacked-fractions proportional-nums slashed-zero; }
+t1822 { font-variant-numeric: stacked-fractions slashed-zero proportional-nums; }
+t1823 { font-variant-numeric: slashed-zero proportional-nums stacked-fractions; }
+t1824 { font-variant-numeric: slashed-zero stacked-fractions proportional-nums; }
+t1825 { font-variant-numeric: tabular-nums diagonal-fractions slashed-zero; }
+t1826 { font-variant-numeric: tabular-nums slashed-zero diagonal-fractions; }
+t1827 { font-variant-numeric: diagonal-fractions tabular-nums slashed-zero; }
+t1828 { font-variant-numeric: diagonal-fractions slashed-zero tabular-nums; }
+t1829 { font-variant-numeric: slashed-zero tabular-nums diagonal-fractions; }
+t1830 { font-variant-numeric: slashed-zero diagonal-fractions tabular-nums; }
+t1831 { font-variant-numeric: tabular-nums stacked-fractions slashed-zero; }
+t1832 { font-variant-numeric: tabular-nums slashed-zero stacked-fractions; }
+t1833 { font-variant-numeric: stacked-fractions tabular-nums slashed-zero; }
+t1834 { font-variant-numeric: stacked-fractions slashed-zero tabular-nums; }
+t1835 { font-variant-numeric: slashed-zero tabular-nums stacked-fractions; }
+t1836 { font-variant-numeric: slashed-zero stacked-fractions tabular-nums; }
+t1837 { font-variant-numeric: proportional-nums ordinal slashed-zero; }
+t1838 { font-variant-numeric: proportional-nums slashed-zero ordinal; }
+t1839 { font-variant-numeric: ordinal proportional-nums slashed-zero; }
+t1840 { font-variant-numeric: ordinal slashed-zero proportional-nums; }
+t1841 { font-variant-numeric: slashed-zero proportional-nums ordinal; }
+t1842 { font-variant-numeric: slashed-zero ordinal proportional-nums; }
+t1843 { font-variant-numeric: tabular-nums ordinal slashed-zero; }
+t1844 { font-variant-numeric: tabular-nums slashed-zero ordinal; }
+t1845 { font-variant-numeric: ordinal tabular-nums slashed-zero; }
+t1846 { font-variant-numeric: ordinal slashed-zero tabular-nums; }
+t1847 { font-variant-numeric: slashed-zero tabular-nums ordinal; }
+t1848 { font-variant-numeric: slashed-zero ordinal tabular-nums; }
+t1849 { font-variant-numeric: diagonal-fractions ordinal slashed-zero; }
+t1850 { font-variant-numeric: diagonal-fractions slashed-zero ordinal; }
+t1851 { font-variant-numeric: ordinal diagonal-fractions slashed-zero; }
+t1852 { font-variant-numeric: ordinal slashed-zero diagonal-fractions; }
+t1853 { font-variant-numeric: slashed-zero diagonal-fractions ordinal; }
+t1854 { font-variant-numeric: slashed-zero ordinal diagonal-fractions; }
+t1855 { font-variant-numeric: stacked-fractions ordinal slashed-zero; }
+t1856 { font-variant-numeric: stacked-fractions slashed-zero ordinal; }
+t1857 { font-variant-numeric: ordinal stacked-fractions slashed-zero; }
+t1858 { font-variant-numeric: ordinal slashed-zero stacked-fractions; }
+t1859 { font-variant-numeric: slashed-zero stacked-fractions ordinal; }
+t1860 { font-variant-numeric: slashed-zero ordinal stacked-fractions; }
+t1861 { font-variant-numeric: lining-nums proportional-nums; }
+t1862 { font-variant-numeric: proportional-nums lining-nums; }
+t1863 { font-variant-numeric: lining-nums tabular-nums; }
+t1864 { font-variant-numeric: tabular-nums lining-nums; }
+t1865 { font-variant-numeric: oldstyle-nums proportional-nums; }
+t1866 { font-variant-numeric: proportional-nums oldstyle-nums; }
+t1867 { font-variant-numeric: oldstyle-nums tabular-nums; }
+t1868 { font-variant-numeric: tabular-nums oldstyle-nums; }
+t1869 { font-variant-numeric: lining-nums diagonal-fractions; }
+t1870 { font-variant-numeric: diagonal-fractions lining-nums; }
+t1871 { font-variant-numeric: lining-nums stacked-fractions; }
+t1872 { font-variant-numeric: stacked-fractions lining-nums; }
+t1873 { font-variant-numeric: oldstyle-nums diagonal-fractions; }
+t1874 { font-variant-numeric: diagonal-fractions oldstyle-nums; }
+t1875 { font-variant-numeric: oldstyle-nums stacked-fractions; }
+t1876 { font-variant-numeric: stacked-fractions oldstyle-nums; }
+t1877 { font-variant-numeric: lining-nums ordinal; }
+t1878 { font-variant-numeric: ordinal lining-nums; }
+t1879 { font-variant-numeric: oldstyle-nums ordinal; }
+t1880 { font-variant-numeric: ordinal oldstyle-nums; }
+t1881 { font-variant-numeric: lining-nums slashed-zero; }
+t1882 { font-variant-numeric: slashed-zero lining-nums; }
+t1883 { font-variant-numeric: oldstyle-nums slashed-zero; }
+t1884 { font-variant-numeric: slashed-zero oldstyle-nums; }
+t1885 { font-variant-numeric: proportional-nums diagonal-fractions; }
+t1886 { font-variant-numeric: diagonal-fractions proportional-nums; }
+t1887 { font-variant-numeric: proportional-nums stacked-fractions; }
+t1888 { font-variant-numeric: stacked-fractions proportional-nums; }
+t1889 { font-variant-numeric: tabular-nums diagonal-fractions; }
+t1890 { font-variant-numeric: diagonal-fractions tabular-nums; }
+t1891 { font-variant-numeric: tabular-nums stacked-fractions; }
+t1892 { font-variant-numeric: stacked-fractions tabular-nums; }
+t1893 { font-variant-numeric: proportional-nums ordinal; }
+t1894 { font-variant-numeric: ordinal proportional-nums; }
+t1895 { font-variant-numeric: tabular-nums ordinal; }
+t1896 { font-variant-numeric: ordinal tabular-nums; }
+t1897 { font-variant-numeric: proportional-nums slashed-zero; }
+t1898 { font-variant-numeric: slashed-zero proportional-nums; }
+t1899 { font-variant-numeric: tabular-nums slashed-zero; }
+t1900 { font-variant-numeric: slashed-zero tabular-nums; }
+t1901 { font-variant-numeric: diagonal-fractions ordinal; }
+t1902 { font-variant-numeric: ordinal diagonal-fractions; }
+t1903 { font-variant-numeric: stacked-fractions ordinal; }
+t1904 { font-variant-numeric: ordinal stacked-fractions; }
+t1905 { font-variant-numeric: diagonal-fractions slashed-zero; }
+t1906 { font-variant-numeric: slashed-zero diagonal-fractions; }
+t1907 { font-variant-numeric: stacked-fractions slashed-zero; }
+t1908 { font-variant-numeric: slashed-zero stacked-fractions; }
+t1909 { font-variant-numeric: ordinal slashed-zero; }
+t1910 { font-variant-numeric: slashed-zero ordinal; }
+t1911 { font-variant-numeric: lining-nums; }
+t1912 { font-variant-numeric: oldstyle-nums; }
+t1913 { font-variant-numeric: proportional-nums; }
+t1914 { font-variant-numeric: tabular-nums; }
+t1915 { font-variant-numeric: diagonal-fractions; }
+t1916 { font-variant-numeric: stacked-fractions; }
+t1917 { font-variant-numeric: ordinal; }
+t1918 { font-variant-numeric: slashed-zero; }
+t1919 { font-variant-numeric: normal; }
+t1920 { font-variant-numeric: inherit; }
+t1921 { font-variant-numeric: initial; }

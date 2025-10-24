@@ -1,0 +1,43 @@
+z { background-position: inherit }
+bgpos1 { background-position: 50%  }
+bgpos2 { background-position: 50% 50%  }
+bgpos3 { background-position: 10px  }
+bgpos4 { background-position: 10px 50%  }
+bgpos5 { background-position: 50%  }
+bgpos6 { background-position: 50% 10px  }
+bgpos7 { background-position: 10px  }
+bgpos8 { background-position: 10px 10px }
+bgpos9 { background-position: bottom   }
+bgpos10 { background-position: bottom center   }
+bgpos11 { background-position: bottom left   }
+bgpos12 { background-position: bottom right   }
+bgpos13 { background-position: center   }
+bgpos14 { background-position: center bottom   }
+bgpos15 { background-position: center center   }
+bgpos16 { background-position: center left   }
+bgpos17 { background-position: center right   }
+bgpos18 { background-position: center top   }
+bgpos19 { background-position: left   }
+bgpos20 { background-position: left bottom   }
+bgpos21 { background-position: left center   }
+bgpos22 { background-position: left top   }
+bgpos23 { background-position: right   }
+bgpos24 { background-position: right bottom   }
+bgpos25 { background-position: right center   }
+bgpos26 { background-position: right top   }
+bgpos27 { background-position: top   }
+bgpos28 { background-position: top center   }
+bgpos29 { background-position: top left   }
+bgpos30 { background-position: top right }
+bgpos32 { background-position:left 100px }
+bgpos33 { background-position:center 100px }
+bgpos34 { background-position:right 100px }
+bgpos35 { background-position:left 10% }
+bgpos36 { background-position:center 10% }
+bgpos37 { background-position:right 10% }
+bgpos38 { background-position:100px top }
+bgpos39 { background-position:50% top }
+bgpos40 { background-position:100px center }
+bgpos41 { background-position:50% center }
+bgpos42 { background-position:100px bottom }
+bgpos43 { background-position:50% bottom }

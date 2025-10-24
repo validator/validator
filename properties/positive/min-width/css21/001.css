@@ -1,0 +1,4 @@
+a { min-width: 1px }
+b { min-width: 0.01% }
+c { min-width: 0 }
+z { min-width: inherit }

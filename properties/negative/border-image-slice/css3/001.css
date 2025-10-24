@@ -1,0 +1,3 @@
+a { border-image-slice: -10 }
+b { border-image-slice: -10 fill}
+c { border-image-slice: 10 -10 10 5}

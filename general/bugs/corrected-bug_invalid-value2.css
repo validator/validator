@@ -1,0 +1,4 @@
+/* Should not be valid, badly validated by the validator  */
+img {
+    background-color: "red"
+} /* keywords cannot be quoted */

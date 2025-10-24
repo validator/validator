@@ -1,0 +1,7 @@
+a { voice-stress: normal }
+b { voice-stress: strong }
+c { voice-stress: moderate }
+d { voice-stress: none }
+e { voice-stress: reduced }
+y { voice-stress: initial }
+z { voice-stress: inherit }

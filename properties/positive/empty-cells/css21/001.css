@@ -1,0 +1,4 @@
+a { empty-cells: show }
+b { empty-cells: hide }
+z { empty-cells: inherit }
+

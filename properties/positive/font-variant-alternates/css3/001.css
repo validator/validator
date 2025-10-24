@@ -1,0 +1,16 @@
+c { font-variant-alternates: normal }
+d { font-variant-alternates: inherit }
+e { font-variant-alternates: initial }
+f { font-variant-alternates: historical-forms }
+i { font-variant-alternates: stylistic(foo) }
+j { font-variant-alternates: styleset(foo) }
+jm { font-variant-alternates: styleset(foo, bar) }
+k { font-variant-alternates: character-variant(foo) }
+km { font-variant-alternates: character-variant(foo, bar) }
+l { font-variant-alternates: swash(foo) }
+m { font-variant-alternates: ornaments(foo) }
+n { font-variant-alternates: annotation(foo) }
+p { font-variant-alternates: annotation(foo) historical-forms swash(foo) character-variant(foo, bar) }
+q { font-variant-alternates: character-variant(foo) ornaments(foobar) styleset(foo, bar) stylistic(foo) }
+r { font-variant-alternates: annotation(foo) historical-forms swash(foo) character-variant(foo,bar) ornaments(foobar) styleset(foo, bar) stylistic(foo) }
+

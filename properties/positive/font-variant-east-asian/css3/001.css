@@ -1,0 +1,124 @@
+t1 { font-variant-east-asian: jis78 full-width ruby; }
+t2 { font-variant-east-asian: jis78 ruby full-width; }
+t3 { font-variant-east-asian: full-width jis78 ruby; }
+t4 { font-variant-east-asian: full-width ruby jis78; }
+t5 { font-variant-east-asian: ruby jis78 full-width; }
+t6 { font-variant-east-asian: ruby full-width jis78; }
+t7 { font-variant-east-asian: jis78 proportional-width ruby; }
+t8 { font-variant-east-asian: jis78 ruby proportional-width; }
+t9 { font-variant-east-asian: proportional-width jis78 ruby; }
+t10 { font-variant-east-asian: proportional-width ruby jis78; }
+t11 { font-variant-east-asian: ruby jis78 proportional-width; }
+t12 { font-variant-east-asian: ruby proportional-width jis78; }
+t13 { font-variant-east-asian: jis83 full-width ruby; }
+t14 { font-variant-east-asian: jis83 ruby full-width; }
+t15 { font-variant-east-asian: full-width jis83 ruby; }
+t16 { font-variant-east-asian: full-width ruby jis83; }
+t17 { font-variant-east-asian: ruby jis83 full-width; }
+t18 { font-variant-east-asian: ruby full-width jis83; }
+t19 { font-variant-east-asian: jis83 proportional-width ruby; }
+t20 { font-variant-east-asian: jis83 ruby proportional-width; }
+t21 { font-variant-east-asian: proportional-width jis83 ruby; }
+t22 { font-variant-east-asian: proportional-width ruby jis83; }
+t23 { font-variant-east-asian: ruby jis83 proportional-width; }
+t24 { font-variant-east-asian: ruby proportional-width jis83; }
+t25 { font-variant-east-asian: jis90 full-width ruby; }
+t26 { font-variant-east-asian: jis90 ruby full-width; }
+t27 { font-variant-east-asian: full-width jis90 ruby; }
+t28 { font-variant-east-asian: full-width ruby jis90; }
+t29 { font-variant-east-asian: ruby jis90 full-width; }
+t30 { font-variant-east-asian: ruby full-width jis90; }
+t31 { font-variant-east-asian: jis90 proportional-width ruby; }
+t32 { font-variant-east-asian: jis90 ruby proportional-width; }
+t33 { font-variant-east-asian: proportional-width jis90 ruby; }
+t34 { font-variant-east-asian: proportional-width ruby jis90; }
+t35 { font-variant-east-asian: ruby jis90 proportional-width; }
+t36 { font-variant-east-asian: ruby proportional-width jis90; }
+t37 { font-variant-east-asian: jis04 full-width ruby; }
+t38 { font-variant-east-asian: jis04 ruby full-width; }
+t39 { font-variant-east-asian: full-width jis04 ruby; }
+t40 { font-variant-east-asian: full-width ruby jis04; }
+t41 { font-variant-east-asian: ruby jis04 full-width; }
+t42 { font-variant-east-asian: ruby full-width jis04; }
+t43 { font-variant-east-asian: jis04 proportional-width ruby; }
+t44 { font-variant-east-asian: jis04 ruby proportional-width; }
+t45 { font-variant-east-asian: proportional-width jis04 ruby; }
+t46 { font-variant-east-asian: proportional-width ruby jis04; }
+t47 { font-variant-east-asian: ruby jis04 proportional-width; }
+t48 { font-variant-east-asian: ruby proportional-width jis04; }
+t49 { font-variant-east-asian: simplified full-width ruby; }
+t50 { font-variant-east-asian: simplified ruby full-width; }
+t51 { font-variant-east-asian: full-width simplified ruby; }
+t52 { font-variant-east-asian: full-width ruby simplified; }
+t53 { font-variant-east-asian: ruby simplified full-width; }
+t54 { font-variant-east-asian: ruby full-width simplified; }
+t55 { font-variant-east-asian: simplified proportional-width ruby; }
+t56 { font-variant-east-asian: simplified ruby proportional-width; }
+t57 { font-variant-east-asian: proportional-width simplified ruby; }
+t58 { font-variant-east-asian: proportional-width ruby simplified; }
+t59 { font-variant-east-asian: ruby simplified proportional-width; }
+t60 { font-variant-east-asian: ruby proportional-width simplified; }
+t61 { font-variant-east-asian: traditional full-width ruby; }
+t62 { font-variant-east-asian: traditional ruby full-width; }
+t63 { font-variant-east-asian: full-width traditional ruby; }
+t64 { font-variant-east-asian: full-width ruby traditional; }
+t65 { font-variant-east-asian: ruby traditional full-width; }
+t66 { font-variant-east-asian: ruby full-width traditional; }
+t67 { font-variant-east-asian: traditional proportional-width ruby; }
+t68 { font-variant-east-asian: traditional ruby proportional-width; }
+t69 { font-variant-east-asian: proportional-width traditional ruby; }
+t70 { font-variant-east-asian: proportional-width ruby traditional; }
+t71 { font-variant-east-asian: ruby traditional proportional-width; }
+t72 { font-variant-east-asian: ruby proportional-width traditional; }
+t73 { font-variant-east-asian: ruby full-width; }
+t74 { font-variant-east-asian: full-width ruby; }
+t75 { font-variant-east-asian: ruby proportional-width; }
+t76 { font-variant-east-asian: proportional-width ruby; }
+t77 { font-variant-east-asian: ruby jis78; }
+t78 { font-variant-east-asian: jis78 ruby; }
+t79 { font-variant-east-asian: ruby jis83; }
+t80 { font-variant-east-asian: jis83 ruby; }
+t81 { font-variant-east-asian: ruby jis90; }
+t82 { font-variant-east-asian: jis90 ruby; }
+t83 { font-variant-east-asian: ruby jis04; }
+t84 { font-variant-east-asian: jis04 ruby; }
+t85 { font-variant-east-asian: ruby simplified; }
+t86 { font-variant-east-asian: simplified ruby; }
+t87 { font-variant-east-asian: ruby traditional; }
+t88 { font-variant-east-asian: traditional ruby; }
+t89 { font-variant-east-asian: full-width jis78; }
+t90 { font-variant-east-asian: jis78 full-width; }
+t91 { font-variant-east-asian: full-width jis83; }
+t92 { font-variant-east-asian: jis83 full-width; }
+t93 { font-variant-east-asian: full-width jis90; }
+t94 { font-variant-east-asian: jis90 full-width; }
+t95 { font-variant-east-asian: full-width jis04; }
+t96 { font-variant-east-asian: jis04 full-width; }
+t97 { font-variant-east-asian: full-width simplified; }
+t98 { font-variant-east-asian: simplified full-width; }
+t99 { font-variant-east-asian: full-width traditional; }
+t100 { font-variant-east-asian: traditional full-width; }
+t101 { font-variant-east-asian: proportional-width jis78; }
+t102 { font-variant-east-asian: jis78 proportional-width; }
+t103 { font-variant-east-asian: proportional-width jis83; }
+t104 { font-variant-east-asian: jis83 proportional-width; }
+t105 { font-variant-east-asian: proportional-width jis90; }
+t106 { font-variant-east-asian: jis90 proportional-width; }
+t107 { font-variant-east-asian: proportional-width jis04; }
+t108 { font-variant-east-asian: jis04 proportional-width; }
+t109 { font-variant-east-asian: proportional-width simplified; }
+t110 { font-variant-east-asian: simplified proportional-width; }
+t111 { font-variant-east-asian: proportional-width traditional; }
+t112 { font-variant-east-asian: traditional proportional-width; }
+t113 { font-variant-east-asian: jis78; }
+t114 { font-variant-east-asian: jis83; }
+t115 { font-variant-east-asian: jis90; }
+t116 { font-variant-east-asian: jis04; }
+t117 { font-variant-east-asian: simplified; }
+t118 { font-variant-east-asian: traditional; }
+t119 { font-variant-east-asian: full-width; }
+t120 { font-variant-east-asian: proportional-width; }
+t121 { font-variant-east-asian: ruby; }
+t122 { font-variant-numeric: normal; }
+t123 { font-variant-numeric: inherit; }
+t124 { font-variant-numeric: initial; }

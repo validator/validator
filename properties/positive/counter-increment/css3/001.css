@@ -1,0 +1,9 @@
+a { counter-increment: none }
+b { counter-increment: item }
+c { counter-increment: double 2 }
+d { counter-increment: appendix 0 }
+e { counter-increment: backwards -1 }
+f { counter-increment: chapter section 1 para 1 foo -1 bar -10 }
+g { counter-increment: truc 0 bidule }
+y { counter-increment: initial }
+z { counter-increment: inherit }
