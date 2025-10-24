@@ -15,7 +15,9 @@ JAVA ?= java
 JAVAFLAGS ?=
 VNU_TEST_REPO ?= git@github.com:validator/tests.git
 ITS_REPO ?= git@github.com:w3c/its-2.0-testsuite-inputdata.git
-.PHONY: .FORCE
+VNUJAR ?= vnu.jar
+
+.PHONY: .FORCE clean
 
 all: README.md messages.json
 
@@ -27,18 +29,21 @@ README.md: index.html
 	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/ +(\[[0-9]+\]:)\n +/\n   $$1 /g' \
 	    | $(EXPAND) $(EXPANDFLAGS) > $@
 
-messages.json: .FORCE
-	$(CURL) $(CURLFLAGS) -O -L \
+clean:
+	$(RM) vnu.jar
+
+$(VNUJAR):
+	cd $(CURDIR) && $(CURL) $(CURLFLAGS) -O -L \
 	  https://github.com/validator/validator/releases/download/latest/vnu.jar
-	$(JAVA) $(JAVAFLAGS) -cp vnu.jar nu.validator.client.TestRunner \
+
+messages.json: .FORCE $(VNUJAR)
+	$(JAVA) $(JAVAFLAGS) -cp $(VNUJAR) nu.validator.client.TestRunner \
 	  --ignore=html-its --write-messages $@
 	$(PYTHON) $(PYTHONFLAGS) -mjson.tool --sort-keys $@ > $@.tmp
 	mv $@.tmp $@
 
-test: .FORCE
-	$(CURL) $(CURLFLAGS) -O -L \
-	  https://github.com/validator/validator/releases/download/jar/vnu.jar
-	$(JAVA) $(JAVAFLAGS) -cp vnu.jar nu.validator.client.TestRunner \
+test: .FORCE $(VNUJAR)
+	$(JAVA) $(JAVAFLAGS) -cp $(VNUJAR) nu.validator.client.TestRunner \
 	  --ignore=html-its messages.json
 
 push:
