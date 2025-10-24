@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang=en>
+<meta charset=utf-8>
+<title>invalid popover attributes on button</title>
+<div id="test1" popover="invalid">Popover content 1</div><!-- invalid popover value -->
+<div id="test2" popover="none">Popover content 2</div><!-- invalid popover value -->
+<button popovertarget="">Toggle empty target</button><!-- empty popovertarget -->
+<button popovertargetaction="invalid">Invalid action</button><!-- invalid popovertargetaction -->
+<button popovertargetaction="open">Invalid action open</button><!-- invalid popovertargetaction -->
+<button popovertargetaction="">Empty action</button><!-- empty popovertargetaction -->
+<span popovertarget="test1">Span with popover</span><!-- non-button with popovertarget -->
+<div popovertargetaction="show">Div with action</div><!-- non-button with popovertargetaction -->
+<a href="#" popovertarget="test1">Link with popover</a><!-- link with popovertarget -->
+<p popovertargetaction="hide">Paragraph with action</p><!-- paragraph with popovertargetaction -->
