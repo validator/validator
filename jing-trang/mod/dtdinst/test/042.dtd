@@ -1,3 +1,0 @@
-<!ENTITY % e "EMPTY">
-<!ENTITY % e SYSTEM "sysid">
-<!ELEMENT doc %e;>

@@ -1,3 +1,0 @@
-<!ENTITY % TEI.XML 'INCLUDE'>
-<!ENTITY % teitsd2.dtd SYSTEM "teitsd2.dtd">
-%teitsd2.dtd;

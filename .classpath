@@ -1,86 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="jars/htmlparser.jar" sourcepath="htmlparser/src"/>
-	<classpathentry kind="lib" path="jars/galimatias.jar" sourcepath="galimatias/src/main/java"/>
-	<classpathentry kind="lib" path="dependencies/log4j-1.2.17.jar">
+	<classpathentry kind="src" path="src/main/jjtree"/>
+	<classpathentry kind="src" path="target/generated-sources/jjtree"/>
+	<classpathentry kind="src" path="src/main/javacc"/>
+	<classpathentry kind="src" path="target/generated-sources/utils"/>
+	<classpathentry kind="src" path="target/generated-sources/javacc"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
-			<attribute name="javadoc_location" value="http://logging.apache.org/log4j/1.2/apidocs/"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/commons-fileupload-1.3.1.jar">
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
-			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-fileupload/apidocs/"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/httpcore-4.4.9.jar">
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
-			<attribute name="javadoc_location" value="https://hc.apache.org/httpcomponents-core-4.4.x/current/httpcore/apidocs/"/>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/httpclient-4.5.9.jar">
+	<classpathentry kind="src" path="examples"/>
+	<classpathentry kind="lib" path="lib/jacocoant-0.8.10.jar"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
-			<attribute name="javadoc_location" value="https://hc.apache.org/httpcomponents-client-4.5.x/current/httpclient/apidocs/"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/commons-logging-1.2.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
-			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-logging/javadocs/api-release/"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-adapters.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-logging/javadocs/api-release/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/commons-logging-1.2-api.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-logging/javadocs/api-release/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/icu4j-58.2.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://icu-project.org/apiref/icu4j/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/salvation-2.7.2.jar"/>
-	<classpathentry kind="lib" path="dependencies/javax.servlet-api-4.0.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://docs.oracle.com/javaee/7/api/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-server-9.4.43.v20210629.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.4.43.v20210629.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-servlets-9.4.43.v20210629.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-9.4.43.v20210629.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-9.4.43.v20210629.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="jars/langdetect.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://cdn.rawgit.com/shuyo/language-detection/master/doc/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="css-validator/css-validator.jar"/>
-	<classpathentry kind="lib" path="jing-trang/build/jing.jar" sourcepath="jing-trang/mod/validate/src/main"/>
-	<classpathentry kind="output" path="classes"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

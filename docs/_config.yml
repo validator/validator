@@ -1,0 +1,18 @@
+# --- General options --- #
+theme: jekyll-theme-cayman
+show_downloads: true
+
+# Name of website
+title: JavaCC
+
+# Short description of the site
+description: The most popular parser generator for use with Java applications.
+
+# Latest release
+version: 7.0.13
+
+# Site URLs
+github:
+  contributors_url: https://github.com/javacc/javacc/graphs/contributors
+  zip_url: https://github.com/javacc/javacc/archive/javacc-7.0.13.zip
+  tar_url: https://github.com/javacc/javacc/archive/javacc-7.0.13.tar.gz

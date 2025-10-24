@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+
+<!--
+
+Copyright (c) 2008, Paul Cager
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+
+<project name="test-exceptions" default="test-exceptions" basedir=".">
+
+  <target name="test-exceptions" depends="" description="run functional test cases">
+
+
+    <echo>Test 1</echo>
+    <delete dir="out-dir" />
+
+    <java failonerror="true" fork="true" classname="javacc" classpath="../../target/javacc.jar">
+      <arg line="Parser.jj" />
+    </java>
+
+    <javac srcdir="out-dir" destdir="out-dir" source="1.7" debug="true" includeantruntime='false'
+           classpath="../../target/javacc.jar">
+    </javac>
+
+    <java fork="true" classname="Parser" classpath="out-dir" outputproperty="test1.out" inputstring="ABDC" failonerror="false" />
+
+    <echo>Output:</echo>
+    <echo>${test1.out}</echo>
+    
+    <fail message="Unexpected ParseException">
+     <condition>
+       <or>
+        <not> <contains string="${test1.out}" substring="Exception in thread &quot;main&quot; ParseException: Encountered &quot; &quot;D&quot; &quot;D &quot;&quot; at line 1, column 3." /> </not>
+        <not> <contains string="${test1.out}" substring="Was expecting one of:" /> </not>
+        <not> <contains string="${test1.out}" substring="    &quot;C&quot; ..." /> </not>
+        <not> <contains string="${test1.out}" substring="    &quot;E&quot; ..." /> </not>
+       </or>
+     </condition>
+
+    </fail>
+
+    <java fork="true" classname="Parser" classpath="out-dir" outputproperty="test1a.out" inputstring="ABEC" failonerror="false" />
+
+    <echo>Output:</echo>
+    <echo>${test1a.out}</echo>
+    
+    <fail message="Unexpected ParseException">
+     <condition>
+       <or>
+        <not> <contains string="${test1a.out}" substring="Exception in thread &quot;main&quot; ParseException: help" /> </not>
+       </or>
+     </condition>
+    </fail>
+
+
+    <echo>Test 2</echo>
+    <delete dir="out-dir" />
+
+    <java failonerror="true" fork="true" classname="javacc" classpath="../../target/javacc.jar">
+      <arg line="-KEEP_LINE_COLUMN=false" />
+      <arg line="Parser.jj" />
+    </java>
+
+    <javac srcdir="out-dir" destdir="out-dir" source="1.7" includeantruntime='false'
+	   debug="true"
+           classpath="../../target/javacc.jar">
+    </javac>
+
+    <java fork="true" classname="Parser" classpath="out-dir" outputproperty="test2.out" inputstring="ABDC" failonerror="false" />
+
+    <echo>Output:</echo>
+    <echo>${test2.out}</echo>
+    
+    <fail message="Unexpected ParseException">
+     <condition>
+       <or>
+        <not> <contains string="${test2.out}" substring="Exception in thread &quot;main&quot; ParseException: Encountered &quot; &quot;D&quot; &quot;D &quot;." /> </not>
+        <not> <contains string="${test2.out}" substring="Was expecting one of:" /> </not>
+        <not> <contains string="${test2.out}" substring="    &quot;C&quot; ..." /> </not>
+       </or>
+     </condition>
+    </fail>
+
+  </target>
+
+  <target name="clean">
+    <delete dir="out-dir" />
+  </target>
+
+</project>

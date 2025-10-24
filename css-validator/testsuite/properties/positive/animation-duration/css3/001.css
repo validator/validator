@@ -1,7 +1,0 @@
-y { animation-duration: initial }
-z { animation-duration: inherit }
-a { animation-duration: 0s }
-c { animation-duration: 1000ms }
-d { animation-duration: 1s }
-e { animation-duration: 1s, 0s, 10ms }
-h { animation-duration: 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s }

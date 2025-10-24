@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+
+<!--
+
+Copyright (c) 2007, Paul Cager
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+
+<project name="test-javacodeLA" default="test" basedir=".">
+
+  <target name="test" depends="" description="run functional test cases">
+
+    <!--           JAVACODE                -->
+
+    <java failonerror="true" fork="true" classname="javacc" classpath="../../target/javacc.jar">
+      <arg line="javacode.jj" />
+    </java>
+
+    <javac srcdir="out-dir" destdir="out-dir" source="1.7" debug="true" includeantruntime='false'
+           classpath="../../target/javacc.jar">
+    </javac>
+
+    <echo>Test 1</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" outputproperty="test1.out" inputstring="A" failonerror="true"> <arg line="j" /> </java>
+    <echo>${test1.out}</echo>
+
+    <echo>Test 2</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" outputproperty="test2.out" inputstring="D" failonerror="true"> <arg line="j" /> </java>
+    <echo>${test2.out}</echo>
+
+    <echo>Test 3</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" outputproperty="test3.out" inputstring="C" failonerror="true"> <arg line="j" /> </java>
+    <echo>${test3.out}</echo>
+
+    <fail message="JAVACODE failed">
+     <condition>
+       <or>
+        <not> <contains string="${test1.out}" substring="Answer is: A" /> </not>
+        <not> <contains string="${test2.out}" substring="Answer is: D" /> </not>
+        <not> <contains string="${test3.out}" substring="Answer is: javacode" /> </not>
+       </or>
+     </condition>
+    </fail>
+
+    <!--           NON-JAVACODE                -->
+
+    <echo>Test 4</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test4.err" outputproperty="test4.out" inputstring="C" failonerror="false"> <arg line="n" /> </java>
+    <echo>${test4.out}</echo>
+    <!--<echo>${test4.err}</echo>-->
+
+    <echo>Test 5</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test5.err" outputproperty="test5.out" inputstring="B" failonerror="false"> <arg line="n" /> </java>
+    <echo>${test5.out}</echo>
+
+    <fail message="Non-JAVACODE failed">
+     <condition>
+       <or>
+        <not> <contains string="${test4.err}" substring="ParseException: Encountered &quot; &quot;C" /> </not>
+        <not> <contains string="${test5.err}" substring="ParseException: Encountered &quot; &quot;B" /> </not>
+       </or>
+     </condition>
+    </fail>
+
+    <!--           SEMANTIC                -->
+
+    <echo>Test 6</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test6.err" outputproperty="test6.out" inputstring="C" failonerror="false"> <arg line="s" /> </java>
+    <echo>${test6.out}</echo>
+
+    <echo>Test 7</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test7.err" outputproperty="test7.out" inputstring="B" failonerror="false"> <arg line="s" /> </java>
+    <echo>${test7.out}</echo>
+    <echo>${test7.err}</echo>
+
+    <fail message="Seamantic failed">
+     <condition>
+       <or>
+        <not> <contains string="${test6.out}" substring="Answer is: ." /> </not>
+        <not> <contains string="${test7.out}" substring="Answer is: ." /> </not>
+       </or>
+     </condition>
+    </fail>
+
+    <!--           INDIRECT JAVACODE                -->
+
+    <echo>Test 8</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test8.err" outputproperty="test8.out" inputstring="C" failonerror="true"> <arg line="i" /> </java>
+    <echo>${test8.out}</echo>
+
+    <echo>Test 9</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test9.err" outputproperty="test9.out" inputstring="B" failonerror="true"> <arg line="i" /> </java>
+    <echo>${test9.out}</echo>
+    <echo>${test9.err}</echo>
+
+    <echo>Test 10</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test10.err" outputproperty="test10.out" inputstring="C" failonerror="false"> <arg line="I" /> </java>
+    <echo>${test10.out}</echo>
+    <echo>${test10.err}</echo>
+
+    <fail message="Indirect Javacode failed">
+     <condition>
+       <or>
+        <not> <contains string="${test8.out}" substring="Answer is: javacode C." /> </not>
+        <not> <contains string="${test9.out}" substring="Answer is: javacode B." /> </not>
+        <not> <contains string="${test10.err}" substring="ParseException" /> </not>
+       </or>
+     </condition>
+    </fail>
+
+    <!--           JAVACODE NO LOOKAHEAD                -->
+
+    <echo>Test 11</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test11.err" outputproperty="test11.out" inputstring="C" failonerror="true"> <arg line="N" /> </java>
+    <echo>${test11.out}</echo>
+
+    <echo>Test 12</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test12.err" outputproperty="test12.out" inputstring="B" failonerror="true"> <arg line="N" /> </java>
+    <echo>${test12.out}</echo>
+    <echo>${test12.err}</echo>
+
+    <echo>Test 13</echo>
+    <java fork="true" classname="JavacodeTest" classpath="out-dir" errorproperty="test13.err" outputproperty="test13.out" inputstring="C" failonerror="false"> <arg line="N" /> </java>
+    <echo>${test13.out}</echo>
+    <echo>${test13.err}</echo>
+
+    <fail message="Javacode with no lookahead failed">
+     <condition>
+       <or>
+        <not> <contains string="${test11.out}" substring="Answer is: javacode C." /> </not>
+        <not> <contains string="${test12.out}" substring="Answer is: javacode B." /> </not>
+        <not> <contains string="${test13.out}" substring="Answer is: javacode C." /> </not>
+       </or>
+     </condition>
+    </fail>
+
+  </target>
+
+  <target name="clean">
+    <delete dir="out-dir" />
+  </target>
+
+</project>

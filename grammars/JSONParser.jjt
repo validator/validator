@@ -1,0 +1,393 @@
+/*
+ * This software is licensed under the terms of the ISC License.
+ * (ISCL http://www.opensource.org/licenses/isc-license.txt
+ * It is functionally equivalent to the 2-clause BSD licence,
+ * with language "made unnecessary by the Berne convention" removed).
+ *
+ * Copyright (c) 2011-2013 Mike Norman
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+ * RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
+ * USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ ******************************************************************************/
+options {
+      STATIC = false;
+      SUPPORT_CLASS_VISIBILITY_PUBLIC = true;
+      ERROR_REPORTING = false;
+      JAVA_UNICODE_ESCAPE = true;
+      UNICODE_INPUT = true;
+      NODE_USES_PARSER = false;
+      VISITOR = false;
+}
+
+PARSER_BEGIN(JSONParser)
+/*
+ * This software is licensed under the terms of the ISC License.
+ * (ISCL http://www.opensource.org/licenses/isc-license.txt
+ * It is functionally equivalent to the 2-clause BSD licence,
+ * with language "made unnecessary by the Berne convention" removed).
+ *
+ * Copyright (c) 2011-2013 Mike Norman
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+ * RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
+ * USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ ******************************************************************************/
+package org.mwnorman.json;
+
+//javase imports
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class JSONParser {
+
+    static protected String stripOffQuotes(String quotedString) {
+        return quotedString.substring(1, quotedString.length() - 1);
+    }
+    public static String TRUE_ATOM = stripOffQuotes(tokenImage[K_TRUE]);
+    public static String FALSE_ATOM = stripOffQuotes(tokenImage[K_FALSE]);
+
+    public JSONParser() {
+        super();
+    }
+
+    //cheat to sorta get generics on productions
+    public <A> List<A> array() throws ParseException {
+        return _array();
+    }
+    public <T> Map<String, T> object() throws ParseException {
+        return _object();
+    }
+}
+
+PARSER_END(JSONParser)
+
+TOKEN_MGR_DECLS :
+{
+    static int commentNesting = 0;
+}
+
+// Pls see http://www.ietf.org/rfc/rfc4627.txt for JSON spec details
+
+// white space
+SKIP: {
+        " "
+    |   "\t"
+    |   "\n"
+    |   "\r"
+    |   "\f"
+}
+
+// comments: not really part of JSON spec, but parser shouldn't blow-up if present
+SKIP: {
+        //single-line 'C'-style comments
+        < "//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+        //single-line Bash-style comments
+    |   < "#" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+        //multi-line 'C'-style comments with counter for nesting
+    |   "/*" { commentNesting++; } : WithinMLC
+        //multi-line HTML comments (no nesting)
+    |   "<!--" : WithinMLH
+}
+<WithinMLC> SKIP :
+{
+      "/*"
+      { 
+        commentNesting++; 
+      }
+    | "*/"
+      {
+        commentNesting--;
+        if (commentNesting == 0) {
+            SwitchTo(DEFAULT);
+        }
+      }
+}
+<WithinMLH> SKIP :
+{
+        "-->" : DEFAULT
+}
+<WithinMLC, WithinMLH> MORE :
+{
+        <~[]>
+}
+
+// JSON reserved keywords (prefix with K_ to avoid naming conflicts): only lower case allowed!
+TOKEN: {
+        <K_TRUE: "true">
+    |   <K_FALSE: "false">
+    |   <K_NULL: "null">
+}
+
+// JSON operators (prefix with O_ to avoid naming conflicts)
+TOKEN: {
+        <O_OPENBRACE: "{">
+    |   <O_CLOSEBRACE: "}">
+    |   <O_OPENBRACKET: "[">
+    |   <O_CLOSEBRACKET: "]">
+    |   <O_COMMA: ",">
+    |   <O_COLON: ":">
+    |   <O_DOT: ".">
+    |   <O_PLUS: "+">
+    |   <O_MINUS: "-">
+}
+
+// numeric literals
+TOKEN: {
+        <#DIGIT: [
+            //Unicode "DIGIT" characters - more inclusive than Character.isDigit
+            "\u0030"-"\u0039", //DIGIT ZERO - DIGIT NINE
+            "\u0660"-"\u0669", //ARABIC-INDIC DIGIT ZERO -ARABIC-INDIC DIGIT NINE
+            "\u06f0"-"\u06f9", //EXTENDED ARABIC-INDIC DIGIT ZERO - EXTENDED ARABIC-INDIC DIGIT NINE
+            "\u07c0"-"\u07c9", //NKO DIGIT ZERO - NKO DIGIT NINE
+            "\u0966"-"\u096f", //DEVANAGARI DIGIT ZERO - DEVANAGARI DIGIT NINE
+            "\u09e6"-"\u09ef", //BENGALI DIGIT ZERO - BENGALI DIGIT NINE
+            "\u0a66"-"\u0a6f", //GURMUKHI DIGIT ZERO - GURMUKHI DIGIT NINE
+            "\u0ae6"-"\u0aef", //GUJARATI DIGIT ZERO - GUJARATI DIGIT NINE
+            "\u0b66"-"\u0b6f", //ORIYA DIGIT ZERO - ORIYA DIGIT NINE
+            "\u0be6"-"\u0bef", //TAMIL DIGIT ZERO - TAMIL DIGIT NINE
+            "\u0c66"-"\u0c6f", //TELUGU DIGIT ZERO - TELUGU DIGIT NINE
+            "\u0ce6"-"\u0cef", //KANNADA DIGIT ZERO - KANNADA DIGIT NINE
+            "\u0d66"-"\u0d6f", //MALAYALAM DIGIT ZERO - MALAYALAM DIGIT NINE
+            "\u0e50"-"\u0e59", //THAI DIGIT ZERO - THAI DIGIT NINE
+            "\u0ed0"-"\u0ed9", //LAO DIGIT ZERO - LAO DIGIT NINE
+            "\u0f20"-"\u0f29", //TIBETAN DIGIT ZERO - TIBETAN DIGIT NINE
+            "\u1040"-"\u1049", //MYANMAR DIGIT ZERO - MYANMAR DIGIT NINE
+            "\u1090"-"\u1099", //MYANMAR SHAN DIGIT ZERO - MYANMAR SHAN DIGIT NINE
+            "\u1369"-"\u1371", //ETHIOPIC DIGIT ZERO - ETHIOPIC DIGIT NINE  
+            "\u17e0"-"\u17e9", //KHMER DIGIT ZERO - KHMER DIGIT NINE
+            "\u1810"-"\u1819", //MONGOLIAN DIGIT ZERO - MONGOLIAN DIGIT NINE
+            "\u1946"-"\u194f", //LIMBU DIGIT ZERO - LIMBU DIGIT NINE
+            "\u19d0"-"\u19d9", //NEW TAI LUE DIGIT ZERO - NEW TAI LUE DIGIT NINE
+            "\u1a80"-"\u1a89", //TAI THAM HORA DIGIT ZERO - TAI THAM HORA DIGIT NINE
+            "\u1a90"-"\u1a99", //TAI THAM THAM DIGIT ZERO - TAI THAM THAM DIGIT NINE
+            "\u1b50"-"\u1b59", //BALINESE DIGIT ZERO - BALINESE DIGIT NINE
+            "\u1bb0"-"\u1bb9", //SUNDANESE DIGIT ZERO - SUNDANESE DIGIT NINE
+            "\u1c40"-"\u1c49", //LEPCHA DIGIT ZERO - LEPCHA DIGIT NINE
+            "\u1c50"-"\u1c59", //OL CHIKI DIGIT ZERO - OL CHIKI DIGIT NINE
+            "\ua620"-"\ua629", //VAI DIGIT ZERO - VAI DIGIT NINE
+            "\ua8d0"-"\ua8d9", //SAURASHTRA DIGIT ZERO - SAURASHTRA DIGIT NINE
+            "\ua8e0"-"\ua8e9", //COMBINING DEVANAGARI DIGIT ZERO - COMBINING DEVANAGARI DIGIT NINE
+            "\ua900"-"\ua909", //KAYAH LI DIGIT ZERO - KAYAH LI DIGIT NINE
+            "\ua9d0"-"\ua9d9", //JAVANESE DIGIT ZERO - JAVANESE DIGIT NINE
+            "\uaa50"-"\uaa59", //CHAM DIGIT ZERO - CHAM DIGIT NINE
+            "\uabf0"-"\uabf9", //MEETEI MAYEK DIGIT ZERO - MEETEI MAYEK DIGIT NINE
+            "\uff10"-"\uff19"  //FULLWIDTH DIGIT ZERO -FULLWIDTH DIGIT NINE
+        ] >
+    |   <#EXP: ["e", "E"] ( <O_PLUS > | <O_MINUS > )? >
+}
+// JSON numbers do not support octal or hexadecimal formats
+TOKEN: {
+        <NUMBER:  <INTEGER> | <INTEGER> <FRACTIONAL_DIGITS> | <INTEGER> <EXPONENT> | <INTEGER> <FRACTIONAL_DIGITS> <EXPONENT> >
+    |   <INTEGER: (<O_MINUS>)? ( <DIGITS> ) > //support leading zeros
+    |   <FRACTIONAL_DIGITS: <O_DOT> <DIGITS> >
+    |   <EXPONENT: <EXP> <DIGITS> >
+    |   <DIGITS: ( <DIGIT> )+ >
+}
+
+// string literals
+TOKEN: {
+        <QUOTED_STRING: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"">
+    |   <SINGLE_QUOTED_STRING: "\'" ( (~["\'","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\'"] ) ) )* "\'">
+}
+TOKEN: {
+        <IDENTIFIER: <LETTER> (<LETTER> | <DIGIT> | "_")* >
+    |   <#LETTER: [
+            //Unicode "LETTER" characters - as of Javase 6, Unicode 4 is supported
+            //http://www.unicode.org/Public/4.1.0/ucd/NamesList.txt
+            //more inclusive than Character.isLetter
+           "\u0024",          //DOLLAR SIGN: milreis, escudo
+           "\u0041"-"\u005a", //LATIN CAPITAL LETTER A - LATIN CAPITAL LETTER Z
+           "\u005f",          //LOW LINE: spacing underscore
+           "\u0061"-"\u007a", //LATIN SMALL LETTER A - LATIN SMALL LETTER Z
+           "\u00aa"-"\u00ad", //  00AA FEMININE ORDINAL INDICATOR: spanish
+                              //  00AB LEFT-POINTING DOUBLE ANGLE QUOTATION MARK: left guillemet
+                              //  00AC NOT SIGN: angled dash
+                              //  00AD SOFT HYPHEN: discretionary hyphen
+           "\u00b5"-"\u00b6", //  00B5 MICRO SIGN: greek small letter mu
+                              //  00B6 PILCROW SIGN: paragraph sign
+           "\u00ba"-"\u00bb", //  00BA MASCULINE ORDINAL INDICATOR: spanish
+                              //  00BB RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK : right guillemet        
+           "\u00c0"-"\u00d6", //LATIN CAPITAL LETTER A WITH GRAVE - LATIN CAPITAL LETTER O WITH DIAERESIS
+           "\u00d8"-"\u00f6", //LATIN CAPITAL LETTER O WITH STROKE - LATIN SMALL LETTER O WITH DIAERESIS
+           "\u00f8"-"\u00ff", //LATIN SMALL LETTER O WITH STROKE - LATIN SMALL LETTER Y WITH DIAERESIS
+           "\u0100"-"\u1fff", //LATIN CAPITAL LETTER A WITH MACRON - GREEK DASIA:reversed comma
+           "\u3040"-"\u318f", //Hiragana - Hangul
+           "\u3300"-"\u337f", //Squared Katakana
+           "\u3400"-"\u3d2d", //CJK Unified Ideographs Extension A
+           "\u4e00"-"\u9fff", //CJK Unified Ideographs
+           "\uf900"-"\ufaff", //CJK Compatibility Ideographs
+           "\ufb00"-"\ufb06", //LATIN SMALL LIGATURE FF -LATIN SMALL LIGATURE ST
+           "\ufb13"-"\ufb17", //ARMENIAN SMALL LIGATURE MEN NOW - ARMENIAN SMALL LIGATURE MEN XEH
+           "\ufb1f"-"\ufb28", //HEBREW LIGATURE YIDDISH YOD YOD PATAH -HEBREW LETTER WIDE TAV
+           "\ufb2a"-"\ufb36", //HEBREW LETTER SHIN WITH SHIN DOT - HEBREW LETTER ZAYIN WITH DAGESH
+           "\ufb38"-"\ufb3e", //HEBREW LETTER TET WITH DAGESH - HEBREW LETTER MEM WITH DAGESH
+           "\ufb40"-"\ufb41", //HEBREW LETTER NUN WITH DAGESH - HEBREW LETTER SAMEKH WITH DAGESH
+           "\ufb43"-"\ufb44", //HEBREW LETTER FINAL PE WITH DAGESH - HEBREW LETTER PE WITH DAGESH
+           "\ufb46"-"\ufb4f", //HEBREW LETTER TSADI WITH DAGESH - HEBREW LIGATURE ALEF LAMED
+           "\ufb50"-"\ufdd7", //Arabic Presentation Forms(A) - ARABIC LIGATURE BISMILLAH AR-RAHMAN AR-RAHEEM
+           "\ufdf0"-"\ufdfd", //ARABIC LIGATURE SALLA USED AS KORANIC STOP SIGN ISOLATED FORM -ARABIC LIGATURE BISMILLAH AR-RAHMAN AR-RAHEEM
+           "\ufe70"-"\ufefc", //Arabic Presentation Forms(B) - ARABIC LIGATURE LAM WITH ALEF FINAL FORM
+           "\uff1f"-"\uff3a", //FULLWIDTH QUESTION MARK - FULLWIDTH LATIN CAPITAL LETTER Z
+           "\uff3f"-"\uff5e", //FULLWIDTH LOW LINE - FULLWIDTH TILDE
+           "\uff61"-"\uffbe", //Halfwidth CJK punctuation:HALFWIDTH IDEOGRAPHIC FULL STOP - HALFWIDTH HANGUL LETTER HIEUH
+           "\uffc2"-"\uffc7", //HALFWIDTH HANGUL LETTER A - HALFWIDTH HANGUL LETTER E
+           "\uffca"-"\uffcf", //HALFWIDTH HANGUL LETTER YEO - HALFWIDTH HANGUL LETTER OE
+           "\uffd2"-"\uffd7", //HALFWIDTH HANGUL LETTER YO - HALFWIDTH HANGUL LETTER YU
+           "\uffda"-"\uffdc"  //HALFWIDTH HANGUL LETTER EU - HALFWIDTH HANGUL LETTER I
+      ]
+  >
+}
+
+Object parse():
+{
+Object o = null;
+}
+{
+    ( o=_object() | o=_array() )
+    {
+        return o;
+    }
+}
+
+protected Map _object():
+{
+Map m = new LinkedHashMap();
+}
+{
+    <O_OPENBRACE> ( members(m) )? <O_CLOSEBRACE>
+    {
+        return m;
+    }
+}
+
+protected void members(Map m):
+{
+}
+{
+    pair(m) [ <O_COMMA> members(m) ]
+}
+
+protected void pair(Map m):
+{
+Token t = null;
+Object o;
+String fieldName = null;
+}
+{
+    fieldName=fieldName() <O_COLON> o=value()
+    {
+        m.put(fieldName, o);
+    }
+}
+
+protected String fieldName():
+{
+String fieldName = null;
+}
+{
+    (
+      <SINGLE_QUOTED_STRING>
+        {
+          fieldName = stripOffQuotes(token.image);
+        }
+      |
+      <QUOTED_STRING>
+        {
+          fieldName = stripOffQuotes(token.image);
+        }
+      |
+      //some JSON systems now accept 'naked' JSON Objects
+      <IDENTIFIER>
+        {
+          fieldName = token.image;
+        }
+    )
+    {
+      return fieldName;
+    }
+}
+
+protected List _array():
+{
+List a=new ArrayList();
+}
+{
+    <O_OPENBRACKET> ( elements(a) )? <O_CLOSEBRACKET>
+    {
+        Collections.reverse(a);
+        return a;
+    }
+}
+
+protected void elements(List a):
+{
+Object o = null;
+}
+{
+    o=value() [ <O_COMMA> elements(a) ]
+    {
+        a.add(o);
+    }
+}
+
+protected Object value():
+{
+Token t = null;
+Object o = null;
+}
+{
+    (   o=_object()
+    |   o=_array()
+    |   t=<IDENTIFIER> {o = t.image;} //'naked' values, too
+    |   t=<SINGLE_QUOTED_STRING> {o = stripOffQuotes(t.image);}
+    |   t=<QUOTED_STRING> {o = stripOffQuotes(t.image);}
+    |   t=<NUMBER>
+        {
+            try {
+              o = Integer.valueOf(t.image);
+            }
+            catch (NumberFormatException nfe1) {
+                try {
+                     o = new BigInteger(t.image);
+                }
+                catch  (NumberFormatException nfe2) {
+                    try {
+                         o = new BigDecimal(t.image);
+                    }
+                    catch  (NumberFormatException nfe3) {
+                         o = Double.NaN;
+                    }
+                }
+            }
+        }
+    |   <K_TRUE> {o = Boolean.TRUE;}
+    |   <K_FALSE> {o = Boolean.FALSE;}
+    |   <K_NULL> )
+    {
+        return o;
+    }
+}

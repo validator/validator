@@ -1,0 +1,383 @@
+/*
+ *               JavaCC source of a
+ *               parser for the Oberon-2 Programming Language
+ *
+ *       Author: James Power,
+ *  Affiliation: Dept. of Computer Science, National University of Ireland, 
+ *               Maynooth, Co. Kildare, Ireland.
+ * Last Revised: 17 November 1998
+ *
+ *     Based on: "The Programming Language Oberon"
+ *               H. Mossenbock, N. Wirth, ETH Zurich, 1992-1996
+ *
+ * For more information on Oberon see http://www.oberon.ethz.ch/language.html
+ */
+
+
+
+PARSER_BEGIN(OberonParser)
+public final class OberonParser { // Standard parser class setup...
+
+  public static void main(String args[]) { 
+    OberonParser parser;
+    java.io.InputStream input;
+
+    if (args.length==1) {
+      System.out.print(args[args.length-1] + ": ");
+      try {
+        input = new java.io.FileInputStream(args[args.length-1]);
+      } catch (java.io.FileNotFoundException e) {
+        System.out.println("File not found.");
+        return;
+      }
+    } else if (args.length==0) {
+      System.out.println("Reading from standard input...");
+      input = System.in;
+    } else {
+      System.out.println("Usage: java OberonParser [inputfile]");
+      return;
+    }
+    try {
+      parser = new OberonParser(input);
+      parser.translation_unit();
+      System.out.println("Successful parse!");
+    } catch (ParseException e) {
+      String msg = e.getMessage();
+      msg = msg.substring(0,msg.indexOf("\n"));
+      System.out.println("Syntax Error: "+msg);
+    }
+  }
+}
+PARSER_END(OberonParser)
+
+/***************************************/
+/********** TOKEN DEFINITIONS **********/
+/***************************************/
+
+TOKEN_MGR_DECLS :
+{
+  static int commentNesting;  // Current level of nesting of comments
+}
+
+
+/*** Skip whitespace and comments ***/
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "(*"  { commentNesting=1; } : IN_COMMENT
+}
+<IN_COMMENT> MORE:
+{
+  < ~[] >
+}
+<IN_COMMENT> SKIP:
+{
+  < "(*" > { commentNesting++; } 
+| < "*)" > { commentNesting--; if (commentNesting==0) SwitchTo(DEFAULT); }
+}
+
+
+/*** The keywords ***/
+TOKEN :
+{
+  <ARRAY : "ARRAY">
+| <BEGIN : "BEGIN">
+| <BY : "BY">
+| <CASE : "CASE">
+| <CONST : "CONST">
+| <DIV : "DIV">
+| <DO : "DO">
+| <ELSE : "ELSE">
+| <ELSIF : "ELSIF">
+| <END : "END">
+| <EXIT : "EXIT">
+| <FOR : "FOR">
+| <IF : "IF">
+| <IMPORT : "IMPORT">
+| <IN : "IN">
+| <IS : "IS">
+| <LOOP : "LOOP">
+| <MOD : "MOD">
+| <MODULE : "MODULE">
+| <NIL : "NIL">
+| <OF : "OF">
+| <OR : "OR">
+| <POINTER : "POINTER">
+| <PROCEDURE : "PROCEDURE">
+| <RECORD : "RECORD">
+| <REPEAT : "REPEAT">
+| <RETURN : "RETURN">
+| <THEN : "THEN">
+| <TO : "TO">
+| <TYPE : "TYPE">
+| <UNTIL : "UNTIL">
+| <VAR : "VAR">
+| <WHILE : "WHILE">
+| <WITH : "WITH">
+}
+
+TOKEN  :
+{
+  < DOTDOT : ".." >
+}
+/* The hack: if we see digits followed by "..", trap it here, otherwise
+ * the digits and first dot will be gobbled up to make a REAL below,
+ * and the second dot will give a syntax error
+ */
+TOKEN :
+{
+< DIGIT_DOT_HACK : (<DIGIT>)+ ".."  > 
+  {
+    // Create the new token and initialise its fields properly
+    Token newTok = new Token();
+    newTok.kind = DOTDOT;
+    newTok.beginLine = newTok.endLine = matchedToken.endLine;
+    newTok.beginColumn = matchedToken.endColumn-1;
+    newTok.endColumn = matchedToken.endColumn;
+    newTok.image="..";
+    newTok.next =  matchedToken.next;
+    newTok.specialToken = null;
+    // Now fix up matchedToken:
+    matchedToken.kind = INTEGER;
+    matchedToken.endColumn -= 2;
+    matchedToken.image = matchedToken.image.substring(0,matchedToken.image.length()-2);
+    matchedToken.next = newTok;
+  }
+}
+
+
+/*** Basic constants: numbers, idents, chars and strings ***/
+TOKEN  :
+{
+  < #DIGIT : ["0"-"9"] >
+| < #SCALEFACTOR : ("E" | "D") ("+" | "-")? (<DIGIT>)+ >
+| < #HEXDIGIT : ["0"-"9","A"-"F"] >
+| < INTEGER : (<DIGIT>)+ | <DIGIT> (<HEXDIGIT>)* "H" >
+| < REAL : (<DIGIT>)+ "." (<DIGIT>)* (<SCALEFACTOR>)? >
+
+| < #LETTER : ["A"-"Z","a"-"z"] >
+| < IDENT : <LETTER> (<LETTER> | <DIGIT>)* >
+
+| < CHARACTER : <DIGIT> (<HEXDIGIT>)* "X" >
+
+| < STRING : "\"" (~["\""])* "\"" | "'" (~["'"])* "'" >
+}
+
+
+/**************************************/
+/********** START OF GRAMMAR **********/
+/**************************************/
+
+void translation_unit() : {}
+{
+  Module()
+}
+
+void Module() : {}
+{
+  <MODULE> <IDENT> ";" 
+  (ImportList())? 
+  DeclSeq() 
+  (<BEGIN> StatementSeq())?
+  <END> <IDENT> "."
+}
+void ImportList() : {}
+{
+  <IMPORT> ImportSpec() ("," ImportSpec())* ";"
+}
+void ImportSpec() : {}
+{
+  <IDENT> (":=" <IDENT>)?
+}
+
+void DeclSeq() : {}
+{
+  ( VarTypeDecl() )*
+  ( ProcedureDecl() )*
+}
+void VarTypeDecl() : {}
+{
+  <CONST> (ConstDecl() ";")* 
+| <TYPE> (TypeDecl() ";")* 
+| <VAR> (VarDecl() ";")* 
+}
+void ConstDecl() : {}
+{
+  IdentDef() "=" ConstExpr()
+}
+void TypeDecl() : {}
+{
+  IdentDef() "=" Type()
+}
+void VarDecl() : {}
+{
+  IdentList() ":" Type()
+}
+void ProcedureDecl() : {}
+{
+  <PROCEDURE> (ForwardDecl() | ProcDecl()) ";"
+}
+void ProcDecl() : {}
+{
+  (Receiver())? IdentDef() (FormalPars())? ";" 
+  DeclSeq() (<BEGIN> StatementSeq())? <END> <IDENT>
+}
+void ForwardDecl() : {}
+{
+  "^" (Receiver())? IdentDef() (FormalPars())?
+}
+void FormalPars() : {}
+{
+  "(" (FPSection() (";" FPSection())*)? ")" (":" Qualident())?
+}
+void FPSection() : {}
+{
+  (<VAR>)? <IDENT> ("," <IDENT>)* ":" Type()
+} 
+void Receiver() : {}
+{
+  "(" (<VAR>)? <IDENT> ":" <IDENT> ")"
+}
+void Type() : {}
+{
+  Qualident()
+  | <ARRAY> (ConstExpr() ("," ConstExpr())*)? <OF> Type() 
+  | <RECORD> ("("Qualident()")")? FieldList() (";" FieldList())* <END>
+  | <POINTER> <TO> Type()
+  | <PROCEDURE> (FormalPars())?
+}
+void FieldList() : {}
+{
+  (IdentList() ":" Type())?
+}
+void StatementSeq() : {}
+{
+  optStatement() (";" optStatement())*
+}
+void optStatement() : {}
+{
+  (Statement())?
+}
+void Statement() : {}
+{
+    Designator() ((":=" Expr()) | Arguments() )
+  | <IF> Expr() <THEN> StatementSeq() 
+    (<ELSIF> Expr() <THEN> StatementSeq())*
+    (<ELSE> StatementSeq())?
+    <END> 
+  | <CASE> Expr() <OF> Case() 
+    ("|" Case())*
+    (<ELSE> StatementSeq())?
+    <END> 
+  | <WHILE> Expr() <DO> StatementSeq() <END> 
+  | <REPEAT> StatementSeq() <UNTIL> Expr() 
+  | <FOR> <IDENT> ":=" Expr() <TO> Expr() 
+    (<BY> ConstExpr())? 
+    <DO> StatementSeq() <END> 
+  | <LOOP> StatementSeq() <END>
+  | <WITH> Guard() <DO> StatementSeq() 
+    ("|" Guard() <DO> StatementSeq())*
+    (<ELSE> StatementSeq())?
+    <END>
+  | <EXIT> 
+  | <RETURN> (Expr())?
+}
+void Case() : {}
+{
+  (CaseLabels() ("," CaseLabels())* ":" StatementSeq())?
+} 
+void CaseLabels() : {}
+{
+  ConstExpr() (<DOTDOT> ConstExpr())?
+}
+void Guard() : {}
+{
+  Qualident() ":" Qualident()
+}
+void ConstExpr() : {}
+{
+  Expr()
+}
+void Expr() : {}
+{
+  SimpleExpr() (Relation() SimpleExpr())?
+}
+void SimpleExpr() : {}
+{
+  ("+" | "-")? Term() (AddOp() Term())*
+} 
+void Term() : {}
+{
+  Factor() (MulOp() Factor())*
+}
+void Factor() : {}
+{
+  Designator() Arguments() | Number() | <CHARACTER> | <STRING> 
+                | <NIL> | Set() | "(" Expr() ")" | "~" Factor()
+}
+void Set() : {}
+{
+  "{" (Element() ("," Element())* )? "}"
+} 
+void Element() : {}
+{
+  Expr() (<DOTDOT> Expr())?
+}
+void Relation() : {}
+{
+  "=" | "#" | "<" | "<=" | ">" | ">=" | <IN> | <IS>
+}
+void AddOp() : {}
+{
+  "+" | "-" | <OR>
+}
+void MulOp() : {}
+{
+  "*" | "/" | <DIV> | <MOD> | "&"
+} 
+
+  /* NB: Because Arguments() always appears after Designator(), there 
+   * will be a conflict if we get "(" Qualident() ")" - do we consume
+   * this as part of the Designator(), or leave it for the Arguments()
+   * The disambiguation in Designator() chooses the former, so the
+   * semantic phase will have to disentangle this for function calls
+   * with one (qualified) identifier as an argument.
+   */
+
+void Arguments() : {}
+{
+  ( "(" (ExprList())? ")" )?
+} 
+void Designator() : {}
+{
+  <IDENT> (LOOKAHEAD("." | "[" | "^" | ("(" Qualident() ")")) 
+   ( "." <IDENT> 
+  | "[" ExprList() "]" 
+  | "^" 
+  | "(" Qualident() ")")
+  )*
+} 
+void ExprList() : {}
+{
+  Expr() ("," Expr())*
+}
+void IdentList() : {}
+{
+  IdentDef() ("," IdentDef())*
+}
+void Qualident() : {}
+{
+  // (<IDENT> ".")? <IDENT>
+  <IDENT> ("." <IDENT>)?
+}
+void IdentDef() : {}
+{
+  <IDENT> ("*" | "-")?
+}
+void Number() : {}
+{
+  <INTEGER> | <REAL>
+}

@@ -1,0 +1,33 @@
+\#include "${NODE_TYPE}.h"
+#if VISITOR
+\#include "${PARSER_NAME}Visitor.h"
+#fi
+
+#if NAMESPACE
+namespace ${NAMESPACE_OPEN}
+#fi
+  
+  ${NODE_TYPE}::${NODE_TYPE}(int id) : ${NODE_CLASS:-SimpleNode}(id) {
+  }
+  ${NODE_TYPE}::${NODE_TYPE}(${PARSER_NAME} *parser, int id) : ${NODE_CLASS:-SimpleNode}(parser, id) {
+  }
+  ${NODE_TYPE}::~${NODE_TYPE}() {
+  }
+
+#if VISITOR
+  /** Accept the visitor. **/
+  ${VISITOR_RETURN_TYPE} ${NODE_TYPE}::jjtAccept(${PARSER_NAME}Visitor *visitor, ${VISITOR_DATA_TYPE:-void *} data) const {
+#if !VISITOR_RETURN_TYPE_VOID
+    return 
+#fi
+#if VISITOR_METHOD_NAME_INCLUDES_TYPE_NAME
+    visitor->visit${NODE_TYPE}(this, data);
+#else
+    visitor->visit(this, data);
+#fi
+  }
+#fi
+
+#if NAMESPACE
+${NAMESPACE_CLOSE}
+#fi

@@ -1,0 +1,272 @@
+/* Copyright (c) 2009, Paul Cager.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright notice,
+ *       this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ * This file contains a simple parser to evalulate simple boolean conditions,
+ * such as
+ *   !value1 || value2
+ */
+
+options {
+  JAVA_UNICODE_ESCAPE = true;
+  STATIC=false;
+}
+
+PARSER_BEGIN(ConditionParser)
+
+package org.javacc.utils;
+
+import java.io.StringReader;
+import java.util.Map;
+
+public class ConditionParser
+{
+    private Map<String, Object> options;
+    
+    public static void main(String... args) throws ParseException
+    {
+      test("F", false);
+      test("T", true);
+      test("F || T", true);
+      test("T || F", true);
+      test("T || will not be compiled )", true);
+      test("F && T", false);
+      test("T && T", true);
+      test("unknown", false);
+    }
+    
+    private static void test(String input, boolean expectedValue)  throws ParseException
+    {
+      ConditionParser cp = new ConditionParser(new StringReader(input));
+      Map<String,Object> values = new java.util.HashMap<String,Object>();
+      values.put("F", Boolean.FALSE);
+      values.put("T", Boolean.TRUE);
+      boolean value = cp.CompilationUnit(values);
+      System.out.println(input + " = " + value);
+      if (value != expectedValue)
+        throw new RuntimeException();
+    }
+}
+
+PARSER_END(ConditionParser)
+
+
+
+/* WHITE SPACE */
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+
+}
+
+/* COMMENTS */
+
+MORE :
+{
+  "//" : IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT
+|
+  "/*" : IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
+}
+
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN :
+{
+  <FORMAL_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE :
+{
+  < ~[] >
+}
+
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+}
+
+/* OPERATORS */
+
+TOKEN :
+{
+  < BANG: "!" >
+| < SC_OR: "||" >
+| < SC_AND: "&&" >
+}
+
+boolean CompilationUnit(Map<String,Object> options):
+{
+	boolean value;
+    this.options = options;
+}
+{
+  value = ConditionalExpression()
+  
+  { return value; }
+}
+
+boolean ConditionalExpression():
+{
+	boolean value;
+}
+{
+  value = ConditionalAndExpression() 
+  	{ if (value) return true; }
+  	
+  ( "||" 
+  	value = ConditionalAndExpression()
+  	    { if (value) return true; }
+  )*
+  
+  { return false; }
+}
+
+boolean ConditionalAndExpression():
+{
+	boolean value;
+}
+{
+  value = UnaryExpressionNotPlusMinus()
+  	{ if (!value) return false; }
+  
+  ( "&&"
+    value = UnaryExpressionNotPlusMinus()
+  	    { if (!value) return false; }
+  )*
+  
+  { return true; }
+}
+
+
+boolean UnaryExpressionNotPlusMinus():
+{
+	boolean value;
+}
+{
+  ( "~" | "!" ) value = UnaryExpressionNotPlusMinus() { return !value; }
+  | value = UnaryExpression()    { return value; }
+}
+
+boolean UnaryExpression():
+{
+	boolean value;
+}
+{
+  value = Literal()		{ return value; }
+|
+  "(" value = ConditionalExpression() ")" { return value; }
+|
+  value = Name()  { return value; } 
+}
+
+boolean Literal():
+{
+	boolean value;
+}
+{
+  value = BooleanLiteral()     { return value; }
+}
+
+boolean BooleanLiteral() :
+{}
+{
+   <TRUE>    { return true; }
+ | <FALSE>   { return false; }
+}
+
+boolean Name() :
+{
+  String name;
+}
+{
+	<IDENTIFIER>
+	
+	{
+	    name = getToken(0).image.trim();
+	    
+	    Object obj = options.get(name);
+	    
+	    if (obj instanceof Boolean)
+	    {
+	      return ((Boolean)obj).booleanValue();
+	    }
+	    else if (obj instanceof String)
+	    {
+	      String string = ((String)obj).trim();
+	      return string.length() > 0 && !string.equalsIgnoreCase("false") && !string.equalsIgnoreCase("no");
+	    }
+	    
+	    return false;
+	}
+}
+
+/* IDENTIFIERS */
+
+TOKEN :
+{
+  < TRUE: "true" >
+|
+  < FALSE: "false" >
+|
+  < IDENTIFIER: <LETTER> (<PART_LETTER>)* >
+|
+  < #LETTER:
+      [  
+         "$",
+         "A"-"Z",
+         "_",
+         "a"-"z"
+      ]
+  >
+|
+  < #PART_LETTER:
+      [
+         "$",
+         "0"-"9",
+         "A"-"Z",
+         "_",
+         "a"-"z"
+      ]
+  >
+}
