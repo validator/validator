@@ -1,4 +1,0 @@
-/* this should pass CSS2 test, see
-http://www.w3.org/Bugs/Public/show_bug.cgi?id=3627 */ 
-
-.selector { color: gr\000065en; }

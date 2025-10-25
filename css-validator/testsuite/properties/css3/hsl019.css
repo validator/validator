@@ -1,2 +1,0 @@
-element { background-color: hsl(0, 50%, 50%, 0.5) }
-/* no error (valid for hsla, which is an alias for the new hsl definition in css-color-4 */

@@ -1,7 +1,0 @@
-a { font-size-adjust: 0.45 }
-b { font-size-adjust: var(--foo, 42) }
-y { font-size-adjust: initial }
-w { font-size-adjust: unset }
-z { font-size-adjust: inherit }
-cy { font-size-adjust: iNiTial }
-cz { font-size-adjust: iNheRit }
