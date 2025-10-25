@@ -21,6 +21,7 @@ DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-validator" basedir=".." default="build"
   xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <tstamp/>
   <property name="dist" location="build/dist" />
@@ -225,72 +226,80 @@ DEALINGS IN THE SOFTWARE.
     <delete dir="${dist}"/>
   </target>
   <target name="distclean" depends="clean, dl-clean"/>
+
   <target name="jar" depends="validator-jar">
     <jar destfile="${dist}/vnu.jar" duplicate="preserve">
-      <zipgroupfileset dir="${jarsDir}" includes="*.jar"/>
-      <zipfileset src="css-validator/css-validator.jar"/>
-      <zipfileset src="jing-trang/build/jing.jar"/>
-      <zipfileset src="jing-trang/lib/saxon9.jar"/>
-      <zipfileset src="${depsDir}/commons-codec-${commons-codec-version}.jar"/>
-      <zipfileset src="${depsDir}/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
-      <zipfileset src="${depsDir}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
-      <zipfileset src="${depsDir}/commons-io-${commons-io-version}.jar"/>
-      <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}.jar"/>
-      <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar"/>
-      <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-api.jar"/>
-      <zipfileset src="${depsDir}/httpclient-${httpclient-version}.jar"/>
-      <zipfileset src="${depsDir}/httpcore-${httpcore-version}.jar"/>
-      <zipfileset src="${depsDir}/icu4j-${icu4j-version}.jar"/>
+      <zipfileset src="${jarsDir}/validator.jar"/>
 
-      <zipfileset src="${depsDir}/jchardet-${jchardet-version}.jar"/>
-      <zipfileset src="${depsDir}/jetty-http-${jetty-version}.jar">
+      <zipfileset src="${jarsDir}/galimatias.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${jarsDir}/htmlparser.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${jarsDir}/langdetect.jar" unless:true="${jar-without-deps}"/>
+
+      <zipfileset src="css-validator/css-validator.jar" unless:true="${jar-without-deps}"/>
+
+      <zipfileset src="jing-trang/build/jing.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="jing-trang/lib/saxon9.jar" unless:true="${jar-without-deps}"/>
+
+      <zipfileset src="${depsDir}/commons-codec-${commons-codec-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-fileupload2-core-${commons-fileupload-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-io-${commons-io-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-api.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/httpclient-${httpclient-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/httpcore-${httpcore-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/icu4j-${icu4j-version}.jar" unless:true="${jar-without-deps}"/>
+
+      <zipfileset src="${depsDir}/jchardet-${jchardet-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/jetty-http-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
         <exclude name="META-INF/services/**"/>
       </zipfileset>
-      <zipfileset src="${depsDir}/jetty-io-${jetty-version}.jar">
+      <zipfileset src="${depsDir}/jetty-io-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar">
+      <zipfileset src="${depsDir}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/jetty-security-${jetty-version}.jar">
+      <zipfileset src="${depsDir}/jetty-security-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/jetty-server-${jetty-version}.jar">
+      <zipfileset src="${depsDir}/jetty-server-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/jetty-servlet-${jetty-version}.jar">
+      <zipfileset src="${depsDir}/jetty-servlet-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/jetty-servlets-${jetty-version}.jar">
+      <zipfileset src="${depsDir}/jetty-servlets-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/jetty-util-${jetty-version}.jar">
+      <zipfileset src="${depsDir}/jetty-util-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/javax.json-${javax.json-version}.jar">
+      <zipfileset src="${depsDir}/javax.json-${javax.json-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/log4j-${log4j-version}.jar"/>
-      <zipfileset src="${depsDir}/salvation-${salvation-version}.jar"/>
+      <zipfileset src="${depsDir}/log4j-${log4j-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/salvation-${salvation-version}.jar" unless:true="${jar-without-deps}"/>
       <!-- module dependencies -->
-      <zipfileset src="jing-trang/lib/isorelax.jar"/>
-      <zipfileset src="${depsDir}/avalon-framework-api-${avalon-framework-api-version}.jar"/>
-      <zipfileset src="${depsDir}/avalon-logkit-${avalon-logkit-version}.jar"/>
-      <zipfileset src="${depsDir}/cdi-api-${cdi-api-version}.jar"/>
-      <zipfileset src="${depsDir}/el-api-${el-api-version}.jar"/>
-      <zipfileset src="${depsDir}/javax.activation-${javax-activation-version}.jar"/>
-      <zipfileset src="${depsDir}/javax.inject-${javax-inject-version}.jar"/>
-      <zipfileset src="${depsDir}/javax.interceptor-api-${javax-interceptor-api-version}.jar"/>
-      <zipfileset src="${depsDir}/javax.jms-api-${javax-jms-api-version}.jar"/>
-      <zipfileset src="${depsDir}/jetty-jmx-${jetty-version}.jar">
+      <zipfileset src="jing-trang/lib/isorelax.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/avalon-framework-api-${avalon-framework-api-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/avalon-logkit-${avalon-logkit-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/cdi-api-${cdi-api-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/el-api-${el-api-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/javax.activation-${javax-activation-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/javax.inject-${javax-inject-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/javax.interceptor-api-${javax-interceptor-api-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/javax.jms-api-${javax-jms-api-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/jetty-jmx-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/jsr305-${jsr305-version}.jar"/>
-      <zipfileset src="${depsDir}/mail-${mail-version}.jar"/>
-      <zipfileset src="${depsDir}/portlet-api-${portlet-api-version}.jar"/>
-      <zipfileset src="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
-      <zipfileset src="${depsDir}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
+      <zipfileset src="${depsDir}/jsr305-${jsr305-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/mail-${mail-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/portlet-api-${portlet-api-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/slf4j-api-${slf4j-api-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/slf4j-log4j12-${slf4j-log4j12-version}.jar" unless:true="${jar-without-deps}"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
