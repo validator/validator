@@ -312,14 +312,12 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
-  <target name="war" depends="validator-jar">
+  <target name="war" depends="validator-split-core">
     <mkdir dir="${dist}/war" />
-    <unzip dest="${dist}/war/classes">
-      <fileset dir="${jarsDir}">
-        <include name="*.jar"/>
-      </fileset>
-    </unzip>
     <copy todir="${dist}/war/lib">
+      <fileset file="${jarsDir}/galimatias.jar"/>
+      <fileset file="${jarsDir}/htmlparser.jar"/>
+      <fileset file="${jarsDir}/langdetect.jar"/>
       <fileset file="css-validator/css-validator.jar"/>
       <fileset file="jing-trang/build/jing.jar"/>
       <fileset file="jing-trang/lib/saxon9.jar"/>
@@ -342,10 +340,8 @@ DEALINGS IN THE SOFTWARE.
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${validator.basedir}/resources/war/web.xml">
       <lib dir="${dist}/war/lib"/>
-      <classes dir="${dist}/war/classes">
-        <exclude name="**/*.java"/>
-        <exclude name="**/nu/validator/servlet/Main.class"/>
-      </classes>
+      <classes dir="${validator.build.basedir}/core/classes"/>
+      <classes dir="${validator.build.basedir}/resources"/>
       <classes file="${validator.basedir}/resources/war/log4j.xml"/>
       <service type="org.relaxng.datatype.DatatypeLibraryFactory">
         <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
