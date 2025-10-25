@@ -2,14 +2,8 @@ css-validator:
     remote_url: https://github.com/w3c/css-validator.git
     remote_name: css-validator
     remote_branch: validator-nu
-    last_local_merge: 32fb969cc524dbbeffc75f3869bafa039adcd9ec
-    current_commit: c275895eae822672095ffbc702f0ffa2bb2e9834
-css-validator/testsuite:
-    remote_url: https://github.com/w3c/css-validator-testsuite.git
-    remote_name: testsuite
-    remote_branch: master
-    last_local_merge: a30b744bfe10fafb5e559f59cb28a24eff48cd19
-    current_commit: a95c420435e6f0f5bc72a1dd5bbeec5346df870e
+    last_local_merge: ad3b1f32049b352728405198adc020b72f52944f
+    current_commit: 7a0f4aa8462e7e89790d253e921c33ac5d5d5b21
 docs/wiki:
     remote_url: https://github.com/validator/validator.wiki.git
     remote_name: wiki
@@ -25,15 +19,9 @@ galimatias:
 htmlparser:
     remote_url: https://github.com/validator/htmlparser.git
     remote_name: htmlparser
-    remote_branch: master
-    last_local_merge: f10a69f21251bb2372fb62964f49676de89e3712
-    current_commit: b177e8d5455b6ff57e85effceffe9bc9377c3707
-htmlparser/test-src/test/resources/html5lib-tests:
-    remote_url: https://github.com/html5lib/html5lib-tests.git
-    remote_name: html5lib-tests
-    remote_branch: master
-    last_local_merge: 04e40f5195f43942e2964fe0b0db35f30cba8e1f
-    current_commit: 6ddcf58bea5a01e616911050c173622f84297211
+    remote_branch: validator-nu
+    last_local_merge: 983eb89c5f6c263cc9ced838dba845f8ca0653c1
+    current_commit: 3a1f6c1aac90e31e9fe6fa140800b80766684da4
 jing-trang:
     remote_url: https://github.com/relaxng/jing-trang.git
     remote_name: jing-trang
