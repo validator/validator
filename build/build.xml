@@ -314,52 +314,6 @@ DEALINGS IN THE SOFTWARE.
   </target>
   <target name="war" depends="validator-jar">
     <mkdir dir="${dist}/war" />
-    <echo file="${dist}/war/web.xml" append="false"
-><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-      version="3.0">
-    <display-name>validator.nu</display-name>
-    <description>Mark-up validation service</description>
-    <filter>
-        <filter-name>inbound-size-limit-filter</filter-name>
-        <filter-class>nu.validator.servlet.InboundSizeLimitFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>inbound-size-limit-filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>inbound-gzip-filter</filter-name>
-        <filter-class>nu.validator.servlet.InboundGzipFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>inbound-gzip-filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>multipart-form-data-filter</filter-name>
-        <filter-class>nu.validator.servlet.MultipartFormDataFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>multipart-form-data-filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <servlet>
-        <servlet-name>validator</servlet-name>
-        <servlet-class>nu.validator.servlet.VerifierServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>validator</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
-</web-app>
-]]></echo>
     <unzip dest="${dist}/war/classes">
       <fileset dir="${jarsDir}">
         <include name="*.jar"/>
@@ -386,7 +340,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="${depsDir}/javax.json-${javax.json-version}.jar"/>
       <fileset file="${depsDir}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
     </copy>
-    <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
+    <war destfile="${dist}/vnu.war" webxml="${validator.basedir}/resources/war/web.xml">
       <lib dir="${dist}/war/lib"/>
       <classes dir="${dist}/war/classes">
         <exclude name="**/*.java"/>
