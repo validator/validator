@@ -763,6 +763,10 @@ class Release():
         self.minDocPath = os.path.join(buildRoot, 'build', 'minDoc.html')
         self.docs = ["README.md", "LICENSE"]
 
+    def reInitDistDir(self, whichDir):
+        removeIfDirExists(distDir)
+        ensureDirExists(distDir)
+
     def writeHash(self, filename, md5OrSha1):
         BLOCKSIZE = 65536
         hasher = md5()
@@ -800,7 +804,7 @@ class Release():
         if jarOrWar == "war":
             whichDir = distWarDir
             distJarOrWar = "build/dist-war"
-        ensureDirExists(whichDir)
+        self.reInitDistDir(whichDir)
         self.version = validatorVersion
         runCmd([antCmd] + antCommonArgs + [
                 '-Dbuild.java.target.version=' + javaTargetVersion,
@@ -845,7 +849,7 @@ class Release():
             removeIfDirExists(os.path.join(whichDir, "war"))
             ensureDirExists(whichDir)
             os.mkdir(os.path.join(whichDir, "war"))
-        ensureDirExists(distDir)
+        self.reInitDistDir(whichDir)
         self.version = validatorVersion
         runCmd([antCmd] + antCommonArgs + [
                 '-Dbuild.java.target.version=' + javaTargetVersion,
