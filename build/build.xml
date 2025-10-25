@@ -312,8 +312,8 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
+
   <target name="war" depends="validator-split-core">
-    <mkdir dir="${dist}/war" />
     <war destfile="${dist}/vnu.war" webxml="${validator.basedir}/resources/war/web.xml">
       <lib file="${jarsDir}/galimatias.jar"/>
       <lib file="${jarsDir}/htmlparser.jar"/>
@@ -345,7 +345,6 @@ DEALINGS IN THE SOFTWARE.
         <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </war>
-    <delete dir="${dist}/war" />
   </target>
 
   <property name="validator.basedir" location="." />
