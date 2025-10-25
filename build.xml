@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<project default="jar" name="W3C CSS Validator">
+
+  <!-- =================================================================== -->
+  <!-- Project-wide properties                                           -->
+  <!-- =================================================================== -->
+  <!-- Overriding those properties works too, but is not advisable. -->
+
+  <property name="app.name" value="css-validator"/>
+  <property name="jar.file" value="${app.name}.jar"/>
+  <property name="war.file" value="${app.name}.war"/>
+
+  <!-- =================================================================== -->
+  <!-- Targets                                                             -->
+  <!-- =================================================================== -->
+
+  <target name="build" description="Builds the validator">
+    <mkdir dir="./build"/>
+    <javac destdir="./build" encoding="UTF-8"
+           debug="yes" includes="org/w3c/**" srcdir="." source="8" target="8"
+           includeantruntime="false"/>
+    <copy todir="./build">
+      <fileset dir="./">
+        <include name="org/**"/>
+        <exclude name="**/*.java"/>
+        <exclude name="**/*.class"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="javadoc" description="Generates API docs">
+    <mkdir dir="./javadoc"/>
+    <javadoc
+      packagenames="org.w3c.*"
+      sourcepath="./"
+      destdir="./javadoc"
+      author="true"
+      version="true"
+      windowtitle="W3C CSS Validator API"/>
+  </target>
+
+  <target name="jar" depends="build" description="Creates the lib archive with all dependency jars included">
+    <delete file="${jar.file}"/>
+    <jar jarfile="${jar.file}" basedir="build" excludes="org/**/*.java">
+      <include name="org/**"/>
+      <manifest>
+        <attribute name="Main-Class" value="org.w3c.css.css.CssValidator"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="jar-without-dependencies" depends="build" description="Creates the lib archive without dependency jars">
+    <delete file="${jar.file}"/>
+    <jar jarfile="${jar.file}" basedir="build" excludes="org/**/*.java">
+      <include name="org/**"/>
+      <manifest>
+        <attribute name="Main-Class" value="org.w3c.css.css.CssValidator"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="war" depends="build, buildhtml" description="Creates the webapp module">
+    <delete file="${war.file}"/>
+    <war warfile="${war.file}" webxml="web.xml" basedir="." includes="*html*,favicon.ico,images/**,style/**,scripts/**.js" excludes="html,css-validator.*">
+      <classes dir="build"/>
+    </war>
+  </target>
+
+  <target name="autotest" depends="jar">
+    <fail message="&#xa0;${line.separator}${line.separator}
+  Usage: ant autotest -Dtestfile=testsuite/xml/FILENAME.xml">
+      <condition>
+        <not>
+          <isset property="testfile"/>
+        </not>
+      </condition>
+    </fail>
+    <javac srcdir="autotest" classpath="css-validator.jar"
+      includeantruntime="false"/>
+    <java classname="autotest.AutoTest" classpath="css-validator.jar">
+      <arg value="${testfile}"/>
+    </java>
+  </target>
+
+  <path id="generate.class.path">
+    <path refid="build.class.path"/>
+    <pathelement location="build"/>
+  </path>
+
+  <target name="buildhtml" depends="build">
+    <java classpathref="generate.class.path" classname="org.w3c.css.index.IndexGenerator">
+      <arg value="."/>
+    </java>
+    <java classpathref="generate.class.path" classname="org.w3c.css.index.TranslationTableGenerator">
+      <arg value="."/>
+    </java>
+  </target>
+
+  <target name="javacc">
+    <ant antfile="build.xml" dir="javacc"/>
+  </target>
+
+  <target name="clean" description="Cleans up generated files">
+    <delete file="${jar.file}"/>
+    <delete file="${war.file}"/>
+    <delete dir="./build"/>
+    <delete dir="./javadoc"/>
+    <delete dir="./tmp"/>
+  </target>
+
+</project>

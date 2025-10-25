@@ -1,0 +1,2 @@
+#RedirectMatch permanent / https://github.com/w3c/css-validator
+#RedirectMatch permanent /README.cvs.html https://github.com/w3c/css-validator
