@@ -868,10 +868,10 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
   <property name="cssvalidator.basedir" location="css-validator" />
-  <target name="cssvalidator-build" depends="dl-deps, dl-deps-modules" >
+  <target name="cssvalidator-build" depends="dl-deps, dl-deps-modules" unless="${use-system-cssvalidator}">
     <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
   </target>
-  <target name="cssvalidator-clean">
+  <target name="cssvalidator-clean" unless="${use-system-cssvalidator}">
     <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
   </target>
 
@@ -880,7 +880,7 @@ DEALINGS IN THE SOFTWARE.
   <path id="galimatias.classpath">
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
   </path>
-  <target name="galimatias-build" depends="dl-deps, dl-deps-modules">
+  <target name="galimatias-build" depends="dl-deps, dl-deps-modules" unless="${use-system-galimatias}">
     <mkdir dir="${galimatias.build.basedir}/classes"/>
     <javac srcdir="${galimatias.basedir}/src/main/java"
            destdir="${galimatias.build.basedir}/classes"
@@ -892,11 +892,11 @@ DEALINGS IN THE SOFTWARE.
            release="${build.java.target.version}"
            />
   </target>
-  <target name="galimatias-clean">
+  <target name="galimatias-clean" unless="${use-system-galimatias}">
     <delete dir="${galimatias.build.basedir}"/>
     <deleteFileWithEmptyParent file="${jarsDir}/galimatias.jar"/>
   </target>
-  <target name="galimatias-jar" depends="galimatias-build">
+  <target name="galimatias-jar" depends="galimatias-build" unless="${use-system-galimatias}">
     <jar destfile="${jarsDir}/galimatias.jar" basedir="${galimatias.build.basedir}/classes"/>
   </target>
 
@@ -906,7 +906,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="jchardet-${jchardet-version}.jar" />
   </path>
-  <target name="htmlparser-initialize">
+  <target name="htmlparser-initialize" unless="${use-system-htmlparser}">
     <!-- copied over from htmlparser/pom.xml -->
     <delete dir="${htmlparser.build.basedir}/realsrc"/>
     <mkdir dir="${htmlparser.build.basedir}/realsrc"/>
@@ -914,7 +914,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${htmlparser.basedir}/src"/>
     </copy>
   </target>
-  <target name="htmlparser-process-sources" depends="htmlparser-initialize">
+  <target name="htmlparser-process-sources" depends="htmlparser-initialize" unless="${use-system-htmlparser}">
     <!-- copied over from htmlparser/pom.xml -->
     <property name="translator.sources" value="${htmlparser.basedir}/translator-src"/>
     <property name="translator.classes" value="${htmlparser.build.basedir}/translator-classes"/>
@@ -928,7 +928,7 @@ DEALINGS IN THE SOFTWARE.
       <arg value="${htmlparser.build.basedir}/realsrc/nu/validator/htmlparser/impl/HotSpotWorkaround.txt"/>
     </java>
   </target>
-  <target name="htmlparser-build" depends="dl-deps, dl-deps-modules, htmlparser-process-sources">
+  <target name="htmlparser-build" depends="dl-deps, dl-deps-modules, htmlparser-process-sources" unless="${use-system-htmlparser}">
     <mkdir dir="${htmlparser.build.basedir}/classes"/>
     <javac srcdir="${htmlparser.basedir}/src"
            destdir="${htmlparser.build.basedir}/classes"
@@ -941,19 +941,19 @@ DEALINGS IN THE SOFTWARE.
            release="${build.java.target.version}"
            />
   </target>
-  <target name="htmlparser-clean">
+  <target name="htmlparser-clean" unless="${use-system-htmlparser}">
     <delete dir="${htmlparser.build.basedir}"/>
     <deleteFileWithEmptyParent file="${jarsDir}/htmlparser.jar"/>
   </target>
-  <target name="htmlparser-jar" depends="htmlparser-build">
+  <target name="htmlparser-jar" depends="htmlparser-build" unless="${use-system-htmlparser}">
     <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.build.basedir}/classes"/>
   </target>
 
   <property name="jing.basedir" location="jing-trang" />
-  <target name="jing-build">
+  <target name="jing-build" unless="${use-system-jing}">
     <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
   </target>
-  <target name="jing-clean">
+  <target name="jing-clean" unless="${use-system-jing}">
     <ant dir="${jing.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
     <delete file="${jing.basedir}/modbuild.xml"/>
     <delete file="${jing.basedir}/modules.xml"/>
@@ -964,7 +964,7 @@ DEALINGS IN THE SOFTWARE.
   <path id="langdetect.classpath">
     <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
   </path>
-  <target name="langdetect-build" depends="dl-deps, dl-deps-modules">
+  <target name="langdetect-build" depends="dl-deps, dl-deps-modules" unless="${use-system-langdetect}">
     <mkdir dir="${langdetect.build.basedir}/classes"/>
     <javac srcdir="${langdetect.basedir}/src"
            destdir="${langdetect.build.basedir}/classes"
@@ -976,11 +976,11 @@ DEALINGS IN THE SOFTWARE.
            release="${build.java.target.version}"
            />
   </target>
-  <target name="langdetect-clean">
+  <target name="langdetect-clean" unless="${use-system-langdetect}">
     <delete dir="${langdetect.build.basedir}"/>
     <deleteFileWithEmptyParent file="${jarsDir}/langdetect.jar"/>
   </target>
-  <target name="langdetect-jar" depends="langdetect-build">
+  <target name="langdetect-jar" depends="langdetect-build" unless="${use-system-langdetect}">
     <copy file="${langdetect.basedir}/src/com/cybozu/labs/langdetect/util/messages.properties" todir="${langdetect.build.basedir}/classes/com/cybozu/labs/langdetect/util"/>
       <jar destfile="${jarsDir}/langdetect.jar" basedir="${langdetect.build.basedir}/classes"/>
   </target>
