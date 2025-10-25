@@ -226,8 +226,6 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
-      - name: Update submodules
-        run: python checker.py update
       - name: Build vnu.jar
         run: python checker.py --version="$version" build
       - name: Rebuild tests/messages.json
