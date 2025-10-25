@@ -1,0 +1,355 @@
+direction: ltr
+language_name: Українська
+more_options: Додаткові можливості
+title_more_options: Показати/сховати додаткові можливості
+all: Усі
+normal_report: Звичайний звіт
+most_important: Найбільш важливі
+no_warnings: Без попереджень
+profile: Профіль
+no_special_profile: Без спеціальних настройок
+css1: CSS1
+css2: CSS2
+css21: CSS2.1
+css3: CSS3
+svg: SVG
+svgbasic: SVG Basic
+svgtiny: SVG tiny
+mobile: Мобільний
+ATSC_TV_profile: телебачення ATSC
+TV_profile: телебачення
+medium: Середовище
+aural: аудіо (aural)
+braille: термінал Брайля (braille)
+embossed: посторінковий принтер Брайля (embossed)
+handheld: портативний пристрій (handheld)
+print: друкарська продукція (print)
+projection: проектор (projection)
+screen: дисплей (screen)
+tty: телетайп (tty)
+tv: телевізор (tv)
+presentation: презентація (presentation)
+type: Тип документу
+no_special_type: визначити автоматично
+html_doc: HTML
+css_doc: CSS
+check: Перевірити
+W3C_CSS_validation_service: сервіс перевірки CSS від W3C
+check_CSS: Перевірка каскадних таблиць стилів (CSS) та документів (X)HTML з таблицями стилів
+by_URI: Перевірити URI
+by_file_upload: Перевірити завантажений файл
+by_direct_input: Перевірити набраний текст
+validate_by_URI: Перевірка по URI
+enter_uri: Уведіть  URI документу (HTML з CSS або лише CSS) для перевірки
+page_address: Адреса сторінки для перевірки
+address: Адреса
+submit_uri: Відправити URI для перевірки
+validate_by_file_upload: Перевірити завантажений файл
+choose_document: Оберіть документ, який ви хотіли б перевірити (лише CSS)
+choose_local_file: Оберіть локальний файл для завантаження й перевірки
+local_CSS_file: Локальний файл CSS
+submit_file: Відправити файл для перевірки
+validate_by_input: Перевірка тексту, що набирається
+enter_CSS: Уведіть код CSS, що ви хотіли б перевірити на коректність
+submit_input: Перевірити уведені дані
+note: Примітка
+note_xhtml_valid: Якщо ви хочете перевірити каскадні таблиці стилів, вбудовані до документу (X)HTML, ви повинні спершу <a href="https://validator.w3.org/">перевірити на коректність сам документ (X)HTML</a>
+# End of variables added along with Index page template
+
+W3C_validator_results: W3C результати перевірки CSS для
+# file_title: <!-- provided by the user -->
+CSS_validation_service: Сервіс перевірки CSS
+jump_to: Перейти до
+# errors_count: <!-- generated on the fly -->
+errors: Помилки
+# warnings_count <!-- generated on the fly -->
+warnings: Попередження
+validated_CSS: Перевірений CSS
+congrats: Поздоровляємо! Помилок не знайдено.
+# The sentence defined by doc_validates_before_link and doc_validates_after_link variables goes: \
+# "This document validates as CSSXX!" where XX stands for the CSS version used \
+# Since the content of the link about the CSS version is generated on the fly, \
+# it is important to define what goes before the link and what goes afterwards in 2 separate \
+# variables because the position of the link in the sentence varies in different languages
+doc_validates_before_link: Цей документ проходить перевірку згідно зі стандартом
+doc_validates_after_link: !
+no_errors_interoperable_msg: Для того, щоб продемонструвати відвідувачам, що ви піклуєтесь про створення коректних сторінок, ви можее розмістити цей знак на будь-якій перевіреній сторінці. Ось код XHTML \
+для розміщення:
+valid_CSS: Правильний CSS!
+# <!-- close the img tag with > instead of /> if using HTML<= 4.01 -->
+no_errors_close_tags_msg: закрийте тег img, використовуючи &gt; замість /&gt;, якщо використовуєте HTML &lt;= 4.01
+no_errors_dl_local_msg: Якщо хочете, то можете завантажити копію зображення для зберігання безпосередньо на сайті й змінити наведений вище код XHTML, щоб послатися на локальну версію.
+no_errors_create_link_msg: Якщо Ви бажаєте створити посилання на цю сторінку (тобто, на результати цієї \
+перевірки) для полегшення подальших перевірок вами або іншими людьми, то скористайтеся наступним URI:
+no_errors_forHTML_only_msg: лише для документів HTML/XML
+no_errors_bookmark_msg: Або можее просто додати цю сторінку до закладок.
+note_valide_html: Для коректної роботи сервіса перевірки CSS необхідно щоб ваші документи \ 
+мали правильну деревоподібну размітку. Це означає, що ви повинні використовувати <a href="https://validator.w3.org/">коректний HTML</a>.
+top: Наверх
+# hook_html_validator <!-- generated on the fly -->
+not-css1-style: /* ОБЕРЕЖНО! Не є властивістю CSS1 ! */
+errors_sorry_msg: На жаль, ми знайшли наступні помилки
+# errors_list: <!-- generated on the fly -->
+# warnings_list: <!-- generated on the fly -->
+# rules_count: <!-- generated on the fly -->
+valid_CSS_info: Інформація про коректний CSS
+# charset: <!-- generated on the fly -->
+# rules_list: <!-- generated on the fly -->
+CSS_not_found: Не знайдено жодної каскадної таблиці стилів
+home: Головна
+about: Про сервіс
+doc: Документація
+dl: Завантажити
+feedback: Відгуки
+credits: Створювачи
+home_title: Головна сторінка сервісу перевірки CSS від W3C
+about_title: Про цей сервіс
+doc_title: Документація по сервісу перевірки CSS від W3C
+dl_title: Завантаження и встановлення сервісу перевірки CSS
+feedback_title: Как оставить відгук про сервіс
+credits_title: Створювачи
+W3C_quality_msg: Група W3C по підтримці якості, що пропонує безплатні інструменти перевірки якості й інші ресурси
+learn_more_msg: Докладніше про таблиці каскадних стилів CSS
+support: Підтримайте цей інструмент, станьте
+supporter: людиною, що підтримує W3C
+# End of variables added along with Velocity
+
+# Defines your own error and warning message here
+content-type: text/html; charset=utf-8
+content-language: ru
+output-encoding-name: utf-8
+
+# You can change the level warning like this (example) :
+# warning.redefinition.level: 5
+#  level is an integer between 0 and 9 (all others values are ignored)
+warning.redefinition: Перевизначення \u201C%s\u201D
+
+# used by xml parser 
+warning.style-inside-comment: Do not put style rules inside HTML comments as they may be removed by user agent
+
+# used by org.w3c.css.properties.Css1Style
+warning.same-colors: Однакові кольори для \u201C%s\u201D та \u201C%s\u201D
+warning.no-color: Ви не вказали колір атрибуту color (або його зроблено прозорим), але вказали атрибут background-color. Переконайтеся, що послідовність кольорів зберігає текст читабельним.
+warning.no-background-color: Ви не вказали колір фону background-color (або background-color зроблено прозорим), але вказали колір color. Переконайтеся, що послідовність кольорів зберігає текст читабельним.
+#warning.color.mixed-capitalization is now obsolete
+#warning.color.mixed-capitalization: Although color names are case-insensitive, it is recommended to use the mixed capitalization, to make the names more legible: \u201C%s\u201D
+warning.no-generic-family: \u201C%s\u201D: рекомендується пропонувати у якості останньої альтернативи базове сімейство шрифтів
+warning.with-space: Імена, що містять пробіли, повинні поміщатися у лапки. Якщо лапки пропущені, будь-яки пробіли до або після імені ігноруються, а послідовності пробілів усередині імені перетворюються у одиничний пробіл.
+warning.no-padding: З фоновим кольором рекомендуеться використовувати відступи (padding)
+warning.same-colors2: Однакові кольори для тексту й фону використовуються у наступних місцях: \u201C%s\u201D та \u201C%s\u201D
+warning.relative-absolute: В \u201C%s\u201D використовуються абсолютні й відносні значення довжини. Це ненадійна таблиця стилів.
+# used by org.w3c.css.properties.CssSelectors
+warning.unknown-html: \u201C%s\u201D не є елементом HTML
+warning.html-inside: елемент HTML не може бути всередині іншого елементу
+warning.body-inside: елемент BODY не може зустрічатися всередині іншого елементу, за виключенням HTML
+warning.pseudo-classes: Якір псевдокласу \u201C%s\u201D не використовується для елементів, за виключенням A
+
+# not used by org.w3c.css.properties.CssSelectors for the moment
+warning.noinside: \u201C%s\u201D не може бути всередині елементу рядкового типа
+warning.withblock: Будьте ообережні! Псевдоелементи можуть бути прив'язані лише до блочних елементів
+warning.block-level: Ця властивість застосовується до блочних елементів.
+
+# used by org.w3c.css.parser.Frame
+warning.no-declaration: У правилі немає визначень
+
+# used by org.w3c.css.parser.CssFouffa
+warning.unsupported-import: Таблиці стилів, що імпортуються, не перевіряються у режимі завантаження й прямого введення
+
+# used by org.w3c.css.values.CssColor
+warning.out-of-range: \u201C%s\u201D лежить поза діапазоном припустимих значень
+error.invalid-color: Неправильна функція RGB
+
+warning.marker: Властивість marker-offset застосовується до елементів типу display: marker
+
+# used by org.w3c.css.properties.ACssStyle
+warning.relative: Використання відносних одиниць вимірювання у властивості \u201C%s\u201D робить таблиці стилів більш надійними
+
+# used by org.w3c.css.css.StyleSheetParser and org.w3c.css.css.StyleSheetXMLParser
+error.at-rule: Вибачте, але правило \u201C%s\u201D не є реалізованим.
+warning.at-rule: Вибачте, але правило \u201C%s\u201D не є реалізованим.
+
+# used by all properties and values
+error.operator: \u201C%s\u201D — некоректний оператор
+error.negative-value: \u201C%s\u201D від'ємні значення неприпустимі
+error.few-value: замало значень для властивості \u201C%s\u201D
+
+# be careful here, values comes first
+# You can't write something like this : For the color, blue is an incorrect value
+error.value: \u201C%s\u201D не є значенням \u201C%s\u201D 
+
+#used by org.w3c.css.properties3.CssToggleGroup
+error.groupname: \u201C%s\u201D не є коректним ім'ям групи. Використовуйте правильний ідентифікатор
+
+#used by org.w3c.css.properties3.CssGroupReset
+error.nogroup: \u201C%s\u201D не встановлено властивістю toggle-group 
+
+#used by org.w3c.css.properties3.CssGlyphOrVert
+error.anglevalue: Значення повинно бути між -360 та 360 та кратно 90
+
+#used by org.w3c.css.properties3.CssTextKashidaSpace
+error.percentage: очікується значення у процентах
+
+#used by org.w3c.css.properties.CssTextAlign
+warning.xsl: значення \u201C%s\u201D застосовується лише до XSL
+
+#used by org.w3c.css.parser.analyzer.CssParser
+warning.medialist: список середовищ повинен починатися з ‘media :’ \u201C%s\u201D
+error.nocomb: Комбінатор селекторів \u201C%s\u201D не припустим у цьому профілі або у цій версії
+
+#used by org.w3c.css.properties.CssDirection
+warning.direction: для блочних елементів замість direction використовуйте нову властивість CSS3 writing-mode
+
+# used by org.w3c.css.properties.CssTextDecoration
+error.same-value: \u201C%s\u201D оголошено двічі
+
+error.generic-family.quote: імена базових сімейств є ключовими словами та не повинні бути у лапках
+
+# used by org.w3c.css.properties.CssClip
+error.shape: Неправильне визначення положення rect(<top>,<right>,<bottom>,<left>)
+error.shape-separator: Неправильний роздільник у визначенні положення. Повинна використовуватися кома.
+
+# used by org.w3c.css.properties.CssContent
+error.attr: Неправильне визначення attr(X)
+error.function: Неправильне оголошення функції
+error.counter: Неправильне оголошення counter(<identifier>[,<list-style-type>]?)
+error.counters: Неправильне оголошення counters(<identifier>,<string>[,<list-style-type>]?)
+
+# used by org.w3c.css.font.Src
+error.format: Неправильне оголошення формату format(<string>[,<string>]*)
+error.local: Неправильне оголошення формату local(<string>|<ident>+)
+
+# used by org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength
+error.unit: \u201C%s\u201D некоректна одиниця вимірювання
+
+# used by org.w3c.css.aural.ACssAzimuth
+error.degree: Позиція повинна задаватися у градусах.
+
+# used by org.w3c.css.aural.ACssElevation
+error.elevation.range: Вказує підняття як кут між -90deg та 90deg.
+
+# used by org.w3c.css.aural.ACssPitchRange
+error.range: Значення поза припустимих меж. Значення повинно бути між 0 и 100.
+
+# used by org.w3c.css.properties.CssTextShadow
+error.two-lengths: Зміщення тіні задається двома значеннями довжини (радіус розмиття може бути додатково вказано після зміщення).
+
+error.integer: Це число повинно бути цілим
+error.comma: Пропущено роздільну кому
+
+# used by org.w3c.css.values.CssPercentage
+error.percent: \u201C%s\u201D некоректне процентне значення
+
+# used by org.w3c.css.values.CssString
+error.string: \u201C%s\u201D некоректне рядкове значення
+
+# used by org.w3c.css.values.CssURL
+error.url: \u201C%s\u201D некоректний URL
+
+# used by org.w3c.css.values.CssColor
+error.rgb: \u201C%s\u201D не є припустимим кольором з 3 або 6 шістнадцяткових цифр
+error.angle: \u201C%s\u201D не є припустимим кутом. Значення повинно бути між 0 та 360
+
+# used by org.w3c.css.values.CssNumber
+error.zero: лише 0 може бути \u201C%s\u201D. Ви повинні вказати після числа одиниці вимірювання
+warning.zero: лише 0 може бути \u201C%s\u201D. Ви повинні вказати після числа одиниці вимірювання
+
+#used by org.w3c.css.properties.CssColumnCount
+error.strictly-positive: Невірне значення \u201C%s\u201D. Допускаються лише значення більше 0.
+
+# used by org.w3c.css.parser.CssPropertyFactory
+error.noexistence-at-all: Властивість \u201C%s\u201D не існує
+error.noexistence-media: Властивість \u201C%s\u201D не існує для середовища \u201C%s\u201D
+error.noexistence: Властивість \u201C%s\u201D не існує в \u201C%s\u201D, але існує в \u201C%s\u201D
+warning.noexistence: Властивість \u201C%s\u201D не існує в \u201C%s\u201D але існує в \u201C%s\u201D
+warning.noexistence-media: Властивість \u201C%s\u201D не існує для середовища \u201C%s\u201D
+warning.notforusermedium : Властивість \u201C%s\u201D не існує для вказаного користувачем середовища
+##################
+warning.noothermedium : Властивості для інших середовищ можуть не функціонувати у вказаному користувачем середовищі
+warning.vendor-extension : Властивість \u201C%s\u201D є невідомим розширенням
+# used by org.w3c.css.parser.AtRule*
+error.noatruleyet: Правила @rules, за виключенням @import, не підтримуються стандартом CSS1 \u201C%s\u201D
+# used by org.w3c.css.parser.analyzer.CssParser
+error.notforcss1: Значення \u201C%s\u201D не існує для CSS1
+warning.pseudo: Невідомий псевдоелемент або псевдоклас \u201C%s\u201D у профілі за замовчуванням (\u201C%s\u201D)
+warning.nocomb: комбінатор селекторів \u201C%s\u201D не припустим у даному профілі (\u201C%s\u201D)
+warning.charsetspecial: Цей профіль використовує особливий синтаксис @charset: після @charset йде рівно один пробіл, після якого йде им'я кодування у лапках, що відразу же замикається крапкой з комою.
+warning.notversion: \u201C%s\u201D не може бути використано у CSS версії \u201C%s\u201D
+
+# used by org.w3c.css.parser.CssFouffa
+error.unrecognize: Забагато значень або нерозпізнані значення
+
+# used by org.w3c.css.parser.CssFouffa
+generator.unrecognize: Помилка розбору
+generator.dontmixhtml: Помилка аналiзу синтаксису. Таблицi стилiв не повиннi містити HTML синтаксису.
+
+# used by org.w3c.css.css.StyleSheetGeneratorHTML2
+error.unknown: Невідома помилка
+
+# used by org.w3c.css.parser.CssSelectors
+error.pseudo-element: Псевдоелемент \u201C%s\u201D не може з'являться у \u201C%s\u201D
+error.pseudo-class: Псевдоклас \u201C%s\u201D не може розташовуватися тут у HTML \u201C%s\u201D
+error.pseudo: Невідомий псевдоелемент або псевдоклас \u201C%s\u201D
+error.id: Неправильний ідентифікатор селектору #\u201C%s\u201D! У простому селекторі може бути вказано лише один ідентифікатор: \u201C%s\u201D.
+error.space: Якщо використовується селектор атрибуту ~=, то слово у значенні \u201C%s\u201D не повинно містити пробіли.
+error.todo : На жаль, \u201C%s\u201D ще не реалізовано.
+error.incompatible: \u201C%s\u201D та \u201C%s\u201D не сумісні
+warning.incompatible: \u201C%s\u201D та \u201C%s\u201D не сумісні
+error.notformobile: \u201C%s\u201D не може бути використано з профілем mobile
+error.notforatsc: \u201C%s\u201D не може бути використано з профілем ATSC
+error.notfortv: \u201C%s\u201D не може бути використано з профілем TV
+error.notversion: \u201C%s\u201D не може бути використано з цією версією CSS \u201C%s\u201D
+
+error.media: нерозпізнане середовище \u201C%s\u201D
+error.page: нерозпізнана псевдоіменована сторінка \u201C%s\u201D
+
+error.unrecognized.link: Нерозпізнане посилання або інструкція обробки з таблицею стилів XML.
+
+# used by StyleSheetGeneratorHTML
+generator.context: Контекст
+generator.request: У процесі виводу вашої таблиці стилів виникла помилка. Будь ласка, виправьте запит або надішліть лист до plh@w3.org.
+generator.unrecognized: Не розпізнано
+generator.invalid-number: Некоректне число
+generator.property: Помилка значення
+generator.line: Рядок
+generator.not-found: Файл не знайдено
+
+generator.doc-html:   <!-- removed this confusing message olivier 2006-12-14 -->
+generator.doc:  <!-- removed this confusing message olivier 2006-12-14 -->
+
+
+# used by the parser
+parser.semi-colon: спроба знайти крапку з комою до імені властивості. додайте її
+
+parser.unknown-dimension: Невідома одиниця розміру
+
+parser.old_class: У CSS1 им'я класу могло починатися із цифри (#55ft), якщо це розмірність (#55in). У CSS2 такі ідентифікатори вважаються невідомими розмірами (для додання одиниць вимірювання у майбутньому). Щоб “.\u201C%s\u201D” був правильним класом, CSS2 потребує, щоб початкові цифри були екрановані “.\3\u201C%s\u201D”
+
+parser.old_id: У CSS1 ідентифікатор міг починатися із цифри (#55ft), якщо це не розмірність (#55in). У CSS2 такі ідентифікатори вважаються невідомими розмірами (для додання одиниць вимірювання у майбутньому).
+
+parser.class_dim: У CSS1 им'я класу могло починатися із цифри (.55ft), якщо це не розмірність (.55in).
+
+parser.id_dim: У CSS1 ідентифікатор міг починатися із цифри (#55ft), якщо це не розмірність (#55in).
+
+parser.charset: Правило @charset може з'являтися лише у початку описа стилю. Будь ласка, перевірте, чи є перед ним пробіли.
+
+parser.charsetspecial: Цей профіль має специфічний синтаксис @charset: після @charset йде рівно один пробіл, за яким йде назва кодування у лапках, за яким відразу йде крапка з комою.
+
+warning.old_id: У CSS1 ідентифікатор міг починатися із цифри (#55ft), якщо це не розмірність (#55in). У CSS2 такі ідентифікатори вважаються невідомими розмірами (для додання одиниць вимірювання у майбутньому).
+
+warning.old_class: У CSS1 им'я класу могло починатися із цифри (#55ft), якщо це не розмірність (#55in). У CSS2 такі ідентифікатори вважаються невідомими розмірами (для додання одиниць вимірювання у майбутньому).
+
+# used by the servlet
+servlet.invalid-request: Передано неправильний запит
+servlet.process: Не можу опрацювати об'єкт
+
+warning.atsc: \u201C%s\u201D може не підтримуватися пристроєм atsc-tv
+error.onlyATSC: \u201C%s\u201D ця функція використовується лише у середовищі atsc-tv
+
+warning.otherprofile: властивість \u201C%s\u201D не існує для даного профілю, але вона перевіряється у відповідності з іншим профілем
+
+warning.float-no-width: У (x)HTML+CSS рухомі елементи повинні мати оголошену ширину. Це не розповсюджується лише на елементи з вбудованою шириною (html, img, input, textarea, select, або object)
+parser.charsetcss1: @charset правила не можуть бути використані у CSS1
+parser.attrcss1: Селектори властивостей недійсні у CSS1
+parser.invalid_id_selector: Недійсний ID селектор
+parser.import_not_allowed: @import не дозволені після будь-якої валідної заяви, крім як @charset та @import.
+error.bg_order: У специфікації CSS3 властивість bg_position має йти до bg_size, якщо вказані обидві властивості.

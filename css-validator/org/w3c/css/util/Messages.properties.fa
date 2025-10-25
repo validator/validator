@@ -1,0 +1,340 @@
+direction: rtl
+language_name: فارسی
+more_options: گزینه های بیشتر
+title_more_options: نمایش/پنهان کردن گزینه های اعتبار سنجی اضافی
+all: تمام
+normal_report: گزارش معمولی
+most_important: مهمترین
+no_warnings: بدون اخطار
+profile: پروفایل
+no_special_profile: بدون پروفایل خاص
+css1: سطح 1 CSS
+css2: سطح 2 CSS
+css21: سطح 2.1 CSS
+css3: سطح 3 CSS
+svg: SVG
+svgbasic: بیسیک SVG
+svgtiny: SVG tiny
+mobile: موبایل
+ATSC_TV_profile: ATSC TV پروفایل
+TV_profile: TV پروفایل
+medium: رسانه
+aural: شنیداری
+braille: بریل
+embossed: برجسته شده
+handheld: دستی
+print: پرینت
+projection: طرح ریزی
+screen: صفحه نمایش
+tty: تله تایپ
+tv: تلویزیون
+presentation: نمایش
+type: نوع
+no_special_type: خودکار
+html_doc: HTML
+css_doc: CSS
+check: بررسی
+W3C_CSS_validation_service: W3C CSS سرویس اعتبار سنجی
+check_CSS: دارای شیوه نامه X(HTML) و اسناد (CSS) بررسی شیوه نامه های آبشاری
+by_URI: URI توسط
+by_file_upload: با آپلود فایل
+by_direct_input: با ورودی مستقیم
+validate_by_URI: URI تایید اعتبار با
+enter_uri: ای که می خواهید معتبر نمایید را، وارد نمایید (CSS یا تنها CSS دارای HTML) سند URI
+page_address: آدرس صفحه جهت تایید اعتبار
+address: آدرس
+submit_uri: برای اعتبار سنجی URI ارایه ی
+validate_by_file_upload: تایید اعتبار با آپلود فایل
+choose_document: (CSS سندی که می خواهید معتبر نمایید را انتخاب کنید (تنها فایلهای
+choose_local_file: یک فایل محلی (در سیستم خودتان) را جهت آپلود و تایید اعتبار انتخاب نمایید
+local_CSS_file: CSS فایل محلی
+submit_file: فایل را برای اعتبار سنجی ارایه نمایید
+validate_by_input: تایید اعتبار با ورودی مستقیم
+enter_CSS: ای را که می خواهید تایید اعتبار شود را وارد نمایید CSS
+submit_input: ورودیتان را برای اعتبار سنجی ارایه نمایید
+note: توجه
+note_xhtml_valid: <a href="https://validator.w3.org"> مورد استفاده معتبر باشد (X)HTML بررسی نمایید که <a/> خودتان را تایید اعتبار نمایید، نخست باید (X)HTML جاسازی شده در یک سند CSS اگر بخواهید شیوه نامه ی 
+# انتهای متغیرهای اضافه شده همراه با الگوی صفحه ی فهرست 
+
+W3C_validator_results: برای W3C CSS نتایج اعتبار سنج
+# file_title: <!-- تهیه شده توسط کاربر -->
+CSS_validation_service: CSS سرویس اعتبار سنجی
+jump_to: جهش کنید به
+# errors_count: <!-- تولید شده در اجرا -->
+errors: خطاها
+# warnings_count: <!-- تولید شده در اجرا -->
+warnings: اخطارها
+validated_CSS: معتبر شده CSS
+congrats: .تبریک! هیچ خطایی یافت نشد
+# doc_validates_before_link و doc_validates_after_link راهی شدن متغیرهای: \
+# باشد CSS نمادهایی برای نسخه ی مورد استفاده ی XX تایید اعتبار می شود!" جاییکه CSSXX این سند بصورت" \
+# ،در هنگام اجرا تولید شده است CSS از آنجایی که محتوای لینک در مورد نسخه ی \
+# این مهم است که آنچه را که قبل از لینک می رود و آنچه را که پس از آن در 2 قسمت مجزا می رود را تعریف نماید \
+# متغیرها برای اینکه وضعیت لینک در جمله در زبانهای متفاوت تغییر می کند
+doc_validates_before_link: این سند تایید اعتبار می شود بصورت
+doc_validates_after_link: !
+no_errors_interoperable_msg: برای نشان دادن به کاربرانتان مبنی بر اینکه شما د قت کافی را جهت ایجاد یک قابلیت عمل بینابینی وب مبذول داشته اید مورد نظر است XHTML صفحه، شما می توانید این آیکون را در هر صفحه ای که تایید اعتبار شده نمایش دهید. در اینجا :شما می توانید اینرا بکار برید تا این آیکون به صفحه ی وب شما اضافه شود
+valid_CSS: !معتبر CSS
+# <--! را بجای </ با < ببندید img استفاده می کنید، تگ HTML <= 4.01 اگر از -->
+no_errors_close_tags_msg: ببندید &lt; با /&lt; را بجای img استفاده می کنید، تگ HTML &lt;= 4.01 اگر از
+no_errors_dl_local_msg: اگر می خواهید، می توانید یک کپی از این تصویر را جهت نگهداری در وب محلی تان دانلود نمایید مذکور در بالا را جهت مراجعه ی تصویر محلی تان انتخاب نمایید XHTML دایرکتوری، و تکه ی .بجای این یکی بر روی این سرور
+no_errors_create_link_msg: اگر شما می خواهید لینکی به این صفحه ایجاد نمایید (یعنی، نتایج \ این اعتبار سنجی) اجازه می دهد جهت اجازه یا تایید اعتبار مجدد این صفحه در آینده آسانتر ساخته شود هست URI ،دیگران که صفحه ی شما را تایید اعتبار می نمایند:
+no_errors_forHTML_only_msg: HTML/XML تنها برای سند
+no_errors_bookmark_msg: .یا، شما فقط می توانید صفحه ی فعلی را به بوکمارک ها یا هات لیست خود اضافه نمایید
+note_valide_html: .شما نیازمند یک نمودار درختی تجزیه سند صحیح است CSS جهت فعالیت بصورت مورد نظر، شیوه نامه .را بکار برید <a href="https://validator.w3.org/">valid HTML</a> این بدین منظور است که باید
+top: بالا
+# hook_html_validator: <!-- تولید شده در اجرا -->
+not-css1-style: /* نیست CSS1 مواظب باشید! این یک مشخصه ی */
+errors_sorry_msg: با تأسف! خطاهای ذیل را یافتیم
+# errors_list: <!-- تولید شده در اجرا -->
+# warnings_list: <!-- تولید شده در اجرا -->
+# rules_count: <!-- تولید شده در اجرا -->
+valid_CSS_info: معتبر CSS اطلاعات
+# charset: <!-- تولید شده در اجرا -->
+# rules_list: <!-- تولید شده در اجرا -->
+CSS_not_found: هیچ شیوه نامه ای یافت نشد
+home: خانه
+about: در مورد
+doc: مستند سازی
+dl: دانلود
+feedback: بازخورد
+credits: قدردانی
+home_title: W3C CSS صفحه اصلی برای سرویس اعتبار سنجی
+about_title: در مورد این سرویس
+doc_title: W3C CSS مستند سازی برای سرویس اعتبار سنجی
+dl_title: CSS دانلود و نصب اعتبار سنج
+feedback_title: چگونگی تهیه ی بازخورد در این سرویس
+credits_title: قدردانی و سپاسگزاریها
+W3C_quality_msg: موجب رساندن ابزارهای رایگان کیفیت وب و سایر موارد به شما می شود ،W3C فعالیت تضمین کیفیت
+learn_more_msg: در مورد شیوه نامه های آبشاری بیشتر یاد بگیرید
+support: حمایت از این ابزار و تبدیل شدن به
+supporter: حامی کنسرسیوم وب جهانی
+# انتهای متغیرهای بسرعت اضافه شده
+
+# تعاریف خطاهای شما و پیغام اخطار در اینجا
+content-type: text/html; charset=utf-8
+content-language: en
+output-encoding-name: utf-8
+
+# :(شما اینگونه می توانید سطح اخطار را تغییر دهید (مثال
+# warning.redefinition.level: 5
+# (سطح یک عدد صحیح مابین 0 و 9 است (تمامی مقادیر دیگر نادیده گرفته می شوند
+warning.redefinition: \u201C\u201C%s\u201D\u201D تعریف دوباره ی
+
+# xml استفاده شده توسط تجزیه کننده ی
+warning.style-inside-comment: را بصورتی قرار ندهید که احتمالا توسط مرورگر برداشته شوند HTML دستورات سبک درون توضیحات
+
+# org.w3c.css.properties.Css1Style استفاده شده توسط
+warning.same-colors: \u201C%s\u201D و \u201C%s\u201D رنگ یکسان برای
+warning.no-color: .شما هیچ مجموعه رنگ (یا رنگی که بصورت شفاف است) را ندارید اما شما مجموعه ای از یک رنگ پس زمینه را دارید. مطمئن شوید که با آبشار رنگها متن بخوبی خوانده شود
+warning.no-background-color: .شما هیچ رنگ پس زمینه (یا رنگ پس زمینه ای که بصورت شفاف است) را ندارید اما شما یک رنگ را انتخاب کرده اید. مطمئن شوید که آبشار رنگها متن را بخوبی خوانا می نماید
+#هم اکنون منسوخ شده است warning.color.mixed-capitalization
+#warning.color.mixed-capitalization: \u201C%s\u201D:اگرچه نامهای رنگ نسبت به حروف بزرگ و کوچک غیر حساسند، جهت خواناتر شدن نامها، نوشتن با حروف بزرگ ترکیبی توصیه شده است
+warning.no-generic-family: \u201C%s\u201D: به شما توصیه می شود تا یک گروه کلی را بعنوان آخرین جایگزین پیشنهاد نمایید
+warning.with-space: نامهای خانوادگی شامل فضای خالی بایستی نقل قول شده باشند. اگر نقل قول از قلم انداخته شده، هر فضای خالی کاراکترها قبل و بعد از نام رد شده اند و هر رشته ی فضای خالی کاراکترها درون .نام به یک تک فاصله تبدیل شده است 
+warning.no-padding: را با یک رنگ پس زمینه داشته باشید padding به شما توصیه می شود که یک ناحیه ی
+warning.same-colors2: \u201C%s\u201D و \u201C%s\u201D رنگهای یکسان برای رنگ و رنگ پس زمینه در دو مضمون
+warning.relative-absolute: .دارید. این شیوه نامه ی صحیحی نیست \u201C%s\u201D شما طولهای نسبی و مطلق اندکی در
+# بکار برده شده است org.w3c.css.properties.CssSelectors توسط
+warning.unknown-html: نیست HTML یک عنصر \u201C%s\u201D
+warning.html-inside: نمی تواند درون عنصر دیگری باشد HTML عنصر
+warning.body-inside: نمی تواند در داخل عنصر دیگری باشد HTML بجز درون عنصر BODY عنصر
+warning.pseudo-classes: در عناصر دیگر تاثیری ندارد 'A' غیر از \u201C%s\u201D لینک انچور شبه کلاس
+
+# .برای حالا بکار نرفته است org.w3c.css.properties.CssSelectors توسط
+warning.noinside: باشد inline نمی تواند درون یک عنصر \u201C%s\u201D
+warning.withblock: اضافه شده باشند block-level دقت کنید. شبه عناصر تنها می توانند به یک عنصر
+warning.block-level: .کاربرد دارد block-level این مشخصه برای عناصر
+
+# org.w3c.css.parser.Frame استفاده شده توسط
+warning.no-declaration: هیچ اعلانی در دستور نیست
+
+# org.w3c.css.parser.CssFouffa استفاده شده توسط
+warning.unsupported-import: شیوه نامه های وارد شده به شیوه های ورودی مستقیم و آپلود فایل بررسی نشده اند
+
+# org.w3c.css.values.CssColor استفاده شده توسط
+warning.out-of-range: خارج از محدوده است \u201C%s\u201D
+error.invalid-color: بی اعتبار RGB تابع
+
+warning.marker: کاربرد دارد 'display: marker' ویژگی نشانه گذار افست در عناصری با
+
+# org.w3c.css.properties.ACssStyle استفاده شده توسط
+warning.relative: بدست می آید \u201C%s\u201D با کاربرد واحدهای نسبی شیوه نامه های صحیح  بیشتری در ویژگی
+
+# org.w3c.css.css.StyleSheetParser و org.w3c.css.css.StyleSheetXMLParser استفاده شده توسط
+error.at-rule: .نمی تواند از ویژگی درخواست شده پشتیبانی نماید at-rule \u201C%s\u201D ،با تاسف
+warning.at-rule: .نمی تواند از ویژگی درخواست شده پشتیبانی نماید at-rule \u201C%s\u201D ،با تاسف
+
+# استفاده شده توسط تمامی مشخصات و مقادیر
+error.operator: اپراتور نادرستی می باشد \u201C%s\u201D
+error.negative-value: مقادیر منفی غیر مجازند \u201C%s\u201D
+error.few-value: \u201C%s\u201D مقادیر بسیار اندک برای ویژگی
+
+# در اینجا دقت کنید، نخست مقادیر می آیند
+# مقدار نادرستی است blue ،شما نمی توانید چنین چیزی را بنویسید : برای رنگ 
+error.value: نیست \u201C%s\u201D یک مقدار \u201C%s\u201D
+
+#org.w3c.css.properties3.CssToggleGroup استفاده شده توسط
+error.groupname: نام گروه صحیحی نیست. شناسه ی معتبری را بکار برید \u201C%s\u201D
+
+#org.w3c.css.properties3.CssGroupReset استفاده شده با
+error.nogroup: توسط ویژگی گروه ضامن تخصیص داده نشده است \u201C%s\u201D
+
+#org.w3c.css.properties3.CssGlyphOrVert استفاده شده توسط
+error.anglevalue: مقدار بایستی مابین 360- و 360 بوده و بر 90 قابل تقسیم باشد
+
+#org.w3c.css.properties3.CssTextKashidaSpace استفاده شده توسط
+error.percentage: مقدار درصدی مورد انتظار است
+
+#org.w3c.css.properties.CssTextAlign استفاده شده توسط
+warning.xsl: کاربرد دارد XSL تنها در \u201C%s\u201D مقدار
+
+#org.w3c.css.parser.analyzer.CssParser استفاده شده توسط
+warning.medialist: شروع شده باشد 'media :' \u201C%s\u201D لیست رسانه می بایستی با
+error.nocomb: مابین گزینشگرها در این پروفایل یا ورژن غیر مجاز است \u201C%s\u201D ترکیب کننده ی
+
+#org.w3c.css.properties.CssDirection استفاده شده توسط
+warning.direction: استفاده کنید CSS3 از 'writing-mode' برای عناصر سطح بلوک ویژگی جدید 'direction' بجای استفاده از
+
+# org.w3c.css.properties.CssTextDecoration استفاده شده توسط
+error.same-value: دوبار ظاهر می شود \u201C%s\u201D 
+
+error.generic-family.quote: .نامهای خانوادگی عمومی کلمات کلیدی هستند و بنابراین نبایستی نقل شده باشند
+
+# org.w3c.css.properties.CssClip استفاده شده توسط
+error.shape: (<top>,<right>,<bottom>,<left>) تعریف شکل نامعتبر دریافتی
+error.shape-separator: .جداساز نامعتبر در تعریف شکل. آن بایستی یک ویرگول باشد
+
+# org.w3c.css.properties.CssContent استفاده شده توسط
+error.attr: attr(X) بی اعتبار attr تعریف
+error.function: تعریف عمل نامعتبر 
+error.counter: (<identifier>[,<list-style-type>]?) شمارشگر بی اعتبار شمارشگر تعریف
+error.counters: (<identifier>,<string>[,<list-style-type>]?) شمارشگرهای بی اعتبار شمارشگرهای تعریف
+
+# org.w3c.css.font.Src استفاده شده توسط
+error.format: (<string>[,<string>]*) فرمت بی اعتبار فرمت تعریف
+error.local: (<string>|<ident>+) فرمت بی اعتبار تعریف محلی
+
+# org.w3c.css.values.CssAngle, org.w3c.css.values.CssFrequency, org.w3c.css.values.CssTime, org.w3c.css.values.CssLength استفاده شده توسط
+error.unit: یک واحد نادرست است \u201C%s\u201D
+
+# org.w3c.css.aural.ACssAzimuth استفاده شده توسط
+error.degree: .موقعیت بایستی بر حسب درجات تشریح شده باشد
+
+# org.w3c.css.aural.ACssElevation استفاده شده توسط
+error.elevation.range: .ارتقا بصورت یک زاویه، مابین 'درجه90-' و 'درجه90' را تبیین می کند
+
+# org.w3c.css.aural.ACssPitchRange استفاده شده توسط
+error.range: .مقدار خارج از محدوده است. این مقدار بایستی مابین '0' و '100' باشد
+
+# org.w3c.css.properties.CssTextShadow استفاده شده توسط
+error.two-lengths: (.تعیین شده است (یک شعاع تیرگی ممکن است پس از افست سایه بصورت اختیاری تعریف شده باشد <length> یک افست سایه با دو مقدار
+
+error.integer: .این عدد بایستی یک عدد صحیح باشد
+error.comma: .جداساز ویرگول گم شده است
+
+# org.w3c.css.values.CssPercentage استفاده شده توسط
+error.percent: درصدی نادرست است \u201C%s\u201D
+
+# org.w3c.css.values.CssString استفاده شده توسط
+error.string: رشته ای نادرست است \u201C%s\u201D
+
+# org.w3c.css.values.CssURL استفاده شده توسط
+error.url: نادرست است URL یک \u201C%s\u201D
+
+# org.w3c.css.values.CssColor استفاده شده توسط
+error.rgb: اعداد هگزا دسیمال رنگ 3 یا 6 معتبر نیست \u201C%s\u201D
+error.angle: زاویه ی معتبری نیست. مقدار بایستی مابین 0 و 360 باشد \u201C%s\u201D
+
+# org.w3c.css.values.CssNumber استفاده شده توسط
+error.zero: باشد. شما بایستی بعد از عددتان یک واحد بگذارید \u201C%s\u201D تنها 0 می تواند یک
+warning.zero: باشد. شما بایستی بعد از عددتان یک واحد بگذارید \u201C%s\u201D تنها 0 می تواند یک
+
+# org.w3c.css.parser.CssPropertyFactory استفاده شده توسط
+error.noexistence-at-all: وجود ندارد \u201C%s\u201D مشخصه ی
+error.noexistence-media: وجود ندارد \u201C%s\u201D برای رسانه ی \u201C%s\u201D مشخصه ی
+error.noexistence: موجود است \u201C%s\u201D وجود ندارد اما در \u201C%s\u201D در \u201C%s\u201D مشخصه ی
+warning.noexistence: موجود است \u201C%s\u201D وجود ندارد اما در \u201C%s\u201D در \u201C%s\u201D مشخصه ی
+warning.noexistence-media: وجود ندارد \u201C%s\u201D برای رسانه ی \u201C%s\u201D مشخصه ی
+warning.notforusermedium : برای این واسط کار بر وجود ندارد \u201C%s\u201D مشخصه ی
+warning.noothermedium : مشخصات برای رسانه های دیگر توانایی کار برای واسط کاربر را ندارند
+# org.w3c.css.parser.AtRule* استفاده شده توسط
+error.noatruleyet: پشتیبانی نشده است CSS1 \u201C%s\u201D توسط @import دیگر از @rules 
+# org.w3c.css.parser.analyzer.CssParser استفاده شده توسط
+error.notforcss1: وجود ندارد CSS1 برای \u201C%s\u201D مقدار
+warning.pseudo: (\u201C%s\u201D) در پروفایل پیش فرض \u201C%s\u201D شبه عنصر یا شبه کلاس ناشناخته ی
+warning.nocomb: غیر مجاز است (\u201C%s\u201D) مابین گزینشگرها در این پروفایل \u201C%s\u201D ترکیب گر
+warning.charsetspecial: :دارد @charset این پرفایل ترکیب نحوی بسیار ویژه ای برای ادامه داده شده با فضایی دقیق، توسط نام رمزگذاری ادامه یافته است @charset .در گیومه ها، فورا توسط یک ویرگول نقطه ادامه یافته اند
+warning.notversion: نمی تواند بکار رفته باشد CSS: \u201C%s\u201D با این ورژن \u201C%s\u201D
+
+# org.w3c.css.parser.CssFouffa استفاده شده توسط
+error.unrecognize: مقادیر زیادند یا تشخیص داده نشده اند
+
+# org.w3c.css.parser.CssFouffa استفاده شده توسط
+generator.unrecognize: خطای تجزیه
+generator.dontmixhtml: .باشند HTML خطای تجزیه. شیوه نامه ها نبایستی شامل ترکیب نحوی 
+
+# org.w3c.css.css.StyleSheetGeneratorHTML2 استفاده شده توسط
+error.unknown: خطای ناشناخته
+
+# org.w3c.css.parser.CssSelectors استفاده شده توسط
+error.pseudo-element: نمی تواند ظاهر شود \u201C%s\u201D اینجا در بافت :\u201C%s\u201D شبه عنصر
+error.pseudo-class: نمی تواند ظاهر شود HTML از \u201C%s\u201D اینجا در بافت .\u201C%s\u201D شبه کلاس
+error.pseudo: \u201C%s\u201D شبه عنصر ناشناخته یا شبه کلاس
+error.id: .تعیین شده باشد \u201C%s\u201D :می تواند در یک گزینشگر ساده ی ID بی اعتبار است! تنها یک گزینشگر #\u201C%s\u201D ی ID گزینشگر
+error.space: .نبایستی محتوی فواصل باشد \u201C%s\u201D اگر گزینشگر ویژگی =~ بکار رفته است، واژه در مقدار
+error.todo : .مورد پشتیبانی قرار نگرفته است \u201C%s\u201D متاسفانه هنوز ویژگی
+error.incompatible: ناسازگارند \u201C%s\u201D و \u201C%s\u201D
+warning.incompatible: ناسازگارند \u201C%s\u201D و \u201C%s\u201D
+error.notformobile: نمی تواند با پروفایل سیار بکار رفته باشد \u201C%s\u201D
+error.notforatsc: بکار رفته باشد ATSC نمی تواند با پروفایل \u201C%s\u201D
+error.notfortv: بکار رفته باشد TV نمی تواند با پروفایل \u201C%s\u201D
+error.notversion: بکار رفته باشد CSS: \u201C%s\u201D نمی تواند با این ورژن \u201C%s\u201D
+
+error.media: \u201C%s\u201D رسانه های ناشناس 
+error.page: \u201C%s\u201D صفحه ی نام برده ی ساختگی ناشناس
+
+error.unrecognized.link: .xml-stylesheet PI عنصر لینک ناشناس یا
+
+# StyleSheetGeneratorHTML استفاده شده توسط
+generator.context: مفهوم
+generator.request: .خطایی در جریان برونداد شیوه نامه رخ داده است .بفرستید plh@w3.org لطفا درخواست خود را تصحیح کنید یا ایمیلی به.
+generator.unrecognized: ناشناس
+generator.invalid-number: شماره ی بی اعتبار
+generator.property: خطای مقدار
+generator.line: خط
+generator.not-found: فایل پیدا نشد
+
+generator.doc-html: <!-- برداشته شده است olivier 2006-12-14 این پیغام گنگ -->
+generator.doc: <!-- برداشته شده است olivier 2006-12-14 این پیغام گنگ -->
+
+
+# استفاده شده توسط تجزیه گر
+parser.semi-colon: سعی نمایید که قبل از نام مشخصه یک ویرگول نقطه را بیابید. آنرا اضافه نمایید
+
+parser.unknown-dimension: بُعد ناشناخته
+
+parser.old_class: ،(".55ft") یک نام کلاس می توانست شروع شود با یک رقم ،CSS1 در دارای چنین کلاس هایی است که تجزیه شده اند بصورت CSS2 ،("#55ft") اگر نبود یک بُعد (ابعاد ناشناخته (با در نظر گرفتن افزایش واحدهای جدید در آینده ".3\u201C%s\u201D" نیازمند آن است که صرف نظر کرده باشد از نخستین رقم CSS2 ،به یک کلاس معتبر ".\u201C%s\u201D" جهت تبدیل
+
+parser.old_id: ،("#55ft") می توانست شروع شود با یک عدد id یک نام ،CSS1 در هایی است که تجزیه شده اند بصورت id دارای چنین CSS2 ،("#55ft") اگر نبود بُعد (ابعاد ناشناخته (با مجاز بودن افزایش واحدهای جدید در آینده
+
+parser.class_dim: ،("#55ft") یک نام کلاس می تواند شروع شود با یک عدد ،CSS1 در .(".55in") اگر نباشد بُعد
+
+parser.id_dim: ،("#55ft") می تواند شروع شود با یک عدد id یک نام ،CSS1 در .(".55in") اگر نباشد بُعد
+
+parser.charset: تنها می تواند در شروع استایل واقع شود @charset دستور .ورق. لطفا بررسی نمایید که در آنجا قبل از آن فواصلی موجود نباشند
+
+parser.charsetspecial: :دارد @charset این پروفایل ترکیب نحوی بسیار ویژه ای برای ادامه یافته دقیقا با یک فضا، ادامه داده شده توسط نام رمزگذاری @charset .در گیومه ها، فورا با یک ویرگول نقطه ادامه یافته است 
+
+warning.old_id: ،("#55ft") می تواند شروع شود با یک عدد id یک نام ،CSS1 در هایی است که تجزیه شده اند بصورت id دارای چنین CSS2 ،("#55ft") اگر نباشد بُعد (ابعاد ناشناخته (با در نظر گرفتن افزایش واحدهای جدید در آینده
+
+warning.old_class: ،("#55ft") یک نام کلاس می تواند شروع شود با یک عدد ،CSS1 در هایی است که تجزیه شده اند بصورت id دارای چنین CSS2 ،("#55ft") اگر نباشد بُعد .(ابعاد ناشناخته (با در نظر گرفتن افزایش واحدهای جدید در آینده
+
+# (servlet) استفاده شده توسط سرولت
+servlet.invalid-request: .شما درخواست بی اعتباری فرستاده اید
+servlet.process: نمی تواند شیء را پردازش نماید
+
+warning.atsc: پشتیبانی شده باشد atsc-tv نمی تواند توسط رسانه ی \u201C%s\u201D
+error.onlyATSC: می باشد atsc-tv این تابع تنها برای رسانه ی \u201C%s\u201D
+
+warning.otherprofile: برای این پروفایل وجود ندارد، اما در انطباق با پروفایل دیگری تایید اعتبار شده است \u201C%s\u201D مشخصه ی

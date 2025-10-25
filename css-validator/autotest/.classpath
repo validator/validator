@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/jean/usr/jwsdp-1.6/jaxp/lib/jaxp-api.jar"/>
+	<classpathentry kind="lib" path="/home/jean/usr/Jigsaw/classes/jigsaw.jar"/>
+	<classpathentry kind="lib" path="/home/jean/usr/Jigsaw/classes/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/home/jean/usr/Jigsaw/classes/xml-apis.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

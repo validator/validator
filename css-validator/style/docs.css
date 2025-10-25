@@ -1,0 +1,175 @@
+/*
+   Documentation Style Sheet for the W3C Markup Validation Service.
+ 
+   Copyright 2003 W3C (MIT, INRIA, Keio). All Rights Reserved.
+   See <http://www.w3.org/Consortium/Legal/ipr-notice.html#Copyright>
+ 
+   $Id$
+*/
+
+/*
+   Please Note:
+   Every selector in this stylesheet should require a parent element with the
+   class ".doc" to avoid namespace clashes. Currently the class is set on a
+   "div" element, but there is no reason to limit it to that. i.e. use the
+   ".doc" selector as parent, not "div.doc".
+*/
+
+
+/* Margins common (relative) to multiple block elements. */
+.doc h4, .doc h5, .doc p, .doc pre, .doc ul, .doc table
+{
+ margin-left: 1em;
+ /* margin-right: 20%; */
+margin-right: 1em;
+}
+
+/* Set line height to 1.4x (from 1.3x on general site) to allow for various inline decoration. */
+.doc {
+  line-height: 140%; 
+}
+
+/* documentation - table of contents */
+#toc { /* making the toc a bit more compact and standing out */
+    font-size: .85em;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.doc div#toc ol {
+   list-style-type: decimal;
+}
+.doc div#toc ol li ol {
+   list-style-type: lower-alpha;
+}
+
+/* documentation - error explanations */
+dl#expl dt code { /* headings for an error */
+  white-space: normal;
+  font-weight: bold;
+}
+
+dl#expl dt {
+  border-top: 1px dashed black;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.doc dd {
+  margin-right: 0; /* no need for the extra margin if we nicely put the text of the dd in a paragraph */
+}
+.doc var { /* headings for an error */
+  color: #006;
+}
+
+/* A snippet of code used inline. */
+.doc code {
+  white-space: normal;
+  font-weight: bold;
+  display: inline;
+  padding-left: .2em;
+  padding-right: .2em;
+  background: #eef;
+  color:      #337;
+  font-family: "Bitstream Vera Sans Mono", monospace;
+  border: 1px dotted #ccf;
+}
+
+.doc code.block {
+  display: block;
+  padding: 1em;
+  white-space: pre;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-right:  3em;
+}
+
+.doc code samp {
+  font-weight: normal;
+  color: black;
+  font-style: italic;
+}
+
+span.dir {color:#600060;}
+span.file {color:#006000;}
+span.const {font-weight:bold; color:#800000; font-size:12px;}
+
+span.balise {font-family:monospace; font-size:14px;}
+span.balise > span.name {color:blue;}
+span.balise > span.attr {color:#009000;}
+span.balise > span.string {color:purple;}
+
+ul.instructions, ol.instructions {
+    margin-left: 18px;
+    list-style-type: decimal;
+    list-style-position: inside;
+}
+
+/***** translation status page *******/
+
+ol.translations_instructions {
+    list-style-type: decimal;
+    list-style-position: inside;
+}
+ul.translations_instructions {
+    list-style-type: circle;
+}
+
+/* translation summary table */
+table#translation_summary {
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+}
+table#translation_summary td, table#translation_summary th{
+	border-top: 0px solid #ddd;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #eee;
+	padding: 6px;
+	text-align: center;
+	border-collapse: collapse;
+}
+table#translation_summary th {
+	background-color: #eee;
+	color: #11111A;
+	border-right: 1px solid #ccc;
+	padding: .3em .5em;
+	line-height: 120%;
+}
+
+table#translation_summary th#properties {
+width: 15em;
+padding: 0 !important;
+padding-top: .5em;
+}
+table#translation_summary th.property_name {
+padding: .2em 0 0 0 !important;
+}
+
+table#translation_summary th p {
+/*width: 100%;*/
+font-size: xx-small;
+margin: 0;
+margin-top: .5em;
+padding: .5em;
+padding-bottom: .4em;
+
+}
+
+.table_translation_missing {
+    background-color: #F55;
+}
+.table_translation_missing a, .table_translation_missing a:link, .table_translation_missing a:visited {
+    background-color: #F55;
+    text-decoration: none;
+    color: yellow;
+}
+
+.table_translation_missing a:hover, .table_translation_missing a:active {
+    background-color: #F55;
+    text-decoration: underline;
+    color: #5589E3;
+}
+
+.table_translation_ok {
+    background-color: #89E5A7;
+}

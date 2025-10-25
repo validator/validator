@@ -1,0 +1,79 @@
+BODY {
+  font-family: verdana, arial, helvetica, sans-serif; 
+  color: rgb(0,0,0); 
+  background-color: white; 
+  margin-left: 2.0%; 
+}
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+.center {
+  text-align: center; 
+  margin: 5%;
+}
+ADDRESS {
+  float: left;
+}
+.t1 { 
+  color: silver;
+  text-align: center;
+  /* font: bold 10em Times, serif; */
+  font: bold 120px/120px Times, serif;
+  text-shadow: 0.2em 0.2em;
+  margin-top: 10px;
+}
+
+.t2 { 
+  color: rgb(0, 90, 156);
+  text-align: center;
+  margin-top: -90px;
+  /* font: italic 6em Times, serif; */
+  font: italic 72px/72px Times, serif;
+  text-shadow: 0.2em 0.2em;
+  margin-bottom: 10px;
+}
+
+
+PRE SPAN.doc-string {
+  color: blue;
+}
+
+PRE SPAN.reference {
+  background-color: silver;
+  color: red;
+}
+
+PRE SPAN.type {
+  color: red;
+}
+
+PRE SPAN.function-name {
+  color: red;
+}
+
+PRE SPAN.string {
+  color: purple;
+}
+
+PRE SPAN.comment {
+  color: blue;
+}
+
+PRE SPAN.variable-name {
+  color: red;
+}
+
+PRE SPAN.preprocessor {
+  color: red;
+}
+
+PRE SPAN.keyword {
+  color: green;
+}
+
+.copyright P { 
+  text-align: justify;
+}

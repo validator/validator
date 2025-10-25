@@ -1,0 +1,743 @@
+/* @group Reset */
+
+html, body, form, fieldset, p, a, ul, ol, li, div, legend, label,
+br, input, button, textarea, h1, h2, h3, h4, h5, strong {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 100%;
+	font-family: Helvetica, Arial, Sans-Serif;
+	vertical-align: baseline;
+	background-color: white;
+	color: #1f2126;
+	line-height: 1;
+	text-align: left;
+}
+
+a img {
+	border: 0;
+}
+
+a:link, a:visited {
+	text-decoration: underline;
+	color: #365D95;
+}
+
+a:hover, a:active {
+	text-decoration: underline;
+	color: #1f2126;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+abbr[title], acronym[title], span[title], strong[title] {
+	border-bottom: thin dotted;
+	cursor: help;
+}
+
+acronym:hover, abbr:hover {
+	cursor: help;
+}
+
+/* @end */
+
+/* @group Basics */
+
+body {
+	padding-bottom: 6em;
+	min-width: 40em; /* for the tabs, mostly */
+}
+
+p {
+  line-height: 130%;   
+}
+
+strong { 
+  font-weight: bold;
+}
+
+h2 { 
+    color: #690;
+    font-family:Verdana,Arial,sans-serif;
+    background-color: white;
+    font-size: 1.3em;
+    margin-bottom: 1em;    
+}
+
+h3 {
+    font-family:Verdana,Arial,sans-serif;
+    color: #690;
+    background-color: white;
+    font-size: 1.1em;
+    border-bottom: 1px dotted #aaaa77;
+    text-decoration: none;
+    margin-top: 1em;
+    margin-bottom: 1em;
+} 
+
+h4 {
+    font-family:Verdana,Arial,sans-serif;
+    color: #690;
+    font-style: italic;
+    text-decoration: none;
+    font-size: .9em;
+    font-weight:600;
+    margin-top: 1.5em;
+    margin-bottom: .5em;
+}
+
+h5,h6 {
+    font-family:Verdana,Arial,sans-serif;
+    color: #11111a;
+    background-color: white;
+    font-weight: normal;
+    font-size: small;
+    margin-top: 1em;
+    margin-left: 1em;
+    margin-bottom: .7em;
+    }
+
+    /* tables in the documentation */
+
+    table {
+    }
+    td, th{
+    	padding: 6px;
+    }
+   
+/* @end */
+
+
+/* @group Inputs */
+
+input#uri, input#file, input#uploaded_file, input#keywords, input#short_desc, textarea {
+	font-family: Monaco, "Courier New", Monospace;
+	font-size: 0.9em;
+	border: 1px solid #bbb;
+	border-top: 1px solid #777;
+	border-bottom: 1px solid #ddd;
+	background: #fefefe url(../images/textbg.png) no-repeat top left;
+	padding: 0.2em 0.2em;
+	max-width: 1000px;
+	font-variant: normal;
+}
+
+input#uri, input#file, input#uploaded_file {
+	width: 85%;
+	margin: 0.3em 0 0 1em;
+}
+
+input#file, input#uploaded_file {
+	width: 30em;
+}
+
+input#mailsearch, input#bugsearch {
+    background-color: #EAEBEE;
+    color: #365D95;
+    padding: .3em 1em;
+    border: 1px outset #ccc;
+  }
+  input#mailsearch:active, input#bugsearch:active {
+    border-style: inset !important;
+  }
+a.submit {
+	display: block;
+	width: 10em;
+	text-align: center;
+	margin: 0 auto;
+	background: url(../images/button-left.png) no-repeat center left;
+	text-decoration: none;
+}
+
+a.submit span {
+	display: block;
+	padding: 1.2em 2em;
+	background: url(../images/button-right.png) no-repeat center right;
+}
+
+textarea {
+	width: 98.5%;
+}
+
+p.submit_button input {
+	overflow: visible;
+	width: auto;
+	background: #fff;
+  color: #365D95;
+  padding: 0.3em 0.4em 0.1em 0.3em;
+	font-size: 1.2em;
+	width: 12em;
+	text-align: center;
+	border-bottom: 2px solid #444;
+	border-right: 2px solid #444;
+	border-top: 1px solid #aaa;
+	border-left: 1px solid #aaa;
+	background: #eee url(../images/grad.png) repeat-x top left;
+	cursor: pointer;
+}
+
+p.submit_button input:active {
+  color: #1f2126;
+	border-bottom: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	border-top: 2px solid #444;
+	border-left: 2px solid #444;
+}
+
+label {
+	font-size: 0.9em;
+	padding-left: .2em;
+	padding-right: .2em;
+}
+
+div.options select {
+	margin-right: 0.8em;
+}
+
+div.options label {
+	margin: 1em 0.3em 0 0;
+	background-color: #EAEBEE;
+}
+
+
+div.options table, div.options tbody, div.options td, div.options th, div.options tr {
+	margin: 0;
+	padding: 0;
+}
+
+div.options table {
+	border-collapse: collapse;
+}
+
+div.options th, div.options th label {
+	font-weight: bold;
+}
+
+div.options td, div.options th {
+	padding: 0.5em 1.1em 0.5em 0;
+	text-align: left;
+}
+
+div.options td input {
+	margin-right: 0.2em;
+}
+
+div.options select {
+	width: 12em;
+}
+
+div.options table tr.subchoice th {
+    padding-left: 3em;
+}
+tr.subchoice th label {
+  padding-left: 0;
+}
+tr.subchoice th, tr.subchoice th label {
+  font-size: 1em;
+  font-weight: normal;
+}
+/* @end */
+
+/* @group Header */
+
+h1#title {
+	font-family: "Myriad Web", "Myriad Pro", "Gill Sans", Helvetica, Arial, Sans-Serif;
+	background-color: #365D95;
+	color: #fdfdfd;
+	font-size: 1.6em;
+	padding-bottom: 0.430em;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+h1#title a, h1#title a img {
+	background-color: #365D95;
+}
+
+h1 span {
+	border-bottom: 1px solid #6383b1;
+	border-color: #4e6f9e;
+	vertical-align: 10px;
+}
+
+h1#title a:link, h1#title a:hover, h1#title a:visited, h1#title a:active {
+  color: #fdfdfd !important;
+  text-decoration: none;
+}
+
+h1#title img {
+	vertical-align: middle;
+	margin-right: 0.7em;
+}
+
+#logo {
+	border-radius: 10px;
+	width: 80px;
+	margin-left: 20px;
+	margin-top: 10px;
+	height: 80px;
+}
+
+div#banner {
+	background-color: #365D95;
+	margin: 1.5em 2em;
+}
+
+p#tagline {
+	font-size: 0.7em;
+	margin: -3em 0 0 11.5em;
+	padding-bottom: 1em;
+	letter-spacing: 0.1em;
+	line-height: 100% !important;
+	color: #D0DCEE;
+	background-color: transparent;
+}
+
+ul#lang_choice {
+	position: absolute;
+	text-align: right;
+	top: 0;
+	right: 0;
+	font-size: 0.7em;
+	padding: 0.5em 0;
+	line-height: 100%;
+	margin-right: 3.3em;
+	min-width: 40em;
+	background-color: transparent;
+}
+
+ul#lang_choice a:link, ul#lang_choice a:visited {
+	text-decoration: none;
+}
+
+ul#lang_choice a:hover, ul#lang_choice a:active {
+	text-decoration: underline;
+}
+
+ul#lang_choice li {
+	display: inline;
+	padding-left: 0.5em;
+}
+
+/* @end */
+
+/* @group Tabs */
+
+ul#tabset_tabs {
+	height: 1.59em;
+}
+
+ul#tabset_tabs li {
+	cursor: pointer;
+	float: left;
+	margin-right: 0.245em;
+	background: #DADDE3 url(../images/tab-tl.png) no-repeat top left;
+	border-bottom: 1px solid #CBD0DB;
+}
+
+ul#tabset_tabs li.selected {
+	background: #EAEBEE url(../images/round-tl.png) no-repeat top left;
+	border-bottom: 1px solid #EAEBEE;
+}
+
+ul#tabset_tabs li.selected a:link, ul#tabset_tabs li.selected a:visited {
+	color: #1f2126;
+	background: #EAEBEE url(../images/round-tr.png) no-repeat top right;
+}
+
+ul#tabset_tabs li span {
+	color: #616571;
+}
+
+body ul#tabset_tabs li.selected a span {
+	color: #3d424f;
+}
+
+ul#tabset_tabs li a:link, ul#tabset_tabs li a:visited {
+	color: #365D95;
+	display: block;
+	padding: 0.515em 1.3em 0.215em 0.8em;
+	background: #DADDE3 url(../images/tab-tr.png) no-repeat top right;
+	margin-left: 0.5em;
+	font-size: 0.9em;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+ul#tabset_tabs li a:hover, ul#tabset_tabs li a:active {
+	color: #1f2126;
+}
+
+ul#tabset_tabs li a:hover span, ul#tabset_tabs li a:active span {
+	color: #3d424f;
+}
+
+ul#tabset_tabs li.selected span {
+	color: #5d6371;
+}
+
+/* @end */
+
+/* @group Contents */
+
+div#frontforms {
+	background: #fff;
+	padding: 0 2em;
+}
+
+div#fields {
+	clear: both;
+	background: #EAEBEE url(../images/round-tr.png) no-repeat top right;
+	padding: 0.5em 1.3em;
+	border-bottom: 1px solid #DCDDE0;
+}
+
+div#fields legend, div#fields p, div#fields fieldset, div#fields form,div#fields form fieldset legend a, div#fields form p label, div#fields tr label   {
+  background-color: #EAEBEE;
+}
+
+fieldset {
+	background: #EAEBEE;
+}
+
+legend {
+	font-size: 1.1em;
+	padding: 1em 0 0.23em;
+	letter-spacing: 0.06em;
+}
+
+legend a:link, legend a:visited, legend a:hover, legend a:active {
+	text-decoration: none;
+}
+
+legend.toggletext {
+	cursor: pointer;
+	padding-left: 0.8em;
+	background: #EAEBEE url(../images/arrow-closed.png) 0 1.2em no-repeat;
+}
+
+legend.toggled {
+	background: #EAEBEE url(../images/arrow-open.png) 0 1.4em no-repeat;
+}
+
+p.instructions {
+	color: #4D525E;
+	font-size: 0.80em;
+	padding-bottom: 1em;
+	padding-top: 0.5em;
+}
+
+p.instructions label {
+	color: #4D525E;
+	padding: 0;
+	margin: 0;
+	font-size: 1em;
+}
+
+div.options {
+	padding: 0.7em 0 0.5em 1em;
+}
+
+div.options, p.submit_button, p.instructions, p#note {
+	border-top: 1px solid #cbcdd5;
+	background: #EAEBEE url(../images/double.png) left top repeat-x;
+}
+
+p.submit_button {
+	padding: 0.6em 0 0;
+	margin: 0;
+	text-align: center;
+}
+
+
+p#note {
+	clear: both;
+	color: #4D525E;
+	font-size: 0.9em;
+	padding: 0.5em 0 0.1em;
+}
+
+/* @end */
+
+/* @group Menu */
+
+ul#menu {
+	text-align: center;
+	margin: 1em 2em;
+	background: #EAEBEE url(../images/round-br.png) no-repeat bottom right;
+	padding: 0.5em 0 0.3em;
+	border-top: 1px solid #DCDDE0;
+}
+
+ul#menu span {
+	display: none;
+}
+
+ul#menu a:link, ul#menu a:visited {
+	background: #EAEBEE;
+	color: #365D95;
+	text-decoration: none;
+}
+
+ul#menu a:hover, ul#menu a:active {
+	color: #1f2126;
+	text-decoration: underline;
+}
+
+ul#menu li {
+	display: inline;
+	margin-right: 0.8em;
+        background: #EAEBEE; }
+
+
+
+/* @end */
+
+/* @group Footer */
+
+div#footer {
+	padding: 0 2em;
+}
+
+p#activity_logos {
+	float: left;
+	margin-right: 2em;
+}
+
+p#support_logo {
+	float: right;
+	font-size: 0.8em;
+	text-align: center;
+	margin-left: 2em;
+}
+
+p.copyright {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 0.7em;
+	line-height: 1.4;
+}
+
+p.copyright, p.copyright a {
+	text-decoration: none;
+	color: #7C8395;
+}
+
+p.copyright a:link, p.copyright a:visited {
+	color: #A3756E;
+}
+
+p.copyright a:hover, p.copyright a:active {
+	color: #7D4A42;
+}
+
+p#version_info {
+    font-size:      small;
+    text-align: center;
+    color: #888;
+    background-color: white;
+}
+
+/* @end */
+
+/* @group Docs */
+
+div.doc {
+  margin: 1em 2em;
+	padding: 0.5em 0 0.3em;	  
+}
+
+
+/* Set line height to 1.4x (from 1.3x on general site) to allow for various inline decoration. */
+div.doc p, div.doc li {
+  line-height: 150% !important; 
+}
+div.doc p {
+  margin-bottom: .7em;
+  margin-top: .5em;
+}
+
+div.doc p, div.doc dt, div.doc ul, div.doc ol {
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
+div.doc ul li {
+  list-style-type: disc;
+  margin-left: 1em;
+}
+
+/* documentation - table of contents */
+#toc { /* making the toc a bit more compact and standing out */
+    font-size: .85em;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-left: 3em;
+}
+
+div.doc div#toc ol {
+   list-style-type: decimal;
+}
+div.doc div#toc ol li {
+  line-height: 130%;
+  font-weight: bold;
+}
+div.doc div#toc ol li ol {
+   list-style-type: lower-alpha;
+   font-weight: normal;
+   margin-left: 1em;
+}
+div.doc div#toc ol li ol li ol{
+   list-style-type: lower-roman;
+}
+
+
+/* documentation - error explanations */
+dl#expl dt code { /* headings for an error */
+  white-space: normal;
+  font-weight: bold;
+}
+
+dl#expl dt {
+  border-top: 1px dashed black;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+div.doc dt {
+  margin-top: 1.2em;
+  margin-bottom: .2em;
+}
+div.doc dt, div.doc dt a {
+  font-style: italic;
+}
+div.doc dd {
+  margin-right: 0; /* no need for the extra margin if we nicely put the text of the dd in a paragraph */
+}
+div.doc var { /* headings for an error */
+  color: #006;
+}
+
+/* A snippet of code used inline. */
+div.doc code {
+  white-space: normal;
+  display: inline;
+  padding-left: .2em;
+  padding-right: .2em;
+  color:      black;
+  font-family: Monaco, "Courier New", monospace;
+  border: 1px dotted #ccc;
+}
+
+div.doc code.block {
+  display: block;
+  padding: 1em;
+  white-space: pre;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-right:  3em;
+}
+
+div.doc code samp {
+  font-weight: normal;
+  color: black;
+  font-style: italic;
+}
+
+/* reference tables */
+
+div.doc table {
+	border-collapse: collapse;
+	border-right: 1px solid #ccc;
+}
+div.doc table td, .doc table th{
+	border-top: 0px solid #ddd;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #eee;
+	padding: 6px;
+	border-collapse: collapse;
+}
+div.doc table th {
+	background-color: #eee;
+	color: #11111A;
+	border-right: 1px solid #ccc;
+}
+
+div.doc table {
+  margin-top: 1em;
+  margin-bottom: .5em;
+ 	border-collapse: collapse;
+	border-right: 1px solid #ccc; 
+}
+
+div.doc td, div.doc th {
+	border-top: 0px solid #ddd;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #eee;
+	border-collapse: collapse;
+  
+}
+div.doc th {
+	background-color: #eee;
+	color: #11111A;
+	border-right: 1px solid #ccc;
+}
+
+/* @end */
+
+
+/* @group home page, news text */
+
+div.intro {
+  margin: 1em 2em;
+	padding: 0.5em 0 0.3em;	
+}
+
+#news dt {
+    font-weight: bold;
+     margin-top: 1.5em;
+     margin-bottom: .3em;
+   }
+
+#news dd {
+       margin-left: 2.5em;
+       margin-right: 1.5em;
+   }
+
+
+/* warning on the home page for test instances */
+#test_warning {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    line-height: 160%;
+    text-align: center;
+    margin-top: 2em;
+	margin-left: 12%;
+	margin-right: 12%;
+	padding-left: 1.5em;
+   padding-right: 1.5em;
+	color: black;
+	background-color: white;
+}
+
+#test_warning img {
+    width: 1.3em;
+    vertical-align: middle;
+}
+
+/* donation and sponsorship program */
+
+div#don_program { border: 1px solid #55b05a; padding: .5em; line-height: 150%; text-align: center; margin-top: .5em; }
+div#don_program span#don_program_img {float: left; width: 150px; height: 60px;}
+div#don_program span#don_program_img img {vertical-align: middle;}
+div#don_program span#don_program_text { }
+div#don_program span#don_program_text a {font-weight: bold;}
+
+#w3c-include { margin-top: 1em; }
+
+/* @end */
+
+/* @end */

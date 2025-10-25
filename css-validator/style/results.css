@@ -1,0 +1,268 @@
+/* == internal navigation bar == */
+
+#jumpbar {
+margin: 1em 2.4em;
+}
+#jumpbar li {
+color:#11111A !important;
+}
+#jumpbar {
+background-color:white;
+border-bottom:1px solid #005A9C;
+border-top:1px solid #005A9C;
+color:#005A9C;
+font-size:0.9em;
+font-weight:bold;
+line-height:140%;
+list-style-type:none;
+padding:3px 0;
+text-align:center;
+vertical-align:bottom;
+}
+#jumpbar li {
+display:inline;
+}
+#jumpbar li a {
+font-weight: 700;
+padding-left:1.2em;
+padding-right:1.2em;
+text-decoration: none;
+}
+/*   ==== CONGRATS =====  */
+div#results_container {
+  margin: 2em;
+}
+
+#congrats h3, #errors h3 {
+        margin: 0;
+        font-family: "Bitstream Vera Sans", sans-serif;
+        font-weight:		800;
+        font-style:		normal;
+        text-decoration:	none;
+        word-spacing:		normal;
+        letter-spacing:	normal;
+        text-transform:	none;
+        border-color:		black;
+        padding:		.4em;
+}
+#congrats h3 {
+      background-color: #55B05A;
+      color: white;      
+}
+
+#congrats p { padding: .5em 1em; }
+
+#congrats p.toggle { text-indent: 10px;
+        background: transparent url('../images/arrow-down.gif')  15px 0 no-repeat;
+        }
+
+#congrats p.closed{
+        text-indent: 10px;
+                background: transparent url('../images/arrow-right.gif')  15px 0 no-repeat;
+}
+
+#congrats pre { overflow: auto;}
+
+img.inline-badge {
+  float: left;
+  padding: 10px;
+  padding-top: 3em;
+  margin: 0;
+  margin-left: 1.6em;
+}
+
+pre.badgeSnippet {
+  margin-left: 108px !important; /* give room to the image */
+  margin-top:0;
+  padding-left: 1em;
+  font-size: small;
+  color: #444;
+  margin-bottom: 2em;
+}
+
+
+/*   ==== COMMON: ERRORS + WARNINGS =====  */
+
+
+#warnings table, #errors table {
+	width:100%;
+	border-top: 1px solid #ccc !important;
+	line-height:120%;
+	border-collapse:collapse;
+  border-right:1px solid #CCCCCC;
+	}
+
+#warnings td, #errors td {
+	border-width: 0;
+}
+
+#errors h4, #warnings h4  {
+  font-weight: bold;
+  margin: 0;
+  padding: .4em;
+  background-color: #eee;
+  color: black;
+}
+#errors h4 a, #warnings h4 a {
+  background-color: #eee;
+  
+}
+
+td.linenumber {
+	width:3em;
+	border-bottom: 1px solid #ccc !important;
+	background-color: #e1e1e1;
+	text-align:right;
+}
+
+td.codeContext {
+	border-bottom: 1px solid #ddd !important;
+	background-color: #F1F1F1;}
+
+
+/*   ==== ERRORS =====  */
+
+/* id="errors" - start of the list of errors */
+
+#errors h2 {
+  background-color: #E82848;
+  color: white;
+}
+
+#errors h3 {
+background-color: #D23D24 !important;
+        color: white;
+}
+
+
+td.parse-error {
+	padding: 5px 1em;
+	border-bottom: 1px solid #fdd !important;
+}
+
+td.nocontext {
+	width: 3em;
+	border-bottom: 1px solid #ddd !important;
+	background-color: #F1F1F1;}
+
+td.io, td.notfound, td.invalidparam, td.errortoken, td.unknownerror {
+	padding: 5px 1em;
+	border-bottom: 1px solid #fdd !important;
+}
+
+/*   ==== WARNINGS =====  */
+
+/* id="warnings" - start of the list of warnings */
+
+tr.warning {
+	padding: 0;}
+
+td.level1, td.level2, td.level0 {
+	padding: 5px 1em;
+	border-bottom: 1px solid #fdd !important;
+}
+.level0 {
+	border-left: 10px solid #C66 !important;
+	color: #000;}
+
+.level1 {
+	border-left: 10px solid #FA9084 !important;
+	color: #000;
+}
+.level2 {
+	border-left: 10px solid #FFB1A7 !important;
+	color: #000;
+}
+
+/* ==== example of code for icon ==== */
+pre {
+        margin-left: 1em;
+        padding: 2em;
+        border-left: thin solid #ddd;
+	padding: 2em;
+
+}
+/*   ==== VALIDATED STYLESHEET =====  */
+
+/* id="css" - to identify the validated style sheet */
+#css {}
+
+/* class="vAtRule" - block of all atSelector */
+.vAtRule {
+	font-family: monospace;
+	padding:0em;}
+
+/* class="atRule" - block of one atSelector */
+.atRule {
+	margin: 1em 0;
+	padding-left: 0.5em;
+	border-left: 3px solid #ddd;
+}
+
+/* class="atSelector" - Value of atSelector */
+.atSelector {}
+
+/* class="selector" - block of the selector */
+.selector {
+	background-color: #F1F1F1;
+	font-family: monospace;
+	padding: 1em;
+	border-bottom: 1px solid #ddd;}
+
+/* class="selectorValue" - value of the selector */
+.selectorValue {font-weight: bold;}
+
+/* class='RuleList' - block of all couple propertie-value*/
+.RuleList {padding: 0 1em;
+  background-color: #F1F1F1;
+  }
+
+/* class='Rule' - one couple propertie-value*/
+.Rule {
+  background-color: #F1F1F1;
+  font-family: monospace;
+	
+}
+
+/* class='Property' - propertie name */
+.Property {
+	color: #222;
+	font-family: monospace;
+	font-style: italic;
+	}
+
+/* class='PropertyValue' - value of property */
+.PropertyValue {
+	color: #666;
+}
+
+/* link to go back to top of page */
+p.backtop {
+        color: #bbc;
+        font-size: x-small;
+        padding-right: 0 !important;
+        margin: 1em 0 !important;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding-top: .3em;
+        text-align: right;
+        border-top: 1px solid #eef;
+        clear: both;
+}
+
+p.backtop a:link, p.backtop a:hover, p.backtop a:visited {
+        color: #bbc;
+        text-decoration: none;
+}
+
+.error code, .warning code,
+.unrecognized, .exp, .skippedString, .codeContext {
+        border: 1px dashed #999;
+        padding: 2px;
+        padding-left: 4px;
+        padding-right: 4px;
+}
+
+.unrecognized, .exp, .skippedString, .codeContext {
+        font-family: monospace;
+}

@@ -1,0 +1,68 @@
+a img { color: white; border: none } /* remove border from top image */
+
+h2 {
+  font-weight: bold; 
+  font-size: large;
+  font-family: helvetica, sans-serif;
+  color: rgb(136,0,0);
+  margin-top: 2.0%;
+}
+body {
+  font-size: medium;
+  font-family: verdana, arial, helvetica, sans-serif;
+  color: rgb(0,0,0);
+  background-color: white;
+}
+address {
+  font-weight: bold;
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.error {
+  color: red;
+  font-size: large;
+}
+
+.t1 { 
+  color: silver;
+  text-align: center;
+  /* font: bold 10em Times, serif; */
+  font: bold 120px/120px Times, serif;
+  text-shadow: 0.2em 0.2em;
+  margin-top: 10px;
+}
+
+.t2 { 
+  color: rgb(0, 90, 156);
+  text-align: center;
+  margin-top: -90px;
+  /* font: italic 6em Times, serif; */
+  font: italic 72px/72px Times, serif;
+  text-shadow: 0.2em 0.2em;
+  margin-bottom: 10px;
+}
+
+/*
+   .t1 { 
+  color: silver;
+  text-align: center;
+  font: bold 10em Times, serif;
+  text-shadow: 0.2em 0.2em;
+}
+
+.t2 { 
+  color: rgb(0, 90, 156);
+  text-align: center;
+  margin-top: 9em;
+  font: italic 6em Times, serif;
+  text-shadow: 0.2em 0.2em;
+}
+*/
+.t3 { 
+  color: red;
+  text-align: center;
+  font: italic 4em Times, serif;
+  text-shadow: 0.2em 0.2em;
+}
