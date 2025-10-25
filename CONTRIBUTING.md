@@ -1,8 +1,6 @@
 ## Code contributions
 
-The [Grant of license](CONTRIBUTING.md#grant-of-license) section at the end of this file
-has details about licensing code contributions to this project, and about "signing off"
-on code contributions. Please make sure to read it.
+The [Grant of license](CONTRIBUTING.md#grant-of-license) section at the end of this file has details about licensing code contributions to this project, and about "signing off" on code contributions. Please make sure to read it.
 
 ## Questions or problems? [![Nu Html Checker chat room](https://goo.gl/1kHqwI)][2]
 
@@ -13,8 +11,7 @@ Along with using the [project issue tracker][1] you can get help in real time in
 
 ## Want to build, test, and run the code?
 
-Follow the steps below to build, test, and run the checker such that you can open
-http://localhost:8888/ in a Web browser to use the checker Web UI.
+Follow the steps below to build, test, and run the checker such that you can open http://localhost:8888/ in a Web browser to use the checker Web UI.
 
 1. Make sure you have git, python, and JDK 8 or later installed.
 
@@ -39,11 +36,9 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 
         python ./checker.py all
 
-The steps above will build, test, and run the checker such that you can open
-http://localhost:8888/ in a Web browser to use the checker Web UI.
+The steps above will build, test, and run the checker such that you can open http://localhost:8888/ in a Web browser to use the checker Web UI.
 
-Use `python ./checker.py --help` to see command-line options for controlling the
-behavior of the script, as well as build-target names you can call separately; e.g.:
+Use `python ./checker.py --help` to see command-line options for controlling the behavior of the script, as well as build-target names you can call separately; e.g.:
 
 * `python ./checker.py build` (to build only)
 * `python ./checker.py build test` (to build and test)
@@ -51,8 +46,7 @@ behavior of the script, as well as build-target names you can call separately; e
 
 ## Confused about the code? Don’t know where to look?
 
-If you’d like to contribute a bug fix or feature enhancement but aren’t sure where in
-the code to get started, here’s a brief annotated overview of the repository contents:
+If you’d like to contribute a bug fix or feature enhancement but aren’t sure where in the code to get started, here’s a brief annotated overview of the repository contents:
 
 * `assets` — CSS and JavaScript sources for https://validator.github.io/validator/
 * `checker.py` — build script
@@ -93,21 +87,15 @@ the code to get started, here’s a brief annotated overview of the repository c
 
 Please read the https://github.com/validator/validator/blob/main/DCO file.
 
-By contributing to this project, you agree to license your contributions under
-[the MIT license](https://github.com/validator/validator/blob/main/LICENSE)
-and to waive any requirement to include an additional copyright notice.
+By contributing to this project, you agree to license your contributions under [the MIT license](https://github.com/validator/validator/blob/main/LICENSE) and to waive any requirement to include an additional copyright notice.
 
-When contributing pull requests, please add a "Signed-off-by" line to your
-git commit messages to indicate that you have read all of the content of
-https://github.com/validator/validator/blob/main/DCO and that you certify
-your code contributions actually conform to the terms of that agreement.
+When contributing pull requests, please add a "Signed-off-by" line to your git commit messages to indicate that you have read all of the content of https://github.com/validator/validator/blob/main/DCO and that you certify your code contributions actually conform to the terms of that agreement.
 
 To add a "Signed-off-by" line, invoke `git commit` with the `-s` option:
 
     git commit -s
 
-To save yourself some time, you probably want to set `user.name` and `user.email`
-values in a git config file (e.g., in `~/.gitconfig`), like this:
+To save yourself some time, you probably want to set `user.name` and `user.email` values in a git config file (e.g., in `~/.gitconfig`), like this:
 
     [user]
        name = Zaphod Beeblebrox
