@@ -672,8 +672,11 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
     ]
 
     if _type == "jar":
+        classpath_item = []
+        classpath_item.append(os.pathsep.join(extrasJarPaths()))
+        classpath_item.append(vnuJar)
         args.append('-classpath')
-        args.append(os.pathsep.join(extrasJarPaths() + [vnuJar]))
+        args.append(os.pathsep.join(classpath_item))
 
     if stackSize != "":
         args.append('-Xss' + stackSize + 'k')
@@ -1033,30 +1036,19 @@ class Release():
             if call_createJarOrWar:
                 self.createJarOrWar("jar")
 
-        javaArg = None
+        args = [javaCmd]
         if stackSize != "":
-            javaArg = '-Xss' + stackSize + 'k'
+            args.append('-Xss' + stackSize + 'k')
+
+        args.append('-jar')
+        args.append(vnuJar)
 
         formats = ["gnu", "xml", "json", "text"]
         for _format in formats:
-            if javaArg:
-                args = [javaCmd, javaArg, '-jar', vnuJar, '--format', _format,
-                        self.minDocPath]
-            else:
-                args = [javaCmd, '-jar', vnuJar, '--format', _format,
-                        self.minDocPath]
-            runCmd(args)
+            runCmd(args + ['--format', _format, self.minDocPath])
         # also make sure it works even w/o --format value; returns gnu output
-        if javaArg:
-            args = [javaCmd, javaArg, '-jar', vnuJar, self.minDocPath]
-        else:
-            args = [javaCmd, '-jar', vnuJar, self.minDocPath]
-        runCmd(args)
-        if javaArg:
-            args = [javaCmd, javaArg, '-jar', vnuJar, '--version']
-        else:
-            args = [javaCmd, '-jar', vnuJar, '--version']
-        runCmd(args)
+        runCmd(args + [self.minDocPath])
+        runCmd(args + ['--version'])
 
     def checkRuntimeImage(self):
         if javaEnvVersion < 9:
@@ -1140,19 +1132,23 @@ class Release():
     def runTests(self):
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
-        javaArg = None
+
+        args = [javaCmd]
         if stackSize != "":
-            javaArg = '-Xss' + stackSize + 'k'
-        args = []
+            args.append('-Xss' + stackSize + 'k')
+
+        classpath_item = []
+        classpath_item.append(vnuJar)
+        args.append('-classpath')
+        args.append(os.pathsep.join(classpath_item))
+        args.append('nu.validator.client.TestRunner')
+
         if verbose:
             args.append("--verbose")
+
         args.append("tests/messages.json")
-        className = "nu.validator.client.TestRunner"
-        if javaArg:
-            cmd = [javaCmd, javaArg, '-classpath', vnuJar, className] + args
-        else:
-            cmd = [javaCmd, '-classpath', vnuJar, className] + args
-        runCmd(cmd)
+
+        runCmd(args)
 
     def buildAll(self):
         self.createJarOrWar("jar")
