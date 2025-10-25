@@ -780,13 +780,13 @@ class Release():
         o.close
 
     def writeHashes(self, whichDir):
-        files = [f for f in os.listdir(distDir)
-                 if os.path.isfile(os.path.join(distDir, f))]
+        files = [f for f in os.listdir(whichDir)
+                 if os.path.isfile(os.path.join(whichDir, f))]
         for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
-            self.writeHash(os.path.join(distDir, filename), "md5")
-            self.writeHash(os.path.join(distDir, filename), "sha1")
+            self.writeHash(os.path.join(whichDir, filename), "md5")
+            self.writeHash(os.path.join(whichDir, filename), "sha1")
 
     def sign(self):
         files = [f for f in os.listdir(distDir)
