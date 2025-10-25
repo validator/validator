@@ -1666,6 +1666,8 @@ def main(argv):
                 javadocCmd = arg[10:]
             elif arg.startswith("--ant="):
                 antCmd = arg[6:]
+            elif arg.startswith("--ant-extra-arg="):
+                antCommonArgs.append(arg[16:])
             elif arg == '--offline':
                 # Run ant without internet
                 antCommonArgs.append('-Doffline=true')
