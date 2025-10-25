@@ -360,25 +360,6 @@ DEALINGS IN THE SOFTWARE.
     </servlet-mapping>
 </web-app>
 ]]></echo>
-    <echo file="${dist}/war/log4j.xml" append="false"
-><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-  <appender name="console" class="org.apache.log4j.ConsoleAppender">
-    <param name="Target" value="System.out"/>
-    <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%-5p %c{1} - %m%n"/>
-    </layout>
-  </appender>
-
-  <root>
-    <priority value ="info" />
-    <appender-ref ref="console" />
-  </root>
-
-</log4j:configuration>
-]]></echo>
     <unzip dest="${dist}/war/classes">
       <fileset dir="${jarsDir}">
         <include name="*.jar"/>
@@ -411,7 +392,7 @@ DEALINGS IN THE SOFTWARE.
         <exclude name="**/*.java"/>
         <exclude name="**/nu/validator/servlet/Main.class"/>
       </classes>
-      <classes file="${dist}/war/log4j.xml"/>
+      <classes file="${validator.basedir}/resources/war/log4j.xml"/>
       <service type="org.relaxng.datatype.DatatypeLibraryFactory">
         <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
         <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
