@@ -13,7 +13,7 @@ Along with using the [project issue tracker][1] you can get help in real time in
 
 Follow the steps below to build, test, and run the checker such that you can open http://localhost:8888/ in a Web browser to use the checker Web UI.
 
-1. Make sure you have git, python, and JDK 8 or later installed.
+1. Make sure you have git, python, and JDK 11 or later installed.
 
 2. Set the `JAVA_HOME` environment variable:
 
@@ -21,7 +21,7 @@ Follow the steps below to build, test, and run the checker such that you can ope
 
    For example:
 
-   * `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64` (newer Ubuntu)
+   * `export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64` (newer Ubuntu)
    * `export JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
 
 3. Create a working directory:
