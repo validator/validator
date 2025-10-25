@@ -4,12 +4,6 @@ css-validator:
     remote_branch: validator-nu
     last_local_merge: 32fb969cc524dbbeffc75f3869bafa039adcd9ec
     current_commit: c275895eae822672095ffbc702f0ffa2bb2e9834
-css-validator/javacc:
-    remote_url: https://github.com/javacc/javacc.git
-    remote_name: javacc
-    remote_branch: master
-    last_local_merge: 4b0e11439d0017946f5123da2698a01c90748c19
-    current_commit: 38f8f9e4067b43b0ce0f86e3ce6aa1ed0ea58424
 css-validator/testsuite:
     remote_url: https://github.com/w3c/css-validator-testsuite.git
     remote_name: testsuite
