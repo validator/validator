@@ -182,11 +182,11 @@ To define a service named `vnu` for use with `docker compose`, create a Compose 
 
 Follow the steps below to build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
 
-  1. Make sure you have git, python, JDK 8 or above and [ant](https://ant.apache.org/manual/install.html) installed.
+  1. Make sure you have git, python, JDK 11 or above and [ant](https://ant.apache.org/manual/install.html) installed.
 
   2. Set the `JAVA_HOME` environment variable:
 
-         export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64    <-- Ubuntu, etc.
+         export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
          export JAVA_HOME=$(/usr/libexec/java_home)            <-- macOS
 
