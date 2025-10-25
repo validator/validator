@@ -314,32 +314,29 @@ DEALINGS IN THE SOFTWARE.
   </target>
   <target name="war" depends="validator-split-core">
     <mkdir dir="${dist}/war" />
-    <copy todir="${dist}/war/lib">
-      <fileset file="${jarsDir}/galimatias.jar"/>
-      <fileset file="${jarsDir}/htmlparser.jar"/>
-      <fileset file="${jarsDir}/langdetect.jar"/>
-      <fileset file="css-validator/css-validator.jar"/>
-      <fileset file="jing-trang/build/jing.jar"/>
-      <fileset file="jing-trang/lib/saxon9.jar"/>
-      <fileset file="${depsDir}/commons-codec-${commons-codec-version}.jar"/>
-      <fileset file="${depsDir}/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
-      <fileset file="${depsDir}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
-      <fileset file="${depsDir}/commons-io-${commons-io-version}.jar"/>
-      <fileset file="${depsDir}/commons-logging-${commons-logging-version}.jar"/>
-      <fileset file="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar"/>
-      <fileset file="${depsDir}/commons-logging-${commons-logging-version}-api.jar"/>
-      <fileset file="${depsDir}/httpclient-${httpclient-version}.jar"/>
-      <fileset file="${depsDir}/httpcore-${httpcore-version}.jar"/>
-      <fileset file="${depsDir}/icu4j-${icu4j-version}.jar"/>
-      <fileset file="${depsDir}/salvation-${salvation-version}.jar"/>
-      <fileset file="${depsDir}/jchardet-${jchardet-version}.jar"/>
-      <fileset file="${depsDir}/log4j-${log4j-version}.jar"/>
-      <fileset file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
-      <fileset file="${depsDir}/javax.json-${javax.json-version}.jar"/>
-      <fileset file="${depsDir}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
-    </copy>
     <war destfile="${dist}/vnu.war" webxml="${validator.basedir}/resources/war/web.xml">
-      <lib dir="${dist}/war/lib"/>
+      <lib file="${jarsDir}/galimatias.jar"/>
+      <lib file="${jarsDir}/htmlparser.jar"/>
+      <lib file="${jarsDir}/langdetect.jar"/>
+      <lib file="css-validator/css-validator.jar"/>
+      <lib file="jing-trang/build/jing.jar"/>
+      <lib file="jing-trang/lib/saxon9.jar"/>
+      <lib file="${depsDir}/commons-codec-${commons-codec-version}.jar"/>
+      <lib file="${depsDir}/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
+      <lib file="${depsDir}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
+      <lib file="${depsDir}/commons-io-${commons-io-version}.jar"/>
+      <lib file="${depsDir}/commons-logging-${commons-logging-version}.jar"/>
+      <lib file="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar"/>
+      <lib file="${depsDir}/commons-logging-${commons-logging-version}-api.jar"/>
+      <lib file="${depsDir}/httpclient-${httpclient-version}.jar"/>
+      <lib file="${depsDir}/httpcore-${httpcore-version}.jar"/>
+      <lib file="${depsDir}/icu4j-${icu4j-version}.jar"/>
+      <lib file="${depsDir}/salvation-${salvation-version}.jar"/>
+      <lib file="${depsDir}/jchardet-${jchardet-version}.jar"/>
+      <lib file="${depsDir}/log4j-${log4j-version}.jar"/>
+      <lib file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
+      <lib file="${depsDir}/javax.json-${javax.json-version}.jar"/>
+      <lib file="${depsDir}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
       <classes dir="${validator.build.basedir}/core/classes"/>
       <classes dir="${validator.build.basedir}/resources"/>
       <classes file="${validator.basedir}/resources/war/log4j.xml"/>
