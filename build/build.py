@@ -1392,12 +1392,17 @@ def updateSubtree(dir_name, info):
     branch = info.get("remote_branch", "master")
     last_local_merge = info.get("last_local_merge")
     last_remote_commit = info.get("current_commit")
+    skip_updates = info.get("skip_updates")
 
     if not remote_url:
         print(f"⚠️ Skipping {dir_name}: no remote URL")
         return False, last_local_merge, last_remote_commit
 
     print(f"\n==> Checking {dir_name} ({branch})...")
+
+    if skip_updates and skip_updates == "true":
+        print(f"⏭️ Skipping {dir_name} because it has “skip_updates: true”")
+        return False, last_local_merge, last_remote_commit
 
     try:
         runGit("remote", "add", "-f", remote_name, remote_url)

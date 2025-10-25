@@ -4,6 +4,12 @@ css-validator:
     remote_branch: validator-nu
     last_local_merge: ad3b1f32049b352728405198adc020b72f52944f
     current_commit: 7a0f4aa8462e7e89790d253e921c33ac5d5d5b21
+htmlparser:
+    remote_url: https://github.com/validator/htmlparser.git
+    remote_name: htmlparser
+    remote_branch: validator-nu
+    last_local_merge: 983eb89c5f6c263cc9ced838dba845f8ca0653c1
+    current_commit: 3a1f6c1aac90e31e9fe6fa140800b80766684da4
 docs/wiki:
     remote_url: https://github.com/validator/validator.wiki.git
     remote_name: wiki
@@ -16,27 +22,25 @@ galimatias:
     remote_branch: master
     last_local_merge: 873373ef4508b9b75d54759218c6108107ad8df0
     current_commit: 8e893f3fe89baacd00d5f022e9b7ef0114d3372e
-htmlparser:
-    remote_url: https://github.com/validator/htmlparser.git
-    remote_name: htmlparser
-    remote_branch: validator-nu
-    last_local_merge: 983eb89c5f6c263cc9ced838dba845f8ca0653c1
-    current_commit: 3a1f6c1aac90e31e9fe6fa140800b80766684da4
+    skip_updates: true
 jing-trang:
     remote_url: https://github.com/relaxng/jing-trang.git
     remote_name: jing-trang
     remote_branch: validator-nu
     last_local_merge: 9137d0342d04450fd6b0267b0d4ccbc3c50c4885
     current_commit: a2c48c075746d3f40d92ad66e3dd3dd69b10943f
+    skip_updates: true
 langdetect:
     remote_url: https://github.com/validator/language-detection.git
     remote_name: langdetect
     remote_branch: master
     last_local_merge: 5c324c54db1007a8edf4a4de448e28b5aedbd90e
     current_commit: 7a0bb1bfe30763d2bef71bbb8d8df693cfcd1f67
+    skip_updates: true
 tests:
     remote_url: https://github.com/validator/tests.git
     remote_name: tests
     remote_branch: master
     last_local_merge: 2f72907bcded18e025a9a346c3db6b68adf163f9
     current_commit: 11357f01eaad6199358a53a08fad58ac9162ea04
+    skip_updates: true
