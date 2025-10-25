@@ -23,6 +23,7 @@
 # DEALINGS IN THE SOFTWARE.
 
 import os
+import shlex
 import shutil
 import json
 try:
@@ -162,19 +163,19 @@ class UrlExtractor(HTMLParser):
 
 
 def runCmd(cmd):
-    print(" ".join(cmd))
+    print(shlex.join(cmd))
     subprocess.check_call(cmd)
 
 
 def execCmd(cmd, args):
-    print("%s %s" % (cmd, " ".join(args)))
+    print(shlex.join([cmd] + args))
     if subprocess.call([cmd, ] + args):
         print("Command failed.")
         sys.exit(2)
 
 
 def runShell(shellCmd):
-    print(shellCmd)
+    print(shlex.join(cmd))
     return subprocess.call(shellCmd, shell=True)
 
 
