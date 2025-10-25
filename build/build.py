@@ -178,6 +178,42 @@ def runShell(shellCmd):
     return subprocess.call(shellCmd, shell=True)
 
 
+def runAnt(opts, targets):
+    # Append antCommonArgs after the default values so that they can be overridden
+    # e.g. with --ant-extra-arg options passed to this script.
+    antOpts = [ '-Dbuild.java.target.version=' + javaTargetVersion,
+                '-Ddist=' + distDir,
+                '-Dvalidator.param.aboutFile=' + aboutFile,
+                '-Dvalidator.param.formTemplate=' + formTemplate,
+                '-Dvalidator.param.pageTemplate=' + pageTemplate,
+                '-Dvalidator.param.presetsFile=' + presetsFile,
+                '-Dvalidator.param.resultsTitle=' + resultsTitle,
+                '-Dvalidator.param.scriptFile=' + scriptFile,
+                '-Dvalidator.param.serviceName=' + serviceName,
+                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
+                '-Dvalidator.param.userAgent=' + userAgent,
+                '-Dversion=' + validatorVersion,
+                '-f', os.path.join(buildRoot, "build", "build.xml"),
+                ] + antCommonArgs
+
+    if isinstance(targets, str):
+        if targets != "":
+            antTargets = [ targets ]
+        else:
+            antTargets = []
+    else:
+        antTargets = targets
+
+    # Append the options received in 'opts' at the end of 'antOpts'.
+    # If a property is defined twice, and will take the value of the last one.
+    if isinstance(opts, str):
+        antOpts = antOpts + [ opts ]
+    else:
+        antOpts = antOpts + opts
+
+    runCmd([antCmd] + antOpts + antTargets)
+
+
 def removeIfExists(filePath):
     if os.path.exists(filePath):
         print("Removing %s" % filePath)
@@ -717,18 +753,12 @@ def generateRunScript():
 def clean():
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
-    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot,
-                                                          "build",
-                                                          "build.xml"),
-                                       'clean'])
+    runAnt([], "clean")
 
 
 def realclean():
     clean()
-    runCmd([antCmd] + antCommonArgs + ['-f', os.path.join(buildRoot,
-                                                          "build",
-                                                          "build.xml"),
-                                       'distclean'])
+    runAnt([], "distclean")
 
     buildFilesToCleanup = []
     buildFilesToCleanup.append(os.path.join(buildRoot, "run-validator.sh"))
@@ -807,39 +837,19 @@ class Release():
             distJarOrWar = "build/dist-war"
         ensureDirExists(whichDir)
         self.version = validatorVersion
-        runCmd([antCmd] + antCommonArgs + [
-                '-Dbuild.java.target.version=' + javaTargetVersion,
-                '-Dvalidator.param.aboutFile=' + aboutFile,
-                '-Dvalidator.param.formTemplate=' + formTemplate,
-                '-Dvalidator.param.pageTemplate=' + pageTemplate,
-                '-Dvalidator.param.presetsFile=' + presetsFile,
-                '-Dvalidator.param.resultsTitle=' + resultsTitle,
-                '-Dvalidator.param.scriptFile=' + scriptFile,
-                '-Dvalidator.param.serviceName=' + serviceName,
-                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
-                '-Dvalidator.param.userAgent=' + userAgent,
-                '-Ddist=' + distJarOrWar,
+        runAnt(['-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
-                '-f', self.buildXml, ('%s-artifacts' % self.artifactId)])
+                '-f', self.buildXml],
+                ('%s-artifacts' % self.artifactId))
 
     def createBundle(self):
         self.createArtifacts("jar")
         print("Building %s/%s-%s-bundle.jar" %
               (distDir, self.artifactId, self.version))
         self.sign(distDir)
-        runCmd([antCmd] + antCommonArgs + [
-                '-Dbuild.java.target.version=' + javaTargetVersion,
-                '-Dvalidator.param.aboutFile=' + aboutFile,
-                '-Dvalidator.param.formTemplate=' + formTemplate,
-                '-Dvalidator.param.pageTemplate=' + pageTemplate,
-                '-Dvalidator.param.presetsFile=' + presetsFile,
-                '-Dvalidator.param.resultsTitle=' + resultsTitle,
-                '-Dvalidator.param.scriptFile=' + scriptFile,
-                '-Dvalidator.param.serviceName=' + serviceName,
-                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
-                '-Dvalidator.param.userAgent=' + userAgent,
-                '-Dversion=' + self.version,
-                '-f', self.buildXml, ('%s-bundle' % self.artifactId)])
+        runAnt(['-Dversion=' + self.version,
+                '-f', self.buildXml],
+                ('%s-bundle' % self.artifactId))
 
     def createJarOrWar(self, jarOrWar):
         whichDir = distDir
@@ -852,20 +862,10 @@ class Release():
             os.mkdir(os.path.join(whichDir, "war"))
         ensureDirExists(distDir)
         self.version = validatorVersion
-        runCmd([antCmd] + antCommonArgs + [
-                '-Dbuild.java.target.version=' + javaTargetVersion,
-                '-Dvalidator.param.aboutFile=' + aboutFile,
-                '-Dvalidator.param.formTemplate=' + formTemplate,
-                '-Dvalidator.param.pageTemplate=' + pageTemplate,
-                '-Dvalidator.param.presetsFile=' + presetsFile,
-                '-Dvalidator.param.resultsTitle=' + resultsTitle,
-                '-Dvalidator.param.scriptFile=' + scriptFile,
-                '-Dvalidator.param.serviceName=' + serviceName,
-                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
-                '-Dvalidator.param.userAgent=' + userAgent,
-                '-Ddist=' + distJarOrWar,
+        runAnt(['-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
-                '-f', self.buildXml, jarOrWar])
+                '-f', self.buildXml],
+                jarOrWar)
         if jarOrWar == "jar":
             self.checkJar(call_createJarOrWar=False)
         else:
@@ -1475,10 +1475,7 @@ def downloadExtras():
 
 
 def downloadDependencies():
-    runCmd([antCmd] + antCommonArgs + ["-f", os.path.join(buildRoot,
-                                                          "build",
-                                                          "build.xml"),
-                                       "dl-all"])
+    runAnt([], "dl-all")
     downloadExtras()
 
 
@@ -1606,6 +1603,7 @@ def printHelp():
     print("  jar      -- Create a JAR package of the checker")
     print("  war      -- Create a WAR package of the checker")
     print("  script   -- Make run-validator.sh script for running the system")
+    print("  ant:TARGET -- Call Ant with TARGET")
 
 
 def main(argv):
@@ -1847,6 +1845,8 @@ def main(argv):
                 if not icon:
                     icon = 'icon.png'
                 release.runValidator()
+            elif arg.startswith("ant:"):
+                runAnt([], arg[4:])
             else:
                 print("Unknown option %s." % arg)
 
