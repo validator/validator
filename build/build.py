@@ -764,6 +764,8 @@ class Release():
         self.docs = ["README.md", "LICENSE"]
 
     def writeHash(self, filename, md5OrSha1):
+        if Path(filename).suffix not in {".jar", ".war", ".zip"}:
+            return
         BLOCKSIZE = 65536
         hasher = md5()
         if md5OrSha1 == "sha1":
