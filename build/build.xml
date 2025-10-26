@@ -711,12 +711,12 @@ DEALINGS IN THE SOFTWARE.
         name="Henri Sivonen"
         id="hsivonen"
         email="hsivonen@iki.fi"
-        url="https://hsivonen.iki.fi/"/>
+        url="https://github.com/hsivonen"/>
       <developer
-        name="Michael[tm] Smith"
+        name="sideshowbarker"
         id="sideshowbarker"
-        email="mike@w3.org"
-        url="https://people.w3.org/mike/"/>
+        email="sideshowbarker@gmail.com"
+        url="https://github.com/sideshowbarker"/>
       <dependency groupId="com.ibm.icu" artifactId="icu4j" version="${icu4j-version}"/>
       <dependency groupId="com.shapesecurity" artifactId="salvation" version="${salvation-version}"/>
       <dependency groupId="commons-codec" artifactId="commons-codec" version="${commons-codec-version}"/>
