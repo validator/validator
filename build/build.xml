@@ -657,7 +657,12 @@ DEALINGS IN THE SOFTWARE.
           langdetect-jar,
           dl-deps,
           dl-deps-modules,
-          dl-deps-jetty">
+          dl-deps-jetty,
+          cssvalidator-javadoc-jar,
+          galimatias-javadoc-jar,
+          htmlparser-javadoc-jar,
+          jing-javadoc-jar,
+          langdetect-javadoc-jar">
     <property name="javadoc-dir" value="${dist}/javadoc" />
     <javadoc destdir="${javadoc-dir}" additionalparam="-Xdoclint:none" classpathref="validator.classpath">
       <fileset dir="${validator.basedir}/src">
@@ -673,17 +678,42 @@ DEALINGS IN THE SOFTWARE.
     </javadoc>
     <jar destfile="${validator-javadoc-jar}">
       <fileset dir="${javadoc-dir}" />
+      <zipfileset src="${jing-javadoc-jar}"/>
+      <zipfileset src="${cssvalidator-javadoc-jar}"/>
+      <zipfileset src="${galimatias-javadoc-jar}"/>
+      <zipfileset src="${htmlparser-javadoc-jar}"/>
+      <zipfileset src="${langdetect-javadoc-jar}"/>
     </jar>
     <delete dir="${javadoc-dir}"/>
+    <delete file="${cssvalidator-javadoc-jar}"/>
+    <delete file="${galimatias-javadoc-jar}"/>
+    <delete file="${htmlparser-javadoc-jar}"/>
+    <delete file="${jing-javadoc-jar}"/>
+    <delete file="${langdetect-javadoc-jar}"/>
   </target>
-  <target name="validator-sources-jar" depends="validator-emitters">
+  <target name="validator-sources-jar"
+          depends="validator-emitters,
+          cssvalidator-sources-jar,
+          galimatias-sources-jar,
+          htmlparser-sources-jar,
+          jing-sources-jar,
+          langdetect-sources-jar">
     <jar destfile="${validator-sources-jar}">
       <fileset dir="${validator.basedir}/src"/>
       <fileset dir="${validator.build.basedir}/builtSrc"/>
+      <zipfileset src="${jing-sources-jar}"/>
+      <zipfileset src="${cssvalidator-sources-jar}"/>
+      <zipfileset src="${galimatias-sources-jar}"/>
+      <zipfileset src="${htmlparser-sources-jar}"/>
+      <zipfileset src="${langdetect-sources-jar}"/>
     </jar>
+    <delete file="${cssvalidator-sources-jar}"/>
+    <delete file="${galimatias-sources-jar}"/>
+    <delete file="${htmlparser-sources-jar}"/>
+    <delete file="${jing-sources-jar}"/>
+    <delete file="${langdetect-sources-jar}"/>
   </target>
   <target name="validator-artifacts" depends="dl-deps-antlib, validator-jar, validator-javadoc-jar, validator-sources-jar">
-    <delete file="${dist}/VERSION" />
     <artifact:pom
       id="pom"
       groupId="nu.validator"
@@ -728,11 +758,6 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty.toolchain" artifactId="jetty-jakarta-servlet-api" version="${jakarta.servlet-api-version}"/>
       <dependency groupId="log4j" artifactId="log4j" version="${log4j-version}"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
-      <dependency groupId="nu.validator" artifactId="langdetect" version="1.2"/>
-      <dependency groupId="nu.validator" artifactId="galimatias" version="0.1.3"/>
-      <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.16"/>
-      <dependency groupId="nu.validator" artifactId="cssvalidator" version="1.0.8"/>
-      <dependency groupId="nu.validator" artifactId="jing" version="20200702VNU"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="${httpclient-version}"/>
       <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="${httpcore-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="${jetty-version}"/>
@@ -746,6 +771,11 @@ DEALINGS IN THE SOFTWARE.
     <artifact:writepom pomRefId="pom" file="${dist}/validator-${version.number}.pom"/>
     <jar destfile="${validator-jar}" duplicate="preserve">
       <zipfileset src="${jarsDir}/validator.jar"/>
+      <zipfileset src="css-validator/css-validator.jar"/>
+      <zipfileset src="${jarsDir}/galimatias.jar"/>
+      <zipfileset src="${jarsDir}/htmlparser.jar"/>
+      <zipfileset src="jing-trang/build/jing.jar"/>
+      <zipfileset src="${jarsDir}/langdetect.jar"/>
       <manifest>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
         <attribute name="Implementation-Version" value="${version}"/>
@@ -803,6 +833,10 @@ DEALINGS IN THE SOFTWARE.
     </exec>
   </target>
 
+  <property name="cssvalidator-base" location="${dist}/cssvalidator-${version}" />
+  <property name="cssvalidator-src" location="css-validator/org" />
+  <property name="cssvalidator-javadoc-jar" value="${cssvalidator-base}-javadoc.jar" />
+  <property name="cssvalidator-sources-jar" value="${cssvalidator-base}-sources.jar" />
   <property name="cssvalidator.basedir" location="css-validator" />
   <target name="cssvalidator-build" depends="dl-deps, dl-deps-modules" unless="${use-system-cssvalidator}">
     <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="jar-without-dependencies" inheritAll="false"/>
@@ -810,7 +844,27 @@ DEALINGS IN THE SOFTWARE.
   <target name="cssvalidator-clean" unless="${use-system-cssvalidator}">
     <ant dir="${cssvalidator.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
   </target>
+  <target name="cssvalidator-javadoc-jar">
+    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
+      <fileset dir="${cssvalidator-src}"/>
+    </javadoc>
+    <jar destfile="${cssvalidator-javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="cssvalidator-sources-jar">
+    <jar destfile="${cssvalidator-sources-jar}">
+      <fileset dir="${cssvalidator-src}"/>
+    </jar>
+  </target>
+  <target name="cssvalidator-artifacts" depends="dl-deps-antlib, cssvalidator-build, cssvalidator-javadoc-jar, cssvalidator-sources-jar">
+  </target>
 
+  <property name="galimatias-base" location="${dist}/galimatias-${version}" />
+  <property name="galimatias-src" location="galimatias/src" />
+  <property name="galimatias-javadoc-jar" value="${galimatias-base}-javadoc.jar" />
+  <property name="galimatias-sources-jar" value="${galimatias-base}-sources.jar" />
   <property name="galimatias.basedir" location="galimatias" />
   <property name="galimatias.build.basedir" location="build/galimatias" />
   <path id="galimatias.classpath">
@@ -835,7 +889,28 @@ DEALINGS IN THE SOFTWARE.
   <target name="galimatias-jar" depends="galimatias-build" unless="${use-system-galimatias}">
     <jar destfile="${jarsDir}/galimatias.jar" basedir="${galimatias.build.basedir}/classes"/>
   </target>
+  <target name="galimatias-javadoc-jar">
+    <javadoc destdir="${javadoc-dir}"
+             additionalparam="-html5 -Xdoclint:none"
+             classpathref="galimatias.classpath">
+      <fileset dir="${galimatias-src}"/>
+    </javadoc>
+    <jar destfile="${galimatias-javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="galimatias-sources-jar">
+    <jar destfile="${galimatias-sources-jar}">
+      <fileset dir="${galimatias-src}"/>
+    </jar>
+  </target>
+  <target name="galimatias-artifacts" depends="dl-deps-antlib, galimatias-jar, galimatias-javadoc-jar, galimatias-sources-jar"/>
 
+  <property name="htmlparser-base" location="${dist}/htmlparser-${version}" />
+  <property name="htmlparser-src" location="htmlparser/src" />
+  <property name="htmlparser-javadoc-jar" value="${htmlparser-base}-javadoc.jar" />
+  <property name="htmlparser-sources-jar" value="${htmlparser-base}-sources.jar" />
   <property name="htmlparser.basedir" location="htmlparser" />
   <property name="htmlparser.build.basedir" location="build/htmlparser" />
   <path id="htmlparser.classpath">
@@ -884,7 +959,39 @@ DEALINGS IN THE SOFTWARE.
   <target name="htmlparser-jar" depends="htmlparser-build" unless="${use-system-htmlparser}">
     <jar destfile="${jarsDir}/htmlparser.jar" basedir="${htmlparser.build.basedir}/classes"/>
   </target>
+  <target name="htmlparser-javadoc-jar" depends="htmlparser-process-sources">
+    <javadoc destdir="${javadoc-dir}"
+             additionalparam="-html5 -Xdoclint:none"
+             classpathref="htmlparser.classpath">
+      <fileset dir="${htmlparser.build.basedir}/realsrc">
+        <include name="**/*.java"/>
+        <exclude name="nu/validator/htmlparser/xom/**"/>
+      </fileset>
+    </javadoc>
+    <jar destfile="${htmlparser-javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="htmlparser-sources-jar" depends="htmlparser-process-sources">
+    <jar destfile="${htmlparser-sources-jar}">
+      <fileset dir="${htmlparser.build.basedir}/realsrc"/>
+    </jar>
+  </target>
+  <target name="htmlparser-artifacts" depends="dl-deps-antlib, htmlparser-jar, htmlparser-javadoc-jar, htmlparser-sources-jar"/>
 
+  <property name="jing.basedir" location="jing-trang" />
+  <property name="jing-base" location="${dist}/jing-${version}" />
+  <property name="jing-src" location="jing-trang/mod" />
+  <property name="jing-javadoc-jar" value="${jing-base}-javadoc.jar" />
+  <property name="jing-sources-jar" value="${jing-base}-sources.jar" />
+  <property name="jing-util-src" location="${jing-src}/util/src/main" />
+  <property name="jing-datatype-src" location="${jing-src}/datatype/src/main" />
+  <property name="jing-rng-parse-src" location="${jing-src}/rng-parse/src/main" />
+  <property name="jing-validate-src" location="${jing-src}/validate/src/main" />
+  <property name="jing-rng-validate-src" location="${jing-src}/rng-validate/src/main" />
+  <property name="jing-nvdl-src" location="${jing-src}/nvdl/src/main" />
+  <property name="jing-schematron-src" location="${jing-src}/schematron/src/main" />
   <property name="jing.basedir" location="jing-trang" />
   <target name="jing-build" unless="${use-system-jing}">
     <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
@@ -894,7 +1001,43 @@ DEALINGS IN THE SOFTWARE.
     <delete file="${jing.basedir}/modbuild.xml"/>
     <delete file="${jing.basedir}/modules.xml"/>
   </target>
+  <target name="jing-javadoc-jar">
+    <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">
+      <fileset dir="${jing-util-src}"/>
+      <fileset dir="${jing-datatype-src}"/>
+      <fileset dir="${jing-validate-src}"/>
+      <fileset dir="${jing-rng-parse-src}"/>
+      <fileset dir="${jing-rng-validate-src}"/>
+      <fileset dir="${jing-nvdl-src}"/>
+      <fileset dir="${jing-schematron-src}"/>
+      <classpath>
+        <fileset dir="jing-trang/lib/">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
+    </javadoc>
+    <jar destfile="${jing-javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="jing-sources-jar">
+    <jar destfile="${jing-sources-jar}">
+      <fileset dir="${jing-util-src}"/>
+      <fileset dir="${jing-datatype-src}"/>
+      <fileset dir="${jing-validate-src}"/>
+      <fileset dir="${jing-rng-parse-src}"/>
+      <fileset dir="${jing-rng-validate-src}"/>
+      <fileset dir="${jing-nvdl-src}"/>
+      <fileset dir="${jing-schematron-src}"/>
+    </jar>
+  </target>
+  <target name="jing-artifacts" depends="dl-deps-antlib, jing-build, jing-javadoc-jar, jing-sources-jar"/>
 
+  <property name="langdetect-base" location="${dist}/langdetect-${version}" />
+  <property name="langdetect-src" location="langdetect/src" />
+  <property name="langdetect-javadoc-jar" value="${langdetect-base}-javadoc.jar" />
+  <property name="langdetect-sources-jar" value="${langdetect-base}-sources.jar" />
   <property name="langdetect.basedir" location="langdetect" />
   <property name="langdetect.build.basedir" location="build/langdetect" />
   <path id="langdetect.classpath">
@@ -920,5 +1063,22 @@ DEALINGS IN THE SOFTWARE.
     <copy file="${langdetect.basedir}/src/com/cybozu/labs/langdetect/util/messages.properties" todir="${langdetect.build.basedir}/classes/com/cybozu/labs/langdetect/util"/>
       <jar destfile="${jarsDir}/langdetect.jar" basedir="${langdetect.build.basedir}/classes"/>
   </target>
+  <target name="langdetect-javadoc-jar">
+    <javadoc destdir="${javadoc-dir}"
+             additionalparam="-html5 -Xdoclint:none"
+             classpathref="langdetect.classpath">
+      <fileset dir="${langdetect-src}"/>
+    </javadoc>
+    <jar destfile="${langdetect-javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="langdetect-sources-jar">
+    <jar destfile="${langdetect-sources-jar}">
+      <fileset dir="${langdetect-src}"/>
+    </jar>
+  </target>
+  <target name="langdetect-artifacts" depends="dl-deps-antlib, langdetect-jar, langdetect-javadoc-jar, langdetect-sources-jar"/>
 
 </project>
