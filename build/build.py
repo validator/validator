@@ -822,7 +822,7 @@ class Release():
             self.writeHash(os.path.join(whichDir, filename), "md5")
             self.writeHash(os.path.join(whichDir, filename), "sha1")
 
-    def sign(self):
+    def sign(self, distDir):
         files = [f for f in os.listdir(distDir)
                  if os.path.isfile(os.path.join(distDir, f))]
         for filename in files:
