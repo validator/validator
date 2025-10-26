@@ -689,7 +689,7 @@ DEALINGS IN THE SOFTWARE.
       groupId="nu.validator"
       artifactId="validator"
       version="${version.number}"
-      name="The Nu Html Checker"
+      name="The Nu Html Checker (vnu)"
       description="An HTML-checking library (used by https://validator.w3.org/nu/)"
       url="https://validator.github.io/validator/"
       packaging="jar">
