@@ -690,7 +690,7 @@ DEALINGS IN THE SOFTWARE.
       artifactId="validator"
       version="${version.number}"
       name="The Nu Html Checker"
-      description="An HTML-checking library (used by https://checker.html5.org/ and https://html5.validator.nu)"
+      description="An HTML-checking library (used by https://validator.w3.org/nu/)"
       url="https://validator.github.io/validator/"
       packaging="jar">
       <license
