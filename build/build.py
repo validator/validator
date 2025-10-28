@@ -175,31 +175,31 @@ def execCmd(cmd, args):
 
 
 def runShell(shellCmd):
-    print(shlex.join(cmd))
+    print(shlex.join(shellCmd))
     return subprocess.call(shellCmd, shell=True)
 
 
 def runAnt(opts, targets):
-    # Append antCommonArgs after the default values so that they can be overridden
-    # e.g. with --ant-extra-arg options passed to this script.
-    antOpts = [ '-Dbuild.java.target.version=' + javaTargetVersion,
-                '-Ddist=' + distDir,
-                '-Dvalidator.param.aboutFile=' + aboutFile,
-                '-Dvalidator.param.formTemplate=' + formTemplate,
-                '-Dvalidator.param.pageTemplate=' + pageTemplate,
-                '-Dvalidator.param.presetsFile=' + presetsFile,
-                '-Dvalidator.param.resultsTitle=' + resultsTitle,
-                '-Dvalidator.param.scriptFile=' + scriptFile,
-                '-Dvalidator.param.serviceName=' + serviceName,
-                '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
-                '-Dvalidator.param.userAgent=' + userAgent,
-                '-Dversion=' + validatorVersion,
-                '-f', os.path.join(buildRoot, "build", "build.xml"),
-                ] + antCommonArgs
+    # Append antCommonArgs after the default values so that they can be
+    # overridden; e.g. with --ant-extra-arg options passed to this script.
+    antOpts = ['-Dbuild.java.target.version=' + javaTargetVersion,
+               '-Ddist=' + distDir,
+               '-Dvalidator.param.aboutFile=' + aboutFile,
+               '-Dvalidator.param.formTemplate=' + formTemplate,
+               '-Dvalidator.param.pageTemplate=' + pageTemplate,
+               '-Dvalidator.param.presetsFile=' + presetsFile,
+               '-Dvalidator.param.resultsTitle=' + resultsTitle,
+               '-Dvalidator.param.scriptFile=' + scriptFile,
+               '-Dvalidator.param.serviceName=' + serviceName,
+               '-Dvalidator.param.stylesheetFile=' + stylesheetFile,
+               '-Dvalidator.param.userAgent=' + userAgent,
+               '-Dversion=' + validatorVersion,
+               '-f', os.path.join(buildRoot, "build", "build.xml"),
+               ] + antCommonArgs
 
     if isinstance(targets, str):
         if targets != "":
-            antTargets = [ targets ]
+            antTargets = [targets]
         else:
             antTargets = []
     else:
@@ -208,7 +208,7 @@ def runAnt(opts, targets):
     # Append the options received in 'opts' at the end of 'antOpts'.
     # If a property is defined twice, and will take the value of the last one.
     if isinstance(opts, str):
-        antOpts = antOpts + [ opts ]
+        antOpts = antOpts + [opts]
     else:
         antOpts = antOpts + opts
 
@@ -866,7 +866,7 @@ class Release():
         runAnt(['-Ddist=' + distJarOrWar,
                 '-Dversion=' + self.version,
                 '-f', self.buildXml],
-                jarOrWar)
+               jarOrWar)
         if jarOrWar == "jar":
             self.checkJar(call_createJarOrWar=False)
         else:
