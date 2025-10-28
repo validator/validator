@@ -828,7 +828,8 @@ class Release():
         for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
-            runCmd([gpgCmd, '--yes', '-ab', os.path.join(distDir, filename)])
+            runCmd(shlex.split(
+                f"{gpgCmd} --yes -ab {os.path.join(distDir, filename)}"))
 
     def createArtifacts(self, jarOrWar, url=None):
         whichDir = distDir
@@ -983,19 +984,17 @@ class Release():
             return
         self.createArtifacts("jar")
         basename = "%s-%s" % (self.artifactId, self.version)
-        mvnArgs = [
-            mvnCmd,
-            "-DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator",  # nopep8
-            "-f",
-            "%s.pom" % os.path.join(distDir, basename),
-            "deploy:deploy-file",
-            "-DrepositoryId=github",
-            "-Durl=%s" % 'https://maven.pkg.github.com/validator/validator',
-            "-DpomFile=%s.pom" % basename,
-            "-Dfile=%s.jar" % basename,
-            "-Djavadoc=%s-javadoc.jar" % basename,
-            "-Dsources=%s-sources.jar" % basename,
-        ]
+        mvnArgs = shlex.split(
+                f"""{mvnCmd}
+                deploy:deploy-file
+                -f {os.path.join(distDir, basename)}
+                -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator"
+                -DrepositoryId=github
+                -Durl=https://maven.pkg.github.com/validator/validator
+                -DpomFile={basename}.pom"
+                -Dfile={basename}.jar
+                -Djavadoc={basename}-javadoc.jar
+                -Dsources={basename}-sources.jar""")
         runCmd(mvnArgs)
 
     def uploadNpmToGitHub(self, tag=None):
