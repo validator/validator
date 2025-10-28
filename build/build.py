@@ -83,6 +83,8 @@ validatorVersion = "%s.%s.%s" % (year, month, day)
 buildRoot = '.'
 distDir = os.path.join(buildRoot, "build", "dist")
 distWarDir = os.path.join(buildRoot, "build", "dist-war")
+mavenArtifactsDir = os.path.join(distDir, "nu", "validator", "validator",
+                                 validatorVersion)
 vnuJar = os.path.join(distDir, "vnu.jar")
 dependencyDir = os.path.join(buildRoot, "dependencies")
 extrasDir = os.path.join(buildRoot, "extras")
@@ -833,27 +835,18 @@ class Release():
             runCmd(shlex.split(
                 f"{gpgCmd} --yes -ab {os.path.join(distDir, filename)}"))
 
-    def createArtifacts(self, jarOrWar, url=None):
-        whichDir = distDir
-        distJarOrWar = "build/dist"
-        if jarOrWar == "war":
-            whichDir = distWarDir
-            distJarOrWar = "build/dist-war"
-        ensureDirExists(whichDir)
-        self.version = validatorVersion
-        runAnt(['-Ddist=' + distJarOrWar,
-                '-Dversion=' + self.version,
-                '-f', self.buildXml],
-                ('%s-artifacts' % self.artifactId))
+    def createMavenArtifacts(self):
+        ensureDirExists(distDir)
+        runAnt(shlex.split(f"-Dversion={self.version} -f {self.buildXml}"),
+               "validator-artifacts")
 
-    def createBundle(self):
-        self.createArtifacts("jar")
-        print("Building %s/%s-%s-bundle.jar" %
-              (distDir, self.artifactId, self.version))
-        self.sign(distDir)
-        runAnt(['-Dversion=' + self.version,
-                '-f', self.buildXml],
-                ('%s-bundle' % self.artifactId))
+    def signMavenArtifacts(self):
+        self.sign(os.path.join(mavenArtifactsDir))
+
+    def createMavenBundle(self):
+        print(f"Building {distDir}/validator-{self.version}-bundle.jar")
+        runAnt(shlex.split(f"-Dversion={self.version} -f {self.buildXml}"),
+               "validator-bundle")
 
     def createJarOrWar(self, jarOrWar):
         whichDir = distDir
@@ -984,7 +977,7 @@ class Release():
             sys.exit(1)
         if self.version in [v["name"] for v in versions]:
             return
-        self.createArtifacts("jar")
+        self.createMavenArtifacts()
         basename = "%s-%s" % (self.artifactId, self.version)
         mvnArgs = shlex.split(
                 f"""{mvnCmd}
@@ -1782,15 +1775,15 @@ def main(argv):
                 dockerPush()
             elif arg == 'bundle':
                 release.createBundle()
-            elif arg == 'snapshot':
-                release.uploadMavenToGitHub()
             elif arg == 'npm-release':
                 release.createJarOrWar("jar")
                 release.uploadNpmToGitHub()
+            elif arg == 'maven-artifacts':
+                release.createMavenArtifacts()
+            elif arg == 'maven-sign':
+                release.signMavenArtifacts()
             elif arg == 'maven-bundle':
-                release.createBundle()
-            elif arg == 'maven-snapshot':
-                release.uploadMavenToGitHub()
+                release.createMavenBundle()
             elif arg == 'maven-release':
                 release.uploadMavenToGitHub()
             elif arg == 'image':
