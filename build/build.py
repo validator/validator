@@ -828,6 +828,8 @@ class Release():
         for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
+            if Path(filename).suffix == ".asc":
+                continue
             runCmd(shlex.split(
                 f"{gpgCmd} --yes -ab {os.path.join(distDir, filename)}"))
 
