@@ -44,7 +44,8 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator-jar" value="${dist}/${artifactId}-${version.number}.jar" />
   <property name="validator-javadoc-jar" value="${dist}/${artifactId}-${version.number}-javadoc.jar" />
   <property name="validator-sources-jar" value="${dist}/${artifactId}-${version.number}-sources.jar" />
-  <property name="validator-bundle-jar" value="${dist}/${artifactId}-${version.number}-bundle.jar" />
+  <property name="validator-bundle-dir" value="${dist}/nu/validator/validator/${version.number}" />
+  <property name="validator-bundle-jar" value="${dist}/validator-${version.number}-bundle.jar" />
 
   <!-- The default values of these 'validator.param.*' properties are supposed
   to be equal to the values in build.py -->
@@ -786,9 +787,32 @@ DEALINGS IN THE SOFTWARE.
         <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </jar>
+    <mkdir dir="${validator-bundle-dir}" />
+    <move toDir="${validator-bundle-dir}">
+      <fileset dir="${dist}">
+        <include name="validator-${version.number}*.pom*" />
+        <include name="validator-${version.number}*.jar*" />
+      </fileset>
+    </move>
+    <checksum todir="${validator-bundle-dir}" fileext=".md5" pattern="{0}  {1}">
+      <fileset dir="${validator-bundle-dir}">
+        <exclude name="**/*.md5"/>
+        <exclude name="**/*.sha1"/>
+        <exclude name="**/*.asc"/>
+      </fileset>
+    </checksum>
+    <checksum todir="${validator-bundle-dir}" algorithm="sha1" fileext=".sha1" pattern="{0}  {1}">
+      <fileset dir="${validator-bundle-dir}">
+        <exclude name="**/*.md5"/>
+        <exclude name="**/*.asc"/>
+      </fileset>
+    </checksum>
   </target>
-  <target name="validator-bundle" depends="validator-artifacts">
-    <jar basedir="${dist}" destfile="${validator-bundle-jar}"/>
+  <target name="validator-bundle">
+    <mkdir dir="${validator-bundle-dir}/nu" />
+    <zip destfile="${validator-bundle-jar}">
+      <zipfileset dir="${dist}/nu" prefix="nu" />
+    </zip>
   </target>
 
   <property name="python-executable" value="python3"/>
