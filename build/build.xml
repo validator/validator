@@ -794,14 +794,14 @@ DEALINGS IN THE SOFTWARE.
         <include name="validator-${version.number}*.jar*" />
       </fileset>
     </move>
-    <checksum todir="${validator-bundle-dir}" fileext=".md5" pattern="{0}  {1}">
+    <checksum todir="${validator-bundle-dir}" fileext=".md5">
       <fileset dir="${validator-bundle-dir}">
         <exclude name="**/*.md5"/>
         <exclude name="**/*.sha1"/>
         <exclude name="**/*.asc"/>
       </fileset>
     </checksum>
-    <checksum todir="${validator-bundle-dir}" algorithm="sha1" fileext=".sha1" pattern="{0}  {1}">
+    <checksum todir="${validator-bundle-dir}" algorithm="sha1" fileext=".sha1">
       <fileset dir="${validator-bundle-dir}">
         <exclude name="**/*.md5"/>
         <exclude name="**/*.asc"/>
