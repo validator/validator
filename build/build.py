@@ -977,12 +977,10 @@ class Release():
             sys.exit(1)
         if self.version in [v["name"] for v in versions]:
             return
-        self.createMavenArtifacts()
-        basename = "%s-%s" % (self.artifactId, self.version)
+        basename = f"validator-{self.version}"
         mvnArgs = shlex.split(
                 f"""{mvnCmd}
                 deploy:deploy-file
-                -f {os.path.join(distDir, basename)}
                 -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator"
                 -DrepositoryId=github
                 -Durl=https://maven.pkg.github.com/validator/validator
@@ -990,7 +988,10 @@ class Release():
                 -Dfile={basename}.jar
                 -Djavadoc={basename}-javadoc.jar
                 -Dsources={basename}-sources.jar""")
+        os.chdir(os.path.join(distDir, "nu", "validator", "validator",
+                              {self.version}))
         runCmd(mvnArgs)
+        os.chdir(buildRoot)
 
     def uploadNpmToGitHub(self, tag=None):
         self.version = validatorVersion
@@ -1784,7 +1785,7 @@ def main(argv):
                 release.signMavenArtifacts()
             elif arg == 'maven-bundle':
                 release.createMavenBundle()
-            elif arg == 'maven-release':
+            elif arg == 'maven-github-release':
                 release.uploadMavenToGitHub()
             elif arg == 'image':
                 release.createRuntimeImage()

@@ -113,7 +113,12 @@ jobs:
           git push origin :refs/tags/latest || true
           git tag -m latest -fa latest || true
           git push origin main --tags
-      - name: Release new maven package
+      - name: Generate maven artifacts and bundle
+        shell: bash
+        run: |
+          python ./checker.py maven-artifacts
+          python ./checker.py maven-sign
+      - name: Release new maven package to GitHub
         if: >
           github.event_name == 'push' &&
           github.ref == 'refs/heads/main' &&
@@ -121,9 +126,22 @@ jobs:
           matrix.java == 25
         shell: bash
         run: |
-          python ./checker.py maven-release
+          python ./checker.py maven-github-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release new maven package to Maven Central
+        if: >
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          matrix.os == 'ubuntu-latest' &&
+          matrix.java == 25
+        shell: bash
+        run: |
+          python ./checker.py maven-bundle
+          curl --request POST \
+               --form "bundle=@build/dist/validator-$(date +"%y.%m.%d")-bundle.jar" \
+               --user "${{ secrets.MAVEN_CENTRAL_USERNAME}}:${{ secrets.MAVEN_CENTRAL_PASSWORD}}" \
+               "https://central.sonatype.com/api/v1/publisher/upload?name=validator-$(date +"%y.%m.%d")&publishingType=AUTOMATIC"
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
