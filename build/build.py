@@ -989,7 +989,7 @@ class Release():
                 -Djavadoc={basename}-javadoc.jar
                 -Dsources={basename}-sources.jar""")
         os.chdir(os.path.join(distDir, "nu", "validator", "validator",
-                              {self.version}))
+                              self.version))
         runCmd(mvnArgs)
         os.chdir(buildRoot)
 
