@@ -980,14 +980,7 @@ class Release():
         basename = f"validator-{self.version}"
         mvnArgs = shlex.split(
                 f"""{mvnCmd}
-                deploy:deploy-file
-                -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator"
-                -DrepositoryId=github
-                -Durl=https://maven.pkg.github.com/validator/validator
-                -DpomFile={basename}.pom"
-                -Dfile={basename}.jar
-                -Djavadoc={basename}-javadoc.jar
-                -Dsources={basename}-sources.jar""")
+                deploy:deploy-file -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator" -DrepositoryId=github -Durl=https://maven.pkg.github.com/validator/validator -DpomFile={basename}.pom" -Dfile={basename}.jar -Djavadoc={basename}-javadoc.jar -Dsources={basename}-sources.jar""")
         os.chdir(os.path.join(distDir, "nu", "validator", "validator",
                               self.version))
         runCmd(mvnArgs)
