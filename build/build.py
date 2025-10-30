@@ -26,6 +26,7 @@ import os
 import shlex
 import shutil
 import json
+import xml.etree.ElementTree as ET
 try:
     from urllib.request import urlopen, Request
     from urllib.error import URLError, HTTPError
@@ -955,6 +956,27 @@ class Release():
                     sigsums.match(filename)):
                 removeIfExists(filename)
 
+    def getLatestMavenCentralValidatorVersion(self):
+        URL = "https://repo1.maven.org/maven2/nu/validator/validator/maven-metadata.xml"  # nopep8
+        try:
+            with urlopen(URL) as response:
+                maven_metadata = response.read()
+        except HTTPError as e:
+            print(e.reason)
+            sys.exit(1)
+        except URLError as e:
+            print(e.reason)
+            sys.exit(1)
+        root = ET.fromstring(maven_metadata)
+        latest = root.findtext("./versioning/latest")
+        if not latest:
+            latest = root.findtext("./versioning/release")
+        if latest:
+            print(latest)
+        else:
+            print("Couldn’t get latest version number from Maven Central.")
+            sys.exit(1)
+
     def uploadMavenToGitHub(self):
         self.version = validatorVersion
         print("maven package version: " + self.version)
@@ -1784,7 +1806,9 @@ def main(argv):
                 release.signMavenArtifacts()
             elif arg == 'maven-bundle':
                 release.createMavenBundle()
-            elif arg == 'maven-github-release':
+            elif arg == 'maven-version':
+                release.getLatestMavenCentralValidatorVersion()
+            elif arg == 'maven-release':
                 release.uploadMavenToGitHub()
             elif arg == 'image':
                 release.createRuntimeImage()
