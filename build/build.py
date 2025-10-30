@@ -812,8 +812,8 @@ class Release():
             while len(buf) > 0:
                 hasher.update(buf)
                 buf = f.read(BLOCKSIZE)
-        o = open("%s.%s" % (filename, md5OrSha1), 'wb')
-        o.write(hasher.hexdigest().encode())
+        o = open("%s.%s" % (filename, md5OrSha1), 'w')
+        o.write(f"{hasher.hexdigest()}  {os.path.basename(filename)}")
         o.close
 
     def writeHashes(self, whichDir):
