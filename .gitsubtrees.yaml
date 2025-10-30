@@ -2,14 +2,14 @@ css-validator:
     remote_url: https://github.com/w3c/css-validator.git
     remote_name: css-validator
     remote_branch: validator-nu
-    last_local_merge: ad3b1f32049b352728405198adc020b72f52944f
-    current_commit: 7a0f4aa8462e7e89790d253e921c33ac5d5d5b21
+    last_local_merge: d4a0baadd39fa84cd9def8c21d782f8a1e3d6532
+    current_commit: 976fb02e009059b8518cab71d1c23e69ad2d175e
 htmlparser:
     remote_url: https://github.com/validator/htmlparser.git
     remote_name: htmlparser
     remote_branch: validator-nu
-    last_local_merge: 983eb89c5f6c263cc9ced838dba845f8ca0653c1
-    current_commit: 3a1f6c1aac90e31e9fe6fa140800b80766684da4
+    last_local_merge: 01c08a29bbee79a86e0d8b3d27c49b41d4b41650
+    current_commit: 0336b31c06307fc21e5d38166fb425b6d309196c
 docs/wiki:
     remote_url: https://github.com/validator/validator.wiki.git
     remote_name: wiki
