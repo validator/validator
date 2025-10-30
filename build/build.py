@@ -825,16 +825,18 @@ class Release():
             self.writeHash(os.path.join(whichDir, filename), "md5")
             self.writeHash(os.path.join(whichDir, filename), "sha1")
 
-    def sign(self, distDir):
-        files = [f for f in os.listdir(distDir)
-                 if os.path.isfile(os.path.join(distDir, f))]
+    def sign(self, whichDir):
+        if not os.path.exists(whichDir):
+            return
+        files = [f for f in os.listdir(whichDir)
+                 if os.path.isfile(os.path.join(whichDir, f))]
         for filename in files:
             if os.path.basename(filename) in self.docs:
                 continue
             if Path(filename).suffix == ".asc":
                 continue
             runCmd(shlex.split(
-                f"{gpgCmd} --yes -ab {os.path.join(distDir, filename)}"))
+                f"{gpgCmd} --yes -ab {os.path.join(whichDir, filename)}"))
 
     def createMavenArtifacts(self):
         ensureDirExists(distDir)
@@ -1816,6 +1818,9 @@ def main(argv):
                 release.createJarOrWar("jar")
             elif arg == 'war':
                 release.createJarOrWar("war")
+            elif arg == 'sign':
+                release.sign(distDir)
+                release.sign(distWarDir)
             elif arg == 'localent':
                 prepareLocalEntityJar()
             elif arg == 'deploy':

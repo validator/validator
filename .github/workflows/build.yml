@@ -83,13 +83,11 @@ jobs:
           passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-      - name: Sign release artifacts
+      - name: Sign https://github.com/validator/validator/releases files
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
-          for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign "$file"; done || true
-          for file in build/dist/*.jar*; do gpg --yes -ab --sign "$file"; done || true
-          for file in build/dist-war/*.war*; do gpg --yes -ab --sign "$file"; done || true
+          python ./checker.py sign
       - name: Release new binary runtime image
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: ncipollo/release-action@v1
