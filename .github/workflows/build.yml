@@ -142,11 +142,13 @@ jobs:
                  "https://central.sonatype.com/api/v1/publisher/upload?name=validator-$(date +"%y.%m.%d")&publishingType=AUTOMATIC"
           fi
       - name: Set up Node
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://npm.pkg.github.com'
       - name: Install Node dependencies
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         run: npm install
       - name: Release new npm package
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
