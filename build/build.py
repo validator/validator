@@ -170,6 +170,11 @@ def runCmd(cmd):
     subprocess.check_call(cmd)
 
 
+def runCmdFromString(cmdString):
+    print(cmdString)
+    subprocess.check_call(cmdString, shell=True)
+
+
 def execCmd(cmd, args):
     print(shlex.join([cmd] + args))
     if subprocess.call([cmd, ] + args):
