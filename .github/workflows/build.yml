@@ -87,10 +87,6 @@ jobs:
           for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign "$file"; done || true
           for file in build/dist/*.jar*; do gpg --yes -ab --sign "$file"; done || true
           for file in build/dist-war/*.war*; do gpg --yes -ab --sign "$file"; done || true
-      - name: Delete any existing “latest” release
-        run: gh release delete latest -y || true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release new binary runtime image
         if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
         uses: ncipollo/release-action@v1
@@ -101,6 +97,7 @@ jobs:
           allowUpdates: true
           artifacts: build/dist/*.zip*
           body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
+          name: latest
           omitName: true
           tag: latest
       - name: Release new jar and war
@@ -112,7 +109,6 @@ jobs:
           allowUpdates: true
           artifacts: build/dist/*.jar*,build/dist-war/*.war*
           omitBodyDuringUpdate: true
-          name: latest
           omitName: true
           tag: latest
       - name: Update the 'latest' tag
