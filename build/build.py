@@ -840,7 +840,8 @@ class Release():
                 continue
             if Path(filename).suffix == ".asc":
                 continue
-            runCmd([gpgCmd, "--yes", "-ab", os.path.join(whichDir, filename)])
+            cmd = f"{gpgCmd} --yes -ab {os.path.join(whichDir, filename)}"
+            runCmdFromString(cmd)
 
     def createMavenArtifacts(self):
         ensureDirExists(distDir)
