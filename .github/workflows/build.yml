@@ -27,9 +27,12 @@ jobs:
           - os: windows-latest
             java: 11.0.23
     env:
-      IS_RELEASE_BUILDER: ${{ github.event_name == 'push' &&
+      IS_MAIN_RELEASE_BUILDER: ${{ github.event_name == 'push' &&
                               github.ref == 'refs/heads/main' &&
                               matrix.os == 'ubuntu-latest' &&
+                              matrix.java == 25 }}
+      IS_ANY_RELEASE_BUILDER: ${{ github.event_name == 'push' &&
+                              github.ref == 'refs/heads/main' &&
                               matrix.java == 25 }}
     steps:
       - uses: actions/checkout@v5
@@ -73,7 +76,7 @@ jobs:
           python ./checker.py check
           python ./checker.py test
       - name: Import GPG signing key
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
@@ -81,14 +84,14 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
       - name: Sign release artifacts
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
           for file in build/dist/{*.zip,*.zip.md5,*.zip.sha1}; do gpg --yes -ab --sign "$file"; done || true
           for file in build/dist/*.jar*; do gpg --yes -ab --sign "$file"; done || true
           for file in build/dist-war/*.war*; do gpg --yes -ab --sign "$file"; done || true
       - name: Release new binary runtime image
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -99,7 +102,7 @@ jobs:
           omitName: true
           tag: latest
       - name: Release new jar and war
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -109,26 +112,26 @@ jobs:
           omitName: true
           tag: latest
       - name: Update the 'latest' tag
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         run: |
           git push origin :refs/tags/latest || true
           git tag -m latest -fa latest || true
           git push origin main --tags
       - name: Generate maven artifacts and bundle
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
           python ./checker.py maven-artifacts
           python ./checker.py maven-sign
       - name: Release new maven package to GitHub
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
           python ./checker.py maven-github-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release new maven package to Maven Central
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
           python ./checker.py maven-bundle
@@ -144,7 +147,7 @@ jobs:
       - name: Install Node dependencies
         run: npm install
       - name: Release new npm package
-        if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
           python ./checker.py npm-release
