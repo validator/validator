@@ -91,6 +91,7 @@ jobs:
         if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
         uses: ncipollo/release-action@v1
         with:
+          draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
           commit: ${{ github.sha }}
           allowUpdates: true
@@ -102,6 +103,7 @@ jobs:
         if: ${{ env.IS_RELEASE_BUILDER == 'true' }}
         uses: ncipollo/release-action@v1
         with:
+          draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           artifacts: build/dist/*.jar*,build/dist-war/*.war*
