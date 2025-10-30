@@ -182,6 +182,12 @@ public class HVisitor extends CppVisitor {
                 previousVisibility = Visibility.PUBLIC;
             }
         }
+        if (cppTypes.requiresTemplateParameter(currentMethod)
+                && "Tokenizer".equals(javaClassName)
+                && cppTypes.stateLoopPolicies().length > 0) {
+            printer.print("template<class P>");
+            printer.printLn();
+        }       
         if (inline()) {
             printer.print("inline ");
         }

@@ -81,8 +81,14 @@ public class CppTypes {
         reservedWords.add("unicode");
     }
 
+    private static Map<String, String> methodRenames = new HashMap<String, String>();
+    
+    static {
+        methodRenames.put("htmlaccelEnabled", "mozilla::htmlaccel::htmlaccelEnabled");
+    }
+    
     private static final String[] TREE_BUILDER_INCLUDES = { "jArray",
-            "mozilla/ImportScanner", "mozilla/Likely",
+            "mozilla/ImportScanner", "mozilla/Likely", 
             "nsAHtml5TreeBuilderState", "nsAtom", "nsContentUtils", "nsGkAtoms",
             "nsHtml5ArrayCopy", "nsHtml5AtomTable", "nsHtml5DocumentMode",
             "nsHtml5Highlighter", "nsHtml5OplessBuilder", "nsHtml5Parser",
@@ -91,12 +97,12 @@ public class CppTypes {
             "nsHtml5TreeOpExecutor", "nsHtml5ViewSourceUtils", "nsIContent",
             "nsIContentHandle", "nsNameSpaceManager", "nsTraceRefcnt", };
 
-    private static final String[] TOKENIZER_INCLUDES = { "jArray",
+    private static final String[] TOKENIZER_INCLUDES = { "jArray", 
             "nsAHtml5TreeBuilderState", "nsAtom", "nsGkAtoms",
             "nsHtml5ArrayCopy", "nsHtml5AtomTable", "nsHtml5DocumentMode",
             "nsHtml5Highlighter", "nsHtml5Macros", "nsHtml5NamedCharacters",
-            "nsHtml5NamedCharactersAccel", "nsHtml5String",
-            "nsIContent", "nsTraceRefcnt" };
+            "nsHtml5NamedCharactersAccel", "nsHtml5String", "nsHtml5TreeBuilder",
+            "nsIContent", "nsTraceRefcnt", "mozilla/htmlaccel/htmlaccelEnabled" };
 
     private static final String[] STACK_NODE_INCLUDES = { "nsAtom", "nsHtml5AtomTable",
             "nsHtml5HtmlAttributes", "nsHtml5String", "nsNameSpaceManager", "nsIContent",
@@ -359,6 +365,14 @@ public class CppTypes {
         return candidate;
     }
 
+    public String mapMethodName(String method) {
+        String mapped = methodRenames.get(method);
+        if (mapped == null) {
+            return method;
+        }
+        return mapped;
+    }
+    
     public String stringForLiteral(String literal) {
         return '"' + literal + '"';
     }
@@ -486,6 +500,10 @@ public class CppTypes {
         return "P::checkChar";
     }
 
+    public String accelerateData() {
+        return "P::accelerateAdvancementData";
+    }
+    
     public String silentLineFeed() {
         return "P::silentLineFeed";
     }
@@ -536,9 +554,5 @@ public class CppTypes {
 
     public String crashMacro() {
         return "MOZ_CRASH";
-    }
-    
-    public String loopPolicyInclude() {
-     return "nsHtml5TokenizerLoopPolicies";
     }
 }
