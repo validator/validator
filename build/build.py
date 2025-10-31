@@ -1819,7 +1819,7 @@ def main(argv):
             elif arg == 'docker-push':
                 dockerPush()
             elif arg == 'bundle':
-                release.createBundle()
+                release.createMavenBundle()
             elif arg == 'npm-release':
                 release.createJarOrWar("jar")
                 release.uploadNpmToGitHub()
