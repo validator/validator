@@ -115,7 +115,7 @@ jobs:
           git push origin :refs/tags/latest || true
           git tag -m latest -fa latest || true
           git push origin main --tags
-      - name: Generate maven artifacts and bundle
+      - name: Generate all maven artifacts
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
@@ -128,17 +128,7 @@ jobs:
           python ./checker.py maven-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Release new maven package to Maven Central
-        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
-        shell: bash
-        run: |
-          if [[ "$(python ./checker.py maven-version | tr -d '\n')" != $(date +"%y.%m.%d") ]]; then
-            python ./checker.py maven-bundle
-            curl --request POST \
-                 --form "bundle=@build/dist/validator-$(date +"%y.%m.%d")-bundle.jar" \
-                 --user "${{ secrets.MAVEN_CENTRAL_USERNAME}}:${{ secrets.MAVEN_CENTRAL_PASSWORD}}" \
-                 "https://central.sonatype.com/api/v1/publisher/upload?name=validator-$(date +"%y.%m.%d")&publishingType=AUTOMATIC"
-          fi
+          MAVEN_USER_TOKEN: ${{ secrets.MAVEN_USER_TOKEN }}
       - name: Set up Node
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         uses: actions/setup-node@v4

@@ -64,6 +64,7 @@ from pathlib import Path
 
 javaTargetVersion = '8'
 dockerCmd = 'docker'
+curlCmd = 'curl'
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
@@ -1021,6 +1022,35 @@ class Release():
         runCmd(mvnArgs)
         os.chdir(buildRoot)
 
+    def uploadMavenToMavenCentral(self):
+        url = "https://repo1.maven.org/maven2/nu/validator/validator/maven-metadata.xml"  # nopep8
+        try:
+            with urlopen(url) as response:
+                maven_metadata = response.read()
+        except HTTPError as e:
+            print(e.reason)
+            sys.exit(1)
+        except URLError as e:
+            print(e.reason)
+            sys.exit(1)
+        root = ET.fromstring(maven_metadata)
+        latest = root.findtext("./versioning/latest")
+        if not latest:
+            latest = root.findtext("./versioning/release")
+        if latest:
+            if latest == validatorVersion:
+                return
+        else:
+            print("Couldn’t get latest version number from Maven Central.")
+            sys.exit(1)
+        self.createMavenBundle()
+        cmd = f"""{curlCmd} --request POST \
+             --form "bundle=@{distDir}/validator-{self.version}-bundle.jar"
+             --header "Authorization: Bearer {os.getenv("MAVEN_USER_TOKEN")}"
+             "https://central.sonatype.com/api/v1/publisher/upload?name=validator-{self.version}&publishingType=AUTOMATIC"
+             """  # nopep8
+        runCmdFromString(cmd)
+
     def uploadNpmToGitHub(self, tag=None):
         self.version = validatorVersion
         print("npm package version: " + self.version)
@@ -1817,6 +1847,7 @@ def main(argv):
                 release.getLatestMavenCentralValidatorVersion()
             elif arg == 'maven-release':
                 release.uploadMavenToGitHub()
+                release.uploadMavenToMavenCentral()
             elif arg == 'image':
                 release.createRuntimeImage()
             elif arg == 'jar':
