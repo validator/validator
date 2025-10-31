@@ -1,9 +1,9 @@
 {
   "name": "vnu-jar",
-  "version": "20.6.30",
+  "version": "latest",
   "description": "Provides the Nu Html Checker «vnu.jar» file",
   "main": "vnu-jar.js",
-  "author": "Michael[tm] Smith <mike@w3.org>",
+  "author": "sideshowbarker@gmail.com",
   "engines": {
     "node": ">=0.10"
   },
