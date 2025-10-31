@@ -1025,8 +1025,8 @@ class Release():
             sys.exit(1)
         self.createMavenBundle()
         cmd = f"""{curlCmd} --request POST \
-             --form "bundle=@{distDir}/validator-{self.version}-bundle.jar"
-             --header "Authorization: Bearer {os.getenv("MAVEN_USER_TOKEN")}"
+             --form "bundle=@{distDir}/validator-{self.version}-bundle.jar" \
+             --header "Authorization: Bearer {os.getenv("MAVEN_USER_TOKEN")}" \
              "https://central.sonatype.com/api/v1/publisher/upload?name=validator-{self.version}&publishingType=AUTOMATIC"
              """  # nopep8
         runCmdFromString(cmd)
