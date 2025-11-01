@@ -1047,13 +1047,10 @@ class Release():
         with open(packageJson, 'r') as f:
             packageJsonCopy = f.read()
         self.createPackageJson(packageJson)
-        registry_url = "https://registry.npmjs.org"
         if tag:
-            runCmdFromString(f"""{npmCmd} publish --tag {tag} \
-                             --registry={registry_url}""")
+            runCmdFromString(f"""{npmCmd} publish --tag {tag}""")
         else:
-            runCmdFromString(f"""{npmCmd} publish \
-                             --registry={registry_url}""")
+            runCmdFromString(f"""{npmCmd} publish""")
         with open(readMe, 'w') as f:
             f.write(readMeCopy)
         with open(packageJson, 'w') as f:
@@ -1086,13 +1083,10 @@ class Release():
         with open(packageJson, 'r') as f:
             packageJsonCopy = f.read()
         self.createGitHubPackageJson(packageJson)
-        registry_url = 'https://npm.pkg.github.com'
         if tag:
-            runCmdFromString(f"""{npmCmd} publish --tag {tag} \
-                             --registry={registry_url}""")
+            runCmdFromString(f"""{npmCmd} publish --tag {tag}""")
         else:
-            runCmdFromString(f"""{npmCmd} publish \
-                             --registry={registry_url}""")
+            runCmdFromString(f"""{npmCmd} publish""")
         with open(packageJson, 'w') as f:
             f.write(packageJsonCopy)
 
@@ -1847,6 +1841,7 @@ def main(argv):
                 release.createMavenBundle()
             elif arg == 'npm-release':
                 release.uploadNpm()
+            elif arg == 'npm-github-release':
                 release.uploadNpmToGitHub()
             elif arg == 'maven-artifacts':
                 release.createMavenArtifacts()
