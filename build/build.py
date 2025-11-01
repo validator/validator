@@ -1050,10 +1050,10 @@ class Release():
         registry_url = "https://registry.npmjs.org"
         if tag:
             runCmdFromString(f"""{npmCmd} publish --tag {tag} \
-                             --registry {registry_url}""")
+                             --registry={registry_url}""")
         else:
             runCmdFromString(f"""{npmCmd} publish \
-                             --registry {registry_url}""")
+                             --registry={registry_url}""")
         with open(readMe, 'w') as f:
             f.write(readMeCopy)
         with open(packageJson, 'w') as f:
@@ -1089,10 +1089,10 @@ class Release():
         registry_url = 'https://npm.pkg.github.com'
         if tag:
             runCmdFromString(f"""{npmCmd} publish --tag {tag} \
-                             --registry {registry_url}""")
+                             --registry={registry_url}""")
         else:
             runCmdFromString(f"""{npmCmd} publish \
-                             --registry {registry_url}""")
+                             --registry={registry_url}""")
         with open(packageJson, 'w') as f:
             f.write(packageJsonCopy)
 
