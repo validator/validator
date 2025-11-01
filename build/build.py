@@ -1047,10 +1047,13 @@ class Release():
         with open(packageJson, 'r') as f:
             packageJsonCopy = f.read()
         self.createPackageJson(packageJson)
+        registry_url = "https://registry.npmjs.org"
         if tag:
-            runCmd([npmCmd, 'publish', '--tag', tag])
+            runCmdFromString(f"""{npmCmd} publish --tag {tag}
+                             --registry {registry_url}""")
         else:
-            runCmd([npmCmd, 'publish'])
+            runCmdFromString(f"""{npmCmd} publish
+                             --registry {registry_url}""")
         with open(readMe, 'w') as f:
             f.write(readMeCopy)
         with open(packageJson, 'w') as f:
@@ -1083,10 +1086,13 @@ class Release():
         with open(packageJson, 'r') as f:
             packageJsonCopy = f.read()
         self.createGitHubPackageJson(packageJson)
+        registry_url = 'https://npm.pkg.github.com'
         if tag:
-            runCmd([npmCmd, 'publish', '--tag', tag])
+            runCmdFromString(f"""{npmCmd} publish --tag {tag}
+                             --registry {registry_url}""")
         else:
-            runCmd([npmCmd, 'publish'])
+            runCmdFromString(f"""{npmCmd} publish
+                             --registry {registry_url}""")
         with open(packageJson, 'w') as f:
             f.write(packageJsonCopy)
 
