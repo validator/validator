@@ -1037,6 +1037,25 @@ class Release():
              """  # nopep8
         runCmdFromString(cmd)
 
+    def uploadNpm(self, tag=None):
+        removeIfExists(os.path.join(buildRoot, "README.md~"))
+        readMe = os.path.join(buildRoot, "README.md")
+        with open(readMe, 'r') as f:
+            readMeCopy = f.read()
+        self.createNpmReadme(readMe, readMeCopy)
+        packageJson = os.path.join(buildRoot, "package.json")
+        with open(packageJson, 'r') as f:
+            packageJsonCopy = f.read()
+        self.createPackageJson(packageJson)
+        if tag:
+            runCmd([npmCmd, 'publish', '--tag', tag])
+        else:
+            runCmd([npmCmd, 'publish'])
+        with open(readMe, 'w') as f:
+            f.write(readMeCopy)
+        with open(packageJson, 'w') as f:
+            f.write(packageJsonCopy)
+
     def uploadNpmToGitHub(self, tag=None):
         self.version = validatorVersion
         print("npm package version: " + self.version)
@@ -1821,7 +1840,7 @@ def main(argv):
             elif arg == 'bundle':
                 release.createMavenBundle()
             elif arg == 'npm-release':
-                release.createJarOrWar("jar")
+                release.uploadNpm()
                 release.uploadNpmToGitHub()
             elif arg == 'maven-artifacts':
                 release.createMavenArtifacts()
