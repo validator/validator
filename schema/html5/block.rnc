@@ -286,3 +286,16 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	h6.elem?
 		&	hgroup.elem?
 		)
+
+## Search Container: <search>
+
+	search.elem =
+		element div { search.inner & search.attrs }
+	search.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		)
+	search.inner =
+		( common.inner.flow )
+	
+	common.elem.flow |= search.elem
