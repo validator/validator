@@ -942,6 +942,8 @@ class Release():
             json.dump(copy, f)
 
     def createNpmReadme(self, readMe, readMeCopy):
+        # Create a README file for npm as
+        # text of 'npm.md' + fragment Usage of general README
         splitAt = "see **Pulling the Docker image** below"
         npmFragment = os.path.join(buildRoot, "npm.md")
         npmReadme = open(readMe, 'w')
@@ -954,7 +956,7 @@ class Release():
                         npmReadme.write(line)
             elif line.find("## Usage") != -1:
                 skip = False
-                npmReadme.write(line)
+                npmReadme.write(line + '\n')
             elif line.find("## Web-based checking") != -1:
                 skip = True
             elif skip:
