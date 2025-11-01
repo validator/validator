@@ -1038,6 +1038,15 @@ class Release():
         runCmdFromString(cmd)
 
     def uploadNpm(self, tag=None):
+        self.version = validatorVersion
+        print("npmjs package version: " + self.version)
+        url = f"https://registry.npmjs.org/vnu-jar/{self.version}"
+        try:
+            with urlopen(url):
+                return
+        except HTTPError as e:
+            if e.code != 404:
+                raise
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         readMe = os.path.join(buildRoot, "README.md")
         with open(readMe, 'r') as f:
@@ -1058,7 +1067,7 @@ class Release():
 
     def uploadNpmToGitHub(self, tag=None):
         self.version = validatorVersion
-        print("npm package version: " + self.version)
+        print("GitHub npm package version: " + self.version)
         url = "https://api.github.com/orgs/validator/packages/npm/vnu-jar/versions"  # nopep8
         request = Request(
             url,
