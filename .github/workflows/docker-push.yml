@@ -19,14 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Log in to the container registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract metadata (tags, labels)
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ghcr.io/validator/validator
           tags: type=semver,pattern={{version}}
@@ -35,5 +35,6 @@ jobs:
         with:
           context: .
           push: true
+          no-cache: true
           tags: ghcr.io/validator/validator:latest, ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
