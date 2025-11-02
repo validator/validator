@@ -1,8 +1,6 @@
 name: Push a new Docker image
 
 on:
-  create:
-    tags-ignore: latest
   workflow_run:
     workflows: ["Build"]
     branches: [main]
