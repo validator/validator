@@ -761,12 +761,11 @@ def generateRunScript():
 
 
 def clean():
-    try:
-        os.rmdir("classes")
-        os.rmdir("html")
-        os.rmdir("logs")
-    except Exception:
-        pass
+    for directory in ["classes", "html", "logs"]:
+        try:
+            os.rmdir(directory)
+        except Exception:
+            pass
     removeIfDirExists(distDir)
     removeIfDirExists(distWarDir)
     runAnt([], "clean")
