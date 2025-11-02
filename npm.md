@@ -1,7 +1,6 @@
-`vnu.jar` is a packaged version of the Nu Html Checker for batch-checking
-documents from the command line and from other scripts/apps.
+# vnu-jar: Call the Nu Html Checker (vnu) from JavaScript code
 
-You can work with `vnu.jar` in CommonJS modules.
+`vnu-jar` lets you use the Nu Html Checker (vnu) from within JavaScript code — to catch unintended mistakes in HTML, CSS, and SVG content.
 
 ## Install latest release version
 

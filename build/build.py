@@ -1049,10 +1049,11 @@ class Release():
                 raise
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         readMe = os.path.join(buildRoot, "README.md")
+        npmMd = os.path.join(buildRoot, "npm.md")
+        packageJson = os.path.join(buildRoot, "package.json")
         with open(readMe, 'r') as f:
             readMeCopy = f.read()
-        self.createNpmReadme(readMe, readMeCopy)
-        packageJson = os.path.join(buildRoot, "package.json")
+        shutil.copy(npmMd, readMe)
         with open(packageJson, 'r') as f:
             packageJsonCopy = f.read()
         self.createPackageJson(packageJson)
@@ -1088,7 +1089,12 @@ class Release():
         if self.version in [v["name"] for v in versions]:
             return
         removeIfExists(os.path.join(buildRoot, "README.md~"))
+        readMe = os.path.join(buildRoot, "README.md")
+        npmMd = os.path.join(buildRoot, "npm.md")
         packageJson = os.path.join(buildRoot, "package.json")
+        with open(readMe, 'r') as f:
+            readMeCopy = f.read()
+        shutil.copy(npmMd, readMe)
         with open(packageJson, 'r') as f:
             packageJsonCopy = f.read()
         self.createGitHubPackageJson(packageJson)
@@ -1096,6 +1102,8 @@ class Release():
             runCmdFromString(f"""{npmCmd} publish --tag {tag}""")
         else:
             runCmdFromString(f"""{npmCmd} publish""")
+        with open(readMe, 'w') as f:
+            f.write(readMeCopy)
         with open(packageJson, 'w') as f:
             f.write(packageJsonCopy)
 
