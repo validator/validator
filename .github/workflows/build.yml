@@ -97,6 +97,7 @@ jobs:
           allowUpdates: true
           artifacts: build/dist/*.zip*
           body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
+          bodyFile: "IMPORTANT.md"
           omitName: true
           tag: latest
       - name: Release new jar and war
