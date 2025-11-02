@@ -2,8 +2,8 @@ css-validator:
     remote_url: https://github.com/w3c/css-validator.git
     remote_name: css-validator
     remote_branch: validator-nu
-    last_local_merge: d4a0baadd39fa84cd9def8c21d782f8a1e3d6532
-    current_commit: 976fb02e009059b8518cab71d1c23e69ad2d175e
+    last_local_merge: 4f0cdfcf77493774be85e76e1d8e1c0110a07e9b
+    current_commit: f66e7ab509874b8940db4b7a00729813ce5146f2
 htmlparser:
     remote_url: https://github.com/validator/htmlparser.git
     remote_name: htmlparser
