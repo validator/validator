@@ -95,7 +95,7 @@ public class TestRunner extends MessageEmitterAdapter {
 
     public TestRunner() throws IOException {
         reportedMessages = Json.createObjectBuilder();
-        validator = new SimpleDocumentValidator(true, false, false);
+        validator = new SimpleDocumentValidator(true, false, true);
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
                     "UTF-8"));
