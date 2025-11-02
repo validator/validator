@@ -232,6 +232,36 @@ Use `python ./checker.py --help` to see command-line options for controlling the
 
     python ./checker.py jar         # to compile vnu.jar
 
+## Embedded Java usage
+
+Maven:
+
+    <dependency>
+        <groupId>nu.validator</groupId>
+        <artifactId>validator</artifactId>
+        <version>NN.NN.NN</version>
+        <scope>test</scope>
+    </dependency>
+
+Gradle:
+
+    testImplementation 'nu.validator:validator:NN.NN.NN'
+
+Basic usage java code:
+
+    String html = ...
+    EmbeddedValidator validator = new EmbeddedValidator();
+    validator.setOutputFormat( EmbeddedValidator.OutputFormat.GNU );
+    try {
+        String output = validator.validate( new ByteArrayInputStream( html.getBytes( StandardCharsets.UTF_8 ) ) );
+        if (!output.isEmpty())
+            throw new Exception( output ); //validation failed
+    } catch (SAXException e) {
+        throw new Exception( "Cannot validate html", e );
+    }
+
+Using a different output format requires the code to be adjusted.
+
 ## Additional documentation
 
 Additional documentation is available on the [vnu wiki](https://github.com/validator/validator/wiki/).
