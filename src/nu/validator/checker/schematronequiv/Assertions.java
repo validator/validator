@@ -232,41 +232,50 @@ public class Assertions extends Checker {
         registerObsoleteAttribute("abbr",
                 new String[] { "td" },
                 "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
+        registerObsoleteAttribute("accept",
+                new String[] { "form" },
+                "Use the \u201Caccept\u201D attribute directly on the \u201Cinput\u201D elements instead.");
         registerObsoleteAttribute("archive",
                 new String[] { "object" },
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Carchive\u201D, use the \u201Cparam\u201D element.");
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
+        registerObsoleteAttribute("a",
+                new String[] { "object" },
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
         registerObsoleteAttribute("axis",
                 new String[] { "td", "th" },
                 "Use the \u201Cscope\u201D attribute.");
+        registerObsoleteAttribute("border",
+                new String[] { "input", "img", "object", "table" },
+                "Consider specifying \u201Cimg { border: 0; }\u201D in CSS instead.");
         registerObsoleteAttribute("charset",
                 new String[] { "a", "link" },
                 "Use an HTTP Content-Type header on the linked resource instead.");
         registerObsoleteAttribute("classid",
                 new String[] { "object" },
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Cclassid\u201D, use the \u201Cparam\u201D element.");
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
         registerObsoleteAttribute("code",
                 new String[] { "object" },
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccode\u201D, use the \u201Cparam\u201D element.");
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
         registerObsoleteAttribute("codebase",
                 new String[] { "object" },
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodebase\u201D, use the \u201Cparam\u201D element.");
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
         registerObsoleteAttribute("codetype",
                 new String[] { "object" },
-                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins.");
         registerObsoleteAttribute("coords",
                 new String[] { "a" },
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
         registerObsoleteAttribute("datafld",
-                new String[] { "button", "div", "input", "object", "select", "span", "table", "textarea" },
+                new String[] { "a", "button", "div", "fieldset", "iframe", "img", "input", "label", "legend", "object", "select", "span", "textarea" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
         registerObsoleteAttribute("dataformatas",
-                new String[] { "button", "div", "input", "object", "select", "span", "table", "textarea" },
+                new String[] { "button", "div", "input", "label", "legend", "object", "option", "select", "span", "table" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
         registerObsoleteAttribute("datapagesize",
                 new String[] { "table" },
                 "You can safely omit it.");
         registerObsoleteAttribute("datasrc",
-                new String[] { "button", "div", "input", "object", "select", "span", "table", "textarea" },
+                new String[] { "a", "button", "div", "iframe", "img", "input", "label", "legend", "object", "option", "select", "span", "table", "textarea" },
                 "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
         registerObsoleteAttribute("declare",
                 new String[] { "object" },
@@ -277,12 +286,24 @@ public class Assertions extends Checker {
         registerObsoleteAttribute("for",
                 new String[] { "script" },
                 "Use DOM Events mechanisms to register event listeners.");
+        registerObsoleteAttribute("hreflang",
+                new String[] { "area" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("ismap",
+                new String[] { "input" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("label",
+                new String[] { "menu" },
+                "Use script to handle \u201Ccontextmenu\u201D event instead.");
         registerObsoleteAttribute("language",
                 new String[] { "script" },
                 "Use the \u201Ctype\u201D attribute instead.");
         registerObsoleteAttribute("longdesc",
                 new String[] { "iframe", "img" },
                 "Use a regular \u201Ca\u201D element to link to the description.");
+        registerObsoleteAttribute("lowsrc",
+                new String[] { "img" },
+                "Use a progressive JPEG image instead.");
         registerObsoleteAttribute("manifest",
                 new String[] { "html" },
                 "Use service workers instead.");
@@ -290,8 +311,11 @@ public class Assertions extends Checker {
                 new String[] { "a", "link" },
                 "Use the HTTP OPTIONS feature instead.");
         registerObsoleteAttribute("name",
-                new String[] { "embed", "img", "option" },
+                new String[] { "a", "embed", "img", "option" },
                 "Use the \u201Cid\u201D attribute instead.");
+        registerObsoleteAttribute("name",
+                new String[] { "a" },
+                "Consider putting an \u201Cid\u201D attribute on the nearest container instead.");
         registerObsoleteAttribute("nohref",
                 new String[] { "area" },
                 "Omitting the \u201Chref\u201D attribute is sufficient.");
@@ -310,18 +334,30 @@ public class Assertions extends Checker {
         registerObsoleteAttribute("standby",
                 new String[] { "object" },
                 "Optimise the linked resource so that it loads quickly or, at least, incrementally.");
+        registerObsoleteAttribute("summary",
+                new String[] { "table" },
+                "Consider describing the structure of the \u201Ctable\u201D in a \u201Ccaption\u201D element or in a \u201Cfigure\u201D element containing the \u201Ctable\u201D; or, simplify the structure of the \u201Ctable\u201D so that no description is needed.");
         registerObsoleteAttribute("target",
                 new String[] { "link" },
                 "You can safely omit it.");
         registerObsoleteAttribute("type",
                 new String[] { "param" },
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
+        registerObsoleteAttribute("type",
+                new String[] { "area" },
+                "You can safely omit it.");
+        registerObsoleteAttribute("type",
+                new String[] { "menu" },
+                "Use script to handle \u201Ccontextmenu\u201D event instead.");
+        registerObsoleteAttribute("typemustmatch",
+                new String[] { "object" },
+                "Avoid using \u201Cobject\u201D elements with untrusted resources.");
         registerObsoleteAttribute("urn",
                 new String[] { "a", "link" },
                 "Specify the preferred persistent identifier using the \u201Chref\u201D attribute instead.");
         registerObsoleteAttribute("usemap",
-                new String[] { "input" },
-                "Use the \u201Cimg\u201D element instead of the \u201Cinput\u201D element for image maps.");
+                new String[] { "input", "object" },
+                "Use the \u201Cimg\u201D element instead.");
         registerObsoleteAttribute("valuetype",
                 new String[] { "param" },
                 "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
@@ -341,9 +377,10 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("alink", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("allowtransparency",
                 new String[] { "iframe" });
-        OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body", "table", "thead", "tbody", "tfoot", "tr", "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("bgcolor",
                 new String[] { "table", "tr", "td", "th", "body" });
+        OBSOLETE_STYLE_ATTRS.put("bordercolor", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("char", new String[] { "col", "colgroup",
@@ -355,8 +392,9 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("compact",
                 new String[] { "dl", "menu", "ol", "ul" });
         OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("framespacing", new String[] { "iframe" });
         OBSOLETE_STYLE_ATTRS.put("frame", new String[] { "table" });
-        OBSOLETE_STYLE_ATTRS.put("height", new String[] { "td", "th" });
+        OBSOLETE_STYLE_ATTRS.put("height", new String[] { "table", "thead", "tbody", "tfoot", "tr", "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("hspace",
                 new String[] { "embed", "iframe", "input", "img", "object" });
         OBSOLETE_STYLE_ATTRS.put("link", new String[] { "body" });
@@ -386,6 +424,14 @@ public class Assertions extends Checker {
         for (String[] elementNames: OBSOLETE_STYLE_ATTRS.values()) {
             Arrays.sort(elementNames);
         }
+    }
+
+    private static final Map<String, String> OBSOLETE_GLOBAL_ATTRIBUTES = new HashMap<>();
+
+    static {
+        OBSOLETE_GLOBAL_ATTRIBUTES.put("contextmenu", "Use script to handle \u201Ccontextmenu\u201D event instead.");
+        OBSOLETE_GLOBAL_ATTRIBUTES.put("dropzone", "Use script to handle the \u201Cdragenter\u201D and \u201Cdragover\u201D events instead.");
+        OBSOLETE_GLOBAL_ATTRIBUTES.put("onshow", "Use script to handle \u201Ccontextmenu\u201D event instead.");
     }
 
     private static final HashSet<String> JAVASCRIPT_MIME_TYPES = new HashSet<>();
@@ -2199,6 +2245,10 @@ public class Assertions extends Checker {
                                 err("CSS: " + message);
                             }
                         }
+                    } else if ("aria-dropeffect" == attLocal || "aria-grabbed" == attLocal) {
+                        warn("The \u201C" + attLocal + "\u201D attribute is"
+                                + " deprecated and should not be used. Support for"
+                                + " it is poor and is unlikely to improve.");
                     } else if ("tabindex" == attLocal) {
                         tabindex = true;
                     } else if ("href" == attLocal) {
@@ -2266,7 +2316,15 @@ public class Assertions extends Checker {
                         errObsoleteAttribute("rev", localName,
                                 " Use the \u201Crel\u201D attribute instead,"
                                         + " with a term having the opposite meaning.");
-                    } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
+                    } else if ("autofocus" == attLocal) {
+                        if (hasAutofocus) {
+                            err("A document must not include more than one"
+                                        + " \u201Cautofocus\u201D attribute.");
+                        }
+                        hasAutofocus = true;
+                    }
+
+                    if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
                             && OBSOLETE_ATTRIBUTES.get(attLocal).containsKey(localName)) {
                         String suggestion = OBSOLETE_ATTRIBUTES.get(attLocal).get(localName);
                         errObsoleteAttribute(attLocal, localName, suggestion.isEmpty() ? "" : " " + suggestion);
@@ -2277,6 +2335,9 @@ public class Assertions extends Checker {
                             errObsoleteAttribute(attLocal, localName,
                                     " Use CSS instead.");
                         }
+                    } else if (OBSOLETE_GLOBAL_ATTRIBUTES.containsKey(attLocal)) {
+                        String suggestion = OBSOLETE_GLOBAL_ATTRIBUTES.get(attLocal);
+                        err("The \u201C" + attLocal + "\u201D attribute is obsolete." + (suggestion.isEmpty() ? "" : " " + suggestion));
                     } else if (INPUT_ATTRIBUTES.containsKey(attLocal)
                             && "input" == localName) {
                         String[] allowedTypes = INPUT_ATTRIBUTES.get(attLocal);
@@ -2289,12 +2350,6 @@ public class Assertions extends Checker {
                                     + " type is " + renderTypeList(allowedTypes)
                                     + ".");
                         }
-                    } else if ("autofocus" == attLocal) {
-                        if (hasAutofocus) {
-                            err("A document must not include more than one"
-                                    + " \u201Cautofocus\u201D attribute.");
-                        }
-                        hasAutofocus = true;
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
@@ -2739,20 +2794,6 @@ public class Assertions extends Checker {
                         || "treegrid".equals(role)) {
                     hasAncestorTableIsRoleTableGridOrTreeGrid = true;
                 }
-                if (atts.getIndex("", "summary") >= 0) {
-                    errObsoleteAttribute("summary", "table",
-                            " Consider describing the structure of the"
-                                    + " \u201Ctable\u201D in a \u201Ccaption\u201D "
-                                    + " element or in a \u201Cfigure\u201D element "
-                                    + " containing the \u201Ctable\u201D; or,"
-                                    + " simplify the structure of the"
-                                    + " \u201Ctable\u201D so that no description"
-                                    + " is needed.");
-                }
-                if (atts.getIndex("", "border") > -1) {
-                    errObsoleteAttribute("border", "table",
-                            " Use CSS instead.");
-                }
             } else if (hasAncestorTableIsRoleTableGridOrTreeGrid
                     && atts.getIndex("", "role") >= 0 && ("td" == localName
                             || "tr" == localName || "th" == localName)) {
@@ -2953,20 +2994,6 @@ public class Assertions extends Checker {
                 String nameVal = atts.getValue("", "name");
                 if (nameVal != null && !nameVal.equals(id)) {
                     err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
-                }
-            }
-
-            else if ("object" == localName) {
-                if (atts.getIndex("", "typemustmatch") >= 0) {
-                    if ((atts.getIndex("", "data") < 0)
-                            || (atts.getIndex("", "type") < 0)) {
-                        {
-                            err("Element \u201Cobject\u201D must not have"
-                                    + " attribute \u201Ctypemustmatch\u201D unless"
-                                    + " both attribute \u201Cdata\u201D"
-                                    + " and attribute \u201Ctype\u201D are also specified.");
-                        }
-                    }
                 }
             }
             else if ("form" == localName) {

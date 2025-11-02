@@ -23,7 +23,6 @@ namespace local = ""
 		&	img.attrs.decoding?
 		&	img.attrs.loading?
 		&	common.attrs.fetchpriority?
-		&	img.attrs.border? # obsolete
 		&	referrerpolicy?
 		&	embedded.content.attrs.crossorigin?
 		)
@@ -103,10 +102,6 @@ namespace local = ""
 		img.attrs.loading =
 			attribute loading {
 				w:string "lazy" | w:string "eager"
-			}
-		img.attrs.border =
-			attribute border {
-				common.data.zero
 			}
 	img.inner =
 		empty
@@ -358,6 +353,9 @@ namespace local = ""
 			                    | rev
 			                    | inlist
 			                    | its-loc-note
+			                    | contextmenu
+			                    | dropzone
+			                    | onshow
                                             | its-loc-note-type
                                             | its-loc-note-ref
                                             | its-term-info-ref
@@ -430,7 +428,6 @@ namespace local = ""
 #		&	object.attrs.codetype?
 		&	object.attrs.height?
 		&	object.attrs.width?
-		&	object.attrs.usemap?
 		&	object.attrs.name?
 		&	common-form.attrs.form?
 		&	(	common.attrs.aria.role.application
@@ -453,10 +450,6 @@ namespace local = ""
 		object.attrs.width =
 			attribute width {
 				common.data.integer.non-negative
-			}
-		object.attrs.usemap =
-			attribute usemap {
-				common.data.hash-name
 			}
 		object.attrs.name =
 			attribute name {
@@ -598,8 +591,6 @@ namespace local = ""
 		&	shared-hyperlink.attrs.target?
 		&	shared-hyperlink.attrs.ping?
 		&	shared-hyperlink.attrs.rel?
-		&	shared-hyperlink.attrs.hreflang?
-		&	shared-hyperlink.attrs.type?
 		&	area.attrs.shape?
 		&	(	common.attrs.aria.role.link
 			|	common.attrs.aria.role.button
