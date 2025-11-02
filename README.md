@@ -19,6 +19,13 @@ You can run the vnu checker with one of the invocations from the [vnu manual pag
 
 The [OPTIONS section of the vnu manual page](docs/vnu.1.md#options) has details on all available options.
 
+## Releases
+
+> [!IMPORTANT]
+> **The [release named _“latest”_][0] is “production-ready” and is the only release you want to use.** This project no longer does “major” version-numbered releases. The 20.6.30 (30 June 2020) release was the final such release. There will be no more.
+
+[0]: https://github.com/validator/validator/releases/tag/latest
+
 ## Sources
 
 The vnu source code is available on [GitHub][5], as are [instructions on how to build, test, and run the code][6].

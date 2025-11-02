@@ -96,7 +96,6 @@ jobs:
           commit: ${{ github.sha }}
           allowUpdates: true
           artifacts: build/dist/*.zip*
-          body: ${{ github.sha }} — ${{ github.event.head_commit.message }}
           bodyFile: "IMPORTANT.md"
           omitName: true
           tag: latest
