@@ -87,6 +87,7 @@ distDir = os.path.join(buildRoot, "build", "dist")
 distWarDir = os.path.join(buildRoot, "build", "dist-war")
 mavenArtifactsDir = os.path.join(distDir, "nu", "validator", "validator",
                                  validatorVersion)
+vnuCmd = os.path.join(distDir, "vnu-runtime-image", "bin", "vnu")
 vnuJar = os.path.join(distDir, "vnu.jar")
 dependencyDir = os.path.join(buildRoot, "dependencies")
 extrasDir = os.path.join(buildRoot, "extras")
@@ -176,10 +177,11 @@ def runCmdFromString(cmdString):
     subprocess.check_call(cmdString, shell=True)
 
 
-def execCmd(cmd, args):
+def execCmd(cmd, args, silent=False):
     print(shlex.join([cmd] + args))
     if subprocess.call([cmd, ] + args):
-        print("Command failed.")
+        if not silent:
+            print("Command failed.")
         sys.exit(2)
 
 
@@ -1670,7 +1672,8 @@ def printHelp():
     print("  dldeps   -- Download missing dependency libraries and entities")
     print("  build    -- Build the source")
     print("  test     -- Run regression tests")
-    print("  check    -- Perform self-test of the system")
+    print("  check    -- Invoke vnu with all remaining args (filenames/URLs)")
+    print("  self-test-- Perform self-test of the system")
     print("  run      -- Run the system")
     print("  all      -- dldeps build test run")
     print("  bundle   -- Create a Maven release bundle")
@@ -1724,7 +1727,7 @@ def main(argv):
         release = Release()
         release.runtimeDistroBasename = getRuntimeDistroBasename()
         release.runtimeDistroFile = release.runtimeDistroBasename + ".zip"
-        for arg in argv:
+        for i, arg in enumerate(argv):
             if arg.startswith("--git="):
                 gitCmd = arg[6:]
             elif arg.startswith("--java="):
@@ -1895,6 +1898,11 @@ def main(argv):
             elif arg == 'test':
                 release.runTests()
             elif arg == 'check':
+                if not os.path.exists(vnuCmd):
+                    release.createRuntimeImage()
+                execCmd(vnuCmd, argv[i + 1:], True)
+                break
+            elif arg == 'self-test':
                 if not stylesheet:
                     stylesheet = 'style.css'
                 if not script:
