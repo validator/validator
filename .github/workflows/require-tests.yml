@@ -25,8 +25,9 @@ jobs:
       - name: Get list of changed files
         id: changes
         run: |
-          git fetch origin "${{ github.base_ref }}" --depth=1
-          CHANGED_FILES=$(git diff --name-only "origin/${{ github.base_ref }}"...HEAD)
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          git fetch origin "$BASE_SHA" --depth=1
+          CHANGED_FILES=$(git diff --name-only "$BASE_SHA"...HEAD)
           {
             echo "files<<EOF"
             echo "$CHANGED_FILES"
