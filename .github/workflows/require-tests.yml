@@ -25,9 +25,8 @@ jobs:
       - name: Get list of changed files
         id: changes
         run: |
-          # Fetch GitHub’s merge commit ref for the PR
           git fetch origin "refs/pull/${{ github.event.pull_request.number }}/merge":pr-merge
-          CHANGED_FILES=$(git diff --name-only pr-merge HEAD)
+          CHANGED_FILES=$(git diff --name-only pr-merge^1 pr-merge)
           echo "Detected changed files:"
           echo "$CHANGED_FILES"
           CHANGED_FILES_LINE=$(echo "$CHANGED_FILES" | tr '\n' ' ')
