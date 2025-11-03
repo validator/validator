@@ -14,9 +14,9 @@ jobs:
       - name: Check for “no-tests-needed” label
         id: label-check
         run: |
-          LABELS=$(jq -r '[.pull_request.labels[].name] | join(" ")' <<< '${{ toJson(github.event) }}')
+          LABELS=$(jq -r '[.pull_request.labels[].name] | join(" ")' <<< "${{ toJson(github.event) }}")
           echo "Labels on PR: $LABELS"
-          if echo "$LABELS" | grep -q '\bno-tests-needed\b'; then
+          if echo "$LABELS" | grep -qw "no-tests-needed"; then
             echo "has_label=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_label=false" >> "$GITHUB_OUTPUT"
@@ -25,15 +25,22 @@ jobs:
       - name: Get list of changed files
         id: changes
         run: |
+          # Fetch GitHub’s merge commit ref for the PR
           git fetch origin "refs/pull/${{ github.event.pull_request.number }}/merge":pr-merge
-          CHANGED_FILES=$(git diff --name-only pr-merge HEAD | tr '\n' ' ')
-          echo "files=$CHANGED_FILES" >> "$GITHUB_OUTPUT"
+          CHANGED_FILES=$(git diff --name-only pr-merge HEAD)
+          echo "Detected changed files:"
+          echo "$CHANGED_FILES"
+          CHANGED_FILES_LINE=$(echo "$CHANGED_FILES" | tr '\n' ' ')
+          echo "files=$CHANGED_FILES_LINE" >> "$GITHUB_OUTPUT"
 
       - name: Fail if checker Java code or RNG schema changed but no tests changed
-        if: steps.label-check.outputs.has_labels != 'true'
+        if: steps.label-check.outputs.has_label == 'false'
+        env:
+          CHANGED_FILES: ${{ steps.changes.outputs.files }}
         run: |
-          CODE_CHANGED=$(echo "${{ steps.changes.outputs.files }}" | grep -E '^(schema/|src/nu/validator/checker/)' || true)
-          TESTS_CHANGED=$(echo "${{ steps.changes.outputs.files }}" | grep -E '^tests/' || true)
+          echo "Checking changed files: $CHANGED_FILES"
+          CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '^(schema/|src/nu/validator/checker/)' || true)
+          TESTS_CHANGED=$(echo "$CHANGED_FILES" | grep -E '^tests/' || true)
           if [ -n "$CODE_CHANGED" ] && [ -z "$TESTS_CHANGED" ]; then
             echo "::error::This PR changes files in schema/ or src/nu/validator/checker/ but not in tests/."
             echo '::error::If this is intentional, add the label “no-tests-needed” to override this check.'
