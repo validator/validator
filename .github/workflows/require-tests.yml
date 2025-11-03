@@ -10,6 +10,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Check for “no-tests-needed” label
         id: label-check
@@ -25,8 +27,9 @@ jobs:
       - name: Get list of changed files
         id: changes
         run: |
-          git fetch origin "refs/pull/${{ github.event.pull_request.number }}/merge":pr-merge
-          CHANGED_FILES=$(git diff --name-only pr-merge^1 pr-merge)
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          git fetch origin "$BASE_BRANCH":base
+          CHANGED_FILES=$(git diff --name-only base HEAD)
           echo "Detected changed files:"
           echo "$CHANGED_FILES"
           CHANGED_FILES_LINE=$(echo "$CHANGED_FILES" | tr '\n' ' ')
