@@ -25,9 +25,11 @@ jobs:
       - name: Get list of changed files
         id: changes
         run: |
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          git fetch origin "$BASE_SHA" --depth=1
-          CHANGED_FILES=$(git diff --name-only "$BASE_SHA"...HEAD)
+          # Fetch the synthetic merge commit that GitHub provides
+          git fetch origin "refs/pull/${{ github.event.pull_request.number }}/merge":pr-merge
+
+          # Diff the merge base of the PR and HEAD
+          CHANGED_FILES=$(git diff --name-only pr-merge HEAD)
           {
             echo "files<<EOF"
             echo "$CHANGED_FILES"
