@@ -14,7 +14,7 @@ jobs:
       - name: Check for “no-tests-needed” label
         id: label-check
         run: |
-          LABELS=$(jq -r '[.pull_request.labels[].name] | join(" ")' <<< "${{ toJson(github.event) }}")
+          LABELS=$(jq -r '[.pull_request.labels[].name] | join(" ")' "$GITHUB_EVENT_PATH")
           echo "Labels on PR: $LABELS"
           if echo "$LABELS" | grep -qw "no-tests-needed"; then
             echo "has_label=true" >> "$GITHUB_OUTPUT"
