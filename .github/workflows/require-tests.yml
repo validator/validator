@@ -41,8 +41,8 @@ jobs:
           CHANGED_FILES: ${{ steps.changes.outputs.files }}
         run: |
           echo "Checking changed files: $CHANGED_FILES"
-          CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '^(schema/|src/nu/validator/checker/)' || true)
-          TESTS_CHANGED=$(echo "$CHANGED_FILES" | grep -E '^tests/' || true)
+          CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '(^|\s)(schema/|src/nu/validator/checker/)' || true)
+          TESTS_CHANGED=$(echo "$CHANGED_FILES" | grep -E '(^|\s)tests/' || true)
           if [ -n "$CODE_CHANGED" ] && [ -z "$TESTS_CHANGED" ]; then
             echo "::error::This PR changes files in schema/ or src/nu/validator/checker/ but not in tests/."
             echo '::error::If this is intentional, add the label “no-tests-needed” to override this check.'
