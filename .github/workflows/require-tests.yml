@@ -1,4 +1,4 @@
-name: Check that PRs include test changes when needed
+name: Check that PRs include test changes
 
 on:
   pull_request:
