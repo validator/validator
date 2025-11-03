@@ -25,16 +25,9 @@ jobs:
       - name: Get list of changed files
         id: changes
         run: |
-          # Fetch the synthetic merge commit that GitHub provides
           git fetch origin "refs/pull/${{ github.event.pull_request.number }}/merge":pr-merge
-
-          # Diff the merge base of the PR and HEAD
-          CHANGED_FILES=$(git diff --name-only pr-merge HEAD)
-          {
-            echo "files<<EOF"
-            echo "$CHANGED_FILES"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          CHANGED_FILES=$(git diff --name-only pr-merge HEAD | tr '\n' ' ')
+          echo "files=$CHANGED_FILES" >> "$GITHUB_OUTPUT"
 
       - name: Fail if checker Java code or RNG schema changed but no tests changed
         if: steps.label-check.outputs.has_labels != 'true'
