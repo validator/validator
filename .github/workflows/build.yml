@@ -73,7 +73,7 @@ jobs:
           test -z "$(if [ -t RESULTS ]; then cat RESULTS | grep -v '^$'; fi)"
           # shellcheck disable=SC2181
           if [ $? != 0 ]; then cat RESULTS; fi
-          python ./checker.py check
+          python ./checker.py self-test
           python ./checker.py test
       - name: Import GPG signing key
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
