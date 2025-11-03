@@ -15,11 +15,11 @@ clean:
 
 $(VNUJAR):
 	cd $(CURDIR) && $(CURL) $(CURLFLAGS) -O -L \
-	  https://github.com/validator/validator/releases/download/latest/vnu.jar
+		https://github.com/validator/validator/releases/download/latest/vnu.jar
 
 messages.json: .FORCE $(VNUJAR)
 	$(JAVA) $(JAVAFLAGS) -cp $(VNUJAR) nu.validator.client.TestRunner \
-	  --ignore=html-its --write-messages $@
+		--ignore=html-its --write-messages $@
 	$(PYTHON) $(PYTHONFLAGS) -mjson.tool --sort-keys $@ > $@.tmp
 	mv $@.tmp $@
 
