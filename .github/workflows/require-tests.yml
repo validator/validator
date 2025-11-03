@@ -1,4 +1,4 @@
-name: Check that PRs include test changes
+name: Check that PR includes test changes
 
 on:
   pull_request:
@@ -9,14 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if “no-tests-needed” label is present
-        id: label-check
-        uses: actions-ecosystem/action-has-labels@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: no-tests-needed
-
       - uses: actions/checkout@v4
+
+      - name: Check for “no-tests-needed” label
+        id: label-check
+        run: |
+          LABELS=$(jq -r '[.pull_request.labels[].name] | join(" ")' <<< '${{ toJson(github.event) }}')
+          echo "Labels on PR: $LABELS"
+          if echo "$LABELS" | grep -q '\bno-tests-needed\b'; then
+            echo "has_label=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_label=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Get list of changed files
         id: changes
@@ -36,10 +40,10 @@ jobs:
           TESTS_CHANGED=$(echo "${{ steps.changes.outputs.files }}" | grep -E '^tests/' || true)
           if [ -n "$CODE_CHANGED" ] && [ -z "$TESTS_CHANGED" ]; then
             echo "::error::This PR changes files in schema/ or src/nu/validator/checker/ but not in tests/."
-            echo "::error::If this is intentional, add the label 'no-tests-needed' to override this check."
+            echo '::error::If this is intentional, add the label “no-tests-needed” to override this check.'
             exit 1
           fi
 
       - name: Skip check (label override)
-        if: steps.label-check.outputs.has_labels == 'true'
+        if: steps.label-check.outputs.has_label == 'true'
         run: echo '“no-tests-needed” label found — skipping test-requirement check.'
