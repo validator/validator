@@ -185,6 +185,10 @@ To define a service named `vnu` for use with `docker compose`, create a Compose 
             - "8888:8888"
           network_mode: "host" #so "localhost" refers to the host machine.
 
+To run the vnu command-line checker provided by a Docker image on all the HTML files in the `/var/www/html` directory:
+
+      docker run --rm -v /var/www/html:/data ghcr.io/validator/validator:latest vnu --skip-non-html /data
+
 ## Build instructions
 
 Follow the steps below to build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
