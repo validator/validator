@@ -970,6 +970,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 errorHandler = new MessageEmitterAdapter(request, filterPattern,
                         sourceCode, showSource, imageCollector, lineOffset,
                         false, new XhtmlMessageEmitter(contentHandler));
+                errorHandler.setErrorsOnly(errorsOnly);
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
