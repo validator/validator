@@ -13,7 +13,7 @@ Along with using the [project issue tracker][1] you can get help in real time in
 
 Follow the steps below to build, test, and run the checker such that you can open http://localhost:8888/ in a Web browser to use the checker Web UI.
 
-1. Make sure you have git, python, and JDK 11 or later installed.
+1. Make sure you have git, python, a 64-bit JDK 11 or above, and [ant](https://ant.apache.org/manual/install.html) installed.
 
 2. Set the `JAVA_HOME` environment variable:
 
