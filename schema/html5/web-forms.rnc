@@ -439,6 +439,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	select.inner =
 		(	optgroup.elem*
 		&	option.elem*
+		&	hr.elem*
 		&	common.elem.script-supporting*
 		)
 
