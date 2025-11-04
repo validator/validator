@@ -1007,6 +1007,17 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	common.attrs.aria |= aria.img
 	common.attrs.aria.role.img |= aria.img
 
+## image
+	aria.image =
+		(	aria.role.image
+		&	aria.state.expanded?
+		)
+		aria.role.image = 
+			attribute role { string "image" }
+	
+	common.attrs.aria |= aria.image
+	common.attrs.aria.role.image |= aria.image
+
 ## insertion - added in ARIA 1.2
 	aria.insertion =
 		(	aria.role.insertion
