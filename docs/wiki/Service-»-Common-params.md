@@ -25,9 +25,12 @@ supported by the output format).
 
 ### `level`
 
-The only supported value is `error` which means that only errors and
-non-document errors are reported. That is, informative messages
-*including warnings* are not reported.
+Supported values:
+
+Value       | Meaning
+----------- | -------
+`error`     | Only errors and non-document errors are reported — but not warnings or info messages.
+`warning`     | Only errors, non-document errors, and warnings are reported — but not info messages.
 
 ### `nsfilter`
 
