@@ -47,6 +47,14 @@ When used from the command line, the vnu checker provides these options:
 
     default: [unset; Unicode smart quotation marks are used in messages]
 
+## --skip-info-messages
+
+    Specifies that only error-level messages and non-document-error messages 
+    and warnings are reported — but not info messages.
+
+    default: [unset; all messages reported, including warnings & info messages]
+
+
 ## --errors-only
 
     Specifies that only error-level messages and non-document-error messages are
