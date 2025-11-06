@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title >ARIA in HTML - Test Cases</title>
+	  <link rel="stylesheet" href="../results/styles.css">
+		<style>
+			body{
+				font-size: 1em;
+			}
+			.flex {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: stretch;
+			}
+			.widgetDemo {
+				border: 1px solid #EEE;
+				margin: .5em;
+				padding: 5px;
+				flex: 1 0 0;
+				min-width: calc(300px - 1em);
+			}
+			.widgetDemo p {
+				color: #696969;
+				font-size: 1.125em;
+				padding: 0;
+				margin: .75em 0;
+			}
+			.testcase {
+				margin: 2em 0;
+			}
+			h3{
+				margin: .5em 0;
+				border: 0;
+				padding: 0;
+			}
+			h2 {font-size:2em}
+			.testcase > *:not(p) {
+				border: 1px dotted;
+				padding: .25em;
+			}
+
+			html .testcase input {
+				  background: #1b75bc;
+				  border: 1px solid black;
+				  border-radius: .125em;
+				  color: #fff;
+				  font-family: "Roboto Slab", Cambria, Georgia, serif;
+				  font-size: 1.125em;
+				  letter-spacing: 1px;
+				  padding: .5em 1em;
+			}
+		</style>
+	</head>
+<body>
+
+	<header>
+	<h1>ARIA in HTML - test case for additional role allowances for <code>button</code> and <code>input type=button</code> elements</h1>
+		<p>last updated 15 February 2023</p>
+	</header>
+	<main>
+		<h2>Tests:</h2>
+		
+		<h3>
+			Authors MAY use <code>role=gridcell</code>, <code>slider</code> or <code>treeitem</code> on a <code>button</code> element.
+		</h3>
+				
+		<div class="flex">
+			<div class="widgetDemo">
+				<div class="testcase">
+					<div role=grid>
+						<div role=row>
+							<button role=gridcell>role=gridcell</button>
+						</div>
+					</div>
+
+					<div role=tree>
+						<button role=treeitem>role=treeitem</button>
+					</div>
+
+					<button role=slider aria-valuenow=0 aria-label="role=slider">role=slider</button>
+				</div>
+
+				<p>
+					<strong>Expected result:</strong>
+					No errors or warnings would be expected for these test cases, as they meet all the necessary requirements for use of these roles (necessary nesting and required attributes).
+				</p>
+			</div>
+		</div>
+	
+		<h3>
+    		Authors MAY use <code>role=gridcell</code>, <code>slider</code> or <code>treeitem</code> on a <code>input type=button</code> element.
+    	</h3>
+    	<p>
+    		Note that while these roles are allowed, web authors will generally have a much easier time building these components using another HTML 
+    		element as their base (e.g., a button or even a div).
+    	</p>
+		<div class="flex">
+	 
+			<div class="widgetDemo">
+				<div class="testcase">
+					<div role=grid>
+						<div role=row>
+							<input type=button role=gridcell value="role=gridcell">
+						</div>
+					</div>
+
+					<div role=tree>
+						<input type=button role=treeitem value="role=treeitem">
+					</div>
+
+					<input type=button role=slider value="role=slider" aria-label="role=slider" aria-valuenow=0>
+				</div>
+
+				<p>
+					<strong>Expected result:</strong>
+					No errors or warnings would be expected for these test cases, as they meet all the necessary requirements for use of these roles (necessary nesting and required attributes).
+				</p>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

@@ -177,6 +177,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	common.attrs.aria.role.separator
 			|	common.attrs.aria.role.switch
 			|	common.attrs.aria.role.tab
+			|	aria.gridcell
+			|	aria.slider
+			|	aria.treeitem
 			)?
 		)
 		input.button.attrs.type = 
@@ -488,6 +491,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	common.attrs.aria.role.radio
 			|	common.attrs.aria.role.separator
 			|	common.attrs.aria.role.tab
+			|	aria.gridcell
+			|	aria.slider
+			|	aria.treeitem
 			)?
 		)
 		button.submit.attrs.type =
@@ -518,6 +524,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	common.attrs.aria.role.radio
 			|	common.attrs.aria.role.separator
 			|	common.attrs.aria.role.switch
+			|	aria.gridcell
+			|	aria.slider
+			|	aria.treeitem
 			)?
 		)
 		button.reset.attrs.type =
@@ -549,6 +558,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	common.attrs.aria.role.separator
 			|	common.attrs.aria.role.switch
 			|	common.attrs.aria.role.tab
+			|	aria.gridcell
+			|	aria.slider
+			|	aria.treeitem
 			)?
 		)
 		button.button.attrs.type =
