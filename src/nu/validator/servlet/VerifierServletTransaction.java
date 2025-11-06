@@ -935,6 +935,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         boolean errorsOnly = ("error".equals(request.getParameter("level")));
 
+        boolean skipInfoMessages = ("warning".equals(request.getParameter("level")));
+
         boolean asciiQuotes = false;
 
         if (!"no".equals(ASCII_QUOTES)) {
@@ -971,6 +973,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         sourceCode, showSource, imageCollector, lineOffset,
                         false, new XhtmlMessageEmitter(contentHandler));
                 errorHandler.setErrorsOnly(errorsOnly);
+                errorHandler.setSkipInfoMessages(skipInfoMessages);
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
@@ -1009,6 +1012,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     throw new RuntimeException("Unreachable.");
                 }
                 errorHandler.setErrorsOnly(errorsOnly);
+                errorHandler.setSkipInfoMessages(skipInfoMessages);
                 validate();
             }
         } catch (SAXException e) {

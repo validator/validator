@@ -27,6 +27,7 @@ vnu – The Nu Html Checker
     --help --skip-non-css --css --skip-non-svg --svg --skip-non-html --html
     --xml --also-check-css --also-check-svg --user-agent USER_AGENT
     --no-langdetect --no-stream --verbose --version --entities --schema SCHEMA
+    --skip-info-messages
 
 # DESCRIPTION
 

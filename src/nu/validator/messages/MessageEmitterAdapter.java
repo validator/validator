@@ -437,6 +437,8 @@ public class MessageEmitterAdapter implements ErrorHandler {
 
     private boolean errorsOnly = false;
 
+    private boolean skipInfoMessages = false;
+
     @SuppressWarnings("deprecation")
     protected static String scrub(String s) throws SAXException {
         if (s == null) {
@@ -820,6 +822,8 @@ public class MessageEmitterAdapter implements ErrorHandler {
     private void message(MessageType type, Exception message, String systemId,
             int oneBasedLine, int oneBasedColumn, boolean exact, int[] start)
             throws SAXException {
+        if (skipInfoMessages && type == MessageType.INFO)
+            return;
         String msg = message.getMessage();
         if (msg != null && ((filterPattern != null
                 && filterPattern.matcher(msg).matches())
@@ -1811,6 +1815,16 @@ public class MessageEmitterAdapter implements ErrorHandler {
      */
     public void setErrorsOnly(boolean errorsOnly) {
         this.errorsOnly = errorsOnly;
+    }
+
+    /**
+     * Sets the skipInfoMessages.
+     *
+     * @param skipInfoMessages
+     *            the skipInfoMessages to set
+     */
+    public void setSkipInfoMessages(boolean skipInfoMessages) {
+        this.skipInfoMessages = skipInfoMessages;
     }
 
     /**

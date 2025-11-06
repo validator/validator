@@ -76,6 +76,8 @@ public class SimpleCommandLineValidator {
 
     private static boolean errorsOnly;
 
+    private static boolean skipInfoMessages;
+
     private static boolean wError;
 
     private static boolean exitZeroAlways;
@@ -134,6 +136,7 @@ public class SimpleCommandLineValidator {
         userAgent = "Validator.nu/LV";
         System.setProperty("nu.validator.datatype.warn", "true");
         errorsOnly = false;
+        skipInfoMessages = false;
         wError = false;
         alsoCheckCSS = false;
         skipNonCSS = false;
@@ -177,6 +180,9 @@ public class SimpleCommandLineValidator {
                     asciiQuotes = true;
                 } else if ("--errors-only".equals(args[i])) {
                     errorsOnly = true;
+                    System.setProperty("nu.validator.datatype.warn", "false");
+                } else if ("--skip-info-messages".equals(args[i])) {
+                    skipInfoMessages = true;
                     System.setProperty("nu.validator.datatype.warn", "false");
                 } else if ("--Werror".equals(args[i])) {
                     wError = true;
@@ -619,6 +625,7 @@ public class SimpleCommandLineValidator {
             throw new RuntimeException("Bug. Should be unreachable.");
         }
         errorHandler.setErrorsOnly(errorsOnly);
+        errorHandler.setSkipInfoMessages(skipInfoMessages);
     }
 
     private static void usage() {
