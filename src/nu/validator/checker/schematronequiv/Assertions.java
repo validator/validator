@@ -2130,6 +2130,11 @@ public class Assertions extends Checker {
                                     + " attribute has the value"
                                     + " \u201Chidden\u201D.");
                         }
+                        if ("body".equals(localName) &&
+                                "true".equals(atts.getValue(i))) {
+                            err("\u201caria-hidden=true\u201d must not be used"
+                                    + " on the \u201cbody\u201d element.");
+                        }
                     } else if (attLocal.startsWith("aria-") && !isEmptyAtt) {
                         hasAriaAttributesOtherThanAriaHidden = true;
                     }
@@ -2170,12 +2175,6 @@ public class Assertions extends Checker {
                                         + " \u201C" + attLocal + "\u201D.");
                             }
                         }
-                    }
-                    if ("body".equals(localName) &&
-                            "aria-hidden".equals(attLocal) &&
-                            "true".equals(atts.getValue(i))) {
-                        err("\u201caria-hidden=true\u201d must not be used"
-                                + " on the \u201cbody\u201d element.");
                     }
                     if ("embed".equals(localName)) {
                         for (int j = 0; j < attLocal.length(); j++) {
