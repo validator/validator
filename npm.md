@@ -1,4 +1,4 @@
-# vnu-jar: Check HTML/CSS/SVG from JavaScript
+# vnu-jar: Check HTML from JavaScript
 
 `vnu-jar` lets you use the Nu Html Checker (vnu) from within JavaScript code — to catch unintended mistakes in HTML, CSS, and SVG content.
 
