@@ -305,6 +305,8 @@ namespace local = ""
 			                    | role
 			                    | aria-activedescendant
 			                    | aria-atomic
+			                    | aria-braillelabel
+			                    | aria-brailleroledescription
 			                    | aria-busy
 			                    | aria-controls
 			                    | aria-current

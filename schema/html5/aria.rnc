@@ -11,6 +11,8 @@
 
 aria.global = 
 	(	aria.prop.atomic?
+	&	aria.prop.braillelabel?
+	&	aria.prop.brailleroledescription?
 	&	aria.state.busy?
 	&	aria.prop.controls?
 	&	aria.state.current?
@@ -362,6 +364,18 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			|	string "both"
 			|	string "none" #default
 			}
+
+## braillelabel
+	aria.prop.braillelabel =
+		attribute aria-braillelabel {
+			string
+		}
+
+## brailleroledescription
+	aria.prop.brailleroledescription =
+		attribute aria-brailleroledescription {
+			string
+		}
 
 ## colcount
 	aria.prop.colcount =
