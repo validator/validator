@@ -27,4 +27,6 @@
 *.htm      linguist-vendored
 *.html     linguist-vendored
 *.xhtml    linguist-vendored
+*.rnc      linguist-language=RelaxNG
+*.rng      linguist-language=RelaxNG
 *.sch      linguist-language=Schematron
