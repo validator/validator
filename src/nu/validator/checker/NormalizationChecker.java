@@ -252,7 +252,8 @@ public final class NormalizationChecker extends Checker {
                 return;
             } else {
                 if (!Normalizer.isNormalized(buf, 0, pos, Normalizer.NFC, 0)) {
-                    errAboutTextRun();
+                    String normalizedText = Normalizer.normalize(new String(buf, 0, pos), Normalizer.NFC, 0);
+                    errAboutTextRun(normalizedText);
                 }
                 pos = 0;
             }
@@ -265,7 +266,8 @@ public final class NormalizationChecker extends Checker {
             }
             if (i > start
                     && !Normalizer.isNormalized(ch, start, i, Normalizer.NFC, 0)) {
-                errAboutTextRun();
+                String normalizedText = Normalizer.normalize(new String(ch, start, i - start), Normalizer.NFC, 0);
+                errAboutTextRun(normalizedText);
             }
             appendToBuf(ch, i, stop);
         }
@@ -277,11 +279,17 @@ public final class NormalizationChecker extends Checker {
      * 
      * @throws SAXException if the <code>ErrorHandler</code> throws
      */
-    private void errAboutTextRun() throws SAXException {
+    private void errAboutTextRun(String normalizedText) throws SAXException {
         if (sourceTextMode) {
-            warn("Source text is not in Unicode Normalization Form C.");
+            warn("Source text is not in Unicode Normalization Form C."
+                    + " Should instead be \u201C" + normalizedText + "\u201D."
+                    + " (Copy and paste that into your source document to replace"
+                    + " the un-normalized text.)");
         } else {
-            warn("Text run is not in Unicode Normalization Form C.");
+            warn("Text run is not in Unicode Normalization Form C."
+                    + " Should instead be \u201C" + normalizedText + "\u201D."
+                    + " (Copy and paste that into your source document to replace"
+                    + " the un-normalized text.)");
         }
         alreadyComplainedAboutThisRun = true;
     }
@@ -416,7 +424,8 @@ public final class NormalizationChecker extends Checker {
     public void flush() throws SAXException {
         if (!alreadyComplainedAboutThisRun
                 && !Normalizer.isNormalized(buf, 0, pos, Normalizer.NFC, 0)) {
-            errAboutTextRun();
+            String normalizedText = Normalizer.normalize(new String(buf, 0, pos), Normalizer.NFC, 0);
+            errAboutTextRun(normalizedText);
         }
         reset();
     }
