@@ -352,14 +352,16 @@ public class SimpleDocumentValidator {
         htmlReader = getWiretap(htmlParser);
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
+        xmlParser.setErrorHandler(docValidationErrHandler);
         if (lexicalHandler != null) {
             xmlParser.setProperty(
                     "http://xml.org/sax/properties/lexical-handler",
                     lexicalHandler);
         }
         xmlReader = new IdFilter(xmlParser);
-        xmlReader.setFeature("http://xml.org/sax/features/string-interning", true);
         xmlReader.setContentHandler(validator.getContentHandler());
+        xmlReader.setErrorHandler(xmlParser.getErrorHandler());
+        xmlReader.setFeature("http://xml.org/sax/features/string-interning", true);
         xmlReader.setFeature(
                 "http://xml.org/sax/features/unicode-normalization-checking",
                 true);
@@ -374,8 +376,7 @@ public class SimpleDocumentValidator {
                     false);
             xmlReader.setEntityResolver(new NullEntityResolver());
         }
-        xmlReader = getWiretap(xmlParser);
-        xmlParser.setErrorHandler(docValidationErrHandler);
+        xmlReader = getWiretap(xmlReader);
         xmlParser.lockErrorHandler();
     }
 
