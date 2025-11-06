@@ -26,6 +26,7 @@
     "html-aria/roles-properties-global/roles-properties-global-main-aria-disabled-true-haswarn.html": "Attribute \u201caria-disabled\u201d is deprecated on element with the attribute \u201crole=main\u201d.",
     "html-aria/roles-properties-global/roles-properties-global-main-aria-haspopup-false-haswarn.html": "Attribute \u201caria-haspopup\u201d is deprecated on element with the attribute \u201crole=main\u201d.",
     "html-aria/roles-properties-global/roles-properties-global-main-aria-haspopup-true-haswarn.html": "Attribute \u201caria-haspopup\u201d is deprecated on element with the attribute \u201crole=main\u201d.",
+    "html-aria/roles-properties-global/roles-properties-global-main-aria-hidden-true-on-body-novalid.html": "\u201caria-hidden=true\u201d must not be used on the \u201cbody\u201d element.",
     "html-aria/roles-properties-global/roles-properties-global-main-aria-invalid-false-haswarn.html": "Attribute \u201caria-invalid\u201d is deprecated on element with the attribute \u201crole=main\u201d.",
     "html-aria/roles-properties-global/roles-properties-global-main-aria-invalid-grammar-haswarn.html": "Attribute \u201caria-invalid\u201d is deprecated on element with the attribute \u201crole=main\u201d.",
     "html-aria/roles-properties-global/roles-properties-global-main-aria-invalid-spelling-haswarn.html": "Attribute \u201caria-invalid\u201d is deprecated on element with the attribute \u201crole=main\u201d.",
