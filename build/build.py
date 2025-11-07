@@ -1325,8 +1325,8 @@ def localPathToJarCompatName(path):
 def prepareLocalEntityJar():
     ensureDirExists(filesDir)
 
-    makeUsage()
-    makeCliHelp()
+    makeUsage(validatorVersion)
+    makeCliHelp(validatorVersion)
 
     buildSchemaDrivers()
     f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
@@ -1360,7 +1360,9 @@ def prepareLocalEntityJar():
         o.close()
 
 
-def makeUsage():
+def makeUsage(version):
+    if os.path.exists(os.path.join(filesDir, "usage")):
+        return
     usageLines = []
     with open(os.path.join(buildRoot, "docs", "vnu.1.md")) as f:
         for line in f:
@@ -1370,17 +1372,26 @@ def makeUsage():
     usageLines.append("\n")
     usageLines.append("For details on all options and usage,"
                       + " try the \"--help\" option or see:\n")
-    usageLines.append("\n")
     usageLines.append("https://validator.github.io/validator/\n")
+    usageLines.append("\n")
+    match = re.search(r'\(([^)]*)\)[^()]*$', version)
+    if match:
+        usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}")  # nopep8
     with open(os.path.join(filesDir, "usage"), "w") as f:
         f.writelines(usageLines)
 
 
-def makeCliHelp():
+def makeCliHelp(version):
+    if os.path.exists(os.path.join(filesDir, "cli-help")):
+        return
     usageLines = []
     with open(os.path.join(buildRoot, "docs", "vnu.1.md")) as f:
         for line in f:
             usageLines.append(stripLeadingHashes(line))
+    usageLines.append("\n")
+    match = re.search(r'\(([^)]*)\)[^()]*$', version)
+    if match:
+        usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}")  # nopep8
     with open(os.path.join(filesDir, "cli-help"), "w") as f:
         f.writelines(usageLines)
 
@@ -1836,6 +1847,9 @@ def main(argv):
                 statistics = 1
             elif arg.startswith("--version="):
                 validatorVersion = arg[10:]
+                ensureDirExists(filesDir)
+                makeUsage(validatorVersion)
+                makeCliHelp(validatorVersion)
             elif arg == '--verbose':
                 # Run build & tests verbosely
                 antCommonArgs.append('-verbose')
