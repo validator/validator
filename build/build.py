@@ -1923,7 +1923,6 @@ def main(argv):
                     icon = 'icon.png'
                 release.runValidator()
             elif arg == 'all':
-                updateSubtrees()
                 release.buildAll()
                 release.runTests()
                 if not stylesheet:
