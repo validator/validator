@@ -166,7 +166,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
-      - name: Verify release assets were uploaded, and are downloadable
+      - name: Verify release assets and release state (not Draft/Pre-release)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXPECTED_ASSETS: |
@@ -177,7 +177,7 @@ jobs:
             vnu.windows.zip
         run: |
           set -euxo pipefail
-          echo 'Fetching release metadata for tag “latest”...'
+          echo 'Fetching release metadata for tag “latest”…'
           release_json=$(gh api repos/${{ github.repository }}/releases/tags/latest)
           asset_names=$(echo "$release_json" | jq -r '.assets[].name')
           echo "Assets found in release:"
@@ -202,6 +202,15 @@ jobs:
             fi
           done
           echo "✅ All release assets are downloadable."
+          if [ "$(echo "$release_json" | jq -r '.draft')" = "true" ]; then
+            echo "::error::Release is still in the Draft state!"
+            exit 1
+          fi
+          if [ "$(echo "$release_json" | jq -r '.prerelease')" = "true" ]; then
+            echo "::error::Release is marked as a Pre-release!"
+            exit 1
+          fi
+          echo "✅ Release is not in the Draft or Pre-release state."
 
   ant-build:
     name: Ant build ${{ matrix.target }}
