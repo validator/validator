@@ -62,6 +62,7 @@ except ImportError:
     CAFILE = None
 from pathlib import Path
 
+os.environ["PYTHONIOENCODING"] = "utf-8"
 javaTargetVersion = '8'
 dockerCmd = 'docker'
 curlCmd = 'curl'
@@ -1364,7 +1365,8 @@ def makeUsage(version):
     if os.path.exists(os.path.join(filesDir, "usage")):
         return
     usageLines = []
-    with open(os.path.join(buildRoot, "docs", "vnu.1.md")) as f:
+    with open(os.path.join(buildRoot, "docs", "vnu.1.md"),
+              encoding="utf-8") as f:
         for line in f:
             usageLines.append(stripLeadingHashes(line))
             if line.startswith("# OPTIONS"):
@@ -1377,7 +1379,7 @@ def makeUsage(version):
     match = re.search(r'\(([^)]*)\)[^()]*$', version)
     if match:
         usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}")  # nopep8
-    with open(os.path.join(filesDir, "usage"), "w") as f:
+    with open(os.path.join(filesDir, "usage"), "w", encoding="utf-8") as f:
         f.writelines(usageLines)
 
 
@@ -1385,14 +1387,15 @@ def makeCliHelp(version):
     if os.path.exists(os.path.join(filesDir, "cli-help")):
         return
     usageLines = []
-    with open(os.path.join(buildRoot, "docs", "vnu.1.md")) as f:
+    with open(os.path.join(buildRoot, "docs", "vnu.1.md"),
+              encoding="utf-8") as f:
         for line in f:
             usageLines.append(stripLeadingHashes(line))
     usageLines.append("\n")
     match = re.search(r'\(([^)]*)\)[^()]*$', version)
     if match:
         usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}")  # nopep8
-    with open(os.path.join(filesDir, "cli-help"), "w") as f:
+    with open(os.path.join(filesDir, "cli-help"), "w", encoding="utf-8") as f:
         f.writelines(usageLines)
 
 
