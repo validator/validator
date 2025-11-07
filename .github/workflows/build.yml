@@ -115,6 +115,42 @@ jobs:
           git push origin :refs/tags/latest || true
           git tag -m latest -fa latest || true
           git push origin main --tags
+      - name: Verify release assets were uploaded, and are downloadable
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXPECTED_ASSETS: |
+            vnu.jar
+            vnu.war
+            vnu.linux.zip
+            vnu.osx.zip
+            vnu.windows.zip
+        run: |
+          set -euxo pipefail
+          echo 'Fetching release metadata for tag “latest”...'
+          release_json=$(gh api repos/${{ github.repository }}/releases/tags/latest)
+          asset_names=$(echo "$release_json" | jq -r '.assets[].name')
+          echo "Assets found in release:"
+          echo "$asset_names"
+          missing=0
+          for expected in $EXPECTED_ASSETS; do
+            if ! echo "$asset_names" | grep -qx "$expected"; then
+              echo "::error::Missing expected asset: $expected"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::One or more expected release assets are missing!"
+            exit 1
+          fi
+          echo "✅ All expected release assets are present."
+          echo "Verifying that release assets are downloadable..."
+          for asset_url in $(echo "$release_json" | jq -r '.assets[].browser_download_url'); do
+            if ! curl -fL --head --silent --max-time 20 "$asset_url" >/dev/null; then
+              echo "::error::Asset not downloadable: $asset_url"
+              exit 1
+            fi
+          done
+          echo "✅ All release assets are downloadable."
       - name: Generate all maven artifacts
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
@@ -253,3 +289,4 @@ jobs:
         run: make VNUJAR=../build/dist/vnu.jar  -C tests/ messages.json
       - name: Check if there are changes to messages.json
         run: cd tests && git diff --exit-code messages.json
+# yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
