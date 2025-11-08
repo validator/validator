@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <title>aria-label: rt</title>
+  <div hidden id=name>labelled by name</div>
+  <main>
+    <div class=test-case>
+    <h3><!--<code>rp</code> and --><code>rt</code></h3>
+      <ruby>
+        <rp aria-label="aria">(</rp>
+        <rt aria-label="aria">fail</rt>
+        <rp aria-label="aria">)</rp>
+      </ruby>
+      <ruby>
+        <rp aria-label="aria">(</rp>
+        <rp aria-label="aria">)</rp>
+      </ruby>
+    </div>
+  </main>

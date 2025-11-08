@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <title>aria-braillelabel: rt</title>
+  <div hidden id=name>labelled by name</div>
+  <main>
+    <div class=test-case>
+    <h3><!--<code>rp</code> and --><code>rt</code></h3>
+      <ruby>
+        <rp aria-braillelabel="aria">(</rp>
+        <rt aria-braillelabel="aria">fail</rt>
+        <rp aria-braillelabel="aria">)</rp>
+      </ruby>
+      <ruby>
+        <rp aria-braillelabel="aria">(</rp>
+        <rp aria-braillelabel="aria">)</rp>
+      </ruby>
+    </div>
+  </main>

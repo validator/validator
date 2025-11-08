@@ -489,6 +489,13 @@ public class Assertions extends Checker {
         return -1;
     }
 
+    private static final Set<String> ROLES_WHICH_CANNOT_BE_NAMED =
+        new LinkedHashSet<>(
+                Arrays.asList("caption", "code", "deletion", "emphasis",
+                    "generic", "insertion", "paragraph", "presentation",
+                    "strong", "subscript", "superscript")
+                );
+
     private static Map<String, Integer> ANCESTOR_MASK_BY_DESCENDANT = new HashMap<>();
 
     private static void registerProhibitedAncestor(String ancestor,
@@ -1335,66 +1342,58 @@ public class Assertions extends Checker {
         return false;
     }
 
-    private boolean isAriaLabelMisuse(String ariaLabel, String localName,
-            String role, Attributes atts) {
-        if (ariaLabel == "") {
-            return false;
-        }
-        if (ariaLabel == null) {
-            return false;
-        }
-        if (Arrays.binarySearch(INTERACTIVE_ELEMENTS, localName) >= 0) {
-            return false;
-        }
-        if (isLabelableElement(localName, atts)) {
-            return false;
-        }
-        // https://html5accessibility.com/stuff/2020/11/07/not-so-short-note-on-aria-label-usage-big-table-edition/
-        if (//
-                // "a" == localName // INTERACTIVE_ELEMENTS
-                "area" == localName // https://github.com/validator/validator/issues/775#issuecomment-494455608
-                || "article" == localName //
-                || "aside" == localName //
-                || "audio" == localName //
-                // "button" == localName // INTERACTIVE_ELEMENTS
-                // "details" == localName // INTERACTIVE_ELEMENTS
-                // "dialog" == localName // INTERACTIVE_ELEMENTS
-                || "dl" == localName //
-                || "fieldset" == localName //
-                || "figure" == localName //
-                || "footer" == localName //
-                || "form" == localName //
-                || "h1" == localName //
-                || "h2" == localName //
-                || "h3" == localName //
-                || "h4" == localName //
-                || "h5" == localName //
-                || "h6" == localName //
-                || "header" == localName //
-                || "hr" == localName //
-                // "iframe" == localName // INTERACTIVE_ELEMENTS
-                || "img" == localName // https://github.com/validator/validator/issues/775
-                // "input" == localName // isLabelableElement
-                || "main" == localName //
-                // "meter" == localName // isLabelableElement
-                || "nav" == localName //
-                || "ol" == localName //
-                // "progress" == localName // isLabelableElement
-                || "section" == localName //
-                // "select" == localName // isLabelableElement
-                || "summary" == localName // https://github.com/validator/validator/issues/775#issuecomment-494459220
-                || "svg" == localName //
-                || "table" == localName //
-                // "textarea" == localName // INTERACTIVE_ELEMENTS
-                || "video" == localName //
-                || "ul" == localName //
-        ) {
-            return false;
-        }
-        if (role != null) {
-            return false;
-        }
-        return true;
+    private boolean isProhibitedFromBeingNamed(String localName, String role,
+            Attributes atts) {
+        if (// https://github.com/validator/validator/issues/1334
+                (localName.contains("-") // custom element
+                || "a" == localName && atts.getIndex("", "href") == -1)
+                || "abbr" == localName
+                || ("area" == localName && atts.getIndex("", "href") == -1)
+                || "b" == localName
+                || "bdi" == localName
+                || "bdo" == localName
+                || "body" == localName
+                || "caption" == localName
+                || "cite" == localName
+                || "code" == localName
+                || "data" == localName
+                || "del" == localName
+                || "div" == localName
+                || "em" == localName
+                || "figcaption" == localName
+                || "i" == localName
+                || "ins" == localName
+                || "kbd" == localName
+                || "legend" == localName
+                || "mark" == localName
+                || "p" == localName
+                || "pre" == localName
+                || "q" == localName
+                || "rp" == localName
+                || "rt" == localName
+                || "s" == localName
+                || "samp" == localName
+                || "small" == localName
+                || "span" == localName
+                || "strong" == localName
+                || "sub" == localName
+                || "sup" == localName
+                || "time" == localName
+                || "u" == localName
+                || "var" == localName) {
+                    if (role != null && role != "") {
+                        List<String> roles = Arrays.asList(role.trim() //
+                                .toLowerCase().split("\\s+"));
+                        for (String roleValue : roles) {
+                            if (ROLES_WHICH_CANNOT_BE_NAMED.contains(roleValue)) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                    return true;
+                }
+        return false;
     }
 
     private boolean isLabelableElement(String localName, Attributes atts) {
@@ -1496,7 +1495,8 @@ public class Assertions extends Checker {
     private final void errContainedInOrOwnedBy(String role, Locator locator)
             throws SAXException {
         err("An element with \u201Crole=" + role + "\u201D"
-                + " must be contained in, or owned by, an element with "
+                + " must be contained in, or owned by, an element with the "
+                + "\u201Crole\u201D value "
                 + renderRoleSet(REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(role))
                 + ".", locator);
     }
@@ -2058,7 +2058,6 @@ public class Assertions extends Checker {
         String role = null;
         String inputTypeVal = null;
         String activeDescendant = null;
-        String ariaLabel = null;
         String owns = null;
         String forAttr = null;
         boolean href = false;
@@ -2279,8 +2278,19 @@ public class Assertions extends Checker {
                     } else if ("aria-activedescendant" == attLocal
                             && !isEmptyAtt) {
                         activeDescendant = atts.getValue(i);
-                    } else if ("aria-label" == attLocal && !isEmptyAtt) {
-                        ariaLabel = atts.getValue(i);
+                    } else if (!isEmptyAtt && ("aria-label" == attLocal
+                                || "aria-labelledby" == attLocal
+                                || "aria-braillelabel" == attLocal)) {
+                        if (isProhibitedFromBeingNamed(localName, role, atts)) {
+                            String message =
+                                    "The \u201C" + attLocal + "\u201D attribute"
+                                    + " must not be specified on any"
+                                    + " \u201C" + localName + "\u201D element"
+                                    + " unless the element has a"
+                                    + " \u201Crole\u201D value other than "
+                                    + renderRoleSet(ROLES_WHICH_CANNOT_BE_NAMED);
+                            err(message + ".");
+                        }
                     } else if ("aria-owns" == attLocal && !isEmptyAtt) {
                         owns = atts.getValue(i);
                     } else if ("list" == attLocal) {
@@ -3795,13 +3805,6 @@ public class Assertions extends Checker {
         }
         allIds.addAll(ids);
 
-        if (isAriaLabelMisuse(ariaLabel, localName, role, atts)) {
-            warn("Possible misuse of \u201Caria-label\u201D. (If you disagree"
-                    + " with this warning, file an issue report or send e-mail"
-                    + " to www-validator@w3.org.)");
-            incrementUseCounter("aria-label-misuse-found");
-        }
-
         // aria-activedescendant accompanied by aria-owns
         if (activeDescendant != null && !"".equals(activeDescendant)) {
             // String activeDescendantVal = atts.getValue("",
@@ -4077,17 +4080,17 @@ public class Assertions extends Checker {
     }
 
     private CharSequence renderRoleSet(Set<String> roles) {
-        boolean first = true;
+        int size = roles.size();
         StringBuilder sb = new StringBuilder();
+        int index = 0;
         for (String role : roles) {
-            if (first) {
-                first = false;
-            } else {
-                sb.append(" or ");
+            sb.append('\u201C').append(role).append('\u201D');
+            index++;
+            if (index < size - 1) {
+                sb.append(", ");
+            } else if (index == size - 1) {
+                sb.append(", or ");
             }
-            sb.append("\u201Crole=");
-            sb.append(role);
-            sb.append('\u201D');
         }
         return sb;
     }
