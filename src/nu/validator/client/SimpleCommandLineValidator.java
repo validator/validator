@@ -31,10 +31,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.net.URL;
-import java.util.Enumeration;
 import java.util.Properties;
-import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
 import nu.validator.htmlparser.sax.XmlSerializer;

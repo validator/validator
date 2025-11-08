@@ -85,12 +85,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import org.apache.log4j.Logger;
-
 public class Assertions extends Checker {
-
-    private static final Logger log4j = //
-            Logger.getLogger(Assertions.class);
 
     private static boolean equalsIgnoreAsciiCase(String one, String other) {
         if (other == null) {
@@ -1873,7 +1868,7 @@ public class Assertions extends Checker {
             return false;
         }
 
-        Map<String, Object> importMapObject = (Map<String, Object>) importMap;
+        final Map<String, Object> importMapObject = (Map<String, Object>) importMap;
 
         for (Map.Entry<String, Object> importMapEntry : importMapObject.entrySet()) {
             String specifierType = importMapEntry.getKey();
@@ -3805,10 +3800,6 @@ public class Assertions extends Checker {
                     + " with this warning, file an issue report or send e-mail"
                     + " to www-validator@w3.org.)");
             incrementUseCounter("aria-label-misuse-found");
-            String systemId = getDocumentLocator().getSystemId();
-            if (systemId != null && hasPageEmitterInCallStack()) {
-                log4j.info("aria-label misuse " + systemId);
-            }
         }
 
         // aria-activedescendant accompanied by aria-owns
