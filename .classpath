@@ -39,12 +39,13 @@
 			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-logging/javadocs/api-release/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/icu4j-70.1.jar">
+	<classpathentry kind="lib" path="dependencies/icu4j-75.1.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://icu-project.org/apiref/icu4j/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="dependencies/salvation-2.7.2.jar"/>
+        <classpathentry kind="lib" path="dependencies/javax.json-1.1.4.jar"/>
 	<classpathentry kind="lib" path="dependencies/javax.servlet-api-4.0.1.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://docs.oracle.com/javaee/7/api/"/>
@@ -55,6 +56,7 @@
 			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
 		</attributes>
 	</classpathentry>
+        <classpathentry kind="lib" path="dependencies/jetty-jakarta-servlet-api-5.0.2.jar"/>
 	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.4.44.v20210927.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
@@ -83,4 +85,5 @@
 	<classpathentry kind="lib" path="css-validator/css-validator.jar"/>
 	<classpathentry kind="lib" path="jing-trang/build/jing.jar" sourcepath="jing-trang/mod/validate/src/main"/>
 	<classpathentry kind="output" path="classes"/>
+	<classpathentry kind="lib" path="jars/validator.jar"/>
 </classpath>
