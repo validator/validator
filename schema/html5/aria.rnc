@@ -790,6 +790,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "columnheader" }
 	
 	common.attrs.aria |= aria.columnheader
+	common.attrs.aria.role.columnheader |= aria.columnheader
 
 ## combobox
 	aria.combobox =
@@ -943,6 +944,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "grid" }
 	
 	common.attrs.aria |= aria.grid
+	common.attrs.aria.role.grid |= aria.grid
 	
 ## gridcell
 	aria.gridcell =
@@ -961,6 +963,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "gridcell" }
 	
 	common.attrs.aria |= aria.gridcell
+	common.attrs.aria.role.gridcell |= aria.gridcell
 
 ## group
 	aria.group =
@@ -1373,6 +1376,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "row" }
 	
 	common.attrs.aria |= aria.row
+	common.attrs.aria.role.row |= aria.row
 
 ## rowgroup
 	aria.rowgroup =
@@ -1403,6 +1407,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "rowheader" }
 	
 	common.attrs.aria |= aria.rowheader
+	common.attrs.aria.role.rowheader |= aria.rowheader
 
 ## searchbox
 	aria.searchbox =
@@ -1652,6 +1657,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "timer" }
 	
 	common.attrs.aria |= aria.timer
+	common.attrs.aria.role.timer |= aria.timer
 
 ## toolbar
 	aria.toolbar =
@@ -1675,6 +1681,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "tooltip" }
 	
 	common.attrs.aria |= aria.tooltip
+	common.attrs.aria.role.tooltip |= aria.tooltip
 
 ## tree
 	aria.tree =
@@ -1708,6 +1715,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 			attribute role { string "treegrid" }
 	
 	common.attrs.aria |= aria.treegrid
+	common.attrs.aria.role.treegrid |= aria.treegrid
 
 ## treeitem
 	aria.treeitem =
