@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title >ARIA in HTML - Test Cases</title>
+	  <link rel="stylesheet" href="../results/styles.css">
+		<style>
+			body{
+				font-size: 1em;
+			}
+			.flex {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: stretch;
+			}
+			.widgetDemo {
+				border: 1px solid #EEE;
+				margin: .5em;
+				padding: 5px;
+				flex: 1 0 0;
+				min-width: calc(300px - 1em);
+			}
+			.widgetDemo p {
+				color: #696969;
+				font-size: 1.125em;
+				padding: 0;
+				margin: .75em 0;
+			}
+			.testcase {
+				margin: 2em 0;
+			}
+			h3{
+				margin: .5em 0;
+				border: 0;
+				padding: 0;
+			}
+			h2 {font-size:2em}
+			.testcase > *:not(p) {
+				border: 1px dotted;
+				padding: .25em;
+			}
+
+			html .testcase input {
+				  background: #1b75bc;
+				  border: 1px solid black;
+				  border-radius: .125em;
+				  color: #fff;
+				  font-family: "Roboto Slab", Cambria, Georgia, serif;
+				  font-size: 1.125em;
+				  letter-spacing: 1px;
+				  padding: .5em 1em;
+			}
+		</style>
+	</head>
+<body>
+
+	<header>
+	<h1>ARIA in HTML - test case for additional role allowances for <code>button</code> and <code>input type=button</code> elements</h1>
+		<p>last updated 15 February 2023</p>
+	</header>
+	<main>
+		<h2>Tests:</h2>
+		
+		<h3>
+			Allowances for <code>input type=reset</code>, <code>input type=image</code> and <code>type=submit</code>
+		</h3>
+		<p>
+    		Authors are allowed to use the roles
+    		<code>button</code>, <code>checkbox</code>, <code>combobox</code>, <code>gridcell</code>, <code>link</code>, <code>menuitem</code>, <code>menuitemcheckbox</code>, <code>menuitemradio</code>, <code>option</code>, <code>radio</code>, <code>slider</code>, <code>switch</code>, <code>tab</code> or <code>treeitem</code> on a <code>input type=reset</code>, <code>input type=image</code> or <code>input type=submit</code> element.
+    	</p>
+    	<p>
+    		All allowed roles on the button element are now allowed on these elements as well. While there are far better elements to use as a base for these roles, if an author has no other choice and they end up using these elements to make an otherwise accessible custom widget, there is no reason to preclude their use as other automated and manual checks can call out potential accessibility gaps.
+    	</p>
+		<div class="flex">
+	 
+			<div class="widgetDemo">
+				<div class="testcase">
+					<p>input type=reset</p>
+					<input type=reset role=checkbox value="role=checkbox" aria-checked=true aria-label=test>
+					<input type=reset role=combobox value="role=combobox" aria-expanded=true aria-controls=d>
+					<div role=grid>
+						<div role=row>
+							<input type=reset role=gridcell value="role=gridcell">
+						</div>
+					</div>
+					<input type=reset role=link value="role=link">
+					<div role=menubar>
+						<input type=reset role=menuitem value="role=menuitem">
+					</div>
+					<div role=menu>
+						<input type=reset role=menuitemcheckbox value="role=menuitemcheckbox" aria-checked=false>
+						<input type=reset role=menuitemradio value="role=menuitemradio" aria-checked=false>
+					</div>
+					<div role=listbox aria-label=test id=d>
+						<input type=reset role=option value="role=option">
+					</div>
+					<input type=reset role=radio value="role=radio" aria-checked=false>
+					<input type=reset role=slider value="role=slider" aria-label=test aria-valuenow=0>
+					<input type=reset role=switch value="role=switch" aria-checked=false>
+					<div role=tablist>
+						<input type=reset role=tab value="role=tab" aria-selected=false>
+					</div>
+					<div role=tree>
+						<input type=reset role=treeitem value="role=treeitem">
+					</div>
+
+					<p>input type=submit</p>
+					<input type=submit role=checkbox value="role=checkbox" aria-checked=true aria-label=test>
+					<input type=submit role=combobox value="role=combobox" aria-expanded=true aria-controls=d2>
+					<div role=grid>
+						<div role=row>
+							<input type=submit role=gridcell value="role=gridcell">
+						</div>
+					</div>
+					<input type=submit role=link value="role=link">
+					<div role=menubar>
+						<input type=submit role=menuitem value="role=menuitem">
+					</div>
+					<div role=menu>
+						<input type=submit role=menuitemcheckbox value="role=menuitemcheckbox" aria-checked=false>
+						<input type=submit role=menuitemradio value="role=menuitemradio" aria-checked=false>
+					</div>
+					<div role=listbox aria-label=test id=d2>
+						<input type=submit role=option value="role=option">
+					</div>
+					<input type=submit role=radio value="role=radio" aria-checked=false>
+					<input type=submit role=slider value="role=slider" aria-label=test aria-valuenow=0>
+					<input type=submit role=switch value="role=switch" aria-checked=false>
+					<div role=tablist>
+						<input type=submit role=tab value="role=tab" aria-selected=false>
+					</div>
+					<div role=tree>
+						<input type=submit role=treeitem value="role=treeitem">
+					</div>
+
+
+					<p>input type=image</p>
+					<input type=image role=checkbox alt="role=checkbox" aria-checked=true aria-label=test>
+					<input type=image role=combobox alt="role=combobox" aria-expanded=true aria-controls=d2>
+					<div role=grid>
+						<div role=row>
+							<input type=image role=gridcell alt="role=gridcell">
+						</div>
+					</div>
+					<input type=image role=link alt="role=link">
+					<div role=menubar>
+						<input type=image role=menuitem alt="role=menuitem">
+					</div>
+					<div role=menu>
+						<input type=image role=menuitemcheckbox alt="role=menuitemcheckbox" aria-checked=false>
+						<input type=image role=menuitemradio alt="role=menuitemradio" aria-checked=false>
+					</div>
+					<div role=listbox aria-label=test id=d3>
+						<input type=image role=option alt="role=option">
+					</div>
+					<input type=image role=radio alt="role=radio" aria-checked=false>
+					<input type=image role=slider alt="role=slider" aria-label=test aria-valuenow=0>
+					<input type=image role=switch alt="role=switch" aria-checked=false>
+					<div role=tablist>
+						<input type=image role=tab alt="role=tab" aria-selected=false>
+					</div>
+					<div role=tree>
+						<input type=image role=treeitem alt="role=treeitem">
+					</div>
+				</div>
+
+				<p>
+					<strong>Expected result:</strong>
+					No errors would be expected for these test cases, as they meet all the necessary requirements for use of these roles (necessary nesting and required attributes). Conformance checkers could provide a warning or guidance to use a different HTML element as a base for these roles, if they so choose.
+				</p>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
