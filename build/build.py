@@ -63,7 +63,7 @@ except ImportError:
 from pathlib import Path
 
 os.environ["PYTHONIOENCODING"] = "utf-8"
-javaTargetVersion = '8'
+javaTargetVersion = '11'
 dockerCmd = 'docker'
 curlCmd = 'curl'
 tarCmd = 'tar'
