@@ -1,0 +1,58 @@
+name: "Feature request"
+description: "Suggest an idea or enhancement for the validator."
+labels: [enhancement]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: "Summary"
+      description: "Describe your feature request in 1 or 2 short sentences."
+      placeholder: "I’d like the validator to…"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Is your feature request related to a problem?"
+      description: "Provide a clear and concise description of the problem this feature would solve."
+      placeholder: "I’m always frustrated when…"
+    validations:
+      required: false
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Describe the solution you’d like"
+      description: "Provide a clear and concise description of what you want to happen."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Describe alternatives you’ve considered"
+      description: "Provide a clear and concise description of any alternative solutions or features you’ve considered."
+    validations:
+      required: false
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: "Use cases"
+      description: "Describe specific scenarios where this feature would be helpful."
+      placeholder: |
+        1. When validating…
+        2. For developers who…
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "Additional context"
+      description: "Add any other context, screenshots, or examples about the feature request here."
+    validations:
+      required: false
+  - type: checkboxes
+    id: will-implement
+    attributes:
+      label: "Contribute an implementation?"
+      description: "If you plan to implement this feature yourself, please check the box below."
+      options:
+        - label: "I’ll contribute an implementation for this myself."
