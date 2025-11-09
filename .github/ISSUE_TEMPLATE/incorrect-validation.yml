@@ -1,0 +1,92 @@
+name: "Incorrect validation"
+description: "Report a validation error on code you believe is correct."
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: "Summary"
+      description: "Describe the validation problem in 1 or 2 short sentences."
+      placeholder: "The validator reports an error on… but this should be valid according to…"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: "Steps to reproduce"
+      description: "Describe the exact steps we can follow to reproduce the validation error."
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "Expected behavior"
+      description: "Describe what validation result you expected (e.g., no errors or specific errors)."
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "Actual behavior"
+      description: "Describe what the validator actually reported."
+    validations:
+      required: true
+  - type: markdown
+    id: reduced-test-case-section
+    attributes:
+      value: |
+        &nbsp; <!-- add some vertical whitespace -->
+        ## Reduced test case
+        Please provide a minimal, self-contained example that demonstrates the validation issue. This is the most important part of your report.
+        > [!IMPORTANT]
+        > A reduced test case helps us isolate the problem quickly. Remove any unnecessary code or markup that does not contribute to reproducing the issue.
+  - type: input
+    id: url
+    attributes:
+      label: "URL being validated"
+      description: "If you’re validating a live URL, provide it here. Otherwise, enter `n/a`."
+      placeholder: https://example.com/page-with-issue.html
+    validations:
+      required: true
+  - type: textarea
+    id: test-case-code
+    attributes:
+      label: "Code to reproduce the validation error"
+      description: "Paste the minimal HTML/CSS/SVG code that reproduces the issue. What you paste in will be formatted as a code block—so no need to add code fence backticks around it."
+      render: html
+    validations:
+      required: true
+  - type: textarea
+    id: error-messages
+    attributes:
+      label: "Validator error messages"
+      description: "Copy and paste the exact error or warning messages from the validator. What you paste in will be formatted as a code block."
+      render: shell
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        &nbsp; <!-- add some vertical whitespace -->
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots or screen recordings"
+      description: "Optionally, drag and drop screenshots or screen recordings that show the validation error."
+  - type: textarea
+    id: spec-reference
+    attributes:
+      label: "Specification reference"
+      description: "If applicable, provide links to the relevant specification sections that support your case."
+      placeholder: https://html.spec.whatwg.org/multipage/…
+  - type: checkboxes
+    id: will-patch
+    attributes:
+      label: "Contribute a patch?"
+      description: "If you plan to contribute a patch for this issue yourself, please check the box below. If you do, please try to send a pull request within a reasonable timeframe."
+      options:
+        - label: "I’ll contribute a patch for this myself."

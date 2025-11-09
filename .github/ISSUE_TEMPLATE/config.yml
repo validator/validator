@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "Read the documentation"
+    url: https://github.com/validator/validator/blob/main/README.md
+    about: "Learn about the Nu Html Checker (v.Nu) and how to use it."
+  - name: "Contributing guide"
+    url: https://github.com/validator/validator/blob/main/CONTRIBUTING.md
+    about: "Learn how to contribute to the validator project."
+  - name: "Ask a question"
+    url: https://github.com/validator/validator/discussions
+    about: "Ask questions and discuss the validator with the community."
+  - name: "HTML specification"
+    url: https://html.spec.whatwg.org/
+    about: "Read the official HTML Living Standard specification."
