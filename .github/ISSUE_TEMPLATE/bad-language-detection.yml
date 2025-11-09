@@ -1,56 +1,56 @@
-name: Bad Language Detection
-description: Report an incorrectly detected language on a page
-labels: [ "wrong-lang" ]
+name: "Bad language detection"
+description: "Report an incorrectly detected language on a page"
+labels: [wrong-lang]
 assignees: []
 body:
   - type: input
     id: detected-language
     attributes:
-      label: Detected language
-      description: What was the language detected by vnu?
-      placeholder: English
+      label: "Detected language"
+      description: "What was the language detected by vnu?"
+      placeholder: "English"
     validations:
       required: yes
   - type: input
     id: expected-language
     attributes:
-      label: Expected language
-      description: What language did you expect to be detected?
-      placeholder: English
+      label: "Expected language"
+      description: "What language did you expect to be detected?"
+      placeholder: "English"
     validations:
       required: yes
   - type: checkboxes
     id: vnu-instance
     attributes:
-      label: Instance of vnu
-      description: What instance of vnu did you use?
+      label: "Instance of vnu"
+      description: "What instance of vnu did you use?"
       options:
         - label: https://validator.w3.org/nu/
-        - label: vnu web interface (private instance)
-        - label: Command line
-        - label: vnu HTTP Client
+        - label: "vnu web interface (private instance)"
+        - label: "Command line"
+        - label: "vnu HTTP Client"
     validations:
       required: true
   - type: input
     id: vnu-version
     attributes:
-      label: Version of vnu
+      label: "Version of vnu"
       description: |
         What is the version of vnu?
          - On the command line, run vnu with the `--version` option.
          - If you use the Web UI, the version is displayed on the result page.
-      placeholder: 24.10.30
+      placeholder: "24.10.30"
     validations:
       required: yes
   - type: checkboxes
     id: input-type
     attributes:
-      label: Source type
-      description: What was the type of your input?
+      label: "Source type"
+      description: "What was the type of your input?"
       options:
-        - label: Address or URL
-        - label: File
-        - label: Text input
+        - label: "Address or URL"
+        - label: "File"
+        - label: "Text input"
     validations:
       required: true
   - type: markdown
@@ -61,7 +61,7 @@ body:
   - type: textarea
     id: attached-file
     attributes:
-      label: Attached file
+      label: "Attached file"
       description: |
         Please drop or attach a copy of the file in the field below.
         You may use the `.txt` or `.html` extension.
@@ -70,16 +70,16 @@ body:
   - type: input
     id: url
     attributes:
-      label: Validated URL or Address
-      description: The **URL** of the page, if you validate by address/URL.
+      label: "Validated URL or Address"
+      description: "The **URL** of the page, if you validate by address/URL."
       placeholder: https://www.example.com/page.html
     validations:
       required: no
   - type: textarea
     id: text-input
     attributes:
-      label: Raw source / Text input
-      description: If the source type is "Text input", copy the raw sources below as is (**without using markdown ticks**).
+      label: "Raw source / text input"
+      description: "If the source type is “Text input”, copy the raw sources below as is (**without using markdown ticks**)."
       placeholder: |
         <!DOCTYPE html>
         <html lang="cmn">
@@ -97,6 +97,6 @@ body:
   - type: textarea
     id: additional-information
     attributes:
-      label: Additional information
+      label: "Additional information"
     validations:
       required: no
