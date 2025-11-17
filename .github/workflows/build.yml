@@ -57,7 +57,7 @@ jobs:
       - name: Test
         shell: bash
         env:
-          TOMCAT_VERSION: 8.5.29
+          TOMCAT_VERSION: 11.0.14
         run: |
           java -jar build/dist/vnu.jar site/nu-about.html
           jar xf build/dist/vnu.jar && javap -verbose nu/validator/client/SimpleCommandLineValidator.class | grep "major version: 55"
