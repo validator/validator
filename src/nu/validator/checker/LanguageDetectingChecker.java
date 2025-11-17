@@ -614,25 +614,24 @@ public class LanguageDetectingChecker extends Checker {
                         "nu.validator.checker.enableLangDetection"))
                 && htmlStartTagLocator != null) {
             detectLanguageAndCheckAgainstDeclaredLanguage();
-                }
+        } else {
+            warnIfMissingLang();
+        }
     }
 
     private void warnIfMissingLang() throws SAXException {
-        if (!htmlElementHasLang) {
+        if (!htmlElementHasLang
+                && !"true".equals(System.getProperty("nu.validator.checker.ignoreMissingLang"))) {
             String message = "Consider adding a \u201Clang\u201D"
-                    + " attribute to the \u201Chtml\u201D"
-                    + " start tag to declare the language"
-                    + " of this document.";
+                + " attribute to the \u201Chtml\u201D"
+                + " start tag to declare the language"
+                + " of this document.";
             warn(message, htmlStartTagLocator);
         }
     }
 
     private void detectLanguageAndCheckAgainstDeclaredLanguage()
             throws SAXException {
-        if (nonWhitespaceCharacterCount < MIN_CHARS) {
-            warnIfMissingLang();
-            return;
-        }
         if ("zxx".equals(declaredLangCode) // "No Linguistic Content"
                 || "eo".equals(declaredLangCode) // Esperanto
                 || "la".equals(declaredLangCode) // Latin

@@ -126,6 +126,9 @@ public class TestRunner extends MessageEmitterAdapter {
     }
 
     private void checkHtmlFile(File file) throws IOException, SAXException {
+        if (file.getName().contains("missing-lang")) {
+            System.setProperty("nu.validator.checker.ignoreMissingLang", "false");
+        }
         if (!file.exists()) {
             if (verbose) {
                 out.println(String.format("\"%s\": warning: File not found.",
@@ -152,6 +155,7 @@ public class TestRunner extends MessageEmitterAdapter {
                 out.flush();
             }
         }
+        System.setProperty("nu.validator.checker.ignoreMissingLang", "true");
     }
 
     private boolean isXhtml(File file) {
@@ -575,6 +579,7 @@ public class TestRunner extends MessageEmitterAdapter {
         }
         verbose = false;
         String messagesFilename = null;
+        System.setProperty("nu.validator.checker.ignoreMissingLang", "true");
         System.setProperty("nu.validator.datatype.warn", "true");
         for (String arg : args) {
             if ("--verbose".equals(arg)) {
