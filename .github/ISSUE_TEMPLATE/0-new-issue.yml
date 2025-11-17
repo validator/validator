@@ -1,0 +1,104 @@
+name: "New issue"
+description: "Report a problem with vnu checker behavior."
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: "Summary"
+      description: "Describe the problem in 1 or 2 short sentences."
+      placeholder: "The checker reports an error about… but shouldn’t, according to…"
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        &nbsp; <!-- add some vertical whitespace -->
+        ## Document/snippet which reproduces the problem
+        If the problem is with checker behavior for particular markup or a particular document, please provide either:
+        - a URL for document that reproduces the problem when checked
+        - a snippet of HTML/CSS/SVG that reproduces the problem
+        > [!IMPORTANT]
+        > If you’re reporting a CSS-checking issue, and you can reproduce it with the CSS validator at https://jigsaw.w3.org/css-validator/, then you should report the issue at https://github.com/w3c/css-validator/issues/new rather than here.
+
+        If the problem _isn’t_ with a particular markup or a particular document, but instead with other general behavior of the checker, then just put `n/a` in all the form fields in this section, and skip ahead to the _**Steps to reproduce, and expected behavior vs actual behavior**_ section.
+  - type: input
+    id: url
+    attributes:
+      label: "URL for document that reproduces the problem"
+      description: "If you have a document at URL which reproduces the problem, provide it here. Otherwise, enter `n/a`."
+      placeholder: https://example.com/page-with-issue.html
+    validations:
+      required: true
+  - type: textarea
+    id: test-case-code
+    attributes:
+      label: "HTML/CSS/SVG snippet that reproduces the problem"
+      description: "Paste in a HTML/CSS/SVG snippet that reproduces the problem. (This will be formatted as a code block — so, no need to add code fences/backticks.)"
+      render: html
+    validations:
+      required: true
+  - type: textarea
+    id: error-messages
+    attributes:
+      label: "Checker error messages"
+      description: "Copy and paste the exact error or warning messages from the checker. (This will be formatted as a code block — so, no need to add code fences/backticks.)"
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: spec-reference
+    attributes:
+      label: "Spec links/citations"
+      description: "If the checker appears to not be conforming to required spec behavior, provide links and/or citations to relevant spec sections which state the requirements."
+      placeholder: https://html.spec.whatwg.org/multipage/…
+  - type: markdown
+    attributes:
+      value: |
+        &nbsp; <!-- add some vertical whitespace -->
+        ## Steps to reproduce, and expected behavior vs actual behavior
+        This section is mostly for reporting a general problem in the checker behavior that’s not related to particular markup or to a particular document.
+
+        If the problem _is_ with particular markup or a particular document, and you already provided above a URL or snippet for reproducing the problem — and you have no further info to offer here — then just put `n/a` in all the form fields in this section, and skip ahead to the _**Additional details**_ section.
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: "Steps to reproduce"
+      description: "Describe the exact steps we can follow to reproduce the problem."
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "Expected behavior"
+      description: "Describe what checker behavior you expected (e.g., no errors, or specific errors)."
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "Actual behavior"
+      description: "Describe what the actual checker behavior."
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        &nbsp; <!-- add some vertical whitespace -->
+        ## Additional details
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots or screen recordings"
+      description: "Drag and drop any screenshots or screen recordings that you want include to show the checker problem."
+  - type: checkboxes
+    id: will-patch
+    attributes:
+      label: "Contribute a patch?"
+      description: "If you plan to contribute a patch for this issue yourself, please check the box below. If you do, please try to send a pull request within a reasonable timeframe."
+      options:
+        - label: "I’ll contribute a patch for this myself."
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json

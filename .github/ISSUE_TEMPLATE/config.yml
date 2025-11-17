@@ -1,14 +1,15 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
+  - name: "Discussion and questions"
+    url: https://github.com/validator/validator/discussions
+    about: "Ask questions and discuss the vnu checker with others."
   - name: "Read the documentation"
     url: https://github.com/validator/validator/blob/main/README.md
-    about: "Learn about the Nu Html Checker (v.Nu) and how to use it."
+    about: "Learn about the vnu checker and how to use it."
   - name: "Contributing guide"
     url: https://github.com/validator/validator/blob/main/CONTRIBUTING.md
-    about: "Learn how to contribute to the validator project."
-  - name: "Ask a question"
-    url: https://github.com/validator/validator/discussions
-    about: "Ask questions and discuss the validator with the community."
-  - name: "HTML specification"
-    url: https://html.spec.whatwg.org/
-    about: "Read the official HTML Living Standard specification."
+    about: "Learn how to contribute to the vnu checker project."
+  - name: "Chat"
+    url: https://whatwg.org/chat
+    about: "You can reach the vnu checker maintainer and other knowledgable people in the WHATWG room on the Matrix network."
+# yaml-language-server: # $schema=https://www.schemastore.org/github-issue-config.json

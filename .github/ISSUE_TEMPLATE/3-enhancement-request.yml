@@ -1,5 +1,5 @@
-name: "Feature request"
-description: "Suggest an idea or enhancement for the validator."
+name: "Enhancement request"
+description: "Suggest an enhancement or new feature for the checker."
 labels: [enhancement]
 body:
   - type: textarea
@@ -7,7 +7,7 @@ body:
     attributes:
       label: "Summary"
       description: "Describe your feature request in 1 or 2 short sentences."
-      placeholder: "I’d like the validator to…"
+      placeholder: "I’d like the checker to…"
     validations:
       required: true
   - type: textarea
@@ -21,10 +21,10 @@ body:
   - type: textarea
     id: solution
     attributes:
-      label: "Describe the solution you’d like"
+      label: "Describe in more detail the solution you’d like"
       description: "Provide a clear and concise description of what you want to happen."
     validations:
-      required: true
+      required: false
   - type: textarea
     id: alternatives
     attributes:
@@ -36,7 +36,7 @@ body:
     id: use-cases
     attributes:
       label: "Use cases"
-      description: "Describe specific scenarios where this feature would be helpful."
+      description: "Describe specific scenarios where this feature would be helpful"
       placeholder: |
         1. When validating…
         2. For developers who…
@@ -46,13 +46,7 @@ body:
     id: additional-context
     attributes:
       label: "Additional context"
-      description: "Add any other context, screenshots, or examples about the feature request here."
+      description: "Add any other context, screenshots, or examples about the feature request here"
     validations:
       required: false
-  - type: checkboxes
-    id: will-implement
-    attributes:
-      label: "Contribute an implementation?"
-      description: "If you plan to implement this feature yourself, please check the box below."
-      options:
-        - label: "I’ll contribute an implementation for this myself."
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
