@@ -59,7 +59,6 @@ jobs:
         env:
           TOMCAT_VERSION: 8.5.29
         run: |
-          java -jar build/dist/vnu.jar build/dist/index.html
           java -jar build/dist/vnu.jar site/nu-about.html
           jar xf build/dist/vnu.jar && javap -verbose nu/validator/client/SimpleCommandLineValidator.class | grep "major version: 52"
           curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v${{ env.TOMCAT_VERSION }}/bin/apache-tomcat-${{ env.TOMCAT_VERSION }}.zip
