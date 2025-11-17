@@ -35,6 +35,7 @@ import io.mola.galimatias.URL;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +55,14 @@ public class LanguageDetectingChecker extends Checker {
 
     private static final String profilesDir = //
             "nu/validator/localentities/files/language-profiles/";
+
+    private static BufferedReader profileReaderForLanguageTag(String languageTag)
+            throws UnsupportedEncodingException {
+            return new BufferedReader(new InputStreamReader(
+                        LanguageDetectingChecker.class.getClassLoader() //
+                        .getResourceAsStream(profilesDir + languageTag),
+                        "UTF-8"));
+    }
 
     private static final Map<String, String[]> LANG_TAGS_BY_TLD = //
             new HashMap<>();
@@ -207,10 +216,7 @@ public class LanguageDetectingChecker extends Checker {
                 }
                 List<String> profiles = new ArrayList<>();
                 for (String languageTag : languageTags) {
-                    profiles.add((new BufferedReader(new InputStreamReader(
-                            LanguageDetectingChecker.class.getClassLoader() //
-                                    .getResourceAsStream(profilesDir + languageTag),
-                            "UTF-8"))).readLine());
+                    profiles.add(profileReaderForLanguageTag(languageTag).readLine());
                 }
                 DetectorFactory.clear();
                 DetectorFactory.loadProfile(profiles);
