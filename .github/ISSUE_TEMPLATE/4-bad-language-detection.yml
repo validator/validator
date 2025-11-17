@@ -1,0 +1,40 @@
+name: "Report bad language detection"
+description: "Report an incorrectly detected language on a page"
+labels: [wrong-lang]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: "URL for document that reproduces the bad-language-detection problem"
+      description: |
+        If you have a URL for a document which reproduces the problem, provide it here. Otherwise, enter `n/a`.
+      placeholder: https://www.example.com/page.html
+  - type: textarea
+    id: attached-file
+    attributes:
+      label: "Document upload"
+      description: |
+        if you want to upload a document that reproduces the problem, drag and drop in the document here. Otherwise, enter `n/a`.
+    validations:
+      required: true
+  - type: textarea
+    id: text-input
+    attributes:
+      label: "Raw source / text input"
+      description: |
+        If you want to provide the raw source for a document that reproduces the problem, please copy and paste it in here. Otherwise, enter `n/a`.
+      placeholder: |
+        <!DOCTYPE html>
+        <html lang="cmn">
+          <head>
+            <meta charset="utf-8">
+            <title>官话</title>
+          </head>
+          <body>
+            <p>官话</p>
+          </body>
+        </html>
+      render: html
+    validations:
+      required: true
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json

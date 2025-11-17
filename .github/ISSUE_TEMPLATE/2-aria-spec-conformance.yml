@@ -1,0 +1,29 @@
+name: "ARIA conformance request"
+description: "Request support for new or updated requirements in the ARIA in HTML spec or ARIA spec."
+labels: [aria-conformance]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        To request support for new or updated requirements in the ARIA in HTML spec or ARIA spec, please provide both:
+        - one or more URLs for the relevant spec sections or spec commits which specify the requirements
+        - **an HTML snippet/document that can be used for testing checker support for the requirements**
+        > [!IMPORTANT]
+        > Providing a test case along with your request will help significantly in getting support for the spec requirements added to the checker.
+  - type: input
+    id: spec-url
+    attributes:
+      label: "Spec URL"
+      description: "Provide one or more URLs to the relevant sections in the ARIA in HTML spec or ARIA spec."
+      placeholder: https://w3c.github.io/html-aria/… | https://w3c.github.io/aria/…
+    validations:
+      required: true
+  - type: textarea
+    id: test-case
+    attributes:
+      label: "Test case"
+      description: "Provide an HTML snippet for testing checker support for the spec requirements. (This will be formatted as a code block — so, no need to add code fences/backticks.)"
+      render: html
+    validations:
+      required: true
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
