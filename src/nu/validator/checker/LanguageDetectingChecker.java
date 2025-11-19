@@ -83,6 +83,8 @@ public class LanguageDetectingChecker extends Checker {
 
     private String declaredLangCode;
 
+    private boolean hasHtmlElement;
+
     private boolean htmlElementHasLang;
 
     private String dirAttrValue;
@@ -626,7 +628,7 @@ public class LanguageDetectingChecker extends Checker {
     }
 
     private void warnIfMissingLang() throws SAXException {
-        if (!htmlElementHasLang
+        if (hasHtmlElement && !htmlElementHasLang
                 && !"true".equals(System.getProperty("nu.validator.checker.ignoreMissingLang"))) {
             String message = "Consider adding a \u201Clang\u201D"
                 + " attribute to the \u201Chtml\u201D"
@@ -795,6 +797,7 @@ public class LanguageDetectingChecker extends Checker {
         nonWhitespaceCharacterCount = 0;
         elementContent = new StringBuilder();
         documentContent = new StringBuilder();
+        hasHtmlElement = false;
         htmlElementHasLang = false;
         htmlElementLangAttrValue = "";
         declaredLangCode = "";
@@ -827,7 +830,8 @@ public class LanguageDetectingChecker extends Checker {
                 || Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
             return;
         }
-        if ("html".equals(localName)) {
+        if ("html".equals(localName) && "http://www.w3.org/1999/xhtml" == uri) {
+            hasHtmlElement = true;
             htmlStartTagLocator = new LocatorImpl(getDocumentLocator());
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("lang".equals(atts.getLocalName(i))) {

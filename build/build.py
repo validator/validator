@@ -1228,6 +1228,16 @@ class Release():
 
         runCmd(args)
 
+        # TestRunner only checks HTML files, but we need to test this
+        # particular case that’s explicitly non-HTML; so we do it here.
+        svgTestArgs = ["--also-check-svg", "--Werror"]
+        svgTestArgs.append(os.path.join(
+            buildRoot, "tests", "html", "attributes",
+            "lang", "missing-lang-attribute-non-html-isvalid.svg"))
+        if not os.path.exists(vnuCmd):
+            self.createRuntimeImage()
+        execCmd(vnuCmd, svgTestArgs, True)
+
     def buildAll(self):
         self.createJarOrWar("jar")
 
