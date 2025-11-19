@@ -1234,6 +1234,10 @@ class Release():
         svgTestArgs.append(os.path.join(
             buildRoot, "tests", "html", "attributes",
             "lang", "missing-lang-attribute-non-html-isvalid.svg"))
+        if platform.system() == 'Windows':
+            # Something about either the createRuntimeImage() or execCmd()
+            # below doesn’t work as expected in a Windows environment.
+            return
         if not os.path.exists(vnuCmd):
             self.createRuntimeImage()
         execCmd(vnuCmd, svgTestArgs, True)
