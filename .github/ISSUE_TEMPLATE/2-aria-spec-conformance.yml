@@ -1,5 +1,5 @@
 name: "ARIA conformance request"
-description: "Request support for new or updated requirements in the ARIA in HTML spec or ARIA spec."
+description: "Request support for new or updated requirements in the ARIA in HTML spec or ARIA spec"
 labels: [aria-conformance]
 body:
   - type: markdown

@@ -1,5 +1,5 @@
 name: "HTML conformance request"
-description: "Request support for new or updated requirements in the HTML spec."
+description: "Request support for new or updated requirements in the HTML spec"
 labels: [spec-conformance]
 body:
   - type: markdown

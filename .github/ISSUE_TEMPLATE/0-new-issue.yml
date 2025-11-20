@@ -1,5 +1,5 @@
 name: "New issue"
-description: "Report a problem with vnu checker behavior."
+description: "Report a problem with vnu checker behavior"
 body:
   - type: textarea
     id: summary
@@ -94,11 +94,4 @@ body:
     attributes:
       label: "Screenshots or screen recordings"
       description: "Drag and drop any screenshots or screen recordings that you want include to show the checker problem."
-  - type: checkboxes
-    id: will-patch
-    attributes:
-      label: "Contribute a patch?"
-      description: "If you plan to contribute a patch for this issue yourself, please check the box below. If you do, please try to send a pull request within a reasonable timeframe."
-      options:
-        - label: "I’ll contribute a patch for this myself."
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json

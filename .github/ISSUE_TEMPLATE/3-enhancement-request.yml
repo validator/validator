@@ -1,5 +1,5 @@
 name: "Enhancement request"
-description: "Suggest an enhancement or new feature for the checker."
+description: "Suggest an enhancement or new feature for the checker"
 labels: [enhancement]
 body:
   - type: textarea
