@@ -11,7 +11,7 @@ jobs:
     name: Prepare the build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
   build:
     name: Build on ${{ matrix.os }} with Java ${{ matrix.java }}
     needs: prep
@@ -35,7 +35,7 @@ jobs:
                               github.ref == 'refs/heads/main' &&
                               matrix.java == 25 }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Java JDK
         uses: actions/setup-java@v5
         with:
@@ -231,7 +231,7 @@ jobs:
           validator-split-server,
         ]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Java JDK
         uses: actions/setup-java@v5
         with:
@@ -248,7 +248,7 @@ jobs:
     needs: prep
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Java JDK
         uses: actions/setup-java@v5
         with:
@@ -277,7 +277,7 @@ jobs:
     needs: prep
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Java JDK
         uses: actions/setup-java@v5
         with:
