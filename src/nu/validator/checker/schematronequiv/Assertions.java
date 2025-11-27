@@ -749,10 +749,10 @@ public class Assertions extends Checker {
      * Map of global aria attributes as keys and array of roles for which they have been deprecated for, as values.
      * Array of roles is sorted according to {@linkplain Comparable natural ordering}
      */
-    private static final Map<String, String[]> ARIA_DEPRECATED_GLOBAL_ATTRIBUTES = new HashMap<>();
+    private static final Map<String, String[]> ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE = new HashMap<>();
     
     static {
-        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-disabled", new String[] {
+        ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.put("aria-disabled", new String[] {
                 "alert", "alertdialog", "article", "associationlist",
                 "associationlistitemkey", "associationlistitemvalue", "banner",
                 "blockquote", "caption", "cell", "code", "command", "comment",
@@ -765,7 +765,7 @@ public class Assertions extends Checker {
                 "section", "sectionhead", "status", "strong", "structure",
                 "subscript", "suggestion", "superscript", "table", "tabpanel",
                 "term", "time", "timer", "tooltip", "widget", "window" });
-        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-errormessage",
+        ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.put("aria-errormessage",
                 new String[] { "alert", "alertdialog", "article",
                         "associationlist", "associationlistitemkey",
                         "associationlistitemvalue", "banner", "blockquote",
@@ -785,7 +785,7 @@ public class Assertions extends Checker {
                         "subscript", "suggestion", "superscript", "tab",
                         "table", "tablist", "tabpanel", "term", "time", "timer",
                         "toolbar", "tooltip", "treeitem", "widget", "window" });
-        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-haspopup", new String[] {
+        ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.put("aria-haspopup", new String[] {
                 "alert", "alertdialog", "article", "associationlist",
                 "associationlistitemkey", "associationlistitemvalue", "banner",
                 "blockquote", "caption", "cell", "checkbox", "code", "command",
@@ -802,7 +802,7 @@ public class Assertions extends Checker {
                 "suggestion", "superscript", "switch", "table", "tablist",
                 "tabpanel", "term", "time", "timer", "toolbar", "tooltip",
                 "tree", "treegrid", "widget", "window" });
-        ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.put("aria-invalid", new String[] {
+        ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.put("aria-invalid", new String[] {
                 "alert", "alertdialog", "article", "associationlist",
                 "associationlistitemkey", "associationlistitemvalue", "banner",
                 "blockquote", "button", "caption", "cell", "code", "command",
@@ -819,6 +819,8 @@ public class Assertions extends Checker {
                 "structure", "subscript", "suggestion", "superscript", "tab",
                 "table", "tablist", "tabpanel", "term", "time", "timer",
                 "toolbar", "tooltip", "treeitem", "widget", "window" });
+        ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.put("aria-level",
+                new String[] { "listitem" });
     }
 
     /**
@@ -2718,13 +2720,13 @@ public class Assertions extends Checker {
             }
             
             if (role != null && !role.isEmpty()) {
-                for (Map.Entry<String, String[]> attributeAndRoles : ARIA_DEPRECATED_GLOBAL_ATTRIBUTES.entrySet()) {
+                for (Map.Entry<String, String[]> attributeAndRoles : ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.entrySet()) {
                     if (atts.getIndex("", attributeAndRoles.getKey()) >= 0
                             && Arrays.binarySearch(attributeAndRoles.getValue(),
                                     role) >= 0) {
-                        warn("Attribute \u201C" + attributeAndRoles.getKey()
-                                + "\u201D is deprecated on element with the attribute"
-                                + " \u201Crole=" + role + "\u201D.");
+                        warn("The \u201C" + attributeAndRoles.getKey()
+                                + "\u201D attribute should not be used on any"
+                                + " element which has \u201Crole=" + role + "\u201D.");
                     }
                 }
             }
