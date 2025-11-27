@@ -421,11 +421,8 @@ namespace local = ""
 		element object { object.inner.phrasing & object.attrs }
 	object.attrs =
 		(	common.attrs
-		&	(	(	object.attrs.data
-				&	object.attrs.type?
-				)
-			|	object.attrs.type
-			)
+		&	object.attrs.data
+		&	object.attrs.type?
 #		&	object.attrs.classid?
 #		&	object.attrs.codebase?
 #		&	object.attrs.codetype?
