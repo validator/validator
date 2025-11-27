@@ -1333,15 +1333,6 @@ public class Assertions extends Checker {
         this.sourceIsCss = sourceIsCss;
     }
 
-    private boolean hasPageEmitterInCallStack() {
-        for (StackTraceElement el : Thread.currentThread().getStackTrace()) {
-            if (el.getClassName().equals("nu.validator.servlet.PageEmitter")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private boolean isProhibitedFromBeingNamed(String localName, String role,
             Attributes atts) {
         if (// https://github.com/validator/validator/issues/1334
