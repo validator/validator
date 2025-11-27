@@ -2749,15 +2749,17 @@ public class Assertions extends Checker {
                             + "\u201Ca\u201D ancestor with the "
                             + "\u201Chref\u201D attribute.");
                 }
-                if (atts.getIndex("", "alt") < 0) {
+                if (atts.getIndex("", "alt") < 0
+                        && atts.getIndex("", "aria-label") < 0
+                        && atts.getIndex("", "aria-labelledby") < 0) {
                     if (role != null) {
-                        err("An \u201Cimg\u201D element with no \u201Calt\u201D"
-                                + " attribute must not have a"
+                        err("An \u201Cimg\u201D element with accessible name"
+                                + " must not have a"
                                 + " \u201Crole\u201D attribute.");
                     }
                     if (hasAriaAttributesOtherThanAriaHidden) {
-                        err("An \u201Cimg\u201D element with no \u201Calt\u201D"
-                                + " attribute must not have any"
+                        err("An \u201Cimg\u201D element with no accessible name"
+                                + " must not have any"
                                 + " \u201Caria-*\u201D attributes other than"
                                 + " \u201Caria-hidden\u201D.");
                     }
