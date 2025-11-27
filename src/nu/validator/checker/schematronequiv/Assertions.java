@@ -1661,7 +1661,8 @@ public class Assertions extends Checker {
         openMediaElements.remove(node);
         if ("http://www.w3.org/1999/xhtml" == uri) {
             if ("figure" == localName) {
-                if (node.hasFigcaptionContent() && (node.role != null)) {
+                if (node.hasFigcaptionContent() && node.role != null
+                        && !"figure".equals(node.role)) {
                     err("A \u201Cfigure\u201D element with a"
                             + " \u201Cfigcaption\u201D descendant must not"
                             + " have a \u201Crole\u201D attribute.");
