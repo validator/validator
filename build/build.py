@@ -1228,12 +1228,15 @@ class Release():
 
         runCmd(args)
 
-        # TestRunner only checks HTML files, but we need to test this
-        # particular case that’s explicitly non-HTML; so we do it here.
+        # TestRunner only checks HTML files, but we need to test these
+        # particular cases, too; so we do that here.
         svgTestArgs = ["--also-check-svg", "--Werror"]
         svgTestArgs.append(os.path.join(
             buildRoot, "tests", "html", "attributes",
             "lang", "missing-lang-attribute-non-html-isvalid.svg"))
+        svgTestArgs.append(os.path.join(
+            buildRoot, "tests", "svg",
+            "stoplight-titles-compatibility.svg"))
         if platform.system() == 'Windows':
             # Something about either the createRuntimeImage() or execCmd()
             # below doesn’t work as expected in a Windows environment.

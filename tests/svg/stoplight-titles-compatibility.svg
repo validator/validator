@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="320px" width="140px" 
+     aria-labelledby="title-main">
+    <title id="title-main">Stoplight with Titled Lights,
+        Redundant Cross-Browser Compatibility Edition
+    </title>
+    <defs aria-hidden="true">
+        <circle id="light" cx="70" r="30" />
+    </defs>
+    <rect x="20" y="20" width="100" height="280" 
+          fill="blue" stroke="black" stroke-width="3"
+          aria-hidden="true" />
+    <g stroke="black" stroke-width="2" role="presentation">
+        <use xlink:href="#light" y="80" fill="red"
+             role="img" aria-labelledby="title-red">
+            <title id="title-red">Red means Stop</title>
+        </use>
+        <use xlink:href="#light" y="160" fill="yellow"
+             role="img" aria-labelledby="title-yellow">
+            <title id="title-yellow">Yellow means Slow</title>
+        </use>
+        <use xlink:href="#light" y="240" fill="#40CC40"
+             role="img" aria-labelledby="title-green">
+            <title id="title-green">Green means Go</title>
+        </use>
+    </g>
+</svg>
