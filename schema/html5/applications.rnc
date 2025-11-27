@@ -136,6 +136,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	dialog.attrs.open?
 		&	(	common.attrs.aria.implicit.dialog
 			|	common.attrs.aria.role.alertdialog
+			|	common.attrs.aria.role.dialog
 			)?
 		)
 		dialog.attrs.open =

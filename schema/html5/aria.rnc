@@ -68,7 +68,9 @@ common.attrs.aria.implicit.definition |=
 	(	aria.state.expanded? )
 
 common.attrs.aria.implicit.dialog |=
-	(	aria.state.expanded? )
+	(	aria.state.expanded?
+	&	aria.prop.modal?
+	)
 
 common.attrs.aria.implicit.document |=
 	(	aria.state.expanded? )
