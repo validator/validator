@@ -2100,10 +2100,11 @@ public class Assertions extends Checker {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
                 String attUri = atts.getURI(i);
-                boolean isEmptyAtt = "".equals(atts.getValue(i));
+                String attLocal = atts.getLocalName(i);
+                boolean isEmptyAriaAttribute = "".equals(atts.getValue(i))
+                    && attLocal.startsWith("aria-");
                 if (attUri.length() == 0) {
-                    String attLocal = atts.getLocalName(i);
-                    if ("aria-hidden".equals(attLocal) && !isEmptyAtt) {
+                    if ("aria-hidden".equals(attLocal) && !isEmptyAriaAttribute) {
                         if (Arrays.binarySearch(
                                 ARIA_HIDDEN_NOT_ALLOWED_ELEMENTS,
                                 localName) >= 0) {
@@ -2123,11 +2124,11 @@ public class Assertions extends Checker {
                             err("\u201caria-hidden=true\u201d must not be used"
                                     + " on the \u201cbody\u201d element.");
                         }
-                    } else if (attLocal.startsWith("aria-") && !isEmptyAtt) {
+                    } else if (attLocal.startsWith("aria-") && !isEmptyAriaAttribute) {
                         hasAriaAttributesOtherThanAriaHidden = true;
                     }
                     if (ATTRIBUTES_WITH_IMPLICIT_STATE_OR_PROPERTY.contains(
-                            attLocal) && (!isEmptyAtt || "hidden".equals(attLocal))) {
+                            attLocal) && (!isEmptyAriaAttribute || "hidden".equals(attLocal))) {
                         String stateOrProperty = "aria-" + attLocal;
                         if (atts.getIndex("", stateOrProperty) > -1) {
                             String attLocalValue = atts.getValue("", attLocal);
@@ -2270,9 +2271,9 @@ public class Assertions extends Checker {
                     } else if ("role" == attLocal) {
                         role = atts.getValue(i);
                     } else if ("aria-activedescendant" == attLocal
-                            && !isEmptyAtt) {
+                            && !isEmptyAriaAttribute) {
                         activeDescendant = atts.getValue(i);
-                    } else if (!isEmptyAtt && ("aria-label" == attLocal
+                    } else if (!isEmptyAriaAttribute && ("aria-label" == attLocal
                                 || "aria-labelledby" == attLocal
                                 || "aria-braillelabel" == attLocal)) {
                         if (isProhibitedFromBeingNamed(localName, role, atts)) {
@@ -2285,7 +2286,7 @@ public class Assertions extends Checker {
                                     + renderRoleSet(ROLES_WHICH_CANNOT_BE_NAMED);
                             err(message + ".");
                         }
-                    } else if ("aria-owns" == attLocal && !isEmptyAtt) {
+                    } else if ("aria-owns" == attLocal && !isEmptyAriaAttribute) {
                         owns = atts.getValue(i);
                     } else if ("list" == attLocal) {
                         list = atts.getValue(i);
