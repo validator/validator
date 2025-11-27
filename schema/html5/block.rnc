@@ -62,8 +62,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element ul { ul.inner & ul.attrs }
 	ul.attrs =
 		(	common.attrs
-		&	(	(	common.attrs.aria.role.directory
-				|	common.attrs.aria.role.group
+		&	(	(	common.attrs.aria.role.group
 				|	common.attrs.aria.role.list
 				|	common.attrs.aria.role.listbox
 				|	common.attrs.aria.role.menu
@@ -115,8 +114,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	ol.attrs.start?
 		&	ol.attrs.reversed?
 		&	ol.attrs.type?
-		&	(	(	common.attrs.aria.role.directory
-				|	common.attrs.aria.role.group
+		&	(	(	common.attrs.aria.role.group
 				|	common.attrs.aria.role.list
 				|	common.attrs.aria.role.listbox
 				|	common.attrs.aria.role.menu

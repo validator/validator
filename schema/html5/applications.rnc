@@ -154,7 +154,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	menu.attrs =
 		(	common.attrs
 		&	(	common.attrs.aria.implicit.list
-			|	common.attrs.aria.role.directory
 			|	common.attrs.aria.role.group
 			|	common.attrs.aria.role.list
 			|	common.attrs.aria.role.listbox

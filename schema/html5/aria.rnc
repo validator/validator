@@ -866,17 +866,6 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 	common.attrs.aria |= aria.dialog
 	common.attrs.aria.role.dialog |= aria.dialog
 
-## directory
-	aria.directory =
-		(	aria.role.directory
-		&	aria.state.expanded?
-		)
-		aria.role.directory = 
-			attribute role { string "directory" }
-
-	common.attrs.aria |= aria.directory
-	common.attrs.aria.role.directory |= aria.directory
-
 ## document
 	aria.document =
 		(	aria.role.document
