@@ -81,6 +81,18 @@ common.attrs.aria.implicit.figure |=
 common.attrs.aria.implicit.form |=
 	(	aria.state.expanded? )
 
+common.attrs.aria.implicit.gridcell |=
+	(	aria.prop.level? # net inherited
+	&	aria.prop.readonly? # not inherited
+	&	aria.state.selected? # not inherited
+	&	aria.state.expanded?
+	&	aria.prop.required?
+	&	aria.prop.colspan?
+	&	aria.prop.colindex?
+	&	aria.prop.rowspan?
+	&	aria.prop.rowindex?
+	)
+
 common.attrs.aria.implicit.group |=
 	(	aria.state.expanded?
 	&	aria.prop.activedescendant?
