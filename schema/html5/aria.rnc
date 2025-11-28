@@ -51,8 +51,10 @@ common.attrs.aria.implicit.cell |=
 	)
 
 common.attrs.aria.implicit.checkbox |=
-	(	aria.prop.required?
-	&	aria.state.checked?
+	(	aria.state.checked?
+	&	aria.state.expanded?
+	&	aria.prop.readonly?
+	&	aria.prop.required?
 	)
 
 common.attrs.aria.implicit.combobox |=
