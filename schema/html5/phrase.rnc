@@ -401,7 +401,11 @@ referrerpolicy =
 	br.elem =
 		element br { br.inner & br.attrs }
 	br.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
+		&	aria.state.hidden?
 		&	common.attrs.aria.role.presentation?
 		)
 	br.inner =
@@ -414,7 +418,11 @@ referrerpolicy =
 	wbr.elem =
 		element wbr { wbr.inner & wbr.attrs }
 	wbr.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
+		&	aria.state.hidden?
 		&	common.attrs.aria.role.presentation?
 		)
 	wbr.inner =
