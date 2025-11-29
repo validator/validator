@@ -686,6 +686,7 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("progress", "progressbar");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("section", "region");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("summary", "button");
+        ELEMENTS_WITH_IMPLICIT_ROLE.put("s", "deletion");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("table", "table");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("tbody", "rowgroup");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("textarea", "textbox");
