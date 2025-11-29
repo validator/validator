@@ -14,8 +14,8 @@ docs/wiki:
     remote_url: https://github.com/validator/validator.wiki.git
     remote_name: wiki
     remote_branch: master
-    last_local_merge: 516707a7cff7e475701bdda2f086479b41aa9d60
-    current_commit: d609ea887f548f9bbba534fe8c8a0bbf83b2f3d1
+    last_local_merge: 976e3d5371ea45b1dd9e65aecc9748618231ede1
+    current_commit: 80f20d9f98b02c8ffe41c308f2b88afcd2af9e7f
 galimatias:
     remote_url: https://github.com/validator/galimatias.git
     remote_name: galimatias
