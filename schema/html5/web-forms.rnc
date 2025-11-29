@@ -483,6 +483,23 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 ## Shared Definitions for Complex Button
 	
+	button.attrs.command =
+		attribute command {
+			(w:string "toggle-popover"
+			| w:string "show-popover"
+			| w:string "hide-popover"
+			| w:string "close"
+			| w:string "request-close"
+			| w:string "show-modal"
+			| xsd:string {
+				pattern = "--.*"
+			}
+			)
+		}
+	button.attrs.commandfor =
+		attribute commandfor {
+			common.data.idref
+		}
 	button.attrs.value =
 		attribute value {
 			string
@@ -510,6 +527,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	button.submit.attrs.type?
+		&	button.attrs.command?
+		&	button.attrs.commandfor?
 		&	button.attrs.value?
 		&	button.attrs.popover-controls
 		&	(	common.attrs.aria.implicit.button
@@ -544,6 +563,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	button.reset.attrs.type
+		&	button.attrs.command?
+		&	button.attrs.commandfor?
 		&	button.attrs.value? #REVISIT I guess this still affects the DOM
 		&	button.attrs.popover-controls
 		&	(	common.attrs.aria.implicit.button
@@ -578,6 +599,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	button.button.attrs.type
+		&	button.attrs.command?
+		&	button.attrs.commandfor?
 		&	button.attrs.value? #REVISIT I guess this still affects the DOM
 		&	button.attrs.popover-controls
 		&	(	common.attrs.aria.implicit.button

@@ -1,0 +1,22 @@
+<!doctype html><html lang><meta charset=utf-8>
+<title>test</title>
+<div id="popover-target" popover>Popover target</div>
+<dialog id="dialog-target">Dialog target</dialog>
+<div id="custom-target">Custom command target</div>
+<button command="toggle-popover" commandfor="popover-target" type="button">
+  toggle-popover
+</button>
+<button command="show-popover" commandfor="popover-target" type="submit">
+  show-popover
+</button>
+<button command="hide-popover" commandfor="popover-target" type="reset">
+  hide-popover
+</button>
+<button command="close" commandfor="dialog-target">
+  close
+</button>
+<button command="request-close" commandfor="dialog-target">
+  request-close
+</button>
+<button command="show-modal" commandfor="dialog-target"> </button>
+<button command="--example" commandfor="custom-target"></button>

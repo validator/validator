@@ -232,6 +232,7 @@ namespace local = ""
 			                    | onchange
 			                    | onclick
 			                    | onclose
+			                    | oncommand
 			                    | oncontextlost
 			                    | oncontextmenu
 			                    | oncontextrestored

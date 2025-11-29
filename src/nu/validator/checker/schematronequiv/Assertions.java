@@ -1440,6 +1440,8 @@ public class Assertions extends Checker {
 
     private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<>();
 
+    private LinkedHashSet<IdrefLocator> commandForReferences = new LinkedHashSet<>();
+
     private LinkedHashSet<IdrefLocator> formElementReferences = new LinkedHashSet<>();
 
     private LinkedHashSet<IdrefLocator> needsAriaOwner = new LinkedHashSet<>();
@@ -1567,6 +1569,17 @@ public class Assertions extends Checker {
             }
         }
 
+        // button commandfor
+        for (IdrefLocator idrefLocator : commandForReferences) {
+            if (!allIds.contains(idrefLocator.getIdref())) {
+                err("The value of the \u201Ccommandfor\u201D attribute of the"
+                        + " \u201Cbutton\u201D element must be the ID of an"
+                        + " element in the same tree as the"
+                        + " \u201Cbutton\u201D with the \u201Ccommandfor\u201D"
+                        + " attribute.",
+                        idrefLocator.getLocator());
+            }
+        }
         // references to IDs from form attributes
         for (IdrefLocator idrefLocator : formElementReferences) {
             if (!formElementIds.contains(idrefLocator.getIdref())) {
@@ -2015,6 +2028,7 @@ public class Assertions extends Checker {
         ariaOwnsIdsByRole.clear();
         needsAriaOwner.clear();
         formControlReferences.clear();
+        commandForReferences.clear();
         formElementReferences.clear();
         formControlIds.clear();
         formElementIds.clear();
@@ -3186,6 +3200,15 @@ public class Assertions extends Checker {
                 if (forVal != null) {
                     formControlReferences.add(new IdrefLocator(
                             new LocatorImpl(getDocumentLocator()), forVal));
+                }
+            }
+
+            // button commandfor
+            if ("button" == localName) {
+                String commandforVal = atts.getValue("", "commandfor");
+                if (commandforVal != null) {
+                    commandForReferences.add(new IdrefLocator(
+                            new LocatorImpl(getDocumentLocator()), commandforVal));
                 }
             }
 

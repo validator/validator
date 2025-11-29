@@ -119,6 +119,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onchange?
 		&	scripting.attr.onclick?
 		&	scripting.attr.onclose?
+		&	scripting.attr.oncommand?
 		&	scripting.attr.oncontextlost?
 		&	scripting.attr.oncontextmenu?
 		&	scripting.attr.oncontextrestored?
@@ -202,6 +203,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onclick { common.data.functionbody }
 	scripting.attr.onclose =
 		attribute onclose { common.data.functionbody }
+	scripting.attr.oncommand =
+		attribute oncommand { common.data.functionbody }
 	scripting.attr.oncontextlost =
 		attribute oncontextlost { common.data.functionbody }
 	scripting.attr.oncontextmenu =
