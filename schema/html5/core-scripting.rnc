@@ -112,6 +112,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	scripting.attr.onauxclick?
 		&	scripting.attr.onbeforeinput?
 		&	scripting.attr.onbeforematch?
+		&	scripting.attr.onbeforetoggle?
 		&	scripting.attr.onblur?
 		&	scripting.attr.oncancel?
 		&	scripting.attr.oncanplay?
@@ -189,6 +190,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onbeforeinput { common.data.functionbody }
 	scripting.attr.onbeforematch =
 		attribute onbeforematch { common.data.functionbody }
+	scripting.attr.onbeforetoggle =
+		attribute onbeforetoggle { common.data.functionbody }
 	scripting.attr.onblur =
 		attribute onblur { common.data.functionbody }
 	scripting.attr.oncancel =

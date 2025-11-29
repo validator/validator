@@ -225,6 +225,7 @@ namespace local = ""
 			                    | onauxclick
 			                    | onbeforeinput
 			                    | onbeforematch
+			                    | onbeforetoggle
 			                    | onblur
 			                    | oncancel
 			                    | oncanplay
