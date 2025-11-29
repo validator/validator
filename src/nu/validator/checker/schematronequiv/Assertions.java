@@ -3769,6 +3769,18 @@ public class Assertions extends Checker {
                         + " an \u201Col\u201D element or a"
                         + " \u201Cul\u201D element.");
             }
+            if (atts.getIndex("", "aria-expanded") > -1) {
+                if (atts.getIndex("", "popovertarget") > -1) {
+                    err("The \u201caria-expanded\u201D attribute must not be"
+                            + " used on any element which has a"
+                            + " \u201Cpopovertarget\u201D attribute.");
+                }
+                if (atts.getIndex("", "command") > -1) {
+                    err("The \u201caria-expanded\u201D attribute must not be"
+                            + " used on any element which has a"
+                            + " \u201Ccommand\u201D attribute.");
+                }
+            }
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
