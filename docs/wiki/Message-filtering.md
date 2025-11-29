@@ -44,7 +44,7 @@ regular expression that will match all the messages. The typical way to do that 
 expressions is to OR multiple patterns together using the "`|`" character.
 
     java -jar ~/vnu.jar \
-      --filterpattern=".*Unicode Normalization.*|.*appears to be written in.*" FILE.html
+      --filterpattern ".*Unicode Normalization.*|.*appears to be written in.*" FILE.html
 
 ## You can filter messages in the network API and Web checker
 
