@@ -61,7 +61,7 @@ jobs:
         run: |
           java -jar build/dist/vnu.jar site/nu-about.html
           python ./checker.py self-test
-          python ./checker.py test
+          python ./checker.py test-all
       - name: Import GPG signing key
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: crazy-max/ghaction-import-gpg@v5

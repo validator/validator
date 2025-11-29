@@ -1244,6 +1244,14 @@ class Release():
         if not os.path.exists(vnuCmd):
             self.createRuntimeImage()
         execCmd(vnuCmd, svgTestArgs, True)
+
+    def runOtherTests(self):
+        if platform.system() == 'Windows':
+            # Something about either the createRuntimeImage() or execCmd()
+            # below doesn’t work as expected in a Windows environment.
+            return
+        if not os.path.exists(vnuCmd):
+            self.createRuntimeImage()
         specTestArgs = ["--verbose"]
         specTestArgs.extend(["--filterpattern",
                              ".*which is less than the column count.*"])
@@ -1273,7 +1281,7 @@ class Release():
             "https://websockets.spec.whatwg.org/",
             "https://xhr.spec.whatwg.org/",
             ])
-        execCmd(vnuCmd, specTestArgs, False)
+        execCmd(vnuCmd, specTestArgs, True)
         legacyEncodingCoverageTestArgs = ["--verbose"]
         legacyEncodingCoverageTestArgs.extend(
                 ["--filterpattern",
@@ -1976,6 +1984,9 @@ def main(argv):
                 generateRunScript()
             elif arg == 'test':
                 release.runTests()
+            elif arg == 'test-all':
+                release.runTests()
+                release.runOtherTests()
             elif arg == 'check':
                 if not os.path.exists(vnuCmd):
                     release.createRuntimeImage()
