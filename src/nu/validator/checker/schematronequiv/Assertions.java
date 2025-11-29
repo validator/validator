@@ -194,6 +194,7 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("menuitem", "Use script to handle \u201Ccontextmenu\u201D event instead.");
         OBSOLETE_ELEMENTS.put("nextid", "Use GUIDs instead.");
         OBSOLETE_ELEMENTS.put("noembed", "Use the \u201Cobject\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("param", "Use the \u201Cdata\u201D attribute of the \u201Cobject\u201D element to set the URL of the external resource.");
         OBSOLETE_ELEMENTS.put("plaintext", "Use the \u201Ctext/plain\u201D MIME type instead.");
         OBSOLETE_ELEMENTS.put("rb", "");
         OBSOLETE_ELEMENTS.put("rtc", "");

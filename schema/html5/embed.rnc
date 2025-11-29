@@ -458,36 +458,12 @@ namespace local = ""
 				common.data.browsing-context
 			}
 	object.inner.flow =
-		(	param.elem*
-		,	common.inner.transparent.flow
-		)
+		( common.inner.transparent.flow )
 	object.inner.phrasing =
-		(	param.elem*
-		,	common.inner.phrasing
-		)
+		( common.inner.phrasing )
 
 	common.elem.flow |= object.elem.flow
 	common.elem.phrasing |= object.elem.phrasing
-
-## Initialization Parameters: <param>
-
-	param.elem =
-		element param { param.inner & param.attrs }
-	param.attrs =
-		(	common.attrs
-		&	param.attrs.name
-		&	param.attrs.value
-		)
-		param.attrs.name =
-			attribute name {
-				string
-			}
-		param.attrs.value =
-			attribute value {
-				string
-			}
-	param.inner =
-		( empty )
 
 ## Inline Frame: <iframe>
 

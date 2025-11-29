@@ -73,6 +73,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.flow |= applet.elem
 	common.elem.phrasing |= applet.elem
 
+## Initialization Parameters: <param>
+
+	param.elem =
+		element param { common.inner.anything & common.attr.anything }
+
+	common.elem.flow |= param.elem
+	common.elem.phrasing |= param.elem
+
 ## Frame Set: <frameset>
 
 	frameset.elem =

@@ -1714,7 +1714,7 @@
     "html/elements/option/label-novalid.html": "Bad value \u201c\u201d for attribute \u201clabel\u201d on element \u201coption\u201d: Bad non-empty string: Must not be empty.",
     "html/elements/option/model-novalid.html": "Element \u201coption\u201d without attribute \u201clabel\u201d must not be empty.",
     "html/elements/p/model-novalid.html": "No \u201cp\u201d element in scope but a \u201cp\u201d end tag seen.",
-    "html/elements/param/model-novalid.html": "Element \u201cparam\u201d not allowed as child of element \u201cbody\u201d in this context. (Suppressing further errors from this subtree.)",
+    "html/elements/param/model-novalid.html": "The \u201cparam\u201d element is obsolete. Use the \u201cdata\u201d attribute of the \u201cobject\u201d element to set the URL of the external resource.",
     "html/elements/picture/always-matching-source-media-all-spaces-with-following-source-srcset-novalid.html": "Value of \u201cmedia\u201d attribute here must not be \u201call\u201d.",
     "html/elements/picture/always-matching-source-media-all-with-following-source-srcset-novalid.html": "Value of \u201cmedia\u201d attribute here must not be \u201call\u201d.",
     "html/elements/picture/always-matching-source-media-empty-with-following-source-srcset-novalid.html": "Value of \u201cmedia\u201d attribute here must not be empty.",
