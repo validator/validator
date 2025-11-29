@@ -43,12 +43,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.present
 		&	common.attrs.other
 		&	common.attrs.aria?
+		&	aria.global?
 		)
 	a.attrs =
 		(	common.attrs.basic
 		&	common.attrs.i18n
 		&	common.attrs.present
 		&	common.attrs.other
+		&	aria.global?
 		&	shared-hyperlink.attrs.download?
 		&	shared-hyperlink.attrs.target?
 		&	shared-hyperlink.attrs.rel?

@@ -587,6 +587,7 @@ namespace local = ""
 		&	common.attrs.i18n
 		&	common.attrs.present
 		&	common.attrs.other
+		&	aria.global?
 		&	shared-hyperlink.attrs.download?
 		&	(	area.attrs.alt
 			&	shared-hyperlink.attrs.href

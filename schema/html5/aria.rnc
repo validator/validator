@@ -34,8 +34,6 @@ aria.global =
 	&	aria.prop.description?
 	)
 
-common.attrs.other &= aria.global?
-
 ## States and Properties for Native Roles
 
 common.attrs.aria.implicit.button |=
