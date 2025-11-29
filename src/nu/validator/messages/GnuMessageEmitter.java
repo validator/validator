@@ -60,6 +60,7 @@ public class GnuMessageEmitter extends MessageEmitter {
             int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
             throws SAXException {
         try {
+            writer.flush();
             if (systemId == null) {
                 if (fileName != null) {
                     writer.write(fileName, 0, fileName.length);
