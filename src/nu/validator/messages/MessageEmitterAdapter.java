@@ -848,6 +848,18 @@ public class MessageEmitterAdapter implements ErrorHandler {
                         true);
             }
         }
+        if (msg != null && msg.contains(
+                "Bad value \u201Cdirectory\u201D for attribute “role”")) {
+            if (type == MessageType.ERROR) {
+                if (this.errors > 0) {
+                    this.errors--;
+                }
+                this.warnings++;
+                message(MessageType.WARNING, message, systemId, oneBasedLine,
+                        oneBasedColumn, exact, start);
+                return;
+            }
+        }
         if (loggingOk
                 && (type.getSuperType() == "error")
                 && spec != EmptySpec.THE_INSTANCE
