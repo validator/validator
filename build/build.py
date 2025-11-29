@@ -1244,6 +1244,36 @@ class Release():
         if not os.path.exists(vnuCmd):
             self.createRuntimeImage()
         execCmd(vnuCmd, svgTestArgs, True)
+        specTestArgs = ["--verbose"]
+        specTestArgs.extend(["--filterpattern",
+                             ".*which is less than the column count.*"])
+        specTestArgs.extend(["--filterpattern",
+                             ".*Bad value “directory” for attribute “role”.*"])
+        specTestArgs.extend([
+            "https://html.spec.whatwg.org/",
+            "https://compat.spec.whatwg.org/",
+            "https://compression.spec.whatwg.org/",
+            "https://console.spec.whatwg.org/",
+            "https://cookiestore.spec.whatwg.org/",
+            "https://dom.spec.whatwg.org/",
+            "https://encoding.spec.whatwg.org/",
+            "https://fetch.spec.whatwg.org/",
+            "https://fs.spec.whatwg.org/",
+            "https://fullscreen.spec.whatwg.org/",
+            "https://infra.spec.whatwg.org/",
+            "https://mimesniff.spec.whatwg.org/",
+            "https://notifications.spec.whatwg.org/",
+            "https://quirks.spec.whatwg.org/",
+            "https://storage.spec.whatwg.org/",
+            "https://streams.spec.whatwg.org/",
+            "https://testutils.spec.whatwg.org/",
+            "https://url.spec.whatwg.org/",
+            "https://urlpattern.spec.whatwg.org/",
+            "https://webidl.spec.whatwg.org/",
+            "https://websockets.spec.whatwg.org/",
+            "https://xhr.spec.whatwg.org/",
+            ])
+        execCmd(vnuCmd, specTestArgs, False)
 
     def buildAll(self):
         self.createJarOrWar("jar")
