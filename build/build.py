@@ -1274,6 +1274,21 @@ class Release():
             "https://xhr.spec.whatwg.org/",
             ])
         execCmd(vnuCmd, specTestArgs, False)
+        legacyEncodingCoverageTestArgs = ["--verbose"]
+        legacyEncodingCoverageTestArgs.extend(
+                ["--filterpattern",
+                 ".*Text run is not in Unicode Normalization Form C.*"])
+        legacyEncodingCoverageTestArgs.extend(
+                ["--filterpattern",
+                 ".*This document appears to be written in.*"])
+        legacyEncodingCoverageTestArgs.extend(
+                ["--filterpattern",
+                 ".*Document uses the Unicode Private Use Area.*"])
+        legacyEncodingCoverageTestArgs.extend([
+            "https://encoding.spec.whatwg.org/macintosh-bmp.html",
+            "https://encoding.spec.whatwg.org/shift_jis.html",
+            ])
+        execCmd(vnuCmd, legacyEncodingCoverageTestArgs, True)
 
     def buildAll(self):
         self.createJarOrWar("jar")
