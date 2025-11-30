@@ -114,6 +114,7 @@
     "html-aria/misc/br-aria-atomic-novalid.html": "Attribute \u201caria-atomic\u201d not allowed on element \u201cbr\u201d at this point.",
     "html-aria/misc/br-role-separator-novalid.html": "Bad value \u201cseparator\u201d for attribute \u201crole\u201d on element \u201cbr\u201d.",
     "html-aria/misc/dialog-with-role-dialog-haswarn.html": "The \u201cdialog\u201d role is unnecessary for element \u201cdialog\u201d.",
+    "html-aria/misc/dl-with-div-child-with-role-group-novalid.html": "A \u201cdiv\u201d child of a \u201cdl\u201d element must not have any \u201crole\u201d value other than \u201cpresentation\u201d or \u201cnone\u201d.",
     "html-aria/misc/figure-with-role-figure-and-figcaption-haswarn.html": "The \u201cfigure\u201d role is unnecessary for element \u201cfigure\u201d.",
     "html-aria/misc/role-listitem-with-aria-level-haswarn.html": "The \u201caria-level\u201d attribute should not be used on any element which has \u201crole=listitem\u201d.",
     "html-aria/misc/s-role-deletion-haswarn.html": "The \u201cdeletion\u201d role is unnecessary for element \u201cs\u201d.",

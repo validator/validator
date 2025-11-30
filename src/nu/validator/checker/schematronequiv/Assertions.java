@@ -2411,6 +2411,14 @@ public class Assertions extends Checker {
                     }
                 }
             }
+            if ("div".equals(localName) && "dl".equals(parentName)
+                    && role != null
+                    && !role.equals("none")
+                    && !role.equals("presentation")) {
+                err("A \u201Cdiv\u201D child of a \u201Cdl\u201D element must"
+                        + " not have any \u201Crole\u201D value other than"
+                        + " \u201Cpresentation\u201D or \u201Cnone\u201D.");
+            }
             if ("input".equals(localName)) {
                 if (atts.getIndex("", "name") > -1
                         && "isindex".equals(atts.getValue("", "name"))) {
