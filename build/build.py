@@ -66,6 +66,7 @@ os.environ["PYTHONIOENCODING"] = "utf-8"
 javaTargetVersion = '11'
 dockerCmd = 'docker'
 curlCmd = 'curl'
+makeCmd = 'make'
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
@@ -90,6 +91,7 @@ mavenArtifactsDir = os.path.join(distDir, "nu", "validator", "validator",
                                  validatorVersion)
 vnuCmd = os.path.join(distDir, "vnu-runtime-image", "bin", "vnu")
 vnuJar = os.path.join(distDir, "vnu.jar")
+os.environ["VNUJAR"] = str(Path(vnuJar).resolve())
 dependencyDir = os.path.join(buildRoot, "dependencies")
 extrasDir = os.path.join(buildRoot, "extras")
 jarsDir = os.path.join(buildRoot, "jars")
@@ -1298,6 +1300,10 @@ class Release():
             ])
         execCmd(vnuCmd, legacyEncodingCoverageTestArgs, True)
 
+    def makeTestMessages(self):
+        os.chdir("tests")
+        runCmdFromString(makeCmd)
+
     def buildAll(self):
         self.createJarOrWar("jar")
 
@@ -1987,6 +1993,8 @@ def main(argv):
             elif arg == 'test-all':
                 release.runTests()
                 release.runOtherTests()
+            elif arg == 'make-messages':
+                release.makeTestMessages()
             elif arg == 'check':
                 if not os.path.exists(vnuCmd):
                     release.createRuntimeImage()
