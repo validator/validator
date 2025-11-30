@@ -3806,7 +3806,6 @@ public class Assertions extends Checker {
                         role = atts.getValue(i);
                     } else if ("aria-activedescendant" == attLocal
                             && !isEmptyAtt) {
-                        System.out.println("found aria-activedescendant 1");
                         activeDescendant = atts.getValue(i);
                     } else if ("aria-owns" == attLocal && !isEmptyAtt) {
                         owns = atts.getValue(i);
