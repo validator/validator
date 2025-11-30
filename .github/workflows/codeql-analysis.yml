@@ -32,11 +32,11 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           paths-ignore: |
-            css-validator/**
-            jing-trang/**
-            resources/**
-            htmlparser/test-src/**
-            tests/**
+            - 'css-validator/**'
+            - 'jing-trang/**'
+            - 'resources/**'
+            - 'htmlparser/test-src/**'
+            - 'tests/**'
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
