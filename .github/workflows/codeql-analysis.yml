@@ -7,6 +7,7 @@ on:
     branches: [main]
   schedule:
     - cron: '0 0 * * 0'
+  workflow_dispatch:
 
 jobs:
   analyze:
@@ -20,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['javascript', 'python']
+        language: ['java', 'javascript', 'python']
 
     steps:
       - name: Checkout repository
@@ -30,6 +31,12 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
+          paths-ignore: |
+            css-validator/**
+            jing-trang/**
+            resources/**
+            htmlparser/test-src/**
+            tests/**
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
