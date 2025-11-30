@@ -27,6 +27,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Build Java sources
+        run: |
+          ./checker.py build
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
