@@ -457,6 +457,14 @@ public class Assertions extends Checker {
             "noscript", "param", "script", "slot", "source", "style",
             "template", "title", "track" };
 
+    private static final String[] ARIA_GLOBAL_ATTRIBUTES = { "aria-atomic",
+        "aria-braillelabel", "aria-brailleroledescription", "aria-busy",
+        "aria-controls", "aria-current", "aria-describedby", "aria-details",
+        "aria-disabled", "aria-errormessage", "aria-flowto", "aria-haspopup",
+        "aria-hidden", "aria-invalid", "aria-keyshortcuts", "aria-label",
+        "aria-labelledby", "aria-live", "aria-owns", "aria-relevant",
+        "aria-roledescription", "aria-description" };
+
     private static final String[] INTERACTIVE_ELEMENTS = { "a", "button",
             "details", "dialog", "embed", "iframe", "label", "select",
             "textarea" };
@@ -3970,6 +3978,9 @@ public class Assertions extends Checker {
             if ("figure" == localName) {
                 child.setIsCollectingChildren(true);
             }
+            if ("details" == localName) {
+                child.setIsCollectingChildren(true);
+            }
             if (activeDescendant != null && !activeDescendantWithAriaOwns) {
                 openActiveDescendants.put(child,
                         new LocatorImpl(getDocumentLocator()));
@@ -4067,6 +4078,23 @@ public class Assertions extends Checker {
                     }
                 } else {
                         // ARIA
+                }
+            }
+            if ("summary" == localName && "details".equals(parent.name)
+                    && !parent.getCollectedChildren().stream().anyMatch(
+                        s -> "summary" == s.getName())) {
+                for (int i = 0; i < atts.getLength(); i++) {
+                    String attLocal = atts.getLocalName(i);
+                    if ("role".equals(attLocal)
+                            || (Arrays.binarySearch(ARIA_GLOBAL_ATTRIBUTES,
+                                    attLocal) < 0
+                                && !"aria-haspopup".equals(attLocal)
+                                && !"aria-disabled".equals(attLocal))) {
+                        err("The \u201C" + attLocal + "\u201D attribute must"
+                                + " not be used on any \u201Csummary\u201D"
+                                + " element that is a summary for its parent"
+                                + " \u201Cdetails\u201D element.");
+                    }
                 }
             }
             if (parent != null && parent.isCollectingChildren()) {

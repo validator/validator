@@ -248,9 +248,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element summary { summary.inner & summary.attrs }
 	summary.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria.implicit.button
-			|	common.attrs.aria.role.button
-			)?
+		&	common.attrs.aria?
 		)
 	summary.inner =
 		(	common.inner.phrasing
