@@ -71,6 +71,7 @@ import nu.validator.datatype.ImageCandidateStrings;
 import nu.validator.datatype.ImageCandidateURL;
 import nu.validator.htmlparser.impl.NCName;
 import nu.validator.messages.MessageEmitterAdapter;
+import nu.validator.xml.AttributesImpl;
 
 import org.relaxng.datatype.DatatypeException;
 
@@ -888,6 +889,35 @@ public class Assertions extends Checker {
         }
     }
 
+    public class IdReference {
+        private final Locator locator;
+        private final String idref;
+        private final String elementName;
+        private final Attributes attributes;
+        public IdReference(Locator locator, String idref, String elementName,
+                Attributes attributes) {
+            this.locator = locator;
+            this.idref = idref;
+            this.elementName = elementName;
+            this.attributes = attributes;
+        }
+        public Locator getLocator() { return locator; }
+        public String getIdref() { return idref; }
+        public String getElementName() { return elementName; }
+        public Attributes getAttributes() { return attributes; }
+    }
+
+    private class Element {
+        private final String name;
+        private final Attributes attributes;
+        public Element(String name, Attributes attributes) {
+            this.name = name;
+            this.attributes = attributes;
+        }
+        public String getName() { return name; }
+        public Attributes getAttributes() { return attributes; }
+    }
+
     private class StackNode {
         private final int ancestorMask;
 
@@ -900,6 +930,8 @@ public class Assertions extends Checker {
         private final String activeDescendant;
 
         private final String forAttr;
+
+        private final Attributes atts;
 
         private Set<Locator> imagesLackingAlt = new HashSet<>();
 
@@ -945,12 +977,13 @@ public class Assertions extends Checker {
          * @param ancestorMask
          */
         public StackNode(int ancestorMask, String name, String role,
-                String activeDescendant, String forAttr) {
+                String activeDescendant, String forAttr, Attributes atts) {
             this.ancestorMask = ancestorMask;
             this.name = name;
             this.role = role;
             this.activeDescendant = activeDescendant;
             this.forAttr = forAttr;
+            this.atts = atts;
             this.textContent = new StringBuilder();
         }
 
@@ -1439,7 +1472,7 @@ public class Assertions extends Checker {
 
     private Map<StackNode, Locator> openActiveDescendants = new HashMap<>();
 
-    private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<>();
+    private LinkedHashSet<IdReference> formControlReferences = new LinkedHashSet<>();
 
     private LinkedHashSet<IdrefLocator> commandForReferences = new LinkedHashSet<>();
 
@@ -1447,17 +1480,17 @@ public class Assertions extends Checker {
 
     private LinkedHashSet<IdrefLocator> needsAriaOwner = new LinkedHashSet<>();
 
-    private Set<String> formControlIds = new HashSet<>();
+    private Map<String, Element> formControlIds = new HashMap<>();
 
-    private Set<String> formElementIds = new HashSet<>();
+    private Map<String, Element> formElementIds = new HashMap<>();
 
     private LinkedHashSet<IdrefLocator> listReferences = new LinkedHashSet<>();
 
-    private Set<String> listIds = new HashSet<>();
+    private Map<String, Element> listIds = new HashMap<>();
 
     private LinkedHashSet<IdrefLocator> ariaReferences = new LinkedHashSet<>();
 
-    private Set<String> allIds = new HashSet<>();
+    private Map<String, Element> allIds = new HashMap<>();
 
     private int currentFigurePtr;
 
@@ -1561,18 +1594,38 @@ public class Assertions extends Checker {
     @Override
     public void endDocument() throws SAXException {
         // label for
-        for (IdrefLocator idrefLocator : formControlReferences) {
-            if (!formControlIds.contains(idrefLocator.getIdref())) {
+        for (IdReference label : formControlReferences) {
+            String idref = label.getIdref();
+            Element referencedElement = formControlIds.get(idref);
+            if (referencedElement == null) {
                 err("The value of the \u201Cfor\u201D attribute of the"
                         + " \u201Clabel\u201D element must be the ID of a"
                         + " non-hidden form control.",
-                        idrefLocator.getLocator());
+                        label.getLocator());
+            } else if (isLabelableElement(referencedElement.getName(),
+                        referencedElement.getAttributes())) {
+                Attributes labelAttributes = label.getAttributes();
+                if (labelAttributes.getIndex("", "role") > -1) {
+                    err("The \u201Crole\u201D attribute must not be used on any"
+                            + " \u201Clabel\u201D element that is associated"
+                            + " with a labelable element.",
+                            label.getLocator());
+                }
+                for (int i = 0; i < labelAttributes.getLength(); i++) {
+                    String attLocal = labelAttributes.getLocalName(i);
+                    if (attLocal.startsWith("aria-")) {
+                        err("The \u201C" + attLocal + "\u201D attribute must not"
+                                + " be used on any \u201Clabel\u201D element"
+                                + " that is associated with a labelable element.",
+                                label.getLocator());
+                    }
+                }
             }
         }
 
         // button commandfor
         for (IdrefLocator idrefLocator : commandForReferences) {
-            if (!allIds.contains(idrefLocator.getIdref())) {
+            if (!allIds.containsKey(idrefLocator.getIdref())) {
                 err("The value of the \u201Ccommandfor\u201D attribute of the"
                         + " \u201Cbutton\u201D element must be the ID of an"
                         + " element in the same tree as the"
@@ -1583,7 +1636,7 @@ public class Assertions extends Checker {
         }
         // references to IDs from form attributes
         for (IdrefLocator idrefLocator : formElementReferences) {
-            if (!formElementIds.contains(idrefLocator.getIdref())) {
+            if (!formElementIds.containsKey(idrefLocator.getIdref())) {
                 err("The \u201Cform\u201D attribute must refer to a form element.",
                         idrefLocator.getLocator());
             }
@@ -1591,7 +1644,7 @@ public class Assertions extends Checker {
 
         // input list
         for (IdrefLocator idrefLocator : listReferences) {
-            if (!listIds.contains(idrefLocator.getIdref())) {
+            if (!listIds.containsKey(idrefLocator.getIdref())) {
                 err("The \u201Clist\u201D attribute of the \u201Cinput\u201D element must refer to a \u201Cdatalist\u201D element.",
                         idrefLocator.getLocator());
             }
@@ -1599,7 +1652,7 @@ public class Assertions extends Checker {
 
         // ARIA idrefs
         for (IdrefLocator idrefLocator : ariaReferences) {
-            if (!allIds.contains(idrefLocator.getIdref())) {
+            if (!allIds.containsKey(idrefLocator.getIdref())) {
                 err("The \u201C" + idrefLocator.getAdditional()
                         + "\u201D attribute must point to an element in the same document.",
                         idrefLocator.getLocator());
@@ -2065,7 +2118,7 @@ public class Assertions extends Checker {
                         + " descendant of another SVG element \u201Ca\u201D.");
             }
         }
-        Set<String> ids = new HashSet<>();
+        Map<String, Element> ids = new HashMap<>();
         String role = null;
         String inputTypeVal = null;
         String activeDescendant = null;
@@ -2382,7 +2435,8 @@ public class Assertions extends Checker {
                 if (atts.getType(i) == "ID" || "id" == atts.getLocalName(i)) {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
-                        ids.add(attVal);
+                        ids.put(attVal, new Element(localName,
+                                    new AttributesImpl(atts)));
                     }
                 }
             }
@@ -3142,9 +3196,25 @@ public class Assertions extends Checker {
             // labelable elements
             if (isLabelableElement(localName, atts)) {
                 for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
-                    StackNode node = entry.getKey();
+                    StackNode label = entry.getKey();
                     Locator locator = entry.getValue();
-                    if (node.isLabeledDescendants()) {
+                    Attributes labelAttributes = label.atts;
+                    if (labelAttributes.getIndex("", "role") > -1) {
+                        err("The \u201Crole\u201D attribute must not be used on any"
+                                + " \u201Clabel\u201D element that is an"
+                                + " ancestor of a labelable element.",
+                                locator);
+                    }
+                    for (int i = 0; i < labelAttributes.getLength(); i++) {
+                        String attLocal = labelAttributes.getLocalName(i);
+                        if (attLocal.startsWith("aria-")) {
+                            err("The \u201C" + attLocal + "\u201D attribute must not"
+                                    + " be used on any \u201Clabel\u201D element"
+                                    + " that is an ancestor of a labelable element.",
+                                    locator);
+                        }
+                    }
+                    if (label.isLabeledDescendants()) {
                         err("The \u201Clabel\u201D element may contain at most"
                                 + " one \u201Cbutton\u201D, \u201Cinput\u201D,"
                                 + " \u201Cmeter\u201D, \u201Coutput\u201D,"
@@ -3153,7 +3223,7 @@ public class Assertions extends Checker {
                         warn("\u201Clabel\u201D element with multiple labelable"
                                 + " descendants.", locator);
                     } else {
-                        node.setLabeledDescendants();
+                        label.setLabeledDescendants();
                     }
                 }
                 if ((ancestorMask & LABEL_FOR_MASK) != 0) {
@@ -3200,15 +3270,16 @@ public class Assertions extends Checker {
                 }
             }
             if ("datalist" == localName) {
-                listIds.addAll(ids);
+                listIds.putAll(ids);
             }
 
             // label for
             if ("label" == localName) {
                 String forVal = atts.getValue("", "for");
                 if (forVal != null) {
-                    formControlReferences.add(new IdrefLocator(
-                            new LocatorImpl(getDocumentLocator()), forVal));
+                    formControlReferences.add(new IdReference(
+                                new LocatorImpl(getDocumentLocator()),
+                                forVal, localName, new AttributesImpl(atts)));
                 }
             }
 
@@ -3222,7 +3293,7 @@ public class Assertions extends Checker {
             }
 
             if ("form" == localName) {
-                formElementIds.addAll(ids);
+                formElementIds.putAll(ids);
             }
 
             if (("button" == localName //
@@ -3233,7 +3304,7 @@ public class Assertions extends Checker {
                     || "select" == localName //
                     || "textarea" == localName //
                     || isCustomElement) {
-                formControlIds.addAll(ids);
+                formControlIds.putAll(ids);
             }
 
             if ("button" == localName || "fieldset" == localName
@@ -3797,7 +3868,8 @@ public class Assertions extends Checker {
                 if (atts.getType(i) == "ID") {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
-                        ids.add(attVal);
+                        ids.put(attVal, new Element(localName,
+                                    new AttributesImpl(atts)));
                     }
                 }
                 String attLocal = atts.getLocalName(i);
@@ -3813,7 +3885,7 @@ public class Assertions extends Checker {
                 }
             }
 
-            allIds.addAll(ids);
+            allIds.putAll(ids);
         }
 
         // ARIA required owner/ancestors
@@ -3845,7 +3917,7 @@ public class Assertions extends Checker {
                 }
             }
         }
-        allIds.addAll(ids);
+        allIds.putAll(ids);
 
         // aria-activedescendant accompanied by aria-owns
         if (activeDescendant != null && !"".equals(activeDescendant)) {
@@ -3866,7 +3938,7 @@ public class Assertions extends Checker {
         // activedescendant
         for (Iterator<Map.Entry<StackNode, Locator>> iterator = openActiveDescendants.entrySet().iterator(); iterator.hasNext();) {
             Map.Entry<StackNode, Locator> entry = iterator.next();
-            if (ids.contains(entry.getKey().getActiveDescendant())) {
+            if (ids.containsKey(entry.getKey().getActiveDescendant())) {
                 iterator.remove();
             }
         }
@@ -3888,7 +3960,7 @@ public class Assertions extends Checker {
                 }
             }
             StackNode child = new StackNode(ancestorMask, localName, role,
-                    activeDescendant, forAttr);
+                    activeDescendant, forAttr, new AttributesImpl(atts));
             if ("style" == localName) {
                 child.setIsCollectingCharacters(true);
             }
@@ -4019,7 +4091,7 @@ public class Assertions extends Checker {
                     + " not allowed.");
         } else {
             StackNode child = new StackNode(ancestorMask, null, role,
-                    activeDescendant, forAttr);
+                    activeDescendant, forAttr, new AttributesImpl(atts));
             if (activeDescendant != null) {
                 openActiveDescendants.put(child,
                         new LocatorImpl(getDocumentLocator()));

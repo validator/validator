@@ -700,6 +700,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element label { label.inner & label.attrs }
 	label.attrs =
 		(	common.attrs
+		&	common.attrs.aria?
 		&	label.attrs.for?
 		)
 		label.attrs.for =
