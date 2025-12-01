@@ -78,9 +78,9 @@ If you’d like to contribute a bug fix or feature enhancement but aren’t sure
 * `css-validator` – (subtree) CSS validator source code
 * `docs` – vnu manual pages + makefile to generate actual (roff) man pages from them
 * `docs/wiki` – (subtree) https://github.com/validator/validator/wiki sources
-* `galimatias` – (subtree) URL parser
+* `galimatias` – URL parser
 * `htmlparser` – (subtree) HTML parser
-* `langdetect` – (subtree) language-detection library
+* `langdetect` – language-detection library
 * `jing-trang` – (subtree) RelaxNG engine
 * `package.json` – build file for the npm package
 * `resources` – config files, caching-related catalogs, and some example code
@@ -102,7 +102,7 @@ If you’d like to contribute a bug fix or feature enhancement but aren’t sure
   * `spec` – parsing the HTML spec & emitting spec excerpts in validation messages
   * `validation` – entry point for 3rd-party code to use; `SimpleDocumentValidator`
   * `xml` – utility code of various kinds
-* `tests` – (subtree) valid/invalid HTML docs for (regression) testing the checker
+* `tests` – valid/invalid HTML docs for (regression) testing the checker
 * `vnu-jar.js` — driver file for the npm package
 * `_config.yml` — Jekyll config file https://validator.github.io/validator/
 * `_layouts` — Jekyll layout file for https://validator.github.io/validator/
