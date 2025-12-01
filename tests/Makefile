@@ -4,7 +4,7 @@ CURL ?= curl
 CURLFLAGS ?=
 JAVA ?= java
 JAVAFLAGS ?=
-VNUJAR ?= vnu.jar
+VNUJAR ?= ../build/dist/vnu.jar
 
 .PHONY: .FORCE clean
 
@@ -14,8 +14,7 @@ clean:
 	$(RM) vnu.jar
 
 $(VNUJAR):
-	cd $(CURDIR) && $(CURL) $(CURLFLAGS) -O -L \
-	  https://github.com/validator/validator/releases/download/latest/vnu.jar
+	cd .. && $(PYTHON) checker.py jar
 
 messages.json: .FORCE $(VNUJAR)
 	$(JAVA) $(JAVAFLAGS) -cp $(VNUJAR) nu.validator.client.TestRunner \
