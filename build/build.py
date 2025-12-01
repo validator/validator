@@ -1247,7 +1247,7 @@ class Release():
             self.createRuntimeImage()
         execCmd(vnuCmd, svgTestArgs, True)
 
-    def runOtherTests(self):
+    def runSpecTests(self):
         if platform.system() == 'Windows':
             # Something about either the createRuntimeImage() or execCmd()
             # below doesn’t work as expected in a Windows environment.
@@ -1990,9 +1990,8 @@ def main(argv):
                 generateRunScript()
             elif arg == 'test':
                 release.runTests()
-            elif arg == 'test-all':
-                release.runTests()
-                release.runOtherTests()
+            elif arg == 'test-specs':
+                release.runSpecTests()
             elif arg == 'make-messages':
                 release.makeTestMessages()
             elif arg == 'check':
