@@ -1,0 +1,14 @@
+repos:
+  - repo: local
+    hooks:
+      - id: check-commit
+        name: Checking commit details to ensure they meet all requirements.
+        entry: bash -c './resources/check-commit.sh "$@"' --
+        stages: [commit]
+        language: system
+
+      - id: check-commit-message
+        name: Checking commit message to ensure it meets all requirements
+        entry: bash -c './resources/check-commit-message.sh "$@"' --
+        stages: [commit-msg]
+        language: system

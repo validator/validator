@@ -44,6 +44,15 @@ Use `python ./checker.py --help` to see command-line options for controlling the
 * `python ./checker.py build test` (to build and test)
 * `python ./checker.py run` (to run only)
 
+## Commit Hooks
+
+The repository contains a file called `.pre-commit-config.yaml` that defines “commit hook” behavior to be run locally in your environment each time you commit a change to the sources.
+
+To enable that “commit hook” behavior, first follow the installation instructions at https://pre-commit.com/#install, and then run both of these commands:
+
+    pre-commit install
+    pre-commit install --hook-type commit-msg
+
 ## Confused about the code? Don’t know where to look?
 
 If you’d like to contribute a bug fix or feature enhancement but aren’t sure where in the code to get started, here’s a brief annotated overview of the repository contents:
