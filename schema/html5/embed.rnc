@@ -363,6 +363,8 @@ namespace local = ""
 			                    | contextmenu
 			                    | dropzone
 			                    | onshow
+			                    | headingoffset
+			                    | headingreset
                                             | its-loc-note-type
                                             | its-loc-note-ref
                                             | its-term-info-ref

@@ -842,7 +842,8 @@ public class Assertions extends Checker {
     };
 
     private static final String h1WarningMessage = "Consider using the"
-            + " \u201Ch1\u201D element as a top-level heading only (all"
+            + " \u201Ch1\u201D element as a top-level heading only — or else"
+            + " use the \u201Cheadingoffset\u201D attribute (otherwise, all"
             + " \u201Ch1\u201D elements are treated as top-level headings"
             + " by many screen readers and other tools).";
 
@@ -1504,6 +1505,8 @@ public class Assertions extends Checker {
 
     private int currentHeadingPtr;
 
+    private boolean hasHeadingoffset;
+
     private final LinkedList<Integer> sectioningElementPtrs = new LinkedList<>();
 
     private boolean hasVisibleMain;
@@ -1686,7 +1689,7 @@ public class Assertions extends Checker {
             }
         }
 
-        if (hasTopLevelH1) {
+        if (hasTopLevelH1 && !hasHeadingoffset) {
             for (Locator locator : secondLevelH1s) {
                 warn(h1WarningMessage, locator);
             }
@@ -1716,6 +1719,7 @@ public class Assertions extends Checker {
     @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
+
         if ("http://www.w3.org/1999/xhtml" == uri
                 && "template".equals(localName)) {
             numberOfTemplatesDeep--;
@@ -1728,6 +1732,7 @@ public class Assertions extends Checker {
         if ("http://www.w3.org/2000/svg" == uri && "a".equals(localName)) {
             numberOfSvgAelementsDeep--;
         }
+        hasHeadingoffset = false;
         StackNode node = pop();
         String systemId = node.locator().getSystemId();
         String publicId = node.locator().getPublicId();
@@ -2079,6 +2084,7 @@ public class Assertions extends Checker {
         hasAncestorTableIsRoleTableGridOrTreeGrid = false;
         numberOfTemplatesDeep = 0;
         numberOfSvgAelementsDeep = 0;
+        hasHeadingoffset = false;
     }
 
     @Override
@@ -2259,6 +2265,9 @@ public class Assertions extends Checker {
                                     + " \u201cembed\u201d element must be"
                                     + " XML-compatible.");
                         }
+                    }
+                    if ("headingoffset" == attLocal) {
+                        hasHeadingoffset = true;
                     }
                     if ("style" == attLocal) {
                         String styleContents = atts.getValue(i);
@@ -2939,7 +2948,7 @@ public class Assertions extends Checker {
                     }
                     hasVisibleMain = true;
                 }
-            } else if ("h1" == localName) {
+            } else if ("h1" == localName && !hasHeadingoffset) {
                 if (sectioningElementPtrs.size() > 1) {
                     warn(h1WarningMessage);
                 } else if (sectioningElementPtrs.size() == 1) {
