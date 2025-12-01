@@ -20,7 +20,7 @@ error() {
 
 # fail if the commit message contains windows style line breaks (carriage returns)
 if grep -q -U $'\x0D' "$commit_file"; then
-  error "Commit message contains CRLF (Windows) line breaks. Only unix-style LF linebreaks are allowed."
+  error "Please use Unix line breaks (LF), not Windows line breaks (CRLF)"
 fi
 
 line_number=0
@@ -39,25 +39,35 @@ while read -r line; do
   line_length=${#line}
 
   if [[ $line_number -eq 2 ]] && [[ $line_length -ne 0 ]]; then
-    error "You must put an empty line between commit title and body."
+    error "Please put an empty line between commit-message title and body"
   fi
 
   merge_commit_pattern="^Merge branch"
   if [[ $line_number -eq 1 ]] && (echo "$line" | grep -E -q "$merge_commit_pattern"); then
-    error "Commit is a git merge commit; use the rebase command instead."
+    error 'Please do not make “git merge” commits; use “git rebase“ instead'
+  fi
+
+  category_pattern='^(Revert "|\S+: )'
+  if [[ $line_number -eq 1 ]] && (echo "$line" | grep -E -v -q "$category_pattern"); then
+    error 'Please add a prefix to the commit-message title; e.g., add “fix:”, “feat:”, “chore:”, “test:”'
+  fi
+
+  title_case_pattern="^\S.*?: [A-Z0-9]"
+  if [[ $line_number -eq 1 ]] && (echo "$line" | grep -E -v -q "$title_case_pattern"); then
+    error "Please capitalize the first word of the commit-message title after the prefix"
   fi
 
   if [[ $line_number -eq 1 ]] && [[ "$line" =~ \.$ ]]; then
-    error "Commit-message title ends in a period"
+    error "Please do not put a period at the end of the commit-message title"
   fi
 
   url_pattern="([a-z]+:\/\/)?(([a-zA-Z0-9_]|-)+\.)+[a-z]{2,}(:\d+)?([a-zA-Z_0-9@:%\+.~\?&\/=]|-)+"
   if [[ $line_length -gt 80 ]] && (echo "$line" | grep -E -v -q "$url_pattern"); then
-    error "Some commit-message lines are longer than 80 characters. Please wrap them.)"
+    error "Please wrap all commit-message lines to 80 characters or less"
   fi
 
   if [[ "$line" == *"commit message was AI-generated"* ]]; then
-    error 'Commit-message body contains “commit message was AI-generated” text.'
+    error 'Please remove any “commit message was AI-generated” text'
   fi
 
 done <"$commit_file"
