@@ -116,6 +116,7 @@
     "html-aria/misc/dialog-with-role-dialog-haswarn.html": "The \u201cdialog\u201d role is unnecessary for element \u201cdialog\u201d.",
     "html-aria/misc/dl-with-div-child-with-role-group-novalid.html": "A \u201cdiv\u201d child of a \u201cdl\u201d element must not have any \u201crole\u201d value other than \u201cpresentation\u201d or \u201cnone\u201d.",
     "html-aria/misc/figure-with-role-figure-and-figcaption-haswarn.html": "The \u201cfigure\u201d role is unnecessary for element \u201cfigure\u201d.",
+    "html-aria/misc/input-checkbox-role-button-no-aria-pressed-novalid.html": "An \u201cinput\u201d element with a \u201ctype\u201d attribute whose value is \u201ccheckbox\u201d and with a \u201crole\u201d attribute whose value is \u201cbutton\u201d must have an \u201caria-pressed\u201d attribute.",
     "html-aria/misc/label-ancestor-of-labelable-element-with-aria-label-novalid.html": "The \u201crole\u201d attribute must not be used on any \u201clabel\u201d element that is an ancestor of a labelable element.",
     "html-aria/misc/label-ancestor-of-labelable-element-with-role-novalid.html": "The \u201crole\u201d attribute must not be used on any \u201clabel\u201d element that is an ancestor of a labelable element.",
     "html-aria/misc/label-associated-with-labelable-element-with-aria-label-novalid.html": "The \u201caria-label\u201d attribute must not be used on any \u201clabel\u201d element that is associated with a labelable element.",
