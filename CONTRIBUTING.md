@@ -44,7 +44,22 @@ Use `python ./checker.py --help` to see command-line options for controlling the
 * `python ./checker.py build test` (to build and test)
 * `python ./checker.py run` (to run only)
 
-## Commit Hooks
+## Commit-message title prefixes
+
+The project follows a convention of requiring commit-message titles to start with “type” prefixes; in particular:
+
+Type     | Purpose
+-------  |--------
+`fix:`   | For cases where your change fixes existing problems in the code.
+`feat:`  | For cases where your change allows/enables new checker support for a spec feature (typically, new features that’ve been added to the HTML spec, the ARIA in HTML spec, or the ARIA spec).
+`build:` | For cases where your change is to sources in the `build/` directory or to the `checker.py` script.
+`test:`  | For any test-only changes you make to tests in the `tests/` directory.
+
+About the `test:` prefix: You normally want to include appropriate test changes in your `feat:` and `fix:` commits — so the only case when you’d typically want to use the `test:` prefix is when your change really is a test-only change, with no related code changes.
+
+The other type prefixes commonly used by the project include `docs:`, `chore:`, and `ci:`. Those are all used by the project in the normal way they’re used in other projects — with no further project-specific meanings.
+
+## Commit hooks
 
 The repository contains a file called `.pre-commit-config.yaml` that defines “commit hook” behavior to be run locally in your environment each time you commit a change to the sources.
 
