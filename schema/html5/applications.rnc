@@ -243,10 +243,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 	details.attrs =
 		(	common.attrs
 		&	details.attrs.open?
+		&	details.attrs.name?
 		&	(	common.attrs.aria.implicit.group # aria-expanded must be true if open attr present; check by assertions
 			|	common.attrs.aria.role.group
 			)?
 		)
+		details.attrs.name =
+			attribute name {
+				w:non-empty-string
+			}
 		details.attrs.open =
 			attribute open {
 				w:string "open" | w:string ""
