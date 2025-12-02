@@ -150,6 +150,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	dialog.attrs =
 		(	common.attrs
 		&	dialog.attrs.open?
+		&	dialog.attrs.closedby?
 		&	(	common.attrs.aria.implicit.dialog
 			|	common.attrs.aria.role.alertdialog
 			|	common.attrs.aria.role.dialog
@@ -158,6 +159,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		dialog.attrs.open =
 			attribute open {
 				w:string "open" | w:string ""
+			}
+		dialog.attrs.closedby =
+			attribute closedby {
+				w:string "any" | w:string "closerequest" | w:string "none"
 			}
 	dialog.inner =
 		( common.inner.flow )
