@@ -4094,7 +4094,8 @@ public class Assertions extends Checker {
                 for (int i = 0; i < atts.getLength(); i++) {
                     String attLocal = atts.getLocalName(i);
                     if ("role".equals(attLocal)
-                            || (Arrays.binarySearch(ARIA_GLOBAL_ATTRIBUTES,
+                            || (attLocal.startsWith("aria-")
+                                && Arrays.binarySearch(ARIA_GLOBAL_ATTRIBUTES,
                                     attLocal) < 0
                                 && !"aria-haspopup".equals(attLocal)
                                 && !"aria-disabled".equals(attLocal))) {
