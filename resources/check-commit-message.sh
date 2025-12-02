@@ -61,6 +61,10 @@ while read -r line; do
     error "Please do not put a period at the end of the commit-message title"
   fi
 
+  if [[ $line == https://github.com/validator/validator/issues* ]]; then
+    error 'Bare issue URL; did you mean to prefix it with “Fixes” or “Closes”?'
+  fi
+
   url_pattern="([a-z]+:\/\/)?(([a-zA-Z0-9_]|-)+\.)+[a-z]{2,}(:\d+)?([a-zA-Z_0-9@:%\+.~\?&\/=]|-)+"
   if [[ $line_length -gt 80 ]] && (echo "$line" | grep -E -v -q "$url_pattern"); then
     error "Please wrap all commit-message lines to 80 characters or less"
