@@ -637,6 +637,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.color.attrs.type
 		&	input.color.attrs.value?
+		&	input.color.attrs.alpha?
+		&	input.color.attrs.colorspace?
 		&	shared-input.attrs
 		)	
 		input.color.attrs.type = 
@@ -646,6 +648,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 		input.color.attrs.value =
 			attribute value {
 				w:string "" | form.data.color
+			}
+		input.color.attrs.alpha =
+			attribute alpha {
+				w:string "alpha" | w:string ""
+			}
+		input.color.attrs.colorspace =
+			attribute colorspace {
+				w:string "limited-srgb" | w:string "display-p3"
 			}
 		
 	input.elem |= input.color.elem
