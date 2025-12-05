@@ -571,7 +571,7 @@ function updateFragmentIdHilite() {
 			newStyle.styleSheet.cssText = rule
 		} else {
 			throw ex
-		} 
+		}
 	}
 	dynamicStyle.parentNode.replaceChild(newStyle, dynamicStyle)
 	dynamicStyle = newStyle
@@ -610,6 +610,24 @@ if (document.getElementById) {
 	window.onunload = undoFormSubmission
 	window.onabort = undoFormSubmission
 	boot()
+}
+
+function getMessageCategory(messageText) {
+	// CSS validation errors (always prefixed with "CSS:")
+	if (/^CSS:/.test(messageText)) {
+		return 'css'
+	}
+
+	// Encoding and internationalization issues
+	if (/\b(encoding|charset|UTF-8|windows-\d+|iso-\d+|Content-Language)\b/i.test(messageText) ||
+		/appears to be written in/i.test(messageText) ||
+		/\b(lang|dir)=/i.test(messageText) ||
+		/Unicode Normalization/.test(messageText)) {
+		return 'i18n'
+	}
+
+	// Everything else is HTML (including ARIA)
+	return 'html'
 }
 
 function initFilters() {
@@ -670,6 +688,7 @@ function initFilters() {
 			legend,
 			hide,
 			show,
+			showHtml,
 			messageList,
 			messageGroupList,
 			checkbox,
@@ -682,7 +701,16 @@ function initFilters() {
 			type = displayType.toLowerCase(),
 			messageGroup,
 			uniqueMessage,
-			makeCheckbox
+			makeCheckbox,
+			categoryCounts = {html: 0, css: 0, i18n: 0},
+			messageTypeClass = ''
+
+		// Derive messageTypeClass from DOM elements
+		if (messages.length > 0) {
+			if (messages[0].classList.contains('error')) messageTypeClass = 'error'
+			else if (messages[0].classList.contains('warning')) messageTypeClass = 'warning'
+			else if (messages[0].classList.contains('info')) messageTypeClass = 'info'
+		}
 
 		makeCheckbox = function(messageName, messageCollection) {
 			var checkbox, label, listitem,
@@ -718,7 +746,7 @@ function initFilters() {
 
 		if (messages.length > 0) {
 
-			// Find the unique messages
+			// Find the unique messages and categorize them
 			for (var i = 0; i < messages.length; ++i) {
 				message = messages[i]
 				messageClone = messages[i].cloneNode(true)
@@ -750,6 +778,12 @@ function initFilters() {
 				}
 				var id = "vnuId" + idCount
 				message.id = id
+
+				// Add category as data attribute
+				var category = getMessageCategory(uniqueMessage)
+				message.setAttribute('data-category', category)
+				categoryCounts[category]++
+
 				messages[messageGroup].uniqueMessages[uniqueMessage].push(id)
 				idCount++
 			}
@@ -769,6 +803,18 @@ function initFilters() {
 			legend.appendChild(hide)
 			legend.appendChild(document.createTextNode(" · "))
 			legend.appendChild(show)
+
+			// Add "Show only HTML" link if we have non-HTML messages
+			if (categoryCounts.css > 0 || categoryCounts.i18n > 0) {
+				showHtml = document.createElement("a")
+				showHtml.href = ""
+				showHtml.className = "show-html"
+				showHtml.appendChild(document.createTextNode("Show only HTML " + type + " (" + categoryCounts.html + ")"))
+				showHtml.setAttribute('data-message-type', messageTypeClass)
+				legend.appendChild(document.createTextNode(" · "))
+				legend.appendChild(showHtml)
+			}
+
 			fieldset.appendChild(legend)
 
 			messageList = document.createElement("ol")
@@ -950,6 +996,58 @@ function initFilters() {
 				}
 				if (supportsLocalStorage()) {
 					localStorage[box.vnuMessageType + ':' + box.vnuMessageName] = true
+				}
+			}
+			showCount()
+		}, false)
+	}
+
+	// Add event handlers for "Show only HTML" links
+	links = document.getElementsByClassName("show-html")
+	for (var n = 0; n < links.length; ++n) {
+		links[n].addEventListener("click", function(e) {
+			e.preventDefault()
+			// Use currentTarget to get the element the listener is attached to
+			var messageType = e.currentTarget.getAttribute('data-message-type')
+			// Get all messages of this type (errors, warnings, or info)
+			var allMessages = document.querySelectorAll("li." + messageType)
+
+			for (var i = 0; i < allMessages.length; ++i) {
+				var msg = allMessages[i]
+				if (!msg || !msg.id) continue
+				var category = msg.getAttribute('data-category')
+				var msgId = msg.id
+
+				if (category === 'html') {
+					// Show HTML messages
+					msg.className = msg.className.replace(/\s*hidden\s*/g, "")
+					// Update corresponding checkboxes
+					var boxes = document.querySelectorAll("input[type='checkbox']")
+					for (var k = 0; k < boxes.length; ++k) {
+						var box = boxes[k]
+						if (box.vnuMessageCollection && box.vnuMessageCollection.indexOf(msgId) !== -1) {
+							box.checked = true
+							if (supportsLocalStorage()) {
+								localStorage[box.vnuMessageType + ':' + box.vnuMessageName] = true
+							}
+						}
+					}
+				} else {
+					// Hide non-HTML messages (CSS and i18n)
+					if (msg.className.indexOf('hidden') === -1) {
+						msg.className += ' hidden'
+					}
+					// Update corresponding checkboxes
+					var boxes = document.querySelectorAll("input[type='checkbox']")
+					for (var k = 0; k < boxes.length; ++k) {
+						var box = boxes[k]
+						if (box.vnuMessageCollection && box.vnuMessageCollection.indexOf(msgId) !== -1) {
+							box.checked = false
+							if (supportsLocalStorage()) {
+								localStorage[box.vnuMessageType + ':' + box.vnuMessageName] = false
+							}
+						}
+					}
 				}
 			}
 			showCount()
