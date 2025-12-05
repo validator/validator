@@ -2271,6 +2271,11 @@ public class Assertions extends Checker {
                     }
                     if ("headingoffset" == attLocal) {
                         hasHeadingoffset = true;
+                        if (!atts.getValue(i).matches("[0-8]")) {
+                            err("The value of the \u201cheadingoffset\u201d"
+                                    + " attribute must be a number between"
+                                    + " \u201c0\u201d and \u201c8\u201d.");
+                        }
                     }
                     if ("style" == attLocal) {
                         String styleContents = atts.getValue(i);
