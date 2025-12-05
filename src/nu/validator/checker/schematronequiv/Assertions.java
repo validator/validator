@@ -2414,8 +2414,16 @@ public class Assertions extends Checker {
                                         + " \u201Cautofocus\u201D attribute.");
                         }
                         hasAutofocus = true;
+                    } else if ("autocomplete".equals(attLocal)) {
+                        if (atts.getValue(i).contains("webauthn")
+                                && !"input".equals(localName)
+                                && !"textarea".equals(localName)) {
+                            err("The value of the \u201Cautocomplete\u201D"
+                                    + " attribute for the \u201C" + localName
+                                    + "\u201D element must not contain"
+                                    + " \u201Cwebauthn\u201D.");
+                                }
                     }
-
                     if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
                             && OBSOLETE_ATTRIBUTES.get(attLocal).containsKey(localName)) {
                         String suggestion = OBSOLETE_ATTRIBUTES.get(attLocal).get(localName);

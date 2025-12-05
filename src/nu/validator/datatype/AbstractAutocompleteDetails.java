@@ -147,7 +147,23 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
             detailTokens.remove(0);
             isContactDetails = true;
         }
-        for (String token : detailTokens) {
+        int detailTokensSize = detailTokens.size();
+        for (int i = 0; i < detailTokensSize; i++) {
+            String token = detailTokens.get(i);
+            if ("webauthn".equals(token)) {
+                if (detailTokensSize == 1) {
+                    throw newDatatypeException(
+                            "The token \u201cwebauthn\u201d must not be the only"
+                            + " token in a list of autofill detail tokens.");
+                } else if (i == detailTokensSize - 1) {
+                    return;
+                } else {
+                    throw newDatatypeException(
+                            "The token \u201cwebauthn\u201d must only appear"
+                            + " as the very last token in a list of autofill"
+                            + " detail tokens.");
+                }
+            }
             if (CONTACT_TYPES.contains(token)) {
                 throw newDatatypeException(
                         "The token \u201c" + token + "\u201d must only"
@@ -180,8 +196,10 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
             }
         }
         if (detailTokens.size() > 1) {
-            throw newDatatypeException("A list of autofill details tokens must"
-                    + " not contain more than one autofill field name.");
+            if (!"webauthn".equals(detailTokens.get(1))) {
+                throw newDatatypeException("A list of autofill details tokens"
+                        + " must not contain more than one autofill field name.");
+            }
         } else if (detailTokens.isEmpty()) {
             throw newDatatypeException("A list of autofill details tokens must"
                     + " contain an autofill field name.");
