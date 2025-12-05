@@ -895,7 +895,8 @@ dl.inputattrs .highlight {
 }
 
 #filters .hide,
-#filters .show {
+#filters .show,
+#filters .show-html {
 	color: #00f;
 }
 
