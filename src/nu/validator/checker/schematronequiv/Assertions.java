@@ -3872,8 +3872,8 @@ public class Assertions extends Checker {
                             + " \u201Ccommand\u201D attribute.");
                 }
             }
-            for (String aLabelAtt: List.of("aria-label", "aria-labelledby",
-                        "aria-braillelabel")) {
+            for (String aLabelAtt: new String[] { "aria-label",
+                    "aria-labelledby", "aria-braillelabel"}) {
                 if (atts.getIndex("", aLabelAtt) > -1) {
                     if (isProhibitedFromBeingNamed(localName, role, atts)) {
                         String message =
