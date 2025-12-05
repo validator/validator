@@ -108,9 +108,9 @@ public class LanguageDetectingChecker extends Checker {
     private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
             "he", "pnb", "ps", "sd", "ug", "ur" };
 
-    private static final String[] SKIP_NAMES = { "a", "details", "figcaption",
-            "form", "li", "nav", "pre", "script", "select", "span", "style",
-            "summary", "td", "textarea", "th", "tr" };
+    private static final String[] SKIP_NAMES = { "a", "button", "details",
+        "figcaption", "form", "li", "nav", "pre", "script", "select", "span",
+        "style", "summary", "td", "textarea", "th", "tr" };
 
     static {
         if (!"0".equals(System.getProperty("nu.validator.checker.enableLangDetection"))) {
