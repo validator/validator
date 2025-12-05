@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+			<meta charset="utf-8">
+			<title>Test: Main Element and Main Role</title>
+	</head>
+	<body>
+			<!-- This tests the interaction between the `<main>` element and `role="main"` -->
+
+			<!-- HTML `<main>` element (has implicit `role="main"`) -->
+			<main>
+					<h1>Main Content Using Element</h1>
+					<p>This uses the HTML <code>main</code> element.</p>
+			</main>
+
+			<!-- Element with explicit `role="main"` -->
+			<!-- Note: This should trigger a separate warning for `role="main", not the error for multiple `<main>` elements -->
+			<div role="main">
+					<h1>Main Content Using Role</h1>
+					<p>This uses an explicit <code>role="main"</code> attribute.</p>
+			</div>
+	</body>
+</html>

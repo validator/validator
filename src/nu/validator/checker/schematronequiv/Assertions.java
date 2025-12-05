@@ -1511,6 +1511,8 @@ public class Assertions extends Checker {
 
     private boolean hasVisibleMain;
 
+    private boolean hasVisibleMainRole;
+
     private boolean hasMetaCharset;
 
     private boolean hasMetaDescription;
@@ -2076,6 +2078,7 @@ public class Assertions extends Checker {
         currentHeadingPtr = -1;
         stack[0] = null;
         hasVisibleMain = false;
+        hasVisibleMainRole = false;
         hasMetaCharset = false;
         hasMetaDescription = false;
         hasContentTypePragma = false;
@@ -2822,6 +2825,16 @@ public class Assertions extends Checker {
                                 + " element which has \u201Crole=" + role + "\u201D.");
                     }
                 }
+                // Check for multiple main roles in document
+                List<String> roles = Arrays.asList(role.trim()
+                        .toLowerCase().split("\\s+"));
+                if (roles.contains("main") && atts.getIndex("", "hidden") < 0) {
+                    if (hasVisibleMainRole) {
+                        warn("A document should not include more than one visible"
+                                + " element with \u201Crole=main\u201D.");
+                    }
+                    hasVisibleMainRole = true;
+                }
             }
 
             // Ancestor requirements/restrictions
@@ -2942,6 +2955,7 @@ public class Assertions extends Checker {
                                 + " \u201Cmain\u201D element.");
                     }
                     hasVisibleMain = true;
+                    hasVisibleMainRole = true; // <main> has implicit role="main"
                 }
             } else if ("h1" == localName && !hasHeadingoffset) {
                 if (sectioningElementPtrs.size() > 1) {
