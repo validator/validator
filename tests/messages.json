@@ -1919,7 +1919,6 @@
     "html/elements/picture/srcset-microsyntax-zero-x-novalid.html": "Bad value \u201cx 0x\u201d for attribute \u201csrcset\u201d on element \u201cimg\u201d: Bad positive floating point number: Zero is not a valid positive floating point number at \u201cx 0x\u201d.",
     "html/elements/picture/svg-image-srcset-novalid.html": "Attribute \u201csrcset\u201d not allowed on element \u201cimage\u201d at this point.",
     "html/elements/picture/track-srcset-novalid.html": "Attribute \u201csrcset\u201d not allowed on element \u201ctrack\u201d at this point.",
-    "html/elements/picture/video-source-media-src-novalid.html": "Attribute \u201cmedia\u201d not allowed on element \u201csource\u201d at this point.",
     "html/elements/picture/video-source-sizes-srcset-novalid.html": "Attribute \u201csizes\u201d not allowed on element \u201csource\u201d at this point.",
     "html/elements/picture/video-source-srcset-novalid.html": "Attribute \u201csrcset\u201d not allowed on element \u201csource\u201d at this point.",
     "html/elements/picture/video-source-srcset-src-novalid.html": "Attribute \u201csrcset\u201d not allowed on element \u201csource\u201d at this point.",
