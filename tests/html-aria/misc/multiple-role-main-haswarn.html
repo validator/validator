@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+			<meta charset="utf-8">
+			<title>Test: Multiple Main Roles</title>
+	</head>
+	<body>
+			<!-- This document should trigger a warning: multiple visible elements with `role="main"` -->
+
+			<!-- First element with `role="main"` -->
+			<div role="main">
+					<h1>First Main Content Area</h1>
+					<p>This is the first main content area.</p>
+			</div>
+
+			<!-- Second element with `role="main"`—should trigger warning -->
+			<section role="main">
+					<h1>Second Main Content Area</h1>
+					<p>This is the second main content area (should trigger warning).</p>
+			</section>
+
+			<!-- Third element with `role="main"` but hidden—should NOT trigger warning -->
+			<div role="main" hidden>
+					<h1>Hidden Main Content</h1>
+					<p>This hidden main area should not trigger a warning.</p>
+			</div>
+	</body>
+</html>
