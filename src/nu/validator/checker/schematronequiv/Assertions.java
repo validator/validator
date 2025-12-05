@@ -2360,19 +2360,6 @@ public class Assertions extends Checker {
                     } else if ("aria-activedescendant" == attLocal
                             && !isEmptyAriaAttribute) {
                         activeDescendant = atts.getValue(i);
-                    } else if (!isEmptyAriaAttribute && ("aria-label" == attLocal
-                                || "aria-labelledby" == attLocal
-                                || "aria-braillelabel" == attLocal)) {
-                        if (isProhibitedFromBeingNamed(localName, role, atts)) {
-                            String message =
-                                    "The \u201C" + attLocal + "\u201D attribute"
-                                    + " must not be specified on any"
-                                    + " \u201C" + localName + "\u201D element"
-                                    + " unless the element has a"
-                                    + " \u201Crole\u201D value other than "
-                                    + renderRoleSet(ROLES_WHICH_CANNOT_BE_NAMED);
-                            err(message + ".");
-                        }
                     } else if ("aria-owns" == attLocal && !isEmptyAriaAttribute) {
                         owns = atts.getValue(i);
                     } else if ("list" == attLocal) {
@@ -3883,6 +3870,21 @@ public class Assertions extends Checker {
                     err("The \u201caria-expanded\u201D attribute must not be"
                             + " used on any element which has a"
                             + " \u201Ccommand\u201D attribute.");
+                }
+            }
+            for (String aLabelAtt: List.of("aria-label", "aria-labelledby",
+                        "aria-braillelabel")) {
+                if (atts.getIndex("", aLabelAtt) > -1) {
+                    if (isProhibitedFromBeingNamed(localName, role, atts)) {
+                        String message =
+                            "The \u201C" + aLabelAtt + "\u201D attribute"
+                            + " must not be specified on any"
+                            + " \u201C" + localName + "\u201D element"
+                            + " unless the element has a"
+                            + " \u201Crole\u201D value other than "
+                            + renderRoleSet(ROLES_WHICH_CANNOT_BE_NAMED);
+                        err(message + ".");
+                    }
                 }
             }
         } else {
