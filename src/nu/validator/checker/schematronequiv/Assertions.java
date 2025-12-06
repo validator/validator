@@ -1776,6 +1776,9 @@ public class Assertions extends Checker {
                 }
             } else if ("picture" == localName) {
                 siblingSources.clear();
+            } else if ("dialog" == localName
+                    || node.atts.getIndex("", "popover") > -1) {
+                hasAutofocus = false;
             } else if ("select" == localName && node.isOptionNeeded()) {
                 if (!node.hasOption()) {
                     err("A \u201Cselect\u201D element with a"
@@ -2405,8 +2408,11 @@ public class Assertions extends Checker {
                                         + " with a term having the opposite meaning.");
                     } else if ("autofocus" == attLocal) {
                         if (hasAutofocus) {
-                            err("A document must not include more than one"
-                                        + " \u201Cautofocus\u201D attribute.");
+                            err("There must not be two elements with the same"
+                                    + " \"nearest ancestor autofocus scoping"
+                                    + " root element\" that both have the"
+                                    + " \u201Cautofocus\u201D attribute"
+                                    + " specified.");
                         }
                         hasAutofocus = true;
                     } else if ("autocomplete".equals(attLocal)) {
