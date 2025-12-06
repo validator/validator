@@ -39,4 +39,19 @@ if [ -n "$CODE_CHANGED" ] && [ -z "$TESTS_CHANGED" ]; then
     exit 1
 fi
 
-exit 0
+./checker.py make-messages
+git diff --exit-code tests/messages.json && exit 0
+
+if [ -z "$TESTS_CHANGED" ]; then
+    echo ""
+    echo "❌ Commit rejected."
+    echo ""
+    echo "Your changes alter the tests/messages file, but you’re not committing it."
+    echo "Please include the tests/messages changes (see the diff above)."
+    echo ""
+    echo "Otherwise, if the omission is intentional, you can bypass this check using:"
+    echo ""
+    echo "    git commit --no-verify"
+    echo ""
+    exit 1
+fi
