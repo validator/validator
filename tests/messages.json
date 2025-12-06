@@ -221,6 +221,8 @@
     "html-svg/types-dom-04-b-novalid.html": "Attribute \u201cexternalresourcesrequired\u201d not allowed on element \u201csvg\u201d at this point.",
     "html/attributes/accesskey/duplicate-key-labels-novalid.html": "Bad value \u201ca b \u306c c \u306c\u201d for attribute \u201caccesskey\u201d on element \u201ca\u201d: Bad key label list: Duplicate key label. Each key label must be unique.",
     "html/attributes/accesskey/multi-character-key-label-novalid.html": "Bad value \u201ca b \u307b\u3052\u201d for attribute \u201caccesskey\u201d on element \u201ca\u201d: Bad key label list: Key label has multiple characters. Each key label must be a single character.",
+    "html/attributes/autofocus-multiple-novalid.html": "There must not be two elements with the same \"nearest ancestor autofocus scoping root element\" that both have the \u201cautofocus\u201d attribute specified.",
+    "html/attributes/autofocus-multiple-popover-novalid.html": "There must not be two elements with the same \"nearest ancestor autofocus scoping root element\" that both have the \u201cautofocus\u201d attribute specified.",
     "html/attributes/command-with-aria-expanded-novalid.html": "The \u201caria-expanded\u201d attribute must not be used on any element which has a \u201ccommand\u201d attribute.",
     "html/attributes/commandfor-missing-id-novalid.html": "The value of the \u201ccommandfor\u201d attribute of the \u201cbutton\u201d element must be the ID of an element in the same tree as the \u201cbutton\u201d with the \u201ccommandfor\u201d attribute.",
     "html/attributes/data/no-characters-after-hyphen-novalid.html": "Attribute \u201cdata-\u201d not allowed on element \u201cp\u201d at this point.",
