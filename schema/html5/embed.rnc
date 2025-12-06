@@ -12,8 +12,11 @@ namespace local = ""
 
 	shared-img.attrs =
 		(	common.attrs
-		&	img.attrs.src
-		&	img.attrs.srcset?
+		&	(
+				( img.attrs.src & img.attrs.srcset? )
+				|
+				( img.attrs.srcset & img.attrs.src? )
+			)
 		&	img.attrs.sizes?
 		&	img.attrs.generator-unable-to-provide-required-alt?
 		&	img.attrs.height?
