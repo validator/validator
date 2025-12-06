@@ -37,7 +37,7 @@ public class ContentSecurityPolicy extends AbstractDatatype {
      */
     public static final ContentSecurityPolicy THE_INSTANCE = new ContentSecurityPolicy();
 
-    private static final String DIRECTIVE_NAME = " ("
+    private static final String DIRECTIVE_NAME = " \\b("
             + "child-src|connect-src|default-src|font-src|frame-src|img-src"
             + "|manifest-src|media-src|object-src|prefetch-src|script-src"
             + "|style-src|worker-src|allow|options|referrer|report-uri"
@@ -70,9 +70,9 @@ public class ContentSecurityPolicy extends AbstractDatatype {
                 if (notice.show().contains("experimental directive")) {
                     continue;
                 }
-                String message = notice.show().replaceAll(DIRECTIVE_NAME,
-                        " \u201c$1\u201d ").replaceAll(SANDBOX_KEYWORDS,
-                                "\u201c$1\u201d")
+                String message = notice.show()
+                    .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
+                    .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
                         + " ";
                 if (notice.isError()) {
                     errors.append(message);
