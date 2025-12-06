@@ -365,7 +365,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 	var langGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/techniques/authoring-html.en?open=language&open=textprocessing#textprocessing">Declaring the overall language of a page</a> and <a href="https://www.w3.org/International/techniques/authoring-html.en?open=language&open=langvalues#langvalues">Choosing language tags</a>.'
 	var contentLangGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-http-and-lang">HTTP headers, meta elements and language information</a>.'
 	var dirGuidance = 'For further guidance, consult <a href="https://www.w3.org/International/questions/qa-html-dir">Structural markup and right-to-left text in HTML</a> and <a href="https://www.w3.org/International/techniques/authoring-html#using">Setting up a right-to-left page</a>.'
-	var ifMisidentifiedGuidance = 'If the HTML checker has misidentified the language of this document, please <a href="https://github.com/validator/validator/issues/new">file an issue report</a> or <a href="mailto:www-validator@w3.org">send e-mail to report the problem</a>.'
+	var ifMisidentifiedGuidance = 'If the HTML checker has misidentified the language of this document, please <a href="https://github.com/validator/validator/issues/new?template=4-bad-language-detection.yml">file an issue report</a>.'
 	var langOrDirWarning
 	var langOrDirLinks
 	var ifMisidentifiedLinks
