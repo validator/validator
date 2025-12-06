@@ -1954,11 +1954,13 @@ public class Assertions extends Checker {
         for (Map.Entry<String, Object> importMapEntry : importMapObject.entrySet()) {
             String specifierType = importMapEntry.getKey();
             if (!"imports".equals(specifierType)
-                    && !"scopes".equals(specifierType)) {
+                    && !"scopes".equals(specifierType)
+                    && !"integrity".equals(specifierType)) {
                 err("A \u201cscript\u201d element with a \u201ctype\u201d"
                         + " attribute whose value is \u201cimportmap\u201d must"
                         + " contain a JSON object with no properties other than"
-                        + " \u201cimports\u201d and \u201cscopes\u201d.");
+                        + " \u201cimports\u201d, \u201cscopes\u201d,"
+                        + " and \u201cintegrity\u201d.");
                 return false;
             }
             if (!(importMapEntry.getValue() instanceof Map)) {
