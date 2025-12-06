@@ -3227,9 +3227,16 @@ public class Assertions extends Checker {
                 }
             }
 
-            // bdo required attrs
-            else if ("bdo" == localName && atts.getIndex("", "dir") < 0) {
-                err("Element \u201Cbdo\u201D must have attribute \u201Cdir\u201D.");
+            else if ("bdo" == localName) {
+                if (atts.getIndex("", "dir") < 0) {
+                    err("Element \u201Cbdo\u201D must have attribute"
+                            + " \u201Cdir\u201D.");
+                } else if ("auto".equals(
+                            atts.getValue("", "dir").toLowerCase())) {
+                    err("The value of \u201Cdir\u201D attribute for the"
+                            + " \u201Cbdo\u201D element must not be"
+                            + " \u201Cauto\u201D.");
+                }
             }
 
             // labelable elements
