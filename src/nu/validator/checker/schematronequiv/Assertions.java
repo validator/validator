@@ -2776,7 +2776,12 @@ public class Assertions extends Checker {
             int mask = 0;
             String descendantUiString = "The element \u201C" + localName
                     + "\u201D";
-            if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(
+            if ("a" == localName && href) {
+                mask = A_BUTTON_MASK;
+                descendantUiString = "The element \u201Ca\u201D with the"
+                        + " attribute \u201Chref\u201D";
+                checkForInteractiveAncestorRole(descendantUiString);
+            } else if ((maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(
                     localName)) != null) {
                 mask = maskAsObject.intValue();
             } else if ("video" == localName && controls) {
