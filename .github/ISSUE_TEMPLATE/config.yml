@@ -6,10 +6,7 @@ contact_links:
   - name: "Chat"
     url: https://whatwg.org/chat
     about: "You can reach the vnu checker maintainer and other knowledgable people in the WHATWG room on the Matrix network"
-  - name: "Discussion and questions"
-    url: https://github.com/validator/validator/discussions
-    about: "Ask questions and discuss the vnu checker with others"
-  - name: "Read the documentation"
+  - name: "Read the project docs"
     url: https://github.com/validator/validator/blob/main/README.md
     about: "Learn about the vnu checker and how to use it"
   - name: "Contributing guide"
