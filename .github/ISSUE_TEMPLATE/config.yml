@@ -3,6 +3,9 @@ contact_links:
   - name: "Report a CSS issue"
     url: https://github.com/w3c/css-validator/issues/new
     about: "If you encounter a CSS-related problem with the checker, use this link to report it"
+  - name: "Chat"
+    url: https://whatwg.org/chat
+    about: "You can reach the vnu checker maintainer and other knowledgable people in the WHATWG room on the Matrix network"
   - name: "Discussion and questions"
     url: https://github.com/validator/validator/discussions
     about: "Ask questions and discuss the vnu checker with others"
@@ -12,7 +15,4 @@ contact_links:
   - name: "Contributing guide"
     url: https://github.com/validator/validator/blob/main/CONTRIBUTING.md
     about: "Learn how to contribute to the vnu checker project"
-  - name: "Chat"
-    url: https://whatwg.org/chat
-    about: "You can reach the vnu checker maintainer and other knowledgable people in the WHATWG room on the Matrix network"
 # yaml-language-server: # $schema=https://www.schemastore.org/github-issue-config.json
