@@ -1,4 +1,4 @@
-name: "Report bad language detection"
+name: "Bad language detection"
 description: "Report an incorrectly detected language on a page"
 labels: [wrong-lang]
 body:
