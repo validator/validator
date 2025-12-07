@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: "Report a CSS issue"
+    url: https://github.com/w3c/css-validator/issues/new
+    about: "If you encounter a CSS-related problem with the checker, use this link to report it"
   - name: "Discussion and questions"
     url: https://github.com/validator/validator/discussions
     about: "Ask questions and discuss the vnu checker with others"

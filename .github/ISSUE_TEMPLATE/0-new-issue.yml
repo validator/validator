@@ -1,5 +1,5 @@
-name: "New issue"
-description: "Report a problem with vnu checker behavior"
+name: "New issue (for non-CSS issues)"
+description: "Report a problem with vnu checker behavior. (To report CSS issues, instead use the “Report a CSS issue” link below)"
 body:
   - type: textarea
     id: summary
