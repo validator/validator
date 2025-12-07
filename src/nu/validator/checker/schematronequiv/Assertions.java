@@ -1519,6 +1519,8 @@ public class Assertions extends Checker {
 
     private boolean hasContentTypePragma;
 
+    private boolean hasLinkOrScript;
+
     private boolean hasAutofocus;
 
     private boolean hasTopLevelH1;
@@ -2088,6 +2090,7 @@ public class Assertions extends Checker {
         hasMetaDescription = false;
         hasContentTypePragma = false;
         hasAutofocus = false;
+        hasLinkOrScript = false;
         hasTopLevelH1 = false;
         hasAncestorTableIsRoleTableGridOrTreeGrid = false;
         numberOfTemplatesDeep = 0;
@@ -2492,6 +2495,12 @@ public class Assertions extends Checker {
                     } catch (ClassNotFoundException ce) {
                     }
                 }
+            }
+            if ("base".equals(localName) && atts.getIndex("", "href") > -1
+                    && hasLinkOrScript) {
+                err("The \u201Cbase\u201D element must come before any"
+                        + " \u201Clink\u201D or \u201Cscript\u201D elements"
+                        + " in the document.");
             }
             if ("div".equals(localName) && "dl".equals(parentName)
                     && role != null
@@ -3134,6 +3143,7 @@ public class Assertions extends Checker {
             }
             // script
             else if ("script" == localName) {
+                hasLinkOrScript = true;
                 // script language
                 if (languageJavaScript && typeNotTextJavaScript) {
                     err("A \u201Cscript\u201D element with the \u201Clanguage=\"JavaScript\"\u201D attribute set must not have a \u201Ctype\u201D attribute whose value is not \u201Ctext/javascript\u201D.");
@@ -3529,6 +3539,7 @@ public class Assertions extends Checker {
                 }
             }
             if ("link" == localName) {
+                hasLinkOrScript = true;
                 boolean hasRel = false;
                 List<String> relList = new ArrayList<>();
                 if (atts.getIndex("", "rel") > -1) {
