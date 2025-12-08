@@ -657,16 +657,15 @@ function initFilters() {
 		replaceSuccessFailure()
 		return
 	}
-	if (document.getElementsByTagName('ol').length < 1) {
-		// If there's no <ol> on the page, then we have no
-		// messages to filter.
-		return
-	}
 
-	helptext = document.querySelector("#filters > div")
 	errors = document.getElementsByClassName("error")
 	warnings = document.getElementsByClassName('warning')
 	info = document.querySelectorAll('[class=info]')
+
+	if (errors.length === 0 && warnings.length === 0 && info.length === 0) {
+		// If there are no messages, we don’t need filtering
+		return
+	}
 	filters = document.createElement("section")
 	filters.id = "filters"
 	filters.className = "unexpanded"
