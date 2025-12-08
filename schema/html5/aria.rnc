@@ -113,7 +113,6 @@ common.attrs.aria.implicit.listbox |=
 	(	aria.prop.multiselectable?
 	&	aria.prop.required?
 	&	aria.prop.activedescendant?
-	&	aria.state.expanded?
 	)
 
 common.attrs.aria.implicit.listitem |=
@@ -1076,7 +1075,6 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 		&	aria.prop.multiselectable? # not inherited
 		&	aria.prop.required?
 		&	aria.prop.activedescendant?
-		&	aria.state.expanded?
 		&	aria.prop.readonly? # ARIA 1.1 and 1.2
 		&	aria.prop.orientation?
 		)
