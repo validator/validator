@@ -224,26 +224,34 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
 
     /**
      * Got an element pattern.
-     * 
+     *
      * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitElement(com.thaiopensource.relaxng.impl.NameClass,
      *      com.thaiopensource.relaxng.impl.Pattern)
      */
     public void visitElement(NameClass nc, Pattern content) {
       // just output the element name class, not the content.
+      nameRecord = null;
       nc.accept(this);
-      elements.add(nameRecord);
+      // Only add if nameRecord was set (i.e., not a wildcard like anyName or nsName)
+      if (nameRecord != null) {
+        elements.add(nameRecord);
+      }
     }
 
     /**
      * Got an attribute pattern. Here it seems we get only attribute
      * wildcards patterns.
-     * 
+     *
      * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitAttribute(com.thaiopensource.relaxng.impl.NameClass,
      *      com.thaiopensource.relaxng.impl.Pattern)
      */
     public void visitAttribute(NameClass ns, Pattern value) {
+      nameRecord = null;
       ns.accept(this);
-      attributes.add(nameRecord);
+      // Only add if nameRecord was set (i.e., not a wildcard like anyName or nsName)
+      if (nameRecord != null) {
+        attributes.add(nameRecord);
+      }
     }
 
     /**
