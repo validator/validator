@@ -939,6 +939,8 @@ public class Assertions extends Checker {
 
         private final String role;
 
+        private List<String> roles;
+
         private final String activeDescendant;
 
         private final String forAttr;
@@ -989,10 +991,12 @@ public class Assertions extends Checker {
          * @param ancestorMask
          */
         public StackNode(int ancestorMask, String name, String role,
-                String activeDescendant, String forAttr, Attributes atts) {
+               List<String> roles, String activeDescendant, String forAttr,
+               Attributes atts) {
             this.ancestorMask = ancestorMask;
             this.name = name;
             this.role = role;
+            this.roles = roles;
             this.activeDescendant = activeDescendant;
             this.forAttr = forAttr;
             this.atts = atts;
@@ -2917,6 +2921,67 @@ public class Assertions extends Checker {
                 }
             }
 
+            if ("li" == localName && roles != null && roles.size() > 0) {
+                List<String> ancestorRoles = new ArrayList<>();
+                for (int i = 0; i < currentPtr; i++) {
+                    if (stack[currentPtr - i] != null
+                            && stack[currentPtr - i].roles != null) {
+                        ancestorRoles.addAll(stack[currentPtr - i].roles);
+                    }
+                }
+                if (ancestorRoles.size() == 0
+                        || ancestorRoles.contains("list")) {
+                    err("An \u201Cli\u201D element that is a descendant of"
+                            + " a \u201Cul\u201D, \u201Col\u201D,"
+                            + " or \u201Cmenu\u201D element with no explicit"
+                            + " \u201Crole\u201D value, or a descendant of a"
+                            + " \u201Crole=list\u201D element, must not have any"
+                            + " \u201Crole\u201D value other than"
+                            + " \u201Clistitem\u201D.");
+                }
+                if (ancestorRoles.contains("tablist")
+                        && !roles.contains("tab")) {
+                    err("An \u201Cli\u201D element that is a descendant of"
+                            + " a \u201Crole=tablist\u201D element must not"
+                            + " have any \u201Crole\u201D value other than"
+                            + " \u201Ctab\u201D.");
+                }
+                if (ancestorRoles.contains("tree")
+                        && !roles.contains("treeitem")) {
+                    err("An \u201Cli\u201D element that is a descendant of"
+                            + " a \u201Crole=tree\u201D element must not"
+                            + " have any \u201Crole\u201D value other than"
+                            + " \u201Ctreeitem\u201D.");
+                }
+                if ((ancestorRoles.contains("listbox")
+                            || ancestorRoles.contains("list"))
+                        && !roles.contains("group")
+                        && !roles.contains("option")) {
+                    err("An \u201Cli\u201D element that is a descendant of"
+                            + " a \u201Crole=listbox\u201D element"
+                            + " or \u201Crole=list\u201D element must not"
+                            + " have any \u201Crole\u201D value other than"
+                            + " \u201Cgroup\u201D or \u201Coption\u201D.");
+                }
+                if ((ancestorRoles.contains("menu") ||
+                            ancestorRoles.contains("menubar"))
+                        && !roles.contains("group")
+                        && !roles.contains("menuitem")
+                        && !roles.contains("menuitemcheckbox")
+                        && !roles.contains("menuitemradio")
+                        && !roles.contains("separator")) {
+                    err("An \u201Cli\u201D element that is a descendant of"
+                            + " a \u201Crole=menu\u201D element"
+                            + " or \u201Crole=menubar\u201D element must not"
+                            + " have any \u201Crole\u201D value other than"
+                            + " \u201Cgroup\u201D,"
+                            + " \u201Cmenuitem\u201D,"
+                            + " \u201Cmenuitemcheckbox\u201D,"
+                            + " \u201Cmenuitemradio\u201D,"
+                            + " or \u201Cseparator\u201D.");
+                }
+            }
+
             // Ancestor requirements/restrictions
             if ("area" == localName && ((ancestorMask & MAP_MASK) == 0)) {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
@@ -4088,7 +4153,7 @@ public class Assertions extends Checker {
                 }
             }
             StackNode child = new StackNode(ancestorMask, localName, role,
-                    activeDescendant, forAttr, new AttributesImpl(atts));
+                    roles, activeDescendant, forAttr, new AttributesImpl(atts));
             if ("style" == localName) {
                 child.setIsCollectingCharacters(true);
             }
@@ -4239,7 +4304,7 @@ public class Assertions extends Checker {
                     + " \u201chttp://n.validator.nu/custom-elements/\u201d"
                     + " not allowed.");
         } else {
-            StackNode child = new StackNode(ancestorMask, null, role,
+            StackNode child = new StackNode(ancestorMask, null, role, roles,
                     activeDescendant, forAttr, new AttributesImpl(atts));
             if (activeDescendant != null) {
                 openActiveDescendants.put(child,
