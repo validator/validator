@@ -2979,6 +2979,8 @@ public class Assertions extends Checker {
                         || "table".equals(role) || "grid".equals(role)
                         || "treegrid".equals(role)) {
                     hasAncestorTableIsRoleTableGridOrTreeGrid = true;
+                } else if ("presentation".equals(role)) {
+                    hasAncestorTableIsRoleTableGridOrTreeGrid = false;
                 }
             } else if (hasAncestorTableIsRoleTableGridOrTreeGrid
                     && atts.getIndex("", "role") >= 0 && ("td" == localName
