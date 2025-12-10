@@ -1379,8 +1379,8 @@ public class Assertions extends Checker {
         this.sourceIsCss = sourceIsCss;
     }
 
-    private boolean isProhibitedFromBeingNamed(String localName, String role,
-            Attributes atts) {
+    private boolean isProhibitedFromBeingNamed(String localName,
+            List<String> roles, Attributes atts) {
         if (// https://github.com/validator/validator/issues/1334
                 (localName.contains("-") // custom element
                 || "a" == localName && atts.getIndex("", "href") == -1)
@@ -1418,9 +1418,7 @@ public class Assertions extends Checker {
                 || "time" == localName
                 || "u" == localName
                 || "var" == localName) {
-                    if (role != null && role != "") {
-                        List<String> roles = Arrays.asList(role.trim() //
-                                .toLowerCase().split("\\s+"));
+                    if (roles != null) {
                         for (String roleValue : roles) {
                             if (ROLES_WHICH_CANNOT_BE_NAMED.contains(roleValue)) {
                                 return true;
@@ -2373,6 +2371,8 @@ public class Assertions extends Checker {
                         }
                     } else if ("role" == attLocal) {
                         role = atts.getValue(i);
+                        roles = Arrays.asList(role.trim()
+                                .toLowerCase().split("\\s+"));
                     } else if ("aria-activedescendant" == attLocal
                             && !isEmptyAriaAttribute) {
                         activeDescendant = atts.getValue(i);
@@ -2853,8 +2853,6 @@ public class Assertions extends Checker {
                     }
                 }
                 // Check for multiple main roles in document
-                List<String> roles = Arrays.asList(role.trim()
-                        .toLowerCase().split("\\s+"));
                 if (roles.contains("main") && atts.getIndex("", "hidden") < 0) {
                     if (hasVisibleMainRole) {
                         warn("A document should not include more than one visible"
@@ -2868,11 +2866,6 @@ public class Assertions extends Checker {
             if ("area" == localName && ((ancestorMask & MAP_MASK) == 0)) {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
             } else if ("img" == localName) {
-                List<String> roles = null;
-                if (role != null) {
-                    roles = Arrays.asList(role.trim() //
-                            .toLowerCase().split("\\s+"));
-                }
                 String titleVal = atts.getValue("", "title");
                 if (ismap && ((ancestorMask & HREF_MASK) == 0)) {
                     err("The \u201Cimg\u201D element with the "
@@ -3925,7 +3918,7 @@ public class Assertions extends Checker {
             for (String aLabelAtt: new String[] { "aria-label",
                     "aria-labelledby", "aria-braillelabel"}) {
                 if (atts.getIndex("", aLabelAtt) > -1) {
-                    if (isProhibitedFromBeingNamed(localName, role, atts)) {
+                    if (isProhibitedFromBeingNamed(localName, roles, atts)) {
                         String message =
                             "The \u201C" + aLabelAtt + "\u201D attribute"
                             + " must not be specified on any"
