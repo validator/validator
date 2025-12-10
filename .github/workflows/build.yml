@@ -139,6 +139,7 @@ jobs:
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
+          unset NODE_AUTH_TOKEN
           python ./checker.py npm-release
       - name: Set up Node
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
