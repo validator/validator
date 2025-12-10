@@ -125,20 +125,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_USER_TOKEN: ${{ secrets.MAVEN_USER_TOKEN }}
-      - name: Set up Node
-        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://npm.pkg.github.com'
-      - name: Release new npm package to GitHub Packages
-        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
-        shell: bash
-        run: |
-          python ./checker.py npm-github-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   verify-release-assets:
     name: Verify release assets
