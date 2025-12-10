@@ -1043,14 +1043,6 @@ class Release():
 
     def uploadNpm(self, tag=None):
         self.version = validatorVersion
-        print("npmjs package version: " + self.version)
-        url = f"https://registry.npmjs.org/vnu-jar/{self.version}"
-        try:
-            with urlopen(url):
-                return
-        except HTTPError as e:
-            if e.code != 404:
-                raise
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         readMe = os.path.join(buildRoot, "README.md")
         npmMd = os.path.join(buildRoot, "npm.md")
