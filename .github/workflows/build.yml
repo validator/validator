@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+
 jobs:
   prep:
     name: Prepare the build
@@ -135,8 +138,6 @@ jobs:
         shell: bash
         run: |
           python ./checker.py npm-release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       - name: Set up Node
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         uses: actions/setup-node@v4
