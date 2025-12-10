@@ -125,12 +125,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_USER_TOKEN: ${{ secrets.MAVEN_USER_TOKEN }}
-      - name: Release new npm package to npmjs.com
-        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
-        shell: bash
-        run: |
-          unset NODE_AUTH_TOKEN
-          python ./checker.py npm-release
       - name: Set up Node
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         uses: actions/setup-node@v4
@@ -197,6 +191,21 @@ jobs:
             exit 1
           fi
           echo "✅ Release is not in the Draft or Pre-release state."
+
+  npm-publish-npmjs:
+    name: Release new npm package to npmjs.com
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run ./checker.py npm-release
+        shell: bash
+        run: |
+          unset NODE_AUTH_TOKEN
+          python ./checker.py npm-release
 
   ant-build:
     name: Ant build ${{ matrix.target }}
