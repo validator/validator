@@ -917,12 +917,15 @@ public class Assertions extends Checker {
     }
 
     private class Element {
+        private final Locator locator;
         private final String name;
         private final Attributes attributes;
-        public Element(String name, Attributes attributes) {
+        public Element(Locator locator, String name, Attributes attributes) {
+            this.locator = locator;
             this.name = name;
             this.attributes = attributes;
         }
+        public Locator getLocator() { return locator; }
         public String getName() { return name; }
         public Attributes getAttributes() { return attributes; }
     }
@@ -1499,6 +1502,10 @@ public class Assertions extends Checker {
 
     private Map<String, Element> allIds = new HashMap<>();
 
+    private Map<String, Element> tabpanelElements = new HashMap<>();
+
+    private Map<String, Element> tabElementsActive = new HashMap<>();
+
     private int currentFigurePtr;
 
     private int currentHeadingPtr;
@@ -1661,6 +1668,34 @@ public class Assertions extends Checker {
                 err("The \u201Clist\u201D attribute of the \u201Cinput\u201D element must refer to a \u201Cdatalist\u201D element.",
                         idrefLocator.getLocator());
             }
+        }
+
+        tabElements:
+        for (Map.Entry<String, Element> tabEntry :
+                tabElementsActive.entrySet()) {
+            String tabId = tabEntry.getKey();
+            Element tab = tabEntry.getValue();
+            String controlsValue = tab.getAttributes()
+                .getValue("", "aria-controls");
+            if (controlsValue != null) {
+                if (tabpanelElements.containsKey(controlsValue)) {
+                    continue;
+                }
+            }
+            for (Map.Entry<String, Element> tabpanelEntry :
+                    tabpanelElements.entrySet()) {
+                Element tabpanel = tabpanelEntry.getValue();
+                String arialabelledbyValue = tabpanel.getAttributes()
+                    .getValue("", "aria-labelledby");
+                if (arialabelledbyValue != null) {
+                    if (arialabelledbyValue.equals(tabId)) {
+                        continue tabElements;
+                    }
+                }
+            }
+            err("Every active \u201Crole=tab\u201D element must have a"
+                    + " corresponding \u201Crole=tabpanel\u201D element.",
+                    tab.getLocator());
         }
 
         // ARIA idrefs
@@ -2113,6 +2148,8 @@ public class Assertions extends Checker {
         listIds.clear();
         ariaReferences.clear();
         allIds.clear();
+        tabpanelElements.clear();
+        tabElementsActive.clear();
         siblingSources.clear();
         secondLevelH1s.clear();
         sectioningElementPtrs.clear();
@@ -2143,6 +2180,7 @@ public class Assertions extends Checker {
         }
         Map<String, Element> ids = new HashMap<>();
         String role = null;
+        List<String> roles = null;
         String inputTypeVal = null;
         String activeDescendant = null;
         String owns = null;
@@ -2466,7 +2504,9 @@ public class Assertions extends Checker {
                 if (atts.getType(i) == "ID" || "id" == atts.getLocalName(i)) {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
-                        ids.put(attVal, new Element(localName,
+                        ids.put(attVal, new Element(
+                                    new LocatorImpl(getDocumentLocator()),
+                                    localName,
                                     new AttributesImpl(atts)));
                     }
                 }
@@ -2841,7 +2881,22 @@ public class Assertions extends Checker {
                 checkForInteractiveAncestorRole(
                         "The element \u201C" + localName + "\u201D");
             }
-            
+
+            if (roles !=null && roles.contains("tabpanel")) {
+                tabpanelElements.put(id, new Element(
+                            new LocatorImpl(getDocumentLocator()),
+                            localName,
+                            new AttributesImpl(atts)));
+            }
+
+            if (roles != null && roles.contains("tab")
+                    && "true".equals(atts.getValue("", "aria-selected"))) {
+                tabElementsActive.put(id, new Element(
+                            new LocatorImpl(getDocumentLocator()),
+                            localName,
+                            new AttributesImpl(atts)));
+            }
+
             if (role != null && !role.isEmpty()) {
                 for (Map.Entry<String, String[]> attributeAndRoles : ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.entrySet()) {
                     if (atts.getIndex("", attributeAndRoles.getKey()) >= 0
@@ -3937,7 +3992,9 @@ public class Assertions extends Checker {
                 if (atts.getType(i) == "ID") {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
-                        ids.put(attVal, new Element(localName,
+                        ids.put(attVal, new Element(
+                                    new LocatorImpl(getDocumentLocator()),
+                                    localName,
                                     new AttributesImpl(atts)));
                     }
                 }

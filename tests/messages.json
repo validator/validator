@@ -124,6 +124,7 @@
     "html-aria/misc/multiple-role-main-haswarn.html": "A document should not include more than one visible element with \u201crole=main\u201d.",
     "html-aria/misc/role-listitem-with-aria-level-haswarn.html": "The \u201caria-level\u201d attribute should not be used on any element which has \u201crole=listitem\u201d.",
     "html-aria/misc/role-main-with-main-element-haswarn.html": "A document should not include more than one visible element with \u201crole=main\u201d.",
+    "html-aria/misc/role-tab-with-no-role-tabpanel-novalid.html": "Every active \u201crole=tab\u201d element must have a corresponding \u201crole=tabpanel\u201d element.",
     "html-aria/misc/s-role-deletion-haswarn.html": "The \u201cdeletion\u201d role is unnecessary for element \u201cs\u201d.",
     "html-aria/misc/summary-for-its-details-with-aria-expanded-novalid.html": "Element \u201csummary\u201d is missing one or more of the following attributes: [aria-checked, aria-level, role].",
     "html-aria/misc/summary-for-its-details-with-aria-pressed-novalid.html": "Element \u201csummary\u201d is missing required attribute \u201crole\u201d.",
