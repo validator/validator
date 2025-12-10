@@ -191,6 +191,7 @@ jobs:
         shell: bash
         run: |
           unset NODE_AUTH_TOKEN
+          npm --version
           python ./checker.py npm-release
 
   ant-build:

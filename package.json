@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/validator/validator"
+    "url": "git+https://github.com/validator/validator.git"
   },
   "license": "MIT",
   "bugs": {
