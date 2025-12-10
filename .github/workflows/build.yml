@@ -178,22 +178,6 @@ jobs:
           fi
           echo "✅ Release is not in the Draft or Pre-release state."
 
-  npm-publish-npmjs:
-    name: Release new npm package to npmjs.com
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
-    steps:
-      - uses: actions/checkout@v6
-      - name: Run ./checker.py npm-release
-        shell: bash
-        run: |
-          unset NODE_AUTH_TOKEN
-          npm --version
-          python ./checker.py npm-release
-
   ant-build:
     name: Ant build ${{ matrix.target }}
     needs: prep
