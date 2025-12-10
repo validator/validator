@@ -1054,9 +1054,11 @@ class Release():
             packageJsonCopy = f.read()
         self.createPackageJson(packageJson)
         if tag:
-            runCmdFromString(f"""{npmCmd} publish --tag {tag}""")
+            runCmdFromString(
+                    f"{npmCmd} publish --provenance --access public --tag {tag}")  # nopep8
         else:
-            runCmdFromString(f"""{npmCmd} publish""")
+            runCmdFromString(
+                    f"{npmCmd} publish --provenance --access public")
         with open(readMe, 'w') as f:
             f.write(readMeCopy)
         with open(packageJson, 'w') as f:
