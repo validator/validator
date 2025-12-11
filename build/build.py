@@ -915,7 +915,7 @@ class Release():
         runCmd([jlinkCmd, '--launcher',
                 'vnu=vnu/nu.validator.client.SimpleCommandLineValidator',
                 '--strip-debug', '--no-header-files', '--no-man-pages',
-                '--compress=2',
+                '--compress=zip-6',
                 '--output', self.vnuImageDir, '--module-path', vnuJar,
                 '--add-modules', 'jdk.crypto.ec',
                 '--add-modules', 'vnu'])
