@@ -191,7 +191,7 @@ jobs:
         shell: bash
         run: |
           unset NODE_AUTH_TOKEN
-          npm install -g npm@latest
+          npm install npm@latest
           echo "npm version: $(npm --version)"
           python ./checker.py npm-release
 
