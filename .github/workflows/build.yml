@@ -190,7 +190,7 @@ jobs:
           fi
           echo "✅ Release is not in the Draft or Pre-release state."
 
-  npm-publish-npmjs:
+  npm-release:
     name: Release new npm package
     needs: build
     runs-on: ubuntu-latest
@@ -209,7 +209,7 @@ jobs:
           export PATH="$HOME/.npm-global/bin:$PATH"
           npm install -g npm@latest
           echo "npm version: $(npm --version)"
-          python ./checker.py --version="25.12.12" npm-release
+          python ./checker.py npm-release
 
   ant-build:
     name: Ant build ${{ matrix.target }}

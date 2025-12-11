@@ -1005,6 +1005,18 @@ class Release():
 
     def uploadNpm(self, tag=None):
         self.version = validatorVersion
+        url = f"https://registry.npmjs.org/vnu-jar/{self.version}"
+        try:
+            with urlopen(url):
+                print(f"npmjs package version {self.version} already exists. Skipping.")  # nopep8
+                return
+        except HTTPError as e:
+            if e.code != 404:
+                raise
+        if not os.path.exists(vnuJar):
+            print(f"Error: {vnuJar} not found.")
+            sys.exit(1)
+        print("npmjs package version: " + self.version)
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         readMe = os.path.join(buildRoot, "README.md")
         npmMd = os.path.join(buildRoot, "npm.md")
