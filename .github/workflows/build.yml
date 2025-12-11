@@ -209,7 +209,7 @@ jobs:
           export PATH="$HOME/.npm-global/bin:$PATH"
           npm install -g npm@latest
           echo "npm version: $(npm --version)"
-          python ./checker.py npm-release
+          python ./checker.py --version="25.12.12" npm-release
 
   ant-build:
     name: Ant build ${{ matrix.target }}
