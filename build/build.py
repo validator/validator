@@ -974,44 +974,6 @@ class Release():
                     sigsums.match(filename)):
                 removeIfExists(filename)
 
-    def uploadMavenToGitHub(self):
-        self.version = validatorVersion
-        print("maven package version: " + self.version)
-        url = "https://api.github.com/orgs/validator/packages/maven/nu.validator.validator/versions"  # nopep8
-        request = Request(
-            url,
-            headers={
-                "Authorization": "Bearer %s" % os.getenv("GITHUB_TOKEN"),
-                "Accept": "application/vnd.github+json",
-            },
-        )
-        try:
-            with urlopen(request) as response:
-                versions = json.load(response)
-        except HTTPError as e:
-            print(e.reason)
-            sys.exit(1)
-        except URLError as e:
-            print(e.reason)
-            sys.exit(1)
-        if self.version in [v["name"] for v in versions]:
-            return
-        basename = f"validator-{self.version}"
-        mvnArgs = shlex.split(
-                f"""{mvnCmd} deploy:deploy-file
-                -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/validator/validator
-                -DrepositoryId=github
-                -Durl=https://maven.pkg.github.com/validator/validator
-                -DpomFile={basename}.pom
-                -Dfile={basename}.jar
-                -Djavadoc={basename}-javadoc.jar
-                -Dsources={basename}-sources.jar""")
-        workingDirectory = os.getcwd()
-        os.chdir(os.path.join(distDir, "nu", "validator", "validator",
-                              self.version))
-        runCmd(mvnArgs)
-        os.chdir(workingDirectory)
-
     def uploadMavenToMavenCentral(self):
         url = "https://repo1.maven.org/maven2/nu/validator/validator/maven-metadata.xml"  # nopep8
         try:
@@ -1059,47 +1021,6 @@ class Release():
         else:
             runCmdFromString(
                     f"{npmCmd} publish --provenance --access public")
-        with open(readMe, 'w') as f:
-            f.write(readMeCopy)
-        with open(packageJson, 'w') as f:
-            f.write(packageJsonCopy)
-
-    def uploadNpmToGitHub(self, tag=None):
-        self.version = validatorVersion
-        print("GitHub npm package version: " + self.version)
-        url = "https://api.github.com/orgs/validator/packages/npm/vnu-jar/versions"  # nopep8
-        request = Request(
-            url,
-            headers={
-                "Authorization": "Bearer %s" % os.getenv("GITHUB_TOKEN"),
-                "Accept": "application/vnd.github+json",
-            },
-        )
-        try:
-            with urlopen(request) as response:
-                versions = json.load(response)
-        except HTTPError as e:
-            print(e.reason)
-            sys.exit(1)
-        except URLError as e:
-            print(e.reason)
-            sys.exit(1)
-        if self.version in [v["name"] for v in versions]:
-            return
-        removeIfExists(os.path.join(buildRoot, "README.md~"))
-        readMe = os.path.join(buildRoot, "README.md")
-        npmMd = os.path.join(buildRoot, "npm.md")
-        packageJson = os.path.join(buildRoot, "package.json")
-        with open(readMe, 'r') as f:
-            readMeCopy = f.read()
-        shutil.copy(npmMd, readMe)
-        with open(packageJson, 'r') as f:
-            packageJsonCopy = f.read()
-        self.createGitHubPackageJson(packageJson)
-        if tag:
-            runCmdFromString(f"""{npmCmd} publish --tag {tag}""")
-        else:
-            runCmdFromString(f"""{npmCmd} publish""")
         with open(readMe, 'w') as f:
             f.write(readMeCopy)
         with open(packageJson, 'w') as f:
@@ -1935,8 +1856,6 @@ def main(argv):
                 release.createMavenBundle()
             elif arg == 'npm-release':
                 release.uploadNpm()
-            elif arg == 'npm-github-release':
-                release.uploadNpmToGitHub()
             elif arg == 'maven-artifacts':
                 release.createMavenArtifacts()
             elif arg == 'maven-sign':
@@ -1944,7 +1863,6 @@ def main(argv):
             elif arg == 'maven-bundle':
                 release.createMavenBundle()
             elif arg == 'maven-release':
-                release.uploadMavenToGitHub()
                 release.uploadMavenToMavenCentral()
             elif arg == 'image':
                 release.createRuntimeImage()

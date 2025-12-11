@@ -117,7 +117,7 @@ jobs:
         run: |
           python ./checker.py maven-artifacts
           python ./checker.py maven-sign
-      - name: Release new maven packages to Maven Central and GitHub
+      - name: Release new maven package
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
@@ -179,7 +179,7 @@ jobs:
           echo "✅ Release is not in the Draft or Pre-release state."
 
   npm-publish-npmjs:
-    name: Release new npm package to npmjs.com
+    name: Release new npm package
     needs: build
     runs-on: ubuntu-latest
     permissions:
