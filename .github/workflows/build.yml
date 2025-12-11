@@ -202,6 +202,8 @@ jobs:
       - name: Run ./checker.py npm-release
         shell: bash
         run: |
+          mkdir -p build/dist
+          curl -L https://github.com/validator/validator/releases/download/latest/vnu.jar > build/dist/vnu.jar
           unset NODE_AUTH_TOKEN
           npm config set prefix "${HOME}/.npm-global"
           export PATH="$HOME/.npm-global/bin:$PATH"
