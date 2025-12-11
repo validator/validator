@@ -191,7 +191,9 @@ jobs:
         shell: bash
         run: |
           unset NODE_AUTH_TOKEN
-          npm install npm@latest
+          npm config set prefix "${HOME}/.npm-global"
+          export PATH="$HOME/.npm-global/bin:$PATH"
+          npm install -g npm@latest
           echo "npm version: $(npm --version)"
           python ./checker.py npm-release
 
