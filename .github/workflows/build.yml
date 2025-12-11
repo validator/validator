@@ -30,6 +30,10 @@ jobs:
             java: 11.0.23
           - os: windows-latest
             java: 11.0.23
+          - os: macos-latest
+            java: 17
+          - os: windows-latest
+            java: 17
     env:
       IS_MAIN_RELEASE_BUILDER: ${{ github.event_name == 'push' &&
                               github.ref == 'refs/heads/main' &&
