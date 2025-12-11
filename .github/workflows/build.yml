@@ -62,6 +62,12 @@ jobs:
           python checker.py --version="$version" jar
           python checker.py --version="$version" image
           python checker.py --version="$version" war
+      - name: Build runtime image
+        if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
+        shell: bash
+        run: |
+          version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
+          python checker.py --version="$version" image
       - name: Test
         shell: bash
         env:
