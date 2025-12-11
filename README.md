@@ -58,7 +58,6 @@ You can [get the latest release][12] or run one of the following:
 
 - [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13]
 - [`npm install vnu-jar`][14]
-- [`npm install --registry=https://npm.pkg.github.com @validator/vnu-jar`][15]
 - [`brew install vnu`][16]
 - [`pip install html5validator`][17]
 
@@ -67,7 +66,6 @@ You can [get the latest release][12] or run one of the following:
    [12]: https://github.com/validator/validator/releases/tag/latest
    [13]: https://github.com/validator/validator/pkgs/container/validator
    [14]: https://www.npmjs.com/package/vnu-jar
-   [15]: https://github.com/validator/validator/packages/892707
    [16]: https://libraries.io/homebrew/vnu
    [17]: https://github.com/svenkreiss/html5validator
 
