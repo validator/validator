@@ -72,9 +72,8 @@ jobs:
           version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
           python checker.py --version="$version" image
       - name: Test
+        if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         shell: bash
-        env:
-          TOMCAT_VERSION: 11.0.14
         run: |
           java -jar build/dist/vnu.jar site/nu-about.html
           python ./checker.py self-test
