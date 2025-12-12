@@ -122,27 +122,29 @@ function initFieldHolders() {
 	modeSelect.appendChild(createOption('file upload', 'file'))
 	modeSelect.appendChild(createOption('text input', 'textarea'))
 	modeSelect.onchange = function() {
-	if (this.value == 'file') {
-		installFileUpload()
-		location.hash = '#file'
-	}
-	else
-		if (this.value == 'textarea') {
+		if (this.value == 'file') {
+			installFileUpload()
+			location.hash = '#file'
+		} else if (this.value == 'textarea') {
 			installTextarea()
 			location.hash = '#textarea'
-		}
-		else {
+		} else {
 			installUrlInput()
 			history.pushState("", document.title, location.pathname);
+		}
+		if (supportsLocalStorage()) {
+			localStorage["lastInputMode"] = this.value
 		}
 	}
 	label.appendChild(modeSelect)
 	if (urlInput.className == 'file') {
 		installFileUpload()
+		location.hash = '#file'
 		modeSelect.value = 'file'
 	} else
 		if (urlInput.className == 'textarea' || disabledAddressType) {
 		installTextarea()
+		location.hash = '#textarea'
 		modeSelect.value = 'textarea'
 	}
 	document.querySelector('#show_options')
@@ -151,14 +153,27 @@ function initFieldHolders() {
 		}, false)
 	if (location.hash == '#file') {
 		installFileUpload()
+		location.hash = '#file'
 		modeSelect.value = 'file'
 	} else {
 		if (location.hash == '#textarea' || disabledAddressType) {
 			installTextarea()
+			location.hash = '#textarea'
 			modeSelect.value = 'textarea'
 		}
 		else {
-			installUrlInput()
+			if (supportsLocalStorage() && localStorage["lastInputMode"] == 'file') {
+				installFileUpload()
+				location.hash = '#file'
+				modeSelect.value = 'file'
+			} else if (supportsLocalStorage() && localStorage["lastInputMode"] == 'textarea') {
+				installTextarea()
+				location.hash = '#textarea'
+				modeSelect.value = 'textarea'
+			} else {
+				installUrlInput()
+				modeSelect.value = ''
+			}
 		}
 	}
 }
@@ -235,7 +250,7 @@ function formSubmission() {
 	}
 	disableByIdIfEmptyString("doc")
 	if (textareaHidden && textarea) {
-	  textareaHidden.value = textarea.value
+		textareaHidden.value = textarea.value
 	}
 	return true
 }
@@ -461,10 +476,10 @@ function installTextarea() {
 		}
 	}
 	if (textareaHidden) {
-	  var submit = document.getElementById("submit")
-	  if (submit) {
-	    submit.parentNode.appendChild(textareaHidden)
-	  }
+		var submit = document.getElementById("submit")
+		if (submit) {
+			submit.parentNode.appendChild(textareaHidden)
+		}
 	}
 	var showSource = document.getElementById("showsource")
 	if (showSource) {
@@ -497,7 +512,7 @@ function installFileUpload() {
 		}
 	}
 	if (textareaHidden && textareaHidden.parentNode) {
-	  textareaHidden.parentNode.removeChild(textareaHidden)
+		textareaHidden.parentNode.removeChild(textareaHidden)
 	}
 }
 
@@ -519,7 +534,7 @@ function installUrlInput() {
 		}
 	}
 	if (textareaHidden && textareaHidden.parentNode) {
-	  textareaHidden.parentNode.removeChild(textareaHidden)
+		textareaHidden.parentNode.removeChild(textareaHidden)
 	}
 }
 
