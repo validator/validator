@@ -2939,46 +2939,50 @@ public class Assertions extends Checker {
                             + " \u201Crole\u201D value other than"
                             + " \u201Clistitem\u201D.");
                 }
-                if (ancestorRoles.contains("tablist")
-                        && !roles.contains("tab")) {
-                    err("An \u201Cli\u201D element that is a descendant of"
-                            + " a \u201Crole=tablist\u201D element must not"
-                            + " have any \u201Crole\u201D value other than"
-                            + " \u201Ctab\u201D.");
-                }
-                if (ancestorRoles.contains("tree")
-                        && !roles.contains("treeitem")) {
-                    err("An \u201Cli\u201D element that is a descendant of"
-                            + " a \u201Crole=tree\u201D element must not"
-                            + " have any \u201Crole\u201D value other than"
-                            + " \u201Ctreeitem\u201D.");
-                }
-                if ((ancestorRoles.contains("listbox")
-                            || ancestorRoles.contains("list"))
-                        && !roles.contains("group")
-                        && !roles.contains("option")) {
-                    err("An \u201Cli\u201D element that is a descendant of"
-                            + " a \u201Crole=listbox\u201D element"
-                            + " or \u201Crole=list\u201D element must not"
-                            + " have any \u201Crole\u201D value other than"
-                            + " \u201Cgroup\u201D or \u201Coption\u201D.");
-                }
-                if ((ancestorRoles.contains("menu") ||
-                            ancestorRoles.contains("menubar"))
-                        && !roles.contains("group")
-                        && !roles.contains("menuitem")
-                        && !roles.contains("menuitemcheckbox")
-                        && !roles.contains("menuitemradio")
-                        && !roles.contains("separator")) {
-                    err("An \u201Cli\u201D element that is a descendant of"
-                            + " a \u201Crole=menu\u201D element"
-                            + " or \u201Crole=menubar\u201D element must not"
-                            + " have any \u201Crole\u201D value other than"
-                            + " \u201Cgroup\u201D,"
-                            + " \u201Cmenuitem\u201D,"
-                            + " \u201Cmenuitemcheckbox\u201D,"
-                            + " \u201Cmenuitemradio\u201D,"
-                            + " or \u201Cseparator\u201D.");
+                if (!roles.contains("none")
+                        && !roles.contains("presentation")
+                        && !roles.contains("generic")) {
+                    if (ancestorRoles.contains("tablist")
+                            && !roles.contains("tab")) {
+                        err("An \u201Cli\u201D element that is a descendant of"
+                                + " a \u201Crole=tablist\u201D element must not"
+                                + " have any \u201Crole\u201D value other than"
+                                + " \u201Ctab\u201D.");
+                            }
+                    if (ancestorRoles.contains("tree")
+                            && !roles.contains("treeitem")) {
+                        err("An \u201Cli\u201D element that is a descendant of"
+                                + " a \u201Crole=tree\u201D element must not"
+                                + " have any \u201Crole\u201D value other than"
+                                + " \u201Ctreeitem\u201D.");
+                            }
+                    if ((ancestorRoles.contains("listbox")
+                                || ancestorRoles.contains("list"))
+                            && !roles.contains("group")
+                            && !roles.contains("option")) {
+                        err("An \u201Cli\u201D element that is a descendant of"
+                                + " a \u201Crole=listbox\u201D element"
+                                + " or \u201Crole=list\u201D element must not"
+                                + " have any \u201Crole\u201D value other than"
+                                + " \u201Cgroup\u201D or \u201Coption\u201D.");
+                            }
+                    if ((ancestorRoles.contains("menu") ||
+                                ancestorRoles.contains("menubar"))
+                            && !roles.contains("group")
+                            && !roles.contains("menuitem")
+                            && !roles.contains("menuitemcheckbox")
+                            && !roles.contains("menuitemradio")
+                            && !roles.contains("separator")) {
+                        err("An \u201Cli\u201D element that is a descendant of"
+                                + " a \u201Crole=menu\u201D element"
+                                + " or \u201Crole=menubar\u201D element must not"
+                                + " have any \u201Crole\u201D value other than"
+                                + " \u201Cgroup\u201D,"
+                                + " \u201Cmenuitem\u201D,"
+                                + " \u201Cmenuitemcheckbox\u201D,"
+                                + " \u201Cmenuitemradio\u201D,"
+                                + " or \u201Cseparator\u201D.");
+                    }
                 }
             }
 
