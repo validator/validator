@@ -29,6 +29,13 @@
   ],
   "files": [
     "build/dist/vnu.jar",
+    "vnu-java-downloader.js",
     "vnu-jar.js"
-  ]
+  ],
+  "bin": {
+    "vnu": "./vnu-jar.js"
+  },
+  "scripts": {
+    "postinstall": "node vnu-java-downloader.js"
+  }
 }
