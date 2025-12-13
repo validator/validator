@@ -24,4 +24,5 @@ extras/
 jars.tar.gz
 jars/
 local-entities/
+node_modules/
 run-validator.sh
