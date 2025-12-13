@@ -2,17 +2,11 @@
 
 const { spawnSync, execSync } = require('child_process');
 const { mkdirSync, existsSync, createWriteStream } = require('fs');
-const { tmpdir } = require('os');
 const { join } = require('path');
 const https = require('https');
-const readline = require('readline');
-const { pipeline } = require('stream');
-const { promisify } = require('util');
 const { extract } = require('tar');
-const pipelineAsync = promisify(pipeline);
 
 const CACHE_DIR = join(__dirname, '..', 'node_modules', '.cache', 'vnu-jar', 'java');
-const TEMURIN_VERSION = '17';
 const TEMURIN_BASE_URL = 'https://github.com/adoptium/temurin17-binaries/releases/latest/download/';
 
 function findSystemJava() {
@@ -31,7 +25,7 @@ function getPlatformArchiveName() {
     return `OpenJDK17U-jre_${arch}_${plat}_hotspot_latest.${ext}`;
 }
 
-async function downloadJava(dest) {
+async function downloadJava() {
     mkdirSync(CACHE_DIR, { recursive: true });
     const archiveName = getPlatformArchiveName();
     const url = TEMURIN_BASE_URL + archiveName;
@@ -68,7 +62,7 @@ function resolveLocalJavaExecutable() {
 
 async function ensureLocalJava() {
     if (!existsSync(CACHE_DIR)) {
-        await downloadJava(CACHE_DIR);
+        await downloadJava();
     }
     return resolveLocalJavaExecutable();
 }
@@ -76,8 +70,21 @@ async function ensureLocalJava() {
 async function resolveJava() {
     const javaPath = findSystemJava();
     if (javaPath) return javaPath;
-    console.log('No Java runtime found.');
+    try {
+        return resolveLocalJavaExecutable();
+    } catch {
+    }
     return ensureLocalJava();
+}
+
+if (require.main === module) {
+    (async () => {
+        try {
+            await resolveJava();
+        } catch {
+            process.exit(0);
+        }
+    })();
 }
 
 module.exports = { resolveJava };
