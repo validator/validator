@@ -203,7 +203,7 @@ jobs:
   maven-release:
     name: Release new npm package
     needs: build
-    if: ${{ env.IS_PUSH_TO_MAIN == 'true' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
