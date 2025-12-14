@@ -201,7 +201,7 @@ jobs:
           python ./checker.py npm-release
 
   maven-release:
-    name: Release new npm package
+    name: Release new Maven package
     needs: build
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
@@ -209,6 +209,8 @@ jobs:
       id-token: write
       contents: write
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v6
       - name: Set up Java JDK
         uses: actions/setup-java@v5
         with:
@@ -218,6 +220,14 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Install dependencies
+        run: python checker.py dldeps
+      - name: Build
+        shell: bash
+        run: |
+          version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
+          python checker.py --version="$version" build
+          python checker.py --version="$version" jar
       - name: Import GPG signing key
         uses: crazy-max/ghaction-import-gpg@v5
         with:
