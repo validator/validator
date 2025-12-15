@@ -847,6 +847,12 @@ public class Assertions extends Checker {
             + " \u201Ch1\u201D elements are treated as top-level headings"
             + " by many screen readers and other tools).";
 
+    private static final String multipleH1WarningMessage = "Consider using"
+            + " only one \u201Ch1\u201D element per document (or, if using"
+            + " \u201Ch1\u201D elements multiple times is required, consider"
+            + " using the \u201Cheadingoffset\u201D attribute to indicate that"
+            + " these \u201Ch1\u201D elements are not all top-level headings).";
+
     private class IdrefLocator {
         private final Locator locator;
 
@@ -1542,7 +1548,7 @@ public class Assertions extends Checker {
 
     private int numberOfSvgAelementsDeep = 0;
 
-    private Set<Locator> secondLevelH1s = new HashSet<>();
+    private Set<Locator> allH1s = new HashSet<>();
 
     private Map<Locator, Map<String, String>> siblingSources = new ConcurrentHashMap<>();
 
@@ -1730,9 +1736,10 @@ public class Assertions extends Checker {
             }
         }
 
-        if (hasTopLevelH1 && !hasHeadingoffset) {
-            for (Locator locator : secondLevelH1s) {
-                warn(h1WarningMessage, locator);
+        // Warn if multiple h1 elements found in document
+        if (allH1s.size() > 1 && !hasHeadingoffset) {
+            for (Locator locator : allH1s) {
+                warn(multipleH1WarningMessage, locator);
             }
         }
 
@@ -2155,7 +2162,7 @@ public class Assertions extends Checker {
         tabpanelElements.clear();
         tabElementsActive.clear();
         siblingSources.clear();
-        secondLevelH1s.clear();
+        allH1s.clear();
         sectioningElementPtrs.clear();
     }
 
@@ -3104,10 +3111,12 @@ public class Assertions extends Checker {
                     hasVisibleMainRole = true; // <main> has implicit role="main"
                 }
             } else if ("h1" == localName && !hasHeadingoffset) {
+                // Store location of all h1 elements for multiple h1 check
+                allH1s.add(new LocatorImpl(getDocumentLocator()));
+
+                // Keep existing warning for deeply nested h1 elements (2+ levels)
                 if (sectioningElementPtrs.size() > 1) {
                     warn(h1WarningMessage);
-                } else if (sectioningElementPtrs.size() == 1) {
-                    secondLevelH1s.add(new LocatorImpl(getDocumentLocator()));
                 } else {
                     hasTopLevelH1 = true;
                 }

@@ -992,6 +992,7 @@
     "html/elements/form/action/userinfo-username-contains-at-sign-novalid.html": "Bad value \u201chttp://::@c@d:2\u201d for attribute \u201caction\u201d on element \u201cform\u201d: Bad URL: User or password contains an at symbol (\"@\") not percent-encoded.",
     "html/elements/form/action/userinfo-username-contains-pile-of-poo-novalid.html": "Bad value \u201chttp://\ud83d\udca9:foo@example.com\u201d for attribute \u201caction\u201d on element \u201cform\u201d: Bad URL: Illegal character in user or password: \u201c\ud83d\udca9\u201d is not allowed.",
     "html/elements/h1/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
+    "html/elements/h1/multiple-h1-haswarn.html": "Consider using only one \u201ch1\u201d element per document (or, if using \u201ch1\u201d elements multiple times is required, consider using the \u201cheadingoffset\u201d attribute to indicate that these \u201ch1\u201d elements are not all top-level headings).",
     "html/elements/h2/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
     "html/elements/h3/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
     "html/elements/h4/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
