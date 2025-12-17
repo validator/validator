@@ -65,7 +65,18 @@ async function downloadJava() {
     });
     if (process.platform === 'win32') {
         console.log('Extracting ZIP archive...');
-        execSync(`powershell -Command "Expand-Archive -Force '${archivePath}' '${CACHE_DIR}'`);
+        const extractRes = spawnSync('powershell', [
+            '-NoProfile',
+            '-NonInteractive',
+            '-Command',
+            'Expand-Archive',
+            '-Force',
+            archivePath,
+            CACHE_DIR
+        ], { stdio: 'inherit' });
+        if (extractRes.status !== 0) {
+            throw new Error('Failed to extract Java archive.');
+        }
     } else {
         console.log('Extracting tar.gz archive...');
         execSync(`tar -xzf '${archivePath}' -C '${CACHE_DIR}'`);
