@@ -34,8 +34,8 @@ jobs:
             paths:
               - build
               - src
-              - 'vnu-jar.js'
-              - 'vnu-java-downloader.js'
+              - '**/vnu-jar.js'
+              - '**/vnu-java-downloader.js'
             paths-ignore:
               - assets
               - css-validator
