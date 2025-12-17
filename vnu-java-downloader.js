@@ -23,7 +23,7 @@ function findNearestNodeModules(startDir) {
 
 const NODE_MODULES_DIR = findNearestNodeModules(__dirname);
 const CACHE_DIR = join( NODE_MODULES_DIR, '.cache', 'vnu-jar', 'java');
-const TEMURIN_VERSION= '17.0.17+10'
+const TEMURIN_VERSION = '17.0.17+10'
 const TEMURIN_BASE_URL = `https://github.com/adoptium/temurin17-binaries/releases/download/jdk-${TEMURIN_VERSION}/`;
 
 function findSystemJava() {
