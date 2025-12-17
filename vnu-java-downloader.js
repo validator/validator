@@ -39,7 +39,7 @@ function getPlatformArchiveName() {
     let arch = process.arch;
     const plat = process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'mac' : 'linux';
     if (plat === 'mac' && arch === 'arm64') {
-        arch = 'aarch64'
+        arch = 'aarch64';
     }
     const ext = process.platform === 'win32' ? 'zip' : 'tar.gz';
     const version = TEMURIN_VERSION.replace('+', '_');
