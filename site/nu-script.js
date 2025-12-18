@@ -421,7 +421,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 
 function reflow(element) {
 	if (element.offsetHeight) {
-		var reflow = element.offsetHeight
+		element.offsetHeight;
 	}
 }
 
