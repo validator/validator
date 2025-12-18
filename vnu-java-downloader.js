@@ -37,7 +37,12 @@ function findSystemJava() {
 
 function getPlatformArchiveName() {
     let arch = process.arch;
-    const plat = process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'mac' : 'linux';
+    let plat = 'linux';
+    if (process.platform === 'win32') {
+        plat = 'windows';
+    } else if (process.platform === 'darwin') {
+        plat = 'mac';
+    }
     if (plat === 'mac' && arch === 'arm64') {
         arch = 'aarch64';
     }
