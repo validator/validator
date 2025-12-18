@@ -30,7 +30,8 @@
  * in this file.
  *
  */
-var idCount = 0
+var NuScript = {};
+NuScript.idCount = 0
 var urlInput = null
 var fileInput = null
 var textarea = null
