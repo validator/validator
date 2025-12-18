@@ -547,7 +547,7 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("dt", "section");
         registerProhibitedAncestor("dt", "h1");
         registerProhibitedAncestor("dt", "h2");
-        registerProhibitedAncestor("dt", "h2");
+        registerProhibitedAncestor("dt", "h3");
         registerProhibitedAncestor("dt", "h3");
         registerProhibitedAncestor("dt", "h4");
         registerProhibitedAncestor("dt", "h5");
