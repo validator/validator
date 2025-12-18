@@ -400,7 +400,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 				langOrDirLinks.innerHTML = langGuidance
 			} else if (warningText.indexOf("Content-Language") != -1) {
 				langOrDirLinks.innerHTML = contentLangGuidance
-			} else if (warningText.indexOf("dir=") != 1) {
+			} else if (warningText.indexOf("dir=") != -1) {
 				langOrDirLinks.innerHTML = dirGuidance
 			}
 			langOrDirWarning.appendChild(langOrDirLinks)
