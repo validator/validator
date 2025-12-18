@@ -31,7 +31,7 @@
  *
  */
 var NuScript = {};
-NuScript.idCount = 0
+NuScript.idCount = 0;
 var urlInput = null
 var fileInput = null
 var textarea = null
