@@ -830,7 +830,7 @@ class Release():
                 buf = f.read(BLOCKSIZE)
         o = open("%s.%s" % (filename, md5OrSha1), 'w')
         o.write(f"{hasher.hexdigest()}  {os.path.basename(filename)}")
-        o.close
+        o.close()
 
     def writeHashes(self, whichDir):
         files = [f for f in os.listdir(whichDir)
