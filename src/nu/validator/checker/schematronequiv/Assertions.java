@@ -4068,7 +4068,7 @@ public class Assertions extends Checker {
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
-                boolean isEmptyAtt = !"".equals(atts.getValue(i));
+                boolean isEmptyAtt = "".equals(atts.getValue(i));
                 if (atts.getType(i) == "ID") {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
