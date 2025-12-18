@@ -5,6 +5,7 @@ const { spawnSync, execSync } = require('child_process');
 const { mkdirSync, existsSync, createWriteStream } = require('fs');
 const { join, dirname, parse } = require('path');
 const { Readable } = require('stream');
+const fetch = globalThis.fetch || require('node-fetch');
 
 function findNearestNodeModules(startDir) {
     let dir = startDir;
