@@ -5,6 +5,7 @@ const { spawnSync, execSync } = require('child_process');
 const { mkdirSync, existsSync, createWriteStream } = require('fs');
 const { join, dirname, parse } = require('path');
 const { Readable } = require('stream');
+const fetch = globalThis.fetch || require('node-fetch');
 
 function findNearestNodeModules(startDir) {
     let dir = startDir;
@@ -23,7 +24,7 @@ function findNearestNodeModules(startDir) {
 
 const NODE_MODULES_DIR = findNearestNodeModules(__dirname);
 const CACHE_DIR = join(NODE_MODULES_DIR, '.cache', 'vnu-jar', 'java');
-const TEMURIN_VERSION = '17.0.17+10'
+const TEMURIN_VERSION = '17.0.17+10';
 const TEMURIN_BASE_URL = `https://github.com/adoptium/temurin17-binaries/releases/download/jdk-${TEMURIN_VERSION}/`;
 
 function findSystemJava() {
@@ -37,7 +38,12 @@ function findSystemJava() {
 
 function getPlatformArchiveName() {
     let arch = process.arch;
-    const plat = process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'mac' : 'linux';
+    let plat = 'linux';
+    if (process.platform === 'win32') {
+        plat = 'windows';
+    } else if (process.platform === 'darwin') {
+        plat = 'mac';
+    }
     if (plat === 'mac' && arch === 'arm64') {
         arch = 'aarch64';
     }
@@ -112,13 +118,17 @@ async function resolveJava() {
     if (javaPath) return javaPath;
     try {
         return resolveLocalJavaExecutable();
-    } catch {
+    } catch (err) {
+        console.error('Failed to resolve local Java runtime, falling back to ensureLocalJava():', err);
     }
     return ensureLocalJava();
 }
 
 if (require.main === module) {
-    void resolveJava().catch(() => process.exit(0));
+    void resolveJava().catch((err) => {
+        console.error('Failed to resolve Java runtime:', err && err.stack ? err.stack : String(err));
+        process.exit(1);
+    });
 }
 
 module.exports = { resolveJava };
