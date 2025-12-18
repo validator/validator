@@ -93,7 +93,7 @@ function initFieldHolders() {
 		copySourceIntoTextArea()
 		if (textarea.value == '') {
 			textarea.value = htmlBoilerplate
-			if (supportsLocalStorage() && localStorage["inputWasCss"] == "yes") {
+			if (supportsLocalStorage() && localStorage.inputWasCss == "yes") {
 				textarea.value = ""
 			}
 		}
