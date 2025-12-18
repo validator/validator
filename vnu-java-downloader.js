@@ -112,7 +112,8 @@ async function resolveJava() {
     if (javaPath) return javaPath;
     try {
         return resolveLocalJavaExecutable();
-    } catch {
+    } catch (err) {
+        console.error('Failed to resolve local Java runtime, falling back to ensureLocalJava():', err);
     }
     return ensureLocalJava();
 }
