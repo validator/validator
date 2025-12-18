@@ -548,7 +548,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("dt", "h1");
         registerProhibitedAncestor("dt", "h2");
         registerProhibitedAncestor("dt", "h3");
-        registerProhibitedAncestor("dt", "h3");
         registerProhibitedAncestor("dt", "h4");
         registerProhibitedAncestor("dt", "h5");
         registerProhibitedAncestor("dt", "h6");
@@ -560,9 +559,8 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("th", "section");
         registerProhibitedAncestor("th", "h1");
         registerProhibitedAncestor("th", "h2");
+        registerProhibitedAncestor("th", "h3");
         registerProhibitedAncestor("th", "h4");
-        registerProhibitedAncestor("th", "h5");
-        registerProhibitedAncestor("th", "h5");
         registerProhibitedAncestor("th", "h5");
         registerProhibitedAncestor("th", "h6");
         registerProhibitedAncestor("th", "hgroup");
