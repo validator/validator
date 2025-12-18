@@ -31,7 +31,7 @@
  *
  */
 var NuScript = {};
-NuScript.idCount = 0
+NuScript.idCount = 0;
 var urlInput = null
 var fileInput = null
 var textarea = null
@@ -422,6 +422,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 
 function reflow(element) {
 	if (element.offsetHeight) {
+		// Intentionally read offsetHeight to force a layout/reflow in the browser.
 		element.offsetHeight;
 	}
 }
@@ -663,7 +664,6 @@ function initFilters() {
 		links,
 		messageCollection,
 		className,
-		links,
 		mainForm
 
 	if (!document.getElementsByClassName || !document.querySelectorAll) {
@@ -764,7 +764,7 @@ function initFilters() {
 			// Find the unique messages and categorize them
 			for (var i = 0; i < messages.length; ++i) {
 				message = messages[i]
-				messageClone = messages[i].cloneNode(true)
+				var messageClone = messages[i].cloneNode(true)
 					uniqueMessage = messageClone.getElementsByTagName('p')[0].getElementsByTagName('span')[0].textContent
 					messageGroupEl = messageClone.getElementsByTagName('p')[0].getElementsByTagName('span')[0].cloneNode(true)
 					messageGroupElCode = messageGroupEl.getElementsByTagName("code")
