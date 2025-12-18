@@ -422,6 +422,7 @@ function moveLangAndDirWarningsAndAddLinks() {
 
 function reflow(element) {
 	if (element.offsetHeight) {
+		// Intentionally read offsetHeight to force a layout/reflow in the browser.
 		element.offsetHeight;
 	}
 }
