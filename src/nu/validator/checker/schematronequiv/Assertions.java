@@ -4068,10 +4068,11 @@ public class Assertions extends Checker {
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
-                boolean isEmptyAtt = "".equals(atts.getValue(i));
+                String value = atts.getValue(i);
+                boolean isEmptyAtt = (value != null && value.length() == 0);
                 if (atts.getType(i) == "ID") {
-                    String attVal = atts.getValue(i);
-                    if (attVal.length() != 0) {
+                    String attVal = value;
+                    if (attVal != null && attVal.length() != 0) {
                         ids.put(attVal, new Element(
                                     new LocatorImpl(getDocumentLocator()),
                                     localName,
@@ -4081,12 +4082,12 @@ public class Assertions extends Checker {
                 String attLocal = atts.getLocalName(i);
                 if (atts.getURI(i).length() == 0) {
                     if ("role" == attLocal) {
-                        role = atts.getValue(i);
+                        role = value;
                     } else if ("aria-activedescendant" == attLocal
                             && !isEmptyAtt) {
-                        activeDescendant = atts.getValue(i);
+                        activeDescendant = value;
                     } else if ("aria-owns" == attLocal && !isEmptyAtt) {
-                        owns = atts.getValue(i);
+                        owns = value;
                     }
                 }
             }
