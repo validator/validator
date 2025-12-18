@@ -130,7 +130,7 @@ function initFieldHolders() {
 			location.hash = '#textarea'
 		} else {
 			installUrlInput()
-			history.pushState("", document.title, location.pathname);
+			history.pushState(null, document.title, location.pathname);
 		}
 		if (supportsLocalStorage()) {
 			localStorage["lastInputMode"] = this.value
