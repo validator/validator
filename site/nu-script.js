@@ -663,7 +663,6 @@ function initFilters() {
 		links,
 		messageCollection,
 		className,
-		links,
 		mainForm
 
 	if (!document.getElementsByClassName || !document.querySelectorAll) {
