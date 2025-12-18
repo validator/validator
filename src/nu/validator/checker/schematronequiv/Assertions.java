@@ -547,7 +547,7 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("dt", "section");
         registerProhibitedAncestor("dt", "h1");
         registerProhibitedAncestor("dt", "h2");
-        registerProhibitedAncestor("dt", "h2");
+        registerProhibitedAncestor("dt", "h3");
         registerProhibitedAncestor("dt", "h3");
         registerProhibitedAncestor("dt", "h4");
         registerProhibitedAncestor("dt", "h5");
@@ -560,9 +560,9 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("th", "section");
         registerProhibitedAncestor("th", "h1");
         registerProhibitedAncestor("th", "h2");
-        registerProhibitedAncestor("th", "h2");
         registerProhibitedAncestor("th", "h3");
         registerProhibitedAncestor("th", "h4");
+        registerProhibitedAncestor("th", "h5");
         registerProhibitedAncestor("th", "h5");
         registerProhibitedAncestor("th", "h6");
         registerProhibitedAncestor("th", "hgroup");
@@ -4015,7 +4015,7 @@ public class Assertions extends Checker {
                 warn("The \u201Crowgroup\u201D role is unnecessary for element"
                         + " \u201C" + localName + "\u201D.");
             } else if ("th" == localName && ("columnheader".equals(role)
-                    || "columnheader".equals(role))) {
+                    || "rowheader".equals(role))) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element \u201Cth\u201D.");
             } else if ("li" == localName && "listitem".equals(role)
@@ -4068,7 +4068,7 @@ public class Assertions extends Checker {
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
-                boolean isEmptyAtt = !"".equals(atts.getValue(i));
+                boolean isEmptyAtt = atts.getValue(i).isEmpty();
                 if (atts.getType(i) == "ID") {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
