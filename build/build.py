@@ -161,7 +161,6 @@ class UrlExtractor(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         if tag == "a":
-            print(attrs)
             for name, value in attrs:
                 if name == "href":
                     if directoryPat.match(value):
@@ -321,7 +320,7 @@ def buildSchemaDrivers():
     driversSrcDir = os.path.join(schemaSrcDir, ".drivers")
     srcLegacyRnc = os.path.join(driversSrcDir, "legacy.rnc")
     srcItsRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5.rnc"))  # nopep8
-    srcItsTypesRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5-types.rnc"))  # nopep8
+    srcItsTypesRnc = os.path.join(schemaSrcDir, "its2/its20-html5-types.rnc")  # nopep8
     buildSchemaDriverHtmlCore(html5Dir)
     buildSchemaDriverHtml5NoMicrodata(html5Dir)
     buildSchemaDriverHtml5(html5Dir)
@@ -830,7 +829,7 @@ class Release():
                 buf = f.read(BLOCKSIZE)
         o = open("%s.%s" % (filename, md5OrSha1), 'w')
         o.write(f"{hasher.hexdigest()}  {os.path.basename(filename)}")
-        o.close
+        o.close()
 
     def writeHashes(self, whichDir):
         files = [f for f in os.listdir(whichDir)
