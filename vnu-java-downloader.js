@@ -89,7 +89,7 @@ function resolveLocalJavaExecutable() {
     if (process.platform === 'win32') {
         javaPath = join(CACHE_DIR, `jdk-${TEMURIN_VERSION}-jre`, 'bin', 'java.exe');
     } else if (process.platform === 'darwin') {
-        javaPath = `${CACHE_DIR}/jdk-${TEMURIN_VERSION}-jre/Contents/Home/bin/java`
+        javaPath = join(CACHE_DIR, `jdk-${TEMURIN_VERSION}-jre`, 'Contents', 'Home', 'bin', 'java');
     }
     if (!existsSync(javaPath)) {
         throw new Error('Local Java runtime not found after installation.');
