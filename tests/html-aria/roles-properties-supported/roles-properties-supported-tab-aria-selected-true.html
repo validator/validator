@@ -5,8 +5,8 @@
       <title>&lt;div&gt; with role tab; supported state or property "aria-selected" value of "true"</title>
    </head>
    <body>
-      <div role="tablist"><div id="test" role="tab" aria-selected="true">Placeholder content</div></div>
-      <div role="tabpanel" aria-labelledby="test"></div>
+      <div role="tablist"><div id="test" role="tab" aria-selected="true" aria-controls="tabpanel1">Placeholder content</div></div>
+      <div id="tabpanel1" role="tabpanel" aria-labelledby="test"></div>
       <div id="obj1">obj1</div>
       <div id="obj2">obj2</div>
    </body>
