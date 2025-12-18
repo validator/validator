@@ -161,7 +161,6 @@ class UrlExtractor(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         if tag == "a":
-            print(attrs)
             for name, value in attrs:
                 if name == "href":
                     if directoryPat.match(value):
