@@ -85,7 +85,7 @@ async function downloadJava() {
 }
 
 function resolveLocalJavaExecutable() {
-    let javaPath = `${CACHE_DIR}/jdk-${TEMURIN_VERSION}-jre/bin/java`;
+    let javaPath = join(CACHE_DIR, `jdk-${TEMURIN_VERSION}-jre`, 'bin', 'java');
     if (process.platform === 'win32') {
         javaPath = join(CACHE_DIR, `jdk-${TEMURIN_VERSION}-jre`, 'bin', 'java.exe');
     } else if (process.platform === 'darwin') {
