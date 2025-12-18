@@ -118,7 +118,10 @@ async function resolveJava() {
 }
 
 if (require.main === module) {
-    void resolveJava().catch(() => process.exit(0));
+    void resolveJava().catch((err) => {
+        console.error('Failed to resolve Java runtime:', err && err.stack ? err.stack : String(err));
+        process.exit(1);
+    });
 }
 
 module.exports = { resolveJava };
