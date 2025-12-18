@@ -87,6 +87,8 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private static boolean verbose;
 
+    private static boolean hasUnhandledWarning = false;
+
     private File baseDir = null;
 
     private Map<String, JsonString> expectedMessages;
@@ -520,6 +522,7 @@ public class TestRunner extends MessageEmitterAdapter {
             return;
         }
         if (emitMessages) {
+            hasUnhandledWarning = true;
             emitMessage(e, "warning");
         } else if (exception == null && !expectingError) {
             exception = e;
@@ -625,6 +628,9 @@ public class TestRunner extends MessageEmitterAdapter {
         }
         TestRunner tr = new TestRunner();
         if (tr.runTestSuite()) {
+            if (hasUnhandledWarning) {
+                System.exit(1);
+            }
             System.exit(0);
         } else {
             System.exit(1);
