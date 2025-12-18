@@ -4015,7 +4015,7 @@ public class Assertions extends Checker {
                 warn("The \u201Crowgroup\u201D role is unnecessary for element"
                         + " \u201C" + localName + "\u201D.");
             } else if ("th" == localName && ("columnheader".equals(role)
-                    || "columnheader".equals(role))) {
+                    || "rowheader".equals(role))) {
                 warn("The \u201C" + role + "\u201D role is unnecessary for"
                         + " element \u201Cth\u201D.");
             } else if ("li" == localName && "listitem".equals(role)
