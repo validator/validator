@@ -79,7 +79,10 @@ async function downloadJava() {
         }
     } else {
         console.log('Extracting tar.gz archive...');
-        execSync(`tar -xzf '${archivePath}' -C '${CACHE_DIR}'`);
+        const extractRes = spawnSync('tar', ['-xzf', archivePath, '-C', CACHE_DIR], { stdio: 'inherit' });
+        if (extractRes.status !== 0) {
+            throw new Error('Failed to extract Java archive.');
+        }
     }
     console.log('Local Java runtime now installed.');
 }
