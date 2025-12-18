@@ -321,7 +321,7 @@ def buildSchemaDrivers():
     driversSrcDir = os.path.join(schemaSrcDir, ".drivers")
     srcLegacyRnc = os.path.join(driversSrcDir, "legacy.rnc")
     srcItsRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5.rnc"))  # nopep8
-    srcItsTypesRnc = os.path.join(os.path.join(schemaSrcDir, "its2/its20-html5-types.rnc"))  # nopep8
+    srcItsTypesRnc = os.path.join(schemaSrcDir, "its2/its20-html5-types.rnc")  # nopep8
     buildSchemaDriverHtmlCore(html5Dir)
     buildSchemaDriverHtml5NoMicrodata(html5Dir)
     buildSchemaDriverHtml5(html5Dir)
