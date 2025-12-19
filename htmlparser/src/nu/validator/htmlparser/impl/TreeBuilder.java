@@ -6567,7 +6567,7 @@ public abstract class TreeBuilder<T> implements TokenHandler,
         if (errorHandler == null) {
             return;
         }
-        errNoCheck("\u201C" + name + "\u201D start tag in table body.");
+        errNoCheck("\u201C" + name + "\u201D start tag not within \u201Ctr\u201D element.");
     }
 
     private void errEndTagSeenWithoutDoctype() throws SAXException {
