@@ -298,7 +298,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
                         attributes.getLocalName(i), attributes.getQName(i),
                         attributes.getType(i),
                         getFirstMatchingAriaRoleFromTokenList(
-                                attributes.getValue(i)));
+                                attributes.getValue(i).trim()));
             } else {
                 attributesImpl.addAttribute(attributes.getURI(i),
                         attributes.getLocalName(i), attributes.getQName(i),
