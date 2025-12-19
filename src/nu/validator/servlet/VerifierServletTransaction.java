@@ -685,7 +685,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "http://s.validator.nu/xhtml5-all.rnc".equals(key)
                 || "http://s.validator.nu/html5-its.rnc".equals(key)
                 || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
-                || "http://s.validator.nu/html5-rdfalite.rnc".equals(key));
+                || "http://s.validator.nu/html5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc".equals(key));
     }
 
     private static boolean isTemplateElementDroppingSchema(String key) {

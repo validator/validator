@@ -278,6 +278,8 @@ public class SimpleDocumentValidator {
             } else {
                 System.setProperty("nu.validator.schema.rdfa-full", "0");
             }
+        } else if (schemaUrl.contains("svg")) {
+            schema = new RoleAttributeFilteringSchemaWrapper(schema);
         }
         this.mainSchemaUrl = schemaUrl;
         this.mainSchema = schema;

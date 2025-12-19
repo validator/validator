@@ -166,7 +166,8 @@ public class RoleAttributeFilteringContentHandlerWrapper
     @Override
     public void startElement(String ns, String arg1, String arg2,
             Attributes attributes) throws SAXException {
-        if ("http://www.w3.org/1999/xhtml" == ns) {
+        if ("http://www.w3.org/1999/xhtml" == ns
+                || "http://www.w3.org/2000/svg" == ns) {
             delegate.startElement(ns, arg1, arg2, filterAttributes(attributes));
         } else {
             delegate.startElement(ns, arg1, arg2, attributes);
