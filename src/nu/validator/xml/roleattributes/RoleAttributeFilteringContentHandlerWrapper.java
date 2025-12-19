@@ -232,6 +232,9 @@ public class RoleAttributeFilteringContentHandlerWrapper
             "feed", //
             "figure", //
             "form", //
+            "graphics-document", //
+            "graphics-object", //
+            "graphics-symbol", //
             "grid", //
             "gridcell", //
             "group", //
