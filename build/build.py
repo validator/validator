@@ -1796,10 +1796,14 @@ def applyArgsToGlobals(args):
 
     if args.jdk_bin:
         jdkBinDir = args.jdk_bin
-        javaCmd = os.path.join(jdkBinDir, "java")
-        jarCmd = os.path.join(jdkBinDir, "jar")
-        javacCmd = os.path.join(jdkBinDir, "javac")
-        javadocCmd = os.path.join(jdkBinDir, "javadoc")
+        javaExecutable = 'java.exe' if sys.platform == 'win32' else 'java'
+        jarExecutable = 'jar.exe' if sys.platform == 'win32' else 'jar'
+        javacExecutable = 'javac.exe' if sys.platform == 'win32' else 'javac'
+        javadocExecutable = 'javadoc.exe' if sys.platform == 'win32' else 'javadoc'
+        javaCmd = os.path.join(jdkBinDir, javaExecutable)
+        jarCmd = os.path.join(jdkBinDir, jarExecutable)
+        javacCmd = os.path.join(jdkBinDir, javacExecutable)
+        javadocCmd = os.path.join(jdkBinDir, javadocExecutable)
 
 
 def main(argv, script_name=None):
@@ -1888,12 +1892,18 @@ def main(argv, script_name=None):
     # Only initialize Java-related variables if not in completion mode
     if '_ARGCOMPLETE' not in os.environ:
         JAVA_HOME = os.getenv('JAVA_HOME')
-        javacCmd = os.path.join(JAVA_HOME, 'bin', 'javac')
-        jarCmd = os.path.join(JAVA_HOME, 'bin', 'jar')
-        javaCmd = os.path.join(JAVA_HOME, 'bin', 'java')
-        jdepsCmd = os.path.join(JAVA_HOME, 'bin', 'jdeps')
-        jlinkCmd = os.path.join(JAVA_HOME, 'bin', 'jlink')
-        javadocCmd = os.path.join(JAVA_HOME, 'bin', 'javadoc')
+        javaExecutable = 'java.exe' if sys.platform == 'win32' else 'java'
+        javacExecutable = 'javac.exe' if sys.platform == 'win32' else 'javac'
+        jarExecutable = 'jar.exe' if sys.platform == 'win32' else 'jar'
+        jdepsExecutable = 'jdeps.exe' if sys.platform == 'win32' else 'jdeps'
+        jlinkExecutable = 'jlink.exe' if sys.platform == 'win32' else 'jlink'
+        javadocExecutable = 'javadoc.exe' if sys.platform == 'win32' else 'javadoc'
+        javacCmd = os.path.join(JAVA_HOME, 'bin', javacExecutable)
+        jarCmd = os.path.join(JAVA_HOME, 'bin', jarExecutable)
+        javaCmd = os.path.join(JAVA_HOME, 'bin', javaExecutable)
+        jdepsCmd = os.path.join(JAVA_HOME, 'bin', jdepsExecutable)
+        jlinkCmd = os.path.join(JAVA_HOME, 'bin', jlinkExecutable)
+        javadocCmd = os.path.join(JAVA_HOME, 'bin', javadocExecutable)
         try:
             javaRawVersion = subprocess.check_output([javaCmd, '-version'],
                                                      universal_newlines=True,
