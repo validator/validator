@@ -1719,10 +1719,6 @@ def applyArgsToGlobals(args):
 
     simpleMapping = {
         'git': 'gitCmd',
-        'java': 'javaCmd',
-        'jar': 'jarCmd',
-        'javac': 'javacCmd',
-        'javadoc': 'javadocCmd',
         'ant': 'antCmd',
         'bind_address': 'bindAddress',
         'port': 'portNumber',
