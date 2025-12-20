@@ -28,11 +28,11 @@ import shutil
 import json
 import xml.etree.ElementTree as ET
 try:
-    from urllib.request import urlopen, Request
+    from urllib.request import urlopen
     from urllib.error import URLError, HTTPError
     from http.client import BadStatusLine
 except ImportError:
-    from urllib2 import urlopen, Request, URLError, HTTPError
+    from urllib2 import urlopen, URLError, HTTPError
     from httplib import BadStatusLine
 import socket
 import re
