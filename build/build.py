@@ -55,7 +55,11 @@ import subprocess
 from ssl import SSLError
 import time
 import argparse
-import argcomplete
+try:
+    import argcomplete
+    ARGCOMPLETE_AVAILABLE = True
+except ImportError:
+    ARGCOMPLETE_AVAILABLE = False
 # Use newer https certifications from certifi package if available
 try:
     import certifi
@@ -1638,6 +1642,8 @@ def getTaskChoices():
 
 
 def taskCompleter(prefix, parsed_args, **kwargs):
+    if not ARGCOMPLETE_AVAILABLE:
+        return []
     from argcomplete.completers import FilesCompleter
     comp_line = os.environ.get('COMP_LINE', '')
     # Only use FilesCompleter if "check" is explicitly typed as a task
@@ -1675,6 +1681,8 @@ def detectShell():
 
 
 def generateCompletion(script_name):
+    if not ARGCOMPLETE_AVAILABLE:
+        return 'To enable shell tab completion for this script’s options, do this:\n    pip install argcomplete'  # nopep8
     shell = detectShell()
     if (shell in ["bash", "zsh", "tcsh"]):
         return f'eval "`register-python-argcomplete -s {shell} {script_name}`"'
@@ -1683,7 +1691,11 @@ def generateCompletion(script_name):
 
 
 def printCompletionInstructions(script_name):
-    print('\nTo enable shell tab completion for this script’s options,', end="")  # nopep8
+    if not ARGCOMPLETE_AVAILABLE:
+        print('\nTo enable shell tab completion for this script’s options, do this:')  # nopep8
+        print('\n    pip install argcomplete')
+        return
+    print("\nTo enable shell tab completion for this script's options,", end="")  # nopep8
     if (detectShell() in ["bash", "zsh", "tcsh"]):
         print(' run this:')
     else:
@@ -1857,9 +1869,13 @@ def main(argv, script_name=None):
     parser.add_argument("--max-total-connections", type=int, default=200, help="Max total connections")  # nopep8
     parser.add_argument("--max-redirects", type=int, default=20, help="Max redirects")  # nopep8
     parser.add_argument("--statistics", action="store_true", help="Enable statistics")  # nopep8
-    parser.add_argument('tasks', nargs='*', help='Tasks to run').completer = taskCompleter  # nopep8
+    if ARGCOMPLETE_AVAILABLE:
+        parser.add_argument('tasks', nargs='*', help='Tasks to run').completer = taskCompleter  # nopep8
+    else:
+        parser.add_argument('tasks', nargs='*', help='Tasks to run')  # nopep8
 
-    argcomplete.autocomplete(parser)
+    if ARGCOMPLETE_AVAILABLE:
+        argcomplete.autocomplete(parser)
     args = parser.parse_args(argv)
 
     # Only check JAVA_HOME if we're not just doing completion
