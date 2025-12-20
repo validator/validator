@@ -54,6 +54,8 @@ except ImportError:
 import subprocess
 from ssl import SSLError
 import time
+import argparse
+import argcomplete
 # Use newer https certifications from certifi package if available
 try:
     import certifi
@@ -61,6 +63,19 @@ try:
 except ImportError:
     CAFILE = None
 from pathlib import Path
+
+
+class CustomHelpAction(argparse.Action):
+    def __init__(self, option_strings, dest, script_name=None, **kwargs):
+        kwargs.pop('script_name', None)
+        super(CustomHelpAction, self).__init__(option_strings, dest, nargs=0, **kwargs)  # nopep8
+        self.script_name = script_name
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        parser.print_help()
+        printCompletionInstructions(self.script_name)
+        sys.exit(0)
+
 
 os.environ["PYTHONIOENCODING"] = "utf-8"
 javaTargetVersion = '11'
@@ -1611,84 +1626,171 @@ def isServiceUp(defaultReply):
     return defaultReply
 
 
-def printHelp():
-    print("Usage: python %s [options] [tasks]" % sys.argv[0])
-    print("")
-    print("Options:")
-    print("  --about=https://about.validator.nu/")
-    print("                                Sets URL for the about page")
-    print("  --control-port=-1")
-    print("                                Sets server control port number")
-    print("                                (necessary for daemonizing)")
-    print("  --filter-file=resources/message-filters.txt")
-    print("                                Sets path to the filter file")
-    print("  --git=/usr/bin/git         -- Sets path to the git binary")
-    print("  --heap=512                 -- Sets Java heap size in MB")
-    print("  --html5link=https://html.spec.whatwg.org/")
-    print("                                Sets link URL of the HTML5 spec")
-    print("  --html5load=https://html.spec.whatwg.org/")
-    print("                                Sets load URL of the HTML5 spec")
-    print("  --jar=/usr/bin/jar         -- Sets path to the jar binary")
-    print("  --java=/usr/bin/java       -- Sets path to the java binary")
-    print("  --javac=/usr/bin/javac     -- Sets path to the javac binary")
-    print("  --javadoc=/usr/bin/javadoc -- Sets path to the javadoc binary")
-    print("  --ant=ant                  -- Sets path to the ant binary")
-    print("  --javaversion=N.N          -- Sets Java VM version to build for")
-    print("  --jdk-bin=/j2se/bin        -- Sets paths for all JDK tools")
-    print("  --log4j=log4j.properties   -- Sets path to log4 configuration")
-    print("  --messages-limit=1000")
-    print("                                Sets limit on the maximum number")
-    print("                                of errors+warnings to report")
-    print("                                for any document before stopping")
-    print("  --name=Validator.nu        -- Sets service name")
-    print("  --bind-address=0.0.0.0     -- Sets server bind address")
-    print("  --port=8888                -- Sets server port number")
-    print("  --allowed-address-type=<value>")
-    print("                                Sets which URLs the checker allows.")  # nopep8
-    print("                                Possible values:")
-    print("                                - 'all': Allow all URLs (default)")
-    print("                                - 'same-origin': Allow only")
-    print("                                  same-origin URLs")
-    print("                                - 'none': Disallow all URLs")
-    print("  --promiscuous-ssl=on       -- Don't check SSL/TLS trust chain")
-    print("  --results-title=Validation results")
-    print("                                Sets title to show on results page")
-    print("  --script=script.js")
-    print("                                Sets the URL for the script")
-    print("                                Defaults to \"script.js\" relative")
-    print("                                to the validator URL")
-    print("  --script-additional=<URL>")
-    print("                                Sets the URL for a script file to")
-    print("                                include in addition to the file")
-    print("                                specified by the --script option.")
-    print("  --stacksize=NN             -- Sets Java thread stack size in KB")
-    print("  --stylesheet=style.css")
-    print("                                Sets URL for the style sheet")
-    print("                                Defaults to \"style.css\" relative")
-    print("                                to the validator URL")
-    print("  --user-agent                  Sets User-Agent string for checker")
-    print("  --offline                  -- Build offline. Needs prior download")  # nopep8
-    print("                                of the dependencies with 'dldeps'.")
-    print("  --version=VERSION          -- Sets the version of vnu to VERSION")
-    print("  --verbose                  -- Run build & tests verbosely")
-    print("")
-    print("Tasks:")
-    print("  dldeps   -- Download missing dependency libraries and entities")
-    print("  build    -- Build the source")
-    print("  test     -- Run regression tests")
-    print("  check    -- Invoke vnu with all remaining args (filenames/URLs)")
-    print("  self-test-- Perform self-test of the system")
-    print("  run      -- Run the system")
-    print("  all      -- dldeps build test run")
-    print("  bundle   -- Create a Maven release bundle")
-    print("  image    -- Create a binary runtime image of the checker")
-    print("  jar      -- Create a JAR package of the checker")
-    print("  war      -- Create a WAR package of the checker")
-    print("  script   -- Make run-validator.sh script for running the system")
-    print("  ant:TARGET -- Call Ant with TARGET")
+def getTaskChoices():
+    return [
+        'update-subtrees', 'dldeps', 'checkout', 'build', 'docker-build',
+        'docker-run', 'docker-push', 'bundle', 'npm-release',
+        'maven-artifacts', 'maven-sign', 'maven-bundle', 'maven-release',
+        'image', 'jar', 'war', 'sign', 'localent', 'deploy', 'tar',
+        'script', 'test', 'test-specs', 'make-messages', 'check',
+        'self-test', 'clean', 'realclean', 'run', 'all', 'completion',
+    ]
 
 
-def main(argv):
+def taskCompleter(prefix, parsed_args, **kwargs):
+    from argcomplete.completers import FilesCompleter
+    comp_line = os.environ.get('COMP_LINE', '')
+    # Only use FilesCompleter if "check" is explicitly typed as a task
+    # Look for "check" as a complete word at the end or followed by space
+    if comp_line.rstrip().endswith(' check') or ' check ' in comp_line:
+        # Make sure "check" is not part of an option value, by checking context
+        parts = comp_line.split()
+        if 'check' in parts:
+            # If "check" is in the parts and at least one item after script,
+            # and it looks like it's not in an option value (no "=" sign in
+            # the same part), then use FilesCompleter
+            for part in parts:
+                if part == 'check':
+                    return FilesCompleter()(prefix, **kwargs)
+
+    task_choices = getTaskChoices()
+    completions = [t for t in task_choices if t.startswith(prefix)]
+    if 'ant:'.startswith(prefix):
+        completions.append('ant:')
+    return completions
+
+
+def detectShell():
+    shell_path = os.environ.get('SHELL', '/bin/bash')
+    shell_name = os.path.basename(shell_path)
+    shell_map = {
+        'bash': 'bash',
+        'zsh': 'zsh',
+        'tcsh': 'tcsh',
+        'fish': 'fish',
+        'pwsh': 'powershell',
+        'powershell': 'powershell',
+    }
+    return shell_map.get(shell_name, 'bash')
+
+
+def generateCompletion(script_name):
+    shell = detectShell()
+    if (shell in ["bash", "zsh", "tcsh"]):
+        return f'eval "`register-python-argcomplete -s {shell} {script_name}`"'
+    else:
+        return 'https://github.com/kislyuk/argcomplete/blob/main/contrib/README.rst'  # nopep8
+
+
+def printCompletionInstructions(script_name):
+    print('\nTo enable shell tab completion for this script’s options,', end="")  # nopep8
+    if (detectShell() in ["bash", "zsh", "tcsh"]):
+        print(' run this:')
+    else:
+        print(' see the following:')  # nopep8
+    print(f'\n    {generateCompletion(script_name)}')
+
+
+def applyArgsToGlobals(args):
+    global gitCmd, javaCmd, jarCmd, javacCmd, javadocCmd, antCmd, \
+        bindAddress, portNumber, controlPort, log4jProps, heapSize, \
+        stackSize, javaTargetVersion, html5specLink, aboutPage, \
+        denyList, userAgent, deploymentTarget, script, scriptAdditional, \
+        serviceName, resultsTitle, messagesLimit, pageTemplate, \
+        formTemplate, presetsFile, aboutFile, stylesheetFile, scriptFile, \
+        filterFile, allowedAddressType, disablePromiscuousSsl, \
+        connectionTimeoutSeconds, socketTimeoutSeconds, maxConnPerRoute, \
+        maxTotalConnections, statistics, stylesheet, icon, \
+        additionalJavaSystemProperties, offline, verbose, antCommonArgs, \
+        validatorVersion, genericHost, genericPath, html5Host, html5Path, \
+        parsetreeHost, parsetreePath
+
+    simpleMapping = {
+        'git': 'gitCmd',
+        'java': 'javaCmd',
+        'jar': 'jarCmd',
+        'javac': 'javacCmd',
+        'javadoc': 'javadocCmd',
+        'ant': 'antCmd',
+        'bind_address': 'bindAddress',
+        'port': 'portNumber',
+        'log4j': 'log4jProps',
+        'heap': 'heapSize',
+        'html5link': 'html5specLink',
+        'about': 'aboutPage',
+        'denylist': 'denyList',
+        'stylesheet': 'stylesheet',
+        'user_agent': 'userAgent',
+        'script': 'script',
+        'name': 'serviceName',
+        'results_title': 'resultsTitle',
+        'messages_limit': 'messagesLimit',
+        'page_template': 'pageTemplate',
+        'form_template': 'formTemplate',
+        'presets_file': 'presetsFile',
+        'about_file': 'aboutFile',
+        'stylesheet_file': 'stylesheetFile',
+        'script_file': 'scriptFile',
+        'filter_file': 'filterFile',
+        'allowed_address_type': 'allowedAddressType',
+        'connection_timeout': 'connectionTimeoutSeconds',
+        'socket_timeout': 'socketTimeoutSeconds',
+        'max_requests': 'maxConnPerRoute',
+        'max_total_connections': 'maxTotalConnections',
+        'additional_java_system_properties': 'additionalJavaSystemProperties',
+    }
+
+    for argName, globalName in simpleMapping.items():
+        if hasattr(args, argName):
+            globals()[globalName] = getattr(args, argName)
+
+    # Handle conditional/special mappings
+    antCommonArgs.extend(args.ant_extra_arg)
+    if args.offline:
+        antCommonArgs.append('-Doffline=true')
+        offline = True
+    if args.control_port:
+        controlPort = args.control_port
+    if args.stacksize is not None:
+        stackSize = args.stacksize
+    if args.javaversion:
+        javaTargetVersion = args.javaversion
+    if args.icon:
+        icon = args.icon
+    if args.scp_target:
+        deploymentTarget = args.scp_target
+    if args.script_additional is not None:
+        scriptAdditional = args.script_additional
+    if args.genericpath:
+        (genericHost, genericPath) = splitHostSpec(args.genericpath)
+    if args.html5path:
+        (html5Host, html5Path) = splitHostSpec(args.html5path)
+    if args.parsetreepath:
+        (parsetreeHost, parsetreePath) = splitHostSpec(args.parsetreepath)
+    if args.promiscuous_ssl == 'off':
+        disablePromiscuousSsl = 1
+    else:
+        disablePromiscuousSsl = 0
+    if args.statistics:
+        statistics = 1
+    if args.version:
+        validatorVersion = args.version
+        ensureDirExists(filesDir)
+        makeUsage(validatorVersion)
+        makeCliHelp(validatorVersion)
+    if args.verbose:
+        antCommonArgs.append('-verbose')
+        verbose = True
+
+    if args.jdk_bin:
+        jdkBinDir = args.jdk_bin
+        javaCmd = os.path.join(jdkBinDir, "java")
+        jarCmd = os.path.join(jdkBinDir, "jar")
+        javacCmd = os.path.join(jdkBinDir, "javac")
+        javadocCmd = os.path.join(jdkBinDir, "javadoc")
+
+
+def main(argv, script_name=None):
     global gitCmd, javaCmd, jarCmd, javacCmd, javadocCmd, portNumber, \
         controlPort, log4jProps, heapSize, stackSize, javaTargetVersion, \
         html5specLink, aboutPage, denyList, userAgent, deploymentTarget, \
@@ -1699,14 +1801,76 @@ def main(argv):
         maxConnPerRoute, statistics, stylesheet, script, icon, bindAddress, \
         jdepsCmd, jlinkCmd, javaEnvVersion, additionalJavaSystemProperties, \
         offline, antCmd, validatorVersion, verbose, extrasDir
-    if len(argv) == 0:
-        printHelp()
-    else:
-        if 'JAVA_HOME' not in os.environ:
-            print("Error: The JAVA_HOME environment variable is not set.")
-            print("Set the JAVA_HOME environment variable to the pathname" +
-                  " of the directory where your JDK is installed.")
-            sys.exit(1)
+
+    if script_name is None:
+        script_name = "build/build.py"
+
+    parser = argparse.ArgumentParser(add_help=False)  # nopep8
+    parser.add_argument("-h", "--help", action=CustomHelpAction, script_name=script_name, help="show this help message and exit")  # nopep8
+    parser.add_argument("--about", default="https://about.validator.nu/", help="Sets URL for the about page")  # nopep8
+    parser.add_argument("--control-port", help="Sets server control port number (necessary for daemonizing)")  # nopep8
+    parser.add_argument("--filter-file", default="resources/message-filters.txt", help="Sets path to the filter file")  # nopep8
+    parser.add_argument("--git", default="/usr/bin/git", help="Sets path to the git binary")  # nopep8
+    parser.add_argument("--heap", default="512", help="Sets Java heap size in MB")  # nopep8
+    parser.add_argument("--html5link", default="https://html.spec.whatwg.org/", help="Sets link URL of the HTML5 spec")  # nopep8
+    parser.add_argument("--html5load", default="https://html.spec.whatwg.org/", help="Sets load URL of the HTML5 spec")  # nopep8
+    parser.add_argument("--jar", default="/usr/bin/jar", help="Sets path to the jar binary")  # nopep8
+    parser.add_argument("--java", default="/usr/bin/java", help="Sets path to the java binary")  # nopep8
+    parser.add_argument("--javac", default="/usr/bin/javac", help="Sets path to the javac binary")  # nopep8
+    parser.add_argument("--javadoc", default="/usr/bin/javadoc", help="Sets path to the javadoc binary")  # nopep8
+    parser.add_argument("--ant", default="ant", help="Sets path to the ant binary")  # nopep8
+    parser.add_argument("--javaversion", help="Sets Java VM version to build for")  # nopep8
+    parser.add_argument("--jdk-bin", help="Sets paths for all JDK tools")  # nopep8
+    parser.add_argument("--log4j", default="resources/log4j.properties", help="Sets path to log4 configuration")  # nopep8
+    parser.add_argument("--messages-limit", type=int, default=1000, help="Sets limit on the maximum number of errors+warnings to report for any document before stopping")  # nopep8
+    parser.add_argument("--name", default="Validator.nu", help="Sets service name")  # nopep8
+    parser.add_argument("--bind-address", default="0.0.0.0", help="Sets server bind address")  # nopep8
+    parser.add_argument("--port", default="8888", help="Sets server port number")  # nopep8
+    parser.add_argument("--allowed-address-type", choices=['all', 'same-origin', 'none'], default='all', help="Sets which URLs the checker allows.")  # nopep8
+    parser.add_argument("--promiscuous-ssl", choices=['on', 'off'], default='on', help="Don't check SSL/TLS trust chain")  # nopep8
+    parser.add_argument("--results-title", default="Validation results", help="Sets title to show on results page")  # nopep8
+    parser.add_argument("--script", default="script.js", help="Sets the URL for the script")  # nopep8
+    parser.add_argument("--script-additional", help="Sets the URL for a script file to include in addition to the file specified by the --script option.")  # nopep8
+    parser.add_argument("--stacksize", help="Sets Java thread stack size in KB")  # nopep8
+    parser.add_argument("--stylesheet", default="style.css", help="Sets URL for the style sheet")  # nopep8
+    parser.add_argument("--user-agent", default='Validator.nu/LV', help="Sets User-Agent string for checker")  # nopep8
+    parser.add_argument("--offline", action="store_true", help="Build offline. Needs prior download of the dependencies with 'dldeps'.")  # nopep8
+    parser.add_argument("--version", help="Sets the version of vnu to VERSION")  # nopep8
+    parser.add_argument("--verbose", action="store_true", help="Run build & tests verbosely")  # nopep8
+    parser.add_argument("--additional-java-system-properties", default="", help="Additional Java system properties")  # nopep8
+    parser.add_argument("--ant-extra-arg", action="append", default=[], help="Additional arguments for ant")  # nopep8
+    parser.add_argument("--denylist", default="", help="Deny list")  # nopep8
+    parser.add_argument("--icon", help="Icon")  # nopep8
+    parser.add_argument("--scp-target", help="SCP target")  # nopep8
+    parser.add_argument("--genericpath", help="Generic path")  # nopep8
+    parser.add_argument("--html5path", help="HTML5 path")  # nopep8
+    parser.add_argument("--parsetreepath", help="Parsetree path")  # nopep8
+    parser.add_argument("--page-template", default="site/PageEmitter.xml", help="Page template")  # nopep8
+    parser.add_argument("--form-template", default="site/FormEmitter.xml", help="Form template")  # nopep8
+    parser.add_argument("--presets-file", default="resources/presets.txt", help="Presets file")  # nopep8
+    parser.add_argument("--about-file", default="site/about.html", help="About file")  # nopep8
+    parser.add_argument("--stylesheet-file", default="site/style.css", help="Stylesheet file")  # nopep8
+    parser.add_argument("--script-file", default="site/script.js", help="Script file")  # nopep8
+    parser.add_argument("--connection-timeout", type=int, default=120, help="Connection timeout in seconds")  # nopep8
+    parser.add_argument("--socket-timeout", type=int, default=5, help="Socket timeout in seconds")  # nopep8
+    parser.add_argument("--max-requests", type=int, default=100, help="Max requests per route")  # nopep8
+    parser.add_argument("--max-total-connections", type=int, default=200, help="Max total connections")  # nopep8
+    parser.add_argument("--max-redirects", type=int, default=20, help="Max redirects")  # nopep8
+    parser.add_argument("--statistics", action="store_true", help="Enable statistics")  # nopep8
+    parser.add_argument('tasks', nargs='*', help='Tasks to run').completer = taskCompleter  # nopep8
+
+    argcomplete.autocomplete(parser)
+    args = parser.parse_args(argv)
+
+    # Only check JAVA_HOME if we're not just doing completion
+    if '_ARGCOMPLETE' not in os.environ and 'JAVA_HOME' not in os.environ:
+        print("Error: The JAVA_HOME environment variable is not set.")
+        print("Set the JAVA_HOME environment variable to the pathname" +
+              " of the directory where your JDK is installed.")
+        sys.exit(1)
+
+    # Only initialize Java-related variables if not in completion mode
+    if '_ARGCOMPLETE' not in os.environ:
         JAVA_HOME = os.getenv('JAVA_HOME')
         javacCmd = os.path.join(JAVA_HOME, 'bin', 'javac')
         jarCmd = os.path.join(JAVA_HOME, 'bin', 'jar')
@@ -1731,219 +1895,118 @@ def main(argv):
         release = Release()
         release.runtimeDistroBasename = getRuntimeDistroBasename()
         release.runtimeDistroFile = release.runtimeDistroBasename + ".zip"
-        for i, arg in enumerate(argv):
-            if arg.startswith("--git="):
-                gitCmd = arg[6:]
-            elif arg.startswith("--java="):
-                javaCmd = arg[7:]
-            elif arg.startswith("--additional-java-system-properties="):
-                additionalJavaSystemProperties = arg[36:]
-            elif arg.startswith("--jar="):
-                jarCmd = arg[6:]
-            elif arg.startswith("--javac="):
-                javacCmd = arg[8:]
-            elif arg.startswith("--javadoc="):
-                javadocCmd = arg[10:]
-            elif arg.startswith("--ant="):
-                antCmd = arg[6:]
-            elif arg.startswith("--ant-extra-arg="):
-                antCommonArgs.append(arg[16:])
-            elif arg == '--offline':
-                # Run ant without internet
-                antCommonArgs.append('-Doffline=true')
-                offline = True
-            elif arg.startswith("--jdk-bin="):
-                jdkBinDir = arg[10:]
-                javaCmd = os.path.join(jdkBinDir, "java")
-                jarCmd = os.path.join(jdkBinDir, "jar")
-                javacCmd = os.path.join(jdkBinDir, "javac")
-                javadocCmd = os.path.join(jdkBinDir, "javadoc")
-            elif arg.startswith("--bind-address="):
-                bindAddress = arg[15:]
-            elif arg.startswith("--port="):
-                portNumber = arg[7:]
-            elif arg.startswith("--control-port="):
-                controlPort = arg[15:]
-            elif arg.startswith("--log4j="):
-                log4jProps = arg[8:]
-            elif arg.startswith("--heap="):
-                heapSize = arg[7:]
-            elif arg.startswith("--stacksize="):
-                stackSize = arg[12:]
-            elif arg.startswith("--javaversion="):
-                javaTargetVersion = arg[14:]
-            elif arg.startswith("--html5link="):
-                html5specLink = arg[12:]
-            elif arg.startswith("--about="):
-                aboutPage = arg[8:]
-            elif arg.startswith("--denylist="):
-                denyList = arg[11:]
-            elif arg.startswith("--stylesheet="):
-                stylesheet = arg[13:]
-            elif arg.startswith("--icon="):
-                icon = arg[7:]
-            elif arg.startswith("--user-agent="):
-                userAgent = arg[13:]
-            elif arg.startswith("--scp-target="):
-                deploymentTarget = arg[13:]
-            elif arg.startswith("--script="):
-                script = arg[9:]
-            elif arg.startswith("--script-additional="):
-                scriptAdditional = arg[20:]
-            elif arg.startswith("--name="):
-                serviceName = arg[7:]
-            elif arg.startswith("--results-title="):
-                resultsTitle = arg[16:]
-            elif arg.startswith("--messages-limit="):
-                messagesLimit = int(arg[17:])
-            elif arg.startswith("--genericpath="):
-                (genericHost, genericPath) = splitHostSpec(arg[14:])
-            elif arg.startswith("--html5path="):
-                (html5Host, html5Path) = splitHostSpec(arg[12:])
-            elif arg.startswith("--parsetreepath="):
-                (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
-            elif arg.startswith("--page-template="):
-                pageTemplate = arg[16:]
-            elif arg.startswith("--form-template="):
-                formTemplate = arg[16:]
-            elif arg.startswith("--presets-file="):
-                presetsFile = arg[15:]
-            elif arg.startswith("--about-file="):
-                aboutFile = arg[13:]
-            elif arg.startswith("--stylesheet-file="):
-                stylesheetFile = arg[18:]
-            elif arg.startswith("--script-file="):
-                scriptFile = arg[14:]
-            elif arg.startswith("--filter-file="):
-                filterFile = arg[14:]
-            elif arg.startswith("--allowed-address-type="):
-                allowedAddressType = arg[23:]
-            elif arg == '--promiscuous-ssl=on':
-                disablePromiscuousSsl = 0
-            elif arg == '--promiscuous-ssl=off':
-                disablePromiscuousSsl = 1
-            elif arg == '--no-self-update':
-                pass
-            elif arg == '--local':
-                pass
-            elif arg.startswith("--connection-timeout="):
-                connectionTimeoutSeconds = int(arg[21:])
-            elif arg.startswith("--socket-timeout="):
-                socketTimeoutSeconds = int(arg[17:])
-            elif arg.startswith("--max-requests="):
-                maxConnPerRoute = int(arg[15:])
-            elif arg.startswith("--max-total-connections="):
-                maxTotalConnections = int(arg[24:])
-            elif arg.startswith("--max-redirects="):
-                maxConnPerRoute = int(arg[16:])
-            elif arg == '--statistics':
-                statistics = 1
-            elif arg.startswith("--version="):
-                validatorVersion = arg[10:]
-                ensureDirExists(filesDir)
-                makeUsage(validatorVersion)
-                makeCliHelp(validatorVersion)
-            elif arg == '--verbose':
-                # Run build & tests verbosely
-                antCommonArgs.append('-verbose')
-                verbose = True
-            elif arg == '--help':
-                printHelp()
-            elif arg == 'update-subtrees':
-                updateSubtrees()
-            elif arg == 'dldeps':
-                downloadDependencies()
-            elif arg == 'checkout':
-                pass
-            elif arg == 'build':
-                release.buildAll()
-            elif arg == 'docker-build':
-                dockerBuild()
-            elif arg == 'docker-run':
-                dockerRun()
-            elif arg == 'docker-push':
-                dockerPush()
-            elif arg == 'bundle':
-                release.createMavenBundle()
-            elif arg == 'npm-release':
-                release.uploadNpm()
-            elif arg == 'maven-artifacts':
-                release.createMavenArtifacts()
-            elif arg == 'maven-sign':
-                release.signMavenArtifacts()
-            elif arg == 'maven-bundle':
-                release.createMavenBundle()
-            elif arg == 'maven-release':
-                release.uploadMavenToMavenCentral()
-            elif arg == 'image':
+    else:
+        return
+
+    applyArgsToGlobals(args)
+
+    tasks = args.tasks
+    if not tasks:
+        parser.print_help()
+        printCompletionInstructions(script_name)
+        sys.exit(0)
+
+    i = 0
+    while i < len(tasks):
+        task = tasks[i]
+        if task == 'update-subtrees':
+            updateSubtrees()
+        elif task == 'dldeps':
+            downloadDependencies()
+        elif task == 'checkout':
+            pass
+        elif task == 'build':
+            release.buildAll()
+        elif task == 'docker-build':
+            dockerBuild()
+        elif task == 'docker-run':
+            dockerRun()
+        elif task == 'docker-push':
+            dockerPush()
+        elif task == 'bundle':
+            release.createMavenBundle()
+        elif task == 'npm-release':
+            release.uploadNpm()
+        elif task == 'maven-artifacts':
+            release.createMavenArtifacts()
+        elif task == 'maven-sign':
+            release.signMavenArtifacts()
+        elif task == 'maven-bundle':
+            release.createMavenBundle()
+        elif task == 'maven-release':
+            release.uploadMavenToMavenCentral()
+        elif task == 'image':
+            release.createRuntimeImage()
+        elif task == 'jar':
+            release.createJarOrWar("jar")
+        elif task == 'war':
+            release.createJarOrWar("war")
+        elif task == 'sign':
+            release.sign(distDir)
+            release.sign(distWarDir)
+        elif task == 'localent':
+            prepareLocalEntityJar()
+        elif task == 'deploy':
+            deployOverScp()
+        elif task == 'tar':
+            createTarball()
+            createDepTarball()
+        elif task == 'script':
+            if not stylesheet:
+                stylesheet = 'style.css'
+            if not script:
+                script = 'script.js'
+            if not icon:
+                icon = 'icon.png'
+            generateRunScript()
+        elif task == 'test':
+            release.runTests()
+        elif task == 'test-specs':
+            release.runSpecTests()
+        elif task == 'make-messages':
+            release.makeTestMessages()
+        elif task == 'check':
+            if not os.path.exists(vnuCmd):
                 release.createRuntimeImage()
-            elif arg == 'jar':
-                release.createJarOrWar("jar")
-            elif arg == 'war':
-                release.createJarOrWar("war")
-            elif arg == 'sign':
-                release.sign(distDir)
-                release.sign(distWarDir)
-            elif arg == 'localent':
-                prepareLocalEntityJar()
-            elif arg == 'deploy':
-                deployOverScp()
-            elif arg == 'tar':
-                createTarball()
-                createDepTarball()
-            elif arg == 'script':
-                if not stylesheet:
-                    stylesheet = 'style.css'
-                if not script:
-                    script = 'script.js'
-                if not icon:
-                    icon = 'icon.png'
-                generateRunScript()
-            elif arg == 'test':
-                release.runTests()
-            elif arg == 'test-specs':
-                release.runSpecTests()
-            elif arg == 'make-messages':
-                release.makeTestMessages()
-            elif arg == 'check':
-                if not os.path.exists(vnuCmd):
-                    release.createRuntimeImage()
-                execCmd(vnuCmd, argv[i + 1:], True)
-                break
-            elif arg == 'self-test':
-                if not stylesheet:
-                    stylesheet = 'style.css'
-                if not script:
-                    script = 'script.js'
-                if not icon:
-                    icon = 'icon.png'
-                release.checkService()
-            elif arg == 'clean':
-                clean()
-            elif arg == 'realclean':
-                realclean()
-            elif arg == 'run':
-                if not stylesheet:
-                    stylesheet = 'style.css'
-                if not script:
-                    script = 'script.js'
-                if not icon:
-                    icon = 'icon.png'
-                release.runValidator()
-            elif arg == 'all':
-                release.buildAll()
-                release.runTests()
-                if not stylesheet:
-                    stylesheet = 'style.css'
-                if not script:
-                    script = 'script.js'
-                if not icon:
-                    icon = 'icon.png'
-                release.runValidator()
-            elif arg.startswith("ant:"):
-                runAnt([], arg[4:])
-            else:
-                print("Unknown option %s." % arg)
+            execCmd(vnuCmd, tasks[i + 1:], True)
+            break
+        elif task == 'self-test':
+            if not stylesheet:
+                stylesheet = 'style.css'
+            if not script:
+                script = 'script.js'
+            if not icon:
+                icon = 'icon.png'
+            release.checkService()
+        elif task == 'clean':
+            clean()
+        elif task == 'realclean':
+            realclean()
+        elif task == 'run':
+            if not stylesheet:
+                stylesheet = 'style.css'
+            if not script:
+                script = 'script.js'
+            if not icon:
+                icon = 'icon.png'
+            release.runValidator()
+        elif task == 'all':
+            release.buildAll()
+            release.runTests()
+            if not stylesheet:
+                stylesheet = 'style.css'
+            if not script:
+                script = 'script.js'
+            if not icon:
+                icon = 'icon.png'
+            release.runValidator()
+        elif task.startswith("ant:"):
+            runAnt([], task[4:])
+        elif task == "completion":
+            printCompletionInstructions(script_name)
+        else:
+            parser.error("unrecognized arguments: %s" % task)
+        i += 1
 
 
 if __name__ == '__main__':

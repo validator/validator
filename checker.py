@@ -4,7 +4,6 @@
 # Copyright (c) 2019 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
-
 # copy of this software and associated documentation files (the "Software"),
 # to deal in the Software without restriction, including without limitation
 # the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -25,7 +24,8 @@
 from build import build
 import sys
 
-args = [
+# Preset checker-specific options
+presetArgs = [
   '--connection-timeout=15',
   '--socket-timeout=15',
   '--name=Ready to check',
@@ -37,8 +37,7 @@ args = [
   '--stylesheet-file=site/nu-style.css'
 ]
 
-if len(sys.argv) > 1:
-    args.extend(sys.argv[1:])
-    build.main(args)
-else:
-    build.printHelp()
+# Combine preset args with user-provided args
+args = presetArgs + sys.argv[1:]
+
+build.main(args, script_name="checker.py")
