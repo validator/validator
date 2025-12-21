@@ -46,6 +46,11 @@ public class RoleAttributeFilteringContentHandlerWrapper
 
     /**
      * @param delegate
+     *            the underlying {@link ContentHandler} to which SAX events
+     *            are forwarded
+     * @param errorHandler
+     *            the {@link ErrorHandler} used to report role-attribute
+     *            related problems
      */
     public RoleAttributeFilteringContentHandlerWrapper(ContentHandler delegate,
             ErrorHandler errorHandler) {
