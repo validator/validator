@@ -1641,6 +1641,19 @@ def getTaskChoices():
     ]
 
 
+def getAntTargets():
+    antTargetsFile = os.path.join(buildRoot, 'build', '.ant-targets-build.xml')
+    if not os.path.exists(antTargetsFile):
+        return []
+    try:
+        with open(antTargetsFile, 'r') as f:
+            # Each line contains a target name
+            targets = [line.strip() for line in f if line.strip()]
+        return targets
+    except (IOError, OSError):
+        return []
+
+
 def taskCompleter(prefix, parsed_args, **kwargs):
     if not ARGCOMPLETE_AVAILABLE:
         return []
@@ -1663,6 +1676,11 @@ def taskCompleter(prefix, parsed_args, **kwargs):
     completions = [t for t in task_choices if t.startswith(prefix)]
     if 'ant:'.startswith(prefix):
         completions.append('ant:')
+    if prefix.startswith('ant:'):
+        antPrefix = prefix[4:]  # Remove 'ant:' prefix
+        antTargets = getAntTargets()
+        antCompletions = ['ant:' + t for t in antTargets if t.startswith(antPrefix)]
+        completions.extend(antCompletions)
     return completions
 
 
