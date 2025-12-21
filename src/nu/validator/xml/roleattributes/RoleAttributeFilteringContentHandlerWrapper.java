@@ -31,6 +31,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -316,7 +317,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
             return "";
         }
         int len = tokenList.length();
-        List<String> tokens = new java.util.ArrayList<>();
+        List<String> tokens = new ArrayList<>();
         boolean collectingSpace = true;
         int start = 0;
         for (int i = 0; i < len; i++) {
@@ -338,9 +339,9 @@ public class RoleAttributeFilteringContentHandlerWrapper
         }
         String roleValue = null;
         List<String> unrecognizedTokens = new LinkedList<>();
-        List<String> superfluousTokens = new java.util.ArrayList<>();
+        List<String> superfluousTokens = new ArrayList<>();
         for (String token : tokens) {
-            if (Arrays.binarySearch(nonAbstractAriaRoles, token) < 0) {
+            if (!Arrays.asList(nonAbstractAriaRoles).contains(token)) {
                 unrecognizedTokens.add(token);
             } else if (roleValue == null) {
                 roleValue = token;
