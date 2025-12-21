@@ -1929,8 +1929,7 @@ def main(argv, script_name=None):
         sys.exit(0)
 
     i = 0
-    while i < len(tasks):
-        task = tasks[i]
+    for i, task in enumerate(tasks):
         if task == 'update-subtrees':
             updateSubtrees()
         elif task == 'dldeps':
@@ -2028,7 +2027,6 @@ def main(argv, script_name=None):
             printCompletionInstructions(script_name)
         else:
             parser.error("unrecognized arguments: %s" % task)
-        i += 1
 
 
 if __name__ == '__main__':
