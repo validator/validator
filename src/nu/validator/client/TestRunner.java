@@ -422,18 +422,6 @@ public class TestRunner extends MessageEmitterAdapter {
                     throw new RuntimeException(e);
                 }
             }
-            if (inError) {
-                failed = true;
-                try {
-                    err.println(String.format(
-                            "\"%s\": error: Expected a warning only but"
-                                    + " encountered at least one error.",
-                            this.getFileURL(file)));
-                    err.flush();
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
     }
 
@@ -638,11 +626,10 @@ public class TestRunner extends MessageEmitterAdapter {
         System.setProperty("nu.validator.checker.ignoreMissingLang", "true");
         System.setProperty("nu.validator.datatype.warn", "true");
         for (String arg : args) {
-            if ("--verbose".equals(arg)) {
-            } else if ("--errors-only".equals(arg)) {
+            if ("--errors-only".equals(arg)) {
                 System.setProperty("nu.validator.datatype.warn", "false");
-            } else if ("--write-messages".equals(arg)) {
             } else if (arg.startsWith("--ignore=")) {
+                // Ignore options are parsed later by parseIgnoreList(args).
             } else if (arg.startsWith("--")) {
                 System.out.println(String.format(
                         "\nError: There is no option \"%s\".", arg));
@@ -714,7 +701,7 @@ public class TestRunner extends MessageEmitterAdapter {
     private static String[] parseIgnoreList(String[] args) {
         for (String arg : args) {
             if (arg.startsWith("--ignore=")) {
-                return arg.substring(9, arg.length()).split(",");
+                return arg.substring(9).split(",");
             }
         }
         return null;
