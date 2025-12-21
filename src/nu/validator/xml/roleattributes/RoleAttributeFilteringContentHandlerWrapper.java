@@ -45,7 +45,9 @@ public class RoleAttributeFilteringContentHandlerWrapper
     private Locator locator = null;
 
     /**
-     * @param delegate
+     * @param delegate the underlying ContentHandler to which events will be delegated
+     * @param errorHandler the ErrorHandler to which validation errors will be reported,
+     *            or null if error reporting is not needed
      */
     public RoleAttributeFilteringContentHandlerWrapper(ContentHandler delegate,
             ErrorHandler errorHandler) {
@@ -54,9 +56,9 @@ public class RoleAttributeFilteringContentHandlerWrapper
     }
 
     /**
-     * @param arg0
-     * @param arg1
-     * @param arg2
+     * @param chars
+     * @param start
+     * @param length
      * @throws SAXException
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
@@ -166,8 +168,8 @@ public class RoleAttributeFilteringContentHandlerWrapper
     @Override
     public void startElement(String ns, String arg1, String arg2,
             Attributes attributes) throws SAXException {
-        if ("http://www.w3.org/1999/xhtml" == ns
-                || "http://www.w3.org/2000/svg" == ns) {
+        if ("http://www.w3.org/1999/xhtml".equals(ns)
+                || "http://www.w3.org/2000/svg".equals(ns)) {
             delegate.startElement(ns, arg1, arg2, filterAttributes(attributes));
         } else {
             delegate.startElement(ns, arg1, arg2, attributes);
@@ -262,7 +264,6 @@ public class RoleAttributeFilteringContentHandlerWrapper
             "progressbar", //
             "radio", //
             "radiogroup", //
-            "radiogroup", //
             "region", //
             "row", //
             "rowgroup", //
@@ -311,7 +312,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
 
     private String getFirstMatchingAriaRoleFromTokenList(String tokenList)
             throws SAXException {
-        if (tokenList == null || "".equals(tokenList)) {
+        if ("".equals(tokenList)) {
             return "";
         }
         int len = tokenList.length();
