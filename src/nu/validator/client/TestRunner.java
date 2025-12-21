@@ -506,7 +506,7 @@ public class TestRunner extends MessageEmitterAdapter {
     }
 
     public boolean runTestSuite() throws SAXException, Exception {
-        if (messagesFile != null) {
+        if (messagesFile != null && !writeMessages) {
             baseDir = messagesFile.getCanonicalFile().getParentFile();
             try (FileInputStream fis = new FileInputStream(messagesFile);
                  JsonReader reader = Json.createReader(fis)) {
@@ -517,6 +517,8 @@ public class TestRunner extends MessageEmitterAdapter {
                 }
                 expectedMessages = expectedMessagesMap;
             }
+        } else if (messagesFile != null) {
+            baseDir = messagesFile.getCanonicalFile().getParentFile();
         } else {
             baseDir = new File(System.getProperty("user.dir"));
         }
@@ -660,22 +662,25 @@ public class TestRunner extends MessageEmitterAdapter {
             }
         }
         File messagesFileToUse = null;
+        boolean writeMessagesFlag = parseWriteMessagesFlag(args);
         if (messagesFilename != null) {
             messagesFileToUse = new File(messagesFilename);
-            if (!messagesFileToUse.exists()) {
-                System.out.println("\nError: \"" + messagesFilename
-                        + "\" file not found.");
-                System.exit(1);
-            } else if (!messagesFileToUse.isFile()) {
-                System.out.println("\nError: \"" + messagesFilename
-                        + "\" is not a file.");
-                System.exit(1);
+            if (!writeMessagesFlag) {
+                if (!messagesFileToUse.exists()) {
+                    System.out.println("\nError: \"" + messagesFilename
+                            + "\" file not found.");
+                    System.exit(1);
+                } else if (!messagesFileToUse.isFile()) {
+                    System.out.println("\nError: \"" + messagesFilename
+                            + "\" is not a file.");
+                    System.exit(1);
+                }
             }
         }
         TestRunner tr = new TestRunner();
         tr.setMessagesFile(messagesFileToUse);
         tr.setVerbose(parseVerboseFlag(args));
-        tr.setWriteMessages(parseWriteMessagesFlag(args));
+        tr.setWriteMessages(writeMessagesFlag);
         tr.setIgnoreList(parseIgnoreList(args));
         if (messagesFileToUse == null && tr.isWriteMessages()) {
             System.out.println("\nError: Expected the name of a messages"
