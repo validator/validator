@@ -72,13 +72,81 @@ from pathlib import Path
 class CustomHelpAction(argparse.Action):
     def __init__(self, option_strings, dest, script_name=None, **kwargs):
         kwargs.pop('script_name', None)
-        super(CustomHelpAction, self).__init__(option_strings, dest, nargs=0, **kwargs)  # nopep8
+        super(CustomHelpAction, self).__init__(option_strings, dest,
+                                               nargs=0, **kwargs)
         self.script_name = script_name
 
     def __call__(self, parser, namespace, values, option_string=None):
         parser.print_help()
         printCompletionInstructions(self.script_name)
         sys.exit(0)
+
+
+class TasksFormatter(argparse.RawTextHelpFormatter):
+    def _format_action(self, action):
+        if action.dest == 'tasks':
+            task_choices = sorted(getTaskChoices())
+            help_text = ''
+            for task in task_choices:
+                help_text += f'  {task}\n'
+            action.help = help_text
+            # Return custom format with colon and newline
+            return f'tasks:\n{action.help}'
+        return super()._format_action(action)
+
+    def _format_usage(self, usage, actions, groups, prefix):
+        sorted_actions = sorted(actions, key=lambda a: a.dest if a.dest !=
+                                'help' else '')
+        return super()._format_usage(usage, sorted_actions, groups, prefix)
+
+    def add_arguments(self, actions):
+        sorted_actions = sorted(actions, key=lambda a: a.option_strings[0]
+                                if a.option_strings else a.dest)
+        super().add_arguments(sorted_actions)
+
+    def format_help(self):
+        help_text = super().format_help()
+        # Find and extract the tasks section (which appears right after usage)
+        lines = help_text.split('\n')
+        filtered_lines = []
+        tasks_lines = []
+        in_tasks_section = False
+
+        for line in lines:
+            if line.strip() == 'positional arguments:':
+                continue
+
+            if line.strip() == 'tasks:':
+                in_tasks_section = True
+                continue
+
+            if in_tasks_section:
+                # Check if we've reached optional arguments
+                if line.strip() == 'optional arguments:':
+                    in_tasks_section = False
+                    filtered_lines.append(line)
+                else:
+                    # Extract task names
+                    if line.strip():
+                        tasks_lines.append(line.strip())
+            else:
+                filtered_lines.append(line)
+
+        # Insert tasks section at the end, before the completion instructions
+        insert_pos = len(filtered_lines)
+        for i, line in enumerate(filtered_lines):
+            if 'To enable shell tab completion' in line:
+                insert_pos = i
+                break
+
+        if tasks_lines:
+            filtered_lines.insert(insert_pos, 'tasks:')
+            for task in tasks_lines:
+                filtered_lines.insert(insert_pos + 1, f'    {task}')
+                insert_pos += 1
+            filtered_lines.insert(insert_pos + 1, '')
+
+        return '\n'.join(filtered_lines)
 
 
 os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -1838,7 +1906,7 @@ def main(argv, script_name=None):
     if script_name is None:
         script_name = "build/build.py"
 
-    parser = argparse.ArgumentParser(add_help=False)  # nopep8
+    parser = argparse.ArgumentParser(add_help=False, formatter_class=TasksFormatter)  # nopep8
     parser.add_argument("-h", "--help", action=CustomHelpAction, script_name=script_name, help="show this help message and exit")  # nopep8
     parser.add_argument("--about", default="https://about.validator.nu/", help="Sets URL for the about page")  # nopep8
     parser.add_argument("--control-port", help="Sets server control port number (necessary for daemonizing)")  # nopep8
