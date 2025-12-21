@@ -947,7 +947,16 @@ class Release():
         os.chdir(os.path.join('..', '..'))
         self.writeHashes(distDir)
 
-    def createPackageJson(self, packageJson):
+    def updatePackageJsonAndReadme(self):
+        packageJson = os.path.join(buildRoot, "package.json")
+        removeIfExists(os.path.join(buildRoot, "README.md~"))
+        readMe = os.path.join(buildRoot, "README.md")
+        npmMd = os.path.join(buildRoot, "npm.md")
+        with open(readMe, 'r') as f:
+            readMeCopy = f.read()
+        shutil.copy(npmMd, readMe)
+        with open(packageJson, 'r') as f:
+            packageJsonCopy = f.read()
         with open(packageJson, 'r') as original:
             copy = json.load(original)
         copy['version'] = validatorVersion
@@ -1021,6 +1030,15 @@ class Release():
              """  # nopep8
         runCmdFromString(cmd)
 
+    def installNpm(self,):
+        print("npmjs package version: " + self.version)
+        self.updatePackageJsonAndReadme()
+        runCmdFromString(f"{npmCmd} install --save")
+        runCmdFromString(f"{npmCmd} link vnu-jar")
+        runCmdFromString(f"{npmCmd} link")
+        runCmdFromString(f"{gitCmd} checkout package.json")
+        runCmdFromString(f"{gitCmd} checkout README.md")
+
     def uploadNpm(self, tag=None):
         self.version = validatorVersion
         url = f"https://registry.npmjs.org/vnu-jar/{self.version}"
@@ -1034,27 +1052,15 @@ class Release():
         if not os.path.exists(vnuJar):
             print(f"Error: {vnuJar} not found.")
             sys.exit(1)
-        print("npmjs package version: " + self.version)
-        removeIfExists(os.path.join(buildRoot, "README.md~"))
-        readMe = os.path.join(buildRoot, "README.md")
-        npmMd = os.path.join(buildRoot, "npm.md")
-        packageJson = os.path.join(buildRoot, "package.json")
-        with open(readMe, 'r') as f:
-            readMeCopy = f.read()
-        shutil.copy(npmMd, readMe)
-        with open(packageJson, 'r') as f:
-            packageJsonCopy = f.read()
-        self.createPackageJson(packageJson)
+        self.updatePackageJsonAndReadme()
         if tag:
             runCmdFromString(
                     f"{npmCmd} publish --provenance --access public --tag {tag}")  # nopep8
         else:
             runCmdFromString(
                     f"{npmCmd} publish --provenance --access public")
-        with open(readMe, 'w') as f:
-            f.write(readMeCopy)
-        with open(packageJson, 'w') as f:
-            f.write(packageJsonCopy)
+        runCmdFromString(f"{gitCmd} checkout package.json")
+        runCmdFromString(f"{gitCmd} checkout README.md")
 
     def checkJar(self, call_createJarOrWar=True):
         if not os.path.exists(vnuJar):
@@ -1633,7 +1639,7 @@ def isServiceUp(defaultReply):
 def getTaskChoices():
     return [
         'update-subtrees', 'dldeps', 'checkout', 'build', 'docker-build',
-        'docker-run', 'docker-push', 'bundle', 'npm-release',
+        'docker-run', 'docker-push', 'bundle', 'npm-install', 'npm-release',
         'maven-artifacts', 'maven-sign', 'maven-bundle', 'maven-release',
         'image', 'jar', 'war', 'sign', 'localent', 'deploy', 'tar',
         'script', 'test', 'test-specs', 'make-messages', 'check',
@@ -1963,6 +1969,8 @@ def main(argv, script_name=None):
             dockerPush()
         elif task == 'bundle':
             release.createMavenBundle()
+        elif task == 'npm-install':
+            release.installNpm()
         elif task == 'npm-release':
             release.uploadNpm()
         elif task == 'maven-artifacts':
