@@ -33,8 +33,9 @@ import org.xml.sax.SAXParseException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RoleAttributeFilteringContentHandlerWrapper
         implements ContentHandler {
@@ -177,7 +178,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
         }
     }
 
-    private static String[] nonAbstractAriaRoles = { //
+    private static final Set<String> NON_ABSTRACT_ARIA_ROLES = new HashSet<>(Arrays.asList(
             "alert", //
             "alertdialog", //
             "application", //
@@ -289,7 +290,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
             "tree", //
             "treegrid", //
             "treeitem" //
-    };
+    ));
 
     private Attributes filterAttributes(Attributes attributes)
             throws SAXException {
@@ -338,10 +339,10 @@ public class RoleAttributeFilteringContentHandlerWrapper
             tokens.add(tokenList.substring(start, len));
         }
         String roleValue = null;
-        List<String> unrecognizedTokens = new LinkedList<>();
+        List<String> unrecognizedTokens = new ArrayList<>();
         List<String> superfluousTokens = new ArrayList<>();
         for (String token : tokens) {
-            if (!Arrays.asList(nonAbstractAriaRoles).contains(token)) {
+            if (!NON_ABSTRACT_ARIA_ROLES.contains(token)) {
                 unrecognizedTokens.add(token);
             } else if (roleValue == null) {
                 roleValue = token;
