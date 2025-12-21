@@ -79,13 +79,13 @@ jobs:
         shell: bash
         run: |
           java -jar build/dist/vnu.jar site/nu-about.html
-          python ./checker.py self-test
-          python ./checker.py test
+          python checker.py self-test
+          python checker.py test
       - name: Test specs
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
-          python ./checker.py test-specs
+          python checker.py test-specs
       - name: Import GPG signing key
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: crazy-max/ghaction-import-gpg@v5
@@ -98,7 +98,7 @@ jobs:
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
-          python ./checker.py sign
+          python checker.py sign
       - name: Release new binary runtime image
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: ncipollo/release-action@v1
@@ -189,7 +189,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
-      - name: Run ./checker.py npm-release
+      - name: Run checker.py npm-release
         shell: bash
         run: |
           mkdir -p build/dist
@@ -199,7 +199,7 @@ jobs:
           export PATH="$HOME/.npm-global/bin:$PATH"
           npm install -g npm@latest
           echo "npm version: $(npm --version)"
-          python ./checker.py npm-release
+          python checker.py npm-release
 
   maven-release:
     name: Release new Maven package
@@ -240,12 +240,12 @@ jobs:
         shell: bash
         run: |
           ls ./build/dist
-          python ./checker.py maven-artifacts
-          python ./checker.py maven-sign
+          python checker.py maven-artifacts
+          python checker.py maven-sign
       - name: Release new maven package
         shell: bash
         run: |
-          python ./checker.py maven-release
+          python checker.py maven-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_USER_TOKEN: ${{ secrets.MAVEN_USER_TOKEN }}
