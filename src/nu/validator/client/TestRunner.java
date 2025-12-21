@@ -56,6 +56,12 @@ import nu.validator.validation.SimpleDocumentValidator;
 
 public class TestRunner extends MessageEmitterAdapter {
 
+    private static final String DEFAULT_SCHEMA = "http://s.validator.nu/html5-all.rnc";
+
+    private static final String RDFALITE_SCHEMA = "http://s.validator.nu/html5-rdfalite.rnc";
+
+    private static final String XHTML_SCHEMA = "http://s.validator.nu/xhtml5-all.rnc";
+
     private boolean inError = false;
 
     private boolean emitMessages = false;
@@ -72,8 +78,6 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private PrintWriter out;
 
-    private String schema = "http://s.validator.nu/html5-all.rnc";
-
     private boolean failed = false;
 
     private static File messagesFile;
@@ -88,7 +92,7 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private File baseDir = null;
 
-    private Map<String, JsonString> expectedMessages;
+    private Map<String, javax.json.JsonValue> expectedMessages;
 
     private JsonObjectBuilder reportedMessages;
 
@@ -174,6 +178,9 @@ public class TestRunner extends MessageEmitterAdapter {
     private void recurseDirectory(File directory) throws SAXException,
             IOException {
         File[] files = directory.listFiles();
+        if (files == null) {
+            return;
+        }
         for (File file : files) {
             if (file.isDirectory()) {
                 recurseDirectory(file);
@@ -236,7 +243,7 @@ public class TestRunner extends MessageEmitterAdapter {
         // http://www.unicode.org/reports/tr18/#General_Category_Property
         String messageReported = exception.getMessage().replaceAll("\\p{C}",
                 "?");
-        String messageExpected = expectedMessages.get(testFilename).getString().replaceAll(
+        String messageExpected = ((JsonString) expectedMessages.get(testFilename)).getString().replaceAll(
                 "\\p{C}", "?");
         // NOTE: The string replacements below are a hack to "normalize"
         // error messages reported for bad values of the ins/del datetime
@@ -455,9 +462,9 @@ public class TestRunner extends MessageEmitterAdapter {
                     invalidFiles.add(file);
                 } else if (state == State.EXPECTING_VALID_FILES) {
                     validFiles.add(file);
-                } else if (file.getPath().indexOf("novalid") > 0) {
+                } else if (file.getPath().indexOf("novalid") >= 0) {
                     invalidFiles.add(file);
-                } else if (file.getPath().indexOf("haswarn") > 0) {
+                } else if (file.getPath().indexOf("haswarn") >= 0) {
                     hasWarningFiles.add(file);
                 } else {
                     validFiles.add(file);
@@ -481,34 +488,36 @@ public class TestRunner extends MessageEmitterAdapter {
     public boolean runTestSuite() throws SAXException, Exception {
         if (messagesFile != null) {
             baseDir = messagesFile.getCanonicalFile().getParentFile();
-            FileInputStream fis = new FileInputStream(messagesFile);
-            JsonReader reader = Json.createReader(fis);
-            javax.json.JsonObject jsonObject = reader.readObject();
-            final Map<String, Object> expectedMessagesMap = new HashMap<String, Object>();
-            for (Map.Entry<String, javax.json.JsonValue> entry : jsonObject.entrySet()) {
-                expectedMessagesMap.put(entry.getKey(), entry.getValue());
+            try (FileInputStream fis = new FileInputStream(messagesFile);
+                 JsonReader reader = Json.createReader(fis)) {
+                javax.json.JsonObject jsonObject = reader.readObject();
+                final Map<String, javax.json.JsonValue> expectedMessagesMap = new HashMap<>();
+                for (Map.Entry<String, javax.json.JsonValue> entry : jsonObject.entrySet()) {
+                    expectedMessagesMap.put(entry.getKey(), entry.getValue());
+                }
+                expectedMessages = expectedMessagesMap;
             }
-            expectedMessages = (Map) expectedMessagesMap;
         } else {
             baseDir = new File(System.getProperty("user.dir"));
         }
-        for (File directory : baseDir.listFiles()) {
-            if (directory.isDirectory()) {
-                if (directory.getName().contains("rdfalite")) {
-                    checkTestDirectoryAgainstSchema(directory,
-                            "http://s.validator.nu/html5-rdfalite.rnc");
-                } else if (directory.getName().contains("xhtml")) {
-                    checkTestDirectoryAgainstSchema(directory,
-                            "http://s.validator.nu/xhtml5-all.rnc");
-                } else {
-                    checkTestDirectoryAgainstSchema(directory, schema);
+        File[] directories = baseDir.listFiles();
+        if (directories != null) {
+            for (File directory : directories) {
+                if (directory.isDirectory()) {
+                    if (directory.getName().contains("rdfalite")) {
+                        checkTestDirectoryAgainstSchema(directory, RDFALITE_SCHEMA);
+                    } else if (directory.getName().contains("xhtml")) {
+                        checkTestDirectoryAgainstSchema(directory, XHTML_SCHEMA);
+                    } else {
+                        checkTestDirectoryAgainstSchema(directory, DEFAULT_SCHEMA);
+                    }
                 }
             }
         }
         if (writeMessages) {
-            OutputStreamWriter out = new OutputStreamWriter(
+            try (OutputStreamWriter out = new OutputStreamWriter(
                     new FileOutputStream(messagesFile), "utf-8");
-            try (BufferedWriter bw = new BufferedWriter(out)) {
+                 BufferedWriter bw = new BufferedWriter(out)) {
                 JsonWriter jsonWriter = Json.createWriter(bw);
                 jsonWriter.writeObject(reportedMessages.build());
                 jsonWriter.close();
@@ -528,7 +537,7 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private void emitMessage(SAXParseException e, String messageType) {
         String systemId = e.getSystemId();
-        err.write((systemId == null) ? "" : '\"' + systemId + '\"');
+        err.write((systemId != null) ? '\"' + systemId + '\"' : "");
         err.write(":");
         err.write(Integer.toString(e.getLineNumber()));
         err.write(":");
