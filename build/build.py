@@ -952,11 +952,7 @@ class Release():
         removeIfExists(os.path.join(buildRoot, "README.md~"))
         readMe = os.path.join(buildRoot, "README.md")
         npmMd = os.path.join(buildRoot, "npm.md")
-        with open(readMe, 'r') as f:
-            readMeCopy = f.read()
         shutil.copy(npmMd, readMe)
-        with open(packageJson, 'r') as f:
-            packageJsonCopy = f.read()
         with open(packageJson, 'r') as original:
             copy = json.load(original)
         copy['version'] = validatorVersion
@@ -1685,7 +1681,8 @@ def taskCompleter(prefix, parsed_args, **kwargs):
     if prefix.startswith('ant:'):
         antPrefix = prefix[4:]  # Remove 'ant:' prefix
         antTargets = getAntTargets()
-        antCompletions = ['ant:' + t for t in antTargets if t.startswith(antPrefix)]
+        antCompletions = ['ant:' + t for t in antTargets if
+                          t.startswith(antPrefix)]
         completions.extend(antCompletions)
     return completions
 
@@ -1819,7 +1816,7 @@ def applyArgsToGlobals(args):
         javaExecutable = 'java.exe' if sys.platform == 'win32' else 'java'
         jarExecutable = 'jar.exe' if sys.platform == 'win32' else 'jar'
         javacExecutable = 'javac.exe' if sys.platform == 'win32' else 'javac'
-        javadocExecutable = 'javadoc.exe' if sys.platform == 'win32' else 'javadoc'
+        javadocExecutable = 'javadoc.exe' if sys.platform == 'win32' else 'javadoc'  # nopep8
         javaCmd = os.path.join(jdkBinDir, javaExecutable)
         jarCmd = os.path.join(jdkBinDir, jarExecutable)
         javacCmd = os.path.join(jdkBinDir, javacExecutable)
@@ -1917,7 +1914,7 @@ def main(argv, script_name=None):
         jarExecutable = 'jar.exe' if sys.platform == 'win32' else 'jar'
         jdepsExecutable = 'jdeps.exe' if sys.platform == 'win32' else 'jdeps'
         jlinkExecutable = 'jlink.exe' if sys.platform == 'win32' else 'jlink'
-        javadocExecutable = 'javadoc.exe' if sys.platform == 'win32' else 'javadoc'
+        javadocExecutable = 'javadoc.exe' if sys.platform == 'win32' else 'javadoc'  # nopep8
         javacCmd = os.path.join(JAVA_HOME, 'bin', javacExecutable)
         jarCmd = os.path.join(JAVA_HOME, 'bin', jarExecutable)
         javaCmd = os.path.join(JAVA_HOME, 'bin', javaExecutable)
