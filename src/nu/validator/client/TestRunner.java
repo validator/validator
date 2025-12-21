@@ -80,15 +80,15 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private boolean failed = false;
 
-    private static File messagesFile;
+    private File messagesFile;
 
-    private static String[] ignoreList = null;
+    private String[] ignoreList = null;
 
-    private static boolean writeMessages;
+    private boolean writeMessages;
 
-    private static boolean verbose;
+    private boolean verbose;
 
-    private static boolean hasUnhandledWarning = false;
+    private boolean hasUnhandledWarning = false;
 
     private File baseDir = null;
 
@@ -108,6 +108,26 @@ public class TestRunner extends MessageEmitterAdapter {
             // If this happens, the JDK is too broken anyway
             throw new RuntimeException(e);
         }
+    }
+
+    public void setMessagesFile(File file) {
+        this.messagesFile = file;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+    }
+
+    public void setWriteMessages(boolean writeMessages) {
+        this.writeMessages = writeMessages;
+    }
+
+    public boolean isWriteMessages() {
+        return this.writeMessages;
+    }
+
+    public void setIgnoreList(String[] ignoreList) {
+        this.ignoreList = ignoreList;
     }
 
     private URL getFileURL(File file) throws MalformedURLException {
@@ -614,19 +634,15 @@ public class TestRunner extends MessageEmitterAdapter {
             usage();
             System.exit(0);
         }
-        verbose = false;
         String messagesFilename = null;
         System.setProperty("nu.validator.checker.ignoreMissingLang", "true");
         System.setProperty("nu.validator.datatype.warn", "true");
         for (String arg : args) {
             if ("--verbose".equals(arg)) {
-                verbose = true;
             } else if ("--errors-only".equals(arg)) {
                 System.setProperty("nu.validator.datatype.warn", "false");
             } else if ("--write-messages".equals(arg)) {
-                writeMessages = true;
             } else if (arg.startsWith("--ignore=")) {
-                ignoreList = arg.substring(9, arg.length()).split(",");
             } else if (arg.startsWith("--")) {
                 System.out.println(String.format(
                         "\nError: There is no option \"%s\".", arg));
@@ -643,32 +659,65 @@ public class TestRunner extends MessageEmitterAdapter {
                 }
             }
         }
+        File messagesFileToUse = null;
         if (messagesFilename != null) {
-            messagesFile = new File(messagesFilename);
-            if (!messagesFile.exists()) {
+            messagesFileToUse = new File(messagesFilename);
+            if (!messagesFileToUse.exists()) {
                 System.out.println("\nError: \"" + messagesFilename
                         + "\" file not found.");
                 System.exit(1);
-            } else if (!messagesFile.isFile()) {
+            } else if (!messagesFileToUse.isFile()) {
                 System.out.println("\nError: \"" + messagesFilename
                         + "\" is not a file.");
                 System.exit(1);
             }
-        } else if (writeMessages) {
+        }
+        TestRunner tr = new TestRunner();
+        tr.setMessagesFile(messagesFileToUse);
+        tr.setVerbose(parseVerboseFlag(args));
+        tr.setWriteMessages(parseWriteMessagesFlag(args));
+        tr.setIgnoreList(parseIgnoreList(args));
+        if (messagesFileToUse == null && tr.isWriteMessages()) {
             System.out.println("\nError: Expected the name of a messages"
                     + " file with a .json extension.");
             usage();
             System.exit(1);
         }
-        TestRunner tr = new TestRunner();
         if (tr.runTestSuite()) {
-            if (hasUnhandledWarning) {
+            if (tr.hasUnhandledWarning) {
                 System.exit(1);
             }
             System.exit(0);
         } else {
             System.exit(1);
         }
+    }
+
+    private static boolean parseVerboseFlag(String[] args) {
+        for (String arg : args) {
+            if ("--verbose".equals(arg)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean parseWriteMessagesFlag(String[] args) {
+        for (String arg : args) {
+            if ("--write-messages".equals(arg)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String[] parseIgnoreList(String[] args) {
+        for (String arg : args) {
+            if (arg.startsWith("--ignore=")) {
+                return arg.substring(9, arg.length()).split(",");
+            }
+        }
+        return null;
     }
 
     private static void usage() {
