@@ -61,9 +61,9 @@ public class RoleAttributeFilteringContentHandlerWrapper
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
     @Override
-    public void characters(char[] arg0, int arg1, int arg2)
+    public void characters(char[] ch, int start, int length)
             throws SAXException {
-        delegate.characters(arg0, arg1, arg2);
+        delegate.characters(ch, start, length);
     }
 
     /**
