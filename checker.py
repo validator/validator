@@ -21,11 +21,17 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-from build import build
+import os
+import sys
+try:
+    from build import build
+except ImportError as e:
+    print("Error: required module 'build' could not be imported: {}".format(e),
+          file=sys.stderr)
+    sys.exit(1)
 import sys
 
-# Preset checker-specific options
-presetArgs = [
+preset_args = [
   '--connection-timeout=15',
   '--socket-timeout=15',
   '--name=Ready to check',
@@ -36,8 +42,6 @@ presetArgs = [
   '--script-file=site/nu-script.js',
   '--stylesheet-file=site/nu-style.css'
 ]
+combined_args = preset_args + sys.argv[1:]
 
-# Combine preset args with user-provided args
-args = presetArgs + sys.argv[1:]
-
-build.main(args, script_name="checker.py")
+build.main(combined_args, script_name=os.path.basename(__file__))

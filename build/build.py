@@ -1928,9 +1928,7 @@ def main(argv, script_name=None):
         printCompletionInstructions(script_name)
         sys.exit(0)
 
-    i = 0
-    while i < len(tasks):
-        task = tasks[i]
+    for taskIndex, task in enumerate(tasks):
         if task == 'update-subtrees':
             updateSubtrees()
         elif task == 'dldeps':
@@ -1990,7 +1988,7 @@ def main(argv, script_name=None):
         elif task == 'check':
             if not os.path.exists(vnuCmd):
                 release.createRuntimeImage()
-            execCmd(vnuCmd, tasks[i + 1:], True)
+            execCmd(vnuCmd, tasks[taskIndex + 1:], True)
             break
         elif task == 'self-test':
             if not stylesheet:
@@ -2028,7 +2026,6 @@ def main(argv, script_name=None):
             printCompletionInstructions(script_name)
         else:
             parser.error("unrecognized arguments: %s" % task)
-        i += 1
 
 
 if __name__ == '__main__':
