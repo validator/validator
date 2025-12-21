@@ -26,7 +26,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -34,7 +33,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -56,7 +54,6 @@ import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.validation.SimpleDocumentValidator;
 
-@SuppressWarnings("unchecked")
 public class TestRunner extends MessageEmitterAdapter {
 
     private boolean inError = false;
@@ -218,6 +215,14 @@ public class TestRunner extends MessageEmitterAdapter {
                     checkHtmlFile(file);
                 }
             } catch (IOException | SAXException e) {
+                if (verbose) {
+                    out.println(String.format(
+                            "\"%s\": error: Exception while processing file: %s",
+                            this.getFileURL(file), e.getMessage()));
+                    e.printStackTrace(out);
+                    out.flush();
+                }
+                failed = true;
             }
             if (inError) {
                 failed = true;
@@ -233,7 +238,7 @@ public class TestRunner extends MessageEmitterAdapter {
                 "?");
         String messageExpected = expectedMessages.get(testFilename).getString().replaceAll(
                 "\\p{C}", "?");
-        // FIXME: The string replacements below are a hack to "normalize"
+        // NOTE: The string replacements below are a hack to "normalize"
         // error messages reported for bad values of the ins/del datetime
         // attribute, to work around the fact that in Java 8, parts of
         // those error messages don't always get emitted in the same order
@@ -260,6 +265,11 @@ public class TestRunner extends MessageEmitterAdapter {
                     checkHtmlFile(file);
                 }
             } catch (IOException | SAXException e) {
+                err.println(String.format(
+                        "\"%s\": error: Exception while processing file: %s",
+                        file.getPath(),
+                        e.getMessage()));
+                err.flush();
             }
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
@@ -322,6 +332,16 @@ public class TestRunner extends MessageEmitterAdapter {
                     checkHtmlFile(file);
                 }
             } catch (IOException | SAXException e) {
+                failed = true;
+                try {
+                    err.println(String.format(
+                            "\"%s\": error: Exception while checking file: %s",
+                            this.getFileURL(file),
+                            e.getMessage()));
+                    err.flush();
+                } catch (MalformedURLException e1) {
+                    throw new RuntimeException(e1);
+                }
             }
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
@@ -463,7 +483,12 @@ public class TestRunner extends MessageEmitterAdapter {
             baseDir = messagesFile.getCanonicalFile().getParentFile();
             FileInputStream fis = new FileInputStream(messagesFile);
             JsonReader reader = Json.createReader(fis);
-            expectedMessages = (Map)reader.readObject();
+            javax.json.JsonObject jsonObject = reader.readObject();
+            final Map<String, Object> expectedMessagesMap = new HashMap<String, Object>();
+            for (Map.Entry<String, javax.json.JsonValue> entry : jsonObject.entrySet()) {
+                expectedMessagesMap.put(entry.getKey(), entry.getValue());
+            }
+            expectedMessages = (Map) expectedMessagesMap;
         } else {
             baseDir = new File(System.getProperty("user.dir"));
         }
