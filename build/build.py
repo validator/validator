@@ -1963,9 +1963,32 @@ def main(argv, script_name=None):
     else:
         parser.add_argument('tasks', nargs='*', help='Tasks to run')  # nopep8
 
+    # Preprocess argv to handle special cases where arguments after “check”
+    # should be passed through to vnu command (not parsed by argparse)
+    checkInArgv = False
+    checkIndex = -1
+    processedArgv = []
+    passthroughArgs = []
+    for i, arg in enumerate(argv):
+        if arg == 'check':
+            checkInArgv = True
+            checkIndex = i
+            processedArgv.append(arg)
+        elif checkInArgv and checkIndex >= 0 and i > checkIndex:
+            # Everything after “check” should be passed through
+            passthroughArgs.append(arg)
+        else:
+            processedArgv.append(arg)
     if ARGCOMPLETE_AVAILABLE:
         argcomplete.autocomplete(parser)
-    args = parser.parse_args(argv)
+    # Parse only the processed args (without “pass through” args)
+    if checkInArgv:
+        args, unknown = parser.parse_known_args(processedArgv)
+        # Add “pass through” args to tasks
+        checkTaskIndex = args.tasks.index('check')
+        args.tasks = args.tasks[:checkTaskIndex + 1] + passthroughArgs
+    else:
+        args = parser.parse_args(argv)
 
     # Only check JAVA_HOME if we're not just doing completion
     if '_ARGCOMPLETE' not in os.environ and 'JAVA_HOME' not in os.environ:
