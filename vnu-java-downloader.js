@@ -27,11 +27,30 @@ const CACHE_DIR = join(NODE_MODULES_DIR, '.cache', 'vnu-jar', 'java');
 const TEMURIN_VERSION = '17.0.17+10';
 const TEMURIN_BASE_URL = `https://github.com/adoptium/temurin17-binaries/releases/download/jdk-${TEMURIN_VERSION}/`;
 
+function getJavaVersion(javaPath) {
+    try {
+        const result = spawnSync(javaPath, ['-version'], { encoding: 'utf8' });
+        const versionOutput = result.stderr || result.stdout || '';
+        const match = versionOutput.match(/version "(\d+)(?:\.(\d+))?/);
+        if (match) {
+            const majorVersion = parseInt(match[1], 10);
+            return majorVersion;
+        }
+    } catch (err) {
+        return null;
+    }
+    return null;
+}
+
 function findSystemJava() {
     const whichCmd = process.platform === 'win32' ? 'where' : 'which';
     const result = spawnSync(whichCmd, ['java'], { encoding: 'utf8' });
     if (result.status === 0 && result.stdout) {
-        return result.stdout.split(/\r?\n/)[0].trim();
+        const javaPath = result.stdout.split(/\r?\n/)[0].trim();
+        const version = getJavaVersion(javaPath);
+        if (version !== null && version >= 11) {
+            return javaPath;
+        }
     }
     return null;
 }
