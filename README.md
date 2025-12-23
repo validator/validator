@@ -191,7 +191,7 @@ To run the vnu command-line checker provided by a Docker image on all the HTML f
 
 Follow the steps below to build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
 
-  1. Make sure you have git, python, a 64-bit JDK 11 or above, and [ant](https://ant.apache.org/manual/install.html) installed.
+  1. Make sure you have git, python, a 64-bit JDK 11 or above, [ant](https://ant.apache.org/manual/install.html), and [maven](https://maven.apache.org/install.html) installed.
 
   2. Set the `JAVA_HOME` environment variable:
 
