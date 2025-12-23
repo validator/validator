@@ -108,7 +108,7 @@ class TasksFormatter(argparse.RawTextHelpFormatter):
         help_text = super().format_help()
         # Find and extract the tasks section (which appears right after usage)
         lines = help_text.split('\n')
-        filtered_lines = []
+        filteredLines = []
         tasks_lines = []
         in_tasks_section = False
 
@@ -124,29 +124,29 @@ class TasksFormatter(argparse.RawTextHelpFormatter):
                 # Check if we've reached optional arguments
                 if line.strip() == 'optional arguments:':
                     in_tasks_section = False
-                    filtered_lines.append(line)
+                    filteredLines.append(line)
                 else:
                     # Extract task names
                     if line.strip():
                         tasks_lines.append(line.strip())
             else:
-                filtered_lines.append(line)
+                filteredLines.append(line)
 
         # Insert tasks section at the end, before the completion instructions
-        insert_pos = len(filtered_lines)
-        for i, line in enumerate(filtered_lines):
+        insert_pos = len(filteredLines)
+        for i, line in enumerate(filteredLines):
             if 'To enable shell tab completion' in line:
                 insert_pos = i
                 break
 
         if tasks_lines:
-            filtered_lines.insert(insert_pos, 'tasks:')
+            filteredLines.insert(insert_pos, 'tasks:')
             for task in tasks_lines:
-                filtered_lines.insert(insert_pos + 1, f'    {task}')
+                filteredLines.insert(insert_pos + 1, f'    {task}')
                 insert_pos += 1
-            filtered_lines.insert(insert_pos + 1, '')
+            filteredLines.insert(insert_pos + 1, '')
 
-        return '\n'.join(filtered_lines)
+        return '\n'.join(filteredLines)
 
 
 os.environ["PYTHONIOENCODING"] = "utf-8"
