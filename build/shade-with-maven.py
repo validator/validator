@@ -10,6 +10,9 @@ import tempfile
 
 
 def main():
+    # Determine Maven command based on platform
+    mvn_cmd = "mvn.cmd" if sys.platform == "win32" else "mvn"
+
     # Paths
     jing_jar = "jing-trang/build/jing.jar"
     isorelax_jar = "jing-trang/lib/isorelax.jar"
@@ -28,7 +31,7 @@ def main():
 
         print("Installing jing.jar to local Maven repository...")
         install_cmd = [
-            "mvn", "install:install-file",
+            mvn_cmd, "install:install-file",
             f"-Dfile={os.path.abspath(jing_jar)}",
             "-DgroupId=com.thaiopensource",
             "-DartifactId=jing",
@@ -52,7 +55,7 @@ def main():
 
         print("Installing isorelax.jar to local Maven repository...")
         install_cmd = [
-            "mvn", "install:install-file",
+            mvn_cmd, "install:install-file",
             f"-Dfile={os.path.abspath(isorelax_jar)}",
             "-DgroupId=isorelax",
             "-DartifactId=isorelax",
@@ -150,7 +153,7 @@ def main():
             f.write(pom_content)
 
         print("Running Maven package with shade plugin...")
-        cmd = ["mvn", "clean", "package"]
+        cmd = [mvn_cmd, "clean", "package"]
 
         result = subprocess.run(
             cmd,
