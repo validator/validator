@@ -200,6 +200,70 @@ jobs:
           npm install -g npm@latest
           echo "npm version: $(npm --version)"
           python checker.py npm-release
+      - name: Verify npm package includes vnu.jar
+        shell: bash
+        run: |
+          echo "Testing that npm pack includes vnu.jar correctly..."
+          npm pack --quiet
+          tar -tzf vnu-jar-*.tgz | grep -q "package/build/dist/vnu.jar" || {
+            echo "::error::vnu.jar not found in npm package!"
+            exit 1
+          }
+          tar -xzf vnu-jar-*.tgz
+          jar_size=$(stat -c%s package/build/dist/vnu.jar 2>/dev/null || stat -f%z package/build/dist/vnu.jar)
+          echo "vnu.jar size in package: $jar_size bytes"
+          if [ "$jar_size" -lt 1000000 ]; then
+            echo "::error::vnu.jar in package is too small ($jar_size bytes), likely corrupted!"
+            exit 1
+          fi
+          if ! file package/build/dist/vnu.jar | grep -q "Java archive"; then
+            echo "::error::vnu.jar is not a valid Java archive!"
+            file package/build/dist/vnu.jar
+            exit 1
+          fi
+          echo "✅ vnu.jar is correctly included in npm package ($jar_size bytes)"
+
+  verify-npm-package:
+    name: Verify published npm package
+    needs: npm-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Test npx vnu-jar@latest
+        shell: bash
+        run: |
+          # Give npm registry time to propagate the package
+          echo "Waiting 30 seconds for npm registry to propagate..."
+          sleep 30
+
+          # Create a simple test HTML file
+          cat > test.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head><title>Test</title></head>
+          <body><p>Hello World</p></body>
+          </html>
+          EOF
+
+          # Test that npx can run vnu-jar
+          echo "Testing: npx vnu-jar@latest --version"
+          if ! npx --yes vnu-jar@latest --version; then
+            echo "::error::Failed to run 'npx vnu-jar@latest --version'"
+            exit 1
+          fi
+
+          # Test that it can validate a file
+          echo "Testing: npx vnu-jar@latest test.html"
+          if ! npx --yes vnu-jar@latest test.html; then
+            echo "::error::Failed to validate test.html with npx vnu-jar@latest"
+            exit 1
+          fi
+
+          echo "✅ npx vnu-jar@latest works correctly"
 
   maven-release:
     name: Release new Maven package

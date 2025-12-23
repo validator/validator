@@ -1,0 +1,33 @@
+# .npmignore - overrides .gitignore for npm packaging
+# Include node_modules as always
+node_modules/
+# Don't include other build artifacts
+build/dist-war/
+build/galimatias/
+build/html5spec/
+build/htmlparser/
+build/jing-shaded.jar
+build/langdetect/
+build/schema/
+build/vnu*.jar.zip
+build/vnu*.war.zip
+build/validator*.jar
+build/validator/
+build/VERSION
+build/.gradle
+build/__init__.pyc
+build/__pycache__/
+build/build.pyc
+# But DO include build/dist/vnu.jar (by not excluding build/dist/)
+# Other exclusions from .gitignore
+dependencies/
+deps.tar.gz
+dist/
+extras/
+jars.tar.gz
+jars/
+local-entities/
+run-validator.sh
+docs/*.1
+.ropeproject
+nbproject
