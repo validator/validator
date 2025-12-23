@@ -131,7 +131,7 @@ jobs:
     name: Verify release assets
     needs: build
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     steps:
       - name: Verify release assets and release state (not Draft/Pre-release)
         env:
