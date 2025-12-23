@@ -655,7 +655,7 @@ DEALINGS IN THE SOFTWARE.
           cssvalidator-build,
           galimatias-jar,
           htmlparser-jar,
-          jing-build,
+          jing-shade,
           langdetect-jar,
           dl-deps,
           dl-deps-modules,
