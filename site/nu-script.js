@@ -62,6 +62,7 @@ function reboot() {
 	injectHyperlinks()
 	moveLangAndDirWarningsAndAddLinks()
 	replaceSuccessFailure()
+	hideSourceIfNotRequested()
 }
 
 function installDynamicStyle() {
@@ -483,10 +484,6 @@ function installTextarea() {
 			submit.parentNode.appendChild(textareaHidden)
 		}
 	}
-	var showSource = document.getElementById("showsource")
-	if (showSource) {
-		showSource.checked = true
-	}
 }
 
 function installFileUpload() {
@@ -562,6 +559,23 @@ function copySourceIntoTextArea() {
 			li = li.nextSibling
 		}
 		textarea.value = strings.join('\n')
+	}
+}
+
+function hideSourceIfNotRequested() {
+	var showSourceCheckbox = document.getElementById("showsource")
+	if (showSourceCheckbox && !showSourceCheckbox.checked) {
+		var sourceHeading = document.getElementById('source')
+		if (sourceHeading) {
+			var sourceList = sourceHeading.nextSibling
+			while (sourceList && sourceList.nodeType != 1) {
+				sourceList = sourceList.nextSibling
+			}
+			if (sourceList && sourceList.className == 'source') {
+				sourceHeading.style.display = 'none'
+				sourceList.style.display = 'none'
+			}
+		}
 	}
 }
 

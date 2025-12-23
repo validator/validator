@@ -386,6 +386,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean showSource;
 
+    private boolean showSourceExplicitly;
+
     private boolean showOutline;
 
     private boolean checkErrorPages;
@@ -905,8 +907,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     scrub(request.getParameter("acceptlanguage")));
         }
         Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
-        showSource = (request.getParameter("showsource") != null);
-        showSource = (showSource || "textarea".equals(inputType));
+        showSourceExplicitly = (request.getParameter("showsource") != null);
+        showSource = (showSourceExplicitly || "textarea".equals(inputType));
         showOutline = (request.getParameter("showoutline") != null);
         if (request.getParameter("checkerrorpages") != null) {
             request.setAttribute(
@@ -2126,7 +2128,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      *
      */
     void emitShowSourceField() throws SAXException {
-        emitter.checkbox("showsource", "yes", showSource);
+        emitter.checkbox("showsource", "yes", showSourceExplicitly);
     }
 
     /**
