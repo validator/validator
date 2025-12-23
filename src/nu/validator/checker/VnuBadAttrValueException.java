@@ -27,13 +27,13 @@ import java.util.Map;
 
 import nu.validator.datatype.Html5DatatypeException;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.thaiopensource.xml.util.Name;
+import nu.validator.vendor.thaiopensource.xml.util.Name;
 
 /**
  * Encapsulate an error or warning for attribute value with datatype mismatch.

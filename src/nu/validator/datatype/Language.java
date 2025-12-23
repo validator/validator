@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 import nu.validator.datatype.data.LanguageData;
 
 /**

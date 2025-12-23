@@ -29,7 +29,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import nu.validator.datatype.Html5DatatypeException;
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 /**
  * Encapsulate an error or warning for a datatype mismatch.

@@ -46,9 +46,9 @@ import javax.json.JsonWriter;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
-import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.BadAttributeValueException;
 
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.messages.MessageEmitterAdapter;

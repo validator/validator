@@ -22,9 +22,9 @@
 
 package nu.validator.xml.customelements;
 
-import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.Validator;
+import nu.validator.vendor.thaiopensource.util.PropertyMap;
+import nu.validator.vendor.thaiopensource.validate.Schema;
+import nu.validator.vendor.thaiopensource.validate.Validator;
 
 public class NamespaceChangingSchemaWrapper implements Schema {
 

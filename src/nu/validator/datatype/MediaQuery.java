@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import java.io.StringReader;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 import org.w3c.css.css.StyleSheetParser;
 import org.w3c.css.parser.CssError;
 import org.w3c.css.parser.CssParseException;

@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="dist" location="build/dist" />
   <property name="jarsDir" location="jars" />
   <property name="depsDir" location="dependencies" />
+  <property name="jing-shaded-jar" location="build/jing-shaded.jar" />
   <property name="version" value="nightly-${DSTAMP}" />
   <loadresource property="version.number">
     <string value="${version}"/>
@@ -228,7 +229,7 @@ DEALINGS IN THE SOFTWARE.
   </target>
   <target name="distclean" depends="clean, dl-clean"/>
 
-  <target name="jar" depends="validator-jar">
+  <target name="jar" depends="validator-jar, jing-shade">
     <jar destfile="${dist}/vnu.jar" duplicate="preserve">
       <zipfileset src="${jarsDir}/validator.jar"/>
 
@@ -238,7 +239,7 @@ DEALINGS IN THE SOFTWARE.
 
       <zipfileset src="css-validator/css-validator.jar" unless:true="${jar-without-deps}"/>
 
-      <zipfileset src="jing-trang/build/jing.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${jing-shaded-jar}" unless:true="${jar-without-deps}"/>
       <zipfileset src="jing-trang/lib/saxon9.jar" unless:true="${jar-without-deps}"/>
 
       <zipfileset src="${depsDir}/commons-codec-${commons-codec-version}.jar" unless:true="${jar-without-deps}"/>
@@ -284,7 +285,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/log4j-${log4j-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/salvation-${salvation-version}.jar" unless:true="${jar-without-deps}"/>
       <!-- module dependencies -->
-      <zipfileset src="jing-trang/lib/isorelax.jar" unless:true="${jar-without-deps}"/>
+      <!-- isorelax.jar classes are now included in jing-shaded.jar to avoid Maven conflicts -->
       <zipfileset src="${depsDir}/avalon-framework-api-${avalon-framework-api-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/avalon-logkit-${avalon-logkit-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/cdi-api-${cdi-api-version}.jar" unless:true="${jar-without-deps}"/>
@@ -307,20 +308,20 @@ DEALINGS IN THE SOFTWARE.
         <attribute name="Implementation-Version" value="${version}"/>
         <attribute name="Implementation-Vendor" value="http://validator.github.io/validator/"/>
       </manifest>
-      <service type="org.relaxng.datatype.DatatypeLibraryFactory">
-        <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
+      <service type="nu.validator.vendor.relaxng.datatype.DatatypeLibraryFactory">
+        <provider classname="nu.validator.vendor.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
         <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </jar>
   </target>
 
-  <target name="war" depends="validator-split-core">
+  <target name="war" depends="validator-split-core, jing-shade">
     <war destfile="${dist}/vnu.war" webxml="${validator.basedir}/resources/war/web.xml">
       <lib file="${jarsDir}/galimatias.jar"/>
       <lib file="${jarsDir}/htmlparser.jar"/>
       <lib file="${jarsDir}/langdetect.jar"/>
       <lib file="css-validator/css-validator.jar"/>
-      <lib file="jing-trang/build/jing.jar"/>
+      <lib file="${jing-shaded-jar}"/>
       <lib file="jing-trang/lib/saxon9.jar"/>
       <lib file="${depsDir}/commons-codec-${commons-codec-version}.jar"/>
       <lib file="${depsDir}/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
@@ -341,8 +342,8 @@ DEALINGS IN THE SOFTWARE.
       <classes dir="${validator.build.basedir}/core/classes"/>
       <classes dir="${validator.build.basedir}/resources"/>
       <classes file="${validator.basedir}/resources/war/log4j.xml"/>
-      <service type="org.relaxng.datatype.DatatypeLibraryFactory">
-        <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
+      <service type="nu.validator.vendor.relaxng.datatype.DatatypeLibraryFactory">
+        <provider classname="nu.validator.vendor.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
         <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </war>
@@ -368,7 +369,7 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="${jarsDir}/galimatias.jar"/>
     <pathelement location="${jarsDir}/htmlparser.jar"/>
     <pathelement location="${jarsDir}/langdetect.jar"/>
-    <pathelement location="jing-trang/build/jing.jar"/>
+    <pathelement location="${jing-shaded-jar}"/>
   </path>
 
   <target name="validator-prepare" depends="validator-resources">
@@ -416,7 +417,7 @@ DEALINGS IN THE SOFTWARE.
           cssvalidator-build,
           galimatias-jar,
           htmlparser-jar,
-          jing-build,
+          jing-shade,
           langdetect-jar,
           dl-deps,
           dl-deps-modules,
@@ -440,7 +441,7 @@ DEALINGS IN THE SOFTWARE.
           cssvalidator-build,
           galimatias-jar,
           htmlparser-jar,
-          jing-build,
+          jing-shade,
           langdetect-jar,
           dl-deps,
           dl-deps-modules">
@@ -476,7 +477,7 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="${jarsDir}/galimatias.jar"/>
     <pathelement location="${jarsDir}/htmlparser.jar"/>
     <pathelement location="${jarsDir}/langdetect.jar"/>
-    <pathelement location="jing-trang/build/jing.jar"/>
+    <pathelement location="${jing-shaded-jar}"/>
   </path>
 
   <path id="validator-split-core.runtime.classpath">
@@ -1020,10 +1021,16 @@ DEALINGS IN THE SOFTWARE.
   <target name="jing-build" unless="${use-system-jing}">
     <ant dir="${jing.basedir}" antfile="build.xml" inheritAll="false"/>
   </target>
+  <target name="jing-shade" depends="jing-build" unless="${use-system-jing}">
+    <exec executable="python3" failonerror="true">
+      <arg value="build/shade-with-maven.py"/>
+    </exec>
+  </target>
   <target name="jing-clean" unless="${use-system-jing}">
     <ant dir="${jing.basedir}" antfile="build.xml" target="clean" inheritAll="false"/>
     <delete file="${jing.basedir}/modbuild.xml"/>
     <delete file="${jing.basedir}/modules.xml"/>
+    <delete file="${jing-shaded-jar}"/>
   </target>
   <target name="jing-javadoc-jar">
     <javadoc destdir="${javadoc-dir}" additionalparam="-html5 -Xdoclint:none">

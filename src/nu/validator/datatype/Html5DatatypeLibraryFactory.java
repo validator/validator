@@ -22,8 +22,8 @@
 
 package nu.validator.datatype;
 
-import org.relaxng.datatype.DatatypeLibrary;
-import org.relaxng.datatype.DatatypeLibraryFactory;
+import nu.validator.vendor.relaxng.datatype.DatatypeLibrary;
+import nu.validator.vendor.relaxng.datatype.DatatypeLibraryFactory;
 
 /**
  * The factory for datatype library autodiscovery.

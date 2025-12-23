@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import org.relaxng.datatype.Datatype;
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.Datatype;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 import nu.validator.datatype.Language;
 
 public class LanguageTester {

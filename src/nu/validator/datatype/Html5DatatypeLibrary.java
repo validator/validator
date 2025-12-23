@@ -23,11 +23,11 @@
 
 package nu.validator.datatype;
 
-import org.relaxng.datatype.Datatype;
-import org.relaxng.datatype.DatatypeBuilder;
-import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.DatatypeLibrary;
-import org.relaxng.datatype.helpers.ParameterlessDatatypeBuilder;
+import nu.validator.vendor.relaxng.datatype.Datatype;
+import nu.validator.vendor.relaxng.datatype.DatatypeBuilder;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeLibrary;
+import nu.validator.vendor.relaxng.datatype.helpers.ParameterlessDatatypeBuilder;
 
 /**
  * Factory for HTML5 datatypes.

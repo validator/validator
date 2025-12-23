@@ -34,7 +34,7 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 
-import com.thaiopensource.validate.IncorrectSchemaException;
+import nu.validator.vendor.thaiopensource.validate.IncorrectSchemaException;
 
 
 public class Html5ConformanceCheckerTransaction extends

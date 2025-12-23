@@ -33,7 +33,7 @@ import nu.validator.saxtree.TreeBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.EmptyAttributes;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 import nu.validator.datatype.AbstractDatatype;
 import nu.validator.datatype.Html5DatatypeLibrary;
 import org.xml.sax.Attributes;

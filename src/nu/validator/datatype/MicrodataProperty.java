@@ -22,7 +22,7 @@
 
 package nu.validator.datatype;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 /**
  * This datatype shall accept absolute URLs or any string that does not contain

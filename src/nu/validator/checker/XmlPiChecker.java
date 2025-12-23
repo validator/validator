@@ -31,7 +31,7 @@ import org.xml.sax.ext.LexicalHandler;
 
 import org.xml.sax.helpers.AttributesImpl;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import nu.validator.datatype.Html5DatatypeLibrary;
 import nu.validator.datatype.Html5DatatypeException;

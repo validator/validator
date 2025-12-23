@@ -24,7 +24,7 @@ package nu.validator.spec;
 
 import nu.validator.saxtree.DocumentFragment;
 
-import com.thaiopensource.xml.util.Name;
+import nu.validator.vendor.thaiopensource.xml.util.Name;
 
 public final class EmptySpec extends Spec {
 

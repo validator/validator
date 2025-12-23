@@ -59,28 +59,28 @@ import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.XhtmlSaxEmitter;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.thaiopensource.relaxng.exceptions.AbstractValidationException;
-import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
-import com.thaiopensource.relaxng.exceptions.ImpossibleAttributeIgnoredException;
-import com.thaiopensource.relaxng.exceptions.OnlyTextNotAllowedException;
-import com.thaiopensource.relaxng.exceptions.OutOfContextElementException;
-import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingException;
-import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingOneOfException;
-import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingException;
-import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingOneOfException;
-import com.thaiopensource.relaxng.exceptions.StringNotAllowedException;
-import com.thaiopensource.relaxng.exceptions.TextNotAllowedException;
-import com.thaiopensource.relaxng.exceptions.UnfinishedElementException;
-import com.thaiopensource.relaxng.exceptions.UnfinishedElementOneOfException;
-import com.thaiopensource.relaxng.exceptions.UnknownElementException;
-import com.thaiopensource.xml.util.Name;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.AbstractValidationException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.BadAttributeValueException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.ImpossibleAttributeIgnoredException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.OnlyTextNotAllowedException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.OutOfContextElementException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.RequiredAttributesMissingException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.RequiredAttributesMissingOneOfException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.RequiredElementsMissingException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.RequiredElementsMissingOneOfException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.StringNotAllowedException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.TextNotAllowedException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.UnfinishedElementException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.UnfinishedElementOneOfException;
+import nu.validator.vendor.thaiopensource.relaxng.exceptions.UnknownElementException;
+import nu.validator.vendor.thaiopensource.xml.util.Name;
 
 import org.apache.log4j.Logger;
 import com.ibm.icu.text.Normalizer;

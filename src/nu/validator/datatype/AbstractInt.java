@@ -22,7 +22,7 @@
 
 package nu.validator.datatype;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 
 public abstract class AbstractInt extends AbstractDatatype {

@@ -22,8 +22,8 @@
 
 package nu.validator.datatype.test;
 
-import org.relaxng.datatype.Datatype;
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.Datatype;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 import nu.validator.datatype.Html5DatatypeLibrary;
 
 public class IriTester {

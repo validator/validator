@@ -35,9 +35,9 @@ import nu.validator.checker.XmlPiChecker;
 import nu.validator.checker.schematronequiv.Assertions;
 import nu.validator.checker.table.TableChecker;
 
-import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.Validator;
+import nu.validator.vendor.thaiopensource.util.PropertyMap;
+import nu.validator.vendor.thaiopensource.validate.Schema;
+import nu.validator.vendor.thaiopensource.validate.Validator;
 
 public class CheckerSchema implements Schema {
 

@@ -22,8 +22,8 @@
 
 package nu.validator.datatype;
 
-import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.DatatypeStreamingValidator;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeStreamingValidator;
 
 public final class DatatypeStreamingValidatorImpl implements
         DatatypeStreamingValidator {

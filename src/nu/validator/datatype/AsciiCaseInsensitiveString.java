@@ -22,8 +22,8 @@
 
 package nu.validator.datatype;
 
-import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.ValidationContext;
 
 public class AsciiCaseInsensitiveString extends AbstractDatatype {
 

@@ -25,7 +25,7 @@ package nu.validator.datatype;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 public final class SandboxAllowList extends AbstractDatatype {
 

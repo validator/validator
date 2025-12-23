@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import java.util.HashSet;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 public class MimeType extends AbstractDatatype {
 

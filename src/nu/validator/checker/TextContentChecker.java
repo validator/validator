@@ -25,8 +25,8 @@ package nu.validator.checker;
 
 import java.util.LinkedList;
 
-import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.DatatypeStreamingValidator;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeStreamingValidator;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.datatype.TimeDatetime;
 import nu.validator.datatype.ScriptDocumentation;

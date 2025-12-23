@@ -38,7 +38,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import nu.validator.datatype.ContentSecurityPolicy;
 import nu.validator.datatype.Html5DatatypeException;

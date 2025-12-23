@@ -23,7 +23,7 @@
 package nu.validator.datatype;
 
 import nu.validator.datatype.data.CharsetData;
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 public class Charset extends AbstractDatatype {
 

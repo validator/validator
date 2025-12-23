@@ -25,7 +25,7 @@ package nu.validator.datatype;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import com.shapesecurity.salvation.Parser;
 import com.shapesecurity.salvation.data.Notice;

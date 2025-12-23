@@ -980,16 +980,57 @@ class Release():
             self.createJarOrWar("jar")
         runCmd([jdepsCmd, '--ignore-missing-deps',
                 '--generate-open-module', distDir, vnuJar])
-        f = open(os.path.join(self.vnuModuleInfoDir, "module-info.java"), 'r+')
-        lines = f.readlines()
-        lines = lines[:-2]
-        f.seek(0)
-        f.truncate()
-        f.write(''.join(lines))
-        f.write('    uses org.eclipse.jetty.http.HttpFieldPreEncoder;\n')
-        f.write('    uses javax.json.spi.JsonProvider;\n')
-        f.write('}\n')
-        f.close()
+
+        moduleInfoPath = os.path.join(self.vnuModuleInfoDir,
+                                      "module-info.java")
+        with open(moduleInfoPath, 'r') as f:
+            content = f.read()
+
+        content = content.replace('org.relaxng.datatype',
+                                  'nu.validator.vendor.relaxng.datatype')
+        content = content.replace('com.thaiopensource',
+                                  'nu.validator.vendor.thaiopensource')
+        content = content.replace('org.iso_relax',
+                                  'nu.validator.vendor.iso_relax')
+        content = content.replace('jp.gr.xml.relax',
+                                  'nu.validator.vendor.jp.gr.xml.relax')
+
+        # Handle duplicate “provides” declarations
+        lines = content.split('\n')
+        filteredLines = []
+        skipUntilSemicolon = False
+        seenProvides = set()
+
+        for line in lines:
+            if line.strip().startswith('provides '):
+                # Extract the service interface name
+                serviceMatch = line.strip().split(' with')[0].replace('provides ', '').strip()  # nopep8
+                if serviceMatch in seenProvides:
+                    # This is a duplicate - skip this “provides” block
+                    skipUntilSemicolon = True
+                    continue
+                else:
+                    seenProvides.add(serviceMatch)
+                    filteredLines.append(line)
+            elif skipUntilSemicolon:
+                # Skip lines til we hit semicolon ending the “provides” block
+                if line.strip().endswith(';'):
+                    skipUntilSemicolon = False
+                continue
+            else:
+                filteredLines.append(line)
+
+        # Remove the closing brace and last “provides” block, if needed
+        while filteredLines and (filteredLines[-1].strip() == '}' or
+                                 filteredLines[-1].strip() == ''):
+            filteredLines.pop()
+
+        # Write back the modified content
+        with open(moduleInfoPath, 'w') as f:
+            f.write('\n'.join(filteredLines))
+            f.write('\n    uses org.eclipse.jetty.http.HttpFieldPreEncoder;\n')
+            f.write('    uses javax.json.spi.JsonProvider;\n')
+            f.write('}\n')
         runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + vnuJar,
                 os.path.join(distDir, 'vnu', 'module-info.java')])
         runCmd([jarCmd, '--update',

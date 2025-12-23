@@ -25,7 +25,7 @@ package nu.validator.datatype;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import com.shapesecurity.salvation.data.Base64Value;
 

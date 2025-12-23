@@ -67,17 +67,17 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
-import com.thaiopensource.relaxng.impl.CombineValidator;
-import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.util.PropertyMapBuilder;
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.Validator;
-import com.thaiopensource.validate.auto.AutoSchemaReader;
-import com.thaiopensource.validate.prop.rng.RngProperty;
-import com.thaiopensource.validate.rng.CompactSchemaReader;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import nu.validator.vendor.thaiopensource.relaxng.impl.CombineValidator;
+import nu.validator.vendor.thaiopensource.util.PropertyMap;
+import nu.validator.vendor.thaiopensource.util.PropertyMapBuilder;
+import nu.validator.vendor.thaiopensource.validate.Schema;
+import nu.validator.vendor.thaiopensource.validate.SchemaReader;
+import nu.validator.vendor.thaiopensource.validate.ValidateProperty;
+import nu.validator.vendor.thaiopensource.validate.Validator;
+import nu.validator.vendor.thaiopensource.validate.auto.AutoSchemaReader;
+import nu.validator.vendor.thaiopensource.validate.prop.rng.RngProperty;
+import nu.validator.vendor.thaiopensource.validate.rng.CompactSchemaReader;
+import nu.validator.vendor.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 
 import org.apache.log4j.PropertyConfigurator;
 

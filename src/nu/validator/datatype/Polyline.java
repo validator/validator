@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import java.util.List;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 public final class Polyline extends AbstractInt {
 

@@ -26,10 +26,10 @@ package nu.validator.datatype;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.relaxng.datatype.Datatype;
-import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.DatatypeStreamingValidator;
-import org.relaxng.datatype.ValidationContext;
+import nu.validator.vendor.relaxng.datatype.Datatype;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeStreamingValidator;
+import nu.validator.vendor.relaxng.datatype.ValidationContext;
 
 /**
  * Common superclass for HTML5 datatypes. Implements all methods of the 

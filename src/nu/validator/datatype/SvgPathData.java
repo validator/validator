@@ -22,7 +22,7 @@ package nu.validator.datatype;
 import java.io.StringReader;
 import java.io.IOException;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 public class SvgPathData extends AbstractDatatype {
 

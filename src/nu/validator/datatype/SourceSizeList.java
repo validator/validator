@@ -25,7 +25,7 @@ package nu.validator.datatype;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
 

@@ -25,7 +25,7 @@ package nu.validator.xml;
 import java.net.URI;
 import java.util.LinkedList;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 import nu.validator.datatype.Language;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;

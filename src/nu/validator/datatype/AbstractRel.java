@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 import java.util.Map;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 abstract class AbstractRel extends AbstractDatatype {
 

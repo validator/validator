@@ -26,7 +26,7 @@ import java.util.Map;
 
 import nu.validator.saxtree.DocumentFragment;
 
-import com.thaiopensource.xml.util.Name;
+import nu.validator.vendor.thaiopensource.xml.util.Name;
 
 public class Spec {
     private final Map<Name, String> urisByElement;

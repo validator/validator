@@ -26,9 +26,9 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.ErrorHandler;
 
-import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.Validator;
+import nu.validator.vendor.thaiopensource.util.PropertyMap;
+import nu.validator.vendor.thaiopensource.validate.ValidateProperty;
+import nu.validator.vendor.thaiopensource.validate.Validator;
 
 public class XmlLangAttributeDroppingValidatorWrapper implements Validator {
 

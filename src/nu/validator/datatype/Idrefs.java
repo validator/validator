@@ -22,7 +22,7 @@
 
 package nu.validator.datatype;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 /**
  * This datatype shall accept any string that consists of one or more characters and 

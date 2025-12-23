@@ -29,7 +29,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import com.thaiopensource.xml.sax.XMLReaderCreator;
+import nu.validator.vendor.thaiopensource.xml.sax.XMLReaderCreator;
 
 
 /**

@@ -73,7 +73,7 @@ import nu.validator.htmlparser.impl.NCName;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.xml.AttributesImpl;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import org.w3c.css.css.StyleSheetParser;
 import org.w3c.css.parser.CssError;

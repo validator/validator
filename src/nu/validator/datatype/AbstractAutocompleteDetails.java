@@ -25,7 +25,7 @@ package nu.validator.datatype;
 import java.util.HashSet;
 import java.util.ArrayList;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 abstract class AbstractAutocompleteDetails extends AbstractDatatype {
 

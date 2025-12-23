@@ -26,7 +26,7 @@ package nu.validator.datatype;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.relaxng.datatype.DatatypeException;
+import nu.validator.vendor.relaxng.datatype.DatatypeException;
 import nu.validator.io.DataUri;
 import nu.validator.io.DataUriException;
 

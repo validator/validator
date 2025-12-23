@@ -36,7 +36,7 @@ import org.xml.sax.DTDHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-import com.thaiopensource.validate.Validator;
+import nu.validator.vendor.thaiopensource.validate.Validator;
 
 public class ImageCollector implements Validator, ContentHandler, Iterable<Image> {
 
