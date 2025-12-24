@@ -14,16 +14,6 @@
 			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-fileupload/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/httpcore-4.4.14.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://hc.apache.org/httpcomponents-core-4.4.x/current/httpcore/apidocs/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/httpclient-4.5.13.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://hc.apache.org/httpcomponents-client-4.5.x/current/httpclient/apidocs/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.2.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-logging/javadocs/api-release/"/>
@@ -51,28 +41,31 @@
 			<attribute name="javadoc_location" value="http://docs.oracle.com/javaee/7/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-server-9.4.44.v20210927.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-client-11.0.20.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-http-11.0.20.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-io-11.0.20.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-server-11.0.20.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
 		</attributes>
 	</classpathentry>
         <classpathentry kind="lib" path="dependencies/jetty-jakarta-servlet-api-5.0.2.jar"/>
-	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.4.44.v20210927.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-servlet-11.0.20.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-servlets-9.4.44.v20210927.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-servlets-11.0.20.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-9.4.44.v20210927.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-util-11.0.20.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-9.4.44.v20210927.jar">
+	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-11.0.20.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://www.eclipse.org/jetty/javadoc/jetty-9/"/>
 		</attributes>
@@ -84,6 +77,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="css-validator/css-validator.jar"/>
 	<classpathentry kind="lib" path="jing-trang/build/jing.jar" sourcepath="jing-trang/mod/validate/src/main"/>
+	<classpathentry kind="lib" path="build/jing-shaded.jar"/>
 	<classpathentry kind="output" path="classes"/>
 	<classpathentry kind="lib" path="jars/validator.jar"/>
 </classpath>
