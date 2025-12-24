@@ -441,7 +441,8 @@ DEALINGS IN THE SOFTWARE.
           jing-shade,
           langdetect-jar,
           dl-deps,
-          dl-deps-modules">
+          dl-deps-modules,
+          dl-deps-jetty">
     <javac destdir="${validator.build.basedir}/core/classes"
            classpathref="validator-split-core.classpath"
            debug="true"
