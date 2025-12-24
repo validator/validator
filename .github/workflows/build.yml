@@ -269,24 +269,37 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v6
-      - name: Set up Java JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: zulu
-          java-version: 25
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Check if version already exists on Maven Central
+        id: check_version
+        shell: bash
+        run: |
+          if python checker.py --version="$(date +"%y.%m.%d")" maven-version-exists; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Set up Java JDK
+        if: steps.check_version.outputs.exists == 'false'
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 25
       - name: Install dependencies
+        if: steps.check_version.outputs.exists == 'false'
         run: python checker.py dldeps
       - name: Build
+        if: steps.check_version.outputs.exists == 'false'
         shell: bash
         run: |
           version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
           python checker.py --version="$version" build
           python checker.py --version="$version" jar
       - name: Import GPG signing key
+        if: steps.check_version.outputs.exists == 'false'
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
@@ -294,12 +307,14 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
       - name: Generate all maven artifacts
+        if: steps.check_version.outputs.exists == 'false'
         shell: bash
         run: |
           ls ./build/dist
           python checker.py maven-artifacts
           python checker.py maven-sign
       - name: Release new maven package
+        if: steps.check_version.outputs.exists == 'false'
         shell: bash
         run: |
           python checker.py maven-release
