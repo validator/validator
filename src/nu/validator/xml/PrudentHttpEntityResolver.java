@@ -143,7 +143,8 @@ public class PrudentHttpEntityResolver
     private static synchronized void ensureClientStarted() {
         if (!clientStarted) {
             if (client == null) {
-                // Create the client on first use, to avoid Jetty logging during initialization
+                // Create the client on first use, to avoid Jetty logging during
+                // initialization
                 boolean promiscuousSSL = "true".equals(System.getProperty(
                         "nu.validator.xml.promiscuous-ssl", "true"));
                 SslContextFactory.Client sslContextFactory;
@@ -154,35 +155,42 @@ public class PrudentHttpEntityResolver
                 }
                 ClientConnector clientConnector = new ClientConnector();
                 clientConnector.setSslContextFactory(sslContextFactory);
-                HttpClientTransport transport = new HttpClientTransportOverHTTP(clientConnector);
+                HttpClientTransport transport = new
+                    HttpClientTransportOverHTTP(clientConnector);
                 client = new HttpClient(transport);
-                // Set daemon thread pool, so the JVM can exit when the main thread completes.
-                // Create a thread factory that makes daemon threads.
-                java.util.concurrent.ThreadFactory daemonThreadFactory = new java.util.concurrent.ThreadFactory() {
-                    private final java.util.concurrent.atomic.AtomicInteger counter = 
-                        new java.util.concurrent.atomic.AtomicInteger();
+                // Set daemon thread pool, so JVM can exit when the main thread
+                // completes. Create a thread factory that makes daemon threads.
+                java.util.concurrent.ThreadFactory daemonThreadFactory = new
+                    java.util.concurrent.ThreadFactory() {
+                    private final java.util.concurrent.atomic.AtomicInteger
+                        counter = new java.util.concurrent.atomic.AtomicInteger();
                     @Override
                     public Thread newThread(Runnable r) {
-                        Thread thread = new Thread(r, "vnu-http-" + counter.incrementAndGet());
+                        Thread thread = new Thread(r, "vnu-http-" +
+                                counter.incrementAndGet());
                         thread.setDaemon(true);
                         return thread;
                     }
                 };
-                org.eclipse.jetty.util.thread.QueuedThreadPool threadPool = 
-                    new org.eclipse.jetty.util.thread.QueuedThreadPool(200, 8, 60000, -1, 
-                        new java.util.concurrent.LinkedBlockingQueue<Runnable>(), null, daemonThreadFactory);
+                org.eclipse.jetty.util.thread.QueuedThreadPool threadPool =
+                    new org.eclipse.jetty.util.thread
+                    .QueuedThreadPool(200, 8, 60000, -1,
+                            new java.util.concurrent.LinkedBlockingQueue<Runnable>(),
+                        null, daemonThreadFactory);
                 threadPool.setName("vnu-http-client");
                 client.setExecutor(threadPool);
-                // Set daemon scheduler
-                org.eclipse.jetty.util.thread.ScheduledExecutorScheduler scheduler = 
-                    new org.eclipse.jetty.util.thread.ScheduledExecutorScheduler("vnu-http-scheduler", true);
+                org.eclipse.jetty.util.thread.ScheduledExecutorScheduler
+                    scheduler = new org.eclipse.jetty.util.thread
+                    .ScheduledExecutorScheduler("vnu-http-scheduler", true);
                 client.setScheduler(scheduler);
                 client.setFollowRedirects(true);
                 client.setMaxConnectionsPerDestination(maxRequests);
                 client.setMaxRequestsQueuedPerDestination(
-                        Integer.parseInt(System.getProperty("nu.validator.servlet.max-total-connections","200")));
-                client.setMaxRedirects(
-                        Integer.parseInt(System.getProperty("nu.validator.servlet.max-redirects","20")));
+                        Integer.parseInt(System.getProperty(
+                                "nu.validator.servlet.max-total-connections",
+                                "200")));
+                client.setMaxRedirects(Integer.parseInt(System.getProperty(
+                        "nu.validator.servlet.max-redirects", "20")));
                 client.setConnectTimeout(connectionTimeoutMs);
                 client.setIdleTimeout(socketTimeoutMs);
             }
@@ -225,14 +233,11 @@ public class PrudentHttpEntityResolver
     @Override
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {
-
         String allowedAddressType = System.getProperty(
             "nu.validator.servlet.allowed-address-type", "all");
-
         if ("none".equals(allowedAddressType)) {
             throw new IOException("URL-based checks are prohibited.");
         }
-
         if (requestsLeft > -1) {
             if (requestsLeft == 0) {
                 throw new IOException(
@@ -247,17 +252,20 @@ public class PrudentHttpEntityResolver
             try {
                 url = URL.parse(systemId);
                 if ("same-origin".equals(allowedAddressType)) {
-                    URL currentURL = URL.parse(request.getRequestURL().toString());
-
-                    String currentURLOrigin = currentURL.scheme() + currentURL.host() + currentURL.port();
-                    String targetURLOrigin = url.scheme() + url.host() + url.port();
-
+                    URL currentURL = URL.parse(
+                            request.getRequestURL().toString());
+                    String currentURLOrigin = currentURL.scheme()
+                            + currentURL.host() + currentURL.port();
+                    String targetURLOrigin = url.scheme() + url.host()
+                            + url.port();
                     if (!currentURLOrigin.equals(targetURLOrigin)) {
-                        throw new IOException("Cross-origin requests are prohibited.");
+                        throw new IOException(
+                                "Cross-origin requests are prohibited.");
                     }
                 }
             } catch (GalimatiasParseException e) {
-                IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
+                IOException ioe = (IOException) new IOException(
+                        e.getMessage()).initCause(e);
                 SAXParseException spe = new SAXParseException(e.getMessage(),
                         publicId, systemId, -1, -1, ioe);
                 if (errorHandler != null) {
@@ -282,12 +290,8 @@ public class PrudentHttpEntityResolver
             try {
                 jettyRequest = client.newRequest(systemId);
             } catch (IllegalArgumentException e) {
-                SAXParseException spe = new SAXParseException(
-                        e.getMessage(),
-                        publicId,
-                        systemId,
-                        -1,
-                        -1,
+                SAXParseException spe = new SAXParseException(e.getMessage(),
+                        publicId, systemId, -1, -1,
                         (IOException) new IOException(e.getMessage()).initCause(e));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
@@ -367,12 +371,10 @@ public class PrudentHttpEntityResolver
             }
             is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
                     contentType);
-
             HttpField cl = response.getHeaders().getField("Content-Language");
             if (cl != null) {
                 is.setLanguage(cl.getValue().trim());
             }
-
             HttpField xuac = response.getHeaders().getField("X-UA-Compatible");
             if (xuac != null) {
                 String val = xuac.getValue().trim();
@@ -384,7 +386,6 @@ public class PrudentHttpEntityResolver
                     errorHandler.error(spe);
                 }
             }
-
             HttpField csp = response.getHeaders().getField("Content-Security-Policy");
             if (csp != null) {
                 try {
@@ -402,7 +403,6 @@ public class PrudentHttpEntityResolver
                     }
                 }
             }
-
             if (sizeLimit > -1) {
                 stream = new BoundedInputStream(stream, sizeLimit, baseUri);
             }
@@ -421,12 +421,10 @@ public class PrudentHttpEntityResolver
             is.setByteStream(new ObservableInputStream(stream,
                     new StreamObserver() {
                         private final Logger log4j = Logger.getLogger("nu.validator.xml.PrudentEntityResolver.StreamObserver");
-
                         @Override
                         public void closeCalled() {
                             log4j.debug("closeCalled");
                         }
-
                         @Override
                         public void exceptionOccurred(Exception ex)
                                 throws IOException {
@@ -444,15 +442,14 @@ public class PrudentHttpEntityResolver
                                         ex);
                             }
                         }
-
                         @Override
                         public void finalizerCalled() {
                             log4j.debug("finalizerCalled");
                         }
-
                     }));
             return is;
-        } catch (InterruptedException | java.util.concurrent.TimeoutException | java.util.concurrent.ExecutionException e) {
+        } catch (InterruptedException | java.util.concurrent.TimeoutException
+                | java.util.concurrent.ExecutionException e) {
             throw new IOException("HTTP request failed: " + e.getMessage(), e);
         } catch (IOException | RuntimeException | SAXException e) {
             throw e;
