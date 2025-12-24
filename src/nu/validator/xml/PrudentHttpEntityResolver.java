@@ -157,20 +157,37 @@ public class PrudentHttpEntityResolver
                 // Create the client on first use to avoid Jetty logging during initialization
                 boolean promiscuousSSL = "true".equals(System.getProperty(
                         "nu.validator.xml.promiscuous-ssl", "true"));
-                
                 SslContextFactory.Client sslContextFactory;
                 if (promiscuousSSL) {
                     sslContextFactory = new SslContextFactory.Client(true);
                 } else {
                     sslContextFactory = new SslContextFactory.Client();
                 }
-                
                 ClientConnector clientConnector = new ClientConnector();
                 clientConnector.setSslContextFactory(sslContextFactory);
-                
                 HttpClientTransport transport = new HttpClientTransportOverHTTP(clientConnector);
-                
                 client = new HttpClient(transport);
+                // Set daemon thread pool, so the JVM can exit when the main thread completes.
+                // Create a thread factory that makes daemon threads.
+                java.util.concurrent.ThreadFactory daemonThreadFactory = new java.util.concurrent.ThreadFactory() {
+                    private final java.util.concurrent.atomic.AtomicInteger counter = 
+                        new java.util.concurrent.atomic.AtomicInteger();
+                    @Override
+                    public Thread newThread(Runnable r) {
+                        Thread thread = new Thread(r, "vnu-http-" + counter.incrementAndGet());
+                        thread.setDaemon(true);
+                        return thread;
+                    }
+                };
+                org.eclipse.jetty.util.thread.QueuedThreadPool threadPool = 
+                    new org.eclipse.jetty.util.thread.QueuedThreadPool(200, 8, 60000, -1, 
+                        new java.util.concurrent.LinkedBlockingQueue<Runnable>(), null, daemonThreadFactory);
+                threadPool.setName("vnu-http-client");
+                client.setExecutor(threadPool);
+                // Set daemon scheduler
+                org.eclipse.jetty.util.thread.ScheduledExecutorScheduler scheduler = 
+                    new org.eclipse.jetty.util.thread.ScheduledExecutorScheduler("vnu-http-scheduler", true);
+                client.setScheduler(scheduler);
                 client.setFollowRedirects(true);
                 client.setMaxConnectionsPerDestination(maxRequests);
                 client.setMaxRequestsQueuedPerDestination(
@@ -180,7 +197,6 @@ public class PrudentHttpEntityResolver
                 client.setConnectTimeout(connectionTimeoutMs);
                 client.setIdleTimeout(socketTimeoutMs);
             }
-            
             try {
                 client.start();
                 clientStarted = true;
