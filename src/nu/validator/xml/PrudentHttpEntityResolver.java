@@ -179,10 +179,6 @@ public class PrudentHttpEntityResolver
                         Integer.parseInt(System.getProperty("nu.validator.servlet.max-redirects","20")));
                 client.setConnectTimeout(connectionTimeoutMs);
                 client.setIdleTimeout(socketTimeoutMs);
-                // Set response buffer size from max-file-size property (default 2MB)
-                int maxFileSize = Integer.parseInt(System.getProperty(
-                        "nu.validator.servlet.max-file-size", "2097152"));
-                client.setResponseBufferSize(maxFileSize);
             }
             
             try {
@@ -321,7 +317,10 @@ public class PrudentHttpEntityResolver
                     throw new IOException(
                             "Port number must be less than 65536.");
             }
-            ContentResponse response = jettyRequest.send();
+            InputStreamResponseListener listener = new InputStreamResponseListener();
+            jettyRequest.send(listener);
+            org.eclipse.jetty.client.api.Response response = listener.get(
+                    socketTimeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS);
             boolean ignoreResponseStatus = false;
             if (request != null && request.getAttribute(
                     "http://validator.nu/properties/ignore-response-status") != null) {
@@ -342,8 +341,8 @@ public class PrudentHttpEntityResolver
                 throw new ResourceNotRetrievableException(
                         String.format("%s: %s", systemId, msg));
             }
-            byte[] content = response.getContent();
-            if (content == null || content.length == 0) {
+            InputStream stream = listener.getInputStream();
+            if (stream == null) {
                 String msg = "Empty response.";
                 SAXParseException spe = new SAXParseException(msg, publicId,
                         systemId, -1, -1,
@@ -353,20 +352,6 @@ public class PrudentHttpEntityResolver
                 }
                 throw new ResourceNotRetrievableException(
                         String.format("%s: %s", systemId, msg));
-            }
-            long len = content.length;
-            if (sizeLimit > -1 && len > sizeLimit) {
-                SAXParseException spe = new SAXParseException(
-                        "Resource size exceeds limit.",
-                        publicId,
-                        systemId,
-                        -1,
-                        -1,
-                        new StreamBoundException("Resource size exceeds limit."));
-                if (errorHandler != null) {
-                    errorHandler.fatalError(spe);
-                }
-                throw spe;
             }
             TypedInputSource is;
             HttpField ct = response.getHeaders().getField("Content-Type");
@@ -413,7 +398,6 @@ public class PrudentHttpEntityResolver
                 }
             }
 
-            InputStream stream = new java.io.ByteArrayInputStream(content);
             if (sizeLimit > -1) {
                 stream = new BoundedInputStream(stream, sizeLimit, baseUri);
             }
