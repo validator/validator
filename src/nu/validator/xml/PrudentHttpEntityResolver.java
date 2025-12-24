@@ -25,17 +25,10 @@ package nu.validator.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
@@ -44,18 +37,15 @@ import nu.validator.datatype.ContentSecurityPolicy;
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
-import nu.validator.io.StreamBoundException;
 import nu.validator.io.StreamObserver;
 import nu.validator.io.SystemIdIOException;
 
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.HttpClientTransport;
 import org.eclipse.jetty.client.http.HttpClientTransportOverHTTP;
-import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.client.util.InputStreamResponseListener;
 import org.eclipse.jetty.http.HttpField;
-import org.eclipse.jetty.http.HttpFields;
 import org.eclipse.jetty.io.ClientConnector;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.apache.log4j.Logger;
@@ -80,11 +70,11 @@ public class PrudentHttpEntityResolver
     private static final Logger log4j = Logger.getLogger(PrudentHttpEntityResolver.class);
 
     private static HttpClient client;
-    
+
     private static boolean clientStarted = false;
-    
+
     private static int connectionTimeoutMs;
-    
+
     private static int socketTimeoutMs;
 
     private static int maxRequests;
@@ -145,16 +135,15 @@ public class PrudentHttpEntityResolver
         PrudentHttpEntityResolver.connectionTimeoutMs = connectionTimeout;
         PrudentHttpEntityResolver.socketTimeoutMs = socketTimeout;
         PrudentHttpEntityResolver.maxRequests = maxRequests;
-        
         // Don't create any Jetty objects here - defer until first HTTP request
         client = null;
         clientStarted = false;
     }
-    
+
     private static synchronized void ensureClientStarted() {
         if (!clientStarted) {
             if (client == null) {
-                // Create the client on first use to avoid Jetty logging during initialization
+                // Create the client on first use, to avoid Jetty logging during initialization
                 boolean promiscuousSSL = "true".equals(System.getProperty(
                         "nu.validator.xml.promiscuous-ssl", "true"));
                 SslContextFactory.Client sslContextFactory;
@@ -288,10 +277,8 @@ public class PrudentHttpEntityResolver
                 throw spe;
             }
             systemId = url.toString();
-            
             // Ensure the HTTP client is initialized before creating requests
             ensureClientStarted();
-            
             try {
                 jettyRequest = client.newRequest(systemId);
             } catch (IllegalArgumentException e) {
@@ -315,14 +302,16 @@ public class PrudentHttpEntityResolver
                     && url.port() < 1024) {
                 throw new IOException("Forbidden port.");
             }
-            jettyRequest.header("User-Agent", userAgent);
-            jettyRequest.header("Accept", buildAccept());
-            jettyRequest.header("Accept-Encoding", "gzip");
-            if (request != null && request.getAttribute(
-                    "http://validator.nu/properties/accept-language") != null) {
-                jettyRequest.header("Accept-Language", (String) request.getAttribute(
-                        "http://validator.nu/properties/accept-language"));
-            }
+            jettyRequest.headers(headers -> {
+                headers.put("User-Agent", userAgent);
+                headers.put("Accept", buildAccept());
+                headers.put("Accept-Encoding", "gzip");
+                if (request != null && request.getAttribute(
+                        "http://validator.nu/properties/accept-language") != null) {
+                    headers.put("Accept-Language", (String) request.getAttribute(
+                            "http://validator.nu/properties/accept-language"));
+                }
+            });
             log4j.info(systemId);
             try {
                 if (url.port() > 65535) {
