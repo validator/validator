@@ -179,6 +179,10 @@ public class PrudentHttpEntityResolver
                         Integer.parseInt(System.getProperty("nu.validator.servlet.max-redirects","20")));
                 client.setConnectTimeout(connectionTimeoutMs);
                 client.setIdleTimeout(socketTimeoutMs);
+                // Set response buffer size from max-file-size property (default 2MB)
+                int maxFileSize = Integer.parseInt(System.getProperty(
+                        "nu.validator.servlet.max-file-size", "2097152"));
+                client.setResponseBufferSize(maxFileSize);
             }
             
             try {
