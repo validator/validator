@@ -205,10 +205,10 @@ jobs:
         run: |
           echo "Testing that npm pack includes vnu.jar correctly..."
           npm pack --quiet
-          tar -tzf vnu-jar-*.tgz | grep -q "package/build/dist/vnu.jar" || {
+          if ! tar -tzf vnu-jar-*.tgz | grep "package/build/dist/vnu.jar" > /dev/null; then
             echo "::error::vnu.jar not found in npm package!"
             exit 1
-          }
+          fi
           tar -xzf vnu-jar-*.tgz
           jar_size=$(stat -c%s package/build/dist/vnu.jar 2>/dev/null || stat -f%z package/build/dist/vnu.jar)
           echo "vnu.jar size in package: $jar_size bytes"
@@ -216,7 +216,7 @@ jobs:
             echo "::error::vnu.jar in package is too small ($jar_size bytes), likely corrupted!"
             exit 1
           fi
-          if ! file package/build/dist/vnu.jar | grep -q "Java archive"; then
+          if ! file package/build/dist/vnu.jar | grep "Java archive" > /dev/null; then
             echo "::error::vnu.jar is not a valid Java archive!"
             file package/build/dist/vnu.jar
             exit 1
