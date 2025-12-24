@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
 org.eclipse.jdt.core.compiler.compliance=1.8
 org.eclipse.jdt.core.compiler.problem.comparingIdentical=error
+org.eclipse.jdt.core.compiler.problem.deprecation=ignore
 org.eclipse.jdt.core.compiler.problem.explicitlyClosedAutoCloseable=ignore
 org.eclipse.jdt.core.compiler.problem.forbiddenReference=error
 org.eclipse.jdt.core.compiler.problem.incompleteEnumSwitch=error
