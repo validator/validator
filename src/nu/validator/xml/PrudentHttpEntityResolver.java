@@ -125,6 +125,8 @@ import io.mola.galimatias.GalimatiasParseException;
             "[0:0:0:0:0:0:0:0]" //
     );
 
+    private boolean allowForbiddenHosts = false;
+
     private String userAgent;
 
     private HttpServletRequest request;
@@ -206,6 +208,8 @@ import io.mola.galimatias.GalimatiasParseException;
         this.sizeLimit = sizeLimit;
         this.requestsLeft = maxRequests;
         this.errorHandler = errorHandler;
+        this.allowForbiddenHosts = "true".equals(
+                System.getProperty("nu.validator.servlet.allow-forbidden-hosts"));
         this.contentTypeParser = new ContentTypeParser(errorHandler,
                 laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml,
                 this.acceptAllKnownXmlTypes, this.allowGenericXml);
@@ -290,7 +294,8 @@ import io.mola.galimatias.GalimatiasParseException;
                 }
                 throw spe;
             }
-            if (FORBIDDEN_HOSTS.contains(url.host().toHostString())) {
+            if (!allowForbiddenHosts
+                    && FORBIDDEN_HOSTS.contains(url.host().toHostString())) {
                 throw new IOException( "Forbidden host.");
             }
             if (url.port() != 80 && url.port() != 81 && url.port() != 443

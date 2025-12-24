@@ -217,6 +217,7 @@ messagesLimit = 1000
 maxFileSize = 15360
 disablePromiscuousSsl = 0
 allowedAddressType = 'all'
+allowForbiddenHosts = False
 genericHost = ''
 html5Host = ''
 parsetreeHost = ''
@@ -779,6 +780,7 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
         '-Dnu.validator.servlet.about-page=' + aboutPage,
         '-Dnu.validator.servlet.bind-address=' + bindAddress,
         '-Dnu.validator.servlet.allowed-address-type=' + allowedAddressType,
+        '-Dnu.validator.servlet.allow-forbidden-hosts=' + str(allowForbiddenHosts).lower(),  # nopep8
         '-Dnu.validator.servlet.deny-list=' + denyList,
         '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),  # nopep8
         '-Dnu.validator.servlet.filterfile=' + filterFile,
@@ -1840,12 +1842,12 @@ def applyArgsToGlobals(args):
         denyList, userAgent, deploymentTarget, script, scriptAdditional, \
         serviceName, resultsTitle, messagesLimit, pageTemplate, \
         formTemplate, presetsFile, aboutFile, stylesheetFile, scriptFile, \
-        filterFile, allowedAddressType, disablePromiscuousSsl, \
-        connectionTimeoutSeconds, socketTimeoutSeconds, maxConnPerRoute, \
-        maxTotalConnections, statistics, stylesheet, icon, \
-        additionalJavaSystemProperties, offline, verbose, antCommonArgs, \
-        validatorVersion, genericHost, genericPath, html5Host, html5Path, \
-        parsetreeHost, parsetreePath
+        filterFile, allowedAddressType, allowForbiddenHosts, \
+        disablePromiscuousSsl, connectionTimeoutSeconds, \
+        socketTimeoutSeconds, maxConnPerRoute, maxTotalConnections, \
+        statistics, stylesheet, icon, additionalJavaSystemProperties, \
+        offline, verbose, antCommonArgs, validatorVersion, genericHost, \
+        genericPath, html5Host, html5Path, parsetreeHost, parsetreePath
 
     simpleMapping = {
         'git': 'gitCmd',
@@ -1871,6 +1873,7 @@ def applyArgsToGlobals(args):
         'script_file': 'scriptFile',
         'filter_file': 'filterFile',
         'allowed_address_type': 'allowedAddressType',
+        'allow_forbidden_hosts': 'allowForbiddenHosts',
         'connection_timeout': 'connectionTimeoutSeconds',
         'socket_timeout': 'socketTimeoutSeconds',
         'max_requests': 'maxConnPerRoute',
@@ -1969,6 +1972,7 @@ def main(argv, script_name=None):
     parser.add_argument("--bind-address", default="0.0.0.0", help="Sets server bind address")  # nopep8
     parser.add_argument("--port", default="8888", help="Sets server port number")  # nopep8
     parser.add_argument("--allowed-address-type", choices=['all', 'same-origin', 'none'], default='all', help="Sets which URLs the checker allows.")  # nopep8
+    parser.add_argument("--allow-forbidden-hosts", action="store_true", help="Allow requests to \"forbidden\" hosts (localhost, 127.0.0.1, etc.)")  # nopep8
     parser.add_argument("--promiscuous-ssl", choices=['on', 'off'], default='on', help="Don't check SSL/TLS trust chain")  # nopep8
     parser.add_argument("--results-title", default="Validation results", help="Sets title to show on results page")  # nopep8
     parser.add_argument("--script", default="script.js", help="Sets the URL for the script")  # nopep8

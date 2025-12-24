@@ -66,6 +66,14 @@ checking that resource displayed in the browser.
 
     example: nu.validator.servlet.socket-timeout=5000
 
+## nu.validator.servlet.allow-forbidden-hosts=true_or_false
+
+    Allows requests to "forbidden" hosts (localhost, 127.0.0.1, etc.).
+    default: false
+    possible values: true or false
+
+    example: nu.validator.servlet.allow-forbidden-hosts=true
+
 # EXAMPLES
 
 Start a vnu server accessible at `http://128.30.52.73:8888`.
