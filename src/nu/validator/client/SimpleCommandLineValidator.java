@@ -377,20 +377,6 @@ public class SimpleCommandLineValidator {
                 try {
                     validator.checkHttpURL(args[i], userAgent, errorHandler);
                 } catch (IOException e) {
-                    if (e.getCause() instanceof //
-                            org.apache.http.TruncatedChunkException) {
-                        continue;
-                    } else if (e.getCause() instanceof //
-                            org.apache.http.MalformedChunkCodingException
-                            && (e.getMessage().contains(
-                                    "CRLF expected at end of chunk"))) {
-                        continue;
-                    } else if (e.getCause() instanceof //
-                            org.apache.http.ConnectionClosedException
-                            && (e.getMessage().contains(
-                                    "closing chunk expected"))) {
-                        continue;
-                    }
                     errorHandler.fatalError(new SAXParseException(e.getMessage(),
                             null, args[i], -1, -1,
                             new SystemIdIOException(args[i], e.getMessage())));

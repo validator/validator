@@ -134,7 +134,6 @@ import nu.validator.vendor.thaiopensource.validate.prop.rng.RngProperty;
 import nu.validator.vendor.thaiopensource.validate.prop.wrap.WrapProperty;
 import nu.validator.vendor.thaiopensource.validate.rng.CompactSchemaReader;
 
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.log4j.Logger;
 
 import com.ibm.icu.text.Normalizer;
@@ -1217,8 +1216,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             log4j.debug(e.getMessage());
         } catch (SocketTimeoutException e) {
             errorHandler.ioError(new IOException(e.getMessage(), null));
-        } catch (ConnectTimeoutException e) {
-            errorHandler.ioError(new IOException(e.getMessage(), null));
         } catch (TooManyErrorsException e) {
             errorHandler.fatalError(e);
         } catch (SAXException e) {
@@ -1227,21 +1224,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 log4j.debug("SAXException: " + e.getMessage());
             }
         } catch (IOException e) {
-            if (e.getCause() instanceof org.apache.http.TruncatedChunkException) {
-                log4j.debug("TruncatedChunkException", e.getCause());
-            } else if (e.getCause() instanceof //
-                    org.apache.http.MalformedChunkCodingException
-                    && (e.getMessage(). //
-                        contains("CRLF expected at end of chunk"))) {
-                log4j.debug("MalformedChunkCodingException", e.getCause());
-            } else if (e.getCause() instanceof //
-                    org.apache.http.ConnectionClosedException
-                    && (e.getMessage().contains("closing chunk expected"))) {
-                log4j.debug("ConnectionClosedException", e.getCause());
-            } else {
-                isHtmlOrXhtml = false;
-                errorHandler.ioError(e);
-            }
+            isHtmlOrXhtml = false;
+            errorHandler.ioError(e);
         } catch (IncorrectSchemaException e) {
             log4j.debug("IncorrectSchemaException", e);
             errorHandler.schemaError(e);

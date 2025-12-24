@@ -48,25 +48,16 @@ import nu.validator.io.StreamBoundException;
 import nu.validator.io.StreamObserver;
 import nu.validator.io.SystemIdIOException;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContextBuilder;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.LaxRedirectStrategy;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.eclipse.jetty.client.HttpClient;
+import org.eclipse.jetty.client.HttpClientTransport;
+import org.eclipse.jetty.client.http.HttpClientTransportOverHTTP;
+import org.eclipse.jetty.client.api.ContentResponse;
+import org.eclipse.jetty.client.api.Request;
+import org.eclipse.jetty.client.util.InputStreamResponseListener;
+import org.eclipse.jetty.http.HttpField;
+import org.eclipse.jetty.http.HttpFields;
+import org.eclipse.jetty.io.ClientConnector;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.apache.log4j.Logger;
 
 import org.xml.sax.EntityResolver;
@@ -83,12 +74,18 @@ import io.mola.galimatias.GalimatiasParseException;
  *          hsivonen Exp $
  * @author hsivonen
  */
-@SuppressWarnings("deprecation") public class PrudentHttpEntityResolver
+public class PrudentHttpEntityResolver
         implements EntityResolver {
 
     private static final Logger log4j = Logger.getLogger(PrudentHttpEntityResolver.class);
 
     private static HttpClient client;
+    
+    private static boolean clientStarted = false;
+    
+    private static int connectionTimeoutMs;
+    
+    private static int socketTimeoutMs;
 
     private static int maxRequests;
 
@@ -145,57 +142,53 @@ import io.mola.galimatias.GalimatiasParseException;
      */
     public static void setParams(int connectionTimeout, int socketTimeout,
             int maxRequests) {
+        PrudentHttpEntityResolver.connectionTimeoutMs = connectionTimeout;
+        PrudentHttpEntityResolver.socketTimeoutMs = socketTimeout;
         PrudentHttpEntityResolver.maxRequests = maxRequests;
-        PoolingHttpClientConnectionManager phcConnMgr;
-        Registry<ConnectionSocketFactory> registry = //
-        RegistryBuilder.<ConnectionSocketFactory> create() //
-        .register("http", PlainConnectionSocketFactory.getSocketFactory()) //
-        .register("https", SSLConnectionSocketFactory.getSocketFactory()) //
-        .build();
-        HttpClientBuilder builder = HttpClients.custom().useSystemProperties();
-        builder.setRedirectStrategy(new LaxRedirectStrategy());
-        builder.setMaxConnPerRoute(maxRequests);
-        builder.setMaxConnTotal(
-                Integer.parseInt(System.getProperty("nu.validator.servlet.max-total-connections","200")));
-        if ("true".equals(System.getProperty(
-                "nu.validator.xml.promiscuous-ssl", "true"))) { //
+        
+        // Don't create any Jetty objects here - defer until first HTTP request
+        client = null;
+        clientStarted = false;
+    }
+    
+    private static synchronized void ensureClientStarted() {
+        if (!clientStarted) {
+            if (client == null) {
+                // Create the client on first use to avoid Jetty logging during initialization
+                boolean promiscuousSSL = "true".equals(System.getProperty(
+                        "nu.validator.xml.promiscuous-ssl", "true"));
+                
+                SslContextFactory.Client sslContextFactory;
+                if (promiscuousSSL) {
+                    sslContextFactory = new SslContextFactory.Client(true);
+                } else {
+                    sslContextFactory = new SslContextFactory.Client();
+                }
+                
+                ClientConnector clientConnector = new ClientConnector();
+                clientConnector.setSslContextFactory(sslContextFactory);
+                
+                HttpClientTransport transport = new HttpClientTransportOverHTTP(clientConnector);
+                
+                client = new HttpClient(transport);
+                client.setFollowRedirects(true);
+                client.setMaxConnectionsPerDestination(maxRequests);
+                client.setMaxRequestsQueuedPerDestination(
+                        Integer.parseInt(System.getProperty("nu.validator.servlet.max-total-connections","200")));
+                client.setMaxRedirects(
+                        Integer.parseInt(System.getProperty("nu.validator.servlet.max-redirects","20")));
+                client.setConnectTimeout(connectionTimeoutMs);
+                client.setIdleTimeout(socketTimeoutMs);
+            }
+            
             try {
-                SSLContext promiscuousSSLContext = new SSLContextBuilder() //
-                .loadTrustMaterial(null, new TrustStrategy() {
-                    @Override
-                    public boolean isTrusted(X509Certificate[] arg0, String arg1)
-                            throws CertificateException {
-                        return true;
-                    }
-                }).build();
-                builder.setSslcontext(promiscuousSSLContext);
-                HostnameVerifier verifier = //
-                SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
-                SSLConnectionSocketFactory promiscuousSSLConnSocketFactory = //
-                new SSLConnectionSocketFactory(promiscuousSSLContext, verifier);
-                registry = RegistryBuilder.<ConnectionSocketFactory> create() //
-                .register("https", promiscuousSSLConnSocketFactory) //
-                .register("http",
-                        PlainConnectionSocketFactory.getSocketFactory()) //
-                .build();
-            } catch (KeyManagementException | KeyStoreException
-                    | NoSuchAlgorithmException | NumberFormatException e) {
-                e.printStackTrace();
+                client.start();
+                clientStarted = true;
+            } catch (Exception e) {
+                log4j.error("Failed to start HTTP client", e);
+                throw new RuntimeException("Failed to start HTTP client", e);
             }
         }
-        phcConnMgr = new PoolingHttpClientConnectionManager(registry);
-        phcConnMgr.setDefaultMaxPerRoute(maxRequests);
-        phcConnMgr.setMaxTotal(200);
-        builder.setConnectionManager(phcConnMgr);
-        RequestConfig.Builder config = RequestConfig.custom();
-        config.setCircularRedirectsAllowed(true);
-        config.setMaxRedirects(
-                Integer.parseInt(System.getProperty("nu.validator.servlet.max-redirects","20")));
-        config.setConnectTimeout(connectionTimeout);
-        config.setCookieSpec(CookieSpecs.BEST_MATCH);
-        config.setSocketTimeout(socketTimeout);
-        config.setCookieSpec(CookieSpecs.IGNORE_COOKIES);
-        client = builder.setDefaultRequestConfig(config.build()).build();
     }
 
     public void setUserAgent(String ua) {
@@ -243,7 +236,7 @@ import io.mola.galimatias.GalimatiasParseException;
                 requestsLeft--;
             }
         }
-        HttpGet m = null;
+        Request jettyRequest = null;
         try {
             URL url = null;
             try {
@@ -279,8 +272,12 @@ import io.mola.galimatias.GalimatiasParseException;
                 throw spe;
             }
             systemId = url.toString();
+            
+            // Ensure the HTTP client is initialized before creating requests
+            ensureClientStarted();
+            
             try {
-                m = new HttpGet(systemId);
+                jettyRequest = client.newRequest(systemId);
             } catch (IllegalArgumentException e) {
                 SAXParseException spe = new SAXParseException(
                         e.getMessage(),
@@ -302,13 +299,12 @@ import io.mola.galimatias.GalimatiasParseException;
                     && url.port() < 1024) {
                 throw new IOException("Forbidden port.");
             }
-            m.setHeader("User-Agent", userAgent);
-            m.setHeader("Accept", buildAccept());
-            m.setHeader("Accept-Encoding", "gzip");
-            m.setProtocolVersion(HttpVersion.HTTP_1_0);
+            jettyRequest.header("User-Agent", userAgent);
+            jettyRequest.header("Accept", buildAccept());
+            jettyRequest.header("Accept-Encoding", "gzip");
             if (request != null && request.getAttribute(
                     "http://validator.nu/properties/accept-language") != null) {
-                m.setHeader("Accept-Language", (String) request.getAttribute(
+                jettyRequest.header("Accept-Language", (String) request.getAttribute(
                         "http://validator.nu/properties/accept-language"));
             }
             log4j.info(systemId);
@@ -321,45 +317,45 @@ import io.mola.galimatias.GalimatiasParseException;
                     throw new IOException(
                             "Port number must be less than 65536.");
             }
-            HttpResponse response = client.execute(m);
+            ContentResponse response = jettyRequest.send();
             boolean ignoreResponseStatus = false;
             if (request != null && request.getAttribute(
                     "http://validator.nu/properties/ignore-response-status") != null) {
                 ignoreResponseStatus = (boolean) request.getAttribute(
                         "http://validator.nu/properties/ignore-response-status");
             }
-            int statusCode = response.getStatusLine().getStatusCode();
+            int statusCode = response.getStatus();
             if (statusCode != 200 && !ignoreResponseStatus) {
                 String msg = "HTTP resource not retrievable."
                         + " The HTTP status from the remote server was: "
                         + statusCode + ".";
                 SAXParseException spe = new SAXParseException(msg, publicId,
-                        m.getURI().toString(), -1, -1,
-                        new SystemIdIOException(m.getURI().toString(), msg));
+                        systemId, -1, -1,
+                        new SystemIdIOException(systemId, msg));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
                 throw new ResourceNotRetrievableException(
-                        String.format("%s: %s", m.getURI().toString(), msg));
+                        String.format("%s: %s", systemId, msg));
             }
-            HttpEntity entity = response.getEntity();
-            if (entity == null) {
+            byte[] content = response.getContent();
+            if (content == null || content.length == 0) {
                 String msg = "Empty response.";
                 SAXParseException spe = new SAXParseException(msg, publicId,
-                        m.getURI().toString(), -1, -1,
-                        new SystemIdIOException(m.getURI().toString(), msg));
+                        systemId, -1, -1,
+                        new SystemIdIOException(systemId, msg));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
                 throw new ResourceNotRetrievableException(
-                        String.format("%s: %s", m.getURI().toString(), msg));
+                        String.format("%s: %s", systemId, msg));
             }
-            long len = entity.getContentLength();
+            long len = content.length;
             if (sizeLimit > -1 && len > sizeLimit) {
                 SAXParseException spe = new SAXParseException(
                         "Resource size exceeds limit.",
                         publicId,
-                        m.getURI().toString(),
+                        systemId,
                         -1,
                         -1,
                         new StreamBoundException("Resource size exceeds limit."));
@@ -369,21 +365,21 @@ import io.mola.galimatias.GalimatiasParseException;
                 throw spe;
             }
             TypedInputSource is;
-            org.apache.http.Header ct = response.getFirstHeader("Content-Type");
+            HttpField ct = response.getHeaders().getField("Content-Type");
             String contentType = null;
-            final String baseUri = m.getURI().toString();
+            final String baseUri = systemId;
             if (ct != null) {
                 contentType = ct.getValue();
             }
             is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
                     contentType);
 
-            Header cl = response.getFirstHeader("Content-Language");
+            HttpField cl = response.getHeaders().getField("Content-Language");
             if (cl != null) {
                 is.setLanguage(cl.getValue().trim());
             }
 
-            Header xuac = response.getFirstHeader("X-UA-Compatible");
+            HttpField xuac = response.getHeaders().getField("X-UA-Compatible");
             if (xuac != null) {
                 String val = xuac.getValue().trim();
                 if (!"ie=edge".equalsIgnoreCase(val)) {
@@ -395,7 +391,7 @@ import io.mola.galimatias.GalimatiasParseException;
                 }
             }
 
-            Header csp = response.getFirstHeader("Content-Security-Policy");
+            HttpField csp = response.getHeaders().getField("Content-Security-Policy");
             if (csp != null) {
                 try {
                     ContentSecurityPolicy.THE_INSTANCE.checkValid(csp.getValue().trim());
@@ -413,12 +409,11 @@ import io.mola.galimatias.GalimatiasParseException;
                 }
             }
 
-            final HttpGet meth = m;
-            InputStream stream = entity.getContent();
+            InputStream stream = new java.io.ByteArrayInputStream(content);
             if (sizeLimit > -1) {
                 stream = new BoundedInputStream(stream, sizeLimit, baseUri);
             }
-            Header ce = response.getFirstHeader("Content-Encoding");
+            HttpField ce = response.getHeaders().getField("Content-Encoding");
             if (ce != null) {
                 String val = ce.getValue().trim();
                 if ("gzip".equalsIgnoreCase(val)
@@ -434,42 +429,14 @@ import io.mola.galimatias.GalimatiasParseException;
                     new StreamObserver() {
                         private final Logger log4j = Logger.getLogger("nu.validator.xml.PrudentEntityResolver.StreamObserver");
 
-                        private boolean released = false;
-
                         @Override
                         public void closeCalled() {
                             log4j.debug("closeCalled");
-                            if (!released) {
-                                log4j.debug("closeCalled, not yet released");
-                                released = true;
-                                try {
-                                    meth.releaseConnection();
-                                } catch (Exception e) {
-                                    log4j.debug(
-                                            "closeCalled, releaseConnection", e);
-                                }
-                            }
                         }
 
                         @Override
                         public void exceptionOccurred(Exception ex)
                                 throws IOException {
-                            if (!released) {
-                                released = true;
-                                try {
-                                    meth.abort();
-                                } catch (Exception e) {
-                                    log4j.debug("exceptionOccurred, abort", e);
-                                } finally {
-                                    try {
-                                        meth.releaseConnection();
-                                    } catch (Exception e) {
-                                        log4j.debug(
-                                                "exceptionOccurred, releaseConnection",
-                                                e);
-                                    }
-                                }
-                            }
                             if (ex instanceof SystemIdIOException) {
                                 throw (SystemIdIOException) ex;
                             } else if (ex instanceof IOException) {
@@ -487,40 +454,14 @@ import io.mola.galimatias.GalimatiasParseException;
 
                         @Override
                         public void finalizerCalled() {
-                            if (!released) {
-                                released = true;
-                                try {
-                                    meth.abort();
-                                } catch (Exception e) {
-                                    log4j.debug("finalizerCalled, abort", e);
-                                } finally {
-                                    try {
-                                        meth.releaseConnection();
-                                    } catch (Exception e) {
-                                        log4j.debug(
-                                                "finalizerCalled, releaseConnection",
-                                                e);
-                                    }
-                                }
-                            }
+                            log4j.debug("finalizerCalled");
                         }
 
                     }));
             return is;
+        } catch (InterruptedException | java.util.concurrent.TimeoutException | java.util.concurrent.ExecutionException e) {
+            throw new IOException("HTTP request failed: " + e.getMessage(), e);
         } catch (IOException | RuntimeException | SAXException e) {
-            if (m != null) {
-                try {
-                    m.abort();
-                } catch (Exception ex) {
-                    log4j.debug("abort", ex);
-                } finally {
-                    try {
-                        m.releaseConnection();
-                    } catch (Exception ex) {
-                        log4j.debug("releaseConnection", ex);
-                    }
-                }
-            }
             throw e;
         }
     }

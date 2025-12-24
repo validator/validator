@@ -130,6 +130,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="jetty-version" value="11.0.20" />
   <target name="dl-deps-jetty" unless="${offline}">
     <echo>Downloading dependencies (jetty)</echo>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-client/${jetty-version}/jetty-client-${jetty-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/${jetty-version}/jetty-http-${jetty-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/${jetty-version}/jetty-io-${jetty-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/${jetty-version}/jetty-security-${jetty-version}.jar"/>
@@ -143,8 +144,6 @@ DEALINGS IN THE SOFTWARE.
   <property name="commons-fileupload-version" value="2.0.0-M2" />
   <property name="commons-io-version" value="2.15.1" />
   <property name="commons-logging-version" value="1.2" />
-  <property name="httpclient-version" value="4.5.13" />
-  <property name="httpcore-version" value="4.4.14" />
   <property name="icu4j-version" value="75.1" />
   <property name="jakarta.servlet-api-version" value="5.0.2" />
   <property name="javax.json-version" value="1.1.4" />
@@ -167,8 +166,6 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/toolchain/jetty-jakarta-servlet-api/${jakarta.servlet-api-version}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/log4j/log4j/${log4j-version}/log4j-${log4j-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/${jchardet-version}/jchardet-${jchardet-version}.jar" checksum.pattern="{0} "/>
-    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/${httpclient-version}/httpclient-${httpclient-version}.jar"/>
-    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/${httpcore-version}/httpcore-${httpcore-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/glassfish/javax.json/${javax.json-version}/javax.json-${javax.json-version}.jar"/>
   </target>
 
@@ -249,11 +246,12 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-api.jar" unless:true="${jar-without-deps}"/>
-      <zipfileset src="${depsDir}/httpclient-${httpclient-version}.jar" unless:true="${jar-without-deps}"/>
-      <zipfileset src="${depsDir}/httpcore-${httpcore-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/icu4j-${icu4j-version}.jar" unless:true="${jar-without-deps}"/>
 
       <zipfileset src="${depsDir}/jchardet-${jchardet-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/jetty-client-${jetty-version}.jar" unless:true="${jar-without-deps}">
+        <exclude name="module-info.class" />
+      </zipfileset>
       <zipfileset src="${depsDir}/jetty-http-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
         <exclude name="META-INF/services/**"/>
@@ -330,8 +328,6 @@ DEALINGS IN THE SOFTWARE.
       <lib file="${depsDir}/commons-logging-${commons-logging-version}.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}-api.jar"/>
-      <lib file="${depsDir}/httpclient-${httpclient-version}.jar"/>
-      <lib file="${depsDir}/httpcore-${httpcore-version}.jar"/>
       <lib file="${depsDir}/icu4j-${icu4j-version}.jar"/>
       <lib file="${depsDir}/salvation-${salvation-version}.jar"/>
       <lib file="${depsDir}/jchardet-${jchardet-version}.jar"/>
@@ -355,14 +351,15 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
-    <fileset dir="${depsDir}/" includes="httpclient-${httpclient-version}.jar" />
-    <fileset dir="${depsDir}/" includes="httpcore-${httpcore-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-server-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-servlet-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-http-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-io-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="log4j-${log4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="salvation-${salvation-version}.jar" />
     <pathelement location="css-validator/css-validator.jar"/>
@@ -461,16 +458,17 @@ DEALINGS IN THE SOFTWARE.
 
 
   <path id="validator-split-core.classpath">
-    <!-- This should be the same as validator.classpath but without jetty -->
+    <!-- This should be the same as validator.classpath but without jetty server components -->
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
-    <fileset dir="${depsDir}/" includes="httpclient-${httpclient-version}.jar" />
-    <fileset dir="${depsDir}/" includes="httpcore-${httpcore-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-http-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-io-${jetty-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar" />
-    <!-- Since core doesn't contain the jetty server, there should be no jetty* here except the servlet-api -->
     <fileset dir="${depsDir}/" includes="log4j-${log4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="salvation-${salvation-version}.jar" />
     <pathelement location="css-validator/css-validator.jar"/>
@@ -529,6 +527,7 @@ DEALINGS IN THE SOFTWARE.
 
   <path id="validator-split-server.runtime.classpath">
     <!-- The ones required for a simple run of vnu-server.jar -->
+    <pathelement location="${depsDir}/jetty-client-${jetty-version}.jar" />
     <pathelement location="${depsDir}/jetty-http-${jetty-version}.jar" />
     <pathelement location="${depsDir}/jetty-io-${jetty-version}.jar" />
     <pathelement location="${depsDir}/jetty-security-${jetty-version}.jar" />
@@ -760,8 +759,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty.toolchain" artifactId="jetty-jakarta-servlet-api" version="${jakarta.servlet-api-version}"/>
       <dependency groupId="log4j" artifactId="log4j" version="${log4j-version}"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
-      <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="${httpclient-version}"/>
-      <dependency groupId="org.apache.httpcomponents" artifactId="httpcore" version="${httpcore-version}"/>
+      <dependency groupId="org.eclipse.jetty" artifactId="jetty-client" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-io" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-security" version="${jetty-version}"/>
