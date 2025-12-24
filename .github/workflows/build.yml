@@ -182,7 +182,7 @@ jobs:
   npm-release:
     name: Release new npm package
     needs: build
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -226,6 +226,7 @@ jobs:
   verify-npm-package:
     name: Verify published npm package
     needs: npm-release
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up Java
@@ -236,11 +237,8 @@ jobs:
       - name: Test npx vnu-jar@latest
         shell: bash
         run: |
-          # Give npm registry time to propagate the package
           echo "Waiting 30 seconds for npm registry to propagate..."
           sleep 30
-
-          # Create a simple test HTML file
           cat > test.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en">
@@ -248,27 +246,22 @@ jobs:
           <body><p>Hello World</p></body>
           </html>
           EOF
-
-          # Test that npx can run vnu-jar
           echo "Testing: npx vnu-jar@latest --version"
           if ! npx --yes vnu-jar@latest --version; then
             echo "::error::Failed to run 'npx vnu-jar@latest --version'"
             exit 1
           fi
-
-          # Test that it can validate a file
           echo "Testing: npx vnu-jar@latest test.html"
           if ! npx --yes vnu-jar@latest test.html; then
             echo "::error::Failed to validate test.html with npx vnu-jar@latest"
             exit 1
           fi
-
           echo "✅ npx vnu-jar@latest works correctly"
 
   maven-release:
     name: Release new Maven package
     needs: build
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
