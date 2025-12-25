@@ -22,6 +22,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && apt-get purge -y --auto-remove unzip
 # hadolint ignore=DL3006
 FROM debian:stable-slim
+RUN apt-get update && apt-get install --no-install-recommends -y \
+       wget \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /vnu-runtime-image /vnu-runtime-image
 ENV LANG C.UTF-8
 ENV JAVA_TOOL_OPTIONS ""
@@ -30,4 +34,6 @@ ENV SOCKET_TIMEOUT_SECONDS 5
 ENV BIND_ADDRESS 0.0.0.0
 ENV PATH=/vnu-runtime-image/bin:$PATH
 EXPOSE 8888
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8888/ || exit 1
 CMD ["./vnu-runtime-image/bin/java", "-m", "vnu/nu.validator.servlet.Main", "8888"]
