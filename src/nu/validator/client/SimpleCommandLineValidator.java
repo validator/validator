@@ -31,6 +31,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -116,6 +118,8 @@ public class SimpleCommandLineValidator {
     private static String schemaUrl;
 
     private static boolean hasSchemaOption;
+
+    private static Map<String, String> additionalRequestHeaders = new HashMap<>();
 
     private static Properties props = new Properties();
 
@@ -270,6 +274,23 @@ public class SimpleCommandLineValidator {
                                 + " requires a URL for a schema.");
                         System.exit(1);
                     }
+                } else if ("--additional-request-header".equals(args[i])) {
+                    String headerValue = args[++i];
+                    int colonIndex = headerValue.indexOf(':');
+                    if (colonIndex == -1) {
+                        System.err.println("error: The"
+                                + " \"--additional-request-header\" option"
+                                + " requires a header in the format"
+                                + " \"Name: Value\".");
+                        System.exit(1);
+                    }
+                    String headerName = headerValue.substring(0, colonIndex).trim();
+                    String headerVal = headerValue.substring(colonIndex + 1).trim();
+                    if (headerName.isEmpty()) {
+                        System.err.println("error: Header name cannot be empty.");
+                        System.exit(1);
+                    }
+                    additionalRequestHeaders.put(headerName, headerVal);
                 }
             }
         }
@@ -375,7 +396,9 @@ public class SimpleCommandLineValidator {
             if (args[i].startsWith("http://") || args[i].startsWith("https://")) {
                 emitFilename(args[i]);
                 try {
-                    validator.checkHttpURL(args[i], userAgent, errorHandler);
+                    validator.checkHttpURL(args[i], userAgent, errorHandler,
+                            additionalRequestHeaders.isEmpty() ? null
+                                    : additionalRequestHeaders);
                 } catch (IOException e) {
                     errorHandler.fatalError(new SAXParseException(e.getMessage(),
                             null, args[i], -1, -1,

@@ -48,6 +48,14 @@ is a 404 or other non-200 status. Otherwise the checker will not
 retrieve the document but will instead emit a message indicating the
 document was not retrieved, along with the HTTP status code.
 
+### `additionalrequestheader`
+
+This parameter can be specified multiple times to add custom HTTP
+request headers when checking documents via HTTP/HTTPS. Each value
+should be in the format "HeaderName: HeaderValue". For example:
+`additionalrequestheader=X-API-Key: secret123` would add the custom
+header `X-API-Key: secret123` to the HTTP request.
+
 ## Parameters for the generic facet only
 
 ### `schema`

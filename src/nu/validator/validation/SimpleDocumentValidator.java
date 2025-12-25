@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
@@ -472,6 +473,12 @@ public class SimpleDocumentValidator {
     public void checkHttpURL(String document, String userAgent,
             ErrorHandler errorHandler)
             throws IOException, SAXException {
+        checkHttpURL(document, userAgent, errorHandler, null);
+    }
+
+    public void checkHttpURL(String document, String userAgent,
+            ErrorHandler errorHandler, Map<String, String> additionalHeaders)
+            throws IOException, SAXException {
         CookieHandler.setDefault(
                 new CookieManager(null, CookiePolicy.ACCEPT_ALL));
         validator.reset();
@@ -481,6 +488,9 @@ public class SimpleDocumentValidator {
         }
         httpRes.setAllowHtml(true);
         httpRes.setUserAgent(userAgent);
+        if (additionalHeaders != null && !additionalHeaders.isEmpty()) {
+            httpRes.setAdditionalRequestHeaders(additionalHeaders);
+        }
         try {
             documentInput = (TypedInputSource) httpRes.resolveEntity(null,
                     document);

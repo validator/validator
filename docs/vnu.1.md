@@ -27,7 +27,7 @@ vnu – The Nu Html Checker
     --help --skip-non-css --css --skip-non-svg --svg --skip-non-html --html
     --xml --also-check-css --also-check-svg --user-agent USER_AGENT
     --no-langdetect --no-stream --verbose --version --entities --schema SCHEMA
-    --skip-info-messages
+    --skip-info-messages --additional-request-header "HEADER: VALUE"
 
 # DESCRIPTION
 
@@ -177,6 +177,16 @@ When used from the command line, the vnu checker provides these options:
     HTTPS/HTTP URLs.
 
     default: "Validator.nu/LV"
+
+## --additional-request-header "_HEADER_: _VALUE_"
+
+    Specifies a custom HTTP request header and value to send when checking
+    HTTPS/HTTP URLs. This option can be specified multiple times to add multiple
+    headers. The header name and value must be separated by a colon and space.
+
+    example: --additional-request-header "X-API-Key: abc123"
+
+    default: [unset; no additional request headers are sent]
 
 ## --no-langdetect
 

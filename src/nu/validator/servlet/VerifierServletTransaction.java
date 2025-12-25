@@ -905,6 +905,29 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     "http://validator.nu/properties/accept-language",
                     scrub(request.getParameter("acceptlanguage")));
         }
+        String[] additionalHeaderParams = request.getParameterValues(
+                "additionalrequestheader");
+        if (additionalHeaderParams != null) {
+            java.util.Map<String, String> additionalHeaders =
+                new java.util.HashMap<>();
+            for (String headerValue : additionalHeaderParams) {
+                int colonIndex = headerValue.indexOf(':');
+                if (colonIndex != -1) {
+                    String headerName = headerValue.substring(0,
+                            colonIndex).trim();
+                    String headerVal = headerValue.substring(
+                            colonIndex + 1).trim();
+                    if (!headerName.isEmpty()) {
+                        additionalHeaders.put(headerName, headerVal);
+                    }
+                }
+            }
+            if (!additionalHeaders.isEmpty()) {
+                request.setAttribute(
+                        "http://validator.nu/properties/additional-request-headers",
+                        additionalHeaders);
+            }
+        }
         Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
         showSourceExplicitly = (request.getParameter("showsource") != null);
         showSource = (showSourceExplicitly || "textarea".equals(inputType));
@@ -1097,6 +1120,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         httpRes = new PrudentHttpEntityResolver(SIZE_LIMIT, laxType,
                 errorHandler, request);
         httpRes.setUserAgent(userAgent);
+        if (request.getAttribute(
+                "http://validator.nu/properties/additional-request-headers") != null) {
+            java.util.Map<String, String> additionalHeaders =
+                (java.util.Map<String, String>) request.getAttribute(
+                    "http://validator.nu/properties/additional-request-headers");
+            httpRes.setAdditionalRequestHeaders(additionalHeaders);
+        }
         dataRes = new DataUriEntityResolver(httpRes, laxType, errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
         entityResolver = new LocalCacheEntityResolver(dataRes);

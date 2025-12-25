@@ -26,7 +26,9 @@ package nu.validator.xml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -115,6 +117,8 @@ public class PrudentHttpEntityResolver
     private boolean allowForbiddenHosts = false;
 
     private String userAgent;
+
+    private Map<String, String> additionalRequestHeaders = new HashMap<>();
 
     private HttpServletRequest request;
 
@@ -206,6 +210,18 @@ public class PrudentHttpEntityResolver
 
     public void setUserAgent(String ua) {
         userAgent = ua;
+    }
+
+    public void setAdditionalRequestHeaders(Map<String, String> headers) {
+        if (headers != null) {
+            additionalRequestHeaders = new HashMap<>(headers);
+        }
+    }
+
+    public void addRequestHeader(String name, String value) {
+        if (name != null && value != null) {
+            additionalRequestHeaders.put(name, value);
+        }
     }
 
     public PrudentHttpEntityResolver(long sizeLimit, boolean laxContentType,
@@ -314,6 +330,10 @@ public class PrudentHttpEntityResolver
                         "http://validator.nu/properties/accept-language") != null) {
                     headers.put("Accept-Language", (String) request.getAttribute(
                             "http://validator.nu/properties/accept-language"));
+                }
+                for (Map.Entry<String, String> entry :
+                        additionalRequestHeaders.entrySet()) {
+                    headers.put(entry.getKey(), entry.getValue());
                 }
             });
             log4j.info(systemId);
