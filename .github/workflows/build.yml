@@ -199,7 +199,7 @@ jobs:
           export PATH="$HOME/.npm-global/bin:$PATH"
           npm install -g npm@latest
           echo "npm version: $(npm --version)"
-          python checker.py npm-release
+          python ./checker.py --version="25.12.26" npm-release
       - name: Verify npm package includes vnu.jar
         shell: bash
         run: |
