@@ -1145,6 +1145,12 @@ class Release():
         if not os.path.exists(vnuJar):
             print(f"Error: {vnuJar} not found.")
             sys.exit(1)
+        # Verify the jar file is valid (not a placeholder or error page)
+        jar_size = os.path.getsize(vnuJar)
+        if jar_size < 1000000:
+            print(f"Error: {vnuJar} is too small ({jar_size} bytes), likely corrupted!")
+            sys.exit(1)
+        print(f"vnu.jar size: {jar_size} bytes")
         self.updatePackageJsonAndReadme()
         if tag:
             runCmdFromString(

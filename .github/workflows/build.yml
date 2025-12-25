@@ -181,7 +181,7 @@ jobs:
 
   npm-release:
     name: Release new npm package
-    needs: build
+    needs: [build, verify-release-assets]
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     runs-on: ubuntu-latest
     permissions:
@@ -189,11 +189,33 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
-      - name: Run checker.py npm-release
+      - name: Download vnu.jar from GitHub release
         shell: bash
         run: |
           mkdir -p build/dist
-          curl -L https://github.com/validator/validator/releases/download/latest/vnu.jar > build/dist/vnu.jar
+          echo "Downloading vnu.jar from GitHub release..."
+          if ! curl -fL https://github.com/validator/validator/releases/download/latest/vnu.jar -o build/dist/vnu.jar; then
+            echo "::error::Failed to download vnu.jar from GitHub release"
+            exit 1
+          fi
+          jar_size=$(stat -c%s build/dist/vnu.jar 2>/dev/null || stat -f%z build/dist/vnu.jar)
+          echo "Downloaded vnu.jar size: $jar_size bytes"
+          if [ "$jar_size" -lt 1000000 ]; then
+            echo "::error::Downloaded vnu.jar is too small ($jar_size bytes), likely not a valid jar file!"
+            echo "Content of file:"
+            head -c 200 build/dist/vnu.jar
+            exit 1
+          fi
+          if ! file build/dist/vnu.jar | grep "Java archive" > /dev/null; then
+            echo "::error::Downloaded file is not a valid Java archive!"
+            file build/dist/vnu.jar
+            head -c 200 build/dist/vnu.jar
+            exit 1
+          fi
+          echo "✅ vnu.jar successfully downloaded ($jar_size bytes)"
+      - name: Run checker.py npm-release
+        shell: bash
+        run: |
           unset NODE_AUTH_TOKEN
           npm config set prefix "${HOME}/.npm-global"
           export PATH="$HOME/.npm-global/bin:$PATH"
