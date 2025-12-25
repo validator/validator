@@ -143,10 +143,15 @@ public class SourceSizeList extends AbstractDatatype {
         String currentChunk;
         StringBuilder unparsedSize = new StringBuilder();
         StringBuilder extract = new StringBuilder();
+        int parenDepth = 0;
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             extract.append(c);
-            if (',' == c) {
+            if ('(' == c) {
+                parenDepth++;
+            } else if (')' == c) {
+                parenDepth--;
+            } else if (',' == c && parenDepth == 0) {
                 currentChunk = literal.subSequence(offset, i).toString();
                 checkForInvalidComments(currentChunk, extract);
                 unparsedSize.append(currentChunk);
