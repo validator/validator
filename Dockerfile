@@ -9,9 +9,10 @@ FROM debian:stable-slim AS builder
 #    ghcr.io/validator/validator
 LABEL name="vnu"
 LABEL version="dev"
-LABEL maintainer="Michael[tm] Smith <mike@w3.org>"
+LABEL maintainer="sideshowbarker@gmail.com"
 ARG TARGETPLATFORM
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install --no-install-recommends -y \
         ca-certificates \
         curl \
@@ -21,6 +22,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     rm -rf /var/lib/apt/lists/*
 # hadolint ignore=DL3006
 FROM debian:stable-slim
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install --no-install-recommends -y \
        wget \
        default-jre-headless \
