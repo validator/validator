@@ -22,13 +22,9 @@
 
 package nu.validator.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
-import com.shapesecurity.salvation.Parser;
-import com.shapesecurity.salvation.data.Notice;
+import com.shapesecurity.salvation2.Policy;
 
 public class ContentSecurityPolicy extends AbstractDatatype {
 
@@ -60,38 +56,64 @@ public class ContentSecurityPolicy extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        List<Notice> notices = new ArrayList<>();
         StringBuilder errors = new StringBuilder();
         StringBuilder warnings = new StringBuilder();
         StringBuilder others = new StringBuilder();
-        Parser.parse(literal.toString()
+        String policyText = literal.toString()
                 .replace("allow-downloads", "")
-                .replace("allow-presentation", "")
-                ,"http://example.org", notices);
-        if (!notices.isEmpty()) {
-            for (Notice notice : notices) {
-                if (notice.show().contains("experimental directive")) {
-                    continue;
-                }
-                String message = notice.show()
-                    .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
-                    .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
-                        + " ";
-                if (notice.isError()) {
-                    errors.append(message);
-                } else if (notice.isWarning()) {
-                    warnings.append(message);
-                } else if (notice.isInfo()) {
-                    others.append(message);
-                }
-            }
-            if (errors.length() > 0) {
-                throw newDatatypeException(errors.toString());
-            } else if (warnings.length() > 0) {
-                throw newDatatypeException(warnings.toString(), WARN);
-            } else if (others.length() > 0) {
-                throw newDatatypeException(others.toString(), WARN);
-            }
+                .replace("allow-presentation", "");
+        if (policyText.contains(",")) {
+            Policy.parseSerializedCSPList(policyText,
+                    (severity, message, policyIndex, directiveIndex,
+                            valueIndex) -> {
+                        if (message.contains("experimental directive")) {
+                            return;
+                        }
+                        String formattedMessage = message
+                            .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
+                            .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
+                                + " ";
+                        switch (severity) {
+                            case Error:
+                                errors.append(formattedMessage);
+                                break;
+                            case Warning:
+                                warnings.append(formattedMessage);
+                                break;
+                            case Info:
+                                others.append(formattedMessage);
+                                break;
+                        }
+                    });
+        } else {
+            Policy.parseSerializedCSP(policyText,
+                    (severity, message, directiveIndex, valueIndex) -> {
+                        if (message.contains("experimental directive")) {
+                            return;
+                        }
+                        String formattedMessage = message
+                            .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
+                            .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
+                                + " ";
+                        switch (severity) {
+                            case Error:
+                                errors.append(formattedMessage);
+                                break;
+                            case Warning:
+                                warnings.append(formattedMessage);
+                                break;
+                            case Info:
+                                others.append(formattedMessage);
+                                break;
+                        }
+                    });
+        }
+        if (errors.length() > 0) {
+            throw newDatatypeException(errors.toString());
+        } else if (warnings.length() > 0) {
+            throw newDatatypeException(warnings.toString(), WARN);
+        } else if (others.length() > 0) {
+            throw newDatatypeException(others.toString(), WARN);
         }
     }
 

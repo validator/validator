@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
-import com.shapesecurity.salvation.data.Base64Value;
+import com.shapesecurity.salvation2.Values.Hash;
 
 public final class IntegrityMetadata extends AbstractDatatype {
 
@@ -69,10 +69,9 @@ public final class IntegrityMetadata extends AbstractDatatype {
         String token = builder.toString();
         Matcher m = getPattern().matcher(token);
         if (m.matches()) {
-            try {
-                new Base64Value(m.group(1));
-            } catch (IllegalArgumentException e) {
-                throw newDatatypeException(i - 1, e.getMessage(), WARN);
+            String hashWithQuotes = "'" + token + "'";
+            if (!Hash.parseHash(hashWithQuotes).isPresent()) {
+                throw newDatatypeException(i - 1, "Invalid base64 value.", WARN);
             }
         } else {
             throw newDatatypeException(i - 1,
