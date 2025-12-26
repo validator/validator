@@ -331,6 +331,7 @@ DEALINGS IN THE SOFTWARE.
       <lib file="${depsDir}/commons-logging-${commons-logging-version}.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}-api.jar"/>
+      <lib file="${depsDir}/commons-text-${commons-text-version}.jar"/>
       <lib file="${depsDir}/icu4j-${icu4j-version}.jar"/>
       <lib file="${depsDir}/salvation2-${salvation-version}.jar"/>
       <lib file="${depsDir}/jchardet-${jchardet-version}.jar"/>
@@ -467,6 +468,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
+    <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />
