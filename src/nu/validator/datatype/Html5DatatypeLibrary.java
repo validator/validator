@@ -154,6 +154,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Zero.THE_INSTANCE;
         } else if ("script-documentation".equals(typeLocalName)) {
             return ScriptDocumentation.THE_INSTANCE;
+        } else if ("rel-value".equals(typeLocalName)) {
+            return RelValue.THE_INSTANCE;
         } else if ("non-empty-string".equals(typeLocalName)) {
             return NonEmptyString.THE_INSTANCE;
         } else if ("string-without-line-breaks".equals(typeLocalName)) {

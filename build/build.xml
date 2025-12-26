@@ -144,6 +144,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="commons-fileupload-version" value="2.0.0-M2" />
   <property name="commons-io-version" value="2.15.1" />
   <property name="commons-logging-version" value="1.2" />
+  <property name="commons-text-version" value="1.12.0" />
   <property name="icu4j-version" value="75.1" />
   <property name="jakarta.servlet-api-version" value="5.0.2" />
   <property name="javax.json-version" value="1.1.4" />
@@ -162,6 +163,7 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-adapters.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-api.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/commons/commons-text/${commons-text-version}/commons-text-${commons-text-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/javax/mail/mail/${mail-version}/mail-${mail-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/eclipse/jetty/toolchain/jetty-jakarta-servlet-api/${jakarta.servlet-api-version}/jetty-jakarta-servlet-api-${jakarta.servlet-api-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/log4j/log4j/${log4j-version}/log4j-${log4j-version}.jar"/>
@@ -246,6 +248,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-api.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-text-${commons-text-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/icu4j-${icu4j-version}.jar" unless:true="${jar-without-deps}"/>
 
       <zipfileset src="${depsDir}/jchardet-${jchardet-version}.jar" unless:true="${jar-without-deps}"/>
@@ -351,6 +354,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
+    <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />

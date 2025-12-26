@@ -599,6 +599,12 @@ public class MessageEmitterAdapter implements ErrorHandler {
                 if (dex instanceof Html5DatatypeException) {
                     Html5DatatypeException ex5 = (Html5DatatypeException) dex;
                     if (ex5.isWarning()) {
+                        String message = ex5.getMessage();
+                        if (message != null && message.contains("Typo for")) {
+                            messageFromSAXParseException(MessageType.INFO, e,
+                                    exact, null);
+                            return;
+                        }
                         this.warnings++;
                         throwIfTooManyMessages();
                         messageFromSAXParseException(MessageType.WARNING, e,

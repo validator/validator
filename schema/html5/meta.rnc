@@ -182,7 +182,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		link.attrs.rel =
 			attribute rel {
-				string
+				w:rel-value
 			}
 		link.attrs.as =
 			attribute as {
