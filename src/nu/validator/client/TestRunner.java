@@ -678,12 +678,15 @@ public class TestRunner extends MessageEmitterAdapter {
         if (DEFAULT_FILTER_PATTERN.matcher(e.getMessage()).matches()) {
             return;
         }
-        if (e.getMessage() != null && e.getMessage().contains("Typo for")
-                && e.getMessage().contains("rel")) {
-            hasUnhandledInfo = true;
-            if (infoMessage == null) {
-                infoMessage = e.getMessage();
+        if (e.getMessage() != null && e.getMessage().contains("Typo for")) {
+            if (emitMessages) {
+                if (infoMessage == null) {
+                    infoMessage = e.getMessage();
+                }
+                // Don't call emitMessage; let checkHasInfoFiles handle
+                // printing on mismatch.
             }
+            // Don't set hasUnhandledInfo; typo info messages are expected.
             return;
         }
         if (emitMessages) {

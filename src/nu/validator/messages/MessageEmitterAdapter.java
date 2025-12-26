@@ -1177,11 +1177,26 @@ public class MessageEmitterAdapter implements ErrorHandler {
                 }
             } else if (e instanceof StringNotAllowedException) {
                 StringNotAllowedException ex = (StringNotAllowedException) e;
-                messageTextString(messageTextHandler, BAD_CHARACTER_CONTENT,
-                        false);
-                codeString(messageTextHandler, ex.getValue());
-                messageTextString(messageTextHandler, FOR, false);
-                element(messageTextHandler, ex.getCurrentElement(), false);
+                boolean isTypoInfo = false;
+                Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
+                for (Map.Entry<String, DatatypeException> entry :
+                        datatypeErrors.entrySet()) {
+                    DatatypeException dex = entry.getValue();
+                    if (dex instanceof Html5DatatypeException) {
+                        Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+                        if (ex5.isWarning() && ex5.getMessage() != null
+                                && ex5.getMessage().contains("Typo for")) {
+                            isTypoInfo = true;
+                        }
+                    }
+                }
+                if (!isTypoInfo) {
+                    messageTextString(messageTextHandler, BAD_CHARACTER_CONTENT,
+                            false);
+                    codeString(messageTextHandler, ex.getValue());
+                    messageTextString(messageTextHandler, FOR, false);
+                    element(messageTextHandler, ex.getCurrentElement(), false);
+                }
                 emitDatatypeErrors(messageTextHandler, ex.getExceptions());
             } else if (e instanceof TextNotAllowedException) {
                 TextNotAllowedException ex = (TextNotAllowedException) e;
@@ -1256,9 +1271,26 @@ public class MessageEmitterAdapter implements ErrorHandler {
         if (datatypeErrors.isEmpty()) {
             messageTextString(messageTextHandler, PERIOD, false);
         } else {
-            messageTextString(messageTextHandler, COLON, false);
-            for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
-                messageTextString(messageTextHandler, SPACE, false);
+            boolean isTypoInfo = false;
+            for (Map.Entry<String, DatatypeException> entry :
+                    datatypeErrors.entrySet()) {
+                DatatypeException ex = entry.getValue();
+                if (ex instanceof Html5DatatypeException) {
+                    Html5DatatypeException ex5 = (Html5DatatypeException) ex;
+                    if (ex5.isWarning() && ex5.getMessage() != null
+                            && ex5.getMessage().contains("Typo for")) {
+                        isTypoInfo = true;
+                    }
+                }
+            }
+            if (!isTypoInfo) {
+                messageTextString(messageTextHandler, COLON, false);
+            }
+            for (Map.Entry<String, DatatypeException> entry :
+                    datatypeErrors.entrySet()) {
+                if (!isTypoInfo) {
+                    messageTextString(messageTextHandler, SPACE, false);
+                }
                 DatatypeException ex = entry.getValue();
                 if (ex instanceof Html5DatatypeException) {
                     Html5DatatypeException ex5 = (Html5DatatypeException) ex;

@@ -27,7 +27,8 @@ import nu.validator.vendor.relaxng.datatype.DatatypeException;
 public final class ScriptDocumentation extends CdoCdcPair {
 
     private enum State {
-        BEFORE_DOCUMENTATION, SLASH, IN_COMMENT, IN_LINE_COMMENT, STAR
+        BEFORE_DOCUMENTATION, SLASH, IN_COMMENT, IN_LINE_COMMENT, STAR,
+        LESS_THAN, SLASH_AFTER_LESS_THAN, LETTER_AFTER_SLASH_AFTER_LESS_THAN
     }
 
     /**
@@ -42,6 +43,7 @@ public final class ScriptDocumentation extends CdoCdcPair {
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         State state = State.BEFORE_DOCUMENTATION;
+        StringBuilder fauxTagName = new StringBuilder();
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             switch (state) {
@@ -59,6 +61,10 @@ public final class ScriptDocumentation extends CdoCdcPair {
                                                 + " instead.");
                             }
                             state = State.SLASH;
+                            continue;
+                        case '<':
+                            fauxTagName.setLength(0);
+                            state = State.LESS_THAN;
                             continue;
                         default:
                             throw newDatatypeException(
@@ -102,6 +108,41 @@ public final class ScriptDocumentation extends CdoCdcPair {
                             continue;
                         default:
                             continue;
+                    }
+                case LESS_THAN:
+                    switch (c) {
+                        case '/':
+                            state = State.SLASH_AFTER_LESS_THAN;
+                            continue;
+                        default:
+                            throw newDatatypeException(
+                                    "Expected space, tab, newline, or slash but"
+                                            + " found \u201c<\u201d instead.");
+                    }
+                case SLASH_AFTER_LESS_THAN:
+                    if (Character.isLetter(c)) {
+                        fauxTagName.append(c);
+                        state = State.LETTER_AFTER_SLASH_AFTER_LESS_THAN;
+                        continue;
+                    } else {
+                        throw newDatatypeException(
+                                "Expected space, tab, newline, or slash but"
+                                        + " found \u201c<\u201d instead.");
+                    }
+                case LETTER_AFTER_SLASH_AFTER_LESS_THAN:
+                    if (Character.isLetter(c) || Character.isDigit(c)) {
+                        fauxTagName.append(c);
+                        continue;
+                    } else if (c == '>') {
+                        String tagName = fauxTagName.toString();
+                        throw newDatatypeException(
+                                "Found \u201c</" + tagName
+                                        + ">\u201d in \u201cscript\u201d content."
+                                        + " Typo for \u201c</script>\u201d?", true);
+                    } else {
+                        throw newDatatypeException(
+                                "Expected space, tab, newline, or slash but"
+                                        + " found \u201c<\u201d instead.");
                     }
                 default:
                     throw newDatatypeException("Content ended prematurely.");

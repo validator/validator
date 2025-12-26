@@ -2569,6 +2569,8 @@
     "html/parser/u10ffff-charref-novalid.html": "Character reference expands to an astral non-character (U+10ffff).",
     "html/parser/ufffe-charref-novalid.html": "Character reference expands to a non-character (U+fffe).",
     "html/parser/unassigned-charref-novalid.html": "Character reference expands to a permanently unassigned code point.",
+    "issues/1082-faux-end-tag-src-novalid.html": "End of file seen when expecting text or an end tag.",
+    "issues/1082-faux-end-tag-style-novalid.html": "End of file seen when expecting text or an end tag.",
     "issues/1889-importmap-0-not-json-novalid.html": "A script \u201cscript\u201d with a \u201ctype\u201d attribute whose value is \u201cimportmap\u201d must have valid JSON content.",
     "issues/1889-importmap-1-empty-json-novalid.html": "A script \u201cscript\u201d with a \u201ctype\u201d attribute whose value is \u201cimportmap\u201d must have valid JSON content.",
     "issues/1889-importmap-2-forbidden-property-novalid.html": "A \u201cscript\u201d element with a \u201ctype\u201d attribute whose value is \u201cimportmap\u201d must contain a JSON object with no properties other than \u201cimports\u201d, \u201cscopes\u201d, and \u201cintegrity\u201d.",
