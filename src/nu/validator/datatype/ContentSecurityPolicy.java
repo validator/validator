@@ -62,51 +62,58 @@ public class ContentSecurityPolicy extends AbstractDatatype {
         String policyText = literal.toString()
                 .replace("allow-downloads", "")
                 .replace("allow-presentation", "");
-        if (policyText.contains(",")) {
-            Policy.parseSerializedCSPList(policyText,
-                    (severity, message, policyIndex, directiveIndex,
-                            valueIndex) -> {
-                        if (message.contains("experimental directive")) {
-                            return;
-                        }
-                        String formattedMessage = message
-                            .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
-                            .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
-                                + " ";
-                        switch (severity) {
-                            case Error:
-                                errors.append(formattedMessage);
-                                break;
-                            case Warning:
-                                warnings.append(formattedMessage);
-                                break;
-                            case Info:
-                                others.append(formattedMessage);
-                                break;
-                        }
-                    });
-        } else {
-            Policy.parseSerializedCSP(policyText,
-                    (severity, message, directiveIndex, valueIndex) -> {
-                        if (message.contains("experimental directive")) {
-                            return;
-                        }
-                        String formattedMessage = message
-                            .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
-                            .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
-                                + " ";
-                        switch (severity) {
-                            case Error:
-                                errors.append(formattedMessage);
-                                break;
-                            case Warning:
-                                warnings.append(formattedMessage);
-                                break;
-                            case Info:
-                                others.append(formattedMessage);
-                                break;
-                        }
-                    });
+        try {
+            if (policyText.contains(",")) {
+                Policy.parseSerializedCSPList(policyText,
+                        (severity, message, policyIndex, directiveIndex,
+                                valueIndex) -> {
+                            if (message.contains("experimental directive")) {
+                                return;
+                            }
+                            String formattedMessage = message
+                                .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
+                                .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
+                                    + " ";
+                            switch (severity) {
+                                case Error:
+                                    errors.append(formattedMessage);
+                                    break;
+                                case Warning:
+                                    warnings.append(formattedMessage);
+                                    break;
+                                case Info:
+                                    others.append(formattedMessage);
+                                    break;
+                            }
+                        });
+            } else {
+                Policy.parseSerializedCSP(policyText,
+                        (severity, message, directiveIndex, valueIndex) -> {
+                            if (message.contains("experimental directive")) {
+                                return;
+                            }
+                            String formattedMessage = message
+                                .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
+                                .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
+                                    + " ";
+                            switch (severity) {
+                                case Error:
+                                    errors.append(formattedMessage);
+                                    break;
+                                case Warning:
+                                    warnings.append(formattedMessage);
+                                    break;
+                                case Info:
+                                    others.append(formattedMessage);
+                                    break;
+                            }
+                        });
+            }
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage() != null && e.getMessage().startsWith("string is not ascii")) {
+                throw newDatatypeException("Content Security Policy must contain only ASCII characters.");
+            }
+            throw newDatatypeException(e.getMessage());
         }
         if (errors.length() > 0) {
             throw newDatatypeException(errors.toString());
