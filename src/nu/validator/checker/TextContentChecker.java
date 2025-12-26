@@ -178,14 +178,19 @@ public final class TextContentChecker extends Checker {
             throws SAXException, ClassNotFoundException {
         if (getErrorHandler() != null) {
             Html5DatatypeException ex5 = (Html5DatatypeException) e;
+            String exceptionMessage = e.getMessage().split(": ")[1];
             String message = "The text content of element \u201c" + localName
                     + "\u201d was not in the required format: ";
             if (ex5.isWarning()) {
-                message = "Double-check the text content of element \u201c"
-                        + localName + "\u201d: ";
+                if (exceptionMessage.contains("Typo for")) {
+                    message = "";
+                } else {
+                    message = "Double-check the text content of element \u201c"
+                            + localName + "\u201d: ";
+                }
             }
             DatatypeMismatchException dme = new DatatypeMismatchException(
-                    message + e.getMessage().split(": ")[1],
+                    message + exceptionMessage,
                     getDocumentLocator(), datatypeClass, ex5.isWarning());
             getErrorHandler().error(dme);
         }
