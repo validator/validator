@@ -451,9 +451,7 @@ public class TestRunner extends MessageEmitterAdapter {
             reset();
             hasUnhandledInfo = false;
             infoMessage = null;
-            if (writeMessages) {
-                emitMessages = true;
-            }
+            emitMessages = true;
             try {
                 if (file.isDirectory()) {
                     recurseDirectory(file);
@@ -476,6 +474,33 @@ public class TestRunner extends MessageEmitterAdapter {
                 testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
                     reportedMessages.add(testFilename, infoMessage);
+                } else if (expectedMessages != null
+                        && expectedMessages.get(testFilename) == null) {
+                    try {
+                        err.println(String.format(
+                                "\"%s\": info: No expected message in"
+                                        + " messages file.",
+                                this.getFileURL(file)));
+                        err.flush();
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (expectedMessages != null
+                        && !infoMessage.equals(((javax.json.JsonString) expectedMessages.get(testFilename)).getString())) {
+                    try {
+                        err.println(String.format(
+                                "\"%s\": error: Expected \"%s\""
+                                        + " but instead encountered \"%s\".",
+                                this.getFileURL(file),
+                                expectedMessages.get(testFilename),
+                                infoMessage));
+                        err.flush();
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    // Message matched expectations - clear the unhandled flag
+                    hasUnhandledInfo = false;
                 }
             } else if (!hasUnhandledInfo) {
                 try {
@@ -658,9 +683,6 @@ public class TestRunner extends MessageEmitterAdapter {
             if (infoMessage == null) {
                 infoMessage = e.getMessage();
             }
-            if (emitMessages) {
-                emitMessage(e, "info");
-            }
             return;
         }
         if (emitMessages) {
@@ -772,6 +794,9 @@ public class TestRunner extends MessageEmitterAdapter {
         }
         if (tr.runTestSuite()) {
             if (tr.hasUnhandledWarning) {
+                System.exit(1);
+            }
+            if (!tr.isWriteMessages() && tr.hasUnhandledInfo) {
                 System.exit(1);
             }
             System.exit(0);
