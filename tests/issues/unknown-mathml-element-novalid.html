@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Unknown MathML Element Test</title>
+</head>
+<body>
+	<p>This document contains an unknown MathML element:</p>
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+		<mrow>
+			<mi>x</mi>
+			<mo>=</mo>
+			<unknownmathelement>unknown</unknownmathelement>
+			<mn>5</mn>
+		</mrow>
+	</math>
+	<p>The element above should trigger an error.</p>
+</body>
+</html>

@@ -839,6 +839,54 @@ public class Assertions extends Checker {
             "dns-prefetch", "icon", "manifest", "modulepreload", "pingback", "preconnect", "prefetch", "preload", "prerender", "stylesheet"
     };
 
+    private static final Set<String> HTML_ELEMENTS = new HashSet<>(Arrays.asList(
+            "a", "abbr", "acronym", "address", "annotation-xml", "applet", "area",
+            "article", "aside", "attachment", "audio", "b", "base", "basefont", "bdi",
+            "bdo", "bgsound", "big", "blockquote", "body", "br", "button", "canvas",
+            "caption", "center", "cite", "code", "col", "colgroup", "color-profile",
+            "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div",
+            "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font",
+            "font-face", "font-face-format", "font-face-name", "font-face-src",
+            "font-face-uri", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4",
+            "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image",
+            "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link",
+            "listing", "main", "map", "mark", "marquee", "menu", "meta", "meter",
+            "missing-glyph", "model", "nav", "nobr", "noembed", "noframes", "noscript",
+            "object", "ol", "optgroup", "option", "output", "p", "param", "picture",
+            "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s",
+            "samp", "script", "search", "section", "select", "selectedcontent", "slot",
+            "small", "source", "span", "strike", "strong", "style", "sub", "summary",
+            "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead",
+            "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"
+    ));
+
+    private static final Set<String> MATHML_ELEMENTS = new HashSet<>(Arrays.asList(
+            "annotation", "annotation-xml", "maction", "maligngroup", "malignmark", "math",
+            "menclose", "merror", "mfenced", "mfrac", "mglyph", "mi", "mlabeledtr",
+            "mlongdiv", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom",
+            "mprescripts", "mroot", "mrow", "ms", "mscarries", "mscarry", "msgroup",
+            "msline", "mspace", "msqrt", "msrow", "mstack", "mstyle", "msub", "msubsup",
+            "msup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "none",
+            "semantics"
+    ));
+
+    private static final Set<String> SVG_ELEMENTS = new HashSet<>(Arrays.asList(
+            "a", "altGlyph", "altGlyphDef", "altGlyphItem", "animate", "animateColor",
+            "animateMotion", "animateTransform", "circle", "clipPath", "color-profile",
+            "cursor", "defs", "desc", "ellipse", "feBlend", "feColorMatrix",
+            "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting",
+            "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA",
+            "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge",
+            "feMergeNode", "feMorphology", "feOffset", "fePointLight",
+            "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence", "filter",
+            "font", "font-face", "font-face-format", "font-face-name", "font-face-src",
+            "font-face-uri", "foreignObject", "g", "glyph", "glyphRef", "hkern", "image",
+            "line", "linearGradient", "marker", "mask", "metadata", "missing-glyph",
+            "mpath", "path", "pattern", "polygon", "polyline", "radialGradient", "rect",
+            "script", "set", "stop", "style", "svg", "switch", "symbol", "text",
+            "textPath", "title", "tref", "tspan", "use", "view", "vkern"
+    ));
+
     private static final String h1WarningMessage = "Consider using the"
             + " \u201Ch1\u201D element as a top-level heading only — or else"
             + " use the \u201Cheadingoffset\u201D attribute (otherwise, all"
@@ -2211,6 +2259,23 @@ public class Assertions extends Checker {
                 && "math".equals(atts.getValue("", "role"))) {
             warn("Element \u201Cmath\u201D does not need a"
                     + " \u201Crole\u201D attribute.");
+        }
+        if ("http://www.w3.org/1999/xhtml" == uri
+                && !localName.contains("-")
+                && !HTML_ELEMENTS.contains(localName)) {
+            err("The \u201C" + localName
+                    + "\u201D element is a completely-unknown element that"
+                    + " is not allowed anywhere in any HTML content.");
+        } else if ("http://www.w3.org/2000/svg" == uri
+                && !SVG_ELEMENTS.contains(localName)) {
+            err("The \u201C" + localName
+                    + "\u201D element is a completely-unknown element that"
+                    + " is not allowed anywhere in any SVG content.");
+        } else if ("http://www.w3.org/1998/Math/MathML" == uri
+                && !MATHML_ELEMENTS.contains(localName)) {
+            err("The \u201C" + localName
+                    + "\u201D element is a completely-unknown element that"
+                    + " is not allowed anywhere in any MathML content.");
         }
         if ("http://www.w3.org/1999/xhtml" == uri) {
             boolean controls = false;

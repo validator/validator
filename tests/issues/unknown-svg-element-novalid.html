@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Unknown SVG Element Test</title>
+</head>
+<body>
+	<p>This document contains an unknown SVG element:</p>
+	<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+		<rect x="10" y="10" width="30" height="30" fill="blue"/>
+		<unknownsvgelement x="50" y="50">This is an unknown SVG element</unknownsvgelement>
+	</svg>
+	<p>The element above should trigger an error.</p>
+</body>
+</html>
