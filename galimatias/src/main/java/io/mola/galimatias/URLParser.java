@@ -162,15 +162,15 @@ final class URLParser {
 
     private void handleIllegalCharacterError(String message, int codePoint) throws GalimatiasParseException {
         if (codePoint == ' ') {
-            message += ": space is not allowed";
+            message += ". Space is not allowed";
         } else if (codePoint == '\t') {
-            message += ": tab is not allowed";
+            message += ". Tab is not allowed";
         } else if (codePoint == '\n') {
-            message += ": line break is not allowed";
+            message += ". Line break is not allowed";
         } else if (codePoint == '\r') {
-            message += ": carriage return is not allowed";
+            message += ". Carriage return is not allowed";
         } else {
-            message += ": \u201c" + new String(Character.toChars(codePoint)) + "\u201d is not allowed";
+            message += ". \u201c" + new String(Character.toChars(codePoint)) + "\u201d is not allowed";
         }
         handleError(GalimatiasParseException.builder()
                 .withMessage(message)
@@ -365,7 +365,7 @@ final class URLParser {
 
                         // WHATWG URL: If c is not the EOF code point, not a URL code point, and not "%", parse error.
                         if (!isEOF && c != '%' && !isURLCodePoint(c)) {
-                            handleIllegalCharacterError("Illegal character in scheme data", c);
+                            handleIllegalCharacterError("Illegal character after \u201c" + scheme.substring(2) + ":\u201d", c);
                         }
 
                         if (c == '%') {
