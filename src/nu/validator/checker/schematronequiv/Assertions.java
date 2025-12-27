@@ -1865,6 +1865,9 @@ public class Assertions extends Checker {
                 stack[currentPtr].setOptionFound();
             } else if ("style" == localName) {
                 String styleContents = node.getTextContent().toString();
+                if (styleContents.startsWith("\uFEFF")) {
+                    styleContents = styleContents.substring(1);
+                }
                 int lineOffset = 0;
                 if (styleContents.startsWith("\n")) {
                     lineOffset = 1;

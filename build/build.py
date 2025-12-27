@@ -1296,6 +1296,9 @@ class Release():
         if not os.path.exists(vnuCmd):
             self.createRuntimeImage()
         execCmd(vnuCmd, svgTestArgs, True)
+        cssTestArgs = ["--skip-non-css"]
+        cssTestArgs.append(os.path.join(buildRoot, "tests", "css"))
+        execCmd(vnuCmd, cssTestArgs, True)
 
     def runSpecTests(self):
         if platform.system() == 'Windows':

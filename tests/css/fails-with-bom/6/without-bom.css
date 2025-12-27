@@ -1,0 +1,2 @@
+/* Comments can’t save you. As long as there’s a <whitespace-token> or
+ * <EOF-token> after the comment, you’ll still get a parse error. */
