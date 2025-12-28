@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Nested dl with same dt names - should not warn</title>
+<dl>
+  <dt>Term</dt>
+  <dd>
+    Outer definition
+    <dl>
+      <dt>Term</dt>
+      <dd>Inner definition in separate scope</dd>
+    </dl>
+  </dd>
+</dl>
