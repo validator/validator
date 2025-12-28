@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
       </tokenfilter>
     </filterchain>
   </loadresource>
-  <property name="build.java.target.version" value="8" />
+  <property name="build.java.target.version" value="11" />
   <property name="groupId" value="nu.validator" />
   <property name="artifactId" value="validator" />
   <property name="src" location="src" />
