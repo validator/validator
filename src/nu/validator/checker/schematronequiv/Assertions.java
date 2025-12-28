@@ -3067,17 +3067,16 @@ public class Assertions extends Checker {
                         && atts.getIndex("", "aria-label") < 0
                         && atts.getIndex("", "aria-labelledby") < 0) {
                     if (role != null) {
-                        err("An \u201Cimg\u201D element with accessible name"
-                                + " must not have a"
-                                + " \u201Crole\u201D attribute.");
-                    }
-                    if (hasAriaAttributesOtherThanAriaHidden) {
-                        err("An \u201Cimg\u201D element with no accessible name"
-                                + " must not have any"
-                                + " \u201Caria-*\u201D attributes other than"
-                                + " \u201Caria-hidden\u201D.");
-                    }
-                    if ((titleVal == null || "".equals(titleVal))) {
+                        err("An \u201Cimg\u201D element with a \u201Crole\u201D"
+                                + " attribute must also have an accessible"
+                                + " name (e.g., an \u201Calt\u201D attribute).");
+                    } else if (hasAriaAttributesOtherThanAriaHidden) {
+                        err("An \u201Cimg\u201D element with any"
+                                + " \u201Caria-*\u201D attributes"
+                                + " other than \u201Caria-hidden\u201D"
+                                + " must also have an accessible name."
+                                + " (e.g., an \u201Calt\u201D attribute).");
+                    } else if ((titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"
                                     + " \u201Calt\u201D attribute, except under"
@@ -3093,10 +3092,9 @@ public class Assertions extends Checker {
                 } else if (role != null) {
                     if ("".equals(atts.getValue("", "alt"))) {
                         // img with alt="" and role
-                        err("An \u201Cimg\u201D element which has an"
-                                + " \u201Calt\u201D attribute whose value is"
-                                + " the empty string must not have a"
-                                + " \u201Crole\u201D attribute.");
+                        err("An \u201Cimg\u201D element with a \u201Crole\u201D"
+                                + " attribute must not have an \u201Calt\u201D"
+                                + " attribute whose value is the empty string.");
                     } else {
                         // img with alt="some text" and role
                         for (String roleValue : roles) {
