@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - With document source</title>
+    <script type="speculationrules">
+    {
+        "prefetch": [
+            {
+                "source": "document",
+                "where": {
+                    "href_matches": "/articles/*"
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+</body>
+</html>

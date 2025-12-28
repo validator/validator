@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - Invalid eagerness</title>
+    <script type="speculationrules">
+    {
+        "prefetch": [
+            {
+                "source": "list",
+                "urls": ["/page1.html"],
+                "eagerness": "invalid"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+</body>
+</html>

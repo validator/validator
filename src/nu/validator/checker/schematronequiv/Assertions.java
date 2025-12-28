@@ -1589,6 +1589,8 @@ public class Assertions extends Checker {
 
     private boolean parsingScriptImportMap = false;
 
+    private boolean parsingScriptSpeculationRules = false;
+
     private int numberOfTemplatesDeep = 0;
 
     private int numberOfSvgAelementsDeep = 0;
@@ -2015,6 +2017,10 @@ public class Assertions extends Checker {
                 isImportMapValid(node.getTextContent().toString());
                 parsingScriptImportMap = false;
             }
+            if ("script" == localName && parsingScriptSpeculationRules) {
+                isSpeculationRulesValid(node.getTextContent().toString());
+                parsingScriptSpeculationRules = false;
+            }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
             warn("Attribute \u201Caria-activedescendant\u201D value should "
@@ -2161,6 +2167,366 @@ public class Assertions extends Checker {
         }
 
         return false;
+    }
+
+    private boolean isSpeculationRulesValid(String scriptContent) throws SAXException {
+        JsonStructure speculationRulesJson;
+        try {
+            JsonReader reader = Json.createReader(new StringReader(scriptContent));
+            speculationRulesJson = reader.readObject();
+        } catch (JsonException e) {
+            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
+                    + " whose value is \u201cspeculationrules\u201d must have valid"
+                    + " JSON content.");
+            return false;
+        }
+        if (!(speculationRulesJson instanceof Map)) {
+            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
+                    + " whose value is \u201cspeculationrules\u201d must contain a"
+                    + " JSON object.");
+            return false;
+        }
+
+        final Map<String, Object> speculationRulesObject = (Map<String, Object>) speculationRulesJson;
+
+        // Validate that only known top-level properties exist
+        for (String key : speculationRulesObject.keySet()) {
+            if (!"prefetch".equals(key) && !"prefetch_with_subresources".equals(key)) {
+                err("A \u201cscript\u201d element with a \u201ctype\u201d"
+                        + " attribute whose value is \u201cspeculationrules\u201d must"
+                        + " contain a JSON object with only \u201cprefetch\u201d"
+                        + " or \u201cprefetch_with_subresources\u201d properties.");
+                return false;
+            }
+        }
+
+        // Validate prefetch rules
+        if (speculationRulesObject.containsKey("prefetch")) {
+            if (!validateSpeculationRulesList("prefetch", speculationRulesObject.get("prefetch"))) {
+                return false;
+            }
+        }
+
+        // Validate prefetch_with_subresources rules
+        if (speculationRulesObject.containsKey("prefetch_with_subresources")) {
+            if (!validateSpeculationRulesList("prefetch_with_subresources", 
+                    speculationRulesObject.get("prefetch_with_subresources"))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validateSpeculationRulesList(String ruleType, Object rules) throws SAXException {
+        if (!(rules instanceof List)) {
+            err("The \u201c" + ruleType + "\u201d property in a speculation rules"
+                    + " object must be a JSON array.");
+            return false;
+        }
+
+        List<?> rulesList = (List<?>) rules;
+        for (Object rule : rulesList) {
+            if (!validateSpeculationRule(ruleType, rule)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validateSpeculationRule(String ruleType, Object rule) throws SAXException {
+        if (!(rule instanceof Map)) {
+            err("Each item in the \u201c" + ruleType + "\u201d array must be a JSON object.");
+            return false;
+        }
+
+        Map<String, Object> ruleObject = (Map<String, Object>) rule;
+
+        // Check for required properties and validate them
+        boolean hasSource = ruleObject.containsKey("source");
+        boolean hasUrls = ruleObject.containsKey("urls");
+        boolean hasWhere = ruleObject.containsKey("where");
+
+        if (hasSource) {
+            Object source = ruleObject.get("source");
+            if (!(source instanceof JsonString)) {
+                err("The \u201csource\u201d property in a speculation rule must be a string.");
+                return false;
+            }
+            String sourceValue = ((JsonString) source).getString();
+            if (!"list".equals(sourceValue) && !"document".equals(sourceValue)) {
+                err("The \u201csource\u201d property in a speculation rule must be"
+                        + " either \u201clist\u201d or \u201cdocument\u201d.");
+                return false;
+            }
+
+            // Validate based on source type
+            if ("list".equals(sourceValue)) {
+                if (!hasUrls) {
+                    err("A speculation rule with \u201csource\u201d: \u201clist\u201d"
+                            + " must have a \u201curls\u201d property.");
+                    return false;
+                }
+                if (hasWhere) {
+                    err("A speculation rule with \u201csource\u201d: \u201clist\u201d"
+                            + " must not have a \u201cwhere\u201d property.");
+                    return false;
+                }
+            } else if ("document".equals(sourceValue)) {
+                if (hasUrls) {
+                    err("A speculation rule with \u201csource\u201d: \u201cdocument\u201d"
+                            + " must not have a \u201curls\u201d property.");
+                    return false;
+                }
+            }
+        }
+
+        // Validate urls property if present
+        if (hasUrls) {
+            if (!validateUrlsList(ruleObject.get("urls"))) {
+                return false;
+            }
+        }
+
+        // Validate where property (predicate) if present
+        if (hasWhere) {
+            if (!validateDocumentRulePredicate(ruleObject.get("where"))) {
+                return false;
+            }
+        }
+
+        // Validate eagerness if present
+        if (ruleObject.containsKey("eagerness")) {
+            Object eagerness = ruleObject.get("eagerness");
+            if (!(eagerness instanceof JsonString)) {
+                err("The \u201ceagerness\u201d property in a speculation rule must be a string.");
+                return false;
+            }
+            String eagernessValue = ((JsonString) eagerness).getString();
+            if (!"immediate".equals(eagernessValue) && !"eager".equals(eagernessValue) 
+                    && !"moderate".equals(eagernessValue) && !"conservative".equals(eagernessValue)) {
+                err("The \u201ceagerness\u201d property in a speculation rule must be"
+                        + " one of: \u201cimmediate\u201d, \u201ceager\u201d,"
+                        + " \u201cmoderate\u201d, or \u201cconservative\u201d.");
+                return false;
+            }
+        }
+
+        // Validate referrer_policy if present
+        if (ruleObject.containsKey("referrer_policy")) {
+            Object referrerPolicy = ruleObject.get("referrer_policy");
+            if (!(referrerPolicy instanceof JsonString)) {
+                err("The \u201creferrer_policy\u201d property in a speculation rule must be a string.");
+                return false;
+            }
+            // Note: We don't validate specific referrer policy values as that's handled elsewhere
+        }
+
+        // Validate expects_no_vary_search if present
+        if (ruleObject.containsKey("expects_no_vary_search")) {
+            Object expectsNoVarySearch = ruleObject.get("expects_no_vary_search");
+            if (!(expectsNoVarySearch instanceof JsonString)) {
+                err("The \u201cexpects_no_vary_search\u201d property in a speculation"
+                        + " rule must be a string.");
+                return false;
+            }
+        }
+
+        // Validate target_hint if present
+        if (ruleObject.containsKey("target_hint")) {
+            Object targetHint = ruleObject.get("target_hint");
+            if (!(targetHint instanceof JsonString)) {
+                err("The \u201ctarget_hint\u201d property in a speculation rule must be a string.");
+                return false;
+            }
+            String targetHintValue = ((JsonString) targetHint).getString();
+            if (!"_self".equals(targetHintValue) && !"_blank".equals(targetHintValue)) {
+                err("The \u201ctarget_hint\u201d property in a speculation rule must be"
+                        + " either \u201c_self\u201d or \u201c_blank\u201d.");
+                return false;
+            }
+        }
+
+        // Validate requires if present
+        if (ruleObject.containsKey("requires")) {
+            if (!validateRequirements(ruleObject.get("requires"))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validateUrlsList(Object urls) throws SAXException {
+        if (!(urls instanceof List)) {
+            err("The \u201curls\u201d property in a speculation rule must be a JSON array.");
+            return false;
+        }
+
+        List<?> urlsList = (List<?>) urls;
+        for (Object url : urlsList) {
+            if (!(url instanceof JsonString)) {
+                err("Each item in the \u201curls\u201d array must be a string.");
+                return false;
+            }
+            String urlString = ((JsonString) url).getString();
+            if (!isValidURL(urlString)) {
+                err("The \u201curls\u201d array in a speculation rule must only"
+                        + " contain valid URL strings.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validateDocumentRulePredicate(Object predicate) throws SAXException {
+        if (!(predicate instanceof Map)) {
+            err("The \u201cwhere\u201d property in a speculation rule must be a JSON object.");
+            return false;
+        }
+
+        Map<String, Object> predicateObject = (Map<String, Object>) predicate;
+
+        // Check which type of predicate this is
+        if (predicateObject.containsKey("and")) {
+            return validateDocumentRuleConjunction(predicateObject.get("and"));
+        } else if (predicateObject.containsKey("or")) {
+            return validateDocumentRuleDisjunction(predicateObject.get("or"));
+        } else if (predicateObject.containsKey("not")) {
+            return validateDocumentRuleNegation(predicateObject.get("not"));
+        } else if (predicateObject.containsKey("href_matches")) {
+            return validateUrlPatternPredicate(predicateObject.get("href_matches"));
+        } else if (predicateObject.containsKey("selector_matches")) {
+            return validateSelectorPredicate(predicateObject.get("selector_matches"));
+        } else if (predicateObject.containsKey("relative_to")) {
+            // relative_to is allowed and can be combined with other predicates
+            Object relativeTo = predicateObject.get("relative_to");
+            if (!(relativeTo instanceof JsonString)) {
+                err("The \u201crelative_to\u201d property must be a string.");
+                return false;
+            }
+            String relativeToValue = ((JsonString) relativeTo).getString();
+            if (!"document".equals(relativeToValue) && !"ruleset".equals(relativeToValue)) {
+                err("The \u201crelative_to\u201d property must be either"
+                        + " \u201cdocument\u201d or \u201cruleset\u201d.");
+                return false;
+            }
+            // Check for other predicate types alongside relative_to
+            for (String key : predicateObject.keySet()) {
+                if ("relative_to".equals(key)) continue;
+                if ("href_matches".equals(key)) {
+                    return validateUrlPatternPredicate(predicateObject.get(key));
+                } else if ("selector_matches".equals(key)) {
+                    return validateSelectorPredicate(predicateObject.get(key));
+                } else if ("and".equals(key) || "or".equals(key) || "not".equals(key)) {
+                    // These should be validated above
+                    return true;
+                } else {
+                    err("Unknown property \u201c" + key + "\u201d in document rule predicate.");
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            err("A document rule predicate must contain one of: \u201cand\u201d,"
+                    + " \u201cor\u201d, \u201cnot\u201d, \u201chref_matches\u201d,"
+                    + " or \u201cselector_matches\u201d.");
+            return false;
+        }
+    }
+
+    private boolean validateDocumentRuleConjunction(Object clauses) throws SAXException {
+        if (!(clauses instanceof List)) {
+            err("The \u201cand\u201d property in a document rule predicate must be a JSON array.");
+            return false;
+        }
+
+        List<?> clausesList = (List<?>) clauses;
+        for (Object clause : clausesList) {
+            if (!validateDocumentRulePredicate(clause)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validateDocumentRuleDisjunction(Object clauses) throws SAXException {
+        if (!(clauses instanceof List)) {
+            err("The \u201cor\u201d property in a document rule predicate must be a JSON array.");
+            return false;
+        }
+
+        List<?> clausesList = (List<?>) clauses;
+        for (Object clause : clausesList) {
+            if (!validateDocumentRulePredicate(clause)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validateDocumentRuleNegation(Object clause) throws SAXException {
+        return validateDocumentRulePredicate(clause);
+    }
+
+    private boolean validateUrlPatternPredicate(Object patterns) throws SAXException {
+        if (patterns instanceof JsonString) {
+            // Single pattern is allowed
+            return true;
+        } else if (patterns instanceof List) {
+            List<?> patternsList = (List<?>) patterns;
+            for (Object pattern : patternsList) {
+                if (!(pattern instanceof JsonString)) {
+                    err("Each item in the \u201chref_matches\u201d array must be a string.");
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            err("The \u201chref_matches\u201d property must be a string or an array of strings.");
+            return false;
+        }
+    }
+
+    private boolean validateSelectorPredicate(Object selectors) throws SAXException {
+        if (selectors instanceof JsonString) {
+            // Single selector is allowed
+            return true;
+        } else if (selectors instanceof List) {
+            List<?> selectorsList = (List<?>) selectors;
+            for (Object selector : selectorsList) {
+                if (!(selector instanceof JsonString)) {
+                    err("Each item in the \u201cselector_matches\u201d array must be a string.");
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            err("The \u201cselector_matches\u201d property must be a string or an array of strings.");
+            return false;
+        }
+    }
+
+    private boolean validateRequirements(Object requirements) throws SAXException {
+        if (!(requirements instanceof List)) {
+            err("The \u201crequires\u201d property in a speculation rule must be a JSON array.");
+            return false;
+        }
+
+        List<?> requirementsList = (List<?>) requirements;
+        for (Object requirement : requirementsList) {
+            if (!(requirement instanceof JsonString)) {
+                err("Each item in the \u201crequires\u201d array must be a string.");
+                return false;
+            }
+            String reqValue = ((JsonString) requirement).getString();
+            if (!"anonymous-client-ip-when-cross-origin".equals(reqValue)) {
+                err("The only allowed value for items in the \u201crequires\u201d array"
+                        + " is \u201canonymous-client-ip-when-cross-origin\u201d.");
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -3417,6 +3783,14 @@ public class Assertions extends Checker {
                                     + " a \u201Csrc\u201D attribute.");
                         }
                         parsingScriptImportMap = true;
+                    } else if ("speculationrules".equals(scriptType)) {
+                        if (atts.getIndex("", "src") > -1) {
+                            err("A \u201cscript\u201d element with a"
+                                    + " \u201ctype\u201d attribute whose value"
+                                    + " is \u201cspeculationrules\u201d must not have"
+                                    + " a \u201Csrc\u201D attribute.");
+                        }
+                        parsingScriptSpeculationRules = true;
                     }
                 }
             }

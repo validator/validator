@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - With requirements</title>
+    <script type="speculationrules">
+    {
+        "prefetch": [
+            {
+                "source": "list",
+                "urls": ["/page1.html"],
+                "requires": ["anonymous-client-ip-when-cross-origin"]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+</body>
+</html>
