@@ -96,7 +96,7 @@ public final class DuplicateDtChecker extends Checker {
                 // Finished collecting text content for this dt
                 inDt = false;
                 if (!dtTextStack.isEmpty()) {
-                    String dtName = dtTextStack.removeLast().toString().trim().replaceAll("\\s+", " ");
+                    String dtName = dtTextStack.removeLast().toString().trim();
                     
                     // Only check for duplicates if the dt has non-empty text content
                     if (!dtName.isEmpty() && !dlStack.isEmpty()) {
