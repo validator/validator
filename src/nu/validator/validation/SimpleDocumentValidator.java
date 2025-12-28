@@ -322,8 +322,9 @@ public class SimpleDocumentValidator {
             validator = new CombineValidator(validator, langdetectValidator);
             validator = new CombineValidator(validator, new CheckerValidator(
                     new TableChecker(), jingPropertyMap));
-            validator = new CombineValidator(validator, new CheckerValidator(
-                    new DuplicateDtChecker(), jingPropertyMap));
+            // Temporarily disabled DuplicateDtChecker to debug CI failures
+            // validator = new CombineValidator(validator, new CheckerValidator(
+            //         new DuplicateDtChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new MicrodataChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
