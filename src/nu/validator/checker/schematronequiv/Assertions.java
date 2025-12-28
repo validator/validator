@@ -3417,6 +3417,13 @@ public class Assertions extends Checker {
                                     + " a \u201Csrc\u201D attribute.");
                         }
                         parsingScriptImportMap = true;
+                    } else if ("speculationrules".equals(scriptType)) {
+                        if (atts.getIndex("", "src") > -1) {
+                            err("A \u201cscript\u201d element with a"
+                                    + " \u201ctype\u201d attribute whose value"
+                                    + " is \u201cspeculationrules\u201d must not have"
+                                    + " a \u201Csrc\u201D attribute.");
+                        }
                     }
                 }
             }
