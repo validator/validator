@@ -39,33 +39,18 @@ import org.xml.sax.SAXException;
  * @version $Id$
  * @author copilot
  */
-public final class DuplicateDtChecker extends Checker {
+public class DuplicateDtChecker extends Checker {
 
-    private static final String XHTML_NS = "http://www.w3.org/1999/xhtml";
+    private static final String HTML_NS = "http://www.w3.org/1999/xhtml";
 
-    /**
-     * Stack to track nested dl elements. Each entry contains a map of dt names to their first occurrence locators.
-     */
     private final LinkedList<Map<String, Locator>> dlStack = new LinkedList<>();
-
-    /**
-     * Stack to track nested dt text content accumulation.
-     */
+    
     private final LinkedList<StringBuilder> dtTextStack = new LinkedList<>();
-
-    /**
-     * Flag to track if we are inside a dt element
-     */
+    
     private boolean inDt = false;
 
-    /**
-     * Current document locator
-     */
     private Locator locator = null;
 
-    /**
-     * Constructor.
-     */
     public DuplicateDtChecker() {
         super();
     }
@@ -73,12 +58,10 @@ public final class DuplicateDtChecker extends Checker {
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
-        if (XHTML_NS.equals(uri)) {
+        if (HTML_NS.equals(uri)) {
             if ("dl".equals(localName)) {
-                // Start tracking a new dl element
-                dlStack.addLast(new HashMap<String, Locator>());
+                dlStack.addLast(new HashMap<>());
             } else if ("dt".equals(localName) && !dlStack.isEmpty()) {
-                // Start collecting text content for this dt
                 inDt = true;
                 dtTextStack.addLast(new StringBuilder());
             }
@@ -88,33 +71,26 @@ public final class DuplicateDtChecker extends Checker {
     @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
-        if (XHTML_NS.equals(uri)) {
+        if (HTML_NS.equals(uri)) {
             if ("dl".equals(localName) && !dlStack.isEmpty()) {
-                // Finished processing this dl element
                 dlStack.removeLast();
             } else if ("dt".equals(localName) && inDt) {
-                // Finished collecting text content for this dt
                 inDt = false;
                 if (!dtTextStack.isEmpty()) {
-                    String dtName = dtTextStack.removeLast().toString().trim();
-                    
-                    // Only check for duplicates if the dt has non-empty text content
-                    if (!dtName.isEmpty() && !dlStack.isEmpty()) {
+                    String dtText = dtTextStack.removeLast().toString().trim();
+                    if (!dtText.isEmpty() && !dlStack.isEmpty()) {
                         Map<String, Locator> dtNames = dlStack.getLast();
-                        Locator firstOccurrence = dtNames.get(dtName);
-                        
+                        Locator firstOccurrence = dtNames.get(dtText);
                         if (firstOccurrence == null) {
-                            // First occurrence of this dt name
-                            dtNames.put(dtName, new LocatorImpl(locator));
+                            dtNames.put(dtText, new LocatorImpl(locator));
                         } else {
-                            // Duplicate dt name found
-                            warn("Duplicate \u201Cdt\u201D name \u201C" + dtName 
+                            warn("Duplicate \u201Cdt\u201D name \u201C" + dtText 
                                     + "\u201D in \u201Cdl\u201D element. "
                                     + "Within a single \u201Cdl\u201D element, "
                                     + "there should not be more than one "
                                     + "\u201Cdt\u201D element for each name.");
                             warn("The first occurrence of \u201Cdt\u201D name \u201C" 
-                                    + dtName + "\u201D was here.", firstOccurrence);
+                                    + dtText + "\u201D was here.", firstOccurrence);
                         }
                     }
                 }
