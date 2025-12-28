@@ -506,6 +506,11 @@ public class Assertions extends Checker {
                     "strong", "subscript", "superscript")
                 );
 
+    private static final Set<String> ELEMENTS_THAT_CAN_HAVE_A_NAME_ATTRIBUTE =
+            Set.of("button", "fieldset", "input", "output", "select",
+                    "textarea", "details", "form", "iframe", "object", "map",
+                    "meta", "slot");
+
     private static Map<String, Integer> ANCESTOR_MASK_BY_DESCENDANT = new HashMap<>();
 
     private static void registerProhibitedAncestor(String ancestor,
@@ -2305,6 +2310,13 @@ public class Assertions extends Checker {
                 boolean isEmptyAriaAttribute = "".equals(atts.getValue(i))
                     && attLocal.startsWith("aria-");
                 if (attUri.length() == 0) {
+                    if ("name".equals(attLocal)
+                            && !ELEMENTS_THAT_CAN_HAVE_A_NAME_ATTRIBUTE
+                                .contains(localName)) {
+                        info("The \u201Cname\u201D attribute is never allowed"
+                                + " on the \u201C" + localName + "\u201D"
+                                + " element.");
+                    }
                     if ("aria-hidden".equals(attLocal) && !isEmptyAriaAttribute) {
                         if (Arrays.binarySearch(
                                 ARIA_HIDDEN_NOT_ALLOWED_ELEMENTS,
