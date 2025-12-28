@@ -110,12 +110,15 @@ public final class DuplicateDtChecker extends Checker {
                         dtNames.put(dtName, dtLocator);
                     } else {
                         // Duplicate dt name found
-                        warn("Duplicate \u201Cdt\u201D name \u201C" + dtName 
-                                + "\u201D in \u201Cdl\u201D element. Consider using unique \u201Cdt\u201D names."
-                                + " Within a single \u201Cdl\u201D element, there should not be more than one"
-                                + " \u201Cdt\u201D element for each name.", dtLocator);
-                        warn("The first occurrence of \u201Cdt\u201D \u201C" + dtName 
-                                + "\u201D was here.", firstOccurrence);
+                        String warningMessage = String.format(
+                                "Duplicate \u201Cdt\u201D name \u201C%s\u201D in \u201Cdl\u201D element. "
+                                + "Consider using unique \u201Cdt\u201D names. "
+                                + "Within a single \u201Cdl\u201D element, there should not be more than one "
+                                + "\u201Cdt\u201D element for each name.",
+                                dtName);
+                        warn(warningMessage, dtLocator);
+                        warn(String.format("The first occurrence of \u201Cdt\u201D \u201C%s\u201D was here.", dtName),
+                                firstOccurrence);
                     }
                 }
                 
