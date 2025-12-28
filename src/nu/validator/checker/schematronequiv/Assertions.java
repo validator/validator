@@ -1589,6 +1589,8 @@ public class Assertions extends Checker {
 
     private boolean parsingScriptImportMap = false;
 
+    private boolean parsingScriptSpeculationRules = false;
+
     private int numberOfTemplatesDeep = 0;
 
     private int numberOfSvgAelementsDeep = 0;
@@ -2015,6 +2017,10 @@ public class Assertions extends Checker {
                 isImportMapValid(node.getTextContent().toString());
                 parsingScriptImportMap = false;
             }
+            if ("script" == localName && parsingScriptSpeculationRules) {
+                isSpeculationRulesValid(node.getTextContent().toString());
+                parsingScriptSpeculationRules = false;
+            }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
             warn("Attribute \u201Caria-activedescendant\u201D value should "
@@ -2161,6 +2167,160 @@ public class Assertions extends Checker {
         }
 
         return false;
+    }
+
+    private boolean isSpeculationRulesValid(String scriptContent) throws SAXException {
+        JsonStructure speculationRules;
+        try {
+            JsonReader reader = Json.createReader(new StringReader(scriptContent));
+            speculationRules = reader.read();
+        } catch (JsonException e) {
+            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
+                    + " whose value is \u201cspeculationrules\u201d must have valid"
+                    + " JSON content.");
+            return false;
+        }
+        if (!(speculationRules instanceof Map)) {
+            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
+                    + " whose value is \u201cspeculationrules\u201d must contain a"
+                    + " JSON object.");
+            return false;
+        }
+
+        final Map<String, Object> rulesObject = (Map<String, Object>) speculationRules;
+
+        // Valid top-level properties are speculation rule types like "prefetch", "prerender", etc.
+        for (Map.Entry<String, Object> entry : rulesObject.entrySet()) {
+            String ruleType = entry.getKey();
+            Object ruleValue = entry.getValue();
+
+            // Each rule type should be an array
+            if (!(ruleValue instanceof List)) {
+                err("The value of the \u201c" + ruleType + "\u201d"
+                        + " property within the content of a \u201cscript\u201d"
+                        + " element with a \u201ctype\u201d attribute whose value"
+                        + " is \u201cspeculationrules\u201d must be a JSON array.");
+                return false;
+            }
+
+            List<?> rules = (List<?>) ruleValue;
+            for (Object rule : rules) {
+                if (!(rule instanceof Map)) {
+                    err("Each item in the \u201c" + ruleType + "\u201d"
+                            + " array within the content of a \u201cscript\u201d"
+                            + " element with a \u201ctype\u201d attribute whose value"
+                            + " is \u201cspeculationrules\u201d must be a JSON object.");
+                    return false;
+                }
+
+                Map<String, Object> ruleObject = (Map<String, Object>) rule;
+
+                // Check for "source" field which is required
+                if (!ruleObject.containsKey("source")) {
+                    err("Each speculation rule in a \u201c" + ruleType + "\u201d"
+                            + " array must contain a \u201csource\u201d field.");
+                    return false;
+                }
+
+                Object source = ruleObject.get("source");
+                if (!(source instanceof JsonString)) {
+                    err("The \u201csource\u201d field in a speculation rule"
+                            + " must be a string.");
+                    return false;
+                }
+
+                String sourceValue = ((JsonString) source).getString();
+                
+                // If source is "list", must have "urls" field
+                if ("list".equals(sourceValue)) {
+                    if (!ruleObject.containsKey("urls")) {
+                        err("A speculation rule with \u201csource\u201d"
+                                + " set to \u201clist\u201d must contain a"
+                                + " \u201curls\u201d field.");
+                        return false;
+                    }
+                    
+                    Object urls = ruleObject.get("urls");
+                    if (!(urls instanceof List)) {
+                        err("The \u201curls\u201d field in a speculation rule"
+                                + " must be a JSON array.");
+                        return false;
+                    }
+                    
+                    // Validate each URL in the array
+                    List<?> urlsList = (List<?>) urls;
+                    for (Object url : urlsList) {
+                        if (!(url instanceof JsonString)) {
+                            err("Each item in the \u201curls\u201d array"
+                                    + " must be a string.");
+                            return false;
+                        }
+                    }
+                } else if ("document".equals(sourceValue)) {
+                    // Document rules need "where" or similar predicates
+                    // For now, just validate it's a valid source type
+                } else {
+                    // Unknown source types might be valid in future specs
+                    // Don't fail validation for extensibility
+                }
+
+                // Validate optional fields if present
+                if (ruleObject.containsKey("eagerness")) {
+                    Object eagerness = ruleObject.get("eagerness");
+                    if (!(eagerness instanceof JsonString)) {
+                        err("The \u201ceagerness\u201d field in a speculation rule"
+                                + " must be a string.");
+                        return false;
+                    }
+                    
+                    String eagernessValue = ((JsonString) eagerness).getString();
+                    if (!"immediate".equals(eagernessValue) 
+                            && !"eager".equals(eagernessValue)
+                            && !"moderate".equals(eagernessValue) 
+                            && !"conservative".equals(eagernessValue)) {
+                        err("The \u201ceagerness\u201d field must be one of:"
+                                + " \u201cimmediate\u201d, \u201ceager\u201d,"
+                                + " \u201cmoderate\u201d, or \u201cconservative\u201d.");
+                        return false;
+                    }
+                }
+
+                if (ruleObject.containsKey("referrer_policy")) {
+                    Object referrerPolicy = ruleObject.get("referrer_policy");
+                    if (!(referrerPolicy instanceof JsonString)) {
+                        err("The \u201creferrer_policy\u201d field in a speculation rule"
+                                + " must be a string.");
+                        return false;
+                    }
+                }
+
+                if (ruleObject.containsKey("requires")) {
+                    Object requires = ruleObject.get("requires");
+                    if (!(requires instanceof List)) {
+                        err("The \u201crequires\u201d field in a speculation rule"
+                                + " must be a JSON array.");
+                        return false;
+                    }
+                    
+                    List<?> requiresList = (List<?>) requires;
+                    for (Object req : requiresList) {
+                        if (!(req instanceof JsonString)) {
+                            err("Each item in the \u201crequires\u201d array"
+                                    + " must be a string.");
+                            return false;
+                        }
+                        String reqValue = ((JsonString) req).getString();
+                        if (!"anonymous-client-ip-when-cross-origin".equals(reqValue)) {
+                            err("The only valid value in the \u201crequires\u201d"
+                                    + " array is"
+                                    + " \u201canonymous-client-ip-when-cross-origin\u201d.");
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -3424,6 +3584,7 @@ public class Assertions extends Checker {
                                     + " is \u201cspeculationrules\u201d must not have"
                                     + " a \u201Csrc\u201D attribute.");
                         }
+                        parsingScriptSpeculationRules = true;
                     }
                 }
             }
