@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real World Speculation Rules Example</title>
+    <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "source": "list",
+          "urls": ["/home", "/about"]
+        }
+      ],
+      "prefetch": [
+        {
+          "source": "document",
+          "where": {
+            "and": [
+              {"href_matches": "/*"},
+              {"not": {"href_matches": "/logout"}}
+            ]
+          },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</body>
+</html>

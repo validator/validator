@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <title>Test Speculation Rules - Valid With Or Rule</title>
+     <script type="speculationrules">
+     {
+         "prefetch": [
+             {
+                 "source": "document",
+                 "where": {
+                     "or": [
+                         {"href_matches": "/articles/*"},
+                         {"href_matches": "/blog/*"}
+                     ]
+                 }
+             }
+         ]
+     }
+     </script>
+ </head>
+ <body>
+ </body>
+ </html>

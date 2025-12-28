@@ -29,6 +29,7 @@ import nu.validator.checker.LanguageDetectingChecker;
 import nu.validator.checker.MicrodataChecker;
 import nu.validator.checker.RdfaLiteChecker;
 import nu.validator.checker.NormalizationChecker;
+import nu.validator.checker.SpeculationRulesChecker;
 import nu.validator.checker.TextContentChecker;
 import nu.validator.checker.UncheckedSubtreeWarner;
 import nu.validator.checker.UsemapChecker;
@@ -43,9 +44,11 @@ import nu.validator.vendor.thaiopensource.validate.Validator;
 public class CheckerSchema implements Schema {
 
     public static final CheckerSchema DEBUG_CHECKER = new CheckerSchema(PropertyMap.EMPTY, DebugChecker.class);
-    
+
     public static final CheckerSchema NORMALIZATION_CHECKER = new CheckerSchema(PropertyMap.EMPTY, NormalizationChecker.class);
-    
+
+    public static final CheckerSchema SPECULATION_RULES_CHECKER = new CheckerSchema(PropertyMap.EMPTY, SpeculationRulesChecker.class);
+
     public static final CheckerSchema TEXT_CONTENT_CHECKER = new CheckerSchema(PropertyMap.EMPTY, TextContentChecker.class);
 
     public static final CheckerSchema UNCHECKED_SUBTREE_WARNER = new CheckerSchema(PropertyMap.EMPTY, UncheckedSubtreeWarner.class);
@@ -57,7 +60,7 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema DUPLICATE_DT_CHECKER = new CheckerSchema(PropertyMap.EMPTY, DuplicateDtChecker.class);
 
     public static final CheckerSchema ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Assertions.class);
-    
+
     public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);
 
     public static final CheckerSchema MICRODATA_CHECKER = new CheckerSchema(PropertyMap.EMPTY, MicrodataChecker.class);
@@ -69,9 +72,9 @@ public class CheckerSchema implements Schema {
                     LanguageDetectingChecker.class);
 
     private final PropertyMap properties;
-    
+
     private final Class<? extends Checker> klazz;
-    
+
     /**
      * @param properties
      * @param klazz

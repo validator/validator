@@ -50,7 +50,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 			} & v5only
 		script.attrs.type =
 			attribute type {
-				w:string "module" | w:string "importmap" | w:string "" | common.data.scripttype # XXX without charset parameter!
+				( w:string ""
+				| w:string "module"
+				| w:string "importmap"
+				| w:string "speculationrules"
+				| common.data.scripttype
+				)
 			}
 		script.attrs.nomodule =
 			attribute nomodule {

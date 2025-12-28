@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <title>Test Speculation Rules - Multiple Predicates</title>
+     <script type="speculationrules">
+     {
+         "prefetch": [
+             {
+                 "source": "document",
+                 "where": {
+                     "and": [{"href_matches": "*"}],
+                     "or": [{"href_matches": "*"}]
+                 }
+             }
+         ]
+     }
+     </script>
+ </head>
+ <body>
+ </body>
+ </html>

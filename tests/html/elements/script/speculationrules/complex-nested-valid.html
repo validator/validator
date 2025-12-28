@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <title>Test Speculation Rules - Complex Nested Rules</title>
+     <script type="speculationrules">
+     {
+         "prefetch": [
+             {
+                 "source": "document",
+                 "where": {
+                     "and": [
+                         {
+                             "or": [
+                                 {"href_matches": "/articles/*"},
+                                 {"href_matches": "/blog/*"}
+                             ]
+                         },
+                         {
+                             "not": {
+                                 "or": [
+                                     {"selector_matches": ".no-prefetch"},
+                                     {"href_matches": "/admin/*"}
+                                 ]
+                             }
+                         }
+                     ]
+                 }
+             }
+         ]
+     }
+     </script>
+ </head>
+ <body>
+ </body>
+ </html>
