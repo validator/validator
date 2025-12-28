@@ -2,3 +2,10 @@
 <meta charset=utf-8>
 <title>empty action is not valid</title>
 <form action=""></form>
+<!--
+This test should cause the checker to also emit an info message:
+
+“Info: To set the document’s location as the action for a form,
+       omit the "action" attribute”
+
+-->

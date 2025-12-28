@@ -3540,6 +3540,12 @@ public class Assertions extends Checker {
 
             if ("form" == localName) {
                 formElementIds.putAll(ids);
+                if (atts.getIndex("action") > -1
+                        && "".equals(atts.getValue("", "action"))) {
+                    warn("To set the document\u2019s location as the action for"
+                            + " a form, omit the \u201caction\u201d attribute.");
+                }
+
             }
 
             if (("button" == localName //
