@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - List With Where (invalid)</title>
+    <script type="speculationrules">
+    {
+        "prefetch": [
+            {
+                "source": "list",
+                "urls": ["/page1"],
+                "where": {
+                    "href_matches": "/*"
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+</body>
+</html>

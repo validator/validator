@@ -2189,17 +2189,31 @@ public class Assertions extends Checker {
 
         final Map<String, Object> rulesObject = (Map<String, Object>) speculationRules;
 
-        // Valid top-level properties are speculation rule types like "prefetch", "prerender", etc.
+        // Must have at least "prefetch" or "prerender"
+        if (!rulesObject.containsKey("prefetch") && !rulesObject.containsKey("prerender")) {
+            err("A speculation rules object must contain at least one of"
+                    + " \u201cprefetch\u201d or \u201cprerender\u201d properties.");
+            return false;
+        }
+
+        // Only allow "prefetch" and "prerender" properties
+        for (String key : rulesObject.keySet()) {
+            if (!"prefetch".equals(key) && !"prerender".equals(key)) {
+                err("A speculation rules object must only contain"
+                        + " \u201cprefetch\u201d and/or \u201cprerender\u201d"
+                        + " properties. Found invalid property: \u201c" + key + "\u201d.");
+                return false;
+            }
+        }
+
+        // Validate each rule type
         for (Map.Entry<String, Object> entry : rulesObject.entrySet()) {
             String ruleType = entry.getKey();
             Object ruleValue = entry.getValue();
 
-            // Each rule type should be an array
             if (!(ruleValue instanceof List)) {
                 err("The value of the \u201c" + ruleType + "\u201d"
-                        + " property within the content of a \u201cscript\u201d"
-                        + " element with a \u201ctype\u201d attribute whose value"
-                        + " is \u201cspeculationrules\u201d must be a JSON array.");
+                        + " property must be a JSON array.");
                 return false;
             }
 
@@ -2207,119 +2221,222 @@ public class Assertions extends Checker {
             for (Object rule : rules) {
                 if (!(rule instanceof Map)) {
                     err("Each item in the \u201c" + ruleType + "\u201d"
-                            + " array within the content of a \u201cscript\u201d"
-                            + " element with a \u201ctype\u201d attribute whose value"
-                            + " is \u201cspeculationrules\u201d must be a JSON object.");
+                            + " array must be a JSON object.");
                     return false;
                 }
 
                 Map<String, Object> ruleObject = (Map<String, Object>) rule;
 
-                // Check for "source" field which is required
+                // Validate that only allowed properties exist
+                for (String key : ruleObject.keySet()) {
+                    if (!"source".equals(key) && !"urls".equals(key) 
+                            && !"where".equals(key) && !"eagerness".equals(key)) {
+                        err("A speculation rule must only contain allowed properties."
+                                + " Found invalid property: \u201c" + key + "\u201d.");
+                        return false;
+                    }
+                }
+
+                // Check for required "source" field
                 if (!ruleObject.containsKey("source")) {
-                    err("Each speculation rule in a \u201c" + ruleType + "\u201d"
-                            + " array must contain a \u201csource\u201d field.");
+                    err("Each speculation rule must contain a \u201csource\u201d field.");
                     return false;
                 }
 
                 Object source = ruleObject.get("source");
                 if (!(source instanceof JsonString)) {
-                    err("The \u201csource\u201d field in a speculation rule"
-                            + " must be a string.");
+                    err("The \u201csource\u201d field must be a string.");
                     return false;
                 }
 
                 String sourceValue = ((JsonString) source).getString();
                 
-                // If source is "list", must have "urls" field
+                // Source must be "list" or "document"
+                if (!"list".equals(sourceValue) && !"document".equals(sourceValue)) {
+                    err("The \u201csource\u201d field must be either"
+                            + " \u201clist\u201d or \u201cdocument\u201d.");
+                    return false;
+                }
+                
+                // If source is "list", must have "urls" and must NOT have "where"
                 if ("list".equals(sourceValue)) {
                     if (!ruleObject.containsKey("urls")) {
-                        err("A speculation rule with \u201csource\u201d"
-                                + " set to \u201clist\u201d must contain a"
-                                + " \u201curls\u201d field.");
+                        err("A speculation rule with \u201csource\u201d set to"
+                                + " \u201clist\u201d must contain a \u201curls\u201d field.");
+                        return false;
+                    }
+                    
+                    if (ruleObject.containsKey("where")) {
+                        err("A speculation rule with \u201csource\u201d set to"
+                                + " \u201clist\u201d must not contain a \u201cwhere\u201d field.");
                         return false;
                     }
                     
                     Object urls = ruleObject.get("urls");
                     if (!(urls instanceof List)) {
-                        err("The \u201curls\u201d field in a speculation rule"
-                                + " must be a JSON array.");
+                        err("The \u201curls\u201d field must be a JSON array.");
                         return false;
                     }
                     
-                    // Validate each URL in the array
                     List<?> urlsList = (List<?>) urls;
+                    if (urlsList.isEmpty()) {
+                        err("The \u201curls\u201d array must contain at least one item.");
+                        return false;
+                    }
+                    
                     for (Object url : urlsList) {
                         if (!(url instanceof JsonString)) {
-                            err("Each item in the \u201curls\u201d array"
-                                    + " must be a string.");
+                            err("Each item in the \u201curls\u201d array must be a string.");
+                            return false;
+                        }
+                        String urlStr = ((JsonString) url).getString();
+                        if (urlStr.isEmpty()) {
+                            err("Each URL in the \u201curls\u201d array must be"
+                                    + " a non-empty string.");
                             return false;
                         }
                     }
                 } else if ("document".equals(sourceValue)) {
-                    // Document rules need "where" or similar predicates
-                    // For now, just validate it's a valid source type
-                } else {
-                    // Unknown source types might be valid in future specs
-                    // Don't fail validation for extensibility
+                    // If source is "document", must have "where" and must NOT have "urls"
+                    if (!ruleObject.containsKey("where")) {
+                        err("A speculation rule with \u201csource\u201d set to"
+                                + " \u201cdocument\u201d must contain a \u201cwhere\u201d field.");
+                        return false;
+                    }
+                    
+                    if (ruleObject.containsKey("urls")) {
+                        err("A speculation rule with \u201csource\u201d set to"
+                                + " \u201cdocument\u201d must not contain a \u201curls\u201d field.");
+                        return false;
+                    }
+                    
+                    Object where = ruleObject.get("where");
+                    if (!(where instanceof Map)) {
+                        err("The \u201cwhere\u201d field must be a JSON object.");
+                        return false;
+                    }
+                    
+                    if (!isDocumentRuleValid((Map<String, Object>) where)) {
+                        return false;
+                    }
                 }
 
-                // Validate optional fields if present
+                // Validate optional "eagerness" field
                 if (ruleObject.containsKey("eagerness")) {
                     Object eagerness = ruleObject.get("eagerness");
                     if (!(eagerness instanceof JsonString)) {
-                        err("The \u201ceagerness\u201d field in a speculation rule"
-                                + " must be a string.");
+                        err("The \u201ceagerness\u201d field must be a string.");
                         return false;
                     }
                     
                     String eagernessValue = ((JsonString) eagerness).getString();
-                    if (!"immediate".equals(eagernessValue) 
-                            && !"eager".equals(eagernessValue)
+                    if (!"eager".equals(eagernessValue) 
                             && !"moderate".equals(eagernessValue) 
                             && !"conservative".equals(eagernessValue)) {
                         err("The \u201ceagerness\u201d field must be one of:"
-                                + " \u201cimmediate\u201d, \u201ceager\u201d,"
-                                + " \u201cmoderate\u201d, or \u201cconservative\u201d.");
+                                + " \u201ceager\u201d, \u201cmoderate\u201d,"
+                                + " or \u201cconservative\u201d.");
                         return false;
-                    }
-                }
-
-                if (ruleObject.containsKey("referrer_policy")) {
-                    Object referrerPolicy = ruleObject.get("referrer_policy");
-                    if (!(referrerPolicy instanceof JsonString)) {
-                        err("The \u201creferrer_policy\u201d field in a speculation rule"
-                                + " must be a string.");
-                        return false;
-                    }
-                }
-
-                if (ruleObject.containsKey("requires")) {
-                    Object requires = ruleObject.get("requires");
-                    if (!(requires instanceof List)) {
-                        err("The \u201crequires\u201d field in a speculation rule"
-                                + " must be a JSON array.");
-                        return false;
-                    }
-                    
-                    List<?> requiresList = (List<?>) requires;
-                    for (Object req : requiresList) {
-                        if (!(req instanceof JsonString)) {
-                            err("Each item in the \u201crequires\u201d array"
-                                    + " must be a string.");
-                            return false;
-                        }
-                        String reqValue = ((JsonString) req).getString();
-                        if (!"anonymous-client-ip-when-cross-origin".equals(reqValue)) {
-                            err("The only valid value in the \u201crequires\u201d"
-                                    + " array is"
-                                    + " \u201canonymous-client-ip-when-cross-origin\u201d.");
-                            return false;
-                        }
                     }
                 }
             }
         }
+        return true;
+    }
+
+    private boolean isDocumentRuleValid(Map<String, Object> rule) throws SAXException {
+        // A document rule must have exactly one of: and, or, not, href_matches, selector_matches
+        int ruleTypeCount = 0;
+        String foundRuleType = null;
+        
+        if (rule.containsKey("and")) {
+            ruleTypeCount++;
+            foundRuleType = "and";
+        }
+        if (rule.containsKey("or")) {
+            ruleTypeCount++;
+            foundRuleType = "or";
+        }
+        if (rule.containsKey("not")) {
+            ruleTypeCount++;
+            foundRuleType = "not";
+        }
+        if (rule.containsKey("href_matches")) {
+            ruleTypeCount++;
+            foundRuleType = "href_matches";
+        }
+        if (rule.containsKey("selector_matches")) {
+            ruleTypeCount++;
+            foundRuleType = "selector_matches";
+        }
+        
+        if (ruleTypeCount == 0) {
+            err("A document rule must contain exactly one of: \u201cand\u201d,"
+                    + " \u201cor\u201d, \u201cnot\u201d, \u201chref_matches\u201d,"
+                    + " or \u201cselector_matches\u201d.");
+            return false;
+        }
+        
+        if (ruleTypeCount > 1) {
+            err("A document rule must contain only one rule type, but found multiple.");
+            return false;
+        }
+        
+        // Check for additional properties
+        for (String key : rule.keySet()) {
+            if (!key.equals(foundRuleType)) {
+                err("A document rule with \u201c" + foundRuleType + "\u201d"
+                        + " must not contain additional properties.");
+                return false;
+            }
+        }
+        
+        Object ruleValue = rule.get(foundRuleType);
+        
+        if ("and".equals(foundRuleType) || "or".equals(foundRuleType)) {
+            if (!(ruleValue instanceof List)) {
+                err("The \u201c" + foundRuleType + "\u201d field must be a JSON array.");
+                return false;
+            }
+            
+            List<?> clauses = (List<?>) ruleValue;
+            if (clauses.isEmpty()) {
+                err("The \u201c" + foundRuleType + "\u201d array must contain"
+                        + " at least one item.");
+                return false;
+            }
+            
+            for (Object clause : clauses) {
+                if (!(clause instanceof Map)) {
+                    err("Each item in the \u201c" + foundRuleType + "\u201d array"
+                            + " must be a JSON object.");
+                    return false;
+                }
+                if (!isDocumentRuleValid((Map<String, Object>) clause)) {
+                    return false;
+                }
+            }
+        } else if ("not".equals(foundRuleType)) {
+            if (!(ruleValue instanceof Map)) {
+                err("The \u201cnot\u201d field must be a JSON object.");
+                return false;
+            }
+            if (!isDocumentRuleValid((Map<String, Object>) ruleValue)) {
+                return false;
+            }
+        } else if ("href_matches".equals(foundRuleType) || "selector_matches".equals(foundRuleType)) {
+            if (!(ruleValue instanceof JsonString)) {
+                err("The \u201c" + foundRuleType + "\u201d field must be a string.");
+                return false;
+            }
+            String strValue = ((JsonString) ruleValue).getString();
+            if (strValue.isEmpty()) {
+                err("The \u201c" + foundRuleType + "\u201d field must be"
+                        + " a non-empty string.");
+                return false;
+            }
+        }
+        
         return true;
     }
 

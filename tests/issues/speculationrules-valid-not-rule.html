@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - Valid NOT Rule</title>
+    <script type="speculationrules">
+    {
+        "prerender": [
+            {
+                "source": "document",
+                "where": {
+                    "not": {
+                        "href_matches": "/admin/*"
+                    }
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+</body>
+</html>

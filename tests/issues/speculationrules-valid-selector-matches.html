@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - Valid Selector Matches</title>
+    <script type="speculationrules">
+    {
+        "prerender": [
+            {
+                "source": "document",
+                "where": {
+                    "selector_matches": ".article-link"
+                },
+                "eagerness": "conservative"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+</body>
+</html>

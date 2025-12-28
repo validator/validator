@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - Valid AND Rule</title>
+    <script type="speculationrules">
+    {
+        "prefetch": [
+            {
+                "source": "document",
+                "where": {
+                    "and": [
+                        {"href_matches": "/articles/*"},
+                        {"selector_matches": ".featured"}
+                    ]
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+</body>
+</html>
