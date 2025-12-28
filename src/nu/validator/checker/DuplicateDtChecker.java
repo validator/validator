@@ -23,8 +23,8 @@
 package nu.validator.checker;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.Stack;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -46,22 +46,22 @@ public final class DuplicateDtChecker extends Checker {
     /**
      * Stack to track nested dl elements. Each entry contains a map of dt names to their first occurrence locators.
      */
-    private Stack<Map<String, Locator>> dlStack = new Stack<>();
+    private final LinkedList<Map<String, Locator>> dlStack = new LinkedList<>();
 
     /**
-     * Accumulator for dt text content
+     * Stack to track nested dt text content accumulation.
      */
-    private StringBuilder dtTextContent = null;
-
-    /**
-     * Locator for the current dt element
-     */
-    private Locator dtLocator = null;
+    private final LinkedList<StringBuilder> dtTextStack = new LinkedList<>();
 
     /**
      * Flag to track if we are inside a dt element
      */
     private boolean inDt = false;
+
+    /**
+     * Current document locator
+     */
+    private Locator locator = null;
 
     /**
      * Constructor.
@@ -76,12 +76,11 @@ public final class DuplicateDtChecker extends Checker {
         if (XHTML_NS.equals(uri)) {
             if ("dl".equals(localName)) {
                 // Start tracking a new dl element
-                dlStack.push(new HashMap<String, Locator>());
+                dlStack.addLast(new HashMap<String, Locator>());
             } else if ("dt".equals(localName) && !dlStack.isEmpty()) {
                 // Start collecting text content for this dt
                 inDt = true;
-                dtTextContent = new StringBuilder();
-                dtLocator = new LocatorImpl(getDocumentLocator());
+                dtTextStack.addLast(new StringBuilder());
             }
         }
     }
@@ -92,38 +91,33 @@ public final class DuplicateDtChecker extends Checker {
         if (XHTML_NS.equals(uri)) {
             if ("dl".equals(localName) && !dlStack.isEmpty()) {
                 // Finished processing this dl element
-                dlStack.pop();
+                dlStack.removeLast();
             } else if ("dt".equals(localName) && inDt) {
                 // Finished collecting text content for this dt
                 inDt = false;
-                
-                // Normalize the text content (trim and collapse whitespace)
-                String dtName = dtTextContent.toString().trim().replaceAll("\\s+", " ");
-                
-                // Only check for duplicates if the dt has non-empty text content
-                if (!dtName.isEmpty() && !dlStack.isEmpty()) {
-                    Map<String, Locator> dtNames = dlStack.peek();
-                    Locator firstOccurrence = dtNames.get(dtName);
+                if (!dtTextStack.isEmpty()) {
+                    String dtName = dtTextStack.removeLast().toString().trim().replaceAll("\\s+", " ");
                     
-                    if (firstOccurrence == null) {
-                        // First occurrence of this dt name
-                        dtNames.put(dtName, dtLocator);
-                    } else {
-                        // Duplicate dt name found
-                        String warningMessage = String.format(
-                                "Duplicate \u201Cdt\u201D name \u201C%s\u201D in \u201Cdl\u201D element. "
-                                + "Consider using unique \u201Cdt\u201D names. "
-                                + "Within a single \u201Cdl\u201D element, there should not be more than one "
-                                + "\u201Cdt\u201D element for each name.",
-                                dtName);
-                        warn(warningMessage, dtLocator);
-                        warn(String.format("The first occurrence of \u201Cdt\u201D \u201C%s\u201D was here.", dtName),
-                                firstOccurrence);
+                    // Only check for duplicates if the dt has non-empty text content
+                    if (!dtName.isEmpty() && !dlStack.isEmpty()) {
+                        Map<String, Locator> dtNames = dlStack.getLast();
+                        Locator firstOccurrence = dtNames.get(dtName);
+                        
+                        if (firstOccurrence == null) {
+                            // First occurrence of this dt name
+                            dtNames.put(dtName, new LocatorImpl(locator));
+                        } else {
+                            // Duplicate dt name found
+                            warn("Duplicate \u201Cdt\u201D name \u201C" + dtName 
+                                    + "\u201D in \u201Cdl\u201D element. "
+                                    + "Within a single \u201Cdl\u201D element, "
+                                    + "there should not be more than one "
+                                    + "\u201Cdt\u201D element for each name.");
+                            warn("The first occurrence of \u201Cdt\u201D name \u201C" 
+                                    + dtName + "\u201D was here.", firstOccurrence);
+                        }
                     }
                 }
-                
-                dtTextContent = null;
-                dtLocator = null;
             }
         }
     }
@@ -131,17 +125,34 @@ public final class DuplicateDtChecker extends Checker {
     @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
-        if (inDt && dtTextContent != null) {
-            // Accumulate text content for the current dt element
-            dtTextContent.append(ch, start, length);
+        if (inDt && !dtTextStack.isEmpty()) {
+            dtTextStack.getLast().append(ch, start, length);
         }
+    }
+
+    @Override
+    public void setDocumentLocator(Locator locator) {
+        this.locator = locator;
+    }
+
+    @Override
+    public void startDocument() throws SAXException {
+        dlStack.clear();
+        dtTextStack.clear();
+        inDt = false;
+    }
+
+    @Override
+    public void endDocument() throws SAXException {
+        dlStack.clear();
+        dtTextStack.clear();
+        inDt = false;
     }
 
     @Override
     public void reset() {
         dlStack.clear();
-        dtTextContent = null;
-        dtLocator = null;
+        dtTextStack.clear();
         inDt = false;
     }
 }
