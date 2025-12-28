@@ -36,6 +36,7 @@ import java.util.Set;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import nu.validator.checker.InfoAwareErrorHandler;
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.DatatypeMismatchException;
 import nu.validator.checker.VnuBadAttrValueException;
@@ -86,7 +87,7 @@ import org.apache.log4j.Logger;
 import com.ibm.icu.text.Normalizer;
 
 @SuppressWarnings("unchecked")
-public class MessageEmitterAdapter implements ErrorHandler {
+public class MessageEmitterAdapter implements InfoAwareErrorHandler {
 
     private static final Logger log4j = Logger.getLogger(MessageEmitterAdapter.class);
 
@@ -665,9 +666,8 @@ public class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
+    @Override
     public void info(String str) throws SAXException {
-        if (emitter instanceof GnuMessageEmitter)
-            return;
         message(MessageType.INFO, new Exception(str), null, -1, -1, false,
                 null);
     }

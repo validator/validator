@@ -110,6 +110,18 @@ public abstract class Checker implements ContentHandler {
         }
     }
 
+    /**
+     * Emit an info-level message. The locator is used.
+     *
+     * @param message the info message
+     * @throws SAXException if something goes wrong
+     */
+    public void info(String message) throws SAXException {
+        if (errorHandler instanceof InfoAwareErrorHandler) {
+            ((InfoAwareErrorHandler) errorHandler).info(message);
+        }
+    }
+
     private HttpServletRequest request;
 
     public void setRequest(HttpServletRequest request) {
