@@ -49,22 +49,19 @@ public final class DuplicateDtChecker extends Checker {
     private Stack<Map<String, Locator>> dlStack = new Stack<>();
 
     /**
-     * Stack to track nested dt elements. Each entry contains the text content and locator for that dt level.
+     * Accumulator for dt text content
      */
-    private Stack<DtInfo> dtStack = new Stack<>();
+    private StringBuilder dtTextContent = null;
 
     /**
-     * Helper class to store dt element information
+     * Locator for the current dt element
      */
-    private static class DtInfo {
-        final StringBuilder textContent;
-        final Locator locator;
+    private Locator dtLocator = null;
 
-        DtInfo(Locator locator) {
-            this.textContent = new StringBuilder();
-            this.locator = locator;
-        }
-    }
+    /**
+     * Flag to track if we are inside a dt element
+     */
+    private boolean inDt = false;
 
     /**
      * Constructor.
@@ -81,8 +78,10 @@ public final class DuplicateDtChecker extends Checker {
                 // Start tracking a new dl element
                 dlStack.push(new HashMap<String, Locator>());
             } else if ("dt".equals(localName) && !dlStack.isEmpty()) {
-                // Start collecting text content for this dt (push onto stack)
-                dtStack.push(new DtInfo(new LocatorImpl(getDocumentLocator())));
+                // Start collecting text content for this dt
+                inDt = true;
+                dtTextContent = new StringBuilder();
+                dtLocator = new LocatorImpl(getDocumentLocator());
             }
         }
     }
@@ -94,12 +93,12 @@ public final class DuplicateDtChecker extends Checker {
             if ("dl".equals(localName) && !dlStack.isEmpty()) {
                 // Finished processing this dl element
                 dlStack.pop();
-            } else if ("dt".equals(localName) && !dtStack.isEmpty()) {
+            } else if ("dt".equals(localName) && inDt) {
                 // Finished collecting text content for this dt
-                DtInfo dtInfo = dtStack.pop();
+                inDt = false;
                 
                 // Normalize the text content (trim and collapse whitespace)
-                String dtName = dtInfo.textContent.toString().trim().replaceAll("\\s+", " ");
+                String dtName = dtTextContent.toString().trim().replaceAll("\\s+", " ");
                 
                 // Only check for duplicates if the dt has non-empty text content
                 if (!dtName.isEmpty() && !dlStack.isEmpty()) {
@@ -108,7 +107,7 @@ public final class DuplicateDtChecker extends Checker {
                     
                     if (firstOccurrence == null) {
                         // First occurrence of this dt name
-                        dtNames.put(dtName, dtInfo.locator);
+                        dtNames.put(dtName, dtLocator);
                     } else {
                         // Duplicate dt name found
                         String warningMessage = String.format(
@@ -117,11 +116,14 @@ public final class DuplicateDtChecker extends Checker {
                                 + "Within a single \u201Cdl\u201D element, there should not be more than one "
                                 + "\u201Cdt\u201D element for each name.",
                                 dtName);
-                        warn(warningMessage, dtInfo.locator);
+                        warn(warningMessage, dtLocator);
                         warn(String.format("The first occurrence of \u201Cdt\u201D \u201C%s\u201D was here.", dtName),
                                 firstOccurrence);
                     }
                 }
+                
+                dtTextContent = null;
+                dtLocator = null;
             }
         }
     }
@@ -129,15 +131,17 @@ public final class DuplicateDtChecker extends Checker {
     @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
-        if (!dtStack.isEmpty()) {
-            // Accumulate text content for the current (innermost) dt element
-            dtStack.peek().textContent.append(ch, start, length);
+        if (inDt && dtTextContent != null) {
+            // Accumulate text content for the current dt element
+            dtTextContent.append(ch, start, length);
         }
     }
 
     @Override
     public void reset() {
         dlStack.clear();
-        dtStack.clear();
+        dtTextContent = null;
+        dtLocator = null;
+        inDt = false;
     }
 }
