@@ -855,14 +855,6 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             }
         }
         if (msg != null && msg.contains(
-                "location as the action for a form, omit the")) {
-            if (type != MessageType.INFO) {
-                message(MessageType.INFO, message, systemId, oneBasedLine,
-                        oneBasedColumn, exact, start);
-                return;
-            }
-        }
-        if (msg != null && msg.contains(
                 "Bad value \u201Cdirectory\u201D for attribute “role”")) {
             if (type == MessageType.ERROR) {
                 if (this.errors > 0) {
