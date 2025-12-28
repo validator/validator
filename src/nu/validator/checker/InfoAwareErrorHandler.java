@@ -24,6 +24,7 @@ package nu.validator.checker;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Extension of ErrorHandler that adds support for info-level messages.
@@ -33,8 +34,8 @@ public interface InfoAwareErrorHandler extends ErrorHandler {
     /**
      * Emit an info-level message.
      *
-     * @param message the info message
+     * @param exception the parse exception containing the info message
      * @throws SAXException if something goes wrong
      */
-    void info(String message) throws SAXException;
+    void info(SAXParseException exception) throws SAXException;
 }

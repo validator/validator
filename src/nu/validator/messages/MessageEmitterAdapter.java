@@ -667,9 +667,33 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
     }
 
     @Override
+    public void info(SAXParseException e) throws SAXException {
+        info(e, false);
+    }
+
+    /**
+     * Convenience method for emitting info messages with just a string.
+     * This creates a SAXParseException without location information.
+     * For messages with location info, use the info(SAXParseException) method
+     * from InfoAwareErrorHandler interface.
+     *
+     * @param str the info message
+     * @throws SAXException if something goes wrong
+     */
     public void info(String str) throws SAXException {
         message(MessageType.INFO, new Exception(str), null, -1, -1, false,
                 null);
+    }
+
+    private void info(SAXParseException e, boolean exact) throws SAXException {
+        if (emitter == null) {
+            return;
+        }
+        if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
+            return;
+        }
+        throwIfTooManyMessages();
+        messageFromSAXParseException(MessageType.INFO, e, exact, null);
     }
 
     public void ioError(IOException e) throws SAXException {
@@ -878,7 +902,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         if (errorsOnly && type.getSuperType() == "info") {
             return;
         }
-        String uri = sourceCode.getUri();
+        String uri = sourceCode != null ? sourceCode.getUri() : null;
         if (oneBasedLine > -1
                 && (uri == systemId || (uri != null && uri.equals(systemId)))) {
             if (oneBasedColumn > -1) {
@@ -901,6 +925,11 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
     private void messageWithRange(MessageType type, Exception message,
             String systemId, int oneBasedLine, int oneBasedColumn, int[] start)
             throws SAXException {
+        if (sourceCode == null) {
+            messageWithoutExtract(type, message, systemId, oneBasedLine,
+                    oneBasedColumn);
+            return;
+        }
         if (start != null && !sourceCode.getIsCss()) {
             oneBasedColumn = oneBasedColumn + start[2];
         }
@@ -941,6 +970,11 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
     private void messageWithExact(MessageType type, Exception message,
             String systemId, int oneBasedLine, int oneBasedColumn, int[] start)
             throws SAXException {
+        if (sourceCode == null) {
+            messageWithoutExtract(type, message, systemId, oneBasedLine,
+                    oneBasedColumn);
+            return;
+        }
         if (start != null && !sourceCode.getIsCss()) {
             oneBasedColumn = oneBasedColumn + start[2];
         }
@@ -965,6 +999,10 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
 
     private void messageWithLine(MessageType type, Exception message,
             String systemId, int oneBasedLine) throws SAXException {
+        if (sourceCode == null) {
+            messageWithoutExtract(type, message, systemId, oneBasedLine, -1);
+            return;
+        }
         systemId = batchMode ? systemId : null;
         if (!sourceCode.isWithinKnownSource(oneBasedLine)) {
             throw new RuntimeException("Bug. Line out of range!");
@@ -984,7 +1022,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
     private void messageWithoutExtract(MessageType type, Exception message,
             String systemId, int oneBasedLine, int oneBasedColumn)
             throws SAXException {
-        if (systemId == null) {
+        if (systemId == null && sourceCode != null) {
             systemId = sourceCode.getUri();
         }
         startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine,

@@ -118,7 +118,22 @@ public abstract class Checker implements ContentHandler {
      */
     public void info(String message) throws SAXException {
         if (errorHandler instanceof InfoAwareErrorHandler) {
-            ((InfoAwareErrorHandler) errorHandler).info(message);
+            SAXParseException spe = new SAXParseException(message, locator);
+            ((InfoAwareErrorHandler) errorHandler).info(spe);
+        }
+    }
+
+    /**
+     * Emit an info-level message with specified locator.
+     *
+     * @param message the info message
+     * @param overrideLocator the locator to use
+     * @throws SAXException if something goes wrong
+     */
+    public void info(String message, Locator overrideLocator) throws SAXException {
+        if (errorHandler instanceof InfoAwareErrorHandler) {
+            SAXParseException spe = new SAXParseException(message, overrideLocator);
+            ((InfoAwareErrorHandler) errorHandler).info(spe);
         }
     }
 
