@@ -2541,12 +2541,12 @@ public class Assertions extends Checker {
                     if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
                             && OBSOLETE_ATTRIBUTES.get(attLocal).containsKey(localName)) {
                         String suggestion = OBSOLETE_ATTRIBUTES.get(attLocal).get(localName);
-                        errObsoleteAttribute(attLocal, localName, suggestion.isEmpty() ? "" : " " + suggestion);
+                        warnObsoleteAttribute(attLocal, localName, suggestion.isEmpty() ? "" : " " + suggestion);
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                         String[] elementNames = OBSOLETE_STYLE_ATTRS.get(
                                 attLocal);
                         if (Arrays.binarySearch(elementNames, localName) >= 0) {
-                            errObsoleteAttribute(attLocal, localName,
+                            warnObsoleteAttribute(attLocal, localName,
                                     " Use CSS instead.");
                         }
                     } else if (OBSOLETE_GLOBAL_ATTRIBUTES.containsKey(attLocal)) {
