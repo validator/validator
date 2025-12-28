@@ -3663,6 +3663,15 @@ public class Assertions extends Checker {
                     hasMetaCharset = true;
                 }
                 if (atts.getIndex("", "name") > -1) {
+                    if (atts.getIndex("", "itemprop") > -1) {
+                        info("Either remove the \u201Citemprop\u201D attribute"
+                                + " from this \u201Cmeta\u201D element, or else,"
+                                + " remove the \u201Cname\u201D attribute."
+                                + " Exactly one of the \u201Cname\u201D,"
+                                + " \u201Chttp-equiv\u201D, \u201Ccharset\u201D,"
+                                + " and \u201Citemprop\u201D attributes must"
+                                + " be specified.");
+                    }
                     if ("description".equals(atts.getValue("", "name"))) {
                         if (hasMetaDescription) {
                             err("A document must not include more than one"
@@ -3748,6 +3757,14 @@ public class Assertions extends Checker {
                     Collections.addAll(relList, //
                             atts.getValue("", "rel") //
                             .toLowerCase().split("\\s+"));
+                    if (atts.getIndex("", "itemprop") > -1) {
+                        info("Either remove the \u201Citemprop\u201D attribute"
+                                + " from this \u201Clink\u201D element, or else,"
+                                + " remove the \u201Crel\u201D attribute."
+                                + " A \u201Clink\u201D element must have either"
+                                + " a \u201Crel\u201D attribute, or an"
+                                + " \u201Citemprop\u201D attribute, but not both.");
+                    }
                 }
                 if (atts.getIndex("", "href") == -1
                         && atts.getIndex("", "imagesrcset") == -1
