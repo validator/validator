@@ -57,8 +57,8 @@ public final class DuplicateDtChecker extends Checker {
      * Helper class to store dt element information
      */
     private static class DtInfo {
-        StringBuilder textContent;
-        Locator locator;
+        final StringBuilder textContent;
+        final Locator locator;
 
         DtInfo(Locator locator) {
             this.textContent = new StringBuilder();
