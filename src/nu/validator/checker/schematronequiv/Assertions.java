@@ -3543,7 +3543,14 @@ public class Assertions extends Checker {
                     info("To set the document\u2019s location as the action for"
                             + " a form, omit the \u201caction\u201d attribute.");
                 }
+            }
 
+            if ("area" == localName) {
+                if (atts.getIndex("href") < 0 && atts.getIndex("alt") > -1) {
+                    info("Either remove the \u201calt\u201d attribute from this"
+                            + " \u201carea\u201d element, or else, add an"
+                            + " \u201chref\u201d attribute.");
+                }
             }
 
             if (("button" == localName //
