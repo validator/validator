@@ -3426,6 +3426,14 @@ public class Assertions extends Checker {
                     parsingScriptImportMap = true;
                 } else if (isDataBlock) {
                     // Data blocks: no script-specific attributes
+                    if (hasSrc) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " a \u201Csrc\u201D attribute.");
+                    }
                     if (atts.getIndex("", "async") >= 0) {
                         err("A \u201Cscript\u201D element with a"
                                 + " \u201Ctype\u201D attribute whose value is"
