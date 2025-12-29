@@ -370,7 +370,6 @@ jobs:
           jing-artifacts,
           langdetect-build,
           langdetect-artifacts,
-          maven-test,
           validator-artifacts,
           validator-build,
           validator-bundle,
