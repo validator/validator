@@ -32,9 +32,8 @@ import org.xml.sax.SAXException;
 
 /**
  * Checker for dl elements, to warn about “duplicate” dt names.
- * https://html.spec.whatwg.org/multipage/grouping-content.html#the-dl-element:the-dt-element-5
- * “Within a single dl element, there should not be more than one dt element
- * for each name.”
+ * https://whatwg.org/html/#the-dl-element:the-dt-element-5 : “Within a single
+ * dl element, there should not be more than one dt element for each name.”
  */
 public class DuplicateDtChecker extends Checker {
 
