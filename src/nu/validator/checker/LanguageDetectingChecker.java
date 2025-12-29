@@ -97,6 +97,8 @@ public class LanguageDetectingChecker extends Checker {
 
     private int currentOpenElementsWithSkipName = 0;
 
+    private int currentOpenElementsInIgnoredNamespace = 0;
+
     private int nonWhitespaceCharacterCount;
 
     private static final int MAX_CHARS = 30720;
@@ -108,9 +110,16 @@ public class LanguageDetectingChecker extends Checker {
     private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
             "he", "pnb", "ps", "sd", "ug", "ur" };
 
-    private static final String[] SKIP_NAMES = { "a", "button", "details",
-        "figcaption", "form", "li", "nav", "pre", "script", "select", "span",
-        "style", "summary", "td", "textarea", "th", "tr" };
+    private static final String[] SKIP_NAMES = { "script", "style", "template" };
+
+    private static final String[] BLOCK_LEVEL_NAMES = { "address", "article",
+        "aside", "audio", "blockquote", "br", "button", "canvas", "caption",
+        "center", "dd", "details", "dialog", "div", "dt", "embed", "fieldset",
+        "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5",
+        "h6", "header", "hgroup", "hr", "iframe", "img", "input", "legend", "li",
+        "listing", "main", "marquee", "menuitem", "meter", "nav", "object",
+        "option", "p", "pre", "progress", "rt", "section", "select", "summary",
+        "td", "textarea", "th", "video", "xmp" };
 
     static {
         if (!"0".equals(System.getProperty("nu.validator.checker.enableLangDetection"))) {
@@ -237,6 +246,7 @@ public class LanguageDetectingChecker extends Checker {
     private boolean shouldAppendToLangdetectContent() {
         return (inBody && currentOpenElementsWithSkipName < 1
                 && currentOpenElementsInDifferentLang < 1
+                && currentOpenElementsInIgnoredNamespace < 1
                 && nonWhitespaceCharacterCount < MAX_CHARS);
     }
 
@@ -753,6 +763,14 @@ public class LanguageDetectingChecker extends Checker {
     @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
+        if ("http://www.w3.org/2000/svg" == uri
+                || "http://www.w3.org/1998/Math/MathML" == uri) {
+            currentOpenElementsInIgnoredNamespace--;
+            if (currentOpenElementsInIgnoredNamespace < 0) {
+                currentOpenElementsInIgnoredNamespace = 0;
+            }
+            return;
+        }
         if ("http://www.w3.org/1999/xhtml" != uri) {
             elementContent.setLength(0);
             return;
@@ -760,6 +778,10 @@ public class LanguageDetectingChecker extends Checker {
         if (Arrays.binarySearch(SKIP_NAMES, localName) < 0 &&
                 nonWhitespaceCharacterCount < MAX_CHARS) {
             documentContent.append(elementContent);
+            // Add space after block-level elements
+            if (Arrays.binarySearch(BLOCK_LEVEL_NAMES, localName) >= 0) {
+                documentContent.append(" ");
+            }
             elementContent.setLength(0);
         }
         if ("body".equals(localName)) {
@@ -794,6 +816,7 @@ public class LanguageDetectingChecker extends Checker {
         inBody = false;
         currentOpenElementsInDifferentLang = 0;
         currentOpenElementsWithSkipName = 0;
+        currentOpenElementsInIgnoredNamespace = 0;
         nonWhitespaceCharacterCount = 0;
         elementContent = new StringBuilder();
         documentContent = new StringBuilder();
@@ -826,8 +849,18 @@ public class LanguageDetectingChecker extends Checker {
     @Override
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
-        if ("http://www.w3.org/1999/xhtml" != uri
-                || Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
+        // Handle SVG and MathML namespaces - ignore their content
+        if ("http://www.w3.org/2000/svg" == uri
+                || "http://www.w3.org/1998/Math/MathML" == uri) {
+            currentOpenElementsInIgnoredNamespace++;
+            return;
+        }
+        if ("http://www.w3.org/1999/xhtml" != uri) {
+            return;
+        }
+        // Track SKIP_NAMES elements before returning
+        if (Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
+            currentOpenElementsWithSkipName++;
             return;
         }
         if ("html".equals(localName) && "http://www.w3.org/1999/xhtml" == uri) {
@@ -859,6 +892,23 @@ public class LanguageDetectingChecker extends Checker {
         } else if ("body".equals(localName)) {
             inBody = true;
         } else if (inBody) {
+            // Add space before block-level elements
+            if (Arrays.binarySearch(BLOCK_LEVEL_NAMES, localName) >= 0
+                    && shouldAppendToLangdetectContent()) {
+                documentContent.append(" ");
+            }
+            // Extract alt attribute from img elements
+            if ("img".equals(localName)) {
+                for (int i = 0; i < atts.getLength(); i++) {
+                    if ("alt".equals(atts.getLocalName(i)) 
+                            && shouldAppendToLangdetectContent()) {
+                        String altText = atts.getValue(i);
+                        if (altText != null && !altText.isEmpty()) {
+                            documentContent.append(" ").append(altText).append(" ");
+                        }
+                    }
+                }
+            }
             if (currentOpenElementsInDifferentLang > 0) {
                 currentOpenElementsInDifferentLang++;
             } else {
@@ -872,9 +922,6 @@ public class LanguageDetectingChecker extends Checker {
                     }
                 }
             }
-        }
-        if (Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
-            currentOpenElementsWithSkipName++;
         }
     }
 
