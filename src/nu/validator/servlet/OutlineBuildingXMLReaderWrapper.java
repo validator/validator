@@ -117,18 +117,34 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // whether the element is hidden
         final private boolean hidden;
 
+        // headingoffset attribute value
+        final private int headingOffset;
+
+        // whether headingreset attribute is present
+        final private boolean headingReset;
+
         // the outline for a sectioning content element or a sectioning root
         // element consists of a list of one or more potentially nested sections
         final private Deque<Section> outline = new LinkedList<>();
 
-        public Element(int depth, String name, boolean hidden) {
+        public Element(int depth, String name, boolean hidden, int headingOffset, boolean headingReset) {
             this.depth = depth;
             this.name = name;
             this.hidden = hidden;
+            this.headingOffset = headingOffset;
+            this.headingReset = headingReset;
         }
 
         public boolean isHidden() {
             return hidden;
+        }
+
+        public int getHeadingOffset() {
+            return headingOffset;
+        }
+
+        public boolean hasHeadingReset() {
+            return headingReset;
         }
 
         public boolean equals(int depth, String name) {
@@ -338,6 +354,50 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     private static final Pattern excerptPattern = Pattern.compile("\\W*\\S*$");
 
     private static final Pattern whitespacePattern = Pattern.compile("\\s+");
+
+    /**
+     * Parse a non-negative integer attribute value.
+     * Returns -1 if the value is not a valid non-negative integer.
+     */
+    private int parseNonNegativeInteger(String value) {
+        if (value == null || value.isEmpty()) {
+            return -1;
+        }
+        try {
+            int result = Integer.parseInt(value.trim());
+            return result >= 0 ? result : -1;
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    /**
+     * Get an element's computed heading offset.
+     * Walks up the ancestor chain looking for headingoffset and headingreset attributes.
+     */
+    private int getComputedHeadingOffset() {
+        int offset = 0;
+        // Walk up the element stack from most recent (top) to root
+        for (Element element : elementStack) {
+            int nextOffset = element.getHeadingOffset();
+            if (nextOffset > 0) {
+                offset += nextOffset;
+            }
+            if (element.hasHeadingReset()) {
+                return offset;
+            }
+        }
+        return offset;
+    }
+
+    /**
+     * Get an element's computed heading level.
+     * Takes the base level (1-6) and adds the computed offset.
+     */
+    private int getComputedHeadingLevel(int baseLevel) {
+        int level = baseLevel + getComputedHeadingOffset();
+        return level > 9 ? 9 : level;
+    }
 
     /*
      * Returns the string excerpt.
@@ -569,7 +629,19 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         boolean hidden = atts.getIndex("", "hidden") >= 0
                 || "template".equals(localName);
-        elementStack.push(new Element(currentWalkDepth, localName, hidden));
+
+        int headingOffset = 0;
+        String headingOffsetAttr = atts.getValue("", "headingoffset");
+        if (headingOffsetAttr != null) {
+            int parsedOffset = parseNonNegativeInteger(headingOffsetAttr);
+            if (parsedOffset >= 0) {
+                headingOffset = parsedOffset;
+            }
+        }
+
+        boolean headingReset = atts.getIndex("", "headingreset") >= 0;
+
+        elementStack.push(new Element(currentWalkDepth, localName, hidden, headingOffset, headingReset));
 
         // If the top of the stack is a heading content element or an element
         // with a hidden attribute
@@ -589,7 +661,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // Push the element being entered onto the stack. (This causes the
             // algorithm to skip that element and any descendants of the
             // element.)
-            outlineStack.push(new Element(currentWalkDepth, localName, hidden));
+            outlineStack.push(new Element(currentWalkDepth, localName, hidden, headingOffset, headingReset));
             inHeadingContentOrHiddenElement = true;
             contentHandler.startElement(uri, localName, qName, atts);
             return;
@@ -614,7 +686,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             }
 
             // Let current outlinee be the element that is being entered.
-            currentOutlinee = new Element(currentWalkDepth, localName, hidden);
+            currentOutlinee = new Element(currentWalkDepth, localName, hidden, headingOffset, headingReset);
 
             // Let current section be a newly created section for the current
             // outlinee element.
@@ -635,7 +707,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // case of hgroup here, but instead just the h1-h6 case.
         if (Arrays.binarySearch(H1_TO_H6_ELEMENTS, localName) > -1
                 && currentOutlinee != null) {
-            int rank = localName.charAt(1) - '0';
+            int baseLevel = localName.charAt(1) - '0';
+            int rank = getComputedHeadingLevel(baseLevel);
 
             // If the current section has no heading,
             // let the element being entered be the heading for the current
@@ -703,7 +776,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // Push the element being entered onto the stack.
             // (This causes the algorithm to skip any descendants of the
             // element.)
-            outlineStack.push(new Element(currentWalkDepth, localName, hidden));
+            outlineStack.push(new Element(currentWalkDepth, localName, hidden, headingOffset, headingReset));
             inHeadingContentOrHiddenElement = true;
             currentSection.setHeadingElementName(localName);
         }

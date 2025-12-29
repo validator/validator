@@ -148,7 +148,9 @@ public class XhtmlOutlineEmitter {
             int currentDepth) throws IOException, SAXException {
         for (Section section : outline) {
             String headingName = section.getHeadingElementName();
-            if ("h1".equals(headingName)) {
+            int headingRank = section.getHeadingRank();
+
+            if (headingRank == 1) {
                 hasH1 = true;
                 hasH2 = false;
                 hasH3 = false;
@@ -158,7 +160,7 @@ public class XhtmlOutlineEmitter {
                 emittedDummyH3 = false;
                 emittedDummyH4 = false;
                 emittedDummyH5 = false;
-            } else if ("h2".equals(headingName)) {
+            } else if (headingRank == 2) {
                 hasH2 = true;
                 hasH3 = false;
                 hasH4 = false;
@@ -166,52 +168,45 @@ public class XhtmlOutlineEmitter {
                 emittedDummyH3 = false;
                 emittedDummyH4 = false;
                 emittedDummyH5 = false;
-            } else if ("h3".equals(headingName)) {
+            } else if (headingRank == 3) {
                 hasH3 = true;
                 hasH4 = false;
                 hasH5 = false;
                 emittedDummyH4 = false;
                 emittedDummyH5 = false;
-            } else if ("h4".equals(headingName)) {
+            } else if (headingRank == 4) {
                 hasH4 = true;
                 hasH5 = false;
                 emittedDummyH5 = false;
-            } else if ("h5".equals(headingName)) {
+            } else if (headingRank == 5) {
                 hasH5 = true;
             }
-            if ("h1".equals(headingName) || "h2".equals(headingName)
-                    || "h3".equals(headingName) || "h4".equals(headingName)
-                    || "h5".equals(headingName) || "h6".equals(headingName)) {
+            if (headingRank >= 1 && headingRank <= 9) {
                 StringBuilder headingText = section.getHeadingTextBuilder();
-                if (!"h1".equals(headingName) && !hasH1 && !emittedDummyH1) {
-                    emitMissingHeading("h1");
+                if (headingRank > 1 && !hasH1 && !emittedDummyH1) {
+                    emitMissingHeading("h1", 1);
                     emittedDummyH1 = true;
                 }
-                if (!"h1".equals(headingName) && !"h2".equals(headingName)
-                        && !hasH2 && !emittedDummyH2) {
-                    emitMissingHeading("h2");
+                if (headingRank > 2 && !hasH2 && !emittedDummyH2) {
+                    emitMissingHeading("h2", 2);
                     emittedDummyH2 = true;
                 }
-                if (!"h1".equals(headingName) && !"h2".equals(headingName)
-                        && !"h3".equals(headingName) && !hasH3
-                        && !emittedDummyH3) {
-                    emitMissingHeading("h3");
+                if (headingRank > 3 && !hasH3 && !emittedDummyH3) {
+                    emitMissingHeading("h3", 3);
                     emittedDummyH3 = true;
                 }
-                if (!"h1".equals(headingName) && !"h2".equals(headingName)
-                        && !"h3".equals(headingName)
-                        && !"h4".equals(headingName) && !hasH4
-                        && !emittedDummyH4) {
-                    emitMissingHeading("h4");
+                if (headingRank > 4 && !hasH4 && !emittedDummyH4) {
+                    emitMissingHeading("h4", 4);
                     emittedDummyH4 = true;
                 }
-                if ("h6".equals(headingName) && !hasH5 && !emittedDummyH5) {
-                    emitMissingHeading("h5");
+                if (headingRank == 6 && !hasH5 && !emittedDummyH5) {
+                    emitMissingHeading("h5", 5);
                     emittedDummyH5 = true;
                 }
-                emitter.startElementWithClass("p", headingName);
+                String levelClass = headingRank <= 6 ? "h" + headingRank : "h6";
+                emitter.startElementWithClass("p", levelClass);
                 emitter.startElementWithClass("span", "headinglevel");
-                emitter.characters(("<" + headingName + ">").toCharArray());
+                emitter.characters(("<h" + headingRank + ">").toCharArray());
                 emitter.endElement("span");
                 if (headingText.length() > 0) {
                     emitter.characters(
@@ -230,10 +225,10 @@ public class XhtmlOutlineEmitter {
         }
     }
 
-    private void emitMissingHeading(String headingName) throws SAXException {
+    private void emitMissingHeading(String headingName, int level) throws SAXException {
         emitter.startElementWithClass("p", headingName);
         emitter.startElementWithClass("span", "missingheadinglevel");
-        emitter.characters(("<" + headingName + ">").toCharArray());
+        emitter.characters(("<h" + level + ">").toCharArray());
         emitter.endElement("span");
         emitter.startElementWithClass("span", "missingheading");
         emitter.characters((" [missing]").toCharArray());
