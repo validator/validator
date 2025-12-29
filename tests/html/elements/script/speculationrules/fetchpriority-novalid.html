@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - With fetchpriority</title>
+    <script type="speculationrules" fetchpriority="high">
+    {
+      "prefetch": [{
+        "source": "list",
+        "urls": ["next.html"]
+      }]
+    }
+    </script>
+</head>
+<body>
+    <p>Test</p>
+</body>
+</html>

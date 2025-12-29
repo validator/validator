@@ -3370,9 +3370,10 @@ public class Assertions extends Checker {
                         JAVASCRIPT_MIME_TYPES.contains(scriptType);
                 boolean isModuleScript = "module".equals(scriptType);
                 boolean isImportMap = "importmap".equals(scriptType);
+                boolean isSpeculationRules = "speculationrules".equals(scriptType);
                 boolean isDataBlock = !scriptType.isEmpty() && 
                         !isClassicScript && !isModuleScript && !isImportMap &&
-                        !"speculationrules".equals(scriptType);
+                        !isSpeculationRules;
 
                 // Validate attributes based on script type
                 if (isImportMap) {
@@ -3424,6 +3425,48 @@ public class Assertions extends Checker {
                                 + " a \u201Cblocking\u201D attribute.");
                     }
                     parsingScriptImportMap = true;
+                } else if (isSpeculationRules) {
+                    // Speculation rules: only inline, no other script-specific attributes
+                    if (atts.getIndex("", "nomodule") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " a \u201Cnomodule\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "async") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " an \u201Casync\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "defer") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " a \u201Cdefer\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "blocking") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " a \u201Cblocking\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "crossorigin") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " a \u201Ccrossorigin\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "referrerpolicy") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " a \u201Creferrerpolicy\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "integrity") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " an \u201Cintegrity\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "fetchpriority") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=speculationrules\u201D must not have"
+                                + " a \u201Cfetchpriority\u201D attribute.");
+                    }
                 } else if (isDataBlock) {
                     // Data blocks: no script-specific attributes
                     if (hasSrc) {

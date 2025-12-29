@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - With blocking</title>
+    <script type="speculationrules" blocking="render">
+    {
+      "prefetch": [{
+        "source": "list",
+        "urls": ["next.html"]
+      }]
+    }
+    </script>
+</head>
+<body>
+    <p>Test</p>
+</body>
+</html>

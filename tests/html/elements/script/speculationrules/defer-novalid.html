@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Speculation Rules - With defer</title>
+    <script type="speculationrules" defer>
+    {
+      "prefetch": [{
+        "source": "list",
+        "urls": ["next.html"]
+      }]
+    }
+    </script>
+</head>
+<body>
+    <p>Test</p>
+</body>
+</html>
