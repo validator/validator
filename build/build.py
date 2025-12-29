@@ -1148,7 +1148,7 @@ class Release():
         # Verify the jar file is valid (not a placeholder or error page)
         jar_size = os.path.getsize(vnuJar)
         if jar_size < 1000000:
-            print(f"Error: {vnuJar} is too small ({jar_size} bytes), likely corrupted!")
+            print(f"Error: {vnuJar} is too small ({jar_size} bytes), likely corrupted!")  # nopep8
             sys.exit(1)
         print(f"vnu.jar size: {jar_size} bytes")
         self.updatePackageJsonAndReadme()
@@ -1775,11 +1775,12 @@ def isServiceUp(defaultReply):
 def getTaskChoices():
     return [
         'update-subtrees', 'dldeps', 'checkout', 'build', 'docker-build',
-        'docker-run', 'docker-push', 'bundle', 'npm-install', 'npm-release',
-        'maven-artifacts', 'maven-sign', 'maven-bundle', 'maven-release',
-        'maven-version-exists', 'image', 'jar', 'war', 'sign', 'localent',
-        'deploy', 'tar', 'script', 'test', 'test-specs', 'make-messages',
-        'check', 'self-test', 'clean', 'realclean', 'run', 'all', 'completion',
+        'docker-run', 'docker-push', 'bundle', 'npm-install',
+        'npm-release', 'maven-artifacts', 'maven-sign', 'maven-test',
+        'maven-bundle', 'maven-release', 'maven-version-exists', 'image',
+        'jar', 'war', 'sign', 'localent', 'deploy', 'tar', 'script',
+        'test', 'test-specs', 'make-messages', 'check', 'self-test',
+        'clean', 'realclean', 'run', 'all', 'completion',
     ]
 
 
