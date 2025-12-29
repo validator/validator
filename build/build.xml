@@ -762,6 +762,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.apache.commons" artifactId="commons-fileupload2-jakarta-servlet5" version="${commons-fileupload-version}"/>
       <dependency groupId="commons-io" artifactId="commons-io" version="${commons-io-version}"/>
       <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging-version}"/>
+      <dependency groupId="org.apache.commons" artifactId="commons-text" version="${commons-text-version}"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="org.eclipse.jetty.toolchain" artifactId="jetty-jakarta-servlet-api" version="${jakarta.servlet-api-version}"/>
       <dependency groupId="log4j" artifactId="log4j" version="${log4j-version}"/>
@@ -781,15 +782,15 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="css-validator/css-validator.jar"/>
       <zipfileset src="${jarsDir}/galimatias.jar"/>
       <zipfileset src="${jarsDir}/htmlparser.jar"/>
-      <zipfileset src="jing-trang/build/jing.jar"/>
+      <zipfileset src="${jing-shaded-jar}"/>
       <zipfileset src="${jarsDir}/langdetect.jar"/>
       <manifest>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
         <attribute name="Implementation-Version" value="${version}"/>
         <attribute name="Implementation-Vendor" value="http://validator.github.io/validator/"/>
       </manifest>
-      <service type="org.relaxng.datatype.DatatypeLibraryFactory">
-        <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
+      <service type="nu.validator.vendor.relaxng.datatype.DatatypeLibraryFactory">
+        <provider classname="nu.validator.vendor.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
         <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </jar>
@@ -819,6 +820,13 @@ DEALINGS IN THE SOFTWARE.
     <zip destfile="${validator-bundle-jar}">
       <zipfileset dir="${dist}/nu" prefix="nu" />
     </zip>
+  </target>
+
+  <target name="maven-test" depends="validator-artifacts">
+    <exec executable="bash" dir="${basedir}/tests/maven-integration" failonerror="true">
+      <arg value="test-maven-integration.sh"/>
+      <arg value="local"/>
+    </exec>
   </target>
 
   <property name="python-executable" value="python3"/>

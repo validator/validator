@@ -954,6 +954,23 @@ class Release():
     def signMavenArtifacts(self):
         self.sign(os.path.join(mavenArtifactsDir))
 
+    def testMavenArtifact(self):
+        print("Testing Maven artifact...")
+        testScriptPath = os.path.join(buildRoot, "tests", "maven-integration",
+                                      "test-maven-integration.sh")
+        if not os.path.exists(testScriptPath):
+            print(f"Error: Test script not found: {testScriptPath}")
+            sys.exit(1)
+
+        # Change to test directory and run the test script
+        testDir = os.path.join(buildRoot, "tests", "maven-integration")
+        originalDir = os.getcwd()
+        try:
+            os.chdir(testDir)
+            runCmd(["./test-maven-integration.sh", "local"])
+        finally:
+            os.chdir(originalDir)
+
     def createMavenBundle(self):
         print(f"Building {distDir}/validator-{self.version}-bundle.jar")
         runAnt(shlex.split(f"-Dversion={self.version} -f {self.buildXml}"),
@@ -2140,6 +2157,8 @@ def main(argv, script_name=None):
             release.createMavenArtifacts()
         elif task == 'maven-sign':
             release.signMavenArtifacts()
+        elif task == 'maven-test':
+            release.testMavenArtifact()
         elif task == 'maven-bundle':
             release.createMavenBundle()
         elif task == 'maven-release':

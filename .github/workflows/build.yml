@@ -335,6 +335,11 @@ jobs:
           ls ./build/dist
           python checker.py maven-artifacts
           python checker.py maven-sign
+      - name: Test Maven artifact locally before release
+        if: steps.check_version.outputs.exists == 'false'
+        shell: bash
+        run: |
+          python checker.py maven-test
       - name: Release new maven package
         if: steps.check_version.outputs.exists == 'false'
         shell: bash
@@ -365,6 +370,7 @@ jobs:
           jing-artifacts,
           langdetect-build,
           langdetect-artifacts,
+          maven-test,
           validator-artifacts,
           validator-build,
           validator-bundle,
