@@ -3359,65 +3359,226 @@ public class Assertions extends Checker {
                                 + " omitted altogether.)");
                     }
                 }
-                // src-less script
-                if (atts.getIndex("", "src") < 0) {
-                    if (atts.getIndex("", "charset") >= 0) {
-                        err("Element \u201Cscript\u201D must not have attribute \u201Ccharset\u201D unless attribute \u201Csrc\u201D is also specified.");
-                    }
-                    if (atts.getIndex("", "defer") >= 0) {
-                        err("Element \u201Cscript\u201D must not have attribute \u201Cdefer\u201D unless attribute \u201Csrc\u201D is also specified.");
+
+                // Determine script type
+                String scriptType = "";
+                if (atts.getIndex("", "type") > -1) {
+                    scriptType = atts.getValue("", "type").toLowerCase();
+                }
+                boolean hasSrc = atts.getIndex("", "src") >= 0;
+                boolean isClassicScript = scriptType.isEmpty() || 
+                        JAVASCRIPT_MIME_TYPES.contains(scriptType);
+                boolean isModuleScript = "module".equals(scriptType);
+                boolean isImportMap = "importmap".equals(scriptType);
+                boolean isDataBlock = !scriptType.isEmpty() && 
+                        !isClassicScript && !isModuleScript && !isImportMap &&
+                        !"speculationrules".equals(scriptType);
+
+                // Validate attributes based on script type
+                if (isImportMap) {
+                    // Import maps: only inline, no other script-specific attributes
+                    if (hasSrc) {
+                        err("A \u201cscript\u201d element with a"
+                                + " \u201ctype\u201d attribute whose value"
+                                + " is \u201cimportmap\u201d must not have"
+                                + " a \u201Csrc\u201D attribute.");
                     }
                     if (atts.getIndex("", "async") >= 0) {
-                        if (!(atts.getIndex("", "type") > -1 && //
-                                "module".equals(atts.getValue("", "type") //
-                                        .toLowerCase()))) {
-                            err("Element \u201Cscript\u201D must not have"
-                                    + " attribute \u201Casync\u201D unless"
-                                    + " attribute \u201Csrc\u201D is also"
-                                    + " specified or unless attribute"
-                                    + " \u201Ctype\u201D is specified with"
-                                    + " value \u201Cmodule\u201D.");
-                        }
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " an \u201Casync\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "nomodule") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " a \u201Cnomodule\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "defer") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " a \u201Cdefer\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "crossorigin") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " a \u201Ccrossorigin\u201D attribute.");
                     }
                     if (atts.getIndex("", "integrity") >= 0) {
-                        err("Element \u201Cscript\u201D must not have attribute"
-                                + " \u201Cintegrity\u201D unless attribute"
-                                + " \u201Csrc\u201D is also specified.");
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " an \u201Cintegrity\u201D attribute.");
                     }
-                    if (atts.getIndex("", "fetchpriority") > -1) {
-                        warn("Element \u201Cscript\u201D should not have attribute"
-                                     + " \u201Cfetchpriority\u201D unless attribute"
-                                     + " \u201Csrc\u201D is also specified.");
+                    if (atts.getIndex("", "referrerpolicy") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " a \u201Creferrerpolicy\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "fetchpriority") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " a \u201Cfetchpriority\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "blocking") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=importmap\u201D must not have"
+                                + " a \u201Cblocking\u201D attribute.");
+                    }
+                    parsingScriptImportMap = true;
+                } else if (isDataBlock) {
+                    // Data blocks: no script-specific attributes
+                    if (atts.getIndex("", "async") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " an \u201Casync\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "nomodule") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " a \u201Cnomodule\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "defer") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " a \u201Cdefer\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "crossorigin") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " a \u201Ccrossorigin\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "integrity") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " an \u201Cintegrity\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "referrerpolicy") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " a \u201Creferrerpolicy\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "fetchpriority") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " a \u201Cfetchpriority\u201D attribute.");
+                    }
+                    if (atts.getIndex("", "blocking") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Ctype\u201D attribute whose value is"
+                                + " neither a JavaScript MIME type, \u201Cmodule\u201D,"
+                                + " \u201Cimportmap\u201D, nor \u201Cspeculationrules\u201D"
+                                + " (i.e., a data block) must not have"
+                                + " a \u201Cblocking\u201D attribute.");
+                    }
+                } else if (isModuleScript) {
+                    // Module scripts
+                    if (atts.getIndex("", "nomodule") >= 0) {
+                        err("A \u201Cscript\u201D element with a"
+                                + " \u201Cnomodule\u201D attribute must not have a"
+                                + " \u201Ctype\u201D attribute with the value"
+                                + " \u201Cmodule\u201D.");
+                    }
+                    if (atts.getIndex("", "defer") >= 0) {
+                        err("A \u201Cscript\u201D element with"
+                                + " \u201Ctype=module\u201D must not have"
+                                + " a \u201Cdefer\u201D attribute.");
+                    }
+                    if (!hasSrc) {
+                        // Inline module script
+                        if (atts.getIndex("", "integrity") >= 0) {
+                            err("An inline \u201Cscript\u201D element with"
+                                    + " \u201Ctype=module\u201D must not have"
+                                    + " an \u201Cintegrity\u201D attribute.");
+                        }
+                        if (atts.getIndex("", "fetchpriority") >= 0) {
+                            err("An inline \u201Cscript\u201D element with"
+                                    + " \u201Ctype=module\u201D must not have"
+                                    + " a \u201Cfetchpriority\u201D attribute.");
+                        }
+                        if (atts.getIndex("", "blocking") >= 0) {
+                            err("An inline \u201Cscript\u201D element with"
+                                    + " \u201Ctype=module\u201D must not have"
+                                    + " a \u201Cblocking\u201D attribute.");
+                        }
+                    }
+                } else if (isClassicScript) {
+                    // Classic scripts
+                    if (scriptType.isEmpty() || JAVASCRIPT_MIME_TYPES.contains(scriptType)) {
+                        if (!scriptType.isEmpty()) {
+                            warn("The \u201Ctype\u201D attribute is unnecessary for"
+                                    + " JavaScript resources.");
+                        }
+                    }
+                    if (!hasSrc) {
+                        // Inline classic script
+                        if (atts.getIndex("", "defer") >= 0) {
+                            err("An inline \u201Cscript\u201D element"
+                                    + " (i.e., a \u201Cscript\u201D element without"
+                                    + " a \u201Csrc\u201D attribute and with a"
+                                    + " \u201Ctype\u201D attribute that is either"
+                                    + " unspecified, empty, or a JavaScript MIME type)"
+                                    + " must not have a \u201Cdefer\u201D attribute.");
+                        }
+                        if (atts.getIndex("", "async") >= 0) {
+                            err("An inline classic \u201Cscript\u201D element"
+                                    + " (i.e., a \u201Cscript\u201D element without"
+                                    + " a \u201Csrc\u201D attribute and with a"
+                                    + " \u201Ctype\u201D attribute that is either"
+                                    + " unspecified, empty, or a JavaScript MIME type)"
+                                    + " must not have an \u201Casync\u201D attribute.");
+                        }
+                        if (atts.getIndex("", "integrity") >= 0) {
+                            err("An inline classic \u201Cscript\u201D element"
+                                    + " (i.e., a \u201Cscript\u201D element without"
+                                    + " a \u201Csrc\u201D attribute and with a"
+                                    + " \u201Ctype\u201D attribute that is either"
+                                    + " unspecified, empty, or a JavaScript MIME type)"
+                                    + " must not have an \u201Cintegrity\u201D attribute.");
+                        }
+                        if (atts.getIndex("", "fetchpriority") >= 0) {
+                            err("An inline classic \u201Cscript\u201D element"
+                                    + " (i.e., a \u201Cscript\u201D element without"
+                                    + " a \u201Csrc\u201D attribute and with a"
+                                    + " \u201Ctype\u201D attribute that is either"
+                                    + " unspecified, empty, or a JavaScript MIME type)"
+                                    + " must not have a \u201Cfetchpriority\u201D attribute.");
+                        }
+                        if (atts.getIndex("", "blocking") >= 0) {
+                            err("An inline classic \u201Cscript\u201D element"
+                                    + " (i.e., a \u201Cscript\u201D element without"
+                                    + " a \u201Csrc\u201D attribute and with a"
+                                    + " \u201Ctype\u201D attribute that is either"
+                                    + " unspecified, empty, or a JavaScript MIME type)"
+                                    + " must not have a \u201Cblocking\u201D attribute.");
+                        }
                     }
                 }
-                if (atts.getIndex("", "type") > -1) {
-                    String scriptType = atts.getValue("", "type").toLowerCase();
-                    if (JAVASCRIPT_MIME_TYPES.contains(scriptType)
-                            || "".equals(scriptType)) {
-                        warn("The \u201Ctype\u201D attribute is unnecessary for"
-                                + " JavaScript resources.");
-                    } else if ("module".equals(scriptType)) {
-                        if (atts.getIndex("", "defer") > -1) {
-                            err("A \u201Cscript\u201D element with a"
-                                    + " \u201Cdefer\u201D attribute must not have a"
-                                    + " \u201Ctype\u201D attribute with the value"
-                                    + " \u201Cmodule\u201D.");
-                        }
-                        if (atts.getIndex("", "nomodule") > -1) {
-                            err("A \u201Cscript\u201D element with a"
-                                    + " \u201Cnomodule\u201D attribute must not have a"
-                                    + " \u201Ctype\u201D attribute with the value"
-                                    + " \u201Cmodule\u201D.");
-                        }
-                    } else if ("importmap".equals(scriptType)) {
-                        if (atts.getIndex("", "src") > -1) {
-                            err("A \u201cscript\u201d element with a"
-                                    + " \u201ctype\u201d attribute whose value"
-                                    + " is \u201cimportmap\u201d must not have"
-                                    + " a \u201Csrc\u201D attribute.");
-                        }
-                        parsingScriptImportMap = true;
-                    }
+
+                // charset validation (inline scripts must not have charset)
+                if (!hasSrc && atts.getIndex("", "charset") >= 0) {
+                    err("Element \u201Cscript\u201D must not have attribute"
+                            + " \u201Ccharset\u201D unless attribute \u201Csrc\u201D"
+                            + " is also specified.");
                 }
             }
             else if ("style" == localName) {
