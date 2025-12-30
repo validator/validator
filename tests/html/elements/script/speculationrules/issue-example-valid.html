@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Title</title>
+</head>
+<body>
+<script type="speculationrules">
+{
+  "prefetch": [
+    {
+      "urls": ["/chapters/5"]
+    },
+    {
+      "eagerness": "moderate",
+      "where": {
+        "and": [
+          { "href_matches": "/*" },
+          { "not": { "selector_matches": ".no-prefetch" } }
+        ]
+      }
+    }
+  ]
+}
+</script>
+</body>
+</html>

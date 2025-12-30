@@ -170,25 +170,35 @@ public final class SpeculationRulesChecker extends Checker {
             return false;
         }
         JsonObject ruleObject = (JsonObject) ruleValue;
-        if (!ruleObject.containsKey("source")) {
-            err("Each rule in the \u201c" + ruleType + "\u201d array within"
-                    + " the content of a \u201cscript\u201d element with a"
-                    + " \u201ctype\u201d attribute whose value is"
-                    + " \u201cspeculationrules\u201d must have a"
-                    + " \u201csource\u201d property.");
-            return false;
-        }
-        JsonValue sourceValue = ruleObject.get("source");
-        if (!(sourceValue instanceof JsonString)) {
-            err("The \u201csource\u201d property in a speculation rule must"
-                    + " be a string.");
-            return false;
-        }
-        String source = ((JsonString) sourceValue).getString();
-        if (!"list".equals(source) && !"document".equals(source)) {
-            err("The \u201csource\u201d property in a speculation rule must"
-                    + " be either \u201clist\u201d or \u201cdocument\u201d.");
-            return false;
+        
+        // Determine the source: either from explicit "source" property or infer from "urls"/"where"
+        String source = null;
+        if (ruleObject.containsKey("source")) {
+            JsonValue sourceValue = ruleObject.get("source");
+            if (!(sourceValue instanceof JsonString)) {
+                err("The \u201csource\u201d property in a speculation rule must"
+                        + " be a string.");
+                return false;
+            }
+            source = ((JsonString) sourceValue).getString();
+            if (!"list".equals(source) && !"document".equals(source)) {
+                err("The \u201csource\u201d property in a speculation rule must"
+                        + " be either \u201clist\u201d or \u201cdocument\u201d.");
+                return false;
+            }
+        } else {
+            // Infer source from presence of "urls" or "where"
+            if (ruleObject.containsKey("urls")) {
+                source = "list";
+            } else if (ruleObject.containsKey("where")) {
+                source = "document";
+            } else {
+                err("A speculation rule must have either a \u201csource\u201d"
+                        + " property, or \u201curls\u201d property (for list"
+                        + " rules), or \u201cwhere\u201d property (for document"
+                        + " rules).");
+                return false;
+            }
         }
         for (String key : ruleObject.keySet()) {
             if (!"source".equals(key) && !"urls".equals(key)
@@ -202,15 +212,13 @@ public final class SpeculationRulesChecker extends Checker {
         }
         if ("list".equals(source)) {
             if (!ruleObject.containsKey("urls")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201clist\u201d must have a \u201curls\u201d"
-                        + " property.");
+                err("A \u201clist\u201d speculation rule must have a"
+                        + " \u201curls\u201d property.");
                 return false;
             }
             if (ruleObject.containsKey("where")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201clist\u201d must not have a \u201cwhere\u201d"
-                        + " property.");
+                err("A \u201clist\u201d speculation rule must not have a"
+                        + " \u201cwhere\u201d property.");
                 return false;
             }
             if (!isUrlsArrayValid(ruleObject.get("urls"))) {
@@ -218,15 +226,13 @@ public final class SpeculationRulesChecker extends Checker {
             }
         } else if ("document".equals(source)) {
             if (!ruleObject.containsKey("where")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201cdocument\u201d must have a \u201cwhere\u201d"
-                        + " property.");
+                err("A \u201cdocument\u201d speculation rule must have a"
+                        + " \u201cwhere\u201d property.");
                 return false;
             }
             if (ruleObject.containsKey("urls")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201cdocument\u201d must not have a \u201curls\u201d"
-                        + " property.");
+                err("A \u201cdocument\u201d speculation rule must not have a"
+                        + " \u201curls\u201d property.");
                 return false;
             }
             if (!isDocumentRuleValid(ruleObject.get("where"))) {
