@@ -159,7 +159,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         assert !charOpen;
         assert lineNumber == oneBasedLine;
         attrs.clear();
-        attrs.addAttribute("id", "cl" + (oneBasedLine + lineOffset) + "c" + oneBasedColumn);
+        attrs.addAttribute("id", "cl" + (lineNumber + lineOffset) + "c" + oneBasedColumn);
         emitter.startElement("b", attrs);
         charOpen = true;
     }
@@ -169,7 +169,7 @@ public class XhtmlSourceHandler implements SourceHandler {
             throws SAXException {
         maybeOpen();
         assert rangeOpen == null;
-        rangeOpen = "l" + (oneBasedLine + lineOffset) + "c" + oneBasedColumn;
+        rangeOpen = "l" + (lineNumber + lineOffset) + "c" + oneBasedColumn;
         attrs.clear();
         attrs.addAttribute("id", rangeOpen);
         attrs.addAttribute("class", rangeOpen);
