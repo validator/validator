@@ -110,7 +110,7 @@ public class LanguageDetectingChecker extends Checker {
     private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
             "he", "pnb", "ps", "sd", "ug", "ur" };
 
-    private static final String[] SKIP_NAMES = { "script", "style", "template" };
+    private static final String[] SKIP_NAMES = { "pre", "script", "style", "template" };
 
     private static final String[] BLOCK_LEVEL_NAMES = { "address", "article",
         "aside", "audio", "blockquote", "br", "button", "canvas", "caption",
@@ -118,7 +118,7 @@ public class LanguageDetectingChecker extends Checker {
         "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5",
         "h6", "header", "hgroup", "hr", "iframe", "img", "input", "legend", "li",
         "listing", "main", "marquee", "menuitem", "meter", "nav", "object",
-        "option", "p", "pre", "progress", "rt", "section", "select", "summary",
+        "option", "p", "progress", "rt", "section", "select", "summary",
         "td", "textarea", "th", "video", "xmp" };
 
     static {
