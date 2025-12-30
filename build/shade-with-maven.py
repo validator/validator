@@ -48,6 +48,7 @@ def main():
 
         if result.returncode != 0:
             print("Maven install failed!")
+            print(f"STDOUT:\n{result.stdout}")
             print(f"STDERR:\n{result.stderr}")
             sys.exit(1)
 
@@ -72,6 +73,7 @@ def main():
 
         if result.returncode != 0:
             print("Maven install failed!")
+            print(f"STDOUT:\n{result.stdout}")
             print(f"STDERR:\n{result.stderr}")
             sys.exit(1)
 
