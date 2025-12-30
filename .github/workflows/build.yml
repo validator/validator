@@ -437,7 +437,7 @@ jobs:
       - name: Build vnu.jar
         run: python checker.py --version="$version" build
       - name: Rebuild tests/messages.json
-        run: pythong checker.py make-messages
+        run: python checker.py make-messages
       - name: Check if there are changes to messages.json
         run: git diff --exit-code tests/messages.json
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
