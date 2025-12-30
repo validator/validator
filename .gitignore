@@ -28,3 +28,4 @@ local-entities/
 node_modules/
 run-validator.sh
 .commit_message_update
+
