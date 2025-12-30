@@ -171,7 +171,7 @@ public final class SpeculationRulesChecker extends Checker {
         }
         JsonObject ruleObject = (JsonObject) ruleValue;
         
-        // Determine the source: either from explicit "source" property or infer from "urls"/"where"
+        // Determine the source type: either from explicit "source" property or infer from "urls"/"where"
         String source = null;
         if (ruleObject.containsKey("source")) {
             JsonValue sourceValue = ruleObject.get("source");
