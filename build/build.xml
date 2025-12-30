@@ -721,7 +721,7 @@ DEALINGS IN THE SOFTWARE.
     <delete file="${jing-sources-jar}"/>
     <delete file="${langdetect-sources-jar}"/>
   </target>
-  <target name="validator-artifacts" depends="dl-deps-antlib, validator-jar, validator-javadoc-jar, validator-sources-jar">
+  <target name="validator-artifacts" depends="dl-deps-antlib, validator-jar, validator-javadoc-jar, validator-sources-jar, jing-shade">
     <artifact:pom
       id="pom"
       groupId="nu.validator"
