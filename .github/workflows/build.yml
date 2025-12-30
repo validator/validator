@@ -76,7 +76,7 @@ jobs:
         run: |
           java -jar build/dist/vnu.jar site/nu-about.html
           python checker.py self-test
-          python checker.py test --verbose
+          python checker.py test
       - name: Test specs
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
