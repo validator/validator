@@ -432,10 +432,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Clean
+        run: python checker.py clean
       - name: Build vnu.jar
         run: python checker.py --version="$version" build
       - name: Rebuild tests/messages.json
-        run: make VNUJAR=../build/dist/vnu.jar  -C tests/ messages.json
+        run: pythong checker.py make-messages
       - name: Check if there are changes to messages.json
-        run: cd tests && git diff --exit-code messages.json
+        run: git diff --exit-code tests/messages.json
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
