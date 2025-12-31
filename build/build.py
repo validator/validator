@@ -1285,6 +1285,10 @@ class Release():
             'nu.validator.collections.test.SortedSetTest',
             'nu.validator.io.test.DataUriTest',
             'nu.validator.checker.test.SpeculationRulesCheckerTest',
+            'nu.validator.checker.test.AttributeUtilTest',
+            'nu.validator.datatype.test.DatatypeTest',
+            'nu.validator.checker.test.LocatorImplTest',
+            'nu.validator.checker.test.NormalizationCheckerTest',
         ]
         for testClass in testClasses:
             print(f"\nRunning {testClass}...")
