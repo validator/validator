@@ -841,6 +841,19 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         return nonDocumentErrors > 0;
     }
 
+    /**
+     * Checks if an exception represents a role=directory error, which should
+     * be treated as a warning (deprecated but not invalid).
+     */
+    protected static boolean isRoleDirectoryWarning(Exception e) {
+        if (e instanceof BadAttributeValueException) {
+            BadAttributeValueException ex = (BadAttributeValueException) e;
+            return "directory".equals(ex.getAttributeValue())
+                    && "role".equals(ex.getAttributeName().getLocalName());
+        }
+        return false;
+    }
+
     private String getDisplayMessage(Exception message) {
         if (message instanceof AbstractValidationException) {
             return getDisplayMessageForRng(
@@ -866,14 +879,15 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             BadAttributeValueException ex = (BadAttributeValueException) e;
             sb.append("Bad value \u201c").append(ex.getAttributeValue()).append(
                     "\u201d for attribute \u201c").append(
-                            ex.getAttributeName()).append(
+                            ex.getAttributeName().getLocalName()).append(
                                     "\u201d on element \u201c").append(
                                             ex.getCurrentElement()
                                             .getLocalName()).append("\u201d.");
         } else if (e instanceof ImpossibleAttributeIgnoredException) {
             ImpossibleAttributeIgnoredException ex =
                 (ImpossibleAttributeIgnoredException) e;
-            sb.append("Attribute \u201c").append(ex.getAttributeName()).append(
+            sb.append("Attribute \u201c").append(
+                    ex.getAttributeName().getLocalName()).append(
                     "\u201d not allowed on element \u201c").append(
                             ex.getCurrentElement().getLocalName()).append(
                                     "\u201d at this point.");
@@ -1016,25 +1030,22 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             throws SAXException {
         if (skipInfoMessages && type == MessageType.INFO)
             return;
+        // Convert role=directory errors to warnings before filtering
+        if (type == MessageType.ERROR && isRoleDirectoryWarning(message)) {
+            if (this.errors > 0) {
+                this.errors--;
+            }
+            this.warnings++;
+            message(MessageType.WARNING, message, systemId, oneBasedLine,
+                    oneBasedColumn, exact, start);
+            return;
+        }
         // Use display message for filtering (what users see in output).
         // Fall back to internal message for exception types not handled by
         // getDisplayMessage().
         String msg = getDisplayMessage(message);
         if (msg == null) {
             msg = message.getMessage();
-        }
-        // Convert role=directory errors to warnings before filtering
-        if (msg != null && msg.contains(
-                "Bad value \u201cdirectory\u201d for attribute \u201crole\u201d")) {
-            if (type == MessageType.ERROR) {
-                if (this.errors > 0) {
-                    this.errors--;
-                }
-                this.warnings++;
-                message(MessageType.WARNING, message, systemId, oneBasedLine,
-                        oneBasedColumn, exact, start);
-                return;
-            }
         }
         if (msg != null && ((filterPattern != null
                 && filterPattern.matcher(msg).matches())

@@ -689,6 +689,16 @@ public class TestRunner extends MessageEmitterAdapter {
             // Don't set hasUnhandledInfo; typo info messages are expected.
             return;
         }
+        // Handle role=directory as a warning (deprecated but not an error)
+        if (isRoleDirectoryWarning(e)) {
+            if (emitMessages) {
+                emitMessage(e, "warning");
+            } else if (exception == null) {
+                exception = e;
+                exceptionIsWarning = true;
+            }
+            return;
+        }
         if (emitMessages) {
             emitMessage(e, "error");
         } else if (exception == null) {
