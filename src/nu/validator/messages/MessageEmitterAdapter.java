@@ -1023,6 +1023,19 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         if (msg == null) {
             msg = message.getMessage();
         }
+        // Convert role=directory errors to warnings before filtering
+        if (msg != null && msg.contains(
+                "Bad value \u201cdirectory\u201d for attribute \u201crole\u201d")) {
+            if (type == MessageType.ERROR) {
+                if (this.errors > 0) {
+                    this.errors--;
+                }
+                this.warnings++;
+                message(MessageType.WARNING, message, systemId, oneBasedLine,
+                        oneBasedColumn, exact, start);
+                return;
+            }
+        }
         if (msg != null && ((filterPattern != null
                 && filterPattern.matcher(msg).matches())
                 || DEFAULT_FILTER_PATTERN.matcher(msg).matches())) {
@@ -1044,18 +1057,6 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
                 request.setAttribute(
                         "http://validator.nu/properties/self-closing-tag-found",
                         true);
-            }
-        }
-        if (msg != null && msg.contains(
-                "Bad value \u201Cdirectory\u201D for attribute “role”")) {
-            if (type == MessageType.ERROR) {
-                if (this.errors > 0) {
-                    this.errors--;
-                }
-                this.warnings++;
-                message(MessageType.WARNING, message, systemId, oneBasedLine,
-                        oneBasedColumn, exact, start);
-                return;
             }
         }
         if (loggingOk
