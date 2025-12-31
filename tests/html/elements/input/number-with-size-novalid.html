@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Issue 1858: input size on type=number</title>
+</head>
+<body>
+<!-- The size attribute comes before type to verify that
+     AttributesPermutingXMLReaderWrapper correctly reorders
+     the type attribute first, resulting in the proper error
+     message "size not allowed" rather than the confusing
+     "Bad value 'number' for attribute 'type'" -->
+<input size="2" type="number">
+</body>
+</html>

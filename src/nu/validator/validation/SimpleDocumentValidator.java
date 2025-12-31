@@ -65,6 +65,7 @@ import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver.ResourceNotRetrievableException;
 import nu.validator.xml.TypedInputSource;
+import nu.validator.xml.AttributesPermutingXMLReaderWrapper;
 import nu.validator.xml.WiretapXMLReaderWrapper;
 
 import org.xml.sax.ContentHandler;
@@ -394,7 +395,9 @@ public class SimpleDocumentValidator {
         HashMap<String, String> profileMap = new HashMap<>();
         profileMap.put("html-strict", "warn");
         htmlParser.setErrorProfile(profileMap);
-        htmlReader = getWiretap(htmlParser);
+        XMLReader permutingHtmlReader = new AttributesPermutingXMLReaderWrapper(
+                htmlParser); // improves RNG validation error messages
+        htmlReader = getWiretap(permutingHtmlReader);
         xmlParser = new SAXDriver();
         xmlParser.setContentHandler(validator.getContentHandler());
         xmlParser.setErrorHandler(docValidationErrHandler);
