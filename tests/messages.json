@@ -3235,5 +3235,19 @@
     "xhtml/elements/table/203-novalid.xhtml": "Table column 3 established by element \u201ctd\u201d has no cells beginning in it.",
     "xhtml/elements/table/204-novalid.xhtml": "Row 3 of an implicit row group has no cells beginning on it.",
     "xhtml/elements/table/205-novalid.xhtml": "Element \u201ccol\u201d not allowed as child of element \u201ctable\u201d in this context. (Suppressing further errors from this subtree.)",
-    "xhtml/other/045-novalid.xhtml": "The \u201capplet\u201d element is obsolete. Use \u201cembed\u201d or \u201cobject\u201d element instead."
+    "xhtml/other/045-novalid.xhtml": "The \u201capplet\u201d element is obsolete. Use \u201cembed\u201d or \u201cobject\u201d element instead.",
+    "xhtml/xml-stylesheet/after-element-novalid.xhtml": "Any \u201cxml-stylesheet\u201d instruction in a document must occur before any elements in the document. Suppressing any further errors for this \u201cxml-stylesheet\u201d instruction.",
+    "xhtml/xml-stylesheet/alternate-yes-no-title-novalid.xhtml": "An \u201cxml-stylesheet\u201d instruction with an \u201calternate\u201d pseudo-attribute whose value is \u201cyes\u201d must also have a \u201ctitle\u201d pseudo-attribute with a non-empty value.",
+    "xhtml/xml-stylesheet/attr-without-value-novalid.xhtml": "Found \u201cxml-stylesheet\u201d pseudo-attribute \u201ctype\u201d without a value. All pseudo-attributes in \u201cxml-stylesheet\u201d instructions must have values.",
+    "xhtml/xml-stylesheet/charset-haswarn.xhtml": "Some browsers ignore the value of the \u201cxml-stylesheet\u201d pseudo-attribute \u201ccharset\u201d.",
+    "xhtml/xml-stylesheet/duplicate-attr-novalid.xhtml": "Duplicate \u201cxml-stylesheet\u201d pseudo-attribute \u201chref\u201d.",
+    "xhtml/xml-stylesheet/invalid-alternate-value-novalid.xhtml": "The value of the \u201cxml-stylesheet\u201d pseudo-attribute \u201calternate\u201d must be either \u201cyes\u201d or \u201cno\u201d.",
+    "xhtml/xml-stylesheet/invalid-charset-novalid.xhtml": "Bad value \u201cnot-a-charset\u201d for \u201cxml-stylesheet\u201d pseudo-attribute \u201ccharset\u201d. Bad encoding name: \u201cnot-a-charset\u201d is not a valid character encoding name.",
+    "xhtml/xml-stylesheet/invalid-href-novalid.xhtml": "Bad value \u201cht tp://example.com/style.css\u201d for \u201cxml-stylesheet\u201d pseudo-attribute \u201chref\u201d. Bad URL: Illegal character in path segment. Space is not allowed.",
+    "xhtml/xml-stylesheet/invalid-pseudo-attr-novalid.xhtml": "Pseudo-attribute \u201cfoo\u201d not allowed in \u201cxml-stylesheet\u201d instruction.",
+    "xhtml/xml-stylesheet/invalid-type-novalid.xhtml": "Bad value \u201ctext\u201d for \u201cxml-stylesheet\u201d pseudo-attribute \u201ctype\u201d. Bad MIME type: Subtype missing.",
+    "xhtml/xml-stylesheet/missing-href-novalid.xhtml": "\u201cxml-stylesheet\u201d instruction lacks \u201chref\u201d pseudo-attribute. The \u201chref\u201d pseudo-attribute is required in all \u201cxml-stylesheet\u201d instructions.",
+    "xhtml/xml-stylesheet/unsupported-type-haswarn.xhtml": "\u201ctext/css\u201d and \u201ctext/xsl\u201d are the only MIME types for the \u201cxml-stylesheet\u201d pseudo-attribute \u201ctype\u201d that are supported across browsers.",
+    "xhtml/xml-stylesheet/uppercase-attr-novalid.xhtml": "Pseudo-attribute \u201cHREF\u201d not allowed in \u201cxml-stylesheet\u201d instruction.",
+    "xhtml/xml-stylesheet/xslt-type-haswarn.xhtml": "\u201ctext/css\u201d and \u201ctext/xsl\u201d are the only MIME types for the \u201cxml-stylesheet\u201d pseudo-attribute \u201ctype\u201d that are supported across browsers."
 }
