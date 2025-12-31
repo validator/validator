@@ -269,7 +269,8 @@ public class SimpleCommandLineValidator {
                     hasSchemaOption = true;
                     schemaUrl = args[++i];
                     if (!schemaUrl.startsWith("http:")
-                            && !schemaUrl.startsWith("https:")) {
+                            && !schemaUrl.startsWith("https:")
+                            && !schemaUrl.startsWith("file:")) {
                         System.err.println("error: The \"--schema\" option"
                                 + " requires a URL for a schema.");
                         System.exit(1);

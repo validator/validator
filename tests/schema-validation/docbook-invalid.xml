@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <info>
+        <title>Invalid DocBook Document</title>
+    </info>
+    <chapter>
+        <title>Test Chapter</title>
+        <para>This paragraph is valid.</para>
+        <para unknown="">This paragraph has an invalid attribute.</para>
+    </chapter>
+</book>

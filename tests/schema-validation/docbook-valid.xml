@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <info>
+        <title>Sample DocBook Document</title>
+        <author>
+            <personname>
+                <firstname>John</firstname>
+                <surname>Doe</surname>
+            </personname>
+        </author>
+    </info>
+    <chapter xml:id="introduction">
+        <title>Introduction</title>
+        <para>
+            This is a valid DocBook 5.0 document that can be used to test
+            validation against arbitrary schemas using the vnu CLI validator
+            with the --schema option.
+        </para>
+        <section xml:id="background">
+            <title>Background</title>
+            <para>
+                DocBook is a semantic markup language for technical documentation.
+                It was originally intended for writing technical documents related
+                to computer hardware and software.
+            </para>
+        </section>
+    </chapter>
+    <chapter xml:id="usage">
+        <title>Usage Examples</title>
+        <para>
+            To validate this document against the DocBook 5.1 schema, use:
+        </para>
+        <programlisting>
+java -cp vnu.jar nu.validator.client.SimpleCommandLineValidator \
+    --schema https://docbook.org/xml/5.1/rng/docbook.rng \
+    --xml \
+    --format text \
+    docbook-valid.xml
+        </programlisting>
+        <para>
+            The validator should report no errors for this document.
+        </para>
+    </chapter>
+</book>

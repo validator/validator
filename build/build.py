@@ -1316,6 +1316,27 @@ class Release():
         cssTestArgs = ["--skip-non-css"]
         cssTestArgs.append(os.path.join(buildRoot, "tests", "css"))
         execCmd(vnuCmd, cssTestArgs, True)
+        docbookTestArgs = ["--schema",
+                           "https://docbook.org/xml/5.1/rng/docbook.rng",
+                           "--xml"]
+        # Test valid DocBook document; expect no output/messages/errors
+        testdoc = [os.path.join("tests", "schema-validation",
+                                "docbook-valid.xml")]
+        execCmd(vnuCmd, docbookTestArgs + testdoc, True)
+        # Test invalid DocBook document; expect output (an error message)
+        testdoc = [os.path.join("tests", "schema-validation",
+                                "docbook-invalid.xml")]
+        cmd = [vnuCmd] + docbookTestArgs + testdoc
+        print(shlex.join(cmd))
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode == 0:
+            print("Expected validation errors in output, but found none.")
+            sys.exit(2)
+        # Check for expected error patterns in output (stdout or stderr)
+        output = result.stdout + result.stderr
+        if "error:" not in output.lower():
+            print("Expected validation errors in output, but found none.")
+            sys.exit(2)
 
     def runSpecTests(self):
         if platform.system() == 'Windows':

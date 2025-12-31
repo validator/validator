@@ -150,8 +150,36 @@ public class SimpleDocumentValidator {
         PropertyMap jingPropertyMap = pmb.toPropertyMap();
 
         try {
-            TypedInputSource schemaInput = (TypedInputSource) entityResolver.resolveEntity(
-                    null, schemaUrl);
+            InputSource resolvedInput = entityResolver.resolveEntity(null, schemaUrl);
+            TypedInputSource schemaInput;
+
+            if (resolvedInput instanceof TypedInputSource) {
+                schemaInput = (TypedInputSource) resolvedInput;
+            } else {
+                if (schemaUrl.startsWith("http://") || schemaUrl.startsWith("https://")) {
+                    PrudentHttpEntityResolver httpResolver = 
+                        new PrudentHttpEntityResolver(-1, true, errorHandler);
+                    httpResolver.setAllowRnc(true);
+                    httpResolver.setAllowGenericXml(true);
+                    schemaInput = (TypedInputSource) httpResolver.resolveEntity(null, schemaUrl);
+                } else if (schemaUrl.startsWith("file:")) {
+                    schemaInput = new TypedInputSource();
+                    java.net.URL url = new java.net.URL(schemaUrl);
+                    schemaInput.setByteStream(url.openStream());
+                    schemaInput.setSystemId(schemaUrl);
+                    if (schemaUrl.endsWith(".rnc")) {
+                        schemaInput.setType("application/relax-ng-compact-syntax");
+                    } else if (schemaUrl.endsWith(".rng")) {
+                        schemaInput.setType("application/xml");
+                    } else {
+                        schemaInput.setType("application/xml");
+                    }
+                } else {
+                    throw new SchemaReadException(String.format(
+                            "Failed to resolve schema URL \"%s\".", schemaUrl));
+                }
+            }
+
             SchemaReader sr;
             if ("application/relax-ng-compact-syntax".equals(schemaInput.getType())) {
                 sr = CompactSchemaReader.getInstance();
@@ -162,6 +190,9 @@ public class SimpleDocumentValidator {
         } catch (ClassCastException e) {
             throw new SchemaReadException(String.format(
                     "Failed to resolve schema URL \"%s\".", schemaUrl));
+        } catch (ResourceNotRetrievableException e) {
+            throw new SchemaReadException(String.format(
+                    "Failed to retrieve schema from URL \"%s\".", schemaUrl));
         }
     }
 
