@@ -18,6 +18,7 @@ build/validator*.jar
 build/validator/
 build/VERSION
 build/.gradle
+classes/
 dependencies/
 deps.tar.gz
 dist/
