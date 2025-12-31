@@ -1276,9 +1276,23 @@ class Release():
         args = getRunArgs(str(int(heapSize) * 1024))
         execCmd(javaCmd, args)
 
+    def runUnitTests(self):
+        if not os.path.exists(vnuJar):
+            self.createJarOrWar("jar")
+        # Run MessageEmitterAdapterTest
+        args = [javaCmd]
+        if stackSize != "":
+            args.append('-Xss' + stackSize + 'k')
+        args.append('-classpath')
+        args.append(vnuJar)
+        args.append('nu.validator.messages.test.MessageEmitterAdapterTest')
+        runCmd(args)
+
     def runTests(self):
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
+
+        self.runUnitTests()
 
         args = [javaCmd]
         if stackSize != "":
@@ -1817,8 +1831,8 @@ def getTaskChoices():
         'npm-release', 'maven-artifacts', 'maven-sign', 'maven-test',
         'maven-bundle', 'maven-release', 'maven-version-exists', 'image',
         'jar', 'war', 'sign', 'localent', 'deploy', 'tar', 'script',
-        'test', 'test-specs', 'make-messages', 'check', 'self-test',
-        'clean', 'realclean', 'run', 'all', 'completion',
+        'test', 'test-specs', 'unit-tests', 'make-messages', 'check',
+        'self-test', 'clean', 'realclean', 'run', 'all', 'completion',
     ]
 
 
@@ -2214,6 +2228,8 @@ def main(argv, script_name=None):
             release.runTests()
         elif task == 'test-specs':
             release.runSpecTests()
+        elif task == 'unit-tests':
+            release.runUnitTests()
         elif task == 'make-messages':
             release.makeTestMessages()
         elif task == 'check':
