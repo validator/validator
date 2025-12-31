@@ -841,6 +841,168 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         return nonDocumentErrors > 0;
     }
 
+    private String getDisplayMessage(Exception message) {
+        if (message instanceof AbstractValidationException) {
+            return getDisplayMessageForRng(
+                    (AbstractValidationException) message);
+        } else if (message instanceof VnuBadAttrValueException) {
+            VnuBadAttrValueException e = (VnuBadAttrValueException) message;
+            return "Bad value \u201c" + e.getAttributeValue()
+                    + "\u201d for attribute \u201c"
+                    + e.getAttributeName().getLocalName()
+                    + "\u201d on element \u201c"
+                    + e.getCurrentElement().getLocalName() + "\u201d.";
+        } else if (message instanceof VnuBadElementNameException) {
+            VnuBadElementNameException e = (VnuBadElementNameException) message;
+            return "Element \u201c" + e.getElementName()
+                    + "\u201d not allowed.";
+        }
+        return null;
+    }
+
+    private String getDisplayMessageForRng(AbstractValidationException e) {
+        StringBuilder sb = new StringBuilder();
+        if (e instanceof BadAttributeValueException) {
+            BadAttributeValueException ex = (BadAttributeValueException) e;
+            sb.append("Bad value \u201c").append(ex.getAttributeValue()).append(
+                    "\u201d for attribute \u201c").append(
+                            ex.getAttributeName()).append(
+                                    "\u201d on element \u201c").append(
+                                            ex.getCurrentElement()
+                                            .getLocalName()).append("\u201d.");
+        } else if (e instanceof ImpossibleAttributeIgnoredException) {
+            ImpossibleAttributeIgnoredException ex =
+                (ImpossibleAttributeIgnoredException) e;
+            sb.append("Attribute \u201c").append(ex.getAttributeName()).append(
+                    "\u201d not allowed on element \u201c").append(
+                            ex.getCurrentElement().getLocalName()).append(
+                                    "\u201d at this point.");
+        } else if (e instanceof OnlyTextNotAllowedException) {
+            OnlyTextNotAllowedException ex = (OnlyTextNotAllowedException) e;
+            sb.append("Element \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append(
+                            "\u201d is not allowed to have content that"
+                            + " consists solely of text.");
+        } else if (e instanceof OutOfContextElementException) {
+            OutOfContextElementException ex = (OutOfContextElementException) e;
+            sb.append("Element \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append(
+                            "\u201d not allowed");
+            if (ex.getParent() != null) {
+                sb.append(" as child of \u201c").append(
+                        ex.getParent().getLocalName()).append("\u201d");
+            }
+            sb.append(" in this context.");
+        } else if (e instanceof RequiredAttributesMissingOneOfException) {
+            RequiredAttributesMissingOneOfException ex =
+                (RequiredAttributesMissingOneOfException) e;
+            sb.append("Element \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append(
+                            "\u201d is missing one or more of the following"
+                            + " attributes: ");
+            for (Iterator<String> iter =
+                    ex.getAttributeLocalNames().iterator(); iter.hasNext();) {
+                sb.append("\u201c").append(iter.next()).append("\u201d");
+                if (iter.hasNext()) {
+                    sb.append(", ");
+                }
+            }
+            sb.append(".");
+        } else if (e instanceof RequiredAttributesMissingException) {
+            RequiredAttributesMissingException ex =
+                (RequiredAttributesMissingException) e;
+            sb.append("Element \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append(
+                            "\u201d is missing required attribute \u201c")
+                    .append(ex.getAttributeLocalName()).append("\u201d.");
+        } else if (e instanceof RequiredElementsMissingException) {
+            RequiredElementsMissingException ex =
+                (RequiredElementsMissingException) e;
+            if (ex.getParent() == null) {
+                sb.append("Required elements missing.");
+            } else {
+                sb.append("Element \u201c").append(
+                        ex.getParent().getLocalName()).append("\u201d");
+                if (ex.getMissingElementName() == null) {
+                    sb.append(" is missing a required child element");
+                } else {
+                    sb.append(
+                            " is missing a required instance of child element"
+                            + " \u201c").append(ex.getMissingElementName())
+                        .append("\u201d");
+                }
+                sb.append(".");
+            }
+        } else if (e instanceof TextNotAllowedException) {
+            TextNotAllowedException ex = (TextNotAllowedException) e;
+            sb.append("Text not allowed in \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append(
+                            "\u201d in this context.");
+        } else if (e instanceof UnfinishedElementException) {
+            UnfinishedElementException ex = (UnfinishedElementException) e;
+            sb.append("Element \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append("\u201d");
+            if (ex.getMissingElementName() == null) {
+                sb.append(" is missing a required child element");
+            } else {
+                sb.append(
+                        " is missing a required instance of child element"
+                        + " \u201c").append(
+                                ex.getMissingElementName()).append("\u201d");
+            }
+            sb.append(".");
+        } else if (e instanceof UnfinishedElementOneOfException) {
+            UnfinishedElementOneOfException ex =
+                (UnfinishedElementOneOfException) e;
+            sb.append("Element \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append(
+                            "\u201d is missing a required instance of one"
+                            + " or more of the following child elements: ");
+            for (Iterator<String> iter =
+                    ex.getMissingElementNames().iterator(); iter.hasNext();) {
+                sb.append("\u201c").append(iter.next()).append("\u201d");
+                if (iter.hasNext()) {
+                    sb.append(", ");
+                }
+            }
+            sb.append(".");
+        } else if (e instanceof RequiredElementsMissingOneOfException) {
+            RequiredElementsMissingOneOfException ex =
+                (RequiredElementsMissingOneOfException) e;
+            sb.append("Element \u201c").append(
+                    ex.getParent().getLocalName()).append(
+                            "\u201d is missing a required instance of one or"
+                            + " more of the following child elements: ");
+            for (Iterator<String> iter =
+                    ex.getMissingElementNames().iterator(); iter.hasNext();) {
+                sb.append("\u201c").append(iter.next()).append("\u201d");
+                if (iter.hasNext()) {
+                    sb.append(", ");
+                }
+            }
+            sb.append(".");
+        } else if (e instanceof UnknownElementException) {
+            UnknownElementException ex = (UnknownElementException) e;
+            sb.append("Unknown element \u201c").append(
+                    ex.getCurrentElement().getLocalName()).append(
+                            "\u201d not allowed");
+            if (ex.getParent() != null) {
+                sb.append(" as child of \u201c").append(
+                        ex.getParent().getLocalName()).append("\u201d");
+            }
+            sb.append(".");
+        } else if (e instanceof StringNotAllowedException) {
+            StringNotAllowedException ex = (StringNotAllowedException) e;
+            sb.append("Bad character content \u201c").append(
+                    ex.getValue()).append("\u201d for element \u201c").append(
+                            ex.getCurrentElement().getLocalName()).append(
+                                    "\u201d.");
+        } else {
+            return null;
+        }
+        return sb.toString();
+    }
+
     private void messageFromSAXParseException(MessageType type,
             SAXParseException spe, boolean exact, int[] start)
             throws SAXException {
@@ -854,7 +1016,13 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             throws SAXException {
         if (skipInfoMessages && type == MessageType.INFO)
             return;
-        String msg = message.getMessage();
+        // Use display message for filtering (what users see in output).
+        // Fall back to internal message for exception types not handled by
+        // getDisplayMessage().
+        String msg = getDisplayMessage(message);
+        if (msg == null) {
+            msg = message.getMessage();
+        }
         if (msg != null && ((filterPattern != null
                 && filterPattern.matcher(msg).matches())
                 || DEFAULT_FILTER_PATTERN.matcher(msg).matches())) {
