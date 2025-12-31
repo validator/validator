@@ -145,7 +145,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
     @Override
     public E first() {
         Node<E> first = head.next;
-        if (first == null) {
+        if (first == tail) {
             throw new NoSuchElementException();
         } else {
             return first.value;
@@ -160,7 +160,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
     @Override
     public E last() {
         Node<E> last = tail.prev;
-        if (last == null) {
+        if (last == head) {
             throw new NoSuchElementException();
         } else {
             return last.value;

@@ -1279,14 +1279,22 @@ class Release():
     def runUnitTests(self):
         if not os.path.exists(vnuJar):
             self.createJarOrWar("jar")
-        # Run MessageEmitterAdapterTest
-        args = [javaCmd]
-        if stackSize != "":
-            args.append('-Xss' + stackSize + 'k')
-        args.append('-classpath')
-        args.append(vnuJar)
-        args.append('nu.validator.messages.test.MessageEmitterAdapterTest')
-        runCmd(args)
+        # List of unit test classes to run
+        testClasses = [
+            'nu.validator.messages.test.MessageEmitterAdapterTest',
+            'nu.validator.collections.test.SortedSetTest',
+            'nu.validator.io.test.DataUriTest',
+            'nu.validator.checker.test.SpeculationRulesCheckerTest',
+        ]
+        for testClass in testClasses:
+            print(f"\nRunning {testClass}...")
+            args = [javaCmd]
+            if stackSize != "":
+                args.append('-Xss' + stackSize + 'k')
+            args.append('-classpath')
+            args.append(vnuJar)
+            args.append(testClass)
+            runCmd(args)
 
     def runTests(self):
         if not os.path.exists(vnuJar):
