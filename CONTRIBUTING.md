@@ -44,6 +44,23 @@ Use `python ./checker.py --help` to see command-line options for controlling the
 * `python ./checker.py build test` (to build and test)
 * `python ./checker.py run` (to run only)
 
+## Running e2e tests
+
+The project includes Playwright end-to-end tests for the web-based checker UI, located in the `e2e/` directory. To set up and run those tests, do the following:
+
+1. Install [pnpm](https://pnpm.io/installation), if you don't have it.
+
+2. Install dependencies and Playwright:
+
+        pnpm install
+        pnpm exec playwright install chromium
+
+3. Run the e2e tests:
+
+        python ./checker.py e2e-tests
+
+The e2e tests are also automatically run when you run `python ./checker.py test` (if Playwright is available).
+
 ## Commit-message title prefixes
 
 The project follows a convention of requiring commit-message titles to start with “type” prefixes; in particular:
@@ -78,6 +95,7 @@ If you’d like to contribute a bug fix or feature enhancement but aren’t sure
 * `css-validator` – (subtree) CSS validator source code
 * `docs` – vnu manual pages + makefile to generate actual (roff) man pages from them
 * `docs/wiki` – (subtree) https://github.com/validator/validator/wiki sources
+* `e2e` – Playwright end-to-end tests for the web-based checker UI
 * `galimatias` – URL parser
 * `htmlparser` – (subtree) HTML parser
 * `langdetect` – language-detection library
