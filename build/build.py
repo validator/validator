@@ -1289,6 +1289,7 @@ class Release():
             'nu.validator.datatype.test.DatatypeTest',
             'nu.validator.checker.test.LocatorImplTest',
             'nu.validator.checker.test.NormalizationCheckerTest',
+            'nu.validator.xml.test.CharacterUtilTest',
         ]
         for testClass in testClasses:
             print(f"\nRunning {testClass}...")

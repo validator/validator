@@ -22,8 +22,12 @@
 
 package nu.validator.datatype.test;
 
+import nu.validator.datatype.CustomElementName;
+import nu.validator.datatype.HashName;
+import nu.validator.datatype.Id;
 import nu.validator.datatype.NonEmptyString;
 import nu.validator.datatype.SimpleColor;
+import nu.validator.datatype.Time;
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 /**
@@ -46,6 +50,26 @@ public class DatatypeTest {
         System.out.println("Testing NonEmptyString...");
         testNonEmptyStringValid();
         testNonEmptyStringInvalid();
+
+        System.out.println();
+        System.out.println("Testing Time...");
+        testTimeValid();
+        testTimeInvalid();
+
+        System.out.println();
+        System.out.println("Testing Id...");
+        testIdValid();
+        testIdInvalid();
+
+        System.out.println();
+        System.out.println("Testing HashName...");
+        testHashNameValid();
+        testHashNameInvalid();
+
+        System.out.println();
+        System.out.println("Testing CustomElementName...");
+        testCustomElementNameValid();
+        testCustomElementNameInvalid();
 
         System.out.println();
         System.out.println("Results: " + passed + " passed, " + failed + " failed");
@@ -111,6 +135,133 @@ public class DatatypeTest {
         NonEmptyString validator = NonEmptyString.THE_INSTANCE;
 
         assertInvalid("NonEmptyString: empty string", validator, "");
+    }
+
+    // Time tests
+
+    private static void testTimeValid() {
+        Time validator = Time.THE_INSTANCE;
+
+        // Basic valid times (HH:MM)
+        assertValid("Time: midnight", validator, "00:00");
+        assertValid("Time: noon", validator, "12:00");
+        assertValid("Time: end of day", validator, "23:59");
+        assertValid("Time: early morning", validator, "06:30");
+        assertValid("Time: evening", validator, "18:45");
+
+        // With seconds (HH:MM:SS)
+        assertValid("Time: with seconds", validator, "12:30:45");
+        assertValid("Time: midnight with seconds", validator, "00:00:00");
+        assertValid("Time: max seconds", validator, "23:59:59");
+
+        // With milliseconds (HH:MM:SS.mmm)
+        assertValid("Time: with 1 decimal", validator, "12:30:45.1");
+        assertValid("Time: with 2 decimals", validator, "12:30:45.12");
+        assertValid("Time: with 3 decimals", validator, "12:30:45.123");
+    }
+
+    private static void testTimeInvalid() {
+        Time validator = Time.THE_INSTANCE;
+
+        assertInvalid("Time: empty string", validator, "");
+        assertInvalid("Time: invalid hour 24", validator, "24:00");
+        assertInvalid("Time: invalid hour 25", validator, "25:00");
+        assertInvalid("Time: invalid minute 60", validator, "12:60");
+        assertInvalid("Time: invalid second 60", validator, "12:30:60");
+        assertInvalid("Time: single digit hour", validator, "1:00");
+        assertInvalid("Time: single digit minute", validator, "12:0");
+        assertInvalid("Time: missing colon", validator, "1200");
+        assertInvalid("Time: extra colon", validator, "12:00:");
+        assertInvalid("Time: AM/PM not allowed", validator, "12:00 PM");
+        assertInvalid("Time: text not allowed", validator, "noon");
+        assertInvalid("Time: negative hour", validator, "-01:00");
+    }
+
+    // Id tests
+
+    private static void testIdValid() {
+        Id validator = Id.THE_INSTANCE;
+
+        assertValid("Id: single char", validator, "a");
+        assertValid("Id: simple id", validator, "myId");
+        assertValid("Id: with hyphen", validator, "my-id");
+        assertValid("Id: with underscore", validator, "my_id");
+        assertValid("Id: with numbers", validator, "id123");
+        assertValid("Id: starting with number", validator, "123");
+        assertValid("Id: special chars", validator, "id!@#$%");
+        assertValid("Id: unicode", validator, "\u00e9l\u00e8ve");
+        assertValid("Id: emoji", validator, "\uD83D\uDE00");
+        assertValid("Id: long id", validator, "a".repeat(1000));
+    }
+
+    private static void testIdInvalid() {
+        Id validator = Id.THE_INSTANCE;
+
+        assertInvalid("Id: empty string", validator, "");
+        assertInvalid("Id: single space", validator, " ");
+        assertInvalid("Id: leading space", validator, " id");
+        assertInvalid("Id: trailing space", validator, "id ");
+        assertInvalid("Id: space in middle", validator, "my id");
+        assertInvalid("Id: tab", validator, "my\tid");
+        assertInvalid("Id: newline", validator, "my\nid");
+        assertInvalid("Id: carriage return", validator, "my\rid");
+    }
+
+    // HashName tests
+
+    private static void testHashNameValid() {
+        HashName validator = HashName.THE_INSTANCE;
+
+        assertValid("HashName: simple", validator, "#foo");
+        assertValid("HashName: single char after hash", validator, "#a");
+        assertValid("HashName: with hyphen", validator, "#my-name");
+        assertValid("HashName: with numbers", validator, "#id123");
+        assertValid("HashName: only numbers", validator, "#123");
+        assertValid("HashName: unicode", validator, "#caf\u00e9");
+        assertValid("HashName: with spaces after hash", validator, "# space");
+    }
+
+    private static void testHashNameInvalid() {
+        HashName validator = HashName.THE_INSTANCE;
+
+        assertInvalid("HashName: empty string", validator, "");
+        assertInvalid("HashName: just hash", validator, "#");
+        assertInvalid("HashName: no hash", validator, "foo");
+        assertInvalid("HashName: wrong prefix", validator, "@foo");
+    }
+
+    // CustomElementName tests
+
+    private static void testCustomElementNameValid() {
+        CustomElementName validator = CustomElementName.THE_INSTANCE;
+
+        assertValid("CustomElementName: simple", validator, "my-element");
+        assertValid("CustomElementName: with numbers", validator, "my-element-123");
+        assertValid("CustomElementName: multiple hyphens", validator, "my-custom-element");
+        assertValid("CustomElementName: hyphen at end", validator, "element-");
+        assertValid("CustomElementName: underscore", validator, "my_element-test");
+        assertValid("CustomElementName: dot", validator, "my.element-test");
+        assertValid("CustomElementName: unicode", validator, "my-\u00e9l\u00e8ment");
+        assertValid("CustomElementName: single letter then hyphen", validator, "x-foo");
+    }
+
+    private static void testCustomElementNameInvalid() {
+        CustomElementName validator = CustomElementName.THE_INSTANCE;
+
+        assertInvalid("CustomElementName: empty string", validator, "");
+        assertInvalid("CustomElementName: no hyphen", validator, "myelement");
+        assertInvalid("CustomElementName: starts with number", validator, "1-element");
+        assertInvalid("CustomElementName: starts with hyphen", validator, "-element");
+        assertInvalid("CustomElementName: starts with uppercase", validator, "My-element");
+        assertInvalid("CustomElementName: contains uppercase", validator, "my-Element");
+        assertInvalid("CustomElementName: prohibited annotation-xml", validator, "annotation-xml");
+        assertInvalid("CustomElementName: prohibited color-profile", validator, "color-profile");
+        assertInvalid("CustomElementName: prohibited font-face", validator, "font-face");
+        assertInvalid("CustomElementName: prohibited font-face-format", validator, "font-face-format");
+        assertInvalid("CustomElementName: prohibited font-face-name", validator, "font-face-name");
+        assertInvalid("CustomElementName: prohibited font-face-src", validator, "font-face-src");
+        assertInvalid("CustomElementName: prohibited font-face-uri", validator, "font-face-uri");
+        assertInvalid("CustomElementName: prohibited missing-glyph", validator, "missing-glyph");
     }
 
     // Test helpers
