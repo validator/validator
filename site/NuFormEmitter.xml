@@ -17,6 +17,9 @@
 			><label title="Display a report about the textual alternatives for images." for='showimagereport'
 			><?SaxCompiler-code t.emitShowImageReportField();
 			?>image report</label
+			><label title="Show only errors and warnings (no informational messages)." for='level'
+			><?SaxCompiler-code t.emitWarningsOnlyField();
+			?>errors &amp; warnings only</label
 			></span
 			><input id="show_options" type="button" value="Options…"></input
 			><span class="extraoptions hidden"

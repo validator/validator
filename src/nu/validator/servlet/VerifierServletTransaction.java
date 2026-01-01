@@ -391,6 +391,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private boolean showOutline;
 
+    private boolean skipInfoMessages;
+
     private boolean checkErrorPages;
 
     private boolean schemaIsDefault;
@@ -968,7 +970,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         boolean errorsOnly = ("error".equals(request.getParameter("level")));
 
-        boolean skipInfoMessages = ("warning".equals(request.getParameter("level")));
+        skipInfoMessages = ("warning".equals(request.getParameter("level")));
 
         boolean asciiQuotes = false;
 
@@ -2167,6 +2169,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     void emitShowImageReportField() throws SAXException {
         emitter.checkbox("showimagereport", "yes", imageCollector != null);
+    }
+
+    void emitWarningsOnlyField() throws SAXException {
+        emitter.checkbox("level", "warning", skipInfoMessages);
     }
 
     void emitCheckErrorPagesField() throws SAXException {

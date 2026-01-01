@@ -53,6 +53,7 @@ function reboot() {
 	boot()
 	initFieldHolders()
 	initUserAgents()
+	initWarningsOnly()
 	installDynamicStyle()
 	updateFragmentIdHilite()
 	window.setInterval(emulateHashChanged, 50)
@@ -192,6 +193,25 @@ function toggleExtraOptions() {
 		extraoptions_useragent.removeAttribute("disabled")
 		extraoptions_acceptlanguage.removeAttribute("disabled")
 	}
+}
+
+function initWarningsOnly() {
+	var warningsCheckbox = document.getElementById("level")
+	if (!warningsCheckbox) {
+		return
+	}
+	if (supportsLocalStorage() && localStorage["warningsOnly"] == "yes") {
+		warningsCheckbox.checked = true
+	}
+	warningsCheckbox.addEventListener("change", function(e) {
+		if (supportsLocalStorage()) {
+			if (e.target.checked) {
+				localStorage["warningsOnly"] = "yes"
+			} else {
+				localStorage["warningsOnly"] = "no"
+			}
+		}
+	}, false)
 }
 
 function initUserAgents() {
