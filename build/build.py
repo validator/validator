@@ -1406,6 +1406,25 @@ class Release():
             ])
         execCmd(vnuCmd, legacyEncodingCoverageTestArgs, True)
 
+    def runE2eTests(self):
+        if not os.path.exists(vnuJar):
+            self.createJarOrWar("jar")
+        if isServiceUp(False):
+            print("Service is already/still running at " + bindAddress +
+                  ":" + portNumber)
+            print("Stop it first, then retry.")
+            sys.exit(1)
+        args = getRunArgs(str(int(heapSize) * 1024))
+        daemon = subprocess.Popen([javaCmd, ] + args)
+        waitUntilServiceIsReady()
+        try:
+            playwrightCmd = ["pnpm", "exec", "playwright", "test",
+                             "--project=chromium"]
+            runCmd(playwrightCmd)
+        finally:
+            daemon.terminate()
+            waitUntilServiceIsDown()
+
     def makeTestMessages(self):
         os.chdir("tests")
         runCmdFromString(makeCmd)
@@ -1844,7 +1863,7 @@ def getTaskChoices():
         'npm-release', 'maven-artifacts', 'maven-sign', 'maven-test',
         'maven-bundle', 'maven-release', 'maven-version-exists', 'image',
         'jar', 'war', 'sign', 'localent', 'deploy', 'tar', 'script',
-        'test', 'test-specs', 'unit-tests', 'make-messages', 'check',
+        'test', 'test-specs', 'unit-tests', 'e2e-tests', 'make-messages', 'check',
         'self-test', 'clean', 'realclean', 'run', 'all', 'completion',
     ]
 
@@ -2243,6 +2262,14 @@ def main(argv, script_name=None):
             release.runSpecTests()
         elif task == 'unit-tests':
             release.runUnitTests()
+        elif task == 'e2e-tests':
+            if not stylesheet:
+                stylesheet = 'style.css'
+            if not script:
+                script = 'script.js'
+            if not icon:
+                icon = 'icon.png'
+            release.runE2eTests()
         elif task == 'make-messages':
             release.makeTestMessages()
         elif task == 'check':
