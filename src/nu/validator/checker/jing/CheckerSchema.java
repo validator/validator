@@ -23,6 +23,7 @@
 package nu.validator.checker.jing;
 
 import nu.validator.checker.Checker;
+import nu.validator.checker.CspEnforcementChecker;
 import nu.validator.checker.DebugChecker;
 import nu.validator.checker.DuplicateDtChecker;
 import nu.validator.checker.HeadingHierarchyChecker;
@@ -43,6 +44,8 @@ import nu.validator.vendor.thaiopensource.validate.Schema;
 import nu.validator.vendor.thaiopensource.validate.Validator;
 
 public class CheckerSchema implements Schema {
+
+    public static final CheckerSchema CSP_ENFORCEMENT_CHECKER = new CheckerSchema(PropertyMap.EMPTY, CspEnforcementChecker.class);
 
     public static final CheckerSchema DEBUG_CHECKER = new CheckerSchema(PropertyMap.EMPTY, DebugChecker.class);
 

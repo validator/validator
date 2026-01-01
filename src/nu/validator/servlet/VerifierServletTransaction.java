@@ -264,7 +264,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/usemap/",
             "http://c.validator.nu/xml-pi/",
             "http://c.validator.nu/microdata/",
-            "http://c.validator.nu/langdetect/" };
+            "http://c.validator.nu/langdetect/",
+            "http://c.validator.nu/csp-enforcement/" };
 
     private long start = System.currentTimeMillis();
 
@@ -557,6 +558,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.RDFALITE_CHECKER);
             schemaMap.put("http://c.validator.nu/langdetect/",
                     CheckerSchema.LANGUAGE_DETECTING_CHECKER);
+            schemaMap.put("http://c.validator.nu/csp-enforcement/",
+                    CheckerSchema.CSP_ENFORCEMENT_CHECKER);
 
             for (String presetUrl : presetUrls) {
                 for (String url : SPACE.split(presetUrl)) {

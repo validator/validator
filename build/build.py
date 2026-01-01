@@ -1285,6 +1285,7 @@ class Release():
             'nu.validator.collections.test.SortedSetTest',
             'nu.validator.io.test.DataUriTest',
             'nu.validator.checker.test.SpeculationRulesCheckerTest',
+            'nu.validator.checker.test.CspEnforcementCheckerTest',
             'nu.validator.checker.test.AttributeUtilTest',
             'nu.validator.datatype.test.DatatypeTest',
             'nu.validator.checker.test.LocatorImplTest',

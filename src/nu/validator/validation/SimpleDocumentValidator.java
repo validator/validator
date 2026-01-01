@@ -39,6 +39,7 @@ import java.util.Map;
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
 import nu.validator.checker.table.TableChecker;
+import nu.validator.checker.CspEnforcementChecker;
 import nu.validator.checker.DuplicateDtChecker;
 import nu.validator.checker.HeadingHierarchyChecker;
 import nu.validator.checker.MicrodataChecker;
@@ -374,6 +375,8 @@ public class SimpleDocumentValidator {
                     new UsemapChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new XmlPiChecker(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
+                    new CspEnforcementChecker(), jingPropertyMap));
         }
 
         HtmlParser htmlParser = new HtmlParser();
