@@ -40,6 +40,7 @@ import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
 import nu.validator.checker.table.TableChecker;
 import nu.validator.checker.DuplicateDtChecker;
+import nu.validator.checker.HeadingHierarchyChecker;
 import nu.validator.checker.MicrodataChecker;
 import nu.validator.checker.NormalizationChecker;
 import nu.validator.checker.SpeculationRulesChecker;
@@ -357,6 +358,8 @@ public class SimpleDocumentValidator {
                     new TableChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new DuplicateDtChecker(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
+                    new HeadingHierarchyChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new MicrodataChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(

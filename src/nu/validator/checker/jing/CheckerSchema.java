@@ -25,6 +25,7 @@ package nu.validator.checker.jing;
 import nu.validator.checker.Checker;
 import nu.validator.checker.DebugChecker;
 import nu.validator.checker.DuplicateDtChecker;
+import nu.validator.checker.HeadingHierarchyChecker;
 import nu.validator.checker.LanguageDetectingChecker;
 import nu.validator.checker.MicrodataChecker;
 import nu.validator.checker.RdfaLiteChecker;
@@ -58,6 +59,8 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema TABLE_CHECKER = new CheckerSchema(PropertyMap.EMPTY, TableChecker.class);
 
     public static final CheckerSchema DUPLICATE_DT_CHECKER = new CheckerSchema(PropertyMap.EMPTY, DuplicateDtChecker.class);
+
+    public static final CheckerSchema HEADING_HIERARCHY_CHECKER = new CheckerSchema(PropertyMap.EMPTY, HeadingHierarchyChecker.class);
 
     public static final CheckerSchema ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Assertions.class);
 
