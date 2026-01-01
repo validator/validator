@@ -98,4 +98,108 @@ test.describe('Message filtering', () => {
     const fieldsets = page.locator('#filters fieldset');
     await expect(fieldsets.first()).toBeVisible();
   });
+
+  test('Message Filtering button toggles expanded/collapsed state', async ({ page }) => {
+    await page.goto(baseURL);
+
+    // Submit HTML that produces messages
+    await page.locator('#docselect').selectOption('textarea');
+    await page.locator('textarea#doc').fill(htmlWithError);
+    await page.click('#submit');
+
+    await page.waitForSelector('#results .error');
+
+    const filters = page.locator('#filters');
+    const filterButton = page.locator('#filters button');
+
+    // Initially unexpanded
+    await expect(filters).toHaveClass(/unexpanded/);
+
+    // Click to expand
+    await filterButton.click();
+    await expect(filters).toHaveClass(/expanded/);
+
+    // Click again to collapse
+    await filterButton.click();
+    await expect(filters).toHaveClass(/unexpanded/);
+  });
+
+  test('unchecking a filter checkbox hides matching messages', async ({ page }) => {
+    await page.goto(baseURL);
+
+    // Submit HTML that produces an error
+    await page.locator('#docselect').selectOption('textarea');
+    await page.locator('textarea#doc').fill(htmlWithError);
+    await page.click('#submit');
+
+    await page.waitForSelector('#results .error');
+
+    // Count initial errors
+    const initialErrorCount = await page.locator('#results .error').count();
+    expect(initialErrorCount).toBeGreaterThan(0);
+
+    // Expand filters
+    await page.locator('#filters button').click();
+    await page.waitForSelector('#filters fieldset');
+
+    // Find a checkbox in the filters and uncheck it
+    const firstCheckbox = page.locator('#filters fieldset input[type="checkbox"]').first();
+    await expect(firstCheckbox).toBeVisible();
+    await firstCheckbox.uncheck();
+
+    // At least one message should now be hidden
+    const hiddenCount = page.locator('.filtercount');
+    await expect(hiddenCount).toBeVisible();
+    await expect(hiddenCount).toContainText('hidden by filtering');
+  });
+
+  test('re-checking a filter checkbox shows messages again', async ({ page }) => {
+    await page.goto(baseURL);
+
+    // Submit HTML that produces an error
+    await page.locator('#docselect').selectOption('textarea');
+    await page.locator('textarea#doc').fill(htmlWithError);
+    await page.click('#submit');
+
+    await page.waitForSelector('#results .error');
+
+    // Expand filters and uncheck a checkbox
+    await page.locator('#filters button').click();
+    await page.waitForSelector('#filters fieldset');
+
+    const firstCheckbox = page.locator('#filters fieldset input[type="checkbox"]').first();
+    await firstCheckbox.uncheck();
+
+    // Verify messages are hidden
+    const hiddenCount = page.locator('.filtercount');
+    await expect(hiddenCount).toBeVisible();
+
+    // Re-check the checkbox
+    await firstCheckbox.check();
+
+    // Hidden count should disappear or show 0
+    await expect(hiddenCount).not.toBeVisible();
+  });
+
+  test('filter fieldset legends show message counts', async ({ page }) => {
+    await page.goto(baseURL);
+
+    // Submit HTML that produces messages
+    await page.locator('#docselect').selectOption('textarea');
+    await page.locator('textarea#doc').fill(htmlWithError);
+    await page.click('#submit');
+
+    await page.waitForSelector('#results .error');
+
+    // Expand filters
+    await page.locator('#filters button').click();
+    await page.waitForSelector('#filters fieldset');
+
+    // The fieldset legend should show total count like "Errors (1)"
+    const legend = page.locator('#filters fieldset legend').first();
+    const legendText = await legend.textContent();
+
+    // Legend should contain a count like "(1)" or "(2)"
+    expect(legendText).toMatch(/\(\d+\)/);
+  });
 });
