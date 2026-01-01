@@ -29,3 +29,10 @@ local-entities/
 node_modules/
 run-validator.sh
 .commit_message_update
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
