@@ -40,15 +40,15 @@ public class ConformingButObsoleteWarner extends Checker {
                 String attributeName = atts.getLocalName(i);
                 if ("aria-dropeffect".equals(attributeName)
                         || "aria-grabbed".equals(attributeName)) {
-                    warn("The \u201C" + attributeName + "\u201D attribute is"
+                    warn("The “" + attributeName + "” attribute is"
                             + " deprecated and should not be used. Support for"
                             + " it is poor and is unlikely to improve.");
                         }
             }
             if ("img" == localName) {
                 if (atts.getIndex("", "border") > -1) {
-                    warn("The \u201Cborder\u201D attribute is obsolete."
-                        + " Consider specifying \u201Cimg { border: 0; }\u201D"
+                    warn("The “border” attribute is obsolete."
+                        + " Consider specifying “img { border: 0; }”"
                         + " in CSS instead.");
                 }
             } else if ("script" == localName) {
@@ -58,15 +58,15 @@ public class ConformingButObsoleteWarner extends Checker {
                     if (type == null
                             || AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                     "text/javascript", type)) {
-                        warn("The \u201Clanguage\u201D attribute on the"
-                            + " \u201Cscript\u201D element is obsolete."
+                        warn("The “language” attribute on the"
+                            + " “script” element is obsolete."
                             + " You can safely omit it.");
                     }
                 }
             } else if ("a" == localName) {
                 if (atts.getIndex("", "name") > -1) {
-                    warn("The \u201Cname\u201D attribute is obsolete."
-                        + " Consider putting an \u201Cid\u201D attribute"
+                    warn("The “name” attribute is obsolete."
+                        + " Consider putting an “id” attribute"
                         + " on the nearest container instead.");
                 }
             }

@@ -110,7 +110,7 @@ public class DataUri {
                         continue;
                     } else {
                         throw newDatatypeException(i, 
-                                "Expected a token character or \u201C/\u201D but saw ",
+                                "Expected a token character or “/” but saw ",
                                         c, " instead.");
                     }
                 case AT_SUBTYPE_START:

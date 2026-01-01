@@ -89,7 +89,7 @@ public class FloatingPointExponent extends AbstractDatatype {
                     } else if (isAsciiDigit(c)) {
                         continue;
                     } else {
-                        throw newDatatypeException(i, "Expected a decimal point, \u201Ce\u201D, \u201CE\u201D or a digit but saw ", c, " instead.");
+                        throw newDatatypeException(i, "Expected a decimal point, “e”, “E” or a digit but saw ", c, " instead.");
                     }
                 case DOT_SEEN:
                     if (isAsciiDigit(c)) {
@@ -105,7 +105,7 @@ public class FloatingPointExponent extends AbstractDatatype {
                         state = State.E_SEEN;
                         continue;
                     } else {
-                        throw newDatatypeException(i, "Expected \u201Ce\u201D, \u201CE\u201D or a digit but saw ", c, " instead.");                        
+                        throw newDatatypeException(i, "Expected “e”, “E” or a digit but saw ", c, " instead.");                        
                     }
                 case E_SEEN:
                     if (c == '-' || c == '+') {
@@ -151,7 +151,7 @@ public class FloatingPointExponent extends AbstractDatatype {
                         + " must not end with the decimal point.");
             case E_SEEN:
                 throw newDatatypeException("A " + getName()
-                        + " must not end with the exponent \u201Ce\u201D.");
+                        + " must not end with the exponent “e”.");
             case IN_EXPONENT_SIGN_SEEN:
                 throw newDatatypeException("A " + getName()
                         + " must not end with only a sign in the exponent.");

@@ -76,7 +76,7 @@ public class MediaQuery extends AbstractDatatype {
                     cssMessage = "Parse Error";
                 }
                 if (cpe.getProperty() != null) {
-                    cssProperty = String.format("\u201c%s\u201D: ",
+                    cssProperty = String.format("“%s”: ",
                             cpe.getProperty());
                 }
                 if (cpe.getMessage() != null) {

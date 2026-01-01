@@ -59,7 +59,7 @@ public class VnuBadElementNameException extends SAXParseException {
     public VnuBadElementNameException(String elementName, String uri,
             String message, Locator locator, Class<?> datatypeClass,
             boolean warning) throws SAXException, ClassNotFoundException {
-        super("Bad element name \u201c" + elementName + "\u201d: " + message,
+        super("Bad element name “" + elementName + "”: " + message,
                 locator);
         Html5DatatypeException ex5 = new Html5DatatypeException(0,
                 datatypeClass, "element name", message, warning);

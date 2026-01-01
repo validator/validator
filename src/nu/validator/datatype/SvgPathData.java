@@ -159,9 +159,9 @@ public class SvgPathData extends AbstractDatatype {
                         break loop;
                     default:
                         throw newDatatypeException("Expected command but "
-                                + "found \u201c" + (char) state.current
-                                + "\u201d (context: \u201c"
-                                + state.context.toString() + "\u201d).");
+                                + "found “" + (char) state.current
+                                + "” (context: “"
+                                + state.context.toString() + "”).");
                 }
             } catch (IOException e) {
                 try {
@@ -177,7 +177,7 @@ public class SvgPathData extends AbstractDatatype {
             state = skipSpaces(state);
             if (state.current != -1) {
                 throw newDatatypeException("Found unexpected character "
-                        + "\u201c" + (char) state.current + "\u201d.");
+                        + "“" + (char) state.current + "”.");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -247,8 +247,8 @@ public class SvgPathData extends AbstractDatatype {
                 default:
                     if (expectNumber) {
                         reportUnexpected(
-                                "coordinate pair for " + "\u201c" + command
-                                        + "\u201d command",
+                                "coordinate pair for " + "“" + command
+                                        + "” command",
                                 state.current, state.context);
                         state = skipSubPath(state);
                     }
@@ -298,8 +298,8 @@ public class SvgPathData extends AbstractDatatype {
                 default:
                     if (expectNumber) {
                         reportUnexpected(
-                                "coordinate pair for " + "\u201c" + command
-                                        + "\u201d command",
+                                "coordinate pair for " + "“" + command
+                                        + "” command",
                                 state.current, state.context);
                         state = skipSubPath(state);
                     }
@@ -920,8 +920,8 @@ public class SvgPathData extends AbstractDatatype {
 
             switch (state.current) {
                 default:
-                    reportUnexpected("\u201c0\u201d or \u201c1\u201d "
-                            + "for large-arc-flag for \u201ca\u201d"
+                    reportUnexpected("“0” or “1” "
+                            + "for large-arc-flag for “a”"
                             + " command", state.current, state.context);
                     state = skipSubPath(state);
                     return state;
@@ -936,8 +936,8 @@ public class SvgPathData extends AbstractDatatype {
 
             switch (state.current) {
                 default:
-                    reportUnexpected("\u201c0\u201d or \u201c1\u201d for"
-                            + " sweep-flag for \u201ca\u201d" + " command",
+                    reportUnexpected("“0” or “1” for"
+                            + " sweep-flag for “a”" + " command",
                             state.current, state.context);
                     state = skipSubPath(state);
                     return state;
@@ -1003,8 +1003,8 @@ public class SvgPathData extends AbstractDatatype {
 
             switch (state.current) {
                 default:
-                    reportUnexpected("\u201c0\u201d or \u201c1\u201d for"
-                            + " large-arc-flag for \u201cA\u201d" + " command",
+                    reportUnexpected("“0” or “1” for"
+                            + " large-arc-flag for “A”" + " command",
                             state.current, state.context);
                     state = skipSubPath(state);
                     return state;
@@ -1019,8 +1019,8 @@ public class SvgPathData extends AbstractDatatype {
 
             switch (state.current) {
                 default:
-                    reportUnexpected("\u201c0\u201d or \u201c1\u201d for"
-                            + " sweep-flag for \u201cA\u201d" + " command",
+                    reportUnexpected("“0” or “1” for"
+                            + " sweep-flag for “A”" + " command",
                             state.current, state.context);
                     state = skipSubPath(state);
                     return state;
@@ -1068,7 +1068,7 @@ public class SvgPathData extends AbstractDatatype {
         m1: switch (state.current) {
             default:
                 reportUnexpected(
-                        arg + " for \u201c" + command + "\u201d command",
+                        arg + " for “" + command + "” command",
                         state.current, state.context);
                 state = skipSubPath(state);
                 return state;
@@ -1435,26 +1435,26 @@ public class SvgPathData extends AbstractDatatype {
             throws DatatypeException {
         if (ch != -1) {
             throw newDatatypeException("Expected " + expected
-                    + " but found \u201c" + (char) ch + "\u201d instead "
-                    + "(context: \u201c" + context.toString() + "\u201d).");
+                    + " but found “" + (char) ch + "” instead "
+                    + "(context: “" + context.toString() + "”).");
         } else {
             throw newDatatypeException("Expected " + expected
-                    + " but value ended " + "(context: \u201c"
-                    + context.toString() + "\u201d).");
+                    + " but value ended " + "(context: “"
+                    + context.toString() + "”).");
         }
     }
 
     private void reportNonNumber(char command, int ch, StringBuffer context)
             throws DatatypeException {
         if (ch != -1) {
-            throw newDatatypeException("Expected number for \u201c" + command
-                    + "\u201d command but found " + "\u201c" + (char) ch
-                    + "\u201d instead " + "(context: \u201c"
-                    + context.toString() + "\u201d).");
+            throw newDatatypeException("Expected number for “" + command
+                    + "” command but found " + "“" + (char) ch
+                    + "” instead " + "(context: “"
+                    + context.toString() + "”).");
         } else {
-            throw newDatatypeException("Expected number for \u201c" + command
-                    + "\u201d command but value ended " + "(context: \u201c"
-                    + context.toString() + "\u201d).");
+            throw newDatatypeException("Expected number for “" + command
+                    + "” command but value ended " + "(context: “"
+                    + context.toString() + "”).");
         }
     }
 

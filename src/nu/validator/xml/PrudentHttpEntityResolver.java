@@ -291,8 +291,8 @@ public class PrudentHttpEntityResolver
             }
             String scheme = url.scheme();
             if (!("http".equals(scheme) || "https".equals(scheme))) {
-                String msg = "Unsupported URI scheme: \u201C" + scheme
-                        + "\u201D.";
+                String msg = "Unsupported URI scheme: “" + scheme
+                        + "”.";
                 SAXParseException spe = new SAXParseException(msg, publicId,
                         systemId, -1, -1, new IOException(msg));
                 if (errorHandler != null) {
@@ -400,8 +400,8 @@ public class PrudentHttpEntityResolver
                 String val = xuac.getValue().trim();
                 if (!"ie=edge".equalsIgnoreCase(val)) {
                     SAXParseException spe = new SAXParseException(
-                            "X-UA-Compatible HTTP header must have the value \u201CIE=edge\u201D,"
-                                    + " was \u201C" + val + "\u201D.",
+                            "X-UA-Compatible HTTP header must have the value “IE=edge”,"
+                                    + " was “" + val + "”.",
                             publicId, systemId, -1, -1);
                     errorHandler.error(spe);
                 }

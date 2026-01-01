@@ -357,7 +357,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
             errorHandler.error(new SAXParseException("Discarding unrecognized"
                     + renderTokenList(unrecognizedTokens)
                     + " from value of attribute"
-                    + " \u201Crole\u201D. Browsers ignore any"
+                    + " “role”. Browsers ignore any"
                     + " token that is not a defined ARIA"
                     + " non-abstract role.", locator));
 
@@ -367,7 +367,7 @@ public class RoleAttributeFilteringContentHandlerWrapper
             errorHandler.error(new SAXParseException("Discarding superfluous"
                     + renderTokenList(superfluousTokens)
                     + " from value of attribute"
-                    + " \u201Crole\u201D. Browsers only process"
+                    + " “role”. Browsers only process"
                     + " the first token found that is a defined"
                     + " ARIA non-abstract role.", locator));
 
@@ -389,9 +389,9 @@ public class RoleAttributeFilteringContentHandlerWrapper
             } else {
                 sb.append(", ");
             }
-            sb.append("\u201C");
+            sb.append("“");
             sb.append(token);
-            sb.append('\u201D');
+            sb.append('”');
         }
         return sb;
     }

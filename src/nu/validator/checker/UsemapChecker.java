@@ -78,11 +78,11 @@ public class UsemapChecker extends Checker {
     public void endDocument() throws SAXException {
         for (Map.Entry<String, Locator> entry : usemapLocationsByName.entrySet()) {
             if (!mapNames.contains(entry.getKey())) {
-                err("The hash-name reference in attribute \u201Cusemap\u201D"
-                    + " referred to \u201C"
+                err("The hash-name reference in attribute “usemap”"
+                    + " referred to “"
                         + entry.getKey()
-                        + "\u201D, but there is no \u201Cmap\u201D element"
-                        + " with a \u201Cname\u201D attribute with that value.",
+                        + "”, but there is no “map” element"
+                        + " with a “name” attribute with that value.",
                         entry.getValue());
             }
         }

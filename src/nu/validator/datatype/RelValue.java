@@ -228,8 +228,8 @@ public final class RelValue extends AbstractDatatype {
         String closestMatch = findClosestMatch(tokenForValidation);
         if (closestMatch != null) {
             // Found a close match - emit info-level warning
-            throw newDatatypeException("Typo for \u201c" + closestMatch
-                    + "\u201d?", true);
+            throw newDatatypeException("Typo for “" + closestMatch
+                    + "”?", true);
         }
     }
 

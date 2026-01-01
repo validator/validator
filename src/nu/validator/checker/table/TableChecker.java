@@ -123,7 +123,7 @@ public final class TableChecker extends Checker {
         int span = AttributeUtil.parseNonNegativeInteger(
                 atts.getValue("", "span"));
         if (span > MAX_COLSPAN) {
-            err("The value of the \u201Cspan\u201D attribute must be less than"
+            err("The value of the “span” attribute must be less than"
                     + " or equal to " + MAX_COLSPAN + ".");
             span = MAX_COLSPAN;
         }

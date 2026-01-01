@@ -59,7 +59,7 @@ public class MimeTypeList extends AbstractDatatype {
                     } else {
                         throw newDatatypeException(i,
                                 "Expected whitespace, a token character or"
-                                        + " \u201C*\u201D but saw ",
+                                        + " “*” but saw ",
                                 c, " instead.");
                     }
                 case ASTERISK_TYPE_SEEN:
@@ -68,7 +68,7 @@ public class MimeTypeList extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(i,
-                                "Expected \u201C/\u201D but saw ", c,
+                                "Expected “/” but saw ", c,
                                 " instead.");
                     }
                 case ASTERISK_AND_SLASH_SEEN:
@@ -77,7 +77,7 @@ public class MimeTypeList extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(i,
-                                "Expected \u201C*\u201D but saw ", c,
+                                "Expected “*” but saw ", c,
                                 " instead.");
                     }
                 case IN_TYPE:
@@ -88,7 +88,7 @@ public class MimeTypeList extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(i,
-                                "Expected a token character or \u201C/\u201D"
+                                "Expected a token character or “/”"
                                         + " but saw ",
                                 c, " instead.");
                     }
@@ -125,7 +125,7 @@ public class MimeTypeList extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(i,
-                                "Expected a token character or \u201C*\u201D"
+                                "Expected a token character or “*”"
                                         + " but saw ",
                                 c, " instead.");
                     }
@@ -164,13 +164,13 @@ public class MimeTypeList extends AbstractDatatype {
                 return;
             case ASTERISK_AND_SLASH_SEEN:
                 throw newDatatypeException(
-                        "Expected \u201C*\u201D but the literal ended.");
+                        "Expected “*” but the literal ended.");
             case ASTERISK_TYPE_SEEN:
                 throw newDatatypeException(
-                        "Expected \u201C/\u201D but the literal ended.");
+                        "Expected “/” but the literal ended.");
             case IN_TYPE:
                 throw newDatatypeException(
-                        "Expected \u201C/\u201D but the literal ended.");
+                        "Expected “/” but the literal ended.");
             case SLASH_SEEN:
                 throw newDatatypeException(
                         "Expected subtype but the literal ended.");

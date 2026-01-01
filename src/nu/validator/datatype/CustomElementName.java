@@ -103,16 +103,16 @@ public final class CustomElementName extends AbstractDatatype {
                 continue;
             }
             throw newDatatypeException(
-                    String.format("Code point \u201c%s\u201d is not allowed",
+                    String.format("Code point “%s” is not allowed",
                             String.format("U+%04x", c).toUpperCase()));
         }
         if (state == State.EXPECTING_HYPHEN) {
             throw newDatatypeException(
-                    "Must contain \"\u201c-\u201d\" (hyphen)");
+                    "Must contain \"“-”\" (hyphen)");
         }
         if (Arrays.binarySearch(PROHIBITED_NAMES, literal) > -1) {
             throw newDatatypeException(String.format(
-                    "Element name \u201c%s\u201d is not allowed.", literal));
+                    "Element name “%s” is not allowed.", literal));
         }
     }
 

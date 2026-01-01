@@ -237,7 +237,7 @@ public class MicrodataChecker extends Checker {
 
         // emit errors for unreferenced properties
         for (Element prop : properties) {
-            err("The \u201Citemprop\u201D attribute was specified,"
+            err("The “itemprop” attribute was specified,"
                 + " but the element is not a property of any item.",
                     prop.locator);
         }
@@ -265,10 +265,10 @@ public class MicrodataChecker extends Checker {
                 if (refElm != null) {
                     pending.push(refElm);
                 } else {
-                    err("The \u201Citemref\u201D attribute referenced \u201C"
+                    err("The “itemref” attribute referenced “"
                             + id
-                            + "\u201D, but there is no element with an"
-                            + " \u201Cid\u201D attribute with that value.",
+                            + "”, but there is no element with an"
+                            + " “id” attribute with that value.",
                             root.locator);
                 }
             }
@@ -294,7 +294,7 @@ public class MicrodataChecker extends Checker {
                         checkItem(current, parents);
                         parents.pop();
                     } else {
-                        err("The \u201Citemref\u201D attribute created a"
+                        err("The “itemref” attribute created a"
                             + " circular reference with another item.",
                                 current.locator);
                     }
@@ -302,7 +302,7 @@ public class MicrodataChecker extends Checker {
             }
         }
         if (memoryError) {
-            err("The \u201Citemref\u201D attribute contained redundant references.",
+            err("The “itemref” attribute contained redundant references.",
                     root.locator);
         }
     }

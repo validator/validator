@@ -556,10 +556,10 @@ final class XmlParser {
             throws SAXException {
         // smart quotes -- 2005-08-20 hsivonen
         if (textFound != null) {
-            message = message + " (found \u201C" + textFound + "\u201D)";
+            message = message + " (found “" + textFound + "”)";
         }
         if (textExpected != null) {
-            message = message + " (expected \u201C" + textExpected + "\u201D)";
+            message = message + " (expected “" + textExpected + "”)";
         }
         handler.fatal(message);
 
@@ -977,50 +977,50 @@ final class XmlParser {
             String canonName = cs.getCanonName();
             if (requireAsciiSuperset) {
                 if (!cs.isAsciiSuperset()) {
-                    fatal("The encoding \u201C"
+                    fatal("The encoding “"
                             + actualName
-                            + "\u201D is not an ASCII superset and, therefore, cannot be used in an internal encoding declaration.");
+                            + "” is not an ASCII superset and, therefore, cannot be used in an internal encoding declaration.");
                 }
             }
             if (!cs.isRegistered()) {
                 if (encoding.startsWith("x-")) {
-                    err("The encoding \u201C"
+                    err("The encoding “"
                             + actualName
-                            + "\u201D is not an IANA-registered encoding. (Charmod C022)");                    
+                            + "” is not an IANA-registered encoding. (Charmod C022)");                    
                 } else {
-                    err("The encoding \u201C"
+                    err("The encoding “"
                             + actualName
-                            + "\u201D is not an IANA-registered encoding and did not use the \u201Cx-\u201D prefix. (Charmod C023)");
+                            + "” is not an IANA-registered encoding and did not use the “x-” prefix. (Charmod C023)");
                 }
             } else if (!canonName.equals(encoding)) {
-                err("The encoding \u201C"
+                err("The encoding “"
                         + actualName
-                        + "\u201D is not the preferred name of the character encoding in use. The preferred name is \u201C"
-                        + canonName + "\u201D. (Charmod C024)");
+                        + "” is not the preferred name of the character encoding in use. The preferred name is “"
+                        + canonName + "”. (Charmod C024)");
             }
             if (!("utf-8".equals(encoding) || "utf-16".equals(encoding)
                     || "utf-16be".equals(encoding)
                     || "utf-16le".equals(encoding)
                     || "iso-8859-1".equals(encoding) || "us-ascii".equals(encoding))) {
-                handler.warn("XML processors are required to support the UTF-8 and UTF-16 character encodings. The encoding was \u201C"
+                handler.warn("XML processors are required to support the UTF-8 and UTF-16 character encodings. The encoding was “"
                         + actualName
-                        + "\u201D instead, which is an incompatibility risk.");
+                        + "” instead, which is an incompatibility risk.");
             }
             Encoding htmlActual = cs.getActualHtmlEncoding();
             if (htmlActual != null) {
-                handler.warn("Documents encoded as \u201C"
+                handler.warn("Documents encoded as “"
                         + htmlActual.getCanonName()
-                        + "\u201D are often mislabeled as \u201C"
+                        + "” are often mislabeled as “"
                         + actualName
-                        + "\u201D, which is the declared encoding of this document.");
+                        + "”, which is the declared encoding of this document.");
             }
             CharsetDecoder decoder = cs.newDecoder();
             decoder.onMalformedInput(CodingErrorAction.REPORT);
             decoder.onUnmappableCharacter(CodingErrorAction.REPORT);
             this.reader = new InputStreamReader(stream, decoder);
         } catch (UnsupportedCharsetException e) {
-            fatal("Unsupported character encoding \u201C" + actualName
-                    + "\u201D.");
+            fatal("Unsupported character encoding “" + actualName
+                    + "”.");
         }
     }
 

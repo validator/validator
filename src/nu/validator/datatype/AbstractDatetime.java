@@ -232,12 +232,12 @@ abstract class AbstractDatetime extends AbstractDatatype {
         if (WARN) {
             if (hours < -12 || hours > 14) {
                 throw newDatatypeException(
-                        "Hours in time zone designator should be from \u201C-12:00\u201d to \u201d+14:00\u201d",
+                        "Hours in time zone designator should be from “-12:00” to ”+14:00”",
                         WARN);
             }
             if (minutes != 00 && minutes != 30 && minutes != 45) {
                 throw newDatatypeException(
-                        "Minutes in time zone designator should be either \u201c00\u201d, \u201c30\u201d, or \u201c45\u201d.",
+                        "Minutes in time zone designator should be either “00”, “30”, or “45”.",
                         WARN);
             }
         }

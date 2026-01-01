@@ -55,7 +55,7 @@ public class ContentTypeParser {
         if (errorHandler != null) {
             errorHandler.error(new SAXParseException(
                     "Document served with malformed Content-Type header: "
-                    + "  \u201c" + contentType + "\u201d. "
+                    + "  “" + contentType + "”. "
                     + reason,
                     null, null, -1, -1));
         }
@@ -155,7 +155,7 @@ public class ContentTypeParser {
             }
             return laxOk;
         } else if (!typeOk && !laxContentType && errorHandler != null) {
-            String msg = "Non-RNC Content-Type: \u201C" + type + "\u201D."
+            String msg = "Non-RNC Content-Type: “" + type + "”."
                     + " (application/relax-ng-compact-syntax"
                     + " is the registered type.)";
             SAXParseException spe = new SAXParseException(msg,
@@ -228,8 +228,8 @@ public class ContentTypeParser {
                             is.setType(type);
                             wasHtml = true;                            
                         } else {
-                            String msg = "Non-HTML Content-Type: \u201C" + type
-                                    + "\u201D.";
+                            String msg = "Non-HTML Content-Type: “" + type
+                                    + "”.";
                             SAXParseException spe = new SAXParseException(msg,
                                     publicId, baseUri, -1, -1,
                                     new SystemIdIOException(baseUri, msg));
@@ -243,8 +243,8 @@ public class ContentTypeParser {
                 if (!wasHtml
                         && (isAllowGenericXml() || isAllowXhtml() || isAcceptAllKnownXmlTypes())) {
                     if (!xmlContentType(type, is)) {
-                        String msg = "Non-XML Content-Type: \u201C" + type
-                                + "\u201D.";
+                        String msg = "Non-XML Content-Type: “" + type
+                                + "”.";
                         SAXParseException spe = new SAXParseException(msg,
                                 publicId, baseUri, -1, -1,
                                 new SystemIdIOException(baseUri, msg));
@@ -283,8 +283,8 @@ public class ContentTypeParser {
                 inCharset: if (hasCharset(param, offset)) {
                     if (param.length() == 8) {
                         malformedContentTypeError(contentType,
-                                "Expected an \u201c=\u201d sign but"
-                                        + " \u201ccharset\u201d parameter"
+                                "Expected an “=” sign but"
+                                        + " “charset” parameter"
                                         + " ended.");
                         break inCharset;
                     }
@@ -300,11 +300,11 @@ public class ContentTypeParser {
                         case '\u000C':
                         case '\r':
                             malformedContentTypeError(contentType,
-                                "Whitespace is not allowed before the \u201c=\u201d sign in the \u201ccharset\u201d parameter.");
+                                "Whitespace is not allowed before the “=” sign in the “charset” parameter.");
                             break inCharset;
                         default:
                             malformedContentTypeError(contentType,
-                                "Expected an \u201c=\u201d sign but saw \u201c" + c + "\u201d instead.");
+                                "Expected an “=” sign but saw “" + c + "” instead.");
                             break inCharset;
                     }
                     if (offset == param.length()) {
@@ -324,7 +324,7 @@ public class ContentTypeParser {
                         case '\u000C':
                         case '\r':
                             malformedContentTypeError(contentType,
-                                "Whitespace is not allowed after the \u201c=\u201d sign in the parameter value.");
+                                "Whitespace is not allowed after the “=” sign in the parameter value.");
                             break inCharset;
                         default:
                             break;
@@ -335,7 +335,7 @@ public class ContentTypeParser {
                             case '"':
                                 if (!quoted) {
                                     malformedContentTypeError(contentType,
-                                        "Unmatched \u201c\"\u201d character in \u201ccharset\u201d parameter.");
+                                        "Unmatched “\"” character in “charset” parameter.");
                                     break inCharset;
                                 }
                                 break inEncodingName;
@@ -353,7 +353,7 @@ public class ContentTypeParser {
                                 || c == '\'' || c == '+' || c == '_' || c == '`'
                                 || c == '{' || c == '}' || c == '~' || c == '^')) {
                             malformedContentTypeError(contentType,
-                                "The character \u201c" + c + "\u201d is not a valid character in an encoding name.");
+                                "The character “" + c + "” is not a valid character in an encoding name.");
                             break inCharset;
                         }
                         offset++;
@@ -364,7 +364,7 @@ public class ContentTypeParser {
                             offset++;
                         } else {
                             malformedContentTypeError(contentType,
-                                "Unmatched \u201c\"\u201d character in \u201ccharset\u201d parameter.");
+                                "Unmatched “\"” character in “charset” parameter.");
                             break inCharset;
                         }
                     }
@@ -381,8 +381,8 @@ public class ContentTypeParser {
                                     continue;
                                 default:
                                     malformedContentTypeError(contentType,
-                                        "Only whitespace is allowed after the encoding name in the \u201ccharset\u201d parameter. "
-                                        + "Found \u201c" + c + "\u201d instead.");
+                                        "Only whitespace is allowed after the encoding name in the “charset” parameter. "
+                                        + "Found “" + c + "” instead.");
                                     break inCharset;
                             }
                         }
@@ -395,7 +395,7 @@ public class ContentTypeParser {
                 if (sb.length() > 0) {
                     if ('\'' == sb.charAt(0) && '\'' == sb.charAt(sb.length() - 1)) {
                         malformedContentTypeError(contentType,
-                            "Single-quoted encoding names are not allowed in the \u201ccharset\u201d parameter.");
+                            "Single-quoted encoding names are not allowed in the “charset” parameter.");
                     } else {
                         charset = sb.toString();
                     }

@@ -43,7 +43,7 @@ public final class Zero extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() != 1 || literal.charAt(0) != '0') {
             throw newDatatypeException(0,
-                    "Only \u201C0\u201D is a permitted zero literal.");
+                    "Only “0” is a permitted zero literal.");
         }
     }
 }

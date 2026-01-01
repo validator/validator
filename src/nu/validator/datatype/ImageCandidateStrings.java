@@ -403,7 +403,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
     }
 
     private CharSequence code(CharSequence cs) {
-        return "\u201c" + cs + "\u201d";
+        return "“" + cs + "”";
     }
 
     protected boolean widthRequired() {

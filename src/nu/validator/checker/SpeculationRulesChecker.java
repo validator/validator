@@ -59,10 +59,10 @@ public final class SpeculationRulesChecker extends Checker {
                 String scriptType = atts.getValue("", "type").toLowerCase();
                 if ("speculationrules".equals(scriptType)) {
                     if (atts.getIndex("", "src") > -1) {
-                        err("A \u201cscript\u201d element with a"
-                                + " \u201ctype\u201d attribute whose value"
-                                + " is \u201cspeculationrules\u201d must not"
-                                + " have a \u201Csrc\u201D attribute.");
+                        err("A “script” element with a"
+                                + " “type” attribute whose value"
+                                + " is “speculationrules” must not"
+                                + " have a “src” attribute.");
                     }
                     parsingSpeculationRules = true;
                     scriptContent = new StringBuilder();
@@ -97,32 +97,32 @@ public final class SpeculationRulesChecker extends Checker {
             JsonReader reader = Json.createReader(new StringReader(content));
             speculationRules = reader.read();
         } catch (JsonException e) {
-            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
-                    + " whose value is \u201cspeculationrules\u201d must have"
+            err("A “script” element with a “type” attribute"
+                    + " whose value is “speculationrules” must have"
                     + " valid JSON content.");
             return false;
         }
         if (!(speculationRules instanceof JsonObject)) {
-            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
-                    + " whose value is \u201cspeculationrules\u201d must contain"
+            err("A “script” element with a “type” attribute"
+                    + " whose value is “speculationrules” must contain"
                     + " a JSON object.");
             return false;
         }
         JsonObject speculationRulesObject = (JsonObject) speculationRules;
         if (!speculationRulesObject.containsKey("prefetch")
                 && !speculationRulesObject.containsKey("prerender")) {
-            err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
-                    + " whose value is \u201cspeculationrules\u201d must contain"
+            err("A “script” element with a “type” attribute"
+                    + " whose value is “speculationrules” must contain"
                     + " a JSON object with at least one of the properties"
-                    + " \u201cprefetch\u201d or \u201cprerender\u201d.");
+                    + " “prefetch” or “prerender”.");
             return false;
         }
         for (String key : speculationRulesObject.keySet()) {
             if (!"prefetch".equals(key) && !"prerender".equals(key)) {
-                err("A \u201cscript\u201d element with a \u201ctype\u201d attribute"
-                        + " whose value is \u201cspeculationrules\u201d must contain"
-                        + " a JSON object with only \u201cprefetch\u201d and/or"
-                        + " \u201cprerender\u201d as properties.");
+                err("A “script” element with a “type” attribute"
+                        + " whose value is “speculationrules” must contain"
+                        + " a JSON object with only “prefetch” and/or"
+                        + " “prerender” as properties.");
                 return false;
             }
         }
@@ -144,9 +144,9 @@ public final class SpeculationRulesChecker extends Checker {
     private boolean isSpeculationRuleArrayValid(String ruleType,
             JsonValue ruleValue) throws SAXException {
         if (!(ruleValue instanceof JsonArray)) {
-            err("The \u201c" + ruleType + "\u201d property within the content"
-                    + " of a \u201cscript\u201d element with a \u201ctype\u201d"
-                    + " attribute whose value is \u201cspeculationrules\u201d"
+            err("The “" + ruleType + "” property within the content"
+                    + " of a “script” element with a “type”"
+                    + " attribute whose value is “speculationrules”"
                     + " must be a JSON array.");
             return false;
         }
@@ -163,10 +163,10 @@ public final class SpeculationRulesChecker extends Checker {
     private boolean isSpeculationRuleObjectValid(String ruleType,
             JsonValue ruleValue) throws SAXException {
         if (!(ruleValue instanceof JsonObject)) {
-            err("Each item in the \u201c" + ruleType + "\u201d array within"
-                    + " the content of a \u201cscript\u201d element with a"
-                    + " \u201ctype\u201d attribute whose value is"
-                    + " \u201cspeculationrules\u201d must be a JSON object.");
+            err("Each item in the “" + ruleType + "” array within"
+                    + " the content of a “script” element with a"
+                    + " “type” attribute whose value is"
+                    + " “speculationrules” must be a JSON object.");
             return false;
         }
         JsonObject ruleObject = (JsonObject) ruleValue;
@@ -176,14 +176,14 @@ public final class SpeculationRulesChecker extends Checker {
         if (ruleObject.containsKey("source")) {
             JsonValue sourceValue = ruleObject.get("source");
             if (!(sourceValue instanceof JsonString)) {
-                err("The \u201csource\u201d property in a speculation rule must"
+                err("The “source” property in a speculation rule must"
                         + " be a string.");
                 return false;
             }
             source = ((JsonString) sourceValue).getString();
             if (!"list".equals(source) && !"document".equals(source)) {
-                err("The \u201csource\u201d property in a speculation rule must"
-                        + " be either \u201clist\u201d or \u201cdocument\u201d.");
+                err("The “source” property in a speculation rule must"
+                        + " be either “list” or “document”.");
                 return false;
             }
         } else if (ruleObject.containsKey("urls")) {
@@ -191,31 +191,31 @@ public final class SpeculationRulesChecker extends Checker {
         } else if (ruleObject.containsKey("where")) {
             source = "document";
         } else {
-            err("A speculation rule must have a \u201csource\u201d property,"
-                    + " or a \u201curls\u201d property (for list rules),"
-                    + " or a \u201cwhere\u201d property (for document rules).");
+            err("A speculation rule must have a “source” property,"
+                    + " or a “urls” property (for list rules),"
+                    + " or a “where” property (for document rules).");
             return false;
         }
         for (String key : ruleObject.keySet()) {
             if (!"source".equals(key) && !"urls".equals(key)
                     && !"where".equals(key) && !"eagerness".equals(key)) {
-                err("Each rule in the \u201c" + ruleType + "\u201d array must"
-                        + " only contain the properties \u201csource\u201d,"
-                        + " \u201curls\u201d, \u201cwhere\u201d, and"
-                        + " \u201ceagerness\u201d.");
+                err("Each rule in the “" + ruleType + "” array must"
+                        + " only contain the properties “source”,"
+                        + " “urls”, “where”, and"
+                        + " “eagerness”.");
                 return false;
             }
         }
         if ("list".equals(source)) {
             if (!ruleObject.containsKey("urls")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201clist\u201d must have a \u201curls\u201d"
+                err("A speculation rule with “source” set to"
+                        + " “list” must have a “urls”"
                         + " property.");
                 return false;
             }
             if (ruleObject.containsKey("where")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201clist\u201d must not have a \u201cwhere\u201d"
+                err("A speculation rule with “source” set to"
+                        + " “list” must not have a “where”"
                         + " property.");
                 return false;
             }
@@ -224,14 +224,14 @@ public final class SpeculationRulesChecker extends Checker {
             }
         } else if ("document".equals(source)) {
             if (!ruleObject.containsKey("where")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201cdocument\u201d must have a \u201cwhere\u201d"
+                err("A speculation rule with “source” set to"
+                        + " “document” must have a “where”"
                         + " property.");
                 return false;
             }
             if (ruleObject.containsKey("urls")) {
-                err("A speculation rule with \u201csource\u201d set to"
-                        + " \u201cdocument\u201d must not have a \u201curls\u201d"
+                err("A speculation rule with “source” set to"
+                        + " “document” must not have a “urls”"
                         + " property.");
                 return false;
             }
@@ -242,16 +242,16 @@ public final class SpeculationRulesChecker extends Checker {
         if (ruleObject.containsKey("eagerness")) {
             JsonValue eagernessValue = ruleObject.get("eagerness");
             if (!(eagernessValue instanceof JsonString)) {
-                err("The \u201ceagerness\u201d property in a speculation rule"
+                err("The “eagerness” property in a speculation rule"
                         + " must be a string.");
                 return false;
             }
             String eagerness = ((JsonString) eagernessValue).getString();
             if (!"eager".equals(eagerness) && !"moderate".equals(eagerness)
                     && !"conservative".equals(eagerness)) {
-                err("The \u201ceagerness\u201d property in a speculation rule"
-                        + " must be one of \u201ceager\u201d,"
-                        + " \u201cmoderate\u201d, or \u201cconservative\u201d.");
+                err("The “eagerness” property in a speculation rule"
+                        + " must be one of “eager”,"
+                        + " “moderate”, or “conservative”.");
                 return false;
             }
         }
@@ -260,24 +260,24 @@ public final class SpeculationRulesChecker extends Checker {
 
     private boolean isUrlsArrayValid(JsonValue urlsValue) throws SAXException {
         if (!(urlsValue instanceof JsonArray)) {
-            err("The \u201curls\u201d property in a speculation rule must be a"
+            err("The “urls” property in a speculation rule must be a"
                     + " JSON array.");
             return false;
         }
         JsonArray urlsArray = (JsonArray) urlsValue;
         if (urlsArray.isEmpty()) {
-            err("The \u201curls\u201d property in a speculation rule must"
+            err("The “urls” property in a speculation rule must"
                     + " contain at least one URL.");
             return false;
         }
         for (JsonValue urlValue : urlsArray) {
             if (!(urlValue instanceof JsonString)) {
-                err("Each item in the \u201curls\u201d array must be a string.");
+                err("Each item in the “urls” array must be a string.");
                 return false;
             }
             String url = ((JsonString) urlValue).getString();
             if (url.isEmpty()) {
-                err("Each URL in the \u201curls\u201d array must be a non-empty"
+                err("Each URL in the “urls” array must be a non-empty"
                         + " string.");
                 return false;
             }
@@ -288,7 +288,7 @@ public final class SpeculationRulesChecker extends Checker {
     private boolean isDocumentRuleValid(JsonValue whereValue)
             throws SAXException {
         if (!(whereValue instanceof JsonObject)) {
-            err("The \u201cwhere\u201d property in a speculation rule must be a"
+            err("The “where” property in a speculation rule must be a"
                     + " JSON object.");
             return false;
         }
@@ -306,16 +306,16 @@ public final class SpeculationRulesChecker extends Checker {
             predicateCount++;
         if (predicateCount == 0) {
             err("A document rule predicate must have one of the properties"
-                    + " \u201cand\u201d, \u201cor\u201d, \u201cnot\u201d,"
-                    + " \u201chref_matches\u201d, or"
-                    + " \u201cselector_matches\u201d.");
+                    + " “and”, “or”, “not”,"
+                    + " “href_matches”, or"
+                    + " “selector_matches”.");
             return false;
         }
         if (predicateCount > 1) {
             err("A document rule predicate must have only one of the properties"
-                    + " \u201cand\u201d, \u201cor\u201d, \u201cnot\u201d,"
-                    + " \u201chref_matches\u201d, or"
-                    + " \u201cselector_matches\u201d.");
+                    + " “and”, “or”, “not”,"
+                    + " “href_matches”, or"
+                    + " “selector_matches”.");
             return false;
         }
         for (String key : whereObject.keySet()) {
@@ -323,9 +323,9 @@ public final class SpeculationRulesChecker extends Checker {
                     && !"href_matches".equals(key)
                     && !"selector_matches".equals(key)) {
                 err("A document rule predicate must only contain one of the"
-                        + " properties \u201cand\u201d, \u201cor\u201d,"
-                        + " \u201cnot\u201d, \u201chref_matches\u201d, or"
-                        + " \u201cselector_matches\u201d.");
+                        + " properties “and”, “or”,"
+                        + " “not”, “href_matches”, or"
+                        + " “selector_matches”.");
                 return false;
             }
         }
@@ -347,13 +347,13 @@ public final class SpeculationRulesChecker extends Checker {
     private boolean isAndOrRuleValid(String ruleType, JsonValue ruleValue)
             throws SAXException {
         if (!(ruleValue instanceof JsonArray)) {
-            err("The \u201c" + ruleType + "\u201d property in a document rule"
+            err("The “" + ruleType + "” property in a document rule"
                     + " must be a JSON array.");
             return false;
         }
         JsonArray rulesArray = (JsonArray) ruleValue;
         if (rulesArray.isEmpty()) {
-            err("The \u201c" + ruleType + "\u201d property in a document rule"
+            err("The “" + ruleType + "” property in a document rule"
                     + " must contain at least one item.");
             return false;
         }
@@ -372,13 +372,13 @@ public final class SpeculationRulesChecker extends Checker {
     private boolean isHrefMatchesRuleValid(JsonValue ruleValue)
             throws SAXException {
         if (!(ruleValue instanceof JsonString)) {
-            err("The \u201chref_matches\u201d property in a document rule must"
+            err("The “href_matches” property in a document rule must"
                     + " be a string.");
             return false;
         }
         String pattern = ((JsonString) ruleValue).getString();
         if (pattern.isEmpty()) {
-            err("The \u201chref_matches\u201d property in a document rule must"
+            err("The “href_matches” property in a document rule must"
                     + " be a non-empty string.");
             return false;
         }
@@ -388,13 +388,13 @@ public final class SpeculationRulesChecker extends Checker {
     private boolean isSelectorMatchesRuleValid(JsonValue ruleValue)
             throws SAXException {
         if (!(ruleValue instanceof JsonString)) {
-            err("The \u201cselector_matches\u201d property in a document rule"
+            err("The “selector_matches” property in a document rule"
                     + " must be a string.");
             return false;
         }
         String selector = ((JsonString) ruleValue).getString();
         if (selector.isEmpty()) {
-            err("The \u201cselector_matches\u201d property in a document rule"
+            err("The “selector_matches” property in a document rule"
                     + " must be a non-empty string.");
             return false;
         }

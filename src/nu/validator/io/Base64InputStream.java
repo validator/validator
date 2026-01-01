@@ -100,8 +100,8 @@ public class Base64InputStream extends InputStream {
                         }
                         bytesLeftInBuffer = 2;
                     } else if (b == -1) {
-                        throw new IOException("Non-Base64 input: \u201C0x"
-                                + Integer.toHexString(c) + "\u201D.");
+                        throw new IOException("Non-Base64 input: “0x"
+                                + Integer.toHexString(c) + "”.");
                     } else {
                         buffer |= b;
                     }

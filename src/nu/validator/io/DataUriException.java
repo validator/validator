@@ -38,7 +38,7 @@ public class DataUriException extends IOException {
      * @param tail
      */
     public DataUriException(int index, String head, char literal, String tail) {
-        super(head + '\u201C' + literal + '\u201D' + tail);
+        super(head + '“' + literal + '”' + tail);
         this.index = index;
         this.head = head;
         this.literal = literal;

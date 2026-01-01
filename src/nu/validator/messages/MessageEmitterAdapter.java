@@ -860,15 +860,15 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
                     (AbstractValidationException) message);
         } else if (message instanceof VnuBadAttrValueException) {
             VnuBadAttrValueException e = (VnuBadAttrValueException) message;
-            return "Bad value \u201c" + e.getAttributeValue()
-                    + "\u201d for attribute \u201c"
+            return "Bad value “" + e.getAttributeValue()
+                    + "” for attribute “"
                     + e.getAttributeName().getLocalName()
-                    + "\u201d on element \u201c"
-                    + e.getCurrentElement().getLocalName() + "\u201d.";
+                    + "” on element “"
+                    + e.getCurrentElement().getLocalName() + "”.";
         } else if (message instanceof VnuBadElementNameException) {
             VnuBadElementNameException e = (VnuBadElementNameException) message;
-            return "Element \u201c" + e.getElementName()
-                    + "\u201d not allowed.";
+            return "Element “" + e.getElementName()
+                    + "” not allowed.";
         }
         return null;
     }
@@ -877,46 +877,46 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         StringBuilder sb = new StringBuilder();
         if (e instanceof BadAttributeValueException) {
             BadAttributeValueException ex = (BadAttributeValueException) e;
-            sb.append("Bad value \u201c").append(ex.getAttributeValue()).append(
-                    "\u201d for attribute \u201c").append(
+            sb.append("Bad value “").append(ex.getAttributeValue()).append(
+                    "” for attribute “").append(
                             ex.getAttributeName().getLocalName()).append(
-                                    "\u201d on element \u201c").append(
+                                    "” on element “").append(
                                             ex.getCurrentElement()
-                                            .getLocalName()).append("\u201d.");
+                                            .getLocalName()).append("”.");
         } else if (e instanceof ImpossibleAttributeIgnoredException) {
             ImpossibleAttributeIgnoredException ex =
                 (ImpossibleAttributeIgnoredException) e;
-            sb.append("Attribute \u201c").append(
+            sb.append("Attribute “").append(
                     ex.getAttributeName().getLocalName()).append(
-                    "\u201d not allowed on element \u201c").append(
+                    "” not allowed on element “").append(
                             ex.getCurrentElement().getLocalName()).append(
-                                    "\u201d at this point.");
+                                    "” at this point.");
         } else if (e instanceof OnlyTextNotAllowedException) {
             OnlyTextNotAllowedException ex = (OnlyTextNotAllowedException) e;
-            sb.append("Element \u201c").append(
+            sb.append("Element “").append(
                     ex.getCurrentElement().getLocalName()).append(
-                            "\u201d is not allowed to have content that"
+                            "” is not allowed to have content that"
                             + " consists solely of text.");
         } else if (e instanceof OutOfContextElementException) {
             OutOfContextElementException ex = (OutOfContextElementException) e;
-            sb.append("Element \u201c").append(
+            sb.append("Element “").append(
                     ex.getCurrentElement().getLocalName()).append(
-                            "\u201d not allowed");
+                            "” not allowed");
             if (ex.getParent() != null) {
-                sb.append(" as child of \u201c").append(
-                        ex.getParent().getLocalName()).append("\u201d");
+                sb.append(" as child of “").append(
+                        ex.getParent().getLocalName()).append("”");
             }
             sb.append(" in this context.");
         } else if (e instanceof RequiredAttributesMissingOneOfException) {
             RequiredAttributesMissingOneOfException ex =
                 (RequiredAttributesMissingOneOfException) e;
-            sb.append("Element \u201c").append(
+            sb.append("Element “").append(
                     ex.getCurrentElement().getLocalName()).append(
-                            "\u201d is missing one or more of the following"
+                            "” is missing one or more of the following"
                             + " attributes: ");
             for (Iterator<String> iter =
                     ex.getAttributeLocalNames().iterator(); iter.hasNext();) {
-                sb.append("\u201c").append(iter.next()).append("\u201d");
+                sb.append("“").append(iter.next()).append("”");
                 if (iter.hasNext()) {
                     sb.append(", ");
                 }
@@ -925,56 +925,56 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         } else if (e instanceof RequiredAttributesMissingException) {
             RequiredAttributesMissingException ex =
                 (RequiredAttributesMissingException) e;
-            sb.append("Element \u201c").append(
+            sb.append("Element “").append(
                     ex.getCurrentElement().getLocalName()).append(
-                            "\u201d is missing required attribute \u201c")
-                    .append(ex.getAttributeLocalName()).append("\u201d.");
+                            "” is missing required attribute “")
+                    .append(ex.getAttributeLocalName()).append("”.");
         } else if (e instanceof RequiredElementsMissingException) {
             RequiredElementsMissingException ex =
                 (RequiredElementsMissingException) e;
             if (ex.getParent() == null) {
                 sb.append("Required elements missing.");
             } else {
-                sb.append("Element \u201c").append(
-                        ex.getParent().getLocalName()).append("\u201d");
+                sb.append("Element “").append(
+                        ex.getParent().getLocalName()).append("”");
                 if (ex.getMissingElementName() == null) {
                     sb.append(" is missing a required child element");
                 } else {
                     sb.append(
                             " is missing a required instance of child element"
-                            + " \u201c").append(ex.getMissingElementName())
-                        .append("\u201d");
+                            + " “").append(ex.getMissingElementName())
+                        .append("”");
                 }
                 sb.append(".");
             }
         } else if (e instanceof TextNotAllowedException) {
             TextNotAllowedException ex = (TextNotAllowedException) e;
-            sb.append("Text not allowed in \u201c").append(
+            sb.append("Text not allowed in “").append(
                     ex.getCurrentElement().getLocalName()).append(
-                            "\u201d in this context.");
+                            "” in this context.");
         } else if (e instanceof UnfinishedElementException) {
             UnfinishedElementException ex = (UnfinishedElementException) e;
-            sb.append("Element \u201c").append(
-                    ex.getCurrentElement().getLocalName()).append("\u201d");
+            sb.append("Element “").append(
+                    ex.getCurrentElement().getLocalName()).append("”");
             if (ex.getMissingElementName() == null) {
                 sb.append(" is missing a required child element");
             } else {
                 sb.append(
                         " is missing a required instance of child element"
-                        + " \u201c").append(
-                                ex.getMissingElementName()).append("\u201d");
+                        + " “").append(
+                                ex.getMissingElementName()).append("”");
             }
             sb.append(".");
         } else if (e instanceof UnfinishedElementOneOfException) {
             UnfinishedElementOneOfException ex =
                 (UnfinishedElementOneOfException) e;
-            sb.append("Element \u201c").append(
+            sb.append("Element “").append(
                     ex.getCurrentElement().getLocalName()).append(
-                            "\u201d is missing a required instance of one"
+                            "” is missing a required instance of one"
                             + " or more of the following child elements: ");
             for (Iterator<String> iter =
                     ex.getMissingElementNames().iterator(); iter.hasNext();) {
-                sb.append("\u201c").append(iter.next()).append("\u201d");
+                sb.append("“").append(iter.next()).append("”");
                 if (iter.hasNext()) {
                     sb.append(", ");
                 }
@@ -983,13 +983,13 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         } else if (e instanceof RequiredElementsMissingOneOfException) {
             RequiredElementsMissingOneOfException ex =
                 (RequiredElementsMissingOneOfException) e;
-            sb.append("Element \u201c").append(
+            sb.append("Element “").append(
                     ex.getParent().getLocalName()).append(
-                            "\u201d is missing a required instance of one or"
+                            "” is missing a required instance of one or"
                             + " more of the following child elements: ");
             for (Iterator<String> iter =
                     ex.getMissingElementNames().iterator(); iter.hasNext();) {
-                sb.append("\u201c").append(iter.next()).append("\u201d");
+                sb.append("“").append(iter.next()).append("”");
                 if (iter.hasNext()) {
                     sb.append(", ");
                 }
@@ -997,20 +997,20 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             sb.append(".");
         } else if (e instanceof UnknownElementException) {
             UnknownElementException ex = (UnknownElementException) e;
-            sb.append("Unknown element \u201c").append(
+            sb.append("Unknown element “").append(
                     ex.getCurrentElement().getLocalName()).append(
-                            "\u201d not allowed");
+                            "” not allowed");
             if (ex.getParent() != null) {
-                sb.append(" as child of \u201c").append(
-                        ex.getParent().getLocalName()).append("\u201d");
+                sb.append(" as child of “").append(
+                        ex.getParent().getLocalName()).append("”");
             }
             sb.append(".");
         } else if (e instanceof StringNotAllowedException) {
             StringNotAllowedException ex = (StringNotAllowedException) e;
-            sb.append("Bad character content \u201c").append(
-                    ex.getValue()).append("\u201d for element \u201c").append(
+            sb.append("Bad character content “").append(
+                    ex.getValue()).append("” for element “").append(
                             ex.getCurrentElement().getLocalName()).append(
-                                    "\u201d.");
+                                    "”.");
         } else {
             return null;
         }
@@ -1642,7 +1642,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         int startQuotes = 0;
         for (int i = 0; i < len; i++) {
             char c = message.charAt(i);
-            if (c == '\u201C') {
+            if (c == '“') {
                 startQuotes++;
                 if (startQuotes == 1) {
                     char[] scrubbed = scrub(message.substring(start, i)).toCharArray();
@@ -1650,7 +1650,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
                     start = i + 1;
                     messageTextHandler.startCode();
                 }
-            } else if (c == '\u201D' && startQuotes > 0) {
+            } else if (c == '”' && startQuotes > 0) {
                 startQuotes--;
                 if (startQuotes == 0) {
                     char[] scrubbed = scrub(message.substring(start, i)).toCharArray();

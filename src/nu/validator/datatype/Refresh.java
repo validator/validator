@@ -86,7 +86,7 @@ public final class Refresh extends IriRef {
                     } else {
                         throw newDatatypeException(
                                 i,
-                                "Expected a space character or the letter \u201Cu\u201D, but saw ",
+                                "Expected a space character or the letter “u”, but saw ",
                                 c, " instead.");
                     }
                 case U_SEEN:
@@ -95,7 +95,7 @@ public final class Refresh extends IriRef {
                         continue;
                     } else {
                         throw newDatatypeException(i,
-                                "Expected the letter \u201Cr\u201D, but saw ",
+                                "Expected the letter “r”, but saw ",
                                 c, " instead.");
                     }
                 case R_SEEN:
@@ -104,7 +104,7 @@ public final class Refresh extends IriRef {
                         continue;
                     } else {
                         throw newDatatypeException(i,
-                                "Expected the letter \u201Cl\u201D, but saw ",
+                                "Expected the letter “l”, but saw ",
                                 c, " instead.");
                     }
                 case L_SEEN:
@@ -113,7 +113,7 @@ public final class Refresh extends IriRef {
                         continue;
                     } else {
                         throw newDatatypeException(i,
-                                "Expected \u201C=\u201D, but saw ", c,
+                                "Expected “=”, but saw ", c,
                                 " instead.");
                     }
                 case EQUALS_SEEN:
@@ -143,13 +143,13 @@ public final class Refresh extends IriRef {
             case SEMICOLON_SEEN:
                 throw newDatatypeException("Expected a space character, but the literal ended.");
             case SPACE_SEEN:
-                throw newDatatypeException("Expected a space character or the letter \u201Cu\u201D, but the literal ended.");
+                throw newDatatypeException("Expected a space character or the letter “u”, but the literal ended.");
             case U_SEEN:
-                throw newDatatypeException("Expected the letter \u201Cr\u201D, but the literal ended.");
+                throw newDatatypeException("Expected the letter “r”, but the literal ended.");
             case R_SEEN:
-                throw newDatatypeException("Expected the letter \u201Cl\u201D, but the literal ended.");
+                throw newDatatypeException("Expected the letter “l”, but the literal ended.");
             case L_SEEN:
-                throw newDatatypeException("Expected \u201C=\u201D, but the literal ended.");
+                throw newDatatypeException("Expected “=”, but the literal ended.");
             case EQUALS_SEEN:
                 throw newDatatypeException("Expected an IRI reference, but the literal ended.");
         }

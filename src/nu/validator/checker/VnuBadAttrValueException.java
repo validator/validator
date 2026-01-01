@@ -69,9 +69,9 @@ public class VnuBadAttrValueException extends SAXParseException {
             String attributeName, String attributeValue, String message,
             Locator locator, Class<?> datatypeClass, boolean warning)
             throws SAXException, ClassNotFoundException {
-        super("Bad value \u201c" + attributeValue
-                + "\u201d for attribute \u201c" + attributeName
-                + "\u201d on element \u201c" + elementName + "\u201d: "
+        super("Bad value “" + attributeValue
+                + "” for attribute “" + attributeName
+                + "” on element “" + elementName + "”: "
                 + message, locator);
         Html5DatatypeException ex5 = new Html5DatatypeException(0,
                 datatypeClass, "attribute", message, warning);

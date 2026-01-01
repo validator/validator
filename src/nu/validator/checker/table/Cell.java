@@ -111,12 +111,12 @@ final class Cell implements Locator {
             this.systemId = locator.getSystemId();
         }
         if (rowspan > MAX_ROWSPAN) {
-            err("The value of the \u201Crowspan\u201D attribute must be less"
+            err("The value of the “rowspan” attribute must be less"
                     + " than or equal to " + MAX_ROWSPAN + ".");
             rowspan = MAX_ROWSPAN;
         }
         if (colspan > MAX_COLSPAN) {
-            err("The value of the \u201Ccolspan\u201D attribute must be less"
+            err("The value of the “colspan” attribute must be less"
                     + " than or equal to " + MAX_COLSPAN + ".");
             colspan = MAX_COLSPAN;
         }
@@ -222,8 +222,8 @@ final class Cell implements Locator {
         if (this.bottom != MAX_ROWSPAN) {
             err("Table cell spans past the end of its "
                     + (rowGroupType == null ? "implicit row group"
-                            : "row group established by a \u201C" + rowGroupType
-                                    + "\u201D element")
+                            : "row group established by a “" + rowGroupType
+                                    + "” element")
                     + "; clipped to the end of the row group.");
         }
     }

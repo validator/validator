@@ -209,34 +209,34 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
         if (getErrorHandler() != null) {
             Html5DatatypeException ex5 = (Html5DatatypeException) e;
             DatatypeMismatchException bpe = new DatatypeMismatchException(
-                    "Bad value \u201c" + attrValue + "\u201d for \u201c"
-                            + piTarget + "\u201d pseudo-attribute \u201c"
-                            + attrName + "\u201d. " + e.getMessage(),
+                    "Bad value “" + attrValue + "” for “"
+                            + piTarget + "” pseudo-attribute “"
+                            + attrName + "”. " + e.getMessage(),
                     getDocumentLocator(), datatypeClass, ex5.isWarning());
             getErrorHandler().error(bpe);
         }
     }
 
     private void errAttributeWithNoValue() throws SAXException {
-        err("Found \u201c" + piTarget + "\u201d pseudo-attribute \u201c"
+        err("Found “" + piTarget + "” pseudo-attribute “"
                 + attributeName
-                + "\u201d without a value. All pseudo-attributes in \u201c"
-                + piTarget + "\u201d instructions must have values.");
+                + "” without a value. All pseudo-attributes in “"
+                + piTarget + "” instructions must have values.");
     }
 
     private void errAttributeValueContainsLt() throws SAXException {
-        err("Found \u201c" + piTarget + "\u201d pseudo-attribute \u201c"
+        err("Found “" + piTarget + "” pseudo-attribute “"
                 + attributeName
-                + "\u201d with the character \u201c<\u201d in its value."
-                + " All pseudo-attribute values in \u201c" + piTarget
-                + "\u201d instructions must not contain the character"
-                + " \u201c<\u201d.");
+                + "” with the character “<” in its value."
+                + " All pseudo-attribute values in “" + piTarget
+                + "” instructions must not contain the character"
+                + " “<”.");
     }
 
     private void errUpperCaseXinHexNcr() throws SAXException {
         err("In XML documents, a hexadecimal character reference must begin"
-                + " with \u201c&#x\u201d (lowercase \u201cx\u201d), not"
-                + " \u201c&#X\u201d (uppercase \u201cX\u201d).");
+                + " with “&#x” (lowercase “x”), not"
+                + " “&#X” (uppercase “X”).");
     }
 
     private void checkXmlStylesheetPiData(String data) throws SAXException {
@@ -249,14 +249,14 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
         boolean alternateIsYes = false;
         boolean badDatatype = false;
         if (inDoctype) {
-            warn("An \u201cxml-stylesheet\u201d instruction should not be used"
-                    + " within a \u201cDOCTYPE\u201d declaration.");
+            warn("An “xml-stylesheet” instruction should not be used"
+                    + " within a “DOCTYPE” declaration.");
         }
         if (alreadyHasElement) {
-            err("Any \u201cxml-stylesheet\u201d instruction in a document must"
+            err("Any “xml-stylesheet” instruction in a document must"
                     + " occur before any elements in the document."
                     + " Suppressing any further errors for this"
-                    + " \u201cxml-stylesheet\u201d instruction.");
+                    + " “xml-stylesheet” instruction.");
             return;
         }
         if (!"".equals(data)) {
@@ -311,26 +311,26 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                                     || attrValue.matches("text/xslt(;.*)?")) {
                                 if (!attrValue.matches("text/xsl(;.*)?")) {
                                     warn("For indicating XSLT,"
-                                            + " \u201ctext/xsl\u201d is the only"
+                                            + " “text/xsl” is the only"
                                             + " MIME type for the"
-                                            + " \u201cxml-stylesheet\u201d"
-                                            + " pseudo-attribute \u201ctype\u201d"
+                                            + " “xml-stylesheet”"
+                                            + " pseudo-attribute “type”"
                                             + " that is supported across browsers.");
                                 }
                                 if (hasXsltPi) {
                                     warn("Browsers do not support multiple"
-                                            + " \u201cxml-stylesheet\u201d"
+                                            + " “xml-stylesheet”"
                                             + " instructions with a"
-                                            + " \u201ctype\u201d value that"
+                                            + " “type” value that"
                                             + " indicates XSLT.");
                                 }
                                 hasXsltPi = true;
                             } else if (!attrValue.matches("^text/css(;.*)?$")) {
-                                warn("\u201ctext/css\u201d and"
-                                        + " \u201ctext/xsl\u201d are the only"
+                                warn("“text/css” and"
+                                        + " “text/xsl” are the only"
                                         + " MIME types for the"
-                                        + " \u201cxml-stylesheet\u201d"
-                                        + " pseudo-attribute \u201ctype\u201d"
+                                        + " “xml-stylesheet”"
+                                        + " pseudo-attribute “type”"
                                         + " that are supported across browsers.");
                             }
                         }
@@ -385,41 +385,41 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                         if ("yes".equals(attrValue)) {
                             alternateIsYes = true;
                         } else if (!"no".equals(attrValue)) {
-                            err("The value of the \u201cxml-stylesheet\u201d"
-                                    + " pseudo-attribute \u201calternate\u201d"
-                                    + " must be either \u201cyes\u201d or"
-                                    + " \u201cno\u201d.");
+                            err("The value of the “xml-stylesheet”"
+                                    + " pseudo-attribute “alternate”"
+                                    + " must be either “yes” or"
+                                    + " “no”.");
                         }
                         break;
                     default:
-                        err("Pseudo-attribute \u201c" + attrName
-                                + "\u201d not allowed in"
-                                + " \u201cxml-stylesheet\u201d instruction.");
+                        err("Pseudo-attribute “" + attrName
+                                + "” not allowed in"
+                                + " “xml-stylesheet” instruction.");
                         break;
                 }
             }
             if (alternateIsYes && !hasNonEmptyTitle) {
-                err("An \u201cxml-stylesheet\u201d instruction with an"
-                        + " \u201calternate\u201d pseudo-attribute whose value is"
-                        + " \u201cyes\u201d must also have a \u201ctitle\u201d"
+                err("An “xml-stylesheet” instruction with an"
+                        + " “alternate” pseudo-attribute whose value is"
+                        + " “yes” must also have a “title”"
                         + " pseudo-attribute with a non-empty value.");
             }
         }
         if (!hasHref) {
-            err("\u201cxml-stylesheet\u201d instruction lacks \u201chref\u201d"
+            err("“xml-stylesheet” instruction lacks “href”"
                     + " pseudo-attribute."
-                    + " The \u201chref\u201d pseudo-attribute is required in all"
-                    + " \u201cxml-stylesheet\u201d instructions.");
+                    + " The “href” pseudo-attribute is required in all"
+                    + " “xml-stylesheet” instructions.");
         }
         if (hasXsltPi && (hasTitle || hasMedia || hasCharset || hasAlternate)) {
-            warn("When processing \u201cxml-stylesheet\u201d instructions,"
-                    + " browsers ignore the pseudo-attributes \u201ctitle\u201d,"
-                    + " \u201cmedia\u201d, \u201ccharset\u201d, and"
-                    + " \u201calternate\u201d.");
+            warn("When processing “xml-stylesheet” instructions,"
+                    + " browsers ignore the pseudo-attributes “title”,"
+                    + " “media”, “charset”, and"
+                    + " “alternate”.");
         } else if (hasCharset) {
             warn("Some browsers ignore the value of the"
-                    + " \u201cxml-stylesheet\u201d pseudo-attribute"
-                    + " \u201ccharset\u201d.");
+                    + " “xml-stylesheet” pseudo-attribute"
+                    + " “charset”.");
         }
     }
 
@@ -1582,8 +1582,8 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
         } else if (c != '\uFFFD') {
             errQuoteBeforeAttributeName(c);
         } else {
-            err("The character \u201C" + c + "\u201D is not allowed in \u201C"
-                    + piTarget + "\u201D pseudo-attribute names.");
+            err("The character “" + c + "” is not allowed in “"
+                    + piTarget + "” pseudo-attribute names.");
         }
     }
 
@@ -1592,13 +1592,13 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errDuplicateAttribute() throws SAXException {
-        err("Duplicate \u201C" + piTarget + "\u201D pseudo-attribute \u201C"
-                + attributeName + "\u201D.");
+        err("Duplicate “" + piTarget + "” pseudo-attribute “"
+                + attributeName + "”.");
     }
 
     private void errEqualsSignBeforeAttributeName() throws SAXException {
-        err("Saw \u201C=\u201D when expecting \u201C" + piTarget
-                + "\u201D pseudo-attribute name. Probable cause:"
+        err("Saw “=” when expecting “" + piTarget
+                + "” pseudo-attribute name. Probable cause:"
                 + " Pseudo-attribute name missing.");
     }
 
@@ -1606,9 +1606,9 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
             throws SAXException {
         switch (c) {
             case '=':
-                err("\u201C=\u201D at the start of an unquoted \u201C"
+                err("“=” at the start of an unquoted “"
                         + piTarget
-                        + "\u201D pseudo-attribute value. Probable cause:"
+                        + "” pseudo-attribute value. Probable cause:"
                         + " Stray duplicate equals sign.");
                 return;
             case '<':
@@ -1616,43 +1616,43 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
                  * we deal with this case in the attribute-value error- checking
                  * code in the getPseudoAttributesFromPiData method
                  */
-                // err("\u201C<\u201D at the start of an unquoted attribute
-                // value. Probable cause: Missing \u201C>\u201D immediately
+                // err("“<” at the start of an unquoted attribute
+                // value. Probable cause: Missing “>” immediately
                 // before.");
                 return;
             case '`':
-                err("\u201C`\u201D at the start of an unquoted \u201C"
+                err("“`” at the start of an unquoted “"
                         + piTarget
-                        + "\u201D pseudo-attribute value. Probable cause:"
+                        + "” pseudo-attribute value. Probable cause:"
                         + " Using the wrong character as a quote.");
                 return;
         }
     }
 
     private void errNoSpaceBetweenAttributes() throws SAXException {
-        err("Space is required between \u201C" + piTarget
-                + "\u201D pseudo-attributes.");
+        err("Space is required between “" + piTarget
+                + "” pseudo-attributes.");
     }
 
     private void errQuoteBeforeAttributeName(char c) throws SAXException {
-        err("Saw \u201C" + c
-                + "\u201D when expecting a pseudo-attribute name. Probable cause:"
-                + " \u201C=\u201D missing immediately before.");
+        err("Saw “" + c
+                + "” when expecting a pseudo-attribute name. Probable cause:"
+                + " “=” missing immediately before.");
     }
 
     private void errQuoteOrLtInAttributeNameOrNull(char c) throws SAXException {
         if (c != '\uFFFD') {
-            err("Quote \u201C" + c
-                    + "\u201D in pseudo-attribute name. Probable cause:"
+            err("Quote “" + c
+                    + "” in pseudo-attribute name. Probable cause:"
                     + " Matching quote missing somewhere earlier.");
         }
     }
 
     private void errUnquotedAttributeValOrNull() throws SAXException {
-        err("Found unquoted value for \u201c" + piTarget
-                + "\u201d pseudo-attribute \u201c" + attributeName
-                + "\u201d. The value of all pseudo-attributes in \u201c"
-                + piTarget + "\u201d instructions must be quoted.");
+        err("Found unquoted value for “" + piTarget
+                + "” pseudo-attribute “" + attributeName
+                + "”. The value of all pseudo-attributes in “"
+                + piTarget + "” instructions must be quoted.");
     }
 
     private void errNoNamedCharacterMatch() throws SAXException {
@@ -1660,9 +1660,9 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
             return;
         }
         SAXParseException spe = new SAXParseException(
-                "\u201C&\u201D did not start a character reference."
-                        + " (\u201C&\u201D probably should have been escaped as"
-                        + " \u201C&amp;\u201D.)",
+                "“&” did not start a character reference."
+                        + " (“&” probably should have been escaped as"
+                        + " “&amp;”.)",
                 getDocumentLocator());
         getErrorHandler().error(spe);
     }
@@ -1701,8 +1701,8 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errNoDigitsInNCR() throws SAXException {
-        err("No digits after \u201C" + new String(strBuf, 0, strBufLen)
-                + "\u201D.");
+        err("No digits after “" + new String(strBuf, 0, strBufLen)
+                + "”.");
     }
 
     private void errUnescapedAmpersandInterpretedAsCharacterReference()
@@ -1711,9 +1711,9 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
             return;
         }
         SAXParseException spe = new SAXParseException(
-                "The string following \u201C&\u201D was interpreted as"
-                        + " a character reference. (\u201C&\u201D probably"
-                        + " should have been escaped as \u201C&amp;\u201D.)",
+                "The string following “&” was interpreted as"
+                        + " a character reference. (“&” probably"
+                        + " should have been escaped as “&amp;”.)",
                 getDocumentLocator());
         getErrorHandler().error(spe);
     }

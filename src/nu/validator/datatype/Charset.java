@@ -60,13 +60,13 @@ public class Charset extends AbstractDatatype {
                 || !CharsetData.isPreferred(encodingName)) {
             String preferred = CharsetData.preferredForLabel(encodingName);
             if (preferred == null || "replacement".equals(preferred)) {
-                throw newDatatypeException("\u201c" + encodingName
-                        + "\u201d is not a valid character encoding name.");
+                throw newDatatypeException("“" + encodingName
+                        + "” is not a valid character encoding name.");
             }
-            throw newDatatypeException("\u201c" + encodingName
-                    + "\u201d is not a preferred encoding name."
-                    + " The preferred label for this encoding is \u201C"
-                    + preferred + "\u201D.");
+            throw newDatatypeException("“" + encodingName
+                    + "” is not a preferred encoding name."
+                    + " The preferred label for this encoding is “"
+                    + preferred + "”.");
         }
     }
 

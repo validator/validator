@@ -82,7 +82,7 @@ public class SourceSizeList extends AbstractDatatype {
         LENGTH_UNITS.add("px");
 
         for (CharSequence units : LENGTH_UNITS) {
-            VALID_UNITS.append(" \u201c").append(units).append("\u201d,");
+            VALID_UNITS.append(" “").append(units).append("”,");
         }
         VALID_UNITS.setLength(VALID_UNITS.length() - 1);
     }
@@ -117,8 +117,8 @@ public class SourceSizeList extends AbstractDatatype {
         FUNCTION_NAMES.add("sign");
 
         for (CharSequence name : FUNCTION_NAMES) {
-            VALID_FUNCTION_NAMES.append(" \u201c").append(name).append(
-                    "\u201d,");
+            VALID_FUNCTION_NAMES.append(" “").append(name).append(
+                    "”,");
         }
         VALID_FUNCTION_NAMES.setLength(VALID_FUNCTION_NAMES.length() - 1);
     }
@@ -511,7 +511,7 @@ public class SourceSizeList extends AbstractDatatype {
     }
 
     private CharSequence code(CharSequence cs) {
-        return "\u201c" + cs + "\u201d";
+        return "“" + cs + "”";
     }
 
     @Override

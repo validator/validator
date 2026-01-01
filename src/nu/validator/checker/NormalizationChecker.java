@@ -282,12 +282,12 @@ public final class NormalizationChecker extends Checker {
     private void errAboutTextRun(String normalizedText) throws SAXException {
         if (sourceTextMode) {
             warn("Source text is not in Unicode Normalization Form C."
-                    + " Should instead be \u201C" + normalizedText + "\u201D."
+                    + " Should instead be “" + normalizedText + "”."
                     + " (Copy and paste that into your source document to replace"
                     + " the un-normalized text.)");
         } else {
             warn("Text run is not in Unicode Normalization Form C."
-                    + " Should instead be \u201C" + normalizedText + "\u201D."
+                    + " Should instead be “" + normalizedText + "”."
                     + " (Copy and paste that into your source document to replace"
                     + " the un-normalized text.)");
         }
@@ -360,38 +360,38 @@ public final class NormalizationChecker extends Checker {
             Attributes atts) throws SAXException {
         flush();
         if (startsWithComposingChar(localName)) {
-            warn("Element name \u201C " + localName
-                    + "\u201D starts with a composing character.");
+            warn("Element name “ " + localName
+                    + "” starts with a composing character.");
         }
 
         int len = atts.getLength();
         for (int i = 0; i < len; i++) {
             String name = atts.getLocalName(i);
             if (startsWithComposingChar(name)) {
-                warn("Attribute name \u201C " + localName
-                        + "\u201D starts with a composing character.");
+                warn("Attribute name “ " + localName
+                        + "” starts with a composing character.");
             }
 
             String value = atts.getValue(i);
             if (!"".equals(value)) {
                 if (startsWithComposingChar(value)) {
-                    warn("The value of attribute \u201C"
+                    warn("The value of attribute “"
                             + atts.getLocalName(i)
-                            + "\u201D"
+                            + "”"
                             + ("".equals(atts.getURI(i)) ? ""
-                                    : " in namespace \u201C" + atts.getURI(i)
-                                            + "\u201D") + " on element \u201C"
-                            + localName + "\u201D from namespace \u201C" + uri
-                            + "\u201D starts with a composing character.");
+                                    : " in namespace “" + atts.getURI(i)
+                                            + "”") + " on element “"
+                            + localName + "” from namespace “" + uri
+                            + "” starts with a composing character.");
                 } else if (!Normalizer.isNormalized(value, Normalizer.NFC, 0)) {
-                    warn("The value of attribute \u201C"
+                    warn("The value of attribute “"
                             + atts.getLocalName(i)
-                            + "\u201D"
+                            + "”"
                             + ("".equals(atts.getURI(i)) ? ""
-                                    : " in namespace \u201C" + atts.getURI(i)
-                                            + "\u201D") + " on element \u201C"
-                            + localName + "\u201D from namespace \u201C" + uri
-                            + "\u201D is not in Unicode Normalization Form C.");
+                                    : " in namespace “" + atts.getURI(i)
+                                            + "”") + " on element “"
+                            + localName + "” from namespace “" + uri
+                            + "” is not in Unicode Normalization Form C.");
                 }
             }
         }
@@ -404,12 +404,12 @@ public final class NormalizationChecker extends Checker {
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
         if (startsWithComposingChar(prefix)) {
-            warn("Namespace prefix \u201C " + prefix
-                    + "\u201D starts with a composing character.");
+            warn("Namespace prefix “ " + prefix
+                    + "” starts with a composing character.");
         }
         if (startsWithComposingChar(uri)) {
-            warn("Namespace URI \u201C " + uri
-                    + "\u201D starts with a composing character.");
+            warn("Namespace URI “ " + uri
+                    + "” starts with a composing character.");
         }
     }
 

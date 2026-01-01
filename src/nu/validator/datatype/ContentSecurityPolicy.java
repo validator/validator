@@ -71,8 +71,8 @@ public class ContentSecurityPolicy extends AbstractDatatype {
                                 return;
                             }
                             String formattedMessage = message
-                                .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
-                                .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
+                                .replaceAll(SANDBOX_KEYWORDS, "“$1”")
+                                .replaceAll(DIRECTIVE_NAME, " “$1” ")
                                     + " ";
                             switch (severity) {
                                 case Error:
@@ -93,8 +93,8 @@ public class ContentSecurityPolicy extends AbstractDatatype {
                                 return;
                             }
                             String formattedMessage = message
-                                .replaceAll(SANDBOX_KEYWORDS, "\u201c$1\u201d")
-                                .replaceAll(DIRECTIVE_NAME, " \u201c$1\u201d ")
+                                .replaceAll(SANDBOX_KEYWORDS, "“$1”")
+                                .replaceAll(DIRECTIVE_NAME, " “$1” ")
                                     + " ";
                             switch (severity) {
                                 case Error:

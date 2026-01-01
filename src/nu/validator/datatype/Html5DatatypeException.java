@@ -48,7 +48,7 @@ public class Html5DatatypeException extends DatatypeException {
     }
 
     public Html5DatatypeException(int index, Class datatypeClass, String datatypeName, String head, String literal, String tail) {
-        super(index, "Bad " + datatypeName + ": " + head + '\u201C' + literal + '\u201D' + tail);
+        super(index, "Bad " + datatypeName + ": " + head + '“' + literal + '”' + tail);
         this.datatypeClass = datatypeClass;
         this.segments = new String[3];
         this.segments[0] = head;
@@ -77,7 +77,7 @@ public class Html5DatatypeException extends DatatypeException {
     }
 
     public Html5DatatypeException(int index, Class datatypeClass, String datatypeName, String head, String literal, String tail, boolean warning) {
-        super(index, "Bad " + datatypeName + ": " + head + '\u201C' + literal + '\u201D' + tail);
+        super(index, "Bad " + datatypeName + ": " + head + '“' + literal + '”' + tail);
         this.datatypeClass = datatypeClass;
         this.segments = new String[3];
         this.segments[0] = head;

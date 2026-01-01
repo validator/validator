@@ -45,8 +45,8 @@ public class JsonMessageTextHandler implements MessageTextHandler {
             LEFT = new char[]{'\''};
             RIGHT = new char[]{'\''};
         } else {
-            LEFT = new char[]{'\u201C'};
-            RIGHT = new char[]{'\u201D'};
+            LEFT = new char[]{'“'};
+            RIGHT = new char[]{'”'};
         }
     }
 

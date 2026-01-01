@@ -98,18 +98,18 @@ public class IdFilter extends XMLFilterImpl {
                 }
                 Matcher m = NCNAME_PATTERN.matcher(normalizedValue);
                 if (!m.matches()) {
-                    super.error(new SAXParseException("\u201C" + normalizedValue + "\u201D is not a Namespaces in XML 1.0 NCName.", locator));                    
+                    super.error(new SAXParseException("“" + normalizedValue + "” is not a Namespaces in XML 1.0 NCName.", locator));                    
                 }
                 if ("ID" != type) {
                     needsWrap = true;
                     if (atts2.isDeclared(i)) {
-                        super.error(new SAXParseException("The attribute \u201Cxml:id\u201D was declared to be of type " + type + "in the DTD although it is required to be declared to be of type ID.", locator));                                            
+                        super.error(new SAXParseException("The attribute “xml:id” was declared to be of type " + type + "in the DTD although it is required to be declared to be of type ID.", locator));                                            
                     }
                 }
                 checkId("xml:id", normalizedValue);
             } else if ("ID" == type) {
                 String qn = atts2.getQName(i);
-                super.warning(new SAXParseException("Unusual attribute \u201C" + qn + "\u201D declared be of type ID. This may be a compatibility problem when the DTD is not processed.", locator));
+                super.warning(new SAXParseException("Unusual attribute “" + qn + "” declared be of type ID. This may be a compatibility problem when the DTD is not processed.", locator));
                 checkId(qn, atts2.getValue(i));
             }
         }
@@ -156,15 +156,15 @@ public class IdFilter extends XMLFilterImpl {
 
     private void checkId(String name, String value) throws SAXException {
         if ("".equals(value)) {
-            super.error(new SAXParseException("Attribute \u201C" + name + "\u201D had the empty string as the value but the empty string cannot be used as an ID.", locator));            
+            super.error(new SAXParseException("Attribute “" + name + "” had the empty string as the value but the empty string cannot be used as an ID.", locator));            
             return;
         }
         Locator first = ids.get(value);
         if (first == null) {
             ids.put(value, new LocatorImpl(locator));
         } else {
-            super.error(new SAXParseException("Attribute \u201C" + name + "\u201D declares a duplicate ID value \u201C" + value + "\u201D.", locator));
-            super.warning(new SAXParseException("The first occurrence of the ID value \u201C" + value + "\u201D was here.", first));
+            super.error(new SAXParseException("Attribute “" + name + "” declares a duplicate ID value “" + value + "”.", locator));
+            super.warning(new SAXParseException("The first occurrence of the ID value “" + value + "” was here.", first));
         }
     }
 

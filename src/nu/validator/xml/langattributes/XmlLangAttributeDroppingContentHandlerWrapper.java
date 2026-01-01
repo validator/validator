@@ -211,7 +211,7 @@ public class XmlLangAttributeDroppingContentHandlerWrapper implements ContentHan
                     attributesImpl.addAttribute(uri, local, attributes.getQName(k), attributes.getType(k), attributes.getValue(k));                        
                 }
                 if (errorHandler != null && !equalsIgnoreAsciiCase(xmlLangValue, langValue)) {
-                    errorHandler.error(new SAXParseException("When the attribute \u201Cxml:lang\u201D in no namespace is specified, the element must also have the attribute \u201Clang\u201D present with the same value.", locator));
+                    errorHandler.error(new SAXParseException("When the attribute “xml:lang” in no namespace is specified, the element must also have the attribute “lang” present with the same value.", locator));
                 }
                 return attributesImpl;
             }

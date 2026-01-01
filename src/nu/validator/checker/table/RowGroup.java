@@ -135,8 +135,8 @@ final class RowGroup {
                     + (currentRow + 1)
                     + " of "
                     + (type == null ? "an implicit row group"
-                            : "a row group established by a \u201C" + type
-                                    + "\u201D element")
+                            : "a row group established by a “" + type
+                                    + "” element")
                     + " has no cells beginning on it.");
         }
 

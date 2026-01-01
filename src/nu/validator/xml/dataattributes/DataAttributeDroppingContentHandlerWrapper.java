@@ -215,13 +215,13 @@ public class DataAttributeDroppingContentHandlerWrapper implements
             char c = local.charAt(i);
             if (c >= 'A' && c <= 'Z') {
                 errorHandler.error(new SAXParseException(
-                        "\u201Cdata-*\u201D attributes must not have"
+                        "“data-*” attributes must not have"
                         + " characters from the range"
-                        + " \u201CA\u201D\u2026\u201CZ\u201D in the name.",
+                        + " “A”\u2026“Z” in the name.",
                         locator));
             } else if (!NCName.isNCNameTrail(c)) {
                 errorHandler.error(new SAXParseException(
-                        "\u201Cdata-*\u201D attribute names must be"
+                        "“data-*” attribute names must be"
                         + " XML 1.0 4th ed. plus Namespaces NCNames.",
                         locator));
             }

@@ -79,14 +79,14 @@ public class DuplicateDtChecker extends Checker {
                         if (firstOccurrence == null) {
                             dtNames.put(dtText, dtLocator);
                         } else {
-                            warn("Duplicate \u201Cdt\u201D name \u201C" + dtText
-                                    + "\u201D in \u201Cdl\u201D element. "
-                                    + "Within a single \u201Cdl\u201D element, "
+                            warn("Duplicate “dt” name “" + dtText
+                                    + "” in “dl” element. "
+                                    + "Within a single “dl” element, "
                                     + "there should not be more than one "
-                                    + "\u201Cdt\u201D element for each name.",
+                                    + "“dt” element for each name.",
                                     dtLocator);
-                            info("The first occurrence of \u201Cdt\u201D name"
-                                    + " \u201C" + dtText + "\u201D was here.",
+                            info("The first occurrence of “dt” name"
+                                    + " “" + dtText + "” was here.",
                                     firstOccurrence);
                         }
                     }

@@ -76,8 +76,8 @@ public final class IntegrityMetadata extends AbstractDatatype {
         } else {
             throw newDatatypeException(i - 1,
                     "Values must start with"
-                            + " \u201csha256-\u201d or \u201csha384-\u201d"
-                            + " or \u201csha512-\u201d.");
+                            + " “sha256-” or “sha384-”"
+                            + " or “sha512-”.");
         }
     }
 

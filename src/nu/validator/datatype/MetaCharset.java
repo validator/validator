@@ -65,7 +65,7 @@ public class MetaCharset extends AbstractDatatype {
                             "The legacy encoding declaration"
                                     + " did not start with space characters or ",
                             "charset=", " after the semicolon. "
-                                    + " Found \u201c" + c + "\u201d instead.");
+                                    + " Found “" + c + "” instead.");
             }
         }
         if (!lower.startsWith("charset=", offset)) {
@@ -91,8 +91,8 @@ public class MetaCharset extends AbstractDatatype {
         String encodingName = lower.substring(offset);
         if (!"utf-8".equals(encodingName)) {
             throw newDatatypeException(
-                    "\u201Ccharset=\u201D must be followed by"
-                            + " \u201Cutf-8\u201D.");
+                    "“charset=” must be followed by"
+                            + " “utf-8”.");
         }
     }
 

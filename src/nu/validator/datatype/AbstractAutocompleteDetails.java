@@ -153,46 +153,46 @@ abstract class AbstractAutocompleteDetails extends AbstractDatatype {
             if ("webauthn".equals(token)) {
                 if (detailTokensSize == 1) {
                     throw newDatatypeException(
-                            "The token \u201cwebauthn\u201d must not be the only"
+                            "The token “webauthn” must not be the only"
                             + " token in a list of autofill detail tokens.");
                 } else if (i == detailTokensSize - 1) {
                     return;
                 } else {
                     throw newDatatypeException(
-                            "The token \u201cwebauthn\u201d must only appear"
+                            "The token “webauthn” must only appear"
                             + " as the very last token in a list of autofill"
                             + " detail tokens.");
                 }
             }
             if (CONTACT_TYPES.contains(token)) {
                 throw newDatatypeException(
-                        "The token \u201c" + token + "\u201d must only"
+                        "The token “" + token + "” must only"
                                 + " appear before any autofill field names.");
             } else if (token.startsWith("section-")) {
                 throw newDatatypeException(
-                        "A \u201csection-*\u201d indicator must only"
+                        "A “section-*” indicator must only"
                                 + " appear as the first token in a list"
                                 + " of autofill detail tokens.");
             } else if ("shipping".equals(token) || "billing".equals(token)) {
                 throw newDatatypeException(
-                        "The token \u201c" + token + "\u201d must only"
+                        "The token “" + token + "” must only"
                                 + " appear as either the first token in a list"
                                 + " of autofill detail tokens, or, if the first"
-                                + " token is a \u201csection-*\u201d indicator,"
+                                + " token is a “section-*” indicator,"
                                 + " as the second token.");
             }
             if (!ALL_FIELD_NAMES.contains(token)) {
-                throw newDatatypeException("The string \u201c" + token
-                        + "\u201d is not a valid autofill field name.");
+                throw newDatatypeException("The string “" + token
+                        + "” is not a valid autofill field name.");
             }
             if (isContactDetails
                     && !getAllowedContactFieldnames().contains(token)) {
-                throw newDatatypeException("The autofill field name \u201c"
-                        + token + "\u201d is not allowed in this context.");
+                throw newDatatypeException("The autofill field name “"
+                        + token + "” is not allowed in this context.");
             }
             if (!getAllowedFieldnames().contains(token)) {
-                throw newDatatypeException("The autofill field name \u201c"
-                        + token + "\u201d is not allowed in this context.");
+                throw newDatatypeException("The autofill field name “"
+                        + token + "” is not allowed in this context.");
             }
         }
         if (detailTokens.size() > 1) {

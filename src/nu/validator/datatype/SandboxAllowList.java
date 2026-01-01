@@ -90,8 +90,8 @@ public final class SandboxAllowList extends AbstractDatatype {
         }
         if (hasAllowScripts && hasAllowSameOrigin) {
             throw newDatatypeException(
-                    "Setting both \u201callow-scripts\u201d and"
-                            + " \u201callow-same-origin\u201d is not"
+                    "Setting both “allow-scripts” and"
+                            + " “allow-same-origin” is not"
                             + " recommended, because it effectively enables an"
                             + " embedded page to break out of all sandboxing.",
                     WARN);
@@ -99,10 +99,10 @@ public final class SandboxAllowList extends AbstractDatatype {
         if (hasAllowTopNavigation //
                 && hasAllowTopNavigationByUserActivation) {
             throw newDatatypeException(
-                    "\u201callow-top-navigation-by-user-activation\u201d and"
-                            + " \u201callow-top-navigation\u201d must not both"
+                    "“allow-top-navigation-by-user-activation” and"
+                            + " “allow-top-navigation” must not both"
                             + " be specified at the same time. If both are"
-                            + " present, only \u201callow-top-navigation\u201d"
+                            + " present, only “allow-top-navigation”"
                             + " will have effect.");
         }
     }
@@ -112,12 +112,12 @@ public final class SandboxAllowList extends AbstractDatatype {
         String token = builder.toString();
         if (tokensSeen.contains(token)) {
             throw newDatatypeException(i - 1,
-                    "Duplicate keyword \u201c" + token + "\u201d.");
+                    "Duplicate keyword “" + token + "”.");
         }
         tokensSeen.add(token);
         if (!allowedKeywords.contains(token)) {
-            throw newDatatypeException(i - 1, "The string \u201c" + token
-                    + "\u201d is not a valid keyword.");
+            throw newDatatypeException(i - 1, "The string “" + token
+                    + "” is not a valid keyword.");
         }
         if ("allow-scripts".equals(token)) {
             hasAllowScripts = true;

@@ -482,11 +482,11 @@ final class Table {
         for (Cell cell : cellsReferringToHeaders) {
             for (String heading : cell.getHeadings()) {
                 if (!headerIds.contains(heading)) {
-                    cell.err("The \u201Cheaders\u201D attribute on the element \u201C"
+                    cell.err("The “headers” attribute on the element “"
                             + cell.elementName()
-                            + "\u201D refers to the ID \u201C"
+                            + "” refers to the ID “"
                             + heading
-                            + "\u201D, but there is no \u201Cth\u201D element with that ID in the same table.");
+                            + "”, but there is no “th” element with that ID in the same table.");
                 }
             }
         }
@@ -497,16 +497,16 @@ final class Table {
             if (colRange.isSingleCol()) {
                 owner.getErrorHandler().error(
                         new SAXParseException("Table column " + colRange
-                                + " established by element \u201C"
+                                + " established by element “"
                                 + colRange.getElement()
-                                + "\u201D has no cells beginning in it.",
+                                + "” has no cells beginning in it.",
                                 colRange.getLocator()));
             } else {
                 owner.getErrorHandler().error(
                         new SAXParseException("Table columns in range "
-                                + colRange + " established by element \u201C"
+                                + colRange + " established by element “"
                                 + colRange.getElement()
-                                + "\u201D have no cells beginning in them.",
+                                + "” have no cells beginning in them.",
                                 colRange.getLocator()));
             }
             colRange = colRange.getNext();

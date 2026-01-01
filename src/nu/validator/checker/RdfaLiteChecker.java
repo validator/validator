@@ -31,9 +31,9 @@ public class RdfaLiteChecker extends Checker {
 
     private void warnNonRDFaLite(String localName, String att)
             throws SAXException {
-        warn("RDFa Core attribute \u201C" + att
-                + "\u201D is not allowed on the \u201C" + localName
-                + "\u201D element in HTML5 + RDFa 1.1 Lite documents."
+        warn("RDFa Core attribute “" + att
+                + "” is not allowed on the “" + localName
+                + "” element in HTML5 + RDFa 1.1 Lite documents."
                 + GUIDANCE);
     }
 
@@ -54,8 +54,8 @@ public class RdfaLiteChecker extends Checker {
             String att = atts.getLocalName(i);
             if ("datatype" == att || "about" == att || "inlist" == att
                     || "rev" == att) {
-                warn("RDFa Core attribute \u201C" + att
-                        + "\u201D is not allowed in HTML5 + RDFa 1.1 Lite documents."
+                warn("RDFa Core attribute “" + att
+                        + "” is not allowed in HTML5 + RDFa 1.1 Lite documents."
                         + GUIDANCE);
             } else if ("content" == att && "meta" != localName) {
                 warnNonRDFaLite(localName, att);

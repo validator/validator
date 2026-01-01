@@ -91,13 +91,13 @@ public class IriRef extends AbstractDatatype {
         String urlString = literal.toString();
         if (reportValue()) {
             if (length < ELIDE_LIMIT) {
-                messagePrologue = "\u201c" + literal + "\u201d: ";
+                messagePrologue = "“" + literal + "”: ";
             } else {
                 StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
                 sb.append(literal, 0, ELIDE_LIMIT / 2);
                 sb.append('\u2026');
                 sb.append(literal, length - ELIDE_LIMIT / 2, length);
-                messagePrologue = "\u201c" + sb.toString() + "\u201d: ";
+                messagePrologue = "“" + sb.toString() + "”: ";
             }
         }
         if ("".equals(trimHtmlSpaces(urlString))) {
@@ -112,12 +112,12 @@ public class IriRef extends AbstractDatatype {
             if (pair == null) {
                 // no scheme or scheme is private
                 if (isAbsolute()) {
-                    throw newDatatypeException("The string \u201c" + literal
-                            + "\u201d is not an absolute URL.");
+                    throw newDatatypeException("The string “" + literal
+                            + "” is not an absolute URL.");
                 } else {
                     if (mustBeHttpOrHttps()) {
                         throw newDatatypeException("Must contain only"
-                                + " \u201chttp\u201d or \u201chttps\u201d URLs.");
+                                + " “http” or “https” URLs.");
                     }
                     // in this case, doc's actual base URL isn't relevant,
                     // so just use http://example.org/foo/bar as base
@@ -129,7 +129,7 @@ public class IriRef extends AbstractDatatype {
                 CharSequence tail = pair.getTail();
                 if (mustBeHttpOrHttps() && !isHttpOrHttps(scheme)) {
                     throw newDatatypeException("Must contain only"
-                            + " \u201chttp\u201d or \u201chttps\u201d URLs.");
+                            + " “http” or “https” URLs.");
                 }
                 if (isWellKnown(scheme)) {
                     url = URL.parse(settings, urlString);

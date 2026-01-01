@@ -83,7 +83,7 @@ public class TextMessageTextHandler implements MessageTextHandler {
             if (asciiQuotes) {
                 writer.write('\"');                            
             } else {
-                writer.write('\u201D');
+                writer.write('”');
             }
         } catch (IOException e) {
             throw new SAXException(e.getMessage(), e);
@@ -100,7 +100,7 @@ public class TextMessageTextHandler implements MessageTextHandler {
             if (asciiQuotes) {
                 writer.write('\"');                            
             } else {
-                writer.write('\u201C');
+                writer.write('“');
             }
         } catch (IOException e) {
             throw new SAXException(e.getMessage(), e);

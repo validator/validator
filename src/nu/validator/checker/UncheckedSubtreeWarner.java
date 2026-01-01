@@ -77,7 +77,7 @@ public class UncheckedSubtreeWarner extends Checker {
             alreadyWarnedAboutInkscape = true;
         }
         if (!alreadyWarnedAboutSvgVersion && "http://www.w3.org/2000/svg" == uri && hasUnsupportedVersion(atts)) {
-            warn("Unsupported SVG version specified. This validator only supports SVG 1.1. The recommended way to suppress this warning is to remove the \u201Cversion\u201D attribute altogether.");
+            warn("Unsupported SVG version specified. This validator only supports SVG 1.1. The recommended way to suppress this warning is to remove the “version” attribute altogether.");
             alreadyWarnedAboutSvgVersion = true;
         }
     }

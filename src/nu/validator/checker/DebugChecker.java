@@ -46,9 +46,9 @@ public final class DebugChecker extends Checker {
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         StringBuilder buf = new StringBuilder();
-        buf.append("Characters: \u201C");
+        buf.append("Characters: “");
         buf.append(ch, start, length);
-        buf.append("\u201D.");
+        buf.append("”.");
         warn(buf.toString());
     }
 
@@ -64,7 +64,7 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        warn("EndElement: \u201C" + localName + "\u201D from namespace \u201C" + uri + "\u201D.");
+        warn("EndElement: “" + localName + "” from namespace “" + uri + "”.");
     }
 
     /**
@@ -72,7 +72,7 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void endPrefixMapping(String prefix) throws SAXException {
-        warn("EndPrefixMapping: \u201C" + prefix + "\u201D.");        
+        warn("EndPrefixMapping: “" + prefix + "”.");        
     }
 
     /**
@@ -80,7 +80,7 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void processingInstruction(String target, String data) throws SAXException {
-        warn("ProcessingInstruction: \u201C" + target + "\u201D, \u201C" + data + "\u201D.");
+        warn("ProcessingInstruction: “" + target + "”, “" + data + "”.");
     }
 
     /**
@@ -88,7 +88,7 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void skippedEntity(String name) throws SAXException {
-        warn("SkippedEntity: \u201C" + name + "\u201D.");
+        warn("SkippedEntity: “" + name + "”.");
     }
 
     /**
@@ -103,10 +103,10 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-        warn("StartElement: \u201C" + localName + "\u201D from namespace \u201C" + uri + "\u201D.");
+        warn("StartElement: “" + localName + "” from namespace “" + uri + "”.");
         int len = atts.getLength();
         for (int i = 0; i < len; i++) {
-            warn("Attribute: \u201C" + atts.getLocalName(i) + "\u201D" + ("".equals(atts.getURI(i)) ? "" : "from namespace \u201C" + atts.getURI(i) + "\u201D") + " has value: \u201C" + atts.getValue(i) + "\u201D.");                       
+            warn("Attribute: “" + atts.getLocalName(i) + "”" + ("".equals(atts.getURI(i)) ? "" : "from namespace “" + atts.getURI(i) + "”") + " has value: “" + atts.getValue(i) + "”.");                       
         }
     }
 
@@ -115,7 +115,7 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void startPrefixMapping(String prefix, String uri) throws SAXException {
-        warn("StartPrefixMapping: \u201C" + prefix + "\u201D, \u201C" + uri + "\u201D.");
+        warn("StartPrefixMapping: “" + prefix + "”, “" + uri + "”.");
     }
 
 }
