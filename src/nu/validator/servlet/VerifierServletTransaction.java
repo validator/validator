@@ -257,7 +257,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final String[] ALL_CHECKERS = {
             "http://c.validator.nu/table/", "http://c.validator.nu/duplicate-dt/",
-            "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/heading-hierarchy/", "http://c.validator.nu/nfc/",
             "http://c.validator.nu/speculation-rules/",
             "http://c.validator.nu/text-content/",
             "http://c.validator.nu/unchecked/",
@@ -523,6 +523,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.TABLE_CHECKER);
             schemaMap.put("http://c.validator.nu/duplicate-dt/",
                     CheckerSchema.DUPLICATE_DT_CHECKER);
+            schemaMap.put("http://c.validator.nu/heading-hierarchy/",
+                    CheckerSchema.HEADING_HIERARCHY_CHECKER);
             schemaMap.put("http://c.validator.nu/nfc/",
                     CheckerSchema.NORMALIZATION_CHECKER);
             schemaMap.put("http://hsivonen.iki.fi/checkers/nfc/",
