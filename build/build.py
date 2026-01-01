@@ -1365,6 +1365,10 @@ class Release():
             print("Expected validation errors in output, but found none.")
             sys.exit(2)
 
+        # Run e2e tests if Playwright is available
+        if isPlaywrightAvailable():
+            self.runE2eTests()
+
     def runSpecTests(self):
         if platform.system() == 'Windows':
             # Something about either the createRuntimeImage() or execCmd()
@@ -1826,6 +1830,14 @@ def waitUntilServiceIsReady():
         time.sleep(15)
 
 
+def isPlaywrightAvailable():
+    """Check if Playwright e2e tests can be run in this environment."""
+    if not shutil.which("pnpm"):
+        return False
+    playwrightDir = os.path.join(buildRoot, "node_modules", "@playwright", "test")
+    return os.path.exists(playwrightDir)
+
+
 def waitUntilServiceIsDown():
     if shutil.which("nc"):
         isReady = True
@@ -2257,6 +2269,12 @@ def main(argv, script_name=None):
                 icon = 'icon.png'
             generateRunScript()
         elif task == 'test':
+            if not stylesheet:
+                stylesheet = 'style.css'
+            if not script:
+                script = 'script.js'
+            if not icon:
+                icon = 'icon.png'
             release.runTests()
         elif task == 'test-specs':
             release.runSpecTests()
