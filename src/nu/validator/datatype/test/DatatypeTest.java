@@ -23,12 +23,18 @@
 package nu.validator.datatype.test;
 
 import nu.validator.datatype.CustomElementName;
+import nu.validator.datatype.Date;
 import nu.validator.datatype.HashName;
+import nu.validator.datatype.Html5DatatypeLibrary;
 import nu.validator.datatype.Id;
 import nu.validator.datatype.MetaCharset;
+import nu.validator.datatype.MimeType;
+import nu.validator.datatype.Month;
 import nu.validator.datatype.NonEmptyString;
 import nu.validator.datatype.SimpleColor;
 import nu.validator.datatype.Time;
+import nu.validator.datatype.Week;
+import nu.validator.vendor.relaxng.datatype.Datatype;
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 /**
@@ -77,6 +83,31 @@ public class DatatypeTest {
         testMetaCharsetValid();
         testMetaCharsetInvalid();
         testMetaCharsetLooping();
+
+        System.out.println();
+        System.out.println("Testing Date...");
+        testDateValid();
+        testDateInvalid();
+
+        System.out.println();
+        System.out.println("Testing Month...");
+        testMonthValid();
+        testMonthInvalid();
+
+        System.out.println();
+        System.out.println("Testing Week...");
+        testWeekValid();
+        testWeekInvalid();
+
+        System.out.println();
+        System.out.println("Testing MimeType...");
+        testMimeTypeValid();
+        testMimeTypeInvalid();
+
+        System.out.println();
+        System.out.println("Testing IriRef (URL)...");
+        testIriRefValid();
+        testIriRefInvalid();
 
         System.out.println();
         System.out.println("Results: " + passed + " passed, " + failed + " failed");
@@ -330,6 +361,196 @@ public class DatatypeTest {
                 validator, "text/html; charsetfoo charset=utf-8");
         assertValid("MetaCharset: multiple invalid charsets then valid",
                 validator, "text/html; charset; charset; charset=utf-8");
+    }
+
+    // Date tests
+
+    private static void testDateValid() {
+        Date validator = Date.THE_INSTANCE;
+
+        assertValid("Date: basic date", validator, "2024-01-15");
+        assertValid("Date: first day of year", validator, "2024-01-01");
+        assertValid("Date: last day of year", validator, "2024-12-31");
+        assertValid("Date: leap year Feb 29", validator, "2024-02-29");
+        assertValid("Date: year 1", validator, "0001-01-01");
+        assertValid("Date: 5-digit year", validator, "10000-06-15");
+        assertValid("Date: end of February non-leap", validator, "2023-02-28");
+        assertValid("Date: April 30", validator, "2024-04-30");
+        assertValid("Date: June 30", validator, "2024-06-30");
+    }
+
+    private static void testDateInvalid() {
+        Date validator = Date.THE_INSTANCE;
+
+        assertInvalid("Date: empty string", validator, "");
+        assertInvalid("Date: invalid month 00", validator, "2024-00-15");
+        assertInvalid("Date: invalid month 13", validator, "2024-13-15");
+        assertInvalid("Date: invalid day 00", validator, "2024-01-00");
+        assertInvalid("Date: invalid day 32", validator, "2024-01-32");
+        assertInvalid("Date: Feb 30", validator, "2024-02-30");
+        assertInvalid("Date: Feb 29 non-leap", validator, "2023-02-29");
+        assertInvalid("Date: April 31", validator, "2024-04-31");
+        assertInvalid("Date: June 31", validator, "2024-06-31");
+        assertInvalid("Date: year 0", validator, "0000-01-01");
+        assertInvalid("Date: 2-digit year", validator, "24-01-15");
+        assertInvalid("Date: 3-digit year", validator, "124-01-15");
+        assertInvalid("Date: single digit month", validator, "2024-1-15");
+        assertInvalid("Date: single digit day", validator, "2024-01-5");
+        assertInvalid("Date: slashes instead of dashes", validator, "2024/01/15");
+        assertInvalid("Date: no separators", validator, "20240115");
+        assertInvalid("Date: with time", validator, "2024-01-15T12:00");
+    }
+
+    // Month tests
+
+    private static void testMonthValid() {
+        Month validator = Month.THE_INSTANCE;
+
+        assertValid("Month: basic month", validator, "2024-01");
+        assertValid("Month: first month", validator, "2024-01");
+        assertValid("Month: last month", validator, "2024-12");
+        assertValid("Month: year 1", validator, "0001-06");
+        assertValid("Month: 5-digit year", validator, "10000-06");
+    }
+
+    private static void testMonthInvalid() {
+        Month validator = Month.THE_INSTANCE;
+
+        assertInvalid("Month: empty string", validator, "");
+        assertInvalid("Month: invalid month 00", validator, "2024-00");
+        assertInvalid("Month: invalid month 13", validator, "2024-13");
+        assertInvalid("Month: year 0", validator, "0000-01");
+        assertInvalid("Month: 2-digit year", validator, "24-01");
+        assertInvalid("Month: single digit month", validator, "2024-1");
+        assertInvalid("Month: with day", validator, "2024-01-15");
+        assertInvalid("Month: no separator", validator, "202401");
+    }
+
+    // Week tests
+
+    private static void testWeekValid() {
+        Week validator = Week.THE_INSTANCE;
+
+        assertValid("Week: basic week", validator, "2024-W01");
+        assertValid("Week: first week", validator, "2024-W01");
+        assertValid("Week: week 52", validator, "2024-W52");
+        assertValid("Week: week 53 in year with 53 weeks", validator, "2004-W53");
+        assertValid("Week: week 53 in 2020", validator, "2020-W53");
+        assertValid("Week: year 1", validator, "0001-W01");
+        assertValid("Week: 5-digit year", validator, "10000-W26");
+    }
+
+    private static void testWeekInvalid() {
+        Week validator = Week.THE_INSTANCE;
+
+        assertInvalid("Week: empty string", validator, "");
+        assertInvalid("Week: invalid week 00", validator, "2024-W00");
+        assertInvalid("Week: invalid week 54", validator, "2024-W54");
+        assertInvalid("Week: week 53 in year without 53 weeks", validator, "2023-W53");
+        assertInvalid("Week: year 0", validator, "0000-W01");
+        assertInvalid("Week: missing W prefix", validator, "2024-01");
+        assertInvalid("Week: lowercase w", validator, "2024-w01");
+        assertInvalid("Week: single digit week", validator, "2024-W1");
+    }
+
+    // MimeType tests
+
+    private static void testMimeTypeValid() {
+        MimeType validator = MimeType.THE_INSTANCE;
+
+        assertValid("MimeType: text/html", validator, "text/html");
+        assertValid("MimeType: text/plain", validator, "text/plain");
+        assertValid("MimeType: application/json", validator, "application/json");
+        assertValid("MimeType: image/png", validator, "image/png");
+        assertValid("MimeType: with charset param", validator, "text/html; charset=utf-8");
+        assertValid("MimeType: with quoted param", validator, "text/html; charset=\"utf-8\"");
+        assertValid("MimeType: multiple params", validator, "text/html; charset=utf-8; boundary=something");
+        assertValid("MimeType: param with spaces", validator, "text/html ; charset=utf-8");
+        assertValid("MimeType: vendor type", validator, "application/vnd.ms-excel");
+        assertValid("MimeType: x- prefix", validator, "application/x-custom");
+        assertValid("MimeType: with + suffix", validator, "application/atom+xml");
+        assertValid("MimeType: multipart/form-data", validator, "multipart/form-data");
+    }
+
+    private static void testMimeTypeInvalid() {
+        MimeType validator = MimeType.THE_INSTANCE;
+
+        assertInvalid("MimeType: empty string", validator, "");
+        assertInvalid("MimeType: no subtype", validator, "text");
+        assertInvalid("MimeType: no subtype with slash", validator, "text/");
+        assertInvalid("MimeType: no supertype", validator, "/html");
+        assertInvalid("MimeType: just slash", validator, "/");
+        assertInvalid("MimeType: trailing semicolon", validator, "text/html;");
+        assertInvalid("MimeType: param without value", validator, "text/html; charset");
+        assertInvalid("MimeType: param with = but no value", validator, "text/html; charset=");
+        assertInvalid("MimeType: unclosed quote", validator, "text/html; charset=\"utf-8");
+        assertInvalid("MimeType: trailing whitespace", validator, "text/html ");
+    }
+
+    // IriRef (URL) tests
+
+    private static void testIriRefValid() {
+        Html5DatatypeLibrary library = new Html5DatatypeLibrary();
+        Datatype validator;
+        try {
+            validator = library.createDatatype("iri-ref");
+        } catch (DatatypeException e) {
+            System.out.println("FAIL: Could not create iri-ref datatype: " + e.getMessage());
+            failed++;
+            return;
+        }
+
+        // Absolute URLs
+        assertValid("IriRef: http URL", validator, "http://example.com/");
+        assertValid("IriRef: https URL", validator, "https://example.com/");
+        assertValid("IriRef: http with port", validator, "http://example.com:8080/");
+        assertValid("IriRef: http with path", validator, "http://example.com/path/to/file");
+        assertValid("IriRef: http with query", validator, "http://example.com/?foo=bar");
+        assertValid("IriRef: http with fragment", validator, "http://example.com/#section");
+        assertValid("IriRef: http with all parts", validator, "http://user:pass@example.com:8080/path?q=1#frag");
+        assertValid("IriRef: ftp URL", validator, "ftp://ftp.example.com/file");
+        assertValid("IriRef: mailto URL", validator, "mailto:user@example.com");
+        assertValid("IriRef: file URL", validator, "file:///path/to/file");
+
+        // Relative URLs
+        assertValid("IriRef: relative path", validator, "path/to/file");
+        assertValid("IriRef: absolute path", validator, "/path/to/file");
+        assertValid("IriRef: fragment only", validator, "#section");
+        assertValid("IriRef: query only", validator, "?query=value");
+        assertValid("IriRef: relative with query", validator, "file.html?q=1");
+        assertValid("IriRef: parent directory", validator, "../file.html");
+        assertValid("IriRef: current directory", validator, "./file.html");
+
+        // Data URLs
+        assertValid("IriRef: data URL text", validator, "data:text/plain,Hello");
+        // Minimal valid base64 PNG (1x1 transparent pixel)
+        assertValid("IriRef: data URL base64", validator,
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==");
+
+        // Special schemes
+        assertValid("IriRef: javascript (allowed)", validator, "javascript:void(0)");
+        assertValid("IriRef: webcal (http alias)", validator, "webcal://example.com/cal");
+        assertValid("IriRef: feed (http alias)", validator, "feed://example.com/rss");
+
+        // Unicode in URLs
+        assertValid("IriRef: unicode in path", validator, "http://example.com/caf%C3%A9");
+        assertValid("IriRef: IDN domain", validator, "http://xn--nxasmq5b.com/");
+    }
+
+    private static void testIriRefInvalid() {
+        Html5DatatypeLibrary library = new Html5DatatypeLibrary();
+        Datatype validator;
+        try {
+            validator = library.createDatatype("iri-ref");
+        } catch (DatatypeException e) {
+            System.out.println("FAIL: Could not create iri-ref datatype: " + e.getMessage());
+            failed++;
+            return;
+        }
+
+        assertInvalid("IriRef: empty string", validator, "");
+        assertInvalid("IriRef: whitespace only", validator, "   ");
+        assertInvalid("IriRef: tabs only", validator, "\t\t");
     }
 
     // Test helpers
