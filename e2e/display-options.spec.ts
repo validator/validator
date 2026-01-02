@@ -83,6 +83,7 @@ test.describe('Display options', () => {
 
     // Click Options button
     await page.click('#show_options');
+    await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
     // Extra options should now be visible
     await expect(extraOptions).toHaveClass(/unhidden/);

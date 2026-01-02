@@ -9,6 +9,7 @@ test.describe('Presets and schema selection', () => {
 
       // Click Options button to show extra options
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       // Preset selector should be visible
       const presetSelect = page.locator('#preset');
@@ -19,6 +20,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const presetSelect = page.locator('#preset');
       const options = presetSelect.locator('option');
@@ -31,6 +33,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const presetSelect = page.locator('#preset');
       const schemaInput = page.locator('#schema');
@@ -58,6 +61,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const parserSelect = page.locator('#parser');
       await expect(parserSelect).toBeVisible();
@@ -67,6 +71,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const parserSelect = page.locator('#parser');
       const options = parserSelect.locator('option');
@@ -79,6 +84,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const parserSelect = page.locator('#parser');
       const options = await parserSelect.locator('option').allTextContents();
@@ -96,6 +102,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const schemaInput = page.locator('#schema');
       await expect(schemaInput).toBeVisible();
@@ -105,6 +112,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const schemaInput = page.locator('#schema');
       await schemaInput.fill('http://s.validator.nu/html5.rnc');
@@ -133,6 +141,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       // Select XML parser if available
       const parserSelect = page.locator('#parser');
@@ -175,6 +184,7 @@ test.describe('Presets and schema selection', () => {
       await page.goto(baseURL);
 
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
 
       const extraOptions = page.locator('.extraoptions');
       await expect(extraOptions).toHaveClass(/unhidden/);
@@ -185,10 +195,12 @@ test.describe('Presets and schema selection', () => {
 
       // Show
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.unhidden', { timeout: 5000 });
       await expect(page.locator('.extraoptions')).toHaveClass(/unhidden/);
 
       // Hide
       await page.click('#show_options');
+      await page.waitForSelector('.extraoptions.hidden', { timeout: 5000 });
       await expect(page.locator('.extraoptions')).toHaveClass(/hidden/);
     });
   });
