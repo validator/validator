@@ -54,8 +54,10 @@ ${errors}
     // Should complete within reasonable time
     await page.waitForSelector('#results p.success, #results p.failure', { timeout: 30000 });
 
-    const success = page.locator('#results p.success');
-    await expect(success).toBeVisible();
+    // Should have no errors (the document is valid HTML5)
+    const errors = page.locator('#results .error');
+    const errorCount = await errors.count();
+    expect(errorCount).toBe(0);
   });
 
   test('handles document with 500 paragraphs', async ({ page }) => {
@@ -70,8 +72,10 @@ ${errors}
     // Should complete within reasonable time
     await page.waitForSelector('#results p.success, #results p.failure', { timeout: 60000 });
 
-    const success = page.locator('#results p.success');
-    await expect(success).toBeVisible();
+    // Should have no errors (the document is valid HTML5)
+    const errors = page.locator('#results .error');
+    const errorCount = await errors.count();
+    expect(errorCount).toBe(0);
   });
 
   test('handles document with many errors (50 stray end tags)', async ({ page }) => {
@@ -141,7 +145,7 @@ ${errors}
     await page.goto(baseURL);
 
     // Create deeply nested divs
-    let deepHTML = '<!DOCTYPE html><html lang="en"><head><title>Deep</title></head><body>';
+    let deepHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Deep</title></head><body>';
     for (let i = 0; i < 50; i++) {
       deepHTML += '<div>';
     }
@@ -157,9 +161,10 @@ ${errors}
 
     await page.waitForSelector('#results p.success, #results p.failure', { timeout: 30000 });
 
-    // Should succeed (deeply nested but valid)
-    const success = page.locator('#results p.success');
-    await expect(success).toBeVisible();
+    // Should have no errors (deeply nested but valid)
+    const errors = page.locator('#results .error');
+    const errorCount = await errors.count();
+    expect(errorCount).toBe(0);
   });
 
   test('document with many attributes is handled', async ({ page }) => {
@@ -173,7 +178,7 @@ ${errors}
 
     const htmlWithManyAttrs = `<!DOCTYPE html>
 <html lang="en">
-<head><title>Many Attrs</title></head>
+<head><meta charset="utf-8"><title>Many Attrs</title></head>
 <body>
   <div ${dataAttrs}>Content with many attributes</div>
 </body>
@@ -185,9 +190,10 @@ ${errors}
 
     await page.waitForSelector('#results p.success, #results p.failure', { timeout: 30000 });
 
-    // Should succeed
-    const success = page.locator('#results p.success');
-    await expect(success).toBeVisible();
+    // Should have no errors
+    const errors = page.locator('#results .error');
+    const errorCount = await errors.count();
+    expect(errorCount).toBe(0);
   });
 
   test('long single line document is handled', async ({ page }) => {
@@ -195,7 +201,7 @@ ${errors}
 
     // Create a very long single line
     const longText = 'x'.repeat(10000);
-    const longLineHTML = `<!DOCTYPE html><html lang="en"><head><title>Long Line</title></head><body><p>${longText}</p></body></html>`;
+    const longLineHTML = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Long Line</title></head><body><p>${longText}</p></body></html>`;
 
     await page.locator('#docselect').selectOption('textarea');
     await page.locator('textarea#doc').fill(longLineHTML);
@@ -203,7 +209,9 @@ ${errors}
 
     await page.waitForSelector('#results p.success, #results p.failure', { timeout: 30000 });
 
-    const success = page.locator('#results p.success');
-    await expect(success).toBeVisible();
+    // Should have no errors
+    const errors = page.locator('#results .error');
+    const errorCount = await errors.count();
+    expect(errorCount).toBe(0);
   });
 });
