@@ -24,7 +24,7 @@ test.describe('URL validation mode', () => {
     await expect(results).toBeVisible();
   });
 
-  test('shows error for malformed URL', async ({ page }) => {
+  test('browser validation prevents submission of malformed URL', async ({ page }) => {
     await page.goto(baseURL);
 
     const urlInput = page.locator('input#doc[type="url"]');
@@ -32,15 +32,14 @@ test.describe('URL validation mode', () => {
 
     await page.click('#submit');
 
-    // Should show an error about invalid URL
-    await page.waitForSelector('#results', { timeout: 10000 });
-
-    const resultsText = await page.locator('#results').textContent();
-    // Should mention something about the URL being invalid
-    expect(resultsText?.toLowerCase()).toMatch(/error|invalid|url/i);
+    // Browser validation should prevent form submission
+    // The results div should remain empty/invisible
+    await page.waitForTimeout(1000);
+    const resultsContent = await page.locator('#results').textContent();
+    expect(resultsContent?.trim()).toBe('');
   });
 
-  test('shows error for URL with unsupported protocol', async ({ page }) => {
+  test('browser validation prevents submission of unsupported protocol', async ({ page }) => {
     await page.goto(baseURL);
 
     const urlInput = page.locator('input#doc[type="url"]');
@@ -48,11 +47,11 @@ test.describe('URL validation mode', () => {
 
     await page.click('#submit');
 
-    await page.waitForSelector('#results', { timeout: 10000 });
-
-    // Should indicate an error
-    const results = page.locator('#results');
-    await expect(results).toBeVisible();
+    // Browser validation should prevent form submission for ftp:// URLs
+    // (the pattern only allows http://, https://, and data: URLs)
+    await page.waitForTimeout(1000);
+    const resultsContent = await page.locator('#results').textContent();
+    expect(resultsContent?.trim()).toBe('');
   });
 
   test('URL input is pre-filled when doc parameter is in URL', async ({ page }) => {
