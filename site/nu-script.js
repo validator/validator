@@ -661,6 +661,11 @@ if (document.getElementById) {
 	boot()
 }
 
+/**
+ * Categorizes a validation message as 'css', 'i18n', or 'html'.
+ * NOTE: This function is duplicated in site/message-category.js for unit testing.
+ * If you modify this function, update message-category.js to match.
+ */
 function getMessageCategory(messageText) {
 	// CSS validation errors (always prefixed with "CSS:")
 	if (/^CSS:/.test(messageText)) {
@@ -671,6 +676,8 @@ function getMessageCategory(messageText) {
 	if (/\b(encoding|charset|UTF-8|windows-\d+|iso-\d+|Content-Language)\b/i.test(messageText) ||
 		/appears to be written in/i.test(messageText) ||
 		/\b(lang|dir)=/i.test(messageText) ||
+		/"lang"/.test(messageText) ||
+		/"dir"/.test(messageText) ||
 		/Unicode Normalization/.test(messageText)) {
 		return 'i18n'
 	}

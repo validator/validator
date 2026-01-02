@@ -36,10 +36,14 @@
     "vnu": "./vnu-jar.js"
   },
   "scripts": {
-    "postinstall": "node vnu-java-downloader.js"
+    "postinstall": "node vnu-java-downloader.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
-    "@types/node": "^25.0.3"
+    "@types/node": "^25.0.3",
+    "vitest": "^4.0.16"
   }
 }
