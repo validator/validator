@@ -1284,6 +1284,7 @@ class Release():
             'nu.validator.messages.test.MessageEmitterAdapterTest',
             'nu.validator.collections.test.SortedSetTest',
             'nu.validator.io.test.DataUriTest',
+            'nu.validator.io.test.SystemIdIOExceptionTest',
             'nu.validator.checker.test.SpeculationRulesCheckerTest',
             'nu.validator.checker.test.CspEnforcementCheckerTest',
             'nu.validator.checker.test.AttributeUtilTest',

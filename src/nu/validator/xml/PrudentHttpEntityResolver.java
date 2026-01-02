@@ -488,7 +488,8 @@ public class PrudentHttpEntityResolver
             return is;
         } catch (InterruptedException | java.util.concurrent.TimeoutException
                 | java.util.concurrent.ExecutionException e) {
-            throw new IOException("HTTP request failed: " + e.getMessage(), e);
+            throw new SystemIdIOException(systemId,
+                    "HTTP request failed: " + e.getMessage(), e);
         } catch (IOException | RuntimeException | SAXException e) {
             throw e;
         }
