@@ -848,9 +848,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         }
 
+        response.setHeader("Cache-Control",
+                "no-cache, no-store, must-revalidate");
+
         if (willValidate()) {
             response.setDateHeader("Expires", 0);
-            response.setHeader("Cache-Control", "no-cache");
         } else if (outputFormat == OutputFormat.HTML
                 || outputFormat == OutputFormat.XHTML) {
             response.setDateHeader("Last-Modified", lastModified);
