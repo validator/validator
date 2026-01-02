@@ -25,6 +25,7 @@ package nu.validator.datatype.test;
 import nu.validator.datatype.CustomElementName;
 import nu.validator.datatype.HashName;
 import nu.validator.datatype.Id;
+import nu.validator.datatype.MetaCharset;
 import nu.validator.datatype.NonEmptyString;
 import nu.validator.datatype.SimpleColor;
 import nu.validator.datatype.Time;
@@ -70,6 +71,12 @@ public class DatatypeTest {
         System.out.println("Testing CustomElementName...");
         testCustomElementNameValid();
         testCustomElementNameInvalid();
+
+        System.out.println();
+        System.out.println("Testing MetaCharset...");
+        testMetaCharsetValid();
+        testMetaCharsetInvalid();
+        testMetaCharsetLooping();
 
         System.out.println();
         System.out.println("Results: " + passed + " passed, " + failed + " failed");
@@ -262,6 +269,67 @@ public class DatatypeTest {
         assertInvalid("CustomElementName: prohibited font-face-src", validator, "font-face-src");
         assertInvalid("CustomElementName: prohibited font-face-uri", validator, "font-face-uri");
         assertInvalid("CustomElementName: prohibited missing-glyph", validator, "missing-glyph");
+    }
+
+    // MetaCharset tests
+
+    private static void testMetaCharsetValid() {
+        MetaCharset validator = MetaCharset.THE_INSTANCE;
+
+        assertValid("MetaCharset: simple valid",
+                validator, "text/html; charset=utf-8");
+        assertValid("MetaCharset: no space after semicolon",
+                validator, "text/html;charset=utf-8");
+        assertValid("MetaCharset: multiple spaces",
+                validator, "text/html;   charset=utf-8");
+        assertValid("MetaCharset: tab after semicolon",
+                validator, "text/html;\tcharset=utf-8");
+        assertValid("MetaCharset: uppercase CHARSET",
+                validator, "text/html; CHARSET=utf-8");
+        assertValid("MetaCharset: mixed case",
+                validator, "text/html; ChArSeT=utf-8");
+    }
+
+    private static void testMetaCharsetInvalid() {
+        MetaCharset validator = MetaCharset.THE_INSTANCE;
+
+        assertInvalid("MetaCharset: empty string",
+                validator, "");
+        assertInvalid("MetaCharset: missing text/html",
+                validator, "charset=utf-8");
+        assertInvalid("MetaCharset: wrong content type",
+                validator, "text/plain; charset=utf-8");
+        assertInvalid("MetaCharset: missing charset",
+                validator, "text/html;");
+        assertInvalid("MetaCharset: wrong encoding",
+                validator, "text/html; charset=iso-8859-1");
+        assertInvalid("MetaCharset: empty encoding",
+                validator, "text/html; charset=");
+    }
+
+    /**
+     * Tests for issue #877: The algorithm should loop to find a valid
+     * "charset=" pattern when the first occurrence is not followed by "=".
+     * https://github.com/validator/validator/issues/877
+     */
+    private static void testMetaCharsetLooping() {
+        MetaCharset validator = MetaCharset.THE_INSTANCE;
+
+        // These are the test cases from issue #877
+        // All should extract "utf-8" (we test with utf-8 since that's
+        // the only valid encoding for HTML5)
+        assertValid("MetaCharset: charset space charset=",
+                validator, "text/html; charset charset=utf-8");
+        assertValid("MetaCharset: charsetxxxxxcharset=",
+                validator, "text/html; charsetxxxxxcharset=utf-8");
+        assertValid("MetaCharset: charsetcharset=",
+                validator, "text/html; charsetcharset=utf-8");
+
+        // Additional edge cases
+        assertValid("MetaCharset: charset without = then valid charset=",
+                validator, "text/html; charsetfoo charset=utf-8");
+        assertValid("MetaCharset: multiple invalid charsets then valid",
+                validator, "text/html; charset; charset; charset=utf-8");
     }
 
     // Test helpers

@@ -47,53 +47,128 @@ public class MetaCharset extends AbstractDatatype {
             throw newDatatypeException(
                     "The legacy encoding declaration ended prematurely.");
         }
-        int offset = 10;
-        paramloop: for (int i = 10; i < lower.length(); i++) {
-            char c = lower.charAt(i);
-            switch (c) {
-                case ' ':
-                case '\t':
-                case '\n':
-                case '\u000C':
-                case '\r':
-                    offset++;
-                    continue;
-                case 'c':
-                    break paramloop;
-                default:
-                    throw newDatatypeException(
-                            "The legacy encoding declaration"
-                                    + " did not start with space characters or ",
-                            "charset=", " after the semicolon. "
-                                    + " Found “" + c + "” instead.");
-            }
-        }
-        if (!lower.startsWith("charset=", offset)) {
+        // Extract charset using the WHATWG algorithm which loops to find
+        // a valid "charset=" pattern. See:
+        // https://html.spec.whatwg.org/#algorithm-for-extracting-a-character-encoding-from-a-meta-element
+        String encodingName = extractCharset(lower, 10);
+        if (encodingName == null) {
             throw newDatatypeException(
-                    "The legacy encoding declaration" + "did not contain ",
-                    "charset=", " after the semicolon.");
+                    "The legacy encoding declaration did not contain ",
+                    "charset=", " followed by a valid encoding name.");
         }
-        offset += 8;
-        if (lower.length() == offset) {
-            throw newDatatypeException(
-                    "The empty string is not a valid character encoding name.");
-        }
-        for (int i = offset; i < lower.length(); i++) {
-            char c = lower.charAt(i);
-            if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || c == '-'
-                    || c == '!' || c == '#' || c == '$' || c == '%' || c == '&'
-                    || c == '\'' || c == '+' || c == '_' || c == '`' || c == '{'
-                    || c == '}' || c == '~' || c == '^')) {
-                throw newDatatypeException("The legacy encoding contained ", c,
-                        ", which is not a valid character in an encoding name.");
-            }
-        }
-        String encodingName = lower.substring(offset);
         if (!"utf-8".equals(encodingName)) {
             throw newDatatypeException(
                     "“charset=” must be followed by"
                             + " “utf-8”.");
         }
+    }
+
+    /**
+     * Extracts charset from a content attribute value using the WHATWG
+     * algorithm. This properly handles cases like "charset charset=utf-8"
+     * where the first "charset" is not followed by "=".
+     *
+     * @param lower the lowercased content attribute value
+     * @param start the position to start searching from
+     * @return the extracted encoding name, or null if not found
+     */
+    private String extractCharset(String lower, int start)
+            throws DatatypeException {
+        int pos = start;
+        int len = lower.length();
+
+        // Loop: search for "charset"
+        while (pos < len) {
+            int charsetPos = lower.indexOf("charset", pos);
+            if (charsetPos == -1) {
+                return null;
+            }
+            pos = charsetPos + 7; // Move past "charset"
+
+            // Skip ASCII whitespace
+            while (pos < len && isAsciiWhitespace(lower.charAt(pos))) {
+                pos++;
+            }
+
+            // Check for '='
+            if (pos >= len) {
+                return null;
+            }
+            if (lower.charAt(pos) != '=') {
+                // Not followed by '=', continue searching for another "charset"
+                continue;
+            }
+            pos++; // Move past '='
+
+            // Skip ASCII whitespace after '='
+            while (pos < len && isAsciiWhitespace(lower.charAt(pos))) {
+                pos++;
+            }
+
+            if (pos >= len) {
+                throw newDatatypeException(
+                        "The empty string is not a valid character encoding name.");
+            }
+
+            // Extract the encoding value
+            char c = lower.charAt(pos);
+            int valueStart;
+            int valueEnd;
+
+            if (c == '"') {
+                // Double-quoted value
+                valueStart = pos + 1;
+                valueEnd = lower.indexOf('"', valueStart);
+                if (valueEnd == -1) {
+                    return null;
+                }
+            } else if (c == '\'') {
+                // Single-quoted value
+                valueStart = pos + 1;
+                valueEnd = lower.indexOf('\'', valueStart);
+                if (valueEnd == -1) {
+                    return null;
+                }
+            } else {
+                // Unquoted value: read until whitespace or semicolon
+                valueStart = pos;
+                valueEnd = pos;
+                while (valueEnd < len) {
+                    char vc = lower.charAt(valueEnd);
+                    if (isAsciiWhitespace(vc) || vc == ';') {
+                        break;
+                    }
+                    valueEnd++;
+                }
+            }
+
+            if (valueStart == valueEnd) {
+                throw newDatatypeException(
+                        "The empty string is not a valid character encoding name.");
+            }
+
+            String encodingName = lower.substring(valueStart, valueEnd);
+            // Validate encoding name characters
+            for (int i = 0; i < encodingName.length(); i++) {
+                char ec = encodingName.charAt(i);
+                if (!((ec >= '0' && ec <= '9') || (ec >= 'a' && ec <= 'z')
+                        || ec == '-' || ec == '!' || ec == '#' || ec == '$'
+                        || ec == '%' || ec == '&' || ec == '\'' || ec == '+'
+                        || ec == '_' || ec == '`' || ec == '{' || ec == '}'
+                        || ec == '~' || ec == '^')) {
+                    throw newDatatypeException(
+                            "The legacy encoding contained ", ec,
+                            ", which is not a valid character"
+                                    + " in an encoding name.");
+                }
+            }
+            return encodingName;
+        }
+        return null;
+    }
+
+    private static boolean isAsciiWhitespace(char c) {
+        return c == ' ' || c == '\t' || c == '\n' || c == '\u000C' || c == '\r';
     }
 
     @Override
