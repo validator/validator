@@ -373,6 +373,14 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
 
     private final static char[] IN_THIS_CONTEXT = " in this context.".toCharArray();
 
+    /**
+     * Elements with transparent content models per HTML spec.
+     * These elements inherit content restrictions from their ancestors.
+     */
+    private static final Set<String> TRANSPARENT_ELEMENTS = Set.of(
+            "a", "ins", "del", "object", "video", "audio", "canvas", "map",
+            "slot");
+
     private final static char[] TEXT_NOT_ALLOWED_IN = "Text not allowed in ".toCharArray();
 
     private final static char[] UNKNOWN = "Unknown ".toCharArray();
@@ -854,7 +862,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         return false;
     }
 
-    private String getDisplayMessage(Exception message) {
+    protected String getDisplayMessage(Exception message) {
         if (message instanceof AbstractValidationException) {
             return getDisplayMessageForRng(
                     (AbstractValidationException) message);
@@ -902,11 +910,20 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             sb.append("Element “").append(
                     ex.getCurrentElement().getLocalName()).append(
                             "” not allowed");
+            String parentName = null;
             if (ex.getParent() != null) {
-                sb.append(" as child of “").append(
-                        ex.getParent().getLocalName()).append("”");
+                parentName = ex.getParent().getLocalName();
+                sb.append(" as child of “").append(parentName).append(
+                        "”");
             }
             sb.append(" in this context.");
+            if (parentName != null
+                    && TRANSPARENT_ELEMENTS.contains(parentName)) {
+                sb.append(" Note: The “").append(parentName).append(
+                        "” element has a transparent content model;")
+                        .append(" its allowed content is inherited from its")
+                        .append(" parent element.");
+            }
         } else if (e instanceof RequiredAttributesMissingOneOfException) {
             RequiredAttributesMissingOneOfException ex =
                 (RequiredAttributesMissingOneOfException) e;
@@ -1350,12 +1367,23 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
                 OutOfContextElementException ex = (OutOfContextElementException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
                 messageTextString(messageTextHandler, NOT_ALLOWED, false);
+                String parentName = null;
                 if (ex.getParent() != null) {
+                    parentName = ex.getParent().getLocalName();
                     messageTextString(messageTextHandler, AS_CHILD_OF, false);
                     element(messageTextHandler, ex.getParent(), false);
                 }
                 messageTextString(messageTextHandler,
                         IN_THIS_CONTEXT_SUPPRESSING, false);
+                if (parentName != null
+                        && TRANSPARENT_ELEMENTS.contains(parentName)) {
+                    messageTextString(messageTextHandler, (" Note: The “"
+                            + parentName + "” element has a transparent"
+                            + " content model; its allowed content is"
+                            + " inherited from its parent element.")
+                                    .toCharArray(),
+                            false);
+                }
             } else if (e instanceof RequiredAttributesMissingOneOfException) {
                 RequiredAttributesMissingOneOfException ex = (RequiredAttributesMissingOneOfException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);

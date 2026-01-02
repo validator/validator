@@ -261,14 +261,26 @@ public class TestRunner extends MessageEmitterAdapter {
         }
     }
 
+    /**
+     * Gets the display message for the current exception, using the enhanced
+     * formatting from MessageEmitterAdapter when available.
+     */
+    private String getExceptionDisplayMessage() {
+        if (exception == null) {
+            return null;
+        }
+        String displayMsg = getDisplayMessage(exception);
+        return displayMsg != null ? displayMsg : exception.getMessage();
+    }
+
     private boolean messageMatches(String testFilename) {
         // p{C} = Other = Control+Format+Private_Use+Surrogate+Unassigned
         // http://www.regular-expressions.info/unicode.html#category
         // http://www.unicode.org/reports/tr18/#General_Category_Property
-        String messageReported = exception.getMessage().replaceAll("\\p{C}",
+        String messageReported = getExceptionDisplayMessage().replaceAll("\\p{C}",
                 "?");
-        String messageExpected = ((JsonString) expectedMessages.get(testFilename)).getString().replaceAll(
-                "\\p{C}", "?");
+        String messageExpected = ((JsonString) expectedMessages
+                .get(testFilename)).getString().replaceAll("\\p{C}", "?");
         // NOTE: The string replacements below are a hack to "normalize"
         // error messages reported for bad values of the ins/del datetime
         // attribute, to work around the fact that in Java 8, parts of
@@ -305,7 +317,8 @@ public class TestRunner extends MessageEmitterAdapter {
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
-                    reportedMessages.add(testFilename, exception.getMessage());
+                    reportedMessages.add(testFilename,
+                            getExceptionDisplayMessage());
                 } else if (expectedMessages != null
                         && expectedMessages.get(testFilename) == null) {
                     try {
@@ -326,7 +339,7 @@ public class TestRunner extends MessageEmitterAdapter {
                                         + " but instead encountered \"%s\".",
                                 this.getFileURL(file),
                                 expectedMessages.get(testFilename),
-                                exception.getMessage()));
+                                getExceptionDisplayMessage()));
                         err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
@@ -377,7 +390,8 @@ public class TestRunner extends MessageEmitterAdapter {
             if (exception != null) {
                 testFilename = this.getRelativePathname(file, baseDir);
                 if (writeMessages) {
-                    reportedMessages.add(testFilename, exception.getMessage());
+                    reportedMessages.add(testFilename,
+                            getExceptionDisplayMessage());
                 } else if (expectedMessages != null
                         && expectedMessages.get(testFilename) == null) {
                     try {
@@ -397,7 +411,7 @@ public class TestRunner extends MessageEmitterAdapter {
                                         + " but instead encountered \"%s\".",
                                 this.getFileURL(file),
                                 expectedMessages.get(testFilename),
-                                exception.getMessage()));
+                                getExceptionDisplayMessage()));
                         err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
