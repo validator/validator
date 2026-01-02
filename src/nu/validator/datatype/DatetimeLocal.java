@@ -42,9 +42,14 @@ public final class DatetimeLocal extends AbstractDatetime {
     public static final DatetimeLocal THE_INSTANCE = new DatetimeLocal();
     
     /**
-     * The rexexp for this datatype.
+     * The regexp for this datatype.
+     * Uses 11 dummy groups to align captures with AbstractDatetime.checkValid()
+     * which expects "valid local date and time string" at groups 12-18.
      */
-    private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-([0-9]{2})-([0-9]{2})[T ]([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]{1,3})?)?$");
+    private static final Pattern THE_PATTERN = Pattern.compile(
+            "^(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}"
+            + "([0-9]{4,})-([0-9]{2})-([0-9]{2})[T ]([0-9]{2}):([0-9]{2})"
+            + "(?::([0-9]{2})(?:\\.([0-9]{1,3}))?)?$");
 
     /**
      * Constructor.

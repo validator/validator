@@ -663,8 +663,12 @@ public class DatatypeTest {
         assertInvalid("Datetime: date only", validator, "2024-01-15");
         assertInvalid("Datetime: invalid month 13", validator, "2024-13-15T12:00Z");
         assertInvalid("Datetime: year 0", validator, "0000-01-15T12:00Z");
-        // Note: Hour/minute/second/day validation is not performed due to
-        // pattern group mismatch with AbstractDatetime.checkValid()
+        // These now work after fixing regex group alignment:
+        assertInvalid("Datetime: invalid hour 24", validator, "2024-01-15T24:00Z");
+        assertInvalid("Datetime: invalid minute 60", validator, "2024-01-15T12:60Z");
+        assertInvalid("Datetime: invalid second 60", validator, "2024-01-15T12:30:60Z");
+        assertInvalid("Datetime: Feb 29 non-leap year", validator, "2023-02-29T12:00Z");
+        assertInvalid("Datetime: invalid day 32", validator, "2024-01-32T12:00Z");
     }
 
     // DatetimeLocal tests (no timezone)
@@ -701,8 +705,12 @@ public class DatatypeTest {
         assertInvalid("DatetimeLocal: date only", validator, "2024-01-15");
         assertInvalid("DatetimeLocal: time only", validator, "12:30:45");
         assertInvalid("DatetimeLocal: year 0", validator, "0000-01-15T12:00");
-        // Note: Hour/minute/day validation is not performed due to
-        // pattern group mismatch with AbstractDatetime.checkValid()
+        // These now work after fixing regex group alignment:
+        assertInvalid("DatetimeLocal: invalid hour 24", validator, "2024-01-15T24:00");
+        assertInvalid("DatetimeLocal: invalid minute 60", validator, "2024-01-15T12:60");
+        assertInvalid("DatetimeLocal: invalid second 60", validator, "2024-01-15T12:30:60");
+        assertInvalid("DatetimeLocal: Feb 29 non-leap", validator, "2023-02-29T12:00");
+        assertInvalid("DatetimeLocal: invalid day 32", validator, "2024-01-32T12:00");
     }
 
     // DatetimeTz tests (with timezone offset - Z or ±HH:MM)
@@ -747,30 +755,40 @@ public class DatatypeTest {
     }
 
     // DateOrTime tests (flexible date and/or time)
-    // Note: This validator has a bug where time-only inputs crash due to
-    // regex group index mismatch with AbstractDatetime.checkValid().
-    // Tests are limited to date-only inputs which work correctly.
 
     private static void testDateOrTimeValid() {
         DateOrTime validator = DateOrTime.THE_INSTANCE;
 
-        // Date only (these work correctly)
+        // Date only
         assertValid("DateOrTime: date only", validator, "2024-01-15");
         assertValid("DateOrTime: leap year Feb 29", validator, "2024-02-29");
         assertValid("DateOrTime: year 1", validator, "0001-01-01");
         assertValid("DateOrTime: 5-digit year", validator, "10000-06-15");
+
+        // Time only (now works after fixing regex groups)
+        assertValid("DateOrTime: time HH:MM", validator, "12:30");
+        assertValid("DateOrTime: time with seconds", validator, "12:30:45");
+        assertValid("DateOrTime: time with ms", validator, "12:30:45.123");
+        assertValid("DateOrTime: midnight", validator, "00:00");
+        assertValid("DateOrTime: end of day", validator, "23:59:59");
     }
 
     private static void testDateOrTimeInvalid() {
         DateOrTime validator = DateOrTime.THE_INSTANCE;
 
         assertInvalid("DateOrTime: empty string", validator, "");
-        assertInvalid("DateOrTime: invalid month 13", validator, "2024-13-15");
-        assertInvalid("DateOrTime: year 0", validator, "0000-01-15");
         assertInvalid("DateOrTime: text", validator, "today");
-        // Note: Day validation (invalid day 32, Feb 29 non-leap) doesn't work
-        // due to regex group index mismatch with AbstractDatetime.checkValid()
-        // Note: Time-only inputs like "12:30" cause IndexOutOfBoundsException
+
+        // Date validation (now works after fixing regex groups)
+        assertInvalid("DateOrTime: invalid month 13", validator, "2024-13-15");
+        assertInvalid("DateOrTime: invalid day 32", validator, "2024-01-32");
+        assertInvalid("DateOrTime: Feb 29 non-leap", validator, "2023-02-29");
+        assertInvalid("DateOrTime: year 0", validator, "0000-01-15");
+
+        // Time validation (now works after fixing regex groups)
+        assertInvalid("DateOrTime: invalid hour 24", validator, "24:00");
+        assertInvalid("DateOrTime: invalid minute 60", validator, "12:60");
+        assertInvalid("DateOrTime: invalid second 60", validator, "12:30:60");
     }
 
     // TimeDatetime tests (very flexible - accepts many formats)

@@ -31,10 +31,21 @@ public class DateOrTime extends AbstractDatetime {
     public static final DateOrTime THE_INSTANCE = new DateOrTime();
 
     /**
-     * The rexexp for this datatype.
+     * The regexp for this datatype.
+     * Uses dummy groups to align captures with AbstractDatetime.checkValid():
+     * - Date-only: groups 3-5 (year, month, day)
+     * - Time-only: groups 8-11 (hour, minute, seconds, ms)
+     * - Local datetime: groups 12-18
+     * - Global datetime: groups 21-29
      */
-    private static final Pattern THE_PATTERN = Pattern.compile("^(?:(?:([0-9]{4,})-([0-9]{2})-([0-9]{2})(?:[T ]([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]{1,3})?)?(?:Z|(?:([+-][0-9]{2}):([0-9]{2})))?)?)|(?:([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]{1,3})?)?(?:Z|(?:([+-][0-9]{2}):([0-9]{2})))?))$");
-    // XXX this is not per spec. outstanding feedback in Hixie's microformats-dates folder
+    private static final Pattern THE_PATTERN = Pattern.compile(
+            "^(?:"
+            // Date only: 2 dummy + groups 3-5
+            + "(.){0}(.){0}([0-9]{4,})-([0-9]{2})-([0-9]{2})"
+            + "|"
+            // Time only: 2 dummy + groups 8-11 (hour, minute, seconds, ms)
+            + "(.){0}(.){0}([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]{1,3}))?)?"
+            + ")$");
     
     private DateOrTime() {
         super();
