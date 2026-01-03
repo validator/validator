@@ -101,27 +101,22 @@ jobs:
         shell: bash
         run: |
           python checker.py sign
-      - name: Release new binary runtime image
+      - name: Upload release artifacts (zip files)
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
-        uses: ncipollo/release-action@v1
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit: ${{ github.sha }}
-          allowUpdates: true
-          artifacts: build/dist/*.zip*
-          bodyFile: "IMPORTANT.md"
-          omitName: true
-          tag: latest
-      - name: Release new jar and war
+          name: release-zips-${{ matrix.os }}
+          path: build/dist/*.zip*
+          retention-days: 1
+      - name: Upload release artifacts (jar and war)
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
-        uses: ncipollo/release-action@v1
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          artifacts: build/dist/*.jar*,build/dist-war/*.war*
-          omitBodyDuringUpdate: true
-          omitName: true
-          tag: latest
+          name: release-jars
+          path: |
+            build/dist/*.jar*
+            build/dist-war/*.war*
+          retention-days: 1
       - name: Update the 'latest' tag
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         run: |
@@ -129,9 +124,36 @@ jobs:
           git tag -m latest -fa latest || true
           git push origin main --tags
 
+  release-assets:
+    name: Upload release assets
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Download all release artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: artifacts
+          merge-multiple: true
+      - name: List downloaded artifacts
+        run: find artifacts -type f | sort
+      - name: Upload all assets to release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.sha }}
+          allowUpdates: true
+          artifacts: artifacts/*
+          bodyFile: "IMPORTANT.md"
+          omitName: true
+          tag: latest
+          draft: false
+
   verify-release-assets:
     name: Verify release assets
-    needs: build
+    needs: release-assets
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     steps:
