@@ -184,24 +184,31 @@ jobs:
             echo "✅ Release is not marked as a Pre-release."
             return 0
           }
-          # First verification attempt
-          if verify_release; then
-            echo "✅ All release checks passed."
-            exit 0
-          fi
-          # Check if the failure was due to draft state — if so, publish and retry
-          release_json=$(gh api repos/${{ github.repository }}/releases/tags/latest)
-          if [ "$(echo "$release_json" | jq -r '.draft')" = "true" ]; then
-            echo "⚠️ Release is in Draft state (likely due to race conditions) — publishing it now..."
-            gh release edit latest --draft=false
-            echo "✅ Release has been published. Re-verifying..."
-            sleep 5  # Give GitHub a moment to propagate the change
+          max_attempts=5
+          attempt=1
+          while [ $attempt -le $max_attempts ]; do
+            echo "Verification attempt $attempt of $max_attempts..."
             if verify_release; then
-              echo "✅ All release checks passed after publishing."
+              echo "✅ All release checks passed."
               exit 0
             fi
-          fi
-          echo "::error::Release verification failed!"
+
+            # Check if the failure was due to draft state — if so, publish it
+            release_json=$(gh api repos/${{ github.repository }}/releases/tags/latest)
+            if [ "$(echo "$release_json" | jq -r '.draft')" = "true" ]; then
+              echo "⚠️ Release is in Draft state (likely due to race conditions) — publishing it now..."
+              gh release edit latest --draft=false
+              echo "✅ Release has been published."
+            fi
+
+            if [ $attempt -lt $max_attempts ]; then
+              echo "⚠️ Verification failed, waiting 30 seconds before retry..."
+              sleep 30
+            fi
+            attempt=$((attempt + 1))
+          done
+
+          echo "::error::Release verification failed after $max_attempts attempts!"
           exit 1
 
   npm-release:
