@@ -918,6 +918,7 @@ dl.inputattrs .highlight {
 
 .checkboxgroup label {
 	font-size: 11px;
+	white-space: nowrap;
 }
 
 label[for="level"] {
@@ -1018,6 +1019,11 @@ input#acceptlanguage {
 
 	.checkboxes {
 		font-size: 12px;
+	}
+
+	.checkboxgroup {
+		border: none;
+		padding: 0;
 	}
 }
 
