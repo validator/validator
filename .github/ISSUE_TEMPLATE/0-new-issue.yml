@@ -94,4 +94,12 @@ body:
     attributes:
       label: "Screenshots or screen recordings"
       description: "Drag and drop any screenshots or screen recordings that you want include to show the checker problem."
+  - type: markdown
+    attributes:
+      value: |
+        &nbsp; <!-- add some vertical whitespace -->
+        ## :heart: [Sponsor this project](https://github.com/sponsors/validator)
+
+        The Nu Html Checker is **critical web infrastructure.** Your sponsorship helps keep continued work on it _sustainable_.
+        &nbsp; <!-- add some vertical whitespace -->
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json

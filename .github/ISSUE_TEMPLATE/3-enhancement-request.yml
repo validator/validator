@@ -49,4 +49,12 @@ body:
       description: "Add any other context, screenshots, or examples about the feature request here"
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        &nbsp; <!-- add some vertical whitespace -->
+        ## :heart: [Sponsor this project](https://github.com/sponsors/validator)
+
+        The Nu Html Checker is **critical web infrastructure.** Your sponsorship helps keep continued work on it _sustainable_.
+        &nbsp; <!-- add some vertical whitespace -->
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
