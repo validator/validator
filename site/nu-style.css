@@ -1102,6 +1102,11 @@ input#acceptlanguage {
 		width: 120px;
 	}
 
+	#accept-language-label {
+		display: block;
+		margin-bottom: 40px;
+	}
+
 	#doc {
 		min-height: 44px;
 		padding: 10px;
