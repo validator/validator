@@ -119,6 +119,7 @@ public class LanguageDetectingChecker extends Checker {
             LANG_TAGS_BY_TLD.put("am", new String[] { "hy" });
             LANG_TAGS_BY_TLD.put("ar", new String[] { "es" });
             LANG_TAGS_BY_TLD.put("at", new String[] { "de" });
+            LANG_TAGS_BY_TLD.put("au", new String[] { "en" });
             LANG_TAGS_BY_TLD.put("az", new String[] { "az" });
             LANG_TAGS_BY_TLD.put("ba", new String[] { "bs", "hr", "sr" });
             LANG_TAGS_BY_TLD.put("bd", new String[] { "bn" });
@@ -129,6 +130,7 @@ public class LanguageDetectingChecker extends Checker {
             LANG_TAGS_BY_TLD.put("br", new String[] { "pt" });
             LANG_TAGS_BY_TLD.put("by", new String[] { "be" });
             LANG_TAGS_BY_TLD.put("bz", new String[] { "es" });
+            LANG_TAGS_BY_TLD.put("ca", new String[] { "en", "fr" });
             LANG_TAGS_BY_TLD.put("ch", new String[] { "de", "fr", "it", "rm" });
             LANG_TAGS_BY_TLD.put("cl", new String[] { "es" });
             LANG_TAGS_BY_TLD.put("co", new String[] { "es" });
@@ -144,6 +146,7 @@ public class LanguageDetectingChecker extends Checker {
             LANG_TAGS_BY_TLD.put("es", new String[] { "es" });
             LANG_TAGS_BY_TLD.put("fi", new String[] { "fi" });
             LANG_TAGS_BY_TLD.put("fr", new String[] { "fr" });
+            LANG_TAGS_BY_TLD.put("gb", new String[] { "en" });
             LANG_TAGS_BY_TLD.put("ge", new String[] { "ka" });
             LANG_TAGS_BY_TLD.put("gr", new String[] { "el" });
             LANG_TAGS_BY_TLD.put("gt", new String[] { "es" });
@@ -151,6 +154,7 @@ public class LanguageDetectingChecker extends Checker {
             LANG_TAGS_BY_TLD.put("hr", new String[] { "hr" });
             LANG_TAGS_BY_TLD.put("hu", new String[] { "hu" });
             LANG_TAGS_BY_TLD.put("id", new String[] { "id" });
+            LANG_TAGS_BY_TLD.put("ie", new String[] { "en", "ga" });
             LANG_TAGS_BY_TLD.put("is", new String[] { "is" });
             LANG_TAGS_BY_TLD.put("it", new String[] { "it" });
             LANG_TAGS_BY_TLD.put("il", new String[] { "iw" });
@@ -179,6 +183,7 @@ public class LanguageDetectingChecker extends Checker {
             LANG_TAGS_BY_TLD.put("nl", new String[] { "nl" });
             LANG_TAGS_BY_TLD.put("no", new String[] { "nn", "no" });
             LANG_TAGS_BY_TLD.put("np", new String[] { "ne" });
+            LANG_TAGS_BY_TLD.put("nz", new String[] { "en", "mi" });
             LANG_TAGS_BY_TLD.put("pa", new String[] { "es" });
             LANG_TAGS_BY_TLD.put("pe", new String[] { "es" });
             LANG_TAGS_BY_TLD.put("ph", new String[] { "tl" });
@@ -200,11 +205,13 @@ public class LanguageDetectingChecker extends Checker {
             LANG_TAGS_BY_TLD.put("tj", new String[] { "tg" });
             LANG_TAGS_BY_TLD.put("tm", new String[] { "tk" });
             LANG_TAGS_BY_TLD.put("ua", new String[] { "uk" });
+            LANG_TAGS_BY_TLD.put("uk", new String[] { "en" });
             LANG_TAGS_BY_TLD.put("uy", new String[] { "es" });
+            LANG_TAGS_BY_TLD.put("us", new String[] { "en", "es" });
             LANG_TAGS_BY_TLD.put("uz", new String[] { "uz" });
             LANG_TAGS_BY_TLD.put("ve", new String[] { "es" });
             LANG_TAGS_BY_TLD.put("vn", new String[] { "vi" });
-            LANG_TAGS_BY_TLD.put("za", new String[] { "af" });
+            LANG_TAGS_BY_TLD.put("za", new String[] { "af", "en" });
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(
                         LanguageDetectingChecker.class.getClassLoader() //
