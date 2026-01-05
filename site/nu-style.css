@@ -21,6 +21,11 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+html {
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+}
+
 html,
 body,
 h1,
@@ -42,6 +47,24 @@ h1,
 
 a img {
 	border: 0;
+}
+
+/* Better focus states for accessibility and touch */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+	outline: 2px solid #365d95;
+	outline-offset: 2px;
+}
+
+button {
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+input[type="checkbox"] {
+	cursor: pointer;
 }
 
 abbr[title],
@@ -164,6 +187,22 @@ hr {
 	margin-left: 3%;
 	margin-right: 3%;
 	margin-bottom: 18px;
+}
+
+@media (max-width: 640px) {
+	#banner {
+		margin: 0.5em 2%;
+	}
+
+	#title {
+		font-size: 1.2em;
+		padding: 0.5em;
+	}
+
+	#title img {
+		margin-right: 0.4em;
+		max-width: 24px;
+	}
 }
 
 #results,
@@ -902,6 +941,10 @@ dl.inputattrs .highlight {
 
 .checkboxes {
 	margin-left: 2px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
 }
 
 .checkboxes label {
@@ -909,6 +952,10 @@ dl.inputattrs .highlight {
 }
 
 .checkboxgroup {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
 	padding: 3px 6px 2px 2px;
 	border-radius: 6px;
 	border: solid #ccc 1px;
@@ -987,6 +1034,35 @@ input#acceptlanguage {
 		display: block;
 		margin-top: 8px;
 	}
+
+	#banner {
+		margin: 1em 2.5%;
+	}
+
+	#results,
+	#about {
+		padding-left: 2.5%;
+		margin-right: 2.5%;
+	}
+
+	form {
+		padding: 2.5%;
+	}
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+	#submit {
+		min-height: 42px;
+		padding: 10px 20px;
+		font-size: 15px;
+	}
+
+	#doc,
+	input[list="useragents"],
+	input#acceptlanguage {
+		min-height: 40px;
+		padding: 8px;
+	}
 }
 
 @media (max-width: 640px) {
@@ -994,6 +1070,9 @@ input#acceptlanguage {
 		display: block;
 		margin-top: 8px;
 		padding-left: 0;
+		min-height: 44px;
+		padding: 10px 16px;
+		font-size: 14px;
 	}
 
 	#inputregion {
@@ -1011,6 +1090,45 @@ input#acceptlanguage {
 
 	input[list="useragents"] {
 		width: 96.9%;
+		min-height: 44px;
+		padding: 10px;
+		font-size: 14px;
+	}
+
+	input#acceptlanguage {
+		min-height: 44px;
+		padding: 10px;
+		font-size: 14px;
+		width: 120px;
+	}
+
+	#doc {
+		min-height: 44px;
+		padding: 10px;
+		font-size: 14px;
+	}
+
+	#submit {
+		width: 100%;
+		min-height: 48px;
+		font-size: 16px;
+		padding: 12px;
+		border-radius: 8px;
+		background-color: #365d95;
+		color: #fff;
+		border: none;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	#submit:active {
+		background-color: #2a4a75;
+	}
+
+	textarea {
+		min-height: 150px;
+		font-size: 14px;
+		padding: 10px;
 	}
 
 	#about {
@@ -1021,9 +1139,196 @@ input#acceptlanguage {
 		font-size: 12px;
 	}
 
+	.checkboxes input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+		margin-right: 8px;
+		vertical-align: middle;
+	}
+
+	.checkboxes label {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 4px 0;
+	}
+
 	.checkboxgroup {
 		border: none;
 		padding: 0;
+	}
+
+	.checkboxgroup label {
+		margin-right: 12px;
+		margin-bottom: 8px;
+	}
+
+	fieldset {
+		padding: 4% 3%;
+		margin: 0;
+	}
+
+	legend {
+		font-size: 1em;
+		padding: 0.8em 0 0.5em;
+	}
+
+	form {
+		padding: 2%;
+	}
+
+	#top {
+		margin-left: 2%;
+		font-size: 1.1em;
+		margin-top: 1em;
+		margin-bottom: 0.5em;
+	}
+
+	p.disclaimer {
+		margin-left: 2%;
+		margin-right: 2%;
+		font-size: 11px;
+		line-height: 1.4;
+	}
+
+	#results {
+		margin-top: 30px;
+		padding-left: 2%;
+		margin-right: 2%;
+		font-size: 13px;
+	}
+
+	#results > ol:first-child {
+		padding-top: 20px;
+		padding-bottom: 15px;
+		padding-left: 1.5em;
+		padding-right: 1.5em;
+	}
+
+	#results > ol:first-child > li {
+		margin-bottom: 12px;
+		padding: 12px;
+	}
+
+	#results > ol:first-child > li > p:first-child,
+	#results > ol:first-child > li > p:first-child code {
+		font-size: 14px;
+	}
+
+	body {
+		padding-bottom: 3em;
+		font-size: 14px;
+	}
+
+	hr {
+		margin-left: 2%;
+		margin-right: 2%;
+	}
+
+	#filters {
+		margin-left: 2%;
+		margin-right: 2%;
+	}
+
+	#filters fieldset {
+		margin: 0.5em;
+	}
+
+	#filters button {
+		min-height: 44px;
+		padding: 10px 14px;
+		font-size: 14px;
+	}
+
+	.imagereview {
+		font-size: 12px;
+	}
+
+	.imagereview th,
+	.imagereview td {
+		padding: 8px 4px;
+	}
+
+	img {
+		max-height: 120px;
+		max-width: 120px;
+	}
+
+	col.img {
+		width: 130px;
+	}
+
+	.extract {
+		font-size: 12px;
+		max-height: 8em;
+		overflow: auto;
+	}
+
+	code {
+		font-size: 12px;
+		word-break: break-word;
+	}
+
+	#outline {
+		margin-left: 2%;
+		margin-right: 2%;
+	}
+
+	#outline li {
+		font-size: 13px;
+	}
+}
+
+@media (max-width: 480px) {
+	#title {
+		font-size: 1em;
+		padding: 0.4em;
+	}
+
+	#title img {
+		max-width: 20px;
+		margin-right: 0.3em;
+	}
+
+	#banner {
+		margin: 0.4em 2%;
+		margin-bottom: 12px;
+	}
+
+	#top {
+		font-size: 1em;
+	}
+
+	.checkboxgroup label {
+		font-size: 12px;
+	}
+
+	#show_options {
+		font-size: 13px;
+		padding: 8px 12px;
+	}
+
+	#about {
+		font-size: 10px;
+	}
+}
+
+@media (max-width: 360px) {
+	#title {
+		font-size: 0.9em;
+	}
+
+	#results {
+		font-size: 12px;
+	}
+
+	#results > ol:first-child > li > p:first-child,
+	#results > ol:first-child > li > p:first-child code {
+		font-size: 13px;
+	}
+
+	.checkboxes {
+		font-size: 11px;
 	}
 }
 
