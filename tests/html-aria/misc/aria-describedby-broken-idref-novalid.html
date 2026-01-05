@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aria-describedby with broken ID reference</title>
+</head>
+<body>
+    <input type="text" aria-describedby="existing-id nonexistent-id">
+    <div id="existing-id">Description text</div>
+</body>
+</html>

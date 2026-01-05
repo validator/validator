@@ -1803,7 +1803,9 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : ariaReferences) {
             if (!allIds.containsKey(idrefLocator.getIdref())) {
                 err("The “" + idrefLocator.getAdditional()
-                        + "” attribute must point to an element in the same document.",
+                        + "” attribute references “"
+                        + idrefLocator.getIdref() + "”, which is not"
+                        + " the ID of any element in this document.",
                         idrefLocator.getLocator());
             }
         }

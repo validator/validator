@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aria-owns with broken ID reference</title>
+</head>
+<body>
+    <div role="listbox" aria-owns="existing-id nonexistent-id">Listbox</div>
+    <div id="existing-id" role="option">Option 1</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aria-labelledby with broken ID reference</title>
+</head>
+<body>
+    <div role="region" aria-labelledby="existing-id nonexistent-id">Content</div>
+    <div id="existing-id">Label text</div>
+</body>
+</html>
