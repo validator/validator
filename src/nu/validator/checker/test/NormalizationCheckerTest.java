@@ -22,6 +22,11 @@
 
 package nu.validator.checker.test;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.stream.Collectors;
+
 import org.xml.sax.SAXException;
 
 import nu.validator.checker.NormalizationChecker;
@@ -45,6 +50,7 @@ public class NormalizationCheckerTest {
         testCombiningCharacters();
         testSurrogatePairs();
         testMalformedSurrogates();
+        testBytecodeUsesStandardJavaCharacterClass();
 
         System.out.println();
         System.out.println("Results: " + passed + " passed, " + failed + " failed");
@@ -120,6 +126,106 @@ public class NormalizationCheckerTest {
 
         // High surrogate followed by non-surrogate should throw
         assertThrowsSAXException("High surrogate + non-surrogate", "\uD800a");
+    }
+
+    /**
+     * Verify that the bytecode uses java.lang.Character instead of
+     * com.ibm.icu.lang.UCharacter for surrogate handling methods.
+     *
+     * ICU4J 75.1 removed the char-taking overloads of UCharacter methods
+     * (isHighSurrogate(char), isLowSurrogate(char), getCodePoint(char,char)).
+     * Code compiled against older ICU4J versions will fail at runtime with
+     * NoSuchMethodError when run against ICU4J 75.1.
+     *
+     * This test ensures we use the standard Java Character class instead,
+     * which avoids the ICU4J version compatibility issue entirely.
+     */
+    private static void testBytecodeUsesStandardJavaCharacterClass() {
+        // Check if javap is available
+        try {
+            Process checkJavap = Runtime.getRuntime().exec(
+                    new String[] { "javap", "-version" });
+            checkJavap.waitFor();
+            if (checkJavap.exitValue() != 0) {
+                System.out.println(
+                        "SKIP: Bytecode check (javap not available)");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("SKIP: Bytecode check (javap not available)");
+            return;
+        }
+
+        // Find the class file location
+        URL classUrl = NormalizationChecker.class.getResource(
+                "NormalizationChecker.class");
+        if (classUrl == null) {
+            System.out.println(
+                    "SKIP: Bytecode check (cannot locate class file)");
+            return;
+        }
+
+        String classPath;
+        if ("jar".equals(classUrl.getProtocol())) {
+            // Extract jar path: jar:file:/path/to/vnu.jar!/nu/validator/...
+            String jarPath = classUrl.getPath();
+            int bangIndex = jarPath.indexOf('!');
+            if (bangIndex > 0) {
+                jarPath = jarPath.substring(0, bangIndex);
+            }
+            if (jarPath.startsWith("file:")) {
+                jarPath = jarPath.substring(5);
+            }
+            classPath = jarPath;
+        } else {
+            // Direct file path
+            classPath = classUrl.getPath();
+            // Go up to get classpath root for the class
+            String className = NormalizationChecker.class.getName();
+            int levels = className.split("\\.").length;
+            for (int i = 0; i < levels; i++) {
+                classPath = classPath.substring(0,
+                        classPath.lastIndexOf('/'));
+            }
+        }
+
+        // Run javap to disassemble the class
+        try {
+            Process javap = Runtime.getRuntime().exec(new String[] { "javap",
+                    "-c", "-classpath", classPath,
+                    "nu.validator.checker.NormalizationChecker" });
+            javap.waitFor();
+
+            String output;
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(javap.getInputStream()))) {
+                output = reader.lines().collect(Collectors.joining("\n"));
+            }
+
+            // Check that isHighSurrogate calls use java/lang/Character
+            boolean usesJavaCharacter = output.contains(
+                    "java/lang/Character.isHighSurrogate");
+            boolean usesIcuUCharacter = output.contains(
+                    "com/ibm/icu/lang/UCharacter.isHighSurrogate");
+
+            if (usesJavaCharacter && !usesIcuUCharacter) {
+                pass("Bytecode uses java.lang.Character (not ICU4J UCharacter)");
+            } else if (usesIcuUCharacter) {
+                System.out.println("FAIL: Bytecode uses ICU4J UCharacter");
+                System.out.println("  The code should use java.lang.Character"
+                        + " to avoid ICU4J version compatibility issues.");
+                System.out.println(
+                        "  See: https://github.com/validator/validator/issues/1504");
+                failed++;
+            } else {
+                System.out.println(
+                        "SKIP: Bytecode check (no surrogate method calls found)");
+            }
+        } catch (Exception e) {
+            System.out.println(
+                    "SKIP: Bytecode check (javap failed: " + e.getMessage()
+                            + ")");
+        }
     }
 
     // Test helper methods

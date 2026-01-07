@@ -25,7 +25,6 @@ package nu.validator.datatype;
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 import java.util.Arrays;
-import com.ibm.icu.lang.UCharacter;
 
 public final class KeyLabelList extends AbstractDatatype {
 
@@ -50,8 +49,8 @@ public final class KeyLabelList extends AbstractDatatype {
           }
           if (label.length() == 2) {
             char[] chars = label.toCharArray();
-            if (!(UCharacter.isHighSurrogate(chars[0])
-                  && UCharacter.isLowSurrogate(chars[1]))) {
+            if (!(Character.isHighSurrogate(chars[0])
+                  && Character.isLowSurrogate(chars[1]))) {
               throw newDatatypeException(
                   "Key label has multiple characters. Each key label must be a single character.");
             }

@@ -30,7 +30,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.ibm.icu.lang.UCharacter;
 import com.ibm.icu.text.Normalizer;
 import com.ibm.icu.text.UnicodeSet;
 
@@ -103,7 +102,7 @@ public final class NormalizationChecker implements CharacterHandler {
      * or a surrogate and <code>false</code> otherwise
      */
     private static boolean isComposingCharOrSurrogate(char c) {
-        if (UCharacter.isHighSurrogate(c) || UCharacter.isLowSurrogate(c)) {
+        if (Character.isHighSurrogate(c) || Character.isLowSurrogate(c)) {
             return true;
         }
         return isComposingChar(c);
@@ -153,18 +152,18 @@ public final class NormalizationChecker implements CharacterHandler {
             char c = ch[start];
             if (pos == 1) {
                 // there's a single high surrogate in buf
-                if (isComposingChar(UCharacter.getCodePoint(buf[0], c))) {
+                if (isComposingChar(Character.toCodePoint(buf[0], c))) {
                     err("Text run starts with a composing character.");
                 }
                 atStartOfRun = false;
             } else {
-                if (length == 1 && UCharacter.isHighSurrogate(c)) {
+                if (length == 1 && Character.isHighSurrogate(c)) {
                     buf[0] = c;
                     pos = 1;
                     return;
                 } else {
-                    if (UCharacter.isHighSurrogate(c)) {
-                        if (isComposingChar(UCharacter.getCodePoint(c,
+                    if (Character.isHighSurrogate(c)) {
+                        if (isComposingChar(Character.toCodePoint(c,
                                 ch[start + 1]))) {
                             err("Text run starts with a composing character.");
                         }
