@@ -15,6 +15,7 @@ org.eclipse.jdt.core.compiler.problem.noEffectAssignment=error
 org.eclipse.jdt.core.compiler.problem.rawTypeReference=ignore
 org.eclipse.jdt.core.compiler.problem.redundantSpecificationOfTypeArguments=ignore
 org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=error
+org.eclipse.jdt.core.compiler.problem.suppressWarningsNotFullyAnalysed=ignore
 org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=ignore
 org.eclipse.jdt.core.compiler.problem.unclosedCloseable=error
 org.eclipse.jdt.core.compiler.problem.unnecessaryTypeCheck=error
