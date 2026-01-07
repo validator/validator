@@ -455,7 +455,18 @@ jobs:
         with:
           python-version: '3.13'
       - name: Run target ${{ matrix.target }}
-        run: ant -f build/build.xml ${{ matrix.target }}
+        run: |
+          max_attempts=3
+          attempt=1
+          until ant -f build/build.xml ${{ matrix.target }}; do
+            if [ $attempt -ge $max_attempts ]; then
+              echo "::error::Ant target ${{ matrix.target }} failed after $max_attempts attempts"
+              exit 1
+            fi
+            echo "⚠️ Attempt $attempt failed, retrying in 30 seconds..."
+            sleep 30
+            attempt=$((attempt + 1))
+          done
 
   ant-clean:
     name: Ant clean
