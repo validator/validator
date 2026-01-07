@@ -256,6 +256,10 @@ Gradle:
 
     testImplementation 'nu.validator:validator:NN.NN.NN'
 
+**Note:** The `nu.validator:validator` artifact bundles all required dependencies,
+including `nu.validator:htmlparser`. Do not add `htmlparser` as a separate
+dependency — doing so will cause duplicate classes on the classpath.
+
 Basic usage java code:
 
     String html = ...
