@@ -29,6 +29,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /vnu.jar /vnu.jar
+# Create vnu wrapper script for CLI compatibility
+RUN printf '#!/bin/sh\nexec java -jar /vnu.jar "$@"\n' > /usr/local/bin/vnu && \
+    chmod +x /usr/local/bin/vnu
 ENV LANG=C.UTF-8
 ENV JAVA_TOOL_OPTIONS=""
 ENV CONNECTION_TIMEOUT_SECONDS=5
