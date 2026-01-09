@@ -250,8 +250,9 @@ public final class Language extends AbstractDatatype {
             }
             if (shouldSuppressScript(subtags[0], subtag)) {
                 throw newDatatypeException(
-                        "Language tag should omit the default script for the"
-                        + " language.");
+                        "IETF BCP 47 language tag should omit the default"
+                                + " script for the language.",
+                        true);
             }
             i++;
             if (i == subtags.length) {

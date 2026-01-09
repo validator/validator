@@ -425,6 +425,7 @@
     "html/datatypes/int-non-digit-novalid.html": "Bad value \u201cabc\u201d for attribute \u201csize\u201d on element \u201cinput\u201d.",
     "html/datatypes/int-positive-zero-novalid.html": "Bad value \u201c0\u201d for attribute \u201crows\u201d on element \u201ctextarea\u201d.",
     "html/datatypes/integrity-invalid-hash-novalid.html": "Bad value \u201cmd5-abc123\u201d for attribute \u201cintegrity\u201d on element \u201cscript\u201d.",
+    "html/datatypes/language-default-script-haswarn.html": "Bad value \u201cja-Jpan\u201d for attribute \u201clang\u201d on element \u201cspan\u201d.",
     "html/datatypes/mimetype-empty-novalid.html": "Bad value \u201c\u201d for attribute \u201ctype\u201d on element \u201cobject\u201d.",
     "html/datatypes/mimetype-invalid-char-novalid.html": "Bad value \u201ctext/html<script>\u201d for attribute \u201ctype\u201d on element \u201cobject\u201d.",
     "html/datatypes/mimetype-no-subtype-novalid.html": "Bad value \u201ctext\u201d for attribute \u201ctype\u201d on element \u201cobject\u201d.",
