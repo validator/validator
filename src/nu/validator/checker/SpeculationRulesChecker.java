@@ -371,33 +371,77 @@ public final class SpeculationRulesChecker extends Checker {
 
     private boolean isHrefMatchesRuleValid(JsonValue ruleValue)
             throws SAXException {
-        if (!(ruleValue instanceof JsonString)) {
-            err("The “href_matches” property in a document rule must"
-                    + " be a string.");
+        if (ruleValue instanceof JsonString) {
+            String pattern = ((JsonString) ruleValue).getString();
+            if (pattern.isEmpty()) {
+                err("The “href_matches” property in a document rule"
+                        + " must be a non-empty string.");
+                return false;
+            }
+            return true;
+        } else if (ruleValue instanceof JsonArray) {
+            JsonArray patternsArray = (JsonArray) ruleValue;
+            if (patternsArray.isEmpty()) {
+                err("The “href_matches” property in a document rule"
+                        + " must contain at least one pattern.");
+                return false;
+            }
+            for (JsonValue patternValue : patternsArray) {
+                if (!(patternValue instanceof JsonString)) {
+                    err("Each item in the “href_matches” array must"
+                            + " be a string.");
+                    return false;
+                }
+                String pattern = ((JsonString) patternValue).getString();
+                if (pattern.isEmpty()) {
+                    err("Each item in the “href_matches” array must"
+                            + " be a non-empty string.");
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            err("The “href_matches” property in a document rule"
+                    + " must be a string or an array of strings.");
             return false;
         }
-        String pattern = ((JsonString) ruleValue).getString();
-        if (pattern.isEmpty()) {
-            err("The “href_matches” property in a document rule must"
-                    + " be a non-empty string.");
-            return false;
-        }
-        return true;
     }
 
     private boolean isSelectorMatchesRuleValid(JsonValue ruleValue)
             throws SAXException {
-        if (!(ruleValue instanceof JsonString)) {
-            err("The “selector_matches” property in a document rule"
-                    + " must be a string.");
+        if (ruleValue instanceof JsonString) {
+            String selector = ((JsonString) ruleValue).getString();
+            if (selector.isEmpty()) {
+                err("The “selector_matches” property in a document"
+                        + " rule must be a non-empty string.");
+                return false;
+            }
+            return true;
+        } else if (ruleValue instanceof JsonArray) {
+            JsonArray selectorsArray = (JsonArray) ruleValue;
+            if (selectorsArray.isEmpty()) {
+                err("The “selector_matches” property in a document"
+                        + " rule must contain at least one selector.");
+                return false;
+            }
+            for (JsonValue selectorValue : selectorsArray) {
+                if (!(selectorValue instanceof JsonString)) {
+                    err("Each item in the “selector_matches” array"
+                            + " must be a string.");
+                    return false;
+                }
+                String selector = ((JsonString) selectorValue).getString();
+                if (selector.isEmpty()) {
+                    err("Each item in the “selector_matches” array"
+                            + " must be a non-empty string.");
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            err("The “selector_matches” property in a document"
+                    + " rule must be a string or an array of strings.");
             return false;
         }
-        String selector = ((JsonString) ruleValue).getString();
-        if (selector.isEmpty()) {
-            err("The “selector_matches” property in a document rule"
-                    + " must be a non-empty string.");
-            return false;
-        }
-        return true;
     }
 }

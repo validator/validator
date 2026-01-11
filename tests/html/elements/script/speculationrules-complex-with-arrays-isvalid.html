@@ -1,0 +1,33 @@
+<!doctype html><html lang><meta charset=utf-8>
+<title>test</title>
+<script type="speculationrules">
+{
+  "prefetch": [
+    {
+      "source": "document",
+      "where": {
+        "and": [
+          {
+            "href_matches": "/blog/*"
+          },
+          {
+            "not": {
+              "href_matches": [
+                "/blog/wp-*.php",
+                "/blog/wp-admin/*",
+                "/blog/wp-content/uploads/*"
+              ]
+            }
+          },
+          {
+            "not": {
+              "selector_matches": ["a[rel~=\"nofollow\"]", ".no-prefetch a"]
+            }
+          }
+        ]
+      },
+      "eagerness": "conservative"
+    }
+  ]
+}
+</script>
