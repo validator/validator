@@ -3047,12 +3047,6 @@ public class Assertions extends Checker {
                         + suggestion);
             }
 
-            // Elements being re-specified
-            if ("rb" == localName) {
-                warn("The “" + localName
-                        + "” element is being actively re-specified in HTML Ruby Markup Extensions.");
-            }
-
             // Exclusions
             Integer maskAsObject;
             int mask = 0;
