@@ -243,7 +243,6 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("noembed", "Use the “object” element instead.");
         OBSOLETE_ELEMENTS.put("param", "Use the “data” attribute of the “object” element to set the URL of the external resource.");
         OBSOLETE_ELEMENTS.put("plaintext", "Use the “text/plain” MIME type instead.");
-        OBSOLETE_ELEMENTS.put("rb", "");
         OBSOLETE_ELEMENTS.put("rtc", "");
         OBSOLETE_ELEMENTS.put("strike", "Use “del” or “s” element instead.");
         OBSOLETE_ELEMENTS.put("xmp", "Use “pre” or “code” element instead.");
@@ -3046,6 +3045,12 @@ public class Assertions extends Checker {
                 }
                 err("The “" + localName + "” element is obsolete."
                         + suggestion);
+            }
+
+            // Elements being re-specified
+            if ("rb" == localName) {
+                warn("The “" + localName
+                        + "” element is being actively re-specified in HTML Ruby Markup Extensions.");
             }
 
             // Exclusions
