@@ -1403,6 +1403,15 @@ class Release():
             agentArg = ("-javaagent:%s=destfile=%s,includes=nu.validator.*"
                         % (jacocoAgentJar, jacocoExecFile))
             args.insert(0, agentArg)
+        # Use the servlet's control-port mechanism for graceful shutdown.
+        # On Windows, Popen.terminate() calls TerminateProcess which
+        # kills the JVM without running shutdown hooks; JaCoCo needs
+        # the hook to write coverage .exec data.
+        import socket as socketmod
+        with socketmod.socket() as _s:
+            _s.bind(('127.0.0.1', 0))
+            stopPort = _s.getsockname()[1]
+        args.append(str(stopPort))
         daemon = subprocess.Popen([javaCmd, ] + args)
         waitUntilServiceIsReady()
         try:
@@ -1414,7 +1423,14 @@ class Release():
             if extraCoverageRequests:
                 self._makeCoverageRequests()
         finally:
-            daemon.terminate()
+            try:
+                with socketmod.create_connection(
+                        ("127.0.0.1", stopPort), timeout=10) as sock:
+                    sock.settimeout(60)
+                    sock.recv(1)
+                daemon.wait(timeout=30)
+            except Exception:
+                daemon.terminate()
             waitUntilServiceIsDown()
 
     def _makeCoverageRequests(self):
