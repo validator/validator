@@ -39,7 +39,7 @@
 			<attribute name="javadoc_location" value="http://icu-project.org/apiref/icu4j/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dependencies/salvation2-3.0.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/htmlunit-csp-4.9.0.jar"/>
         <classpathentry kind="lib" path="dependencies/javax.json-1.1.4.jar"/>
 	<classpathentry kind="lib" path="dependencies/javax.servlet-api-4.0.1.jar">
 		<attributes>

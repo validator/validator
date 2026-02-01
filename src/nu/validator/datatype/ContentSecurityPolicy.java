@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
-import com.shapesecurity.salvation2.Policy;
+import org.htmlunit.csp.Policy;
 
 public class ContentSecurityPolicy extends AbstractDatatype {
 

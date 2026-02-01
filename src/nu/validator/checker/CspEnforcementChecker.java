@@ -30,9 +30,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-import com.shapesecurity.salvation2.Policy;
-import com.shapesecurity.salvation2.URLs.URI;
-import com.shapesecurity.salvation2.URLs.URLWithScheme;
+import org.htmlunit.csp.Policy;
+import org.htmlunit.csp.url.URI;
+import org.htmlunit.csp.url.URLWithScheme;
 
 /**
  * Checks that page resources comply with Content Security Policy (CSP).

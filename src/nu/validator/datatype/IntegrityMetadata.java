@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
-import com.shapesecurity.salvation2.Values.Hash;
+import org.htmlunit.csp.value.Hash;
 
 public final class IntegrityMetadata extends AbstractDatatype {
 
