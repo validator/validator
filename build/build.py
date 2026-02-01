@@ -1422,7 +1422,8 @@ class Release():
         import gzip as gzipmod
         from urllib.request import urlopen, Request
         from urllib.parse import quote
-        baseUrl = "http://%s:%s/" % (bindAddress, portNumber)
+        connectAddr = "127.0.0.1" if bindAddress == "0.0.0.0" else bindAddress
+        baseUrl = "http://%s:%s/" % (connectAddr, portNumber)
         testDoc = ("<!DOCTYPE html><html lang=en><title>test</title>"
                    "<body><h1>Hello</h1><h2>World</h2>"
                    "<p>Test paragraph.</p>"
