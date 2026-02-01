@@ -1408,7 +1408,9 @@ class Release():
         try:
             playwrightCmd = ["pnpm", "exec", "playwright", "test",
                              "--project=chromium"]
-            runCmd(playwrightCmd)
+            print(shlex.join(playwrightCmd))
+            subprocess.check_call(playwrightCmd,
+                                  shell=(platform.system() == 'Windows'))
             if extraCoverageRequests:
                 self._makeCoverageRequests()
         finally:
@@ -1613,7 +1615,7 @@ class Release():
             # No language detection
             ('cli-nolang', ['--no-langdetect', aboutHtml]),
             # Filter pattern
-            ('cli-filter', ['--filterpattern', '.*', aboutHtml]),
+            ('cli-filter', ['--filterpattern', '.', aboutHtml]),
         ]
         for name, extraArgs in cliRuns:
             execFile = os.path.join(coverageDir, "%s.exec" % name)
