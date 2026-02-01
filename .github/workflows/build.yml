@@ -71,7 +71,7 @@ jobs:
           version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
           python checker.py --version="$version" image
       - name: Set up Playwright for e2e tests
-        if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' && matrix.os == 'ubuntu-latest' }}
+        if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         run: |
           npm install -g pnpm
           pnpm install

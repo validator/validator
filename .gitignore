@@ -16,6 +16,7 @@ build/vnu*.jar.zip
 build/vnu*.war.zip
 build/validator*.jar
 build/validator/
+build/coverage/
 build/VERSION
 build/.gradle
 classes/

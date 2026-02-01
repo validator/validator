@@ -152,6 +152,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="log4j-version" value="1.2.17" />
   <property name="mail-version" value="1.4.7" />
   <property name="htmlunit-csp-version" value="4.9.0" />
+  <property name="jacoco-version" value="0.8.14" />
   <target name="dl-deps" unless="${offline}">
     <echo>Downloading dependencies</echo>
     <get-and-checksum url="https://repo1.maven.org/maven2/com/ibm/icu/icu4j/${icu4j-version}/icu4j-${icu4j-version}.jar"/>
@@ -201,13 +202,19 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/${slf4j-log4j12-version}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
   </target>
 
+  <target name="dl-deps-jacoco" unless="${offline}">
+    <echo>Downloading dependencies (JaCoCo)</echo>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/jacoco/org.jacoco.agent/${jacoco-version}/org.jacoco.agent-${jacoco-version}-runtime.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/jacoco/org.jacoco.cli/${jacoco-version}/org.jacoco.cli-${jacoco-version}-nodeps.jar"/>
+  </target>
+
   <target name="dl-html5spec" unless="${offline}">
     <echo>Downloading latest html5 specification</echo>
     <mkdir dir="build/html5spec"/>
     <get src="https://html.spec.whatwg.org/" dest="build/html5spec/html5spec-single.html" usetimestamp="true" tryGzipEncoding="true"/>
   </target>
 
-  <target name="dl-all" depends="dl-deps, dl-deps-modules, dl-deps-jetty, dl-html5spec, dl-deps-antlib"/>
+  <target name="dl-all" depends="dl-deps, dl-deps-modules, dl-deps-jetty, dl-deps-jacoco, dl-html5spec, dl-deps-antlib"/>
 
   <target name="dl-clean">
     <echo>Remove ${depsDir}</echo>
