@@ -1338,7 +1338,7 @@ class Release():
                                 "docbook-invalid.xml")]
         cmd = docbookTestArgs + testdoc
         print(shlex.join(cmd))
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = subprocess.run(cmd, capture_output=True, encoding="utf-8")
         if result.returncode == 0:
             print("Expected validation errors in output, but found none.")
             sys.exit(2)
