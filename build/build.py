@@ -186,7 +186,7 @@ jacocoAgentJar = os.path.join(dependencyDir,
     "org.jacoco.agent-%s-runtime.jar" % jacocoVersion)
 jacocoCliJar = os.path.join(dependencyDir,
     "org.jacoco.cli-%s-nodeps.jar" % jacocoVersion)
-coverageThreshold = 65  # minimum line coverage percentage
+coverageThreshold = 70  # minimum line coverage percentage
 extrasDir = os.path.join(buildRoot, "extras")
 jarsDir = os.path.join(buildRoot, "jars")
 jingTrangDir = os.path.join(buildRoot, "jing-trang")
@@ -1538,6 +1538,25 @@ class Release():
             (baseUrl, "image/svg+xml",
              svgDoc.encode("utf-8"), None),
         ]
+        # Documents with errors to exercise error-formatting code
+        # in MessageEmitterAdapter
+        errorDoc = (
+            "<!DOCTYPE html><html lang=en><title>test</title>"
+            "<body><div role=banana>x</div>"
+            "<span><div>block in inline</div></span>"
+            "<img>"
+            "<input type=text required value=''>"
+            "<label for=x><label for=y>nested</label></label>"
+            "<select><option value=''>pick<option value=''>dup</select>"
+            "<p><table><tr><td>table in p</td></tr></table>"
+        )
+        errDocParam = "data:text/html," + quote(errorDoc)
+        # GET with error doc in various output formats
+        for outFmt in ["html", "json", "xml", "gnu", "text"]:
+            getRequests.append("?doc=%s&out=%s" % (errDocParam, outFmt))
+        # GET with error doc + showsource + showoutline
+        getRequests.append(
+            "?doc=%s&showsource=yes&showoutline=yes" % errDocParam)
         print("\nMaking extra POST coverage requests...")
         for url, contentType, body, encoding in postRequests:
             label = contentType
@@ -1613,16 +1632,34 @@ class Release():
                               'succeeds-with-or-without-bom')
         htmlDir = os.path.join(buildRoot, 'tests', 'html',
                                'elements', 'meter')
+        xhtmlFile = os.path.join(buildRoot, 'tests', 'xhtml',
+                                  'elements', 'meter', '002-isvalid.xhtml')
+        svgDir = os.path.join(buildRoot, 'tests', 'svg')
+        filterFile = os.path.join(coverageDir, 'test-filter.txt')
+        with open(filterFile, 'w') as ff:
+            ff.write('placeholder-filter-pattern\n')
+        cssFile = os.path.join(buildRoot, 'tests', 'css',
+                               'succeeds-with-or-without-bom',
+                               '1', 'without-bom.css')
         cliRuns = [
             # JSON + check css/svg (exercises json emitter, css/svg flags)
             ('cli-json', ['--format', 'json', '--also-check-css',
-                          '--also-check-svg', aboutHtml]),
+                          '--also-check-svg', aboutHtml,
+                          os.path.join(buildRoot, 'tests', 'html',
+                                       'elements', 'custom',
+                                       'invalid-name-novalid.html')]),
             # GNU + verbose (exercises gnu emitter, verbose output)
             ('cli-gnu', ['--format', 'gnu', '--verbose', aboutHtml]),
-            # XML format
-            ('cli-xml', ['--format', 'xml', aboutHtml]),
-            # Text format
-            ('cli-text', ['--format', 'text', aboutHtml]),
+            # XML format with invalid doc (exercises XML error emitter)
+            ('cli-xml', ['--format', 'xml', aboutHtml,
+                         os.path.join(buildRoot, 'tests', 'html',
+                                      'elements', 'custom',
+                                      'invalid-name-novalid.html')]),
+            # Text format with invalid doc (exercises error location formatting)
+            ('cli-text', ['--format', 'text', aboutHtml,
+                          os.path.join(buildRoot, 'tests', 'html',
+                                       'elements', 'custom',
+                                       'invalid-name-novalid.html')]),
             # SVG file (exercises --svg path)
             ('cli-svg', ['--also-check-svg', svgFile]),
             # CSS directory (exercises --skip-non-css + directory mode)
@@ -1633,6 +1670,30 @@ class Release():
             ('cli-nolang', ['--no-langdetect', aboutHtml]),
             # Filter pattern
             ('cli-filter', ['--filterpattern', '.', aboutHtml]),
+            # --errors-only (exercises errorsOnly flag + datatype.warn)
+            ('cli-erronly', ['--errors-only', aboutHtml]),
+            # --exit-zero-always (exercises exitZeroAlways flag)
+            ('cli-exit0', ['--exit-zero-always', aboutHtml]),
+            # --asciiquotes (exercises asciiQuotes flag)
+            ('cli-ascii', ['--asciiquotes', aboutHtml]),
+            # --html with XHTML file (exercises forceHTML path)
+            ('cli-html', ['--html', xhtmlFile]),
+            # --svg with SVG file (exercises forceSVG path)
+            ('cli-forcesvg', ['--svg', svgFile]),
+            # --css with CSS file (exercises forceCSS path)
+            ('cli-forcecss', ['--css', cssFile]),
+            # --Werror (exercises wError flag)
+            ('cli-werror', ['--Werror', aboutHtml]),
+            # --no-stream (exercises noStream flag)
+            ('cli-nostream', ['--no-stream', aboutHtml]),
+            # XHTML auto-detection (exercises checkHtmlFile xhtml path)
+            ('cli-xhtml', [xhtmlFile]),
+            # --filterfile (exercises filterfile loading code)
+            ('cli-filtfile', ['--filterfile', filterFile, aboutHtml]),
+            # --svg + directory (exercises forceSVG in recurseDirectory)
+            ('cli-svgdir', ['--svg', svgDir]),
+            # --skip-non-html (exercises skipNonHTML flag)
+            ('cli-skiphtml', ['--skip-non-html', htmlDir]),
         ]
         for name, extraArgs in cliRuns:
             execFile = os.path.join(coverageDir, "%s.exec" % name)
