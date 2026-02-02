@@ -889,6 +889,14 @@ public class Assertions extends Checker {
             "dns-prefetch", "icon", "manifest", "modulepreload", "pingback", "preconnect", "prefetch", "preload", "prerender", "stylesheet"
     };
 
+    private static final Set<String> PRELOAD_DESTINATIONS = new HashSet<>(
+            Arrays.asList("fetch", "font", "image", "script", "style",
+                    "track"));
+
+    private static final Set<String> MODULE_PRELOAD_DESTINATIONS = new HashSet<>(
+            Arrays.asList("audioworklet", "json", "paintworklet", "script",
+                    "serviceworker", "sharedworker", "style", "worker"));
+
     private static final Set<String> HTML_ELEMENTS = new HashSet<>(Arrays.asList(
             "a", "abbr", "acronym", "address", "annotation-xml", "applet", "area",
             "article", "aside", "attachment", "audio", "b", "base", "basefont", "bdi",
@@ -4172,6 +4180,28 @@ public class Assertions extends Checker {
                             + " “rel” attribute that contains the"
                             + " value “preload” or the value"
                             + " “modulepreload”.");
+                }
+                if (atts.getIndex("", "as") > -1
+                        && relList.contains("preload")
+                        && !PRELOAD_DESTINATIONS.contains(
+                                atts.getValue("", "as"))) {
+                    err("The value “"
+                            + atts.getValue("", "as") + "”"
+                            + " is not a valid value for"
+                            + " the “as” attribute of a"
+                            + " “link” element with"
+                            + " “rel=preload”.");
+                }
+                if (atts.getIndex("", "as") > -1
+                        && relList.contains("modulepreload")
+                        && !MODULE_PRELOAD_DESTINATIONS.contains(
+                                atts.getValue("", "as"))) {
+                    err("The value “"
+                            + atts.getValue("", "as") + "”"
+                            + " is not a valid value for"
+                            + " the “as” attribute of a"
+                            + " “link” element with"
+                            + " “rel=modulepreload”.");
                 }
                 if (atts.getIndex("", "integrity") > -1
                         && (!(relList.contains("stylesheet")

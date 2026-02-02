@@ -186,26 +186,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		link.attrs.as =
 			attribute as {
-				string ""
-			|	string "audio"
-			|	string "audioworklet"
-			|	string "document"
-			|	string "embed"
+				string "audioworklet"
 			|	string "fetch"
 			|	string "font"
 			|	string "image"
-			|	string "manifest"
-			|	string "object"
+			|	string "json"
 			|	string "paintworklet"
-			|	string "report"
 			|	string "script"
 			|	string "serviceworker"
 			|	string "sharedworker"
 			|	string "style"
 			|	string "track"
-			|	string "video"
 			|	string "worker"
-			|	string "xslt"
 			}
 		link.attrs.integrity =
 			attribute integrity {
