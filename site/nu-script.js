@@ -461,7 +461,7 @@ function installTextarea() {
 			if (!document.getElementById("csslabel")) {
 				var cssLabel = document.createElement("label")
 				cssLabel.setAttribute("id", "csslabel")
-				cssLabel.setAttribute("title", "Treat the input as CSS.")
+				cssLabel.setAttribute("title", "Check the text input as CSS, not as HTML.")
 				cssLabel.setAttribute("for", "css")
 				var cssCheckbox = document.createElement("input")
 				cssCheckbox.setAttribute("type", "checkbox")
@@ -489,7 +489,7 @@ function installTextarea() {
 					}
 				}, false)
 				cssLabel.appendChild(cssCheckbox)
-				cssLabel.appendChild(document.createTextNode("CSS"))
+				cssLabel.appendChild(document.createTextNode("check as CSS"))
 				inputRegion.appendChild(cssLabel)
 			}
 			inputRegion.appendChild(textarea)
@@ -577,6 +577,19 @@ function copySourceIntoTextArea() {
 			li = li.nextSibling
 		}
 		textarea.value = strings.join('\n')
+		// Strip CSS-checking wrapper if it leaked into the source display.
+		// The server wraps CSS input in an HTML document with <style>; the
+		// source display normally strips this, but guard against stacking.
+		var cssProlog = "<!DOCTYPE html><html lang=\'\'><title>s</title><style>"
+		var cssEpilog = "</style>"
+		var v = textarea.value
+		if (v.indexOf(cssProlog) === 0
+				&& v.lastIndexOf(cssEpilog) === v.length - cssEpilog.length) {
+			v = v.substring(cssProlog.length, v.length - cssEpilog.length)
+			if (v.charAt(0) === '\n') v = v.substring(1)
+			if (v.charAt(v.length - 1) === '\n') v = v.substring(0, v.length - 1)
+			textarea.value = v
+		}
 	}
 }
 
