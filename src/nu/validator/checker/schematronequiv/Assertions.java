@@ -556,6 +556,9 @@ public class Assertions extends Checker {
                     "textarea", "details", "form", "iframe", "object", "map",
                     "meta", "slot");
 
+    private static final Set<String> SECTIONING_ELEMENTS =
+            Set.of("article", "aside", "main", "nav", "section");
+
     private static Map<String, Integer> ANCESTOR_MASK_BY_DESCENDANT = new HashMap<>();
 
     private static void registerProhibitedAncestor(String ancestor,
@@ -725,7 +728,6 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("fieldset", "group");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("figure", "figure");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("form", "form");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("footer", "contentinfo");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h1", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h2", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h3", "heading");
@@ -733,7 +735,6 @@ public class Assertions extends Checker {
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h5", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("h6", "heading");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("hr", "separator");
-        ELEMENTS_WITH_IMPLICIT_ROLE.put("header", "banner");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("img", "img");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("li", "listitem");
         ELEMENTS_WITH_IMPLICIT_ROLE.put("link", "link");
@@ -1696,6 +1697,16 @@ public class Assertions extends Checker {
                                 .get(openElementName), role) >= 0) {
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    private boolean isDescendantOfSectioningElement() {
+        for (int i = 0; i < currentPtr; i++) {
+            String name = stack[currentPtr - i].getName();
+            if (SECTIONING_ELEMENTS.contains(name)) {
+                return true;
             }
         }
         return false;
@@ -4380,7 +4391,17 @@ public class Assertions extends Checker {
             }
             // Warnings for use of ARIA attributes with markup already
             // having implicit ARIA semantics.
-            if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
+            if ("header".equals(localName)
+                    && "banner".equals(role)
+                    && !isDescendantOfSectioningElement()) {
+                warn("The “banner” role is unnecessary for"
+                        + " element “header”.");
+            } else if ("footer".equals(localName)
+                    && "contentinfo".equals(role)
+                    && !isDescendantOfSectioningElement()) {
+                warn("The “contentinfo” role is unnecessary"
+                        + " for element “footer”.");
+            } else if (ELEMENTS_WITH_IMPLICIT_ROLE.containsKey(localName)
                     && ELEMENTS_WITH_IMPLICIT_ROLE.get(localName).equals(
                             role)) {
                 if (!("img".equals(localName)
