@@ -748,12 +748,11 @@ public class TestRunner extends MessageEmitterAdapter {
     }
 
     @Override
-    public void info(String message) throws SAXException {
-        if (emitMessages) {
-            hasUnhandledInfo = true;
-            err.println("info: " + message);
-            err.flush();
+    public void info(SAXParseException e) throws SAXException {
+        if (emitMessages && infoMessage == null) {
+            infoMessage = e.getMessage();
         }
+        super.info(e);
     }
 
     public void reset() {
