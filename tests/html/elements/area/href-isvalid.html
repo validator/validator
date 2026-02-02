@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset=utf-8>
+<base href="http://example.com">
 <title>valid href</title>
 <map name=foo><area href="a:foo.com" alt></map><!-- scheme-private -->
 <map name=foo><area href="foo:/" alt></map><!-- scheme-private-slash -->
@@ -10,28 +11,21 @@
 <map name=foo><area href="foo:////://///" alt></map><!-- scheme-private-path-leading-slashes-colon-slashes -->
 <map name=foo><area href="c:/foo" alt></map><!-- scheme-private-single-letter -->
 <map name=foo><area href="madeupscheme:/example.com/" alt></map><!-- scheme-private-single-slash -->
-<map name=foo><area href="file:/example.com/" alt></map><!-- scheme-file-single-slash -->
 <map name=foo><area href="ftps:/example.com/" alt></map><!-- scheme-ftps-single-slash -->
 <map name=foo><area href="gopher:/example.com/" alt></map><!-- scheme-gopher-single-slash -->
-<map name=foo><area href="ws:/example.com/" alt></map><!-- scheme-ws-single-slash -->
-<map name=foo><area href="wss:/example.com/" alt></map><!-- scheme-wss-single-slash -->
 <map name=foo><area href="javascript:/example.com/" alt></map><!-- scheme-javascript-single-slash -->
 <map name=foo><area href="mailto:/example.com/" alt></map><!-- scheme-mailto-single-slash -->
 <map name=foo><area href="madeupscheme:example.com/" alt></map><!-- scheme-private-no-slash -->
 <map name=foo><area href="ftps:example.com/" alt></map><!-- scheme-ftps-no-slash -->
 <map name=foo><area href="gopher:example.com/" alt></map><!-- scheme-gopher-no-slash -->
-<map name=foo><area href="wss:example.com/" alt></map><!-- scheme-wss-no-slash -->
 <map name=foo><area href="mailto:example.com/" alt></map><!-- scheme-mailto-no-slash -->
 <map name=foo><area href="data:text/plain,foo" alt></map><!-- scheme-data-no-slash -->
-<map name=foo><area href="http://user:pass@foo:21/bar;par?b#c" alt></map><!-- userinfo -->
 <map name=foo><area href="http://[2001::1]" alt></map><!-- host-ipv6 -->
 <map name=foo><area href="http://[2001::1]:80" alt></map><!-- host-ipv6-port -->
 <map name=foo><area href="http://f:/c" alt></map><!-- port-none-but-colon -->
 <map name=foo><area href="http://f:0/c" alt></map><!-- port-0 -->
 <map name=foo><area href="http://f:00000000000000/c" alt></map><!-- port-00000000000000 -->
 <map name=foo><area href="http://f:00000000000000000000080/c" alt></map><!-- port-00000000000000000000080 -->
-<map name=foo><area href="http://a:b@c:29/d" alt></map><!-- userinfo-host-port-path -->
-<map name=foo><area href="http://foo.com:b@d/" alt></map><!-- userinfo-username-non-alpha -->
 <map name=foo><area href="http://foo/abcd?efgh?ijkl" alt></map><!-- query-contains-question-mark -->
 <map name=foo><area href="http://foo/abcd#foo?bar" alt></map><!-- fragment-contains-question-mark -->
 <map name=foo><area href="http://example.com/foo/%2e" alt></map><!-- path-percent-encoded-dot -->
@@ -49,10 +43,6 @@
 <map name=foo><area href="http://example.com/foo?💩" alt></map><!-- query-contains-pile-of-poo -->
 <map name=foo><area href="http://example.com/foo#💩" alt></map><!-- fragment-contains-pile-of-poo -->
 <map name=foo><area href="http://192.0x00A80001" alt></map><!-- host-192.0x00A80001 -->
-<map name=foo><area href="http://%25DOMAIN:foobar@foodomain.com" alt></map><!-- userinfo-username-contains-percent-encoded -->
-<map name=foo><area href="http://@www.example.com" alt></map><!-- userinfo-empty -->
-<map name=foo><area href="http://:b@www.example.com" alt></map><!-- userinfo-user-empty -->
-<map name=foo><area href="http://a:@www.example.com" alt></map><!-- userinfo-password-empty -->
 <map name=foo><area href="http://GOO​⁠﻿goo.com" alt></map><!-- host-exotic-whitespace -->
 <map name=foo><area href="http://www.foo。bar.com" alt></map><!-- host-exotic-dot -->
 <map name=foo><area href="http://Ｇｏ.com" alt></map><!-- host-fullwidth -->
@@ -81,11 +71,7 @@
 <map name=foo><area href="💩http://foo" alt></map><!-- path-starts-with-pile-of-poo -->
 <map name=foo><area href="/💩" alt></map><!-- path-slash-pile-of-poo -->
 <map name=foo><area href="File://foo/bar.html" alt></map><!-- scheme-file-uppercase -->
-<map name=foo><area href="file://C|/foo/bar" alt></map><!-- scheme-file-slash-slash-c-bar -->
 <map name=foo><area href="file://server/foo/bar" alt></map><!-- scheme-file-host-included -->
 <map name=foo><area href="file:///foo/bar.txt" alt></map><!-- scheme-file-host-empty -->
-<map name=foo><area href="file:" alt></map><!-- scheme-file-scheme-only -->
-<map name=foo><area href="file:/" alt></map><!-- scheme-file-slash-only -->
 <map name=foo><area href="file://" alt></map><!-- scheme-file-slash-slash-only -->
 <map name=foo><area href="file:///" alt></map><!-- scheme-file-slash-slash-slash-only -->
-<map name=foo><area href="file:test" alt></map><!-- scheme-file-no-slash -->

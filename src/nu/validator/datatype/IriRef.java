@@ -188,7 +188,9 @@ public class IriRef extends AbstractDatatype {
         return "http".contentEquals(scheme) || "https".contentEquals(scheme)
                 || "ftp".contentEquals(scheme)
                 || "mailto".contentEquals(scheme)
-                || "file".contentEquals(scheme);
+                || "file".contentEquals(scheme)
+                || "ws".contentEquals(scheme)
+                || "wss".contentEquals(scheme);
     }
 
     protected boolean isAbsolute() {

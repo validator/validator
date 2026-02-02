@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset=utf-8>
+<base href="http://example.com">
 <title>valid formaction</title>
 <input type=image alt="foo" formaction="a:foo.com"><!-- scheme-private -->
 <input type=image alt="foo" formaction="foo:/"><!-- scheme-private-slash -->
@@ -10,28 +11,21 @@
 <input type=image alt="foo" formaction="foo:////://///"><!-- scheme-private-path-leading-slashes-colon-slashes -->
 <input type=image alt="foo" formaction="c:/foo"><!-- scheme-private-single-letter -->
 <input type=image alt="foo" formaction="madeupscheme:/example.com/"><!-- scheme-private-single-slash -->
-<input type=image alt="foo" formaction="file:/example.com/"><!-- scheme-file-single-slash -->
 <input type=image alt="foo" formaction="ftps:/example.com/"><!-- scheme-ftps-single-slash -->
 <input type=image alt="foo" formaction="gopher:/example.com/"><!-- scheme-gopher-single-slash -->
-<input type=image alt="foo" formaction="ws:/example.com/"><!-- scheme-ws-single-slash -->
-<input type=image alt="foo" formaction="wss:/example.com/"><!-- scheme-wss-single-slash -->
 <input type=image alt="foo" formaction="javascript:/example.com/"><!-- scheme-javascript-single-slash -->
 <input type=image alt="foo" formaction="mailto:/example.com/"><!-- scheme-mailto-single-slash -->
 <input type=image alt="foo" formaction="madeupscheme:example.com/"><!-- scheme-private-no-slash -->
 <input type=image alt="foo" formaction="ftps:example.com/"><!-- scheme-ftps-no-slash -->
 <input type=image alt="foo" formaction="gopher:example.com/"><!-- scheme-gopher-no-slash -->
-<input type=image alt="foo" formaction="wss:example.com/"><!-- scheme-wss-no-slash -->
 <input type=image alt="foo" formaction="mailto:example.com/"><!-- scheme-mailto-no-slash -->
 <input type=image alt="foo" formaction="data:text/plain,foo"><!-- scheme-data-no-slash -->
-<input type=image alt="foo" formaction="http://user:pass@foo:21/bar;par?b#c"><!-- userinfo -->
 <input type=image alt="foo" formaction="http://[2001::1]"><!-- host-ipv6 -->
 <input type=image alt="foo" formaction="http://[2001::1]:80"><!-- host-ipv6-port -->
 <input type=image alt="foo" formaction="http://f:/c"><!-- port-none-but-colon -->
 <input type=image alt="foo" formaction="http://f:0/c"><!-- port-0 -->
 <input type=image alt="foo" formaction="http://f:00000000000000/c"><!-- port-00000000000000 -->
 <input type=image alt="foo" formaction="http://f:00000000000000000000080/c"><!-- port-00000000000000000000080 -->
-<input type=image alt="foo" formaction="http://a:b@c:29/d"><!-- userinfo-host-port-path -->
-<input type=image alt="foo" formaction="http://foo.com:b@d/"><!-- userinfo-username-non-alpha -->
 <input type=image alt="foo" formaction="http://foo/abcd?efgh?ijkl"><!-- query-contains-question-mark -->
 <input type=image alt="foo" formaction="http://foo/abcd#foo?bar"><!-- fragment-contains-question-mark -->
 <input type=image alt="foo" formaction="http://example.com/foo/%2e"><!-- path-percent-encoded-dot -->
@@ -49,10 +43,6 @@
 <input type=image alt="foo" formaction="http://example.com/foo?💩"><!-- query-contains-pile-of-poo -->
 <input type=image alt="foo" formaction="http://example.com/foo#💩"><!-- fragment-contains-pile-of-poo -->
 <input type=image alt="foo" formaction="http://192.0x00A80001"><!-- host-192.0x00A80001 -->
-<input type=image alt="foo" formaction="http://%25DOMAIN:foobar@foodomain.com"><!-- userinfo-username-contains-percent-encoded -->
-<input type=image alt="foo" formaction="http://@www.example.com"><!-- userinfo-empty -->
-<input type=image alt="foo" formaction="http://:b@www.example.com"><!-- userinfo-user-empty -->
-<input type=image alt="foo" formaction="http://a:@www.example.com"><!-- userinfo-password-empty -->
 <input type=image alt="foo" formaction="http://GOO​⁠﻿goo.com"><!-- host-exotic-whitespace -->
 <input type=image alt="foo" formaction="http://www.foo。bar.com"><!-- host-exotic-dot -->
 <input type=image alt="foo" formaction="http://Ｇｏ.com"><!-- host-fullwidth -->
@@ -81,11 +71,7 @@
 <input type=image alt="foo" formaction="💩http://foo"><!-- path-starts-with-pile-of-poo -->
 <input type=image alt="foo" formaction="/💩"><!-- path-slash-pile-of-poo -->
 <input type=image alt="foo" formaction="File://foo/bar.html"><!-- scheme-file-uppercase -->
-<input type=image alt="foo" formaction="file://C|/foo/bar"><!-- scheme-file-slash-slash-c-bar -->
 <input type=image alt="foo" formaction="file://server/foo/bar"><!-- scheme-file-host-included -->
 <input type=image alt="foo" formaction="file:///foo/bar.txt"><!-- scheme-file-host-empty -->
-<input type=image alt="foo" formaction="file:"><!-- scheme-file-scheme-only -->
-<input type=image alt="foo" formaction="file:/"><!-- scheme-file-slash-only -->
 <input type=image alt="foo" formaction="file://"><!-- scheme-file-slash-slash-only -->
 <input type=image alt="foo" formaction="file:///"><!-- scheme-file-slash-slash-slash-only -->
-<input type=image alt="foo" formaction="file:test"><!-- scheme-file-no-slash -->

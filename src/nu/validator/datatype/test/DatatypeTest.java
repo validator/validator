@@ -579,7 +579,8 @@ public class DatatypeTest {
         assertValid("IriRef: http with path", validator, "http://example.com/path/to/file");
         assertValid("IriRef: http with query", validator, "http://example.com/?foo=bar");
         assertValid("IriRef: http with fragment", validator, "http://example.com/#section");
-        assertValid("IriRef: http with all parts", validator, "http://user:pass@example.com:8080/path?q=1#frag");
+        assertInvalid("IriRef: http with credentials", validator, "http://user:pass@example.com:8080/path?q=1#frag");
+        assertValid("IriRef: http with all parts", validator, "http://example.com:8080/path?q=1#frag");
         assertValid("IriRef: ftp URL", validator, "ftp://ftp.example.com/file");
         assertValid("IriRef: mailto URL", validator, "mailto:user@example.com");
         assertValid("IriRef: file URL", validator, "file:///path/to/file");

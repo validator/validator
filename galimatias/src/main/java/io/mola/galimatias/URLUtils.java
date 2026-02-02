@@ -304,7 +304,7 @@ public final class URLUtils {
     }
 
     private static final List<String> RELATIVE_SCHEMES = Arrays.asList(
-            "ftp", "file", "gopher", "http", "https", "ws", "wss"
+            "ftp", "file", "http", "https", "ws", "wss"
     );
 
     /**

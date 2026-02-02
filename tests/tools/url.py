@@ -17,9 +17,20 @@ invalid = {
     "scheme-data-single-slash": "data:/example.com/",
     "scheme-ftp-no-slash": "ftp:example.com/",
     "scheme-https-no-slash": "https:example.com/",
+    "scheme-file-single-slash": "file:/example.com/",
+    "scheme-ws-single-slash": "ws:/example.com/",
+    "scheme-wss-single-slash": "wss:/example.com/",
+    "scheme-wss-no-slash": "wss:example.com/",
     "userinfo-password-bad-chars": "http://&a:foo(b]c@d:2/",
     "userinfo-username-contains-at-sign": "http://::@c@d:2",
     "userinfo-backslash": "http://a\\b:c\\d@foo.com",
+    "userinfo": "http://user:pass@foo:21/bar;par?b#c",
+    "userinfo-host-port-path": "http://a:b@c:29/d",
+    "userinfo-username-non-alpha": "http://foo.com:b@d/",
+    "userinfo-username-contains-percent-encoded": "http://%25DOMAIN:foobar@foodomain.com",
+    "userinfo-empty": "http://@www.example.com",
+    "userinfo-user-empty": "http://:b@www.example.com",
+    "userinfo-password-empty": "http://a:@www.example.com",
     "host-space": "http://example .org",
     "host-tab": "http://example\t.org",
     "host-newline": "http://example.\norg",
@@ -81,28 +92,23 @@ valid_absolute = {
     "scheme-private-path-leading-slashes-colon-slashes": "foo:////://///",
     "scheme-private-single-letter": "c:/foo",
     "scheme-private-single-slash": "madeupscheme:/example.com/",
-    "scheme-file-single-slash": "file:/example.com/",
     "scheme-ftps-single-slash": "ftps:/example.com/",
     "scheme-gopher-single-slash": "gopher:/example.com/",
-    "scheme-ws-single-slash": "ws:/example.com/",
-    "scheme-wss-single-slash": "wss:/example.com/",
     "scheme-javascript-single-slash": "javascript:/example.com/",
     "scheme-mailto-single-slash": "mailto:/example.com/",
     "scheme-private-no-slash": "madeupscheme:example.com/",
     "scheme-ftps-no-slash": "ftps:example.com/",
     "scheme-gopher-no-slash": "gopher:example.com/",
-    "scheme-wss-no-slash": "wss:example.com/",
     "scheme-mailto-no-slash": "mailto:example.com/",
     "scheme-data-no-slash": "data:text/plain,foo",
-    "userinfo": "http://user:pass@foo:21/bar;par?b#c",
+
     "host-ipv6": "http://[2001::1]",
     "host-ipv6-port": "http://[2001::1]:80",
     "port-none-but-colon": "http://f:/c",
     "port-0": "http://f:0/c",
     "port-00000000000000": "http://f:00000000000000/c",
     "port-00000000000000000000080": "http://f:00000000000000000000080/c",
-    "userinfo-host-port-path": "http://a:b@c:29/d",
-    "userinfo-username-non-alpha": "http://foo.com:b@d/",
+
     "query-contains-question-mark": "http://foo/abcd?efgh?ijkl",
     "fragment-contains-question-mark": "http://foo/abcd#foo?bar",
     "path-percent-encoded-dot": "http://example.com/foo/%2e",
@@ -120,10 +126,7 @@ valid_absolute = {
     "query-contains-pile-of-poo": "http://example.com/foo?💩",
     "fragment-contains-pile-of-poo": "http://example.com/foo#💩",
     "host-192.0x00A80001": "http://192.0x00A80001",
-    "userinfo-username-contains-percent-encoded": "http://%25DOMAIN:foobar@foodomain.com",
-    "userinfo-empty": "http://@www.example.com",
-    "userinfo-user-empty": "http://:b@www.example.com",
-    "userinfo-password-empty": "http://a:@www.example.com",
+
     "host-exotic-whitespace": "http://GOO\u200b\u2060\ufeffgoo.com",
     "host-exotic-dot": "http://www.foo\u3002bar.com",
     "host-fullwidth": "http://\uff27\uff4f.com",
@@ -169,19 +172,19 @@ invalid_file = {
     "scheme-file-single-slash-c-bar": "file:/C|/foo/bar",
     "scheme-file-slash-slash-abc-bar": "file://abc|/foo/bar",
     "scheme-file-triple-slash-c-bar": "file:///C|/foo/bar",
+    "scheme-file-scheme-only": "file:",
+    "scheme-file-slash-only": "file:/",
+    "scheme-file-no-slash": "file:test",
+    "scheme-file-slash-slash-c-bar": "file://C|/foo/bar",
 }
 invalid.update(invalid_file)
 
 valid_file = {
     "scheme-file-uppercase": "File://foo/bar.html",
-    "scheme-file-slash-slash-c-bar": "file://C|/foo/bar",
     "scheme-file-host-included": "file://server/foo/bar",
     "scheme-file-host-empty": "file:///foo/bar.txt",
-    "scheme-file-scheme-only": "file:",
-    "scheme-file-slash-only": "file:/",
     "scheme-file-slash-slash-only": "file://",
     "scheme-file-slash-slash-slash-only": "file:///",
-    "scheme-file-no-slash": "file:test",
 }
 valid.update(valid_file)
 valid_absolute.update(valid_file)
@@ -218,7 +221,8 @@ element_attribute_pairs = [
     "video src",
 ]
 
-template = "<!DOCTYPE html>\n<meta charset=utf-8>\n"
+template = "<!DOCTYPE html>\n<meta charset=utf-8>\n<base href=\"http://example.com\">\n"
+template_base = "<!DOCTYPE html>\n<meta charset=utf-8>\n"
 
 def write_novalid_files():
     for el, attr in (pair.split() for pair in element_attribute_pairs):
@@ -228,7 +232,12 @@ def write_novalid_files():
                 f.write(template + '<title>invalid href: %s</title>\n' % desc)
                 f.write('<map name=foo><%s %s="%s" alt></map>\n' % (el, attr, url))
                 f.close()
-            elif ("base" == el or "embed" == el):
+            elif ("base" == el):
+                f = open(os.path.join(ccdir, "html/elements/%s/%s/%s-novalid.html" % (el, attr, desc)), 'w')
+                f.write(template_base + '<title>invalid %s: %s</title>\n' % (attr, desc))
+                f.write('<%s %s="%s">\n' % (el, attr, url))
+                f.close()
+            elif ("embed" == el):
                 f = open(os.path.join(ccdir, "html/elements/%s/%s/%s-novalid.html" % (el, attr, desc)), 'w')
                 f.write(template + '<title>invalid %s: %s</title>\n' % (attr, desc))
                 f.write('<%s %s="%s">\n' % (el, attr, url))
@@ -295,7 +304,12 @@ def write_haswarn_files():
                 f.write(template + '<title>%s warning: %s</title>\n' % (attr, desc))
                 f.write('<map name=foo><%s %s="%s" alt></map>\n' % (el, attr, url))
                 f.close()
-            elif ("base" == el or "embed" == el):
+            elif ("base" == el):
+                f = open(os.path.join(ccdir, "html/elements/%s/%s/%s-haswarn.html" % (el, attr, desc)), 'w')
+                f.write(template_base + '<title>%s warning: %s</title>\n' % (attr, desc))
+                f.write('<%s %s="%s">\n' % (el, attr, url))
+                f.close()
+            elif ("embed" == el):
                 f = open(os.path.join(ccdir, "html/elements/%s/%s/%s-haswarn.html" % (el, attr, desc)), 'w')
                 f.write(template + '<title>%s warning: %s</title>\n' % (attr, desc))
                 f.write('<%s %s="%s">\n' % (el, attr, url))
@@ -395,7 +409,7 @@ def write_isvalid_files():
             f.close()
     for desc, url in valid.items():
         f = open(os.path.join(ccdir, "html/elements/base/href/%s-isvalid.html" % desc), 'w')
-        f.write(template + '<title>valid href: %s</title>\n' % desc)
+        f.write(template_base + '<title>valid href: %s</title>\n' % desc)
         f.write('<base href="%s">\n' % url)
         f.close()
     f = open(os.path.join(ccdir, "html/elements/meta/refresh-isvalid.html"), 'w')

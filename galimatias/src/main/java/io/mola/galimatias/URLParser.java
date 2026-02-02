@@ -309,6 +309,9 @@ final class URLParser {
 
                         // WHATWG URL .3: If url's scheme is "file", set state to relative state.
                         if ("file".equals(scheme)) {
+                            if (at(idx + 1) != '/' || at(idx + 2) != '/') {
+                                handleError("\"file\" scheme is not followed by \"//\"");
+                            }
                             state = ParseURLState.RELATIVE;
                         }
                         // WHATWG URL .4: Otherwise, if url's relative flag is set, base is not null and base's
@@ -523,7 +526,9 @@ final class URLParser {
                 case AUTHORITY: {
                     // If c is "@", run these substeps:
                     if (c == '@') {
-                        if (atFlag) {
+                        if (!atFlag) {
+                            handleError("URL includes credentials");
+                        } else {
                             handleError("User or password contains an at symbol (\"@\") not percent-encoded");
                             buffer.insert(0, "%40");
                         }
@@ -587,6 +592,9 @@ final class URLParser {
                         idx--;
                         if (buffer.length() == 2 && isASCIIAlpha(buffer.charAt(0)) &&
                                 (buffer.charAt(1) == ':' || buffer.charAt(1) == '|')) {
+                            if (buffer.charAt(1) == '|') {
+                                handleError("Windows drive letter uses \"|\" instead of \":\"");
+                            }
                             state = ParseURLState.RELATIVE_PATH;
                         } else if (buffer.length() == 0) {
                             state = ParseURLState.RELATIVE_PATH_START;
