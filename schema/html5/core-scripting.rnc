@@ -370,6 +370,23 @@ datatypes w = "http://whattf.org/datatype-draft"
 	scripting.attr.onlostpointercapture =
 		attribute onlostpointercapture { common.data.functionbody }
 
+## Touch Events
+	common.attrs.scripting &=
+		(	scripting.attr.ontouchstart?
+		&	scripting.attr.ontouchend?
+		&	scripting.attr.ontouchmove?
+		&	scripting.attr.ontouchcancel?
+		)
+
+	scripting.attr.ontouchstart =
+		attribute ontouchstart { common.data.functionbody }
+	scripting.attr.ontouchend =
+		attribute ontouchend { common.data.functionbody }
+	scripting.attr.ontouchmove =
+		attribute ontouchmove { common.data.functionbody }
+	scripting.attr.ontouchcancel =
+		attribute ontouchcancel { common.data.functionbody }
+
 #	scripting.attr.common =
 #		(	scripting.attr.mouse
 #		&	scripting.attr.keyboard

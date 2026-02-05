@@ -307,6 +307,10 @@ namespace local = ""
 			                    | onpointerleave
 			                    | ongotpointercapture
 			                    | onlostpointercapture
+			                    | ontouchstart
+			                    | ontouchend
+			                    | ontouchmove
+			                    | ontouchcancel
 			                    | role
 			                    | aria-activedescendant
 			                    | aria-atomic
