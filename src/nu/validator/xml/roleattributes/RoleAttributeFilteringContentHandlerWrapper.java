@@ -22,6 +22,7 @@
 
 package nu.validator.xml.roleattributes;
 
+import nu.validator.checker.InfoAwareErrorHandler;
 import nu.validator.xml.AttributesImpl;
 
 import org.xml.sax.Attributes;
@@ -362,9 +363,11 @@ public class RoleAttributeFilteringContentHandlerWrapper
                     + " non-abstract role.", locator));
 
         }
-        if (errorHandler != null && roleValue != null
+        if (errorHandler instanceof InfoAwareErrorHandler
+                && roleValue != null
                 && superfluousTokens.size() > 0) {
-            errorHandler.error(new SAXParseException("Discarding superfluous"
+            ((InfoAwareErrorHandler) errorHandler).info(
+                    new SAXParseException("Discarding superfluous"
                     + renderTokenList(superfluousTokens)
                     + " from value of attribute"
                     + " “role”. Browsers only process"

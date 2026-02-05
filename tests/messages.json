@@ -391,6 +391,7 @@
     "html/attributes/rel/rel-typo-author-hasinfo.html": "Bad value \u201cauthr\u201d for attribute \u201crel\u201d on element \u201ca\u201d: Bad list of link-type keywords:  Typo for \u201cauthor\u201d?",
     "html/attributes/rel/rel-typo-canonical-hasinfo.html": "Bad value \u201ccanonicl\u201d for attribute \u201crel\u201d on element \u201clink\u201d: Bad list of link-type keywords:  Typo for \u201ccanonical\u201d?",
     "html/attributes/rel/rel-typo-stylesheet-hasinfo.html": "Bad value \u201cstyleshet\u201d for attribute \u201crel\u201d on element \u201clink\u201d: Bad list of link-type keywords:  Typo for \u201cstylesheet\u201d?",
+    "html/attributes/role/superfluous-role-token-hasinfo.html": "Discarding superfluous token \u201clink\u201d from value of attribute \u201crole\u201d. Browsers only process the first token found that is a defined ARIA non-abstract role.",
     "html/attributes/role/unrecognized-role-name-novalid.html": "Discarding unrecognized token \u201cinput\u201d from value of attribute \u201crole\u201d. Browsers ignore any token that is not a defined ARIA non-abstract role.",
     "html/attributes/spellcheck/value-bad-novalid.html": "Bad value \u201cbadvalue\u201d for attribute \u201cspellcheck\u201d on element \u201cp\u201d.",
     "html/datatypes/browsing-context-empty-novalid.html": "Bad value \u201c\u201d for attribute \u201ctarget\u201d on element \u201ca\u201d.",
