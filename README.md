@@ -17,6 +17,10 @@ You can run the vnu checker with one of the invocations from the [vnu manual pag
 
     java -jar ~/vnu.jar [OPTIONS]... FILES|DIRECTORY|URL...
 
+or 
+
+    jbang vnu@validator/validator [OPTIONS]... FILES|DIRECTORY|URL
+    
 The [OPTIONS section of the vnu manual page](docs/vnu.1.md#options) has details on all available options.
 
 ## Releases
@@ -57,6 +61,7 @@ A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8], [
 You can [get the latest release][12] or run one of the following:
 
 - [`docker run -it --rm -p 8888:8888 ghcr.io/validator/validator:latest`][13]
+- [`jbang app install vnu@validator/validator`][15] 
 - [`npm install vnu-jar`][14]
 - [`brew install vnu`][16]
 - [`pip install html5validator`][17]
@@ -66,6 +71,7 @@ You can [get the latest release][12] or run one of the following:
    [12]: https://github.com/validator/validator/releases/tag/latest
    [13]: https://github.com/validator/validator/pkgs/container/validator
    [14]: https://www.npmjs.com/package/vnu-jar
+   [15]: https://www.jbang.dev/
    [16]: https://libraries.io/homebrew/vnu
    [17]: https://github.com/svenkreiss/html5validator
 
