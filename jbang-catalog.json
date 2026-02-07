@@ -1,0 +1,7 @@
+{
+  "aliases": {
+    "vnu": {
+      "script-ref": "https://github.com/validator/validator/releases/download/latest/vnu.jar"
+    }
+  }
+}
