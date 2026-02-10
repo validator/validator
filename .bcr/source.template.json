@@ -1,7 +1,7 @@
 {
-    "url": "https://registry.npmjs.org/vnu-jar/-/vnu-jar-{VERSION}.tgz",
+    "url": "https://github.com/validator/validator/releases/download/{TAG}/vnu.jar.zip",
     "integrity": "",
-    "strip_prefix": "package",
+    "strip_prefix": "",
     "overlay": {
         "BUILD.bazel": "",
         "MODULE.bazel": ""

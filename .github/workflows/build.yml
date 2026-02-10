@@ -101,6 +101,16 @@ jobs:
         shell: bash
         run: |
           python checker.py sign
+      - name: Create JAR archive for BCR
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
+        shell: bash
+        run: |
+          zip -r build/dist/vnu.jar.zip build/dist/vnu.jar
+          gpg --yes -ab build/dist/vnu.jar.zip
+          md5sum build/dist/vnu.jar.zip | cut -d' ' -f1 > build/dist/vnu.jar.zip.md5
+          sha1sum build/dist/vnu.jar.zip | cut -d' ' -f1 > build/dist/vnu.jar.zip.sha1
+          gpg --yes -ab build/dist/vnu.jar.zip.md5
+          gpg --yes -ab build/dist/vnu.jar.zip.sha1
       - name: Upload release artifacts (zip files)
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: actions/upload-artifact@v6
@@ -162,6 +172,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXPECTED_ASSETS: |
             vnu.jar
+            vnu.jar.zip
             vnu.war
             vnu.linux.zip
             vnu.osx.zip
