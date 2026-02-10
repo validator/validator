@@ -2,5 +2,5 @@ module(
     name = "vnu",
     version = "{VERSION}",
     compatibility_level = 26,
-    bazel_compatibility = [">=9.0.0"],
+    bazel_compatibility = [">=7.0.0"],
 )
