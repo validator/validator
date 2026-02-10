@@ -33,13 +33,40 @@ jobs:
 
   publish:
     needs: get-version
-    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@main
-    with:
-      tag_name: ${{ needs.get-version.outputs.version }}
-      registry_fork: robbie-vanderzee/bazel-central-registry
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
       attestations: write
-    secrets:
-      publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout BCR fork
+        uses: actions/checkout@v4
+        with:
+          repository: robbie-vanderzee/bazel-central-registry
+          path: bazel-central-registry
+          token: ${{ secrets.BCR_PUBLISH_TOKEN }}
+
+      - name: Create BCR entry
+        uses: bazel-contrib/publish-to-bcr@main
+        with:
+          module-version: ${{ needs.get-version.outputs.version }}
+          tag: latest
+          local-registry: bazel-central-registry
+          templates-dir: .bcr
+          attest: false
+
+      - name: Push to BCR fork
+        working-directory: bazel-central-registry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BRANCH="vnu-${{ needs.get-version.outputs.version }}"
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "Add vnu ${{ needs.get-version.outputs.version }}"
+          git push origin "$BRANCH"
+          echo "Pushed branch $BRANCH to BCR fork"
+          echo "Create PR at: https://github.com/bazelbuild/bazel-central-registry/compare/main...robbie-vanderzee:bazel-central-registry:$BRANCH"
