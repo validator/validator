@@ -15,4 +15,4 @@ tasks:
     platform: ${{ platform }}
     bazel: ${{ bazel }}
     build_targets:
-    - '@vnu//:build/dist/vnu.jar'
+    - '@vnu//:vnu.jar'

@@ -105,12 +105,21 @@ jobs:
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
-          zip -r build/dist/vnu.jar.zip build/dist/vnu.jar
+          # Create MODULE.bazel with actual version
+          VERSION=$(date +"%y.%-m.%-d")
+          mkdir -p build/dist/bcr-staging
+          cp build/dist/vnu.jar build/dist/bcr-staging/
+          cp .bcr/overlay/BUILD.bazel build/dist/bcr-staging/
+          sed "s/{VERSION}/$VERSION/" .bcr/overlay/MODULE.bazel > build/dist/bcr-staging/MODULE.bazel
+          cd build/dist/bcr-staging
+          zip -r ../vnu.jar.zip MODULE.bazel BUILD.bazel vnu.jar
+          cd ../../..
           gpg --yes -ab build/dist/vnu.jar.zip
           md5sum build/dist/vnu.jar.zip | cut -d' ' -f1 > build/dist/vnu.jar.zip.md5
           sha1sum build/dist/vnu.jar.zip | cut -d' ' -f1 > build/dist/vnu.jar.zip.sha1
           gpg --yes -ab build/dist/vnu.jar.zip.md5
           gpg --yes -ab build/dist/vnu.jar.zip.sha1
+          rm -rf build/dist/bcr-staging
       - name: Upload release artifacts (zip files)
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         uses: actions/upload-artifact@v6
