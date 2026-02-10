@@ -17,10 +17,6 @@ You can run the vnu checker with one of the invocations from the [vnu manual pag
 
     java -jar ~/vnu.jar [OPTIONS]... FILES|DIRECTORY|URL...
 
-or 
-
-    jbang vnu@validator/validator [OPTIONS]... FILES|DIRECTORY|URL
-    
 The [OPTIONS section of the vnu manual page](docs/vnu.1.md#options) has details on all available options.
 
 ## Releases
