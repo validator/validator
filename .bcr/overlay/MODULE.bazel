@@ -1,0 +1,5 @@
+module(
+    name = "vnu",
+    version = "{VERSION}",
+    compatibility_level = 26,
+)

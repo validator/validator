@@ -1,0 +1,16 @@
+{
+    "homepage": "https://validator.github.io/validator/",
+    "maintainers": [
+        {
+            "email": "robert@vantle.org",
+            "github": "robbie-vanderzee",
+            "github_user_id": 26888565,
+            "name": "Robbie VanDerzee"
+        }
+    ],
+    "repository": [
+        "github:validator/validator"
+    ],
+    "versions": [],
+    "yanked_versions": {}
+}
