@@ -9,15 +9,33 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        required: true
+        required: false
         type: string
+        description: "Version to publish (leave empty to use latest npm version)"
 
 jobs:
-  publish:
+  get-version:
+    runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Get version
+        id: version
+        run: |
+          if [ -n "${{ inputs.tag_name }}" ]; then
+            echo "version=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
+          else
+            VERSION=$(npm view vnu-jar version)
+            echo "Latest npm version: $VERSION"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+          fi
+
+  publish:
+    needs: get-version
     uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@main
     with:
-      tag_name: ${{ inputs.tag_name || 'latest' }}
+      tag_name: ${{ needs.get-version.outputs.version }}
       registry_fork: robbie-vanderzee/bazel-central-registry
     permissions:
       contents: write
