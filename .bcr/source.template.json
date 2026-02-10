@@ -1,0 +1,9 @@
+{
+    "url": "https://registry.npmjs.org/vnu-jar/-/vnu-jar-{VERSION}.tgz",
+    "integrity": "",
+    "strip_prefix": "package",
+    "overlay": {
+        "BUILD.bazel": "",
+        "MODULE.bazel": ""
+    }
+}
