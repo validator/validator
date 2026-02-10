@@ -519,13 +519,4 @@ jobs:
         run: python checker.py make-messages
       - name: Check if there are changes to messages.json
         run: git diff --exit-code tests/messages.json
-  bcr-publish:
-    name: Publish to Bazel Central Registry
-    needs: npm-release
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    uses: ./.github/workflows/publish.yml
-    with:
-      tag_name: latest
-    secrets: inherit
-
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json

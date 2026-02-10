@@ -1,11 +1,11 @@
 name: Publish to BCR
 
 on:
-  workflow_call:
-    inputs:
-      tag_name:
-        required: true
-        type: string
+  workflow_run:
+    workflows: ["Build"]
+    branches: [main]
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       tag_name:
@@ -14,9 +14,10 @@ on:
 
 jobs:
   publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@main
     with:
-      tag_name: ${{ inputs.tag_name }}
+      tag_name: ${{ inputs.tag_name || 'latest' }}
       registry_fork: robbie-vanderzee/bazel-central-registry
     permissions:
       contents: write
