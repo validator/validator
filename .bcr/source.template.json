@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/validator/validator/releases/download/{TAG}/vnu.jar.zip",
-    "integrity": "",
-    "strip_prefix": "",
-    "overlay": {
-        "BUILD.bazel": "",
-        "MODULE.bazel": ""
-    }
-}
