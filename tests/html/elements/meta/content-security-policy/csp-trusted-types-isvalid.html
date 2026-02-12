@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>valid Content-Security-Policy with Trusted Types directives</title>
+<meta http-equiv="Content-Security-Policy" content="require-trusted-types-for 'script'">
+<meta http-equiv="Content-Security-Policy" content="trusted-types myPolicy">
+<meta http-equiv="Content-Security-Policy" content="trusted-types myPolicy 'allow-duplicates'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; require-trusted-types-for 'script'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; frame-ancestors 'self'; script-src 'strict-dynamic' 'nonce-VVz1fXT3a0vl40s51oUfepWP2SS22WWFPA+HKdp5dUE=' https: 'unsafe-inline'; style-src 'self' 'nonce-VVz1fXT3a0vl40s51oUfepWP2SS22WWFPA+HKdp5dUE='; img-src 'self'; object-src 'none'; connect-src 'self'; frame-src 'none'; manifest-src 'self'; form-action 'self'; font-src 'self'; require-trusted-types-for 'script'; upgrade-insecure-requests">
