@@ -139,6 +139,10 @@ jobs:
           merge-multiple: true
       - name: List downloaded artifacts
         run: find artifacts -type f | sort
+      - name: Flatten artifacts directory
+        run: |
+          find artifacts -mindepth 2 -type f -exec mv {} artifacts/ \;
+          find artifacts -type d -empty -delete
       - name: Upload all assets to release
         uses: ncipollo/release-action@v1
         with:
