@@ -2707,7 +2707,7 @@
     "html/elements/q/cite/userinfo-username-contains-pile-of-poo-novalid.html": "Bad value \u201chttp://\ud83d\udca9:foo@example.com\u201d for attribute \u201ccite\u201d on element \u201cq\u201d.",
     "html/elements/q/cite/userinfo-username-non-alpha-novalid.html": "Bad value \u201chttp://foo.com:b@d/\u201d for attribute \u201ccite\u201d on element \u201cq\u201d.",
     "html/elements/q/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
-    "html/elements/rb/rb-hasinfo.html": "The \u201crb\u201d element is not supported in all browsers. Please be sure to test.",
+    "html/elements/rb/rb-tabular-hasinfo.html": "Not all browsers position items appropriately when \"tabular markup\" is used with the \u201crb\u201d element. See https://www.w3.org/International/articles/ruby/markup.en.html#visual for more guidance.",
     "html/elements/ruby/empty-novalid.html": "Element \u201cruby\u201d is missing a required instance of one or more of the following child elements: \u201crp\u201d, \u201crt\u201d.",
     "html/elements/ruby/missing-rt-novalid.html": "Element \u201cruby\u201d is missing a required instance of child element \u201crt\u201d.",
     "html/elements/samp/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",

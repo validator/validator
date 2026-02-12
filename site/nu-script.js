@@ -342,6 +342,9 @@ function injectHyperlinks() {
 	linkify(errors, "all image candidate strings must specify a width",
 		"https://ericportis.com/posts/2014/srcset-sizes/",
 		"srcset and sizes overview")
+	linkify(info, "https://www.w3.org/International/articles/ruby/markup.en.html#visual",
+		"https://www.w3.org/International/articles/ruby/markup.en.html#visual",
+		"W3C guidance on ruby markup")
 	}
 
 function replaceSuccessFailure() {

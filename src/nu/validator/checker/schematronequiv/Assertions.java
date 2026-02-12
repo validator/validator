@@ -1086,6 +1086,10 @@ public class Assertions extends Checker {
 
         private boolean isCollectingCharacters = false;
 
+        private boolean hasTabularRubyMarkup = false;
+
+        private int consecutiveRbCount = 0;
+
         private Locator captionNestedInFigure;
 
         private boolean isCollectingChildren = false;
@@ -1469,6 +1473,26 @@ public class Assertions extends Checker {
             collectedChildren.add(node);
         }
 
+        public boolean hasTabularRubyMarkup() {
+            return hasTabularRubyMarkup;
+        }
+
+        public void setTabularRubyMarkup() {
+            this.hasTabularRubyMarkup = true;
+        }
+
+        public int getConsecutiveRbCount() {
+            return consecutiveRbCount;
+        }
+
+        public void incrementConsecutiveRbCount() {
+            this.consecutiveRbCount++;
+        }
+
+        public void resetConsecutiveRbCount() {
+            this.consecutiveRbCount = 0;
+        }
+
         public List<StackNode> getCollectedChildren() {
             return collectedChildren == null ? Collections.emptyList()
                     : collectedChildren;
@@ -1478,6 +1502,8 @@ public class Assertions extends Checker {
     private StackNode[] stack;
 
     private int currentPtr;
+
+    private int currentRubyPtr = -1;
 
     public Assertions() {
         super();
@@ -1932,6 +1958,15 @@ public class Assertions extends Checker {
                 }
             } else if ("picture" == localName) {
                 siblingSources.clear();
+            } else if ("ruby" == localName) {
+                if (node.hasTabularRubyMarkup()) {
+                    info("Not all browsers position items appropriately"
+                            + " when \"tabular markup\" is used with"
+                            + " the “rb” element."
+                            + " See https://www.w3.org/International/articles"
+                            + "/ruby/markup.en.html#visual for more guidance.");
+                }
+                currentRubyPtr = -1;
             } else if ("dialog" == localName
                     || node.atts.getIndex("", "popover") > -1) {
                 hasAutofocus = false;
@@ -2997,6 +3032,9 @@ public class Assertions extends Checker {
             if ("figure" == localName) {
                 currentFigurePtr = currentPtr + 1;
             }
+            if ("ruby" == localName) {
+                currentRubyPtr = currentPtr + 1;
+            }
             if ("caption" == localName && "table" == parentName
                     && stack.length >= currentPtr - 1
                     && "figure" == stack[currentPtr - 1].getName()) {
@@ -3066,9 +3104,17 @@ public class Assertions extends Checker {
                         + suggestion);
             }
 
-            if ("rb".equals(localName)) {
-                info("The “rb” element is not supported in all browsers."
-                        + " Please be sure to test.");
+            if ("rb".equals(localName) && currentRubyPtr > 0
+                    && currentRubyPtr < stack.length) {
+                StackNode rubyNode = stack[currentRubyPtr];
+                rubyNode.incrementConsecutiveRbCount();
+                if (rubyNode.getConsecutiveRbCount() > 1) {
+                    rubyNode.setTabularRubyMarkup();
+                }
+            }
+            if ("rt".equals(localName) && currentRubyPtr > 0
+                    && currentRubyPtr < stack.length) {
+                stack[currentRubyPtr].resetConsecutiveRbCount();
             }
 
             // Exclusions
