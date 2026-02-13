@@ -60,7 +60,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
+          version="$(date +"%y.%-m.%-d") ($(git rev-parse --short ${{ github.sha }}))"
           python checker.py --version="$version" build
           python checker.py --version="$version" jar
           python checker.py --version="$version" war
@@ -68,7 +68,7 @@ jobs:
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         shell: bash
         run: |
-          version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
+          version="$(date +"%y.%-m.%-d") ($(git rev-parse --short ${{ github.sha }}))"
           python checker.py --version="$version" image
       - name: Set up Playwright for e2e tests
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
@@ -171,7 +171,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euxo pipefail
-          EXPECTED_VERSION=$(date +"%y.%m.%d")
+          EXPECTED_VERSION=$(date +"%y.%-m.%-d")
           echo "Expected version: $EXPECTED_VERSION"
 
           echo "Downloading vnu.jar from release..."
@@ -392,7 +392,7 @@ jobs:
         id: check_version
         shell: bash
         run: |
-          if python checker.py --version="$(date +"%y.%m.%d")" maven-version-exists; then
+          if python checker.py --version="$(date +"%y.%-m.%-d")" maven-version-exists; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
@@ -410,7 +410,7 @@ jobs:
         if: steps.check_version.outputs.exists == 'false'
         shell: bash
         run: |
-          version="$(date +"%y.%m.%d") ($(git rev-parse --short ${{ github.sha }}))"
+          version="$(date +"%y.%-m.%-d") ($(git rev-parse --short ${{ github.sha }}))"
           python checker.py --version="$version" build
           python checker.py --version="$version" jar
       - name: Import GPG signing key
