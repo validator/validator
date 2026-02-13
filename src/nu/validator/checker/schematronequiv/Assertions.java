@@ -2249,7 +2249,7 @@ public class Assertions extends Checker {
         try {
             URL.parse(value);
             return true;
-        } catch (GalimatiasParseException e) {
+        } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
         }
 
         if (value.startsWith("/") || value.startsWith("./")
@@ -2257,7 +2257,7 @@ public class Assertions extends Checker {
             try {
                 URL.parse("https://example.com/" + value);
                 return true;
-            } catch (GalimatiasParseException e) {
+            } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
             }
         }
 

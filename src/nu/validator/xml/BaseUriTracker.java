@@ -286,7 +286,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         try {
             URL base = stack.getLast().currentAbsolute;
             return URL.parse(base, uri).toString();
-        } catch (GalimatiasParseException e) {
+        } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
             return null;
         }
     }

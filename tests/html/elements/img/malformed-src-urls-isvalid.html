@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Malformed src URLs</title></head>
+<body>
+<p>These malformed URLs should not cause StringIndexOutOfBoundsException.</p>
+<img src=":" alt="">
+<img src=":/" alt="">
+<img src="://" alt="">
+<img src=":///" alt="">
+<img src=":a" alt="">
+<img src="a:" alt="">
+<img src="a::" alt="">
+<img src="::" alt="">
+</body>
+</html>

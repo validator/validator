@@ -73,7 +73,7 @@ public class ParseTreePrinter {
         }
         try {
             return URL.parse(urlStr).toString();
-        } catch (GalimatiasParseException e) {
+        } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
             return null;
         }
     }

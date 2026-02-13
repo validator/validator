@@ -821,7 +821,7 @@ public class LanguageDetectingChecker extends Checker {
                     tld = host.substring(host.lastIndexOf(".") + 1);
                 }
             }
-        } catch (GalimatiasParseException e) {
+        } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
             throw new RuntimeException(e);
         }
     }

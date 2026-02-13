@@ -281,7 +281,7 @@ public class PrudentHttpEntityResolver
                                 "Cross-origin requests are prohibited.");
                     }
                 }
-            } catch (GalimatiasParseException e) {
+            } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
                 IOException ioe = (IOException) new IOException(
                         e.getMessage()).initCause(e);
                 SAXParseException spe = new SAXParseException(e.getMessage(),

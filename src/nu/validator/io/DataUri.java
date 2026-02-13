@@ -258,7 +258,7 @@ public class DataUri {
     public DataUri(String url) throws IOException {
         try {
             init(URL.parse(url));
-        } catch (GalimatiasParseException e) {
+        } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
             throw new MalformedURLException(e.getMessage());
         }
     }

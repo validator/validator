@@ -77,7 +77,7 @@ public class DataUriEntityResolver implements EntityResolver {
             URL url;
             try {
                 url = URL.parse(systemId);
-            } catch (GalimatiasParseException e) {
+            } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
                 IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
                 SAXParseException spe = new SAXParseException(e.getMessage(),
                         publicId, systemId, -1, -1, ioe);

@@ -1299,6 +1299,7 @@ class Release():
             'nu.validator.checker.test.LocatorImplTest',
             'nu.validator.checker.test.NormalizationCheckerTest',
             'nu.validator.xml.test.CharacterUtilTest',
+            'nu.validator.xml.test.BaseUriTrackerTest',
         ]
         for testClass in testClasses:
             print(f"\nRunning {testClass}...")
@@ -1607,6 +1608,7 @@ class Release():
             'nu.validator.checker.test.LocatorImplTest',
             'nu.validator.checker.test.NormalizationCheckerTest',
             'nu.validator.xml.test.CharacterUtilTest',
+            'nu.validator.xml.test.BaseUriTrackerTest',
         ]
 
         # Run unit tests with JaCoCo agent

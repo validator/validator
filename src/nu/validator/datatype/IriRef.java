@@ -148,7 +148,7 @@ public class IriRef extends AbstractDatatype {
                     url = URL.parse(settings, sb.toString());
                 }
             }
-        } catch (GalimatiasParseException e) {
+        } catch (GalimatiasParseException | StringIndexOutOfBoundsException e) {
             throw newDatatypeException(
                     messagePrologue + e.getMessage() + ".");
         }
