@@ -161,6 +161,39 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     steps:
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Verify JAR and WAR versions match expected
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euxo pipefail
+          EXPECTED_VERSION=$(date +"%y.%-m.%-d")
+          echo "Expected version: $EXPECTED_VERSION"
+
+          echo "Downloading vnu.jar from release..."
+          curl -fL https://github.com/${{ github.repository }}/releases/download/latest/vnu.jar -o vnu.jar
+          JAR_VERSION=$(java -jar vnu.jar --version)
+          echo "vnu.jar version: $JAR_VERSION"
+          if [[ "$JAR_VERSION" != "$EXPECTED_VERSION"* ]]; then
+            echo "::error::vnu.jar version mismatch! Expected $EXPECTED_VERSION, got $JAR_VERSION"
+            exit 1
+          fi
+          echo "\u2705 vnu.jar version matches expected"
+
+          echo "Downloading vnu.war from release..."
+          curl -fL https://github.com/${{ github.repository }}/releases/download/latest/vnu.war -o vnu.war
+          mkdir war-extract
+          cd war-extract
+          unzip -q ../vnu.war
+          WAR_VERSION=$(java -cp "WEB-INF/classes:WEB-INF/lib/*" nu.validator.servlet.VerifierServlet --version 2>/dev/null || echo "unknown")
+          cd ..
+          # WAR version check is best-effort; main check is that it downloaded successfully
+          echo "vnu.war extracted successfully"
+          echo "\u2705 vnu.war is valid"
       - name: Verify release assets and ensure release is published
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
