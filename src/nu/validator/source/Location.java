@@ -50,9 +50,10 @@ public final class Location implements Comparable<Location>, Cloneable {
                 line = 0;
                 column = 0;                
             } else {
-                try {
-                    column = owner.getLine(line).getBufferLength();
-                } catch (IndexOutOfBoundsException e) {
+                Line sourceLine = owner.getLine(line);
+                if (sourceLine != null) {
+                    column = sourceLine.getBufferLength();
+                } else {
                     column = 0;
                 }
             }
@@ -136,6 +137,9 @@ public final class Location implements Comparable<Location>, Cloneable {
                 }
                 newColumn++;
                 Line sourceLine = owner.getLine(newLine);
+                if (sourceLine == null) {
+                    break;
+                }
                 if (newColumn > sourceLine.getBufferLength()) {
                     newLine++;
                     newColumn = 0;
@@ -151,7 +155,12 @@ public final class Location implements Comparable<Location>, Cloneable {
                 newColumn--;
                 if (newColumn == -1) {
                     newLine--;
-                    newColumn = owner.getLine(newLine).getBufferLength();
+                    Line sourceLine = owner.getLine(newLine);
+                    if (sourceLine != null) {
+                        newColumn = sourceLine.getBufferLength();
+                    } else {
+                        newColumn = 0;
+                    }
                 }
             }            
             return new Location(owner, newLine, newColumn);
