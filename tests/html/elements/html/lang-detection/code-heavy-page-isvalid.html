@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <!-- Google Tag Manager -->
+    <script>
+     (function(w,d,s,l,i){
+       w[l]=w[l]||[];
+       w[l].push(
+         {'gtm.start':new Date().getTime(),event:'gtm.js'
+       });
+       var f=d.getElementsByTagName(s)[0],
+           j=d.createElement(s),
+           dl= l != 'dataLayer' ? '&l='+l : '';
+       j.async=true;
+       j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+       f.parentNode.insertBefore(j,f);
+     })
+     (window,document,'script','dataLayer','GTM-WNP7MLF');
+    </script>
+    <!-- End Google Tag Manager -->
+
+
+
+    <link rel="icon" href="/images/favicon_dev.ico"
+          type="image/x-icon">
+    
+    <style>
+      .hover_menu li a { background-color: #a63400 }
+    </style>
+    
+    <link href="/vendor/css/1200-Grid.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/javascript/jQueryUI/jquery-ui.theme.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/css/datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/css/chosen.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/css/parsley.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/css/jquery.datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/css/tooltipster-sideTip-light.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/css/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/default.css" rel="stylesheet" type="text/css">
+    <style>
+     .log-links {
+       cursor: pointer;
+     }
+    
+     .note-align {
+       text-align: left;
+       font-size: 14px;
+       font-family: monospace;
+     }
+    
+     .tooltipster-content {
+       font-family: Arial, sans-serif;
+       font-size: 10px;
+       line-height: 12px;
+       padding: 4px 4px;
+     }
+    
+     .dataTables_wrapper .dataTables_filter {
+       float: none;
+       text-align: right;
+     }
+    
+     tfoot input {
+       width: 100%;
+     }
+    </style>
+
+
+
+<script src="/vendor/javascript/jquery.min.js"></script>
+<script src="/vendor/javascript/jQueryUI/jquery-ui.js"></script>
+
+<script>
+ "use strict";
+ /* Retry script from https://gist.github.com/yairEO/3f0a5c2d6adbdad14c3c7825abeaab7e
+
+    Define a replacement for $.ajax which enhances the original to
+    accept additional parameters timeout, retries and retryInterval to
+    implement the retry mechanism.  Now, we can configure $.ajax calls
+    to retry by adding those parameters to the call on a case-by-case
+    basis. We probably only want to do this for calls which exhibit
+    occasional failures, like the DataTables background retrievals
+ */
+ $.ajax = (($oldAjax) => {
+   // on fail, retry by creating a new Ajax deferred
+   function check(a,b,c){
+     var shouldRetry = b != 'success' && b != 'parsererror';
+     // console.log("Retrying AJAX call from " + arguments.callee.caller);
+     if( shouldRetry && --this.retries > 0 )
+       setTimeout(() => { $.ajax(this) }, this.retryInterval || 100);
+   }
+
+   return settings => $oldAjax(settings).always(check)
+ })($.ajax);
+
+ // now we can use the "retries" property if we need to retry on fail
+ /*
+ $.ajax({
+   type          : 'GET',
+   url           : 'http://www.whatever123.gov',
+   timeout       : 2000,
+   retries       : 3,
+   retryInterval : 2000
+ })
+  .fail(()=>{
+    console.log('failed') 
+  });
+  */
+</script>
+
+<script src="/vendor/javascript/jquery.sort.min.js"></script>
+<script src="/vendor/javascript/ba-debug.js"></script>
+<script src="/vendor/javascript/jquery.datetimepicker.full.min.js"></script>
+<script src="/vendor/javascript/datatables.min.js"></script>
+<script src="/vendor/javascript/chosen.jquery.min.js"></script>
+<script src="/vendor/javascript/parsley.min.js"></script>
+<script src="/vendor/javascript/js.cookie.min.js"></script>
+<script src="/vendor/javascript/URI.min.js"></script>
+<script src="/vendor/javascript/numeral.min.js"></script>
+<script src="/vendor/javascript/sweetalert2.min.js"></script>
+<script src="/vendor/javascript/tooltipster.bundle.min.js"></script>
+<script src="/vendor/javascript/dayjs/dayjs.min.js"></script>
+<script src="/vendor/javascript/dayjs/plugin/utc.js"></script>
+<script src="/vendor/javascript/dayjs/plugin/duration.js"></script>
+
+<script>
+ "use strict";
+
+ /* For sad older browsers that do not have local storage */
+ if(typeof window.localStorage == 'undefined')
+ {
+   window.localStorage = {};
+ }
+ 
+ (function (root) {
+   if(typeof root.sips == 'undefined')
+     root.sips = {};
+
+   var sips = root.sips;
+
+   sips.api = {
+     url: 'http://127.0.0.1:7466/api',
+     ws:  'ws://127.0.0.1:7466/api',
+   };
+        
+   sips.root           = 'http://127.0.0.1:7466/';
+   sips.instance       = 'dev';
+   sips.cookie         = '88557ff1f37b2f8d9aefeacb58bc1f7c';
+   sips.test           = {};
+   sips.expiration     = "24 hours";   
+   sips.start_year     = parseInt("1970");
+   sips.userid         = 105;
+   sips.active_orderid = 647;
+   sips.login          = "";
+
+   if(window.location.protocol == "https:")
+   {
+     sips.api.url = sips.api.url.replace(/^http:/, "https:");
+     sips.api.ws  = sips.api.ws.replace(/^ws:/, "wss:");
+     sips.root    = sips.root.replace(/^http:/, "https:");
+   }      
+ })(this);
+      
+    </script>
+
+    <script src="/javascript/sipsui.js"></script>
+    <script src="/javascript/client.js"></script>
+    <script src="/javascript/cart.js"></script>
+    <script src="/javascript/eventproxy.js"></script>
+    <script src="/javascript/order/summary.js"></script>
+    <script src="/javascript/widget.js"></script>
+
+    <script>
+     "use strict";
+
+     var aset_cookie = "OMISID_" + sips.instance + ".default_as";
+     var default_as = Cookies.get( aset_cookie );
+
+     var restore_cookie = "OMISID_" + sips.instance + ".restore";
+     var restore_session = Cookies.get( restore_cookie );
+     if (restore_session) {
+       console.log("Got restore cookie: " + restore_session);
+     }
+
+     sips.client.archiveset.get();
+
+     $(document).ready(function() {
+       $( "#sips-active-order" ).css("background-color",
+                                     highlightColor("#a63400", -10));
+       $( "#sips-active-order" ).css("height", function()
+         {
+           var divHeight = $( "#topbar" ).css('height');
+           return divHeight;
+       });
+     });
+
+     window.addEventListener('storage', (event) => {
+       if (event.key === 'new_active_orderid') {
+         const data = JSON.parse(event.newValue);
+         let message = data.message;
+         let msgArray = message.split(':');
+         let orderid = msgArray[msgArray.length - 1];
+         sips.active_orderid = orderid;
+         updateOrderSummary(orderid);
+         $( '#active-order-link' ).attr('href', "/order/#sips-tab-edit");
+       }
+     });
+
+     function updateOrderSummary(orderid) {
+       var update_summary =
+         $.ajax({
+           type          : 'GET',
+           url           : "/api/order/" + orderid + "/summary",
+           timeout       : 5000,
+           retries       : 5,
+           retryInterval : 1000
+         })
+          .done(function(data) {
+          })
+          .fail(()=>{
+            console.log('Ajax call updateOrderSummary() failed.');
+            return false;
+          })
+          .then(function(data) {
+            if (orderid == sips.active_orderid) {
+              updateHeaderActiveOrder(data, orderid);
+              updateSearchOrderHeader(data, orderid);
+              if (data.status == 'error') {
+                $( '#sips-order-summary-status' ).css('color', 'red');
+                $( '#id-active-status' ).css('color', 'red');
+              }
+              else if (data.status == 'ready') {
+                $( '#sips-order-summary-status' ).css('color', 'green');
+                $( '#id-active-status' ).css('color', 'green');
+              }
+              else if (data.status == 'queued') {
+                $( '#sips-order-summary-status' ).css('color', '#FFAE42');
+                $( '#id-active-status' ).css('color', '#FFAE42');
+              }
+              else if (data.status == 'searching') {
+                $( '#sips-order-summary-status' ).css('color', '#B87333');
+                $( '#id-active-status' ).css('color', '#B87333');
+              }
+              else {
+                $( '#sips-order-summary-status' ).css('color', 'black');
+                $( '#id-active-status' ).css('color', 'black');
+              }
+            }
+            else {
+            }
+          })
+     }
+
+    </script>
+
+
+    <title>Dev Task Queue</title>
+
+    
+  </head>
+
+  <body>
+    <header>
+     
+      <div id="topbar" style="background-color:#a63400" >
+        <div class="container_15">
+          <div class="grid_15 omega" style="min-width:1200px">
+
+            <div id="logo" style="display:inline-block">ACPS Web
+              <span style="color:#e6e6e6;font-size:50%"> (dev)</span>
+            </div>
+
+            <div id="sips-user-status" style="padding-left: 4px;">
+
+              <div id="username" class="username tooltip">Archie</div>
+
+              <div style="text-align: left;">
+                <span id="role-div">
+                  <span style="color:#e6e6e6;font-size:80%;"><b>SuperOp</b></span>
+                </span>
+
+                <span style="color:#e6e6e6;font-size:90%;">
+                  <a href="/preferences" style="color:#e6e6e6;font-size:80%;">Options</a>
+                  <a href="/logout" class="logout-link"
+                  style="color:#e6e6e6;font-size:80%;">Logout</a>
+                </span>
+              </div>
+            </div>
+
+            <div id="sips-active-order" style="font-style: italic;">
+              <a href="/order/#sips-tab-edit" style="color:#e6e6e6;"
+                 class="hasToolTip" data-tooltip-content="#tooltip_content">
+                <span id="sips-order-summary-name">... computing order ...</span>
+              </a>
+              <div class="tooltip_templates">
+                <span id="tooltip_content">
+                  Status: <span id="sips-order-summary-status"></span>
+                </span>
+              </div>
+              <br>
+              <span id="sips-order-summary"></span>
+              <a href="#" class="sips-order-clear" style="color:#e6e6e6;font-size:80%;">
+                Clear
+              </a>
+              <div id="sips-active-order-status" style="display:none">
+                ...
+              </div>
+            </div>
+           
+            <nav id="sips-site-menu-nav">
+              <ul id="sips-site-menu" class="hover_menu">
+                <li>
+                  <a href="/welcome">Home</a>
+                  <ul>
+                    <li><a href="/sips">Legacy SIPS UI</a></li>
+                    <li>
+                      <a id='calendar-link' href="/calendar"
+                         target="_blank" >Orbital Calendar (new tab)</a>
+                    </li>
+                    <li><a href="/documents">Documentation</a></li>
+                     <li>
+                      <a href="/flocky" target="_blank">Flocky (new tab)</a>
+                    </li>
+                    <li class="logout-link"><a href="/logout">Log Out</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/search">Search</a>
+                </li>
+                <li>
+                  <a href="/order">Order</a>
+                  <ul>
+                    <li><a href="/order#sips-tab-edit">Edit Active Cart</a></li>
+                    <li><a href="/order#sips-tab-saved-orders">All Saved Carts</a></li>
+                    <li><a href="/order#sips-tab-plain-list">List Files</a></li>
+                    <li><a href="/order#sips-tab-urls-list">List URLs</a></li>
+                    <li><a href="/order#sips-tab-md5-list">List Files with MD5</a></li>
+                    <li><a href="/order#sips-tab-download">Download</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/reports">Reports</a>
+                  <ul>
+                    <li><a href="/reports/status/product_table">Product Table</a></li>
+                    <li><a href="/reports/status/PGE_table">PGE table</a></li>
+                    <li><a href="/reports/host_scheduling">Host Scheduling</a></li>
+                    <li><a href="/reports/status/ingest_file_list">Daily Ingest</a></li>
+                    <li><a href="/reports/status/daily_pge_list">Daily PGE Runs</a></li>
+                    <li><a href="/reports/status/export_file_list">Daily Export</a></li>
+                    <li><a href="/reports/new_l0">New L0 Files</a></li>
+                    <li><a href="/reports/archiveset_summary">Summary</a></li>
+                    <li><a href="/recipes/recipe_list" >PGE Comments</a></li>
+                    <li><a href="/reports/plans_ro" >Active Plans</a></li>
+                    <li><a href="/reports/imports_ro" >Imports</a></li>
+                    <li><a href="/reports/standing_orders_ro" >Standing Orders</a></li>
+                    <li><a href="/reports/taskqueue_ro" >Task Queue</a></li>
+                    <li><a href="/reports/recipe_runtimes" >Recipe Runtimes</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/system/plans">Plans</a>
+                  <ul>
+                    <li><a href="/system/plans/pge_edit">PGEs</a></li>
+                    <li><a href="/system/plans/scheduling_options">Scheduling Options</a></li>
+                    <li><a href="/system/plans/comment_pge_edit">Edit PGE Comments</a></li>
+                    <li><a href="/recipes/recipe_list">Recipes</a></li>
+                    <li><a href="/recipes/add_recipe">Add ActivePGE Recipe</a></li>
+                    <li><a href="/system/plans/enter_plan">Enter Plan</a></li>
+                    <li><a href="/system/plans/upload_plans">Upload Plan</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/system">System</a>
+                  <ul>
+                    <li><a href="/system/operator_events">Operator Events</a></li>
+                    <li><a href="/system/archiveset_edit">Edit ArchiveSets</a></li>
+                    <li><a href="/system/task_queue">TaskQueue</a></li>
+                    <li><a href="/system/import_list">Imports</a></li>
+                    <li><a href="/system/standing_orders">Standing Orders</a></li>
+                    <li><a href="/system/user_list">Users</a></li>
+                    <li><a href="/system/plugauth">PlugAuth</a></li>
+                    <li><a href="/system/su_user">Operate as another user</a></li>
+                    <li><a href="/system/session_clean">Session Management</a></li>
+                    <li><a href="/system/proxy">Proxies</a></li>
+                    <li><a href="/proxy/sips/ominrt2/">ominrt2</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+  
+          </div>
+        </div>
+      </div>
+
+      <div id="pagebar" style="min-width:1100px">
+        <div class="container_15">
+          <div class="grid_3" style="font-size:125%;font-weight:bold;white-space:nowrap;" >Task Queue</div>
+        </div>
+        <span style="float:right;">
+          <span class="sips-search-input-label" style="font-size:125%;font-weight:bold;white-space:nowrap;">
+            Current ArchiveSet
+          </span>
+
+          <span class="sips-search-input-inputs">
+            <select style="min-width: 400px;max-width: 600px;" id="id-sips-pagebar-archiveset"
+                    onChange="update_as()" class="sips-pagebar-archiveset"
+                    data-placeholder="Set a default archiveset">
+              <option value="" label="No selection"></option>
+            </select>
+          </span>
+        </span>
+      </div>
+    
+    </header>
+     
+    <main class="container_15">
+      
+
+<!--
+<div>Debug: foo</div>
+-->
+
+
+<div>
+  <form action="/system/task_queue" id="id-taskqueue-form" method="POST">
+  <input name="Subsystem" id="id-all"       type="submit" value="All"       class="ui-button ui-widget ui-corner-all"  onchange="submit()" title="Show all tasks">
+  <input name="Subsystem" id="id-scheduler" type="submit" value="Scheduler" class="ui-button ui-widget ui-corner-all"  onchange="submit()" title="Show scheduler tasks" >
+  <input name="Subsystem" id="id-archiver"  type="submit" value="Archiver"  class="ui-button ui-widget ui-corner-all"  onchange="submit()" title="Show archiver tasks" >
+  <input name="Subsystem" id="id-loader"    type="submit" value="Loader"    class="ui-button ui-widget ui-corner-all"  onchange="submit()" title="Show loader tasks" >
+  <input name="Subsystem" id="id-export"    type="submit" value="Export"    class="ui-button ui-widget ui-corner-all"  onchange="submit()" title="Show export tasks" >
+  <input name="Subsystem" id="id-import"    type="submit" value="Import"    class="ui-button ui-widget ui-corner-all"  onchange="submit()" title="Show import tasks" >
+  <input name="Subsystem" id="id-error"     type="submit" value="Error"     class="ui-button ui-widget ui-corner-all"  onchange="submit()" title="Show error tasks" >
+</form></div>
+
+<form action="/system/task_queue" id="id-taskaction-form" method="POST">
+<input name="Subsystem" type="hidden" value="All">
+  <table id="sips-table-taskqueue" class="sips-table compact data-table cell-border"
+         style="font-size:small;display:none;">
+  <caption style="text-align:left;font-weight:normal;font-size:120%">
+        <b>Legend: </b>
+        <span style="color: white;background-color: #090;padding: 2px;">Normal</span>
+        <span style="color: white;background-color: blue;padding: 2px;">Not Running</span>
+        <span style="color: white;background-color: red;padding: 2px;">Error</span>
+        <span style="color: white;background-color: red;padding: 2px;">Red Running</span>
+        <span style="color: black;background-color: orange;padding: 2px;">Long Run Time</span>
+  </caption>
+  <thead>
+    <tr>
+      <th class="header">TaskId</th>
+      <th class="header">TaskName</th>
+      <th class="header">ParamId</th>
+      <th class="header">TaskType</th>
+      <th class="header">Pri</th>
+      <th class="header">Host</th>
+      <th class="header">State</th>
+      <th class="header">Action</th>
+      <th class="header">Logfile</th>
+      <th class="header">Directory</th>
+      <th class="header">Tag
+        <input name="TagAll" type="checkbox" id="check-all" >
+      <th class="header">Links</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="/system/task/222776">222776</a>
+      </td>
+      <td>
+        <a href="/system/task_name/Controller">Controller</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>ControllerDaemon</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: #090">Running</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/222776">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/222776">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="222776"
+               class="taskid" id="222776" >
+      </td>
+      <td>
+        <span class="log-links" id="log-222776"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/222777">222777</a>
+      </td>
+      <td>
+        <a href="/system/task_name/Scheduler">Scheduler</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>Daemon</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: #090">Running</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/222777">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/222777">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="222777"
+               class="taskid" id="222777" >
+      </td>
+      <td>
+        <span class="log-links" id="log-222777"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/222778">222778</a>
+      </td>
+      <td>
+        <a href="/system/task_name/Planner">Planner</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>Daemon</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: #090">Running</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/222778">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/222778">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="222778"
+               class="taskid" id="222778" >
+      </td>
+      <td>
+        <span class="log-links" id="log-222778"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/222779">222779</a>
+      </td>
+      <td>
+        <a href="/system/task_name/RecipeController">RecipeController</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>Daemon</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: #090">Running</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/222779">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/222779">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="222779"
+               class="taskid" id="222779" >
+      </td>
+      <td>
+        <span class="log-links" id="log-222779"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/222781">222781</a>
+      </td>
+      <td>
+        <a href="/system/task_name/ExportController">ExportController</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>Daemon</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: #090">Running</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/222781">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/222781">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="222781"
+               class="taskid" id="222781" >
+      </td>
+      <td>
+        <span class="log-links" id="log-222781"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/222782">222782</a>
+      </td>
+      <td>
+        <a href="/system/task_name/Loader">Loader</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>Daemon</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: #090">Running</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/222782">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/222782">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="222782"
+               class="taskid" id="222782" >
+      </td>
+      <td>
+        <span class="log-links" id="log-222782"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/222818">222818</a>
+      </td>
+      <td>
+        <a href="/system/task_name/ArchiveController">ArchiveController</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>Daemon</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: red">Error</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/222818">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/222818">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="222818"
+               class="taskid" id="222818" >
+      </td>
+      <td>
+        <span class="log-links" id="log-222818"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/285601">285601</a>
+      </td>
+      <td>
+        <a href="/system/task_name/CleanExport">CleanExport</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>DelayScheduled</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: red">Error</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/285601">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/285601">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="285601"
+               class="taskid" id="285601" >
+      </td>
+      <td>
+        <span class="log-links" id="log-285601"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/285602">285602</a>
+      </td>
+      <td>
+        <a href="/system/task_name/YARSDSM">YARSDSM</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>DelayScheduled</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: red">Error</td>
+      <td>None</td>
+      <td>
+        <a href="/task_log/285602">Logfile</a>
+      </td>
+      <td>
+        <a href="/task_directory/285602">Directory</a>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="285602"
+               class="taskid" id="285602" >
+      </td>
+      <td>
+        <span class="log-links" id="log-285602"
+              title="Show links to task log">
+          <img src="/images/details_open.png" height="16" width="16"
+          alt="open details">
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/297146">297146</a>
+      </td>
+      <td>
+        <a href="/system/task_name/NightlyMetrics">NightlyMetrics</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>DelayScheduled</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: blue">Wait</td>
+      <td>None</td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="297146"
+               class="taskid" id="297146" >
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/297167">297167</a>
+      </td>
+      <td>
+        <a href="/system/task_name/UtilityTask">UtilityTask</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>DelayScheduled</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: blue">Wait</td>
+      <td>None</td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="297167"
+               class="taskid" id="297167" >
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/system/task/297172">297172</a>
+      </td>
+      <td>
+        <a href="/system/task_name/DiskSpaceMonitor">DiskSpaceMonitor</a>
+      </td>
+      <td>
+        
+      </td>
+      <td>DelayScheduled</td>
+      <td>5</td>
+      <td>
+        <a href="/system/host/omidev">omidev</a>
+      </td>
+      <td style="color: white;background-color: blue">Wait</td>
+      <td>None</td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+        <input name="TaskId" type="checkbox" value="297172"
+               class="taskid" id="297172" >
+      </td>
+      <td>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th class="header">TaskId</th>
+      <th class="header">TaskName</th>
+      <th class="header">ParamId</th>
+      <th class="header">TaskType</th>
+      <th class="header">Pri</th>
+      <th class="header">Host</th>
+      <th class="header">State</th>
+      <th class="header">Action</th>
+      <th class="header">Logfile</th>
+      <th class="header">Directory</th>
+      <th class="header">Tag
+      <th class="header">Links</th>
+    </tr>
+  </tfoot>
+</table>
+
+<p>
+  <input name="Action" id="id-enable"   type="submit" value="Enable"           class="ui-button ui-widget ui-corner-all" onchange="submit()" title="Enable task">
+  <input name="Action" id="id-disable"  type="submit" value="Disable"          class="ui-button ui-widget ui-corner-all" onchange="submit()" title="Disable task">
+  <input name="Action" id="id-run"      type="submit" value="Run"              class="ui-button ui-widget ui-corner-all" onchange="submit()" title="Run task">
+  <input name="Action" id="id-shutdown" type="submit" value="Shutdown"         class="ui-button ui-widget ui-corner-all" onchange="submit()" title="Shutdown task">
+  <input name="Action" id="id-kill"     type="submit" value="Kill"             class="ui-button ui-widget ui-corner-all" onchange="submit()" title="Kill task">
+  <input name="Action" id="id-retry"    type="submit" value="Retry"            class="ui-button ui-widget ui-corner-all" onchange="submit()" title="Retry task">
+  <input name="Action" id="id-resubmit" type="submit" value="ResubmitAsPlan"   class="ui-button ui-widget ui-corner-all" onClick="submit()" title="Resubmit task as plan">
+</p>
+</form>
+
+<script src="/javascript/loglinks.js"></script>
+<script>
+ "use strict;"
+ 
+ $(document).ready(function() {
+   $('#sips-table-taskqueue').show();
+   $(".log-links").tooltipster();
+   $(".dir-links").tooltipster();
+
+   $('#clear-filter').click(function() {
+     $('#sips-table-taskqueue').DataTable().search( " " ).draw();
+   });
+    
+   $('#sips-table-taskqueue').DataTable({
+     paging:         false,
+     scrollCollapse: true,
+     scrollY: "400px",
+     pageLength: 8,
+     order: [[ 3, "asc" ], [ 1, "asc" ], [ 0, "asc" ]],
+     columnDefs: [
+       {
+         "targets": '_all',
+         "createdCell": function (td, cellData, rowData, row, col) {
+           $(td).css('padding', '1px')
+         },
+         targets: [4,8,9,10,11],
+         className: 'dt-body-center'
+       },
+     ],
+     columns: [
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       { "orderable": false },
+       { "orderable": false },
+     ],
+     initComplete: function () {
+       const skipList = ["logfile", "directory", "tag", "links"];
+       this.api()
+           .columns()
+           .every(function () {
+             let column = this;
+             let title = column.footer().textContent.trim();
+
+             if (skipList.includes(title.toLowerCase())) {
+               column.footer().replaceChildren("");
+               return true;
+             } else {
+               let input = document.createElement('input');
+               input.placeholder = title;
+               column.footer().replaceChildren(input);
+
+               input.addEventListener('keyup', () => {
+                 if (column.search() !== this.value) {
+                   column.search(input.value).draw();
+                 }
+               });
+             }
+           });
+     },
+    fixedHeader: {
+        footer: true
+    }
+   });
+
+   $( '#sips-table-taskqueue_filter' ).append( ' <a href="" id="clear-filter">Clear search</a>' );
+
+   $('#check-all').change(function(){
+     if ($(this).is(':checked')) {
+       $('#222776').prop('checked', true);
+       $('#222777').prop('checked', true);
+       $('#222778').prop('checked', true);
+       $('#222779').prop('checked', true);
+       $('#222781').prop('checked', true);
+       $('#222782').prop('checked', true);
+       $('#222818').prop('checked', true);
+       $('#285601').prop('checked', true);
+       $('#285602').prop('checked', true);
+       $('#297146').prop('checked', true);
+       $('#297167').prop('checked', true);
+       $('#297172').prop('checked', true);
+     } else {
+       $('#222776').prop('checked', false);
+       $('#222777').prop('checked', false);
+       $('#222778').prop('checked', false);
+       $('#222779').prop('checked', false);
+       $('#222781').prop('checked', false);
+       $('#222782').prop('checked', false);
+       $('#222818').prop('checked', false);
+       $('#285601').prop('checked', false);
+       $('#285602').prop('checked', false);
+       $('#297146').prop('checked', false);
+       $('#297167').prop('checked', false);
+       $('#297172').prop('checked', false);
+     }
+   });
+
+   $('tr td').each(function(){
+     $(this).find("span.log-links").each(function(){
+       $(this).on( 'click', function () {
+         var id  = $(this).attr("id").split("-")[1];
+         var notes = buildLogLinks(id, "/", "dev")
+         ;
+
+         Swal.fire({
+           width: "60rem",
+           title: "Task " + id + " Log Links",
+           html: '<div class="note-align">' + notes + '</div>',
+           showCloseButton: true,
+           showCancelButton: false,
+           showConfirmButton: false,
+         });
+       });
+     });
+   });
+ });
+
+ $(".taskid").prop("checked", false);
+ 
+</script>
+
+    </main>
+
+    <footer>
+    
+      <div class="container_15">
+    
+        <div class="grid_3" style="font-size: 0.9vw;">
+          SIPS v1.10.4 (<a href="/changes">UI Change Log</a>)
+        </div>
+      
+        <div class="grid_2" style="font-size: 0.9vw;">
+          Curator: <a href="mailto:Curt.Tilmes@nasa.gov">Curt Tilmes</a>
+        </div>
+        
+        <div class="grid_3" style="font-size: 0.9vw;">
+          Authorized By: <a href="mailto:Curt.Tilmes@nasa.gov">Curt Tilmes</a>
+        </div>
+
+        <div class="grid_4" style="font-size: 0.9vw;">
+          <a href="https://www.nasa.gov/privacy/">NASA Policy Statement on security &amp; privacy.</a>
+        </div>
+        
+      </div>
+      
+    </footer>
+
+    <script>
+
+     <!-- Update the dynamically generated search fields -->
+
+
+    </script>
+
+    
+  </body>
+</html>

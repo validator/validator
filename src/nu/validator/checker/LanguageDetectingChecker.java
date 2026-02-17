@@ -833,8 +833,11 @@ public class LanguageDetectingChecker extends Checker {
     @Override
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
-        if ("http://www.w3.org/1999/xhtml" != uri
-                || Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
+        if ("http://www.w3.org/1999/xhtml" != uri) {
+            return;
+        }
+        if (Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
+            currentOpenElementsWithSkipName++;
             return;
         }
         if ("html".equals(localName) && "http://www.w3.org/1999/xhtml" == uri) {
@@ -879,9 +882,6 @@ public class LanguageDetectingChecker extends Checker {
                     }
                 }
             }
-        }
-        if (Arrays.binarySearch(SKIP_NAMES, localName) >= 0) {
-            currentOpenElementsWithSkipName++;
         }
     }
 
