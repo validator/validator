@@ -1731,7 +1731,7 @@ public class Assertions extends Checker {
     private boolean isDescendantOfSectioningElement() {
         for (int i = 0; i < currentPtr; i++) {
             String name = stack[currentPtr - i].getName();
-            if (SECTIONING_ELEMENTS.contains(name)) {
+            if (name != null && SECTIONING_ELEMENTS.contains(name)) {
                 return true;
             }
         }
