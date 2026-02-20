@@ -46,11 +46,10 @@ The Nu Html Checker (vnu) is released upstream in these formats:
 > [!NOTE]
 > The `vnu.jar` and `vnu.war` files require you to have Java 11 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
 
-A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8], [pip][9], and [brew][10] packages are also available.
+A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8] and [brew][10] packages are also available.
 
    [7]: https://ghcr.io/validator/validator
    [8]: https://www.npmjs.com/package/vnu-jar
-   [9]: https://github.com/svenkreiss/html5validator
    [10]: https://formulae.brew.sh/formula/vnu
    [36]: #pulling-the-docker-image
 
@@ -60,7 +59,6 @@ You can [get the latest release][12] or run one of the following:
 - [`jbang app install vnu@validator/validator`][15] 
 - [`npm install vnu-jar`][14]
 - [`brew install vnu`][16]
-- [`pip install html5validator`][17]
 
 …and see the **[Usage](#usage)** and **[Web-based checking](#web-based-checking)** sections here. Or automate your checking with a frontend such as:
 
@@ -69,16 +67,13 @@ You can [get the latest release][12] or run one of the following:
    [14]: https://www.npmjs.com/package/vnu-jar
    [15]: https://www.jbang.dev/
    [16]: https://libraries.io/homebrew/vnu
-   [17]: https://github.com/svenkreiss/html5validator
 
 - [Grunt plugin for HTML validation][18] or [Gulp plugin for HTML validation][19] or [Maven plugin for HTML validation][20]
-- [html5validator `pip` package][21] (for integration in Travis CI, CircleCI, CodeShip, Jekyll, Pelican, etc.)
 - [LMVTFY: Let Me Validate That For You][22] (auto-check JSFiddle/JSBin, etc., links in GitHub issue comments)
 
    [18]: https://github.com/validator/grunt-html
    [19]: https://github.com/validator/gulp-html
    [20]: https://github.com/validator/maven-plugin
-   [21]: https://github.com/svenkreiss/html5validator
    [22]: https://github.com/cvrebert/lmvtfy/
 
 ## Web-based checking
