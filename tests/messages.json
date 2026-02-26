@@ -3674,6 +3674,7 @@
     "xhtml/attributes/spellcheck/350-novalid.xhtml": "Bad value \u201cbadvalue\u201d for attribute \u201cspellcheck\u201d on element \u201cp\u201d.",
     "xhtml/elements/a/100-haswarn.xhtml": "The \u201cname\u201d attribute on the \u201ca\u201d element is obsolete. Consider putting an \u201cid\u201d attribute on the nearest container instead.",
     "xhtml/elements/base/001-novalid.xhtml": "Element \u201cbase\u201d is missing one or more of the following attributes: \u201chref\u201d, \u201ctarget\u201d.",
+    "xhtml/elements/caption/table-as-root-novalid.xhtml": "Element \u201ctable\u201d not allowed in this context.",
     "xhtml/elements/dialog/001-novalid.xhtml": "Element \u201cdt\u201d not allowed as child of \u201cdialog\u201d in this context.",
     "xhtml/elements/dl/032-haswarn.xhtml": "Duplicate \u201cdt\u201d name \u201ctext\u201d in \u201cdl\u201d element. Within a single \u201cdl\u201d element, there should not be more than one \u201cdt\u201d element for each name.",
     "xhtml/elements/embed/001-novalid.xhtml": "Bad value \u201c20%\u201d for attribute \u201cheight\u201d on element \u201cembed\u201d.",

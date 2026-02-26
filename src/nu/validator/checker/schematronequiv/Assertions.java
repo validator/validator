@@ -3036,7 +3036,7 @@ public class Assertions extends Checker {
                 currentRubyPtr = currentPtr + 1;
             }
             if ("caption" == localName && "table" == parentName
-                    && stack.length >= currentPtr - 1
+                    && currentPtr > 1
                     && "figure" == stack[currentPtr - 1].getName()) {
                 stack[currentPtr - 1].setCaptionNestedInFigure(
                         new LocatorImpl(getDocumentLocator()));
