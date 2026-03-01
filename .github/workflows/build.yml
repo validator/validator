@@ -103,14 +103,14 @@ jobs:
           python checker.py sign
       - name: Upload release artifacts (zip files)
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-zips-${{ matrix.os }}
           path: build/dist/*.zip*
           retention-days: 1
       - name: Upload release artifacts (jar and war)
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-jars
           path: |
