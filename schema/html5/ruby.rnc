@@ -25,6 +25,7 @@ namespace local = ""
 							rp.elem
 						)+
 					)
+				|	rtc.elem+
 			)
 		)+
 
@@ -62,3 +63,14 @@ namespace local = ""
 		)
 	rb.inner =
 		( common.inner.phrasing )
+
+## Ruby Text Container: <rtc>
+
+	rtc.elem =
+		element rtc { rtc.inner & rtc.attrs }
+	rtc.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		)
+	rtc.inner =
+		( common.inner.phrasing & rt.elem* )
