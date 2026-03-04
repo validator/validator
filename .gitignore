@@ -37,3 +37,4 @@ run-validator.sh
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+.worktrees/
