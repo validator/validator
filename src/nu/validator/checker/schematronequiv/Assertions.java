@@ -4435,6 +4435,23 @@ public class Assertions extends Checker {
                         + " specified on elements that have a"
                         + " “placeholder” attribute.");
             }
+            // Warnings for presentational roles that conflict with
+            // focusability or global ARIA attributes (ARIA spec 9.3).
+            if (("none".equals(role) || "presentation".equals(role))
+                    && (tabindex || hasAriaAttributesOtherThanAriaHidden)) {
+                String reason;
+                if (tabindex && hasAriaAttributesOtherThanAriaHidden) {
+                    reason = "a “tabindex” attribute"
+                            + " and global ARIA attributes";
+                } else if (tabindex) {
+                    reason = "a “tabindex” attribute";
+                } else {
+                    reason = "global ARIA attributes";
+                }
+                warn("The “" + role + "” role has no effect on"
+                        + " the “" + localName + "” element,"
+                        + " because the element has " + reason + ".");
+            }
             // Warnings for use of ARIA attributes with markup already
             // having implicit ARIA semantics.
             if ("header".equals(localName)
