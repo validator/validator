@@ -179,13 +179,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= plaintext.elem
 
-## Ruby Text Container: <rtc>
-
-	rtc.elem =
-		element rtc { common.inner.anything & common.attr.anything }
-
-	common.elem.phrasing |= rtc.elem
-
 ## Display code: <xmp>
 
 	xmp.elem =
