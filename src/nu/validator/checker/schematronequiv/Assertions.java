@@ -4683,6 +4683,39 @@ public class Assertions extends Checker {
             allIds.putAll(ids);
         }
 
+        // Presentational role conflict for non-HTML elements
+        // (the HTML check is inside the XHTML namespace block above)
+        if ("http://www.w3.org/2000/svg" == uri
+                && role != null
+                && ("none".equals(role) || "presentation".equals(role))) {
+            boolean svgTabindex = atts.getIndex("", "tabindex") > -1;
+            boolean svgHasGlobalAria = false;
+            for (int i = 0; i < atts.getLength(); i++) {
+                String attLocal = atts.getLocalName(i);
+                if (atts.getURI(i).length() == 0
+                        && attLocal.startsWith("aria-")
+                        && !"aria-hidden".equals(attLocal)
+                        && !"".equals(atts.getValue(i))) {
+                    svgHasGlobalAria = true;
+                    break;
+                }
+            }
+            if (svgTabindex || svgHasGlobalAria) {
+                String reason;
+                if (svgTabindex && svgHasGlobalAria) {
+                    reason = "a “tabindex” attribute"
+                            + " and global ARIA attributes";
+                } else if (svgTabindex) {
+                    reason = "a “tabindex” attribute";
+                } else {
+                    reason = "global ARIA attributes";
+                }
+                warn("The “" + role + "” role has no effect on"
+                        + " the “" + localName + "” element,"
+                        + " because the element has " + reason + ".");
+            }
+        }
+
         // ARIA required owner/ancestors
         Set<String> requiredAncestorRoles = REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(
                 role);

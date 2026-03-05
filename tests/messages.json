@@ -3037,6 +3037,8 @@
     "html/elements/style/type-text-css-haswarn.html": "The \u201ctype\u201d attribute for the \u201cstyle\u201d element is not needed and should be omitted.",
     "html/elements/sub/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
     "html/elements/sup/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
+    "html/elements/svg/role-none-with-aria-label-haswarn.html": "The \u201cnone\u201d role has no effect on the \u201csvg\u201d element, because the element has global ARIA attributes.",
+    "html/elements/svg/role-presentation-with-tabindex-haswarn.html": "The \u201cpresentation\u201d role has no effect on the \u201csvg\u201d element, because the element has a \u201ctabindex\u201d attribute.",
     "html/elements/table/cell-overlaps-earlier-cell-novalid.html": "Table column 3 established by element \u201ctd\u201d has no cells beginning in it.",
     "html/elements/table/cell-overlaps-novalid.html": "Table column 3 established by element \u201ctd\u201d has no cells beginning in it.",
     "html/elements/table/cell-spans-past-end-novalid.html": "Table columns in range 3\u20266 established by element \u201ctd\u201d have no cells beginning in them.",
