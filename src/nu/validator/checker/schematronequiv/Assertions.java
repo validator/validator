@@ -4454,9 +4454,8 @@ public class Assertions extends Checker {
                 } else {
                     reason = "global ARIA attributes";
                 }
-                warn("The “" + role + "” role has no effect on"
-                        + " the “" + localName + "” element,"
-                        + " because the element has " + reason + ".");
+                warn("The “" + role + "” role does not"
+                        + " affect elements that have " + reason + ".");
             }
             // Warnings for use of ARIA attributes with markup already
             // having implicit ARIA semantics.
@@ -4710,9 +4709,8 @@ public class Assertions extends Checker {
                 } else {
                     reason = "global ARIA attributes";
                 }
-                warn("The “" + role + "” role has no effect on"
-                        + " the “" + localName + "” element,"
-                        + " because the element has " + reason + ".");
+                warn("The “" + role + "” role does not"
+                        + " affect elements that have " + reason + ".");
             }
         }
 
