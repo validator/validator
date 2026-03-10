@@ -353,6 +353,12 @@ public class DatatypeTest {
         assertValid("CustomElementName: dot", validator, "my.element-test");
         assertValid("CustomElementName: unicode", validator, "my-\u00e9l\u00e8ment");
         assertValid("CustomElementName: single letter then hyphen", validator, "x-foo");
+        assertValid("CustomElementName: with colon", validator, "andy-custom:menu");
+        assertValid("CustomElementName: colon after hyphen", validator, "my-element:sub");
+        assertValid("CustomElementName: with tilde", validator, "my-element~test");
+        assertValid("CustomElementName: with hash", validator, "my-#element");
+        assertValid("CustomElementName: with at sign", validator, "my-elem@ent");
+        assertValid("CustomElementName: with exclamation", validator, "my-element!");
     }
 
     private static void testCustomElementNameInvalid() {

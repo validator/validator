@@ -43,28 +43,13 @@ public final class CustomElementName extends AbstractDatatype {
             "missing-glyph" //
     };
 
-    public static boolean isPCENChar(int c) {
-        return (c == '-' //
-                || c == '.' //
-                || (c >= '0' && c <= '9') //
-                || c == '_' //
-                || (c >= 'a' && c <= 'z') //
-                || c == 0xB7 //
-                || (c >= 0xC0 && c <= 0xD6) //
-                || (c >= 0xD8 && c <= 0xF6) //
-                || (c >= 0xF8 && c <= 0x37D) //
-                || (c >= 0x37F && c <= 0x1FFF) //
-                || (c >= 0x37F && c <= 0x1FFF) //
-                || (c >= 0x200C && c <= 0x200D) //
-                || (c >= 0x203F && c <= 0x2040) //
-                || (c >= 0x203F && c <= 0x2040) //
-                || (c >= 0x2070 && c <= 0x218F) //
-                || (c >= 0x2C00 && c <= 0x2FEF) //
-                || (c >= 0x3001 && c <= 0xD7FF) //
-                || (c >= 0xF900 && c <= 0xFDCF) //
-                || (c >= 0xFDF0 && c <= 0xFFFD) //
-                || (c >= 0x10000 && c <= 0xEFFFF) //
-        );
+    private static boolean isDisallowedInCustomElementName(int c) {
+        return (c >= 'A' && c <= 'Z') //
+                || c == ' ' || c == '\t' || c == '\n' //
+                || c == '\f' || c == '\r' //
+                || c == 0x00 //
+                || c == '/' //
+                || c == '>';
     }
 
     /**
@@ -91,20 +76,18 @@ public final class CustomElementName extends AbstractDatatype {
                             "Must begin with a lowercase ASCII letter.");
                 }
             }
-            if (c >= 'A' && c <= 'Z') {
-                throw newDatatypeException( //
-                        "Uppercase ASCII letters are not allowed.");
+            if (isDisallowedInCustomElementName(c)) {
+                if (c >= 'A' && c <= 'Z') {
+                    throw newDatatypeException( //
+                            "Uppercase ASCII letters are not allowed.");
+                }
+                throw newDatatypeException(
+                    String.format("Code point “%s” is not allowed",
+                            String.format("U+%04x", c).toUpperCase()));
             }
             if (c == '-') {
                 state = State.EXPECTING_PNECHAR;
-                continue;
             }
-            if (isPCENChar(c)) {
-                continue;
-            }
-            throw newDatatypeException(
-                    String.format("Code point “%s” is not allowed",
-                            String.format("U+%04x", c).toUpperCase()));
         }
         if (state == State.EXPECTING_HYPHEN) {
             throw newDatatypeException(
