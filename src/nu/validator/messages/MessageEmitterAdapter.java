@@ -566,6 +566,11 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
             return;
         }
+        if (e.getMessage().contains("cannot be represented as XML 1.0")
+                || e.getMessage().contains(
+                        "is not serializable as XML 1.0")) {
+            return;
+        }
         if (!FILE_NOT_CHECKED.matcher(e.getMessage()).matches()) {
             this.warnings++;
         }

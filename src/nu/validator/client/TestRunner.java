@@ -678,6 +678,11 @@ public class TestRunner extends MessageEmitterAdapter {
         if (DEFAULT_FILTER_PATTERN.matcher(e.getMessage()).matches()) {
             return;
         }
+        if (e.getMessage().contains("cannot be represented as XML 1.0")
+                || e.getMessage().contains(
+                        "is not serializable as XML 1.0")) {
+            return;
+        }
         if (emitMessages) {
             hasUnhandledWarning = true;
             emitMessage(e, "warning");
