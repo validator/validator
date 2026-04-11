@@ -121,6 +121,19 @@ jobs:
             build/dist/*.jar*
             build/dist-war/*.war*
           retention-days: 1
+      - name: Add the release tag
+        if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
+        run: |
+          PREFIX=$(date +%y.%-m.%-d)
+          LAST=$(git tag --list "${PREFIX}.*" | grep -E "^${PREFIX}\.[0-9]+$" | awk -F. '{print $NF}' | sort -n | tail -1)
+          if ! git tag --list "${PREFIX}" | grep -q .; then
+            VERSION="${PREFIX}"
+          elif [[ -z "$LAST" ]]; then
+            VERSION="${PREFIX}.1"
+          else
+            VERSION="${PREFIX}.$((LAST + 1))"
+          fi
+          git tag $VERSION
       - name: Update the 'latest' tag
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         run: |
