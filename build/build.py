@@ -1987,7 +1987,7 @@ def makeUsage(version):
     usageLines.append("\n")
     match = re.search(r'\(([^)]*)\)[^()]*$', version)
     if match:
-        usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}")  # nopep8
+        usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}\n")  # nopep8
     with open(os.path.join(filesDir, "usage"), "w", encoding="utf-8") as f:
         f.writelines(usageLines)
 
@@ -2003,7 +2003,7 @@ def makeCliHelp(version):
     usageLines.append("\n")
     match = re.search(r'\(([^)]*)\)[^()]*$', version)
     if match:
-        usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}")  # nopep8
+        usageLines.append(f"👉 {version} changelog: https://github.com/validator/validator/commits/{match.group(1)}\n")  # nopep8
     with open(os.path.join(filesDir, "cli-help"), "w", encoding="utf-8") as f:
         f.writelines(usageLines)
 
