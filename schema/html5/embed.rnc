@@ -23,6 +23,7 @@ namespace local = ""
 		&	img.attrs.width?
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
+		&	img.attrs.controls?
 		&	img.attrs.decoding?
 		&	img.attrs.loading?
 		&	common.attrs.fetchpriority?
@@ -94,6 +95,10 @@ namespace local = ""
 		img.attrs.ismap =
 			attribute ismap {
 				w:string "ismap" | w:string ""
+			}
+		img.attrs.controls =
+			attribute controls {
+				w:string "controls" | w:string ""
 			}
 		img.attrs.decoding =
 			attribute decoding {

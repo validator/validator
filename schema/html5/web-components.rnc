@@ -16,6 +16,7 @@ namespace c = "http://n.validator.nu/custom-elements/"
 		& template.attrs.shadowrootclonable?
 		& template.attrs.shadowrootserializable?
 		& template.attrs.shadowrootcustomelementregistry?
+		& template.attrs.shadowrootslotassignment?
 		)
 	template.attrs.shadowrootmode =
 			attribute shadowrootmode {
@@ -36,6 +37,10 @@ namespace c = "http://n.validator.nu/custom-elements/"
 	template.attrs.shadowrootcustomelementregistry =
 			attribute shadowrootcustomelementregistry {
 				w:string "shadowrootcustomelementregistry" | w:string ""
+			}
+	template.attrs.shadowrootslotassignment =
+			attribute shadowrootslotassignment {
+				w:string "named" | w:string "manual"
 			}
 	template.inner =
 		(	common.inner.metadata
