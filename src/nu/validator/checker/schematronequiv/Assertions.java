@@ -3345,6 +3345,14 @@ public class Assertions extends Checker {
                             + "“a” ancestor with the "
                             + "“href” attribute.");
                 }
+                if (controls && (atts.getIndex("", "alt") < 0
+                        || "".equals(atts.getValue("", "alt")))) {
+                    err("The “controls” attribute must not be"
+                            + " specified on an “img” element that does"
+                            + " not have an “alt” attribute, or whose"
+                            + " “alt” attribute’s value is the empty"
+                            + " string.");
+                }
                 if (atts.getIndex("", "alt") < 0
                         && atts.getIndex("", "aria-label") < 0
                         && atts.getIndex("", "aria-labelledby") < 0) {
