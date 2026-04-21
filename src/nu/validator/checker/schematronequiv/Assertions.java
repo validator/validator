@@ -704,11 +704,7 @@ public class Assertions extends Checker {
     private static final Set<String> MUST_NOT_DANGLE_IDREFS = new HashSet<>();
 
     static {
-        MUST_NOT_DANGLE_IDREFS.add("aria-controls");
-        MUST_NOT_DANGLE_IDREFS.add("aria-describedby");
-        MUST_NOT_DANGLE_IDREFS.add("aria-flowto");
-        MUST_NOT_DANGLE_IDREFS.add("aria-labelledby");
-        MUST_NOT_DANGLE_IDREFS.add("aria-owns");
+        MUST_NOT_DANGLE_IDREFS.add("aria-activedescendant");
     }
 
     private static final Map<String, String> ELEMENTS_WITH_IMPLICIT_ROLE = new HashMap<>();
