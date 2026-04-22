@@ -4777,6 +4777,34 @@ public class Assertions extends Checker {
             }
         }
 
+        // ARIA 1.2 disallows “role=group” as a descendant of
+        // “role=list” (https://github.com/w3c/aria/commit/6166d99).
+        if (roles != null && roles.contains("group")) {
+            for (int i = 0; i < currentPtr; i++) {
+                StackNode ancestor = stack[currentPtr - i];
+                if (ancestor == null) {
+                    continue;
+                }
+                List<String> ancestorRoles = ancestor.roles;
+                boolean ancestorIsList;
+                if (ancestorRoles != null && !ancestorRoles.isEmpty()) {
+                    ancestorIsList = ancestorRoles.contains("list");
+                } else {
+                    String ancestorName = ancestor.getName();
+                    ancestorIsList = ancestorName != null
+                            && "list".equals(ELEMENTS_WITH_IMPLICIT_ROLE
+                                    .get(ancestorName));
+                }
+                if (ancestorIsList) {
+                    err("An element with “role=group” must not"
+                            + " be a descendant of an element with"
+                            + " “role=list”.",
+                            getDocumentLocator());
+                    break;
+                }
+            }
+        }
+
         // ARIA IDREFS
         for (String att : MUST_NOT_DANGLE_IDREFS) {
             String attVal = atts.getValue("", att);
