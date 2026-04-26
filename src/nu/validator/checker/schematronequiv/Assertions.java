@@ -3277,8 +3277,9 @@ public class Assertions extends Checker {
                         ancestorRoles.addAll(stack[currentPtr - i].roles);
                     }
                 }
-                if (ancestorRoles.size() == 0
-                        || ancestorRoles.contains("list")) {
+                if ((ancestorRoles.size() == 0
+                        || ancestorRoles.contains("list"))
+                        && !roles.contains("listitem")) {
                     err("An “li” element that is a descendant of"
                             + " a “ul”, “ol”,"
                             + " or “menu” element with no explicit"
