@@ -4777,6 +4777,61 @@ public class Assertions extends Checker {
             }
         }
 
+        // ARIA 1.2/1.3 owned-child restrictions
+        // (https://github.com/w3c/aria/pull/1454):
+        //   role=rowgroup contains only role=row
+        //   role=group inside role=menu/menubar contains only
+        //     role=menuitem/menuitemcheckbox/menuitemradio
+        //   role=group inside role=tree contains only role=treeitem
+        if (roles != null && !roles.isEmpty()
+                && !roles.contains("none")
+                && !roles.contains("presentation")
+                && !roles.contains("generic")) {
+            StackNode roleParent = null;
+            StackNode roleGrandparent = null;
+            for (int i = 0; i < currentPtr; i++) {
+                StackNode a = stack[currentPtr - i];
+                if (a == null || a.roles == null || a.roles.isEmpty()) {
+                    continue;
+                }
+                if (roleParent == null) {
+                    roleParent = a;
+                } else {
+                    roleGrandparent = a;
+                    break;
+                }
+            }
+            if (roleParent != null
+                    && roleParent.roles.contains("rowgroup")
+                    && !roles.contains("row")) {
+                err("An element that is a child of an element with"
+                        + " “role=rowgroup” must have “role=row”.");
+            }
+            if (roleParent != null && roleParent.roles.contains("group")
+                    && roleGrandparent != null) {
+                if ((roleGrandparent.roles.contains("menu")
+                        || roleGrandparent.roles.contains("menubar"))
+                        && !roles.contains("menuitem")
+                        && !roles.contains("menuitemcheckbox")
+                        && !roles.contains("menuitemradio")) {
+                    err("An element with “role=group” that is a"
+                            + " descendant of an element with"
+                            + " “role=menu” or “role=menubar” must"
+                            + " contain only elements with"
+                            + " “role=menuitem”,"
+                            + " “role=menuitemcheckbox”, or"
+                            + " “role=menuitemradio”.");
+                }
+                if (roleGrandparent.roles.contains("tree")
+                        && !roles.contains("treeitem")) {
+                    err("An element with “role=group” that is a"
+                            + " descendant of an element with"
+                            + " “role=tree” must contain only"
+                            + " elements with “role=treeitem”.");
+                }
+            }
+        }
+
         // ARIA 1.2 disallows “role=group” as a descendant of
         // “role=list” (https://github.com/w3c/aria/commit/6166d99).
         if (roles != null && roles.contains("group")) {
