@@ -152,6 +152,10 @@ common.attrs.aria.implicit.row |=
 	&	aria.state.selected? # not inherited
 	&	aria.prop.activedescendant?
 	&	aria.state.expanded?
+	&	aria.prop.colindex?
+	&	aria.prop.rowindex?
+	&	aria.prop.posinset?		# ARIA 1.2 added
+	&	aria.prop.setsize?		# ARIA 1.2 added
 	)
 
 common.attrs.aria.implicit.rowgroup |=
