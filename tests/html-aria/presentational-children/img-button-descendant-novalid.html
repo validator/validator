@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>role=img must not have button or input descendants</title>
+</head>
+<body>
+<div role="img" aria-label="a">
+ <button type="button">b</button>
+</div>
+<div role="img" aria-label="a">
+ <button type="submit">b</button>
+</div>
+<div role="img" aria-label="a">
+ <button type="reset">b</button>
+</div>
+<div role="img" aria-label="a">
+ <input type="button" value="b">
+</div>
+<div role="img" aria-label="a">
+ <input type="image" src="#" alt="b">
+</div>
+<div role="img" aria-label="a">
+ <input type="reset" value="b">
+</div>
+<div role="img" aria-label="a">
+ <input type="submit" value="b">
+</div>
+<div role="img" aria-label="a">
+ <div role="button">b</div>
+</div>
+</body>
+</html>
