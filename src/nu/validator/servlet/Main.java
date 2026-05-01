@@ -99,49 +99,53 @@ public class Main {
             log4j.debug("Checker service started.");
             return;
         }
-        String ip;
-        log4j.debug("");
-        log4j.debug("WARNING: Future checker releases will bind by default to"
-                + " 127.0.0.1.");
-        log4j.debug("Your checker deployment might become unreachable unless"
-                + " you use the");
-        log4j.debug("nu.validator.servlet.bind-address system property or"
-                + " --bind-address");
-        log4j.debug("script option to bind the checker to a different"
-                + " address:");
-        try {
-            Enumeration<NetworkInterface> interfaces = //
-                    NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface iface = interfaces.nextElement();
-                if (iface.isLoopback() || !iface.isUp())
-                    continue;
-                Enumeration<InetAddress> addresses = iface.getInetAddresses();
-                while (addresses.hasMoreElements()) {
-                    InetAddress addr = addresses.nextElement();
-                    ip = addr.getHostAddress();
-                    if (addr instanceof Inet4Address) {
-                        log4j.debug("");
-                        log4j.debug(String.format(
-                                "  python ./checker.py --bind-address %s run",
-                                ip));
-                        log4j.debug(String.format("  java"
-                                + " -Dnu.validator.servlet.bind-address=%s"
-                                + " -cp vnu.jar"
-                                + " nu.validator.servlet.Main 8888", ip));
-                        log4j.debug(String.format("  vnu-runtime-image/bin/java"
-                                + " -Dnu.validator.servlet.bind-address=%s"
-                                + " nu.validator.servlet.Main 8888", ip));
-                        log4j.debug(String.format(
-                                "  vnu-runtime-image\\bin\\java.exe"
-                                        + " -Dnu.validator.servlet.bind-address=%s"
-                                        + " nu.validator.servlet.Main 8888",
-                                ip));
+        boolean bindAddressExplicitlySet =
+                System.getenv("BIND_ADDRESS") != null
+                || System.getProperty("nu.validator.servlet.bind-address") != null;
+        if (!bindAddressExplicitlySet) {
+            String ip;
+            log4j.debug("");
+            log4j.debug("WARNING: Future checker releases will bind by default to"
+                    + " 127.0.0.1.");
+            log4j.debug("Your checker deployment might become unreachable unless"
+                    + " you use the");
+            log4j.debug("nu.validator.servlet.bind-address system property or"
+                    + " --bind-address");
+            log4j.debug("script option to bind the checker to a different"
+                    + " address:");
+            try {
+                Enumeration<NetworkInterface> interfaces = //
+                        NetworkInterface.getNetworkInterfaces();
+                while (interfaces.hasMoreElements()) {
+                    NetworkInterface iface = interfaces.nextElement();
+                    if (iface.isLoopback() || !iface.isUp())
+                        continue;
+                    Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                    while (addresses.hasMoreElements()) {
+                        InetAddress addr = addresses.nextElement();
+                        ip = addr.getHostAddress();
+                        if (addr instanceof Inet4Address) {
+                            log4j.debug("");
+                            log4j.debug(String.format(
+                                    "  python ./checker.py --bind-address %s run",
+                                    ip));
+                            log4j.debug(String.format("  java"
+                                    + " -Dnu.validator.servlet.bind-address=%s"
+                                    + " -cp vnu.jar"
+                                    + " nu.validator.servlet.Main 8888", ip));
+                            log4j.debug(String.format("  vnu-runtime-image/bin/java"
+                                    + " -Dnu.validator.servlet.bind-address=%s"
+                                    + " nu.validator.servlet.Main 8888", ip));
+                            log4j.debug(String.format(
+                                    "  vnu-runtime-image\\bin\\java.exe"
+                                    + " -Dnu.validator.servlet.bind-address=%s"
+                                    + " nu.validator.servlet.Main 8888", ip));
+                        }
                     }
                 }
+            } catch (SocketException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
         }
         log4j.debug("");
         log4j.debug(String.format("Checker service started at http://%s:%s/",
