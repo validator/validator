@@ -520,7 +520,8 @@ public class Assertions extends Checker {
             "textbox", "treeitem" };
 
     private static final String[] PROHIBITED_INTERACTIVE_ANCESTOR_ROLES = {
-            "button", "img", "link" };
+            "button", "img", "link", "math", "progressbar", "separator",
+            "slider" };
 
     private static final String[] PROHIBITED_MAIN_ANCESTORS = { "a", "address",
             "article", "aside", "audio", "blockquote", "canvas", "caption",
