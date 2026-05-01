@@ -46,9 +46,9 @@ import nu.validator.io.SystemIdIOException;
 
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.HttpClientTransport;
-import org.eclipse.jetty.client.http.HttpClientTransportOverHTTP;
-import org.eclipse.jetty.client.api.Request;
-import org.eclipse.jetty.client.util.InputStreamResponseListener;
+import org.eclipse.jetty.client.transport.HttpClientTransportOverHTTP;
+import org.eclipse.jetty.client.Request;
+import org.eclipse.jetty.client.InputStreamResponseListener;
 import org.eclipse.jetty.http.HttpField;
 import org.eclipse.jetty.io.ClientConnector;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
@@ -350,7 +350,7 @@ public class PrudentHttpEntityResolver
             }
             InputStreamResponseListener listener = new InputStreamResponseListener();
             jettyRequest.send(listener);
-            org.eclipse.jetty.client.api.Response response = listener.get(
+            org.eclipse.jetty.client.Response response = listener.get(
                     socketTimeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS);
             boolean ignoreResponseStatus = false;
             if (request != null && request.getAttribute(
