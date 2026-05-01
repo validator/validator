@@ -1488,6 +1488,8 @@
     "html/elements/img/bad-role-value-novalid.html": "Bad value \u201cinvalid\u201d for attribute \u201crole\u201d on element \u201cimg\u201d.",
     "html/elements/img/border-attribute-haswarn.html": "The \u201cborder\u201d attribute on the \u201cimg\u201d element is obsolete. Consider specifying \u201cimg { border: 0; }\u201d in CSS instead.",
     "html/elements/img/controls-invalid-novalid.html": "Bad value \u201cinvalid\u201d for attribute \u201ccontrols\u201d on element \u201cimg\u201d.",
+    "html/elements/img/controls-with-empty-alt-novalid.html": "The \u201ccontrols\u201d attribute must not be specified on an \u201cimg\u201d element that does not have an \u201calt\u201d attribute, or whose \u201calt\u201d attribute\u2019s value is the empty string.",
+    "html/elements/img/controls-without-alt-novalid.html": "The \u201ccontrols\u201d attribute must not be specified on an \u201cimg\u201d element that does not have an \u201calt\u201d attribute, or whose \u201calt\u201d attribute\u2019s value is the empty string.",
     "html/elements/img/empty-src-without-alt-novalid.html": "Bad value \u201c\u201d for attribute \u201csrc\u201d on element \u201cimg\u201d.",
     "html/elements/img/ismap-no-anchor-ancestor-novalid.html": "The \u201cimg\u201d element with the \u201cismap\u201d attribute set must have an \u201ca\u201d ancestor with the \u201chref\u201d attribute.",
     "html/elements/img/missing-alt-in-figure-novalid.html": "An \u201cimg\u201d element must have an \u201calt\u201d attribute, except under certain conditions. For details, consult guidance on providing text alternatives for images.",
