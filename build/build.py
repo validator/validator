@@ -1362,6 +1362,8 @@ class Release():
                              ".*which is less than the column count.*"])
         specTestArgs.extend(["--filterpattern",
                              ".*Bad value “directory” for attribute “role”.*"])
+        specTestArgs.extend(["--filterpattern",
+                             ".*must not appear as a descendant of an element with the attribute “role=img”.*"])
         specTestArgs.extend([
             "https://html.spec.whatwg.org/",
             "https://dom.spec.whatwg.org/",
