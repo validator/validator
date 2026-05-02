@@ -13,7 +13,7 @@ vnu – The Nu Html Checker
 ## On any system with JBang installed
 `jbang vnu@validator/validator [OPTIONS]... FILES|DIRECTORY|URL`
 
-## On any system with Java11+ installed
+## On any system with Java17+ installed
 `java -jar ~/vnu.jar [OPTIONS]... FILES|DIRECTORY|URL...`
 
 `vnu [OPTIONS]... FILES|DIRECTORY|URL...`

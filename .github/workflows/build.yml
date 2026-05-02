@@ -28,8 +28,6 @@ jobs:
           - 25
         include:
           - os: ubuntu-latest
-            java: 11
-          - os: ubuntu-latest
             java: 17
           - os: ubuntu-latest
             java: 21
@@ -61,13 +59,9 @@ jobs:
         shell: bash
         run: |
           version="$(date +"%y.%-m.%-d") ($(git rev-parse --short ${{ github.sha }}))"
-          stacksize_flag=""
-          if [[ "${{ matrix.java }}" == "11" ]]; then
-            stacksize_flag="--stacksize=2048"
-          fi
-          python checker.py --version="$version" $stacksize_flag build
-          python checker.py --version="$version" $stacksize_flag jar
-          python checker.py --version="$version" $stacksize_flag war
+          python checker.py --version="$version" build
+          python checker.py --version="$version" jar
+          python checker.py --version="$version" war
       - name: Build runtime image
         if: ${{ env.IS_ANY_RELEASE_BUILDER == 'true' }}
         shell: bash

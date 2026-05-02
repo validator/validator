@@ -38,13 +38,13 @@ The vnu source code is available on [GitHub][5], as are [instructions on how to 
 The Nu Html Checker (vnu) is released upstream in these formats:
 
 - pre-compiled Linux, Windows, and macOS binaries that include an embedded Java runtime
-- `vnu.jar` — a portable version you can use on any system that has Java 11 or above installed
+- `vnu.jar` — a portable version you can use on any system that has Java 17 or above installed
 - `vnu.war` — for [deploying the vnu checker service through a servlet container such as Tomcat][11]
 
    [11]: #servlet-container
 
 > [!NOTE]
-> The `vnu.jar` and `vnu.war` files require you to have Java 11 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
+> The `vnu.jar` and `vnu.war` files require you to have Java 17 or above installed. The pre-compiled Linux, Windows, and macOS binaries don’t require you to have any version of Java already installed at all.
 
 A [Dockerfile][7] (see **[Pulling the Docker image][36]** below) and [npm][8] and [brew][10] packages are also available.
 
@@ -188,7 +188,7 @@ To run the vnu command-line checker provided by a Docker image on all the HTML f
 
 Follow the steps below to build, test, and run the vnu checker such that you can open `http://0.0.0.0:8888/` in a Web browser to use the vnu checker Web UI.
 
-  1. Make sure you have git, python, a 64-bit JDK 11 or above, [ant](https://ant.apache.org/manual/install.html), and [maven](https://maven.apache.org/install.html) installed.
+  1. Make sure you have git, python, a 64-bit JDK 17 or above, [ant](https://ant.apache.org/manual/install.html), and [maven](https://maven.apache.org/install.html) installed.
 
   2. Set the `JAVA_HOME` environment variable:
 
