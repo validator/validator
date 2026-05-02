@@ -211,6 +211,7 @@
     "html-aria/presentation-role/506-novalid.html": "An \u201cimg\u201d element with a \u201crole\u201d attribute must not have an \u201calt\u201d attribute whose value is the empty string.",
     "html-aria/presentation-role/507-novalid.html": "An \u201cimg\u201d element with a \u201crole\u201d attribute must not have an \u201calt\u201d attribute whose value is the empty string.",
     "html-aria/presentation-role/509-novalid.html": "An \u201cimg\u201d element with a \u201crole\u201d attribute must not have an \u201calt\u201d attribute whose value is the empty string.",
+    "html-aria/presentational-children/button-heading-descendant-novalid.html": "The element \u201ch1\u201d must not appear as a descendant of an element with the attribute \u201crole=button\u201d.",
     "html-aria/presentational-children/img-button-descendant-novalid.html": "The element \u201cbutton\u201d must not appear as a descendant of an element with the attribute \u201crole=img\u201d.",
     "html-aria/presentational-children/testcase-839-novalid.html": "The element \u201clabel\u201d must not appear as a descendant of an element with the attribute \u201crole=separator\u201d.",
     "html-aria/presentational-children/testcase-840-novalid.html": "The element \u201clabel\u201d must not appear as a descendant of an element with the attribute \u201crole=progressbar\u201d.",

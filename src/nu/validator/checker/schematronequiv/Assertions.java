@@ -523,6 +523,9 @@ public class Assertions extends Checker {
             "button", "img", "link", "math", "progressbar", "separator",
             "slider" };
 
+    private static final String[] PHRASING_ONLY_ANCESTOR_ROLES = {
+            "button", "img", "progressbar", "separator", "slider" };
+
     private static final String[] PROHIBITED_MAIN_ANCESTORS = { "a", "address",
             "article", "aside", "audio", "blockquote", "canvas", "caption",
             "dd", "del", "details", "dialog", "dt", "fieldset", "figure",
@@ -1778,6 +1781,21 @@ public class Assertions extends Checker {
             }
         }
     }
+    private void checkForPhrasingOnlyAncestorRole(String descendantUiString)
+            throws SAXException {
+        for (int i = 0; i < currentPtr; i++) {
+            String ancestorRole = stack[currentPtr - i].getRole();
+            if (ancestorRole != null && ancestorRole != ""
+                    && Arrays.binarySearch(
+                            PHRASING_ONLY_ANCESTOR_ROLES,
+                            ancestorRole) >= 0) {
+                err(descendantUiString + " must not appear as a"
+                        + " descendant of an element with the attribute"
+                        + " “role=" + ancestorRole + "”.");
+            }
+        }
+    }
+
 
     /**
      * @see nu.validator.checker.Checker#endDocument()
@@ -3097,6 +3115,15 @@ public class Assertions extends Checker {
                 if (!sectioningElementPtrs.isEmpty()) {
                     stack[sectioningElementPtrs.peekLast()].setHeadingFound();
                 }
+                checkForPhrasingOnlyAncestorRole(
+                        "The element “" + localName + "”");
+            }
+            if (roles != null && roles.contains("heading")
+                    && !"h1".equals(localName) && !"h2".equals(localName)
+                    && !"h3".equals(localName) && !"h4".equals(localName)
+                    && !"h5".equals(localName) && !"h6".equals(localName)) {
+                checkForPhrasingOnlyAncestorRole(
+                        "An element with the attribute “role=heading”");
             }
             if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
                     || (ancestorMask & H3_MASK) != 0

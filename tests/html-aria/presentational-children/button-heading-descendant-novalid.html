@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>role=button must not have heading descendants</title>
+</head>
+<body>
+<div role="button"><h1>a</h1></div>
+<div role="button"><h2>a</h2></div>
+<div role="button"><h3>a</h3></div>
+<div role="button"><h4>a</h4></div>
+<div role="button"><h5>a</h5></div>
+<div role="button"><h6>a</h6></div>
+<div role="button"><div role="heading" aria-level="1">a</div></div>
+</body>
+</html>
