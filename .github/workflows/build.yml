@@ -118,6 +118,10 @@ jobs:
       - name: Add the release tag
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         run: |
+          # actions/checkout doesn't fetch tags by default, so the
+          # version-computation below would not see existing remote
+          # tags without this fetch.
+          git fetch --tags --quiet origin
           PREFIX=$(date +%y.%-m.%-d)
           LAST=$(git tag --list "${PREFIX}.*" | grep -E "^${PREFIX}\.[0-9]+$" | awk -F. '{print $NF}' | sort -n | tail -1)
           if ! git tag --list "${PREFIX}" | grep -q .; then
