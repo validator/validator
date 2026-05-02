@@ -211,16 +211,14 @@ DEALINGS IN THE SOFTWARE.
 
   <target name="dl-html5spec" unless="${offline}">
     <echo>Downloading latest html5 specification</echo>
-    <mkdir dir="build/html5spec"/>
-    <get src="https://html.spec.whatwg.org/" dest="build/html5spec/html5spec-single.html" usetimestamp="true" tryGzipEncoding="true"/>
+    <get src="https://html.spec.whatwg.org/" dest="${validator.basedir}/resources/spec/html5spec-single.html" usetimestamp="true" tryGzipEncoding="true"/>
   </target>
 
-  <target name="dl-all" depends="dl-deps, dl-deps-modules, dl-deps-jetty, dl-deps-jacoco, dl-html5spec, dl-deps-antlib"/>
+  <target name="dl-all" depends="dl-deps, dl-deps-modules, dl-deps-jetty, dl-deps-jacoco, dl-deps-antlib"/>
 
   <target name="dl-clean">
     <echo>Remove ${depsDir}</echo>
     <delete dir="${depsDir}"/>
-    <delete dir="build/html5spec"/>
   </target>
 
   <target name="build" depends="jar"/>
@@ -845,7 +843,7 @@ DEALINGS IN THE SOFTWARE.
 
   <property name="python-executable" value="python3"/>
 
-  <target name="validator-resources" depends="dl-html5spec">
+  <target name="validator-resources">
     <local name="filesDir"/>
     <property name="filesDir" value="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
     <mkdir dir="${validator.build.basedir}/resources/nu/validator/localentities/files"/>
@@ -864,7 +862,7 @@ DEALINGS IN THE SOFTWARE.
     <copy file="${validator.basedir}/docs/wiki/Microsyntax-descriptions.md" tofile="${filesDir}/syntax-descriptions"/>
     <copy file="${validator.basedir}/resources/alt_advice.html" tofile="${filesDir}/vnu-alt-advice"/>
     <copy file="${validator.basedir}/resources/language-subtag-registry.txt" tofile="${filesDir}/subtag-registry"/>
-    <copy file="build/html5spec/html5spec-single.html" tofile="${filesDir}/html5spec"/>
+    <copy file="${validator.basedir}/resources/spec/html5spec-single.html" tofile="${filesDir}/html5spec"/>
 
     <copy todir="${filesDir}" preservelastmodified="true" flatten="true">
       <fileset dir="${validator.basedir}">

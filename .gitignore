@@ -7,7 +7,6 @@ build/build.pyc
 build/dist
 build/dist-war
 build/galimatias
-build/html5spec
 build/htmlparser
 build/jing-shaded.jar
 build/langdetect

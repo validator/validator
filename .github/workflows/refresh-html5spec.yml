@@ -1,0 +1,43 @@
+name: Refresh html5spec
+
+on:
+  workflow_run:
+    workflows: [Build]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Download latest HTML spec
+        run: ant -f build/build.xml dl-html5spec
+
+      - name: Open PR if the spec changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'chore: Refresh resources/spec/html5spec-single.html'
+          title: 'chore: Refresh resources/spec/html5spec-single.html'
+          body: |
+            Automated refresh of the bundled HTML spec from
+            <https://html.spec.whatwg.org/>, triggered by a successful
+            release build.
+          branch: refresh-html5spec
+          delete-branch: true
+          add-paths: resources/spec/html5spec-single.html

@@ -61,6 +61,16 @@ The project includes Playwright end-to-end tests for the web-based checker UI, l
 
 The e2e tests are also automatically run when you run `python ./checker.py test` (if Playwright is available).
 
+## Bundled HTML spec
+
+A copy of the WHATWG HTML spec is bundled into the checker — so it can emit excerpts of the spec in error/warning messages — and is tracked in the repo at `resources/spec/html5spec-single.html`. Ordinary builds and CI use that committed copy; nothing is downloaded at build time.
+
+The committed copy is refreshed by `.github/workflows/refresh-html5spec.yml` — which runs after each successful `Build` workflow run on `main` (and on `workflow_dispatch`), and opens a PR if the spec has changed upstream. You shouldn’t normally need to refresh it by hand. If you do want to test against the latest upstream spec locally:
+
+    ant -f build/build.xml dl-html5spec
+
+That writes directly to the tracked file — so it’ll dirty your working tree. Either revert it with `git checkout -- resources/spec/html5spec-single.html` when you’re done, or else open a spec-refresh PR if the changes look intentional.
+
 ## Commit-message title prefixes
 
 The project follows a convention of requiring commit-message titles to start with “type” prefixes; in particular:
