@@ -1417,7 +1417,7 @@ class Release():
         daemon = subprocess.Popen([javaCmd, ] + args)
         waitUntilServiceIsReady()
         try:
-            playwrightCmd = ["pnpm", "exec", "playwright", "test",
+            playwrightCmd = playwrightCommand() + ["test",
                              "--project=chromium"]
             print(shlex.join(playwrightCmd))
             subprocess.check_call(playwrightCmd,
@@ -2201,11 +2201,22 @@ def waitUntilServiceIsReady():
 
 
 def isPlaywrightAvailable():
-    """Check if Playwright e2e tests can be run in this environment."""
-    if not shutil.which("pnpm"):
-        return False
+    """Check if Playwright e2e tests can be run in this environment.
+
+    Returns True when either pnpm has installed @playwright/test into the
+    local node_modules, or playwright is on PATH (e.g. installed system-wide).
+    """
+    return playwrightCommand() is not None
+
+
+def playwrightCommand():
+    """Return the command (as a list) for invoking Playwright, or None."""
     playwrightDir = os.path.join(buildRoot, "node_modules", "@playwright", "test")
-    return os.path.exists(playwrightDir)
+    if shutil.which("pnpm") and os.path.exists(playwrightDir):
+        return ["pnpm", "exec", "playwright"]
+    if shutil.which("playwright"):
+        return ["playwright"]
+    return None
 
 
 def waitUntilServiceIsDown():
