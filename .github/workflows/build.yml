@@ -6,6 +6,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Serialize builds on main so that two pushes landing close together
+# do not race on the release-tag step. PR builds (which use a per-PR
+# ref) cancel earlier runs of the same PR.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: write
   id-token: write
