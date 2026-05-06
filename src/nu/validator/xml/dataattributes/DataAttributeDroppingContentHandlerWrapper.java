@@ -22,7 +22,6 @@
 
 package nu.validator.xml.dataattributes;
 
-import nu.validator.htmlparser.impl.NCName;
 import nu.validator.xml.AttributesImpl;
 
 import org.xml.sax.Attributes;
@@ -219,10 +218,15 @@ public class DataAttributeDroppingContentHandlerWrapper implements
                         + " characters from the range"
                         + " “A”\u2026“Z” in the name.",
                         locator));
-            } else if (!NCName.isNCNameTrail(c)) {
+            } else if (c == '\t' || c == '\n' || c == '\f'
+                    || c == '\r' || c == ' ' || c == '\u0000'
+                    || c == '/' || c == '=' || c == '>') {
                 errorHandler.error(new SAXParseException(
-                        "“data-*” attribute names must be"
-                        + " XML 1.0 4th ed. plus Namespaces NCNames.",
+                        "“data-*” attribute names must not"
+                        + " contain ASCII whitespace, U+0000 NULL,"
+                        + " U+002F SOLIDUS (/), U+003D EQUALS"
+                        + " SIGN (=), or U+003E GREATER-THAN"
+                        + " SIGN (>).",
                         locator));
             }
         }
