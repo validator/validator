@@ -775,7 +775,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging-version}"/>
       <dependency groupId="org.apache.commons" artifactId="commons-text" version="${commons-text-version}"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
-      <dependency groupId="org.eclipse.jetty.toolchain" artifactId="jetty-jakarta-servlet-api" version="${jakarta.servlet-api-version}"/>
+      <dependency groupId="jakarta.servlet" artifactId="jakarta.servlet-api" version="${jakarta.servlet-api-version}"/>
       <dependency groupId="log4j" artifactId="log4j" version="${log4j-version}"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-client" version="${jetty-version}"/>
@@ -783,7 +783,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-io" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-security" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-server" version="${jetty-version}"/>
-      <dependency groupId="org.eclipse.jetty" artifactId="jetty-ee10-servlets" version="${jetty-version}"/>
+      <dependency groupId="org.eclipse.jetty.ee10" artifactId="jetty-ee10-servlets" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-session" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="${jetty-version}"/>
       <dependency groupId="org.glassfish" artifactId="javax.json" version="${javax.json-version}"/>
