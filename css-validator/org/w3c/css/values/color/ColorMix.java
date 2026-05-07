@@ -4,13 +4,26 @@
 // (c) COPYRIGHT MIT, ERCIM, Keio University, Beihang University 2018.
 // Please first read the full copyright statement in file COPYRIGHT.html
 //
-package org.w3c.css.values;
+package org.w3c.css.values.color;
 
-import org.w3c.css.properties.css3.CssColor;
 import org.w3c.css.util.ApplContext;
+import org.w3c.css.util.CssVersion;
 import org.w3c.css.util.InvalidParamException;
+import org.w3c.css.values.CssCheckableValue;
+import org.w3c.css.values.CssColor;
+import org.w3c.css.values.CssExpression;
+import org.w3c.css.values.CssIdent;
+import org.w3c.css.values.CssOperator;
+import org.w3c.css.values.CssPercentage;
+import org.w3c.css.values.CssTypes;
+import org.w3c.css.values.CssValue;
+import org.w3c.css.values.CssValueList;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+
+import static org.w3c.css.values.CssOperator.COMMA;
+import static org.w3c.css.values.CssOperator.SPACE;
 
 public class ColorMix {
     public final static CssIdent in = CssIdent.getIdent("in");
@@ -19,9 +32,12 @@ public class ColorMix {
     public final static CssIdent[] polarColorSpaceValues;
     public final static CssIdent[] hueInterpolationMethodModifiers;
 
+    /**
+     @spec https://www.w3.org/TR/2026/WD-css-color-5-20260410/#typedef-rectangular-color-space
+     */
     static {
         String[] _rectangularColorSpaceValues = {"srgb", "srgb-linear", "display-p3",
-                "a98-rgb", "prophoto-rgb", "rec2020", "lab",
+                "display-p3-linear", "a98-rgb", "prophoto-rgb", "rec2020", "lab",
                 "oklab", "xyz", "xyz-d50", "xyz-d65"};
         rectangularColorSpaceValues = new CssIdent[_rectangularColorSpaceValues.length];
         for (int i = 0; i < _rectangularColorSpaceValues.length; i++) {
@@ -55,9 +71,57 @@ public class ColorMix {
     boolean has_css_variable = false;
 
     /**
-     * Create a new LightDark
+     * Create a new ColorMix
      */
     public ColorMix() {
+    }
+
+    public static ColorMix parseColorMix(ApplContext ac, CssExpression exp, CssColor caller)
+            throws InvalidParamException {
+        ColorMix colorMix = new ColorMix();
+        ArrayList<CssExpression> expressions = new ArrayList<>(3);
+        CssValue val;
+        char op;
+
+        if (ac.getCssVersion().compareTo(CssVersion.CSS3) < 0) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("color-mix(").append(exp.toStringFromStart()).append(')');
+            throw new InvalidParamException("notversion", sb.toString(),
+                    ac.getCssVersionString(), ac);
+        }
+
+        CssExpression e = new CssExpression();
+        while (!exp.end()) {
+            val = exp.getValue();
+            op = exp.getOperator();
+            e.addValue(val);
+            if (op == COMMA) {
+                expressions.add(e);
+                e = new CssExpression();
+            } else if (op != SPACE) {
+                throw new InvalidParamException("operator",
+                        Character.toString(op), ac);
+            }
+            exp.next();
+        }
+        if (e.getCount() != 0) {
+            expressions.add(e);
+        }
+        // now check if the first one is interpolation.
+        if (expressions.isEmpty()) {
+            throw new InvalidParamException("colorfunc", exp.toStringFromStart(), "color-mix", ac);
+        }
+
+        e = expressions.get(0);
+        val = e.getValue();
+        if (val.getType() == CssTypes.CSS_IDENT && ColorMix.in.equals(val.getIdent())) {
+            colorMix.setColorInterpolationMethod(ac, e, caller);
+            expressions.remove(0);
+        }
+        for (CssExpression colorex : expressions) {
+            colorMix.addColorPercentageValue(ac, colorex, caller);
+        }
+        return colorMix;
     }
 
     public static CssValue parseColorInterpolationMethod(ApplContext ac, CssExpression exp, CssValue caller)
@@ -91,6 +155,16 @@ public class ColorMix {
         exp.next();
         val = exp.getValue();
         op = exp.getOperator();
+        if (val.getType() == CssTypes.CSS_DASHED_IDENT) {
+            // TODO check it is a declared value
+            values.add(val);
+            exp.next();
+            if (!exp.end()) {
+                throw new InvalidParamException("unrecognize", ac);
+            }
+            return new CssValueList(values);
+        }
+        // else it should be a specific IDENT
         if (val.getType() != CssTypes.CSS_IDENT) {
             throw new InvalidParamException("value",
                     val.toString(), caller, ac);
@@ -146,14 +220,6 @@ public class ColorMix {
             throw new InvalidParamException("value",
                     val.toString(), caller, ac);
         }
-        if (id.toString().startsWith("--")) {
-            // TODO check it is a declared value
-            values.add(val);
-            if (!exp.end()) {
-                throw new InvalidParamException("unrecognize", ac);
-            }
-            return new CssValueList(values);
-        }
         throw new InvalidParamException("unrecognize", ac);
     }
 
@@ -172,11 +238,23 @@ public class ColorMix {
         op = exp.getOperator();
         if (val.getType() == CssTypes.CSS_PERCENTAGE) {
             gotPercentage = true;
+            CssCheckableValue v = val.getCheckableValue();
+            if (!v.isPositive()) {
+                throw new InvalidParamException("value", val.toString(), exp.toStringFromStart(), ac);
+            }
+            if (val.getRawType() == CssTypes.CSS_PERCENTAGE) {
+                CssPercentage p = val.getPercentage();
+                BigDecimal other = BigDecimal.valueOf(100);
+                if (p.getValue().compareTo(other) > 0) {
+                    throw new InvalidParamException("lowerequal",
+                            exp.toStringFromStart(), other.toPlainString(), ac);
+                }
+            }
             values.add(val);
         } else {
             CssExpression e = new CssExpression();
             e.addValue(val);
-            css3Color = new CssColor(ac, e);
+            css3Color = new org.w3c.css.properties.css3.CssColor(ac, e);
             values.add(css3Color.getColor());
         }
         exp.next();
@@ -190,6 +268,19 @@ public class ColorMix {
                 if (gotPercentage) {
                     throw new InvalidParamException("value", val.toString(), caller, ac);
                 }
+                CssCheckableValue v = val.getCheckableValue();
+                if (!v.isPositive()) {
+                    throw new InvalidParamException("value", val.toString(),
+                            exp.toStringFromStart(), ac);
+                }
+                if (val.getRawType() == CssTypes.CSS_PERCENTAGE) {
+                    CssPercentage p = val.getPercentage();
+                    BigDecimal other = BigDecimal.valueOf(100);
+                    if (p.getValue().compareTo(other) > 0) {
+                        throw new InvalidParamException("lowerequal",
+                                exp.toStringFromStart(), other.toPlainString(), ac);
+                    }
+                }
                 values.add(val);
             } else {
                 if (!gotPercentage) {
@@ -198,7 +289,7 @@ public class ColorMix {
                 }
                 CssExpression e = new CssExpression();
                 e.addValue(val);
-                css3Color = new CssColor(ac, e);
+                css3Color = new org.w3c.css.properties.css3.CssColor(ac, e);
                 values.add(css3Color.getColor());
             }
             exp.next();

@@ -15,16 +15,17 @@ import org.w3c.css.values.CssValue;
 import java.util.Arrays;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#propdef-font-size
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260303/#propdef-font-size
  */
 public class CssFontSize extends org.w3c.css.properties.css.CssFontSize {
 
     public static final CssIdent[] allowed_values;
-
+    public static CssIdent math;
 
     static {
         String[] absolute_values = {"xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large", "xxx-large"};
         String[] relative_values = {"smaller", "larger"};
+        math = CssIdent.getIdent("math");
 
         allowed_values = new CssIdent[absolute_values.length + relative_values.length];
         int i = 0;
@@ -81,7 +82,8 @@ public class CssFontSize extends org.w3c.css.properties.css.CssFontSize {
                 break;
             case CssTypes.CSS_IDENT:
                 CssIdent id = val.getIdent();
-                if (CssIdent.isCssWide(id) || getAllowedValue(id) != null) {
+                if (CssIdent.isCssWide(id) || getAllowedValue(id) != null
+                        || math.equals(id)) {
                     value = val;
                     break;
                 }

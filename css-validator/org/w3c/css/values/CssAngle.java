@@ -39,14 +39,14 @@ public class CssAngle extends CssCheckableValue implements CssValueFloat {
         return type;
     }
 
-    protected static final BigDecimal deg360;
+    public static final BigDecimal deg360;
 
     static {
         deg360 = BigDecimal.valueOf(360);
     }
 
     private BigDecimal value;
-    protected BigDecimal factor = BigDecimal.ONE;
+    public BigDecimal factor = BigDecimal.ONE;
     String unit;
 
     /**

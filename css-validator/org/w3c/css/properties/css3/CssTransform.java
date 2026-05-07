@@ -183,7 +183,7 @@ public class CssTransform extends org.w3c.css.properties.css.CssTransform {
                 parseOneX(ac, function.getParameters(), CssTypes.CSS_ANGLE, caller);
                 break;
             case perspective:
-                parseOneX(ac, function.getParameters(), CssTypes.CSS_LENGTH, caller);
+                parsePerspective(ac, function.getParameters(), caller);
                 break;
             // unknown function
             default:

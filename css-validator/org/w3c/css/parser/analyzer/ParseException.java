@@ -65,7 +65,7 @@ public class ParseException extends Exception {
   /**
    * This is the last token that has been consumed successfully.  If
    * this object has been created due to a parse error, the token
-   * followng this token will (therefore) be the first error token.
+   * following this token will (therefore) be the first error token.
    */
   public Token currentToken;
 
@@ -94,7 +94,7 @@ public class ParseException extends Exception {
                            int[][] expectedTokenSequences,
                            String[] tokenImage) {
 
-    StringBuffer expected = new StringBuffer();
+    StringBuilder expected = new StringBuilder();
     int maxSize = 0;
     for (int i = 0; i < expectedTokenSequences.length; i++) {
       if (maxSize < expectedTokenSequences[i].length) {
@@ -108,36 +108,38 @@ public class ParseException extends Exception {
       }
       expected.append(EOL).append("    ");
     }
-    String retval = "Encountered \"";
+    StringBuilder retval = new StringBuilder("Encountered \"");
     Token tok = currentToken.next;
     for (int i = 0; i < maxSize; i++) {
-      if (i != 0) retval += " ";
+      if (i != 0) retval.append(" ");
       if (tok.kind == 0) {
-        retval += tokenImage[0];
+        retval.append(tokenImage[0]);
         break;
       }
-      retval += " " + tokenImage[tok.kind];
-      retval += " \"";
-      retval += add_escapes(tok.image);
-      retval += " \"";
+      retval.append(' ').append(tokenImage[tok.kind]);
+      retval.append(" \"");
+      retval.append(add_escapes(tok.image));
+      retval.append(" \"");
       tok = tok.next;
     }
-    retval += "\" at line " + currentToken.next.beginLine + ", column " + currentToken.next.beginColumn;
-    retval += "." + EOL;
-    
-    
+    if (currentToken.next != null) {
+      retval.append("\" at line ").append(currentToken.next.beginLine).append(", column ").append(currentToken.next.beginColumn);
+    }
+    retval.append('.').append(EOL);
+
+
     if (expectedTokenSequences.length == 0) {
         // Nothing to add here
     } else {
 	    if (expectedTokenSequences.length == 1) {
-	      retval += "Was expecting:" + EOL + "    ";
+	      retval.append("Was expecting:").append(EOL).append("    ");
 	    } else {
-	      retval += "Was expecting one of:" + EOL + "    ";
+	      retval.append("Was expecting one of:").append(EOL).append("    ");
 	    }
-	    retval += expected.toString();
+	    retval.append(expected.toString());
     }
-    
-    return retval;
+
+    return retval.toString();
   }
 
 
@@ -147,7 +149,7 @@ public class ParseException extends Exception {
    * string literal.
    */
   static String add_escapes(String str) {
-      StringBuffer retval = new StringBuffer();
+      StringBuilder retval = new StringBuilder();
       char ch;
       for (int i = 0; i < str.length(); i++) {
         switch (str.charAt(i))
@@ -190,4 +192,4 @@ public class ParseException extends Exception {
    }
 
 }
-/* JavaCC - OriginalChecksum=7d68a6a068da3c9ac8d23a9a0983a253 (do not edit this line) */
+/* JavaCC - OriginalChecksum=0131ff0db19134fe366be6509cf664b5 (do not edit this line) */

@@ -26,14 +26,17 @@ import static org.w3c.css.values.CssOperator.COMMA;
 import static org.w3c.css.values.CssOperator.SPACE;
 
 /**
- * @spec https://www.w3.org/TR/2020/CRD-css-grid-1-20201218/#propdef-grid-template
+ * @spec https://www.w3.org/TR/2025/CRD-css-grid-2-20250326/#propdef-grid-template
  */
 public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate {
 
     public static final CssIdent[] allowed_repeat_values;
     public static final String repeat_func = "repeat";
+    public static final CssIdent subgrid;
+    public static final CssIdent auto_fill = CssIdent.getIdent("auto-fill");
 
     static {
+        subgrid = CssIdent.getIdent("subgrid");
         String[] _allowed_repeat_values = {"auto-fill", "auto-fit"};
         allowed_repeat_values = new CssIdent[_allowed_repeat_values.length];
         int i = 0;
@@ -94,21 +97,23 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
         if (expression.getCount() == 1) {
             // can only be 'none' or 'inherit'
             val = expression.getValue();
-            if (val.getType() != CssTypes.CSS_IDENT) {
-                throw new InvalidParamException("value",
-                        val.toString(),
-                        caller.getPropertyName(), ac);
-            }
-            CssIdent id = val.getIdent();
-            if (none.equals(id) || CssIdent.isCssWide(id)) {
-                values.add(val);
-                areaValues.add(val);
-                columnValues.add(val);
-                rowValues.add(val);
-            } else {
-                throw new InvalidParamException("value",
-                        val.toString(),
-                        caller.getPropertyName(), ac);
+            switch (val.getType()) {
+                case CssTypes.CSS_STRING:
+                    areaValues.add(val);
+                    break;
+                case CssTypes.CSS_IDENT:
+                    CssIdent id = val.getIdent();
+                    if (none.equals(id) || CssIdent.isCssWide(id)) {
+                        values.add(val);
+                        areaValues.add(val);
+                        columnValues.add(val);
+                        rowValues.add(val);
+                        break;
+                    }
+                default:
+                    throw new InvalidParamException("value",
+                            val.toString(),
+                            caller.getPropertyName(), ac);
             }
             expression.next();
         } else {
@@ -268,12 +273,15 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
 
     protected static CssValue parseTemplateRows(ApplContext ac, CssExpression exp, CssProperty caller)
             throws InvalidParamException {
+        CssValue val = exp.getValue();
         if (exp.getCount() == 1) {
-            CssValue val = exp.getValue();
             if (val.getType() == CssTypes.CSS_IDENT && none.equals(val.getIdent())) {
                 exp.next();
                 return val;
             }
+        }
+        if (val.getType() == CssTypes.CSS_IDENT && subgrid.equals(val.getIdent())) {
+            return parseSubgrid(ac, exp, caller);
         }
         exp.mark();
         try {
@@ -283,6 +291,86 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
             exp.reset();
             return parseAutoTrackList(ac, exp, caller);
         }
+    }
+
+    protected static CssValue parseSubgrid(ApplContext ac, CssExpression exp, CssProperty caller)
+            throws InvalidParamException {
+        ArrayList<CssValue> values = new ArrayList<>();
+        CssValue val;
+        char op;
+        boolean in_line_names = false;
+
+        // we got here because we had subgrid, but let's test first.
+        val = exp.getValue();
+        op = exp.getOperator();
+        if (val.getType() != CssTypes.CSS_IDENT || !subgrid.equals(val.getIdent())) {
+            throw new InvalidParamException("value",
+                    val.toString(),
+                    caller.getPropertyName(), ac);
+        }
+        if (op != SPACE) {
+            throw new InvalidParamException("operator", op,
+                    caller.getPropertyName(), ac);
+        }
+        values.add(val);
+        exp.next();
+
+        while (!exp.end()) {
+            val = exp.getValue();
+            op = exp.getOperator();
+            switch (val.getType()) {
+                case CssTypes.CSS_BRACKET:
+                    CssBracket bracket = (CssBracket) val;
+                    if (bracket.isLeft()) {
+                        if (in_line_names) {
+                            throw new InvalidParamException("value",
+                                    val.toString(),
+                                    caller.getPropertyName(), ac);
+                        }
+                        in_line_names = true;
+                    } else if (bracket.isRight()) {
+                        if (!in_line_names) {
+                            throw new InvalidParamException("value",
+                                    val.toString(),
+                                    caller.getPropertyName(), ac);
+                        }
+                        in_line_names = false;
+                    }
+                    values.add(val);
+                    break;
+                case CssTypes.CSS_IDENT:
+                    if (in_line_names) {
+                        // todo check unreserved words
+                        values.add(val);
+                        break;
+                    }
+                    throw new InvalidParamException("value",
+                            val.toString(),
+                            caller.getPropertyName(), ac);
+                case CssTypes.CSS_FUNCTION:
+                    if (in_line_names) {
+                        throw new InvalidParamException("value",
+                                val.toString(),
+                                caller.getPropertyName(), ac);
+                    }
+                    CssFunction function = val.getFunction();
+                    if (repeat_func.equals(function.getName())) {
+                        parseRepeatFunction(ac, function, RepeatType.NAME_REPEAT, caller);
+                        values.add(val);
+                        break;
+                    }
+                default:
+                    throw new InvalidParamException("value",
+                            val.toString(),
+                            caller.getPropertyName(), ac);
+            }
+            if (op != SPACE) {
+                throw new InvalidParamException("operator", op,
+                        caller.getPropertyName(), ac);
+            }
+            exp.next();
+        }
+        return values.size() == 1 ? values.get(0) : new CssValueList(values);
     }
 
     protected static CssValue parseTrackList(ApplContext ac, CssExpression exp, CssProperty caller)
@@ -465,12 +553,18 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
                 case CssTypes.CSS_FUNCTION:
                     CssFunction function = val.getFunction();
                     if (repeat_func.equals(function.getName())) {
-                        if (exp.getRemainingCount() == 1) {
-                            parseRepeatFunction(ac, function, RepeatType.AUTO_REPEAT, caller);
-                            values.add(val);
-                            got_auto = true;
-                        } else {
+                        if (got_auto) {
                             parseRepeatFunction(ac, function, RepeatType.FIXED_REPEAT, caller);
+                            values.add(val);
+                        } else {
+                            CssExpression expression = function.getParameters();
+                            CssValue funcval = expression.getValue();
+                            if (funcval.getType() == CssTypes.CSS_IDENT) {
+                                parseRepeatFunction(ac, function, RepeatType.AUTO_REPEAT, caller);
+                                got_auto = true;
+                            } else {
+                                parseRepeatFunction(ac, function, RepeatType.FIXED_REPEAT, caller);
+                            }
                             values.add(val);
                         }
                         got_line_names = false;
@@ -516,6 +610,9 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
 
         switch (val.getType()) {
             case CssTypes.CSS_IDENT:
+                if (type == RepeatType.NAME_REPEAT && auto_fill.equals(val.getIdent())) {
+                    break;
+                }
                 if ((getAllowedRepeatIdent(val.getIdent()) == null) || (type != RepeatType.AUTO_REPEAT)) {
                     throw new InvalidParamException("value",
                             val.toString(),
@@ -523,7 +620,8 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
                 }
                 break;
             case CssTypes.CSS_NUMBER:
-                if (type != RepeatType.TRACK_REPEAT && type != RepeatType.FIXED_REPEAT) {
+                if ((type != RepeatType.TRACK_REPEAT) && (type != RepeatType.FIXED_REPEAT)
+                        && (type != RepeatType.NAME_REPEAT)) {
                     throw new InvalidParamException("value",
                             val.toString(),
                             caller.getPropertyName(), ac);
@@ -553,7 +651,7 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
                 case CssTypes.CSS_BRACKET:
                     CssBracket bracket = (CssBracket) val;
                     if (bracket.isLeft()) {
-                        if (in_line_names || got_line_names) {
+                        if (in_line_names || (got_line_names && type != RepeatType.NAME_REPEAT)) {
                             throw new InvalidParamException("value",
                                     val.toString(),
                                     caller.getPropertyName(), ac);
@@ -580,6 +678,10 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
                         parseTrackSize(ac, val, caller);
                         got_line_names = false;
                     }
+                    if (type == RepeatType.AUTO_REPEAT) {
+                        parseFixedSize(ac, val, caller);
+                        got_line_names = false;
+                    }
                     break;
                 case CssTypes.CSS_NUMBER:
                 case CssTypes.CSS_LENGTH:
@@ -593,6 +695,7 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
                         case TRACK_REPEAT:
                             parseTrackSize(ac, val, caller);
                             break;
+                        case NAME_REPEAT:
                         default:
                             // wrong type?
                             throw new InvalidParamException("value",
@@ -635,6 +738,6 @@ public class CssGridTemplate extends org.w3c.css.properties.css.CssGridTemplate 
         cssGridTemplateRows.addToStyle(ac, style);
     }
 
-    protected enum RepeatType {TRACK_REPEAT, AUTO_REPEAT, FIXED_REPEAT}
+    protected enum RepeatType {TRACK_REPEAT, AUTO_REPEAT, FIXED_REPEAT, NAME_REPEAT}
 }
 

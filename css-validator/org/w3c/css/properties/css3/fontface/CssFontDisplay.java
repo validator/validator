@@ -13,7 +13,7 @@ import org.w3c.css.values.CssTypes;
 import org.w3c.css.values.CssValue;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#font-display-desc
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260422/#descdef-font-face-font-display
  */
 public class CssFontDisplay extends org.w3c.css.properties.css.fontface.CssFontDisplay {
 

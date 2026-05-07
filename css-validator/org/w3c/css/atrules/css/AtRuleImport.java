@@ -21,6 +21,7 @@ public class AtRuleImport extends AtRule {
 
     boolean is_url = false;
     String linkname = null;
+    AtRuleLayer layer = null;
     AtRuleMedia media = null;
 
     public String keyword() {
@@ -64,6 +65,10 @@ public class AtRuleImport extends AtRule {
             ret.append(linkname);
             ret.append('\"');
         }
+        if (layer != null) {
+            ret.append(' ');
+            ret.append(layer.getNameString());
+        }
         if (media != null && !media.isEmpty()) {
             ret.append(' ');
             ret.append(media.getValueString());
@@ -72,10 +77,12 @@ public class AtRuleImport extends AtRule {
         return ret.toString();
     }
 
-    public AtRuleImport(String linkname, boolean is_url, AtRuleMedia media) {
-        this.media = media;
+    public AtRuleImport(String linkname, boolean is_url,
+                        AtRuleLayer layer, AtRuleMedia media) {
         this.linkname = linkname;
         this.is_url = is_url;
+        this.layer = layer;
+        this.media = media;
     }
 
 	public String getLinkname() {

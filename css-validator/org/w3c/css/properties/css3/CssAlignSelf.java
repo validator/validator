@@ -21,7 +21,7 @@ import static org.w3c.css.values.CssOperator.SPACE;
 /**
  * @spec https://www.w3.org/TR/2018/CR-css-flexbox-1-20181119/#propdef-align-self
  * replaced by
- * @spec https://www.w3.org/TR/2020/WD-css-align-3-20200421/#propdef-align-self
+ * @spec https://www.w3.org/TR/2026/WD-css-align-3-20260130/#propdef-align-self
  */
 public class CssAlignSelf extends org.w3c.css.properties.css.CssAlignSelf {
 
@@ -29,14 +29,15 @@ public class CssAlignSelf extends org.w3c.css.properties.css.CssAlignSelf {
     public static final CssIdent[] self_position;
 
     static {
-        String[] _single_values = {"auto", "normal", "stretch"};
+        String[] _single_values = {"auto", "stretch"};
         single_align_self_values = new CssIdent[_single_values.length];
         int i = 0;
         for (String s : _single_values) {
             single_align_self_values[i++] = CssIdent.getIdent(s);
         }
+        // we add normal here per 'normal' | <self-position>
         String[] _self_position_values = {"center", "start", "end", "self-start",
-                "self-end", "flex-start", "flex-end"};
+                "self-end", "flex-start", "flex-end", "normal"};
         self_position = new CssIdent[_self_position_values.length];
         i = 0;
         for (String s : _self_position_values) {
@@ -73,8 +74,7 @@ public class CssAlignSelf extends org.w3c.css.properties.css.CssAlignSelf {
      * Creates a new CssAlignSelf
      *
      * @param expression The expression for this property
-     * @throws org.w3c.css.util.InvalidParamException
-     *          Expressions are incorrect
+     * @throws org.w3c.css.util.InvalidParamException Expressions are incorrect
      */
     public CssAlignSelf(ApplContext ac, CssExpression expression, boolean check)
             throws InvalidParamException {

@@ -16,7 +16,7 @@ import org.w3c.css.values.CssValueList;
 import java.util.ArrayList;
 
 /**
- * @spec https://www.w3.org/TR/2020/CRD-css-grid-1-20201218/#propdef-grid-template-rows
+ * @spec https://www.w3.org/TR/2025/CRD-css-grid-2-20250326/#propdef-grid-template-rows
  */
 public class CssGridTemplateRows extends org.w3c.css.properties.css.CssGridTemplateRows {
 
@@ -39,7 +39,6 @@ public class CssGridTemplateRows extends org.w3c.css.properties.css.CssGridTempl
         char op;
 
         ArrayList<CssValue> values = new ArrayList<>();
-        CssIdent ident;
 
         val = expression.getValue();
         op = expression.getOperator();

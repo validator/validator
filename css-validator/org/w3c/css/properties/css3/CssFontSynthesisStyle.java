@@ -15,14 +15,14 @@ import org.w3c.css.values.CssValue;
 import java.util.Arrays;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#propdef-font-synthesis-style
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260303/#propdef-font-synthesis-style
  */
 public class CssFontSynthesisStyle extends org.w3c.css.properties.css.CssFontSynthesisStyle {
 
     public static final CssIdent[] allowedValues;
 
     static {
-        String[] _allowedValues = {"auto", "none"};
+        String[] _allowedValues = {"auto", "none", "oblique-only"};
         allowedValues = new CssIdent[_allowedValues.length];
         for (int i = 0; i < allowedValues.length; i++) {
             allowedValues[i] = CssIdent.getIdent(_allowedValues[i]);

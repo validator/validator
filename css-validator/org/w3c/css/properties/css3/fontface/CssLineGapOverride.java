@@ -1,7 +1,7 @@
 //
 // Author: Yves Lafon <ylafon@w3.org>
 //
-// (c) COPYRIGHT MIT, ERCIM, Keio, Beihang, 2018.
+// (c) COPYRIGHT W3C, 2018.
 // Please first read the full copyright statement in file COPYRIGHT.html
 package org.w3c.css.properties.css3.fontface;
 
@@ -11,9 +11,14 @@ import org.w3c.css.values.CssExpression;
 import org.w3c.css.values.CssIdent;
 import org.w3c.css.values.CssTypes;
 import org.w3c.css.values.CssValue;
+import org.w3c.css.values.CssValueList;
+
+import java.util.ArrayList;
+
+import static org.w3c.css.values.CssOperator.SPACE;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#descdef-font-face-line-gap-override
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-5-20260303/#descdef-font-face-line-gap-override
  */
 public class CssLineGapOverride extends org.w3c.css.properties.css.fontface.CssLineGapOverride {
 
@@ -52,7 +57,7 @@ public class CssLineGapOverride extends org.w3c.css.properties.css.fontface.CssL
      */
     public CssLineGapOverride(ApplContext ac, CssExpression expression, boolean check)
             throws InvalidParamException {
-        if (check && expression.getCount() > 1) {
+        if (check && expression.getCount() > 2) {
             throw new InvalidParamException("unrecognize", ac);
         }
 
@@ -60,25 +65,31 @@ public class CssLineGapOverride extends org.w3c.css.properties.css.fontface.CssL
 
         char op;
         CssValue val;
+        ArrayList<CssValue> values = new ArrayList<>();
 
-        val = expression.getValue();
-        op = expression.getOperator();
-
-        switch (val.getType()) {
-            case CssTypes.CSS_PERCENTAGE:
-                value = val;
-                break;
-            case CssTypes.CSS_IDENT:
-                if (getAllowedIdent(val.getIdent()) != null) {
-                    value = val;
+        while (!expression.end()) {
+            val = expression.getValue();
+            op = expression.getOperator();
+            switch (val.getType()) {
+                case CssTypes.CSS_PERCENTAGE:
+                    values.add(val);
                     break;
-                }
-            default:
-                throw new InvalidParamException("value",
-                        val.toString(),
-                        getPropertyName(), ac);
+                case CssTypes.CSS_IDENT:
+                    if (getAllowedIdent(val.getIdent()) != null) {
+                        values.add(val);
+                        break;
+                    }
+                default:
+                    throw new InvalidParamException("value",
+                            val.toString(),
+                            getPropertyName(), ac);
+            }
+            expression.next();
+            if (!expression.end() && op != SPACE) {
+                throw new InvalidParamException("operator", op, ac);
+            }
         }
-        expression.next();
+        value = (values.size() == 1) ? values.get(0) : new CssValueList(values);
     }
 
     public CssLineGapOverride(ApplContext ac, CssExpression expression)

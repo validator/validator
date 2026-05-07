@@ -21,7 +21,7 @@ import static org.w3c.css.values.CssOperator.COMMA;
 import static org.w3c.css.values.CssOperator.SPACE;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#descdef-font-face-src
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260422/#descdef-font-face-src
  */
 public class CssSrc extends org.w3c.css.properties.css.fontface.CssSrc {
 
@@ -42,22 +42,23 @@ public class CssSrc extends org.w3c.css.properties.css.fontface.CssSrc {
         }
 
         i = 0;
-        String[] _allowed_font_technologies = {"variations", "palettes"};
+        String[] _allowed_font_technologies = {"variations", "palettes", "incremental"};
         allowed_font_technologies = new CssIdent[_allowed_font_technologies.length];
         for (String s : _allowed_font_technologies) {
             allowed_font_technologies[i++] = CssIdent.getIdent(s);
         }
 
         i = 0;
-        String[] _allowed_font_feature_technologies = {"opentype", "aat", "graphite"};
+        String[] _allowed_font_feature_technologies = {"features-opentype", "features-aat",
+                "features-graphite"};
         allowed_font_feature_technologies = new CssIdent[_allowed_font_feature_technologies.length];
         for (String s : _allowed_font_feature_technologies) {
             allowed_font_feature_technologies[i++] = CssIdent.getIdent(s);
         }
 
         i = 0;
-        String[] _allowed_color_font_technologies = {"COLRv0", "COLRv1", "SVG",
-                "sbix", "CBDT"};
+        String[] _allowed_color_font_technologies = {"color-COLRv0", "color-COLRv1", "color-SVG",
+                "color-sbix", "color-CBDT"};
         allowed_color_font_technologies = new CssIdent[_allowed_color_font_technologies.length];
         for (String s : _allowed_color_font_technologies) {
             allowed_color_font_technologies[i++] = CssIdent.getIdent(s);
@@ -150,7 +151,7 @@ public class CssSrc extends org.w3c.css.properties.css.fontface.CssSrc {
     protected CssValue parseSrcLayer(ApplContext ac, CssExpression expression, boolean check)
             throws InvalidParamException {
 
-        if (check && expression.getCount() > 2) {
+        if (check && expression.getCount() > 3) {
             throw new InvalidParamException("unrecognize", ac);
         }
 
@@ -182,6 +183,10 @@ public class CssSrc extends org.w3c.css.properties.css.fontface.CssSrc {
                             parseLocalFunction(ac, f);
                             values.add(f);
                             break;
+                        case "tech":
+                            parseTechFunction(ac, f);
+                            values.add(f);
+                            break;
                         case "format":
                             if (gotFormat) {
                                 throw new InvalidParamException("value",
@@ -206,6 +211,34 @@ public class CssSrc extends org.w3c.css.properties.css.fontface.CssSrc {
             expression.next();
         }
         return (values.size() == 1) ? values.get(0) : new CssValueList(values);
+    }
+
+    public static boolean isSingleTech(CssIdent ident) {
+        return ((getMatchingFontTechnology(ident) != null)
+                || (getMatchingFontFeatureTechnology(ident) != null)
+                || (getMatchingColorFontTechnology(ident) != null));
+    }
+
+    protected void parseTechFunction(ApplContext ac, CssFunction f)
+            throws InvalidParamException {
+        CssExpression exp = f.getParameters();
+        char op;
+        CssValue val;
+        while (!exp.end()) {
+            val = exp.getValue();
+            op = exp.getOperator();
+
+            if (!isSingleTech(val.getIdent())) {
+                throw new InvalidParamException("value",
+                        val.toString(),
+                        f.getName(), ac);
+            }
+            exp.next();
+            if (!exp.end() && op != COMMA) {
+                throw new InvalidParamException("operator", op,
+                        f.getName(), ac);
+            }
+        }
     }
 
     protected void parseFormatFunction(ApplContext ac, CssFunction f)

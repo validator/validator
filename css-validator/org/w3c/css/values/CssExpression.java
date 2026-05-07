@@ -47,7 +47,7 @@ public class CssExpression implements CssOperator {
     public void markCssVariable() {
         css_variable = true;
     }
-    
+
     /**
      * mark the current position, it can be set to this
      * position later by using reset
@@ -75,8 +75,13 @@ public class CssExpression implements CssOperator {
      * @param value The value to append
      */
     public void addValue(CssValue value) {
-        items.add(new ValueOperator(value));
-        count++;
+        if (value != null) {
+            if (value.getRawType() == CssTypes.CSS_VARIABLE) {
+                markCssVariable();
+            }
+            items.add(new ValueOperator(value));
+            count++;
+        }
     }
 
     /**
@@ -137,7 +142,7 @@ public class CssExpression implements CssOperator {
         }
     }
 
-	/* Modified by Sijtsche de Jong */
+    /* Modified by Sijtsche de Jong */
 
     /**
      * Returns the operator <strong>after</strong> the current value

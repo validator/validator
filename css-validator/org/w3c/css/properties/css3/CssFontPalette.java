@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class CssFontPalette extends org.w3c.css.properties.css.CssFontPalette {
 
     public static final CssIdent[] allowedValues;
-    public static final String _allowedValues[] = {"none", "normal", "light", "dark"};
+    public static final String _allowedValues[] = {"normal", "light", "dark"};
 
     static {
         allowedValues = new CssIdent[_allowedValues.length];
@@ -65,20 +65,26 @@ public class CssFontPalette extends org.w3c.css.properties.css.CssFontPalette {
         val = expression.getValue();
         op = expression.getOperator();
 
-        if (val.getType() != CssTypes.CSS_IDENT) {
-            throw new InvalidParamException("value",
-                    val.toString(),
-                    getPropertyName(), ac);
+        switch (val.getType()) {
+            case CssTypes.CSS_FUNCTION:
+                //TODO palette-mix()
+                value = val;
+                break;
+            case CssTypes.CSS_DASHED_IDENT:
+                value = val;
+                break;
+            case CssTypes.CSS_IDENT:
+                CssIdent ident = val.getIdent();
+                if (CssIdent.isCssWide(ident) || (getAllowedValue(ident) != null)) {
+                    value = val;
+                    break;
+                }
+            default:
+                throw new InvalidParamException("value",
+                        val.toString(),
+                        getPropertyName(), ac);
         }
-        CssIdent ident = val.getIdent();
-        if (CssIdent.isCssWide(ident) || (getAllowedValue(ident) != null)) {
-            value = val;
-            expression.next();
-        } else {
-            throw new InvalidParamException("value",
-                    val.toString(),
-                    getPropertyName(), ac);
-        }
+        expression.next();
     }
 
     public CssFontPalette(ApplContext ac, CssExpression expression)

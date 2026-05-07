@@ -37,6 +37,8 @@ public class CssTypes {
     public static final int CSS_MATH_FUNCTION = 24;
     public static final int CSS_VARIABLE = 25;
     public static final int CSS_VARIABLE_DEFINITION = 26;
+    public static final int CSS_ENV = 27;
+    public static final int CSS_DASHED_IDENT = 28;
 
     // not really a property value
     public static final int CSS_ANPLUSB = 48;

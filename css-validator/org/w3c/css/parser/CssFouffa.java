@@ -11,6 +11,7 @@
 package org.w3c.css.parser;
 
 import org.w3c.css.atrules.css.AtRuleImport;
+import org.w3c.css.atrules.css.AtRuleLayer;
 import org.w3c.css.atrules.css.AtRuleMedia;
 import org.w3c.css.atrules.css.AtRuleNamespace;
 import org.w3c.css.atrules.css.media.MediaFeature;
@@ -422,9 +423,9 @@ public final class CssFouffa extends CssParser {
      * @param file the file name in the import statement
      */
     public void handleImport(URL url, String file, boolean is_url,
-                             AtRuleMedia media) {
+                             AtRuleLayer layer, AtRuleMedia media) {
         // CssError cssError = null;
-        AtRuleImport importrule = new AtRuleImport(file, is_url, media);
+        AtRuleImport importrule = new AtRuleImport(file, is_url, layer, media);
         newAtRule(importrule);
         endOfAtRule();
 

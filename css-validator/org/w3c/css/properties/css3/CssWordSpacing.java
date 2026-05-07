@@ -16,7 +16,7 @@ import org.w3c.css.values.CssValue;
 import java.util.ArrayList;
 
 /**
- * @spec https://www.w3.org/TR/2024/WD-css-text-4-20240219/#propdef-word-spacing
+ * @spec https://www.w3.org/TR/2024/WD-css-text-4-20240529/#propdef-word-spacing
  */
 public class CssWordSpacing extends org.w3c.css.properties.css.CssWordSpacing {
 
@@ -54,6 +54,7 @@ public class CssWordSpacing extends org.w3c.css.properties.css.CssWordSpacing {
             case CssTypes.CSS_NUMBER:
                 val.getCheckableValue().checkEqualsZero(ac, this);
             case CssTypes.CSS_LENGTH:
+            case CssTypes.CSS_PERCENTAGE:
                 value = val;
                 break;
             case CssTypes.CSS_IDENT:

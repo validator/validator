@@ -13,13 +13,32 @@ import org.w3c.css.values.CssPercentage;
 import org.w3c.css.values.CssTypes;
 import org.w3c.css.values.CssValue;
 
+import java.util.Arrays;
+
 public class AtRuleKeyframes extends AtRule {
 
     static final CssIdent to, from;
+    static final CssIdent[] forbiddenValues;
 
     static {
         to = CssIdent.getIdent("to");
         from = CssIdent.getIdent("from");
+
+        String[] _forbiddenValues = {"none"};
+        forbiddenValues = new CssIdent[_forbiddenValues.length];
+        for (int i = 0; i < forbiddenValues.length; i++) {
+            forbiddenValues[i] = CssIdent.getIdent(_forbiddenValues[i]);
+        }
+        Arrays.sort(forbiddenValues);
+    }
+
+    public static final boolean isForbiddenValue(CssIdent ident) {
+        for (CssIdent id : forbiddenValues) {
+            if (id.equals(ident)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void checkSelectorValue(CssValue selector, ApplContext ac)
@@ -65,7 +84,16 @@ public class AtRuleKeyframes extends AtRule {
         return false;
     }
 
-    public void setName(String name) {
+    public void setName(ApplContext ac, String name)
+            throws InvalidParamException {
+        if (name != null) {
+            if (name.charAt(0) != '"') {
+                CssIdent ident = CssIdent.getIdent(name.toLowerCase());
+                if (CssIdent.isCssWide(ident) || isForbiddenValue(ident)) {
+                    throw new InvalidParamException("unrecognize", name, ac);
+                }
+            }
+        }
         this.name = name;
     }
 

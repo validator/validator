@@ -2,7 +2,7 @@
 // $Id$
 // From Philippe Le Hegaret (Philippe.Le_Hegaret@sophia.inria.fr)
 //
-// (c) COPYRIGHT MIT and INRIA, 1997.
+// (c) COPYRIGHT W3C, 1997
 // Please first read the full copyright statement in file COPYRIGHT.html
 package org.w3c.css.values;
 
@@ -23,7 +23,8 @@ public class CssIdent extends CssValue implements Comparable<CssIdent> {
     static {
         cachedValues = new HashMap<String, CssIdent>();
         cachedValues.put("none", new CssIdent("none"));
-        String[] _css_wide_ids = {"inherit", "initial", "unset", "revert"};
+        String[] _css_wide_ids = {"inherit", "initial", "unset",
+                "revert", "revert-layer"};
 
         css_wide = new CssIdent[_css_wide_ids.length];
         int i = 0;

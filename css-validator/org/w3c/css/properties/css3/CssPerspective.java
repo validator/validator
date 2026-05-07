@@ -52,7 +52,7 @@ public class CssPerspective extends org.w3c.css.properties.css.CssPerspective {
                 val.getCheckableValue().checkEqualsZero(ac, this);
             case CssTypes.CSS_LENGTH:
                 CssCheckableValue l = val.getCheckableValue();
-                l.checkStrictPositiveness(ac, this);
+                l.checkPositiveness(ac, this);
                 value = val;
                 break;
             case CssTypes.CSS_IDENT:

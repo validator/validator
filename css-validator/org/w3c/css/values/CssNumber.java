@@ -29,6 +29,7 @@ public class CssNumber extends CssCheckableValue implements CssValueFloat {
     BigDecimal value;
     boolean isInt = false;
     String _strval = null;
+    boolean relativeColor = false;
 
     /**
      * Create a new CssNumber
@@ -73,24 +74,58 @@ public class CssNumber extends CssCheckableValue implements CssValueFloat {
             val = s;
         }
 
-        if (val.equalsIgnoreCase("pi")) {
-            value = BigDecimal.valueOf(Math.PI);
-            isInt = false;
-            _strval = "pi";
-        } else if (val.equalsIgnoreCase("e")) {
-            value = BigDecimal.valueOf(Math.E);
-            isInt = false;
-            _strval = "e";
-        } else {
-            value = new BigDecimal(val);
-            isInt = (val.indexOf('.') < 0);
-/*		CSS integers are not value-based integers.
-        try {
-			value.toBigIntegerExact();
-			isInt = true;
-		} catch (ArithmeticException e) {
-			isInt = false;
-		} */
+        switch (val.toLowerCase()) {
+            case "pi":
+                value = BigDecimal.valueOf(Math.PI);
+                isInt = false;
+                _strval = "pi";
+                break;
+            case "e":
+                value = BigDecimal.valueOf(Math.E);
+                isInt = false;
+                _strval = "e";
+                break;
+            case "infinity":
+                value = BigDecimal.valueOf(Double.MAX_VALUE);
+                isInt = true;
+                _strval = "infinity";
+                break;
+            // special case for relative colors treated as numbers
+            // h, s, l, alpha, r, g, b,  h, w, b,  l, a, b,  l, c, h
+            // so a, alpha, b, c, g, h, l, r, s, w
+            case "a":
+            case "alpha":
+            case "b":
+            case "c":
+            case "g":
+            case "h":
+            case "l":
+            case "r":
+            case "s":
+            case "w":
+                // Fake value as it is relative to the "from" color
+                relativeColor = true;
+                value = BigDecimal.ONE;
+                isInt = true;
+                _strval = val.toLowerCase();
+                break;
+            case "nan":
+                // FIXME add warning that this iss invalid at compute time?
+                value = BigDecimal.valueOf(Long.MAX_VALUE);
+                isInt = false;
+                _strval = "NaN";
+                break;
+            default:
+                value = new BigDecimal(val);
+                isInt = (val.indexOf('.') < 0);
+                /*		CSS integers are not value-based integers.
+                try {
+                    value.toBigIntegerExact();
+                    isInt = true;
+                } catch (ArithmeticException ex) {
+                    isInt = false;
+                }
+                */
         }
         if (negate) {
             value = value.negate();

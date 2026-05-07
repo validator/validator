@@ -15,12 +15,12 @@ import org.w3c.css.values.CssValue;
 import java.util.Arrays;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#propdef-font-variant-emoji
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260303/#propdef-font-variant-emoji
  */
 public class CssFontVariantEmoji extends org.w3c.css.properties.css.CssFontVariantEmoji {
 
     public static final CssIdent[] emojiValues;
-    public static final String _emojiValues[] = {"auto", "text", "emoji", "unicode"};
+    public static final String _emojiValues[] = {"normal", "text", "emoji", "unicode"};
 
     static {
         emojiValues = new CssIdent[_emojiValues.length];

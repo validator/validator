@@ -4,12 +4,17 @@
 // (c) COPYRIGHT MIT, ERCIM, Keio University, Beihang University 2001-2018.
 // Please first read the full copyright statement in file COPYRIGHT.html
 //
-package org.w3c.css.values;
+package org.w3c.css.values.color;
 
 import org.w3c.css.util.ApplContext;
 import org.w3c.css.util.CssVersion;
 import org.w3c.css.util.InvalidParamException;
 import org.w3c.css.util.Util;
+import org.w3c.css.values.CssCheckableValue;
+import org.w3c.css.values.CssNumber;
+import org.w3c.css.values.CssPercentage;
+import org.w3c.css.values.CssTypes;
+import org.w3c.css.values.CssValue;
 
 public class RGB {
     static final String functionname = "rgb";
@@ -17,7 +22,7 @@ public class RGB {
     private String output = null;
     private boolean percent = false;
     boolean isModernCss = false;
-
+    
     CssValue vr, vg, vb;
 
     public static final CssValue filterValue(ApplContext ac, CssValue val)

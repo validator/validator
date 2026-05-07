@@ -15,9 +15,9 @@ import org.w3c.css.values.CssValue;
 import java.util.Arrays;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#propdef-font-stretch
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260303/#propdef-font-width
  */
-public class CssFontStretch extends org.w3c.css.properties.css.CssFontStretch {
+public class CssFontWidth extends org.w3c.css.properties.css.CssFontWidth {
 
     static final String[] _allowed_values = {"normal", "ultra-condensed",
             "extra-condensed", "condensed", "semi-condensed", "semi-expanded",
@@ -41,19 +41,19 @@ public class CssFontStretch extends org.w3c.css.properties.css.CssFontStretch {
     }
 
     /**
-     * Create a new CssFontStretch
+     * Create a new CssFontWidth
      */
-    public CssFontStretch() {
+    public CssFontWidth() {
         value = initial;
     }
 
     /**
-     * Creates a new CssFontStretch
+     * Creates a new CssFontWidth
      *
      * @param expression The expression for this property
      * @throws org.w3c.css.util.InvalidParamException Expressions are incorrect
      */
-    public CssFontStretch(ApplContext ac, CssExpression expression, boolean check)
+    public CssFontWidth(ApplContext ac, CssExpression expression, boolean check)
             throws InvalidParamException {
         if (check && expression.getCount() > 1) {
             throw new InvalidParamException("unrecognize", ac);
@@ -88,7 +88,7 @@ public class CssFontStretch extends org.w3c.css.properties.css.CssFontStretch {
         expression.next();
     }
 
-    public CssFontStretch(ApplContext ac, CssExpression expression)
+    public CssFontWidth(ApplContext ac, CssExpression expression)
             throws InvalidParamException {
         this(ac, expression, false);
     }

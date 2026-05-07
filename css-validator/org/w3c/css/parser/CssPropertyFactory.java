@@ -34,15 +34,18 @@ import java.util.StringTokenizer;
  */
 public class CssPropertyFactory implements Cloneable {
 
+    // TODO move to a Property set
     private static final String[] NONSTANDARD_PROPERTIES = //
-            {"zoom"};
+            {};
 
-    private static boolean isNonstandardProperty(String property) {
+    private static boolean isNonstandardProperty(AtRule atrule, String property) {
         if (property.charAt(0) == '-' || property.charAt(0) == '_') {
             return true;
         }
+        String prefix = atrule.lookupPrefix();
+        String prefixedProperty = ((prefix == null) || prefix.isEmpty()) ? property : "@" + prefix + '.' + property;
         for (String s : NONSTANDARD_PROPERTIES) {
-            if (s.equals(property)) {
+            if (s.equals(prefixedProperty)) {
                 return true;
             }
         }
@@ -175,10 +178,11 @@ public class CssPropertyFactory implements Cloneable {
         String classname = null;
         AtRuleMedia atRuleMedia;
         String media = null;
+        boolean isCatchall = false;
 
         // if the property name indicates a vendor extension, exit without checking
         // if we need to raise only a warning.
-        if (ac.getTreatVendorExtensionsAsWarnings() && isVendorExtension(property)) {
+        if (ac.getTreatVendorExtensionsAsWarnings() && isVendorExtension(atRule, property)) {
             throw new WarningParamException("vendor-extension", property);
         }
 
@@ -197,6 +201,11 @@ public class CssPropertyFactory implements Cloneable {
         }
         classname = setClassName(atRule, media, ac, property);
 
+        // special case for catchall in some rules
+        if (classname == null && atRule.isPropertyLookupStrict()) {
+            classname = getCatchallClass(atRule, media, ac, property);
+            isCatchall = (classname != null);
+        }
         // the property does not exist in this profile
         // this is an error... or a warning if it exists in another profile
         if (classname == null) {
@@ -278,6 +287,13 @@ public class CssPropertyFactory implements Cloneable {
                 CssProperty p = (CssProperty) constructor.newInstance(parameters);
                 p.value = cssIdent;
                 return p;
+            } else if (isCatchall) {
+                // create an instance of your property class
+                Class[] parametersType = {ac.getClass(), String.class, expression.getClass(), boolean.class};
+                Constructor constructor = Class.forName(classname).getConstructor(parametersType);
+                Object[] parameters = {ac, property, expression, Boolean.TRUE};
+                // invoke the constructor
+                return (CssProperty) constructor.newInstance(parameters);
             } else {
                 // create an instance of your property class
                 Class[] parametersType = {ac.getClass(), expression.getClass(), boolean.class};
@@ -293,6 +309,13 @@ public class CssPropertyFactory implements Cloneable {
             //	uncomment for debug - ex.printStackTrace();
             throw ex;
         }
+    }
+
+    private String getCatchallClass(AtRule atRule, String media, ApplContext ac, String property) {
+        // special case for catchall for some specific classes
+        java.lang.StringBuilder sb = new StringBuilder();
+        sb.append('@').append(atRule.keyword()).append('.').append("*catchall*");
+        return PropertiesLoader.getProfile(ac.getPropertyKey()).getProperty(sb.toString());
     }
 
     private String setClassName(AtRule atRule, String media, ApplContext ac, String property) {
@@ -330,7 +353,10 @@ public class CssPropertyFactory implements Cloneable {
         return null;
     }
 
-    private boolean isVendorExtension(String property) {
-        return property.length() > 0 && isNonstandardProperty(property);
+    private boolean isVendorExtension(AtRule atrule, String property) {
+        if (property == null || property.length() == 0) {
+            return false;
+        }
+        return isNonstandardProperty(atrule, property);
     }
 }

@@ -8,6 +8,7 @@ package org.w3c.css.properties.css3;
 import org.w3c.css.util.ApplContext;
 import org.w3c.css.util.InvalidParamException;
 import org.w3c.css.values.CssExpression;
+import org.w3c.css.values.CssFunction;
 import org.w3c.css.values.CssIdent;
 import org.w3c.css.values.CssLayerList;
 import org.w3c.css.values.CssString;
@@ -20,21 +21,34 @@ import static org.w3c.css.values.CssOperator.COMMA;
 import static org.w3c.css.values.CssOperator.SPACE;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#propdef-font-family
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260303/#propdef-font-family
  */
 public class CssFontFamily extends org.w3c.css.properties.css.CssFontFamily {
 
     public static final ArrayList<CssIdent> genericNames;
+    public static final ArrayList<CssIdent> genericScriptSpecificValues;
 
-    public static final String[] _genericNames = {
-            "serif", "sans-serif", "cursive", "fantasy", "monospace",
-            "system-ui", "emoji", "math", "fangsong", "ui-serif",
-            "ui-sans-serif", "ui-monospace", "ui-rounded"};
+    public static final String[] _generic_complete = {
+            "serif", "sans-serif", "system-ui", "cursive",
+            "fantasy", "math", "monospace"};
+    public static final String[] _generic_incomplete = {
+            "ui-serif", "ui-sans-serif", "ui-monospace", "ui-rounded"};
+    public static final String[] _generic_script_specific = {
+            "fangsong", "kai", "khmer-mul", "nastaliq"
+    };
 
     static {
-        genericNames = new ArrayList<CssIdent>(_genericNames.length);
-        for (String s : _genericNames) {
+        genericNames = new ArrayList<CssIdent>(_generic_complete.length
+                + _generic_incomplete.length);
+        for (String s : _generic_complete) {
             genericNames.add(CssIdent.getIdent(s));
+        }
+        for (String s : _generic_incomplete) {
+            genericNames.add(CssIdent.getIdent(s));
+        }
+        genericScriptSpecificValues = new ArrayList<>(_generic_script_specific.length);
+        for (String s : _generic_script_specific) {
+            genericScriptSpecificValues.add(CssIdent.getIdent(s));
         }
     }
 
@@ -42,6 +56,14 @@ public class CssFontFamily extends org.w3c.css.properties.css.CssFontFamily {
         int pos = genericNames.indexOf(ident);
         if (pos >= 0) {
             return genericNames.get(pos);
+        }
+        return null;
+    }
+
+    static public CssIdent getGenericScriptSpecificName(CssIdent ident) {
+        int pos = genericScriptSpecificValues.indexOf(ident);
+        if (pos >= 0) {
+            return genericScriptSpecificValues.get(pos);
         }
         return null;
     }
@@ -116,6 +138,28 @@ public class CssFontFamily extends org.w3c.css.properties.css.CssFontFamily {
                         if (getGenericFontName(id) != null) {
                             ac.getFrame().addWarning("generic-family.quote", 2);
                         }
+                    }
+                    values.add(val);
+                    break;
+                case CssTypes.CSS_FUNCTION:
+                    CssFunction f = val.getFunction();
+                    if (!"generic".equals(f.getName())) {
+                        throw new InvalidParamException("value", val,
+                                getPropertyName(), ac);
+                    }
+                    CssExpression fexp = f.getParameters();
+                    if (fexp.getCount() != 1) {
+                        throw new InvalidParamException("value", val,
+                                getPropertyName(), ac);
+                    }
+                    CssValue v = fexp.getValue();
+                    if (v.getType() != CssTypes.CSS_IDENT) {
+                        throw new InvalidParamException("value", val,
+                                getPropertyName(), ac);
+                    }
+                    if (getGenericScriptSpecificName(v.getIdent()) == null) {
+                        throw new InvalidParamException("value", val,
+                                getPropertyName(), ac);
                     }
                     values.add(val);
                     break;

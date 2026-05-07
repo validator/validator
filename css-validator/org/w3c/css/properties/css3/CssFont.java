@@ -22,7 +22,7 @@ import static org.w3c.css.values.CssOperator.SPACE;
  */
 public class CssFont extends org.w3c.css.properties.css.CssFont {
 
-    public CssFontStretch fontStretch = null;
+    public CssFontWidth fontWidth = null;
 
     public static final CssIdent normal;
     public static final CssIdent[] systemFonts;
@@ -155,14 +155,14 @@ public class CssFont extends org.w3c.css.properties.css.CssFont {
                             break;
                         }
                         // font-stretch
-                        if (CssFontStretch.getAllowedValue(id) != null) {
-                            if (fontStretch != null) {
+                        if (CssFontWidth.getAllowedValue(id) != null) {
+                            if (fontWidth != null) {
                                 throw new InvalidParamException("value",
                                         val.toString(),
                                         getPropertyName(), ac);
                             }
-                            fontStretch = new CssFontStretch();
-                            fontStretch.value = val;
+                            fontWidth = new CssFontWidth();
+                            fontWidth.value = val;
                             break;
                         }
                     }
@@ -277,9 +277,9 @@ public class CssFont extends org.w3c.css.properties.css.CssFont {
                 fontWeight = new CssFontWeight();
                 fontWeight.value = normal;
             }
-            if (fontStretch == null) {
-                fontStretch = new CssFontStretch();
-                fontStretch.value = normal;
+            if (fontWidth == null) {
+                fontWidth = new CssFontWidth();
+                fontWidth.value = normal;
             }
         }
     }
@@ -316,13 +316,13 @@ public class CssFont extends org.w3c.css.properties.css.CssFont {
             }
             sb.append(fontWeight);
         }
-        if (fontStretch != null) {
+        if (fontWidth != null) {
             if (first) {
                 first = false;
             } else {
                 sb.append(' ');
             }
-            sb.append(fontStretch);
+            sb.append(fontWidth);
         }
 
         // no need to test, if we are here we should have one!
@@ -349,8 +349,8 @@ public class CssFont extends org.w3c.css.properties.css.CssFont {
     @Override
     public void addToStyle(ApplContext ac, CssStyle style) {
         super.addToStyle(ac, style);
-        if (fontStretch != null) {
-            fontStretch.addToStyle(ac, style);
+        if (fontWidth != null) {
+            fontWidth.addToStyle(ac, style);
         }
     }
 }

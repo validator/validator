@@ -40,9 +40,10 @@ public class SimpleCharStream
 
   protected void ExpandBuff(boolean wrapAround)
   {
-    char[] newbuffer = new char[bufsize + 2048];
-    int newbufline[] = new int[bufsize + 2048];
-    int newbufcolumn[] = new int[bufsize + 2048];
+    int newBufsize = bufsize << 1;
+    char[] newbuffer = new char[newBufsize];
+    int newbufline[] = new int[newBufsize];
+    int newbufcolumn[] = new int[newBufsize];
 
     try
     {
@@ -82,10 +83,19 @@ public class SimpleCharStream
     }
 
 
-    bufsize += 2048;
+    bufsize = newBufsize;
     available = bufsize;
     tokenBegin = 0;
   }
+
+  static private final class EOSException extends java.io.IOException {
+    @Override
+    public Throwable fillInStackTrace() {
+      return this;
+    }
+  }
+
+  private static final java.io.IOException STATIC_FILLBUFF_EXCEPTION = new EOSException();
 
   protected void FillBuff() throws java.io.IOException
   {
@@ -116,7 +126,7 @@ public class SimpleCharStream
       if ((i = inputStream.read(buffer, maxNextCharInd, available - maxNextCharInd)) == -1)
       {
         inputStream.close();
-        throw new java.io.IOException();
+        throw STATIC_FILLBUFF_EXCEPTION;
       }
       else
         maxNextCharInd += i;
@@ -203,22 +213,20 @@ public class SimpleCharStream
     return c;
   }
 
-  @Deprecated
   /**
    * @deprecated
    * @see #getEndColumn
    */
-
+  @Deprecated
   public int getColumn() {
     return bufcolumn[bufpos];
   }
 
-  @Deprecated
   /**
    * @deprecated
    * @see #getEndLine
    */
-
+  @Deprecated
   public int getLine() {
     return bufline[bufpos];
   }
@@ -471,4 +479,4 @@ public class SimpleCharStream
   boolean getTrackLineColumn() { return trackLineColumn; }
   void setTrackLineColumn(boolean tlc) { trackLineColumn = tlc; }
 }
-/* JavaCC - OriginalChecksum=ddaf552144d8059b9d34162bcfbf9de7 (do not edit this line) */
+/* JavaCC - OriginalChecksum=9a4947fc106dec7e591403eb6c519392 (do not edit this line) */

@@ -107,6 +107,10 @@ public class CssCalc extends CssCheckableValue {
 
     public CssCalc addRightSide(String oper, CssValue value) throws InvalidParamException {
         _toString = null;
+        int l = oper.length();
+        if (l > 1) {
+            oper = oper.substring(l - 1);
+        }
         switch (oper) {
             case "+":
                 operator = CssOperator.PLUS;
@@ -430,6 +434,14 @@ public class CssCalc extends CssCheckableValue {
                 return val2.getPercentage();
             }
         }
+        if (computed_type == CssTypes.CSS_NUMBER) {
+            if (val1.getType() == CssTypes.CSS_NUMBER) {
+                return val1.getPercentage();
+            }
+            if (val2.getType() == CssTypes.CSS_NUMBER) {
+                return val2.getPercentage();
+            }
+        }
         throw new ClassCastException("unknown");
     }
 
@@ -454,6 +466,14 @@ public class CssCalc extends CssCheckableValue {
                 return val2.getTime();
             }
         }
+        if (computed_type == CssTypes.CSS_NUMBER) {
+            if (val1.getType() == CssTypes.CSS_NUMBER) {
+                return val1.getTime();
+            }
+            if (val2.getType() == CssTypes.CSS_NUMBER) {
+                return val2.getTime();
+            }
+        }
         throw new ClassCastException("unknown");
     }
 
@@ -466,6 +486,14 @@ public class CssCalc extends CssCheckableValue {
                 return val2.getAngle();
             }
         }
+        if (computed_type == CssTypes.CSS_NUMBER) {
+            if (val1.getType() == CssTypes.CSS_NUMBER) {
+                return val1.getAngle();
+            }
+            if (val2.getType() == CssTypes.CSS_NUMBER) {
+                return val2.getAngle();
+            }
+        }
         throw new ClassCastException("unknown");
     }
 
@@ -475,6 +503,14 @@ public class CssCalc extends CssCheckableValue {
                 return val1.getFrequency();
             }
             if (val2.getType() == CssTypes.CSS_FREQUENCY) {
+                return val2.getFrequency();
+            }
+        }
+        if (computed_type == CssTypes.CSS_NUMBER) {
+            if (val1.getType() == CssTypes.CSS_NUMBER) {
+                return val1.getFrequency();
+            }
+            if (val2.getType() == CssTypes.CSS_NUMBER) {
                 return val2.getFrequency();
             }
         }

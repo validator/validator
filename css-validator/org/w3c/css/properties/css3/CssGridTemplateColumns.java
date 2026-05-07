@@ -15,11 +15,8 @@ import org.w3c.css.values.CssValueList;
 
 import java.util.ArrayList;
 
-import static org.w3c.css.properties.css3.CssGridTemplate.parseAutoTrackList;
-import static org.w3c.css.properties.css3.CssGridTemplate.parseTrackList;
-
 /**
- * @spec https://www.w3.org/TR/2020/CRD-css-grid-1-20201218/#propdef-grid-template-rows
+ * @spec https://www.w3.org/TR/2025/CRD-css-grid-2-20250326/#propdef-grid-template-columns
  */
 public class CssGridTemplateColumns extends org.w3c.css.properties.css.CssGridTemplateColumns {
 
@@ -42,23 +39,13 @@ public class CssGridTemplateColumns extends org.w3c.css.properties.css.CssGridTe
         char op;
 
         ArrayList<CssValue> values = new ArrayList<>();
-        CssIdent ident;
 
         val = expression.getValue();
         op = expression.getOperator();
 
         switch (val.getType()) {
             case CssTypes.CSS_IDENT:
-                CssIdent id = val.getIdent();
-                if (CssIdent.isCssWide(id)) {
-                    if (expression.getCount() > 1) {
-                        throw new InvalidParamException("unrecognize", ac);
-                    }
-                    values.add(val);
-                    expression.next();
-                    break;
-                }
-                if (none.equals(id)) {
+                if (CssIdent.isCssWide(val.getIdent())) {
                     if (expression.getCount() > 1) {
                         throw new InvalidParamException("unrecognize", ac);
                     }
@@ -67,17 +54,9 @@ public class CssGridTemplateColumns extends org.w3c.css.properties.css.CssGridTe
                     break;
                 }
             default:
-                expression.mark();
-                try {
-                    values.add(parseTrackList(ac, expression, this));
-                } catch (InvalidParamException ex) {
-                    // perhaps an AutoTrackList?
-                    expression.reset();
-                    values.add(parseAutoTrackList(ac, expression, this));
-                }
+                values.add(CssGridTemplate.parseTemplateRows(ac, expression, this));
         }
         value = (values.size() == 1) ? values.get(0) : new CssValueList(values);
-
     }
 
     public CssGridTemplateColumns(ApplContext ac, CssExpression expression)

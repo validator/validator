@@ -4,7 +4,7 @@
 //
 // (c) COPYRIGHT MIT and INRIA, 1997.
 // Please first read the full copyright statement in file COPYRIGHT.html
-package org.w3c.css.values;
+package org.w3c.css.values.color;
 
 import java.util.HashMap;
 
@@ -16,7 +16,7 @@ public class CssColorCSS1 {
 
     protected static final HashMap<String, RGB> definedRGBColorsCSS1;
 
-    static RGB getRGB(String ident) {
+    public static RGB getRGB(String ident) {
         return definedRGBColorsCSS1.get(ident);
     }
 

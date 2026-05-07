@@ -18,11 +18,12 @@ import java.util.ArrayList;
 import static org.w3c.css.values.CssOperator.SPACE;
 
 /**
- * @spec https://www.w3.org/TR/2021/WD-css-fonts-4-20210729/#propdef-font-style
+ * @spec https://www.w3.org/TR/2026/WD-css-fonts-4-20260303/#propdef-font-style
  */
 public class CssFontStyle extends org.w3c.css.properties.css.CssFontStyle {
 
-    static final String[] _allowed_values = {"italic", "normal", "oblique"};
+    static final String[] _allowed_values = {"italic", "normal", "left",
+            "right", "oblique"};
     static final ArrayList<CssIdent> allowed_values;
     static public final CssIdent oblique = CssIdent.getIdent("oblique");
 

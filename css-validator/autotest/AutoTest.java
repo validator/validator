@@ -32,15 +32,17 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class AutoTest {
 
 	XMLReader saxReader;
+	AutoTestContentHandler autoTestContentHandler;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @throws SAXException
 	 */
-	public AutoTest() throws SAXException {
+	public AutoTest(String testInstance) throws SAXException {
 		saxReader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
-		saxReader.setContentHandler(new AutoTestContentHandler());
+		autoTestContentHandler = new AutoTestContentHandler(testInstance);
+		saxReader.setContentHandler(autoTestContentHandler);
 	}
 
 	/**
@@ -62,16 +64,52 @@ public class AutoTest {
 	 *            list of arguments of the program: uri [options]
 	 */
 	public static void main(String[] args) {
-		if (args.length != 1) {
-			System.out.println("Usage : AutoTest uri");
+		if (args.length == 0) {
+			System.out.println("Usage : AutoTest uri [instance]");
 			System.exit(1);
 		}
 
-		String uri = args[0];
+		String uri = null;
+		String instance = null;
 
+		if (args.length >= 1) {
+			uri = args[0];
+		}
+
+		if (args.length >= 2) {
+			instance = args[1];
+		}
+
+		System.out.println("Processing: " + uri);
 		try {
-			AutoTest parser = new AutoTest();
+			AutoTest parser = new AutoTest(instance);
 			parser.parse(uri);
+			if (parser.autoTestContentHandler.hasErrors()) {
+				System.err.println("\tTests outcome:" +
+					" " +
+					parser.autoTestContentHandler.getTestSuccessCount() +
+					" success(es)." +
+					" " +
+					parser.autoTestContentHandler.getTestFailCount() +
+					" failure(s)." +
+					" " +
+					parser.autoTestContentHandler.getTestErrorCount() +
+					" error(s)."
+					);
+				System.exit(1);
+			} else {
+				System.out.println("\tTests outcome:" +
+					" " +
+					parser.autoTestContentHandler.getTestSuccessCount() +
+					" success(es)." +
+					" " +
+					parser.autoTestContentHandler.getTestFailCount() +
+					" failure(s)." +
+					" " +
+					parser.autoTestContentHandler.getTestErrorCount() +
+					" error(s)."
+					);
+			}
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

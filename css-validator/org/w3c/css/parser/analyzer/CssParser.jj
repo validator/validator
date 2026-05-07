@@ -11,9 +11,11 @@ options {
     IGNORE_CASE  = true;
     STATIC = false;
     UNICODE_INPUT = true;
+    GENERATE_STRING_BUILDER = true;
     /*
-          DEBUG_TOKEN_MANAGER = true; 
-	  DEBUG_PARSER = true;      
+          DEBUG_TOKEN_MANAGER = true;
+	  DEBUG_PARSER = true;
+          DEBUG_LOOKAHEAD = true;
     */
 }
 
@@ -23,7 +25,10 @@ package org.w3c.css.parser.analyzer;
 
 import org.w3c.css.atrules.css.AtRuleCounterStyle;
 import org.w3c.css.atrules.css.AtRuleFontFace;
+import org.w3c.css.atrules.css.AtRuleFontFeatureValues;
+import org.w3c.css.atrules.css.AtRuleFontPaletteValues;
 import org.w3c.css.atrules.css.AtRuleKeyframes;
+import org.w3c.css.atrules.css.AtRuleLayer;
 import org.w3c.css.atrules.css.AtRuleMedia;
 import org.w3c.css.atrules.css.AtRulePage;
 import org.w3c.css.atrules.css.AtRulePhoneticAlphabet;
@@ -67,6 +72,8 @@ import org.w3c.css.values.CssCalc;
 import org.w3c.css.values.CssCheckableValue;
 import org.w3c.css.values.CssColor;
 import org.w3c.css.values.CssComparator;
+import org.w3c.css.values.CssDashedIdent;
+import org.w3c.css.values.CssEnv;
 import org.w3c.css.values.CssExpression;
 import org.w3c.css.values.CssFlexibleLength;
 import org.w3c.css.values.CssFrequency;
@@ -232,8 +239,8 @@ public abstract class CssParser {
      * @param url  The style sheet where this import statement appears.
      * @param file the file name in the import
      */  
-    public abstract void handleImport(URL url, String file, 
-				      boolean is_url, AtRuleMedia media);
+    public abstract void handleImport(URL url, String file, boolean is_url,
+				      AtRuleLayer layer, AtRuleMedia media);
 
     /**
      * Call by the namespace declaration statement.
@@ -429,6 +436,10 @@ public abstract class CssParser {
             if (v.getType() == CssTypes.CSS_VARIABLE) {
                 expr.markCssVariable();
             }
+	} else if ( token == FUNCTIONENV ) {
+            if (v.getType() == CssTypes.CSS_ENV) {
+                expr.markCssVariable();
+            }
         } else if ( token == FUNCTIONCALC ) {
                CssCalc c = (CssCalc) v;
                if (c.hasCssVariable()) {
@@ -609,7 +620,7 @@ TOKEN :
 <DEFAULT>
 TOKEN :
 {
-    <CUSTOM_PROPERTY_NAME : <MINUS> <MINUS> ( <NMSTART> ( <NMCHAR> )* )? >
+    <DASHED_IDENT : <MINUS> <MINUS> ( <NMSTART> ( <NMCHAR> )* )? >
 }
 
 <DEFAULT>
@@ -722,21 +733,39 @@ TOKEN [IGNORE_CASE] :
 
 <DEFAULT>
 TOKEN [IGNORE_CASE] :
-{ 
-    < IMPORT_SYM            : "@import">
-  | < NAMESPACE_SYM         : "@namespace">
-  | < MEDIA_SYM             : "@media" >
-  | < FONT_FACE_SYM         : "@font-face" >
-  | < KEYFRAMES_SYM         : "@keyframes" >
-  | < PREF_SYM              : "@preference" >
-  | < COLOR_PROFILE         : "@color-profile" >
-  | < A_COUNTER             : "@counter" >
-  | < COUNTER_STYLE_SYM     : "@counter-style" > 
-  | < PHONETIC_ALPHABET_SYM : "@phonetic-alphabet" >
-  | < SUPPORTS_SYM          : "@supports" >
-  | < VIEWPORT_SYM          : "@viewport" >
-  | < ATKEYWORD             : "@" <IDENT> >
+{
+    < FONT_FACE_SYM           : "@font-face" >
+  | < FONT_FEATURE_VALUES_SYM : "@font-feature-values" >
+  | < FONT_PALETTE_VALUES_SYM : "@font-palette-values" >
+  | < STYLISTIC_SYM	      : "@stylistic" >
+  | < HISTORICAL_FORMS_SYM    : "@historical-forms" >
+  | < STYLESET_SYM            : "@styleset" >
+  | < CHARACTER_VARIANT_SYM   : "@character-variant" >
+  | < SWASH_SYM               : "@swash" >
+  | < ORNAMENTS_SYM           : "@ornaments" >
+  | < ANNOTATION_SYM          : "@annotation" >
 }
+
+<DEFAULT>
+TOKEN [IGNORE_CASE] :
+{ 
+    < IMPORT_SYM              : "@import">
+  | < NAMESPACE_SYM           : "@namespace">
+  | < MEDIA_SYM               : "@media" >
+  | < KEYFRAMES_SYM           : "@keyframes" >
+  | < PREF_SYM                : "@preference" >
+  | < COLOR_PROFILE           : "@color-profile" >
+  | < A_COUNTER               : "@counter" >
+  | < COUNTER_STYLE_SYM       : "@counter-style" > 
+  | < LAYER_SYM               : "@layer" >
+  | < PHONETIC_ALPHABET_SYM   : "@phonetic-alphabet" >
+  | < SUPPORTS_SYM            : "@supports" >
+  | < VIEWPORT_SYM            : "@viewport" >
+  | < ATKEYWORD               : "@" <IDENT> >
+}
+
+
+
 
 <DEFAULT>
 TOKEN [IGNORE_CASE] :
@@ -781,6 +810,10 @@ TOKEN [IGNORE_CASE] :
     | <FUNCTIONCLAMP         : "clamp("            >
     | <FUNCTIONATTR          : "attr("             >
     | <FUNCTIONVAR           : "var("              >
+    | <FUNCTIONENV           : "env("              >
+    | <FUNCTIONLAYER         : "layer("            >
+    | <FUNCTIONSELECTOR      : "selector("         >
+    | <FUNCTIONATRULE        : "at-rule("          >
 }
 
 <DEFAULT>
@@ -918,8 +951,9 @@ void charset() :
 void nested_at_rules() : {
 }
 {
-  ( media() | page() | fontFace() | keyframes() | preference() | viewport()
-    | colorprofile() | counterstyle() | phoneticAlphabet() | supports() | atRuleDeclaration() )
+  ( media() | page() | fontFace() | fontPaletteValues() | fontFeatureValues() | keyframes()
+    | preference() | viewport() | colorprofile() | counterstyle()
+    | phoneticAlphabet() | supports() | atRuleDeclaration() | layer() )
 }
 
 void afterImportDeclaration() :
@@ -1018,9 +1052,12 @@ void namespaceDeclaration() :
 void importDeclaration() :
 {Token n;
     AtRuleMedia media = AtRuleMedia.getInstance(ac.getCssVersion());
+    AtRuleLayer layer = null;
     CssValue val; 
     String importFile;
     boolean is_url = false;
+    String layername = "";
+    CssVersion version = ac.getCssVersion();
 }
 {
     try {
@@ -1041,10 +1078,31 @@ void importDeclaration() :
 	    } 
 	    )
 	    ( <S> )*
+            ( (  "layer" {
+			     if (version.compareTo(CssVersion.CSS3) < 0) {
+                                 addError(new InvalidParamException("noatruleyet", "", ac),
+                                 skipStatement());
+                             }
+                             layer = new AtRuleLayer();
+                         }
+                         | ( <FUNCTIONLAYER> ( <S> )* n=<IDENT> {
+                                                                    if (version.compareTo(CssVersion.CSS3) < 0) {
+                                                                        addError(new InvalidParamException("noatruleyet", "", ac),
+                                                                        skipStatement());
+                                                                    }
+								    layer = new AtRuleLayer();
+								    layername = convertIdent(n.image);
+                                                                }
+                             ( <DOT> n=<IDENT> {
+						   layername = layername + "." + convertIdent(n.image);
+                                               } )*
+                             ( <S> )* <RPAREN> {
+						   layer.setName(convertIdent(n.image));
+                                               } ) ) ( <S> )* )?
 	    ( mediaquerylist(media) )? <SEMICOLON>
 	    ( <S> )*
 	    { 
-		handleImport(getURL(), importFile, is_url, media);
+		handleImport(getURL(), importFile, is_url, layer, media);
 	    } 
     } catch (ParseException e) {
 	addError(e, skipStatement()); 
@@ -1246,7 +1304,6 @@ void supports() :
  
 SupportsFeature supports_condition(AtRuleSupports supportsRule):
 {
-    Token t;
     SupportsFeature f = null;
     SupportsFeature nf, mf;
     boolean got_multi = false;
@@ -1277,9 +1334,34 @@ SupportsFeature supports_condition(AtRuleSupports supportsRule):
     }
 }
 
+CssIdent at_keyword():
+{
+    Token t;
+    CssIdent ident = new CssIdent();
+}
+{
+   ( t=<PAGE_SYM> | t=<PAGE_TOP_LEFT_CORNER> | t=<PAGE_TOP_LEFT> | t=<PAGE_TOP_CENTER> | t=<PAGE_TOP_RIGHT> |
+       t=<PAGE_TOP_RIGHT_CORNER> | t=<PAGE_BOTTOM_LEFT_CORNER> | t=<PAGE_BOTTOM_LEFT> | t=<PAGE_BOTTOM_CENTER> |
+       t=<PAGE_BOTTOM_RIGHT> | t=<PAGE_BOTTOM_RIGHT_CORNER> | t=<PAGE_LEFT_TOP> | t=<PAGE_LEFT_MIDDLE> |
+       t=<PAGE_LEFT_BOTTOM> | t=<PAGE_RIGHT_TOP> | t=<PAGE_RIGHT_MIDDLE> | t=<PAGE_RIGHT_BOTTOM> |
+       t=<FONT_FACE_SYM> | t=<FONT_FEATURE_VALUES_SYM> | t=<FONT_PALETTE_VALUES_SYM> | t=<STYLISTIC_SYM> |
+       t=<HISTORICAL_FORMS_SYM> | t=<STYLESET_SYM> | t=<CHARACTER_VARIANT_SYM> | t=<SWASH_SYM> |
+       t=<ORNAMENTS_SYM> | t=<ANNOTATION_SYM> | t=<IMPORT_SYM> | t=<NAMESPACE_SYM> | t=<MEDIA_SYM> |
+       t=<KEYFRAMES_SYM> | t=<PREF_SYM> | t=<COLOR_PROFILE> | t=<A_COUNTER> | t=<COUNTER_STYLE_SYM> | t=<LAYER_SYM> |
+       t=<PHONETIC_ALPHABET_SYM> | t=<SUPPORTS_SYM> | t=<VIEWPORT_SYM> | t=<ATKEYWORD> ) {
+           ident.set(convertIdent(t.image), ac);
+           return ident;
+       }
+}
+
 SupportsFeature supports_condition_in_parens(AtRuleSupports supportsRule):
 {
-    CssProperty p;
+    Token t;
+    CssProperty  p;
+    CssSelectors s;
+    Token        fct;
+    CssValue     fctval;
+    CssIdent     atrule;
     SupportsFeature f = new SupportsFeature();
     SupportsFeature nf;
 }
@@ -1287,11 +1369,17 @@ SupportsFeature supports_condition_in_parens(AtRuleSupports supportsRule):
     ( <LPAREN>  ( <S> )* 
       ( LOOKAHEAD(3) nf=supports_condition(supportsRule) { f.addFeature(nf); }
 	| p=declaration() { f.setProperty(p); }
+        | ( fct=<FUNCTIONSELECTOR> s=complex_selector(null) { f.setSelectors(s); } <RPAREN> ( <S> )* )
+        | ( fct=<FUNCTIONATRULE> ( <S> )* atrule=at_keyword() ( <S> )* <RPAREN> { f.setAtRule(atrule); } ( <S> )* )
+        | ( fctval=function() { f.setValue(ac, fctval); } ( <S> )* )
       )
       <RPAREN> ( <S> )*
     ) {
 	return f;
     }
+    | ( t=<FUNCTIONSELECTOR> s=complex_selector(null) { f.setSelectors(s); } <RPAREN>  ( <S> )* ) { return f; }
+    | ( fct=<FUNCTIONATRULE> ( <S> )* atrule=at_keyword() ( <S> )* <RPAREN> { f.setAtRule(atrule); } ( <S> )* ) { return f; }
+    | ( fctval=function() { f.setValue(ac, fctval); } ( <S> )* ) { return f; }
 	//   | general_enclosed(supportsRule)
      
 }
@@ -1549,16 +1637,21 @@ void keyframes() :
 }
 {
   try {
-    <KEYFRAMES_SYM> ( <S> )+ n=ident() ( <S> )* {
-      krule.setName(convertIdent(n.image));
-      if (version.compareTo(CssVersion.CSS3) < 0) {
-        skipStatement();
+    <KEYFRAMES_SYM> {
+       if (version.compareTo(CssVersion.CSS3) < 0) {
+        skipStatement();      
         addError(new InvalidParamException("noatruleyet", "", ac),
-    			     getAtRule().toString());
+                             getAtRule().toString());
       } else {
         newAtRule(getAtRule());
       }
-    }
+    }  ( <S> )+ ( n=ident() | n=<STRING> ) {
+      try {
+          krule.setName(ac, convertIdent(n.image));
+      } catch (InvalidParamException iex) {
+          addError(iex, getAtRule().toString());
+      }
+    }  ( <S> )*          
     <LBRACE> ( <S> )*
     ( s=keyframe_selector(null) {
         sl = new ArrayList<CssSelectors>();
@@ -1648,6 +1741,140 @@ void fontFace() :
         }
     } finally {
 	setAtRule(old);
+    }
+}
+
+void fontFeatureValuesAtRules() :
+{
+    ArrayList<CssProperty> v;
+    Token n;
+}
+{
+   try {
+      ( n=<STYLISTIC_SYM> | n=<HISTORICAL_FORMS_SYM> | n=<STYLESET_SYM>
+        | n=<CHARACTER_VARIANT_SYM> | n=<SWASH_SYM> | n=<ORNAMENTS_SYM>
+        | n=<ANNOTATION_SYM> )
+      <LBRACE> ( <S> )*
+           v=declarations() {
+           }
+      <RBRACE> ( <S> )*
+    } catch (ParseException e) {
+        addError(e, skipStatement());
+    }
+}
+
+void fontFeatureValues() :
+{
+    ArrayList<CssProperty> v = null;
+    ArrayList<CssProperty> allv = null;
+    CssProperty p = null;
+    AtRule old = getAtRule();
+    AtRuleFontFeatureValues ffv = new AtRuleFontFeatureValues();
+    setAtRule(ffv);
+    CssSelectors s = new CssSelectors(ac);
+    s.setAtRule(getAtRule());
+    Token n = null;
+    CssExpression exp = null;
+    boolean notCss3 = (ac.getCssVersion().compareTo(CssVersion.CSS3) < 0);
+    boolean gotContent = false;
+}
+{
+    try {
+        <FONT_FEATURE_VALUES_SYM> ( <S> )*
+            {
+                if (notCss3) {
+                    skipStatement();
+                    addError(new InvalidParamException("noatruleyet", "", ac),
+                             getAtRule().toString());
+                } else {
+                    newAtRule(getAtRule());
+                }
+
+            }
+        exp=expr() ( <S> )* {
+	        ffv.setTarget(ac, exp);
+            }
+        <LBRACE> ( <S> )* v=declarations() {
+		if ( v != null ) {
+         	    gotContent = true;
+                    if (allv == null) {
+			allv = new ArrayList<>();
+                    }
+             	    allv.addAll(v);
+         	}
+             }  ( fontFeatureValuesAtRules() { gotContent = true; } v=declarations() {
+		      if ( v != null ) {
+			  gotContent = true;
+                          if (allv == null) {
+                              allv = new ArrayList<>();
+                          }
+                          allv.addAll(v);
+                      }
+                  } )*
+         <RBRACE> ( <S> )* {
+             if (!notCss3) {
+                 if (!gotContent) {
+		     ac.getFrame().addWarning("no-declaration");
+		 } else if (v != null) {
+                     handleRule(s, v);
+                 }
+                 endOfRule();
+                 endOfAtRule();
+             }
+         }
+    } catch (ParseException e) {
+        if (!notCss3) {
+            addError(e, skipStatement());
+        }
+    } finally {
+        setAtRule(old);
+    }
+}
+
+void fontPaletteValues() :
+{
+    ArrayList<CssProperty> v;
+    AtRule old = getAtRule();
+    setAtRule(new AtRuleFontPaletteValues());
+    CssSelectors s = new CssSelectors(ac);
+    s.setAtRule(getAtRule());
+    Token n = null;
+    boolean notCss3 = (ac.getCssVersion().compareTo(CssVersion.CSS3) < 0);
+}
+{
+    try {
+        <FONT_PALETTE_VALUES_SYM> ( <S> )* 
+            {
+                if (notCss3) {
+                    skipStatement();
+                    addError(new InvalidParamException("noatruleyet", "", ac),
+                             getAtRule().toString());
+                } else {
+                    newAtRule(getAtRule());
+                }
+
+            }
+        n=<DASHED_IDENT> ( <S> )* {
+            }
+        <LBRACE> ( <S> )* v=declarations() <RBRACE> ( <S> )*
+             {
+                 if (!notCss3) {
+                     addProperty(v);
+                     endOfRule();
+                     endOfAtRule();
+                 }
+                 if (v == null) {
+                     ac.getFrame().addWarning("no-declaration");
+                 } else {
+                     handleRule(s, v);
+                 }
+             }
+    } catch (ParseException e) {
+        if (!notCss3) {
+            addError(e, skipStatement());
+        }
+    } finally {
+        setAtRule(old);
     }
 }
 
@@ -1781,6 +2008,60 @@ void counterstyle() :
 	    handleRule(s, v);
 	 }
       }
+  } catch (ParseException e) {
+    addError(e, skipStatement());
+  } finally {
+    setAtRule(old);
+  }
+}
+
+String layerident() :
+{
+  StringBuilder sb = new StringBuilder();
+  Token n = null;
+}
+{
+   n=ident() {
+     sb.append(convertIdent(n.image));
+   }
+   ( <DOT> n=ident() {
+     sb.append('.').append(convertIdent(n.image));
+   } )* ( <S> )* {
+     return sb.toString();
+   }
+}
+
+void layer() :
+{
+  Token n = null;
+  ArrayList<CssProperty> v;
+  AtRule old = getAtRule();
+  AtRuleLayer layerrule = new AtRuleLayer();
+  setAtRule(layerrule);
+  CssSelectors s = new CssSelectors(ac);
+  CssVersion version = ac.getCssVersion();
+  String layername;
+}
+{
+  try {
+    <LAYER_SYM> {
+      if (version.compareTo(CssVersion.CSS3) < 0) {
+        skipStatement();
+        addError(new InvalidParamException("noatruleyet", "", ac),
+                             getAtRule().toString());
+      } else {
+        newAtRule(layerrule);
+      }
+    // we need a layerident, then wait for a <COMMA>, <SEMICOLON> or <LBRACE>, let's use syntactic lookahead.
+    } ( <S> )* ( LOOKAHEAD(layerident() ( <COMMA> | <SEMICOLON> ) ) ( layername=layerident() {
+      layerrule.addLayerName(layername);
+    }                                   ( <COMMA> ( <S> )* layername=layerident() {
+      layerrule.addLayerName(layername);
+    }                                                        )* <SEMICOLON> ) | ( ( layername=layerident() {
+      layerrule.setName(layername);
+    }                                                                          )?
+    <LBRACE> ( <S> )* ( ruleSet()  | nested_at_rules() )* <RBRACE> ) )
+    ( <S> )*
   } catch (ParseException e) {
     addError(e, skipStatement());
   } finally {
@@ -1980,7 +2261,7 @@ String property() :
 {
  // ( hack? ident | hackedIdent ) ( <S> )*
     ( (hack="!" | hack="$" | hack="%" |  hack="&" | hack="`" | hack="?" | hack="<" | hack="|" | hack=<ANY> | hack=<EQ> | hack=<RBRACKET> | hack=<LBRACKET> | hack=<RPAREN> | hack=<LPAREN> | hack=<COLON> | hack=<TILDE> | hack=<PLUS> | hack=<COMMA> | hack=<GREATER> | hack=<DIV>)?
-    n=ident() | n=<CUSTOM_PROPERTY_NAME>) ( <S> )* {
+    n=ident() | n=<DASHED_IDENT>) ( <S> )* {
                  currentProperty = convertIdent(n.image);
                  if (hack != null && !"".equals(hack)) {
                    String hackp = hack.image+currentProperty;
@@ -2569,7 +2850,7 @@ void attribute_selector(CssSelectors s) :
 	   | val=<STRING> 
 	       { val.image = convertStringIndex(val.image, 1, val.image.length() -1, false);} 
 	   ) 
-	   ( LOOKAHEAD(2) ( <S> )+ mod=ident() )? ( <S> )*  )?
+	   ( LOOKAHEAD(2) ( <S> )* mod=ident() )? ( <S> )*  )?
     <RBRACKET>
       {
 	if (ac.getCssVersion() == CssVersion.CSS1) {
@@ -3191,10 +3472,11 @@ void term(CssExpression exp) :
         | func=mathclamp() { setValue(func, exp, operator, null, FUNCTION); } 
         | func=attr() { setValue(func, exp, operator, null, FUNCTION); }
         | func=functionvar() { setValue(func, exp, operator, null, FUNCTIONVAR); }
+        | func=functionenv() { setValue(func, exp, operator, null, FUNCTIONENV); }
         | func=function() { setValue(func, exp, operator, null, FUNCTION); }
         | n=<STRING> { setValue(new CssString(), exp, operator, n, STRING); }
         | n=<DIV>  { setValue(new CssSwitch(), exp, operator, n, DIV); }
-        | ( n=<RBRACKET> | n=<LBRACKET> ) {  setValue(new CssBracket(), exp, operator, n, RBRACKET); }
+        | ( n=<RBRACKET> | n=<LBRACKET> ) { setValue(new CssBracket(), exp, operator, n, RBRACKET); }
         | n=ident() {
 	/*
 	 * Common error :
@@ -3218,6 +3500,7 @@ void term(CssExpression exp) :
 		setValue(new CssIdent(), exp, operator, n, IDENT);
 	    }
         }
+        | n=<DASHED_IDENT> { setValue(new CssDashedIdent(), exp, operator, n, DASHED_IDENT); }
         | hashident(exp)
         | n=<URL> { 
 	    CssURL _u = new CssURL();
@@ -3510,6 +3793,11 @@ CssCheckableValue mathproduct() :
                          c.markCssVariable();
                      }
                  }
+                | v2=functionenv() {
+                     if (v2.getType() == CssTypes.CSS_ENV) {
+                         c.markCssVariable();
+                     }
+                 }
                )
            )
          ) {
@@ -3621,6 +3909,7 @@ char operator = ' ';
     | v=mathclamp()
     | v=attr()
     | v=functionvar()
+    | v=functionenv()
 ) {
      return v;
    }
@@ -3646,6 +3935,38 @@ CssExpression exp = null;
   }
 }
 
+CssCheckableValue functionenv() :
+{ Token n;
+ CssExpression exp = null;
+ CssExpression e;
+ CssEnv env = null;
+ String skipped = null;
+}
+{
+  <FUNCTIONENV> ( <S> )* n=<IDENT> ( <S> )* {
+     env = new CssEnv(ac, convertIdent(n.image));
+     e = new CssExpression();
+  }
+  (  term(e) )*
+  ( <COMMA> ( <S> )* try {
+                         exp = expr()
+                      } catch (ParseException pe) {
+                         skipped = skip_to_matching_paren();
+                         // FIXME do something meaningful with that string
+                         exp = null;
+                      }
+   )? <RPAREN>
+   {
+       env.setNumberExp(e);
+       if (exp != null) {
+	   env.setDeclaration(exp);
+       } else if (skipped != null) {
+	// do something fancy here
+       }
+       return env;
+   }
+}
+
 CssCheckableValue functionvar() :
 { Token n;
  CssExpression exp = null;
@@ -3653,7 +3974,7 @@ CssCheckableValue functionvar() :
  CssVariable var;
 }
 {
-  <FUNCTIONVAR> ( <S> )* n=<CUSTOM_PROPERTY_NAME> {
+  <FUNCTIONVAR> ( <S> )* n=<DASHED_IDENT> {
       var = new CssVariable(ac, convertIdent(n.image));
   } 
   ( <COMMA> ( <S> )* try {
@@ -3693,79 +4014,87 @@ CssValue function() :
 {Token n,p = null,q = null;
  CssExpression exp = new CssExpression();
  CssColor color = new CssColor();
+ CssImage img;
 }
 {
-    n=<FUNCTION> ( <S> )*  ( LOOKAHEAD(2) ( exp=expr() )?
-    ")" { 
+    n=<FUNCTION> ( <S> )*  ( LOOKAHEAD(2) ( exp=expr() )? <RPAREN>
+    {
 	String funcname = n.image.toLowerCase();
-	if (funcname.equals("rgb(")) {
-	    color.setRGBColor(ac, exp);
-	    return color;
-	} else if (funcname.equals("rgba(")) {
-	    color.setRGBAColor(ac, exp);
-	    return color;
-	} else if (funcname.equals("hsl(")) {
-	    color.setHSLColor(ac, exp);
-	    return color;
-	} else if (funcname.equals("hsla(")) {
-	    color.setHSLColor(ac, exp);
-	    return color;
-        } else if (funcname.equals("hwb(")) {
+	switch(funcname) {
+	    case "rgb(":
+            color.setRGBColor(ac, exp);
+            return color;
+        case "rgba(":
+            color.setRGBAColor(ac, exp);
+            return color;
+        case "hsl(":
+            color.setHSLColor(ac, exp);
+            return color;
+        case "hsla(":
+            color.setHSLAColor(ac, exp);
+            return color;
+        case "hwb(":
             color.setHWBColor(ac, exp);
             return color;
-        } else if (funcname.equals("lab(")) {
+        case "lab(":
             color.setLABColor(ac, exp);
             return color;
-        } else if (funcname.equals("lch(")) {
+        case "lch(":
             color.setLCHColor(ac, exp);
             return color;
-        } else if (funcname.equals("device-cmyk(")) {
+        case "oklab(":
+            color.setOKLABColor(ac, exp);
+            return color;
+        case "oklch(":
+            color.setOKLCHColor(ac, exp);
+            return color;
+        case "device-cmyk(":
             color.setDeviceCMYKColor(ac, exp);
             return color;
-        } else if (funcname.equals("light-dark(")) {
-	    color.setLightDark(ac, exp);
-	    return color;
-        } else if (funcname.equals("color-mix(")) {
-	    color.setColorMix(ac, exp);
-	    return color;
-	} else if (funcname.equals("image(")) {
-	    CssImage img = new CssImage();
+        case "light-dark(":
+            color.setLightDark(ac, exp);
+            return color;
+        case "color-mix(":
+            color.setColorMix(ac, exp);
+            return color;
+	case "image(":
+	    img = new CssImage();
 	    img.setImageList(exp, ac);
 	    return img;
-        } else if (funcname.equals("linear-gradient(")) {
-            CssImage img = new CssImage();
+	case "linear-gradient(":
+            img = new CssImage();
             img.setLinearGradient(exp, ac);
             return img;
-        } else if (funcname.equals("repeating-linear-gradient(")) {
-            CssImage img = new CssImage();
+        case "repeating-linear-gradient(":
+            img = new CssImage();
             img.setRepeatingLinearGradient(exp, ac);
             return img;
-        } else if (funcname.equals("radial-gradient(")) {
-            CssImage img = new CssImage();
+        case "radial-gradient(":
+            img = new CssImage();
             img.setRadialGradient(exp, ac);
             return img;
-        } else if (funcname.equals("repeating-radial-gradient(")) {
-            CssImage img = new CssImage();
+        case "repeating-radial-gradient(":
+            img = new CssImage();
             img.setRepeatingRadialGradient(exp, ac);
             return img;
-        } else if (funcname.equals("conic-gradient(")) {
-            CssImage img = new CssImage();
+        case "conic-gradient(":
+            img = new CssImage();
             img.setConicGradient(exp, ac);
             return img;
-        } else if (funcname.equals("repeating-conic-gradient(")) {
-            CssImage img = new CssImage();
+        case "repeating-conic-gradient(":
+            img = new CssImage();
             img.setRepeatingConicGradient(exp, ac);
             return img;
-	} else if (funcname.equals("atsc-rgba(")) {
+	case "atsc-rgba(":
 	    if (getAtRule().toString().equals("@media atsc-tv")) {
 	        color.setATSCRGBAColor(ac, exp);
 	        return color;
 	    } else {
-		addError(new InvalidParamException("onlyATSC", "", ac),
-						 getAtRule().toString());
+	        addError(new InvalidParamException("onlyATSC", "", ac),
+					 getAtRule().toString());
 	        return null;
 	    }
-	} else {
+	default:
 	    CssFunction f = new CssFunction();
 	    f.set(n.image.substring(0, n.image.length() - 1), exp);
 	    if (funcname.charAt(0) == '-') {
@@ -3773,7 +4102,7 @@ CssValue function() :
 	    }
 	    return f;
 	}
-    }   |  p=ident() <EQ> q=<NUMBER> ")" ) {
+    }   |  p=ident() <EQ> q=<NUMBER> <RPAREN> ) {
     // this one is for vendor extension like alpha(opacity=50);
         exp = new CssExpression();
         setValue(new CssIdent(), exp, ' ', p, IDENT);
@@ -3938,6 +4267,7 @@ String skip_to_matching_paren() {
             case FUNCTIONROUND:
             case FUNCTIONATTR:
             case FUNCTIONVAR:
+	    case FUNCTIONENV:
                 s.append(tok.image);
                 nesting++;
                 getNextToken();

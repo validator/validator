@@ -36,7 +36,7 @@ public class CssListStyleType extends org.w3c.css.properties.css.CssListStyleTyp
                 "malayalam", "mongolian", "myanmar", "oriya", "persian",
                 "lower-roman", "upper-roman", "tamil", "telugu", "thai",
                 "tibetan", "lower-alpha", "lower-latin", "upper-alpha",
-                "upper-latin", "cjk-earthly-branch", "cjk-heavenly-stem",
+                "upper-latin",
                 "lower-greek", "hiragana", "hiragana-iroha", "katakana",
                 "katakana-iroha", "disc", "circle", "square", "disclosure-open",
                 "disclosure-closed", "cjk-earthly-branch", "cjk-heavenly-stem",
