@@ -38,7 +38,7 @@ public final class RelValue extends AbstractDatatype {
     /**
      * IANA-registered link relation types.
      * Source: https://www.iana.org/assignments/link-relations/link-relations-1.csv
-     * Last updated: 2025-12-26
+     * plus "sitemap"
      */
     private static final Set<String> registeredValues = new HashSet<>(Arrays.asList(
         "about",
@@ -155,6 +155,7 @@ public final class RelValue extends AbstractDatatype {
         "service-doc",
         "service-meta",
         "sip-trunking-capability",
+        "sitemap",
         "sponsored",
         "start",
         "status",
