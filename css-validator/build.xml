@@ -67,31 +67,6 @@
     </war>
   </target>
 
-  <target name="autotest.build">
-    <javac srcdir="autotest"
-           classpathref="build.class.path"
-           classpath="."
-           debug="yes"
-           encoding="UTF-8"
-           includeantruntime="false"/>
-  </target>
-
-  <target name="autotest" depends="autotest.build,jar">
-    <fail message="&#xa0;${line.separator}${line.separator}
-  Usage: ant autotest -Dtestfile=testsuite/xml/FILENAME.xml">
-      <condition>
-        <not>
-          <isset property="testfile"/>
-        </not>
-      </condition>
-    </fail>
-    <property name="autotest.engine" value="jar"/>
-    <java classname="autotest.AutoTest" classpath="css-validator.jar:.">
-      <arg value="${testfile}"/>
-      <arg value="${autotest.engine}"/>
-    </java>
-  </target>
-
   <path id="generate.class.path">
     <path refid="build.class.path"/>
     <pathelement location="build"/>
@@ -116,10 +91,6 @@
     <delete dir="./build"/>
     <delete dir="./javadoc"/>
     <delete dir="./tmp"/>
-    <delete file="autotest/results/results.html"/>
-    <delete>
-      <fileset dir="autotest" includes="*.class"/>
-    </delete>
   </target>
 
 </project>

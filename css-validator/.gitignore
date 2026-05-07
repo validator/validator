@@ -7,8 +7,6 @@
 build
 lib
 tmp
-autotest/results/results.html
-autotest/testsuite
 observer-response.xsd
 properties.zip
 variables.test
