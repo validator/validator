@@ -6,6 +6,7 @@ repos:
         entry: bash -c './resources/check-commit.sh "$@"' --
         stages: [commit]
         language: system
+        pass_filenames: false
 
       - id: check-commit-message
         name: Checking commit message to ensure it meets all requirements
