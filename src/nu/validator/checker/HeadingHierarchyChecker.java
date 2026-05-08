@@ -142,8 +142,13 @@ public class HeadingHierarchyChecker extends Checker {
         }
 
         HeadingInfo previousHeading = null;
+        boolean hasTopLevelHeading = false;
 
         for (HeadingInfo heading : headings) {
+            if (heading.computedLevel == 1) {
+                hasTopLevelHeading = true;
+            }
+
             // Check for skipped levels
             if (previousHeading != null) {
                 int prevLevel = previousHeading.computedLevel;
@@ -169,9 +174,14 @@ public class HeadingHierarchyChecker extends Checker {
             previousHeading = heading;
         }
 
-        // Note: The spec says documents SHOULD have at least one heading with
-        // computed level 1, but this produces too many warnings for existing
-        // documents. If needed in the future, add a warning here.
+        // Per the HTML spec: "If a document has one or more headings, at
+        // least a single heading within the outline should have a heading
+        // level of 1." SHOULD requirement => warning, not error.
+        if (!hasTopLevelHeading) {
+            warn("This document has heading elements but none of them has"
+                    + " a computed heading level of 1.",
+                    headings.get(0).locator);
+        }
     }
 
     @Override
