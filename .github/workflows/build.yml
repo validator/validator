@@ -192,6 +192,25 @@ jobs:
           # Wipe any pre-existing assets first — so "orphaned" files the
           # build no longer produces don't linger on.
           removeArtifacts: true
+      - name: Refresh the release's published_at timestamp
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # GitHub's release page shows "github-actions released this
+          # N ago" using the release's published_at field, which only
+          # updates when a release transitions from Draft to Published.
+          # Without this step, published_at sticks at whenever the
+          # release was first published; subsequent assets/metadata
+          # updates from ncipollo above don't bump it. Briefly toggle
+          # draft so published_at gets refreshed each build.
+          REL_ID=$(gh api "repos/$GH_REPO/releases/tags/latest" --jq '.id')
+          gh api -X PATCH "repos/$GH_REPO/releases/$REL_ID" -F draft=true \
+            >/dev/null
+          gh api -X PATCH "repos/$GH_REPO/releases/$REL_ID" -F draft=false \
+            >/dev/null
+          echo "Refreshed published_at on release $REL_ID."
 
   verify-release-assets:
     name: Verify release assets
