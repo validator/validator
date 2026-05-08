@@ -45,5 +45,10 @@
     "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.3",
     "vitest": "^4.0.16"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
