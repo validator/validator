@@ -189,6 +189,9 @@ jobs:
           # by highest semver tag — so the badge would jump to an
           # old release (e.g. 20.6.30) on every update.
           makeLatest: true
+          # Wipe any pre-existing assets first — so "orphaned" files the
+          # build no longer produces don't linger on.
+          removeArtifacts: true
 
   verify-release-assets:
     name: Verify release assets
