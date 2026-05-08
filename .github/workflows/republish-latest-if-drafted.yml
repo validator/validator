@@ -1,0 +1,70 @@
+name: Republish 'latest' release if it's in Draft state
+
+# Safety net: if the GitHub Release for tag 'latest' ever ends up in
+# Draft state (e.g. because something deleted the tag, detaching the
+# release; or because ncipollo on a partial-failure run never got to
+# republish it), bring it back to Published state quickly.
+#
+# Trigger:
+#   - Whenever the Build workflow finishes (regardless of conclusion).
+#   - A 5-minute cron, as a backstop in case workflow_run is delayed.
+#   - Manual dispatch from the Actions UI.
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    types: [completed]
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Serialize attempts so two near-simultaneous triggers (e.g. a Build
+# completion and a cron tick) don't race against each other on the
+# release-edit API call.
+concurrency:
+  group: republish-latest
+
+jobs:
+  republish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish 'latest' if it's in Draft state
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -uo pipefail
+
+          # Drafts don't have a real tag attached, so the
+          # /releases/tags/{tag} endpoint returns 404 for them. List
+          # all releases and pick the most-recently-created one whose
+          # tag_name is 'latest'.
+          all=$(gh api "repos/$GH_REPO/releases?per_page=100")
+          json=$(jq -c '[.[] | select(.tag_name=="latest")]
+                        | sort_by(.created_at)
+                        | last // empty' <<<"$all")
+
+          if [ -z "$json" ] || [ "$json" = "null" ]; then
+            echo "No release with tag_name='latest' exists — nothing to do."
+            exit 0
+          fi
+
+          draft=$(jq -r '.draft' <<<"$json")
+          id=$(jq -r '.id' <<<"$json")
+          html_url=$(jq -r '.html_url' <<<"$json")
+
+          if [ "$draft" != "true" ]; then
+            echo "Release 'latest' (id=$id) is already published — nothing to do."
+            echo "  $html_url"
+            exit 0
+          fi
+
+          echo "::warning::Release 'latest' (id=$id) is in Draft state — publishing it."
+          echo "  before: $html_url"
+          gh api -X PATCH "repos/$GH_REPO/releases/$id" -f draft=false >/dev/null
+          new_url=$(gh api "repos/$GH_REPO/releases/$id" --jq '.html_url')
+          echo "  after:  $new_url"
+          echo "✅ Release 'latest' has been published."

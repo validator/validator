@@ -142,9 +142,17 @@ jobs:
       - name: Update the 'latest' tag
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         run: |
-          git push origin :refs/tags/latest || true
-          git tag -m latest -fa latest || true
-          git push origin main --tags
+          # Force-update the tag in place rather than delete-then-recreate.
+          # Deleting a tag on origin detaches its GitHub Release into Draft
+          # state (with an "untagged-…" URL); the release-assets job below
+          # would normally republish, but it's skipped whenever any matrix
+          # build fails — leaving the release stuck as a draft. A force-
+          # push updates the tag pointer atomically, with no transient
+          # period where the tag is missing.
+          git tag -fa -m latest latest
+          git push origin main
+          git push --force origin refs/tags/latest
+          git push origin --tags
 
   release-assets:
     name: Upload release assets
@@ -176,6 +184,11 @@ jobs:
           omitName: true
           tag: latest
           draft: false
+          # Pin the "Latest" badge to this release. Without this,
+          # ncipollo defaults to "legacy" which lets GitHub auto-pick
+          # by highest semver tag — so the badge would jump to an
+          # old release (e.g. 20.6.30) on every update.
+          makeLatest: true
 
   verify-release-assets:
     name: Verify release assets
