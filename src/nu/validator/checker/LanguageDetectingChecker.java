@@ -105,6 +105,8 @@ public class LanguageDetectingChecker extends Checker {
 
     private static final double MIN_PROBABILITY = .90;
 
+    private static final ULocale MESSAGE_LOCALE = ULocale.ENGLISH;
+
     private static final String[] RTL_LANGS = { "ar", "azb", "ckb", "dv", "fa",
             "he", "pnb", "ps", "sd", "ug", "ur" };
 
@@ -740,7 +742,7 @@ public class LanguageDetectingChecker extends Checker {
                 detectedLanguageName = "Lorem ipsum text";
                 preferredLanguageCode = "zxx";
             } else {
-                detectedLanguageName = locale.getDisplayName();
+                detectedLanguageName = locale.getDisplayName(MESSAGE_LOCALE);
                 preferredLanguageCode = detectedLanguageCode;
             }
             checkLangAttribute(detectedLanguage, detectedLanguageName,
