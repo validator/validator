@@ -33,6 +33,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.SequenceInputStream;
 import java.net.SocketTimeoutException;
+import java.util.zip.ZipException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,6 +72,7 @@ import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.DataUri;
 import nu.validator.io.StreamBoundException;
+import nu.validator.io.SystemIdIOException;
 import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.messages.GnuMessageEmitter;
 import nu.validator.messages.JsonMessageEmitter;
@@ -108,6 +110,7 @@ import nu.validator.xml.ariaattributes.AriaAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 
+import org.eclipse.jetty.client.HttpResponseException;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
@@ -1274,13 +1277,32 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (IncorrectSchemaException e) {
             log4j.debug("IncorrectSchemaException", e);
             errorHandler.schemaError(e);
+        } catch (HttpResponseException e) {
+            // HTTP failure (e.g., redirect loop) in response from server we
+            // sent a request to. Jetty surfaces these as RuntimeException-typed
+            // exceptions rather than as an IOException — so without this catch,
+            // we'd misclassify this as a checker bug.
+            isHtmlOrXhtml = false;
+            errorHandler.ioError(new SystemIdIOException(document,
+                    e.getMessage(), e));
         } catch (RuntimeException e) {
             isHtmlOrXhtml = false;
-            log4j.error("RuntimeException, doc: " + document + " schema: "
-                    + schemaUrls + " lax: " + laxType, e);
-            errorHandler.internalError(
-                    e,
-                    "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
+            // Jetty's gzip decoder wraps a ZipException in a RuntimeException
+            // when a server we sent a request to claims Content-Encoding: gzip
+            // but sends back bytes that aren't valid gzip data.
+            Throwable cause = e.getCause();
+            if (cause instanceof ZipException) {
+                errorHandler.ioError(new SystemIdIOException(document,
+                        "Cannot decode gzip-encoded response: "
+                                + cause.getMessage(),
+                        (ZipException) cause));
+            } else {
+                log4j.error("RuntimeException, doc: " + document + " schema: "
+                        + schemaUrls + " lax: " + laxType, e);
+                errorHandler.internalError(
+                        e,
+                        "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
+            }
         } catch (Error e) {
             isHtmlOrXhtml = false;
             log4j.error("Error, doc: " + document + " schema: " + schemaUrls
