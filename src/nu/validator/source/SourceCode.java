@@ -291,7 +291,11 @@ public final class SourceCode implements CharacterHandler {
             return;
         }
         int col = location.getColumn();
-        if (col == line.getBufferLength()) {
+        // Parser-reported columns can drift past the line's recorded length
+        // (surrogate pairs, NBSP normalization, character-reference expansion).
+        // So, we treat "past EOL" the same as "at EOL": Emit a newline — rather
+        // than indexing off the end of the buffer.
+        if (col >= line.getBufferLength()) {
             handler.newLine();
         } else {
             handler.characters(line.getBuffer(), line.getOffset() + col, 1);

@@ -47,6 +47,7 @@ public class SourceCodeTest {
         testIsWithinKnownSourceOutOfBounds();
         testEmitSourceDoesNotThrow();
         testEmitSourceWithErrors();
+        testEmitSourceWithErrorPastEndOfLine();
 
         System.out.println();
         System.out.println("Results: " + passed + " passed, " + failed + " failed");
@@ -126,13 +127,44 @@ public class SourceCodeTest {
         }
     }
 
+    private static void testEmitSourceWithErrorPastEndOfLine()
+            throws SAXException {
+        // Regression test: Parser-reported columns can drift past the
+        // line's actual recorded length — due, e.g., to surrogate pairs,
+        // NBSP normalization, or character-reference expansion. That used to
+        // cause a crash in emitCharacter with an ArrayIndexOutOfBoundsException
+        // when serializing the source-extract for the JSON output.
+        SourceCode sourceCode = createSourceCode("short");
+
+        sourceCode.addLocatorLocation(1, 2200);
+        sourceCode.rememberExactError(sourceCode.newLocatorLocation(1, 2200));
+
+        try {
+            sourceCode.emitSource(createNoOpHandler());
+            pass("emitSource with error past EOL completes without throwing");
+        } catch (IndexOutOfBoundsException e) {
+            fail("emitSource with error past EOL threw "
+                    + "IndexOutOfBoundsException: " + e.getMessage());
+        }
+    }
+
     private static SourceHandler createNoOpHandler() {
         return new SourceHandler() {
             @Override public void startSource(String type, String encoding)
                     throws SAXException {}
             @Override public void endSource() throws SAXException {}
             @Override public void characters(char[] ch, int start, int length)
-                    throws SAXException {}
+                    throws SAXException {
+                // Mimic the JSON Serializer's escape loop (which reads
+                // ch[i] for each i) — same exception type, same
+                // interaction with the AIOOBE try/catch swallows in
+                // emitContent. Without this, a no-op handler would
+                // silently accept bad (start, length) and these tests
+                // would not reproduce the production crash path.
+                for (int i = start; i < start + length; i++) {
+                    char unused = ch[i];
+                }
+            }
             @Override public void newLine() throws SAXException {}
             @Override public void startCharHilite(int line, int col)
                     throws SAXException {}
