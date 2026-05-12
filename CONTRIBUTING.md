@@ -102,14 +102,14 @@ If you’d like to contribute a bug fix or feature enhancement but aren’t sure
 * `assets` — CSS and JavaScript sources for https://validator.github.io/validator/
 * `checker.py` — build script
 * `build` – scripts for building, testing, and running the checker
-* `css-validator` – (subtree) CSS validator source code
+* `css-validator` – CSS validator
 * `docs` – vnu manual pages + makefile to generate actual (roff) man pages from them
-* `docs/wiki` – (subtree) https://github.com/validator/validator/wiki sources
+* `docs/wiki` – https://github.com/validator/validator/wiki sources
 * `e2e` – Playwright end-to-end tests for the web-based checker UI
 * `galimatias` – URL parser
-* `htmlparser` – (subtree) HTML parser
+* `htmlparser` – HTML parser
 * `langdetect` – language-detection library
-* `jing-trang` – (subtree) RelaxNG engine
+* `jing-trang` – RelaxNG engine
 * `package.json` – build file for the npm package
 * `resources` – config files, caching-related catalogs, and some example code
 * `schema` – HTML+SVG+MathML RelaxNG schemas (used with jing in the checker backend)

@@ -202,7 +202,6 @@ aboutFile = os.path.join("site", "about.html")
 stylesheetFile = os.path.join("site", "style.css")
 scriptFile = os.path.join("site", "script.js")
 filterFile = os.path.join("resources", "message-filters.txt")
-gitSubtreesFile = os.path.join(buildRoot, ".gitsubtrees.yaml")
 
 bindAddress = '0.0.0.0'
 portNumber = '8888'
@@ -2043,130 +2042,6 @@ def runGit(*args, check=True, capture_output=True, text=True):
     ).stdout.strip()
 
 
-def loadGitSubtreesFile(path: Path):
-    if not path.exists():
-        print(f"Error: {path} not found.", file=sys.stderr)
-        sys.exit(1)
-
-    result = {}
-    current_section = None
-
-    for line in path.read_text().splitlines():
-        if not line.strip() or line.strip().startswith("#"):
-            continue
-        if not line.startswith(" "):  # new top-level key
-            if not line.endswith(":"):
-                print(f"Error: malformed section header: {line}", file=sys.stderr)  # nopep8
-                sys.exit(1)
-            current_section = line.rstrip(":").strip()
-            result[current_section] = {}
-        else:
-            if current_section is None:
-                print(f"Error: key-value pair outside section: {line}", file=sys.stderr)  # nopep8
-                sys.exit(1)
-            key, _, value = line.strip().partition(":")
-            result[current_section][key.strip()] = value.strip()
-    return result
-
-
-def saveGitSubtreesFile(path: Path, data):
-    lines = []
-    for section, values in data.items():
-        lines.append(f"{section}:")
-        for key, value in values.items():
-            lines.append(f"    {key}: {value}")
-    path.write_text("\n".join(lines) + "\n")
-
-
-def getLastCommit(prefix: str):
-    """Return the last commit SHA in the subtree prefix."""
-    try:
-        return runGit("log", "-1", "--format=%H", "--", prefix)
-    except subprocess.CalledProcessError:
-        return None
-
-
-def updateSubtree(dir_name, info):
-    remote_url = info.get("remote_url")
-    remote_name = info.get("remote_name", Path(dir_name).name)
-    branch = info.get("remote_branch", "master")
-    last_local_merge = info.get("last_local_merge")
-    last_remote_commit = info.get("current_commit")
-    skip_updates = info.get("skip_updates")
-
-    if not remote_url:
-        print(f"⚠️ Skipping {dir_name}: no remote URL")
-        return False, last_local_merge, last_remote_commit
-
-    print(f"\n==> Checking {dir_name} ({branch})...")
-
-    if skip_updates and skip_updates == "true":
-        print(f"⏭️ Skipping {dir_name} because it has “skip_updates: true”")
-        return False, last_local_merge, last_remote_commit
-
-    try:
-        runGit("remote", "add", "-f", remote_name, remote_url)
-    except subprocess.CalledProcessError:
-        pass
-
-    try:
-        runGit("fetch", remote_name,
-               f"+refs/heads/*:refs/remotes/{remote_name}/*")
-    except subprocess.CalledProcessError:
-        print(f"⚠️ Failed to fetch remote {remote_name}, skipping {dir_name}")
-        return False, last_local_merge, last_remote_commit
-
-    try:
-        remote_sha = runGit("rev-parse",
-                            f"refs/remotes/{remote_name}/{branch}")
-    except subprocess.CalledProcessError:
-        available = runGit("branch", "-r")
-        print(f"⚠️ Remote branch '{branch}' not found for {dir_name}, skipping")  # nopep8
-        print(f"    Available remote branches:\n{available}")
-        return False, last_local_merge, last_remote_commit
-
-    current_last = getLastCommit(dir_name)
-
-    print(f"    Last local commit in subtree: {current_last}")
-    print(f"    Last local merge commit:      {last_local_merge}")
-    print(f"    Last pulled remote commit:    {last_remote_commit}")
-    print(f"    Remote HEAD commit:           {remote_sha}")
-
-    if current_last != last_local_merge:
-        print(f"⏭️ {dir_name} has local commits ahead of last merge; skipping update")  # nopep8
-        return False, last_local_merge, last_remote_commit
-
-    if last_remote_commit == remote_sha:
-        print(f"✅ {dir_name} is already up to date")
-        return False, last_local_merge, last_remote_commit
-
-    print(f"🔄 Updating {dir_name} from {remote_name}/{branch}")
-    runGit("subtree", "pull", "--prefix", dir_name, remote_name, branch, "--squash")  # nopep8
-
-    new_merge_commit = getLastCommit(dir_name)
-    return True, new_merge_commit, remote_sha
-
-
-def updateSubtrees():
-    data = loadGitSubtreesFile(Path(gitSubtreesFile))
-    updated_count = 0
-
-    for dir_name, info in data.items():
-        updated, new_local_merge, new_remote_commit = updateSubtree(dir_name, info)  # nopep8
-        if updated:
-            updated_count += 1
-            info["last_local_merge"] = new_local_merge
-            info["current_commit"] = new_remote_commit
-
-    if updated_count:
-        saveGitSubtreesFile(Path(gitSubtreesFile), data)
-
-    print(
-        f"\nSummary: {updated_count} subtree(s) updated, "
-        f"{len(data) - updated_count} already up to date or skipped due to local commits."  # nopep8
-    )
-
-
 def downloadExtras():
     url = "https://repo1.maven.org/maven2/log4j/apache-log4j-extras/1.2.17/apache-log4j-extras-1.2.17.jar"  # nopep8
     md5sum = "f32ed7ae770c83a4ac6fe6714f98f1bd"
@@ -2253,7 +2128,7 @@ def isServiceUp(defaultReply):
 
 def getTaskChoices():
     return [
-        'update-subtrees', 'dldeps', 'checkout', 'build', 'docker-build',
+        'dldeps', 'checkout', 'build', 'docker-build',
         'docker-run', 'docker-push', 'bundle', 'npm-install',
         'npm-release', 'maven-artifacts', 'maven-sign', 'maven-test',
         'maven-bundle', 'maven-release', 'maven-version-exists', 'image',
@@ -2595,9 +2470,7 @@ def main(argv, script_name=None):
         sys.exit(0)
 
     for taskIndex, task in enumerate(tasks):
-        if task == 'update-subtrees':
-            updateSubtrees()
-        elif task == 'dldeps':
+        if task == 'dldeps':
             downloadDependencies()
         elif task == 'checkout':
             pass
