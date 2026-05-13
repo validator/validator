@@ -592,6 +592,7 @@ public abstract class TreeBuilder<T> implements TokenHandler,
         templateModeStack = new int[64];
         listOfActiveFormattingElements = new StackNode[64];
         needToDropLF = false;
+        mode = INITIAL;
         originalMode = INITIAL;
         templateModePtr = -1;
         stackNodesIdx = 0;
