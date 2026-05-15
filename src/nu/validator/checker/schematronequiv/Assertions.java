@@ -4860,31 +4860,42 @@ public class Assertions extends Checker {
             }
         }
 
-        // ARIA 1.2 disallows “role=group” as a descendant of
-        // “role=list” (https://github.com/w3c/aria/commit/6166d99).
+        // ARIA 1.2 disallows “role=group” as an accessibility child
+        // of “role=list” (https://github.com/w3c/aria/commit/6166d99).
+        // Walk up to the nearest role-bearing ancestor (explicit or
+        // implicit role) and flag only if that ancestor is “role=list”.
+        // Plain elements with no role are transparent in the walk; an
+        // ancestor with role=listitem (or e.g. an <li>) interposes the
+        // relationship and so no error is reported in that case.
         if (roles != null && roles.contains("group")) {
             for (int i = 0; i < currentPtr; i++) {
                 StackNode ancestor = stack[currentPtr - i];
                 if (ancestor == null) {
                     continue;
                 }
-                List<String> ancestorRoles = ancestor.roles;
                 boolean ancestorIsList;
+                boolean ancestorHasAnyRole;
+                List<String> ancestorRoles = ancestor.roles;
                 if (ancestorRoles != null && !ancestorRoles.isEmpty()) {
                     ancestorIsList = ancestorRoles.contains("list");
+                    ancestorHasAnyRole = true;
                 } else {
                     String ancestorName = ancestor.getName();
-                    ancestorIsList = ancestorName != null
-                            && "list".equals(ELEMENTS_WITH_IMPLICIT_ROLE
-                                    .get(ancestorName));
+                    String implicitRole = ancestorName == null ? null
+                            : ELEMENTS_WITH_IMPLICIT_ROLE.get(ancestorName);
+                    ancestorIsList = "list".equals(implicitRole);
+                    ancestorHasAnyRole = implicitRole != null;
+                }
+                if (!ancestorHasAnyRole) {
+                    continue;
                 }
                 if (ancestorIsList) {
                     err("An element with “role=group” must not"
-                            + " be a descendant of an element with"
+                            + " be a child of an element with"
                             + " “role=list”.",
                             getDocumentLocator());
-                    break;
                 }
+                break;
             }
         }
 

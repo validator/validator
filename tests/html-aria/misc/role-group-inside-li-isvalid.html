@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>role=group inside li (implicit listitem)</title>
+</head>
+<body>
+<h1>Heading</h1>
+<!-- The “group” here is an accessibility child of the implicit
+     “listitem” role of the <li>, not of the implicit “list” role
+     of the <ul>, so the check for “role=group must not be a child
+     of role=list” should not fire. -->
+<ul>
+  <li>
+    <div role="group">Ipsum</div>
+  </li>
+</ul>
+</body>
+</html>

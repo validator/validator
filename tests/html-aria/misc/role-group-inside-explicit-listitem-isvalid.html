@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>role=group inside explicit role=listitem</title>
+</head>
+<body>
+<h1>Heading</h1>
+<!-- The “group” here is an accessibility child of the explicit
+     “listitem” role of the inner div, not of the “list” role of the
+     outer div, so the check for “role=group must not be a child of
+     role=list” should not fire. -->
+<div role="list">
+  <div role="listitem">
+    <div role="group">Item 1A</div>
+  </div>
+</div>
+</body>
+</html>
