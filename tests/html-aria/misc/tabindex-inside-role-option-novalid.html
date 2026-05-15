@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>tabindex on a descendant of role=option</title>
+</head>
+<body>
+<h1>Heading</h1>
+<!-- Per ARIA in HTML, role=option allows only phrasing content with no
+     descendants that have a tabindex attribute. The tabindex on the
+     inner span must be flagged. -->
+<div id="example-label-id">Lorem</div>
+<div role="listbox" aria-labelledby="example-label-id">
+  <div role="option">
+    <span tabindex="0">Ipsum</span>
+  </div>
+</div>
+</body>
+</html>
