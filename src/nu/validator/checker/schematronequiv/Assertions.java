@@ -327,9 +327,6 @@ public class Assertions extends Checker {
         registerObsoleteAttribute("for",
                 new String[] { "script" },
                 "Use DOM Events mechanisms to register event listeners.");
-        registerObsoleteAttribute("hreflang",
-                new String[] { "area" },
-                "You can safely omit it.");
         registerObsoleteAttribute("ismap",
                 new String[] { "input" },
                 "You can safely omit it.");
@@ -384,9 +381,6 @@ public class Assertions extends Checker {
         registerObsoleteAttribute("type",
                 new String[] { "param" },
                 "Use the “name” and “value” attributes without declaring value types.");
-        registerObsoleteAttribute("type",
-                new String[] { "area" },
-                "You can safely omit it.");
         registerObsoleteAttribute("type",
                 new String[] { "menu" },
                 "Use script to handle “contextmenu” event instead.");

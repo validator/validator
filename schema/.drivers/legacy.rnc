@@ -1258,12 +1258,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		}
 	param.attrs &= param.attrs.type?
 
-	area.attrs.type =
-		attribute type {
-			string
-		}
-	area.attrs &= area.attrs.type?
-
 	style.attrs.type =
 		attribute type {
 			string
@@ -1616,14 +1610,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			string
 		}
 	common.attrs.other &= legacy.attrs.dropzone?
-
-## hreflang attribute
-
-	area.attrs.hreflang =
-		attribute hreflang {
-			string
-		}
-	area.attrs &= area.attrs.hreflang?
 
 ## ismap attribute
 

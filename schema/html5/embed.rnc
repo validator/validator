@@ -586,6 +586,8 @@ namespace local = ""
 		&	shared-hyperlink.attrs.target?
 		&	shared-hyperlink.attrs.ping?
 		&	shared-hyperlink.attrs.rel?
+		&	shared-hyperlink.attrs.hreflang?
+		&	shared-hyperlink.attrs.type?
 		&	area.attrs.shape?
 		&	(	common.attrs.aria.role.link
 			|	common.attrs.aria.role.button
