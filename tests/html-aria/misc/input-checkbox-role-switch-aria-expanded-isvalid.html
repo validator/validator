@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>input[type=checkbox role=switch] with aria-expanded</title>
+</head>
+<body>
+<h1>Heading</h1>
+<!-- Per ARIA, aria-expanded is in the “Used in Roles” list for switch.
+     The native checked attribute on input[type=checkbox] satisfies
+     switch’s required aria-checked state, but the other aria states
+     and properties supported by switch (aria-expanded, aria-readonly,
+     aria-required) must also be allowed here. -->
+<input type="checkbox"
+       role="switch"
+       aria-controls="popup"
+       aria-expanded="false"
+       aria-readonly="false"
+       aria-required="false"
+       checked>
+<div id="popup" hidden>Popup content</div>
+</body>
+</html>

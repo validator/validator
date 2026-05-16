@@ -1202,7 +1202,11 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 
 ## menuitemcheckbox w/o checked required
 	aria.menuitemcheckbox-checked-not-required =
-		(	aria.role.menuitemcheckbox )
+		(	aria.role.menuitemcheckbox
+		&	aria.state.expanded?	# ARIA 1.2 added
+		&	aria.prop.posinset?		# ARIA 1.1 and 1.2
+		&	aria.prop.setsize?		# ARIA 1.1 and 1.2
+		)
 		aria.role.menuitemcheckbox-checked-not-required =
 			attribute role { string "menuitemcheckbox" }
 	common.attrs.aria.role.menuitemcheckbox-checked-not-required |= aria.menuitemcheckbox-checked-not-required
@@ -1225,6 +1229,7 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 ## menuitemradio w/o checked required
 	aria.menuitemradio-checked-not-required =
 		(	aria.role.menuitemradio
+		&	aria.state.expanded?	# ARIA 1.2 added
 		&	aria.state.selected?
 		&	aria.prop.posinset?
 		&	aria.prop.setsize?
@@ -1562,7 +1567,11 @@ common.attrs.aria.implicit.search |= common.attrs.aria.implicit.landmark
 
 ## switch w/o checked required
 	aria.switch-checked-not-required =
-		(	aria.role.switch )
+		(	aria.role.switch
+		&	aria.state.expanded?	# ARIA 1.2 added
+		&	aria.prop.readonly? 	# ARIA 1.1 and 1.2
+		&	aria.prop.required? 	# ARIA 1.2 added
+		)
 		aria.role.switch-checked-not-required =
 			attribute role { string "switch" }
 	common.attrs.aria.role.switch-checked-not-required |= aria.switch-checked-not-required
