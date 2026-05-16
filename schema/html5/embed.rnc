@@ -579,15 +579,15 @@ namespace local = ""
 		&	common.attrs.present
 		&	common.attrs.other
 		&	aria.global?
-		&	shared-hyperlink.attrs.download?
 		&	(	area.attrs.alt
 			&	shared-hyperlink.attrs.href
+			&	shared-hyperlink.attrs.download?
+			&	shared-hyperlink.attrs.target?
+			&	shared-hyperlink.attrs.ping?
+			&	shared-hyperlink.attrs.rel?
+			&	shared-hyperlink.attrs.hreflang?
+			&	shared-hyperlink.attrs.type?
 			)?
-		&	shared-hyperlink.attrs.target?
-		&	shared-hyperlink.attrs.ping?
-		&	shared-hyperlink.attrs.rel?
-		&	shared-hyperlink.attrs.hreflang?
-		&	shared-hyperlink.attrs.type?
 		&	area.attrs.shape?
 		&	(	common.attrs.aria.role.link
 			|	common.attrs.aria.role.button
