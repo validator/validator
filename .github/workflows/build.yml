@@ -138,7 +138,7 @@ jobs:
           else
             VERSION="${PREFIX}.$((LAST + 1))"
           fi
-          git tag $VERSION
+          git tag -s -m "$VERSION" "$VERSION"
       - name: Update the 'latest' tag
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         run: |
@@ -149,7 +149,8 @@ jobs:
           # build fails — leaving the release stuck as a draft. A force-
           # push updates the tag pointer atomically, with no transient
           # period where the tag is missing.
-          git tag -fa -m latest latest
+          #
+          git tag -fs -m latest latest
           git push origin main
           git push --force origin refs/tags/latest
           git push origin --tags
