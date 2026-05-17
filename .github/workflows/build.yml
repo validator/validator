@@ -38,6 +38,8 @@ jobs:
             java: 17
           - os: ubuntu-latest
             java: 21
+          - os: ubuntu-latest
+            java: 26
 
     env:
       IS_MAIN_RELEASE_BUILDER: ${{ github.event_name == 'push' &&
