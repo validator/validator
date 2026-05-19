@@ -515,7 +515,7 @@ public class Assertions extends Checker {
 
     private static final String[] PROHIBITED_INTERACTIVE_ANCESTOR_ROLES = {
             "button", "img", "link", "math", "option", "progressbar",
-            "separator", "slider" };
+            "separator", "slider", "tab" };
 
     private static final String[] PHRASING_ONLY_ANCESTOR_ROLES = {
             "button", "img", "progressbar", "separator", "slider" };
