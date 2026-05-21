@@ -38,7 +38,10 @@ if (require.main === module) {
             child.on('close', (code) => process.exit(code || 0));
         } catch (err) {
             console.error(err.message.trim());
-            process.exit(1);
+            // Set the exit code rather than calling process.exit(): exiting
+            // while the sockets from a failed download are still closing
+            // crashes Node with a libuv assertion on Windows.
+            process.exitCode = 1;
         }
     })();
 }
