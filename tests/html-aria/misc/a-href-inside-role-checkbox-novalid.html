@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Anchor inside role=checkbox</title>
+</head>
+<body>
+<h1>Heading</h1>
+<!-- Per ARIA in HTML, role=checkbox allows only phrasing
+     content with no interactive content descendants — so an
+     <a href> as a descendant must be flagged. -->
+<div role="checkbox" aria-checked="false" aria-label="Subscribe">
+  <a href="#">Terms</a>
+</div>
+</body>
+</html>

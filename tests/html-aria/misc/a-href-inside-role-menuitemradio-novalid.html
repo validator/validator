@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Anchor inside role=menuitemradio</title>
+</head>
+<body>
+<h1>Heading</h1>
+<!-- Per ARIA in HTML, role=menuitemradio allows only phrasing
+     content with no interactive content descendants — so an
+     <a href> as a descendant must be flagged. -->
+<div role="menu" aria-label="Sort">
+  <div role="menuitemradio" aria-checked="false">
+    <a href="#">By name</a>
+  </div>
+</div>
+</body>
+</html>

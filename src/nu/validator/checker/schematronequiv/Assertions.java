@@ -514,8 +514,9 @@ public class Assertions extends Checker {
             "textbox", "treeitem" };
 
     private static final String[] PROHIBITED_INTERACTIVE_ANCESTOR_ROLES = {
-            "button", "img", "link", "math", "option", "progressbar",
-            "separator", "slider", "tab" };
+            "button", "checkbox", "img", "link", "math", "menuitem",
+            "menuitemcheckbox", "menuitemradio", "option", "progressbar",
+            "radio", "separator", "slider", "switch", "tab" };
 
     private static final String[] PHRASING_ONLY_ANCESTOR_ROLES = {
             "button", "img", "progressbar", "separator", "slider" };
