@@ -1426,7 +1426,7 @@ public static final ElementName SELECT = new ElementName("select", "select",
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.SELECT | SPECIAL | SCOPING);
 public static final ElementName SELECTEDCONTENT = new ElementName("selectedcontent", "selectedcontent",
-// CPPONLY: NS_NewHTMLElement,
+// CPPONLY: NS_NewHTMLSelectedContentElement,
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.OTHER);
 public static final ElementName SLOT = new ElementName("slot", "slot",
