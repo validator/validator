@@ -2203,6 +2203,12 @@ public abstract class TreeBuilder<T> implements TokenHandler,
                             case INPUT:
                                 // https://html.spec.whatwg.org/multipage/parsing.html#parsing-main-inbody
                                 // "A start tag whose tag name is "input""
+                                // "If the parser was created as part of the HTML fragment
+                                //  parsing algorithm and the context element is a select element:"
+                                if (fragment && "select" == contextName) {
+                                    errStartTagWithSelectOpen(name);
+                                    break starttagloop;
+                                }
                                 // "If the stack of open elements has a select element
                                 //  in scope:"
                                 eltPos = findLastInScope("select");
