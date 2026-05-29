@@ -171,6 +171,7 @@
     "html-aria/misc/multiple-role-main-haswarn.html": "A document should not include more than one visible element with \u201crole=main\u201d.",
     "html-aria/misc/placeholder-and-aria-placeholder-novalid.html": "The \u201caria-placeholder\u201d attribute must not be specified on elements that have a \u201cplaceholder\u201d attribute.",
     "html-aria/misc/role-cell-without-row-ancestor-novalid.html": "An element with \u201crole=cell\u201d must be contained in, or owned by, an element with the \u201crole\u201d value \u201crow\u201d.",
+    "html-aria/misc/role-listbox-inside-h1-novalid.html": "An element with the attribute \u201crole=listbox\u201d must not appear as a descendant of an \u201ch1\u201d, \u201ch2\u201d, \u201ch3\u201d, \u201ch4\u201d, \u201ch5\u201d, or \u201ch6\u201d element.",
     "html-aria/misc/role-listitem-with-aria-level-haswarn.html": "The \u201caria-level\u201d attribute should not be used on any element which has \u201crole=listitem\u201d.",
     "html-aria/misc/role-main-with-main-element-haswarn.html": "A document should not include more than one visible element with \u201crole=main\u201d.",
     "html-aria/misc/role-on-math-element-haswarn.html": "Element \u201cmath\u201d does not need a \u201crole\u201d attribute.",
