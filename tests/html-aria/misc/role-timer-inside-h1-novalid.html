@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>role=timer inside heading</title>
+</head>
+<body>
+<!-- Per HTML, the content model of h1, h2, h3, h4, h5, and h6 is
+     phrasing content. Per ARIA in HTML, role=timer is flow content,
+     not phrasing content — so an element with role=timer must
+     not be a descendant of any heading. -->
+<h1>
+  <span role="timer" aria-label="Lorem">Ipsum</span>
+</h1>
+</body>
+</html>

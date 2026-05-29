@@ -521,6 +521,11 @@ public class Assertions extends Checker {
     private static final String[] PHRASING_ONLY_ANCESTOR_ROLES = {
             "button", "img", "progressbar", "separator", "slider" };
 
+    private static final String[] HEADING_PROHIBITED_DESCENDANT_ROLES = {
+            "alert", "alertdialog", "application", "dialog", "directory",
+            "document", "feed", "listbox", "log", "marquee", "math", "note",
+            "status", "tabpanel", "timer", "toolbar" };
+
     private static final String[] PROHIBITED_MAIN_ANCESTORS = { "a", "address",
             "article", "aside", "audio", "blockquote", "canvas", "caption",
             "dd", "del", "details", "dialog", "dt", "fieldset", "figure",
@@ -3120,29 +3125,21 @@ public class Assertions extends Checker {
                 checkForPhrasingOnlyAncestorRole(
                         "An element with the attribute “role=heading”");
             }
-            if (roles != null && roles.contains("toolbar")
+            if (roles != null
                     && ((ancestorMask & H1_MASK) != 0
                             || (ancestorMask & H2_MASK) != 0
                             || (ancestorMask & H3_MASK) != 0
                             || (ancestorMask & H4_MASK) != 0
                             || (ancestorMask & H5_MASK) != 0
                             || (ancestorMask & H6_MASK) != 0)) {
-                err("An element with the attribute “role=toolbar”"
-                        + " must not appear as a descendant of an"
-                        + " “h1”, “h2”, “h3”, “h4”, “h5”, or “h6”"
-                        + " element.");
-            }
-            if (roles != null && roles.contains("listbox")
-                    && ((ancestorMask & H1_MASK) != 0
-                            || (ancestorMask & H2_MASK) != 0
-                            || (ancestorMask & H3_MASK) != 0
-                            || (ancestorMask & H4_MASK) != 0
-                            || (ancestorMask & H5_MASK) != 0
-                            || (ancestorMask & H6_MASK) != 0)) {
-                err("An element with the attribute “role=listbox”"
-                        + " must not appear as a descendant of an"
-                        + " “h1”, “h2”, “h3”, “h4”, “h5”, or “h6”"
-                        + " element.");
+                for (String prohibitedRole : HEADING_PROHIBITED_DESCENDANT_ROLES) {
+                    if (roles.contains(prohibitedRole)) {
+                        err("An element with the attribute “role="
+                                + prohibitedRole + "” must not appear as a"
+                                + " descendant of an “h1”, “h2”, “h3”,"
+                                + " “h4”, “h5”, or “h6” element.");
+                    }
+                }
             }
             if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
                     || (ancestorMask & H3_MASK) != 0
