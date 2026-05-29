@@ -3120,6 +3120,18 @@ public class Assertions extends Checker {
                 checkForPhrasingOnlyAncestorRole(
                         "An element with the attribute “role=heading”");
             }
+            if (roles != null && roles.contains("toolbar")
+                    && ((ancestorMask & H1_MASK) != 0
+                            || (ancestorMask & H2_MASK) != 0
+                            || (ancestorMask & H3_MASK) != 0
+                            || (ancestorMask & H4_MASK) != 0
+                            || (ancestorMask & H5_MASK) != 0
+                            || (ancestorMask & H6_MASK) != 0)) {
+                err("An element with the attribute “role=toolbar”"
+                        + " must not appear as a descendant of an"
+                        + " “h1”, “h2”, “h3”, “h4”, “h5”, or “h6”"
+                        + " element.");
+            }
             if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
                     || (ancestorMask & H3_MASK) != 0
                     || (ancestorMask & H4_MASK) != 0

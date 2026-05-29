@@ -177,6 +177,7 @@
     "html-aria/misc/role-option-without-listbox-ancestor-novalid.html": "An element with \u201crole=option\u201d must be contained in, or owned by, an element with the \u201crole\u201d value \u201clistbox\u201d.",
     "html-aria/misc/role-row-without-table-ancestor-novalid.html": "An element with \u201crole=row\u201d must be contained in, or owned by, an element with the \u201crole\u201d value \u201ctreegrid\u201d, \u201cgrid\u201d, \u201crowgroup\u201d, or \u201ctable\u201d.",
     "html-aria/misc/role-tab-with-no-role-tabpanel-novalid.html": "Every active \u201crole=tab\u201d element must have a corresponding \u201crole=tabpanel\u201d element.",
+    "html-aria/misc/role-toolbar-inside-h1-novalid.html": "An element with the attribute \u201crole=toolbar\u201d must not appear as a descendant of an \u201ch1\u201d, \u201ch2\u201d, \u201ch3\u201d, \u201ch4\u201d, \u201ch5\u201d, or \u201ch6\u201d element.",
     "html-aria/misc/s-role-deletion-haswarn.html": "The \u201cdeletion\u201d role is unnecessary for element \u201cs\u201d.",
     "html-aria/misc/select-aria-multiselectable-haswarn.html": "The \u201caria-multiselectable\u201d attribute should not be used with the \u201cselect \u201d element.",
     "html-aria/misc/select-multiple-with-role-novalid.html": "Bad value \u201cbutton\u201d for attribute \u201crole\u201d on element \u201cselect\u201d.",
