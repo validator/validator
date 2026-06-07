@@ -154,7 +154,7 @@ public final class Util {
      * argument.
      *
      * @param search the string to search for.
-     * @param cmp    the the array returned by compile_search.
+     * @param cmp    the array returned by compile_search.
      * @param str    the string in which to look for <var>search</var>.
      * @param begin  the position at which to start the search in
      *               <var>str</var>.

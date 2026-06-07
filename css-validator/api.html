@@ -33,7 +33,7 @@ SOAP 1.2 validation interface documentation</h2>
 <div id="toc">
 <ul>
   <li><a href="#requestformat">Validation Request Format</a></li>
-  <li><a href="#soap12format">SOAP format description</a> 
+  <li><a href="#soap12format">SOAP format description</a>
     <ul>
       <li><a href="#soap12_sample">sample SOAP 1.2 validation
       response</a></li>
@@ -49,7 +49,7 @@ SOAP 1.2 validation interface documentation</h2>
 
 <h3 id="requestformat">Validation Request Format</h3>
 
-<p>The documentation on how to create a custom request to the CSS validation service is available, 
+<p>The documentation on how to create a custom request to the CSS validation service is available,
 with a table of all existing parameters and their values, in the <a href="manual.html">User Manual</a>.</p>
 
 <h3 id="soap12format">SOAP format description</h3>
@@ -73,10 +73,10 @@ this:</p>
 <pre style="font-size: smaller">&lt;?xml version='1.0' encoding="utf-8"?&gt;
 &lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"&gt;
   &lt;env:Body&gt;
-    &lt;m:cssvalidationresponse 
-       env:encodingStyle="http://www.w3.org/2003/05/soap-encoding" 
-       xmlns:m="http://www.w3.org/2005/07/css-validator"&gt; 
-      &lt;m:uri&gt;http://www.w3.org/&lt;/m:uri&gt; 
+    &lt;m:cssvalidationresponse
+       env:encodingStyle="http://www.w3.org/2003/05/soap-encoding"
+       xmlns:m="http://www.w3.org/2005/07/css-validator"&gt;
+      &lt;m:uri&gt;http://www.w3.org/&lt;/m:uri&gt;
       &lt;m:checkedby&gt;http://jigsaw.w3.org/css-validator/&lt;/m:checkedby&gt;
       &lt;m:csslevel&gt;css2&lt;/m:csslevel&gt;
       &lt;m:date&gt;2006.02.23T01:19:57Z&lt;/m:date&gt;
@@ -154,7 +154,7 @@ this:</p>
     </tr>
     <tr>
       <th id="soap12_validity">validity</th>
-      <td>Whether or not the document validated passed or not formal
+      <td>Whether the document validated passed or not formal
         validation (boolean)</td>
     </tr>
     <tr>

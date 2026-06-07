@@ -146,7 +146,7 @@ public class CssBackgroundRepeat extends org.w3c.css.properties.css.CssBackgroun
                     values.add(val);
                     is_complete = true;
                 } else {
-                    // the the one that may come in pairs
+                    // the one that may come in pairs
                     // not an allowed value !
                     if (getDoubleValue(id_val) == null) {
                         throw new InvalidParamException("value",

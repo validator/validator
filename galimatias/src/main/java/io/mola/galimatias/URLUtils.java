@@ -108,7 +108,7 @@ public final class URLUtils {
     }
 
     /**
-     * Converts a domain to its ASCII representation. Uses the the <strong>name to ASCII</strong>
+     * Converts a domain to its ASCII representation. Uses the <strong>name to ASCII</strong>
      * as specified in the IDNA standard.
      *
      * @see <a href="http://url.spec.whatwg.org/#idna">WHATWG URL Standard - IDNA Section</a>
@@ -129,7 +129,7 @@ public final class URLUtils {
     }
 
     /**
-     * Converts a domain to its Unicode representation. Uses the the <strong>name to Unicode</strong>
+     * Converts a domain to its Unicode representation. Uses the <strong>name to Unicode</strong>
      * as specified in the IDNA standard.
      *
      * @see <a href="http://url.spec.whatwg.org/#idna">WHATWG URL Standard - IDNA Section</a>

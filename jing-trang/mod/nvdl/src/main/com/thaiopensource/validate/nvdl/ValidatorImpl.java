@@ -35,16 +35,16 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   static final Name OWNER_NAME = new Name("http://purl.oclc.org/dsdl/nvdl/ns/instance/1.0", "virtualElement");
 
   /**
-   * A value for really no namespace, that is different than any other value 
-   * for any possible namespace including no namespace which is an empty string. 
+   * A value for really no namespace, that is different than any other value
+   * for any possible namespace including no namespace which is an empty string.
    */
   private static final String NO_NS = "\0";
-  
+
   /**
    * The error handler.
    */
   private final ErrorHandler eh;
-  
+
   /**
    * Properties.
    */
@@ -55,70 +55,70 @@ class ValidatorImpl extends DefaultHandler implements Validator {
    * Specifies elements that start a new section.
    */
   private final List triggers;
-  
+
   /**
    * Source locator.
    */
   private Locator locator;
-  
+
   /**
    * Points to the current section.
    */
   private Section currentSection;
-  
+
   /**
    * The current namespace context, points to the last prefix mapping
    * the previous can be found on getParent and so on.
    */
   private PrefixMapping prefixMapping = null;
-  
+
   /**
-   * A hashtable that keeps a stack of validators for schemas. 
+   * A hashtable that keeps a stack of validators for schemas.
    */
   private final Hashtable validatorHandlerCache = new Hashtable();
-  
+
   /**
    * Message localizer to report error messages from keys.
    */
   private final Localizer localizer = new Localizer(ValidatorImpl.class);
-  
+
   /**
    * keeps the no result actions for a section to avoid duplicating them
    * as the same action can be specified by multiple programs in a section.
    */
   private final Hashset noResultActions = new Hashset();
-  
+
   /**
    * Stores index sets for attributed for each namespace.
    */
   private final Hashtable attributeNamespaceIndexSets = new Hashtable();
-  
+
   /**
    * Sores the index sets for attributes for each active handler.
    * The index set specifies what attributes should be given to what handlers.
    */
   private final Vector activeHandlersAttributeIndexSets = new Vector();
-  
+
   /**
    * Attribute schemas for a namespace.
-   * It is used to avoid validating twice the set of attributes 
+   * It is used to avoid validating twice the set of attributes
    * from a namespace with the same schema.
    */
   private final Hashset attributeSchemas = new Hashset();
-  
+
   /**
    * Flag indicating if we had a reject action on attributes from this namespace.
    * Useful to avoid reporting the same error multiple times.
    */
   private boolean attributeNamespaceRejected;
-  
+
   /**
    * We use this to compute
-   * only once the filtered attributes for a namespace, 
+   * only once the filtered attributes for a namespace,
    * laysily when we will need them for the first time.
    */
   private Attributes filteredAttributes;
-  
+
   /**
    * The start mode for this NVDL script.
    */
@@ -129,7 +129,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
    * This is a Stack<String>.
    */
   private final Stack elementsLocalNameStack;
-  
+
   /**
    * Namespace context. Alinked list of proxy namespace
    * mapping linking to parent.
@@ -192,7 +192,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
      * List of Programs saying what to do with child sections
      */
     final Vector childPrograms = new Vector();
-    
+
     /**
      * Keep the context stack if we have a context dependent section.
      */
@@ -201,7 +201,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
      * Flag indicating is this section depends on context or not.
      */
     boolean contextDependent = false;
-    
+
     /**
      * Max attribute processing value from all modes
      * in this section.
@@ -216,10 +216,10 @@ class ValidatorImpl extends DefaultHandler implements Validator {
      * Stores the attach place holder mode usages.
      */
     final Vector placeholderModeUsages = new Vector();
-        
+
     /**
-     * Creates a section for a given namespace and links to to its parent section.
-     * 
+     * Creates a section for a given namespace and links to its parent section.
+     *
      * @param ns The section namespace.
      * @param parent The parent section.
      */
@@ -276,7 +276,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       if (attributeModeUsage.isContextDependent())
         contextDependent = true;
     }
-    
+
     /**
      * Adds a mode usage to the attributeValidationModeUsages list
      * if we process attributes.
@@ -290,7 +290,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
           contextDependent = true;
       }
     }
-    
+
     /**
      * Reject content, report an error.
      */
@@ -304,11 +304,11 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       placeholderHandlers.add(handler);
       placeholderModeUsages.add(modeUsage);
     }
-    
+
   }
 
   /**
-   * A program is a pair of mode usage and handler. 
+   * A program is a pair of mode usage and handler.
    *
    */
   static private class Program {
@@ -316,7 +316,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
      * The mode usage associated with the handler.
      */
     final ModeUsage modeUsage;
-    
+
     /**
      * The handler associated with the mode usage.
      */
@@ -352,7 +352,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   /**
    * Initializes the current session.
    * Creates a section for a dummy namespace (differnet of "", that is no namespace).
-   * Adds as child mode usage for this a mode usage with start mode as current mode 
+   * Adds as child mode usage for this a mode usage with start mode as current mode
    * and that uses start mode. No content handler is set on addChildMode.
    *
    */
@@ -360,7 +360,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     currentSection = new Section(NO_NS, null);
     currentSection.addChildMode(new ModeUsage(startMode, startMode), null);
   }
-  
+
   /**
    * Set document locator callback.
    * @param locator The document locator.
@@ -392,7 +392,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
 
   /**
    * startElement callback.
-   * 
+   *
    * @param uri The element namespace.
    * @param localName The element local name.
    * @param qName The element qualified name.
@@ -401,14 +401,14 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   public void startElement(String uri, String localName,
                            String qName, Attributes attributes)
           throws SAXException {
-    
+
     // if we have a different namespace than the current section namespace
     // or there's an applicable trigger
     // then we start a new section on the new namespace.
     if (!uri.equals(currentSection.ns)
         || trigger(uri, localName, (String)elementsLocalNameStack.peek()))
       startSection(uri);
-    
+
     elementsLocalNameStack.push(localName);
     // increase the depth in the current section as we have a new element
     currentSection.depth++;
@@ -440,7 +440,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
         handler.startPrefixMapping("", "http://purl.oclc.org/dsdl/nvdl/ns/instance/1.0");
         handler.startElement("http://purl.oclc.org/dsdl/nvdl/ns/instance/1.0", "placeholder", "placeholder", atts);
       }
-    }    
+    }
   }
 
   /**
@@ -460,8 +460,8 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       }
     }
     return false;
-  }  
-  
+  }
+
   /**
    * Get the filtered attributes.
    * It checks if we want all the attributes and in that case returns the initial attributes,
@@ -478,9 +478,9 @@ class ValidatorImpl extends DefaultHandler implements Validator {
 
   /**
    * Processes the element attributes.
-   * 
+   *
    * @param attributes The element attributes
-   * @return true if we need to filter attributes when we pass them to the 
+   * @return true if we need to filter attributes when we pass them to the
    * active handlers, false if we can just pass the initial attributes
    * to all the active content handlers
    * @throws SAXException
@@ -490,11 +490,11 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     if (currentSection.attributeProcessing == Mode.ATTRIBUTE_PROCESSING_NONE
         || attributes.getLength() == 0)
       return false;
-    
+
     // clear the attributeNamespaceIndexSets hashtable.
     attributeNamespaceIndexSets.clear();
     // creates index sets based on namespace for the attributes
-    // and places them in the attributeNamespaceIndexSets hashtable 
+    // and places them in the attributeNamespaceIndexSets hashtable
     for (int i = 0, len = attributes.getLength(); i < len; i++) {
       String ns = attributes.getURI(i);
       IntSet indexSet = (IntSet)attributeNamespaceIndexSets.get(ns);
@@ -504,7 +504,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       }
       indexSet.add(i);
     }
-    // if we need to process only qualified attributes and we have attributes 
+    // if we need to process only qualified attributes and we have attributes
     // only in no namespace then return false, no need to filter the attributes
     if (currentSection.attributeProcessing == Mode.ATTRIBUTE_PROCESSING_QUALIFIED
         && attributeNamespaceIndexSets.size() == 1
@@ -528,11 +528,11 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       // get the index set that represent the attributes in the ns namespace
       IntSet indexSet = (IntSet)attributeNamespaceIndexSets.get(ns);
       // clear attribute schemas for this namespace
-      // it is used to avoid validating twice the set of attributes 
+      // it is used to avoid validating twice the set of attributes
       // from this namespace with the same schema.
       attributeSchemas.clear();
       // set the filetered attributes to null - we use this to compute
-      // only one the filtered attributes for this namespace, laysily when we 
+      // only one the filtered attributes for this namespace, laysily when we
       // will need them for the first time.
       filteredAttributes = null;
       // flag indicating if we had a reject action on attributes from this namespace
@@ -541,7 +541,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       // iterates all the handler modes and compute the index sets for all handlers
       for (int i = 0, len = handlerModes.size(); i < len; i++) {
         ModeUsage modeUsage = (ModeUsage)handlerModes.elementAt(i);
-        // get the attribute actions for this mode usage, ns namespace 
+        // get the attribute actions for this mode usage, ns namespace
         // and for the attributes in this namespace
         AttributeActionSet actions = processAttributeSection(modeUsage, ns, indexSet, attributes);
         // if we need to attach the attributes we mark that they should be passed
@@ -549,7 +549,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
         if (actions.getAttach())
           ((IntSet)activeHandlersAttributeIndexSets.get(i)).addAll(indexSet);
         else
-        // if that attributes are not attached then we set the transform flag to 
+        // if that attributes are not attached then we set the transform flag to
         // true as that means we need to filter out these attributes for the current handler
           transform = true;
       }
@@ -558,7 +558,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       // from the current namespace
       for (int i = 0, len = validationModes.size(); i < len; i++) {
         ModeUsage modeUsage = (ModeUsage)validationModes.elementAt(i);
-        // validation means no result actions, so we are not 
+        // validation means no result actions, so we are not
         // interested in the attribute action set returned by
         // the processAttributeSection method
         processAttributeSection(modeUsage, ns, indexSet, attributes);
@@ -566,7 +566,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     }
     return transform;
   }
-  
+
   /**
    * Process an attributes section in a specific mode usage.
    * @param modeUsage The mode usage
@@ -585,7 +585,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     Mode mode = modeUsage.getMode(currentSection.context);
     // get the attribute action set
     AttributeActionSet actions = mode.getAttributeActions(ns);
-    // Check if we have a reject action and if we did not reported already 
+    // Check if we have a reject action and if we did not reported already
     // the reject attribute error for this namespace
     if (actions.getReject() && !attributeNamespaceRejected) {
       // set the flag to avoid reporting this error again for the same namespace
@@ -677,7 +677,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     }
     // iterate the validators on the new section and set their content
     // handler to receive notifications and set the locator,
-    // call start document, and bind the current namespace context. 
+    // call start document, and bind the current namespace context.
     for (int i = 0, len = section.validators.size(); i < len; i++)
       initHandler(((Validator)section.validators.elementAt(i)).getContentHandler());
     // store the new section as the current section
@@ -687,7 +687,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   /**
    * Initialize a content handler. This content handler will receive the
    * document fragment starting at the current element. Therefore we need
-   * to set a locator, call startDocument and give the current namespace 
+   * to set a locator, call startDocument and give the current namespace
    * content to that content handler.
    * @param ch The content handler.
    * @throws SAXException
@@ -711,7 +711,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
    */
   public void endElement(String uri, String localName, String qName)
           throws SAXException {
-	  
+
     elementsLocalNameStack.pop();
     // iterate the active handlers from the current section and call
     // endElement on them
@@ -729,7 +729,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
         ContentHandler handler = (ContentHandler)(currentSection.placeholderHandlers.elementAt(i));
         handler.endPrefixMapping("");
         handler.endElement("http://purl.oclc.org/dsdl/nvdl/ns/instance/1.0", "placeholder", "placeholder");
-      }    
+      }
       endSection();
     }
   }
@@ -795,7 +795,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
 
   /**
    * Get a validator for a schema.
-   * If we already have a validator for this schema available in cache 
+   * If we already have a validator for this schema available in cache
    * then we will use it and remove it from cache. At the end it will be
    * added back to the cache through releaseValidator.
    * @param schema The schema we need a validaor for.
@@ -813,8 +813,8 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   }
 
   /**
-   * Releases a validator for a given schema. Put that validator in the 
-   * cache so that further actions to validate against this schema will 
+   * Releases a validator for a given schema. Put that validator in the
+   * cache so that further actions to validate against this schema will
    * be able to use this validator instead of creating a new one.
    * @param schema The schema the validator validates against
    * @param vh The validator.

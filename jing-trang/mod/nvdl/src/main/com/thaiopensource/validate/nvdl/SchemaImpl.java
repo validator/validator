@@ -49,39 +49,39 @@ class SchemaImpl extends AbstractSchema {
    * namespace and anyNamespace mappings directly inside rules.
    */
   static private final String IMPLICIT_MODE_NAME = "#implicit";
-  
+
   /**
    * Mode name used when we have to use this script as an attributes schema.
    * The wrapper mode allows elements from any namespace.
    */
   static private final String WRAPPER_MODE_NAME = "#wrapper";
-  
+
   /**
    * The NVDL URI.
    */
   static final String NVDL_URI = "http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0";
-  
+
   /**
    * A hash with the modes.
    */
   private final Hashtable modeMap = new Hashtable();
-  
+
   /**
    * A hash with the triggers on namespace.
    * Element names are stored concatenated in a string, each name preceded by #.
    */
   private final List triggers = new ArrayList();
-    
+
   /**
    * The start mode.
    */
   private Mode startMode;
-  
+
   /**
    * Default base mode, rejects everything.
    */
   private final Mode defaultBaseMode;
-  
+
   /**
    * Flag indicating if the schema needs to be changed to handle
    * attributes only, the element in this case is a placeholder.
@@ -116,7 +116,7 @@ class SchemaImpl extends AbstractSchema {
   }
 
   /**
-   * Stores information about options that must be supported by the 
+   * Stores information about options that must be supported by the
    * validator.
    */
   static private class MustSupportOption {
@@ -128,7 +128,7 @@ class SchemaImpl extends AbstractSchema {
      * The property id.
      */
     private final PropertyId pid;
-    
+
     /**
      * Locator pointing to where this option is declared.
      */
@@ -150,7 +150,7 @@ class SchemaImpl extends AbstractSchema {
   /**
    * This class is registered as content handler on the XMLReader that
    * parses the NVDL script.
-   * It creates the Schema representation for this script and also validates 
+   * It creates the Schema representation for this script and also validates
    * the script against the NVDL schema.
    */
   private class Handler extends DelegatingContentHandler implements SchemaFuture {
@@ -158,17 +158,17 @@ class SchemaImpl extends AbstractSchema {
      * The schema receiver. Used to cretae other schemas and access options.
      */
     private final SchemaReceiverImpl sr;
-    
+
     /**
      * Flag indicating that we encountered an error.
      */
     private boolean hadError = false;
-    
+
     /**
      * The error handler.
      */
     private final ErrorHandler eh;
-    
+
     /**
      * A counting error handler that wraps the error handler.
      * It is useful to stop early if we encounter errors.
@@ -179,38 +179,38 @@ class SchemaImpl extends AbstractSchema {
      * The Resolver to use for resolving URIs and entities.
      */
     private final Resolver resolver;
-    
+
     /**
      * Convert error keys to messages.
      */
     private final Localizer localizer = new Localizer(SchemaImpl.class);
-    
+
     /**
      * Error locator.
      */
     private Locator locator;
-    
+
     /**
      * Handle xml:base attributes.
      */
     private final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
-    
+
     /**
      * For ignoring foreign elements.
      */
     private int foreignDepth = 0;
-    
+
     /**
      * The value of rules/@schemaType
      */
     private String defaultSchemaType;
-    
+
     /**
      * The validator that checks the script against the
      * NVDL RelaxNG schema.
      */
     private Validator validator;
-    
+
     /**
      * Stores mode data.
      * We use this to handle included and nested modes.
@@ -290,19 +290,19 @@ class SchemaImpl extends AbstractSchema {
      * Stores mode data.
      */
     ModeData md = new ModeData();
-    
+
     /**
      * Keeps the mode data stack.
      */
     private Stack modeDataStack = new Stack();
-    
+
     /**
      * Keeps the elements from NVDL representing the current context.
-     * We need it to distinguish between modes, included modes and 
+     * We need it to distinguish between modes, included modes and
      * nested modes.
      */
     private Stack nvdlStack = new Stack();
-    
+
     /**
      * Creates a handler.
      * @param sr The Schema Receiver implementation for NVDL schemas.
@@ -451,7 +451,7 @@ class SchemaImpl extends AbstractSchema {
         throw new RuntimeException("unexpected element \"" + localName + "\"");
       // add the NVDL element on the stack
       nvdlStack.push(localName);
-      
+
     }
 
     /**
@@ -483,7 +483,7 @@ class SchemaImpl extends AbstractSchema {
       else if (localName.equals("mode")) {
         String parent = (String)nvdlStack.peek();
         if ("rules".equals(parent))
-          finishMode(); 
+          finishMode();
         else if ("mode".equals(parent))
           // mode inside mode - included mode.
           finishIncludedMode();
@@ -495,8 +495,8 @@ class SchemaImpl extends AbstractSchema {
 
     /**
      * Parse the rules element.
-     * Initializes 
-     *  the start mode 
+     * Initializes
+     *  the start mode
      *  the current mode
      *  the defaultSchemaType
      * @param attributes The rule element attributes.
@@ -562,7 +562,7 @@ class SchemaImpl extends AbstractSchema {
       // Create an anonymous mode.
       Mode parent = md.currentMode;
       modeDataStack.push(md);
-      md = new ModeData();      
+      md = new ModeData();
       md.currentMode = new Mode(defaultBaseMode);
       md.currentMode.noteDefined(locator);
       parent.addIncludedMode(md.currentMode);
@@ -575,7 +575,7 @@ class SchemaImpl extends AbstractSchema {
      */
     private void parseNestedMode(Attributes attributes) throws SAXException {
       // Nested mode is an anonymous mode inside an action. The action does
-    	// not have a useMode attribute and we alrady have the mode for that 
+    	// not have a useMode attribute and we alrady have the mode for that
     	// created in the current mode data lastMode, so we use that and define it
     	// as this nested mode.
       ModeData oldMd = md;
@@ -592,9 +592,9 @@ class SchemaImpl extends AbstractSchema {
         md.currentMode.noteDefined(locator);
       }
     }
-    
+
     /**
-     * Parse a namespace rule. 
+     * Parse a namespace rule.
      * @param attributes The namespace element attributes.
      * @throws SAXException
      */
@@ -627,12 +627,12 @@ class SchemaImpl extends AbstractSchema {
       if (wildcard == null) {
         wildcard = NamespaceSpecification.DEFAULT_WILDCARD;
       }
-      
+
       // check if match attributes
       if (md.match.containsAttributes()) {
         // creates an empty attributes action set.
         md.attributeActions = new AttributeActionSet();
-        // if we already have attribute actions for this namespace 
+        // if we already have attribute actions for this namespace
         // signal an error.
         if (!md.currentMode.bindAttribute(ns, wildcard, md.attributeActions)) {
           if (ns.equals(NamespaceSpecification.ANY_NAMESPACE))
@@ -644,12 +644,12 @@ class SchemaImpl extends AbstractSchema {
       else
         md.attributeActions = null;
       // XXX: george // } else md.attributeActions=null; //???
-      
+
       // check if match elements
       if (md.match.containsElements()) {
         // creates an empty action set.
         md.actions = new ActionSet();
-        // if we already have actions for this namespace 
+        // if we already have actions for this namespace
         // signal an error.
         if (!md.currentMode.bindElement(ns, wildcard, md.actions)) {
           if (ns.equals(NamespaceSpecification.ANY_NAMESPACE))
@@ -723,7 +723,7 @@ class SchemaImpl extends AbstractSchema {
      */
     private void finishMode() throws SAXException {
     }
-    
+
     /**
      * Notification that the mode element ends.
      * @throws SAXException
@@ -731,7 +731,7 @@ class SchemaImpl extends AbstractSchema {
     private void finishIncludedMode() throws SAXException {
       md = (ModeData)modeDataStack.pop();
     }
-    
+
     /**
      * Notification that the mode element ends.
      * @throws SAXException
@@ -739,11 +739,11 @@ class SchemaImpl extends AbstractSchema {
     private void finishNestedMode() throws SAXException {
       md = (ModeData)modeDataStack.pop();
     }
-    
+
     /**
-     * Creates a sub schema for the ending validate action (this is 
+     * Creates a sub schema for the ending validate action (this is
      * called from finishValidate).
-     * 
+     *
      * @param isAttributesSchema If the schema is intended to validate only attributes.
      * @return A Schema.
      * @throws IOException
@@ -754,7 +754,7 @@ class SchemaImpl extends AbstractSchema {
       // the user specified options
       PropertyMap requestedProperties = md.options.toPropertyMap();
       // let the schema receiver create a child schema
-      Schema schema = sr.createChildSchema(md.schemaUriRef, 
+      Schema schema = sr.createChildSchema(md.schemaUriRef,
                                            md.schemaUriBase,
                                            md.schemaType,
                                            requestedProperties,
@@ -846,7 +846,7 @@ class SchemaImpl extends AbstractSchema {
       }
       triggers.add(new Trigger(ns, names));
     }
-    
+
     /**
      * Parse an attach action.
      * @param attributes The attach element attributes.
@@ -855,7 +855,7 @@ class SchemaImpl extends AbstractSchema {
       // if the rule matched attributes set the attach flag in the attribute actions.
       if (md.attributeActions != null)
         md.attributeActions.setAttach(true);
-      // if the rule matched elements, the the mode usage and create a attach result action
+      // if the rule matched elements, the mode usage and create a attach result action
       // with that mode usage.
       if (md.actions != null) {
         md.modeUsage = getModeUsage(attributes);
@@ -899,10 +899,10 @@ class SchemaImpl extends AbstractSchema {
       else
         md.modeUsage = null;
     }
-    
+
     /**
      * Parse an allow action.
-     * 
+     *
      * @param attributes The allow element attributes.
      */
     private void parseAllow(Attributes attributes) {
@@ -923,7 +923,7 @@ class SchemaImpl extends AbstractSchema {
      * @param attributes The reject element attributes.
      */
     private void parseReject(Attributes attributes) {
-      // if element actions, get the mode usage and add a reject 
+      // if element actions, get the mode usage and add a reject
       // action with this mode usage.
       if (md.actions != null) {
         md.modeUsage = getModeUsage(attributes);
@@ -939,23 +939,23 @@ class SchemaImpl extends AbstractSchema {
 
     /**
      * Parse a cancel nested actions action.
-     * 
+     *
      * @param attributes The cancelNestedActions element attributes.
      */
     private void parseCancelNestedActions(Attributes attributes) {
-      // if we match on elements, create the mode usage and add a 
+      // if we match on elements, create the mode usage and add a
       // cancelNestedActions action.
       if (md.actions != null) {
         md.modeUsage = getModeUsage(attributes);
         md.actions.setCancelNestedActions(true);
-      } 
+      }
       // no actions, no mode usage.
       else
         md.modeUsage = null;
-      
+
       // if attribute actions set the cancelNestedActions flag.
       if (md.attributeActions != null) {
-        md.attributeActions.setCancelNestedActions(true);        
+        md.attributeActions.setCancelNestedActions(true);
       }
     }
 
@@ -994,7 +994,7 @@ class SchemaImpl extends AbstractSchema {
     }
 
     /**
-     * Get the URI specified by a schema attribute and if we have a 
+     * Get the URI specified by a schema attribute and if we have a
      * relative location resolve that against the base URI taking into
      * account also eventual xml:base attributes.
      * @param attributes The validate element attributes.
@@ -1042,10 +1042,10 @@ class SchemaImpl extends AbstractSchema {
     }
 
     /**
-     * Creates a mode usage that matches current mode and uses further 
+     * Creates a mode usage that matches current mode and uses further
      * the mode specified by the useMode attribute.
      * @param attributes The action element attributes.
-     * @return A mode usage from currentMode to the mode specified 
+     * @return A mode usage from currentMode to the mode specified
      * by the useMode attribute.
      */
     private ModeUsage getModeUsage(Attributes attributes) {
@@ -1069,7 +1069,7 @@ class SchemaImpl extends AbstractSchema {
 
     /**
      * Get the namespace from the ns attribute.
-     * Also check that the namespace is an absolute URI and report an 
+     * Also check that the namespace is an absolute URI and report an
      * error otherwise.
      * @param attributes The list of attributes of the namespace element
      * @return The ns value.
@@ -1123,7 +1123,7 @@ class SchemaImpl extends AbstractSchema {
 
     /**
      * Report a two arguments error.
-     * @param key The error key. 
+     * @param key The error key.
      * @param arg1 The first argument.
      * @param arg2 The second argument.
      * @throws SAXException
@@ -1134,7 +1134,7 @@ class SchemaImpl extends AbstractSchema {
         return;
       eh.error(new SAXParseException(localizer.message(key, arg1, arg2), locator));
     }
-    
+
     /**
      * Report a no argument warning with location.
      * @param key The warning key.
@@ -1203,7 +1203,7 @@ class SchemaImpl extends AbstractSchema {
 
   /**
    * Installs the schema handler on the reader.
-   * 
+   *
    * @param in The reader.
    * @param sr The schema receiver.
    * @return The installed handler that implements also SchemaFuture.
@@ -1215,7 +1215,7 @@ class SchemaImpl extends AbstractSchema {
   }
 
   /**
-   * Creates a Validator for validating XML documents against this 
+   * Creates a Validator for validating XML documents against this
    * NVDL script.
    * @param properties properties.
    */
@@ -1225,7 +1225,7 @@ class SchemaImpl extends AbstractSchema {
 
   /**
    * Get the mode specified by an attribute from no namespace.
-   * 
+   *
    * @param attributes The attributes.
    * @param localName The attribute name.
    * @return The mode refered by the licanName attribute.
@@ -1237,7 +1237,7 @@ class SchemaImpl extends AbstractSchema {
   /**
    * Gets a mode with the given name from the mode map.
    * If not present then it creates a new mode extending the default base mode.
-   * 
+   *
    * @param name The mode to look for or create if it does not exist.
    * @return Always a not null mode.
    */

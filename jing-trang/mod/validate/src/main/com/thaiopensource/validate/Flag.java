@@ -2,8 +2,7 @@ package com.thaiopensource.validate;
 
 /**
  * A class with a unique value, used as the value of properties whose
- * significance is purely whether or not they are present in the
- * PropertyMap.
+ * significance is purely whether they are present in the PropertyMap.
  */
 public class Flag {
   private Flag() { }

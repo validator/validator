@@ -10,23 +10,23 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 
 #
 #  DocBook Version 5.1
-#  OASIS Standard 
+#  OASIS Standard
 #  22 November 2016
 #  Copyright (c) OASIS Open 2016. All Rights Reserved.
 #  Source: http://docs.oasis-open.org/docbook/docbook/v5.1/os/schemas/rng/
 #  Link to latest version of specification: http://docs.oasis-open.org/docbook/docbook/v5.1/docbook-v5.1.html
-# 
+#
 # This file is part of DocBook V5.1-OS
-# 
+#
 # If you modify the DocBook schema in any way, label your schema as a
 # variant of DocBook. See the reference documentation
 # (http://docbook.org/tdg5/en/html/ch05.html#s-notdocbook)
 # for more information.
-# 
+#
 # Please direct all questions, bug reports, or suggestions for changes
 # to the docbook-comment@lists.oasis-open.org mailing list. For more
 # information, see http://www.oasis-open.org/docbook/.
-# 
+#
 # ======================================================================
 start =
   (db.set
@@ -86,58 +86,58 @@ start =
   | db.topic
 div {
   db._any.attribute =
-    
+
     ## Any attribute, including any attribute in any namespace.
     attribute * { text }
   db._any =
-    
+
     ## Any element from almost any namespace
     element * - (db:* | html:*) {
       (db._any.attribute | text | db._any)*
     }
 }
 db.arch.attribute =
-  
+
   ## Designates the computer or chip architecture to which the element applies
   attribute arch { text }
 db.audience.attribute =
-  
+
   ## Designates the intended audience to which the element applies, for example, system administrators, programmers, or new users.
   attribute audience { text }
 db.condition.attribute =
-  
+
   ## provides a standard place for application-specific effectivity
   attribute condition { text }
 db.conformance.attribute =
-  
+
   ## Indicates standards conformance characteristics of the element
   attribute conformance { text }
 db.os.attribute =
-  
+
   ## Indicates the operating system to which the element is applicable
   attribute os { text }
 db.revision.attribute =
-  
+
   ## Indicates the editorial revision to which the element belongs
   attribute revision { text }
 db.security.attribute =
-  
+
   ## Indicates something about the security level associated with the element to which it applies
   attribute security { text }
 db.userlevel.attribute =
-  
+
   ## Indicates the level of user experience for which the element applies
   attribute userlevel { text }
 db.vendor.attribute =
-  
+
   ## Indicates the computer vendor to which the element applies.
   attribute vendor { text }
 db.wordsize.attribute =
-  
+
   ## Indicates the word size (width in bits) of the computer architecture to which the element applies
   attribute wordsize { text }
 db.outputformat.attribute =
-  
+
   ## Indicates the output format (for example, print or epub) to which the element applies
   attribute outputformat { text }
 db.effectivity.attributes =
@@ -153,76 +153,76 @@ db.effectivity.attributes =
   & db.wordsize.attribute?
   & db.outputformat.attribute?
 db.endterm.attribute =
-  
+
   ## Points to the element whose content is to be used as the text of the link
   attribute endterm { xsd:IDREF }
 db.linkend.attribute =
-  
+
   ## Points to an internal link target by identifying the value of its xml:id attribute
   attribute linkend { xsd:IDREF }
 db.linkends.attribute =
-  
+
   ## Points to one or more internal link targets by identifying the value of their xml:id attributes
   attribute linkends { xsd:IDREFS }
 db.xlink.href.attribute =
-  
+
   ## Identifies a link target with a URI
   attribute xlink:href { xsd:anyURI }
 db.xlink.simple.type.attribute =
-  
+
   ## Identifies the XLink link type
   attribute xlink:type {
-    
+
     ## An XLink simple link type
     "simple"
   }
 db.xlink.role.attribute =
-  
+
   ## Identifies the XLink role of the link
   attribute xlink:role { xsd:anyURI }
 db.xlink.arcrole.attribute =
-  
+
   ## Identifies the XLink arcrole of the link
   attribute xlink:arcrole { xsd:anyURI }
 db.xlink.title.attribute =
-  
+
   ## Identifies the XLink title of the link
   attribute xlink:title { text }
 db.xlink.show.enumeration =
-  
+
   ## An application traversing to the ending resource should load it in a new window, frame, pane, or other relevant presentation context.
   "new"
-  | 
+  |
     ## An application traversing to the ending resource should load the resource in the same window, frame, pane, or other relevant presentation context in which the starting resource was loaded.
     "replace"
-  | 
+  |
     ## An application traversing to the ending resource should load its presentation in place of the presentation of the starting resource.
     "embed"
-  | 
+  |
     ## The behavior of an application traversing to the ending resource is unconstrained by XLink. The application should look for other markup present in the link to determine the appropriate behavior.
     "other"
-  | 
+  |
     ## The behavior of an application traversing to the ending resource is unconstrained by this specification. No other markup is present to help the application determine the appropriate behavior.
     "none"
 db.xlink.show.attribute =
-  
+
   ## Identifies the XLink show behavior of the link
   attribute xlink:show { db.xlink.show.enumeration }
 db.xlink.actuate.enumeration =
-  
+
   ## An application should traverse to the ending resource immediately on loading the starting resource.
   "onLoad"
-  | 
+  |
     ## An application should traverse from the starting resource to the ending resource only on a post-loading event triggered for the purpose of traversal.
     "onRequest"
-  | 
+  |
     ## The behavior of an application traversing to the ending resource is unconstrained by this specification. The application should look for other markup present in the link to determine the appropriate behavior.
     "other"
-  | 
+  |
     ## The behavior of an application traversing to the ending resource is unconstrained by this specification. No other markup is present to help the application determine the appropriate behavior.
     "none"
 db.xlink.actuate.attribute =
-  
+
   ## Identifies the XLink actuate behavior of the link
   attribute xlink:actuate { db.xlink.actuate.enumeration }
 db.xlink.simple.link.attributes =
@@ -241,85 +241,85 @@ db.xlink.attributes =
      | db.xlink.resource.link.attributes
      | db.xlink.title.link.attributes)
 db.xml.id.attribute =
-  
+
   ## Identifies the unique ID value of the element
   attribute xml:id { xsd:ID }
 db.version.attribute =
-  
+
   ## Specifies the DocBook version of the element and its descendants
   attribute version { text }
 db.xml.lang.attribute =
-  
+
   ## Specifies the natural language of the element and its descendants
   attribute xml:lang { text }
 db.xml.base.attribute =
-  
+
   ## Specifies the base URI of the element and its descendants
   attribute xml:base { xsd:anyURI }
 db.remap.attribute =
-  
+
   ## Provides the name or similar semantic identifier assigned to the content in some previous markup scheme
   attribute remap { text }
 db.xreflabel.attribute =
-  
+
   ## Provides the text that is to be generated for a cross reference to the element
   attribute xreflabel { text }
 db.xrefstyle.attribute =
-  
+
   ## Specifies a keyword or keywords identifying additional style information
   attribute xrefstyle { text }
 db.revisionflag.enumeration =
-  
+
   ## The element has been changed.
   "changed"
-  | 
+  |
     ## The element is new (has been added to the document).
     "added"
-  | 
+  |
     ## The element has been deleted.
     "deleted"
-  | 
+  |
     ## Explicitly turns off revision markup for this element.
     "off"
 db.revisionflag.attribute =
-  
+
   ## Identifies the revision status of the element
   attribute revisionflag { db.revisionflag.enumeration }
 db.dir.enumeration =
-  
+
   ## Left-to-right text
   "ltr"
-  | 
+  |
     ## Right-to-left text
     "rtl"
-  | 
+  |
     ## Left-to-right override
     "lro"
-  | 
+  |
     ## Right-to-left override
     "rlo"
 db.dir.attribute =
-  
+
   ## Identifies the direction of text in an element
   attribute dir { db.dir.enumeration }
 db.rdfalite.vocab =
-  
+
   ## The RDFa Lite vocab
   attribute vocab { xsd:anyURI }
 db.rdfalite.typeof =
-  
+
   ## The RDFa Lite typeof
   attribute typeof { text }
 db.rdfalite.property =
-  
+
   ## The RDFa Lite property
   attribute property { text }
 db.rdfalite.resource =
-  
+
   ## The RDFa Lite resource
   attribute resource { text }
 db.rdfalite.prefix =
-  
+
   ## The RDFa Lite prefix
   attribute prefix { text }
 db.rdfalite.attributes =
@@ -351,50 +351,50 @@ db.common.linking.attributes =
 db.common.req.linking.attributes =
   db.linkend.attribute | db.xlink.attributes
 db.common.data.attributes =
-  
+
   ## Specifies the format of the data
   attribute format { text }?,
   (
    ## Indentifies the location of the data by URI
    attribute fileref { xsd:anyURI }
-   | 
+   |
      ## Identifies the location of the data by external identifier (entity name)
      attribute entityref { xsd:ENTITY })
 db.verbatim.continuation.enumeration =
-  
+
   ## Line numbering continues from the immediately preceding element with the same name.
   "continues"
-  | 
+  |
     ## Line numbering restarts (begins at 1, usually).
     "restarts"
 db.verbatim.continuation.attribute =
-  
+
   ## Determines whether line numbering continues from the previous element or restarts.
   attribute continuation { db.verbatim.continuation.enumeration }
 db.verbatim.linenumbering.enumeration =
-  
+
   ## Lines are numbered.
   "numbered"
-  | 
+  |
     ## Lines are not numbered.
     "unnumbered"
 db.verbatim.linenumbering.attribute =
-  
+
   ## Determines whether lines are numbered.
   attribute linenumbering { db.verbatim.linenumbering.enumeration }
 db.verbatim.startinglinenumber.attribute =
-  
+
   ## Specifies the initial line number.
   attribute startinglinenumber { xsd:integer }
 db.verbatim.language.attribute =
-  
+
   ## Identifies the language (i.e. programming language) of the verbatim content.
   attribute language { text }
 db.verbatim.xml.space.attribute =
-  
+
   ## Can be used to indicate explicitly that whitespace in the verbatim environment is preserved. Whitespace must always be preserved in verbatim environments whether this attribute is specified or not.
   attribute xml:space {
-    
+
     ## Whitespace must be preserved.
     "preserve"
   }
@@ -406,153 +406,153 @@ db.verbatim.common.attributes =
 db.verbatim.attributes =
   db.verbatim.common.attributes & db.verbatim.language.attribute?
 db.label.attribute =
-  
+
   ## Specifies an identifying string for presentation purposes
   attribute label { text }
 db.width.characters.attribute =
-  
+
   ## Specifies the width (in characters) of the element
   attribute width { xsd:nonNegativeInteger }
 db.spacing.enumeration =
-  
+
   ## The spacing should be "compact".
   "compact"
-  | 
+  |
     ## The spacing should be "normal".
     "normal"
 db.spacing.attribute =
-  
+
   ## Specifies (a hint about) the spacing of the content
   attribute spacing { db.spacing.enumeration }
 db.pgwide.enumeration =
-  
+
   ## The element should be rendered in the current text flow (with the flow column width).
   "0"
-  | 
+  |
     ## The element should be rendered across the full text page.
     "1"
 db.pgwide.attribute =
-  
+
   ## Indicates if the element is rendered across the column or the page
   attribute pgwide { db.pgwide.enumeration }
 db.language.attribute =
-  
+
   ## Identifies the language (i.e. programming language) of the content.
   attribute language { text }
 db.performance.enumeration =
-  
+
   ## The content describes an optional step or steps.
   "optional"
-  | 
+  |
     ## The content describes a required step or steps.
     "required"
 db.performance.attribute =
-  
+
   ## Specifies if the content is required or optional.
   attribute performance { db.performance.enumeration }
 db.floatstyle.attribute =
-  
+
   ## Specifies style information to be used when rendering the float
   attribute floatstyle { text }
 db.width.attribute =
-  
+
   ## Specifies the width of the element
   attribute width { text }
 db.depth.attribute =
-  
+
   ## Specifies the depth of the element
   attribute depth { text }
 db.contentwidth.attribute =
-  
+
   ## Specifies the width of the content rectangle
   attribute contentwidth { text }
 db.contentdepth.attribute =
-  
+
   ## Specifies the depth of the content rectangle
   attribute contentdepth { text }
 db.scalefit.enumeration =
-  
+
   ## False (do not scale-to-fit; anamorphic scaling may occur)
   "0"
-  | 
+  |
     ## True (scale-to-fit; anamorphic scaling is forbidden)
     "1"
 db.scale.attribute =
-  
+
   ## Specifies the scaling factor
   attribute scale { xsd:positiveInteger }
 db.classid.attribute =
-  
+
   ## Specifies a classid for a media object player
   attribute classid { text }
 db.autoplay.attribute =
-  
+
   ## Specifies the autoplay setting for a media object player
   attribute autoplay { text }
 db.halign.enumeration =
-  
+
   ## Centered horizontally
   "center"
-  | 
+  |
     ## Aligned horizontally on the specified character
     "char"
-  | 
+  |
     ## Fully justified (left and right margins or edges)
     "justify"
-  | 
+  |
     ## Left aligned
     "left"
-  | 
+  |
     ## Right aligned
     "right"
 db.valign.enumeration =
-  
+
   ## Aligned on the bottom of the region
   "bottom"
-  | 
+  |
     ## Centered vertically
     "middle"
-  | 
+  |
     ## Aligned on the top of the region
     "top"
 db.biblio.class.enumeration =
-  
+
   ## A digital object identifier.
   "doi"
-  | 
+  |
     ## An international standard book number.
     "isbn"
-  | 
+  |
     ## An international standard technical report number (ISO 10444).
     "isrn"
-  | 
+  |
     ## An international standard serial number.
     "issn"
-  | 
+  |
     ## An international standard text code.
     "istc"
-  | 
+  |
     ## A Library of Congress reference number.
     "libraryofcongress"
-  | 
+  |
     ## A publication number (an internal number or possibly organizational standard).
     "pubsnumber"
-  | 
+  |
     ## A Uniform Resource Identifier
     "uri"
 db.biblio.class-enum.attribute =
-  
+
   ## Identifies the kind of bibliographic identifier
   attribute class { db.biblio.class.enumeration }?
 db.biblio.class-other.attribute =
-  
+
   ## Identifies the nature of the non-standard bibliographic identifier
   attribute otherclass { xsd:NMTOKEN }
 db.biblio.class-other.attributes =
-  
+
   ## Identifies the kind of bibliographic identifier
   attribute class {
-    
+
     ## Indicates that the identifier is some 'other' kind.
     "other"
   }
@@ -769,7 +769,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.title =
-    
+
     ## The text of the title of a section of a document or of a formal block-level element
     element title { db.title.attlist, db.all.inlines* }
 }
@@ -780,7 +780,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.titleabbrev =
-    
+
     ## The abbreviation of a title
     element titleabbrev { db.titleabbrev.attlist, db.all.inlines* }
 }
@@ -791,7 +791,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.subtitle =
-    
+
     ## The subtitle of a document
     element subtitle { db.subtitle.attlist, db.all.inlines* }
 }
@@ -799,7 +799,7 @@ div {
   db.info.role.attribute = attribute role { text }
   db.info.attlist = db.info.role.attribute? & db.common.attributes
   db.info =
-    
+
     ## A wrapper for information about a component or other block
     element info { db.info.attlist, (db._title & db.info.elements*) }
 }
@@ -808,7 +808,7 @@ div {
   db.titlereq.info.attlist =
     db.titlereq.info.role.attribute? & db.common.attributes
   db.titlereq.info =
-    
+
     ## A wrapper for information about a component or other block with a required title
     element info {
       db.titlereq.info.attlist, (db._title.req & db.info.elements*)
@@ -819,7 +819,7 @@ div {
   db.titleonly.info.attlist =
     db.titleonly.info.role.attribute? & db.common.attributes
   db.titleonly.info =
-    
+
     ## A wrapper for information about a component or other block with only a title
     element info {
       db.titleonly.info.attlist, (db._title.only & db.info.elements*)
@@ -830,7 +830,7 @@ div {
   db.titleonlyreq.info.attlist =
     db.titleonlyreq.info.role.attribute? & db.common.attributes
   db.titleonlyreq.info =
-    
+
     ## A wrapper for information about a component or other block with only a required title
     element info {
       db.titleonlyreq.info.attlist,
@@ -842,14 +842,14 @@ div {
   db.titleforbidden.info.attlist =
     db.titleforbidden.info.role.attribute? & db.common.attributes
   db.titleforbidden.info =
-    
+
     ## A wrapper for information about a component or other block without a title
     element info { db.titleforbidden.info.attlist, db.info.elements* }
 }
 div {
   db.subjectset.role.attribute = attribute role { text }
   db.subjectset.scheme.attribute =
-    
+
     ## Identifies the controlled vocabulary used by this set's terms
     attribute scheme { xsd:NMTOKEN }
   db.subjectset.attlist =
@@ -858,14 +858,14 @@ div {
     & db.common.linking.attributes
     & db.subjectset.scheme.attribute?
   db.subjectset =
-    
+
     ## A set of terms describing the subject matter of a document
     element subjectset { db.subjectset.attlist, db.subject+ }
 }
 div {
   db.subject.role.attribute = attribute role { text }
   db.subject.weight.attribute =
-    
+
     ## Specifies a ranking for this subject relative to other subjects in the same set
     attribute weight { text }
   db.subject.attlist =
@@ -874,7 +874,7 @@ div {
     & db.common.linking.attributes
     & db.subject.weight.attribute?
   db.subject =
-    
+
     ## One of a group of terms describing the subject matter of a document
     element subject { db.subject.attlist, db.subjectterm+ }
 }
@@ -885,7 +885,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.subjectterm =
-    
+
     ## A term in a group of terms describing the subject matter of a document
     element subjectterm { db.subjectterm.attlist, text }
 }
@@ -896,7 +896,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.keywordset =
-    
+
     ## A set of keywords describing the content of a document
     element keywordset { db.keywordset.attlist, db.keyword+ }
 }
@@ -907,7 +907,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.keyword =
-    
+
     ## One of a set of keywords describing the content of a document
     element keyword { db.keyword.attlist, text }
 }
@@ -924,7 +924,7 @@ div {
     & db.common.linking.attributes
   db.procedure.info = db._info.title.only
   db.procedure =
-    
+
     ## A list of operations to be performed in a well-defined sequence
     [
       s:pattern [
@@ -967,7 +967,7 @@ div {
   # This content model is blocks*, step|stepalternatives, blocks* but
   # expressed this way it avoids UPA issues in XSD and DTD versions
   db.step =
-    
+
     ## A unit of action in a procedure
     [
       s:pattern [
@@ -1011,7 +1011,7 @@ div {
     & db.performance.attribute?
   db.stepalternatives.info = db._info.title.forbidden
   db.stepalternatives =
-    
+
     ## Alternative steps in a procedure
     [
       s:pattern [
@@ -1047,7 +1047,7 @@ div {
     & db.common.linking.attributes
     & db.performance.attribute?
   db.substeps =
-    
+
     ## A wrapper for steps that occur within steps in a procedure
     element substeps { db.substeps.attlist, db.step+ }
 }
@@ -1058,7 +1058,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.result =
-    
+
     ## A wrapper for identifying the results of a procedure or step
     element result { db.result.attlist, db.all.blocks+ }
 }
@@ -1072,7 +1072,7 @@ div {
     & db.common.linking.attributes
   db.sidebar.info = db._info
   db.sidebar =
-    
+
     ## A portion of a document that is isolated from the main narrative flow
     [
       s:pattern [
@@ -1128,7 +1128,7 @@ div {
     & db.common.linking.attributes
   db.abstract.info = db._info.title.only
   db.abstract =
-    
+
     ## A summary
     [
       s:pattern [
@@ -1164,7 +1164,7 @@ div {
     & db.common.linking.attributes
   db.personblurb.info = db._info.title.only
   db.personblurb =
-    
+
     ## A short description or note about a person
     [
       s:pattern [
@@ -1200,7 +1200,7 @@ div {
     & db.common.linking.attributes
   db.blockquote.info = db._info.title.only
   db.blockquote =
-    
+
     ## A quotation set off from the main text
     [
       s:pattern [
@@ -1238,7 +1238,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.attribution =
-    
+
     ## The source of a block quote or epigraph
     element attribution {
       db.attribution.attlist,
@@ -1251,34 +1251,34 @@ div {
 }
 div {
   db.bridgehead.renderas.enumeration =
-    
+
     ## Render as a first-level section
     "sect1"
-    | 
+    |
       ## Render as a second-level section
       "sect2"
-    | 
+    |
       ## Render as a third-level section
       "sect3"
-    | 
+    |
       ## Render as a fourth-level section
       "sect4"
-    | 
+    |
       ## Render as a fifth-level section
       "sect5"
   db.bridgehead.renderas-enum.attribute =
-    
+
     ## Indicates how the bridge head should be rendered
     attribute renderas { db.bridgehead.renderas.enumeration }?
   db.bridgehead.renderas-other.attribute =
-    
+
     ## Identifies the nature of the non-standard rendering
     attribute otherrenderas { xsd:NMTOKEN }
   db.bridgehead.renderas-other.attributes =
-    
+
     ## Indicates how the bridge head should be rendered
     attribute renderas {
-      
+
       ## Identifies a non-standard rendering
       "other"
     }
@@ -1293,7 +1293,7 @@ div {
     & db.common.linking.attributes
     & db.bridgehead.renderas.attribute?
   db.bridgehead =
-    
+
     ## A free-floating heading
     element bridgehead { db.bridgehead.attlist, db.all.inlines* }
 }
@@ -1304,7 +1304,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.remark =
-    
+
     ## A remark (or comment) intended for presentation in a draft manuscript
     element remark { db.remark.attlist, db.all.inlines* }
 }
@@ -1316,7 +1316,7 @@ div {
     & db.common.linking.attributes
   db.epigraph.info = db._info.title.forbidden
   db.epigraph =
-    
+
     ## A short inscription at the beginning of a document or component
     [
       s:pattern [
@@ -1350,7 +1350,7 @@ div {
 div {
   db.footnote.role.attribute = attribute role { text }
   db.footnote.label.attribute =
-    
+
     ## Identifies the desired footnote mark
     attribute label { xsd:NMTOKEN }
   db.footnote.attlist =
@@ -1359,7 +1359,7 @@ div {
     & db.common.linking.attributes
     & db.footnote.label.attribute?
   db.footnote =
-    
+
     ## A footnote
     [
       s:pattern [
@@ -1633,7 +1633,7 @@ div {
     & db.common.linking.attributes
   db.formalpara.info = db._info.title.onlyreq
   db.formalpara =
-    
+
     ## A paragraph with a title
     [
       s:pattern [
@@ -1672,7 +1672,7 @@ div {
     & db.common.linking.attributes
   db.para.info = db._info.title.forbidden
   db.para =
-    
+
     ## A paragraph
     [
       s:pattern [
@@ -1710,7 +1710,7 @@ div {
     & db.common.linking.attributes
   db.simpara.info = db._info.title.forbidden
   db.simpara =
-    
+
     ## A paragraph that contains only text and inline markup, no block elements
     [
       s:pattern [
@@ -1741,7 +1741,7 @@ div {
 div {
   db.itemizedlist.role.attribute = attribute role { text }
   db.itemizedlist.mark.attribute =
-    
+
     ## Identifies the type of mark to be used on items in this list
     attribute mark { xsd:NMTOKEN }
   db.itemizedlist.attlist =
@@ -1752,7 +1752,7 @@ div {
     & db.itemizedlist.mark.attribute?
   db.itemizedlist.info = db._info.title.only
   db.itemizedlist =
-    
+
     ## A list in which each entry is marked with a bullet or other dingbat
     [
       s:pattern [
@@ -1786,49 +1786,49 @@ div {
 div {
   db.orderedlist.role.attribute = attribute role { text }
   db.orderedlist.continuation.enumeration =
-    
+
     ## Specifies that numbering should begin where the preceding list left off
     "continues"
-    | 
+    |
       ## Specifies that numbering should begin again at 1
       "restarts"
   db.orderedlist.continuation.attribute =
-    
+
     ## Indicates how list numbering should begin relative to the immediately preceding list
     attribute continuation { db.orderedlist.continuation.enumeration }
   db.orderedlist.startingnumber.attribute =
-    
+
     ## Specifies the initial line number.
     attribute startingnumber { xsd:integer }
   db.orderedlist.inheritnum.enumeration =
-    
+
     ## Specifies that numbering should ignore list nesting
     "ignore"
-    | 
+    |
       ## Specifies that numbering should inherit from outer-level lists
       "inherit"
   db.orderedlist.inheritnum.attribute =
-    
-    ## Indicates whether or not item numbering should be influenced by list nesting
+
+    ## Indicates whether item numbering should be influenced by list nesting
     attribute inheritnum { db.orderedlist.inheritnum.enumeration }
   db.orderedlist.numeration.enumeration =
-    
+
     ## Specifies Arabic numeration (1, 2, 3, …)
     "arabic"
-    | 
+    |
       ## Specifies upper-case alphabetic numeration (A, B, C, …)
       "upperalpha"
-    | 
+    |
       ## Specifies lower-case alphabetic numeration (a, b, c, …)
       "loweralpha"
-    | 
+    |
       ## Specifies upper-case Roman numeration (I, II, III, …)
       "upperroman"
-    | 
+    |
       ## Specifies lower-case Roman numeration (i, ii, iii …)
       "lowerroman"
   db.orderedlist.numeration.attribute =
-    
+
     ## Indicates the desired numeration
     attribute numeration { db.orderedlist.numeration.enumeration }
   db.orderedlist.attlist =
@@ -1842,7 +1842,7 @@ div {
     & db.orderedlist.numeration.attribute?
   db.orderedlist.info = db._info.title.only
   db.orderedlist =
-    
+
     ## A list in which each entry is marked with a sequentially incremented label
     [
       s:pattern [
@@ -1876,7 +1876,7 @@ div {
 div {
   db.listitem.role.attribute = attribute role { text }
   db.listitem.override.attribute =
-    
+
     ## Specifies the keyword for the type of mark that should be used on this
     ##  item, instead of the mark that would be used by default
     attribute override { xsd:NMTOKEN }
@@ -1886,7 +1886,7 @@ div {
     & db.common.linking.attributes
     & db.listitem.override.attribute?
   db.listitem =
-    
+
     ## A wrapper for the elements of a list item
     element listitem { db.listitem.attlist, db.all.blocks+ }
 }
@@ -1898,7 +1898,7 @@ div {
     & db.common.linking.attributes
   db.segmentedlist.info = db._info.title.only
   db.segmentedlist =
-    
+
     ## A segmented list, a list of sets of elements
     [
       s:pattern [
@@ -1936,7 +1936,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.segtitle =
-    
+
     ## The title of an element of a list item in a segmented list
     element segtitle { db.segtitle.attlist, db.all.inlines* }
 }
@@ -1947,7 +1947,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.seglistitem =
-    
+
     ## A list item in a segmented list
     [
       s:pattern [
@@ -1980,29 +1980,29 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.seg =
-    
+
     ## An element of a list item in a segmented list
     element seg { db.seg.attlist, db.all.inlines* }
 }
 div {
   db.simplelist.role.attribute = attribute role { text }
   db.simplelist.type.enumeration =
-    
+
     ## A tabular presentation in row-major order.
     "horiz"
-    | 
+    |
       ## A tabular presentation in column-major order.
       "vert"
-    | 
+    |
       ## An inline presentation, usually a comma-delimited list.
       "inline"
   db.simplelist.type.attribute =
-    
+
     ## Specifies the type of list presentation.
     [ a:defaultValue = "vert" ]
     attribute type { db.simplelist.type.enumeration }
   db.simplelist.columns.attribute =
-    
+
     ## Specifies the number of columns for horizontal or vertical presentation
     attribute columns { xsd:integer }
   db.simplelist.attlist =
@@ -2012,7 +2012,7 @@ div {
     & db.simplelist.type.attribute?
     & db.simplelist.columns.attribute?
   db.simplelist =
-    
+
     ## An undecorated list of single words or short phrases
     [
       s:pattern [
@@ -2045,14 +2045,14 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.member =
-    
+
     ## An element of a simple list
     element member { db.member.attlist, db.all.inlines* }
 }
 div {
   db.variablelist.role.attribute = attribute role { text }
   db.variablelist.termlength.attribute =
-    
+
     ## Indicates a length beyond which the presentation system may consider a term too long and select an alternate presentation for that term, item, or list
     attribute termlength { text }
   db.variablelist.attlist =
@@ -2063,7 +2063,7 @@ div {
     & db.variablelist.termlength.attribute?
   db.variablelist.info = db._info.title.only
   db.variablelist =
-    
+
     ## A list in which each entry is composed of a set of one or more terms and an associated description
     [
       s:pattern [
@@ -2101,7 +2101,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.varlistentry =
-    
+
     ## A wrapper for a set of terms and the associated description in a variable list
     element varlistentry {
       db.varlistentry.attlist, db.term+, db.listitem
@@ -2114,7 +2114,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.term =
-    
+
     ## The word or phrase being defined or described in a variable list
     element term { db.term.attlist, db.all.inlines* }
 }
@@ -2133,7 +2133,7 @@ div {
     & (db.example.width.attribute | db.example.pgwide.attribute)?
   db.example.info = db._info.title.onlyreq
   db.example =
-    
+
     ## A formal example, with a title
     [
       s:pattern [
@@ -2255,7 +2255,7 @@ div {
        | db.informalexample.pgwide.attribute)?
   db.informalexample.info = db._info.title.forbidden
   db.informalexample =
-    
+
     ## A displayed example without a title
     [
       s:pattern [
@@ -2292,14 +2292,14 @@ db.verbatim.contentmodel =
 div {
   db.literallayout.role.attribute = attribute role { text }
   db.literallayout.class.enumeration =
-    
+
     ## The literal layout should be formatted with a monospaced font
     "monospaced"
-    | 
+    |
       ## The literal layout should be formatted with the current font
       "normal"
   db.literallayout.class.attribute =
-    
+
     ## Specifies the class of literal layout
     attribute class { db.literallayout.class.enumeration }
   db.literallayout.attlist =
@@ -2309,7 +2309,7 @@ div {
     & db.verbatim.attributes
     & db.literallayout.class.attribute?
   db.literallayout =
-    
+
     ## A block of text in which line breaks and white space are to be reproduced faithfully
     [
       s:pattern [
@@ -2347,7 +2347,7 @@ div {
     & db.verbatim.attributes
     & db.screen.width.attribute?
   db.screen =
-    
+
     ## Text that a user sees or might see on a computer screen
     [
       s:pattern [
@@ -2381,7 +2381,7 @@ div {
     & db.common.linking.attributes
   db.screenshot.info = db._info
   db.screenshot =
-    
+
     ## A representation of what the user sees or might see on a computer screen
     [
       s:pattern [
@@ -2423,7 +2423,7 @@ div {
     & db.figure.floatstyle.attribute?
   db.figure.info = db._info.title.onlyreq
   db.figure =
-    
+
     ## A formal figure, generally an illustration, with a title
     [
       s:pattern [
@@ -2545,7 +2545,7 @@ div {
     & db.informalfigure.floatstyle.attribute?
   db.informalfigure.info = db._info.title.forbidden
   db.informalfigure =
-    
+
     ## A untitled figure
     [
       s:pattern [
@@ -2587,7 +2587,7 @@ div {
     & db.common.linking.attributes
   db.mediaobject.info = db._info.title.forbidden
   db.mediaobject =
-    
+
     ## A displayed media object (video, audio, image, etc.)
     [
       s:pattern [
@@ -2627,7 +2627,7 @@ div {
     & db.common.linking.attributes
   db.inlinemediaobject.info = db._info.title.forbidden
   db.inlinemediaobject =
-    
+
     ## An inline media object (video, audio, image, and so on)
     [
       s:pattern [
@@ -2666,7 +2666,7 @@ div {
     & db.common.linking.attributes
   db.videoobject.info = db._info.title.forbidden
   db.videoobject =
-    
+
     ## A wrapper for video data and its associated meta-information
     [
       s:pattern [
@@ -2702,7 +2702,7 @@ div {
     & db.common.linking.attributes
   db.audioobject.info = db._info.title.forbidden
   db.audioobject =
-    
+
     ## A wrapper for audio data and its associated meta-information
     [
       s:pattern [
@@ -2740,7 +2740,7 @@ div {
     & db.common.linking.attributes
   db.imageobject.info = db._info.title.forbidden
   db.imageobject =
-    
+
     ## A wrapper for image data and its associated meta-information
     [
       s:pattern [
@@ -2778,7 +2778,7 @@ div {
     & db.common.linking.attributes
   db.textobject.info = db._info.title.forbidden
   db.textobject =
-    
+
     ## A wrapper for a text description of an object and its associated meta-information
     [
       s:pattern [
@@ -2812,14 +2812,14 @@ div {
   db.videodata.role.attribute = attribute role { text }
   db.videodata.align.enumeration = db.halign.enumeration
   db.videodata.align.attribute =
-    
+
     ## Specifies the (horizontal) alignment of the video data
     attribute align { db.videodata.align.enumeration }
   db.videodata.autoplay.attribute = db.autoplay.attribute
   db.videodata.classid.attribute = db.classid.attribute
   db.videodata.valign.enumeration = db.valign.enumeration
   db.videodata.valign.attribute =
-    
+
     ## Specifies the vertical alignment of the video data
     attribute valign { db.videodata.valign.enumeration }
   db.videodata.width.attribute = db.width.attribute
@@ -2828,7 +2828,7 @@ div {
   db.videodata.contentdepth.attribute = db.contentdepth.attribute
   db.videodata.scalefit.enumeration = db.scalefit.enumeration
   db.videodata.scalefit.attribute =
-    
+
     ## Determines if anamorphic scaling is forbidden
     attribute scalefit { db.videodata.scalefit.enumeration }
   db.videodata.scale.attribute = db.scale.attribute
@@ -2848,7 +2848,7 @@ div {
     & db.videodata.classid.attribute?
   db.videodata.info = db._info.title.forbidden
   db.videodata =
-    
+
     ## Pointer to external video data
     [
       s:pattern [
@@ -2880,7 +2880,7 @@ div {
   db.audiodata.role.attribute = attribute role { text }
   db.audiodata.align.enumeration = db.halign.enumeration
   db.audiodata.align.attribute =
-    
+
     ## Specifies the (horizontal) alignment of the video data
     attribute align { db.audiodata.align.enumeration }
   db.audiodata.autoplay.attribute = db.autoplay.attribute
@@ -2891,12 +2891,12 @@ div {
   db.audiodata.scale.attribute = db.scale.attribute
   db.audiodata.scalefit.enumeration = db.scalefit.enumeration
   db.audiodata.scalefit.attribute =
-    
+
     ## Determines if anamorphic scaling is forbidden
     attribute scalefit { db.audiodata.scalefit.enumeration }
   db.audiodata.valign.enumeration = db.valign.enumeration
   db.audiodata.valign.attribute =
-    
+
     ## Specifies the vertical alignment of the video data
     attribute valign { db.audiodata.valign.enumeration }
   db.audiodata.width.attribute = db.width.attribute
@@ -2916,7 +2916,7 @@ div {
     & db.audiodata.width.attribute?
   db.audiodata.info = db._info.title.forbidden
   db.audiodata =
-    
+
     ## Pointer to external audio data
     [
       s:pattern [
@@ -2948,12 +2948,12 @@ div {
   db.imagedata.role.attribute = attribute role { text }
   db.imagedata.align.enumeration = db.halign.enumeration
   db.imagedata.align.attribute =
-    
+
     ## Specifies the (horizontal) alignment of the image data
     attribute align { db.imagedata.align.enumeration }
   db.imagedata.valign.enumeration = db.valign.enumeration
   db.imagedata.valign.attribute =
-    
+
     ## Specifies the vertical alignment of the image data
     attribute valign { db.imagedata.valign.enumeration }
   db.imagedata.width.attribute = db.width.attribute
@@ -2962,7 +2962,7 @@ div {
   db.imagedata.contentdepth.attribute = db.contentdepth.attribute
   db.imagedata.scalefit.enumeration = db.scalefit.enumeration
   db.imagedata.scalefit.attribute =
-    
+
     ## Determines if anamorphic scaling is forbidden
     attribute scalefit { db.imagedata.scalefit.enumeration }
   db.imagedata.scale.attribute = db.scale.attribute
@@ -2980,7 +2980,7 @@ div {
     & db.imagedata.contentdepth.attribute?
   db.imagedata.info = db._info.title.forbidden
   db.imagedata =
-    
+
     ## Pointer to external image data
     [
       s:pattern [
@@ -3009,7 +3009,7 @@ div {
 div {
   db.textdata.role.attribute = attribute role { text }
   db.textdata.encoding.attribute =
-    
+
     ## Identifies the encoding of the text in the external file
     attribute encoding { text }
   db.textdata.attlist =
@@ -3019,7 +3019,7 @@ div {
     & db.textdata.encoding.attribute?
   db.textdata.info = db._info.title.forbidden
   db.textdata =
-    
+
     ## Pointer to external text data
     [
       s:pattern [
@@ -3048,15 +3048,15 @@ div {
 div {
   db.multimediaparam.role.attribute = attribute role { text }
   db.multimediaparam.name.attribute =
-    
+
     ## Specifies the name of the parameter
     attribute name { text }
   db.multimediaparam.value.attribute =
-    
+
     ## Specifies the value of the parameter
     attribute value { text }
   db.multimediaparam.valuetype.attribute =
-    
+
     ## Specifies the type of the value of the parameter
     attribute valuetype { text }
   db.multimediaparam.attlist =
@@ -3066,7 +3066,7 @@ div {
     & db.multimediaparam.value.attribute
     & db.multimediaparam.valuetype.attribute?
   db.multimediaparam =
-    
+
     ## Application specific parameters for a media player
     element multimediaparam { db.multimediaparam.attlist, empty }
 }
@@ -3078,7 +3078,7 @@ div {
     & db.common.linking.attributes
   db.caption.info = db._info.title.forbidden
   db.caption =
-    
+
     ## A caption
     [
       s:pattern [
@@ -3334,7 +3334,7 @@ div {
     & db.common.linking.attributes
     & db.verbatim.attributes
   db.address =
-    
+
     ## A real-world address, generally a postal address
     [
       s:pattern [
@@ -3383,7 +3383,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.street =
-    
+
     ## A street address in an address
     element street { db.street.attlist, db._text }
 }
@@ -3394,7 +3394,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.pob =
-    
+
     ## A post office box in an address
     element pob { db.pob.attlist, db._text }
 }
@@ -3405,7 +3405,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.postcode =
-    
+
     ## A postal code in an address
     element postcode { db.postcode.attlist, db._text }
 }
@@ -3416,7 +3416,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.city =
-    
+
     ## The name of a city in an address
     element city { db.city.attlist, db._text }
 }
@@ -3427,7 +3427,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.state =
-    
+
     ## A state or province in an address
     element state { db.state.attlist, db._text }
 }
@@ -3438,7 +3438,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.country =
-    
+
     ## The name of a country
     element country { db.country.attlist, db._text }
 }
@@ -3449,7 +3449,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.phone =
-    
+
     ## A telephone number
     element phone { db.phone.attlist, db._text }
 }
@@ -3460,7 +3460,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.fax =
-    
+
     ## A fax number
     element fax { db.fax.attlist, db._text }
 }
@@ -3471,7 +3471,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.otheraddr =
-    
+
     ## Uncategorized information in address
     element otheraddr { db.otheraddr.attlist, db._text }
 }
@@ -3482,7 +3482,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.affiliation =
-    
+
     ## The institutional affiliation of an individual
     element affiliation {
       db.affiliation.attlist,
@@ -3498,7 +3498,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.shortaffil =
-    
+
     ## A brief description of an affiliation
     element shortaffil { db.shortaffil.attlist, db._text }
 }
@@ -3509,37 +3509,37 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.jobtitle =
-    
+
     ## The title of an individual in an organization
     element jobtitle { db.jobtitle.attlist, db._text }
 }
 div {
   db.orgname.class.enumeration =
-    
+
     ## A consortium
     "consortium"
-    | 
+    |
       ## A corporation
       "corporation"
-    | 
+    |
       ## An informal organization
       "informal"
-    | 
+    |
       ## A non-profit organization
       "nonprofit"
   db.orgname.class-enum.attribute =
-    
+
     ## Specifies the nature of the organization
     attribute class { db.orgname.class.enumeration }
   db.orgname.class-other.attributes =
-    
+
     ## Specifies the nature of the organization
     attribute class {
-      
+
       ## Indicates a non-standard organization class
       "other"
     },
-    
+
     ## Identifies the non-standard nature of the organization
     attribute otherclass { text }
   db.orgname.class.attribute =
@@ -3551,7 +3551,7 @@ div {
     & db.common.linking.attributes
     & db.orgname.class.attribute?
   db.orgname =
-    
+
     ## The name of an organization
     element orgname { db.orgname.attlist, db._text }
 }
@@ -3562,7 +3562,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.orgdiv =
-    
+
     ## A division of an organization
     element orgdiv { db.orgdiv.attlist, db.all.inlines* }
 }
@@ -3573,7 +3573,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.artpagenums =
-    
+
     ## The page numbers of an article as published
     element artpagenums { db.artpagenums.attlist, db._text }
 }
@@ -3584,7 +3584,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.personname =
-    
+
     ## The personal name of an individual
     element personname {
       db.personname.attlist,
@@ -3626,7 +3626,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.author =
-    
+
     ## The name of an individual author
     element author { db.author.attlist, db.credit.contentmodel }
 }
@@ -3637,7 +3637,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.authorgroup =
-    
+
     ## Wrapper for author information when a document has multiple authors or collaborators
     element authorgroup {
       db.authorgroup.attlist, (db.author | db.editor | db.othercredit)+
@@ -3650,7 +3650,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.collab =
-    
+
     ## Identifies a collaborator
     element collab {
       db.collab.attlist,
@@ -3665,7 +3665,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.authorinitials =
-    
+
     ## The initials or other short identifier for an author
     element authorinitials { db.authorinitials.attlist, db._text }
 }
@@ -3676,7 +3676,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.person =
-    
+
     ## A person and associated metadata
     element person {
       db.person.attlist,
@@ -3695,7 +3695,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.org =
-    
+
     ## An organization and associated metadata
     element org {
       db.org.attlist,
@@ -3710,7 +3710,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.confgroup =
-    
+
     ## A wrapper for document meta-information about a conference
     element confgroup {
       db.confgroup.attlist,
@@ -3728,7 +3728,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.confdates =
-    
+
     ## The dates of a conference for which a document was written
     element confdates { db.confdates.attlist, db._text }
 }
@@ -3739,7 +3739,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.conftitle =
-    
+
     ## The title of a conference for which a document was written
     element conftitle { db.conftitle.attlist, db._text }
 }
@@ -3750,7 +3750,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.confnum =
-    
+
     ## An identifier, frequently numerical, associated with a conference for which a document was written
     element confnum { db.confnum.attlist, db._text }
 }
@@ -3761,7 +3761,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.confsponsor =
-    
+
     ## The sponsor of a conference for which a document was written
     element confsponsor { db.confsponsor.attlist, db._text }
 }
@@ -3772,7 +3772,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.contractnum =
-    
+
     ## The contract number of a document
     element contractnum { db.contractnum.attlist, db._text }
 }
@@ -3783,7 +3783,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.contractsponsor =
-    
+
     ## The sponsor of a contract
     element contractsponsor { db.contractsponsor.attlist, db._text }
 }
@@ -3794,7 +3794,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.copyright =
-    
+
     ## Copyright information about a document
     element copyright { db.copyright.attlist, db.year+, db.holder* }
 }
@@ -3805,7 +3805,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.year =
-    
+
     ## The year of publication of a document
     element year { db.year.attlist, db._text }
 }
@@ -3816,7 +3816,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.holder =
-    
+
     ## The name of the individual or organization that holds a copyright
     element holder { db.holder.attlist, db._text }
 }
@@ -3840,7 +3840,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.cover =
-    
+
     ## Additional content for the cover of a publication
     element cover { db.cover.attlist, db.cover.contentmodel+ }
 }
@@ -3853,7 +3853,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.date =
-    
+
     ## The date of publication or revision of a document
     element date { db.date.attlist, db.date.contentmodel }
 }
@@ -3864,7 +3864,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.edition =
-    
+
     ## The name or number of an edition of a document
     element edition { db.edition.attlist, db._text }
 }
@@ -3875,7 +3875,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.editor =
-    
+
     ## The name of the editor of a document
     element editor { db.editor.attlist, db.credit.contentmodel }
 }
@@ -3887,7 +3887,7 @@ div {
     & db.common.linking.attributes
     & db.biblio.class.attribute
   db.biblioid =
-    
+
     ## An identifier for a document
     element biblioid { db.biblioid.attlist, db._text }
 }
@@ -3899,7 +3899,7 @@ div {
     & db.common.linking.attributes
     & db.biblio.class.attribute
   db.citebiblioid =
-    
+
     ## A citation of a bibliographic identifier
     element citebiblioid { db.citebiblioid.attlist, db._text }
 }
@@ -3911,61 +3911,61 @@ div {
     & db.common.linking.attributes
     & db.biblio.class.attribute
   db.bibliosource =
-    
+
     ## The source of a document
     element bibliosource { db.bibliosource.attlist, db._text }
 }
 div {
   db.bibliorelation.type.enumeration =
-    
+
     ## The described resource pre-existed the referenced resource, which is essentially the same intellectual content presented in another format
     "hasformat"
-    | 
+    |
       ## The described resource includes the referenced resource either physically or logically
       "haspart"
-    | 
+    |
       ## The described resource has a version, edition, or adaptation, namely, the referenced resource
       "hasversion"
-    | 
+    |
       ## The described resource is the same intellectual content of the referenced resource, but presented in another format
       "isformatof"
-    | 
+    |
       ## The described resource is a physical or logical part of the referenced resource
       "ispartof"
-    | 
+    |
       ## The described resource is referenced, cited, or otherwise pointed to by the referenced resource
       "isreferencedby"
-    | 
+    |
       ## The described resource is supplanted, displaced, or superceded by the referenced resource
       "isreplacedby"
-    | 
+    |
       ## The described resource is required by the referenced resource, either physically or logically
       "isrequiredby"
-    | 
+    |
       ## The described resource is a version, edition, or adaptation of the referenced resource; changes in version imply substantive changes in content rather than differences in format
       "isversionof"
-    | 
+    |
       ## The described resource references, cites, or otherwise points to the referenced resource
       "references"
-    | 
+    |
       ## The described resource supplants, displaces, or supersedes the referenced resource
       "replaces"
-    | 
+    |
       ## The described resource requires the referenced resource to support its function, delivery, or coherence of content
       "requires"
   db.bibliorelation.type-enum.attribute =
-    
+
     ## Identifies the type of relationship
     attribute type { db.bibliorelation.type.enumeration }?
   db.bibliorelation.type-other.attributes =
-    
+
     ## Identifies the type of relationship
     attribute type {
-      
+
       ## The described resource has a non-standard relationship with the referenced resource
       "othertype"
     }?,
-    
+
     ## A keyword that identififes the type of the non-standard relationship
     attribute othertype { xsd:NMTOKEN }
   db.bibliorelation.type.attribute =
@@ -3979,62 +3979,62 @@ div {
     & db.biblio.class.attribute
     & db.bibliorelation.type.attribute
   db.bibliorelation =
-    
+
     ## The relationship of a document to another
     element bibliorelation { db.bibliorelation.attlist, db._text }
 }
 div {
   db.bibliocoverage.spacial.enumeration =
-    
+
     ## The DCMI Point identifies a point in space using its geographic coordinates
     "dcmipoint"
-    | 
+    |
       ## ISO 3166 Codes for the representation of names of countries
       "iso3166"
-    | 
+    |
       ## The DCMI Box identifies a region of space using its geographic limits
       "dcmibox"
-    | 
+    |
       ## The Getty Thesaurus of Geographic Names
       "tgn"
   db.bibliocoverage.spatial-enum.attribute =
-    
+
     ## Specifies the type of spatial coverage
     attribute spatial { db.bibliocoverage.spacial.enumeration }?
   db.bibliocoverage.spatial-other.attributes =
-    
+
     ## Specifies the type of spatial coverage
     attribute spatial {
-      
+
       ## Identifies a non-standard type of coverage
       "otherspatial"
     }?,
-    
+
     ## A keyword that identifies the type of non-standard coverage
     attribute otherspatial { xsd:NMTOKEN }
   db.bibliocoverage.spatial.attribute =
     db.bibliocoverage.spatial-enum.attribute
     | db.bibliocoverage.spatial-other.attributes
   db.bibliocoverage.temporal.enumeration =
-    
+
     ## A specification of the limits of a time interval
     "dcmiperiod"
-    | 
+    |
       ## W3C Encoding rules for dates and times—a profile based on ISO 8601
       "w3c-dtf"
   db.bibliocoverage.temporal-enum.attribute =
-    
+
     ## Specifies the type of temporal coverage
     attribute temporal { db.bibliocoverage.temporal.enumeration }?
   db.bibliocoverage.temporal-other.attributes =
-    
+
     ## Specifies the type of temporal coverage
     attribute temporal {
-      
+
       ## Specifies a non-standard type of coverage
       "othertemporal"
     }?,
-    
+
     ## A keyword that identifies the type of non-standard coverage
     attribute othertemporal { xsd:NMTOKEN }
   db.bibliocoverage.temporal.attribute =
@@ -4050,7 +4050,7 @@ div {
     & db.common.linking.attributes
     & db.bibliocoverage.coverage.attrib
   db.bibliocoverage =
-    
+
     ## The spatial or temporal coverage of a document
     element bibliocoverage { db.bibliocoverage.attlist, db._text }
 }
@@ -4062,7 +4062,7 @@ div {
     & db.common.linking.attributes
   db.legalnotice.info = db._info.title.only
   db.legalnotice =
-    
+
     ## A statement of legal obligations or requirements
     [
       s:pattern [
@@ -4092,58 +4092,58 @@ div {
 }
 div {
   db.othercredit.class.enumeration =
-    
+
     ## A copy editor
     "copyeditor"
-    | 
+    |
       ## A graphic designer
       "graphicdesigner"
-    | 
+    |
       ## A production editor
       "productioneditor"
-    | 
+    |
       ## A technical editor
       "technicaleditor"
-    | 
+    |
       ## A translator
       "translator"
-    | 
+    |
       ## An indexer
       "indexer"
-    | 
+    |
       ## A proof-reader
       "proofreader"
-    | 
+    |
       ## A cover designer
       "coverdesigner"
-    | 
+    |
       ## An interior designer
       "interiordesigner"
-    | 
+    |
       ## An illustrator
       "illustrator"
-    | 
+    |
       ## A reviewer
       "reviewer"
-    | 
+    |
       ## A typesetter
       "typesetter"
-    | 
+    |
       ## A converter (a persons responsible for conversion, not an application)
       "conversion"
   db.othercredit.class-enum.attribute =
-    
+
     ## Identifies the nature of the contributor
     attribute class { db.othercredit.class.enumeration }?
   db.othercredit.class-other.attribute =
-    
+
     ## Identifies the nature of the non-standard contribution
     attribute otherclass { xsd:NMTOKEN }
   db.othercredit.class-other.attributes =
-    
+
     ## Identifies the nature of the contributor
     attribute class {
-      
+
       ## Identifies a non-standard contribution
       "other"
     }
@@ -4158,7 +4158,7 @@ div {
     & db.common.linking.attributes
     & db.othercredit.class.attribute
   db.othercredit =
-    
+
     ## A person or entity, other than an author or editor, credited in a document
     element othercredit {
       db.othercredit.attlist, db.credit.contentmodel
@@ -4171,7 +4171,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.pagenums =
-    
+
     ## The numbers of the pages in a book, for use in a bibliographic entry
     element pagenums { db.pagenums.attlist, db._text }
 }
@@ -4182,7 +4182,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.contrib =
-    
+
     ## A summary of the contributions made to a document by a credited source
     element contrib { db.contrib.attlist, db.all.inlines* }
 }
@@ -4193,7 +4193,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.honorific =
-    
+
     ## The title of a person
     element honorific { db.honorific.attlist, db._text }
 }
@@ -4204,7 +4204,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.firstname =
-    
+
     ## A given name of a person
     element firstname { db.firstname.attlist, db._text }
 }
@@ -4215,7 +4215,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.givenname =
-    
+
     ## The given name of a person
     element givenname { db.givenname.attlist, db._text }
 }
@@ -4226,7 +4226,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.surname =
-    
+
     ## An inherited or family name; in western cultures the last name
     element surname { db.surname.attlist, db._text }
 }
@@ -4237,7 +4237,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.lineage =
-    
+
     ## The portion of a person's name indicating a relationship to ancestors
     element lineage { db.lineage.attlist, db._text }
 }
@@ -4248,7 +4248,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.othername =
-    
+
     ## A component of a person's name that is not a first name, surname, or lineage
     element othername { db.othername.attlist, db._text }
 }
@@ -4259,7 +4259,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.printhistory =
-    
+
     ## The printing history of a document
     element printhistory { db.printhistory.attlist, db.para.blocks+ }
 }
@@ -4270,7 +4270,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.pubdate =
-    
+
     ## The date of publication of a document
     element pubdate { db.pubdate.attlist, db.date.contentmodel }
 }
@@ -4281,7 +4281,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.publisher =
-    
+
     ## The publisher of a document
     element publisher {
       db.publisher.attlist, db.publishername, db.address*
@@ -4294,7 +4294,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.publishername =
-    
+
     ## The name of the publisher of a document
     element publishername { db.publishername.attlist, db._text }
 }
@@ -4305,7 +4305,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.releaseinfo =
-    
+
     ## Information about a particular release of a document
     element releaseinfo { db.releaseinfo.attlist, db._text }
 }
@@ -4317,7 +4317,7 @@ div {
     & db.common.linking.attributes
   db.revhistory.info = db._info.title.only
   db.revhistory =
-    
+
     ## A history of the revisions to a document
     [
       s:pattern [
@@ -4352,7 +4352,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.revision =
-    
+
     ## An entry describing a single revision in the history of the revisions to a document
     element revision {
       db.revision.attlist,
@@ -4369,7 +4369,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.revnumber =
-    
+
     ## A document revision number
     element revnumber { db.revnumber.attlist, db._text }
 }
@@ -4380,7 +4380,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.revremark =
-    
+
     ## A description of a revision to a document
     element revremark { db.revremark.attlist, db._text }
 }
@@ -4391,7 +4391,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.revdescription =
-    
+
     ## A extended description of a revision to a document
     element revdescription { db.revdescription.attlist, db.all.blocks* }
 }
@@ -4402,7 +4402,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.seriesvolnums =
-    
+
     ## Numbers of the volumes in a series of books
     element seriesvolnums { db.seriesvolnums.attlist, db._text }
 }
@@ -4413,7 +4413,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.volumenum =
-    
+
     ## The volume number of a document in a set (as of books in a set or articles in a journal)
     element volumenum { db.volumenum.attlist, db._text }
 }
@@ -4424,7 +4424,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.issuenum =
-    
+
     ## The number of an issue of a journal
     element issuenum { db.issuenum.attlist, db._text }
 }
@@ -4435,7 +4435,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.package =
-    
+
     ## A software or application package
     element package { db.package.attlist, db._text }
 }
@@ -4446,7 +4446,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.email =
-    
+
     ## An email address
     element email { db.email.attlist, db._text }
 }
@@ -4457,23 +4457,23 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.lineannotation =
-    
+
     ## A comment on a line in a verbatim listing
     element lineannotation { db.lineannotation.attlist, db._text }
 }
 div {
   db.parameter.class.enumeration =
-    
+
     ## A command
     "command"
-    | 
+    |
       ## A function
       "function"
-    | 
+    |
       ## An option
       "option"
   db.parameter.class.attribute =
-    
+
     ## Identifies the class of parameter
     attribute class { db.parameter.class.enumeration }
   db.parameter.role.attribute = attribute role { text }
@@ -4483,27 +4483,27 @@ div {
     & db.common.linking.attributes
     & db.parameter.class.attribute?
   db.parameter =
-    
+
     ## A value or a symbolic reference to a value
     element parameter { db.parameter.attlist, db._text }
 }
 db.replaceable.inlines = db._text | db.co
 div {
   db.replaceable.class.enumeration =
-    
+
     ## A command
     "command"
-    | 
+    |
       ## A function
       "function"
-    | 
+    |
       ## An option
       "option"
-    | 
+    |
       ## A parameter
       "parameter"
   db.replaceable.class.attribute =
-    
+
     ## Identifies the nature of the replaceable text
     attribute class { db.replaceable.class.enumeration }
   db.replaceable.role.attribute = attribute role { text }
@@ -4513,7 +4513,7 @@ div {
     & db.common.linking.attributes
     & db.replaceable.class.attribute?
   db.replaceable =
-    
+
     ## Content that may or must be replaced by the user
     element replaceable {
       db.replaceable.attlist, db.replaceable.inlines*
@@ -4521,7 +4521,7 @@ div {
 }
 div {
   db.uri.type.attribute =
-    
+
     ## Identifies the type of URI specified
     attribute type { text }?
   db.uri.role.attribute = attribute role { text }
@@ -4531,7 +4531,7 @@ div {
     & db.common.linking.attributes
     & db.uri.type.attribute
   db.uri =
-    
+
     ## A Uniform Resource Identifier
     element uri { db.uri.attlist, db._text }
 }
@@ -4542,7 +4542,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.abbrev =
-    
+
     ## An abbreviation, especially one followed by a period
     element abbrev {
       db.abbrev.attlist,
@@ -4556,7 +4556,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.acronym =
-    
+
     ## An often pronounceable word made from the initial (or selected) letters of a name or phrase
     element acronym {
       db.acronym.attlist,
@@ -4570,7 +4570,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.citation =
-    
+
     ## An inline bibliographic reference to another published work
     element citation { db.citation.attlist, db.all.inlines* }
 }
@@ -4581,7 +4581,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.citerefentry =
-    
+
     ## A citation to a reference page
     element citerefentry {
       db.citerefentry.attlist, db.refentrytitle, db.manvolnum?
@@ -4594,7 +4594,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.refentrytitle =
-    
+
     ## The title of a reference page
     element refentrytitle { db.refentrytitle.attlist, db.all.inlines* }
 }
@@ -4605,68 +4605,68 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.manvolnum =
-    
+
     ## A reference volume number
     element manvolnum { db.manvolnum.attlist, db._text }
 }
 div {
   db.citetitle.pubwork.enumeration =
-    
+
     ## An article
     "article"
-    | 
+    |
       ## A bulletin board system
       "bbs"
-    | 
+    |
       ## A book
       "book"
-    | 
+    |
       ## A CD-ROM
       "cdrom"
-    | 
+    |
       ## A chapter (as of a book)
       "chapter"
-    | 
+    |
       ## A DVD
       "dvd"
-    | 
+    |
       ## An email message
       "emailmessage"
-    | 
+    |
       ## A gopher page
       "gopher"
-    | 
+    |
       ## A journal
       "journal"
-    | 
+    |
       ## A manuscript
       "manuscript"
-    | 
+    |
       ## A posting to a newsgroup
       "newsposting"
-    | 
+    |
       ## A part (as of a book)
       "part"
-    | 
+    |
       ## A reference entry
       "refentry"
-    | 
+    |
       ## A section (as of a book or article)
       "section"
-    | 
+    |
       ## A series
       "series"
-    | 
+    |
       ## A set (as of books)
       "set"
-    | 
+    |
       ## A web page
       "webpage"
-    | 
+    |
       ## A wiki page
       "wiki"
   db.citetitle.pubwork.attribute =
-    
+
     ## Identifies the nature of the publication being cited
     attribute pubwork { db.citetitle.pubwork.enumeration }
   db.citetitle.role.attribute = attribute role { text }
@@ -4676,7 +4676,7 @@ div {
     & db.common.linking.attributes
     & db.citetitle.pubwork.attribute?
   db.citetitle =
-    
+
     ## The title of a cited work
     element citetitle { db.citetitle.attlist, db.all.inlines* }
 }
@@ -4687,13 +4687,13 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.emphasis =
-    
+
     ## Emphasized text
     element emphasis { db.emphasis.attlist, db.all.inlines* }
 }
 div {
   db._emphasis =
-    
+
     ## A limited span of emphasized text
     element emphasis { db.emphasis.attlist, db._text }
 }
@@ -4704,7 +4704,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.foreignphrase =
-    
+
     ## A word or phrase in a language other than the primary language of the document
     element foreignphrase {
       db.foreignphrase.attlist, (text | db.general.inlines)*
@@ -4717,7 +4717,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db._foreignphrase =
-    
+
     ## A limited word or phrase in a language other than the primary language of the document
     element foreignphrase { db._foreignphrase.attlist, db._text }
 }
@@ -4728,13 +4728,13 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.phrase =
-    
+
     ## A span of text
     element phrase { db.phrase.attlist, db.all.inlines* }
 }
 div {
   db._phrase =
-    
+
     ## A limited span of text
     element phrase { db.phrase.attlist, db._text }
 }
@@ -4745,7 +4745,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.quote =
-    
+
     ## An inline quotation
     element quote { db.quote.attlist, db.all.inlines* }
 }
@@ -4756,7 +4756,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db._quote =
-    
+
     ## A limited inline quotation
     element quote { db._quote.attlist, db._text }
 }
@@ -4767,7 +4767,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.subscript =
-    
+
     ## A subscript (as in H2
     ## O, the molecular formula for water)
     element subscript { db.subscript.attlist, db._text }
@@ -4779,27 +4779,27 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.superscript =
-    
+
     ## A superscript (as in x2
     ## , the mathematical notation for x multiplied by itself)
     element superscript { db.superscript.attlist, db._text }
 }
 div {
   db.trademark.class.enumeration =
-    
+
     ## A copyright
     "copyright"
-    | 
+    |
       ## A registered copyright
       "registered"
-    | 
+    |
       ## A service
       "service"
-    | 
+    |
       ## A trademark
       "trade"
   db.trademark.class.attribute =
-    
+
     ## Identifies the class of trade mark
     attribute class { db.trademark.class.enumeration }
   db.trademark.role.attribute = attribute role { text }
@@ -4809,7 +4809,7 @@ div {
     & db.common.linking.attributes
     & db.trademark.class.attribute?
   db.trademark =
-    
+
     ## A trademark
     element trademark { db.trademark.attlist, db._text }
 }
@@ -4820,7 +4820,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.wordasword =
-    
+
     ## A word meant specifically as a word and not representing anything else
     element wordasword { db.wordasword.attlist, db._text }
 }
@@ -4833,7 +4833,7 @@ div {
     & db.linkend.attribute
     & db.footnoteref.label.attribute?
   db.footnoteref =
-    
+
     ## A cross reference to a footnote (a footnote mark)
     [
       s:pattern [
@@ -4871,7 +4871,7 @@ div {
     & db.xref.xrefstyle.attribute?
     & db.xref.endterm.attribute?
   db.xref =
-    
+
     ## A cross reference to another part of the document
     element xref { db.xref.attlist, empty }
 }
@@ -4886,7 +4886,7 @@ div {
     & db.link.xrefstyle.attribute?
     & db.link.endterm.attribute?
   db.link =
-    
+
     ## A hypertext link
     element link { db.link.attlist, db.all.inlines* }
 }
@@ -4894,19 +4894,19 @@ div {
   db.olink.role.attribute = attribute role { text }
   db.olink.xrefstyle.attribute = db.xrefstyle.attribute
   db.olink.localinfo.attribute =
-    
+
     ## Holds additional information that may be used by the application when resolving the link
     attribute localinfo { text }
   db.olink.targetdoc.attribute =
-    
+
     ## Specifies the URI of the document in which the link target appears
     attribute targetdoc { xsd:anyURI }
   db.olink.targetptr.attribute =
-    
+
     ## Specifies the location of the link target in the document
     attribute targetptr { text }
   db.olink.type.attribute =
-    
+
     ## Identifies application-specific customization of the link behavior
     attribute type { text }
   db.olink.attlist =
@@ -4918,7 +4918,7 @@ div {
     & db.olink.targetptr.attribute?
     & db.olink.type.attribute?
   db.olink =
-    
+
     ## A link that addresses its target indirectly
     element olink { db.olink.attlist, db.all.inlines* }
 }
@@ -4927,7 +4927,7 @@ div {
   db.anchor.attlist =
     db.anchor.role.attribute? & db.common.idreq.attributes
   db.anchor =
-    
+
     ## A spot in the document
     element anchor { db.anchor.attlist, empty }
 }
@@ -4935,12 +4935,12 @@ div {
   db.alt.role.attribute = attribute role { text }
   db.alt.attlist = db.alt.role.attribute? & db.common.attributes
   db.alt =
-    
+
     ## A text-only annotation, often used for accessibility
     element alt { db.alt.attlist, (text | db.inlinemediaobject)* }
 }
 db.status.attribute =
-  
+
   ## Identifies the editorial or publication status of the element on which it occurs
   attribute status { text }
 db.toplevel.sections =
@@ -4983,7 +4983,7 @@ div {
     & db.set.status.attribute?
   db.set.info = db._info.title.req
   db.set =
-    
+
     ## A collection of books
     [
       s:pattern [
@@ -5028,7 +5028,7 @@ div {
     & db.book.status.attribute?
   db.book.info = db._info
   db.book =
-    
+
     ## A book
     [
       s:pattern [
@@ -5065,7 +5065,7 @@ div {
     & db.dedication.status.attribute?
   db.dedication.info = db._info
   db.dedication =
-    
+
     ## The dedication of a book or other component
     [
       s:pattern [
@@ -5104,7 +5104,7 @@ div {
     & db.acknowledgements.status.attribute?
   db.acknowledgements.info = db._info
   db.acknowledgements =
-    
+
     ## Acknowledgements of a book or other component
     [
       s:pattern [
@@ -5145,7 +5145,7 @@ div {
     & db.colophon.status.attribute?
   db.colophon.info = db._info
   db.colophon =
-    
+
     ## Text at the back of a book describing facts about its production
     [
       s:pattern [
@@ -5188,7 +5188,7 @@ div {
     & db.appendix.status.attribute?
   db.appendix.info = db._info.title.req
   db.appendix =
-    
+
     ## An appendix in a book or article
     [
       s:pattern [
@@ -5228,7 +5228,7 @@ div {
     & db.chapter.status.attribute?
   db.chapter.info = db._info.title.req
   db.chapter =
-    
+
     ## A chapter, as of a book
     [
       s:pattern [
@@ -5271,7 +5271,7 @@ div {
     & db.part.status.attribute?
   db.part.info = db._info.title.req
   db.part =
-    
+
     ## A division in a book
     [
       s:pattern [
@@ -5313,7 +5313,7 @@ div {
     & db.preface.status.attribute?
   db.preface.info = db._info.title.req
   db.preface =
-    
+
     ## Introductory matter preceding the first chapter of a book
     [
       s:pattern [
@@ -5352,7 +5352,7 @@ div {
     & db.partintro.status.attribute?
   db.partintro.info = db._info
   db.partintro =
-    
+
     ## An introduction to the contents of a part
     [
       s:pattern [
@@ -5393,7 +5393,7 @@ div {
     & db.section.status.attribute?
   db.section.info = db._info.title.req
   db.section =
-    
+
     ## A recursive section
     [
       s:pattern [
@@ -5436,7 +5436,7 @@ div {
     & db.simplesect.status.attribute?
   db.simplesect.info = db._info.title.req
   db.simplesect =
-    
+
     ## A section of a document with no subdivisions
     [
       s:pattern [
@@ -5474,26 +5474,26 @@ db.article.navcomponents =
 div {
   db.article.status.attribute = db.status.attribute
   db.article.class.enumeration =
-    
+
     ## A collection of frequently asked questions.
     "faq"
-    | 
+    |
       ## An article in a journal or other periodical.
       "journalarticle"
-    | 
+    |
       ## A description of a product.
       "productsheet"
-    | 
+    |
       ## A specification.
       "specification"
-    | 
+    |
       ## A technical report.
       "techreport"
-    | 
+    |
       ## A white paper.
       "whitepaper"
   db.article.class.attribute =
-    
+
     ## Identifies the nature of the article
     attribute class { db.article.class.enumeration }
   db.article.role.attribute = attribute role { text }
@@ -5506,7 +5506,7 @@ div {
     & db.article.class.attribute?
   db.article.info = db._info.title.req
   db.article =
-    
+
     ## An article
     [
       s:pattern [
@@ -5540,13 +5540,13 @@ div {
     }
 }
 db.annotations.attribute =
-  
+
   ## Identifies one or more annotations that apply to this element
   attribute annotations { text }
 div {
   db.annotation.role.attribute = attribute role { text }
   db.annotation.annotates.attribute =
-    
+
     ## Identifies one ore more elements to which this annotation applies
     attribute annotates { text }
   db.annotation.attlist =
@@ -5555,7 +5555,7 @@ div {
     & db.common.attributes
   db.annotation.info = db._info.title.only
   db.annotation =
-    
+
     ## An annotation
     [
       s:pattern [
@@ -5604,7 +5604,7 @@ div {
     }
 }
 db.xlink.extended.type.attribute =
-  
+
   ## Identifies the XLink extended link type
   [
     s:pattern [
@@ -5629,12 +5629,12 @@ db.xlink.extended.type.attribute =
     ]
   ]
   attribute xlink:type {
-    
+
     ## An XLink extended link type
     "extended"
   }
 db.xlink.locator.type.attribute =
-  
+
   ## Identifies the XLink locator link type
   [
     s:pattern [
@@ -5659,12 +5659,12 @@ db.xlink.locator.type.attribute =
     ]
   ]
   attribute xlink:type {
-    
+
     ## An XLink locator link type
     "locator"
   }
 db.xlink.arc.type.attribute =
-  
+
   ## Identifies the XLink arc link type
   [
     s:pattern [
@@ -5689,12 +5689,12 @@ db.xlink.arc.type.attribute =
     ]
   ]
   attribute xlink:type {
-    
+
     ## An XLink arc link type
     "arc"
   }
 db.xlink.resource.type.attribute =
-  
+
   ## Identifies the XLink resource link type
   [
     s:pattern [
@@ -5719,12 +5719,12 @@ db.xlink.resource.type.attribute =
     ]
   ]
   attribute xlink:type {
-    
+
     ## An XLink resource link type
     "resource"
   }
 db.xlink.title.type.attribute =
-  
+
   ## Identifies the XLink title link type
   [
     s:pattern [
@@ -5750,7 +5750,7 @@ db.xlink.title.type.attribute =
     ]
   ]
   attribute xlink:type {
-    
+
     ## An XLink title link type
     "title"
   }
@@ -5779,15 +5779,15 @@ db.xlink.resource.link.attributes =
   & db.xlink.label.attribute?
 db.xlink.title.link.attributes = db.xlink.title.type.attribute
 db.xlink.from.attribute =
-  
+
   ## Specifies the XLink traversal-from
   attribute xlink:from { xsd:NMTOKEN }
 db.xlink.label.attribute =
-  
+
   ## Specifies the XLink label
   attribute xlink:label { xsd:NMTOKEN }
 db.xlink.to.attribute =
-  
+
   ## Specifies the XLink traversal-to
   attribute xlink:to { xsd:NMTOKEN }
 div {
@@ -5795,18 +5795,18 @@ div {
   db.extendedlink.attlist =
     db.extendedlink.role.attribute?
     & db.common.attributes
-    & 
-      ## Identifies the XLink link type 
+    &
+      ## Identifies the XLink link type
       [ a:defaultValue = "extended" ]
       attribute xlink:type {
-        
+
         ## An XLink extended link
         "extended"
       }?
     & db.xlink.role.attribute?
     & db.xlink.title.attribute?
   db.extendedlink =
-    
+
     ## An XLink extended link
     element extendedlink {
       db.extendedlink.attlist, (db.locator | db.arc | db.link)+
@@ -5817,11 +5817,11 @@ div {
   db.locator.attlist =
     db.locator.role.attribute?
     & db.common.attributes
-    & 
-      ## Identifies the XLink link type 
+    &
+      ## Identifies the XLink link type
       [ a:defaultValue = "locator" ]
       attribute xlink:type {
-        
+
         ## An XLink locator link
         "locator"
       }?
@@ -5830,7 +5830,7 @@ div {
     & db.xlink.title.attribute?
     & db.xlink.label.attribute?
   db.locator =
-    
+
     ## An XLink locator in an extendedlink
     element locator { db.locator.attlist, empty }
 }
@@ -5839,11 +5839,11 @@ div {
   db.arc.attlist =
     db.arc.role.attribute?
     & db.common.attributes
-    & 
-      ## Identifies the XLink link type 
+    &
+      ## Identifies the XLink link type
       [ a:defaultValue = "arc" ]
       attribute xlink:type {
-        
+
         ## An XLink arc link
         "arc"
       }?
@@ -5854,7 +5854,7 @@ div {
     & db.xlink.from.attribute?
     & db.xlink.to.attribute?
   db.arc =
-    
+
     ## An XLink arc in an extendedlink
     element arc { db.arc.attlist, empty }
 }
@@ -5870,7 +5870,7 @@ div {
     & db.sect1.status.attribute?
   db.sect1.info = db._info.title.req
   db.sect1 =
-    
+
     ## A top-level section of document
     [
       s:pattern [
@@ -5914,7 +5914,7 @@ div {
     & db.sect2.status.attribute?
   db.sect2.info = db._info.title.req
   db.sect2 =
-    
+
     ## A subsection within a sect1
     [
       s:pattern [
@@ -5958,7 +5958,7 @@ div {
     & db.sect3.status.attribute?
   db.sect3.info = db._info.title.req
   db.sect3 =
-    
+
     ## A subsection within a sect2
     [
       s:pattern [
@@ -6002,7 +6002,7 @@ div {
     & db.sect4.status.attribute?
   db.sect4.info = db._info.title.req
   db.sect4 =
-    
+
     ## A subsection within a sect3
     [
       s:pattern [
@@ -6046,7 +6046,7 @@ div {
     & db.sect5.status.attribute?
   db.sect5.info = db._info.title.req
   db.sect5 =
-    
+
     ## A subsection within a sect4
     [
       s:pattern [
@@ -6092,7 +6092,7 @@ div {
     & db.label.attribute?
   db.reference.info = db._info.title.req
   db.reference =
-    
+
     ## A collection of reference entries
     [
       s:pattern [
@@ -6134,7 +6134,7 @@ div {
     & db.label.attribute?
   db.refentry.info = db._info.title.forbidden
   db.refentry =
-    
+
     ## A reference page (originally a UNIX man-style reference page)
     [
       s:pattern [
@@ -6175,7 +6175,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.refmeta =
-    
+
     ## Meta-information for a reference entry
     element refmeta {
       db.refmeta.attlist,
@@ -6187,34 +6187,34 @@ div {
     }
 }
 db.refmiscinfo.class.enumeration =
-  
+
   ## The name of the software product or component to which this topic applies
   "source"
-  | 
+  |
     ## The version of the software product or component to which this topic applies
     "version"
-  | 
+  |
     ## The section title of the reference page (e.g., User Commands)
     "manual"
-  | 
+  |
     ## The section title of the reference page (believed synonymous with "manual" but in wide use)
     "sectdesc"
-  | 
+  |
     ## The name of the software product or component to which this topic applies (e.g., SunOS x.y; believed synonymous with "source" but in wide use)
     "software"
 db.refmiscinfo.class-enum.attribute =
-  
+
   ## Identifies the kind of miscellaneous information
   attribute class { db.refmiscinfo.class.enumeration }?
 db.refmiscinfo.class-other.attribute =
-  
+
   ## Identifies the nature of non-standard miscellaneous information
   attribute otherclass { text }
 db.refmiscinfo.class-other.attributes =
-  
+
   ## Identifies the kind of miscellaneious information
   attribute class {
-    
+
     ## Indicates that the information is some 'other' kind.
     "other"
   }
@@ -6230,7 +6230,7 @@ div {
     & db.common.linking.attributes
     & db.refmiscinfo.class.attribute?
   db.refmiscinfo =
-    
+
     ## Meta-information for a reference entry other than the title and volume number
     element refmiscinfo { db.refmiscinfo.attlist, db._text }
 }
@@ -6241,7 +6241,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.refnamediv =
-    
+
     ## The name, purpose, and classification of a reference page
     element refnamediv {
       db.refnamediv.attlist,
@@ -6258,7 +6258,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.refdescriptor =
-    
+
     ## A description of the topic of a reference page
     element refdescriptor { db.refdescriptor.attlist, db.all.inlines* }
 }
@@ -6269,7 +6269,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.refname =
-    
+
     ## The name of (one of) the subject(s) of a reference page
     element refname { db.refname.attlist, db.all.inlines* }
 }
@@ -6280,7 +6280,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.refpurpose =
-    
+
     ## A short (one sentence) synopsis of the topic of a reference page
     element refpurpose { db.refpurpose.attlist, db.all.inlines* }
 }
@@ -6291,7 +6291,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.refclass =
-    
+
     ## The scope or other indication of applicability of a reference entry
     element refclass { db.refclass.attlist, (text | db.application)* }
 }
@@ -6303,7 +6303,7 @@ div {
     & db.common.linking.attributes
   db.refsynopsisdiv.info = db._info
   db.refsynopsisdiv =
-    
+
     ## A syntactic synopsis of the subject of the reference page
     [
       s:pattern [
@@ -6345,7 +6345,7 @@ div {
     & db.label.attribute?
   db.refsection.info = db._info.title.req
   db.refsection =
-    
+
     ## A recursive section in a refentry
     [
       s:pattern [
@@ -6387,7 +6387,7 @@ div {
     & db.refsect1.status.attribute?
   db.refsect1.info = db._info.title.req
   db.refsect1 =
-    
+
     ## A major subsection of a reference entry
     [
       s:pattern [
@@ -6429,7 +6429,7 @@ div {
     & db.refsect2.status.attribute?
   db.refsect2.info = db._info.title.req
   db.refsect2 =
-    
+
     ## A subsection of a refsect1
     [
       s:pattern [
@@ -6470,7 +6470,7 @@ div {
     & db.refsect3.status.attribute?
   db.refsect3.info = db._info.title.req
   db.refsect3 =
-    
+
     ## A subsection of a refsect2
     [
       s:pattern [
@@ -6501,7 +6501,7 @@ div {
 db.glossary.inlines =
   db.firstterm | db.glossterm | db._firstterm | db._glossterm
 db.baseform.attribute =
-  
+
   ## Specifies the base form of the term, the one that appears in the glossary. This allows adjectival, plural, and other variations of the term to appear in the element. The element content is the default base form.
   attribute baseform { text }?
 div {
@@ -6512,7 +6512,7 @@ div {
     & db.common.linking.attributes
   db.glosslist.info = db._info.title.only
   db.glosslist =
-    
+
     ## A wrapper for a list of glossary entries
     [
       s:pattern [
@@ -6546,7 +6546,7 @@ div {
 div {
   db.glossentry.role.attribute = attribute role { text }
   db.glossentry.sortas.attribute =
-    
+
     ## Specifies the string by which the element's content is to be sorted; if unspecified, the content is used
     attribute sortas { text }
   db.glossentry.attlist =
@@ -6555,7 +6555,7 @@ div {
     & db.common.linking.attributes
     & db.glossentry.sortas.attribute?
   db.glossentry =
-    
+
     ## An entry in a glossary or glosslist
     element glossentry {
       db.glossentry.attlist,
@@ -6569,7 +6569,7 @@ div {
 div {
   db.glossdef.role.attribute = attribute role { text }
   db.glossdef.subject.attribute =
-    
+
     ## Specifies a list of keywords for the definition
     attribute subject { text }
   db.glossdef.attlist =
@@ -6578,7 +6578,7 @@ div {
     & db.common.linking.attributes
     & db.glossdef.subject.attribute?
   db.glossdef =
-    
+
     ## A definition in a glossentry
     element glossdef {
       db.glossdef.attlist, db.all.blocks+, db.glossseealso*
@@ -6587,7 +6587,7 @@ div {
 div {
   db.glosssee.role.attribute = attribute role { text }
   db.glosssee.otherterm.attribute =
-    
+
     ## Identifies the other term
     attribute otherterm { xsd:IDREF }
   db.glosssee.attlist =
@@ -6596,7 +6596,7 @@ div {
     & db.common.linking.attributes
     & db.glosssee.otherterm.attribute?
   db.glosssee =
-    
+
     ## A cross-reference from one glossentry
     ##  to another
     [
@@ -6627,7 +6627,7 @@ div {
 div {
   db.glossseealso.role.attribute = attribute role { text }
   db.glossseealso.otherterm.attribute =
-    
+
     ## Identifies the other term
     attribute otherterm { xsd:IDREF }
   db.glossseealso.attlist =
@@ -6636,7 +6636,7 @@ div {
     & db.common.linking.attributes
     & db.glossseealso.otherterm.attribute?
   db.glossseealso =
-    
+
     ## A cross-reference from one glossentry to another
     [
       s:pattern [
@@ -6671,7 +6671,7 @@ div {
     & db.common.linking.attributes
     & db.baseform.attribute
   db.firstterm =
-    
+
     ## The first occurrence of a term
     [
       s:pattern [
@@ -6706,7 +6706,7 @@ div {
     & db.common.linking.attributes
     & db.baseform.attribute
   db._firstterm =
-    
+
     ## The first occurrence of a term, with limited content
     [
       s:pattern [
@@ -6741,7 +6741,7 @@ div {
     & db.common.linking.attributes
     & db.baseform.attribute
   db.glossterm =
-    
+
     ## A glossary term
     [
       s:pattern [
@@ -6776,7 +6776,7 @@ div {
     & db.common.linking.attributes
     & db.baseform.attribute
   db._glossterm =
-    
+
     ## A glossary term
     [
       s:pattern [
@@ -6814,7 +6814,7 @@ div {
     & db.glossary.status.attribute?
   db.glossary.info = db._info
   db.glossary =
-    
+
     ## A glossary
     [
       s:pattern [
@@ -6857,7 +6857,7 @@ div {
     & db.glossdiv.status.attribute?
   db.glossdiv.info = db._info.title.req
   db.glossdiv =
-    
+
     ## A division in a glossary
     [
       s:pattern [
@@ -6897,7 +6897,7 @@ div {
     & db.common.linking.attributes
     & db.baseform.attribute
   db.termdef =
-    
+
     ## An inline definition of a term
     [
       s:pattern [
@@ -6924,7 +6924,7 @@ div {
     element termdef { db.termdef.attlist, db.all.inlines* }
 }
 db.relation.attribute =
-  
+
   ## Identifies the relationship between the bibliographic elemnts
   attribute relation { text }
 div {
@@ -6934,7 +6934,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.biblioentry =
-    
+
     ## A raw entry in a bibliography
     element biblioentry {
       db.biblioentry.attlist, db.bibliographic.elements+
@@ -6947,7 +6947,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.bibliomixed =
-    
+
     ## A cooked entry in a bibliography
     element bibliomixed {
       db.bibliomixed.attlist,
@@ -6976,7 +6976,7 @@ div {
     & db.common.linking.attributes
     & db.biblioset.relation.attribute?
   db.biblioset =
-    
+
     ## A raw container for related bibliographic information
     element biblioset {
       db.biblioset.attlist, db.bibliographic.elements+
@@ -6991,7 +6991,7 @@ div {
     & db.common.linking.attributes
     & db.bibliomset.relation.attribute?
   db.bibliomset =
-    
+
     ## A cooked container for related bibliographic information
     element bibliomset {
       db.bibliomset.attlist,
@@ -7018,7 +7018,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.bibliomisc =
-    
+
     ## Untyped bibliographic information
     element bibliomisc { db.bibliomisc.attlist, db._text }
 }
@@ -7033,7 +7033,7 @@ div {
     & db.bibliography.status.attrib?
   db.bibliography.info = db._info
   db.bibliography =
-    
+
     ## A bibliography
     [
       s:pattern [
@@ -7075,7 +7075,7 @@ div {
     & db.bibliodiv.status.attrib?
   db.bibliodiv.info = db._info.title.req
   db.bibliodiv =
-    
+
     ## A section of a bibliography
     [
       s:pattern [
@@ -7114,7 +7114,7 @@ div {
     & db.common.linking.attributes
   db.bibliolist.info = db._info.title.only
   db.bibliolist =
-    
+
     ## A wrapper for a list of bibliography entries
     [
       s:pattern [
@@ -7150,15 +7150,15 @@ div {
   db.biblioref.xrefstyle.attribute = db.xrefstyle.attribute
   db.biblioref.endterm.attribute = db.endterm.attribute
   db.biblioref.units.attribute =
-    
+
     ## The units (for example, pages) used to identify the beginning and ending of a reference.
     attribute units { xsd:token }
   db.biblioref.begin.attribute =
-    
+
     ## Identifies the beginning of a reference; the location within the work that is being referenced.
     attribute begin { xsd:token }
   db.biblioref.end.attribute =
-    
+
     ## Identifies the end of a reference.
     attribute end { xsd:token }
   db.biblioref.attlist =
@@ -7171,49 +7171,49 @@ div {
     & db.biblioref.begin.attribute?
     & db.biblioref.end.attribute?
   db.biblioref =
-    
+
     ## A cross-reference to a bibliographic entry
     element biblioref { db.biblioref.attlist, empty }
 }
 db.significance.enumeration =
-  
+
   ## Normal
   "normal"
-  | 
+  |
     ## Preferred
     "preferred"
 db.significance.attribute =
-  
+
   ## Specifies the significance of the term
   attribute significance { db.significance.enumeration }
 db.zone.attribute =
-  
+
   ## Specifies the IDs of the elements to which this term applies
   attribute zone { xsd:IDREFS }
 db.indexterm.pagenum.attribute =
-  
+
   ## Indicates the page on which this index term occurs in some version of the printed document
   attribute pagenum { text }
 db.scope.enumeration =
-  
+
   ## All indexes
   "all"
-  | 
+  |
     ## The global index (as for a combined index of a set of books)
     "global"
-  | 
+  |
     ## The local index (the index for this document only)
     "local"
 db.scope.attribute =
-  
+
   ## Specifies the scope of the index term
   attribute scope { db.scope.enumeration }
 db.sortas.attribute =
-  
+
   ## Specifies the string by which the term is to be sorted; if unspecified, the term content is used
   attribute sortas { text }
 db.index.type.attribute =
-  
+
   ## Specifies the target index for this term
   attribute type { text }
 div {
@@ -7223,7 +7223,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.itermset =
-    
+
     ## A set of index terms in the meta-information of a document
     element itermset { db.itermset.attlist, db.indexterm.singular+ }
 }
@@ -7236,10 +7236,10 @@ db.indexterm.contentmodel =
 div {
   db.indexterm.singular.role.attribute = attribute role { text }
   db.indexterm.singular.class.attribute =
-    
+
     ## Identifies the class of index term
     attribute class {
-      
+
       ## A singular index term
       "singular"
     }
@@ -7254,7 +7254,7 @@ div {
     & db.index.type.attribute?
     & db.indexterm.singular.class.attribute?
   db.indexterm.singular =
-    
+
     ## A wrapper for an indexed term
     element indexterm {
       db.indexterm.singular.attlist, db.indexterm.contentmodel
@@ -7263,10 +7263,10 @@ div {
 div {
   db.indexterm.startofrange.role.attribute = attribute role { text }
   db.indexterm.startofrange.class.attribute =
-    
+
     ## Identifies the class of index term
     attribute class {
-      
+
       ## The start of a range
       "startofrange"
     }
@@ -7281,7 +7281,7 @@ div {
     & db.index.type.attribute?
     & db.indexterm.startofrange.class.attribute
   db.indexterm.startofrange =
-    
+
     ## A wrapper for an indexed term that covers a range
     element indexterm {
       db.indexterm.startofrange.attlist, db.indexterm.contentmodel
@@ -7290,15 +7290,15 @@ div {
 div {
   db.indexterm.endofrange.role.attribute = attribute role { text }
   db.indexterm.endofrange.class.attribute =
-    
+
     ## Identifies the class of index term
     attribute class {
-      
+
       ## The end of a range
       "endofrange"
     }
   db.indexterm.endofrange.startref.attribute =
-    
+
     ## Points to the start of the range
     attribute startref { xsd:IDREF }
   db.indexterm.endofrange.attlist =
@@ -7308,7 +7308,7 @@ div {
     & db.indexterm.endofrange.class.attribute
     & db.indexterm.endofrange.startref.attribute
   db.indexterm.endofrange =
-    
+
     ## Identifies the end of a range associated with an indexed term
     [
       s:pattern [
@@ -7356,7 +7356,7 @@ div {
     & db.common.linking.attributes
     & db.sortas.attribute?
   db.primary =
-    
+
     ## The primary word or phrase under which an index term should be sorted
     element primary { db.primary.attlist, db.all.inlines* }
 }
@@ -7368,7 +7368,7 @@ div {
     & db.common.linking.attributes
     & db.sortas.attribute?
   db.secondary =
-    
+
     ## A secondary word or phrase in an index term
     element secondary { db.secondary.attlist, db.all.inlines* }
 }
@@ -7380,7 +7380,7 @@ div {
     & db.common.linking.attributes
     & db.sortas.attribute?
   db.tertiary =
-    
+
     ## A tertiary word or phrase in an index term
     element tertiary { db.tertiary.attlist, db.all.inlines* }
 }
@@ -7393,7 +7393,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.see =
-    
+
     ## Part of an index term directing the reader instead to another entry in the index
     element see { db.see.attlist, db.all.inlines* }
 }
@@ -7406,7 +7406,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.seealso =
-    
+
     ## Part of an index term directing the reader also to another entry in the index
     element seealso { db.seealso.attlist, db.all.inlines* }
 }
@@ -7425,7 +7425,7 @@ div {
   # Authors can use an empty index to indicate where a generated index should
   # appear.
   db.index =
-    
+
     ## An index to a book or part of a book
     [
       s:pattern [
@@ -7468,7 +7468,7 @@ div {
     & db.index.type.attribute?
   db.setindex.info = db._info
   db.setindex =
-    
+
     ## An index to a set of books
     [
       s:pattern [
@@ -7510,7 +7510,7 @@ div {
     & db.indexdiv.status.attribute?
   db.indexdiv.info = db._info.title.req
   db.indexdiv =
-    
+
     ## A division in an index
     [
       s:pattern [
@@ -7548,7 +7548,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.indexentry =
-    
+
     ## An entry in an index
     element indexentry {
       db.indexentry.attlist,
@@ -7564,7 +7564,7 @@ div {
     & db.common.attributes
     & db.linkends.attribute?
   db.primaryie =
-    
+
     ## A primary term in an index entry, not in the text
     element primaryie { db.primaryie.attlist, db.all.inlines* }
 }
@@ -7575,7 +7575,7 @@ div {
     & db.common.attributes
     & db.linkends.attribute?
   db.secondaryie =
-    
+
     ## A secondary term in an index entry, rather than in the text
     element secondaryie { db.secondaryie.attlist, db.all.inlines* }
 }
@@ -7586,7 +7586,7 @@ div {
     & db.common.attributes
     & db.linkends.attribute?
   db.tertiaryie =
-    
+
     ## A tertiary term in an index entry, rather than in the text
     element tertiaryie { db.tertiaryie.attlist, db.all.inlines* }
 }
@@ -7597,7 +7597,7 @@ div {
     & db.common.attributes
     & db.linkend.attribute?
   db.seeie =
-    
+
     ## A See
     ## entry in an index, rather than in the text
     element seeie { db.seeie.attlist, db.all.inlines* }
@@ -7609,13 +7609,13 @@ div {
     & db.common.attributes
     & db.linkends.attribute?
   db.seealsoie =
-    
+
     ## A See also
     ##  entry in an index, rather than in the text
     element seealsoie { db.seealsoie.attlist, db.all.inlines* }
 }
 db.toc.pagenum.attribute =
-  
+
   ## Indicates the page on which this element occurs in some version of the printed document
   attribute pagenum { text }
 div {
@@ -7626,7 +7626,7 @@ div {
     & db.common.linking.attributes
   db.toc.info = db._info.title.only
   db.toc =
-    
+
     ## A table of contents
     [
       s:pattern [
@@ -7667,7 +7667,7 @@ div {
     & db.linkend.attribute?
   db.tocdiv.info = db._info
   db.tocdiv =
-    
+
     ## A division in a table of contents
     [
       s:pattern [
@@ -7707,7 +7707,7 @@ div {
     & db.tocentry.pagenum.attribute?
     & db.linkend.attribute?
   db.tocentry =
-    
+
     ## A component title in a table of contents
     element tocentry { db.tocentry.attlist, db.all.inlines* }
 }
@@ -7719,7 +7719,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.task =
-    
+
     ## A task to be completed
     [
       s:pattern [
@@ -7761,7 +7761,7 @@ div {
     & db.common.linking.attributes
   db.tasksummary.info = db._info.title.only
   db.tasksummary =
-    
+
     ## A summary of a task
     [
       s:pattern [
@@ -7797,7 +7797,7 @@ div {
     & db.common.linking.attributes
   db.taskprerequisites.info = db._info.title.only
   db.taskprerequisites =
-    
+
     ## The prerequisites for a task
     [
       s:pattern [
@@ -7835,7 +7835,7 @@ div {
     & db.common.linking.attributes
   db.taskrelated.info = db._info.title.only
   db.taskrelated =
-    
+
     ## Information related to a task
     [
       s:pattern [
@@ -7864,35 +7864,35 @@ div {
     }
 }
 db.area.units.enumeration =
-  
+
   ## Coordinates expressed as a pair of CALS graphic coordinates.
   "calspair"
-  | 
+  |
     ## Coordinates expressed as a line and column.
     "linecolumn"
-  | 
+  |
     ## Coordinates expressed as a pair of lines and columns.
     "linecolumnpair"
-  | 
+  |
     ## Coordinates expressed as a line range.
     "linerange"
 db.area.units-enum.attribute =
-  
+
   ## Identifies the units used in the coords attribute. The default units vary according to the type of callout specified: calspair
   ##  for graphics and linecolumn
   ##  for line-oriented elements.
   attribute units { db.area.units.enumeration }?
 db.area.units-other.attributes =
-  
+
   ## Indicates that non-standard units are used for this area
   ## . In this case otherunits
   ##  must be specified.
   attribute units {
-    
+
     ## Coordinates expressed in some non-standard units.
     "other"
   }?,
-  
+
   ## Identifies the units used in the coords
   ##  attribute when the units
   ##  attribute is other
@@ -7908,7 +7908,7 @@ div {
     & db.common.linking.attributes
   db.calloutlist.info = db._info.title.only
   db.calloutlist =
-    
+
     ## A list of callout
     ## s
     [
@@ -7943,7 +7943,7 @@ div {
 div {
   db.callout.role.attribute = attribute role { text }
   db.callout.arearefs.attribute =
-    
+
     ## Identifies the areas described by this callout.
     attribute arearefs { xsd:IDREFS }
   db.callout.attlist =
@@ -7951,7 +7951,7 @@ div {
     & db.common.attributes
     & db.callout.arearefs.attribute
   db.callout =
-    
+
     ## A called out
     ##  description of a marked area
     element callout { db.callout.attlist, db.all.blocks+ }
@@ -7964,7 +7964,7 @@ div {
     & db.common.linking.attributes
   db.programlistingco.info = db._info.title.forbidden
   db.programlistingco =
-    
+
     ## A program listing with associated areas used in callouts
     [
       s:pattern [
@@ -8004,23 +8004,23 @@ div {
     & db.common.linking.attributes
     & db.area.units.attribute
   db.areaspec =
-    
+
     ## A collection of regions in a graphic or code example
     element areaspec { db.areaspec.attlist, (db.area | db.areaset)+ }
 }
 div {
   db.area.role.attribute = attribute role { text }
   db.area.linkends.attribute =
-    
+
     ## Point to the callout
     ## s which refer to this area. (This provides bidirectional linking which may be useful in online presentation.)
     attribute linkends { xsd:IDREFS }
   db.area.label.attribute =
-    
+
     ## Specifies an identifying number or string that may be used in presentation. The area label might be drawn on top of the figure, for example, at the position indicated by the coords attribute.
     attribute label { text }
   db.area.coords.attribute =
-    
+
     ## Provides the coordinates of the area. The coordinates must be interpreted using the units
     ##  specified.
     attribute coords { text }
@@ -8032,7 +8032,7 @@ div {
     & db.area.label.attribute?
     & db.area.coords.attribute
   db.area =
-    
+
     ## A region defined for a callout in a graphic or code example
     element area { db.area.attlist, db.alt? }
 }
@@ -8046,7 +8046,7 @@ div {
     & db.area.label.attribute?
     & db.area.coords.attribute
   db.area.inareaset =
-    
+
     ## A region defined for a callout in a graphic or code example
     element area { db.area.inareaset.attlist, db.alt? }
 }
@@ -8061,7 +8061,7 @@ div {
     & (db.areaset.linkends.attribute | db.xlink.simple.link.attributes)?
     & db.areaset.label.attribute?
   db.areaset =
-    
+
     ## A set of related areas in a graphic or code example
     element areaset { db.areaset.attlist, db.area.inareaset+ }
 }
@@ -8073,7 +8073,7 @@ div {
     & db.common.linking.attributes
   db.screenco.info = db._info.title.forbidden
   db.screenco =
-    
+
     ## A screen with associated areas used in callouts
     [
       s:pattern [
@@ -8113,7 +8113,7 @@ div {
     & db.common.linking.attributes
   db.imageobjectco.info = db._info.title.forbidden
   db.imageobjectco =
-    
+
     ## A wrapper for an image object with callouts
     [
       s:pattern [
@@ -8155,7 +8155,7 @@ div {
     & db.co.linkends.attribute?
     & db.co.label.attribute?
   db.co =
-    
+
     ## The location of a callout embedded in text
     element co { db.co.attlist, empty }
 }
@@ -8168,7 +8168,7 @@ div {
     & db.linkend.attribute
     & db.coref.label.attribute?
   db.coref =
-    
+
     ## A cross reference to a co
     element coref { db.coref.attlist, empty }
 }
@@ -8180,7 +8180,7 @@ div {
     & db.common.linking.attributes
   db.productionset.info = db._info.title.only
   db.productionset =
-    
+
     ## A set of EBNF productions
     [
       s:pattern [
@@ -8217,7 +8217,7 @@ div {
     & db.common.idreq.attributes
     & db.common.linking.attributes
   db.production =
-    
+
     ## A production in a set of EBNF productions
     element production {
       db.production.attlist, db.lhs, db.rhs+, db.constraint*
@@ -8230,7 +8230,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.lhs =
-    
+
     ## The left-hand side of an EBNF production
     element lhs { db.lhs.attlist, text }
 }
@@ -8241,7 +8241,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.rhs =
-    
+
     ## The right-hand side of an EBNF production
     element rhs {
       db.rhs.attlist,
@@ -8251,7 +8251,7 @@ div {
 div {
   db.nonterminal.role.attribute = attribute role { text }
   db.nonterminal.def.attribute =
-    
+
     ## Specifies a URI that points to a production
     ## where the nonterminal
     ##  is defined
@@ -8262,7 +8262,7 @@ div {
     & db.common.linking.attributes
     & db.nonterminal.def.attribute
   db.nonterminal =
-    
+
     ## A non-terminal in an EBNF production
     element nonterminal { db.nonterminal.attlist, text }
 }
@@ -8273,7 +8273,7 @@ div {
     & db.common.attributes
     & db.common.req.linking.attributes
   db.constraint =
-    
+
     ## A constraint in an EBNF production
     element constraint { db.constraint.attlist, empty }
 }
@@ -8284,7 +8284,7 @@ div {
     & db.common.attributes
     & db.common.req.linking.attributes
   db.productionrecap =
-    
+
     ## A cross-reference to an EBNF production
     element productionrecap { db.productionrecap.attlist, empty }
 }
@@ -8296,7 +8296,7 @@ div {
     & db.common.linking.attributes
   db.constraintdef.info = db._info.title.only
   db.constraintdef =
-    
+
     ## The definition of a constraint in an EBNF production
     [
       s:pattern [
@@ -8325,13 +8325,13 @@ div {
     }
 }
 db.char.attribute =
-  
+
   ## Specifies the alignment character when align
   ##  is set to char
   ## .
   attribute char { text }
 db.charoff.attribute =
-  
+
   ## Specifies the percentage of the column's total width that should appear to the left of the first occurance of the character identified in char
   ##  when align
   ##  is set to char
@@ -8340,130 +8340,130 @@ db.charoff.attribute =
     xsd:decimal { minExclusive = "0" maxExclusive = "100" }
   }
 db.frame.attribute =
-  
+
   ## Specifies how the table is to be framed. Note that there is no way to obtain a border on only the starting edge (left, in left-to-right writing systems) of the table.
   attribute frame {
-    
+
     ## Frame all four sides of the table. In some environments with limited control over table border formatting, such as HTML, this may imply additional borders.
     "all"
-    | 
+    |
       ## Frame only the bottom of the table.
       "bottom"
-    | 
+    |
       ## Place no border on the table. In some environments with limited control over table border formatting, such as HTML, this may disable other borders as well.
       "none"
-    | 
+    |
       ## Frame the left and right sides of the table.
       "sides"
-    | 
+    |
       ## Frame the top of the table.
       "top"
-    | 
+    |
       ## Frame the top and bottom of the table.
       "topbot"
   }
 db.colsep.attribute =
-  
+
   ## Specifies the presence or absence of the column separator
   attribute colsep {
-    
+
     ## No column separator rule.
     "0"
-    | 
+    |
       ## Provide a column separator rule on the right
       "1"
   }
 db.rowsep.attribute =
-  
+
   ## Specifies the presence or absence of the row separator
   attribute rowsep {
-    
+
     ## No row separator rule.
     "0"
-    | 
+    |
       ## Provide a row separator rule below
       "1"
   }
 db.orient.attribute =
-  
+
   ## Specifies the orientation of the table
   attribute orient {
-    
+
     ## 90 degrees counter-clockwise from the rest of the text flow.
     "land"
-    | 
+    |
       ## The same orientation as the rest of the text flow.
       "port"
   }
 db.tabstyle.attribute =
-  
+
   ## Specifies the table style
   attribute tabstyle { text }
 db.rowheader.attribute =
-  
-  ## Indicates whether or not the entries in the first column should be considered row headers
+
+  ## Indicates whether the entries in the first column should be considered row headers
   attribute rowheader {
-    
+
     ## Indicates that entries in the first column of the table are functionally row headers (analogous to the way that a thead provides column headers).
     "firstcol"
-    | 
+    |
       ## Indicates that row headers are identified by use of the headers attribute on entries in the table.
       "headers"
-    | 
+    |
       ## Indicates that entries in the first column have no special significance with respect to column headers.
       "norowheader"
   }
 db.align.attribute =
-  
+
   ## Specifies the horizontal alignment of text in an entry.
   attribute align {
-    
+
     ## Centered.
     "center"
-    | 
+    |
       ## Aligned on a particular character.
       "char"
-    | 
+    |
       ## Left and right justified.
       "justify"
-    | 
+    |
       ## Left justified.
       "left"
-    | 
+    |
       ## Right justified.
       "right"
   }
 db.valign.attribute =
-  
+
   ## Specifies the vertical alignment of text in an entry.
   attribute valign {
-    
+
     ## Aligned on the bottom of the entry.
     "bottom"
-    | 
+    |
       ## Aligned in the middle.
       "middle"
-    | 
+    |
       ## Aligned at the top of the entry.
       "top"
   }
 db.specify-col-by-colname.attributes =
-  
+
   ## Specifies a column specification by name.
   attribute colname { text }
 db.specify-col-by-namest.attributes =
-  
+
   ## Specifies a starting column by name.
   attribute namest { text }
 db.specify-span-by-spanspec.attributes =
-  
+
   ## Specifies a span by name.
   attribute spanname { text }
 db.specify-span-directly.attributes =
-  
+
   ## Specifies a starting column by name.
   attribute namest { text }
-  & 
+  &
     ## Specifies an ending column by name.
     attribute nameend { text }
 db.column-spec.attributes =
@@ -8472,21 +8472,21 @@ db.column-spec.attributes =
   | db.specify-span-by-spanspec.attributes
   | db.specify-span-directly.attributes
 db.colname.attribute =
-  
+
   ## Provides a name for a column specification.
   attribute colname { text }
 db.spanname.attribute =
-  
+
   ## Provides a name for a span specification.
   attribute spanname { text }
 div {
   db.tgroup.role.attribute = attribute role { text }
   db.tgroup.tgroupstyle.attribute =
-    
+
     ## Additional style information for downstream processing; typically the name of a style.
     attribute tgroupstyle { text }
   db.tgroup.cols.attribute =
-    
+
     ## The number of columns in the table. Must be an integer greater than zero.
     attribute cols { xsd:positiveInteger }
   db.tgroup.attlist =
@@ -8501,7 +8501,7 @@ div {
     & db.rowsep.attribute?
     & db.align.attribute?
   db.tgroup =
-    
+
     ## A wrapper for the main content of a table, or part of a table
     element tgroup {
       db.tgroup.attlist,
@@ -8515,11 +8515,11 @@ div {
 div {
   db.colspec.role.attribute = attribute role { text }
   db.colspec.colnum.attribute =
-    
+
     ## The number of the column to which this specification applies. Must be greater than any preceding column number. Defaults to one more than the number of the preceding column, if there is one, or one.
     attribute colnum { xsd:positiveInteger }
   db.colspec.colwidth.attribute =
-    
+
     ## Specifies the width of the column.
     attribute colwidth { text }
   db.colspec.attlist =
@@ -8536,18 +8536,18 @@ div {
     & db.align.attribute?
     & db.rowheader.attribute?
   db.colspec =
-    
+
     ## Specifications for a column in a table
     element colspec { db.colspec.attlist, empty }
 }
 div {
   db.spanspec.role.attribute = attribute role { text }
   db.spanspec.namest.attribute =
-    
+
     ## Specifies a starting column by name.
     attribute namest { text }
   db.spanspec.nameend.attribute =
-    
+
     ## Specifies an ending column by name.
     attribute nameend { text }
   db.spanspec.attlist =
@@ -8563,7 +8563,7 @@ div {
     & db.rowsep.attribute?
     & db.align.attribute?
   db.spanspec =
-    
+
     ## Formatting information for a spanned column in a table
     element spanspec { db.spanspec.attlist, empty }
 }
@@ -8575,7 +8575,7 @@ div {
     & db.common.linking.attributes
     & db.valign.attribute?
   db.cals.thead =
-    
+
     ## A table header consisting of one or more rows
     element thead { db.cals.thead.attlist, db.colspec*, db.row+ }
 }
@@ -8587,7 +8587,7 @@ div {
     & db.common.linking.attributes
     & db.valign.attribute?
   db.cals.tfoot =
-    
+
     ## A table footer consisting of one or more rows
     element tfoot { db.cals.tfoot.attlist, db.colspec*, db.row+ }
 }
@@ -8599,7 +8599,7 @@ div {
     & db.common.linking.attributes
     & db.valign.attribute?
   db.cals.tbody =
-    
+
     ## A wrapper for the rows of a table or informal table
     element tbody { db.cals.tbody.attlist, db.row+ }
 }
@@ -8612,46 +8612,46 @@ div {
     & db.rowsep.attribute?
     & db.valign.attribute?
   db.row =
-    
+
     ## A row in a table
     element row { db.row.attlist, (db.entry | db.entrytbl)+ }
 }
 div {
   db.entry.role.attribute = attribute role { text }
   db.entry.morerows.attribute =
-    
+
     ## Specifies the number of additional rows which this entry occupies. Defaults to zero.
     attribute morerows { xsd:integer }
   db.entry.rotate.attribute =
-    
+
     ## Specifies the rotation of this entry. A value of 1 (true) rotates the cell 90 degrees counter-clockwise. A value of 0 (false) leaves the cell unrotated.
     attribute rotate {
-      
+
       ## Do not rotate the cell.
       "0"
-      | 
+      |
         ## Rotate the cell 90 degrees counter-clockwise.
         "1"
     }
   db.entry.scope.attribute =
-    
+
     ## Specifies the scope of a header.
     attribute scope {
-      
+
       ## Applies to the row
       "row"
-      | 
+      |
         ## Applies to the column
         "col"
-      | 
+      |
         ## Applies to the row group
         "rowgroup"
-      | 
+      |
         ## Applies to the column group
         "colgroup"
     }
   db.entry.headers.attribute =
-    
+
     ## Specifies the entry or entries which serve as headers for this element.
     attribute headers { xsd:IDREFS }
   db.entry.attlist =
@@ -8670,7 +8670,7 @@ div {
     & db.entry.scope.attribute?
     & db.entry.headers.attribute?
   db.entry =
-    
+
     ## A cell in a table
     [
       s:pattern [
@@ -8721,11 +8721,11 @@ div {
 div {
   db.entrytbl.role.attribute = attribute role { text }
   db.entrytbl.tgroupstyle.attribute =
-    
+
     ## Additional style information for downstream processing; typically the name of a style.
     attribute tgroupstyle { text }
   db.entrytbl.cols.attribute =
-    
+
     ## The number of columns in the entry table. Must be an integer greater than zero.
     attribute cols { xsd:positiveInteger }
   db.entrytbl.attlist =
@@ -8741,7 +8741,7 @@ div {
     & db.rowsep.attribute?
     & db.align.attribute?
   db.entrytbl =
-    
+
     ## A subtable appearing in place of an entry in a table
     element entrytbl {
       db.entrytbl.attlist,
@@ -8759,7 +8759,7 @@ div {
     & db.common.linking.attributes
     & db.valign.attribute?
   db.cals.entrytbl.thead =
-    
+
     ## A table header consisting of one or more rows
     element thead {
       db.cals.entrytbl.thead.attlist, db.colspec*, db.entrytbl.row+
@@ -8773,7 +8773,7 @@ div {
     & db.common.linking.attributes
     & db.valign.attribute?
   db.cals.entrytbl.tbody =
-    
+
     ## A wrapper for the rows of a table or informal table
     element tbody { db.cals.entrytbl.tbody.attlist, db.entrytbl.row+ }
 }
@@ -8786,7 +8786,7 @@ div {
     & db.rowsep.attribute?
     & db.valign.attribute?
   db.entrytbl.row =
-    
+
     ## A row in a table
     element row { db.entrytbl.row.attlist, db.entry+ }
 }
@@ -8805,30 +8805,30 @@ div {
     & db.rowsep.attribute?
     & db.frame.attribute?
     & db.pgwide.attribute?
-    & 
+    &
       ## Indicates if the short or long title should be used in a List of Tables
       attribute shortentry {
-        
+
         ## Indicates that the full title should be used.
         "0"
-        | 
+        |
           ## Indicates that the short short title (titleabbrev) should be used.
           "1"
       }?
-    & 
+    &
       ## Indicates if the table should appear in a List of Tables
       attribute tocentry {
-        
+
         ## Indicates that the table should not occur in the List of Tables.
         "0"
-        | 
+        |
           ## Indicates that the table should appear in the List of Tables.
           "1"
       }?
     & db.rowheader.attribute?
   db.cals.table.info = db._info.title.onlyreq
   db.cals.table =
-    
+
     ## A formal table in a document
     [
       s:pattern [
@@ -8936,7 +8936,7 @@ div {
     & db.rowheader.attribute?
   db.cals.informaltable.info = db._info.title.forbidden
   db.cals.informaltable =
-    
+
     ## A table without a title
     [
       s:pattern [
@@ -8969,48 +8969,48 @@ div {
     }
 }
 db.html.coreattrs =
-  
+
   ## This attribute assigns a class name or set of class names to an element. Any number of elements may be assigned the same class name or names. Multiple class names must be separated by white space characters.
   attribute class { text }?
-  & 
+  &
     ## This attribute specifies style information for the current element.
     attribute style { text }?
-  & 
+  &
     ## This attribute offers advisory information about the element for which it is set.
     attribute title { text }?
 db.html.i18n =
-  
+
   ## This attribute specifies the base language of an element's attribute values and text content. The default value of this attribute is unknown.
   attribute lang { text }?
 db.html.events =
-  
+
   ## Occurs when the pointing device button is clicked over an element.
   attribute onclick { text }?
-  & 
+  &
     ## Occurs when the pointing device button is double clicked over an element.
     attribute ondblclick { text }?
-  & 
+  &
     ## Occurs when the pointing device button is pressed over an element.
     attribute onmousedown { text }?
-  & 
+  &
     ## Occurs when the pointing device button is released over an element.
     attribute onmouseup { text }?
-  & 
+  &
     ## Occurs when the pointing device is moved onto an element.
     attribute onmouseover { text }?
-  & 
+  &
     ## Occurs when the pointing device is moved while it is over an element.
     attribute onmousemove { text }?
-  & 
+  &
     ## Occurs when the pointing device is moved away from an element.
     attribute onmouseout { text }?
-  & 
+  &
     ## Occurs when a key is pressed and released over an element.
     attribute onkeypress { text }?
-  & 
+  &
     ## Occurs when a key is pressed down over an element.
     attribute onkeydown { text }?
-  & 
+  &
     ## Occurs when a key is released over an element.
     attribute onkeyup { text }?
 db.html.attrs =
@@ -9019,29 +9019,29 @@ db.html.attrs =
   & db.html.i18n
   & db.html.events
 db.html.cellhalign =
-  
+
   ## Specifies the alignment of data and the justification of text in a cell.
   attribute align {
-    
+
     ## Left-flush data/Left-justify text. This is the default value for table data.
     "left"
-    | 
+    |
       ## Center data/Center-justify text. This is the default value for table headers.
       "center"
-    | 
+    |
       ## Right-flush data/Right-justify text.
       "right"
-    | 
+    |
       ## Double-justify text.
       "justify"
-    | 
+    |
       ## Align text around a specific character. If a user agent doesn't support character alignment, behavior in the presence of this value is unspecified.
       "char"
   }?
-  & 
+  &
     ## This attribute specifies a single character within a text fragment to act as an axis for alignment. The default value for this attribute is the decimal point character for the current language as set by the lang attribute (e.g., the period in English and the comma in French). User agents are not required to support this attribute.
     attribute char { text }?
-  & 
+  &
     ## When present, this attribute specifies the offset to the first occurrence of the alignment character on each line. If a line doesn't include the alignment character, it should be horizontally shifted to end at the alignment position. When charoff is used to set the offset of an alignment character, the direction of offset is determined by the current text direction (set by the dir attribute). In left-to-right texts (the default), offset is from the left margin. In right-to-left texts, offset is from the right margin. User agents are not required to support this attribute.
     attribute charoff {
       xsd:integer >> a:documentation [ "An explicit offset." ]
@@ -9049,94 +9049,94 @@ db.html.cellhalign =
         >> a:documentation [ "A percentage offset." ]
     }?
 db.html.cellvalign =
-  
+
   ## Specifies the vertical position of data within a cell.
   attribute valign {
-    
+
     ## Cell data is flush with the top of the cell.
     "top"
-    | 
+    |
       ## Cell data is centered vertically within the cell. This is the default value.
       "middle"
-    | 
+    |
       ## Cell data is flush with the bottom of the cell.
       "bottom"
-    | 
+    |
       ## All cells in the same row as a cell whose valign attribute has this value should have their textual data positioned so that the first text line occurs on a baseline common to all cells in the row. This constraint does not apply to subsequent text lines in these cells.
       "baseline"
   }?
 db.html.table.attributes =
-  
+
   ## Provides a summary of the table's purpose and structure for user agents rendering to non-visual media such as speech and Braille.
   attribute summary { text }?
-  & 
+  &
     ## Specifies the desired width of the entire table and is intended for visual user agents. When the value is a percentage value, the value is relative to the user agent's available horizontal space. In the absence of any width specification, table width is determined by the user agent.
     attribute width {
       xsd:integer >> a:documentation [ "An explicit width." ]
       | xsd:string { pattern = "[0-9]+%" }
         >> a:documentation [ "A percentage width." ]
     }?
-  & 
+  &
     ## Specifies the width (in pixels only) of the frame around a table.
     attribute border { xsd:nonNegativeInteger }?
-  & 
+  &
     ## Specifies which sides of the frame surrounding a table will be visible.
     attribute frame {
-      
+
       ## No sides. This is the default value.
       "void"
-      | 
+      |
         ## The top side only.
         "above"
-      | 
+      |
         ## The bottom side only.
         "below"
-      | 
+      |
         ## The top and bottom sides only.
         "hsides"
-      | 
+      |
         ## The left-hand side only.
         "lhs"
-      | 
+      |
         ## The right-hand side only.
         "rhs"
-      | 
+      |
         ## The right and left sides only.
         "vsides"
-      | 
+      |
         ## All four sides.
         "box"
-      | 
+      |
         ## All four sides.
         "border"
     }?
-  & 
+  &
     ## Specifies which rules will appear between cells within a table. The rendering of rules is user agent dependent.
     attribute rules {
-      
+
       ## No rules. This is the default value.
       "none"
-      | 
+      |
         ## Rules will appear between row groups (see thead, tfoot, and tbody) and column groups (see colgroup and col) only.
         "groups"
-      | 
+      |
         ## Rules will appear between rows only.
         "rows"
-      | 
+      |
         ## Rules will appear between columns only.
         "cols"
-      | 
+      |
         ## Rules will appear between all rows and columns.
         "all"
     }?
-  & 
+  &
     ## Specifies how much space the user agent should leave between the left side of the table and the left-hand side of the leftmost column, the top of the table and the top side of the topmost row, and so on for the right and bottom of the table. The attribute also specifies the amount of space to leave between cells.
     attribute cellspacing {
       xsd:integer >> a:documentation [ "An explicit spacing." ]
       | xsd:string { pattern = "[0-9]+%" }
         >> a:documentation [ "A percentage spacing." ]
     }?
-  & 
+  &
     ## Specifies the amount of space between the border of the cell and its contents. If the value of this attribute is a pixel length, all four margins should be this distance from the contents. If the value of the attribute is a percentage length, the top and bottom margins should be equally separated from the content based on a percentage of the available vertical space, and the left and right margins should be equally separated from the content based on a percentage of the available horizontal space.
     attribute cellpadding {
       xsd:integer >> a:documentation [ "An explicit padding." ]
@@ -9144,32 +9144,32 @@ db.html.table.attributes =
         >> a:documentation [ "A percentage padding." ]
     }?
 db.html.tablecell.attributes =
-  
+
   ## Provides an abbreviated form of the cell's content and may be rendered by user agents when appropriate in place of the cell's content. Abbreviated names should be short since user agents may render them repeatedly. For instance, speech synthesizers may render the abbreviated headers relating to a particular cell before rendering that cell's content.
   attribute abbr { text }?
-  & 
+  &
     ## This attribute may be used to place a cell into conceptual categories that can be considered to form axes in an n-dimensional space. User agents may give users access to these categories (e.g., the user may query the user agent for all cells that belong to certain categories, the user agent may present a table in the form of a table of contents, etc.). Please consult an HTML reference for more details.
     attribute axis { text }?
-  & 
+  &
     ## Specifies the list of header cells that provide header information for the current data cell. The value of this attribute is a space-separated list of cell names; those cells must be named by setting their id attribute. Authors generally use the headers attribute to help non-visual user agents render header information about data cells (e.g., header information is spoken prior to the cell data), but the attribute may also be used in conjunction with style sheets.
     attribute headers { text }?
-  & 
+  &
     ## Specifies the set of data cells for which the current header cell provides header information. This attribute may be used in place of the headers attribute, particularly for simple tables.
     attribute scope {
-      
+
       ## The current cell provides header information for the rest of the row that contains it
       "row"
-      | 
+      |
         ## The current cell provides header information for the rest of the column that contains it.
         "col"
-      | 
+      |
         ## The header cell provides header information for the rest of the row group that contains it.
         "rowgroup"
-      | 
+      |
         ## The header cell provides header information for the rest of the column group that contains it.
         "colgroup"
     }?
-  & 
+  &
     ## Specifies the number of rows spanned by the current cell. The default value of this attribute is one (1
     ## ). The value zero (0
     ## ) means that the cell spans all rows from the current row to the last row of the table section (thead
@@ -9177,7 +9177,7 @@ db.html.tablecell.attributes =
     ## , or tfoot
     ## ) in which the cell is defined.
     attribute rowspan { xsd:nonNegativeInteger }?
-  & 
+  &
     ## Specifies the number of columns spanned by the current cell. The default value of this attribute is one (1
     ## ). The value zero (0
     ## ) means that the cell spans all columns from the current column to the last column of the column group (colgroup
@@ -9211,7 +9211,7 @@ div {
     & db.tabstyle.attribute?
     & db.floatstyle.attribute?
   db.html.table =
-    
+
     ## A formal (captioned) HTML table in a document
     [
       s:pattern [
@@ -9310,7 +9310,7 @@ div {
     & db.tabstyle.attribute?
     & db.floatstyle.attribute?
   db.html.informaltable =
-    
+
     ## An HTML table without a title
     [
       s:pattern [
@@ -9341,7 +9341,7 @@ div {
 div {
   db.html.caption.attlist = db.html.attrs
   db.html.caption =
-    
+
     ## An HTML table caption
     [
       s:pattern [
@@ -9590,14 +9590,14 @@ div {
 div {
   db.html.col.attlist =
     db.html.attrs
-    & 
+    &
       ## This attribute, whose value must be an integer > 0, specifies the number of columns spanned
       ##  by the col
       ##  element; the col
       ##  element shares its attributes with all the columns it spans. The default value for this attribute is 1 (i.e., a single column). If the span attribute is set to N > 1, the current col
       ##  element shares its attributes with the next N-1 columns.
       attribute span { xsd:nonNegativeInteger }?
-    & 
+    &
       ## Specifies a default width for each column spanned by the current col
       ##  element. It has the same meaning as the width
       ##  attribute for the colgroup
@@ -9606,21 +9606,21 @@ div {
     & db.html.cellhalign
     & db.html.cellvalign
   db.html.col =
-    
+
     ## Specifications for a column in an HTML table
     element col { db.html.col.attlist, empty }
 }
 div {
   db.html.colgroup.attlist =
     db.html.attrs
-    & 
+    &
       ## This attribute, which must be an integer > 0, specifies the number of columns in a column group. In the absence of a span attribute, each colgroup
       ##  defines a column group containing one column. If the span attribute is set to N > 0, the current colgroup
       ##  element defines a column group containing N columns. User agents must ignore this attribute if the colgroup
       ##  element contains one or more col
       ##  elements.
       attribute span { xsd:nonNegativeInteger }?
-    & 
+    &
       ## This attribute specifies a default width for each column in the current column group. In addition to the standard pixel, percentage, and relative values, this attribute allows the special form 0*
       ##  (zero asterisk) which means that the width of the each column in the group should be the minimum width necessary to hold the column's contents. This implies that a column's entire contents must be known before its width may be correctly computed. Authors should be aware that specifying 0*
       ##  will prevent visual user agents from rendering a table incrementally. This attribute is overridden for any column in the column group whose width is specified via a col
@@ -9629,7 +9629,7 @@ div {
     & db.html.cellhalign
     & db.html.cellvalign
   db.html.colgroup =
-    
+
     ## A group of columns in an HTML table
     element colgroup { db.html.colgroup.attlist, db.html.col* }
 }
@@ -9637,7 +9637,7 @@ div {
   db.html.thead.attlist =
     db.html.attrs & db.html.cellhalign & db.html.cellvalign
   db.html.thead =
-    
+
     ## A table header consisting of one or more rows in an HTML table
     element thead { db.html.thead.attlist, db.html.tr+ }
 }
@@ -9645,7 +9645,7 @@ div {
   db.html.tfoot.attlist =
     db.html.attrs & db.html.cellhalign & db.html.cellvalign
   db.html.tfoot =
-    
+
     ## A table footer consisting of one or more rows in an HTML table
     element tfoot { db.html.tfoot.attlist, db.html.tr+ }
 }
@@ -9653,7 +9653,7 @@ div {
   db.html.tbody.attlist =
     db.html.attrs & db.html.cellhalign & db.html.cellvalign
   db.html.tbody =
-    
+
     ## A wrapper for the rows of an HTML table or informal HTML table
     element tbody { db.html.tbody.attlist, db.html.tr+ }
 }
@@ -9661,7 +9661,7 @@ div {
   db.html.tr.attlist =
     db.html.attrs & db.html.cellhalign & db.html.cellvalign
   db.html.tr =
-    
+
     ## A row in an HTML table
     element tr { db.html.tr.attlist, (db.html.th | db.html.td)+ }
 }
@@ -9672,7 +9672,7 @@ div {
     & db.html.cellhalign
     & db.html.cellvalign
   db.html.th =
-    
+
     ## A table header entry in an HTML table
     element th {
       db.html.th.attlist, (db.all.inlines* | db.all.blocks*)
@@ -9685,7 +9685,7 @@ div {
     & db.html.cellhalign
     & db.html.cellvalign
   db.html.td =
-    
+
     ## A table entry in an HTML table
     element td {
       db.html.td.attlist, (db.all.inlines* | db.all.blocks*)
@@ -9699,7 +9699,7 @@ div {
     & db.common.linking.attributes
   db.msgset.info = db._info.title.only
   db.msgset =
-    
+
     ## A detailed set of messages, usually error messages
     [
       s:pattern [
@@ -9736,7 +9736,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.msgentry =
-    
+
     ## A wrapper for an entry in a message set
     element msgentry {
       db.msgentry.attlist, db.msg+, db.msginfo?, db.msgexplan*
@@ -9745,15 +9745,15 @@ div {
 div {
   db.simplemsgentry.role.attribute = attribute role { text }
   db.simplemsgentry.msgaud.attribute =
-    
+
     ## The audience to which the message relevant
     attribute msgaud { text }
   db.simplemsgentry.msgorig.attribute =
-    
+
     ## The origin of the message
     attribute msgorig { text }
   db.simplemsgentry.msglevel.attribute =
-    
+
     ## The level of importance or severity of a message
     attribute msglevel { text }
   db.simplemsgentry.attlist =
@@ -9764,7 +9764,7 @@ div {
     & db.simplemsgentry.msgorig.attribute?
     & db.simplemsgentry.msglevel.attribute?
   db.simplemsgentry =
-    
+
     ## A wrapper for a simpler entry in a message set
     element simplemsgentry {
       db.simplemsgentry.attlist, db.msgtext, db.msgexplan+
@@ -9778,7 +9778,7 @@ div {
     & db.common.linking.attributes
   db.msg.info = db._info.title.only
   db.msg =
-    
+
     ## A message in a message set
     [
       s:pattern [
@@ -9814,8 +9814,8 @@ div {
     & db.common.linking.attributes
   db.msgmain.info = db._info.title.only
   db.msgmain =
-    
-    ## The primary component of a message in a message set 
+
+    ## The primary component of a message in a message set
     [
       s:pattern [
         "\x{a}" ~
@@ -9848,7 +9848,7 @@ div {
     & db.common.linking.attributes
   db.msgsub.info = db._info.title.only
   db.msgsub =
-    
+
     ## A subcomponent of a message in a message set
     [
       s:pattern [
@@ -9882,7 +9882,7 @@ div {
     & db.common.linking.attributes
   db.msgrel.info = db._info.title.only
   db.msgrel =
-    
+
     ## A related component of a message in a message set
     [
       s:pattern [
@@ -9915,7 +9915,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.msgtext =
-    
+
     ## The actual text of a message component in a message set
     element msgtext { db.msgtext.attlist, db.all.blocks+ }
 }
@@ -9926,7 +9926,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.msginfo =
-    
+
     ## Information about a message in a message set
     element msginfo {
       db.msginfo.attlist, (db.msglevel | db.msgorig | db.msgaud)*
@@ -9939,7 +9939,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.msglevel =
-    
+
     ## The level of importance or severity of a message in a message set
     element msglevel { db.msglevel.attlist, db._text }
 }
@@ -9950,7 +9950,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.msgorig =
-    
+
     ## The origin of a message in a message set
     element msgorig { db.msgorig.attlist, db._text }
 }
@@ -9961,7 +9961,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.msgaud =
-    
+
     ## The audience to which a message in a message set is relevant
     element msgaud { db.msgaud.attlist, db._text }
 }
@@ -9973,7 +9973,7 @@ div {
     & db.common.linking.attributes
   db.msgexplan.info = db._info.title.only
   db.msgexplan =
-    
+
     ## Explanatory material relating to a message in a message set
     [
       s:pattern [
@@ -10004,17 +10004,17 @@ div {
 div {
   db.qandaset.role.attribute = attribute role { text }
   db.qandaset.defaultlabel.enumeration =
-    
+
     ## No labels
     "none"
-    | 
+    |
       ## Numeric labels
       "number"
-    | 
+    |
       ## "Q:" and "A:" labels
       "qanda"
   db.qandaset.defaultlabel.attribute =
-    
+
     ## Specifies the default labelling
     attribute defaultlabel { db.qandaset.defaultlabel.enumeration }
   db.qandaset.attlist =
@@ -10024,7 +10024,7 @@ div {
     & db.qandaset.defaultlabel.attribute?
   db.qandaset.info = db._info.title.only
   db.qandaset =
-    
+
     ## A question-and-answer set
     [
       s:pattern [
@@ -10063,7 +10063,7 @@ div {
     & db.common.linking.attributes
   db.qandadiv.info = db._info.title.only
   db.qandadiv =
-    
+
     ## A titled division in a qandaset
     [
       s:pattern [
@@ -10102,7 +10102,7 @@ div {
     & db.common.linking.attributes
   db.qandaentry.info = db._info.title.only
   db.qandaentry =
-    
+
     ## A question/answer set within a qandaset
     [
       s:pattern [
@@ -10137,7 +10137,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.question =
-    
+
     ## A question in a qandaset
     element question { db.question.attlist, db.label?, db.all.blocks+ }
 }
@@ -10148,7 +10148,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.answer =
-    
+
     ## An answer to a question posed in a qandaset
     element answer { db.answer.attlist, db.label?, db.all.blocks+ }
 }
@@ -10159,7 +10159,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.label =
-    
+
     ## A label on a question or answer
     element label { db.label.attlist, db._text }
 }
@@ -10179,7 +10179,7 @@ div {
     & db.floatstyle.attribute?
   db.equation.info = db._info.title.only
   db.equation =
-    
+
     ## A displayed mathematical equation
     [
       s:pattern [
@@ -10301,7 +10301,7 @@ div {
     & db.floatstyle.attribute?
   db.informalequation.info = db._info.title.forbidden
   db.informalequation =
-    
+
     ## A displayed mathematical equation without a title
     [
       s:pattern [
@@ -10340,7 +10340,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.inlineequation =
-    
+
     ## A mathematical equation or expression occurring inline
     element inlineequation {
       db.inlineequation.attlist, db.alt?, db.inlineequation.content
@@ -10353,7 +10353,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.mathphrase =
-    
+
     ## A mathematical phrase that can be represented with ordinary text and a small amount of markup
     element mathphrase {
       db.mathphrase.attlist,
@@ -10366,10 +10366,10 @@ div {
   db.imagedata.mathml.attlist =
     db.imagedata.mathml.role.attribute?
     & db.common.attributes
-    & 
+    &
       ## Specifies that the format of the data is MathML
       attribute format {
-        
+
         ## Specifies MathML.
         "mathml"
       }?
@@ -10383,7 +10383,7 @@ div {
     & db.imagedata.contentdepth.attribute?
   db.imagedata.mathml.info = db._info.title.forbidden
   db.imagedata.mathml =
-    
+
     ## A MathML expression in a media object
     [
       s:pattern [
@@ -10415,7 +10415,7 @@ div {
 }
 div {
   db._any.mml =
-    
+
     ## Any element from the MathML namespace
     element mml:* { (db._any.attribute | text | db._any)* }
 }
@@ -10425,10 +10425,10 @@ div {
   db.imagedata.svg.attlist =
     db.imagedata.svg.role.attribute?
     & db.common.attributes
-    & 
+    &
       ## Specifies that the format of the data is SVG
       attribute format {
-        
+
         ## Specifies SVG.
         "svg"
       }?
@@ -10442,7 +10442,7 @@ div {
     & db.imagedata.contentdepth.attribute?
   db.imagedata.svg.info = db._info.title.forbidden
   db.imagedata.svg =
-    
+
     ## An SVG drawing in a media object
     [
       s:pattern [
@@ -10474,7 +10474,7 @@ div {
 }
 div {
   db._any.svg =
-    
+
     ## Any element from the SVG namespace
     element svg:* { (db._any.attribute | text | db._any)* }
 }
@@ -10495,64 +10495,64 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.markup =
-    
+
     ## A string of formatting markup in text that is to be represented literally
     element markup { db.markup.attlist, db._text }
 }
 div {
   db.tag.role.attribute = attribute role { text }
   db.tag.class.enumeration =
-    
+
     ## An attribute
     "attribute"
-    | 
+    |
       ## An attribute value
       "attvalue"
-    | 
+    |
       ## An element
       "element"
-    | 
+    |
       ## An empty element tag
       "emptytag"
-    | 
+    |
       ## An end tag
       "endtag"
-    | 
+    |
       ## A general entity
       "genentity"
-    | 
+    |
       ## The local name part of a qualified name
       "localname"
-    | 
+    |
       ## A namespace
       "namespace"
-    | 
+    |
       ## A numeric character reference
       "numcharref"
-    | 
+    |
       ## A parameter entity
       "paramentity"
-    | 
+    |
       ## A processing instruction
       "pi"
-    | 
+    |
       ## The prefix part of a qualified name
       "prefix"
-    | 
+    |
       ## An SGML comment
       "comment"
-    | 
+    |
       ## A start tag
       "starttag"
-    | 
+    |
       ## An XML processing instruction
       "xmlpi"
   db.tag.class.attribute =
-    
+
     ## Identifies the nature of the tag content
     attribute class { db.tag.class.enumeration }
   db.tag.namespace.attribute =
-    
+
     ## Identifies the namespace of the tag content
     attribute namespace { xsd:anyURI }
   db.tag.attlist =
@@ -10562,16 +10562,16 @@ div {
     & db.tag.class.attribute?
     & db.tag.namespace.attribute?
   db.tag =
-    
+
     ## A component of XML (or SGML) markup
     element tag { db.tag.attlist, (db._text | db.tag)* }
 }
 div {
   db.symbol.class.attribute =
-    
+
     ## Identifies the class of symbol
     attribute class {
-      
+
       ## The value is a limit of some kind
       "limit"
     }
@@ -10582,7 +10582,7 @@ div {
     & db.common.linking.attributes
     & db.symbol.class.attribute?
   db.symbol =
-    
+
     ## A name that is replaced by a value before processing
     element symbol { db.symbol.attlist, db._text }
 }
@@ -10593,7 +10593,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.token =
-    
+
     ## A unit of information
     element token { db.token.attlist, db._text }
 }
@@ -10604,13 +10604,13 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.literal =
-    
+
     ## Inline text that is some literal value
     element literal { db.literal.attlist, db._text }
 }
 div {
   code.language.attribute =
-    
+
     ## Identifies the (computer) language of the code fragment
     attribute language { text }
   db.code.role.attribute = attribute role { text }
@@ -10620,7 +10620,7 @@ div {
     & db.common.linking.attributes
     & code.language.attribute?
   db.code =
-    
+
     ## An inline code fragment
     element code {
       db.code.attlist, (db.programming.inlines | db._text)*
@@ -10628,10 +10628,10 @@ div {
 }
 div {
   db.constant.class.attribute =
-    
+
     ## Identifies the class of constant
     attribute class {
-      
+
       ## The value is a limit of some kind
       "limit"
     }
@@ -10642,27 +10642,27 @@ div {
     & db.common.linking.attributes
     & db.constant.class.attribute?
   db.constant =
-    
+
     ## A programming or system constant
     element constant { db.constant.attlist, db._text }
 }
 div {
   db.productname.role.attribute = attribute role { text }
   db.productname.class.enumeration =
-    
+
     ## A name with a copyright
     "copyright"
-    | 
+    |
       ## A name with a registered copyright
       "registered"
-    | 
+    |
       ## A name of a service
       "service"
-    | 
+    |
       ## A name which is trademarked
       "trade"
   db.productname.class.attribute =
-    
+
     ## Specifies the class of product name
     attribute class { db.productname.class.enumeration }
   db.productname.attlist =
@@ -10671,7 +10671,7 @@ div {
     & db.common.linking.attributes
     & db.productname.class.attribute?
   db.productname =
-    
+
     ## The formal name of a product
     element productname { db.productname.attlist, db._text }
 }
@@ -10682,68 +10682,68 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.productnumber =
-    
+
     ## A number assigned to a product
     element productnumber { db.productnumber.attlist, db._text }
 }
 div {
   db.database.class.enumeration =
-    
+
     ## An alternate or secondary key
     "altkey"
-    | 
+    |
       ## A constraint
       "constraint"
-    | 
+    |
       ## A data type
       "datatype"
-    | 
+    |
       ## A field
       "field"
-    | 
+    |
       ## A foreign key
       "foreignkey"
-    | 
+    |
       ## A group
       "group"
-    | 
+    |
       ## An index
       "index"
-    | 
+    |
       ## The first or primary key
       "key1"
-    | 
+    |
       ## An alternate or secondary key
       "key2"
-    | 
+    |
       ## A name
       "name"
-    | 
+    |
       ## The primary key
       "primarykey"
-    | 
+    |
       ## A (stored) procedure
       "procedure"
-    | 
+    |
       ## A record
       "record"
-    | 
+    |
       ## A rule
       "rule"
-    | 
+    |
       ## The secondary key
       "secondarykey"
-    | 
+    |
       ## A table
       "table"
-    | 
+    |
       ## A user
       "user"
-    | 
+    |
       ## A view
       "view"
   db.database.class.attribute =
-    
+
     ## Identifies the class of database artifact
     attribute class { db.database.class.enumeration }
   db.database.role.attribute = attribute role { text }
@@ -10753,20 +10753,20 @@ div {
     & db.common.linking.attributes
     & db.database.class.attribute?
   db.database =
-    
+
     ## The name of a database, or part of a database
     element database { db.database.attlist, db._text }
 }
 div {
   db.application.class.enumeration =
-    
+
     ## A hardware application
     "hardware"
-    | 
+    |
       ## A software application
       "software"
   db.application.class.attribute =
-    
+
     ## Identifies the class of application
     attribute class { db.application.class.enumeration }
   db.application.role.attribute = attribute role { text }
@@ -10776,7 +10776,7 @@ div {
     & db.common.linking.attributes
     & db.application.class.attribute?
   db.application =
-    
+
     ## The name of a software program
     element application { db.application.attlist, db._text }
 }
@@ -10787,7 +10787,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.hardware =
-    
+
     ## A physical part of a computer system
     element hardware { db.hardware.attlist, db._text }
 }
@@ -10807,7 +10807,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.guibutton =
-    
+
     ## The text on a button in a GUI
     element guibutton {
       db.guibutton.attlist,
@@ -10821,7 +10821,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.guiicon =
-    
+
     ## Graphic and/or text appearing as a icon in a GUI
     element guiicon {
       db.guiicon.attlist,
@@ -10835,7 +10835,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.guilabel =
-    
+
     ## The text of a label in a GUI
     element guilabel {
       db.guilabel.attlist,
@@ -10849,7 +10849,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.guimenu =
-    
+
     ## The name of a menu in a GUI
     element guimenu {
       db.guimenu.attlist,
@@ -10863,7 +10863,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.guimenuitem =
-    
+
     ## The name of a terminal menu item in a GUI
     element guimenuitem {
       db.guimenuitem.attlist,
@@ -10877,7 +10877,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.guisubmenu =
-    
+
     ## The name of a submenu in a GUI
     element guisubmenu {
       db.guisubmenu.attlist,
@@ -10891,7 +10891,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.menuchoice =
-    
+
     ## A selection or series of selections from a menu
     element menuchoice {
       db.menuchoice.attlist,
@@ -10911,7 +10911,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.mousebutton =
-    
+
     ## The conventional name of a mouse button
     element mousebutton { db.mousebutton.attlist, db._text }
 }
@@ -10924,88 +10924,88 @@ db.keyboard.inlines =
   | db.accel
 div {
   db.keycap.function.enumeration =
-    
+
     ## The "Alt" key
     "alt"
-    | 
+    |
       ## The "Alt Graph" key
       "altgr"
-    | 
+    |
       ## The "Backspace" key
       "backspace"
-    | 
+    |
       ## The "Command" key
       "command"
-    | 
+    |
       ## The "Control" key
       "control"
-    | 
+    |
       ## The "Delete" key
       "delete"
-    | 
+    |
       ## The down arrow
       "down"
-    | 
+    |
       ## The "End" key
       "end"
-    | 
+    |
       ## The "Enter" key
       "enter"
-    | 
+    |
       ## The "Escape" key
       "escape"
-    | 
+    |
       ## The "Home" key
       "home"
-    | 
+    |
       ## The "Insert" key
       "insert"
-    | 
+    |
       ## The left arrow
       "left"
-    | 
+    |
       ## The "Meta" key
       "meta"
-    | 
+    |
       ## The "Option" key
       "option"
-    | 
+    |
       ## The page down key
       "pagedown"
-    | 
+    |
       ## The page up key
       "pageup"
-    | 
+    |
       ## The right arrow
       "right"
-    | 
+    |
       ## The "Return" key
       "return"
-    | 
+    |
       ## The "Shift" key
       "shift"
-    | 
+    |
       ## The spacebar
       "space"
-    | 
+    |
       ## The "Tab" key
       "tab"
-    | 
+    |
       ## The up arrow
       "up"
   db.keycap.function-enum.attribute =
-    
+
     ## Identifies the function key
     attribute function { db.keycap.function.enumeration }?
   db.keycap.function-other.attributes =
-    
+
     ## Identifies the function key
     attribute function {
-      
+
       ## Indicates a non-standard function key
       "other"
     }?,
-    
+
     ## Specifies a keyword that identifies the non-standard key
     attribute otherfunction { text }
   db.keycap.function.attrib =
@@ -11018,7 +11018,7 @@ div {
     & db.common.linking.attributes
     & db.keycap.function.attrib
   db.keycap =
-    
+
     ## The text printed on a key on a keyboard
     element keycap { db.keycap.attlist, db._text }
 }
@@ -11029,7 +11029,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.keycode =
-    
+
     ## The internal, frequently numeric, identifier for a key on a keyboard
     element keycode { db.keycode.attlist, db._text }
 }
@@ -11037,36 +11037,36 @@ db.keycombination.contentmodel =
   (db.keycap | db.keycombo | db.keysym) | db.mousebutton
 div {
   db.keycombo.action.enumeration =
-    
+
     ## A (single) mouse click.
     "click"
-    | 
+    |
       ## A double mouse click.
       "double-click"
-    | 
+    |
       ## A mouse or key press.
       "press"
-    | 
+    |
       ## Sequential clicks or presses.
       "seq"
-    | 
+    |
       ## Simultaneous clicks or presses.
       "simul"
   db.keycombo.action-enum.attribute =
-    
+
     ## Identifies the nature of the action taken. If keycombo
     ##  contains more than one element, simul
     ##  is the default, otherwise there is no default.
     attribute action { db.keycombo.action.enumeration }?
   db.keycombo.action-other.attributes =
-    
+
     ## Identifies the nature of the action taken
     attribute action {
-      
+
       ## Indicates a non-standard action
       "other"
     }?,
-    
+
     ## Identifies the non-standard action in some unspecified way.
     attribute otheraction { text }
   db.keycombo.action.attrib =
@@ -11079,7 +11079,7 @@ div {
     & db.common.linking.attributes
     & db.keycombo.action.attrib
   db.keycombo =
-    
+
     ## A combination of input actions
     element keycombo {
       db.keycombo.attlist, db.keycombination.contentmodel+
@@ -11092,7 +11092,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.keysym =
-    
+
     ## The symbolic name of a key on a keyboard
     element keysym { db.keysym.attlist, db._text }
 }
@@ -11103,7 +11103,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.accel =
-    
+
     ## A graphical user interface (GUI) keyboard shortcut
     element accel { db.accel.attlist, db._text }
 }
@@ -11116,7 +11116,7 @@ div {
     & db.common.linking.attributes
     & db.shortcut.action.attrib
   db.shortcut =
-    
+
     ## A key combination for an action that is also accessible through a menu
     element shortcut {
       db.shortcut.attlist, db.keycombination.contentmodel+
@@ -11147,7 +11147,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.prompt =
-    
+
     ## A character or string indicating the start of an input field in a  computer display
     element prompt { db.prompt.attlist, db.prompt.inlines* }
 }
@@ -11158,39 +11158,39 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.envar =
-    
+
     ## A software environment variable
     element envar { db.envar.attlist, db._text }
 }
 div {
   db.filename.class.enumeration =
-    
+
     ## A device
     "devicefile"
-    | 
+    |
       ## A directory
       "directory"
-    | 
+    |
       ## A filename extension
       "extension"
-    | 
+    |
       ## A header file (as for a programming language)
       "headerfile"
-    | 
+    |
       ## A library file
       "libraryfile"
-    | 
+    |
       ## A partition (as of a hard disk)
       "partition"
-    | 
+    |
       ## A symbolic link
       "symlink"
   db.filename.class.attribute =
-    
+
     ## Identifies the class of filename
     attribute class { db.filename.class.enumeration }
   db.filename.path.attribute =
-    
+
     ## Specifies the path of the filename
     attribute path { text }
   db.filename.role.attribute = attribute role { text }
@@ -11201,7 +11201,7 @@ div {
     & db.filename.path.attribute?
     & db.filename.class.attribute?
   db.filename =
-    
+
     ## The name of a file
     element filename { db.filename.attlist, db._text }
 }
@@ -11212,7 +11212,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.command =
-    
+
     ## The name of an executable program or other software command
     element command { db.command.attlist, db._text }
 }
@@ -11223,7 +11223,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.computeroutput =
-    
+
     ## Data, generally text, displayed or presented by a computer
     element computeroutput {
       db.computeroutput.attlist, db.computeroutput.inlines*
@@ -11236,18 +11236,18 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.userinput =
-    
+
     ## Data entered by the user
     element userinput { db.userinput.attlist, db.userinput.inlines* }
 }
 div {
   db.cmdsynopsis.role.attribute = attribute role { text }
   db.cmdsynopsis.sepchar.attribute =
-    
+
     ## Specifies the character that should separate the command and its top-level arguments
     attribute sepchar { text }
   db.cmdsynopsis.cmdlength.attribute =
-    
+
     ## Indicates the displayed length of the command; this information may be used to intelligently indent command synopses which extend beyond one line
     attribute cmdlength { text }
   db.cmdsynopsis.label.attribute = db.label.attribute
@@ -11260,7 +11260,7 @@ div {
     & db.cmdsynopsis.label.attribute?
   db.cmdsynopsis.info = db._info.title.forbidden
   db.cmdsynopsis =
-    
+
     ## A syntax summary for a software command
     [
       s:pattern [
@@ -11292,32 +11292,32 @@ div {
     }
 }
 db.rep.enumeration =
-  
+
   ## Can not be repeated.
   "norepeat"
-  | 
+  |
     ## Can be repeated.
     "repeat"
 db.rep.attribute =
-  
-  ## Indicates whether or not repetition is possible.
+
+  ## Indicates whether repetition is possible.
   [ a:defaultValue = "norepeat" ] attribute rep { db.rep.enumeration }
 db.choice.enumeration =
-  
+
   ## Formatted to indicate that it is optional.
   "opt"
-  | 
+  |
     ## Formatted without indication.
     "plain"
-  | 
+  |
     ## Formatted to indicate that it is required.
     "req"
 db.choice.opt.attribute =
-  
+
   ## Indicates optionality.
   [ a:defaultValue = "opt" ] attribute choice { db.choice.enumeration }
 db.choice.req.attribute =
-  
+
   ## Indicates optionality.
   [ a:defaultValue = "req" ] attribute choice { db.choice.enumeration }
 div {
@@ -11331,7 +11331,7 @@ div {
     & db.arg.rep.attribute?
     & db.arg.choice.attribute?
   db.arg =
-    
+
     ## An argument in a cmdsynopsis
     element arg {
       db.arg.attlist,
@@ -11354,7 +11354,7 @@ div {
     & db.group.rep.attribute?
     & db.group.choice.attribute?
   db.group =
-    
+
     ## A group of elements in a cmdsynopsis
     element group {
       db.group.attlist,
@@ -11370,7 +11370,7 @@ div {
   db.sbr.role.attribute = attribute role { text }
   db.sbr.attlist = db.sbr.role.attribute? & db.common.attributes
   db.sbr =
-    
+
     ## An explicit line break in a command synopsis
     element sbr { db.sbr.attlist, empty }
 }
@@ -11381,7 +11381,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.synopfragment =
-    
+
     ## A portion of a cmdsynopsis broken out from the main body of the synopsis
     element synopfragment {
       db.synopfragment.attlist, (db.arg | db.group)+
@@ -11394,7 +11394,7 @@ div {
     & db.common.attributes
     & db.linkend.attribute
   db.synopfragmentref =
-    
+
     ## A reference to a fragment of a command synopsis
     [
       s:pattern [
@@ -11453,7 +11453,7 @@ div {
     & db.verbatim.attributes
     & db.synopsis.label.attribute?
   db.synopsis =
-    
+
     ## A general-purpose element for representing the syntax of commands or functions
     [
       s:pattern [
@@ -11488,7 +11488,7 @@ div {
     & db.language.attribute?
   db.funcsynopsis.info = db._info.title.forbidden
   db.funcsynopsis =
-    
+
     ## The syntax summary for a function definition
     [
       s:pattern [
@@ -11526,7 +11526,7 @@ div {
     & db.common.linking.attributes
     & db.verbatim.attributes
   db.funcsynopsisinfo =
-    
+
     ## Information supplementing the funcdefs of a funcsynopsis
     [
       s:pattern [
@@ -11561,7 +11561,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.funcprototype =
-    
+
     ## The prototype of a function
     element funcprototype {
       db.funcprototype.attlist,
@@ -11580,7 +11580,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.funcdef =
-    
+
     ## A function (subroutine) name and its return type
     element funcdef {
       db.funcdef.attlist, (db._text | db.type | db.function)*
@@ -11593,7 +11593,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.function =
-    
+
     ## The name of a function or subroutine, as in a programming language
     element function { db.function.attlist, db._text }
 }
@@ -11604,7 +11604,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.void =
-    
+
     ## An empty element in a function synopsis indicating that the function in question takes no arguments
     element void { db.void.attlist, empty }
 }
@@ -11615,7 +11615,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.varargs =
-    
+
     ## An empty element in a function synopsis indicating a variable number of arguments
     element varargs { db.varargs.attlist, empty }
 }
@@ -11628,7 +11628,7 @@ div {
     & db.common.linking.attributes
     & db.group.paramdef.choice.attribute?
   db.group.paramdef =
-    
+
     ## A group of parameters
     element group {
       db.group.paramdef.attlist, (db.paramdef | db.group.paramdef)+
@@ -11637,14 +11637,14 @@ div {
 div {
   db.paramdef.role.attribute = attribute role { text }
   db.paramdef.choice.enumeration =
-    
+
     ## Formatted to indicate that it is optional.
     "opt"
-    | 
+    |
       ## Formatted to indicate that it is required.
       "req"
   db.paramdef.choice.attribute =
-    
+
     ## Indicates optionality.
     [ a:defaultValue = "opt" ]
     attribute choice { db.paramdef.choice.enumeration }
@@ -11654,7 +11654,7 @@ div {
     & db.common.linking.attributes
     & db.paramdef.choice.attribute?
   db.paramdef =
-    
+
     ## Information about a function parameter in a programming language
     element paramdef {
       db.paramdef.attlist,
@@ -11672,21 +11672,21 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.funcparams =
-    
+
     ## Parameters for a function referenced through a function pointer in a synopsis
     element funcparams { db.funcparams.attlist, db._text }
 }
 div {
   db.classsynopsis.role.attribute = attribute role { text }
   db.classsynopsis.class.enumeration =
-    
+
     ## This is the synopsis of a class
     "class"
-    | 
+    |
       ## This is the synopsis of an interface
       "interface"
   db.classsynopsis.class.attribute =
-    
+
     ## Specifies the nature of the synopsis
     attribute class { db.classsynopsis.class.enumeration }
   db.classsynopsis.attlist =
@@ -11696,7 +11696,7 @@ div {
     & db.language.attribute?
     & db.classsynopsis.class.attribute?
   db.classsynopsis =
-    
+
     ## The syntax summary for a class definition
     [
       s:pattern [
@@ -11738,7 +11738,7 @@ div {
     & db.common.linking.attributes
     & db.verbatim.attributes
   db.classsynopsisinfo =
-    
+
     ## Information supplementing the contents of a classsynopsis
     [
       s:pattern [
@@ -11773,7 +11773,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.ooclass =
-    
+
     ## A class in an object-oriented programming language
     element ooclass {
       db.ooclass.attlist, (db.package | db.modifier)*, db.classname
@@ -11786,7 +11786,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.oointerface =
-    
+
     ## An interface in an object-oriented programming language
     element oointerface {
       db.oointerface.attlist,
@@ -11801,7 +11801,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.ooexception =
-    
+
     ## An exception in an object-oriented programming language
     element ooexception {
       db.ooexception.attlist,
@@ -11810,10 +11810,10 @@ div {
     }
 }
 db.modifier.xml.space.attribute =
-  
+
   ## Can be used to indicate that whitespace in the modifier should be preserved (for multi-line annotations, for example).
   attribute xml:space {
-    
+
     ## Extra whitespace and line breaks must be preserved.
     [
       # Ideally the definition of xml:space used on modifier would be
@@ -11825,7 +11825,7 @@ db.modifier.xml.space.attribute =
       # problem in the future.
       #    | ## Extra whitespace and line breaks are not preserved.
       #      "default"
-      
+
     ]
     "preserve"
   }
@@ -11837,7 +11837,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.modifier =
-    
+
     ## Modifiers in a synopsis
     element modifier { db.modifier.attlist, db._text }
 }
@@ -11848,7 +11848,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.interfacename =
-    
+
     ## The name of an interface
     element interfacename { db.interfacename.attlist, db._text }
 }
@@ -11859,7 +11859,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.exceptionname =
-    
+
     ## The name of an exception
     element exceptionname { db.exceptionname.attlist, db._text }
 }
@@ -11871,7 +11871,7 @@ div {
     & db.common.linking.attributes
     & db.language.attribute?
   db.fieldsynopsis =
-    
+
     ## The name of a field in a class definition
     [
       s:pattern [
@@ -11911,7 +11911,7 @@ div {
     & db.common.linking.attributes
   db.initializer.inlines = db._text | db.mathphrase | db.markup.inlines
   db.initializer =
-    
+
     ## The initializer for a fieldsynopsis
     element initializer {
       db.initializer.attlist, db.initializer.inlines*
@@ -11925,7 +11925,7 @@ div {
     & db.common.linking.attributes
     & db.language.attribute?
   db.constructorsynopsis =
-    
+
     ## A syntax summary for a constructor
     [
       s:pattern [
@@ -11965,7 +11965,7 @@ div {
     & db.common.linking.attributes
     & db.language.attribute?
   db.destructorsynopsis =
-    
+
     ## A syntax summary for a destructor
     [
       s:pattern [
@@ -12005,7 +12005,7 @@ div {
     & db.common.linking.attributes
     & db.language.attribute?
   db.methodsynopsis =
-    
+
     ## A syntax summary for a method
     [
       s:pattern [
@@ -12046,7 +12046,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.methodname =
-    
+
     ## The name of a method
     element methodname { db.methodname.attlist, db._text }
 }
@@ -12061,7 +12061,7 @@ div {
     & db.methodparam.rep.attribute?
     & db.methodparam.choice.attribute?
   db.methodparam =
-    
+
     ## Parameters to a method
     element methodparam {
       db.methodparam.attlist,
@@ -12080,7 +12080,7 @@ div {
     & db.common.linking.attributes
     & db.group.methodparam.choice.attribute?
   db.group.methodparam =
-    
+
     ## A group of method parameters
     element group {
       db.group.methodparam.attlist,
@@ -12094,7 +12094,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.varname =
-    
+
     ## The name of a variable
     element varname { db.varname.attlist, db._text }
 }
@@ -12105,7 +12105,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.returnvalue =
-    
+
     ## The value returned by a function
     element returnvalue { db.returnvalue.attlist, db._text }
 }
@@ -12116,7 +12116,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.type =
-    
+
     ## The classification of a value
     element type { db.type.attlist, db._text }
 }
@@ -12127,7 +12127,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.classname =
-    
+
     ## The name of a class, in the object-oriented programming sense
     element classname { db.classname.attlist, db._text }
 }
@@ -12141,7 +12141,7 @@ div {
     & db.verbatim.attributes
     & db.programlisting.width.attribute?
   db.programlisting =
-    
+
     ## A literal listing of all or part of a program
     [
       s:pattern [
@@ -12179,7 +12179,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.caution =
-    
+
     ## A note of caution
     [
       s:pattern [
@@ -12312,7 +12312,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.important =
-    
+
     ## An admonition set off from the text
     [
       s:pattern [
@@ -12447,7 +12447,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.note =
-    
+
     ## A message set off from the text
     [
       s:pattern [
@@ -12580,7 +12580,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.tip =
-    
+
     ## A suggestion to the user, set off from the text
     [
       s:pattern [
@@ -12713,7 +12713,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.warning =
-    
+
     ## An admonition set off from the text
     [
       s:pattern [
@@ -12848,7 +12848,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.errorcode =
-    
+
     ## An error code
     element errorcode { db.errorcode.attlist, db._text }
 }
@@ -12859,7 +12859,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.errorname =
-    
+
     ## An error name
     element errorname { db.errorname.attlist, db._text }
 }
@@ -12870,7 +12870,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.errortext =
-    
+
     ## An error message.
     element errortext { db.errortext.attlist, db._text }
 }
@@ -12881,92 +12881,92 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.errortype =
-    
+
     ## The classification of an error message
     element errortype { db.errortype.attlist, db._text }
 }
 db.systemitem.inlines = db._text | db.co
 div {
   db.systemitem.class.enumeration =
-    
+
     ## A daemon or other system process (syslogd)
     "daemon"
-    | 
+    |
       ## A domain name (example.com)
       "domainname"
-    | 
+    |
       ## An ethernet address (00:05:4E:49:FD:8E)
       "etheraddress"
-    | 
+    |
       ## An event of some sort (SIGHUP)
       "event"
-    | 
+    |
       ## An event handler of some sort (hangup)
       "eventhandler"
-    | 
+    |
       ## A filesystem (ext3)
       "filesystem"
-    | 
+    |
       ## A fully qualified domain name (my.example.com)
       "fqdomainname"
-    | 
+    |
       ## A group name (wheel)
       "groupname"
-    | 
+    |
       ## An IP address (127.0.0.1)
       "ipaddress"
-    | 
+    |
       ## A library (libncurses)
       "library"
-    | 
+    |
       ## A macro
       "macro"
-    | 
+    |
       ## A netmask (255.255.255.192)
       "netmask"
-    | 
+    |
       ## A newsgroup (comp.text.xml)
       "newsgroup"
-    | 
+    |
       ## An operating system name (Hurd)
       "osname"
-    | 
+    |
       ## A process (gnome-cups-icon)
       "process"
-    | 
+    |
       ## A protocol (ftp)
       "protocol"
-    | 
+    |
       ## A resource
       "resource"
-    | 
+    |
       ## A security context (a role, permission, or security token, for example)
       "securitycontext"
-    | 
+    |
       ## A server (mail.example.com)
       "server"
-    | 
+    |
       ## A service (ppp)
       "service"
-    | 
+    |
       ## A system name (hephaistos)
       "systemname"
-    | 
+    |
       ## A user name (ndw)
       "username"
   db.systemitem.class-enum.attribute =
-    
+
     ## Identifies the nature of the system item
     attribute class { db.systemitem.class.enumeration }?
   db.systemitem.class-other.attribute =
-    
+
     ## Identifies the nature of the non-standard system item
     attribute otherclass { xsd:NMTOKEN }
   db.systemitem.class-other.attributes =
-    
+
     ## Identifies the kind of systemitemgraphic identifier
     attribute class {
-      
+
       ## Indicates that the system item is some 'other' kind.
       "other"
     }
@@ -12981,7 +12981,7 @@ div {
     & db.common.linking.attributes
     & db.systemitem.class.attribute?
   db.systemitem =
-    
+
     ## A system-related item or term
     element systemitem { db.systemitem.attlist, db.systemitem.inlines* }
 }
@@ -12992,7 +12992,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.option =
-    
+
     ## An option for a software command
     element option { db.option.attlist, db._text }
 }
@@ -13003,7 +13003,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.optional =
-    
+
     ## Optional information
     element optional { db.optional.attlist, db._text }
 }
@@ -13014,7 +13014,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
   db.property =
-    
+
     ## A unit of data associated with some part of a computer system
     element property { db.property.attlist, db._text }
 }
@@ -13022,7 +13022,7 @@ div {
   db.topic.status.attribute = db.status.attribute
   db.topic.role.attribute = attribute role { text }
   db.topic.type.attribute =
-    
+
     ## Identifies the topic type
     attribute type { text }
   db.topic.attlist =
@@ -13034,7 +13034,7 @@ div {
     & db.topic.status.attribute?
   db.topic.info = db._info.title.req
   db.topic =
-    
+
     ## A modular unit of documentation not part of any particular narrative flow
     [
       s:pattern [
