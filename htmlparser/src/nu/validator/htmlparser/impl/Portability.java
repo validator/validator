@@ -55,7 +55,7 @@ public final class Portability {
     }
 
     public static String newStringFromBuffer(@NoLength char[] buf, int offset, int length
-        // CPPONLY: , TreeBuilder treeBuilder, boolean maybeAtomize
+        // CPPONLY: , TreeBuilder treeBuilder, Interner interner
     ) {
         return new String(buf, offset, length);
     }

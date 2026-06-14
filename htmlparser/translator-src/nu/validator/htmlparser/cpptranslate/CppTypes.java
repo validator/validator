@@ -59,6 +59,8 @@ public class CppTypes {
        PseudoElementAtom or NonInheritingAnonBoxAtom or InheritingAnonBoxAtom */
     private static final Pattern ATOM_DEF = Pattern.compile("^\\s*Atom\\(\"([^,]+)\",\\s*\"([^\"]*)\"\\).*$");
 
+    private static final Pattern GKATOM = Pattern.compile("^.*nsGkAtoms::([a-zA-Z_]+)[^a-zA-Z_].*$");
+    
     private static Set<String> reservedWords = new HashSet<String>();
 
     static {
@@ -80,6 +82,8 @@ public class CppTypes {
         reservedWords.add("xor");
         reservedWords.add("unicode");
     }
+
+    private static Set<String> atomAttributes = new HashSet<String>();
 
     private static Map<String, String> methodRenames = new HashMap<String, String>();
     
@@ -137,12 +141,13 @@ public class CppTypes {
 
     private final Writer atomWriter;
 
-    public CppTypes(File atomList, File generatedAtomFile) {
+    public CppTypes(File atomList, File generatedAtomFile, File atomAttributeFile) {
         if (atomList == null) {
             atomWriter = null;
         } else {
             try {
                 ingestAtoms(atomList);
+                ingestAtomAttributes(atomAttributeFile);
                 atomWriter = new OutputStreamWriter(new FileOutputStream(
                         generatedAtomFile), "utf-8");
                 this.start();
@@ -186,6 +191,23 @@ public class CppTypes {
         }
     }
 
+    private void ingestAtomAttributes(File atomAttributeFile) throws IOException {
+        // This doesn't need to be efficient, so let's make it easy to write.
+        BufferedReader atomReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(atomAttributeFile), "utf-8"));
+        try {
+            String line;
+            while ((line = atomReader.readLine()) != null) {
+                Matcher m = GKATOM.matcher(line);
+                if (m.matches()) {
+                    atomAttributes.add(m.group(1));
+                }
+            }
+        } finally {
+            atomReader.close();
+        }
+    }
+
     public void start() {
         try {
 
@@ -208,6 +230,9 @@ public class CppTypes {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        for (String atomAttr : atomAttributes) {
+            System.err.println("Missing atom attribute: " + atomAttr);
         }
     }
 
@@ -558,5 +583,9 @@ public class CppTypes {
 
     public String crashMacro() {
         return "MOZ_CRASH";
+    }
+
+    public boolean useAtom(String name) {
+        return atomAttributes.remove(atomMap.get(name));
     }
 }

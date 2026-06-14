@@ -1444,6 +1444,7 @@ public class CppVisitor extends AnnotationHelperVisitor<LocalSymbolTable> {
                 // Remove flags, and htmlLang from AttributeName constructor.
                 args.remove(6);
                 args.remove(4);
+                args.add(new BooleanLiteralExpr(cppTypes.useAtom(((StringLiteralExpr)args.get(1)).getValue())));
             }
         }
 

@@ -989,30 +989,22 @@ public class Tokenizer implements Locator, Locator2 {
         strBuf[strBufLen++] = c;
     }
 
-    /**
-     * The buffer as a String. Currently only used for error reporting.
-     *
-     * <p>
-     * C++ memory note: The return value must be released.
-     *
-     * @return the buffer as a string
-     */
     @Inline protected String strBufToString() {
+        String str = Portability.newStringFromBuffer(strBuf, 0, strBufLen
+            // CPPONLY: , tokenHandler, null
+        );
+        clearStrBufAfterUse();
+        return str;
+    }
+
+    @Inline protected String strBufToAttributeValueString() {
         // CPPONLY: String digitAtom = TryAtomizeForSingleDigit();
         // CPPONLY: if (digitAtom) {
         // CPPONLY:   return digitAtom;
         // CPPONLY: }
         // CPPONLY:
-        // CPPONLY: boolean maybeAtomize = false;
-        // CPPONLY: if (!newAttributesEachTime) {
-        // CPPONLY:   if (attributeName == AttributeName.CLASS ||
-        // CPPONLY:       attributeName == AttributeName.TYPE) {
-        // CPPONLY:     maybeAtomize = true;
-        // CPPONLY:   }
-        // CPPONLY: }
-        // CPPONLY:
         String str = Portability.newStringFromBuffer(strBuf, 0, strBufLen
-            // CPPONLY: , tokenHandler, maybeAtomize
+            // CPPONLY: , tokenHandler, attributeName.isUseAtom() ? interner : null
         );
         clearStrBufAfterUse();
         return str;
@@ -1397,7 +1389,7 @@ public class Tokenizer implements Locator, Locator2 {
         }
         // ]NOCPP]
         if (attributeName != null) {
-            String val = strBufToString(); // Ownership transferred to
+            String val = strBufToAttributeValueString(); // Ownership transferred to
             // HtmlAttributes
             // CPPONLY: if (mViewSource) {
             // CPPONLY:   mViewSource.MaybeLinkifyAttributeValue(attributeName, val);

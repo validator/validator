@@ -2967,7 +2967,7 @@ public abstract class TreeBuilder<T> implements TokenHandler,
     }
 
     private void startTagTemplateInHead(ElementName elementName, HtmlAttributes attributes) throws SAXException {
-        appendToCurrentNodeAndPushElement(elementName, attributes);
+        appendToCurrentNodeAndPushTemplateElement(attributes);
         insertMarker();
         framesetOk = false;
         originalMode = mode;
@@ -2988,26 +2988,6 @@ public abstract class TreeBuilder<T> implements TokenHandler,
         return ("http://www.w3.org/1999/xhtml" == ns)
                 || (stackNode.isHtmlIntegrationPoint())
                 || (("http://www.w3.org/1998/Math/MathML" == ns) && (stackNode.getGroup() == MI_MO_MN_MS_MTEXT));
-    }
-
-    private T getDeclarativeShadowRoot(T currentNode, T templateNode, HtmlAttributes attributes) {
-        if (!isAllowDeclarativeShadowRoots()) {
-            return null;
-        }
-
-        String shadowRootMode = attributes.getValue(AttributeName.SHADOWROOTMODE);
-        if (shadowRootMode == null) {
-            return null;
-        }
-
-        boolean shadowRootIsClonable = attributes.contains(AttributeName.SHADOWROOTCLONABLE);
-        boolean shadowRootIsSerializable = attributes.contains(AttributeName.SHADOWROOTSERIALIZABLE);
-        boolean shadowRootDelegatesFocus = attributes.contains(AttributeName.SHADOWROOTDELEGATESFOCUS);
-        boolean shadowRootCustomElementRegistry = attributes.contains(AttributeName.SHADOWROOTCUSTOMELEMENTREGISTRY);
-        String shadowRootReferenceTarget = attributes.getValue(AttributeName.SHADOWROOTREFERENCETARGET);
-        String shadowRootSlotAssignment = attributes.getValue(AttributeName.SHADOWROOTSLOTASSIGNMENT);
-
-        return getShadowRootFromHost(currentNode, templateNode, shadowRootMode, shadowRootIsClonable, shadowRootIsSerializable, shadowRootDelegatesFocus, shadowRootCustomElementRegistry, shadowRootSlotAssignment, shadowRootReferenceTarget);
     }
 
     /**
@@ -3177,7 +3157,7 @@ public abstract class TreeBuilder<T> implements TokenHandler,
             }
             return Portability.newStringFromBuffer(buffer, start, end
                     - start
-                // CPPONLY: , tb, false
+                // CPPONLY: , tb, null
             );
         }
         return null;
@@ -5286,19 +5266,59 @@ public abstract class TreeBuilder<T> implements TokenHandler,
         T elt = createElement("http://www.w3.org/1999/xhtml", elementName.getName(), attributes, currentNode
                 // CPPONLY: , htmlCreator(elementName.getHtmlCreator())
                 );
-        if (ElementName.TEMPLATE == elementName) {
-            T root = getDeclarativeShadowRoot(currentNode, elt, attributes);
-            if (root != null) {
-                setDocumentFragmentForTemplate(elt, root);
-                elt = root;
-            } else {
-                appendElement(elt, currentNode);
-                elt = getDocumentFragmentForTemplate(elt);
+        appendElement(elt, currentNode);
+        StackNode<T> node = createStackNode(elementName, elt
+                // [NOCPP[
+                , errorHandler == null ? null : new TaintableLocatorImpl(tokenizer)
+        // ]NOCPP]
+        );
+        push(node);
+    }
+
+    private void appendToCurrentNodeAndPushTemplateElement(HtmlAttributes attributes)
+            throws SAXException {
+        // [NOCPP[
+        checkAttributes(attributes, "http://www.w3.org/1999/xhtml");
+        // ]NOCPP]
+        // This method can't be called for custom elements
+        T currentNode = nodeFromStackWithBlinkCompat(currentPtr);
+        // All accesses to `attributes` must happen before `createElement`.
+        String shadowRootMode = null;
+        boolean shadowRootIsClonable = false;
+        boolean shadowRootIsSerializable = false;
+        boolean shadowRootDelegatesFocus = false;
+        boolean shadowRootCustomElementRegistry = false;
+        String shadowRootReferenceTarget = null;
+        String shadowRootSlotAssignment = null;
+        if (isAllowDeclarativeShadowRoots()) {
+            shadowRootMode = Portability.newStringFromString(attributes.getValue(AttributeName.SHADOWROOTMODE));
+            if (shadowRootMode != null) {
+                shadowRootIsClonable = attributes.contains(AttributeName.SHADOWROOTCLONABLE);
+                shadowRootIsSerializable = attributes.contains(AttributeName.SHADOWROOTSERIALIZABLE);
+                shadowRootDelegatesFocus = attributes.contains(AttributeName.SHADOWROOTDELEGATESFOCUS);
+                shadowRootCustomElementRegistry = attributes.contains(AttributeName.SHADOWROOTCUSTOMELEMENTREGISTRY);
+                shadowRootReferenceTarget = Portability.newStringFromString(attributes.getValue(AttributeName.SHADOWROOTREFERENCETARGET));
+                shadowRootSlotAssignment = Portability.newStringFromString(attributes.getValue(AttributeName.SHADOWROOTSLOTASSIGNMENT));
             }
+        }
+        T elt = createElement("http://www.w3.org/1999/xhtml", "template", attributes, currentNode
+                // CPPONLY: , htmlCreator(NS_NewHTMLTemplateElement)
+                );
+        T root = null;
+        if (shadowRootMode != null) {
+            root = getShadowRootFromHost(currentNode, elt, shadowRootMode, shadowRootIsClonable, shadowRootIsSerializable, shadowRootDelegatesFocus, shadowRootCustomElementRegistry, shadowRootSlotAssignment, shadowRootReferenceTarget);
+            Portability.releaseString(shadowRootMode);
+            Portability.releaseString(shadowRootReferenceTarget);
+            Portability.releaseString(shadowRootSlotAssignment);
+        }
+        if (root != null) {
+            setDocumentFragmentForTemplate(elt, root);
+            elt = root;
         } else {
             appendElement(elt, currentNode);
+            elt = getDocumentFragmentForTemplate(elt);
         }
-        StackNode<T> node = createStackNode(elementName, elt
+        StackNode<T> node = createStackNode(ElementName.TEMPLATE, elt
                 // [NOCPP[
                 , errorHandler == null ? null : new TaintableLocatorImpl(tokenizer)
         // ]NOCPP]
