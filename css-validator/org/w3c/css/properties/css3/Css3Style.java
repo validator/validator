@@ -91,6 +91,11 @@ import org.w3c.css.properties.css.CssColumnSpan;
 import org.w3c.css.properties.css.CssColumnWidth;
 import org.w3c.css.properties.css.CssColumns;
 import org.w3c.css.properties.css.CssContain;
+import org.w3c.css.properties.css.CssContainIntrinsicBlockSize;
+import org.w3c.css.properties.css.CssContainIntrinsicHeight;
+import org.w3c.css.properties.css.CssContainIntrinsicInlineSize;
+import org.w3c.css.properties.css.CssContainIntrinsicSize;
+import org.w3c.css.properties.css.CssContainIntrinsicWidth;
 import org.w3c.css.properties.css.CssContentVisibility;
 import org.w3c.css.properties.css.CssCounterSet;
 import org.w3c.css.properties.css.CssDominantBaseline;
@@ -447,6 +452,12 @@ public class Css3Style extends ATSCStyle {
     public CssWillChange cssWillChange;
 
     public CssContain cssContain;
+
+    public CssContainIntrinsicSize cssContainIntrinsicSize;
+    public CssContainIntrinsicBlockSize cssContainIntrinsicBlockSize;
+    public CssContainIntrinsicInlineSize cssContainIntrinsicInlineSize;
+    public CssContainIntrinsicWidth cssContainIntrinsicWidth;
+    public CssContainIntrinsicHeight cssContainIntrinsicHeight;
 
     public CssMixBlendMode cssMixBlendMode;
     public CssIsolation cssIsolation;
@@ -2596,6 +2607,51 @@ public class Css3Style extends ATSCStyle {
                             style, selector);
         }
         return cssContain;
+    }
+
+    public CssContainIntrinsicSize getContainIntrinsicSize() {
+        if (cssContainIntrinsicSize == null) {
+            cssContainIntrinsicSize =
+                    (CssContainIntrinsicSize) style.CascadingOrder(new CssContainIntrinsicSize(),
+                            style, selector);
+        }
+        return cssContainIntrinsicSize;
+    }
+
+    public CssContainIntrinsicBlockSize getContainIntrinsicBlockSize() {
+        if (cssContainIntrinsicBlockSize == null) {
+            cssContainIntrinsicBlockSize =
+                    (CssContainIntrinsicBlockSize) style.CascadingOrder(new CssContainIntrinsicBlockSize(),
+                            style, selector);
+        }
+        return cssContainIntrinsicBlockSize;
+    }
+    
+    public CssContainIntrinsicInlineSize getContainIntrinsicInlineSize() {
+        if (cssContainIntrinsicInlineSize == null) {
+            cssContainIntrinsicInlineSize =
+                    (CssContainIntrinsicInlineSize) style.CascadingOrder(new CssContainIntrinsicInlineSize(),
+                            style, selector);
+        }
+        return cssContainIntrinsicInlineSize;
+    }
+    
+    public CssContainIntrinsicWidth getContainIntrinsicWidth() {
+        if (cssContainIntrinsicWidth == null) {
+            cssContainIntrinsicWidth =
+                    (CssContainIntrinsicWidth) style.CascadingOrder(new CssContainIntrinsicWidth(),
+                            style, selector);
+        }
+        return cssContainIntrinsicWidth;
+    }
+
+    public CssContainIntrinsicHeight getContainIntrinsicHeight() {
+        if (cssContainIntrinsicHeight == null) {
+            cssContainIntrinsicHeight =
+                    (CssContainIntrinsicHeight) style.CascadingOrder(new CssContainIntrinsicHeight(),
+                            style, selector);
+        }
+        return cssContainIntrinsicHeight;
     }
 
     public CssMixBlendMode getMixBlendMode() {
