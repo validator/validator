@@ -159,6 +159,59 @@ public final class ElementName
 
     @Inline static ElementName elementNameByBuffer(@NoLength char[] buf,
             int length) {
+        if (length == 3) {
+            // `div` is less common on Speedometer 3.1 than lengths 5 and 6, but
+            // surely `div` must be more common on the Web.
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "div")) {
+                return ElementName.DIV;
+            }
+            // Not necessary for Speedometer 3.1 but otherwise obvious
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "img")) {
+                return ElementName.IMG;
+            }
+        } else if (length == 4) {
+            // `span` is less common on Speedometer 3.1 than lengths 5 and 6, but
+            // surely `span` must be more common on the Web.
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "span")) {
+                return ElementName.SPAN;
+            }
+            // Should `link` and `meta` go here for full page loads?
+        } else if (length == 2) {
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "li")) {
+                return ElementName.LI;
+            }
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "ul")) {
+                return ElementName.UL;
+            }
+            // Other workloads might benefit from `th`, `td`, and `tr` here.
+        } else if (length == 1) {
+            // `a` is less common on Speedometer 3.1 than lengths 5 and 6, but
+            // surely `a` must be more common on the Web.
+            if (buf[0] == 'a') {
+                return ElementName.A;
+            }
+            // Not necessary for Speedometer 3.1 but otherwise obvious
+            if (buf[0] == 'p') {
+                return ElementName.P;
+            }
+            // Other workloads might benefit from `i` and `b` here.
+        } else if (length == 5) {
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "label")) {
+                return ElementName.LABEL;
+            }
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "input")) {
+                return ElementName.INPUT;
+            }
+            // Should `style` go here for other workloads?
+        } else if (length == 6) {
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "button")) {
+                return ElementName.BUTTON;
+            }
+            if (Portability.bufferStartsWithLiteralAssumeSufficientLength(buf, "strong")) {
+                return ElementName.STRONG;
+            }
+            // Should `script` go here for other workloads?
+        }
         @Unsigned int hash = ElementName.bufToHash(buf, length);
         int[] hashes;
         hashes = ElementName.ELEMENT_HASHES;
@@ -263,6 +316,61 @@ public final class ElementName
             // CPPONLY: NS_NewHTMLUnknownElement, NS_NewSVGUnknownElement,
             TreeBuilder.ANNOTATION_XML | SCOPING_AS_MATHML);
 
+    public static final ElementName DIV = new ElementName("div", "div",
+         // CPPONLY: NS_NewHTMLDivElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.DIV_OR_BLOCKQUOTE_OR_CENTER_OR_MENU | SPECIAL);
+
+    public static final ElementName IMG = new ElementName("img", "img",
+         // CPPONLY: NS_NewHTMLImageElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.IMG | SPECIAL);
+
+    public static final ElementName SPAN = new ElementName("span", "span",
+         // CPPONLY: NS_NewHTMLSpanElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.RUBY_OR_SPAN_OR_SUB_OR_SUP_OR_VAR);
+
+    public static final ElementName LI = new ElementName("li", "li",
+         // CPPONLY: NS_NewHTMLLIElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.LI | SPECIAL | OPTIONAL_END_TAG);
+
+    public static final ElementName UL = new ElementName("ul", "ul",
+         // CPPONLY: NS_NewHTMLSharedListElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.UL_OR_OL_OR_DL | SPECIAL);
+
+    public static final ElementName A = new ElementName("a", "a",
+         // CPPONLY: NS_NewHTMLAnchorElement,
+         // CPPONLY: NS_NewSVGAElement,
+         TreeBuilder.A);
+
+    public static final ElementName P = new ElementName("p", "p",
+         // CPPONLY: NS_NewHTMLParagraphElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.P | SPECIAL | OPTIONAL_END_TAG);
+
+    public static final ElementName LABEL = new ElementName("label", "label",
+         // CPPONLY: NS_NewHTMLLabelElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.OTHER);
+
+    public static final ElementName INPUT = new ElementName("input", "input",
+         // CPPONLY: NS_NewHTMLInputElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.INPUT | SPECIAL);
+
+    public static final ElementName BUTTON = new ElementName("button", "button",
+         // CPPONLY: NS_NewHTMLButtonElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.BUTTON | SPECIAL);
+
+    public static final ElementName STRONG = new ElementName("strong", "strong",
+         // CPPONLY: NS_NewHTMLElement,
+         // CPPONLY: NS_NewSVGUnknownElement,
+         TreeBuilder.B_OR_BIG_OR_CODE_OR_EM_OR_I_OR_S_OR_SMALL_OR_STRIKE_OR_STRONG_OR_TT_OR_U);
+
     // START CODE ONLY USED FOR GENERATING CODE uncomment and run to regenerate
 
 //    private static final Pattern HTML_TAG_DEF = Pattern.compile(
@@ -277,6 +385,10 @@ public final class ElementName
 //    private static final Map<String, String> htmlMap = new HashMap<String, String>();
 //
 //    private static final Map<String, String> svgMap = new HashMap<String, String>();
+//
+//    private static final String[] HARDCODED_HTML_ELEMENTS = { "input", "strong", "a", "p", "li", "span", "div", "ul", "img", "button", "label" };
+//
+//    private static final String[] HARDCODED_SVG_ELEMENTS = { "a" };
 //
 //    private static void ingestHtmlTags(File htmlList) throws IOException {
 //        // This doesn't need to be efficient, so let's make it easy to write.
@@ -310,6 +422,24 @@ public final class ElementName
 //        } finally {
 //            htmlReader.close();
 //        }
+//    }
+//
+//    private static boolean isHardcodedHtmlElement(String name) {
+//        for (int i = 0; i < HARDCODED_HTML_ELEMENTS.length; i++) {
+//            if (HARDCODED_HTML_ELEMENTS[i].equals(name)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    private static boolean isHardcodedSvgElement(String name) {
+//        for (int i = 0; i < HARDCODED_SVG_ELEMENTS.length; i++) {
+//            if (HARDCODED_SVG_ELEMENTS[i].equals(name)) {
+//                return true;
+//            }
+//        }
+//        return false;
 //    }
 //
 //    private static void ingestSvgTags(File svgList) throws IOException {
@@ -645,10 +775,16 @@ public final class ElementName
 //        System.out.println("};");
 //
 //        for (Entry<String, String> entry : htmlMap.entrySet()) {
-//            System.err.println("Missing HTML element: " + entry.getKey());
+//            String n = entry.getKey();
+//            if (!isHardcodedHtmlElement(n)) {
+//                System.err.println("Missing HTML element: " + n);
+//            }
 //        }
 //        for (Entry<String, String> entry : svgMap.entrySet()) {
-//            System.err.println("Missing SVG element: " + entry.getKey());
+//            String n = entry.getKey();
+//            if (!isHardcodedSvgElement(n)) {
+//                System.err.println("Missing SVG element: " + entry.getKey());
+//            }
 //        }
 //    }
 
@@ -681,14 +817,6 @@ public static final ElementName DIR = new ElementName("dir", "dir",
 // CPPONLY: NS_NewHTMLSharedElement,
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.ADDRESS_OR_ARTICLE_OR_ASIDE_OR_DETAILS_OR_DIALOG_OR_DIR_OR_FIGCAPTION_OR_FIGURE_OR_FOOTER_OR_HEADER_OR_HGROUP_OR_MAIN_OR_NAV_OR_SEARCH_OR_SECTION_OR_SUMMARY | SPECIAL);
-public static final ElementName DIV = new ElementName("div", "div",
-// CPPONLY: NS_NewHTMLDivElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.DIV_OR_BLOCKQUOTE_OR_CENTER_OR_MENU | SPECIAL);
-public static final ElementName IMG = new ElementName("img", "img",
-// CPPONLY: NS_NewHTMLImageElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.IMG | SPECIAL);
 public static final ElementName INS = new ElementName("ins", "ins",
 // CPPONLY: NS_NewHTMLModElement,
 // CPPONLY: NS_NewSVGUnknownElement,
@@ -709,10 +837,6 @@ public static final ElementName PRE = new ElementName("pre", "pre",
 // CPPONLY: NS_NewHTMLPreElement,
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.PRE_OR_LISTING | SPECIAL);
-public static final ElementName A = new ElementName("a", "a",
-// CPPONLY: NS_NewHTMLAnchorElement,
-// CPPONLY: NS_NewSVGAElement,
-TreeBuilder.A);
 public static final ElementName B = new ElementName("b", "b",
 // CPPONLY: NS_NewHTMLElement,
 // CPPONLY: NS_NewSVGUnknownElement,
@@ -761,10 +885,6 @@ public static final ElementName I = new ElementName("i", "i",
 // CPPONLY: NS_NewHTMLElement,
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.B_OR_BIG_OR_CODE_OR_EM_OR_I_OR_S_OR_SMALL_OR_STRIKE_OR_STRONG_OR_TT_OR_U);
-public static final ElementName P = new ElementName("p", "p",
-// CPPONLY: NS_NewHTMLParagraphElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.P | SPECIAL | OPTIONAL_END_TAG);
 public static final ElementName Q = new ElementName("q", "q",
 // CPPONLY: NS_NewHTMLSharedElement,
 // CPPONLY: NS_NewSVGUnknownElement,
@@ -1025,10 +1145,6 @@ public static final ElementName LISTING = new ElementName("listing", "listing",
 // CPPONLY: NS_NewHTMLPreElement,
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.PRE_OR_LISTING | SPECIAL);
-public static final ElementName STRONG = new ElementName("strong", "strong",
-// CPPONLY: NS_NewHTMLElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.B_OR_BIG_OR_CODE_OR_EM_OR_I_OR_S_OR_SMALL_OR_STRIKE_OR_STRONG_OR_TT_OR_U);
 public static final ElementName ALTGLYPH = new ElementName("altglyph", "altGlyph",
 // CPPONLY: NS_NewHTMLUnknownElement,
 // CPPONLY: NS_NewSVGUnknownElement,
@@ -1069,10 +1185,6 @@ public static final ElementName TEXTPATH = new ElementName("textpath", "textPath
 // CPPONLY: NS_NewHTMLUnknownElement,
 // CPPONLY: NS_NewSVGTextPathElement,
 TreeBuilder.OTHER);
-public static final ElementName LI = new ElementName("li", "li",
-// CPPONLY: NS_NewHTMLLIElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.LI | SPECIAL | OPTIONAL_END_TAG);
 public static final ElementName MI = new ElementName("mi", "mi",
 // CPPONLY: NS_NewHTMLUnknownElement,
 // CPPONLY: NS_NewSVGUnknownElement,
@@ -1106,14 +1218,6 @@ public static final ElementName HTML = new ElementName("html", "html",
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.HTML | SPECIAL | SCOPING | OPTIONAL_END_TAG);
 public static final ElementName OL = new ElementName("ol", "ol",
-// CPPONLY: NS_NewHTMLSharedListElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.UL_OR_OL_OR_DL | SPECIAL);
-public static final ElementName LABEL = new ElementName("label", "label",
-// CPPONLY: NS_NewHTMLLabelElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.OTHER);
-public static final ElementName UL = new ElementName("ul", "ul",
 // CPPONLY: NS_NewHTMLSharedListElement,
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.UL_OR_OL_OR_DL | SPECIAL);
@@ -1153,10 +1257,6 @@ public static final ElementName ANIMATEMOTION = new ElementName("animatemotion",
 // CPPONLY: NS_NewHTMLUnknownElement,
 // CPPONLY: NS_NewSVGAnimateMotionElement,
 TreeBuilder.OTHER);
-public static final ElementName BUTTON = new ElementName("button", "button",
-// CPPONLY: NS_NewHTMLButtonElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.BUTTON | SPECIAL);
 public static final ElementName CAPTION = new ElementName("caption", "caption",
 // CPPONLY: NS_NewHTMLTableCaptionElement,
 // CPPONLY: NS_NewSVGUnknownElement,
@@ -1189,10 +1289,6 @@ public static final ElementName PATTERN = new ElementName("pattern", "pattern",
 // CPPONLY: NS_NewHTMLUnknownElement,
 // CPPONLY: NS_NewSVGPatternElement,
 TreeBuilder.OTHER);
-public static final ElementName SPAN = new ElementName("span", "span",
-// CPPONLY: NS_NewHTMLSpanElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.RUBY_OR_SPAN_OR_SUB_OR_SUP_OR_VAR);
 public static final ElementName SECTION = new ElementName("section", "section",
 // CPPONLY: NS_NewHTMLElement,
 // CPPONLY: NS_NewSVGUnknownElement,
@@ -1377,10 +1473,6 @@ public static final ElementName FONT = new ElementName("font", "font",
 // CPPONLY: NS_NewHTMLFontElement,
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.FONT);
-public static final ElementName INPUT = new ElementName("input", "input",
-// CPPONLY: NS_NewHTMLInputElement,
-// CPPONLY: NS_NewSVGUnknownElement,
-TreeBuilder.INPUT | SPECIAL);
 public static final ElementName LINEARGRADIENT = new ElementName("lineargradient", "linearGradient",
 // CPPONLY: NS_NewHTMLUnknownElement,
 // CPPONLY: NS_NewSVGLinearGradientElement,
@@ -1486,62 +1578,62 @@ public static final ElementName TBODY = new ElementName("tbody", "tbody",
 // CPPONLY: NS_NewSVGUnknownElement,
 TreeBuilder.TBODY_OR_THEAD_OR_TFOOT | SPECIAL | FOSTER_PARENTING | OPTIONAL_END_TAG);
 private final static @NoLength ElementName[] ELEMENT_NAMES = {
-FIGCAPTION,
-CITE,
-FEOFFSET,
-H1,
-CLIPPATH,
+AUDIO,
+FEIMAGE,
+FRAMESET,
+H5,
+TH,
 METER,
 SELECT,
-B,
-BGSOUND,
-SOURCE,
-DL,
-RP,
-PROGRESS,
+SVG,
+HEAD,
+TITLE,
+ANIMATETRANSFORM,
+HR,
+NOFRAMES,
 NOSCRIPT,
 VIEW,
-DIV,
-G,
-FEFUNCA,
-THEAD,
-FIGURE,
-GLYPHREF,
-TEXTPATH,
-ANIMATETRANSFORM,
-SECTION,
-HR,
-DEFS,
-DATALIST,
-FONT,
+INS,
+I,
+FEFUNCB,
+BASE,
+LINE,
+FESPECULARLIGHTING,
+MASK,
+MN,
+SAMP,
+FOOTER,
+CANVAS,
+BASEFONT,
+FEDISTANTLIGHT,
 PLAINTEXT,
 TFOOT,
 FEMORPHOLOGY,
 COL,
-MAP,
-SUP,
-P,
-H5,
-FEFUNCB,
-HEAD,
-BASE,
-FEIMAGE,
-LINE,
-TITLE,
-FESPECULARLIGHTING,
-PATH,
-MARK,
-UL,
+PRE,
+VAR,
+H1,
+FEFUNCA,
+BGSOUND,
+THEAD,
+CITE,
+FIGURE,
+SOURCE,
+GLYPHREF,
+MGLYPH,
+MI,
+OL,
 PARAM,
-OPTION,
-VIDEO,
-BR,
-FOOTER,
-ADDRESS,
-MS,
-APPLET,
-FIELDSET,
-FEPOINTLIGHT,
+POLYGON,
+FEDISPLACEMENTMAP,
+ANIMATECOLOR,
+FECOMPONENTTRANSFER,
+HEADER,
+TR,
+DETAILS,
+DT,
+FOREIGNOBJECT,
+FESPOTLIGHT,
 LINEARGRADIENT,
 OBJECT,
 RECT,
@@ -1551,11 +1643,10 @@ FECONVOLVEMATRIX,
 SUMMARY,
 BDI,
 DFN,
-INS,
-PRE,
-SUB,
-USE,
-XMP,
+MAP,
+RTC,
+SET,
+WBR,
 S,
 H3,
 AREA,
@@ -1572,34 +1663,35 @@ POLYLINE,
 STYLE,
 TEMPLATE,
 FEFUNCG,
-STRONG,
-MATH,
-SEARCH,
-MI,
-MASK,
-OL,
+ALTGLYPH,
+MPATH,
+SWITCH,
+MARK,
+DL,
 SYMBOL,
 EM,
-BUTTON,
-KEYGEN,
-PATTERN,
-AUDIO,
-FEDISPLACEMENTMAP,
-SAMP,
-ANIMATECOLOR,
-FECOMPONENTTRANSFER,
-HEADER,
-TR,
-CANVAS,
-DETAILS,
-NOFRAMES,
-DT,
-BASEFONT,
-FOREIGNOBJECT,
-FRAMESET,
-FESPOTLIGHT,
-FEDISTANTLIGHT,
-INPUT,
+CAPTION,
+MAIN,
+SECTION,
+VIDEO,
+RP,
+BR,
+CENTER,
+FEFUNCR,
+FILTER,
+FEGAUSSIANBLUR,
+MARKER,
+NOBR,
+ADDRESS,
+DEFS,
+MS,
+PROGRESS,
+APPLET,
+DATALIST,
+FIELDSET,
+FEOFFSET,
+FEPOINTLIGHT,
+FONT,
 MTEXT,
 RT,
 OUTPUT,
@@ -1617,16 +1709,14 @@ BIG,
 BDO,
 DEL,
 DIR,
-IMG,
 KBD,
 NAV,
-A,
-RTC,
-SVG,
-SET,
-VAR,
-WBR,
-I,
+B,
+SUB,
+SUP,
+USE,
+G,
+XMP,
 Q,
 U,
 H2,
@@ -1660,27 +1750,24 @@ ALTGLYPHDEF,
 DIALOG,
 FEDIFFUSELIGHTING,
 LISTING,
-ALTGLYPH,
-MGLYPH,
-MPATH,
-TH,
-SWITCH,
-LI,
+CLIPPATH,
+MATH,
+PATH,
+SEARCH,
+TEXTPATH,
 LINK,
 MALIGNMARK,
 TRACK,
 HTML,
-LABEL,
 SMALL,
 ALTGLYPHITEM,
 ACRONYM,
 FORM,
 ANIMATEMOTION,
-CAPTION,
-MN,
-MAIN,
-POLYGON,
-SPAN,
+FIGCAPTION,
+KEYGEN,
+OPTION,
+PATTERN,
 TSPAN,
 MO,
 COLGROUP,
@@ -1688,70 +1775,64 @@ HGROUP,
 OPTGROUP,
 STOP,
 ABBR,
-CENTER,
-FEFUNCR,
-FILTER,
-FEGAUSSIANBLUR,
-MARKER,
-NOBR,
 };
 private final static int[] ELEMENT_HASHES = {
-1900845386,
-1748359220,
-2001349736,
-876609538,
-1798686984,
+1914900309,
+1749715159,
+2001349720,
+943718402,
+1805647874,
 1971465813,
 2008125638,
-59768833,
-1730965751,
-1756474198,
-1864368130,
-1938817026,
-1990037800,
+60347747,
+1733890180,
+1757146773,
+1881498736,
+1967128578,
+1988763672,
 2005719336,
 2060065124,
-52490899,
-62390273,
-1682547543,
-1740181637,
-1749905526,
-1766992520,
-1807599880,
-1881498736,
-1907661127,
-1967128578,
-1983533124,
-2000525512,
-2001495140,
+55110883,
+63438849,
+1699324759,
+1747814436,
+1752979652,
+1783388498,
+1854245076,
+1902641154,
+1941178676,
+1967795958,
+1982935782,
+1999397992,
+2001392798,
 2006896969,
 2008851557,
 2085266636,
 51961587,
-57206291,
-60352339,
-67108865,
-943718402,
-1699324759,
-1733890180,
-1747814436,
-1749715159,
-1752979652,
-1757146773,
-1783388498,
-1805502724,
-1854228692,
-1873281026,
+58773795,
+61925907,
+876609538,
+1682547543,
+1730965751,
+1740181637,
+1748359220,
+1749905526,
+1756474198,
+1766992520,
+1803876550,
+1818755074,
+1870135298,
 1889085973,
-1905563974,
-1925844629,
-1963982850,
-1967795958,
-1982173479,
-1986527234,
-1998724870,
-2001349704,
-2001392796,
+1906087319,
+1934172497,
+1965334268,
+1967788867,
+1968836118,
+1973420034,
+1983633431,
+1998585858,
+2001309869,
+2001392795,
 2004635806,
 2006028454,
 2007601444,
@@ -1761,11 +1842,10 @@ private final static int[] ELEMENT_HASHES = {
 2092255447,
 51435587,
 52486755,
-55110883,
-58773795,
-60345171,
-61395251,
-62973651,
+57206291,
+59821379,
+60354131,
+62450211,
 68681729,
 910163970,
 1679960596,
@@ -1782,34 +1862,35 @@ private final static int[] ELEMENT_HASHES = {
 1756625221,
 1757268168,
 1783210839,
-1790207270,
-1803929812,
-1806805526,
-1818755074,
-1854245076,
-1870135298,
+1797585096,
+1803929861,
+1806806678,
+1854228692,
+1864368130,
 1874102998,
 1881669634,
-1898753862,
-1903302038,
-1906135367,
-1914900309,
-1934172497,
-1941178676,
-1965334268,
-1967788867,
-1968836118,
-1973420034,
-1982935782,
-1983633431,
-1988763672,
-1998585858,
-1999397992,
-2001309869,
-2001349720,
-2001392795,
-2001392798,
-2003183333,
+1899272519,
+1904412884,
+1907661127,
+1925844629,
+1938817026,
+1963982850,
+1966223078,
+1967760215,
+1967795910,
+1968053806,
+1971461414,
+1971938532,
+1982173479,
+1983533124,
+1986527234,
+1990037800,
+1998724870,
+2000525512,
+2001349704,
+2001349736,
+2001392796,
+2001495140,
 2005324101,
 2005925890,
 2006329158,
@@ -1827,16 +1908,14 @@ private final static int[] ELEMENT_HASHES = {
 51438659,
 52485715,
 52488851,
-55104723,
 56151587,
 57733651,
-59244545,
-59821379,
-60347747,
-60354131,
-61925907,
-62450211,
-63438849,
+59768833,
+60345171,
+60352339,
+61395251,
+62390273,
+62973651,
 67633153,
 69730305,
 893386754,
@@ -1870,27 +1949,24 @@ private final static int[] ELEMENT_HASHES = {
 1782357526,
 1783388497,
 1786534215,
-1797585096,
-1803876550,
-1803929861,
-1805647874,
-1806806678,
-1818230786,
+1798686984,
+1803929812,
+1805502724,
+1806805526,
+1807599880,
 1853642948,
 1854228698,
 1857653029,
 1868312196,
-1870268949,
 1874053333,
 1881288348,
 1881613047,
 1884120164,
 1898223949,
-1899272519,
-1902641154,
-1904412884,
-1906087319,
-1907435316,
+1900845386,
+1903302038,
+1905563974,
+1906135367,
 1907959605,
 1919418370,
 1932928296,
@@ -1898,11 +1974,5 @@ private final static int[] ELEMENT_HASHES = {
 1939219752,
 1941221172,
 1965115924,
-1966223078,
-1967760215,
-1967795910,
-1968053806,
-1971461414,
-1971938532,
 };
 }

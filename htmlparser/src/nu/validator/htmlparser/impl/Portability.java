@@ -151,6 +151,26 @@ public final class Portability {
         return one.equals(other);
     }
 
+    // [NOCPP[
+    public static boolean bufferStartsWithLiteralAssumeSufficientLength(char[] buf, String literal) {
+        for (int i = 0; i < literal.length(); i++) {
+            if (buf[i] != literal.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean bufferStartsWithLiteralAtOffsetAssumeSufficientLength(char[] buf, String literal, int offset) {
+        for (int i = 0; i < literal.length(); i++) {
+            if (buf[offset + i] != literal.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    // ]NOCPP]
+
     public static void delete(Object o) {
 
     }

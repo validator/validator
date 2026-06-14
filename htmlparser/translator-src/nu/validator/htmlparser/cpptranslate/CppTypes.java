@@ -128,7 +128,7 @@ public class CppTypes {
     private static final String[] FORWARD_DECLARATIONS = { "nsHtml5StreamParser" };
 
     private static final String[] CLASSES_THAT_NEED_SUPPLEMENT = {
-            "Tokenizer", "TreeBuilder", "UTF16Buffer", };
+            "Portability", "Tokenizer", "TreeBuilder", "UTF16Buffer" };
 
     private static final String[] STATE_LOOP_POLICIES = {
             "nsHtml5ViewSourcePolicy", "nsHtml5LineColPolicy", "nsHtml5FastestPolicy" };
@@ -375,6 +375,10 @@ public class CppTypes {
     
     public String stringForLiteral(String literal) {
         return '"' + literal + '"';
+    }
+
+    public String utf16StringForLiteral(String literal) {
+        return "u\"" + literal + '"';
     }
 
     public String staticArrayTemplate() {

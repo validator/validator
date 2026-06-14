@@ -1239,6 +1239,8 @@ public class CppVisitor extends AnnotationHelperVisitor<LocalSymbolTable> {
             printer.print(cppTypes.stringForLiteral(val));
         } else if ("isQuirky".equals(currentMethod) && "html".equals(val)) {
             printer.print(cppTypes.stringForLiteral(val));
+        } else if ("nameByBuffer".equals(currentMethod) || "elementNameByBuffer".equals(currentMethod)) {
+            printer.print(cppTypes.utf16StringForLiteral(val));
         } else {
             printer.print(cppTypes.localForLiteral(val));
         }
