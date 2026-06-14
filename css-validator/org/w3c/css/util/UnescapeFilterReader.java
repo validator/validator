@@ -40,13 +40,11 @@ public class UnescapeFilterReader extends FilterReader {
         int val = 0;
         for (int i = 0; i < 6; i++) {
             esc = in.read();
-            // 0-9
-            if (esc > 47 && esc < 58) {
+            if (esc > 47 && esc < 58) {          // 0-9
                 val = (val << 4) + (esc - 48);
-            } else if (esc > 64 && esc < 71) {
-                // A_F
+            } else if (esc > 64 && esc < 71) {   // A-F
                 val = (val << 4) + (esc - 55);
-            } else if (esc > 96 && esc < 103) {
+            } else if (esc > 96 && esc < 103) {   // a-f
                 val = (val << 4) + (esc - 87);
             } else if (esc == 0x000a || esc == 0x0009 || esc == 0x0020
                     || esc == 0x000d || esc == 0x000c) { // CSS whitespace.
@@ -66,7 +64,7 @@ public class UnescapeFilterReader extends FilterReader {
                 in.reset();
                 return c;
             } else if (i == 0) {
-                return  esc;
+                return esc;
             } else {
                 if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
                     //we must unread 1
@@ -100,13 +98,22 @@ public class UnescapeFilterReader extends FilterReader {
             throws IOException {
         int i, j, k, l, cki;
         boolean ignoreEscape = false;
+        boolean in_escape = false;
 
         if (len == 0) {
             return 0;
         }
+        if (len == 1) {
+            int c = read();
+            if (c == -1) {
+                return -1;
+            }
+            cbuf[off] = (char) c;
+            return 1;
+        }
         char[] chars = new char[len + 8];
-        in.mark(len + 8);
-        l = super.read(chars, 0, len + 8);
+        in.mark(len);
+        l = super.read(chars, 0, len);
 
         if (l <= 0) {
             return l;
@@ -116,8 +123,16 @@ public class UnescapeFilterReader extends FilterReader {
             if (chars[i] == 0x000d) {
                 chars[j++] = 0x000a;
                 // test for CRLF
-                if (i + 1 < l && chars[i + 1] == 0x000a) {
-                    i++;
+                if (i + 1 < l) {
+                    if (chars[i + 1] == 0x000a) {
+                        i++;
+                    }
+                } else {
+                    // the CR is the last char read, check the stream for a LF
+                    in.mark(1);
+                    if (in.read() != 0x000a) {
+                        in.reset();
+                    }
                 }
                 continue;
             } else if (chars[i] == 0x000c) {
@@ -133,25 +148,34 @@ public class UnescapeFilterReader extends FilterReader {
                 int val = 0;
                 boolean escaped = false;
                 ignoreEscape = false;
+                in_escape = true;
                 for (k = 1; k < 7 && k + i < l; k++) {
                     cki = chars[k + i];
-                    // 0-9
-                    if (cki > 47 && cki < 58) {
+                    if (cki > 47 && cki < 58) {          // 0-9
                         val = (val << 4) + (cki - 48);
-                    } else if (cki > 64 && cki < 71) {
-                        // A_F
+                    } else if (cki > 64 && cki < 71) {     // A-F
                         val = (val << 4) + (cki - 55);
-                    } else if (cki > 96 && cki < 103) {
+                    } else if (cki > 96 && cki < 103) {    // a-f
                         val = (val << 4) + (cki - 87);
-                    } else if (cki == 0x000a || cki == 0x0009 || cki == 0x0020 || cki == 0x000c) { // CSS whitespace.
+                    } else if (cki == 0x000a || cki == 0x0009 || cki == 0x0020 || cki == 0x000c
+                            || cki == 0x000d) { // CSS whitespace.
                         // U+000A LINE FEED, U+0009 CHARACTER TABULATION, or U+0020 SPACE.
                         if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
                             chars[j++] = (char) val;
                             escaped = true;
                             if (cki == 0x000d) {
                                 // CR? => test for LF
-                                if (k + i + 1 < l && chars[k + i + 1] == 0x000a) {
-                                    k++;
+                                if (k + i + 1 < l) {
+                                    if (chars[k + i + 1] == 0x000a) {
+                                        k++;
+                                    }
+                                } else {
+                                    // the CR is the last char read, check the
+                                    // stream for a LF
+                                    in.mark(1);
+                                    if (in.read() != 0x000a) {
+                                        in.reset();
+                                    }
                                 }
                             }
                             i += k;
@@ -159,13 +183,15 @@ public class UnescapeFilterReader extends FilterReader {
                             escaped = true;
                             ignoreEscape = true;
                         }
+                        in_escape = false;
                         break;
                     } else {
-                        if (val == 0) {
+                        if (k == 1) {
                             if ((cki > 96 && cki < 123) || (cki > 64 && cki < 91)) {
                                 // so we found a regular char, just remove the escaping
                                 ++i;
                                 ignoreEscape = true;
+                                in_escape = false;
                                 break;
                             }
                         }
@@ -173,15 +199,18 @@ public class UnescapeFilterReader extends FilterReader {
                             chars[j++] = (char) val;
                             escaped = true;
                             i += k - 1;
+                            in_escape = false;
                             break;
                         } else {
                             ignoreEscape = true;
+                            in_escape = false;
                             break;
                         }
                     }
                 }
                 if (!ignoreEscape) {
                     if (k == 7 && !escaped) {
+                        // process 6 digits.
                         if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
                             chars[j++] = (char) val;
                             escaped = true;
@@ -193,27 +222,138 @@ public class UnescapeFilterReader extends FilterReader {
                                         || cki == 0x000c || cki == 0x000d) {
                                     i++;
                                     if (cki == 0x000d) {
-                                        if (i + 1 < l && chars[i + 1] == 0x000a) {
-                                            i++;
+                                        if (i + 1 < l) {
+                                            if (chars[i + 1] == 0x000a) {
+                                                i++;
+                                            }
+                                        } else {
+                                            // the CR is the last char read,
+                                            // check the stream for a LF
+                                            in.mark(1);
+                                            if (in.read() != 0x000a) {
+                                                in.reset();
+                                            }
                                         }
                                     }
                                 }
+                            } else {
+                                // got an escape at the end, check for possible
+                                // whitespace to consume from the stream
+                                consumeTrailingWhitespace();
                             }
                         } else {
                             // do nothing
                             ignoreEscape = true;
                             chars[j++] = chars[i];
                         }
+                        in_escape = false;
                     } else {
                         // we reached the end, unescaping didn't happen let's stop here
                         // unless we are the last
-                        if (!escaped) {
-                            if (j != 0) {
-                                in.reset();
-                                in.skip(i);
-                                break;
-                            } else {
-                                chars[j++] = chars[i];
+                        if (in_escape && (k + i >= l)) {
+                            // get more from the underlying stream
+                            // to finish unescaping (or not)
+                            int k0 = k;
+                            in.mark(8); // at most 6 hexadecimal digits + 1 terminator
+                            while (in_escape && k < 7) {
+                                int c = in.read();
+                                if (c < 0) {
+                                    // EOF
+                                    if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
+                                        chars[j++] = (char) val;
+                                        i = l - 1; // everything is consumed
+                                    } else {
+                                        // not a letter: keep it as-is, push
+                                        // back the digits read here
+                                        in.reset();
+                                        chars[j++] = chars[i];
+                                    }
+                                    in_escape = false;
+                                } else if (c > 47 && c < 58) {          // 0-9
+                                    val = (val << 4) + (c - 48);
+                                    k++;
+                                } else if (c > 64 && c < 71) {          // A-F
+                                    val = (val << 4) + (c - 55);
+                                    k++;
+                                } else if (c > 96 && c < 103) {         // a-f
+                                    val = (val << 4) + (c - 87);
+                                    k++;
+                                } else if (c == 0x000a || c == 0x0009
+                                        || c == 0x0020 || c == 0x000c || c == 0x000d) {
+                                    if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
+                                        chars[j++] = (char) val;
+                                        escaped = true;
+                                        if (c == 0x000d) {
+                                            // CR? => test for LF
+                                            in.mark(1);
+                                            if (in.read() != 0x000a) {
+                                                in.reset();
+                                            }
+                                        }
+                                        i = l - 1;
+                                    } else {
+                                        // failed, leave it unescaped:
+                                        in.reset();
+                                        chars[j++] = chars[i];
+                                    }
+                                    in_escape = false;
+                                } else {
+                                    // c terminates the escape and is not a whitespace
+                                    if (k == 1 && ((c > 96 && c < 123) || (c > 64 && c < 91))) {
+                                        // so we found a regular char, just remove the escaping
+                                        chars[j++] = (char) c;
+                                        escaped = true;
+                                        i = l - 1; // position at the end of escape
+                                    } else if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
+                                        chars[j++] = (char) val;
+                                        escaped = true;
+                                        // unread c, keep the digits read here
+                                        in.reset();
+                                        int to_skip = k - k0;
+                                        while (to_skip > 0) {
+                                            long s = in.skip(to_skip);
+                                            if (s <= 0) {
+                                                if (in.read() == -1) {
+                                                    break;
+                                                }
+                                                s = 1;
+                                            }
+                                            to_skip -= s;
+                                        }
+                                        i = l - 1; // the buffered part is consumed
+                                    } else {
+                                        // failed, leave it unescaped: push
+                                        // back everything read here
+                                        in.reset();
+                                        chars[j++] = chars[i];
+                                    }
+                                    in_escape = false;
+                                }
+                            }
+                            if (in_escape) {
+                                // we read six hexadecimal digits in total
+                                if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
+                                    chars[j++] = (char) val;
+                                    escaped = true;
+                                    consumeTrailingWhitespace();
+                                    i = l - 1; // the buffered part is consumed
+                                } else {
+                                    // failed, leave it unescaped: push back
+                                    // the digits read here
+                                    in.reset();
+                                    chars[j++] = chars[i];
+                                }
+                                in_escape = false;
+                            }
+                        } else {
+                            if (!escaped) {
+                                if (j != 0) {
+                                    in.reset();
+                                    in.skip(i);
+                                    break;
+                                } else {
+                                    chars[j++] = chars[i];
+                                }
                             }
                         }
                     }
@@ -232,5 +372,26 @@ public class UnescapeFilterReader extends FilterReader {
             in.skip(i);
         }
         return j;
+    }
+
+    /**
+     * Consume one optional whitespace after a decoded escape
+     * from the underlying stream
+     */
+    private void consumeTrailingWhitespace()
+            throws IOException {
+        int c;
+        in.mark(2);
+        c = in.read();
+        if (c == 0x000d) {
+            // must test if it is followed by a LF
+            in.mark(1);
+            if (in.read() != 0x000a) {
+                in.reset();
+            }
+        } else if (c != 0x000a && c != 0x0009 && c != 0x0020
+                && c != 0x000c && c != -1) {
+            in.reset();
+        }
     }
 }
