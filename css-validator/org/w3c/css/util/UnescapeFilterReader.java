@@ -17,11 +17,11 @@ public class UnescapeFilterReader extends FilterReader {
         int c = in.read();
         // https://www.w3.org/TR/css-syntax-3/#input-preprocessing
         if (c == 0x000d) { // U+000D CARRIAGE RETURN (CR)
-            mark(1);
+            in.mark(1);
             c = in.read();
             // eat any LF
             if (c != 0x000a) { // U+000A LINE FEED (LF)
-                reset();
+                in.reset();
             }
             return 0x000a; // U+000A LINE FEED (LF)
         }
@@ -48,11 +48,25 @@ public class UnescapeFilterReader extends FilterReader {
                 val = (val << 4) + (esc - 55);
             } else if (esc > 96 && esc < 103) {
                 val = (val << 4) + (esc - 87);
-            } else if (esc == 10 || esc == 9 || esc == 32) { // CSS whitespace.
+            } else if (esc == 0x000a || esc == 0x0009 || esc == 0x0020
+                    || esc == 0x000d || esc == 0x000c) { // CSS whitespace.
                 // U+000A LINE FEED, U+0009 CHARACTER TABULATION, or U+0020 SPACE.
                 if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
+                    if (esc == 0x000d) {
+                        // must test if it is followed by a LF
+                        in.mark(1);
+                        esc = in.read();
+                        if (esc != 0x000a) {
+                            in.reset();
+                        }
+                    }
                     return val;
                 }
+                // whitespace terminated a non-letter escape: don't unescape
+                in.reset();
+                return c;
+            } else if (i == 0) {
+                return  esc;
             } else {
                 if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
                     //we must unread 1
@@ -71,20 +85,25 @@ public class UnescapeFilterReader extends FilterReader {
             in.reset();
             return c;
         }
-        mark(1);
+        in.mark(1);
         c = in.read();
         // not a CSS WHITESPACE
-        if (c != 10 && c != 9 && c != 32) {
+        if (c != 0x000a && c != 0x0009 && c != 0x0020
+                && c != 0x000d && c != 0x000c) {
             in.reset();
         }
         return val;
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len)
+            throws IOException {
         int i, j, k, l, cki;
         boolean ignoreEscape = false;
 
+        if (len == 0) {
+            return 0;
+        }
         char[] chars = new char[len + 8];
         in.mark(len + 8);
         l = super.read(chars, 0, len + 8);
@@ -124,11 +143,17 @@ public class UnescapeFilterReader extends FilterReader {
                         val = (val << 4) + (cki - 55);
                     } else if (cki > 96 && cki < 103) {
                         val = (val << 4) + (cki - 87);
-                    } else if (cki == 10 || cki == 9 || cki == 32) { // CSS whitespace.
+                    } else if (cki == 0x000a || cki == 0x0009 || cki == 0x0020 || cki == 0x000c) { // CSS whitespace.
                         // U+000A LINE FEED, U+0009 CHARACTER TABULATION, or U+0020 SPACE.
                         if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
                             chars[j++] = (char) val;
                             escaped = true;
+                            if (cki == 0x000d) {
+                                // CR? => test for LF
+                                if (k + i + 1 < l && chars[k + i + 1] == 0x000a) {
+                                    k++;
+                                }
+                            }
                             i += k;
                         } else {
                             escaped = true;
@@ -164,8 +189,14 @@ public class UnescapeFilterReader extends FilterReader {
                             if (i + 1 < l) {
                                 cki = chars[i + 1];
                                 // skip extra space
-                                if (cki == 10 || cki == 9 || cki == 32) {
+                                if (cki == 0x000a || cki == 0x0009 || cki == 0x0020
+                                        || cki == 0x000c || cki == 0x000d) {
                                     i++;
+                                    if (cki == 0x000d) {
+                                        if (i + 1 < l && chars[i + 1] == 0x000a) {
+                                            i++;
+                                        }
+                                    }
                                 }
                             }
                         } else {
