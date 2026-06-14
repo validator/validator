@@ -86,6 +86,7 @@ public class AtRuleKeyframes extends AtRule {
 
     public void setName(ApplContext ac, String name)
             throws InvalidParamException {
+        this.name = name;
         if (name != null) {
             if (name.charAt(0) != '"') {
                 CssIdent ident = CssIdent.getIdent(name.toLowerCase());
