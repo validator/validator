@@ -101,10 +101,13 @@ public class UnescapeFilterReader extends FilterReader {
                 if (i + 1 < l && chars[i + 1] == 0x000a) {
                     i++;
                 }
+                continue;
             } else if (chars[i] == 0x000c) {
                 chars[j++] = 0x000a;
+                continue;
             } else if (chars[i] == 0) {
                 chars[j++] = 0xfffd;
+                continue;
             }
             // escaping
 
