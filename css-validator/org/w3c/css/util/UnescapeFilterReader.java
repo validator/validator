@@ -57,7 +57,6 @@ public class UnescapeFilterReader extends FilterReader {
                 if ((val > 96 && val < 123) || (val > 64 && val < 91)) {
                     //we must unread 1
                     in.reset();
-                    i++;
                     for (int j = 0; j < i; j++) {
                         in.read();
                     }
