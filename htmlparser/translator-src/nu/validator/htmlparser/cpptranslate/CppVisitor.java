@@ -675,7 +675,9 @@ public class CppVisitor extends AnnotationHelperVisitor<LocalSymbolTable> {
                             printer.print("::");
                             declarator.getId().accept(this, arg);
 
-                            printer.printLn(" = 0;");
+                            printer.print(" = ");
+                            printer.print(cppTypes.nullLiteral());
+                            printer.printLn(";");
                             printer = staticInitializerPrinter;
 
                             staticReleases.add("delete[] "
