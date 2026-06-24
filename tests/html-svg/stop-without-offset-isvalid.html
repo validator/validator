@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>gradient stop without an offset attribute</title>
+ <meta charset="utf-8">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2">
+  <title>linearGradient with a stop that has no offset attribute</title>
+  <linearGradient id="g">
+    <stop/>
+    <stop stop-opacity="0.3" offset="1"/>
+  </linearGradient>
+  <rect fill="url(#g)" width="1" height="1"/>
+</svg>
+</body>
+</html>
