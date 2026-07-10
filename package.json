@@ -5,7 +5,7 @@
   "main": "vnu-jar.js",
   "author": "sideshowbarker@gmail.com",
   "engines": {
-    "node": ">=0.10"
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
