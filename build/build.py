@@ -1058,7 +1058,7 @@ class Release():
         with open(moduleInfoPath, 'w') as f:
             f.write('\n'.join(filteredLines))
             f.write('\n    uses org.eclipse.jetty.http.HttpFieldPreEncoder;\n')
-            f.write('    uses javax.json.spi.JsonProvider;\n')
+            f.write('    uses jakarta.json.spi.JsonProvider;\n')
             f.write('}\n')
         runCmd([javacCmd, '-nowarn', '--patch-module', 'vnu=' + vnuJar,
                 os.path.join(distDir, 'vnu', 'module-info.java')])

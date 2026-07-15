@@ -39,11 +39,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import javax.json.Json;
-import javax.json.JsonException;
-import javax.json.JsonReader;
-import javax.json.JsonString;
-import javax.json.JsonStructure;
+import jakarta.json.Json;
+import jakarta.json.JsonException;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonString;
+import jakarta.json.JsonStructure;
 
 import io.mola.galimatias.GalimatiasParseException;
 import io.mola.galimatias.URL;

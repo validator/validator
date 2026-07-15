@@ -148,7 +148,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="commons-text-version" value="1.12.0" />
   <property name="icu4j-version" value="75.1" />
   <property name="jakarta.servlet-api-version" value="6.1.0" />
-  <property name="javax.json-version" value="1.1.4" />
+  <property name="jakarta.json-version" value="2.0.1" />
   <property name="jchardet-version" value="1.0" />
   <property name="log4j-version" value="1.2.17" />
   <property name="mail-version" value="1.4.7" />
@@ -170,7 +170,7 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/${jakarta.servlet-api-version}/jakarta.servlet-api-${jakarta.servlet-api-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/log4j/log4j/${log4j-version}/log4j-${log4j-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/${jchardet-version}/jchardet-${jchardet-version}.jar" checksum.pattern="{0} "/>
-    <get-and-checksum url="https://repo1.maven.org/maven2/org/glassfish/javax.json/${javax.json-version}/javax.json-${javax.json-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/glassfish/jakarta.json/${jakarta.json-version}/jakarta.json-${jakarta.json-version}.jar"/>
   </target>
 
   <property name="avalon-framework-api-version" value="4.3.1" />
@@ -289,7 +289,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/jetty-util-${jetty-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/javax.json-${javax.json-version}.jar" unless:true="${jar-without-deps}">
+      <zipfileset src="${depsDir}/jakarta.json-${jakarta.json-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
       <zipfileset src="${depsDir}/log4j-${log4j-version}.jar" unless:true="${jar-without-deps}"/>
@@ -346,7 +346,7 @@ DEALINGS IN THE SOFTWARE.
       <lib file="${depsDir}/jchardet-${jchardet-version}.jar"/>
       <lib file="${depsDir}/log4j-${log4j-version}.jar"/>
       <lib file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
-      <lib file="${depsDir}/javax.json-${javax.json-version}.jar"/>
+      <lib file="${depsDir}/jakarta.json-${jakarta.json-version}.jar"/>
       <lib file="${depsDir}/jakarta.servlet-api-${jakarta.servlet-api-version}.jar"/>
       <classes dir="${validator.build.basedir}/core/classes"/>
       <classes dir="${validator.build.basedir}/resources"/>
@@ -366,7 +366,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
-    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jakarta.json-${jakarta.json-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jakarta.servlet-api-${jakarta.servlet-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-server-${jetty-version}.jar" />
@@ -480,7 +480,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
-    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jakarta.json-${jakarta.json-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-http-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-io-${jetty-version}.jar" />
@@ -786,7 +786,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty.ee10" artifactId="jetty-ee10-servlets" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-session" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="${jetty-version}"/>
-      <dependency groupId="org.glassfish" artifactId="javax.json" version="${javax.json-version}"/>
+      <dependency groupId="org.glassfish" artifactId="jakarta.json" version="${jakarta.json-version}"/>
     </artifact:pom>
     <artifact:writepom pomRefId="pom" file="${dist}/validator-${version.number}.pom"/>
     <jar destfile="${validator-jar}" duplicate="preserve">
@@ -1097,7 +1097,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="langdetect.basedir" location="langdetect" />
   <property name="langdetect.build.basedir" location="build/langdetect" />
   <path id="langdetect.classpath">
-    <fileset dir="${depsDir}/" includes="javax.json-${javax.json-version}.jar" />
+    <fileset dir="${depsDir}/" includes="jakarta.json-${jakarta.json-version}.jar" />
   </path>
   <target name="langdetect-build" depends="dl-deps, dl-deps-modules" unless="${use-system-langdetect}">
     <mkdir dir="${langdetect.build.basedir}/classes"/>

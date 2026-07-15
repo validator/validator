@@ -37,11 +37,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
-import javax.json.JsonString;
-import javax.json.JsonWriter;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonString;
+import jakarta.json.JsonWriter;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -96,7 +96,7 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private File baseDir = null;
 
-    private Map<String, javax.json.JsonValue> expectedMessages;
+    private Map<String, jakarta.json.JsonValue> expectedMessages;
 
     private JsonObjectBuilder reportedMessages;
 
@@ -500,7 +500,7 @@ public class TestRunner extends MessageEmitterAdapter {
                         throw new RuntimeException(e);
                     }
                 } else if (expectedMessages != null
-                        && !infoMessage.equals(((javax.json.JsonString) expectedMessages.get(testFilename)).getString())) {
+                        && !infoMessage.equals(((jakarta.json.JsonString) expectedMessages.get(testFilename)).getString())) {
                     try {
                         err.println(String.format(
                                 "\"%s\": error: Expected \"%s\""
@@ -611,9 +611,9 @@ public class TestRunner extends MessageEmitterAdapter {
             baseDir = messagesFile.getCanonicalFile().getParentFile();
             try (FileInputStream fis = new FileInputStream(messagesFile);
                  JsonReader reader = Json.createReader(fis)) {
-                javax.json.JsonObject jsonObject = reader.readObject();
-                final Map<String, javax.json.JsonValue> expectedMessagesMap = new HashMap<>();
-                for (Map.Entry<String, javax.json.JsonValue> entry : jsonObject.entrySet()) {
+                jakarta.json.JsonObject jsonObject = reader.readObject();
+                final Map<String, jakarta.json.JsonValue> expectedMessagesMap = new HashMap<>();
+                for (Map.Entry<String, jakarta.json.JsonValue> entry : jsonObject.entrySet()) {
                     expectedMessagesMap.put(entry.getKey(), entry.getValue());
                 }
                 expectedMessages = expectedMessagesMap;
