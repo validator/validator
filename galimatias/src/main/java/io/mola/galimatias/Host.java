@@ -80,11 +80,13 @@ public abstract class Host implements Serializable {
             return IPv6Address.parseIPv6Address(input.substring(1, input.length() - 1));
         }
         final Domain domain = Domain.parseDomain(input);
-        try {
+        // Per the URL Standard, a host that ends in a number must be
+        // parsed as IPv4; a failure there is a failure for the whole
+        // host, with no fallback to treating it as a domain.
+        if (IPv4Address.endsInANumber(domain.toString())) {
             return IPv4Address.parseIPv4Address(domain.toString());
-        } catch (GalimatiasParseException e) {
-            return domain;
         }
+        return domain;
     }
 
 }

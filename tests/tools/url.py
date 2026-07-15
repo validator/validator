@@ -62,6 +62,10 @@ invalid = {
     "host-double-percent-encoded-percent-encoded": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
     "host-u0000-percent-encoded": "http://\uff05\uff10\uff10.com",
     "host-u0000-percent-encoded-percent-encoded": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
+    "host-IP-address-broken": "http://192.168.0.257/",
+    "host-192.0x00A80001": "http://192.0x00A80001",
+    "host-IP-address-percent-encoded": "http://%30%78%63%30%2e%30%32%35%30.01",
+    "host-IP-address-fullwidth": "http://０Ｘｃ０．０２５０．０１",
 }
 invalid_absolute = invalid.copy()
 
@@ -125,13 +129,11 @@ valid_absolute = {
     "path-contains-pile-of-poo": "http://example.com/foo/💩",
     "query-contains-pile-of-poo": "http://example.com/foo?💩",
     "fragment-contains-pile-of-poo": "http://example.com/foo#💩",
-    "host-192.0x00A80001": "http://192.0x00A80001",
 
     "host-exotic-whitespace": "http://GOO\u200b\u2060\ufeffgoo.com",
     "host-exotic-dot": "http://www.foo\u3002bar.com",
     "host-fullwidth": "http://\uff27\uff4f.com",
     "host-idn-unicode-han": "http://\u4f60\u597d\u4f60\u597d",
-    "host-IP-address-broken": "http://192.168.0.257/",
 }
 valid = valid_absolute.copy()
 

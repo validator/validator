@@ -30,6 +30,9 @@ public class IPv4Address extends Host {
 
     private static final long serialVersionUID = 1L;
 
+    // Sentinel returned by parseIPv4Number for input that is not a number.
+    private static final long IPV4_NUMBER_FAILURE = -1L;
+
     private final int address;
 
     private IPv4Address(final byte[] addrBytes) {
@@ -41,59 +44,142 @@ public class IPv4Address extends Host {
         this.address = addr;
     }
 
-    public static IPv4Address parseIPv4Address(final String input) throws GalimatiasParseException{
+    /**
+     * The ends-in-a-number checker from the URL Standard.
+     *
+     * @see <a href="https://url.spec.whatwg.org/#ends-in-a-number-checker">
+     *      https://url.spec.whatwg.org/#ends-in-a-number-checker</a>
+     */
+    static boolean endsInANumber(final String input) {
+        String[] parts = input.split("\\.", -1);
+        int size = parts.length;
+        if (parts[size - 1].isEmpty()) {
+            if (size == 1) {
+                return false;
+            }
+            size--;
+        }
+        String last = parts[size - 1];
+        if (!last.isEmpty() && isAllASCIIDigits(last)) {
+            return true;
+        }
+        return parseIPv4Number(last, new boolean[1]) != IPV4_NUMBER_FAILURE;
+    }
+
+    private static boolean isAllASCIIDigits(final String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (!isASCIIDigit(s.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * The IPv4 number parser from the URL Standard. Returns the parsed number,
+     * or {@link #IPV4_NUMBER_FAILURE} for a part that is not a number. When a
+     * non-decimal radix prefix (0x or a leading 0) is used, validationError[0]
+     * is set to true.
+     *
+     * @see <a href="https://url.spec.whatwg.org/#ipv4-number-parser">
+     *      https://url.spec.whatwg.org/#ipv4-number-parser</a>
+     */
+    private static long parseIPv4Number(final String input,
+            final boolean[] validationError) {
+        if (input.isEmpty()) {
+            return IPV4_NUMBER_FAILURE;
+        }
+        int radix = 10;
+        String number = input;
+        if (number.length() >= 2 && number.charAt(0) == '0'
+                && (number.charAt(1) == 'x' || number.charAt(1) == 'X')) {
+            validationError[0] = true;
+            number = number.substring(2);
+            radix = 16;
+        } else if (number.length() >= 2 && number.charAt(0) == '0') {
+            validationError[0] = true;
+            number = number.substring(1);
+            radix = 8;
+        }
+        if (number.isEmpty()) {
+            return 0;
+        }
+        long value = 0;
+        for (int i = 0; i < number.length(); i++) {
+            int digit = Character.digit(number.charAt(i), radix);
+            if (digit < 0) {
+                return IPV4_NUMBER_FAILURE;
+            }
+            value = value * radix + digit;
+            // No valid IPv4 number exceeds 32 bits; stop before overflow.
+            if (value > 0xFFFFFFFFL) {
+                return IPV4_NUMBER_FAILURE;
+            }
+        }
+        return value;
+    }
+
+    /**
+     * The IPv4 parser from the URL Standard. In addition to the failures the
+     * standard defines, this treats validation errors (non-decimal parts and
+     * leading zeros) as failures too, since this parser backs a conformance
+     * checker for which a validation error means non-conforming.
+     *
+     * @see <a href="https://url.spec.whatwg.org/#concept-ipv4-parser">
+     *      https://url.spec.whatwg.org/#concept-ipv4-parser</a>
+     */
+    public static IPv4Address parseIPv4Address(final String input) throws GalimatiasParseException {
         if (input == null) {
             throw new NullPointerException("null input");
         }
         if (input.isEmpty()) {
             throw new GalimatiasParseException("empty input");
         }
-        if (input.charAt(input.length() - 1) == '.') { //XXX: This case is not covered by the IPv6-mapped IPv4 case in the spec
-            throw new GalimatiasParseException("IPv4 address has trailing dot");
+        String[] parts = input.split("\\.", -1);
+        int size = parts.length;
+        if (parts[size - 1].isEmpty()) {
+            // A trailing dot is a validation error; reject it in strict mode.
+            throw new GalimatiasParseException("IPv4 address has a trailing dot");
         }
-        byte[] addr = new byte[4];
-        int dotsSeen = 0;
-        int addrIdx = 0;
-        int idx = 0;
-        boolean isEOF = false;
-        while (!isEOF) {
-            char c = input.charAt(idx);
-            Integer value = null;
-            if (!isASCIIDigit(c)) {
-                throw new GalimatiasParseException("Non-digit character in IPv4 address");
-            }
-            while (isASCIIDigit(c)) {
-                final int number = c - 0x30;  // 10.3.1
-                if (value == null) {          // 10.3.2
-                    value = number;
-                } else if (value == 0) {
-                    throw new GalimatiasParseException("IPv4 address contains a leading zero");
-                } else {
-                    value = value * 10 + number;
-                }
-                idx++;                        // 10.3.3
-                isEOF = idx >= input.length();
-                c = (isEOF)? 0x00 : input.charAt(idx);
-                if (value > 255) {            // 10.3.4
-                    throw new GalimatiasParseException("Invalid value for IPv4 address");
-                }
-            }
-            if (dotsSeen < 3 && c != '.') {
-                throw new GalimatiasParseException("Illegal character in IPv4 address", idx);
-            }
-            idx++;
-            isEOF = idx >= input.length();
-            c = (isEOF)? 0x00 : input.charAt(idx);
-            if (dotsSeen == 3 && idx < input.length()) {
-                throw new GalimatiasParseException("IPv4 address is too long", idx);
-            }
-            addr[addrIdx] = (byte) (int) value;
-            addrIdx++;
-            dotsSeen++;
+        if (size > 4) {
+            throw new GalimatiasParseException("IPv4 address has too many parts");
         }
-        if (dotsSeen != 4) {
-            throw new GalimatiasParseException("Malformed IPv4 address");
+        long[] numbers = new long[size];
+        boolean[] validationError = new boolean[1];
+        for (int i = 0; i < size; i++) {
+            long value = parseIPv4Number(parts[i], validationError);
+            if (value == IPV4_NUMBER_FAILURE) {
+                throw new GalimatiasParseException(
+                        "Invalid number in IPv4 address");
+            }
+            numbers[i] = value;
         }
+        if (validationError[0]) {
+            throw new GalimatiasParseException(
+                    "IPv4 address contains a non-decimal or leading-zero part");
+        }
+        for (int i = 0; i < size - 1; i++) {
+            if (numbers[i] > 255) {
+                throw new GalimatiasParseException(
+                        "IPv4 address part out of range");
+            }
+        }
+        long last = numbers[size - 1];
+        // The last part fills the bytes the earlier parts did not: it must be
+        // less than 256 ** (5 - size), i.e. 2 ** (8 * (5 - size)).
+        if (last >= (1L << (8 * (5 - size)))) {
+            throw new GalimatiasParseException("IPv4 address part out of range");
+        }
+        long ipv4 = last;
+        for (int i = 0; i < size - 1; i++) {
+            ipv4 += numbers[i] << (8 * (3 - i));
+        }
+        byte[] addr = new byte[] {
+                (byte) ((ipv4 >> 24) & 0xFF),
+                (byte) ((ipv4 >> 16) & 0xFF),
+                (byte) ((ipv4 >> 8) & 0xFF),
+                (byte) (ipv4 & 0xFF)
+        };
         return new IPv4Address(addr);
     }
 
