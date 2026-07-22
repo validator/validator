@@ -34,29 +34,34 @@ import java.util.ArrayList;
 public class PseudoFactory {
 
     private static final String[] PSEUDOCLASS_CONSTANTSCSS3 = {
-            // https://www.w3.org/TR/2018/WD-selectors-4-20181121/#location
+            // https://www.w3.org/TR/2026/WD-selectors-4-20260122/#elemental-selectors
+            "defined",
+            // https://www.w3.org/TR/2026/WD-selectors-4-20260122/#location
             "any-link", "link", "visited", "local-link", "target",
-            "target-within", "scope",
-            // https://www.w3.org/TR/2018/WD-selectors-4-20181121/#useraction-pseudos
+            "scope",
+            // https://www.w3.org/TR/2026/WD-selectors-4-20260122/#useraction-pseudos
             "hover", "active", "focus", "focus-visible", "focus-within",
             // https://www.w3.org/TR/2018/WD-selectors-4-20181121/#time-pseudos
             "current", "past", "future",
-            // https://www.w3.org/TR/2018/WD-selectors-4-20181121/#resource-pseudos
-            "playing", "paused",
-            // https://www.w3.org/TR/2018/WD-selectors-4-20181121/#input-pseudos
+            // https://www.w3.org/TR/2026/WD-selectors-4-20260122/#resource-pseudos
+            "playing", "paused", "seeking", "buffering", "stalled", "muted",
+            "volume-locked",
+            // https://www.w3.org/TR/2026/WD-selectors-4-20260122/#display-state-pseudos
+            "open", "popover-open", "modal", "fullscreen", "picture-in-picture",
+            // https://www.w3.org/TR/2026/WD-selectors-4-20260122/#input-pseudos
             "enabled", "disabled", "read-only", "read-write", "placeholder-shown",
-            "default", "checked", "indeterminate",
+            "autofill", "default", "checked", "unchecked", "indeterminate",
             "blank", "valid", "invalid", "in-range", "out-of-range", "required", "optional",
-            "user-invalid",
-            // https://www.w3.org/TR/2018/WD-selectors-4-20181121/#structural-pseudos
+            "user-valid", "user-invalid",
+            // https://www.w3.org/TR/2026/WD-selectors-4-20260122/#structural-pseudos
             "root", "empty", "first-child", "last-child", "only-child",
             "first-of-type", "last-of-type", "only-of-type",
             // https://www.w3.org/TR/2018/WD-css-page-3-20181018/#page-selectors
             "left", "right", "first",
             // https://www.w3.org/TR/2014/WD-css-scoping-1-20140403/#selectordef-host0
             "host",
-            // https://fullscreen.spec.whatwg.org/#:fullscreen-pseudo-class
-            "fullscreen",
+            // https://drafts.csswg.org/css-shadow-1/#selectordef-has-slotted 20260428
+            "has-slotted",
             // https://html.spec.whatwg.org/multipage/semantics-other.html#pseudo-classes
             "autofill", "defined"
     };
@@ -80,18 +85,20 @@ public class PseudoFactory {
     };
 
     private static final String[] PSEUDOELEMENT_CONSTANTSCSS3 = {
-            // https://www.w3.org/TR/2020/WD-css-pseudo-4-20201231/#typographic-pseudos
-            "first-line", "first-letter",
-            // https://www.w3.org/TR/2020/WD-css-pseudo-4-20201231/#highlight-pseudos
-            "selection", "target-text", "spelling-error", "grammar-error",
-            // https://www.w3.org/TR/2020/WD-css-pseudo-4-20201231/#treelike
+            // https://www.w3.org/TR/2025/WD-css-pseudo-4-20250627/#typographic-pseudos
+            "first-line", "first-letter", "prefix", "suffix", // TODO check that prefix and suffix can only be on ::first-letter
+            // https://www.w3.org/TR/2025/WD-css-pseudo-4-20250627/#highlight-pseudos
+            "selection", "search-text", "target-text", "spelling-error", "grammar-error",
+            // https://www.w3.org/TR/2025/WD-css-pseudo-4-20250627/#treelike
             "before", "after", "marker", "placeholder", "file-selector-button",
+            // https://www.w3.org/TR/2025/WD-css-pseudo-4-20250627/#element-like
+            "file-selector-button", "details-content",
             // https://fullscreen.spec.whatwg.org/#::backdrop-pseudo-element
             "backdrop",
-            // https://www.w3.org/TR/2019/CR-webvtt1-20190404/#css-extensions
+            // https://www.w3.org/TR/2026/CRD-webvtt1-20260520/#css-extensions
             "cue", "cue-region",
-            // https://www.w3.org/TR/2014/WD-css-scoping-1-20140403/ (20211001 draft)
-            "content", "shadow"
+            // https://www.w3.org/TR/2014/WD-css-scoping-1-20140403/ (20260428 draft)
+            "shadow"
     };
 
     private static final String[] PSEUDOELEMENT_CONSTANTSCSS2 = {
