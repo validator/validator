@@ -49,8 +49,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CssHeightMob extends CssProperty {
 
-    CssValue value;
-
     private static CssIdent auto = new CssIdent("auto");
 
     /**

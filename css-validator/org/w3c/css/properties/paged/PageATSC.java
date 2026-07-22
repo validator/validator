@@ -23,7 +23,6 @@ import org.w3c.css.values.CssValue;
 public class PageATSC extends CssProperty
         implements CssOperator {
 
-    CssValue value;
     CssValue pseudo;
 
     private static CssIdent auto = new CssIdent("auto");

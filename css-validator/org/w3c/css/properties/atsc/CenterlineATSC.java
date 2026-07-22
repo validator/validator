@@ -20,8 +20,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CenterlineATSC extends CssProperty {
 
-    CssValue value;
-
     /**
      * Create a new CenterlineATSC
      */
