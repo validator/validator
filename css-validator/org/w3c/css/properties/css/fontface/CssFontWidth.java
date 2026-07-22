@@ -53,7 +53,7 @@ public class CssFontWidth extends CssProperty {
      * Returns the name of this property
      */
     public final String getPropertyName() {
-        return "font-Width";
+        return "font-width";
     }
 
     /**
