@@ -110,8 +110,15 @@ public class LAB {
         val = exp.getValue();
         op = exp.getOperator();
         // from ?
-        if ((val == null || op != SPACE) && !exp.hasCssVariable()) {
-            throw new InvalidParamException("colorfunc", exp, "Lab", ac);
+        if (val == null || op != SPACE) {
+            if (!exp.hasCssVariable()) {
+                throw new InvalidParamException("colorfunc", exp, "Lab", ac);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append("lab(").append(exp.toStringFromStart()).append(')');
+                lab.output = sb.toString();
+                return lab;
+            }
         }
         if (val.getType() == CssTypes.CSS_IDENT) {
             if (CssColor.relative.equals(val.getIdent())) {
@@ -143,9 +150,22 @@ public class LAB {
         }
         // L
         switch (val.getType()) {
+            case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                // plain variable with nothing resolving, can't say anything.
+                if (exp.getRemainingCount() >= 3) {
+                    lab.setL(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("lab(").append(exp.toStringFromStart()).append(')');
+                    lab.output = sb.toString();
+                    return lab;
+                }
+                break;
             case CssTypes.CSS_NUMBER:
             case CssTypes.CSS_PERCENTAGE:
-            case CssTypes.CSS_VARIABLE:
                 lab.setL(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -169,8 +189,21 @@ public class LAB {
             throw new InvalidParamException("invalid-color", ac);
         }
         switch (val.getType()) {
-            case CssTypes.CSS_NUMBER:
             case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                // plain variable with nothing resolving, can't say anything.
+                if (exp.getRemainingCount() >= 2) {
+                    lab.setA(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("lab(").append(exp.toStringFromStart()).append(')');
+                    lab.output = sb.toString();
+                    return lab;
+                }
+                break;
+            case CssTypes.CSS_NUMBER:
                 lab.setA(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -179,6 +212,11 @@ public class LAB {
                     lab.setA(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have lab(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     exp.starts();
@@ -197,8 +235,20 @@ public class LAB {
             }
         }
         switch (val.getType()) {
-            case CssTypes.CSS_NUMBER:
             case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                if (exp.getRemainingCount() >= 1) {
+                    lab.setA(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("lab(").append(exp.toStringFromStart()).append(')');
+                    lab.output = sb.toString();
+                    return lab;
+                }
+                break;
+            case CssTypes.CSS_NUMBER:
                 lab.setB(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -207,6 +257,11 @@ public class LAB {
                     lab.setB(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have lab(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     exp.starts();
