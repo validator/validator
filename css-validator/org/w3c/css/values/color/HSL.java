@@ -111,6 +111,11 @@ public class HSL {
         if (val == null || (!separator_space && (op != COMMA))) {
             if (!exp.hasCssVariable()) {
                 throw new InvalidParamException("invalid-color", ac);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append("hsl(").append(exp.toStringFromStart()).append(')');
+                hsl.output = sb.toString();
+                return hsl;
             }
         }
 
@@ -145,9 +150,21 @@ public class HSL {
 
         // H
         switch (val.getType()) {
+            case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                if (exp.getRemainingCount() >= 3) {
+                    hsl.setHue(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("hsl(").append(exp.toStringFromStart()).append(')');
+                    hsl.output = sb.toString();
+                    return hsl;
+                }
+                break;
             case CssTypes.CSS_ANGLE:
             case CssTypes.CSS_NUMBER:
-            case CssTypes.CSS_VARIABLE:
                 hsl.setHue(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -175,12 +192,24 @@ public class HSL {
 
         // S
         switch (val.getType()) {
+            case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                if (exp.getRemainingCount() >= 2) {
+                    hsl.setSaturation(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("hsl(").append(exp.toStringFromStart()).append(')');
+                    hsl.output = sb.toString();
+                    return hsl;
+                }
+                break;
             case CssTypes.CSS_NUMBER:
                 if (!separator_space) {
                     throw new InvalidParamException("colorfunc", val, "HSL", ac);
                 }
             case CssTypes.CSS_PERCENTAGE:
-            case CssTypes.CSS_VARIABLE:
                 hsl.setSaturation(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -189,6 +218,11 @@ public class HSL {
                     hsl.setSaturation(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have hsl(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 exp.starts();
                 if (!exp.hasCssVariable()) {
@@ -220,6 +254,11 @@ public class HSL {
                     hsl.setLightness(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have hsl(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 exp.starts();
                 if (!exp.hasCssVariable()) {
