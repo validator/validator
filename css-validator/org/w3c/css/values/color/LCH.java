@@ -77,8 +77,14 @@ public class LCH {
         CssValue val = exp.getValue();
         char op = exp.getOperator();
 
-        if ((val == null || op != SPACE) && !exp.hasCssVariable()) {
-            throw new InvalidParamException("invalid-color", ac);
+        if (val == null || op != SPACE) {
+            if (!exp.hasCssVariable()) {
+                throw new InvalidParamException("invalid-color", ac);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append("lch(").append(exp.toStringFromStart()).append(')');
+                lch.output = sb.toString();
+            }
         }
 
         if (val.getType() == CssTypes.CSS_IDENT) {
@@ -115,6 +121,16 @@ public class LCH {
             case CssTypes.CSS_VARIABLE:
                 exp.markCssVariable();
                 caller.markCssVariable();
+                if (exp.getRemainingCount() >= 3) {
+                    lch.setL(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("lch(").append(exp.toStringFromStart()).append(')');
+                    lch.output = sb.toString();
+                    return lch;
+                }
+                break;
             case CssTypes.CSS_NUMBER:
             case CssTypes.CSS_PERCENTAGE:
                 lch.setL(ac, val);
@@ -144,6 +160,16 @@ public class LCH {
             case CssTypes.CSS_VARIABLE:
                 exp.markCssVariable();
                 caller.markCssVariable();
+                if (exp.getRemainingCount() >= 2) {
+                    lch.setL(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("lch(").append(exp.toStringFromStart()).append(')');
+                    lch.output = sb.toString();
+                    return lch;
+                }
+                break;
             case CssTypes.CSS_NUMBER:
             case CssTypes.CSS_PERCENTAGE:
                 lch.setC(ac, val);
@@ -154,6 +180,11 @@ public class LCH {
                     lch.setC(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have lch(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     exp.starts();
@@ -183,6 +214,11 @@ public class LCH {
                     lch.setH(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have rgba(var(--foo) var(--bar) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     exp.starts();
