@@ -52,7 +52,7 @@ public class RGBA extends RGB {
         }
         return false;
     }
-    
+
     private String output = null;
     String fname;
 
@@ -218,8 +218,13 @@ public class RGBA extends RGB {
         CssValue val = exp.getValue();
         char op = exp.getOperator();
 
-        if (val == null && !exp.hasCssVariable()) {
-            throw new InvalidParamException("invalid-color", ac);
+        if (val == null) {
+            if (!exp.hasCssVariable()) {
+                throw new InvalidParamException("invalid-color", ac);
+            } else {
+                rgba.setRepresentationString(funcname + exp.toStringFromStart() + ')');
+                return rgba;
+            }
         }
 
         if (val.getType() == CssTypes.CSS_IDENT) {
@@ -258,6 +263,15 @@ public class RGBA extends RGB {
             case CssTypes.CSS_VARIABLE:
                 exp.markCssVariable();
                 caller.markCssVariable();
+                // plain variable with nothing resolving, can't say anything.
+                if (exp.getRemainingCount() >= 3) {
+                    rgba.setRed(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    rgba.setRepresentationString(funcname + exp.toStringFromStart() + ')');
+                    return rgba;
+                }
+                break;
             case CssTypes.CSS_NUMBER:
                 if (gotPercentage) {
                     throw new InvalidParamException("colorfunc", val, rgba.fname, ac);
@@ -298,6 +312,14 @@ public class RGBA extends RGB {
             case CssTypes.CSS_VARIABLE:
                 exp.markCssVariable();
                 caller.markCssVariable();
+                if (exp.getRemainingCount() >= 2) {
+                    rgba.setGreen(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    rgba.setRepresentationString(funcname + exp.toStringFromStart() + ')');
+                    return rgba;
+                }
+                break;
             case CssTypes.CSS_NUMBER:
                 if (gotPercentage) {
                     throw new InvalidParamException("colorfunc", val, rgba.fname, ac);
@@ -316,6 +338,11 @@ public class RGBA extends RGB {
                     rgba.setGreen(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have rgba(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     throw new InvalidParamException("colorfunc", val, rgba.fname, ac);
@@ -335,6 +362,14 @@ public class RGBA extends RGB {
             case CssTypes.CSS_VARIABLE:
                 exp.markCssVariable();
                 caller.markCssVariable();
+                if (exp.getRemainingCount() >= 1) {
+                    rgba.setBlue(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    rgba.setRepresentationString(funcname + exp.toStringFromStart() + ')');
+                    return rgba;
+                }
+                break;
             case CssTypes.CSS_NUMBER:
                 if (gotPercentage) {
                     throw new InvalidParamException("colorfunc", val, rgba.fname, ac);
@@ -353,6 +388,11 @@ public class RGBA extends RGB {
                     rgba.setBlue(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have rgba(var(--foo) var(--bar) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     throw new InvalidParamException("colorfunc", val, rgba.fname, ac);
