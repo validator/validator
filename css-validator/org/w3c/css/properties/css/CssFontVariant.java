@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssFontVariant extends CssProperty {
 
-
     /**
      * Create a new CssFontVariant
      */
@@ -50,7 +49,6 @@ public class CssFontVariant extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -67,13 +65,6 @@ public class CssFontVariant extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -85,7 +76,6 @@ public class CssFontVariant extends CssProperty {
         cssFont.fontVariant = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -95,7 +85,6 @@ public class CssFontVariant extends CssProperty {
         return (property instanceof CssFontVariant &&
                 value.equals(((CssFontVariant) property).value));
     }
-
 
     /**
      * Get this property in the style.

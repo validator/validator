@@ -5,7 +5,6 @@
 // COPYRIGHT (c) 1995-2018 World Wide Web Consortium, (MIT, ERCIM and Keio)
 // Please first read the full copyright statement in file COPYRIGHT.html
 
-
 package org.w3c.css.properties.css;
 
 import org.w3c.css.parser.CssStyle;
@@ -97,13 +96,6 @@ public class CssColumnRuleWidth extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit == value;
-    }
-
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

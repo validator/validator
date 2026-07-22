@@ -16,13 +16,11 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssMarginBottom extends CssProperty {
 
-
     /**
      * Create a new CssMarginBottom
      */
     public CssMarginBottom() {
     }
-
 
     /**
      * Set the value of the property<br/>
@@ -51,7 +49,6 @@ public class CssMarginBottom extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -59,19 +56,11 @@ public class CssMarginBottom extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
     public final String getPropertyName() {
         return "margin-bottom";
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

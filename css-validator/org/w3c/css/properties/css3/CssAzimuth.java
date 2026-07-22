@@ -202,18 +202,22 @@ public class CssAzimuth extends org.w3c.css.properties.css.CssAzimuth {
      * Returns a string representation of the object.
      */
     public String toString() {
+        if (valueString == null) {
+            return valueString;
+        }
         if (isBehind) {
             StringBuilder sb = new StringBuilder();
             sb.append(behind);
             if (identValue != null) {
                 sb.append(' ').append(identValue);
             }
-            return sb.toString();
+            valueString = sb.toString();
+        } else if (identValue != null) {
+            valueString = identValue.toString();
+        }  else {
+            valueString = angleValue.toString();
         }
-        if (identValue != null) {
-            return identValue.toString();
-        }
-        return angleValue.toString();
+        return valueString;
     }
 
     /**

@@ -47,7 +47,6 @@ public class CssBorderBlockStart extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -61,13 +60,6 @@ public class CssBorderBlockStart extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

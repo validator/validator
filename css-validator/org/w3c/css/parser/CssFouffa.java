@@ -592,6 +592,11 @@ public final class CssFouffa extends CssParser {
 
         if (property.startsWith("--") && (ac.getCssVersion().compareTo(CssVersion.CSS3) >= 0)) {
             prop = new CssCustomProperty(ac, property, expression);
+            // force early registration, it will be overwritten later but
+            // at least it will resolve within the block.
+            if (ac.getStyleSheet() != null) {
+                ac.getStyleSheet().addCustomProperty(property, (CssCustomProperty) prop, true);
+            }
             // css variable
         } else {
             final CssValue lastValue = expression.getLastValue();

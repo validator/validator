@@ -56,13 +56,6 @@ public class CssBackdropFilter extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Returns true if this property is "softly" inherited
      * e.g. its value equals inherit
      */

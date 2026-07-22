@@ -47,7 +47,6 @@ public class CssAspectRatio extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -61,13 +60,6 @@ public class CssAspectRatio extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -90,7 +82,6 @@ public class CssAspectRatio extends CssProperty {
         return (property instanceof CssAspectRatio &&
                 value.equals(((CssAspectRatio) property).value));
     }
-
 
     /**
      * Get this property in the style.

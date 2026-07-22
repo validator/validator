@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssOverflowInline extends CssProperty {
 
-
     /**
      * Create a new CssOverflowInline
      */
@@ -49,7 +48,6 @@ public class CssOverflowInline extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssOverflowInline extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -92,7 +83,6 @@ public class CssOverflowInline extends CssProperty {
         return (property instanceof CssOverflowInline &&
                 value.equals(((CssOverflowInline) property).value));
     }
-
 
     /**
      * Get this property in the style.

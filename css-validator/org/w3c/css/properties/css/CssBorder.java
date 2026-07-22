@@ -81,7 +81,6 @@ public class CssBorder extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -106,14 +105,6 @@ public class CssBorder extends CssProperty {
     public final String getPropertyName() {
         return "border";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle

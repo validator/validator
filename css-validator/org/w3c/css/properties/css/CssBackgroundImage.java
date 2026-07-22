@@ -60,13 +60,6 @@ public class CssBackgroundImage extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Returns the name of this property
      */
     public final String getPropertyName() {

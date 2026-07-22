@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssHangingPunctuation extends CssProperty {
 
-
     /**
      * Create a new CssHangingPunctuation
      */
@@ -49,7 +48,6 @@ public class CssHangingPunctuation extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -66,13 +64,6 @@ public class CssHangingPunctuation extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -85,7 +76,6 @@ public class CssHangingPunctuation extends CssProperty {
         s.cssHangingPunctuation = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -95,7 +85,6 @@ public class CssHangingPunctuation extends CssProperty {
         return (property instanceof CssHangingPunctuation &&
                 value.equals(((CssHangingPunctuation) property).value));
     }
-
 
     /**
      * Get this property in the style.

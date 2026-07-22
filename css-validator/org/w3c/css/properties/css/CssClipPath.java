@@ -48,7 +48,6 @@ public class CssClipPath extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -65,13 +64,6 @@ public class CssClipPath extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -84,7 +76,6 @@ public class CssClipPath extends CssProperty {
         s.cssClipPath = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -94,7 +85,6 @@ public class CssClipPath extends CssProperty {
         return (property instanceof CssClipPath &&
                 value.equals(((CssClipPath) property).value));
     }
-
 
     /**
      * Get this property in the style.

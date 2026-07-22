@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssListStyle extends CssProperty {
 
-
     public CssListStyleType cssListStyleType;
     public CssListStyleImage cssListStyleImage;
     public CssListStylePosition cssListStylePosition;
@@ -27,7 +26,6 @@ public class CssListStyle extends CssProperty {
      */
     public CssListStyle() {
     }
-
 
     /**
      * Set the value of the property<br/>
@@ -56,7 +54,6 @@ public class CssListStyle extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -64,19 +61,11 @@ public class CssListStyle extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
     public final String getPropertyName() {
         return "list-style";
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

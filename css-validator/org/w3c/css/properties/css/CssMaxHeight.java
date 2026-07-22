@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssMaxHeight extends CssProperty {
 
-
     /**
      * Create a new CssMaxHeight
      */
@@ -49,7 +48,6 @@ public class CssMaxHeight extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssMaxHeight extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -92,7 +83,6 @@ public class CssMaxHeight extends CssProperty {
         return (property instanceof CssMaxHeight &&
                 value.equals(((CssMaxHeight) property).value));
     }
-
 
     /**
      * Get this property in the style.

@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssSpeakHeader extends CssProperty {
 
-
     /**
      * Create a new CssSpeakHeader
      */
@@ -50,7 +49,6 @@ public class CssSpeakHeader extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -64,13 +62,6 @@ public class CssSpeakHeader extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -93,7 +84,6 @@ public class CssSpeakHeader extends CssProperty {
         return (property instanceof CssSpeakHeader &&
                 value.equals(((CssSpeakHeader) property).value));
     }
-
 
     /**
      * Get this property in the style.

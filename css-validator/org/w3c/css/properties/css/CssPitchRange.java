@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssPitchRange extends CssProperty {
 
-
     /**
      * Create a new CssPitchRange
      */
@@ -50,7 +49,6 @@ public class CssPitchRange extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -64,13 +62,6 @@ public class CssPitchRange extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -93,7 +84,6 @@ public class CssPitchRange extends CssProperty {
         return (property instanceof CssPitchRange &&
                 value.equals(((CssPitchRange) property).value));
     }
-
 
     /**
      * Get this property in the style.

@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssOverflowStyle extends CssProperty {
 
-
     /**
      * Create a new CssOverflowStyle
      */
@@ -49,7 +48,6 @@ public class CssOverflowStyle extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -66,13 +64,6 @@ public class CssOverflowStyle extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -85,7 +76,6 @@ public class CssOverflowStyle extends CssProperty {
         s.cssOverflowStyle = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -95,7 +85,6 @@ public class CssOverflowStyle extends CssProperty {
         return (property instanceof CssOverflowStyle &&
                 value.equals(((CssOverflowStyle) property).value));
     }
-
 
     /**
      * Get this property in the style.

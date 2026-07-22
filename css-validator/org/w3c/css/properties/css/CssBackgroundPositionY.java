@@ -40,7 +40,6 @@ public class CssBackgroundPositionY extends CssProperty {
         this(ac, expression, false);
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -61,13 +60,6 @@ public class CssBackgroundPositionY extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (inherit == value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

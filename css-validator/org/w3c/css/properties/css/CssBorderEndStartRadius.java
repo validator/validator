@@ -47,7 +47,6 @@ public class CssBorderEndStartRadius extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -61,13 +60,6 @@ public class CssBorderEndStartRadius extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -90,7 +82,6 @@ public class CssBorderEndStartRadius extends CssProperty {
         return (property instanceof CssBorderEndStartRadius &&
                 value.equals(((CssBorderEndStartRadius) property).value));
     }
-
 
     /**
      * Get this property in the style.

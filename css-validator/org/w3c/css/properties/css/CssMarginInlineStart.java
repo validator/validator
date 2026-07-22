@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssMarginInlineStart extends CssProperty {
 
-
     /**
      * Create a new CssMarginInlineStart
      */
@@ -48,7 +47,6 @@ public class CssMarginInlineStart extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -62,13 +60,6 @@ public class CssMarginInlineStart extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -91,7 +82,6 @@ public class CssMarginInlineStart extends CssProperty {
         return (property instanceof CssMarginInlineStart &&
                 value.equals(((CssMarginInlineStart) property).value));
     }
-
 
     /**
      * Get this property in the style.

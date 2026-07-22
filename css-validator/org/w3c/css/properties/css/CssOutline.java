@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssOutline extends CssProperty {
 
-
     public CssOutlineColor _color;
     public CssOutlineStyle _style;
     public CssOutlineWidth _width;
@@ -56,7 +55,6 @@ public class CssOutline extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -70,13 +68,6 @@ public class CssOutline extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -95,7 +86,6 @@ public class CssOutline extends CssProperty {
         _style.addToStyle(ac, style);
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -105,7 +95,6 @@ public class CssOutline extends CssProperty {
         return (property instanceof CssOutline &&
                 value.equals(((CssOutline) property).value));
     }
-
 
     /**
      * Get this property in the style.

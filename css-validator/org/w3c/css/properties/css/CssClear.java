@@ -22,7 +22,6 @@ public class CssClear extends CssProperty {
     public CssClear() {
     }
 
-
     /**
      * Set the value of the property<br/>
      * Does not check the number of values
@@ -50,7 +49,6 @@ public class CssClear extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -58,19 +56,11 @@ public class CssClear extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
     public final String getPropertyName() {
         return "clear";
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

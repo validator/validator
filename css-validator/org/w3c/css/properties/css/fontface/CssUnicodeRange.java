@@ -53,7 +53,6 @@ public class CssUnicodeRange extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -70,13 +69,6 @@ public class CssUnicodeRange extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -89,7 +81,6 @@ public class CssUnicodeRange extends CssProperty {
         s.fontFaceCssUnicodeRange = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -99,7 +90,6 @@ public class CssUnicodeRange extends CssProperty {
         return (property instanceof CssUnicodeRange &&
                 value.equals(((CssUnicodeRange) property).value));
     }
-
 
     /**
      * Get this property in the style.

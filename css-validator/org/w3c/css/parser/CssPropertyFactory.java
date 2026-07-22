@@ -7,6 +7,7 @@
 
 package org.w3c.css.parser;
 
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.w3c.css.atrules.css.AtRuleMedia;
 import org.w3c.css.atrules.css.media.Media;
 import org.w3c.css.atrules.css.media.MediaFeature;
@@ -262,10 +263,6 @@ public class CssPropertyFactory implements Cloneable {
             throw new WarningParamException("vendor-extension", expression.toStringFromStart());
         }
 
-        if (expression.hasCssVariable()) {
-            throw new WarningParamException("css-variable", expression.toStringFromStart());
-        }
-
         if (ac.getTreatCssHacksAsWarnings() && expression.hasCssHack()) {
             throw new WarningParamException("css-hack", expression.toStringFromStart());
         }
@@ -273,6 +270,7 @@ public class CssPropertyFactory implements Cloneable {
         try {
             boolean isCssWide = false;
             CssIdent cssIdent = null;
+            CssProperty p;
             if ((expression.getCount() == 1) && (expression.getValue().getRawType() == CssTypes.CSS_IDENT)) {
                 cssIdent = expression.getValue().getIdent();
                 isCssWide = CssIdent.isCssWide(cssIdent);
@@ -284,7 +282,7 @@ public class CssPropertyFactory implements Cloneable {
                 Object[] parameters = {};
                 expression.next(); // consume token
                 // invoke the constructor
-                CssProperty p = (CssProperty) constructor.newInstance(parameters);
+                p = (CssProperty) constructor.newInstance(parameters);
                 p.value = cssIdent;
                 return p;
             } else if (isCatchall) {
@@ -293,20 +291,38 @@ public class CssPropertyFactory implements Cloneable {
                 Constructor constructor = Class.forName(classname).getConstructor(parametersType);
                 Object[] parameters = {ac, property, expression, Boolean.TRUE};
                 // invoke the constructor
-                return (CssProperty) constructor.newInstance(parameters);
+                p = (CssProperty) constructor.newInstance(parameters);
+                if (expression.hasCssVariable() && p.toString() == null) {
+                    p.valueString = expression.toStringFromStart();
+                }
+                return p;
             } else {
                 // create an instance of your property class
                 Class[] parametersType = {ac.getClass(), expression.getClass(), boolean.class};
                 Constructor constructor = Class.forName(classname).getConstructor(parametersType);
                 Object[] parameters = {ac, expression, Boolean.TRUE};
                 // invoke the constructor
-                return (CssProperty) constructor.newInstance(parameters);
+                p = (CssProperty) constructor.newInstance(parameters);
+                if (expression.hasCssVariable() && p.toString() == null) {
+                    p.valueString = expression.toStringFromStart();
+                }
+                return p;
 
             }
         } catch (InvocationTargetException e) {
             // catch InvalidParamException
             Exception ex = (Exception) e.getTargetException();
             //	uncomment for debug - ex.printStackTrace();
+            if (expression.hasCssVariable()) {
+                try {
+                    CssProperty p = (CssProperty) Class.forName(classname).getConstructor().newInstance();
+                    p.valueString = expression.toStringFromStart();
+                    ac.getFrame().addWarning("css-variable", new String[]{p.valueString});
+                    return p;
+                } catch (Exception fex) {
+                    throw new WarningParamException("css-variable", expression.toStringFromStart());
+                }
+            }
             throw ex;
         }
     }
@@ -350,6 +366,32 @@ public class CssPropertyFactory implements Cloneable {
     }
 
     private String findClosestPropertyName(AtRule atRule, ApplContext ac, String property) {
+        LevenshteinDistance levenshtein = LevenshteinDistance.getDefaultInstance();
+        int mindist = 100000;
+        int dist;
+        Set<String> propertyList = PropertiesLoader.getProfile(ac.getPropertyKey()).keySet();
+        String bestFit = null;
+        String prefix = atRule.lookupPrefix();
+        if (!prefix.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append('@').append(atRule.keyword()).append('.').append(property);
+            property = sb.toString();
+        }
+        for (String s : propertyList) {
+            dist = levenshtein.apply(property, s);
+            if (dist >= 0 && dist < mindist) {
+                bestFit = s;
+                mindist = dist;
+                // as we didn't have a match, 1 is the best we can get.
+                if (mindist == 1) {
+                    return bestFit;
+                }
+            }
+        }
+        // arbitraty limit
+        if (mindist <= 2) {
+            return bestFit;
+        }
         return null;
     }
 

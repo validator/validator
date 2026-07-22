@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssPause extends CssProperty {
 
-
     public CssPauseAfter cssPauseAfter;
     public CssPauseBefore cssPauseBefore;
 
@@ -53,7 +52,6 @@ public class CssPause extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -67,13 +65,6 @@ public class CssPause extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -98,7 +89,6 @@ public class CssPause extends CssProperty {
         return (property instanceof CssPause &&
                 value.equals(((CssPause) property).value));
     }
-
 
     /**
      * Get this property in the style.

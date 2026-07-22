@@ -291,8 +291,12 @@ public class CssFont extends org.w3c.css.properties.css.CssFont {
 
     @Override
     public String toString() {
+        if (valueString != null) {
+            return valueString;
+        }
         if (value != null) {
-            return value.toString();
+            valueString = value.toString();
+            return valueString;
         }
         boolean first = true;
         StringBuilder sb = new StringBuilder();
@@ -343,7 +347,8 @@ public class CssFont extends org.w3c.css.properties.css.CssFont {
             sb.append(' ');
             sb.append(fontFamily);
         }
-        return sb.toString();
+        valueString = sb.toString();
+        return valueString;
     }
 
     @Override

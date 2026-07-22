@@ -50,7 +50,6 @@ public class CssBorderRightStyle extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -64,13 +63,6 @@ public class CssBorderRightStyle extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -93,7 +85,6 @@ public class CssBorderRightStyle extends CssProperty {
         return (property instanceof CssBorderRightStyle &&
                 value.equals(((CssBorderRightStyle) property).value));
     }
-
 
     /**
      * Get this property in the style.

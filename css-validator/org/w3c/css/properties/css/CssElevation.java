@@ -12,7 +12,6 @@ import org.w3c.css.util.ApplContext;
 import org.w3c.css.util.InvalidParamException;
 import org.w3c.css.values.CssExpression;
 
-
 /**
  * @since CSS2
  */
@@ -48,7 +47,6 @@ public class CssElevation extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -62,13 +60,6 @@ public class CssElevation extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

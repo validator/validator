@@ -56,7 +56,6 @@ public class CssBorderLeft extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -70,14 +69,6 @@ public class CssBorderLeft extends CssProperty {
     public final String getPropertyName() {
         return "border-left";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle

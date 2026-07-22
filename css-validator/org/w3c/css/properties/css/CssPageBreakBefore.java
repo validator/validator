@@ -19,7 +19,6 @@ public class CssPageBreakBefore extends CssProperty {
 
     public static final String propertyName = "page-break-before";
 
-
     /**
      * Create a new CssPageBreakBefore
      */
@@ -75,13 +74,6 @@ public class CssPageBreakBefore extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (value == inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

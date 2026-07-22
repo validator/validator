@@ -71,10 +71,14 @@ public class CssBorderTop extends org.w3c.css.properties.css.CssBorderTop {
      * Returns a string representation of the object.
      */
     public String toString() {
+        if (valueString != null) {
+            return valueString;
+        }
         if (_width != null) {
             try {
                 if ((_width.value.getType() == CssTypes.CSS_IDENT) && CssIdent.isCssWide(_width.value.getIdent())) {
-                    return _width.value.toString();
+                    valueString = _width.value.toString();
+                    return valueString;
                 }
             } catch (Exception ignored) {
             }
@@ -100,7 +104,8 @@ public class CssBorderTop extends org.w3c.css.properties.css.CssBorderTop {
                 sb.append(' ').append(_color);
             }
         }
-        return sb.toString();
+        valueString = sb.toString();
+        return valueString;
     }
 
 }

@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssTouchAction extends CssProperty {
 
-
     /**
      * Create a new CssTouchAction
      */
@@ -50,7 +49,6 @@ public class CssTouchAction extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -67,13 +65,6 @@ public class CssTouchAction extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -86,7 +77,6 @@ public class CssTouchAction extends CssProperty {
         s.cssTouchAction = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -96,7 +86,6 @@ public class CssTouchAction extends CssProperty {
         return (property instanceof CssTouchAction &&
                 value.equals(((CssTouchAction) property).value));
     }
-
 
     /**
      * Get this property in the style.

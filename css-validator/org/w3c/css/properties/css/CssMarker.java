@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssMarker extends CssProperty {
 
-
     /**
      * Create a new CssMarker
      */
@@ -49,7 +48,6 @@ public class CssMarker extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssMarker extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -95,7 +86,6 @@ public class CssMarker extends CssProperty {
         s.cssMarker = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -105,7 +95,6 @@ public class CssMarker extends CssProperty {
         return (property instanceof CssMarker &&
                 value.equals(((CssMarker) property).value));
     }
-
 
     /**
      * Get this property in the style.

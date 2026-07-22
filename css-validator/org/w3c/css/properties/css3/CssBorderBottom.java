@@ -71,12 +71,17 @@ public class CssBorderBottom extends org.w3c.css.properties.css.CssBorderBottom 
      * Returns a string representation of the object.
      */
     public String toString() {
+        if (valueString != null) {
+            return valueString;
+        }
         if (_width != null) {
             if (inherit == _width.value) {
-                return inherit.toString();
+                valueString = _width.toString();
+                return valueString;
             }
             if (initial == _width.value) {
-                return initial.toString();
+                valueString = _width.toString();
+                return valueString;
             }
         }
         StringBuilder sb = new StringBuilder();
@@ -100,6 +105,7 @@ public class CssBorderBottom extends org.w3c.css.properties.css.CssBorderBottom 
                 sb.append(' ').append(_color);
             }
         }
-        return sb.toString();
+        valueString = sb.toString();
+        return valueString;
     }
 }

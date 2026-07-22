@@ -161,10 +161,11 @@ public class CssRubySpan extends CssProperty {
      * Returns a string representation of the object
      */
     public String toString() {
-        if (rubyspan != null)
-            return rubyspan.toString();
-        else
-            return values.firstElement().toString();
+        if (valueString != null) {
+            return valueString;
+        }
+        valueString = (rubyspan != null) ? rubyspan.toString() : values.firstElement().toString();
+        return valueString;
     }
 
     /**

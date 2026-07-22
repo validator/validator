@@ -41,7 +41,6 @@ public class CssBackgroundRepeat extends CssProperty {
         throw new InvalidParamException("unrecognize", ac);
     }
 
-
     public CssBackgroundRepeat(ApplContext ac, CssExpression expression)
             throws InvalidParamException {
         this(ac, expression, false);
@@ -61,13 +60,6 @@ public class CssBackgroundRepeat extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (inherit == value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -122,6 +114,4 @@ public class CssBackgroundRepeat extends CssProperty {
     }
 
 }
-
-
 

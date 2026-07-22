@@ -48,7 +48,6 @@ public class CssBackgroundColor extends CssProperty {
         return value;
     }
 
-
     public void set(CssValue col) {
         value = col;
     }
@@ -67,14 +66,6 @@ public class CssBackgroundColor extends CssProperty {
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle.

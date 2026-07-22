@@ -102,13 +102,6 @@ public class CssColumnRuleStyle extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Is the value of this property a default value
      * It is used by all macro for the function <code>print</code>
      */

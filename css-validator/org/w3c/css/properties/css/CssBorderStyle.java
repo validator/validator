@@ -57,7 +57,6 @@ public class CssBorderStyle extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -70,13 +69,6 @@ public class CssBorderStyle extends CssProperty {
      */
     public final String getPropertyName() {
         return "border-style";
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -125,7 +117,6 @@ public class CssBorderStyle extends CssProperty {
                     ((bottom != null && bottom.equals(other.bottom)) || (bottom == null && other.bottom == null)) &&
                     ((right != null && right.equals(other.right)) || (right == null && other.right == null)) &&
                     ((top != null && top.equals(other.top)) || (top == null && other.top == null));
-
 
         } catch (ClassCastException cce) {
         }

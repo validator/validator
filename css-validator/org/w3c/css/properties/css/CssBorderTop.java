@@ -55,7 +55,6 @@ public class CssBorderTop extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -69,14 +68,6 @@ public class CssBorderTop extends CssProperty {
     public final String getPropertyName() {
         return "border-top";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle

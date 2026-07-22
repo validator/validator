@@ -19,7 +19,6 @@ public class CssPageBreakInside extends CssProperty {
 
     public static final String propertyName = "page-break-inside";
 
-
     /**
      * Create a new CssPageBreakInside
      */
@@ -75,13 +74,6 @@ public class CssPageBreakInside extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (value == inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

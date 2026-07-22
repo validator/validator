@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssOverflowY extends CssProperty {
 
-
     /**
      * Create a new CssOverflowY
      */
@@ -49,7 +48,6 @@ public class CssOverflowY extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssOverflowY extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -92,7 +83,6 @@ public class CssOverflowY extends CssProperty {
         return (property instanceof CssOverflowY &&
                 value.equals(((CssOverflowY) property).value));
     }
-
 
     /**
      * Get this property in the style.

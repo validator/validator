@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssRest extends CssProperty {
 
-
     public CssRestAfter cssRestAfter;
     public CssRestBefore cssRestBefore;
 
@@ -53,7 +52,6 @@ public class CssRest extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -67,13 +65,6 @@ public class CssRest extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -98,7 +89,6 @@ public class CssRest extends CssProperty {
         return (property instanceof CssRest &&
                 value.equals(((CssRest) property).value));
     }
-
 
     /**
      * Get this property in the style.

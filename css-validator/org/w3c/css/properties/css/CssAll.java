@@ -46,7 +46,6 @@ public class CssAll extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +62,6 @@ public class CssAll extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -78,7 +70,6 @@ public class CssAll extends CssProperty {
         // TODO FIXME we should redefine all CSS Properties
         // of the current style...
     }
-
 
     /**
      * Compares two properties for equality.
@@ -89,7 +80,6 @@ public class CssAll extends CssProperty {
         return (property instanceof CssAll &&
                 value.equals(property.value));
     }
-
 
     /**
      * Get this property in the style.

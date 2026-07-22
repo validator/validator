@@ -306,6 +306,9 @@ public class CssAnimation extends org.w3c.css.properties.css.CssAnimation {
 
 
         public String toString() {
+            if (valueString != null) {
+                return valueString;
+            }
             boolean doneFirst = false;
             StringBuilder sb = new StringBuilder();
             if (name != null) {
@@ -346,8 +349,8 @@ public class CssAnimation extends org.w3c.css.properties.css.CssAnimation {
                 }
                 sb.append(fillmode);
             }
-
-            return sb.toString();
+            valueString =  sb.toString();
+            return valueString;
         }
     }
 }

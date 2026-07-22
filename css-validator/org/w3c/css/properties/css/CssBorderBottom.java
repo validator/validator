@@ -22,7 +22,6 @@ public class CssBorderBottom extends CssProperty {
     public CssBorderBottomColor _color;
     public CssBorderBottomStyle _style;
 
-
     /**
      * Create a new CssBorderBottom
      */
@@ -56,7 +55,6 @@ public class CssBorderBottom extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -70,14 +68,6 @@ public class CssBorderBottom extends CssProperty {
     public final String getPropertyName() {
         return "border-bottom";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle

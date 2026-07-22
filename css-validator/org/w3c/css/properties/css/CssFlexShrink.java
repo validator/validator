@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssFlexShrink extends CssProperty {
 
-
     /**
      * Create a new CssFlexShrink
      */
@@ -49,7 +48,6 @@ public class CssFlexShrink extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -66,13 +64,6 @@ public class CssFlexShrink extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -85,7 +76,6 @@ public class CssFlexShrink extends CssProperty {
         s.cssFlexShrink = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -95,7 +85,6 @@ public class CssFlexShrink extends CssProperty {
         return (property instanceof CssFlexShrink &&
                 value.equals(((CssFlexShrink) property).value));
     }
-
 
     /**
      * Get this property in the style.

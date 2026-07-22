@@ -48,7 +48,6 @@ public class CssOverscrollBehaviorBlock extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -62,13 +61,6 @@ public class CssOverscrollBehaviorBlock extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -91,7 +83,6 @@ public class CssOverscrollBehaviorBlock extends CssProperty {
         return (property instanceof CssOverscrollBehaviorBlock &&
                 value.equals(((CssOverscrollBehaviorBlock) property).value));
     }
-
 
     /**
      * Get this property in the style.

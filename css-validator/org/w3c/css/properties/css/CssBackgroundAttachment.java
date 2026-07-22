@@ -34,7 +34,6 @@ public class CssBackgroundAttachment extends CssProperty {
     public CssBackgroundAttachment(ApplContext ac, CssExpression expression,
                                    boolean check) throws InvalidParamException {
 
-
         throw new InvalidParamException("unrecognize", ac);
 
     }
@@ -57,13 +56,6 @@ public class CssBackgroundAttachment extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (inherit == value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

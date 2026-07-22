@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssFontSynthesis extends CssProperty {
 
-
     /**
      * Create a new CssFontSynthesis
      */
@@ -50,7 +49,6 @@ public class CssFontSynthesis extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -67,13 +65,6 @@ public class CssFontSynthesis extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -86,7 +77,6 @@ public class CssFontSynthesis extends CssProperty {
         s.cssFontSynthesis = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -96,7 +86,6 @@ public class CssFontSynthesis extends CssProperty {
         return (property instanceof CssFontSynthesis &&
                 value.equals(((CssFontSynthesis) property).value));
     }
-
 
     /**
      * Get this property in the style.

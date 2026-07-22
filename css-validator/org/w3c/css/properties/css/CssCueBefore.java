@@ -48,7 +48,6 @@ public class CssCueBefore extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -62,13 +61,6 @@ public class CssCueBefore extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -91,7 +83,6 @@ public class CssCueBefore extends CssProperty {
         return (property instanceof CssCueBefore &&
                 value.equals(((CssCueBefore) property).value));
     }
-
 
     /**
      * Get this property in the style.

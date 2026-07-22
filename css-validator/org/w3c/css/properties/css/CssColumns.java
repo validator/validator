@@ -103,10 +103,4 @@ public class CssColumns extends CssProperty {
         return (inherit == value);
     }
 
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
-    }
 }

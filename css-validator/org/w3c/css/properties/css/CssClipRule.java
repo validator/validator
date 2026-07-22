@@ -48,7 +48,6 @@ public class CssClipRule extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -65,13 +64,6 @@ public class CssClipRule extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -84,7 +76,6 @@ public class CssClipRule extends CssProperty {
         s.cssClipRule = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -94,7 +85,6 @@ public class CssClipRule extends CssProperty {
         return (property instanceof CssClipRule &&
                 value.equals(((CssClipRule) property).value));
     }
-
 
     /**
      * Get this property in the style.

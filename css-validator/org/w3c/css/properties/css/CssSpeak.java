@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssSpeak extends CssProperty {
 
-
     /**
      * Create a new CssSpeak
      */
@@ -49,7 +48,6 @@ public class CssSpeak extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssSpeak extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -92,7 +83,6 @@ public class CssSpeak extends CssProperty {
         return (property instanceof CssSpeak &&
                 value.equals(((CssSpeak) property).value));
     }
-
 
     /**
      * Get this property in the style.

@@ -68,12 +68,17 @@ public class CssBorderRight extends org.w3c.css.properties.css.CssBorderRight {
      * Returns a string representation of the object.
      */
     public String toString() {
+        if (valueString != null) {
+            return valueString;
+        }
         if (_width != null) {
             if (inherit == _width.value) {
-                return inherit.toString();
+                valueString = inherit.toString();
+                return valueString;
             }
             if (initial == _width.value) {
-                return initial.toString();
+                valueString = initial.toString();
+                return valueString;
             }
         }
         StringBuilder sb = new StringBuilder();
@@ -97,6 +102,7 @@ public class CssBorderRight extends org.w3c.css.properties.css.CssBorderRight {
                 sb.append(' ').append(_color);
             }
         }
-        return sb.toString();
+        valueString = sb.toString();
+        return valueString;
     }
 }

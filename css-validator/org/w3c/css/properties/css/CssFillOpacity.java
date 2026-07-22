@@ -48,7 +48,6 @@ public class CssFillOpacity extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -65,13 +64,6 @@ public class CssFillOpacity extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -84,7 +76,6 @@ public class CssFillOpacity extends CssProperty {
         s.cssFillOpacity = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -94,7 +85,6 @@ public class CssFillOpacity extends CssProperty {
         return (property instanceof CssFillOpacity &&
                 value.equals(((CssFillOpacity) property).value));
     }
-
 
     /**
      * Get this property in the style.

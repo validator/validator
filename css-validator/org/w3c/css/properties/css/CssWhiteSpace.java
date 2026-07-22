@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssWhiteSpace extends CssProperty {
 
-
     /*
     * Create a new CssWhiteSpace
     */
@@ -63,13 +62,6 @@ public class CssWhiteSpace extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return false;
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

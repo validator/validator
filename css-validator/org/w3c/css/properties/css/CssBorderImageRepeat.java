@@ -50,7 +50,6 @@ public class CssBorderImageRepeat extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -64,13 +63,6 @@ public class CssBorderImageRepeat extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -93,7 +85,6 @@ public class CssBorderImageRepeat extends CssProperty {
         return (property instanceof CssBorderImageRepeat &&
                 value.equals(((CssBorderImageRepeat) property).value));
     }
-
 
     /**
      * Get this property in the style.

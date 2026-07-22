@@ -15,7 +15,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssFilter extends CssProperty {
 
-
     /**
      * Create a new CssFilter
      */
@@ -48,13 +47,6 @@ public class CssFilter extends CssProperty {
      */
     public String getPropertyName() {
         return "filter";
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

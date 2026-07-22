@@ -49,7 +49,6 @@ public class CssCaptionSide extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +62,6 @@ public class CssCaptionSide extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -92,7 +84,6 @@ public class CssCaptionSide extends CssProperty {
         return (property instanceof CssCaptionSide &&
                 value.equals(((CssCaptionSide) property).value));
     }
-
 
     /**
      * Get this property in the style.

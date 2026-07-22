@@ -21,7 +21,6 @@ public class CssHeight extends CssProperty {
 
     public static CssIdent auto = CssIdent.getIdent("auto");
 
-
     /**
      * Create a new CssWidth
      */
@@ -61,14 +60,6 @@ public class CssHeight extends CssProperty {
     public boolean isSoftlyInherited() {
         return value == inherit;
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle.

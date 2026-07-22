@@ -153,11 +153,15 @@ public class CssColor extends org.w3c.css.properties.css.CssColor {
      * Returns a string representation of the object.
      */
     public String toString() {
-        if (value != null) {
-            return value.toString();
-        } else {
-            return color.toString();
+        if (valueString != null) {
+            return valueString;
         }
+        if (value != null) {
+            valueString = value.toString();
+        } else {
+            valueString = (color != null) ? color.toString() : null;
+        }
+        return valueString;
     }
 
     /**

@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssInset extends CssProperty {
 
-
     /**
      * Create a new CssInset
      */
@@ -48,7 +47,6 @@ public class CssInset extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -62,13 +60,6 @@ public class CssInset extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

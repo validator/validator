@@ -57,7 +57,6 @@ public class CssBorderWidth extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -71,14 +70,6 @@ public class CssBorderWidth extends CssProperty {
     public final String getPropertyName() {
         return "border-width";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle
@@ -127,7 +118,6 @@ public class CssBorderWidth extends CssProperty {
                     ((bottom != null && bottom.equals(other.bottom)) || (bottom == null && other.bottom == null)) &&
                     ((right != null && right.equals(other.right)) || (right == null && other.right == null)) &&
                     ((top != null && top.equals(other.top)) || (top == null && other.top == null));
-
 
         } catch (ClassCastException cce) {
         }

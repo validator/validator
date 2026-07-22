@@ -92,10 +92,14 @@ public class CssBorderTopLeftRadius extends CssProperty {
      * Returns a string representation of the object.
      */
     public String toString() {
+        if (valueString != null) {
+            return valueString;
+        }
         if ((value == null) && (h_radius != null)) {
             syncval();
         }
-        return value.toString();
+        valueString = value.toString();
+        return valueString;
     }
 
     /**

@@ -42,7 +42,6 @@ public class CssBackgroundClip extends CssProperty {
         this(ac, expression, false);
     }
 
-
     /**
      * Add this property to the CssStyle
      *
@@ -98,13 +97,6 @@ public class CssBackgroundClip extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

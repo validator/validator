@@ -19,7 +19,6 @@ public class CssOrphans extends CssProperty {
 
     public static final String propertyName = "orphans";
 
-
     /**
      * Create a new CssOrphans
      */
@@ -75,13 +74,6 @@ public class CssOrphans extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (value == inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

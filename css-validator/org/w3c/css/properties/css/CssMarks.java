@@ -19,7 +19,6 @@ public class CssMarks extends CssProperty {
 
     public static final String propertyName = "marks";
 
-
     /**
      * Create a new CssMarks
      */
@@ -75,13 +74,6 @@ public class CssMarks extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (value == inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

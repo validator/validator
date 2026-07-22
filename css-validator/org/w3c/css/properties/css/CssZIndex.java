@@ -21,7 +21,6 @@ public class CssZIndex extends CssProperty {
 
     public static final String propertyName = "z-index";
 
-
     public static CssIdent auto = CssIdent.getIdent("auto");
 
     /**
@@ -77,13 +76,6 @@ public class CssZIndex extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (value == inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

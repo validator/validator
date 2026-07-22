@@ -15,7 +15,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssLetterSpacing extends CssProperty {
 
-
     /**
      * Create a new CssLetterSpacing.
      */
@@ -60,13 +59,6 @@ public class CssLetterSpacing extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value == inherit;
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

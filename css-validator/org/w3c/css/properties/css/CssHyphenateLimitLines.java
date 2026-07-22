@@ -47,7 +47,6 @@ public class CssHyphenateLimitLines extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -64,13 +63,6 @@ public class CssHyphenateLimitLines extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -83,7 +75,6 @@ public class CssHyphenateLimitLines extends CssProperty {
         s.cssHyphenateLimitLines = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -93,7 +84,6 @@ public class CssHyphenateLimitLines extends CssProperty {
         return (property instanceof CssHyphenateLimitLines &&
                 value.equals(((CssHyphenateLimitLines) property).value));
     }
-
 
     /**
      * Get this property in the style.

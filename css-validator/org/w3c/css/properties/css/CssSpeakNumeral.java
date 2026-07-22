@@ -17,7 +17,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssSpeakNumeral extends CssProperty {
 
-
     /**
      * Create a new CssSpeakNumeral
      */
@@ -50,7 +49,6 @@ public class CssSpeakNumeral extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -64,13 +62,6 @@ public class CssSpeakNumeral extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -93,7 +84,6 @@ public class CssSpeakNumeral extends CssProperty {
         return (property instanceof CssSpeakNumeral &&
                 value.equals(((CssSpeakNumeral) property).value));
     }
-
 
     /**
      * Get this property in the style.

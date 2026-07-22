@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssPauseAfter extends CssProperty {
 
-
     /**
      * Create a new CssPauseAfter
      */
@@ -49,7 +48,6 @@ public class CssPauseAfter extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssPauseAfter extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return value.equals(inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -92,7 +83,6 @@ public class CssPauseAfter extends CssProperty {
         return (property instanceof CssPauseAfter &&
                 value.equals(((CssPauseAfter) property).value));
     }
-
 
     /**
      * Get this property in the style.

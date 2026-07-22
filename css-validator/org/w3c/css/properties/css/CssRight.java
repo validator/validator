@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssRight extends CssProperty {
 
-
     /**
      * Create a new CssRight
      */
@@ -49,7 +48,6 @@ public class CssRight extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssRight extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -92,7 +83,6 @@ public class CssRight extends CssProperty {
         return (property instanceof CssRight &&
                 value.equals(((CssRight) property).value));
     }
-
 
     /**
      * Get this property in the style.

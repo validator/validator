@@ -36,7 +36,6 @@ public class CssBackgroundSize extends CssProperty {
         throw new InvalidParamException("unrecognize", ac);
     }
 
-
     public CssBackgroundSize(ApplContext ac, CssExpression expression)
             throws InvalidParamException {
         this(ac, expression, false);
@@ -96,13 +95,6 @@ public class CssBackgroundSize extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (inherit == value);
-    }
-
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

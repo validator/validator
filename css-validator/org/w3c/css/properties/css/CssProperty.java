@@ -36,6 +36,13 @@ public abstract class CssProperty
     public CssValue value = null;
 
     /**
+     * Verbatim string to render instead of <code>value.toString()</code>,
+     * used to keep an unresolved value (e.g. one containing a var()) in the
+     * output. <code>null</code> means "render from value".
+     */
+    public String valueString = null;
+
+    /**
      * True if this property is important. false otherwise.
      */
     public boolean important;
@@ -167,8 +174,18 @@ public abstract class CssProperty
      * <BR>
      * You should write something like this :
      * <code>property.getPropertyName() + " : " + property.toString()</code>
+     * <BR>
+     * Returns <code>valueString</code> when set (verbatim, e.g. a var()),
+     * otherwise the string of <code>value</code>, or <code>null</code> when
+     * neither is available (the caller decides how to handle that).
      */
-    public abstract String toString();
+    public String toString() {
+        if (valueString != null) {
+            return valueString;
+        }
+        valueString = (value != null) ? value.toString() : null;
+        return valueString;
+    }
 
     public String getEscaped() {
         return Messages.escapeString(toString());

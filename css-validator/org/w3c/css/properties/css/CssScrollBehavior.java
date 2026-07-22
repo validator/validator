@@ -13,7 +13,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssScrollBehavior extends CssProperty {
 
-
     /**
      * Create a new CssScrollBehavior
      */
@@ -46,7 +45,6 @@ public class CssScrollBehavior extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -63,13 +61,6 @@ public class CssScrollBehavior extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -82,7 +73,6 @@ public class CssScrollBehavior extends CssProperty {
         s.cssScrollBehavior = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -92,7 +82,6 @@ public class CssScrollBehavior extends CssProperty {
         return (property instanceof CssScrollBehavior &&
                 value.equals(((CssScrollBehavior) property).value));
     }
-
 
     /**
      * Get this property in the style.

@@ -47,7 +47,6 @@ public class CssAccentColor extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -64,13 +63,6 @@ public class CssAccentColor extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -83,7 +75,6 @@ public class CssAccentColor extends CssProperty {
         s.cssAccentColor = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -93,7 +84,6 @@ public class CssAccentColor extends CssProperty {
         return (property instanceof CssAccentColor &&
                 value.equals(((CssAccentColor) property).value));
     }
-
 
     /**
      * Get this property in the style.

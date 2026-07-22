@@ -58,7 +58,6 @@ public class CssBorderColor extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -79,14 +78,6 @@ public class CssBorderColor extends CssProperty {
     public final String getPropertyName() {
         return "border-color";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle
@@ -134,7 +125,6 @@ public class CssBorderColor extends CssProperty {
                     ((bottom != null && bottom.equals(other.bottom)) || (bottom == null && other.bottom == null)) &&
                     ((right != null && right.equals(other.right)) || (right == null && other.right == null)) &&
                     ((top != null && top.equals(other.top)) || (top == null && other.top == null));
-
 
         } catch (ClassCastException cce) {
         }

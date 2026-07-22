@@ -24,7 +24,6 @@ import org.w3c.css.values.CssValue;
 
 public class CssColumnSpan extends org.w3c.css.properties.css.CssColumnSpan {
 
-
     static CssIdent all;
 
     static {
@@ -99,13 +98,6 @@ public class CssColumnSpan extends org.w3c.css.properties.css.CssColumnSpan {
      */
     public boolean isSoftlyInherited() {
         return (value == inherit);
-    }
-
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

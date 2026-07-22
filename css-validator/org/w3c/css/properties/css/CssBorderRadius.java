@@ -58,7 +58,6 @@ public class CssBorderRadius extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -72,14 +71,6 @@ public class CssBorderRadius extends CssProperty {
     public final String getPropertyName() {
         return "border-radius";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle

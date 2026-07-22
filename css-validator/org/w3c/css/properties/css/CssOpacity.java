@@ -19,7 +19,6 @@ import org.w3c.css.values.CssExpression;
 
 public class CssOpacity extends CssProperty {
 
-
     /**
      * Create a new CssOpacity
      */
@@ -97,13 +96,6 @@ public class CssOpacity extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit == value;
-    }
-
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

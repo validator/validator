@@ -105,10 +105,4 @@ public class CssColumnRule extends CssProperty {
         return value;
     }
 
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
-    }
 }

@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssForcedColorAdjust extends CssProperty {
 
-
     /**
      * Create a new CssForcedColorAdjust
      */
@@ -48,7 +47,6 @@ public class CssForcedColorAdjust extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -65,13 +63,6 @@ public class CssForcedColorAdjust extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -84,7 +75,6 @@ public class CssForcedColorAdjust extends CssProperty {
         s.cssForcedColorAdjust = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -94,7 +84,6 @@ public class CssForcedColorAdjust extends CssProperty {
         return (property instanceof CssForcedColorAdjust &&
                 value.equals(((CssForcedColorAdjust) property).value));
     }
-
 
     /**
      * Get this property in the style.

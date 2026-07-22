@@ -59,13 +59,6 @@ public abstract class CssCustomProperty extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Compares two properties for equality.
      *
      * @param property The other property.

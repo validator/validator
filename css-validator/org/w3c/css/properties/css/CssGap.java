@@ -20,7 +20,6 @@ public class CssGap extends CssProperty {
 
     private static final String propertyName = "gap";
 
-
     /**
      * Create a new CssGap
      */
@@ -96,13 +95,6 @@ public class CssGap extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (inherit == value);
-    }
-
-    /**
-     * Returns a string representation of the object
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

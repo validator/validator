@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssGridRowEnd extends CssProperty {
 
-
     /**
      * Create a new CssGridRowEnd
      */
@@ -49,7 +48,6 @@ public class CssGridRowEnd extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -66,13 +64,6 @@ public class CssGridRowEnd extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -85,7 +76,6 @@ public class CssGridRowEnd extends CssProperty {
         s.cssGridRowEnd = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -95,7 +85,6 @@ public class CssGridRowEnd extends CssProperty {
         return (property instanceof CssGridRowEnd &&
                 value.equals(((CssGridRowEnd) property).value));
     }
-
 
     /**
      * Get this property in the style.

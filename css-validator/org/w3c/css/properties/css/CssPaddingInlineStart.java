@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssPaddingInlineStart extends CssProperty {
 
-
     /**
      * Create a new CssPaddingInlineStart
      */
@@ -48,7 +47,6 @@ public class CssPaddingInlineStart extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -62,13 +60,6 @@ public class CssPaddingInlineStart extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return inherit.equals(value);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**
@@ -91,7 +82,6 @@ public class CssPaddingInlineStart extends CssProperty {
         return (property instanceof CssPaddingInlineStart &&
                 value.equals(((CssPaddingInlineStart) property).value));
     }
-
 
     /**
      * Get this property in the style.

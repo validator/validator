@@ -23,7 +23,6 @@ public class CssBorderImage extends CssProperty {
     public CssBorderImageOutset outset;
     public CssBorderImageRepeat repeat;
 
-
     public boolean shorthand;
 
     /**
@@ -59,7 +58,6 @@ public class CssBorderImage extends CssProperty {
 
     }
 
-
     /**
      * Returns the value of this property
      */
@@ -73,14 +71,6 @@ public class CssBorderImage extends CssProperty {
     public final String getPropertyName() {
         return "border-image";
     }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
 
     /**
      * Add this property to the CssStyle

@@ -52,7 +52,6 @@ public class CssSrc extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -69,13 +68,6 @@ public class CssSrc extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -88,7 +80,6 @@ public class CssSrc extends CssProperty {
         s.colorProfileCssSrc = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -98,7 +89,6 @@ public class CssSrc extends CssProperty {
         return (property instanceof CssSrc &&
                 value.equals(((CssSrc) property).value));
     }
-
 
     /**
      * Get this property in the style.

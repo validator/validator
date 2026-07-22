@@ -19,7 +19,6 @@ public class CssSize extends CssProperty {
 
     public static final String propertyName = "size";
 
-
     /**
      * Create a new CssSize
      */
@@ -75,13 +74,6 @@ public class CssSize extends CssProperty {
      */
     public boolean isSoftlyInherited() {
         return (value == inherit);
-    }
-
-    /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
     }
 
     /**

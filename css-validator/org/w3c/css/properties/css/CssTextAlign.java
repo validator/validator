@@ -16,7 +16,6 @@ import org.w3c.css.values.CssExpression;
  */
 public class CssTextAlign extends CssProperty {
 
-
     /**
      * Create a new CssTextAlign
      */
@@ -49,7 +48,6 @@ public class CssTextAlign extends CssProperty {
         return value;
     }
 
-
     /**
      * Returns the name of this property
      */
@@ -66,13 +64,6 @@ public class CssTextAlign extends CssProperty {
     }
 
     /**
-     * Returns a string representation of the object.
-     */
-    public String toString() {
-        return value.toString();
-    }
-
-    /**
      * Add this property to the CssStyle.
      *
      * @param style The CssStyle
@@ -85,7 +76,6 @@ public class CssTextAlign extends CssProperty {
         s.cssTextAlign = this;
     }
 
-
     /**
      * Compares two properties for equality.
      *
@@ -95,7 +85,6 @@ public class CssTextAlign extends CssProperty {
         return (property instanceof CssTextAlign &&
                 value.equals(((CssTextAlign) property).value));
     }
-
 
     /**
      * Get this property in the style.

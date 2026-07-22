@@ -443,8 +443,12 @@ public class CssBorderImage extends org.w3c.css.properties.css.CssBorderImage {
     }
 
     public String toString() {
+        if (valueString != null) {
+            return valueString;
+        }
         if (value != null) {
-            return value.toString();
+            valueString = value.toString();
+            return valueString;
         }
         boolean first = true;
         StringBuilder sb = new StringBuilder();
@@ -474,6 +478,7 @@ public class CssBorderImage extends org.w3c.css.properties.css.CssBorderImage {
             }
             sb.append(repeat);
         }
-        return sb.toString();
+        valueString = sb.toString();
+        return valueString;
     }
 }
