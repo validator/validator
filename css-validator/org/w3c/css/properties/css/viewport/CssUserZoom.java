@@ -18,8 +18,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CssUserZoom extends CssProperty {
 
-    public CssValue value;
-
     /**
      * Create a new CssUserZoom
      */

@@ -18,8 +18,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CssSuffix extends CssProperty {
 
-    public CssValue value;
-
     /**
      * Create a new CssSuffix
      */

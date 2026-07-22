@@ -6,7 +6,6 @@ import org.w3c.css.values.CssComparator;
 import org.w3c.css.values.CssValue;
 
 public abstract class MediaRangeFeature extends MediaFeature {
-    public CssValue value;
     public CssValue otherValue;
     public String comparator;
     public String otherComparator;

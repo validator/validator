@@ -18,7 +18,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CatchallProperty extends CssProperty {
 
-    public CssValue value;
     public String name;
 
     /**

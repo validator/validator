@@ -19,8 +19,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CssSuperscriptSizeOverride extends CssProperty {
 
-    public CssValue value;
-
     /**
      * Create a new CssSuperscriptSizeOverride
      */

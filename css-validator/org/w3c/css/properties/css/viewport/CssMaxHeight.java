@@ -18,8 +18,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CssMaxHeight extends CssProperty {
 
-    public CssValue value;
-
     /**
      * Create a new CssMaxHeight
      */

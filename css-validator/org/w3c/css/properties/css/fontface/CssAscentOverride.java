@@ -19,8 +19,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CssAscentOverride extends CssProperty {
 
-    public CssValue value;
-
     /**
      * Create a new CssAscentOverride
      */

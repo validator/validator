@@ -18,8 +18,6 @@ import org.w3c.css.values.CssValue;
  */
 public class CssSystem extends CssProperty {
 
-    public CssValue value;
-
     /**
      * Create a new CssSystem
      */
