@@ -85,8 +85,14 @@ public class HWB {
         CssValue val = exp.getValue();
         char op = exp.getOperator();
         // H
-        if ((val == null || op != SPACE) && !exp.hasCssVariable()) {
-            throw new InvalidParamException("invalid-color", ac);
+        if (val == null || op != SPACE) {
+            if (!exp.hasCssVariable()) {
+                throw new InvalidParamException("invalid-color", ac);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append("hwb(").append(exp.toStringFromStart()).append(')');
+                hwb.output = sb.toString();
+            }
         }
 
         if (val.getType() == CssTypes.CSS_IDENT) {
@@ -119,9 +125,21 @@ public class HWB {
         }
 
         switch (val.getType()) {
+            case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                if (exp.getRemainingCount() >= 3) {
+                    hwb.setHue(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("hwb(").append(exp.toStringFromStart()).append(')');
+                    hwb.output = sb.toString();
+                    return hwb;
+                }
+                break;
             case CssTypes.CSS_ANGLE:
             case CssTypes.CSS_NUMBER:
-            case CssTypes.CSS_VARIABLE:
                 hwb.setHue(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -145,9 +163,21 @@ public class HWB {
             throw new InvalidParamException("invalid-color", ac);
         }
         switch (val.getType()) {
+            case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                if (exp.getRemainingCount() >= 2) {
+                    hwb.setWhiteness(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("hwb(").append(exp.toStringFromStart()).append(')');
+                    hwb.output = sb.toString();
+                    return hwb;
+                }
+                break;
             case CssTypes.CSS_PERCENTAGE:
             case CssTypes.CSS_NUMBER:
-            case CssTypes.CSS_VARIABLE:
                 hwb.setWhiteness(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -156,6 +186,11 @@ public class HWB {
                     hwb.setWhiteness(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have lch(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     exp.starts();
@@ -174,9 +209,21 @@ public class HWB {
             }
         }
         switch (val.getType()) {
+            case CssTypes.CSS_VARIABLE:
+                exp.markCssVariable();
+                caller.markCssVariable();
+                if (exp.getRemainingCount() >= 2) {
+                    hwb.setBlackness(ac, val);
+                } else {
+                    // not the right amount of parameters, bail out.
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("hwb(").append(exp.toStringFromStart()).append(')');
+                    hwb.output = sb.toString();
+                    return hwb;
+                }
+                break;
             case CssTypes.CSS_PERCENTAGE:
             case CssTypes.CSS_NUMBER:
-            case CssTypes.CSS_VARIABLE:
                 hwb.setBlackness(ac, val);
                 break;
             case CssTypes.CSS_IDENT:
@@ -185,6 +232,11 @@ public class HWB {
                     hwb.setBlackness(ac, val);
                     break;
                 }
+            case CssTypes.CSS_SWITCH:
+                // can happen only when we have lch(var(--foo) / ...)
+                exp.precedent();
+                // only do that, if there is variable, it will be handled later
+                // if not it will bail out in default:
             default:
                 if (!exp.hasCssVariable()) {
                     exp.starts();
