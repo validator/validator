@@ -348,7 +348,10 @@ public class LAB {
     }
 
     public boolean equals(LAB other) {
-        if (other != null) {
+        // (va here is the a-axis, a mandatory channel; alpha is guarded separately)
+        if (other != null
+                && vl != null && va != null && vb != null
+                && other.vl != null && other.va != null && other.vb != null) {
             if (isRelative) {
                 if (!other.isRelative || !fromValue.equals(other.fromValue)) {
                     return false;

@@ -145,7 +145,9 @@ public class RGB {
     }
 
     public boolean equals(RGB other) {
-        if (other != null) {
+        if (other != null
+                && vr != null && vg != null && vb != null
+                && other.vr != null && other.vg != null && other.vb != null) {
             return (vr.equals(other.vr) && vg.equals(other.vg) && vb.equals(other.vb));
         }
         return false;

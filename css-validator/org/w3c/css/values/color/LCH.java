@@ -350,7 +350,9 @@ public class LCH {
     }
 
     public boolean equals(LCH other) {
-        if (other != null) {
+        if (other != null
+                && vl != null && vc != null && vh != null
+                && other.vl != null && other.vc != null && other.vh != null) {
             if (isRelative) {
                 if (!other.isRelative || !fromValue.equals(other.fromValue)) {
                     return false;

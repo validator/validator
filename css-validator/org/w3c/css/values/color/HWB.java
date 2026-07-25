@@ -366,7 +366,9 @@ public class HWB {
     }
 
     public boolean equals(HWB other) {
-        if (other != null) {
+        if (other != null
+                && vh != null && vw != null && vb != null
+                && other.vh != null && other.vw != null && other.vb != null) {
             // if relative, check it starts from the same color
             if (isRelative) {
                 if (!other.isRelative || !fromValue.equals(other.fromValue)) {

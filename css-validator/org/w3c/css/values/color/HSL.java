@@ -435,7 +435,9 @@ public class HSL {
     }
 
     public boolean equals(HSL other) {
-        if (other != null) {
+        if (other != null
+                && vh != null && vs != null && vl != null
+                && other.vh != null && other.vs != null && other.vl != null) {
             // if relative, check it starts from the same color
             if (isRelative) {
                 if (!other.isRelative || !fromValue.equals(other.fromValue)) {
