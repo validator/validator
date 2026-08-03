@@ -348,6 +348,14 @@ DEALINGS IN THE SOFTWARE.
       <lib file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
       <lib file="${depsDir}/jakarta.json-${jakarta.json-version}.jar"/>
       <lib file="${depsDir}/jakarta.servlet-api-${jakarta.servlet-api-version}.jar"/>
+      <!-- PrudentHttpEntityResolver and VerifierServletTransaction use the
+           Jetty HTTP client, so the war needs it and the jars it draws on.
+           Only the client side is needed: the war is deployed into a
+           servlet container and never starts a Jetty server itself. -->
+      <lib file="${depsDir}/jetty-client-${jetty-version}.jar"/>
+      <lib file="${depsDir}/jetty-http-${jetty-version}.jar"/>
+      <lib file="${depsDir}/jetty-io-${jetty-version}.jar"/>
+      <lib file="${depsDir}/jetty-util-${jetty-version}.jar"/>
       <classes dir="${validator.build.basedir}/core/classes"/>
       <classes dir="${validator.build.basedir}/resources"/>
       <classes file="${validator.basedir}/resources/war/log4j.xml"/>
