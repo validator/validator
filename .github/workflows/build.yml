@@ -92,6 +92,20 @@ jobs:
           java -jar build/dist/vnu.jar site/nu-about.html
           python checker.py self-test
           python checker.py test
+      - name: Upload e2e failure artifacts
+        # The e2e tests interact with the checker only through a browser,
+        # so a server-side failure surfaces here just as a timed-out wait
+        # for a selector. Playwright records the page it actually got in
+        # test-results/, which is where the underlying error shows up.
+        if: ${{ failure() && env.IS_ANY_RELEASE_BUILDER == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-failure-${{ matrix.os }}-java${{ matrix.java }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+          if-no-files-found: ignore
       - name: Test specs
         if: ${{ env.IS_MAIN_RELEASE_BUILDER == 'true' }}
         shell: bash
