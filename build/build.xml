@@ -351,10 +351,11 @@ DEALINGS IN THE SOFTWARE.
       <classes dir="${validator.build.basedir}/core/classes"/>
       <classes dir="${validator.build.basedir}/resources"/>
       <classes file="${validator.basedir}/resources/war/log4j.xml"/>
-      <service type="nu.validator.vendor.relaxng.datatype.DatatypeLibraryFactory">
-        <provider classname="nu.validator.vendor.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
-        <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
-      </service>
+      <!-- The service-provider file must go under WEB-INF/classes, which is
+           on the webapp classpath. A <service> element would instead put it
+           at the root of the archive, where no classloader looks for it. -->
+      <classes dir="${validator.basedir}/resources/war"
+               includes="META-INF/services/**"/>
     </war>
   </target>
 
