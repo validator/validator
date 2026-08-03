@@ -18,7 +18,7 @@ build/validator/
 build/coverage/
 build/VERSION
 build/.gradle
-classes/
+/classes/
 dependencies/
 deps.tar.gz
 dist/
