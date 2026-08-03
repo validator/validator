@@ -54,7 +54,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload2.core.FileItemInput;
 import org.apache.commons.fileupload2.core.FileItemInputIterator;
 import org.apache.commons.fileupload2.core.FileUploadException;
-import org.apache.commons.fileupload2.jakarta.servlet5.JakartaServletFileUpload;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class MultipartFormDataFilter implements Filter {

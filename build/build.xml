@@ -142,7 +142,7 @@ DEALINGS IN THE SOFTWARE.
   </target>
 
   <property name="commons-codec-version" value="1.15" />
-  <property name="commons-fileupload-version" value="2.0.0-M2" />
+  <property name="commons-fileupload-version" value="2.0.0-M5" />
   <property name="commons-io-version" value="2.15.1" />
   <property name="commons-logging-version" value="1.2" />
   <property name="commons-text-version" value="1.12.0" />
@@ -160,7 +160,7 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/org/htmlunit/htmlunit-csp/${htmlunit-csp-version}/htmlunit-csp-${htmlunit-csp-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-codec/commons-codec/${commons-codec-version}/commons-codec-${commons-codec-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-core/${commons-fileupload-version}/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
-    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-jakarta-servlet5/${commons-fileupload-version}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/commons/commons-fileupload2-jakarta-servlet6/${commons-fileupload-version}/commons-fileupload2-jakarta-servlet6-${commons-fileupload-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-io/commons-io/${commons-io-version}/commons-io-${commons-io-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-adapters.jar"/>
@@ -249,7 +249,7 @@ DEALINGS IN THE SOFTWARE.
 
       <zipfileset src="${depsDir}/commons-codec-${commons-codec-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-fileupload2-core-${commons-fileupload-version}.jar" unless:true="${jar-without-deps}"/>
-      <zipfileset src="${depsDir}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/commons-fileupload2-jakarta-servlet6-${commons-fileupload-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-io-${commons-io-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar" unless:true="${jar-without-deps}"/>
@@ -335,7 +335,7 @@ DEALINGS IN THE SOFTWARE.
       <lib file="jing-trang/lib/saxon9.jar"/>
       <lib file="${depsDir}/commons-codec-${commons-codec-version}.jar"/>
       <lib file="${depsDir}/commons-fileupload2-core-${commons-fileupload-version}.jar"/>
-      <lib file="${depsDir}/commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar"/>
+      <lib file="${depsDir}/commons-fileupload2-jakarta-servlet6-${commons-fileupload-version}.jar"/>
       <lib file="${depsDir}/commons-io-${commons-io-version}.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar"/>
@@ -362,7 +362,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator.build.basedir" location="build/validator" />
   <path id="validator.classpath">
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
-    <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
+    <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet6-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
@@ -476,7 +476,7 @@ DEALINGS IN THE SOFTWARE.
   <path id="validator-split-core.classpath">
     <!-- This should be the same as validator.classpath but without jetty server components -->
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
-    <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet5-${commons-fileupload-version}.jar" />
+    <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet6-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
@@ -770,7 +770,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.htmlunit" artifactId="htmlunit-csp" version="${htmlunit-csp-version}"/>
       <dependency groupId="commons-codec" artifactId="commons-codec" version="${commons-codec-version}"/>
       <dependency groupId="org.apache.commons" artifactId="commons-fileupload2-core" version="${commons-fileupload-version}"/>
-      <dependency groupId="org.apache.commons" artifactId="commons-fileupload2-jakarta-servlet5" version="${commons-fileupload-version}"/>
+      <dependency groupId="org.apache.commons" artifactId="commons-fileupload2-jakarta-servlet6" version="${commons-fileupload-version}"/>
       <dependency groupId="commons-io" artifactId="commons-io" version="${commons-io-version}"/>
       <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging-version}"/>
       <dependency groupId="org.apache.commons" artifactId="commons-text" version="${commons-text-version}"/>
