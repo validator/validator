@@ -328,6 +328,43 @@ def removeIfExists(filePath):
         os.unlink(filePath)
 
 
+def newestMtime(path):
+    """Return the newest mtime under path, or 0 when it does not exist."""
+    if os.path.isfile(path):
+        return os.path.getmtime(path)
+    newest = 0.0
+    for root, _dirs, files in os.walk(path):
+        for name in files:
+            try:
+                newest = max(newest, os.path.getmtime(os.path.join(root, name)))
+            except OSError:
+                pass
+    return newest
+
+
+def jarIsStale():
+    """Report whether vnu.jar needs rebuilding before it can be tested.
+
+    True when the jar is missing, or older than any of the inputs it is
+    built from. Checking only for the jar's existence lets a stale jar be
+    tested silently: a change to a dependency version in build.xml, for
+    instance, leaves the sources untouched, so a jar built before the
+    change still runs and still passes, while testing the old dependency.
+    """
+    if not os.path.exists(vnuJar):
+        return True
+    jarMtime = os.path.getmtime(vnuJar)
+    inputs = [
+        os.path.join(buildRoot, "build", "build.xml"),
+        os.path.join(buildRoot, "src"),
+        os.path.join(buildRoot, "schema"),
+        os.path.join(buildRoot, "resources"),
+        os.path.join(buildRoot, "jars"),
+        os.path.join(buildRoot, "dependencies"),
+    ]
+    return any(newestMtime(path) > jarMtime for path in inputs)
+
+
 def removeIfDirExists(dirPath):
     if os.path.exists(dirPath):
         print("Removing %s" % dirPath)
@@ -1002,11 +1039,14 @@ class Release():
         else:
             self.writeHashes(distWarDir)
 
+    def ensureCurrentJar(self):
+        if jarIsStale():
+            self.createJarOrWar("jar")
+
     def createRuntimeImage(self):
         if javaEnvVersion < 9:
             return
-        if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+        self.ensureCurrentJar()
         runCmd([jdepsCmd, '--ignore-missing-deps',
                 '--generate-open-module', distDir, vnuJar])
 
@@ -1230,8 +1270,7 @@ class Release():
     def checkServiceWithJar(self, url):
         if not os.path.exists(os.path.join(buildRoot, "jars")):
             self.buildAll()
-        if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+        self.ensureCurrentJar()
         print("Checking service using jar...")
         if isServiceUp(False):
             print("Service is already/still running at " + bindAddress +
@@ -1276,15 +1315,13 @@ class Release():
         self.checkServiceWithRuntimeImage(url)
 
     def runValidator(self):
-        if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+        self.ensureCurrentJar()
         ensureDirExists(os.path.join(buildRoot, "logs"))
         args = getRunArgs(str(int(heapSize) * 1024))
         execCmd(javaCmd, args)
 
     def runUnitTests(self):
-        if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+        self.ensureCurrentJar()
         # List of unit test classes to run
         testClasses = [
             'nu.validator.messages.test.MessageEmitterAdapterTest',
@@ -1394,8 +1431,7 @@ class Release():
 
     def runE2eTests(self, jacocoExecFile=None,
                     extraCoverageRequests=False):
-        if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+        self.ensureCurrentJar()
         if isServiceUp(False):
             print("Service is already/still running at " + bindAddress +
                   ":" + portNumber)
@@ -1582,8 +1618,7 @@ class Release():
         import csv
         import glob as globmod
 
-        if not os.path.exists(vnuJar):
-            self.createJarOrWar("jar")
+        self.ensureCurrentJar()
         if not os.path.exists(jacocoAgentJar):
             print("JaCoCo agent JAR not found: %s" % jacocoAgentJar)
             print("Run 'python checker.py dldeps' first.")
