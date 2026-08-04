@@ -35,9 +35,7 @@ jobs:
           commit-message: 'chore: Refresh resources/spec/html5spec-single.html'
           title: 'chore: Refresh resources/spec/html5spec-single.html'
           body: |
-            Automated refresh of the bundled HTML spec from
-            <https://html.spec.whatwg.org/>, triggered by a successful
-            release build.
+            Automated refresh of the bundled HTML spec from <https://html.spec.whatwg.org/>, triggered by a successful release build.
           branch: refresh-html5spec
           delete-branch: true
           add-paths: resources/spec/html5spec-single.html
