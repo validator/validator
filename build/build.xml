@@ -211,7 +211,7 @@ DEALINGS IN THE SOFTWARE.
 
   <target name="dl-html5spec" unless="${offline}">
     <echo>Downloading latest html5 specification</echo>
-    <get src="https://html.spec.whatwg.org/" dest="${validator.basedir}/resources/spec/html5spec-single.html" usetimestamp="true" tryGzipEncoding="true"/>
+    <get src="https://html.spec.whatwg.org/" dest="${validator.basedir}/resources/spec/html5spec-single.html" tryGzipEncoding="true"/>
   </target>
 
   <target name="dl-all" depends="dl-deps, dl-deps-modules, dl-deps-jetty, dl-deps-jacoco, dl-deps-antlib"/>
