@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Issue #2122: Valid script comment containing a slash</title>
+	<script src="./js/loader.js">
+		/*
+		 * A slash / in comment text doesn’t end the comment.
+		 * Neither does one in a URL — such as https://validator.w3.org/
+		 */
+	</script>
+</head>
+<body>
+	<p>Valid script element with a comment containing a slash</p>
+</body>
+</html>

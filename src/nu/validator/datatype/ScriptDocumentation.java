@@ -98,7 +98,13 @@ public final class ScriptDocumentation extends CdoCdcPair {
                         case '/':
                             state = State.BEFORE_DOCUMENTATION;
                             continue;
+                        case '*':
+                            // Still immediately before a possible slash.
+                            continue;
                         default:
+                            // Only a slash immediately after an asterisk ends
+                            // the comment — so this is ordinary comment text.
+                            state = State.IN_COMMENT;
                             continue;
                     }
                 case IN_LINE_COMMENT:
