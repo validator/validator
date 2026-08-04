@@ -1351,8 +1351,11 @@ class Release():
     def runTests(self):
         self.runCoverageTests()
 
-        svgTestArgs = [javaCmd, '-jar', vnuJar,
-                       "--also-check-svg", "--Werror"]
+        svgTestArgs = [javaCmd]
+        if stackSize != "":
+            svgTestArgs.append('-Xss' + stackSize + 'k')
+        svgTestArgs.extend(['-jar', vnuJar,
+                       "--also-check-svg", "--Werror"])
         svgTestArgs.append(os.path.join(
             buildRoot, "tests", "html", "attributes",
             "lang", "missing-lang-attribute-non-html-isvalid.svg"))
@@ -1360,13 +1363,19 @@ class Release():
             buildRoot, "tests", "svg",
             "stoplight-titles-compatibility.svg"))
         runCmd(svgTestArgs)
-        cssTestArgs = [javaCmd, '-jar', vnuJar, "--skip-non-css"]
+        cssTestArgs = [javaCmd]
+        if stackSize != "":
+            cssTestArgs.append('-Xss' + stackSize + 'k')
+        cssTestArgs.extend(['-jar', vnuJar, "--skip-non-css"])
         cssTestArgs.append(os.path.join(buildRoot, "tests", "css"))
         runCmd(cssTestArgs)
-        docbookTestArgs = [javaCmd, '-jar', vnuJar,
+        docbookTestArgs = [javaCmd]
+        if stackSize != "":
+            docbookTestArgs.append('-Xss' + stackSize + 'k')
+        docbookTestArgs.extend(['-jar', vnuJar,
                            "--schema",
                            "file:resources/docbook.rng",
-                           "--xml"]
+                           "--xml"])
         # Test valid DocBook document; expect no output/messages/errors
         testdoc = [os.path.join("tests", "schema-validation",
                                 "docbook-valid.xml")]
@@ -1739,7 +1748,10 @@ class Release():
             execFile = os.path.join(coverageDir, "%s.exec" % name)
             agentArg = ("-javaagent:%s=destfile=%s,includes=nu.validator.*"
                         % (jacocoAgentJar, execFile))
-            args = [javaCmd, agentArg, '-jar', vnuJar] + extraArgs
+            args = [javaCmd]
+            if stackSize != "":
+                args.append('-Xss' + stackSize + 'k')
+            args.extend([agentArg, '-jar', vnuJar] + extraArgs)
             print("  %s" % shlex.join(args[-4:]))
             # Some runs will exit non-zero (e.g. non-conforming files);
             # that is expected, we just want the coverage data
