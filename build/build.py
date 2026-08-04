@@ -264,17 +264,17 @@ class UrlExtractor(HTMLParser):
 
 
 def runCmd(cmd):
-    print(shlex.join(cmd))
+    print(shlex.join(cmd), flush=True)
     subprocess.check_call(cmd)
 
 
 def runCmdFromString(cmdString):
-    print(cmdString)
+    print(cmdString, flush=True)
     subprocess.check_call(cmdString, shell=True)
 
 
 def execCmd(cmd, args, silent=False):
-    print(shlex.join([cmd] + args))
+    print(shlex.join([cmd] + args), flush=True)
     if subprocess.call([cmd, ] + args):
         if not silent:
             print("Command failed.")
@@ -282,7 +282,7 @@ def execCmd(cmd, args, silent=False):
 
 
 def runShell(shellCmd):
-    print(shlex.join(shellCmd))
+    print(shlex.join(shellCmd), flush=True)
     return subprocess.call(shellCmd, shell=True)
 
 
