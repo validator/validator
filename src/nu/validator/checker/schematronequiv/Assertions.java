@@ -1767,6 +1767,9 @@ public class Assertions extends Checker {
         return false;
     }
 
+    // Per-spec, these are warnings rather than errors — for now.
+    // https://github.com/w3c/html-aria/issues/362
+    // https://github.com/w3c/aria/issues/2856
     private void checkForInteractiveAncestorRole(String descendantUiString)
             throws SAXException {
         for (int i = 0; i < currentPtr; i++) {
@@ -1775,7 +1778,7 @@ public class Assertions extends Checker {
                     && Arrays.binarySearch(
                             PROHIBITED_INTERACTIVE_ANCESTOR_ROLES,
                             ancestorRole) >= 0) {
-                err(descendantUiString + " must not appear as a"
+                warn(descendantUiString + " should not appear as a"
                         + " descendant of an element with the attribute"
                         + " “role=" + ancestorRole + "”.");
             }
