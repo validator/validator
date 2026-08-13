@@ -49,6 +49,8 @@ import org.eclipse.jetty.client.HttpClientTransport;
 import org.eclipse.jetty.client.transport.HttpClientTransportOverHTTP;
 import org.eclipse.jetty.client.Request;
 import org.eclipse.jetty.client.InputStreamResponseListener;
+import org.eclipse.jetty.client.ProxyAuthenticationProtocolHandler;
+import org.eclipse.jetty.client.WWWAuthenticationProtocolHandler;
 import org.eclipse.jetty.http.HttpField;
 import org.eclipse.jetty.io.ClientConnector;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
@@ -202,6 +204,19 @@ public class PrudentHttpEntityResolver
             }
             try {
                 client.start();
+                // Jetty registers these two when the client starts, so they
+                // can only be removed afterwards. Each buffers up to 16 KB of
+                // the body of a 401 or 407 response, looking for an
+                // authentication challenge, and aborts the exchange with an
+                // IllegalArgumentException once the body outgrows that. This
+                // resolver never sends credentials, so the handlers can never
+                // authenticate anything and only stand to fail. Without them,
+                // such a response is reported by its status, as it is for
+                // every other status the server declines to serve.
+                client.getProtocolHandlers().remove(
+                        WWWAuthenticationProtocolHandler.NAME);
+                client.getProtocolHandlers().remove(
+                        ProxyAuthenticationProtocolHandler.NAME);
                 clientStarted = true;
             } catch (Exception e) {
                 log4j.error("Failed to start HTTP client", e);
