@@ -13,7 +13,7 @@
   <script crossorigin="" defer="" src="https://resources.whatwg.org/commit-snapshot-shortcut-key.js"></script>
   <header id="head" class="head with-buttons">
    <a href="https://whatwg.org/" class="logo"><img width="100" alt="WHATWG" crossorigin="" class="darkmode-aware" src="https://resources.whatwg.org/logo.svg" height="100"></a>
-   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">20 July 2026</span></p></hgroup>
+   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">11 August 2026</span></p></hgroup>
    
    <nav>
     
@@ -32,7 +32,7 @@
     <div>
      <a href="https://github.com/whatwg/html" class="changes"><span><strong>Contribute on GitHub</strong> <code>whatwg/html repository</code></span></a>
      <a href="https://github.com/whatwg/html/commits" class="changes"><span><strong>Commits</strong> <code>on GitHub</code></span></a>
-     <a id="commit-snapshot-link" href="/commit-snapshots/24c5e48bf66ea61bc199ec6338c81258275ba9c6/" class="changes"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
+     <a id="commit-snapshot-link" href="/commit-snapshots/ac0389a3aca0331055bf4bf23f509c2913e3f795/" class="changes"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
     </div>
     <div>
      <a href="https://github.com/whatwg/html/issues" class="feedback"><span><strong>Open Issues</strong> <code>filed on GitHub</code></span></a>
@@ -63526,9 +63526,15 @@ button2<c- p="">.</c->onclick <c- o="">=</c-> <c- p="">()</c-> <c- p="">=&gt;</c
    list</a> <a href="https://infra.spec.whatwg.org/#list-contain" id="the-popover-attribute:list-contains-3" data-x-internal="list-contains">contains</a> <var>endpoint</var>; otherwise
    false.</p></li><li><p>Run <a href="#hide-popover-stack-until" id="the-popover-attribute:hide-popover-stack-until-8">hide popover stack until</a> given <var>document</var>, <var>endpoint</var>,
    <a href="#attr-popover-hint-state" id="the-popover-attribute:attr-popover-hint-state-11">Hint</a>, <var>focusPreviousElement</var>, and
-   <var>fireEvents</var>.</p></li><li><p>If <var>endpointIsHint</var> is true, then return.</p></li><li><p>Run <a href="#hide-popover-stack-until" id="the-popover-attribute:hide-popover-stack-until-9">hide popover stack until</a> given <var>document</var>, <var>endpoint</var>,
-   <a href="#attr-popover-auto-state" id="the-popover-attribute:attr-popover-auto-state-12">Auto</a>, <var>focusPreviousElement</var>, and
-   <var>fireEvents</var>.</p></li></ol>
+   <var>fireEvents</var>.</p></li><li><p>Let <var>autoEndpoint</var> be <var>endpoint</var>.</p></li><li>
+    <p>If <var>endpointIsHint</var> is true, then set <var>autoEndpoint</var> to
+    <var>document</var>'s <a href="#hint-stack-parent" id="the-popover-attribute:hint-stack-parent-8">hint stack parent</a>.</p>
+
+    <p class="note">This means, if <var>endpoint</var> is a hint popover, auto popovers are closed,
+    except those that are parent to that hint popover.</p>
+   </li><li><p>Run <a href="#hide-popover-stack-until" id="the-popover-attribute:hide-popover-stack-until-9">hide popover stack until</a> given <var>document</var>,
+   <var>autoEndpoint</var>, <a href="#attr-popover-auto-state" id="the-popover-attribute:attr-popover-auto-state-12">Auto</a>,
+   <var>focusPreviousElement</var>, and <var>fireEvents</var>.</p></li></ol>
   </div>
 
   <div data-algorithm="">
@@ -63850,19 +63856,8 @@ button2<c- p="">.</c->onclick <c- o="">=</c-> <c- p="">()</c-> <c- p="">=&gt;</c
 
     <ol><li><p>Let <var>ancestor</var> be the result of running <a href="#topmost-clicked-popover" id="popover-light-dismiss:topmost-clicked-popover-2">topmost clicked popover</a>
      given <var>target</var>.</p></li><li><p>Let <var>sameTarget</var> be true if <var>ancestor</var> is <var>document</var>'s
-     <a href="#popover-pointerdown-target" id="popover-light-dismiss:popover-pointerdown-target-2">popover pointerdown target</a>.</p></li><li><p>Set <var>document</var>'s <a href="#popover-pointerdown-target" id="popover-light-dismiss:popover-pointerdown-target-3">popover pointerdown target</a> to null.</p></li><li><p>If <var>sameTarget</var> is false, then return.</p></li><li><p>Let <var>endpointIsHint</var> be true if <var>document</var>'s <a href="#showing-hint-popover-list" id="popover-light-dismiss:showing-hint-popover-list">showing hint
-     popover list</a> <a href="https://infra.spec.whatwg.org/#list-contain" id="popover-light-dismiss:list-contains" data-x-internal="list-contains">contains</a> <var>ancestor</var>; otherwise
-     false.</p></li><li><p>Run <a href="#hide-popover-stack-until" id="popover-light-dismiss:hide-popover-stack-until">hide popover stack until</a> given <var>document</var>,
-     <var>ancestor</var>, <a href="#attr-popover-hint-state" id="popover-light-dismiss:attr-popover-hint-state-2">Hint</a>, false, and
-     true.</p></li><li><p>Let <var>autoEndpoint</var> be <var>ancestor</var>.</p></li><li>
-      <p>If <var>endpointIsHint</var> is true, then set <var>autoEndpoint</var> to
-      <var>document</var>'s <a href="#hint-stack-parent" id="popover-light-dismiss:hint-stack-parent">hint stack parent</a>.</p>
-
-      <p class="note">This means, if a hint popover is clicked, auto popovers are closed, except
-      those that are parent to the clicked hint popover.</p>
-     </li><li><p>Run <a href="#hide-popover-stack-until" id="popover-light-dismiss:hide-popover-stack-until-2">hide popover stack until</a> given <var>document</var>,
-     <var>autoEndpoint</var>, <a href="#attr-popover-auto-state" id="popover-light-dismiss:attr-popover-auto-state-2">Auto</a>, false, and
-     true.</p></li></ol>
+     <a href="#popover-pointerdown-target" id="popover-light-dismiss:popover-pointerdown-target-2">popover pointerdown target</a>.</p></li><li><p>Set <var>document</var>'s <a href="#popover-pointerdown-target" id="popover-light-dismiss:popover-pointerdown-target-3">popover pointerdown target</a> to null.</p></li><li><p>If <var>sameTarget</var> is false, then return.</p></li><li><p>Run <a href="#hide-popovers-until" id="popover-light-dismiss:hide-popovers-until">hide popovers until</a> given <var>document</var>, <var>ancestor</var>,
+     false, and true.</p></li></ol>
    </li></ol>
   </div>
 
@@ -63880,7 +63875,7 @@ button2<c- p="">.</c->onclick <c- o="">=</c-> <c- p="">()</c-> <c- p="">=&gt;</c
   <p>To <dfn id="get-the-popover-stack-position">get the popover stack position</dfn>, given an <a href="#html-elements" id="popover-light-dismiss:html-elements">HTML
   element</a> <var>popover</var>:</p>
 
-  <ol><li><p>Let <var>hintList</var> be <var>popover</var>'s <a id="popover-light-dismiss:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#showing-hint-popover-list" id="popover-light-dismiss:showing-hint-popover-list-2">showing
+  <ol><li><p>Let <var>hintList</var> be <var>popover</var>'s <a id="popover-light-dismiss:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#showing-hint-popover-list" id="popover-light-dismiss:showing-hint-popover-list">showing
    hint popover list</a>.</p></li><li><p>Let <var>autoList</var> be <var>popover</var>'s <a id="popover-light-dismiss:node-document-3" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#auto-popover-list" id="popover-light-dismiss:auto-popover-list">showing
    auto popover list</a>.</p></li><li><p>If <var>popover</var> is in <var>hintList</var>, then return the index of
    <var>popover</var> in <var>hintList</var> + the size of <var>autoList</var> + 1.</p></li><li><p>If <var>popover</var> is in <var>autoList</var>, then return the index of
@@ -63895,7 +63890,7 @@ button2<c- p="">.</c->onclick <c- o="">=</c-> <c- p="">()</c-> <c- p="">=&gt;</c
     <p>While <var>currentNode</var> is not null:</p>
 
     <ol><li><p>Let <var>targetPopover</var> be <var>currentNode</var>'s <a href="#target-popover" id="popover-light-dismiss:target-popover">target
-     popover</a>.</p></li><li><p>If <var>targetPopover</var> is not null and <var>targetPopover</var>'s <code id="popover-light-dismiss:attr-popover-2"><a href="#attr-popover">popover</a></code> attribute is in the <a href="#attr-popover-auto-state" id="popover-light-dismiss:attr-popover-auto-state-3">Auto</a> state or the <a href="#attr-popover-hint-state" id="popover-light-dismiss:attr-popover-hint-state-3">Hint</a> state, and <var>targetPopover</var>'s
+     popover</a>.</p></li><li><p>If <var>targetPopover</var> is not null and <var>targetPopover</var>'s <code id="popover-light-dismiss:attr-popover-2"><a href="#attr-popover">popover</a></code> attribute is in the <a href="#attr-popover-auto-state" id="popover-light-dismiss:attr-popover-auto-state-2">Auto</a> state or the <a href="#attr-popover-hint-state" id="popover-light-dismiss:attr-popover-hint-state-2">Hint</a> state, and <var>targetPopover</var>'s
      <a href="#popover-visibility-state" id="popover-light-dismiss:popover-visibility-state">popover visibility state</a> is <a href="#popover-showing-state" id="popover-light-dismiss:popover-showing-state">showing</a>,
      then return <var>targetPopover</var>.</p></li><li><p>Set <var>currentNode</var> to <var>currentNode</var>'s ancestor in the <a id="popover-light-dismiss:flat-tree" href="https://drafts.csswg.org/css-scoping/#flat-tree" data-x-internal="flat-tree">flat
      tree</a>.</p></li></ol>
