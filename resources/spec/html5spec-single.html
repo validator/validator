@@ -13,7 +13,7 @@
   <script crossorigin="" defer="" src="https://resources.whatwg.org/commit-snapshot-shortcut-key.js"></script>
   <header id="head" class="head with-buttons">
    <a href="https://whatwg.org/" class="logo"><img width="100" alt="WHATWG" crossorigin="" class="darkmode-aware" src="https://resources.whatwg.org/logo.svg" height="100"></a>
-   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">11 August 2026</span></p></hgroup>
+   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">18 August 2026</span></p></hgroup>
    
    <nav>
     
@@ -32,7 +32,7 @@
     <div>
      <a href="https://github.com/whatwg/html" class="changes"><span><strong>Contribute on GitHub</strong> <code>whatwg/html repository</code></span></a>
      <a href="https://github.com/whatwg/html/commits" class="changes"><span><strong>Commits</strong> <code>on GitHub</code></span></a>
-     <a id="commit-snapshot-link" href="/commit-snapshots/ac0389a3aca0331055bf4bf23f509c2913e3f795/" class="changes"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
+     <a id="commit-snapshot-link" href="/commit-snapshots/40814ebfef1506a621a4af1ebd7e80c048cc396e/" class="changes"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
     </div>
     <div>
      <a href="https://github.com/whatwg/html/issues" class="feedback"><span><strong>Open Issues</strong> <code>filed on GitHub</code></span></a>
@@ -24069,16 +24069,8 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
   keyword must not be specified if either <code id="the-iframe-element:attr-iframe-sandbox-allow-top-navigation-5"><a href="#attr-iframe-sandbox-allow-top-navigation">allow-top-navigation</a></code> or <code id="the-iframe-element:attr-iframe-sandbox-allow-popups-3"><a href="#attr-iframe-sandbox-allow-popups">allow-popups</a></code> are specified, as doing so is
   redundant.</p>
 
-  <p class="note">To allow <code id="the-iframe-element:dom-alert"><a href="#dom-alert">alert()</a></code>, <code id="the-iframe-element:dom-confirm"><a href="#dom-confirm">confirm()</a></code>, and <code id="the-iframe-element:dom-prompt"><a href="#dom-prompt">prompt()</a></code> inside
-  sandboxed content, both the <code id="the-iframe-element:attr-iframe-sandbox-allow-modals-3"><a href="#attr-iframe-sandbox-allow-modals">allow-modals</a></code>
-  and <code id="the-iframe-element:attr-iframe-sandbox-allow-same-origin-3"><a href="#attr-iframe-sandbox-allow-same-origin">allow-same-origin</a></code> keywords need to
-  be specified, and the loaded URL needs to be <a href="#same-origin" id="the-iframe-element:same-origin">same origin</a> with the <a href="#concept-environment-top-level-origin" id="the-iframe-element:concept-environment-top-level-origin">top-level
-  origin</a>. Without the <code id="the-iframe-element:attr-iframe-sandbox-allow-same-origin-4"><a href="#attr-iframe-sandbox-allow-same-origin">allow-same-origin</a></code> keyword, the content is
-  always treated as cross-origin, and cross-origin content <a href="#cannot-show-simple-dialogs" id="the-iframe-element:cannot-show-simple-dialogs">cannot show simple
-  dialogs</a>.</p>
-
-  <p class="warning">Setting both the <code id="the-iframe-element:attr-iframe-sandbox-allow-scripts-3"><a href="#attr-iframe-sandbox-allow-scripts">allow-scripts</a></code> and <code id="the-iframe-element:attr-iframe-sandbox-allow-same-origin-5"><a href="#attr-iframe-sandbox-allow-same-origin">allow-same-origin</a></code> keywords together when the
-  embedded page has the <a href="#same-origin" id="the-iframe-element:same-origin-2">same origin</a> as the page containing the <code id="the-iframe-element:the-iframe-element-20"><a href="#the-iframe-element">iframe</a></code>
+  <p class="warning">Setting both the <code id="the-iframe-element:attr-iframe-sandbox-allow-scripts-3"><a href="#attr-iframe-sandbox-allow-scripts">allow-scripts</a></code> and <code id="the-iframe-element:attr-iframe-sandbox-allow-same-origin-3"><a href="#attr-iframe-sandbox-allow-same-origin">allow-same-origin</a></code> keywords together when the
+  embedded page has the <a href="#same-origin" id="the-iframe-element:same-origin">same origin</a> as the page containing the <code id="the-iframe-element:the-iframe-element-20"><a href="#the-iframe-element">iframe</a></code>
   allows the embedded page to simply remove the <code id="the-iframe-element:attr-iframe-sandbox-5"><a href="#attr-iframe-sandbox">sandbox</a></code>
   attribute and then reload itself, effectively breaking out of the sandbox altogether.</p>
 
@@ -24170,7 +24162,7 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
    <p>Suppose now that a script in A removes all the <code id="the-iframe-element:attr-iframe-sandbox-10"><a href="#attr-iframe-sandbox">sandbox</a></code> attributes in A  and B.
    This would change nothing immediately. If the user clicked the link in C, loading page D into
    the <code id="the-iframe-element:the-iframe-element-31"><a href="#the-iframe-element">iframe</a></code> in B, page D would now act as if the <code id="the-iframe-element:the-iframe-element-32"><a href="#the-iframe-element">iframe</a></code> in B had the
-   <code id="the-iframe-element:attr-iframe-sandbox-allow-same-origin-6"><a href="#attr-iframe-sandbox-allow-same-origin">allow-same-origin</a></code> and <code id="the-iframe-element:attr-iframe-sandbox-allow-forms-4"><a href="#attr-iframe-sandbox-allow-forms">allow-forms</a></code> keywords set, because that was the
+   <code id="the-iframe-element:attr-iframe-sandbox-allow-same-origin-4"><a href="#attr-iframe-sandbox-allow-same-origin">allow-same-origin</a></code> and <code id="the-iframe-element:attr-iframe-sandbox-allow-forms-4"><a href="#attr-iframe-sandbox-allow-forms">allow-forms</a></code> keywords set, because that was the
    state of the <a href="#content-navigable" id="the-iframe-element:content-navigable-23">content navigable</a> in the <code id="the-iframe-element:the-iframe-element-33"><a href="#the-iframe-element">iframe</a></code> in A when page B was
    loaded.</p>
 
@@ -84995,9 +84987,7 @@ console<c- p="">.</c->log<c- p="">(</c-><c- u="">"2"</c-><c- p="">);</c-></code>
   following algorithm returns true:</p>
 
   <ol><li><p>If the <a href="#active-sandboxing-flag-set" id="simple-dialogs:active-sandboxing-flag-set">active sandboxing flag set</a> of <var>window</var>'s <a href="#concept-document-window" id="simple-dialogs:concept-document-window">associated <code>Document</code></a> has the <a href="#sandboxed-modals-flag" id="simple-dialogs:sandboxed-modals-flag">sandboxed
-   modals flag</a> set, then return true.</p></li><li><p>If <var>window</var>'s <a href="#relevant-settings-object" id="simple-dialogs:relevant-settings-object">relevant settings object</a>'s <a href="#concept-settings-object-origin" id="simple-dialogs:concept-settings-object-origin">origin</a> and <var>window</var>'s <a href="#relevant-settings-object" id="simple-dialogs:relevant-settings-object-2">relevant
-   settings object</a>'s <a href="#concept-environment-top-level-origin" id="simple-dialogs:concept-environment-top-level-origin">top-level origin</a> are not <a href="#same-origin-domain" id="simple-dialogs:same-origin-domain">same origin-domain</a>,
-   then return true.</p></li><li>If <var>window</var>'s <a href="#relevant-agent" id="simple-dialogs:relevant-agent">relevant agent</a>'s <a href="#concept-agent-event-loop" id="simple-dialogs:concept-agent-event-loop">event loop</a>'s <a href="#termination-nesting-level" id="simple-dialogs:termination-nesting-level">termination nesting level</a> is
+   modals flag</a> set, then return true.</p></li><li>If <var>window</var>'s <a href="#relevant-agent" id="simple-dialogs:relevant-agent">relevant agent</a>'s <a href="#concept-agent-event-loop" id="simple-dialogs:concept-agent-event-loop">event loop</a>'s <a href="#termination-nesting-level" id="simple-dialogs:termination-nesting-level">termination nesting level</a> is
    nonzero, then optionally return true.</li><li><p>Optionally, return true. (For example, the user agent might give the
    user the option to ignore all modal dialogs, and would thus abort at this step whenever the method was
    invoked.)</p></li><li><p>Return false.</p></li></ol>
