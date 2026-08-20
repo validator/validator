@@ -11,6 +11,7 @@ namespace c = "http://n.validator.nu/custom-elements/"
 		element template { template.inner & template.attrs }
 	template.attrs =
 		( common.attrs
+		& template.attrs.for?
 		& template.attrs.shadowrootmode?
 		& template.attrs.shadowrootdelegatesfocus?
 		& template.attrs.shadowrootclonable?
@@ -18,6 +19,10 @@ namespace c = "http://n.validator.nu/custom-elements/"
 		& template.attrs.shadowrootcustomelementregistry?
 		& template.attrs.shadowrootslotassignment?
 		)
+	template.attrs.for =
+			attribute for {
+				text
+			}
 	template.attrs.shadowrootmode =
 			attribute shadowrootmode {
 				w:string "open" | w:string "closed"
