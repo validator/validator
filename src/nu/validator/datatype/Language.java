@@ -395,14 +395,24 @@ public final class Language extends AbstractDatatype {
     private boolean usesPrefixByExtlang(String language, String extlang) {
         int langIndex = Arrays.binarySearch(languages, language);
         int extlangIndex = Arrays.binarySearch(extlangs, extlang);
-        assert langIndex > -1;
+        if (langIndex < 0) {
+            // A primary-language subtag in the private-use range qaa..qtz is
+            // a valid language subtag, but isn’t in the languages array — so
+            // it can’t be the registered prefix of any extlang.
+            return false;
+        }
         int prefixExpected = prefixByExtlang[extlangIndex];
         return prefixExpected == langIndex;
     }
 
     private boolean shouldSuppressScript(String language, String script) {
         int langIndex = Arrays.binarySearch(languages, language);
-        assert langIndex > -1;
+        if (langIndex < 0) {
+            // A primary-language subtag in the private-use range qaa..qtz is
+            // a valid language subtag but isn’t in the languages array — so
+            // no script is registered as the default for it to suppress.
+            return false;
+        }
         int scriptIndex = suppressedScriptByLanguage[langIndex];
         if (scriptIndex < 0) {
             return false;
