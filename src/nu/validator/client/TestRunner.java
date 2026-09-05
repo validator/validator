@@ -94,6 +94,14 @@ public class TestRunner extends MessageEmitterAdapter {
 
     private boolean hasUnhandledInfo = false;
 
+    /**
+     * Whether an info-level message is acceptable for the file being
+     * checked. A file marked hasinfo expects one, and a file marked
+     * novalid is compared against an expected error message instead.
+     * Any other file is expected to draw no message at all.
+     */
+    private boolean infoAllowed = true;
+
     private File baseDir = null;
 
     private Map<String, jakarta.json.JsonValue> expectedMessages;
@@ -239,6 +247,7 @@ public class TestRunner extends MessageEmitterAdapter {
             }
             reset();
             emitMessages = true;
+            infoAllowed = false;
             try {
                 if (file.isDirectory()) {
                     recurseDirectory(file);
@@ -698,14 +707,26 @@ public class TestRunner extends MessageEmitterAdapter {
             return;
         }
         if (e.getMessage() != null && e.getMessage().contains("Typo for")) {
-            if (emitMessages) {
-                if (infoMessage == null) {
-                    infoMessage = e.getMessage();
+            if (infoAllowed) {
+                if (emitMessages) {
+                    if (infoMessage == null) {
+                        infoMessage = e.getMessage();
+                    }
+                    // Don't call emitMessage; let checkHasInfoFiles handle
+                    // printing on mismatch.
                 }
-                // Don't call emitMessage; let checkHasInfoFiles handle
-                // printing on mismatch.
+                // Don't set hasUnhandledInfo; typo info messages are expected.
+                return;
             }
-            // Don't set hasUnhandledInfo; typo info messages are expected.
+            // Nothing marks this file as expecting an info message — so the
+            // checker offering a spelling correction for one of its values is
+            // the defect the test exists to catch.
+            if (emitMessages) {
+                emitMessage(e, "info");
+            } else if (exception == null) {
+                exception = e;
+            }
+            inError = true;
             return;
         }
         // Handle role=directory as a warning (deprecated but not an error)
@@ -765,6 +786,7 @@ public class TestRunner extends MessageEmitterAdapter {
         inError = false;
         emitMessages = false;
         exceptionIsWarning = false;
+        infoAllowed = true;
     }
 
     public static void main(String[] args) throws SAXException, Exception {
