@@ -26,14 +26,18 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.text.similarity.LevenshteinDistance;
 import nu.validator.vendor.relaxng.datatype.DatatypeException;
 
 public final class RelValue extends AbstractDatatype {
 
-    private static final LevenshteinDistance LEVENSHTEIN =
-        new LevenshteinDistance(3);
     private static final int TYPO_THRESHOLD = 2;
+
+    /**
+     * Shortest token for which two edits still count as a typo. Below this,
+     * two edits reach an unrelated word — "json" reaches "icon", "atom"
+     * reaches "item", and "share" reaches "start" — so only one edit does.
+     */
+    private static final int MIN_LENGTH_FOR_TWO_EDITS = 7;
 
     /**
      * IANA-registered link relation types.
@@ -225,7 +229,7 @@ public final class RelValue extends AbstractDatatype {
         if (registeredValues.contains(token.toLowerCase())) {
             return;
         }
-        // Check for possible typos using Levenshtein distance
+        // Check for possible typos using edit distance
         String closestMatch = findClosestMatch(tokenForValidation);
         if (closestMatch != null) {
             // Found a close match - emit info-level warning
@@ -236,6 +240,8 @@ public final class RelValue extends AbstractDatatype {
 
     private String findClosestMatch(String token) {
         String tokenLower = token.toLowerCase();
+        int threshold = tokenLower.length() < MIN_LENGTH_FOR_TWO_EDITS ? 1
+                : TYPO_THRESHOLD;
         String bestMatch = null;
         int bestDistance = Integer.MAX_VALUE;
         for (String registered : registeredValues) {
@@ -244,30 +250,69 @@ public final class RelValue extends AbstractDatatype {
             if (registeredLower.length() <= 3) {
                 continue;
             }
-            Integer distance = LEVENSHTEIN.apply(tokenLower, registeredLower);
-            if (distance != null && distance > 0 && distance <= TYPO_THRESHOLD) {
-                // Avoid false positives: only suggest if lengths are similar.
-                // Allow length difference of at most 2 characters.
-                int lengthDiff = Math.abs(tokenLower.length() -
-                        registeredLower.length());
-                if (lengthDiff > 2) {
-                    continue;
-                }
-                // Additional check: require same first character or same last
-                // character; avoids false positives like "cite" -> "item".
-                boolean sameStart = tokenLower.charAt(0) == registeredLower.charAt(0);
-                boolean sameEnd = tokenLower.charAt(tokenLower.length() - 1) ==
-                                  registeredLower.charAt(registeredLower.length() - 1);
-                if (!sameStart && !sameEnd) {
-                    continue;
-                }
-                if (distance < bestDistance) {
-                    bestDistance = distance;
-                    bestMatch = registered;
-                }
+            // Avoid false positives: only suggest if lengths are similar.
+            // Allow length difference of at most 2 characters.
+            int lengthDiff = Math.abs(tokenLower.length() -
+                    registeredLower.length());
+            if (lengthDiff > 2) {
+                continue;
+            }
+            // Additional check: require same first character or same last
+            // character; avoids false positives like "cite" -> "item".
+            boolean sameStart = tokenLower.charAt(0) == registeredLower.charAt(0);
+            boolean sameEnd = tokenLower.charAt(tokenLower.length() - 1) ==
+                              registeredLower.charAt(registeredLower.length() - 1);
+            if (!sameStart && !sameEnd) {
+                continue;
+            }
+            int distance = editDistance(tokenLower, registeredLower);
+            if (distance > 0 && distance <= threshold
+                    && distance < bestDistance) {
+                bestDistance = distance;
+                bestMatch = registered;
             }
         }
         return bestMatch;
+    }
+
+    /**
+     * Optimal string alignment distance between two strings: the number of
+     * insertions, deletions, substitutions, and transpositions of adjacent
+     * characters needed to turn one into the other.
+     *
+     * A transposition costs one edit, not the two that plain Levenshtein
+     * distance charges for it — so "iocn" stays within one edit of "icon",
+     * which keeps swapped characters detectable at the tighter threshold that
+     * short tokens get.
+     */
+    private static int editDistance(String a, String b) {
+        int aLength = a.length();
+        int bLength = b.length();
+        int[] twoRowsBack = new int[bLength + 1];
+        int[] previousRow = new int[bLength + 1];
+        int[] currentRow = new int[bLength + 1];
+        for (int j = 0; j <= bLength; j++) {
+            previousRow[j] = j;
+        }
+        for (int i = 1; i <= aLength; i++) {
+            currentRow[0] = i;
+            for (int j = 1; j <= bLength; j++) {
+                int cost = a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1;
+                currentRow[j] = Math.min(
+                        Math.min(previousRow[j] + 1, currentRow[j - 1] + 1),
+                        previousRow[j - 1] + cost);
+                if (i > 1 && j > 1 && a.charAt(i - 1) == b.charAt(j - 2)
+                        && a.charAt(i - 2) == b.charAt(j - 1)) {
+                    currentRow[j] = Math.min(currentRow[j],
+                            twoRowsBack[j - 2] + 1);
+                }
+            }
+            int[] scratch = twoRowsBack;
+            twoRowsBack = previousRow;
+            previousRow = currentRow;
+            currentRow = scratch;
+        }
+        return previousRow[bLength];
     }
 
     @Override

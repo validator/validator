@@ -41,6 +41,7 @@ import nu.validator.datatype.MetaCharset;
 import nu.validator.datatype.MimeType;
 import nu.validator.datatype.Month;
 import nu.validator.datatype.NonEmptyString;
+import nu.validator.datatype.RelValue;
 import nu.validator.datatype.SimpleColor;
 import nu.validator.datatype.Time;
 import nu.validator.datatype.TimeDatetime;
@@ -180,6 +181,11 @@ public class DatatypeTest {
         System.out.println("Testing Language...");
         testLanguageValid();
         testLanguageInvalid();
+
+        System.out.println();
+        System.out.println("Testing RelValue...");
+        testRelValueAccepted();
+        testRelValueTypo();
 
         System.out.println();
         System.out.println("Results: " + passed + " passed, " + failed + " failed");
@@ -1090,6 +1096,77 @@ public class DatatypeTest {
         assertInvalid("Language: x- too short", validator, "x-a");
     }
 
+    // RelValue tests
+
+    private static void testRelValueAccepted() {
+        RelValue validator = RelValue.THE_INSTANCE;
+
+        // Registered values.
+        assertValid("rel: stylesheet", validator, "stylesheet");
+        assertValid("rel: canonical", validator, "canonical");
+        assertValid("rel: alternate", validator, "alternate");
+        assertValid("rel: multiple keywords", validator, "noopener noreferrer");
+
+        // XFN relationship values, which no registry lists.
+        assertValid("rel: contact", validator, "contact");
+        assertValid("rel: acquaintance", validator, "acquaintance");
+        assertValid("rel: friend", validator, "friend");
+        assertValid("rel: met", validator, "met");
+        assertValid("rel: co-worker", validator, "co-worker");
+        assertValid("rel: colleague", validator, "colleague");
+        assertValid("rel: co-resident", validator, "co-resident");
+        assertValid("rel: neighbor", validator, "neighbor");
+        assertValid("rel: child", validator, "child");
+        assertValid("rel: parent", validator, "parent");
+        assertValid("rel: sibling", validator, "sibling");
+        assertValid("rel: spouse", validator, "spouse");
+        assertValid("rel: kin", validator, "kin");
+        assertValid("rel: muse", validator, "muse");
+        assertValid("rel: crush", validator, "crush");
+        assertValid("rel: date", validator, "date");
+        assertValid("rel: sweetheart", validator, "sweetheart");
+        assertValid("rel: me", validator, "me");
+
+        // Unregistered values in common use, which a short token can otherwise
+        // reach by two edits.
+        assertValid("rel: share", validator, "share");
+        assertValid("rel: json", validator, "json");
+        assertValid("rel: atom", validator, "atom");
+        assertValid("rel: authn", validator, "authn");
+        assertValid("rel: west", validator, "west");
+        assertValid("rel: print", validator, "print");
+        assertValid("rel: dark", validator, "dark");
+
+        // Vendor and custom values.
+        assertValid("rel: custom", validator, "my-custom-rel");
+        assertValid("rel: vendor prefix", validator, "x-vendor");
+        assertValid("rel: short custom", validator, "xyz");
+    }
+
+    private static void testRelValueTypo() {
+        RelValue validator = RelValue.THE_INSTANCE;
+
+        // A dropped or doubled character.
+        assertTypo("rel typo: styleshet", "styleshet", "stylesheet");
+        assertTypo("rel typo: canonicl", "canonicl", "canonical");
+        assertTypo("rel typo: authr", "authr", "author");
+        assertTypo("rel typo: alternat", "alternat", "alternate");
+        assertTypo("rel typo: nofollw", "nofollw", "nofollow");
+        assertTypo("rel typo: noopner", "noopner", "noopener");
+        assertTypo("rel typo: manifst", "manifst", "manifest");
+
+        // A substituted character.
+        assertTypo("rel typo: licence", "licence", "license");
+
+        // Two characters swapped, which costs one edit, not two.
+        assertTypo("rel typo: iocn", "iocn", "icon");
+        assertTypo("rel typo: hlep", "hlep", "help");
+        assertTypo("rel typo: indxe", "indxe", "index");
+        assertTypo("rel typo: autohr", "autohr", "author");
+        assertTypo("rel typo: serach", "serach", "search");
+        assertTypo("rel typo: stlyesheet", "stlyesheet", "stylesheet");
+    }
+
     // Test helpers
 
     private static void assertValid(String testName,
@@ -1115,6 +1192,28 @@ public class DatatypeTest {
             failed++;
         } catch (DatatypeException e) {
             pass(testName);
+        }
+    }
+
+    private static void assertTypo(String testName, String value,
+            String expected) {
+        String suggestion = "“" + expected + "”";
+        try {
+            RelValue.THE_INSTANCE.checkValid(value, null);
+            System.out.println("FAIL: " + testName);
+            System.out.println("  Expected: Typo for " + suggestion + "?");
+            System.out.println("  Got: no message");
+            failed++;
+        } catch (DatatypeException e) {
+            String message = e.getMessage();
+            if (message != null && message.contains(suggestion)) {
+                pass(testName);
+            } else {
+                System.out.println("FAIL: " + testName);
+                System.out.println("  Expected: Typo for " + suggestion + "?");
+                System.out.println("  Got: " + message);
+                failed++;
+            }
         }
     }
 
