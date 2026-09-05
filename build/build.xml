@@ -145,7 +145,6 @@ DEALINGS IN THE SOFTWARE.
   <property name="commons-fileupload-version" value="2.0.0-M5" />
   <property name="commons-io-version" value="2.22.0" />
   <property name="commons-logging-version" value="1.2" />
-  <property name="commons-text-version" value="1.12.0" />
   <property name="icu4j-version" value="75.1" />
   <property name="jakarta.servlet-api-version" value="6.1.0" />
   <property name="jakarta.json-version" value="2.0.1" />
@@ -165,7 +164,6 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-adapters.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-api.jar"/>
-    <get-and-checksum url="https://repo1.maven.org/maven2/org/apache/commons/commons-text/${commons-text-version}/commons-text-${commons-text-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/javax/mail/mail/${mail-version}/mail-${mail-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/${jakarta.servlet-api-version}/jakarta.servlet-api-${jakarta.servlet-api-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/log4j/log4j/${log4j-version}/log4j-${log4j-version}.jar"/>
@@ -254,7 +252,6 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/commons-logging-${commons-logging-version}-api.jar" unless:true="${jar-without-deps}"/>
-      <zipfileset src="${depsDir}/commons-text-${commons-text-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/icu4j-${icu4j-version}.jar" unless:true="${jar-without-deps}"/>
 
       <zipfileset src="${depsDir}/jchardet-${jchardet-version}.jar" unless:true="${jar-without-deps}"/>
@@ -340,7 +337,6 @@ DEALINGS IN THE SOFTWARE.
       <lib file="${depsDir}/commons-logging-${commons-logging-version}.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}-adapters.jar"/>
       <lib file="${depsDir}/commons-logging-${commons-logging-version}-api.jar"/>
-      <lib file="${depsDir}/commons-text-${commons-text-version}.jar"/>
       <lib file="${depsDir}/icu4j-${icu4j-version}.jar"/>
       <lib file="${depsDir}/htmlunit-csp-${htmlunit-csp-version}.jar"/>
       <lib file="${depsDir}/jchardet-${jchardet-version}.jar"/>
@@ -373,7 +369,6 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet6-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
-    <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="jakarta.json-${jakarta.json-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />
@@ -487,7 +482,6 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="commons-fileupload2-core-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-fileupload2-jakarta-servlet6-${commons-fileupload-version}.jar" />
     <fileset dir="${depsDir}/" includes="commons-io-${commons-io-version}.jar" />
-    <fileset dir="${depsDir}/" includes="commons-text-${commons-text-version}.jar" />
     <fileset dir="${depsDir}/" includes="icu4j-${icu4j-version}.jar" />
     <fileset dir="${depsDir}/" includes="jakarta.json-${jakarta.json-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-client-${jetty-version}.jar" />
@@ -782,7 +776,6 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.apache.commons" artifactId="commons-fileupload2-jakarta-servlet6" version="${commons-fileupload-version}"/>
       <dependency groupId="commons-io" artifactId="commons-io" version="${commons-io-version}"/>
       <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging-version}"/>
-      <dependency groupId="org.apache.commons" artifactId="commons-text" version="${commons-text-version}"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="jakarta.servlet" artifactId="jakarta.servlet-api" version="${jakarta.servlet-api-version}"/>
       <dependency groupId="log4j" artifactId="log4j" version="${log4j-version}"/>
