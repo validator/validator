@@ -254,7 +254,9 @@ Gradle:
     testImplementation 'nu.validator:validator:NN.NN.NN'
 
 > [!IMPORTANT]
-> The `nu.validator:validator` artifact bundles all required dependencies, including `nu.validator:htmlparser`. Do not add `htmlparser` as a separate dependency; doing so will cause duplicate classes on the classpath. If you need to use the `htmlparser` classes for other purposes, just use the ones provided by the `nu.validator:validator` artifact.
+> The `nu.validator:validator` artifact compiles in `nu.validator:htmlparser`, Jing (relocated to `nu.validator.vendor.*`), galimatias, langdetect, and the CSS validator, but its other dependencies (Jetty, ICU, Saxon, and so on) are only declared in its POM. So let Maven or Gradle resolve it; putting the bare jar on the classpath by hand fails with `NoClassDefFoundError`s. If you want a single jar that carries everything, use `vnu.jar` from the [releases page](https://github.com/validator/validator/releases) instead.
+>
+> Do not add `htmlparser` as a separate dependency; doing so will cause duplicate classes on the classpath. If you need to use the `htmlparser` classes for other purposes, just use the ones provided by the `nu.validator:validator` artifact.
 
 Basic usage Java code:
 
