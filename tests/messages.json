@@ -2547,6 +2547,7 @@
     "html/elements/ol/start-invalid-novalid.html": "Bad value \u201cabc\u201d for attribute \u201cstart\u201d on element \u201col\u201d.",
     "html/elements/optgroup/no-label-no-legend-novalid.html": "An \u201coptgroup\u201d element with no child \u201clegend\u201d element must have a \u201clabel\u201d attribute.",
     "html/elements/option/aria-selected-haswarn.html": "The \u201caria-selected\u201d attribute should not be used on the \u201coption\u201d element.",
+    "html/elements/option/aria-selected-not-first-haswarn.html": "The \u201caria-selected\u201d attribute should not be used on the \u201coption\u201d element.",
     "html/elements/option/empty-option-without-label-novalid.html": "Element \u201coption\u201d without attribute \u201clabel\u201d must not be empty.",
     "html/elements/option/label-novalid.html": "Bad value \u201c\u201d for attribute \u201clabel\u201d on element \u201coption\u201d.",
     "html/elements/option/model-novalid.html": "Element \u201coption\u201d without attribute \u201clabel\u201d must not be empty.",

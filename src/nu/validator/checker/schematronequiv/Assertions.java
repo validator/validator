@@ -3159,12 +3159,14 @@ public class Assertions extends Checker {
                 parent.setLegendFound();
             }
 
+            if ("option" == localName
+                    && atts.getIndex("", "aria-selected") > -1
+                    && !"".equals(atts.getValue("", "aria-selected"))) {
+                warn("The “aria-selected” attribute should not be"
+                        + " used on the “option” element.");
+            }
+
             if ("option" == localName && !parent.hasOption()) {
-                if (atts.getIndex("", "aria-selected") > -1
-                        && !"".equals(atts.getValue("", "aria-selected"))) {
-                    warn("The “aria-selected” attribute should not be"
-                            + " used on the “option” element.");
-                }
                 if (atts.getIndex("", "value") < 0) {
                     parent.setNoValueOptionFound();
                 } else if (atts.getIndex("", "value") > -1
