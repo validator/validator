@@ -1055,6 +1055,8 @@ public class Assertions extends Checker {
 
         private Locator nonEmptyOption = null;
 
+        private Locator optionInOptgroup = null;
+
         private Locator locator = null;
 
         private boolean selectedOptions = false;
@@ -1436,6 +1438,22 @@ public class Assertions extends Checker {
         }
 
         /**
+         * Returns the optionInOptgroup.
+         *
+         * @return the optionInOptgroup
+         */
+        public Locator optionInOptgroupLocator() {
+            return optionInOptgroup;
+        }
+
+        /**
+         * Sets the optionInOptgroup.
+         */
+        public void setOptionInOptgroup(Locator locator) {
+            this.optionInOptgroup = locator;
+        }
+
+        /**
          * Sets the collectingCharacters.
          */
         public void setIsCollectingCharacters(boolean isCollectingCharacters) {
@@ -1636,6 +1654,33 @@ public class Assertions extends Checker {
 
     private StackNode peek() {
         return stack[currentPtr];
+    }
+
+    /**
+     * Returns the stack position of the select element in whose list of
+     * options an option element with a parent at the given stack position
+     * is, or -1 if that option element is in no select element's list of
+     * options.
+     *
+     * https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-option-list
+     */
+    private int selectForOption(int parentPtr) {
+        int optgroups = 0;
+        for (int i = parentPtr; i > 0; i--) {
+            String ancestor = stack[i].getName();
+            if ("select" == ancestor) {
+                // The walk skips an optgroup's descendants once a second
+                // optgroup sits between it and the select.
+                return optgroups > 1 ? -1 : i;
+            } else if ("optgroup" == ancestor) {
+                optgroups++;
+            } else if ("option" == ancestor || "datalist" == ancestor
+                    || "hr" == ancestor) {
+                // The walk skips these elements' descendants too.
+                return -1;
+            }
+        }
+        return -1;
     }
 
     private Map<StackNode, Locator> openSingleSelects = new HashMap<>();
@@ -2029,11 +2074,27 @@ public class Assertions extends Checker {
                             + " “multiple” attribute, and without a"
                             + " “size” attribute whose value is"
                             + " greater than"
-                            + " “1”, must have a child"
+                            + " “1”, must have a descendant"
                             + " “option” element.");
-                }
-                if (node.nonEmptyOptionLocator() != null) {
-                    err("The first child “option” element of a"
+                } else if (node.optionInOptgroupLocator() != null) {
+                    err("The first “option” element in a"
+                            + " “select” element with a"
+                            + " “required” attribute, and without a"
+                            + " “multiple” attribute, and without a"
+                            + " “size” attribute whose value is"
+                            + " greater than"
+                            + " “1”, must not be a descendant of an"
+                            + " “optgroup” element."
+                            + " Consider either adding an"
+                            + " “option” element with an empty"
+                            + " “value” attribute before the"
+                            + " “optgroup” element, or adding a"
+                            + " “size” attribute with a value equal"
+                            + " to the number of"
+                            + " “option” elements.",
+                            node.optionInOptgroupLocator());
+                } else if (node.nonEmptyOptionLocator() != null) {
+                    err("The first “option” element in a"
                             + " “select” element with a"
                             + " “required” attribute, and without a"
                             + " “multiple” attribute, and without a"
@@ -2066,9 +2127,11 @@ public class Assertions extends Checker {
                     || "h5" == localName || "h6" == localName)
                     && !node.hasTextNode() && !node.hasImg()) {
                 warn("Empty heading.", node.locator());
-            } else if ("option" == localName
-                    && !stack[currentPtr].hasOption()) {
-                stack[currentPtr].setOptionFound();
+            } else if ("option" == localName) {
+                int selectPtr = selectForOption(currentPtr);
+                if (selectPtr > -1) {
+                    stack[selectPtr].setOptionFound();
+                }
             } else if ("style" == localName) {
                 String styleContents = node.getTextContent().toString();
                 if (styleContents.startsWith("\uFEFF")) {
@@ -3166,15 +3229,25 @@ public class Assertions extends Checker {
                         + " used on the “option” element.");
             }
 
-            if ("option" == localName && !parent.hasOption()) {
-                if (atts.getIndex("", "value") < 0) {
-                    parent.setNoValueOptionFound();
-                } else if (atts.getIndex("", "value") > -1
-                        && "".equals(atts.getValue("", "value"))) {
-                    parent.setEmptyValueOptionFound();
-                } else {
-                    parent.setNonEmptyOption(
-                            (new LocatorImpl(getDocumentLocator())));
+            if ("option" == localName) {
+                int selectPtr = selectForOption(currentPtr);
+                if (selectPtr > -1 && !stack[selectPtr].hasOption()) {
+                    StackNode select = stack[selectPtr];
+                    for (int i = currentPtr; i > selectPtr; i--) {
+                        if ("optgroup" == stack[i].getName()) {
+                            select.setOptionInOptgroup(
+                                    new LocatorImpl(getDocumentLocator()));
+                            break;
+                        }
+                    }
+                    if (atts.getIndex("", "value") < 0) {
+                        select.setNoValueOptionFound();
+                    } else if ("".equals(atts.getValue("", "value"))) {
+                        select.setEmptyValueOptionFound();
+                    } else {
+                        select.setNonEmptyOption(
+                                new LocatorImpl(getDocumentLocator()));
+                    }
                 }
             }
 
@@ -5269,14 +5342,18 @@ public class Assertions extends Checker {
                                 stack[currentFigurePtr - k].setTextNodeFound();
                             }
                         }
-                    } else if ("option".equals(node.name)
-                            && !stack[currentPtr - 1].hasOption()
-                            && (!stack[currentPtr - 1].hasEmptyValueOption()
-                                    || stack[currentPtr - 1].hasNoValueOption())
-                            && stack[currentPtr
-                                    - 1].nonEmptyOptionLocator() == null) {
-                        stack[currentPtr - 1].setNonEmptyOption(
-                                (new LocatorImpl(getDocumentLocator())));
+                    } else if ("option".equals(node.name)) {
+                        int selectPtr = selectForOption(currentPtr - 1);
+                        if (selectPtr > -1) {
+                            StackNode select = stack[selectPtr];
+                            if (!select.hasOption()
+                                    && (!select.hasEmptyValueOption()
+                                            || select.hasNoValueOption())
+                                    && select.nonEmptyOptionLocator() == null) {
+                                select.setNonEmptyOption(
+                                        new LocatorImpl(getDocumentLocator()));
+                            }
+                        }
                     }
                     return; // This return can be removed if other code is added
                             // here. But it's here for now because we know we
