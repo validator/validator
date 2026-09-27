@@ -273,6 +273,17 @@ public class SelectorsList {
     }
 
     /**
+     * Adds a nesting selector
+     *
+     * @param nesting the nesting selector to add
+     * @throws InvalidParamException when trying to add a selector after a pseudo-element
+     */
+    public void addNesting(NestingSelector nesting)
+            throws InvalidParamException {
+        addSelector(nesting);
+    }
+
+    /**
      * Returns a String representation of this SelectorsList
      *
      * @return the String representation of this SelectorsList

@@ -1,0 +1,26 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>CSS nesting</title>
+<style>
+.card {
+  color: black;
+  & p { color: red; }
+  &:hover { color: blue; }
+  > h1 { margin: 0; }
+  + .card { margin-top: 1em; }
+  ~ p { margin-top: 0; }
+  p { line-height: 1.5; }
+  .title & { font-weight: bold; }
+  @media (min-width: 40em) {
+    padding: 1em;
+    & p { font-size: larger; }
+  }
+  @supports (display: grid) {
+    display: grid;
+  }
+  background: white;
+}
+.a { .b { .c { color: red; } } }
+</style>
+<body>
+<div class=card><h1>Title</h1><p>Text</p></div>
