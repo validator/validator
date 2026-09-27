@@ -122,7 +122,7 @@ final class TreeElement {
      * namespace, or null if there's no such attribute.
      */
     String getAttribute(String name) {
-        for (int i = 0; i < attributes.length; i += 3) {
+        for (int i = 0; i + 2 < attributes.length; i += 3) {
             if (attributes[i].isEmpty() && attributes[i + 1].equals(name)) {
                 return attributes[i + 2];
             }
