@@ -13,7 +13,7 @@
   <script crossorigin="" defer="" src="https://resources.whatwg.org/commit-snapshot-shortcut-key.js"></script>
   <header id="head" class="head with-buttons">
    <a href="https://whatwg.org/" class="logo"><img width="100" alt="WHATWG" crossorigin="" class="darkmode-aware" src="https://resources.whatwg.org/logo.svg" height="100"></a>
-   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">16 September 2026</span></p></hgroup>
+   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">25 September 2026</span></p></hgroup>
    
    <nav>
     
@@ -32,7 +32,7 @@
     <div>
      <a href="https://github.com/whatwg/html" class="changes"><span><strong>Contribute on GitHub</strong> <code>whatwg/html repository</code></span></a>
      <a href="https://github.com/whatwg/html/commits" class="changes"><span><strong>Commits</strong> <code>on GitHub</code></span></a>
-     <a id="commit-snapshot-link" href="/commit-snapshots/d78d7dd8efb783a9a32e187da5152e756ec6bae8/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
+     <a id="commit-snapshot-link" href="/commit-snapshots/2f441941fc523877bd9d5cd7de3b91a81a00ca2e/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
     </div>
     <div>
      <a href="https://github.com/whatwg/html/issues" class="feedback"><span><strong>Open Issues</strong> <code>filed on GitHub</code></span></a>
@@ -2763,7 +2763,7 @@ a<c- p="">.</c->setAttribute<c- p="">(</c-><c- t="">'href'</c-><c- p="">,</c-> <
     <p>This specification uses the following features defined in <cite>Trusted Types</cite>:
     <a href="#refsTRUSTED-TYPES">[TRUSTED-TYPES]</a></p>
 
-    <ul class="brief"><li><dfn id="tt-trustedhtml"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedhtml"><code>TrustedHTML</code></a></dfn></li><li><dfn id="tt-trustedhtml-data"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedhtml-data">data</a></dfn></li><li><dfn id="tt-trustedscript"><a href="https://w3c.github.io/trusted-types/dist/spec/#trusted-script"><code>TrustedScript</code></a></dfn></li><li><dfn id="tt-trustedscript-data"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedscript-data"><code>data</code></a></dfn></li><li><dfn id="tt-trustedscripturl"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedscripturl"><code>TrustedScriptURL</code></a></dfn></li><li><dfn id="tt-getcompliantstring"><a href="https://w3c.github.io/trusted-types/dist/spec/#get-trusted-type-compliant-string">get trusted type compliant string</a></dfn></li></ul>
+    <ul class="brief"><li><dfn id="tt-trustedhtml"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedhtml"><code>TrustedHTML</code></a></dfn></li><li><dfn id="tt-trustedhtml-data"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedhtml-data">data</a></dfn></li><li><dfn id="tt-trustedscript"><a href="https://w3c.github.io/trusted-types/dist/spec/#trusted-script"><code>TrustedScript</code></a></dfn></li><li><dfn id="tt-trustedscript-data"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedscript-data"><code>data</code></a></dfn></li><li><dfn id="tt-trustedscripturl"><a href="https://w3c.github.io/trusted-types/dist/spec/#trustedscripturl"><code>TrustedScriptURL</code></a></dfn></li><li><dfn id="tt-getcompliantstring"><a href="https://w3c.github.io/trusted-types/dist/spec/#get-trusted-type-compliant-string">get trusted type compliant string</a></dfn></li><li>The <dfn id="tt-pre-navigation-check"><a href="https://w3c.github.io/trusted-types/dist/spec/#require-trusted-types-for-pre-navigation-check"><code>require-trusted-types-for</code> pre-navigation check</a></dfn> algorithm</li></ul>
    </dd><dt>WebRTC API</dt><dd>
     <p>The following terms are defined in <cite>WebRTC API</cite>: <a href="#refsWEBRTC">[WEBRTC]</a></p>
 
@@ -23831,7 +23831,7 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
   <p>The <code id="the-iframe-element:the-iframe-element-6"><a href="#the-iframe-element">iframe</a></code> <a href="#html-element-post-connection-steps" id="the-iframe-element:html-element-post-connection-steps">HTML element post-connection steps</a>, given
   <var>insertedNode</var>, are:</p>
 
-  <ol><li><p>If <var>insertedNode</var> has a <code id="the-iframe-element:attr-iframe-sandbox-4"><a href="#attr-iframe-sandbox">sandbox</a></code>
+  <ol><li><p>If <var>insertedNode</var>'s <a id="the-iframe-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#concept-document-bc" id="the-iframe-element:concept-document-bc">browsing context</a> is null, then return.</p></li><li><p>If <var>insertedNode</var> has a <code id="the-iframe-element:attr-iframe-sandbox-4"><a href="#attr-iframe-sandbox">sandbox</a></code>
    attribute, then <a href="#parse-a-sandboxing-directive" id="the-iframe-element:parse-a-sandboxing-directive">parse the sandboxing
    directive</a> given the attribute's value and <var>insertedNode</var>'s
    <a href="#iframe-sandboxing-flag-set" id="the-iframe-element:iframe-sandboxing-flag-set"><code>iframe</code> sandboxing flag set</a>.</p></li><li><p><a href="#create-a-new-child-navigable" id="the-iframe-element:create-a-new-child-navigable">Create a new child navigable</a> for <var>insertedNode</var>.</p></li><li><p><a href="#process-the-iframe-attributes" id="the-iframe-element:process-the-iframe-attributes">Process the <code>iframe</code> attributes</a> for <var>insertedNode</var>, with
@@ -23924,7 +23924,7 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
     and its value is not the empty string:</p>
 
     <ol><li><p>Let <var>maybeURL</var> be the result of <a href="#encoding-parsing-a-url" id="the-iframe-element:encoding-parsing-a-url">encoding-parsing a URL</a> given that
-     attribute's value, relative to <var>element</var>'s <a id="the-iframe-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>.</p></li><li><p>If <var>maybeURL</var> is not failure, then set <var>url</var> to
+     attribute's value, relative to <var>element</var>'s <a id="the-iframe-element:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>.</p></li><li><p>If <var>maybeURL</var> is not failure, then set <var>url</var> to
      <var>maybeURL</var>.</p></li></ol>
    </li><li><p>If the <a href="#inclusive-ancestor-navigables" id="the-iframe-element:inclusive-ancestor-navigables">inclusive ancestor navigables</a> of <var>element</var>'s <a href="#node-navigable" id="the-iframe-element:node-navigable">node
    navigable</a> contains a <a href="#navigable" id="the-iframe-element:navigable">navigable</a> whose <a href="#nav-document" id="the-iframe-element:nav-document">active
@@ -23952,10 +23952,10 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
 
     <ol><li><p>Set <var>element</var>'s <a href="#iframe-pending-resource-timing-start-time" id="the-iframe-element:iframe-pending-resource-timing-start-time">pending resource-timing start time</a> to
      the <a id="the-iframe-element:current-high-resolution-time" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" data-x-internal="current-high-resolution-time">current high resolution time</a> given <var>element</var>'s
-     <a id="the-iframe-element:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#concept-relevant-global" id="the-iframe-element:concept-relevant-global">relevant global object</a>.</p></li><li><p>Set <var>element</var>'s <a href="#iframe-pending-resource-timing-url" id="the-iframe-element:iframe-pending-resource-timing-url">pending resource-timing URL</a> to
+     <a id="the-iframe-element:node-document-3" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#concept-relevant-global" id="the-iframe-element:concept-relevant-global">relevant global object</a>.</p></li><li><p>Set <var>element</var>'s <a href="#iframe-pending-resource-timing-url" id="the-iframe-element:iframe-pending-resource-timing-url">pending resource-timing URL</a> to
      <var>url</var>.</p></li></ol>
    </li><li><p><a href="#navigate" id="the-iframe-element:navigate">Navigate</a> <var>element</var>'s <a href="#content-navigable" id="the-iframe-element:content-navigable-9">content
-   navigable</a> to <var>url</var> using <var>element</var>'s <a id="the-iframe-element:node-document-3" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>, with
+   navigable</a> to <var>url</var> using <var>element</var>'s <a id="the-iframe-element:node-document-4" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>, with
    <i id="the-iframe-element:navigation-hh"><a href="#navigation-hh">historyHandling</a></i> set to <var>historyHandling</var>, <i id="the-iframe-element:navigation-referrer-policy"><a href="#navigation-referrer-policy">referrerPolicy</a></i> set to <var>referrerPolicy</var>, <i id="the-iframe-element:navigation-resource"><a href="#navigation-resource">documentResource</a></i> set to <var>srcdocString</var>, and <i id="the-iframe-element:navigation-initial-insertion"><a href="#navigation-initial-insertion">initialInsertion</a></i> set to <var>initialInsertion</var>.</p></li></ol>
   </div>
 
@@ -23975,7 +23975,7 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
     not null:</p>
 
     <ol><li><p><a id="the-iframe-element:assert-2" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>element</var>'s <a href="#iframe-pending-resource-timing-url" id="the-iframe-element:iframe-pending-resource-timing-url-2">pending resource-timing URL</a> is not
-      null.</p></li><li><p>Let <var>global</var> be <var>element</var>'s <a id="the-iframe-element:node-document-4" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s
+      null.</p></li><li><p>Let <var>global</var> be <var>element</var>'s <a id="the-iframe-element:node-document-5" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s
       <a href="#concept-relevant-global" id="the-iframe-element:concept-relevant-global-2">relevant global object</a>.</p></li><li><p>Let <var>fallbackTimingInfo</var> be a new <a href="https://fetch.spec.whatwg.org/#fetch-timing-info" id="the-iframe-element:fetch-timing-info" data-x-internal="fetch-timing-info">fetch timing info</a> whose <a href="https://fetch.spec.whatwg.org/#fetch-timing-info-start-time" id="the-iframe-element:fetch-timing-info-start-time" data-x-internal="fetch-timing-info-start-time">start time</a> is <var>element</var>'s <a href="#iframe-pending-resource-timing-start-time" id="the-iframe-element:iframe-pending-resource-timing-start-time-3">pending resource-timing start time</a>
       and whose <a href="https://fetch.spec.whatwg.org/#fetch-timing-info-end-time" id="the-iframe-element:fetch-timing-info-end-time" data-x-internal="fetch-timing-info-end-time">response end time</a> is the
       <a id="the-iframe-element:current-high-resolution-time-2" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" data-x-internal="current-high-resolution-time">current high resolution time</a> given <var>global</var>.</p></li><li><p><a id="the-iframe-element:mark-resource-timing" href="https://w3c.github.io/resource-timing/#dfn-mark-resource-timing" data-x-internal="mark-resource-timing">Mark resource timing</a> given <var>fallbackTimingInfo</var>,
@@ -23995,7 +23995,7 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
   <div data-algorithm="">
   <p>If an element type <dfn id="potentially-delays-the-load-event">potentially delays the load event</dfn>, then for each element
   <var>element</var> of that type, the user agent must <a href="#delay-the-load-event" id="the-iframe-element:delay-the-load-event">delay the load event</a> of
-  <var>element</var>'s <a id="the-iframe-element:node-document-5" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> if <var>element</var>'s <a href="#content-navigable" id="the-iframe-element:content-navigable-12">content
+  <var>element</var>'s <a id="the-iframe-element:node-document-6" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> if <var>element</var>'s <a href="#content-navigable" id="the-iframe-element:content-navigable-12">content
   navigable</a> is non-null and any of the following are true:</p>
 
   <ul><li><p><var>element</var>'s <a href="#content-navigable" id="the-iframe-element:content-navigable-13">content navigable</a>'s <a href="#nav-document" id="the-iframe-element:nav-document-5">active
@@ -24217,7 +24217,7 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
   </div>
 
   <p class="note">Neither <code id="the-iframe-element:attr-iframe-allow-3"><a href="#attr-iframe-allow">allow</a></code> nor <code id="the-iframe-element:attr-iframe-allowfullscreen-3"><a href="#attr-iframe-allowfullscreen">allowfullscreen</a></code> can grant access to a feature in an
-  <code id="the-iframe-element:the-iframe-element-38"><a href="#the-iframe-element">iframe</a></code> element's <a href="#content-navigable" id="the-iframe-element:content-navigable-26">content navigable</a> if the element's <a id="the-iframe-element:node-document-6" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node
+  <code id="the-iframe-element:the-iframe-element-38"><a href="#the-iframe-element">iframe</a></code> element's <a href="#content-navigable" id="the-iframe-element:content-navigable-26">content navigable</a> if the element's <a id="the-iframe-element:node-document-7" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node
   document</a> is not already allowed to use that feature.</p>
 
   
@@ -24226,7 +24226,7 @@ Noodliness do you wish to reach out for?<c- p="">&lt;/</c-><c- f="">p</c-><c- p=
    is <dfn id="allowed-to-use" data-export="">allowed to use</dfn> the policy-controlled-feature <var>feature</var>, run these
    steps:</p>
 
-   <ol><li><p>If <var>document</var>'s <a href="#concept-document-bc" id="the-iframe-element:concept-document-bc">browsing context</a> is
+   <ol><li><p>If <var>document</var>'s <a href="#concept-document-bc" id="the-iframe-element:concept-document-bc-2">browsing context</a> is
     null, then return false.</p></li><li><p>If <var>document</var> is not <a href="#fully-active" id="the-iframe-element:fully-active">fully active</a>, then return false.</p></li><li><p>If the result of running <a href="https://w3c.github.io/webappsec-feature-policy/#is-feature-enabled" id="the-iframe-element:is-feature-enabled" data-x-internal="is-feature-enabled">is feature enabled in document
     for origin</a> on <var>feature</var>, <var>document</var>, and <var>document</var>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="the-iframe-element:concept-document-origin" data-x-internal="concept-document-origin">origin</a> is "<code>Enabled</code>", then return
     true.</p></li><li><p>Return false.</p></li></ol>
@@ -25972,11 +25972,11 @@ zero or more <code id="the-audio-element:the-track-element"><a href="#the-track-
   algorithm). Steps in such sections are marked with ⌛.</p>
 
   <ol><li><p>Set the element's <code id="loading-the-media-resource:dom-media-networkstate-3"><a href="#dom-media-networkstate">networkState</a></code> attribute to
-   the <code id="loading-the-media-resource:dom-media-network_no_source"><a href="#dom-media-network_no_source">NETWORK_NO_SOURCE</a></code> value.</p></li><li><p>Set the element's <a href="#show-poster-flag" id="loading-the-media-resource:show-poster-flag">show poster flag</a> to true.</p></li><li><p>If the <a href="#media-element" id="loading-the-media-resource:media-element-19">media element</a>'s <a href="#lazy-loading-attribute" id="loading-the-media-resource:lazy-loading-attribute">lazy loading attribute</a> is in the <a href="#attr-loading-eager-state" id="loading-the-media-resource:attr-loading-eager-state">Eager</a> state or <a href="#concept-n-noscript" id="loading-the-media-resource:concept-n-noscript">scripting
-   is disabled</a>, set the <a href="#media-element" id="loading-the-media-resource:media-element-20">media element</a>'s <a href="#delaying-the-load-event-flag" id="loading-the-media-resource:delaying-the-load-event-flag-2">delaying-the-load-event flag</a>
-   to true (this <a href="#delay-the-load-event" id="loading-the-media-resource:delay-the-load-event-2">delays the load event</a>).</p></li><li><p><a href="#await-a-stable-state" id="loading-the-media-resource:await-a-stable-state">Await a stable state</a>, allowing the <a href="#concept-task" id="loading-the-media-resource:concept-task-4">task</a> that invoked this algorithm to continue. The <a href="#synchronous-section" id="loading-the-media-resource:synchronous-section-2">synchronous
+   the <code id="loading-the-media-resource:dom-media-network_no_source"><a href="#dom-media-network_no_source">NETWORK_NO_SOURCE</a></code> value.</p></li><li><p>Set the element's <a href="#show-poster-flag" id="loading-the-media-resource:show-poster-flag">show poster flag</a> to true.</p></li><li><p><a href="#await-a-stable-state" id="loading-the-media-resource:await-a-stable-state">Await a stable state</a>, allowing the <a href="#concept-task" id="loading-the-media-resource:concept-task-4">task</a> that invoked this algorithm to continue. The <a href="#synchronous-section" id="loading-the-media-resource:synchronous-section-2">synchronous
    section</a> consists of all the remaining steps of this algorithm until the algorithm says the
-   <a href="#synchronous-section" id="loading-the-media-resource:synchronous-section-3">synchronous section</a> has ended. (Steps in <a href="#synchronous-section" id="loading-the-media-resource:synchronous-section-4">synchronous sections</a> are marked with ⌛.)</p></li><li>
+   <a href="#synchronous-section" id="loading-the-media-resource:synchronous-section-3">synchronous section</a> has ended. (Steps in <a href="#synchronous-section" id="loading-the-media-resource:synchronous-section-4">synchronous sections</a> are marked with ⌛.)</p></li><li><p>⌛ If the <a href="#media-element" id="loading-the-media-resource:media-element-19">media element</a>'s <a href="#lazy-loading-attribute" id="loading-the-media-resource:lazy-loading-attribute">lazy loading attribute</a> is in the
+   <a href="#attr-loading-eager-state" id="loading-the-media-resource:attr-loading-eager-state">Eager</a> state or <a href="#concept-n-noscript" id="loading-the-media-resource:concept-n-noscript">scripting is disabled</a>, then set the <a href="#media-element" id="loading-the-media-resource:media-element-20">media
+   element</a>'s <a href="#delaying-the-load-event-flag" id="loading-the-media-resource:delaying-the-load-event-flag-2">delaying-the-load-event flag</a> to true (this <a href="#delay-the-load-event" id="loading-the-media-resource:delay-the-load-event-2">delays the load event</a>).</p></li><li>
     <p>⌛ If the <a href="#media-element" id="loading-the-media-resource:media-element-21">media element</a>'s <a href="#blocked-on-parser" id="loading-the-media-resource:blocked-on-parser">blocked-on-parser</a> flag is false,
     then <a href="#populate-the-list-of-pending-text-tracks" id="loading-the-media-resource:populate-the-list-of-pending-text-tracks">populate the list of pending text tracks</a>.</p>
    </li><li><p>⌛ Let <var>mode</var> be null.</p></li><li><p>⌛ Let <var>candidate</var> be null.</p></li><li><p>⌛ If the <a href="#media-element" id="loading-the-media-resource:media-element-22">media element</a>'s <a href="#assigned-media-provider-object" id="loading-the-media-resource:assigned-media-provider-object-2">assigned media provider object</a>
@@ -60133,12 +60133,15 @@ END:VCARD</pre>
   </div>
 
   <div data-algorithm="">
-  <p>To <dfn id="fire-a-focus-event">fire a focus event</dfn> named <var>e</var> at an element <var>t</var> with a given
-  related target <var>r</var>, <a href="https://dom.spec.whatwg.org/#concept-event-fire" id="focus-processing-model:concept-event-fire-2" data-x-internal="concept-event-fire">fire an event</a> named
-  <var>e</var> at <var>t</var>, using <code id="focus-processing-model:focusevent"><a data-x-internal="focusevent" href="https://w3c.github.io/uievents/#focusevent">FocusEvent</a></code>, with the <code id="focus-processing-model:dom-focusevent-relatedtarget"><a data-x-internal="dom-focusevent-relatedtarget" href="https://w3c.github.io/uievents/#dom-focusevent-relatedtarget">relatedTarget</a></code> attribute initialized to <var>r</var>,
-  the <code id="focus-processing-model:dom-uievent-view"><a data-x-internal="dom-uievent-view" href="https://w3c.github.io/uievents/#dom-uievent-view">view</a></code> attribute initialized to <var>t</var>'s
-  <a id="focus-processing-model:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#concept-relevant-global" id="focus-processing-model:concept-relevant-global-4">relevant global object</a>, and the <a id="focus-processing-model:composed-flag" href="https://dom.spec.whatwg.org/#composed-flag" data-x-internal="composed-flag">composed
-  flag</a> set.</p>
+  <p>To <dfn id="fire-a-focus-event">fire a focus event</dfn> named <var>e</var> at an element or a <code id="focus-processing-model:window"><a href="#window">Window</a></code>
+  object <var>target</var> given a related target <var>relatedTarget</var>:</p>
+
+  <ol><li><p>Let <var>view</var> be <var>target</var> if <var>target</var> is a <code id="focus-processing-model:window-2"><a href="#window">Window</a></code>
+   object; otherwise <var>target</var>'s <a id="focus-processing-model:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#concept-relevant-global" id="focus-processing-model:concept-relevant-global-4">relevant global
+   object</a>.</p></li><li><p><a href="https://dom.spec.whatwg.org/#concept-event-fire" id="focus-processing-model:concept-event-fire-2" data-x-internal="concept-event-fire">Fire an event</a> named <var>e</var> at
+   <var>target</var>, using <code id="focus-processing-model:focusevent"><a data-x-internal="focusevent" href="https://w3c.github.io/uievents/#focusevent">FocusEvent</a></code>, with the <code id="focus-processing-model:dom-focusevent-relatedtarget"><a data-x-internal="dom-focusevent-relatedtarget" href="https://w3c.github.io/uievents/#dom-focusevent-relatedtarget">relatedTarget</a></code> attribute initialized to
+   <var>relatedTarget</var>, the <code id="focus-processing-model:dom-uievent-view"><a data-x-internal="dom-uievent-view" href="https://w3c.github.io/uievents/#dom-uievent-view">view</a></code> attribute initialized
+   to <var>view</var>, and the <a id="focus-processing-model:composed-flag" href="https://dom.spec.whatwg.org/#composed-flag" data-x-internal="composed-flag">composed flag</a> set.</p></li></ol>
   </div>
 
   <hr>
@@ -72566,12 +72569,21 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
    </li><li>
     <p>If <var>url</var>'s <a href="https://url.spec.whatwg.org/#concept-url-scheme" id="beginning-navigation:concept-url-scheme-2" data-x-internal="concept-url-scheme">scheme</a> is "<code id="beginning-navigation:the-javascript:-url-special-case-2"><a href="#the-javascript:-url-special-case">javascript</a></code>":</p>
 
-    <ol><li><p><a href="#queue-a-global-task" id="beginning-navigation:queue-a-global-task-2">Queue a global task</a> on the <a href="#navigation-and-traversal-task-source" id="beginning-navigation:navigation-and-traversal-task-source-2">navigation and traversal task
+    <ol><li>
+      <p>Let <var>request</var> be a new <a href="https://fetch.spec.whatwg.org/#concept-request" id="beginning-navigation:concept-request" data-x-internal="concept-request">request</a>, with</p>
+
+      <dl class="props"><dt><a href="https://fetch.spec.whatwg.org/#concept-request-url" id="beginning-navigation:concept-request-url" data-x-internal="concept-request-url">URL</a></dt><dd><var>url</var></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-client" id="beginning-navigation:concept-request-client" data-x-internal="concept-request-client">client</a></dt><dd><var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-client" id="beginning-navigation:source-snapshot-params-client">fetch
+       client</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-policy-container" id="beginning-navigation:concept-request-policy-container" data-x-internal="concept-request-policy-container">policy container</a></dt><dd><var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-policy-container" id="beginning-navigation:source-snapshot-params-policy-container">source policy container</a></dd></dl>
+
+      <p class="note">This is a synthetic <a href="https://fetch.spec.whatwg.org/#concept-request" id="beginning-navigation:concept-request-2" data-x-internal="concept-request">request</a>, needed
+      because the Content Security Policy check in <a href="#navigate-to-a-javascript:-url" id="beginning-navigation:navigate-to-a-javascript:-url">navigate to a <code>javascript:</code>
+      URL</a> operates on a <a href="https://fetch.spec.whatwg.org/#concept-request" id="beginning-navigation:concept-request-3" data-x-internal="concept-request">request</a>. It will never hit the
+      network.</p>
+     </li><li><p><a href="#queue-a-global-task" id="beginning-navigation:queue-a-global-task-2">Queue a global task</a> on the <a href="#navigation-and-traversal-task-source" id="beginning-navigation:navigation-and-traversal-task-source-2">navigation and traversal task
      source</a> given <var>navigable</var>'s <a href="#nav-window" id="beginning-navigation:nav-window-2">active window</a> to
-     <a href="#navigate-to-a-javascript:-url" id="beginning-navigation:navigate-to-a-javascript:-url">navigate to a <code>javascript:</code> URL</a> given <var>navigable</var>,
-     <var>url</var>, <var>historyHandling</var>, <var>sourceSnapshotParams</var>,
-     <var>initiatorOriginSnapshot</var>, <var>userInvolvement</var>,
-     <var>cspNavigationType</var>, <var>initialInsertion</var>, and
+     <a href="#navigate-to-a-javascript:-url" id="beginning-navigation:navigate-to-a-javascript:-url-2">navigate to a <code>javascript:</code> URL</a> given <var>navigable</var>,
+     <var>request</var>, <var>historyHandling</var>, <var>initiatorOriginSnapshot</var>,
+     <var>userInvolvement</var>, <var>cspNavigationType</var>, <var>initialInsertion</var>, and
      <var>navigationId</var>.</p></li><li><p>Return.</p></li></ol>
    </li><li>
     <p>If all of the following are true:</p>
@@ -72740,30 +72752,34 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
   <div data-algorithm="">
   <p>To <dfn id="navigate-to-a-javascript:-url">navigate to a <code>javascript:</code> URL</dfn>, given a <a href="#navigable" id="the-javascript:-url-special-case:navigable">navigable</a>
-  <var>targetNavigable</var>, a <a id="the-javascript:-url-special-case:url" href="https://url.spec.whatwg.org/#concept-url" data-x-internal="url">URL</a> <var>url</var>, a <a href="#history-handling-behavior" id="the-javascript:-url-special-case:history-handling-behavior">history handling
-  behavior</a> <var>historyHandling</var>, a <a href="#source-snapshot-params" id="the-javascript:-url-special-case:source-snapshot-params">source snapshot params</a>
-  <var>sourceSnapshotParams</var>, an <a href="#concept-origin" id="the-javascript:-url-special-case:concept-origin">origin</a> <var>initiatorOrigin</var>, a <a href="#user-navigation-involvement" id="the-javascript:-url-special-case:user-navigation-involvement">user
-  navigation involvement</a> <var>userInvolvement</var>, a string
-  <var>cspNavigationType</var>, a boolean <var>initialInsertion</var>, and a <a href="#navigation-id" id="the-javascript:-url-special-case:navigation-id">navigation
-  ID</a> <var>navigationId</var>:</p>
+  <var>targetNavigable</var>, a <a href="https://fetch.spec.whatwg.org/#concept-request" id="the-javascript:-url-special-case:concept-request" data-x-internal="concept-request">request</a> <var>request</var>, a
+  <a href="#history-handling-behavior" id="the-javascript:-url-special-case:history-handling-behavior">history handling behavior</a> <var>historyHandling</var>, an <a href="#concept-origin" id="the-javascript:-url-special-case:concept-origin">origin</a>
+  <var>initiatorOrigin</var>, a <a href="#user-navigation-involvement" id="the-javascript:-url-special-case:user-navigation-involvement">user navigation involvement</a> <var>userInvolvement</var>,
+  a string <var>cspNavigationType</var>, a boolean <var>initialInsertion</var>, and a
+  <a href="#navigation-id" id="the-javascript:-url-special-case:navigation-id">navigation ID</a> <var>navigationId</var>:</p>
 
   <ol><li><p><a id="the-javascript:-url-special-case:assert" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>historyHandling</var> is "<code id="the-javascript:-url-special-case:navigationhistorybehavior-replace"><a href="#navigationhistorybehavior-replace">replace</a></code>".</p></li><li><p>If <var>targetNavigable</var>'s <a href="#ongoing-navigation" id="the-javascript:-url-special-case:ongoing-navigation">ongoing navigation</a> is no longer
    <var>navigationId</var>, then return.</p></li><li><p><a href="#set-the-ongoing-navigation" id="the-javascript:-url-special-case:set-the-ongoing-navigation">Set the ongoing navigation</a> for <var>targetNavigable</var> to null.</p></li><li><p>If <var>initiatorOrigin</var> is not <a href="#same-origin-domain" id="the-javascript:-url-special-case:same-origin-domain">same origin-domain</a> with
    <var>targetNavigable</var>'s <a href="#nav-document" id="the-javascript:-url-special-case:nav-document">active document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="the-javascript:-url-special-case:concept-document-origin" data-x-internal="concept-document-origin">origin</a>, then return.</p></li><li>
-    <p>Let <var>request</var> be a new <a href="https://fetch.spec.whatwg.org/#concept-request" id="the-javascript:-url-special-case:concept-request" data-x-internal="concept-request">request</a> whose <a href="https://fetch.spec.whatwg.org/#concept-request-url" id="the-javascript:-url-special-case:concept-request-url" data-x-internal="concept-request-url">URL</a> is <var>url</var> and whose <a href="https://fetch.spec.whatwg.org/#concept-request-policy-container" id="the-javascript:-url-special-case:concept-request-policy-container" data-x-internal="concept-request-policy-container">policy container</a> is
-    <var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-policy-container" id="the-javascript:-url-special-case:source-snapshot-params-policy-container">source
-    policy container</a>.</p>
+    <p>If the result of <a id="the-javascript:-url-special-case:should-navigation-request-of-type-be-blocked-by-content-security-policy" href="https://w3c.github.io/webappsec-csp/#should-block-navigation-request" data-x-internal="should-navigation-request-of-type-be-blocked-by-content-security-policy">should navigation request of type be blocked by Content Security
+    Policy?</a> given <var>request</var> and <var>cspNavigationType</var> is "<code>Blocked</code>", then return. <a href="#refsCSP">[CSP]</a></p>
 
-    <p class="note">This is a synthetic <a href="https://fetch.spec.whatwg.org/#concept-request" id="the-javascript:-url-special-case:concept-request-2" data-x-internal="concept-request">request</a> solely for
-    plumbing into the next step. It will never hit the network.</p>
-   </li><li><p>If the result of <a id="the-javascript:-url-special-case:should-navigation-request-of-type-be-blocked-by-content-security-policy" href="https://w3c.github.io/webappsec-csp/#should-block-navigation-request" data-x-internal="should-navigation-request-of-type-be-blocked-by-content-security-policy">should navigation request of type be blocked by Content Security
-   Policy?</a> given <var>request</var> and <var>cspNavigationType</var> is "<code>Blocked</code>", then return. <a href="#refsCSP">[CSP]</a></p></li><li><p>Let <var>newDocument</var> be the result of <a href="#evaluate-a-javascript:-url" id="the-javascript:-url-special-case:evaluate-a-javascript:-url">evaluating a <code>javascript:</code> URL</a> given <var>targetNavigable</var>,
-   <var>url</var>, <var>initiatorOrigin</var>, and <var>userInvolvement</var>.</p></li><li>
+    <p class="note">This can change <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-url" id="the-javascript:-url-special-case:concept-request-url" data-x-internal="concept-request-url">URL</a>, as the <a href="https://w3c.github.io/trusted-types/dist/spec/#require-trusted-types-for-pre-navigation-check" id="the-javascript:-url-special-case:tt-pre-navigation-check" data-x-internal="tt-pre-navigation-check"><code>require-trusted-types-for</code> pre-navigation check</a> passes the script source
+    through the default policy. <a href="#refsTRUSTED-TYPES">[TRUSTED-TYPES]</a></p>
+   </li><li><p>Let <var>newDocument</var> be the result of <a href="#evaluate-a-javascript:-url" id="the-javascript:-url-special-case:evaluate-a-javascript:-url">evaluating a <code>javascript:</code> URL</a> given <var>targetNavigable</var>,
+   <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-url" id="the-javascript:-url-special-case:concept-request-url-2" data-x-internal="concept-request-url">URL</a>, <var>initiatorOrigin</var>,
+   <var>userInvolvement</var>, and <var>navigationId</var>.</p></li><li>
     <p>If <var>newDocument</var> is null:</p>
 
-    <ol><li><p>If <var>initialInsertion</var> is true and <var>targetNavigable</var>'s <a href="#nav-document" id="the-javascript:-url-special-case:nav-document-2">active document</a>'s <a href="#is-initial-about:blank" id="the-javascript:-url-special-case:is-initial-about:blank">is initial
-     <code>about:blank</code></a> is true, then run the <a href="#iframe-load-event-steps" id="the-javascript:-url-special-case:iframe-load-event-steps">iframe load event steps</a>
-     given <var>targetNavigable</var>'s <a href="#nav-container" id="the-javascript:-url-special-case:nav-container">container</a>.</p></li><li><p>Return.</p></li></ol>
+    <ol><li>
+      <p>If <var>initialInsertion</var> is true, <var>targetNavigable</var>'s <a href="#nav-container" id="the-javascript:-url-special-case:nav-container">container</a> is non-null, and <var>targetNavigable</var>'s <a href="#nav-document" id="the-javascript:-url-special-case:nav-document-2">active document</a>'s <a href="#is-initial-about:blank" id="the-javascript:-url-special-case:is-initial-about:blank">is initial
+      <code>about:blank</code></a> is true, then run the <a href="#iframe-load-event-steps" id="the-javascript:-url-special-case:iframe-load-event-steps">iframe load event steps</a>
+      given <var>targetNavigable</var>'s <a href="#nav-container" id="the-javascript:-url-special-case:nav-container-2">container</a>.</p>
+
+      <p class="note">The <a href="https://w3c.github.io/trusted-types/dist/spec/#require-trusted-types-for-pre-navigation-check" id="the-javascript:-url-special-case:tt-pre-navigation-check-2" data-x-internal="tt-pre-navigation-check">pre-navigation check</a> runs
+      author code through the default policy, which can have removed <var>targetNavigable</var>'s
+      <a href="#nav-container" id="the-javascript:-url-special-case:nav-container-3">container</a> in the meantime.</p>
+     </li><li><p>Return.</p></li></ol>
 
     <p class="note">In this case, some JavaScript code was executed, but no new
     <code id="the-javascript:-url-special-case:document"><a href="#document">Document</a></code> was created, so we will not perform a navigation.</p>
@@ -72784,9 +72800,8 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
     <dl class="props"><dt><a href="#she-url" id="the-javascript:-url-special-case:she-url">URL</a></dt><dd><var>entryToReplace</var>'s <a href="#she-url" id="the-javascript:-url-special-case:she-url-2">URL</a></dd><dt><a href="#she-document-state" id="the-javascript:-url-special-case:she-document-state-2">document state</a></dt><dd><var>documentState</var></dd></dl>
 
     <p class="note">For the <a href="#she-url" id="the-javascript:-url-special-case:she-url-3">URL</a>, we do <em>not</em> use
-    <var>url</var>, i.e. the actual <code id="the-javascript:-url-special-case:the-javascript:-url-special-case-2"><a href="#the-javascript:-url-special-case">javascript:</a></code> URL that
-    the <a href="#navigate" id="the-javascript:-url-special-case:navigate-2">navigate</a> algorithm was called with. This means <code id="the-javascript:-url-special-case:the-javascript:-url-special-case-3"><a href="#the-javascript:-url-special-case">javascript:</a></code> URLs are never stored in session history, and so can never be
-    traversed to.</p>
+    <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-url" id="the-javascript:-url-special-case:concept-request-url-3" data-x-internal="concept-request-url">URL</a>, i.e., the <code id="the-javascript:-url-special-case:the-javascript:-url-special-case-2"><a href="#the-javascript:-url-special-case">javascript:</a></code> URL that was evaluated. This means <code id="the-javascript:-url-special-case:the-javascript:-url-special-case-3"><a href="#the-javascript:-url-special-case">javascript:</a></code> URLs are never stored in session history, and so
+    can never be traversed to.</p>
    </li><li><p><a href="#tn-append-session-history-traversal-steps" id="the-javascript:-url-special-case:tn-append-session-history-traversal-steps">Append session history traversal
    steps</a> to <var>targetNavigable</var>'s <a href="#nav-traversable" id="the-javascript:-url-special-case:nav-traversable">traversable navigable</a>
    to <a href="#finalize-a-cross-document-navigation" id="the-javascript:-url-special-case:finalize-a-cross-document-navigation">finalize a cross-document navigation</a> with <var>targetNavigable</var>,
@@ -72795,9 +72810,9 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
   <div data-algorithm="">
   <p>To <dfn id="evaluate-a-javascript:-url">evaluate a <code>javascript:</code> URL</dfn> given a <a href="#navigable" id="the-javascript:-url-special-case:navigable-2">navigable</a>
-  <var>targetNavigable</var>, a <a id="the-javascript:-url-special-case:url-2" href="https://url.spec.whatwg.org/#concept-url" data-x-internal="url">URL</a> <var>url</var>, an <a href="#concept-origin" id="the-javascript:-url-special-case:concept-origin-2">origin</a>
-  <var>newDocumentOrigin</var>, and a <a href="#user-navigation-involvement" id="the-javascript:-url-special-case:user-navigation-involvement-2">user navigation involvement</a>
-  <var>userInvolvement</var>:</p>
+  <var>targetNavigable</var>, a <a id="the-javascript:-url-special-case:url" href="https://url.spec.whatwg.org/#concept-url" data-x-internal="url">URL</a> <var>url</var>, an <a href="#concept-origin" id="the-javascript:-url-special-case:concept-origin-2">origin</a>
+  <var>newDocumentOrigin</var>, a <a href="#user-navigation-involvement" id="the-javascript:-url-special-case:user-navigation-involvement-2">user navigation involvement</a>
+  <var>userInvolvement</var>, and a <a href="#navigation-id" id="the-javascript:-url-special-case:navigation-id-2">navigation ID</a> <var>navigationId</var>:</p>
 
   <ol><li><p>Let <var>urlString</var> be the result of running the <a href="https://url.spec.whatwg.org/#concept-url-serializer" id="the-javascript:-url-special-case:concept-url-serializer" data-x-internal="concept-url-serializer">URL serializer</a> on <var>url</var>.</p></li><li><p>Let <var>encodedScriptSource</var> be the result of removing the leading "<code>javascript:</code>" from <var>urlString</var>.</p></li><li><p>Let <var>scriptSource</var> be the <a href="https://encoding.spec.whatwg.org/#utf-8-decode" id="the-javascript:-url-special-case:utf-8-decode" data-x-internal="utf-8-decode">UTF-8 decoding</a> of
    the <a href="https://url.spec.whatwg.org/#string-percent-decode" id="the-javascript:-url-special-case:percent-decode" data-x-internal="percent-decode">percent-decoding</a> of
@@ -81996,9 +82011,9 @@ document<c- p="">.</c->querySelector<c- p="">(</c-><c- u="">"button"</c-><c- p="
   <var>eventTarget</var>, a string <var>name</var> representing the <a href="#event-handler-name" id="event-handler-attributes:event-handler-name-7">name</a> of an <a href="#event-handlers" id="event-handler-attributes:event-handlers-31">event handler</a>, and an
   <code id="event-handler-attributes:event"><a data-x-internal="event" href="https://dom.spec.whatwg.org/#interface-event">Event</a></code> object <var>event</var> is as follows:</p>
 
-  <ol><li><p>If <a href="#concept-n-noscript" id="event-handler-attributes:concept-n-noscript">scripting is disabled</a> for
-   <var>eventTarget</var>, then return.</p></li><li><p>Let <var>callback</var> be the result of <a href="#getting-the-current-value-of-the-event-handler" id="event-handler-attributes:getting-the-current-value-of-the-event-handler-2">getting the current value of the event
-   handler</a> given <var>eventTarget</var> and <var>name</var>.</p></li><li><p>If <var>callback</var> is null, then return.</p></li><li><p>Let <var>special error event handling</var> be true if <var>event</var> is an
+  <ol><li><p>Let <var>callback</var> be the result of <a href="#getting-the-current-value-of-the-event-handler" id="event-handler-attributes:getting-the-current-value-of-the-event-handler-2">getting the current value of the event
+   handler</a> given <var>eventTarget</var> and <var>name</var>.</p></li><li><p>If <var>callback</var> is null, then return.</p></li><li><p>If <var>callback</var>'s <a id="event-handler-attributes:associated-realm" href="https://webidl.spec.whatwg.org/#dfn-associated-realm" data-x-internal="associated-realm">associated realm</a>'s <a href="#concept-realm-global" id="event-handler-attributes:concept-realm-global">global object</a> is a <code id="event-handler-attributes:window-5"><a href="#window">Window</a></code> object whose <a href="#concept-document-window" id="event-handler-attributes:concept-document-window">associated <code>Document</code></a> is not <a href="#fully-active" id="event-handler-attributes:fully-active">fully
+   active</a>, then return.</p></li><li><p>Let <var>special error event handling</var> be true if <var>event</var> is an
    <code id="event-handler-attributes:errorevent"><a href="#errorevent">ErrorEvent</a></code> object, <var>event</var>'s <code id="event-handler-attributes:dom-event-type"><a data-x-internal="dom-event-type" href="https://dom.spec.whatwg.org/#dom-event-type">type</a></code> is
    "<code id="event-handler-attributes:event-error"><a href="#event-error">error</a></code>", and <var>event</var>'s <code id="event-handler-attributes:dom-event-currenttarget"><a data-x-internal="dom-event-currenttarget" href="https://dom.spec.whatwg.org/#dom-event-currenttarget">currentTarget</a></code> implements the
    <code id="event-handler-attributes:windoworworkerglobalscope"><a href="#windoworworkerglobalscope">WindowOrWorkerGlobalScope</a></code> mixin. Otherwise, let <var>special error event
@@ -82120,9 +82135,9 @@ document<c- p="">.</c->querySelector<c- p="">(</c-><c- u="">"button"</c-><c- p="
 
     <ol><li><p>If <var>eventTarget</var> is an element, then let <var>element</var> be
      <var>eventTarget</var>, and <var>document</var> be <var>element</var>'s <a id="event-handler-attributes:node-document-4" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node
-     document</a>. Otherwise, <var>eventTarget</var> is a <code id="event-handler-attributes:window-5"><a href="#window">Window</a></code> object, let
-     <var>element</var> be null, and <var>document</var> be <var>eventTarget</var>'s <a href="#concept-document-window" id="event-handler-attributes:concept-document-window">associated <code>Document</code></a>.</p></li><li><p>If <var>document</var>'s <a href="#active-sandboxing-flag-set" id="event-handler-attributes:active-sandboxing-flag-set">active sandboxing flag set</a> has its
-     <a href="#sandboxed-scripts-browsing-context-flag" id="event-handler-attributes:sandboxed-scripts-browsing-context-flag">sandboxed scripts browsing context flag</a> set, then return null.</p></li><li><p>Let <var>body</var> be the uncompiled script body in <var>eventHandler</var>'s <a href="#event-handler-value" id="event-handler-attributes:event-handler-value-9">value</a>.</p></li><li><p>Let <var>location</var> be the location where the script body originated, as
+     document</a>. Otherwise, <var>eventTarget</var> is a <code id="event-handler-attributes:window-6"><a href="#window">Window</a></code> object, let
+     <var>element</var> be null, and <var>document</var> be <var>eventTarget</var>'s <a href="#concept-document-window" id="event-handler-attributes:concept-document-window-2">associated <code>Document</code></a>.</p></li><li><p>If <a href="#concept-n-noscript" id="event-handler-attributes:concept-n-noscript">scripting is disabled</a> for
+     <var>document</var>, then return null.</p></li><li><p>Let <var>body</var> be the uncompiled script body in <var>eventHandler</var>'s <a href="#event-handler-value" id="event-handler-attributes:event-handler-value-9">value</a>.</p></li><li><p>Let <var>location</var> be the location where the script body originated, as
      given by <var>eventHandler</var>'s <a href="#event-handler-value" id="event-handler-attributes:event-handler-value-10">value</a>.</p></li><li><p>If <var>element</var> is not null and <var>element</var> has a
      <a href="#form-owner" id="event-handler-attributes:form-owner">form owner</a>, let <var>form owner</var> be that <a href="#form-owner" id="event-handler-attributes:form-owner-2">form owner</a>.
      Otherwise, let <var>form owner</var> be null.</p></li><li><p>Let <var>settings object</var> be the <a href="#relevant-settings-object" id="event-handler-attributes:relevant-settings-object">relevant settings object</a> of
@@ -82154,13 +82169,13 @@ document<c- p="">.</c->querySelector<c- p="">(</c-><c- u="">"button"</c-><c- p="
 
       <dl><dt><i>functionPrototype</i></dt><dd><a id="event-handler-attributes:function.prototype" href="https://tc39.es/ecma262/#sec-properties-of-the-function-prototype-object" data-x-internal="function.prototype">%Function.prototype%</a></dd><dt><i>sourceText</i></dt><dd>
         <dl class="switch"><dt>If <var>name</var> is <code id="event-handler-attributes:handler-onerror-3"><a href="#handler-onerror">onerror</a></code> and
-         <var>eventTarget</var> is a <code id="event-handler-attributes:window-6"><a href="#window">Window</a></code> object</dt><dd>The string formed by concatenating "<code>function </code>", <var>name</var>,
+         <var>eventTarget</var> is a <code id="event-handler-attributes:window-7"><a href="#window">Window</a></code> object</dt><dd>The string formed by concatenating "<code>function </code>", <var>name</var>,
          "<code>(event, source, lineno, colno, error) {</code>", U+000A LF,
          <var>body</var>, U+000A LF, and "<code>}</code>".</dd><dt>Otherwise</dt><dd>The string formed by concatenating "<code>function </code>", <var>name</var>,
          "<code>(event) {</code>", U+000A LF, <var>body</var>, U+000A LF, and "<code>}</code>".</dd></dl>
        </dd><dt><i>ParameterList</i></dt><dd>
         <dl class="switch"><dt>If <var>name</var> is <code id="event-handler-attributes:handler-onerror-4"><a href="#handler-onerror">onerror</a></code> and
-         <var>eventTarget</var> is a <code id="event-handler-attributes:window-7"><a href="#window">Window</a></code> object</dt><dd>Let the function have five arguments, named <code>event</code>, <code>source</code>, <code>lineno</code>, <code>colno</code>, and
+         <var>eventTarget</var> is a <code id="event-handler-attributes:window-8"><a href="#window">Window</a></code> object</dt><dd>Let the function have five arguments, named <code>event</code>, <code>source</code>, <code>lineno</code>, <code>colno</code>, and
          <code>error</code>.</dd><dt>Otherwise</dt><dd>Let the function have a single argument called <code>event</code>.</dd></dl>
        </dd><dt><i>body</i></dt><dd>The result of parsing <var>body</var> above.</dd><dt><i>thisMode</i></dt><dd>non-lexical-this</dd><dt><i>scope</i></dt><dd>
         <ol><li><p>Let <var>realm</var> be <var>settings object</var>'s <a href="#environment-settings-object's-realm" id="event-handler-attributes:environment-settings-object's-realm-2">realm</a>.</p></li><li><p>Let <var>scope</var> be <var>realm</var>.[[GlobalEnv]].</p></li><li>
@@ -82168,7 +82183,7 @@ document<c- p="">.</c->querySelector<c- p="">(</c-><c- u="">"button"</c-><c- p="
           handler</a>, then set <var>scope</var> to <a href="https://tc39.es/ecma262/#sec-newobjectenvironment" id="event-handler-attributes:js-newobjectenvironment" data-x-internal="js-newobjectenvironment">NewObjectEnvironment</a>(<var>document</var>, true,
           <var>scope</var>).</p>
 
-          <p>(Otherwise, <var>eventHandler</var> is a <code id="event-handler-attributes:window-8"><a href="#window">Window</a></code> object's <a href="#event-handlers" id="event-handler-attributes:event-handlers-34">event handler</a>.)</p>
+          <p>(Otherwise, <var>eventHandler</var> is a <code id="event-handler-attributes:window-9"><a href="#window">Window</a></code> object's <a href="#event-handlers" id="event-handler-attributes:event-handlers-34">event handler</a>.)</p>
          </li><li><p>If <var>form owner</var> is not null, then set <var>scope</var> to <a href="https://tc39.es/ecma262/#sec-newobjectenvironment" id="event-handler-attributes:js-newobjectenvironment-2" data-x-internal="js-newobjectenvironment">NewObjectEnvironment</a>(<var>form owner</var>, true,
          <var>scope</var>).</p></li><li><p>If <var>element</var> is not null, then set <var>scope</var> to <a href="https://tc39.es/ecma262/#sec-newobjectenvironment" id="event-handler-attributes:js-newobjectenvironment-3" data-x-internal="js-newobjectenvironment">NewObjectEnvironment</a>(<var>element</var>, true,
          <var>scope</var>).</p></li><li><p>Return <var>scope</var>.</p></li></ol>
@@ -93744,8 +93759,8 @@ window<c- p="">.</c->fakeWorklet1<c- p="">.</c->addModule<c- p="">(</c-><c- u=""
    0x78, 0x6D, 0x6C (`<code>&lt;?xml</code>`), then return failure.</p></li><li><p>Let <var>xmlDeclarationEnd</var> be a pointer to the next byte in the input byte stream
    which is 0x3E (&gt;). If there is no such byte, then return failure.</p></li><li><p>Set <var>encodingPosition</var> to the position of the first occurrence of the subsequence
    of bytes 0x65, 0x6E, 0x63, 0x6F, 0x64, 0x69, 0x6E, 0x67 (`<code>encoding</code>`) at or
-   after the current <var>encodingPosition</var>. If there is no such sequence, then return
-   failure.</p></li><li><p>Advance <var>encodingPosition</var> past the 0x67 (g) byte.</p></li><li><p>While the byte at <var>encodingPosition</var> is less than or equal to 0x20 (i.e., it is
+   after the current <var>encodingPosition</var> and before <var>xmlDeclarationEnd</var>. If there is
+   no such sequence, then return failure.</p></li><li><p>Advance <var>encodingPosition</var> past the 0x67 (g) byte.</p></li><li><p>While the byte at <var>encodingPosition</var> is less than or equal to 0x20 (i.e., it is
    either an ASCII space or control character), advance <var>encodingPosition</var> to the next
    byte.</p></li><li><p>If the byte at <var>encodingPosition</var> is not 0x3D (=), then return failure.</p></li><li><p>Advance <var>encodingPosition</var> to the next byte.</p></li><li><p>While the byte at <var>encodingPosition</var> is less than or equal to 0x20 (i.e., it is
    either an ASCII space or control character), advance <var>encodingPosition</var> to the next
@@ -102910,10 +102925,10 @@ select::picker-icon {
   
 
   <div data-algorithm="">
-  <p>The <code id="frames:frame"><a href="#frame">frame</a></code> <a href="#html-element-insertion-steps" id="frames:html-element-insertion-steps">HTML element insertion steps</a>, given
+  <p>The <code id="frames:frame"><a href="#frame">frame</a></code> <a href="#html-element-post-connection-steps" id="frames:html-element-post-connection-steps">HTML element post-connection steps</a>, given
   <var>insertedNode</var>, are:</p>
 
-  <ol><li><p>If <var>insertedNode</var> is not <a id="frames:in-a-document-tree" href="https://dom.spec.whatwg.org/#in-a-document-tree" data-x-internal="in-a-document-tree">in a document tree</a>, then return.</p></li><li><p>If <var>insertedNode</var>'s <a id="frames:root" href="https://dom.spec.whatwg.org/#concept-tree-root" data-x-internal="root">root</a>'s <a href="#concept-document-bc" id="frames:concept-document-bc">browsing context</a> is null, then return.</p></li><li><p><a href="#create-a-new-child-navigable" id="frames:create-a-new-child-navigable">Create a new child navigable</a> for <var>insertedNode</var>.</p></li><li><p><a href="#process-the-frame-attributes" id="frames:process-the-frame-attributes">Process the <code>frame</code> attributes</a> for <var>insertedNode</var>, with
+  <ol><li><p>If <var>insertedNode</var>'s <a id="frames:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="#concept-document-bc" id="frames:concept-document-bc">browsing context</a> is null, then return.</p></li><li><p><a href="#create-a-new-child-navigable" id="frames:create-a-new-child-navigable">Create a new child navigable</a> for <var>insertedNode</var>.</p></li><li><p><a href="#process-the-frame-attributes" id="frames:process-the-frame-attributes">Process the <code>frame</code> attributes</a> for <var>insertedNode</var>, with
    <i id="frames:process-frame-initial-insertion"><a href="#process-frame-initial-insertion">initialInsertion</a></i> set to true.</p></li></ol>
   </div>
 
