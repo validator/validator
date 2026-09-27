@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@scope rules</title>
+<style>
+@scope (.card) to (.content) {
+  img { border: 1px solid black; }
+  :scope { padding: 1em; }
+  > h1 { margin: 0; }
+  .title + p { color: gray; }
+}
+@scope (.a, .b) {
+  color: blue;
+  p { color: red; }
+}
+@scope to (.c) {
+  p { color: green; }
+}
+@media screen {
+  @scope (.d) {
+    & p { color: red; }
+  }
+}
+</style>
+<body>
+<div class=card><h1>Title</h1><img src=a.png alt=A><div class=content><p>Text</p></div></div>

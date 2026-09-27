@@ -29,6 +29,7 @@ import org.w3c.css.atrules.css.AtRuleFontFeatureValues;
 import org.w3c.css.atrules.css.AtRuleFontPaletteValues;
 import org.w3c.css.atrules.css.AtRuleKeyframes;
 import org.w3c.css.atrules.css.AtRuleLayer;
+import org.w3c.css.atrules.css.AtRuleScope;
 import org.w3c.css.atrules.css.AtRuleMedia;
 import org.w3c.css.atrules.css.AtRulePage;
 import org.w3c.css.atrules.css.AtRulePhoneticAlphabet;
@@ -48,6 +49,7 @@ import org.w3c.css.properties.css.CssProperty;
 import org.w3c.css.selectors.AttributeSelector;
 import org.w3c.css.selectors.ClassSelector;
 import org.w3c.css.selectors.IdSelector;
+import org.w3c.css.selectors.NestingSelector;
 import org.w3c.css.selectors.TypeSelector;
 import org.w3c.css.selectors.UniversalSelector;
 import org.w3c.css.selectors.attributes.AttributeAny;
@@ -158,6 +160,14 @@ public abstract class CssParser {
 
     // to be able to remove a ruleset if the selector is not valid
     protected boolean validSelector = true;
+
+    // greater than zero while parsing the contents of a style rule or of an
+    // @scope rule, where declarations and nested rules can be mixed
+    protected int blockContentsDepth = 0;
+
+    // true when the style rule about to be parsed is nested (see
+    // nestedRuleSet), so that its selectors can start with a combinator
+    protected boolean nestedRuleNext = false;
 
     /**
      * The ac for handling errors and warnings.
@@ -758,6 +768,7 @@ TOKEN [IGNORE_CASE] :
   | < A_COUNTER               : "@counter" >
   | < COUNTER_STYLE_SYM       : "@counter-style" > 
   | < LAYER_SYM               : "@layer" >
+  | < SCOPE_SYM               : "@scope" >
   | < PHONETIC_ALPHABET_SYM   : "@phonetic-alphabet" >
   | < SUPPORTS_SYM            : "@supports" >
   | < VIEWPORT_SYM            : "@viewport" >
@@ -953,7 +964,17 @@ void nested_at_rules() : {
 {
   ( media() | page() | fontFace() | fontPaletteValues() | fontFeatureValues() | keyframes()
     | preference() | viewport() | colorprofile() | counterstyle()
-    | phoneticAlphabet() | supports() | atRuleDeclaration() | layer() )
+    | phoneticAlphabet() | supports() | atRuleDeclaration() | layer() | scope() )
+}
+
+/**
+ * The conditional group rules and other at-rules allowed inside a style
+ * rule (CSS nesting), or directly inside an @scope rule.
+ */
+void nested_group_rules() : {
+}
+{
+  ( media() | supports() | layer() | scope() )
 }
 
 void afterImportDeclaration() :
@@ -1148,7 +1169,7 @@ AtRuleMedia media() :
 		    }
 	    }
 	)?
-	    <LBRACE> { endl = getEndLine() ; endc = getEndColumn() ; } ( <S> )* ( ruleSet()  | nested_at_rules() )* <RBRACE> ( <S> )*
+	    <LBRACE> { endl = getEndLine() ; endc = getEndColumn() ; } ( <S> )* ( LOOKAHEAD({blockContentsDepth > 0}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ( <S> )*
 	     {
 		     if (!isCss1) {
 		         endOfAtRule();
@@ -1286,7 +1307,7 @@ void supports() :
         // handle supports rules
         //
 	sf=supports_condition(newRule) { newRule.addFeature(sf, ac); newAtRule(getAtRule()); }
-        <LBRACE> ( <S> )* ( ruleSet()  | nested_at_rules() )* <RBRACE> ( <S> )*
+        <LBRACE> ( <S> )* ( LOOKAHEAD({blockContentsDepth > 0}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ( <S> )*
         {
       	     if (!isCss1) {
        	         endOfAtRule();
@@ -1347,7 +1368,7 @@ CssIdent at_keyword():
        t=<FONT_FACE_SYM> | t=<FONT_FEATURE_VALUES_SYM> | t=<FONT_PALETTE_VALUES_SYM> | t=<STYLISTIC_SYM> |
        t=<HISTORICAL_FORMS_SYM> | t=<STYLESET_SYM> | t=<CHARACTER_VARIANT_SYM> | t=<SWASH_SYM> |
        t=<ORNAMENTS_SYM> | t=<ANNOTATION_SYM> | t=<IMPORT_SYM> | t=<NAMESPACE_SYM> | t=<MEDIA_SYM> |
-       t=<KEYFRAMES_SYM> | t=<PREF_SYM> | t=<COLOR_PROFILE> | t=<A_COUNTER> | t=<COUNTER_STYLE_SYM> | t=<LAYER_SYM> |
+       t=<KEYFRAMES_SYM> | t=<PREF_SYM> | t=<COLOR_PROFILE> | t=<A_COUNTER> | t=<COUNTER_STYLE_SYM> | t=<LAYER_SYM> | t=<SCOPE_SYM> |
        t=<PHONETIC_ALPHABET_SYM> | t=<SUPPORTS_SYM> | t=<VIEWPORT_SYM> | t=<ATKEYWORD> ) {
            ident.set(convertIdent(t.image), ac);
            return ident;
@@ -2060,11 +2081,62 @@ void layer() :
     }                                                        )* <SEMICOLON> ) | ( ( layername=layerident() {
       layerrule.setName(layername);
     }                                                                          )?
-    <LBRACE> ( <S> )* ( ruleSet()  | nested_at_rules() )* <RBRACE> ) )
+    <LBRACE> ( <S> )* ( LOOKAHEAD({blockContentsDepth > 0}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ) )
     ( <S> )*
   } catch (ParseException e) {
     addError(e, skipStatement());
   } finally {
+    setAtRule(old);
+  }
+}
+
+/**
+ * @scope [(<scope-start>)]? [to (<scope-end>)]? { <block-contents> }
+ *
+ * https://drafts.csswg.org/css-cascade-6/#scope-atrule
+ */
+void scope() :
+{
+  Token n = null;
+  AtRule old = getAtRule();
+  AtRuleScope scoperule = new AtRuleScope();
+  setAtRule(scoperule);
+  CssVersion version = ac.getCssVersion();
+  ArrayList<CssSelectors> selectors;
+  ArrayList<CssSelectors> outerContext = currentContext;
+}
+{
+  try {
+    <SCOPE_SYM> {
+      if (version.compareTo(CssVersion.CSS3) < 0) {
+        skipStatement();
+        addError(new InvalidParamException("noatruleyet", "", ac),
+                             getAtRule().toString());
+      }
+    } ( <S> )*
+    ( <LPAREN> ( <S> )* selectors=selector_list() ( <S> )* <RPAREN> ( <S> )* {
+      scoperule.setStart(selectors);
+    } )?
+    ( n=<IDENT> {
+      if (!"to".equalsIgnoreCase(n.image)) {
+        throw new ParseException(ac.getMsg().getString("generator.unrecognize"));
+      }
+    } ( <S> )* <LPAREN> ( <S> )* selectors=selector_list() ( <S> )* <RPAREN> ( <S> )* {
+      scoperule.setEnd(selectors);
+    } )?
+    {
+      newAtRule(scoperule);
+      currentContext = null;
+      validSelector = true;
+    }
+    <LBRACE> ( <S> )* declarations() <RBRACE> ( <S> )*
+    {
+      endOfAtRule();
+    }
+  } catch (ParseException e) {
+    addError(e, skipStatement());
+  } finally {
+    currentContext = outerContext;
     setAtRule(old);
   }
 }
@@ -2307,6 +2379,67 @@ ArrayList<CssSelectors> selector_list() :
 	}		
 }
 
+/**
+ * The selector list of a nested style rule: Each selector can start with a
+ * combinator other than whitespace, e.g. "> p", and is otherwise relative
+ * to the parent rule (or to :scope, directly in an @scope rule).
+ *
+ * https://drafts.csswg.org/css-nesting/#syntax
+ */
+ArrayList<CssSelectors> nested_selector_list() :
+{
+	CssSelectors selector;
+	ArrayList<CssSelectors> context_set = new ArrayList<CssSelectors>();
+}
+{
+	selector=nested_relative_selector() {
+		if (selector != null) {
+			context_set.add(selector);
+		}
+	}
+	( <COMMA> ( <S> )* selector=nested_relative_selector() {
+		if (selector != null) {
+			context_set.add(selector);
+		}
+	} )*
+	{
+		return context_set;
+	}
+}
+
+CssSelectors nested_relative_selector() :
+{
+	String comb;
+	CssSelectors current;
+}
+{
+	( ( ( <PLUS> { comb = "+"; }
+	    | <GREATER> { comb = ">"; }
+	    | <TILDE> { comb = "~"; }
+	    | <TWOPIPES> { comb = "||"; }
+	    ) ( <S> )* {
+		current = new CssSelectors(ac);
+		switch(comb) {
+			case "+":
+				current.addNextSiblingCombinator();
+				break;
+			case ">":
+				current.addChildCombinator();
+				break;
+			case "~":
+				current.addSubsequentSiblingCombinator();
+				break;
+			default:
+				current.addColumnCombinator();
+		}
+	    }
+	    current=complex_selector(current) )
+	| current=complex_selector(null) )
+	{
+		return current;
+	}
+}
+
 ArrayList<CssSelectors> relative_selector_list() :
 {
         CssSelectors selector;
@@ -2332,14 +2465,43 @@ ArrayList<CssSelectors> relative_selector_list() :
  * @exception ParseException exception during the parse
  */
 void ruleSet() :
+{}
+{
+    { nestedRuleNext = false; } styleRule()
+}
+
+/**
+ * A style rule nested in another style rule, or directly in an @scope
+ * rule: Its selectors can start with a combinator.
+ */
+void nestedRuleSet() :
+{}
+{
+    { nestedRuleNext = true; } styleRule()
+}
+
+/**
+ * The contents of a conditional group rule nested in a style rule: The
+ * declarations in it apply to the parent style rule's selectors.
+ */
+void nested_group_body() :
+{}
+{
+    declarations()
+}
+
+void styleRule() :
 { 
+    ArrayList<CssSelectors> outerContext = currentContext;
     ArrayList<CssSelectors> context_set = null;
     ArrayList<CssProperty> value_set = null;
     currentContext = context_set;
 }
 {
     try {
-	context_set = selector_list()
+	( LOOKAHEAD({nestedRuleNext}) { nestedRuleNext = false; }
+	  context_set = nested_selector_list()
+	| context_set = selector_list() )
 
 	<LBRACE> {
 	    validSelector = (context_set.size() > 0);
@@ -2377,7 +2539,7 @@ void ruleSet() :
 		    setSelectorList(context_set);
 		    endOfRule();
 		}
-		currentContext = null;
+		currentContext = outerContext;
 	    }
     } catch (ParseException e) {
 	if ((ac.getCssProfile() != CssProfile.MOBILE) && !context_set.isEmpty()) {
@@ -2418,7 +2580,7 @@ void ruleSet() :
 				addError(e, ret);
 			}
                 }
-                currentContext = null;
+                currentContext = outerContext;
 		}
 	}
     } catch (TokenMgrError e) {
@@ -2437,29 +2599,24 @@ ArrayList<CssProperty> declarations() :
     CssProperty values;
     ArrayList<CssProperty> value_set   = new ArrayList<CssProperty>();
     boolean wrong_value = true;
+    blockContentsDepth++;
 }
 {    
-    ( values=declaration() 
+  try {
+    // A nested style rule is anything that parses as a selector list
+    // followed by a block; everything else starting with an ident is a
+    // declaration.
+    ( LOOKAHEAD(nested_selector_list() <LBRACE>) nestedRuleSet()
+    | nested_group_rules()
+    | values=declaration()
 	{ if (values != null) {
 		value_set.add(values);
 		wrong_value = false;
-	    } /* else {
-		 wrong_value = true;
-		 } */
+	    }
 	  currentProperty = null;
 	}
-      )? 
-	( ";" ( <S> )*
-	  ( values=declaration() 
-	      { if (values != null) {
-		      value_set.add(values);
-		      wrong_value = false;
-		  }/* else {
-		      wrong_value = true;
-		      }*/
-		currentProperty = null;
-	      }
-	      )? )* 
+    | ";" ( <S> )*
+    )*
 	{  	
 	    if (!wrong_value) {
 		addProperty(value_set);
@@ -2468,6 +2625,9 @@ ArrayList<CssProperty> declarations() :
 		return null;
 	    }
 	}
+  } finally {
+    blockContentsDepth--;
+  }
 }
 
 /** 
@@ -2565,6 +2725,7 @@ CssSelectors subclass_selector(CssSelectors selector) :
 	| class_selector(selector)
 	| attribute_selector(selector)
 	| pseudo_class_selector(selector)
+	| nesting_selector(selector)
 	)
 	{
 		return selector;
@@ -2670,6 +2831,26 @@ CssSelectors compound_selector(CssSelectors next) :
 	| ( ( LOOKAHEAD(2) pseudo_element_selector(selector) ( LOOKAHEAD(2) pseudo_class_selector(selector) )* )+ ) ) {
 		return selector;
 	}
+}
+
+/**
+ * The nesting selector, &
+ *
+ * https://drafts.csswg.org/css-nesting/#nest-selector
+ */
+void nesting_selector(CssSelectors s) :
+{}
+{
+    "&" {
+	try {
+	    s.addNesting(new NestingSelector());
+	} catch (InvalidParamException e) {
+	    ac.getFrame()
+	        .addError(new CssError(getSourceFile(), getBeginLine(),
+	            getBeginColumn(), getEndLine(), getEndColumn(), e));
+	    throw new ParseException(e.getMessage());
+	}
+    }
 }
 
 /**
@@ -3247,7 +3428,9 @@ CssProperty declaration() :
 {
 try {
      string_property=property() <COLON> ( <S> )* 
-      ( values=expr() )? ( important=prio() )?
+      // A value can start with "+", and so can a nested style rule that
+      // follows the declaration's semicolon.
+      ( LOOKAHEAD(1) values=expr() )? ( important=prio() )?
     {
 	try {
             if (string_property == null) {
