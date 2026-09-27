@@ -53,6 +53,7 @@ import nu.validator.checker.LocatorImpl;
 import nu.validator.checker.TaintableLocatorImpl;
 import nu.validator.checker.VnuBadAttrValueException;
 import nu.validator.checker.VnuBadElementNameException;
+import nu.validator.checker.bodystyle.BodyStyleTracker;
 import nu.validator.client.TestRunner;
 import nu.validator.datatype.AutocompleteDetailsAny;
 import nu.validator.datatype.AutocompleteDetailsDate;
@@ -1745,6 +1746,8 @@ public class Assertions extends Checker {
 
     private int numberOfTemplatesDeep = 0;
 
+    private final BodyStyleTracker bodyStyleTracker = new BodyStyleTracker();
+
     private int numberOfSvgAelementsDeep = 0;
 
     private Set<Locator> secondLevelH1s = new HashSet<>();
@@ -1995,7 +1998,8 @@ public class Assertions extends Checker {
     @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
-
+        List<BodyStyleTracker.SelectorProblem> bodyStyleProblems = //
+                bodyStyleTracker.endElement(uri, localName);
         if ("http://www.w3.org/1999/xhtml" == uri
                 && "template".equals(localName)) {
             numberOfTemplatesDeep--;
@@ -2133,6 +2137,7 @@ public class Assertions extends Checker {
                     stack[selectPtr].setOptionFound();
                 }
             } else if ("style" == localName) {
+                reportBodyStyleProblems(bodyStyleProblems, node);
                 String styleContents = node.getTextContent().toString();
                 if (styleContents.startsWith("\uFEFF")) {
                     styleContents = styleContents.substring(1);
@@ -2382,6 +2387,46 @@ public class Assertions extends Checker {
     /**
      * @see nu.validator.checker.Checker#startDocument()
      */
+    /**
+     * Reports each selector in a "style" element in "body" that matches an
+     * element before the "style" element's parent, at the selector's own
+     * position in the document.
+     */
+    private void reportBodyStyleProblems(
+            List<BodyStyleTracker.SelectorProblem> problems,
+            StackNode styleNode) throws SAXException {
+        Locator styleLocator = styleNode.locator();
+        for (BodyStyleTracker.SelectorProblem problem : problems) {
+            // The style sheet's first line starts right after the "style"
+            // start tag, so only its columns are offset by the tag's column.
+            int line = styleLocator.getLineNumber() + problem.getLine() - 1;
+            int column = problem.getColumn() + (problem.getLine() == 1
+                    ? styleLocator.getColumnNumber()
+                    : 0);
+            int endLine = styleLocator.getLineNumber() + problem.getEndLine()
+                    - 1;
+            int endColumn = problem.getEndColumn()
+                    + (problem.getEndLine() == 1
+                            ? styleLocator.getColumnNumber()
+                            : 0);
+            SAXParseException spe = new SAXParseException("The selector “"
+                    + problem.getSelector() + "” matches, or might match, an"
+                    + " element that comes before the parent of this"
+                    + " “style” element. A “style” element in “body”"
+                    + " must only have selectors that match its parent and"
+                    + " elements after its parent.",
+                    styleLocator.getPublicId(), styleLocator.getSystemId(),
+                    endLine, endColumn);
+            if ((getErrorHandler() instanceof MessageEmitterAdapter)
+                    && !(getErrorHandler() instanceof TestRunner)) {
+                ((MessageEmitterAdapter) getErrorHandler()).errorWithStart(
+                        spe, new int[] { line, column, 0 });
+            } else {
+                getErrorHandler().error(spe);
+            }
+        }
+    }
+
     @Override
     public void startDocument() throws SAXException {
         reset();
@@ -2403,6 +2448,7 @@ public class Assertions extends Checker {
         numberOfTemplatesDeep = 0;
         numberOfSvgAelementsDeep = 0;
         hasHeadingoffset = false;
+        bodyStyleTracker.startDocument();
     }
 
     @Override
@@ -2436,6 +2482,10 @@ public class Assertions extends Checker {
     @Override
     public void startElement(String uri, String localName, String name,
             Attributes atts) throws SAXException {
+        if (bodyStyleTracker.startElement(uri, localName, atts)) {
+            err("A “style” element in “body” must be the first child"
+                    + " of its parent.");
+        }
         if ("http://www.w3.org/1999/xhtml" == uri
                 && "template".equals(localName)) {
             numberOfTemplatesDeep++;
@@ -5291,6 +5341,7 @@ public class Assertions extends Checker {
     @Override
     public void characters(char[] ch, int start, int length)
             throws SAXException {
+        bodyStyleTracker.characters(ch, start, length);
         if (numberOfTemplatesDeep > 0) {
             return;
         }

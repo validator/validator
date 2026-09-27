@@ -1,0 +1,9 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>style whose selectors match only its parent and later elements</title>
+<body>
+<p>Earlier</p>
+<div id=s>
+  <style>#s { padding: 1em } #s p { color: red } p ~ .x { color: blue }</style>
+  <p>Later</p>
+</div>

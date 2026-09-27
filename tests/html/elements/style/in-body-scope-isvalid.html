@@ -1,0 +1,14 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@scope in a style element in body</title>
+<body>
+<p>Earlier</p>
+<div>
+  <style>
+    @scope {
+      p { color: red; }
+    }
+  </style>
+  <p>this is red</p>
+</div>
+<p>not red</p>
