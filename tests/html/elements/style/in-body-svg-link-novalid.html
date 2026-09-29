@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>style selector with :any-link matching an earlier SVG link</title>
+<body>
+<svg width=10 height=10><a href=/><rect width=10 height=10 /></a></svg>
+<div>
+<style>a:any-link { color: red }</style>
+</div>

@@ -238,6 +238,23 @@ public class BodyStyleTrackerTest {
                 doc("<a href=#>x</a><div><style>a:hover { } b:hover { }"
                         + "</style>"),
                 "a:hover");
+        expectFlagged(":any-link and :link on an HTML link",
+                doc("<a href=#>x</a><a>y</a><div><style>a:any-link { }"
+                        + " a:link { } a:not(:any-link) { } p:any-link { }"
+                        + "</style>"),
+                "a:any-link", "a:link", "a:not(:any-link)");
+        expectFlagged(":any-link on an SVG link",
+                doc("<svg><a href=x></a><a xlink:href=y></a></svg><div>"
+                        + "<style>a:any-link { } a:link { }</style>"),
+                "a:any-link", "a:link");
+        expectFlagged(":any-link on an SVG a element with no href",
+                doc("<svg><a></a></svg><div><style>a:any-link { }"
+                        + "</style>"),
+                new String[0]);
+        expectFlagged(":any-link on a MathML element with href",
+                doc("<math><mi href=x>x</mi><mo>+</mo></math><div><style>"
+                        + "mi:any-link { } mo:any-link { }</style>"),
+                "mi:any-link");
         expectFlagged("unknown pseudo-class counts as a match",
                 doc("<p>x</p><div><style>p:frobnicate { } span:frobnicate"
                         + " { }</style>"),
