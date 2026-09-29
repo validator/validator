@@ -3178,6 +3178,7 @@
     "html/elements/style/in-body-last-of-type-novalid.html": "The selector \u201cp:last-of-type\u201d matches, or might match, an element that comes before the parent of this \u201cstyle\u201d element. A \u201cstyle\u201d element in \u201cbody\u201d must only have selectors that match its parent and elements after its parent.",
     "html/elements/style/in-body-not-first-child-novalid.html": "A \u201cstyle\u201d element in \u201cbody\u201d must be the first child of its parent.",
     "html/elements/style/in-body-second-style-novalid.html": "A \u201cstyle\u201d element in \u201cbody\u201d must be the first child of its parent.",
+    "html/elements/style/in-body-svg-link-novalid.html": "The selector \u201ca:any-link\u201d matches, or might match, an element that comes before the parent of this \u201cstyle\u201d element. A \u201cstyle\u201d element in \u201cbody\u201d must only have selectors that match its parent and elements after its parent.",
     "html/elements/style/in-body-text-before-novalid.html": "A \u201cstyle\u201d element in \u201cbody\u201d must be the first child of its parent.",
     "html/elements/style/keyframes-nested-rule-novalid.html": "CSS: \u201cp\u201d: Parse Error.",
     "html/elements/style/missing-semicolon-after-important-novalid.html": "CSS: Parse Error.",

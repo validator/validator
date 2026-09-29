@@ -448,10 +448,10 @@ final class SelectorMatcher {
                         matchNth(LAST_OF_TYPE, element, context));
             case "any-link":
             case "-webkit-any-link":
-                return isLink(element) ? YES : NO;
+                return matchLink(element);
             case "link":
             case "visited":
-                return isLink(element) ? MAYBE : NO;
+                return matchLink(element) == NO ? NO : MAYBE;
             case "defined":
                 return element.isHtml && element.localName.indexOf('-') >= 0
                         ? MAYBE
@@ -477,10 +477,36 @@ final class SelectorMatcher {
 
     private static final Nth LAST_OF_TYPE = new Nth(true, true, 0, 1, null);
 
-    private static boolean isLink(TreeElement element) {
-        return element.isHtml && ("a".equals(element.localName)
-                || "area".equals(element.localName))
-                && element.getAttribute("href") != null;
+    private static final String SVG = "http://www.w3.org/2000/svg";
+
+    private static final String MATHML = "http://www.w3.org/1998/Math/MathML";
+
+    private static final String XLINK = "http://www.w3.org/1999/xlink";
+
+    /**
+     * Whether the element is a hyperlink source, for ":any-link": HTML "a"
+     * and "area" with "href", and SVG "a" with "href" or "xlink:href". A
+     * MathML element with "href" might be one, since engines differ: Gecko
+     * and WebKit make any MathML element with "href" a link (unless the
+     * mathml.href_link_on_non_anchor_element.disabled pref or the
+     * MathMLDisableHrefOnNonAnchorElement setting limits it to "a"), but
+     * Blink's MathMLAnchorElement is still behind a test-only flag.
+     */
+    private static int matchLink(TreeElement element) {
+        if (element.isHtml) {
+            return ("a".equals(element.localName)
+                    || "area".equals(element.localName))
+                    && element.getAttribute("href") != null ? YES : NO;
+        }
+        if (SVG.equals(element.namespace)) {
+            boolean hasHref = element.getAttribute("href") != null
+                    || element.getAttribute(XLINK, "href") != null;
+            return "a".equals(element.localName) && hasHref ? YES : NO;
+        }
+        if (MATHML.equals(element.namespace)) {
+            return element.getAttribute("href") != null ? MAYBE : NO;
+        }
+        return NO;
     }
 
     private int matchNth(Nth nth, TreeElement element, Context context) {

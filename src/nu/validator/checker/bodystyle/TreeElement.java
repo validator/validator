@@ -130,6 +130,20 @@ final class TreeElement {
         return null;
     }
 
+    /**
+     * Returns the value of the attribute with the given namespace and local
+     * name, or null if there's no such attribute.
+     */
+    String getAttribute(String namespace, String name) {
+        for (int i = 0; i + 2 < attributes.length; i += 3) {
+            if (attributes[i].equals(namespace)
+                    && attributes[i + 1].equals(name)) {
+                return attributes[i + 2];
+            }
+        }
+        return null;
+    }
+
     boolean hasClass(String name) {
         if (classes == null) {
             String value = getAttribute("class");
