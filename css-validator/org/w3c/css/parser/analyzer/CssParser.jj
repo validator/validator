@@ -161,9 +161,15 @@ public abstract class CssParser {
     // to be able to remove a ruleset if the selector is not valid
     protected boolean validSelector = true;
 
-    // greater than zero while parsing the contents of a style rule or of an
-    // @scope rule, where declarations and nested rules can be mixed
-    protected int blockContentsDepth = 0;
+    // true while parsing the contents of a style rule or of an @scope rule
+    // (or of a group rule nested in either), where declarations can be mixed
+    // with nested rules, unlike in @font-face, @page, and other at-rules
+    // whose blocks hold only declarations
+    protected boolean nestedRulesAllowed = false;
+
+    // true when the declarations() about to be parsed are the contents of a
+    // style rule, an @scope rule, or a nested group rule
+    protected boolean nestedRulesAllowedNext = false;
 
     // true when the style rule about to be parsed is nested (see
     // nestedRuleSet), so that its selectors can start with a combinator
@@ -1169,7 +1175,7 @@ AtRuleMedia media() :
 		    }
 	    }
 	)?
-	    <LBRACE> { endl = getEndLine() ; endc = getEndColumn() ; } ( <S> )* ( LOOKAHEAD({blockContentsDepth > 0}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ( <S> )*
+	    <LBRACE> { endl = getEndLine() ; endc = getEndColumn() ; } ( <S> )* ( LOOKAHEAD({nestedRulesAllowed}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ( <S> )*
 	     {
 		     if (!isCss1) {
 		         endOfAtRule();
@@ -1307,7 +1313,7 @@ void supports() :
         // handle supports rules
         //
 	sf=supports_condition(newRule) { newRule.addFeature(sf, ac); newAtRule(getAtRule()); }
-        <LBRACE> ( <S> )* ( LOOKAHEAD({blockContentsDepth > 0}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ( <S> )*
+        <LBRACE> ( <S> )* ( LOOKAHEAD({nestedRulesAllowed}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ( <S> )*
         {
       	     if (!isCss1) {
        	         endOfAtRule();
@@ -2081,7 +2087,7 @@ void layer() :
     }                                                        )* <SEMICOLON> ) | ( ( layername=layerident() {
       layerrule.setName(layername);
     }                                                                          )?
-    <LBRACE> ( <S> )* ( LOOKAHEAD({blockContentsDepth > 0}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ) )
+    <LBRACE> ( <S> )* ( LOOKAHEAD({nestedRulesAllowed}) nested_group_body() | ( ruleSet()  | nested_at_rules() )* ) <RBRACE> ) )
     ( <S> )*
   } catch (ParseException e) {
     addError(e, skipStatement());
@@ -2129,7 +2135,7 @@ void scope() :
       currentContext = null;
       validSelector = true;
     }
-    <LBRACE> ( <S> )* declarations() <RBRACE> ( <S> )*
+    <LBRACE> ( <S> )* { nestedRulesAllowedNext = true; } declarations() <RBRACE> ( <S> )*
     {
       endOfAtRule();
     }
@@ -2487,7 +2493,7 @@ void nestedRuleSet() :
 void nested_group_body() :
 {}
 {
-    declarations()
+    { nestedRulesAllowedNext = true; } declarations()
 }
 
 void styleRule() :
@@ -2510,6 +2516,7 @@ void styleRule() :
             }
 	}
 	( <S> )*
+	    { nestedRulesAllowedNext = true; }
 	    value_set=declarations()
 	    <RBRACE> ( <S> )*
 	    {
@@ -2588,8 +2595,32 @@ void styleRule() :
     }
 }
 
+/**
+ * A nested style rule, or a group rule nested in a style rule or directly
+ * in an @scope rule. A nested style rule is anything that parses as a
+ * selector list followed by a block.
+ */
+void nested_item() :
+{}
+{
+    LOOKAHEAD(nested_selector_list() <LBRACE>) nestedRuleSet()
+  | nested_group_rules()
+}
+
+/**
+ * Used only as lookahead, to tell whether a nested_item() comes next.
+ */
+void nested_item_ahead() :
+{}
+{
+    nested_selector_list() <LBRACE>
+  | <MEDIA_SYM> | <SUPPORTS_SYM> | <LAYER_SYM> | <SCOPE_SYM>
+}
+
 ArrayList<CssProperty> declarations() :
 {
+    boolean allowNestedRules = nestedRulesAllowedNext;
+    nestedRulesAllowedNext = false;
     if(!validSelector) {        
         validSelector = true;
         skip_to_matching_brace();
@@ -2599,24 +2630,38 @@ ArrayList<CssProperty> declarations() :
     CssProperty values;
     ArrayList<CssProperty> value_set   = new ArrayList<CssProperty>();
     boolean wrong_value = true;
-    blockContentsDepth++;
+    boolean outerNestedRulesAllowed = nestedRulesAllowed;
+    nestedRulesAllowed = allowNestedRules;
 }
 {    
   try {
-    // A nested style rule is anything that parses as a selector list
-    // followed by a block; everything else starting with an ident is a
-    // declaration.
-    ( LOOKAHEAD(nested_selector_list() <LBRACE>) nestedRuleSet()
-    | nested_group_rules()
-    | values=declaration()
+    // Nested rules can come first, or after any semicolon, but a
+    // declaration is always followed by a semicolon or by the end of the
+    // block. Each loop has just one alternative, so that its lookahead
+    // (including the check of nestedRulesAllowed) decides the loop.
+    ( ";" ( <S> )* )*
+    ( LOOKAHEAD(nested_item_ahead(), {nestedRulesAllowed}) nested_item()
+      ( ";" ( <S> )* )*
+    )*
+    ( values=declaration()
 	{ if (values != null) {
 		value_set.add(values);
 		wrong_value = false;
 	    }
 	  currentProperty = null;
 	}
-    | ";" ( <S> )*
-    )*
+      ( ";" ( <S> )*
+        ( LOOKAHEAD(nested_item_ahead(), {nestedRulesAllowed}) nested_item() )*
+        ( values=declaration()
+	    { if (values != null) {
+		    value_set.add(values);
+		    wrong_value = false;
+		}
+	      currentProperty = null;
+	    }
+        )?
+      )*
+    )?
 	{  	
 	    if (!wrong_value) {
 		addProperty(value_set);
@@ -2626,7 +2671,7 @@ ArrayList<CssProperty> declarations() :
 	    }
 	}
   } finally {
-    blockContentsDepth--;
+    nestedRulesAllowed = outerNestedRulesAllowed;
   }
 }
 
