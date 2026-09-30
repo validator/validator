@@ -56,8 +56,9 @@ public final class BodyStyleTracker {
 
     /**
      * A selector that matches an element before the parent of its "style"
-     * element. Lines and columns are 1-based, and relative to the start of
-     * the style sheet; the end column is inclusive.
+     * element — or an "@import" rule, since the selectors of the style sheet
+     * it imports can't be checked. Lines and columns are 1-based, and
+     * relative to the start of the style sheet; the end column is inclusive.
      */
     public static final class SelectorProblem {
         private final String selector;
@@ -70,8 +71,11 @@ public final class BodyStyleTracker {
 
         private final int endColumn;
 
+        private final boolean isImport;
+
         SelectorProblem(String selector, int line, int column, int endLine,
-                int endColumn) {
+                int endColumn, boolean isImport) {
+            this.isImport = isImport;
             this.selector = selector;
             this.line = line;
             this.column = column;
@@ -80,8 +84,8 @@ public final class BodyStyleTracker {
         }
 
         /**
-         * The selector's source text, with each run of whitespace collapsed
-         * to a single space.
+         * The selector's source text (or the whole "@import" rule's), with
+         * each run of whitespace collapsed to a single space.
          */
         public String getSelector() {
             return selector;
@@ -101,6 +105,13 @@ public final class BodyStyleTracker {
 
         public int getEndColumn() {
             return endColumn;
+        }
+
+        /**
+         * True for an "@import" rule, rather than a selector.
+         */
+        public boolean isImport() {
+            return isImport;
         }
     }
 
@@ -215,12 +226,16 @@ public final class BodyStyleTracker {
             TreeElement parent) {
         List<SelectorProblem> problems = new ArrayList<>();
         SelectorMatcher matcher = new SelectorMatcher(parent);
-        for (Entry entry : SelectorCollector.collect(css)) {
+        SelectorCollector collector = SelectorCollector.collect(css);
+        for (int[] range : collector.getImports()) {
+            problems.add(problem(css, range[0], range[1], true));
+        }
+        for (Entry entry : collector.getEntries()) {
             for (int i = 0; i < parent.index; i++) {
                 if (matcher.match(entry, elements.get(i))
                         != SelectorMatcher.NO) {
                     problems.add(problem(css, entry.selector.start,
-                            entry.selector.end));
+                            entry.selector.end, false));
                     break;
                 }
             }
@@ -228,11 +243,13 @@ public final class BodyStyleTracker {
         return problems;
     }
 
-    private static SelectorProblem problem(String css, int start, int end) {
+    private static SelectorProblem problem(String css, int start, int end,
+            boolean isImport) {
         int[] from = lineAndColumn(css, start);
         int[] to = lineAndColumn(css, end - 1);
         String text = css.substring(start, end).replaceAll("\\s+", " ");
-        return new SelectorProblem(text, from[0], from[1], to[0], to[1]);
+        return new SelectorProblem(text, from[0], from[1], to[0], to[1],
+                isImport);
     }
 
     private static int[] lineAndColumn(String css, int offset) {
