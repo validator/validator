@@ -132,16 +132,30 @@ final class SelectorCollector {
 
     private final List<Entry> entries = new ArrayList<>();
 
+    private final List<int[]> imports = new ArrayList<>();
+
     private SelectorCollector(String css) {
         this.css = css;
         this.tokens = CssTokenizer.tokenize(css);
     }
 
-    static List<Entry> collect(String css) {
+    static SelectorCollector collect(String css) {
         SelectorCollector collector = new SelectorCollector(css);
         collector.consumeBlockContents(0, collector.tokens.size(),
                 new Context(null, null, false));
-        return collector.entries;
+        return collector;
+    }
+
+    List<Entry> getEntries() {
+        return entries;
+    }
+
+    /**
+     * The start and end offsets of each "@import" rule, not counting its
+     * semicolon.
+     */
+    List<int[]> getImports() {
+        return imports;
     }
 
     private Token token(int i) {
@@ -260,6 +274,13 @@ final class SelectorCollector {
         String name = Selectors.asciiLowercase(token(from).value);
         int open = scan(from + 1, to, true);
         if (open >= to || token(open).type != LEFT_BRACE) {
+            if ("import".equals(name)) {
+                int last = open - 1;
+                while (last > from && token(last).type == WHITESPACE) {
+                    last--;
+                }
+                imports.add(new int[] { token(from).start, token(last).end });
+            }
             return open + 1;
         }
         int close = findClose(open, to);

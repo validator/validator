@@ -82,7 +82,8 @@ public class BodyStyleTrackerTest {
                     String qName) {
                 for (BodyStyleTracker.SelectorProblem problem : tracker.endElement(
                         uri, localName)) {
-                    result.selectors.add(problem.getSelector());
+                    result.selectors.add((problem.isImport() ? "import: " : "")
+                            + problem.getSelector());
                     result.positions.add(problem.getLine() + "."
                             + problem.getColumn() + "-" + problem.getEndLine()
                             + "." + problem.getEndColumn());
@@ -260,7 +261,7 @@ public class BodyStyleTrackerTest {
                         + " { }</style>"),
                 "p:frobnicate");
         expectFlagged("comments and at-rules without selectors",
-                doc("<p>x</p><div><style>/* p { } */ @import url(x.css);"
+                doc("<p>x</p><div><style>/* p { } */"
                         + " @font-face { font-family: x } @keyframes k {"
                         + " from { } to { } } @page :first { }"
                         + " @layer a, b;</style>"),
@@ -370,6 +371,29 @@ public class BodyStyleTrackerTest {
                 doc("<section><p>y</p></section><div><style>.later {"
                         + " font: 12px serif; p:hover { } }</style>"),
                 new String[0]);
+
+        System.out.println();
+        System.out.println("Testing @import...");
+        expectFlagged("@import in a body style",
+                doc("<p>x</p><div><style>@import url(x.css); .later { }"
+                        + "</style>"),
+                "import: @import url(x.css)");
+        expectFlagged("@import with a media query and a layer",
+                doc("<div><style>@import \"x.css\" layer(base) screen;\n"
+                        + "@import url(y.css)</style>"),
+                "import: @import \"x.css\" layer(base) screen",
+                "import: @import url(y.css)");
+        expectFlagged("@import in a head style is not checked",
+                "<!doctype html><title>t</title><style>@import url(x.css);"
+                        + "</style><p>x",
+                new String[0]);
+        expectFlagged("@import in template contents is not checked",
+                doc("<div><template><style>@import url(x.css);</style>"
+                        + "</template></div>"),
+                new String[0]);
+        expectPositions("position of a flagged @import",
+                doc("<div><style>\n  @import url(x.css);</style>"),
+                "2.3-2.20");
 
         System.out.println();
         System.out.println("Testing reported positions...");

@@ -2389,8 +2389,9 @@ public class Assertions extends Checker {
      */
     /**
      * Reports each selector in a "style" element in "body" that matches an
-     * element before the "style" element's parent, at the selector's own
-     * position in the document.
+     * element before the "style" element's parent — and each "@import" rule,
+     * whose style sheet's selectors can't be checked — at its own position
+     * in the document.
      */
     private void reportBodyStyleProblems(
             List<BodyStyleTracker.SelectorProblem> problems,
@@ -2409,12 +2410,19 @@ public class Assertions extends Checker {
                     + (problem.getEndLine() == 1
                             ? styleLocator.getColumnNumber()
                             : 0);
-            SAXParseException spe = new SAXParseException("The selector “"
-                    + problem.getSelector() + "” matches, or might match, an"
-                    + " element that comes before the parent of this"
-                    + " “style” element. A “style” element in “body”"
-                    + " must only have selectors that match its parent and"
-                    + " elements after its parent.",
+            String message = problem.isImport()
+                    ? "The “@import” rule imports a style sheet whose"
+                            + " selectors cannot be checked, and might match an"
+                            + " element that comes before the parent of this"
+                            + " “style” element."
+                    : "The selector “" + problem.getSelector()
+                            + "” matches, or might match, an element that"
+                            + " comes before the parent of this “style”"
+                            + " element.";
+            SAXParseException spe = new SAXParseException(message
+                    + " A “style” element in “body” must only have"
+                    + " selectors that match its parent and elements after"
+                    + " its parent.",
                     styleLocator.getPublicId(), styleLocator.getSystemId(),
                     endLine, endColumn);
             if ((getErrorHandler() instanceof MessageEmitterAdapter)
