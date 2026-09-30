@@ -1998,7 +1998,7 @@ public class Assertions extends Checker {
     @Override
     public void endElement(String uri, String localName, String name)
             throws SAXException {
-        List<BodyStyleTracker.SelectorProblem> bodyStyleProblems = //
+        List<BodyStyleTracker.Problem> bodyStyleProblems = //
                 bodyStyleTracker.endElement(uri, localName);
         if ("http://www.w3.org/1999/xhtml" == uri
                 && "template".equals(localName)) {
@@ -2385,19 +2385,15 @@ public class Assertions extends Checker {
     }
 
     /**
-     * @see nu.validator.checker.Checker#startDocument()
-     */
-    /**
-     * Reports each selector in a "style" element in "body" that matches an
-     * element before the "style" element's parent — and each "@import" rule,
-     * whose style sheet's selectors can't be checked — at its own position
-     * in the document.
+     * Reports each rule that the top level of the style sheet of a "style"
+     * element in "body" isn't allowed to have, at its own position in the
+     * document.
      */
     private void reportBodyStyleProblems(
-            List<BodyStyleTracker.SelectorProblem> problems,
-            StackNode styleNode) throws SAXException {
+            List<BodyStyleTracker.Problem> problems, StackNode styleNode)
+            throws SAXException {
         Locator styleLocator = styleNode.locator();
-        for (BodyStyleTracker.SelectorProblem problem : problems) {
+        for (BodyStyleTracker.Problem problem : problems) {
             // The style sheet's first line starts right after the "style"
             // start tag, so only its columns are offset by the tag's column.
             int line = styleLocator.getLineNumber() + problem.getLine() - 1;
@@ -2410,19 +2406,26 @@ public class Assertions extends Checker {
                     + (problem.getEndLine() == 1
                             ? styleLocator.getColumnNumber()
                             : 0);
-            String message = problem.isImport()
-                    ? "The “@import” rule imports a style sheet whose"
-                            + " selectors cannot be checked, and might match an"
-                            + " element that comes before the parent of this"
-                            + " “style” element."
-                    : "The selector “" + problem.getSelector()
-                            + "” matches, or might match, an element that"
-                            + " comes before the parent of this “style”"
-                            + " element.";
-            SAXParseException spe = new SAXParseException(message
-                    + " A “style” element in “body” must only have"
-                    + " selectors that match its parent and elements after"
-                    + " its parent.",
+            String message;
+            switch (problem.getKind()) {
+                case STYLE_RULE:
+                    message = "Style rule “" + problem.getText()
+                            + "” not allowed outside an “@scope” rule in"
+                            + " a “style” element in “body”.";
+                    break;
+                case SCOPE_START:
+                    message = "Rule “@scope” with a scope start (“"
+                            + problem.getText() + "”) not allowed outside"
+                            + " another “@scope” rule in a “style”"
+                            + " element in “body”.";
+                    break;
+                default:
+                    message = "Rule “" + problem.getText()
+                            + "” not allowed outside an “@scope” rule in"
+                            + " a “style” element in “body”.";
+                    break;
+            }
+            SAXParseException spe = new SAXParseException(message,
                     styleLocator.getPublicId(), styleLocator.getSystemId(),
                     endLine, endColumn);
             if ((getErrorHandler() instanceof MessageEmitterAdapter)
@@ -2435,6 +2438,9 @@ public class Assertions extends Checker {
         }
     }
 
+    /**
+     * @see nu.validator.checker.Checker#startDocument()
+     */
     @Override
     public void startDocument() throws SAXException {
         reset();

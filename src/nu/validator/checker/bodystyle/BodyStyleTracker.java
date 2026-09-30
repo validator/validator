@@ -23,45 +23,83 @@
 
 package nu.validator.checker.bodystyle;
 
+import static nu.validator.checker.bodystyle.CssTokenizer.AT_KEYWORD;
+import static nu.validator.checker.bodystyle.CssTokenizer.FUNCTION;
+import static nu.validator.checker.bodystyle.CssTokenizer.LEFT_BRACE;
+import static nu.validator.checker.bodystyle.CssTokenizer.LEFT_BRACKET;
+import static nu.validator.checker.bodystyle.CssTokenizer.LEFT_PAREN;
+import static nu.validator.checker.bodystyle.CssTokenizer.RIGHT_BRACE;
+import static nu.validator.checker.bodystyle.CssTokenizer.RIGHT_BRACKET;
+import static nu.validator.checker.bodystyle.CssTokenizer.RIGHT_PAREN;
+import static nu.validator.checker.bodystyle.CssTokenizer.SEMICOLON;
+import static nu.validator.checker.bodystyle.CssTokenizer.WHITESPACE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.xml.sax.Attributes;
 
-import nu.validator.checker.bodystyle.Selectors.Entry;
+import nu.validator.checker.bodystyle.CssTokenizer.Token;
 
 /**
  * Checks a "style" element in "body": It must be the first child of its
- * parent (ignoring whitespace and comments), and none of its selectors may
- * match an element that comes before its parent in tree order — since
- * applying its rules to content that's already been parsed (and maybe
- * rendered) means restyling that content.
+ * parent (ignoring whitespace and comments), and the top level of its style
+ * sheet must only have "@scope" rules without a scope start, "@namespace"
+ * rules, "@layer" statements, and "@media", "@supports", "@container",
+ * "@starting-style", and "@layer" rules whose blocks follow the same rule.
  *
- * To know what comes before, this records every element it sees, as a
- * lightweight tree. It skips the contents of "template" elements, which
- * aren't in the document tree; a "style" element in a template (or in a
- * declarative shadow root) isn't checked at all.
+ * The scoping root of an "@scope" rule without a scope start is the "style"
+ * element's parent — so its rules can only style the parent and what comes
+ * after the "style" element, never content that might already have been
+ * rendered.
  *
- * At the "style" end tag, each selector is matched against the tree as it
- * stands then. A match that's uncertain — because it depends on
- * user-interaction state, on content that's not parsed yet, or on
- * something this code doesn't know how to match — counts as a match.
+ * The contents of "template" elements are skipped; a "style" element in a
+ * template (or in a declarative shadow root) isn't checked at all.
  *
- * https://github.com/whatwg/html/issues/12951
+ * https://github.com/whatwg/html/pull/13007
  */
 public final class BodyStyleTracker {
 
     private static final String HTML = "http://www.w3.org/1999/xhtml";
 
     /**
-     * A selector that matches an element before the parent of its "style"
-     * element — or an "@import" rule, since the selectors of the style sheet
-     * it imports can't be checked. Lines and columns are 1-based, and
+     * Group rules whose blocks can hold anything the top level can.
+     */
+    private static final String[] GROUPING_RULES = { "media", "supports",
+            "container", "starting-style", "layer" };
+
+    /**
+     * Something the top level of the style sheet of a "style" element in
+     * "body" isn't allowed to have. Lines and columns are 1-based, and
      * relative to the start of the style sheet; the end column is inclusive.
      */
-    public static final class SelectorProblem {
-        private final String selector;
+    public static final class Problem {
+
+        public enum Kind {
+            /**
+             * A style rule outside an "@scope" rule; the text is its
+             * selector list.
+             */
+            STYLE_RULE,
+
+            /**
+             * An "@scope" rule with a scope start; the text is the scope
+             * start, with its parentheses.
+             */
+            SCOPE_START,
+
+            /**
+             * Any other at-rule that's not allowed; the text is its name,
+             * with the "@".
+             */
+            AT_RULE
+        }
+
+        private final Kind kind;
+
+        private final String text;
 
         private final int line;
 
@@ -71,24 +109,26 @@ public final class BodyStyleTracker {
 
         private final int endColumn;
 
-        private final boolean isImport;
-
-        SelectorProblem(String selector, int line, int column, int endLine,
-                int endColumn, boolean isImport) {
-            this.isImport = isImport;
-            this.selector = selector;
+        Problem(Kind kind, String text, int line, int column, int endLine,
+                int endColumn) {
+            this.kind = kind;
+            this.text = text;
             this.line = line;
             this.column = column;
             this.endLine = endLine;
             this.endColumn = endColumn;
         }
 
+        public Kind getKind() {
+            return kind;
+        }
+
         /**
-         * The selector's source text (or the whole "@import" rule's), with
-         * each run of whitespace collapsed to a single space.
+         * The problem's source text, with each run of whitespace collapsed
+         * to a single space.
          */
-        public String getSelector() {
-            return selector;
+        public String getText() {
+            return text;
         }
 
         public int getLine() {
@@ -106,21 +146,27 @@ public final class BodyStyleTracker {
         public int getEndColumn() {
             return endColumn;
         }
+    }
 
+    /**
+     * An open element.
+     */
+    private static final class Frame {
         /**
-         * True for an "@import" rule, rather than a selector.
+         * True for "body" and its descendants.
          */
-        public boolean isImport() {
-            return isImport;
+        final boolean inBody;
+
+        boolean hasChild;
+
+        boolean hasNonWhitespaceText;
+
+        Frame(boolean inBody) {
+            this.inBody = inBody;
         }
     }
 
-    private final List<TreeElement> elements = new ArrayList<>();
-
-    /**
-     * The innermost open element.
-     */
-    private TreeElement current;
+    private final List<Frame> openElements = new ArrayList<>();
 
     private int templatesDeep;
 
@@ -130,15 +176,19 @@ public final class BodyStyleTracker {
     private StringBuilder styleText;
 
     public void startDocument() {
-        elements.clear();
-        current = null;
+        openElements.clear();
         templatesDeep = 0;
         styleText = null;
     }
 
+    private Frame current() {
+        return openElements.isEmpty() ? null
+                : openElements.get(openElements.size() - 1);
+    }
+
     /**
-     * Records an element. Returns true if it's a "style" element in "body"
-     * that isn't the first child of its parent.
+     * Returns true if the element is a "style" element in "body" that isn't
+     * the first child of its parent.
      */
     public boolean startElement(String uri, String localName,
             Attributes atts) {
@@ -149,16 +199,18 @@ public final class BodyStyleTracker {
             }
             return false;
         }
+        Frame parent = current();
         boolean notFirstChild = false;
-        if (isHtml && "style".equals(localName) && isInBody(current)) {
-            notFirstChild = current.firstChild != null
-                    || current.hasNonWhitespaceText;
+        if (isHtml && "style".equals(localName) && parent != null
+                && parent.inBody) {
+            notFirstChild = parent.hasChild || parent.hasNonWhitespaceText;
             styleText = new StringBuilder();
         }
-        TreeElement element = new TreeElement(uri, localName, atts, current,
-                elements.size());
-        elements.add(element);
-        current = element;
+        if (parent != null) {
+            parent.hasChild = true;
+        }
+        openElements.add(new Frame((parent != null && parent.inBody)
+                || (isHtml && "body".equals(localName))));
         if (isHtml && "template".equals(localName)) {
             templatesDeep = 1;
         }
@@ -166,19 +218,19 @@ public final class BodyStyleTracker {
     }
 
     public void characters(char[] ch, int start, int length) {
-        if (templatesDeep > 0 || current == null || length == 0) {
+        Frame frame = current();
+        if (templatesDeep > 0 || frame == null) {
             return;
         }
         if (styleText != null) {
             styleText.append(ch, start, length);
         }
-        current.hasText = true;
-        if (!current.hasNonWhitespaceText) {
+        if (!frame.hasNonWhitespaceText) {
             for (int i = start; i < start + length; i++) {
                 char c = ch[i];
                 if (c != ' ' && c != '\t' && c != '\n' && c != '\r'
                         && c != '\f') {
-                    current.hasNonWhitespaceText = true;
+                    frame.hasNonWhitespaceText = true;
                     break;
                 }
             }
@@ -187,9 +239,9 @@ public final class BodyStyleTracker {
 
     /**
      * Closes the current element. If it's a "style" element in "body",
-     * returns the selectors that match an element before its parent.
+     * returns what the top level of its style sheet isn't allowed to have.
      */
-    public List<SelectorProblem> endElement(String uri, String localName) {
+    public List<Problem> endElement(String uri, String localName) {
         boolean isHtml = HTML.equals(uri);
         if (templatesDeep > 0) {
             if (isHtml && "template".equals(localName)) {
@@ -199,57 +251,153 @@ public final class BodyStyleTracker {
                 return Collections.emptyList();
             }
         }
-        if (current == null) {
+        if (openElements.isEmpty()) {
             return Collections.emptyList();
         }
-        TreeElement element = current;
-        element.closed = true;
-        current = element.parent;
+        openElements.remove(openElements.size() - 1);
         if (styleText == null || !isHtml || !"style".equals(localName)) {
             return Collections.emptyList();
         }
         String css = styleText.toString();
         styleText = null;
-        return findProblems(css, element.parent);
+        List<Token> tokens = CssTokenizer.tokenize(css);
+        List<Problem> problems = new ArrayList<>();
+        checkBlock(css, tokens, 0, tokens.size(), problems);
+        return problems;
     }
 
-    private static boolean isInBody(TreeElement element) {
-        for (TreeElement e = element; e != null; e = e.parent) {
-            if (e.isHtml && "body".equals(e.localName)) {
+    /**
+     * Checks the rules between from and to: the top level of the style
+     * sheet, or the block of a group rule at the top level.
+     */
+    private static void checkBlock(String css, List<Token> tokens, int from,
+            int to, List<Problem> problems) {
+        int i = from;
+        while (i < to) {
+            Token token = tokens.get(i);
+            int type = token.type;
+            if (type == WHITESPACE || type == SEMICOLON
+                    || type == RIGHT_BRACE || type == CssTokenizer.CDO
+                    || type == CssTokenizer.CDC) {
+                i++;
+                continue;
+            }
+            int stop = scan(tokens, type == AT_KEYWORD ? i + 1 : i, to);
+            boolean hasBlock = stop < to
+                    && tokens.get(stop).type == LEFT_BRACE;
+            int next = hasBlock ? findClose(tokens, stop, to) + 1 : stop + 1;
+            if (type != AT_KEYWORD) {
+                // A style rule; without a block, it's just junk that the
+                // CSS parser reports.
+                if (hasBlock) {
+                    problems.add(problem(css, Problem.Kind.STYLE_RULE,
+                            token.start, lastNonWhitespace(tokens, i, stop)));
+                }
+            } else {
+                String name = token.value.toLowerCase(Locale.ROOT);
+                if (!hasBlock) {
+                    if (!"namespace".equals(name) && !"layer".equals(name)) {
+                        problems.add(problem(css, Problem.Kind.AT_RULE,
+                                token.start, token.end));
+                    }
+                } else if ("scope".equals(name)) {
+                    int open = i + 1;
+                    while (open < stop
+                            && tokens.get(open).type == WHITESPACE) {
+                        open++;
+                    }
+                    if (open < stop && tokens.get(open).type == LEFT_PAREN) {
+                        int close = Math.min(findClose(tokens, open, stop),
+                                stop - 1);
+                        problems.add(problem(css, Problem.Kind.SCOPE_START,
+                                tokens.get(open).start,
+                                tokens.get(close).end));
+                    }
+                } else if (isGroupingRule(name)) {
+                    checkBlock(css, tokens, stop + 1, next - 1, problems);
+                } else {
+                    problems.add(problem(css, Problem.Kind.AT_RULE,
+                            token.start, token.end));
+                }
+            }
+            i = next;
+        }
+    }
+
+    private static boolean isGroupingRule(String name) {
+        for (String grouping : GROUPING_RULES) {
+            if (grouping.equals(name)) {
                 return true;
             }
         }
         return false;
     }
 
-    private List<SelectorProblem> findProblems(String css,
-            TreeElement parent) {
-        List<SelectorProblem> problems = new ArrayList<>();
-        SelectorMatcher matcher = new SelectorMatcher(parent);
-        SelectorCollector collector = SelectorCollector.collect(css);
-        for (int[] range : collector.getImports()) {
-            problems.add(problem(css, range[0], range[1], true));
+    /**
+     * Returns the index of the first semicolon or left brace that's not
+     * nested in a block, starting at from — or of a right brace that closes
+     * the enclosing block, or to, if there's neither.
+     */
+    private static int scan(List<Token> tokens, int from, int to) {
+        int depth = 0;
+        for (int i = from; i < to; i++) {
+            int type = tokens.get(i).type;
+            if (depth == 0 && (type == SEMICOLON || type == LEFT_BRACE)) {
+                return i;
+            }
+            if (type == LEFT_BRACKET || type == LEFT_PAREN
+                    || type == FUNCTION) {
+                depth++;
+            } else if (type == RIGHT_BRACKET || type == RIGHT_PAREN) {
+                depth = Math.max(0, depth - 1);
+            } else if (type == RIGHT_BRACE && depth == 0) {
+                return i;
+            }
         }
-        for (Entry entry : collector.getEntries()) {
-            for (int i = 0; i < parent.index; i++) {
-                if (matcher.match(entry, elements.get(i))
-                        != SelectorMatcher.NO) {
-                    problems.add(problem(css, entry.selector.start,
-                            entry.selector.end, false));
-                    break;
+        return to;
+    }
+
+    /**
+     * Returns the index of the token that closes the block or parenthesized
+     * group opened at open — or to - 1, if it's never closed.
+     */
+    private static int findClose(List<Token> tokens, int open, int to) {
+        int depth = 0;
+        for (int i = open; i < to; i++) {
+            int type = tokens.get(i).type;
+            if (type == LEFT_BRACE || type == LEFT_BRACKET
+                    || type == LEFT_PAREN || type == FUNCTION) {
+                depth++;
+            } else if (type == RIGHT_BRACE || type == RIGHT_BRACKET
+                    || type == RIGHT_PAREN) {
+                depth--;
+                if (depth == 0) {
+                    return i;
                 }
             }
         }
-        return problems;
+        return to - 1;
     }
 
-    private static SelectorProblem problem(String css, int start, int end,
-            boolean isImport) {
+    /**
+     * Returns the end offset of the last non-whitespace token from from up
+     * to (but not including) to.
+     */
+    private static int lastNonWhitespace(List<Token> tokens, int from,
+            int to) {
+        int last = to - 1;
+        while (last > from && tokens.get(last).type == WHITESPACE) {
+            last--;
+        }
+        return tokens.get(last).end;
+    }
+
+    private static Problem problem(String css, Problem.Kind kind, int start,
+            int end) {
         int[] from = lineAndColumn(css, start);
         int[] to = lineAndColumn(css, end - 1);
         String text = css.substring(start, end).replaceAll("\\s+", " ");
-        return new SelectorProblem(text, from[0], from[1], to[0], to[1],
-                isImport);
+        return new Problem(kind, text, from[0], from[1], to[0], to[1]);
     }
 
     private static int[] lineAndColumn(String css, int offset) {

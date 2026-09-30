@@ -264,7 +264,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		
 	common.elem.metadata |= style.elem
 	# In body, Assertions requires it to be the first child of its parent,
-	# with no selectors that match anything before its parent.
+	# with its style rules in "@scope" rules that have no scope start.
 	common.elem.flow |= style.elem
 
 ## Name-Value Metadata: <meta name>
