@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>rules allowed at the top level of a style element in body</title>
+<body>
+<article>
+  <style>
+    @namespace svg url(http://www.w3.org/2000/svg);
+    @layer base, overrides;
+    @scope {
+      :scope { border: 1px solid }
+      img { max-width: 100% }
+    }
+    @scope to (.comments) {
+      p { margin: 0 }
+    }
+    @media print {
+      @scope { :scope { border: none } }
+    }
+    @supports (display: grid) {
+      @layer base {
+        @scope { :scope { display: grid } }
+      }
+    }
+  </style>
+  <h1>Kittens</h1>
+  <img src="kittens.jpg" alt="Three kittens asleep in a basket.">
+  <p>Text</p>
+  <div class=comments><p>Comment</p></div>
+</article>

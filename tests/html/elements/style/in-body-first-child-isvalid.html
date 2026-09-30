@@ -5,9 +5,11 @@
 <div>
   <!-- a comment -->
   <style>
-    .card { border: 1px solid }
-    .card > h1, .card p:first-child { margin: 0 }
-    #intro:hover { color: blue }
+    @scope {
+      .card { border: 1px solid }
+      .card > h1, .card p:first-child { margin: 0 }
+      #intro:hover { color: blue }
+    }
   </style>
   <div class=card><h1>Title</h1><p id=intro>Text</p></div>
 </div>
