@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@counter-style in a style element in body</title>
+<body>
+<div>
+<style>@counter-style thumbs { system: cyclic; symbols: "👍"; suffix: " " } @scope { ul { list-style: thumbs } }</style>
+<ul><li>Later</li></ul>
+</div>

@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>allowed at-rules at the top level of a style element in body</title>
+<body>
+<div>
+<style>
+  @namespace svg url(http://www.w3.org/2000/svg);
+  @layer base, components;
+  @media print { @scope { p { color: black } } }
+  @supports (display: grid) { @scope { :scope { display: grid } } }
+  @layer base { @scope { p { margin: 0 } } }
+  @layer components { @media screen { @supports (display: grid) { @scope { p { color: red } } } } }
+</style>
+<p>Later</p>
+</div>

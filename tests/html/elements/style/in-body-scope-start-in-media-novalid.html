@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@scope with a scope start in @media in a style element in body</title>
+<body>
+<div class=card>
+<style>@media print { @scope (.card) { :scope { border: 1px solid } } }</style>
+<p>Later</p>
+</div>

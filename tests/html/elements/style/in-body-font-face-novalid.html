@@ -3,6 +3,6 @@
 <title>@font-face in a style element in body</title>
 <body>
 <div>
-<style>@font-face { font-family: x; src: url(x.woff2) }</style>
-<p>Text</p>
+<style>@font-face { font-family: x; src: url(x.woff2) } @scope { p { font-family: x } }</style>
+<p>Later</p>
 </div>
