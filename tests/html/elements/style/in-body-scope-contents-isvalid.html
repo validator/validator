@@ -1,0 +1,19 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>anything inside a prelude-less @scope</title>
+<body>
+<p class=a>Earlier</p>
+<div>
+<style>
+  @scope {
+    :scope { border: 1px solid }
+    body p { color: red }
+    :root p:has(b) { color: blue }
+    & > p { margin: 0 }
+    p { & b { color: green } }
+    @scope (.a) { p { color: black } }
+    @media print { p { color: black } }
+  }
+</style>
+<p class=a><b>Later</b></p>
+</div>

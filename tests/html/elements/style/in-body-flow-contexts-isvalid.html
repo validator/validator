@@ -1,0 +1,13 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>style as the first child in flow contexts</title>
+<body>
+<header><style>@scope { .a { color: red } }</style><p class=a>x</p></header>
+<ul><li><style>@scope { .b { color: red } }</style><p class=b>x</p></li></ul>
+<table><tr><td><style>@scope { .c { color: red } }</style><p class=c>x</p></td></tr></table>
+<blockquote><style>@scope { .d { color: red } }</style><p class=d>x</p></blockquote>
+<noscript><style>@scope { .e { color: red } }</style><p class=e>x</p></noscript>
+<div><a href=#><style>@scope { .f { color: red } }</style><p class=f>x</p></a></div>
+<fieldset><style>@scope { .g { color: red } }</style><p class=g>x</p></fieldset>
+<figure><style>@scope { .h { color: red } }</style><img src=x.png alt=""><figcaption class=h>x</figcaption></figure>
+<div><style></style></div>

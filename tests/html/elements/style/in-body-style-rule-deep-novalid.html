@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>style rule nested in @layer and @supports in a style element in body</title>
+<body>
+<div>
+<style>@layer base { @supports (display: grid) { @scope { p { margin: 0 } } .later { display: grid } } }</style>
+<p class=later>Later</p>
+</div>

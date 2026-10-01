@@ -1,8 +1,9 @@
 <!doctype html>
 <meta charset=utf-8>
-<title>@scope with a scope start in a style element in body</title>
+<title>@scope with a scope start</title>
 <body>
-<div>
-<style>@scope (.card) { p { color: red } }</style>
-<div class=card><p>Text</p></div>
+<div class=card>
+  <section>
+    <style>@scope (.card) { :scope { border: 1px solid } }</style>
+  </section>
 </div>
