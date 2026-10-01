@@ -1,0 +1,9 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@scope with only a scope end</title>
+<body>
+<div>
+<style>@scope to (.other) { p { color: red } }</style>
+<p>Later</p>
+<div class=other><p>Not red</p></div>
+</div>

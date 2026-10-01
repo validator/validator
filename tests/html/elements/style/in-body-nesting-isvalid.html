@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>CSS nesting in a style element in body</title>
+<body>
+<p class=card>Earlier</p>
+<div class=card>
+  <style>
+    @scope {
+      .card {
+        color: red;
+        & p { color: blue; }
+        > h1 { margin: 0; }
+      }
+    }
+  </style>
+  <div class=card><h1>Later</h1><p>Later</p></div>
+</div>

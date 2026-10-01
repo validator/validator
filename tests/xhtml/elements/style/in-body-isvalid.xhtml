@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>style as the first child of an element in body</title>
+</head>
+<body>
+  <p>Earlier</p>
+  <div>
+    <style>
+      @namespace svg url(http://www.w3.org/2000/svg);
+      @scope {
+        p { color: red }
+        .later > svg|circle { fill: red }
+      }
+    </style>
+    <p class="later">Later</p>
+  </div>
+</body>
+</html>

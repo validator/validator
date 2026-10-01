@@ -1,0 +1,10 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@charset in a style element in body</title>
+<body>
+<!-- "@charset" is a syntax construct, not a rule: it's dropped during parsing and doesn't exist
+     in the parsed CSS object model, so it's not at the top level of the style sheet. -->
+<div>
+<style>@charset "utf-8"; @scope { p { color: red } }</style>
+<p>Later</p>
+</div>
