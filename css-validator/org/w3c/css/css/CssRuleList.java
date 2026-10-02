@@ -48,7 +48,8 @@ public class CssRuleList {
     }
 
     public boolean isEmpty() {
-        return atRule.isEmpty() /*&& rulelist.isEmpty() */;
+        // a list without at-rule holds the style rules at the top level
+        return (atRule != null) ? atRule.isEmpty() : rulelist.isEmpty();
     }
 
     public String toString() {

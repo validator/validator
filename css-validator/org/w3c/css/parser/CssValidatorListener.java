@@ -76,6 +76,24 @@ public interface CssValidatorListener {
 
     public void setProperty(ArrayList<CssProperty> properties);
 
+    /**
+     * CSS Nesting Level 1: a style rule body was entered ("{" consumed).
+     * Together with {@link #endOfRule()} this brackets a style rule so that
+     * rules ending inside it can be attached as nested rules for the output,
+     * instead of being appended flat. Default is a no-op so that existing
+     * listeners are unaffected.
+     */
+    default public void startStyleRule() {
+    }
+
+    /**
+     * CSS Nesting Level 1: the style rule opened by the last
+     * {@link #startStyleRule()} failed to parse; discard its pending output
+     * frame. Default is a no-op.
+     */
+    default public void abortStyleRule() {
+    }
+
     public void endOfRule();
 
     public void removeThisRule();

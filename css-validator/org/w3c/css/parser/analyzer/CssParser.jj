@@ -165,6 +165,12 @@ public abstract class CssParser {
     // true if the nesting selector appeared in the selector being parsed
     private boolean hasNestingSelector = false;
 
+    // pseudo-classes as written, whose arguments contain the nesting selector,
+    // and their resolved form (the one used for conflicts)
+    private java.util.IdentityHashMap<org.w3c.css.selectors.Selector, org.w3c.css.selectors.Selector>
+            resolvedArguments = new java.util.IdentityHashMap<org.w3c.css.selectors.Selector,
+                                                            org.w3c.css.selectors.Selector>();
+
     /**
      * The ac for handling errors and warnings.
      * 
@@ -274,6 +280,12 @@ public abstract class CssParser {
     public abstract void setSelectorList(ArrayList<CssSelectors> selectors);
     public abstract void addProperty(ArrayList<CssProperty> properties);
     public abstract void endOfRule();	
+
+    /** CSS Nesting: a style rule body was entered, for the output. */
+    public abstract void startStyleRule();
+
+    /** CSS Nesting: the style rule last entered failed to parse. */
+    public abstract void abortStyleRule();
     public abstract void removeThisRule();
     public abstract void removeThisAtRule();
     
@@ -574,13 +586,17 @@ public abstract class CssParser {
         }
     }
 
-    private void addNestedSelector(ArrayList<CssSelectors> context_set, CssSelectors selector) {
+    private void addNestedSelector(ArrayList<CssSelectors> context_set,
+                                   ArrayList<CssSelectors> display_set, CssSelectors selector) {
         if (selector == null) {
             return;
         }
+        // as written, for the output of the style sheet
+        display_set.add(selector);
         try {
             context_set.addAll(CssSelectors.resolveNesting(ac, getAtRule(), nestingParents,
-                                                           selector, hasNestingSelector));
+                                                           selector, hasNestingSelector,
+                                                           resolvedArguments));
         } catch (InvalidParamException e) {
             addError(e, selector.toString());
         }
@@ -594,13 +610,36 @@ public abstract class CssParser {
         }
         ArrayList<CssSelectors> resolved = new ArrayList<CssSelectors>(selector_list.size());
         for (CssSelectors selector : selector_list) {
-            if (selector.containsNesting()) {
-                resolved.addAll(CssSelectors.resolveNestingInArgument(ac, getAtRule(), nestingParents, selector));
+            if (selector.containsNesting() || selector.hasSubstitution(resolvedArguments)) {
+                resolved.addAll(CssSelectors.resolveNestingInArgument(ac, getAtRule(), nestingParents,
+                                                                      selector, resolvedArguments));
             } else {
                 resolved.add(selector);
             }
         }
         return resolved;
+    }
+
+    // adds a pseudo-class with a selector list argument, as written; if the argument
+    // contains the nesting selector, its resolved form is kept for conflict detection
+    private void setPseudoFunction(CssSelectors s, String pseudo, CssExpression exp,
+                                   ArrayList<CssSelectors> selector_list)
+            throws InvalidParamException {
+        ArrayList<CssSelectors> resolved = resolveNestingInArguments(selector_list);
+        if (exp == null) {
+            s.setPseudoFun(ac, pseudo, selector_list);
+        } else {
+            s.setPseudoFun(ac, pseudo, exp, selector_list);
+        }
+        if ((resolved != selector_list) && (s.size() > 0)) {
+            org.w3c.css.selectors.Selector written = s.getSelector(s.size() - 1);
+            org.w3c.css.selectors.Selector substitute = (exp == null)
+                    ? org.w3c.css.selectors.PseudoFactory.newPseudoFunction(pseudo, resolved, ac)
+                    : org.w3c.css.selectors.PseudoFactory.newPseudoFunction(pseudo, exp, resolved, ac);
+            if (!written.toString().equals(substitute.toString())) {
+                resolvedArguments.put(written, substitute);
+            }
+        }
     }
 
     private void handleStyleRule(ArrayList<CssSelectors> context_set, ArrayList<CssProperty> value_set) {
@@ -624,9 +663,8 @@ public abstract class CssParser {
                 handleRule(sel, v);
             }
         }
+        // for the output, in order with the nested rules
         addProperty(value_set);
-        setSelectorList(context_set);
-        endOfRule();
     }
 
     private static String addOperator(char operator, String value) {
@@ -2445,21 +2483,22 @@ ArrayList<CssSelectors> relative_selector_list() :
 
 /**
  * The selectors of a nested style rule, resolved against the parent rule's selectors
+ * (the selectors as written are added to display_set, for the output)
  *
  * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#syntax
  */
-ArrayList<CssSelectors> nested_selector_list() :
+ArrayList<CssSelectors> nested_selector_list(ArrayList<CssSelectors> display_set) :
 {
         CssSelectors selector;
         ArrayList<CssSelectors> context_set = new ArrayList<CssSelectors>();
 }
 {
-        { hasNestingSelector = false; }
+        { hasNestingSelector = false; resolvedArguments.clear(); }
         selector=nested_relative_selector() {
-                addNestedSelector(context_set, selector);
+                addNestedSelector(context_set, display_set, selector);
         }
         ( <COMMA> ( <S> )* { hasNestingSelector = false; } selector=nested_relative_selector() {
-                addNestedSelector(context_set, selector);
+                addNestedSelector(context_set, display_set, selector);
         } )*
         {
                 return context_set;
@@ -2494,20 +2533,26 @@ CssSelectors nested_relative_selector() :
 void ruleSet() :
 { 
     ArrayList<CssSelectors> context_set = null;
+    // the selectors as written, for the output
+    ArrayList<CssSelectors> display_set = null;
     ArrayList<CssProperty> value_set = null;
     ArrayList<CssSelectors> parents = nestingParents;
+    boolean displayOpen = false;
     currentContext = parents;
 }
 {
     try {
-	( LOOKAHEAD({ nestingParents != null }) context_set = nested_selector_list()
-	| context_set = selector_list() )
+	( LOOKAHEAD({ nestingParents != null }) { display_set = new ArrayList<CssSelectors>(); }
+	  context_set = nested_selector_list(display_set)
+	| context_set = selector_list() { display_set = context_set; } )
 
 	<LBRACE> {
 	    validSelector = (context_set.size() > 0);
             if (validSelector) {
                 currentContext = context_set;
             }
+	    startStyleRule();
+	    displayOpen = true;
 	}
 	( <S> )*
 	( LOOKAHEAD({ ac.getCssVersion().compareTo(CssVersion.CSS3) < 0 }) value_set=declarations()
@@ -2516,6 +2561,10 @@ void ruleSet() :
 	    {
 		markRule = true;
 		handleStyleRule(context_set, value_set);
+		// the rule as written, with its nested rules
+		setSelectorList(display_set);
+		endOfRule();
+		displayOpen = false;
 		currentContext = parents;
 	    }
     } catch (ParseException e) {
@@ -2533,10 +2582,26 @@ void ruleSet() :
 			// unterminated comment... let's process
 			markRule = true;
 			handleStyleRule(context_set, value_set);
+			if (displayOpen) {
+				setSelectorList(display_set);
+				endOfRule();
+				displayOpen = false;
+			}
+			currentContext = parents;
 		}
+	}
+	// a nested rule gives the context back to its parent; at the top level,
+	// the context is left as before nesting
+	if (parents != null) {
 		currentContext = parents;
 	}
+	if (displayOpen) {
+		abortStyleRule();
+	}
     } catch (TokenMgrError e) {
+	if (displayOpen) {
+		abortStyleRule();
+	}
 	addError(new ParseException(e.getMessage()), skipStatement());
     }
 }
@@ -3253,7 +3318,7 @@ CssANPlusB anpb = null;
 	    }
 	    | ( ( n=<FUNCTIONIS> | n=<FUNCTIONNOT> ) ( <S> )* selector_list=selector_list() ( <S> )* ) {
 		try {
-			s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), resolveNestingInArguments(selector_list));
+			setPseudoFunction(s, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), null, selector_list);
 		} catch(InvalidParamException e) {
 			removeThisRule();
 			ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
@@ -3267,7 +3332,7 @@ CssANPlusB anpb = null;
 	      )
 		{
                try {
-                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), resolveNestingInArguments(selector_list));
+                        setPseudoFunction(s, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), null, selector_list);
                 } catch(InvalidParamException e) {
                         removeThisRule();
                         ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
@@ -3276,7 +3341,7 @@ CssANPlusB anpb = null;
 	    }
 	    | ( n=<FUNCTIONHAS> selector_list=relative_selector_list() ( <S> )* ) {
 		try {
-                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), resolveNestingInArguments(selector_list));
+                        setPseudoFunction(s, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), null, selector_list);
                 } catch(InvalidParamException e) {
                         removeThisRule();
                         ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
@@ -3301,7 +3366,7 @@ CssANPlusB anpb = null;
 			if (id != null) {
 				setValue(new CssIdent(), exp, ' ', id, IDENT);
 			}
-                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), exp, resolveNestingInArguments(selector_list));
+                        setPseudoFunction(s, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), exp, selector_list);
                 } catch(InvalidParamException e) {
                         removeThisRule();
                         ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),

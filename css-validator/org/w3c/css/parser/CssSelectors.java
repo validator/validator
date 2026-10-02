@@ -36,6 +36,7 @@ import org.w3c.css.util.Warnings;
 import org.w3c.css.values.CssExpression;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * This class manages all contextual selector.
@@ -365,15 +366,18 @@ public final class CssSelectors extends SelectorsList
      * @param selector   the nested selector, as parsed as a relative selector
      * @param hasNesting <code>true</code> if the nested selector contains the
      *                   nesting selector, including in pseudo-class arguments
+     * @param substitutions the resolved form of pseudo-classes whose arguments
+     *                   contain the nesting selector, or null
      * @return the resolved selectors, one per parent selector
      * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nest-selector
      */
     public static ArrayList<CssSelectors> resolveNesting(ApplContext ac, AtRule atRule,
                                                          ArrayList<CssSelectors> parents,
                                                          CssSelectors selector,
-                                                         boolean hasNesting)
+                                                         boolean hasNesting,
+                                                         Map<Selector, Selector> substitutions)
             throws InvalidParamException {
-        ArrayList<ArrayList<Selector>> nested = getCompounds(selector);
+        ArrayList<ArrayList<Selector>> nested = getCompounds(selector, substitutions);
         // the relative selector production adds a leading compound holding only the optional combinator
         ArrayList<Selector> lead = nested.remove(0);
         Selector combinator = lead.isEmpty() ? null : lead.get(0);
@@ -391,14 +395,34 @@ public final class CssSelectors extends SelectorsList
      * @param atRule   the at-rule the resolved selectors belong to
      * @param parents  the parent rule's (resolved) selectors
      * @param selector the argument
+     * @param substitutions the resolved form of pseudo-classes whose arguments
+     *                 contain the nesting selector, or null
      * @return the resolved selectors, one per parent selector
      * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nest-selector
      */
     public static ArrayList<CssSelectors> resolveNestingInArgument(ApplContext ac, AtRule atRule,
                                                                    ArrayList<CssSelectors> parents,
-                                                                   CssSelectors selector)
+                                                                   CssSelectors selector,
+                                                                   Map<Selector, Selector> substitutions)
             throws InvalidParamException {
-        return resolveNesting(ac, atRule, parents, getCompounds(selector), null);
+        return resolveNesting(ac, atRule, parents, getCompounds(selector, substitutions), null);
+    }
+
+    /**
+     * Returns <code>true</code> if a pseudo-class of this selector has a
+     * resolved form in <code>substitutions</code>
+     */
+    public boolean hasSubstitution(Map<Selector, Selector> substitutions) {
+        if (substitutions != null) {
+            for (CssSelectors s = this; s != null; s = s.next) {
+                for (Selector sel : s.getSelectors()) {
+                    if (substitutions.containsKey(sel)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     // prefixes the compounds with each parent and the combinator, if any, and substitutes the nesting selector
@@ -520,9 +544,20 @@ public final class CssSelectors extends SelectorsList
 
     // returns the compounds of a selector, first to last, each with its trailing combinator
     private static ArrayList<ArrayList<Selector>> getCompounds(CssSelectors selector) {
+        return getCompounds(selector, null);
+    }
+
+    // same, with the resolved form of pseudo-classes whose arguments contain the nesting selector
+    private static ArrayList<ArrayList<Selector>> getCompounds(CssSelectors selector,
+                                                               Map<Selector, Selector> substitutions) {
         ArrayList<ArrayList<Selector>> compounds = new ArrayList<>();
         for (CssSelectors s = selector; s != null; s = s.next) {
-            compounds.add(0, new ArrayList<>(s.getSelectors()));
+            ArrayList<Selector> compound = new ArrayList<>(s.getSelectors().size());
+            for (Selector sel : s.getSelectors()) {
+                Selector substitute = (substitutions != null) ? substitutions.get(sel) : null;
+                compound.add((substitute != null) ? substitute : sel);
+            }
+            compounds.add(0, compound);
         }
         return compounds;
     }

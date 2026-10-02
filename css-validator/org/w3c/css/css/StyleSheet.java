@@ -228,6 +228,11 @@ public class StyleSheet {
     }
 
     public void newAtRule(AtRule atRule) {
+        if (!openRuleStack.isEmpty()) {
+            // CSS Nesting: an at-rule nested in a style rule
+            openRuleStack.add(new OpenFrame(atRule));
+            return;
+        }
         CssRuleList rulelist = new CssRuleList();
         rulelist.addAtRule(atRule);
         atRuleList.add(rulelist);
@@ -235,6 +240,14 @@ public class StyleSheet {
     }
 
     public void endOfAtRule() {
+        if (!openRuleStack.isEmpty()
+                && openRuleStack.get(openRuleStack.size() - 1).atRule != null) {
+            closeAtRuleFrame();
+            important = false;
+            selectortext = "";
+            doNotAddAtRule = false;
+            return;
+        }
         if (!doNotAddAtRule) {
             CssRuleList rulelist = new CssRuleList();
             atRuleList.add(rulelist); //for the new set of rules
@@ -259,16 +272,87 @@ public class StyleSheet {
             if (sb.length() > 0) {
                 sb.append(", ");
             }
-            sb.append(s.toString());
+            sb.append(s.toString().trim());
         }
         selectortext = sb.toString();
     }
 
     public void setProperty(ArrayList<CssProperty> properties) {
+        if (!openRuleStack.isEmpty()) {
+            // CSS Nesting: the declarations of the open rule, in order; those
+            // following a nested rule stay after it (a nested declarations rule)
+            OpenFrame frame = openRuleStack.get(openRuleStack.size() - 1);
+            if ((properties == null) || properties.isEmpty() || (properties == frame.lastRun)) {
+                return;
+            }
+            frame.lastRun = properties;
+            CssStyleRule last = frame.children.isEmpty() ? null
+                    : frame.children.get(frame.children.size() - 1);
+            if (last == null) {
+                if (frame.properties == null) {
+                    frame.properties = new ArrayList<CssProperty>();
+                }
+                frame.properties.addAll(properties);
+            } else if (last.isDeclarationsOnly()) {
+                last.getProperties().addAll(properties);
+            } else {
+                frame.children.add(CssStyleRule.newDeclarations(indent,
+                        new ArrayList<CssProperty>(properties)));
+            }
+            return;
+        }
         this.properties = properties;
     }
 
+    /**
+     * CSS Nesting: opens an output frame for a style rule body. The rules
+     * and at-rules ending while it is open become its nested rules, instead
+     * of being appended to the flat rule list.
+     */
+    public void startStyleRule() {
+        openRuleStack.add(new OpenFrame(null));
+    }
+
+    /**
+     * CSS Nesting: the style rule opened by the last startStyleRule failed to
+     * parse; discards its frame, and anything left open inside it.
+     */
+    public void abortStyleRule() {
+        while (!openRuleStack.isEmpty()) {
+            if (openRuleStack.remove(openRuleStack.size() - 1).atRule == null) {
+                break;
+            }
+        }
+        selectortext = "";
+        doNotAddRule = false;
+    }
+
     public void endOfRule() {
+        if (!openRuleStack.isEmpty()) {
+            // at-rules left open inside the rule (after an error) are closed first
+            while ((openRuleStack.size() > 1)
+                    && (openRuleStack.get(openRuleStack.size() - 1).atRule != null)) {
+                closeAtRuleFrame();
+            }
+            OpenFrame frame = openRuleStack.get(openRuleStack.size() - 1);
+            if (frame.atRule == null) {
+                openRuleStack.remove(openRuleStack.size() - 1);
+                // empty rules are not shown, as before nesting, but a rule
+                // holding only nested rules is
+                if (!doNotAddRule && ((frame.properties != null) || !frame.children.isEmpty())) {
+                    CssStyleRule stylerule = new CssStyleRule(indent, selectortext,
+                            (frame.properties != null) ? frame.properties
+                                    : new ArrayList<CssProperty>(), important);
+                    for (CssStyleRule child : frame.children) {
+                        stylerule.addNestedRule(child);
+                    }
+                    attach(stylerule);
+                }
+                selectortext = "";
+                doNotAddRule = false;
+                return;
+            }
+        }
         CssRuleList rulelist;
         if (!doNotAddRule) {
             CssStyleRule stylerule = new CssStyleRule(indent, selectortext,
@@ -283,6 +367,47 @@ public class StyleSheet {
         }
         selectortext = "";
         doNotAddRule = false;
+    }
+
+    /**
+     * CSS Nesting: closes the at-rule frame on top of the stack into a node
+     * of the enclosing rule.
+     */
+    private void closeAtRuleFrame() {
+        OpenFrame frame = openRuleStack.remove(openRuleStack.size() - 1);
+        if (doNotAddAtRule) {
+            return;
+        }
+        CssStyleRule node = new CssStyleRule(indent, null,
+                (frame.properties != null) ? frame.properties : new ArrayList<CssProperty>(),
+                false);
+        node.setAtRule(frame.atRule.toString(), frame.atRule.isEmpty());
+        for (CssStyleRule child : frame.children) {
+            node.addNestedRule(child);
+        }
+        // an empty block is not shown, a statement such as "@layer a;" is
+        if (frame.atRule.isEmpty() || (frame.properties != null) || !frame.children.isEmpty()) {
+            attach(node);
+        }
+    }
+
+    /**
+     * CSS Nesting: adds a closed rule to the enclosing frame, or to the flat
+     * rule list at the top level.
+     */
+    private void attach(CssStyleRule rule) {
+        if (!openRuleStack.isEmpty()) {
+            openRuleStack.get(openRuleStack.size() - 1).children.add(rule);
+        } else {
+            CssRuleList rulelist;
+            if (!atRuleList.isEmpty()) {
+                rulelist = atRuleList.remove(atRuleList.size() - 1);
+            } else {
+                rulelist = new CssRuleList();
+            }
+            rulelist.addStyleRule(rule);
+            atRuleList.add(rulelist);
+        }
     }
 
     public void removeThisRule() {
@@ -300,6 +425,20 @@ public class StyleSheet {
     String selectortext;
     boolean important;
     ArrayList<CssProperty> properties;
+    // CSS Nesting: the style rules and at-rules open for the output, each
+    // collecting, in order, its declarations and the rules nested in it
+    private static final class OpenFrame {
+        final AtRule atRule; // null for a style rule
+        ArrayList<CssProperty> properties = null;
+        ArrayList<CssProperty> lastRun = null;
+        final ArrayList<CssStyleRule> children = new ArrayList<CssStyleRule>();
+
+        OpenFrame(AtRule atRule) {
+            this.atRule = atRule;
+        }
+    }
+
+    private final ArrayList<OpenFrame> openRuleStack = new ArrayList<OpenFrame>();
     String indent = new String();
     public String charset;
 }
