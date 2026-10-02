@@ -377,16 +377,44 @@ public final class CssSelectors extends SelectorsList
         // the relative selector production adds a leading compound holding only the optional combinator
         ArrayList<Selector> lead = nested.remove(0);
         Selector combinator = lead.isEmpty() ? null : lead.get(0);
+        // relative selectors, and selectors without nesting selector, are prefixed by the parent
+        if ((combinator == null) && !hasNesting) {
+            combinator = new DescendantCombinator();
+        }
+        return resolveNesting(ac, atRule, parents, nested, combinator);
+    }
+
+    /**
+     * Resolves the nesting selector in a pseudo-class argument against the parent rule's selectors
+     *
+     * @param ac       the context
+     * @param atRule   the at-rule the resolved selectors belong to
+     * @param parents  the parent rule's (resolved) selectors
+     * @param selector the argument
+     * @return the resolved selectors, one per parent selector
+     * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nest-selector
+     */
+    public static ArrayList<CssSelectors> resolveNestingInArgument(ApplContext ac, AtRule atRule,
+                                                                   ArrayList<CssSelectors> parents,
+                                                                   CssSelectors selector)
+            throws InvalidParamException {
+        return resolveNesting(ac, atRule, parents, getCompounds(selector), null);
+    }
+
+    // prefixes the compounds with each parent and the combinator, if any, and substitutes the nesting selector
+    private static ArrayList<CssSelectors> resolveNesting(ApplContext ac, AtRule atRule,
+                                                          ArrayList<CssSelectors> parents,
+                                                          ArrayList<ArrayList<Selector>> nested,
+                                                          Selector combinator)
+            throws InvalidParamException {
         ArrayList<CssSelectors> resolved = new ArrayList<>(parents.size());
         for (CssSelectors parent : parents) {
             ArrayList<ArrayList<Selector>> parentCompounds = getCompounds(parent);
             ArrayList<ArrayList<Selector>> compounds = new ArrayList<>();
-            // relative selectors, and selectors without nesting selector, are prefixed by the parent
-            if (combinator != null || !hasNesting) {
+            if (combinator != null) {
                 compounds.addAll(copyCompounds(parentCompounds));
-                compounds.get(compounds.size() - 1).add((combinator != null) ? combinator : new DescendantCombinator());
+                compounds.get(compounds.size() - 1).add(combinator);
             }
-            // FIXME the nesting selector is not resolved in pseudo-class arguments, as these are stored as strings
             for (ArrayList<Selector> compound : nested) {
                 if (containsNesting(compound)) {
                     substituteNesting(compounds, compound, parent, parentCompounds);
@@ -394,9 +422,36 @@ public final class CssSelectors extends SelectorsList
                     compounds.add(new ArrayList<>(compound));
                 }
             }
-            resolved.add(fromCompounds(ac, atRule, compounds));
+            CssSelectors selector = fromCompounds(ac, atRule, compounds);
+            // without a nesting selector to substitute, all parents give the same selector
+            if (!containsString(resolved, selector)) {
+                resolved.add(selector);
+            }
         }
         return resolved;
+    }
+
+    private static boolean containsString(ArrayList<CssSelectors> selectors, CssSelectors selector) {
+        String s = selector.toString();
+        for (CssSelectors other : selectors) {
+            if (other.toString().equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns <code>true</code> if the nesting selector appears in this selector,
+     * not counting pseudo-class arguments
+     */
+    public boolean containsNesting() {
+        for (CssSelectors s = this; s != null; s = s.next) {
+            if (containsNesting(s.getSelectors())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
