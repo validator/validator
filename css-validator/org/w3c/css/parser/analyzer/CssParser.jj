@@ -29,6 +29,7 @@ import org.w3c.css.atrules.css.AtRuleFontFeatureValues;
 import org.w3c.css.atrules.css.AtRuleFontPaletteValues;
 import org.w3c.css.atrules.css.AtRuleKeyframes;
 import org.w3c.css.atrules.css.AtRuleLayer;
+import org.w3c.css.atrules.css.AtRuleScope;
 import org.w3c.css.atrules.css.AtRuleMedia;
 import org.w3c.css.atrules.css.AtRulePage;
 import org.w3c.css.atrules.css.AtRulePhoneticAlphabet;
@@ -164,6 +165,14 @@ public abstract class CssParser {
 
     // true if the nesting selector appeared in the selector being parsed
     private boolean hasNestingSelector = false;
+
+    // true in the body of a @scope rule, where style rules are relative to the
+    // scoping root, unless they contain & or :scope
+    private boolean inScopeBody = false;
+
+    // the scoping root of the enclosing @scope rule, :where(<scope-start>), or
+    // null if there is none (or no scope-start)
+    private org.w3c.css.selectors.Selector scopeRoot = null;
 
     // pseudo-classes as written, whose arguments contain the nesting selector,
     // and their resolved form (the one used for conflicts)
@@ -594,9 +603,15 @@ public abstract class CssParser {
         // as written, for the output of the style sheet
         display_set.add(selector);
         try {
-            context_set.addAll(CssSelectors.resolveNesting(ac, getAtRule(), nestingParents,
-                                                           selector, hasNestingSelector,
-                                                           resolvedArguments));
+            // in @scope, a style rule containing :scope is not relative either
+            boolean anchored = hasNestingSelector || (inScopeBody && selector.containsScope());
+            ArrayList<CssSelectors> resolved = CssSelectors.resolveNesting(ac, getAtRule(),
+                                                                           nestingParents, selector,
+                                                                           anchored, resolvedArguments);
+            if (scopeRoot != null) {
+                resolved = CssSelectors.qualifyScope(ac, resolved, scopeRoot);
+            }
+            context_set.addAll(resolved);
         } catch (InvalidParamException e) {
             addError(e, selector.toString());
         }
@@ -639,6 +654,68 @@ public abstract class CssParser {
             if (!written.toString().equals(substitute.toString())) {
                 resolvedArguments.put(written, substitute);
             }
+        }
+    }
+
+    // pseudo-elements can be neither scoping roots nor scoping limits
+    private void checkScopeBoundaries(ArrayList<CssSelectors> selectors) {
+        if (selectors == null) {
+            return;
+        }
+        for (CssSelectors selector : selectors) {
+            for (CssSelectors s = selector; s != null; s = s.getNext()) {
+                for (org.w3c.css.selectors.Selector sel : s.getSelectors()) {
+                    if ((sel instanceof org.w3c.css.selectors.PseudoElementSelector)
+                            || sel.toString().startsWith("::")) {
+                        ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
+                                getBeginColumn(), getEndLine(), getEndColumn(),
+                                new InvalidParamException("pseudo-element", sel.toString(), "@scope", ac)));
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Enters the body of a @scope rule: the scope-start is resolved in the outer
+     * context (& is the enclosing style rule, :scope the enclosing scoping root),
+     * and the scoping root, written :where(<scope-start>) (or :where(:scope)
+     * without scope-start), becomes the parent of the rules and declarations
+     * of the body; & behaves as :where(:scope)
+     *
+     * @return the scoping root, for the declarations directly in the body
+     * @spec https://www.w3.org/TR/2024/WD-css-cascade-6-20240906/#scoped-rules
+     */
+    private ArrayList<CssSelectors> enterScope(AtRuleScope scoperule, ArrayList<CssSelectors> start) {
+        try {
+            ArrayList<CssSelectors> resolved = start;
+            if ((start != null) && (nestingParents != null)) {
+                resolved = new ArrayList<CssSelectors>(start.size());
+                for (CssSelectors selector : start) {
+                    resolved.addAll(CssSelectors.resolveNestingInArgument(ac, getAtRule(), nestingParents,
+                                                                          selector, resolvedArguments));
+                }
+            }
+            if ((resolved != null) && (scopeRoot != null)) {
+                resolved = CssSelectors.qualifyScope(ac, resolved, scopeRoot);
+            }
+            ArrayList<CssSelectors> argument = resolved;
+            if ((argument == null) || argument.isEmpty()) {
+                CssSelectors scope = new CssSelectors(ac);
+                scope.addPseudoClass(new org.w3c.css.selectors.PseudoClassSelector("scope"));
+                argument = new ArrayList<CssSelectors>(1);
+                argument.add(scope);
+            }
+            CssSelectors root = new CssSelectors(ac);
+            root.addPseudoFunction(org.w3c.css.selectors.PseudoFactory.newPseudoFunction("where", argument, ac));
+            scopeRoot = ((resolved != null) && !resolved.isEmpty()) ? root.getSelector(0) : null;
+            ArrayList<CssSelectors> roots = new ArrayList<CssSelectors>(1);
+            roots.add(root);
+            return CssSelectors.copy(ac, scoperule, roots);
+        } catch (InvalidParamException e) {
+            addError(e, "@scope");
+            return new ArrayList<CssSelectors>();
         }
     }
 
@@ -907,6 +984,7 @@ TOKEN [IGNORE_CASE] :
   | < A_COUNTER               : "@counter" >
   | < COUNTER_STYLE_SYM       : "@counter-style" > 
   | < LAYER_SYM               : "@layer" >
+  | < SCOPE_SYM               : "@scope" >
   | < PHONETIC_ALPHABET_SYM   : "@phonetic-alphabet" >
   | < SUPPORTS_SYM            : "@supports" >
   | < VIEWPORT_SYM            : "@viewport" >
@@ -1102,7 +1180,7 @@ void nested_at_rules() : {
 {
   ( media() | page() | fontFace() | fontPaletteValues() | fontFeatureValues() | keyframes()
     | preference() | viewport() | colorprofile() | counterstyle()
-    | phoneticAlphabet() | supports() | atRuleDeclaration() | layer() )
+    | phoneticAlphabet() | supports() | atRuleDeclaration() | layer() | scope() )
 }
 
 void afterImportDeclaration() :
@@ -1496,7 +1574,7 @@ CssIdent at_keyword():
        t=<FONT_FACE_SYM> | t=<FONT_FEATURE_VALUES_SYM> | t=<FONT_PALETTE_VALUES_SYM> | t=<STYLISTIC_SYM> |
        t=<HISTORICAL_FORMS_SYM> | t=<STYLESET_SYM> | t=<CHARACTER_VARIANT_SYM> | t=<SWASH_SYM> |
        t=<ORNAMENTS_SYM> | t=<ANNOTATION_SYM> | t=<IMPORT_SYM> | t=<NAMESPACE_SYM> | t=<MEDIA_SYM> |
-       t=<KEYFRAMES_SYM> | t=<PREF_SYM> | t=<COLOR_PROFILE> | t=<A_COUNTER> | t=<COUNTER_STYLE_SYM> | t=<LAYER_SYM> |
+       t=<KEYFRAMES_SYM> | t=<PREF_SYM> | t=<COLOR_PROFILE> | t=<A_COUNTER> | t=<COUNTER_STYLE_SYM> | t=<LAYER_SYM> | t=<SCOPE_SYM> |
        t=<PHONETIC_ALPHABET_SYM> | t=<SUPPORTS_SYM> | t=<VIEWPORT_SYM> | t=<ATKEYWORD> ) {
            ident.set(convertIdent(t.image), ac);
            return ident;
@@ -2222,6 +2300,70 @@ void layer() :
   }
 }
 
+/**
+ * @spec https://www.w3.org/TR/2024/WD-css-cascade-6-20240906/#scoped-rules
+ * @exception ParseException exception during the parse
+ */
+void scope() :
+{
+  Token n = null;
+  AtRule old = getAtRule();
+  AtRuleScope scoperule = new AtRuleScope();
+  ArrayList<CssSelectors> start = null;
+  ArrayList<CssSelectors> end = null;
+  ArrayList<CssSelectors> context_set = null;
+  ArrayList<CssProperty> value_set = null;
+  ArrayList<CssSelectors> outerContext = currentContext;
+  org.w3c.css.selectors.Selector outerRoot = scopeRoot;
+  CssVersion version = ac.getCssVersion();
+  boolean opened = false;
+}
+{
+  try {
+    <SCOPE_SYM> {
+      if (version.compareTo(CssVersion.CSS3) < 0) {
+        addError(new InvalidParamException("noatruleyet", "", ac), "@scope");
+        skipStatement();
+        return;
+      }
+    } ( <S> )*
+    ( <LPAREN> ( <S> )* start=selector_list() ( <S> )* <RPAREN> ( <S> )* )?
+    ( n=<IDENT> {
+        if (!"to".equalsIgnoreCase(n.image)) {
+          throw new ParseException(ac.getMsg().getString("generator.unrecognize"));
+        }
+      } ( <S> )* <LPAREN> ( <S> )* end=selector_list() ( <S> )* <RPAREN> ( <S> )* )?
+    <LBRACE> {
+      checkScopeBoundaries(start);
+      checkScopeBoundaries(end);
+      scoperule.setStart(start);
+      scoperule.setEnd(end);
+      context_set = enterScope(scoperule, start);
+      setAtRule(scoperule);
+      newAtRule(scoperule);
+      opened = true;
+      currentContext = context_set;
+    }
+    ( <S> )*
+    value_set=nestedDeclarations(context_set, true)
+    <RBRACE> ( <S> )*
+    {
+      handleStyleRule(context_set, value_set);
+      endOfAtRule();
+      opened = false;
+    }
+  } catch (ParseException e) {
+    if (opened) {
+      endOfAtRule();
+    }
+    addError(e, skipStatement());
+  } finally {
+    scopeRoot = outerRoot;
+    currentContext = outerContext;
+    setAtRule(old);
+  }
+}
+
 void preference() :
 {
     ArrayList<CssProperty> v;
@@ -2556,7 +2698,7 @@ void ruleSet() :
 	}
 	( <S> )*
 	( LOOKAHEAD({ ac.getCssVersion().compareTo(CssVersion.CSS3) < 0 }) value_set=declarations()
-	| value_set=nestedDeclarations(context_set) )
+	| value_set=nestedDeclarations(context_set, false) )
 	    <RBRACE> ( <S> )*
 	    {
 		markRule = true;
@@ -2613,7 +2755,7 @@ void ruleSet() :
  * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nested-style-rule
  * @exception ParseException exception during the parse
  */
-ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set) :
+ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set, boolean scopeBody) :
 {
     if (!validSelector) {
         validSelector = true;
@@ -2622,13 +2764,14 @@ ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set) :
     }
 
     ArrayList<CssSelectors> parents = nestingParents;
+    boolean scoped = inScopeBody;
     CssProperty values;
     ArrayList<CssProperty> value_set = new ArrayList<CssProperty>();
     boolean separated;
 }
 {
     try {
-        { nestingParents = context_set; }
+        { nestingParents = context_set; inScopeBody = scopeBody; }
         ( LOOKAHEAD({ isNestedRuleAhead() }) {
               handleStyleRule(context_set, value_set);
               value_set = new ArrayList<CssProperty>();
@@ -2637,7 +2780,7 @@ ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set) :
               handleStyleRule(context_set, value_set);
               value_set = new ArrayList<CssProperty>();
           } nested_group_rule()
-        // unsupported at-rules with a block, such as @container and @scope
+        // unsupported at-rules with a block, such as @container
         | LOOKAHEAD({ (getToken(1).kind == ATKEYWORD) && isBlockAhead() }) atRuleDeclaration()
         | values=declaration() {
               separated = false;
@@ -2655,6 +2798,7 @@ ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set) :
         )*
     } finally {
         nestingParents = parents;
+        inScopeBody = scoped;
     }
     {
         return value_set;
@@ -2670,7 +2814,7 @@ ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set) :
 void nested_group_rule() :
 {}
 {
-    ( media() | supports() | layer() )
+    ( media() | supports() | layer() | scope() )
 }
 
 /**
@@ -2691,7 +2835,7 @@ void group_rule_body() :
         } catch (InvalidParamException e) {
             throw new ParseException(e.getMessage());
         }
-    } value_set=nestedDeclarations(context_set) {
+    } value_set=nestedDeclarations(context_set, inScopeBody) {
         handleStyleRule(context_set, value_set);
     }
   | ( ruleSet() | nested_at_rules() )*
