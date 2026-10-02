@@ -159,6 +159,12 @@ public abstract class CssParser {
     // to be able to remove a ruleset if the selector is not valid
     protected boolean validSelector = true;
 
+    // the (resolved) selectors of the enclosing style rule, if any
+    protected ArrayList<CssSelectors> nestingParents = null;
+
+    // true if the nesting selector appeared in the selector being parsed
+    private boolean hasNestingSelector = false;
+
     /**
      * The ac for handling errors and warnings.
      * 
@@ -516,6 +522,88 @@ public abstract class CssParser {
           }
           CssErrorToken err = new CssErrorToken(e, skipped);
           ac.getFrame().addError(err);
+    }
+
+    /**
+     * Checks whether a nested style rule follows, not a declaration, i.e., whether
+     * a block starts before the end of the declaration
+     *
+     * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#syntax
+     */
+    private boolean isNestedRuleAhead() {
+        Token t = getToken(1);
+        // custom properties may contain blocks, at-rules are handled separately
+        if ((t.kind == DASHED_IDENT) || ((t.image != null) && t.image.startsWith("@"))) {
+            return false;
+        }
+        int parens = 0;
+        try {
+            for (int i = 1; ; i++) {
+                t = getToken(i);
+                switch (t.kind) {
+                    case EOF:
+                        return false;
+                    case LBRACE:
+                        if (parens == 0) {
+                            return true;
+                        }
+                        break;
+                    case SEMICOLON:
+                    case RBRACE:
+                        if (parens == 0) {
+                            return false;
+                        }
+                        break;
+                    case RPAREN:
+                        parens--;
+                        break;
+                    default:
+                        if ((t.image != null) && t.image.endsWith("(")) {
+                            parens++;
+                        }
+                }
+            }
+        } catch (TokenMgrError err) {
+            return false;
+        }
+    }
+
+    private void addNestedSelector(ArrayList<CssSelectors> context_set, CssSelectors selector) {
+        if (selector == null) {
+            return;
+        }
+        try {
+            context_set.addAll(CssSelectors.resolveNesting(ac, getAtRule(), nestingParents,
+                                                           selector, hasNestingSelector));
+        } catch (InvalidParamException e) {
+            addError(e, selector.toString());
+        }
+    }
+
+    private void handleStyleRule(ArrayList<CssSelectors> context_set, ArrayList<CssProperty> value_set) {
+        if ((value_set == null) || value_set.isEmpty()) {
+            return;
+        }
+        markRule = true;
+        boolean first = true;
+        for (CssSelectors sel : context_set) {
+            if (first) {
+                handleRule(sel, value_set);
+                first = false;
+            } else {
+                // we need to duplicate properties in that case
+                // as property holds reference to the selectors and it interact
+                // badly with conflict detection
+                ArrayList<CssProperty> v = new ArrayList<CssProperty>(value_set.size());
+                for (CssProperty p : value_set) {
+                    v.add(p.duplicate());
+                }
+                handleRule(sel, v);
+            }
+        }
+        addProperty(value_set);
+        setSelectorList(context_set);
+        endOfRule();
     }
 
     private static String addOperator(char operator, String value) {
@@ -1148,7 +1236,7 @@ AtRuleMedia media() :
 		    }
 	    }
 	)?
-	    <LBRACE> { endl = getEndLine() ; endc = getEndColumn() ; } ( <S> )* ( ruleSet()  | nested_at_rules() )* <RBRACE> ( <S> )*
+	    <LBRACE> { endl = getEndLine() ; endc = getEndColumn() ; } ( <S> )* group_rule_body() <RBRACE> ( <S> )*
 	     {
 		     if (!isCss1) {
 		         endOfAtRule();
@@ -1286,7 +1374,7 @@ void supports() :
         // handle supports rules
         //
 	sf=supports_condition(newRule) { newRule.addFeature(sf, ac); newAtRule(getAtRule()); }
-        <LBRACE> ( <S> )* ( ruleSet()  | nested_at_rules() )* <RBRACE> ( <S> )*
+        <LBRACE> ( <S> )* group_rule_body() <RBRACE> ( <S> )*
         {
       	     if (!isCss1) {
        	         endOfAtRule();
@@ -2060,7 +2148,11 @@ void layer() :
     }                                                        )* <SEMICOLON> ) | ( ( layername=layerident() {
       layerrule.setName(layername);
     }                                                                          )?
-    <LBRACE> ( <S> )* ( ruleSet()  | nested_at_rules() )* <RBRACE> ) )
+    <LBRACE> ( <S> )* group_rule_body() <RBRACE> ) ) {
+      if (version.compareTo(CssVersion.CSS3) >= 0) {
+        endOfAtRule();
+      }
+    }
     ( <S> )*
   } catch (ParseException e) {
     addError(e, skipStatement());
@@ -2329,17 +2421,64 @@ ArrayList<CssSelectors> relative_selector_list() :
 }
 
 /**
+ * The selectors of a nested style rule, resolved against the parent rule's selectors
+ *
+ * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#syntax
+ */
+ArrayList<CssSelectors> nested_selector_list() :
+{
+        CssSelectors selector;
+        ArrayList<CssSelectors> context_set = new ArrayList<CssSelectors>();
+}
+{
+        { hasNestingSelector = false; }
+        selector=nested_relative_selector() {
+                addNestedSelector(context_set, selector);
+        }
+        ( <COMMA> ( <S> )* { hasNestingSelector = false; } selector=nested_relative_selector() {
+                addNestedSelector(context_set, selector);
+        } )*
+        {
+                return context_set;
+        }
+}
+
+/**
+ * Like relative_selector, without leading whitespace
+ *
+ * @exception ParseException exception during the parse
+ */
+CssSelectors nested_relative_selector() :
+{
+        CssSelectors current = new CssSelectors(ac);
+}
+{
+        ( ( <PLUS> { current.addNextSiblingCombinator(); }
+          | <GREATER> { current.addChildCombinator(); }
+          | <TILDE> { current.addSubsequentSiblingCombinator(); }
+          | <TWOPIPES> { current.addColumnCombinator(); }
+          ) ( <S> )*
+        )?
+        current=complex_selector(current)
+        {
+                return current;
+        }
+}
+
+/**
  * @exception ParseException exception during the parse
  */
 void ruleSet() :
 { 
     ArrayList<CssSelectors> context_set = null;
     ArrayList<CssProperty> value_set = null;
-    currentContext = context_set;
+    ArrayList<CssSelectors> parents = nestingParents;
+    currentContext = parents;
 }
 {
     try {
-	context_set = selector_list()
+	( LOOKAHEAD({ nestingParents != null }) context_set = nested_selector_list()
+	| context_set = selector_list() )
 
 	<LBRACE> {
 	    validSelector = (context_set.size() > 0);
@@ -2348,36 +2487,13 @@ void ruleSet() :
             }
 	}
 	( <S> )*
-	    value_set=declarations()
+	( LOOKAHEAD({ ac.getCssVersion().compareTo(CssVersion.CSS3) < 0 }) value_set=declarations()
+	| value_set=nestedDeclarations(context_set) )
 	    <RBRACE> ( <S> )*
 	    {
 		markRule = true;
-		
-		/*      if (value_set == null) {
-			ac.getFrame().addWarning("no-declaration");
-			} else {*/
-		if (value_set != null) {
-		    boolean first = true;
-                    for (CssSelectors sel : context_set) {
-			if (first) {
-			    handleRule(sel, value_set);
-			    first = false;
-			} else {
-			    // we need to duplicate properties in that case
-			    // as property holds reference to the selectors and it interact
-			    // badly with conflict detection
-			    int vsize = value_set.size();
-			    ArrayList<CssProperty> v = new ArrayList<CssProperty>(vsize);
-                            for (CssProperty p : value_set) {
-			        v.add(p.duplicate());
-        		    }
-			    handleRule(sel, v);
-			}
-		    }
-		    setSelectorList(context_set);
-		    endOfRule();
-		}
-		currentContext = null;
+		handleStyleRule(context_set, value_set);
+		currentContext = parents;
 	    }
     } catch (ParseException e) {
 	if ((ac.getCssProfile() != CssProfile.MOBILE) && !context_set.isEmpty()) {
@@ -2392,38 +2508,103 @@ void ruleSet() :
 			addError(e, ret);
 		} else {
 			// unterminated comment... let's process
-			if (version.compareTo(CssVersion.CSS3) >= 0) {
-				markRule = true;
-       		         	if (value_set != null) {
-       		             		boolean first = true; 
-       		             		for (CssSelectors sel : context_set) {
-       		                 		if (first) {
-       		                     			handleRule(sel, value_set);
-       		                     			first = false;
-       		                 		} else {
-       		                     			// we need to duplicate properties in that case 
-       		                 			// as property holds reference to the selectors and it interact
-       		                     			// badly with conflict detection
-       		                    			int vsize = value_set.size();
-       		                     			ArrayList<CssProperty> v = new ArrayList<CssProperty>(vsize);
-       		                 			for (CssProperty p : value_set) {
-       		                         			v.add(p.duplicate());
-       		                     			}
-       		                     			handleRule(sel, v);
-       		                 		}
-       		            	 }
-       		             	setSelectorList(context_set);
-       		             	endOfRule();
-			} else {
-				addError(e, ret);
-			}
-                }
-                currentContext = null;
+			markRule = true;
+			handleStyleRule(context_set, value_set);
 		}
+		currentContext = parents;
 	}
     } catch (TokenMgrError e) {
 	addError(new ParseException(e.getMessage()), skipStatement());
     }
+}
+
+/**
+ * The contents of a style rule's block, possibly with nested rules
+ * (declarations are handled as rules of their own when interleaved)
+ *
+ * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nested-style-rule
+ * @exception ParseException exception during the parse
+ */
+ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set) :
+{
+    if (!validSelector) {
+        validSelector = true;
+        skip_to_matching_brace();
+        return null;
+    }
+
+    ArrayList<CssSelectors> parents = nestingParents;
+    CssProperty values;
+    ArrayList<CssProperty> value_set = new ArrayList<CssProperty>();
+    boolean separated;
+}
+{
+    try {
+        { nestingParents = context_set; }
+        ( LOOKAHEAD({ isNestedRuleAhead() }) {
+              handleStyleRule(context_set, value_set);
+              value_set = new ArrayList<CssProperty>();
+          } ruleSet()
+        | {
+              handleStyleRule(context_set, value_set);
+              value_set = new ArrayList<CssProperty>();
+          } nested_group_rule()
+        | values=declaration() {
+              separated = false;
+              if (values != null) {
+                  value_set.add(values);
+              }
+              currentProperty = null;
+          } ( LOOKAHEAD(1) ";" ( <S> )* { separated = true; } )? {
+              // a declaration ends with a semicolon, the block, or the style sheet
+              if (!separated && (getToken(1).kind != RBRACE) && (getToken(1).kind != EOF)) {
+                  throw generateParseException();
+              }
+          }
+        | ";" ( <S> )*
+        )*
+    } finally {
+        nestingParents = parents;
+    }
+    {
+        return value_set;
+    }
+}
+
+/**
+ * The conditional group rules allowed in style rules
+ *
+ * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#conditionals
+ * @exception ParseException exception during the parse
+ */
+void nested_group_rule() :
+{}
+{
+    ( media() | supports() | layer() )
+}
+
+/**
+ * The contents of a conditional group rule's block
+ *
+ * @exception ParseException exception during the parse
+ */
+void group_rule_body() :
+{
+    ArrayList<CssSelectors> context_set = null;
+    ArrayList<CssProperty> value_set;
+}
+{
+    // nested in a style rule, the contents are handled like those of the style rule
+    LOOKAHEAD({ nestingParents != null }) {
+        try {
+            context_set = CssSelectors.copy(ac, getAtRule(), nestingParents);
+        } catch (InvalidParamException e) {
+            throw new ParseException(e.getMessage());
+        }
+    } value_set=nestedDeclarations(context_set) {
+        handleStyleRule(context_set, value_set);
+    }
+  | ( ruleSet() | nested_at_rules() )*
 }
 
 ArrayList<CssProperty> declarations() :
@@ -2565,6 +2746,7 @@ CssSelectors subclass_selector(CssSelectors selector) :
 	| class_selector(selector)
 	| attribute_selector(selector)
 	| pseudo_class_selector(selector)
+	| nesting_selector(selector)
 	)
 	{
 		return selector;
@@ -2579,7 +2761,7 @@ CssSelectors complex_selector(CssSelectors sel) :
 {
 	try {
 		current=compound_selector(sel)
-	        ( LOOKAHEAD(2) ( comb=combinator() {
+	        ( LOOKAHEAD(2) comb=combinator() {
 			if ((ac.getCssProfile() == CssProfile.MOBILE) ||
 				getAtRule().toString().equals("@media atsc-tv") ||
 				(ac.getCssVersion() == CssVersion.CSS1)) {
@@ -2610,12 +2792,10 @@ CssSelectors complex_selector(CssSelectors sel) :
 				case "||":
 					current.addColumnCombinator();
 					break;
-				case "*none*":
-					break;
 				default:
 					current.addDescendantCombinator();
 			}
-		} )?
+		}
 		current=compound_selector(current)
 		)*
 		{
@@ -2670,6 +2850,22 @@ CssSelectors compound_selector(CssSelectors next) :
 	| ( ( LOOKAHEAD(2) pseudo_element_selector(selector) ( LOOKAHEAD(2) pseudo_class_selector(selector) )* )+ ) ) {
 		return selector;
 	}
+}
+
+/**
+ * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nest-selector
+ * @exception ParseException exception during the parse
+ */
+void nesting_selector(CssSelectors s) :
+{}
+{
+    "&" {
+        if (ac.getCssVersion().compareTo(CssVersion.CSS3) < 0) {
+            throw new InvalidParamException("notversion", "&", ac.getCssVersionString(), ac);
+        }
+        s.addNesting();
+        hasNestingSelector = true;
+    }
 }
 
 /**
@@ -3247,7 +3443,7 @@ CssProperty declaration() :
 {
 try {
      string_property=property() <COLON> ( <S> )* 
-      ( values=expr() )? ( important=prio() )?
+      ( LOOKAHEAD(1) values=expr() )? ( important=prio() )?
     {
 	try {
             if (string_property == null) {
