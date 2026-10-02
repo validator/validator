@@ -199,6 +199,10 @@ public class BodyStyleTrackerTest {
         expectProblems("anything goes inside an allowed @scope",
                 sheet("@scope { @scope (.x) to (.y) { p { } }"
                         + " @media print { p { } } }"));
+        expectProblems("a leading @charset, which parsing drops",
+                sheet("@charset \"utf-8\"; @scope { p { } }"));
+        expectProblems("a leading @charset after whitespace and a comment",
+                sheet("\n  /* c */ @CHARSET \"utf-8\"; @scope { }"));
         expectProblems("at-rule names are case-insensitive",
                 sheet("@MEDIA screen { @Scope { p { } } }"));
 
@@ -233,7 +237,13 @@ public class BodyStyleTrackerTest {
                 "AT_RULE: @property", "AT_RULE: @page",
                 "AT_RULE: @counter-style", "AT_RULE: @font-palette-values",
                 "AT_RULE: @font-feature-values");
-        expectProblems("@charset", sheet("@charset \"utf-8\";"),
+        expectProblems("@charset that's not the first rule",
+                sheet("@scope { } @charset \"utf-8\";"), "AT_RULE: @charset");
+        expectProblems("a second @charset",
+                sheet("@charset \"utf-8\"; @charset \"utf-8\";"),
+                "AT_RULE: @charset");
+        expectProblems("@charset in a group rule",
+                sheet("@media print { @charset \"utf-8\"; }"),
                 "AT_RULE: @charset");
         expectProblems("an unknown at-rule",
                 sheet("@frobnicate { } @whatever;"), "AT_RULE: @frobnicate",
