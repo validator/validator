@@ -536,6 +536,12 @@ public abstract class CssParser {
         if ((t.kind == DASHED_IDENT) || ((t.image != null) && t.image.startsWith("@"))) {
             return false;
         }
+        return isBlockAhead();
+    }
+
+    // checks whether a block starts before the end of the current statement
+    private boolean isBlockAhead() {
+        Token t;
         int parens = 0;
         try {
             for (int i = 1; ; i++) {
@@ -578,6 +584,23 @@ public abstract class CssParser {
         } catch (InvalidParamException e) {
             addError(e, selector.toString());
         }
+    }
+
+    // pseudo-class arguments are stored as strings, so the nesting selector is resolved while parsing
+    private ArrayList<CssSelectors> resolveNestingInArguments(ArrayList<CssSelectors> selector_list)
+            throws InvalidParamException {
+        if ((nestingParents == null) || (selector_list == null)) {
+            return selector_list;
+        }
+        ArrayList<CssSelectors> resolved = new ArrayList<CssSelectors>(selector_list.size());
+        for (CssSelectors selector : selector_list) {
+            if (selector.containsNesting()) {
+                resolved.addAll(CssSelectors.resolveNestingInArgument(ac, getAtRule(), nestingParents, selector));
+            } else {
+                resolved.add(selector);
+            }
+        }
+        return resolved;
     }
 
     private void handleStyleRule(ArrayList<CssSelectors> context_set, ArrayList<CssProperty> value_set) {
@@ -2549,6 +2572,8 @@ ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set) :
               handleStyleRule(context_set, value_set);
               value_set = new ArrayList<CssProperty>();
           } nested_group_rule()
+        // unsupported at-rules with a block, such as @container and @scope
+        | LOOKAHEAD({ (getToken(1).kind == ATKEYWORD) && isBlockAhead() }) atRuleDeclaration()
         | values=declaration() {
               separated = false;
               if (values != null) {
@@ -3228,7 +3253,7 @@ CssANPlusB anpb = null;
 	    }
 	    | ( ( n=<FUNCTIONIS> | n=<FUNCTIONNOT> ) ( <S> )* selector_list=selector_list() ( <S> )* ) {
 		try {
-			s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), selector_list);
+			s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), resolveNestingInArguments(selector_list));
 		} catch(InvalidParamException e) {
 			removeThisRule();
 			ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
@@ -3242,7 +3267,7 @@ CssANPlusB anpb = null;
 	      )
 		{
                try {
-                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), selector_list);
+                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), resolveNestingInArguments(selector_list));
                 } catch(InvalidParamException e) {
                         removeThisRule();
                         ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
@@ -3251,7 +3276,7 @@ CssANPlusB anpb = null;
 	    }
 	    | ( n=<FUNCTIONHAS> selector_list=relative_selector_list() ( <S> )* ) {
 		try {
-                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), selector_list);
+                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), resolveNestingInArguments(selector_list));
                 } catch(InvalidParamException e) {
                         removeThisRule();
                         ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
@@ -3276,7 +3301,7 @@ CssANPlusB anpb = null;
 			if (id != null) {
 				setValue(new CssIdent(), exp, ' ', id, IDENT);
 			}
-                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), exp, selector_list);
+                        s.setPseudoFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), exp, resolveNestingInArguments(selector_list));
                 } catch(InvalidParamException e) {
                         removeThisRule();
                         ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
