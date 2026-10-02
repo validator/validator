@@ -837,6 +837,26 @@ public final class CssFouffa extends CssParser {
     }
 
     /**
+     * CSS Nesting Level 1: a style rule body was entered; open an output
+     * frame so rules closing inside it become nested rules of this one.
+     */
+    public void startStyleRule() {
+        for (CssValidatorListener listener : listeners) {
+            listener.startStyleRule();
+        }
+    }
+
+    /**
+     * CSS Nesting Level 1: the style rule opened by the last startStyleRule
+     * failed to parse; discard its pending output frame.
+     */
+    public void abortStyleRule() {
+        for (CssValidatorListener listener : listeners) {
+            listener.abortStyleRule();
+        }
+    }
+
+    /**
      * used for the output of the stylesheet if an error is found this function
      * is used to remove the whole stylerule from the memorystructure so that it
      * won't appear on the screen

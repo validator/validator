@@ -133,6 +133,14 @@ public final class StyleSheetParser
         style.setSelectorList(selectors);
     }
 
+    public void startStyleRule() {
+        style.startStyleRule();
+    }
+
+    public void abortStyleRule() {
+        style.abortStyleRule();
+    }
+
     public void setProperty(ArrayList<CssProperty> properties) {
         style.setProperty(properties);
     }
