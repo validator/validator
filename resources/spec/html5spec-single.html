@@ -13,7 +13,7 @@
   <script crossorigin="" defer="" src="https://resources.whatwg.org/commit-snapshot-shortcut-key.js"></script>
   <header id="head" class="head with-buttons">
    <a href="https://whatwg.org/" class="logo"><img width="100" alt="WHATWG" crossorigin="" class="darkmode-aware" src="https://resources.whatwg.org/logo.svg" height="100"></a>
-   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">29 September 2026</span></p></hgroup>
+   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">1 October 2026</span></p></hgroup>
    
    <nav>
     
@@ -32,7 +32,7 @@
     <div>
      <a href="https://github.com/whatwg/html" class="changes"><span><strong>Contribute on GitHub</strong> <code>whatwg/html repository</code></span></a>
      <a href="https://github.com/whatwg/html/commits" class="changes"><span><strong>Commits</strong> <code>on GitHub</code></span></a>
-     <a id="commit-snapshot-link" href="/commit-snapshots/92f248013013096b5a780afffd8377fb9a6eba87/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
+     <a id="commit-snapshot-link" href="/commit-snapshots/6992cb519a02db34f653ddd54c50fad2565285f5/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
     </div>
     <div>
      <a href="https://github.com/whatwg/html/issues" class="feedback"><span><strong>Open Issues</strong> <code>filed on GitHub</code></span></a>
@@ -20770,11 +20770,11 @@ document<c- p="">.</c->body<c- p="">.</c->appendChild<c- p="">(</c->wbr<c- p="">
 
   <div data-algorithm="">
   <p>The <code id="the-img-element:the-img-element-9"><a href="#the-img-element">img</a></code> <a href="#html-element-removing-steps" id="the-img-element:html-element-removing-steps">HTML element removing steps</a>, given <var>removedNode</var>,
-  <var>oldAncestor</var>, and <var>isSubtreeRoot</var> are:</p>
+  <var>isSubtreeRoot</var>, and <var>oldAncestor</var> are:</p>
 
   <ol><li><p>If <var>isSubtreeRoot</var> is true and <var>oldAncestor</var> is a <code id="the-img-element:the-picture-element-5"><a href="#the-picture-element">picture</a></code>
    element, then count this as a <a href="#relevant-mutations" id="the-img-element:relevant-mutations-3">relevant mutation</a> for
-   <var>removedNode</var>.</p></li></ol>
+   <var>removedNode</var>.</p></li><li><p>Set <var>removedNode</var>'s <a href="#last-auto-sizes-width" id="the-img-element:last-auto-sizes-width">last auto-sizes width</a> to null.</p></li></ol>
   </div>
 
   <hr>
@@ -21860,15 +21860,17 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
   <a href="#update-the-image-data" id="sizes-attributes:update-the-image-data">update the image data</a> or <a href="#img-environment-changes" id="sizes-attributes:img-environment-changes">react to environment
   changes</a> algorithms) <a href="#allows-auto-sizes" id="sizes-attributes:allows-auto-sizes">allows auto-sizes</a> and is <a href="#being-rendered" id="sizes-attributes:being-rendered">being rendered</a>,
   then <code id="sizes-attributes:valdef-sizes-auto-3"><a href="#valdef-sizes-auto">auto</a></code> is the <a id="sizes-attributes:concrete-object-size" href="https://drafts.csswg.org/css-images/#concrete-object-size" data-x-internal="concrete-object-size">concrete object size</a> width.
-  Otherwise, the <code id="sizes-attributes:valdef-sizes-auto-4"><a href="#valdef-sizes-auto">auto</a></code> value is ignored and the next
+  If it <a href="#allows-auto-sizes" id="sizes-attributes:allows-auto-sizes-2">allows auto-sizes</a> and is not <a href="#being-rendered" id="sizes-attributes:being-rendered-2">being rendered</a>, but its <a href="#last-auto-sizes-width" id="sizes-attributes:last-auto-sizes-width">last
+  auto-sizes width</a> is not null, then <code id="sizes-attributes:valdef-sizes-auto-4"><a href="#valdef-sizes-auto">auto</a></code> is that
+  width. Otherwise, the <code id="sizes-attributes:valdef-sizes-auto-5"><a href="#valdef-sizes-auto">auto</a></code> value is ignored and the next
   <a href="#source-size-2" id="sizes-attributes:source-size-2">source size</a> is used instead, if any.</p>
 
-  <p>The <code id="sizes-attributes:valdef-sizes-auto-5"><a href="#valdef-sizes-auto">auto</a></code> keyword may be specified in the <code id="sizes-attributes:attr-source-sizes"><a href="#attr-source-sizes">sizes</a></code> attribute of <code id="sizes-attributes:the-source-element"><a href="#the-source-element">source</a></code> elements and <code id="sizes-attributes:attr-img-sizes"><a href="#attr-img-sizes">sizes</a></code> attribute of <code id="sizes-attributes:the-img-element-2"><a href="#the-img-element">img</a></code> elements, if the following
-  conditions are met. Otherwise, <code id="sizes-attributes:valdef-sizes-auto-6"><a href="#valdef-sizes-auto">auto</a></code> must not be
+  <p>The <code id="sizes-attributes:valdef-sizes-auto-6"><a href="#valdef-sizes-auto">auto</a></code> keyword may be specified in the <code id="sizes-attributes:attr-source-sizes"><a href="#attr-source-sizes">sizes</a></code> attribute of <code id="sizes-attributes:the-source-element"><a href="#the-source-element">source</a></code> elements and <code id="sizes-attributes:attr-img-sizes"><a href="#attr-img-sizes">sizes</a></code> attribute of <code id="sizes-attributes:the-img-element-2"><a href="#the-img-element">img</a></code> elements, if the following
+  conditions are met. Otherwise, <code id="sizes-attributes:valdef-sizes-auto-7"><a href="#valdef-sizes-auto">auto</a></code> must not be
   specified.</p>
 
   <ul><li><p>The element is a <code id="sizes-attributes:the-source-element-2"><a href="#the-source-element">source</a></code> element with a following sibling
-   <code id="sizes-attributes:the-img-element-3"><a href="#the-img-element">img</a></code> element.</p></li><li><p>The element is an <code id="sizes-attributes:the-img-element-4"><a href="#the-img-element">img</a></code> element.</p></li><li><p>The <code id="sizes-attributes:the-img-element-5"><a href="#the-img-element">img</a></code> element referenced in either condition above <a href="#allows-auto-sizes" id="sizes-attributes:allows-auto-sizes-2">allows
+   <code id="sizes-attributes:the-img-element-3"><a href="#the-img-element">img</a></code> element.</p></li><li><p>The element is an <code id="sizes-attributes:the-img-element-4"><a href="#the-img-element">img</a></code> element.</p></li><li><p>The <code id="sizes-attributes:the-img-element-5"><a href="#the-img-element">img</a></code> element referenced in either condition above <a href="#allows-auto-sizes" id="sizes-attributes:allows-auto-sizes-3">allows
    auto-sizes</a>.</p></li></ul>
 
   <p class="note">In addition, it is strongly encouraged to specify dimensions using the <code id="sizes-attributes:attr-dim-width"><a href="#attr-dim-width">width</a></code> and <code id="sizes-attributes:attr-dim-height"><a href="#attr-dim-height">height</a></code> attributes
@@ -21944,6 +21946,9 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
   <p>Each <code id="images-processing-model:the-img-element-7"><a href="#the-img-element">img</a></code> element has a <dfn id="last-selected-source">last selected source</dfn>, which must initially be
   null.</p>
 
+  <p>Each <code id="images-processing-model:the-img-element-8"><a href="#the-img-element">img</a></code> element has a <dfn id="last-auto-sizes-width">last auto-sizes width</dfn>, which is a length in
+  <a href="https://drafts.csswg.org/css-values/#px" id="images-processing-model:'px'" data-x-internal="'px'">CSS pixels</a> or null, initially null.</p>
+
   <p>Each <a href="#image-request" id="images-processing-model:image-request-8">image request</a> has a <dfn id="current-pixel-density">current pixel density</dfn>, which must initially be
   1.</p>
 
@@ -21952,7 +21957,7 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
 
   <div data-algorithm="">
   <p>To determine the <dfn id="density-corrected-intrinsic-width-and-height">density-corrected
-  natural width and height</dfn> of an <code id="images-processing-model:the-img-element-8"><a href="#the-img-element">img</a></code> element <var>img</var>:</p>
+  natural width and height</dfn> of an <code id="images-processing-model:the-img-element-9"><a href="#the-img-element">img</a></code> element <var>img</var>:</p>
 
   <ol><li><p>Let <var>density</var> be <var>img</var>'s <a href="#current-request" id="images-processing-model:current-request-4">current request</a>'s <a href="#current-pixel-density" id="images-processing-model:current-pixel-density">current
    pixel density</a>.</p></li><li>
@@ -21976,9 +21981,9 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
 
   <p class="example">For example, if the <a href="#current-pixel-density" id="images-processing-model:current-pixel-density-2">current pixel density</a> is 3.125, that means
   that there are 300 device pixels per <a href="https://drafts.csswg.org/css-values/#in" id="images-processing-model:'in'" data-x-internal="'in'">CSS inch</a>, and thus if the image
-  data is 300x600, it has <a href="#density-corrected-intrinsic-width-and-height" id="images-processing-model:density-corrected-intrinsic-width-and-height-3">density-corrected natural width and height</a> of 96 <a href="https://drafts.csswg.org/css-values/#px" id="images-processing-model:'px'" data-x-internal="'px'">CSS pixels</a> by 192 <a href="https://drafts.csswg.org/css-values/#px" id="images-processing-model:'px'-2" data-x-internal="'px'">CSS pixels</a>.</p>
+  data is 300x600, it has <a href="#density-corrected-intrinsic-width-and-height" id="images-processing-model:density-corrected-intrinsic-width-and-height-3">density-corrected natural width and height</a> of 96 <a href="https://drafts.csswg.org/css-values/#px" id="images-processing-model:'px'-2" data-x-internal="'px'">CSS pixels</a> by 192 <a href="https://drafts.csswg.org/css-values/#px" id="images-processing-model:'px'-3" data-x-internal="'px'">CSS pixels</a>.</p>
 
-  <p>All <code id="images-processing-model:the-img-element-9"><a href="#the-img-element">img</a></code> and <code id="images-processing-model:the-link-element"><a href="#the-link-element">link</a></code> elements are associated with a <a href="#source-set" id="images-processing-model:source-set">source set</a>.</p>
+  <p>All <code id="images-processing-model:the-img-element-10"><a href="#the-img-element">img</a></code> and <code id="images-processing-model:the-link-element"><a href="#the-link-element">link</a></code> elements are associated with a <a href="#source-set" id="images-processing-model:source-set">source set</a>.</p>
 
   <p>A <dfn id="source-set">source set</dfn> is an ordered set of zero or more <a href="#image-source" id="images-processing-model:image-source">image sources</a>
   and a <a href="#source-size-2" id="images-processing-model:source-size-2">source size</a>.</p>
@@ -21988,7 +21993,7 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
 
   <p>A <dfn id="source-size-2">source size</dfn> is a <a href="#source-size-value" id="images-processing-model:source-size-value">&lt;source-size-value&gt;</a>.
   When a <a href="#source-size-2" id="images-processing-model:source-size-2-2">source size</a> has a unit relative to the <a id="images-processing-model:viewport" href="https://drafts.csswg.org/css2/#viewport" data-x-internal="viewport">viewport</a>,
-  it must be interpreted relative to the <code id="images-processing-model:the-img-element-10"><a href="#the-img-element">img</a></code> element's <a id="images-processing-model:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s
+  it must be interpreted relative to the <code id="images-processing-model:the-img-element-11"><a href="#the-img-element">img</a></code> element's <a id="images-processing-model:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s
   <a id="images-processing-model:viewport-2" href="https://drafts.csswg.org/css2/#viewport" data-x-internal="viewport">viewport</a>. Other units must be interpreted the same as in Media Queries.
   <a href="#refsMQ">[MQ]</a></p>
 
@@ -22011,7 +22016,7 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
   type</var>. If these rules are not applied, then the type of the image must be the type given by
   the image's <a href="#content-type" id="images-processing-model:content-type-2">associated Content-Type headers</a>.</p>
 
-  <p>User agents must not support non-image resources with the <code id="images-processing-model:the-img-element-11"><a href="#the-img-element">img</a></code> element (e.g. XML
+  <p>User agents must not support non-image resources with the <code id="images-processing-model:the-img-element-12"><a href="#the-img-element">img</a></code> element (e.g. XML
   files whose <a id="images-processing-model:document-element" href="https://dom.spec.whatwg.org/#document-element" data-x-internal="document-element">document element</a> is an HTML element). User agents must not run executable
   code (e.g. scripts) embedded in the image resource. User agents must only display the first page
   of a multipage resource (e.g. a PDF file). User agents must not allow the resource to act in an
@@ -22051,7 +22056,7 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
    state is changed.</p></li><li><p>The <code id="reacting-to-dom-mutations:the-img-element-2"><a href="#the-img-element">img</a></code> or <code id="reacting-to-dom-mutations:the-source-element"><a href="#the-source-element">source</a></code> <a href="#html-element-insertion-steps" id="reacting-to-dom-mutations:html-element-insertion-steps">HTML element insertion steps</a>,
    <a href="#html-element-removing-steps" id="reacting-to-dom-mutations:html-element-removing-steps">HTML element removing steps</a>, and <a href="#html-element-moving-steps" id="reacting-to-dom-mutations:html-element-moving-steps">HTML element moving steps</a> count the
    mutation as a <a href="#relevant-mutations" id="reacting-to-dom-mutations:relevant-mutations">relevant mutation</a>.</p></li><li><p>The element's parent is a <code id="reacting-to-dom-mutations:the-picture-element"><a href="#the-picture-element">picture</a></code> element and a <code id="reacting-to-dom-mutations:the-source-element-2"><a href="#the-source-element">source</a></code> element
-   that is a previous sibling has its <code id="reacting-to-dom-mutations:attr-source-srcset"><a href="#attr-source-srcset">srcset</a></code>, <code id="reacting-to-dom-mutations:attr-source-sizes"><a href="#attr-source-sizes">sizes</a></code>, <code id="reacting-to-dom-mutations:attr-source-media"><a href="#attr-source-media">media</a></code>, <code id="reacting-to-dom-mutations:attr-source-type"><a href="#attr-source-type">type</a></code>, <code id="reacting-to-dom-mutations:attr-dim-width-2"><a href="#attr-dim-width">width</a></code> or <code id="reacting-to-dom-mutations:attr-dim-height"><a href="#attr-dim-height">height</a></code> attributes set, changed, or removed.</p></li><li><p>The element's <a href="https://dom.spec.whatwg.org/#concept-node-adopt-ext" id="reacting-to-dom-mutations:concept-node-adopt-ext" data-x-internal="concept-node-adopt-ext">adopting steps</a> are run.</p></li><li><p>If the element <a href="#allows-auto-sizes" id="reacting-to-dom-mutations:allows-auto-sizes">allows auto-sizes</a>: the element starts or stops <a href="#being-rendered" id="reacting-to-dom-mutations:being-rendered">being
+   that is a previous sibling has its <code id="reacting-to-dom-mutations:attr-source-srcset"><a href="#attr-source-srcset">srcset</a></code>, <code id="reacting-to-dom-mutations:attr-source-sizes"><a href="#attr-source-sizes">sizes</a></code>, <code id="reacting-to-dom-mutations:attr-source-media"><a href="#attr-source-media">media</a></code>, <code id="reacting-to-dom-mutations:attr-source-type"><a href="#attr-source-type">type</a></code>, <code id="reacting-to-dom-mutations:attr-dim-width-2"><a href="#attr-dim-width">width</a></code> or <code id="reacting-to-dom-mutations:attr-dim-height"><a href="#attr-dim-height">height</a></code> attributes set, changed, or removed.</p></li><li><p>The element's <a href="https://dom.spec.whatwg.org/#concept-node-adopt-ext" id="reacting-to-dom-mutations:concept-node-adopt-ext" data-x-internal="concept-node-adopt-ext">adopting steps</a> are run.</p></li><li><p>If the element <a href="#allows-auto-sizes" id="reacting-to-dom-mutations:allows-auto-sizes">allows auto-sizes</a>: the element starts <a href="#being-rendered" id="reacting-to-dom-mutations:being-rendered">being
    rendered</a>, or its <a id="reacting-to-dom-mutations:concrete-object-size" href="https://drafts.csswg.org/css-images/#concrete-object-size" data-x-internal="concrete-object-size">concrete object size</a> width changes. This must set the
    <i>maybe omit events</i> flag for the <a href="#update-the-image-data" id="reacting-to-dom-mutations:update-the-image-data-2">update the image data</a> algorithm.</p></li></ul>
   </div>
@@ -22658,10 +22663,14 @@ was an English <c- p="">&lt;</c-><c- f="">a</c-> <c- e="">href</c-><c- o="">=</c
      Any CSS function other than the <a id="parsing-a-sizes-attribute:math-functions" href="https://drafts.csswg.org/css-values/#math-function" data-x-internal="math-functions">math functions</a> is invalid.
      Otherwise, there is a <a href="#concept-microsyntax-parse-error" id="parsing-a-sizes-attribute:concept-microsyntax-parse-error-2">parse error</a>;
      <a id="parsing-a-sizes-attribute:continue-2" href="https://infra.spec.whatwg.org/#iteration-continue" data-x-internal="continue">continue</a>.</p></li><li>
-      <p>If <var>size</var> is <code id="parsing-a-sizes-attribute:valdef-sizes-auto"><a href="#valdef-sizes-auto">auto</a></code>, and <var>img</var>
-      is not null, and <var>img</var> is <a href="#being-rendered" id="parsing-a-sizes-attribute:being-rendered">being rendered</a>, and <var>img</var>
-      <a href="#allows-auto-sizes" id="parsing-a-sizes-attribute:allows-auto-sizes">allows auto-sizes</a>, then set <var>size</var> to the <a id="parsing-a-sizes-attribute:concrete-object-size" href="https://drafts.csswg.org/css-images/#concrete-object-size" data-x-internal="concrete-object-size">concrete object
-      size</a> width of <var>img</var>, in <a href="https://drafts.csswg.org/css-values/#px" id="parsing-a-sizes-attribute:'px'" data-x-internal="'px'">CSS pixels</a>.</p>
+      <p>If <var>size</var> is <code id="parsing-a-sizes-attribute:valdef-sizes-auto"><a href="#valdef-sizes-auto">auto</a></code>, and <var>img</var> is
+      not null, and <var>img</var> <a href="#allows-auto-sizes" id="parsing-a-sizes-attribute:allows-auto-sizes">allows auto-sizes</a>:</p>
+
+      <ol><li><p>If <var>img</var> is <a href="#being-rendered" id="parsing-a-sizes-attribute:being-rendered">being rendered</a>, then set <var>size</var> to the
+       <a id="parsing-a-sizes-attribute:concrete-object-size" href="https://drafts.csswg.org/css-images/#concrete-object-size" data-x-internal="concrete-object-size">concrete object size</a> width of <var>img</var>, in <a href="https://drafts.csswg.org/css-values/#px" id="parsing-a-sizes-attribute:'px'" data-x-internal="'px'">CSS
+       pixels</a>, and set <var>img</var>'s <a href="#last-auto-sizes-width" id="parsing-a-sizes-attribute:last-auto-sizes-width">last auto-sizes width</a> to
+       <var>size</var>.</p></li><li><p>Otherwise, if <var>img</var>'s <a href="#last-auto-sizes-width" id="parsing-a-sizes-attribute:last-auto-sizes-width-2">last auto-sizes width</a> is not null, then
+       set <var>size</var> to <var>img</var>'s <a href="#last-auto-sizes-width" id="parsing-a-sizes-attribute:last-auto-sizes-width-3">last auto-sizes width</a>.</p></li></ol>
 
       <p class="note">If <var>size</var> is still <code id="parsing-a-sizes-attribute:valdef-sizes-auto-2"><a href="#valdef-sizes-auto">auto</a></code>,
       then it will be ignored.</p>
@@ -84901,7 +84910,16 @@ document<c- p="">.</c->body<c- p="">.</c->appendChild<c- p="">(</c->frame<c- p="
   <var>repeat</var>, and optionally (and only if <var>repeat</var> is true) a number
   <var>previousId</var>, perform the following steps. They return a number.</p>
 
-  <ol><li><p>Let <var>thisArg</var> be <var>global</var> if that is a <code id="timers:workerglobalscope"><a href="#workerglobalscope">WorkerGlobalScope</a></code>
+  <ol><li>
+    <p>If <var>handler</var> is not a <code id="timers:idl-function-2"><a data-x-internal="idl-function" href="https://webidl.spec.whatwg.org/#common-Function">Function</a></code> and
+    <var>previousId</var> was not given:</p>
+
+    <ol><li><p>Let <var>globalName</var> be "<code>Window</code>" if <var>global</var> is a
+     <code id="timers:window"><a href="#window">Window</a></code> object; "<code>WorkerGlobalScope</code>" otherwise.</p></li><li><p>Let <var>methodName</var> be "<code>setInterval</code>" if <var>repeat</var>
+     is true; "<code>setTimeout</code>" otherwise.</p></li><li><p>Let <var>sink</var> be a concatenation of <var>globalName</var>, U+0020 SPACE, and
+     <var>methodName</var>.</p></li><li><p>Set <var>handler</var> to the result of invoking the <a href="https://w3c.github.io/trusted-types/dist/spec/#get-trusted-type-compliant-string" id="timers:tt-getcompliantstring" data-x-internal="tt-getcompliantstring">get trusted type compliant string</a> algorithm with <code id="timers:tt-trustedscript-2"><a data-x-internal="tt-trustedscript" href="https://w3c.github.io/trusted-types/dist/spec/#trusted-script">TrustedScript</a></code>, <var>global</var>, <var>handler</var>,
+     <var>sink</var>, and "<code>script</code>".</p></li></ol>
+   </li><li><p>Let <var>thisArg</var> be <var>global</var> if that is a <code id="timers:workerglobalscope"><a href="#workerglobalscope">WorkerGlobalScope</a></code>
    object; otherwise let <var>thisArg</var> be the <code id="timers:windowproxy"><a href="#windowproxy">WindowProxy</a></code> that corresponds to
    <var>global</var>.</p></li><li><p>If <var>previousId</var> was given, let <var>id</var> be <var>previousId</var>;
    otherwise, let <var>id</var> be an <a id="timers:implementation-defined" href="https://infra.spec.whatwg.org/#implementation-defined" data-x-internal="implementation-defined">implementation-defined</a> integer that is greater
@@ -84934,21 +84952,11 @@ document<c- p="">.</c->body<c- p="">.</c->appendChild<c- p="">(</c->frame<c- p="
      </li><li><p>Let <var>settings object</var> be <var>global</var>'s <a href="#relevant-settings-object" id="timers:relevant-settings-object">relevant settings
      object</a>.</p></li><li><p>If <a href="#concept-environment-noscript" id="timers:concept-environment-noscript">scripting is disabled</a> for
      <var>settings object</var>, then abort these steps.</p></li><li><p><a id="timers:record-timing-info-for-timer-handler" href="https://w3c.github.io/long-animation-frames/#record-timing-info-for-timer-handler" data-x-internal="record-timing-info-for-timer-handler">Record timing info for timer handler</a> given <var>handler</var>,
-     <var>settings object</var>, and <var>repeat</var>.</p></li><li><p>If <var>handler</var> is a <code id="timers:idl-function-2"><a data-x-internal="idl-function" href="https://webidl.spec.whatwg.org/#common-Function">Function</a></code>, then <a href="https://webidl.spec.whatwg.org/#invoke-a-callback-function" id="timers:es-invoking-callback-functions" data-x-internal="es-invoking-callback-functions">invoke</a> <var>handler</var> given
+     <var>settings object</var>, and <var>repeat</var>.</p></li><li><p>If <var>handler</var> is a <code id="timers:idl-function-3"><a data-x-internal="idl-function" href="https://webidl.spec.whatwg.org/#common-Function">Function</a></code>, then <a href="https://webidl.spec.whatwg.org/#invoke-a-callback-function" id="timers:es-invoking-callback-functions" data-x-internal="es-invoking-callback-functions">invoke</a> <var>handler</var> given
      <var>arguments</var> and "<code>report</code>", and with <i id="timers:dfn-callback-this-value"><a data-x-internal="dfn-callback-this-value" href="https://webidl.spec.whatwg.org/#dfn-callback-this-value">callback this value</a></i> set to <var>thisArg</var>.</p></li><li>
       <p>Otherwise:</p>
 
-      <ol><li>
-        <p>If <var>previousId</var> was not given:</p>
-
-        <ol><li><p>Let <var>globalName</var> be "<code>Window</code>" if <var>global</var> is
-         a <code id="timers:window"><a href="#window">Window</a></code> object; "<code>WorkerGlobalScope</code>"
-         otherwise.</p></li><li><p>Let <var>methodName</var> be "<code>setInterval</code>" if
-         <var>repeat</var> is true; "<code>setTimeout</code>" otherwise.</p></li><li><p>Let <var>sink</var> be a concatenation of <var>globalName</var>, U+0020 SPACE, and
-         <var>methodName</var>.</p></li><li><p>Set <var>handler</var> to the result of invoking the <a href="https://w3c.github.io/trusted-types/dist/spec/#get-trusted-type-compliant-string" id="timers:tt-getcompliantstring" data-x-internal="tt-getcompliantstring">get trusted type compliant string</a> algorithm with
-         <code id="timers:tt-trustedscript-2"><a data-x-internal="tt-trustedscript" href="https://w3c.github.io/trusted-types/dist/spec/#trusted-script">TrustedScript</a></code>, <var>global</var>,
-         <var>handler</var>, <var>sink</var>, and "<code>script</code>".</p></li></ol>
-       </li><li><p><a id="timers:assert-2" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>handler</var> is a string.</p></li><li><p>Perform <a href="https://w3c.github.io/webappsec-csp/#can-compile-strings" id="timers:csp-ensurecspdoesnotblockstringcompilation" data-x-internal="csp-ensurecspdoesnotblockstringcompilation">EnsureCSPDoesNotBlockStringCompilation</a>(<var>realm</var>,
+      <ol><li><p><a id="timers:assert-2" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>handler</var> is a string.</p></li><li><p>Perform <a href="https://w3c.github.io/webappsec-csp/#can-compile-strings" id="timers:csp-ensurecspdoesnotblockstringcompilation" data-x-internal="csp-ensurecspdoesnotblockstringcompilation">EnsureCSPDoesNotBlockStringCompilation</a>(<var>realm</var>,
        « », <var>handler</var>, <var>handler</var>, timer, « », <var>handler</var>). If this throws
        an exception, catch it, <a href="#report-an-exception" id="timers:report-an-exception">report</a> it for
        <var>global</var>, and abort these steps.</p></li><li><p>Let <var>fetch options</var> be the <a href="#default-script-fetch-options" id="timers:default-script-fetch-options">default script fetch
