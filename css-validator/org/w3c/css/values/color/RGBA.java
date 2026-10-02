@@ -358,6 +358,10 @@ public class RGBA extends RGB {
             exp.starts();
             throw new InvalidParamException("invalid-color", ac);
         }
+        if (val == null) {
+            rgba.setRepresentationString(funcname + exp.toStringFromStart() + ')');
+            return rgba;
+        }
         switch (val.getType()) {
             case CssTypes.CSS_VARIABLE:
                 exp.markCssVariable();
@@ -423,6 +427,16 @@ public class RGBA extends RGB {
             val = exp.getValue();
             op = exp.getOperator();
 
+            if (val == null) {
+                // nothing left after the separator: that is invalid, unless an
+                // unresolved var() stands in for it, in which case bail out.
+                if (!exp.hasCssVariable()) {
+                    exp.starts();
+                    throw new InvalidParamException("invalid-color", ac);
+                }
+                rgba.setRepresentationString(funcname + exp.toStringFromStart() + ')');
+                return rgba;
+            }
             switch (val.getType()) {
                 case CssTypes.CSS_VARIABLE:
                     exp.markCssVariable();

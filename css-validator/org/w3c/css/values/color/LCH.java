@@ -199,6 +199,12 @@ public class LCH {
         if ((val == null) && !exp.hasCssVariable()) {
             throw new InvalidParamException("colorfunc", exp.toStringFromStart(), "LCH", ac);
         }
+        if (val == null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("lch(").append(exp.toStringFromStart()).append(')');
+            lch.output = sb.toString();
+            return lch;
+        }
 
         switch (val.getType()) {
             case CssTypes.CSS_VARIABLE:

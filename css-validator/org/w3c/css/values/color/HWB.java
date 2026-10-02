@@ -208,6 +208,12 @@ public class HWB {
                 throw new InvalidParamException("invalid-color", ac);
             }
         }
+        if (val == null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("hwb(").append(exp.toStringFromStart()).append(')');
+            hwb.output = sb.toString();
+            return hwb;
+        }
         switch (val.getType()) {
             case CssTypes.CSS_VARIABLE:
                 exp.markCssVariable();
@@ -267,6 +273,12 @@ public class HWB {
             val = exp.getValue();
             if (val == null && !exp.hasCssVariable()) {
                 throw new InvalidParamException("invalid-color", exp.toStringFromStart(), ac);
+            }
+            if (val == null) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("hwb(").append(exp.toStringFromStart()).append(')');
+                hwb.output = sb.toString();
+                return hwb;
             }
             switch (val.getType()) {
                 case CssTypes.CSS_NUMBER:

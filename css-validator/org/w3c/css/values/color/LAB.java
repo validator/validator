@@ -233,6 +233,10 @@ public class LAB {
                 exp.starts();
                 throw new InvalidParamException("colorfunc", exp, "Lab", ac);
             }
+            StringBuilder sb = new StringBuilder();
+            sb.append("lab(").append(exp.toStringFromStart()).append(')');
+            lab.output = sb.toString();
+            return lab;
         }
         switch (val.getType()) {
             case CssTypes.CSS_VARIABLE:
@@ -289,6 +293,12 @@ public class LAB {
             val = exp.getValue();
             if ((val == null) && !exp.hasCssVariable()) {
                 throw new InvalidParamException("colorfunc", exp.toStringFromStart(), "Lab", ac);
+            }
+            if (val == null) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("lab(").append(exp.toStringFromStart()).append(')');
+                lab.output = sb.toString();
+                return lab;
             }
             switch (val.getType()) {
                 case CssTypes.CSS_NUMBER:

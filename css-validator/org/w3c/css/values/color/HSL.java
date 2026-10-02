@@ -306,6 +306,12 @@ public class HSL {
                     throw new InvalidParamException("colorfunc", exp.getValue(), "HSL", ac);
                 }
                 val = exp.getValue();
+                if (val == null) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("hsl(").append(exp.toStringFromStart()).append(')');
+                    hsl.output = sb.toString();
+                    return hsl;
+                }
                 switch (val.getType()) {
                     case CssTypes.CSS_NUMBER:
                     case CssTypes.CSS_PERCENTAGE:
