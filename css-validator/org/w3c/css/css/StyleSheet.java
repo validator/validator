@@ -7,7 +7,10 @@
 
 package org.w3c.css.css;
 
+import org.w3c.css.atrules.css.AtRuleLayer;
+import org.w3c.css.atrules.css.AtRuleMedia;
 import org.w3c.css.atrules.css.AtRuleScope;
+import org.w3c.css.atrules.css.AtRuleSupports;
 import org.w3c.css.parser.AtRule;
 import org.w3c.css.parser.CssSelectors;
 import org.w3c.css.parser.CssStyle;
@@ -288,7 +291,7 @@ public class StyleSheet {
                 return;
             }
             frame.lastRun = properties;
-            CssStyleRule last = frame.children.isEmpty() ? null
+            CssStyleRule last = (frame.ownBody || frame.children.isEmpty()) ? null
                     : frame.children.get(frame.children.size() - 1);
             if (last == null) {
                 if (frame.properties == null) {
@@ -330,6 +333,21 @@ public class StyleSheet {
     }
 
     public void endOfRule() {
+        if (!openRuleStack.isEmpty()
+                && openRuleStack.get(openRuleStack.size() - 1).ownBody) {
+            // the end of a block of an at-rule such as @keyframes, or of the body
+            // of an at-rule such as @font-face, nested in a @scope rule
+            OpenFrame frame = openRuleStack.get(openRuleStack.size() - 1);
+            if (!doNotAddRule && (selectortext != null) && !selectortext.isEmpty()) {
+                frame.children.add(new CssStyleRule(indent, selectortext,
+                        (frame.properties != null) ? frame.properties
+                                : new ArrayList<CssProperty>(), important));
+                frame.properties = null;
+            }
+            selectortext = "";
+            doNotAddRule = false;
+            return;
+        }
         if (!openRuleStack.isEmpty()) {
             // at-rules left open inside the rule (after an error) are closed first
             while ((openRuleStack.size() > 1)
@@ -431,12 +449,18 @@ public class StyleSheet {
     // collecting, in order, its declarations and the rules nested in it
     private static final class OpenFrame {
         final AtRule atRule; // null for a style rule
+        // true for an at-rule whose body is not rules and declarations, such
+        // as @font-face (descriptors) or @keyframes (keyframe blocks)
+        final boolean ownBody;
         ArrayList<CssProperty> properties = null;
         ArrayList<CssProperty> lastRun = null;
         final ArrayList<CssStyleRule> children = new ArrayList<CssStyleRule>();
 
         OpenFrame(AtRule atRule) {
             this.atRule = atRule;
+            ownBody = (atRule != null) && !((atRule instanceof AtRuleMedia)
+                    || (atRule instanceof AtRuleSupports) || (atRule instanceof AtRuleLayer)
+                    || (atRule instanceof AtRuleScope));
         }
     }
 

@@ -1861,6 +1861,7 @@ void keyframes() :
   CssSelectors s;
   ArrayList<CssSelectors> sl;
   CssVersion version = ac.getCssVersion();
+  boolean opened = false;
 }
 {
   try {
@@ -1871,6 +1872,7 @@ void keyframes() :
                              getAtRule().toString());
       } else {
         newAtRule(getAtRule());
+        opened = true;
       }
     }  ( <S> )+ ( n=ident() | n=<STRING> ) {
       try {
@@ -1919,9 +1921,21 @@ void keyframes() :
     }
     )* <RBRACE> ( <S> )*  {
         endOfAtRule();
+        opened = false;
     }
   } catch (ParseException e) {
+    // in @scope, the rule is closed for the output
+    if (opened && inScopeBody) {
+        endOfAtRule();
+    }
     addError(e, skipStatement());
+  } catch (TokenMgrError e) {
+    // in @scope, the rule is closed for the output, and the error handled here
+    if (!(opened && inScopeBody)) {
+        throw e;
+    }
+    endOfAtRule();
+    addError(new ParseException(e.getMessage()), skipStatement());
   } finally {
     setAtRule(old);
   }
@@ -1935,6 +1949,7 @@ void fontFace() :
     CssSelectors s = new CssSelectors(ac);
     s.setAtRule(getAtRule());
     boolean isCss1 = (ac.getCssVersion() == CssVersion.CSS1);
+    boolean opened = false;
 }
 {
     try {
@@ -1946,6 +1961,7 @@ void fontFace() :
 			     getAtRule().toString());
 		} else {
 		    newAtRule(getAtRule());
+		    opened = true;
 		}
 
 	    }
@@ -1955,6 +1971,7 @@ void fontFace() :
 		     addProperty(v);
 		     endOfRule();
 		     endOfAtRule();
+		     opened = false;
 		 }
 		 if (v == null) {
 		     ac.getFrame().addWarning("no-declaration");
@@ -1964,8 +1981,19 @@ void fontFace() :
 	     }
     } catch (ParseException e) {
 	if (!isCss1) {
+	    // in @scope, the rule is closed for the output
+	    if (opened && inScopeBody) {
+		endOfAtRule();
+	    }
 	    addError(e, skipStatement()); 
         }
+    } catch (TokenMgrError e) {
+	// in @scope, the rule is closed for the output, and the error handled here
+	if (!(opened && inScopeBody)) {
+	    throw e;
+	}
+	endOfAtRule();
+	addError(new ParseException(e.getMessage()), skipStatement());
     } finally {
 	setAtRule(old);
     }
@@ -2357,6 +2385,11 @@ void scope() :
       endOfAtRule();
     }
     addError(e, skipStatement());
+  } catch (TokenMgrError e) {
+    if (opened) {
+      endOfAtRule();
+    }
+    addError(new ParseException(e.getMessage()), skipStatement());
   } finally {
     scopeRoot = outerRoot;
     currentContext = outerContext;
@@ -2765,6 +2798,7 @@ ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set, b
 
     ArrayList<CssSelectors> parents = nestingParents;
     boolean scoped = inScopeBody;
+    ArrayList<CssSelectors> blockContext = null;
     CssProperty values;
     ArrayList<CssProperty> value_set = new ArrayList<CssProperty>();
     boolean separated;
@@ -2780,6 +2814,15 @@ ArrayList<CssProperty> nestedDeclarations(ArrayList<CssSelectors> context_set, b
               handleStyleRule(context_set, value_set);
               value_set = new ArrayList<CssProperty>();
           } nested_group_rule()
+        // in @scope, name-defining at-rules are valid, and not scoped
+        | LOOKAHEAD({ inScopeBody && ((getToken(1).kind == KEYFRAMES_SYM)
+                                      || (getToken(1).kind == FONT_FACE_SYM)) }) {
+              handleStyleRule(context_set, value_set);
+              value_set = new ArrayList<CssProperty>();
+              // as at the top level, outside the context of the scoping root
+              blockContext = currentContext;
+              currentContext = null;
+          } ( keyframes() | fontFace() ) { currentContext = blockContext; }
         // unsupported at-rules with a block, such as @container
         | LOOKAHEAD({ (getToken(1).kind == ATKEYWORD) && isBlockAhead() }) atRuleDeclaration()
         | values=declaration() {
