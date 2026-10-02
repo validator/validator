@@ -262,8 +262,38 @@ public final class BodyStyleTracker {
         styleText = null;
         List<Token> tokens = CssTokenizer.tokenize(css);
         List<Problem> problems = new ArrayList<>();
-        checkBlock(css, tokens, 0, tokens.size(), problems);
+        checkBlock(css, tokens, afterLeadingCharset(tokens),
+                tokens.size(), problems);
         return problems;
+    }
+
+    /**
+     * Returns the index just past a "@charset" rule that's the first rule in
+     * the style sheet, or 0 if there's none. Parsing a style sheet drops such
+     * a rule, so it's never at the top level of the style sheet; Blink
+     * (CSSParserImpl::ParseStyleSheet), Gecko (rust-cssparser), and WebKit
+     * (CSSParser::parseStyleSheet) all drop it too. Any other "@charset" is
+     * invalid, and is checked like any other at-rule.
+     *
+     * https://drafts.csswg.org/css-syntax/#parse-stylesheet
+     */
+    private static int afterLeadingCharset(List<Token> tokens) {
+        int i = 0;
+        while (i < tokens.size() && (tokens.get(i).type == WHITESPACE
+                || tokens.get(i).type == CssTokenizer.CDO
+                || tokens.get(i).type == CssTokenizer.CDC)) {
+            i++;
+        }
+        if (i >= tokens.size() || tokens.get(i).type != AT_KEYWORD
+                || !"charset".equals(
+                        tokens.get(i).value.toLowerCase(Locale.ROOT))) {
+            return 0;
+        }
+        int stop = scan(tokens, i + 1, tokens.size());
+        if (stop < tokens.size() && tokens.get(stop).type != SEMICOLON) {
+            return 0;
+        }
+        return stop + 1;
     }
 
     /**

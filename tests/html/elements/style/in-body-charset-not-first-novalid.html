@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@charset that is not the first rule in a style element in body</title>
+<body>
+<div>
+<style>@scope { p { color: red } } @charset "utf-8";</style>
+<p>Text</p>
+</div>

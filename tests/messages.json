@@ -3168,6 +3168,7 @@
     "html/elements/style/css-property-error-novalid.html": "CSS: \u201ccolr\u201d: Property \u201ccolr\u201d doesn't exist.",
     "html/elements/style/font-face-nested-media-novalid.html": "CSS: Parse Error.",
     "html/elements/style/font-face-nested-rule-novalid.html": "CSS: \u201cp\u201d: Parse Error.",
+    "html/elements/style/in-body-charset-not-first-novalid.html": "Rule \u201c@charset\u201d not allowed outside an \u201c@scope\u201d rule in a \u201cstyle\u201d element in \u201cbody\u201d.",
     "html/elements/style/in-body-font-face-novalid.html": "Rule \u201c@font-face\u201d not allowed outside an \u201c@scope\u201d rule in a \u201cstyle\u201d element in \u201cbody\u201d.",
     "html/elements/style/in-body-group-style-rule-novalid.html": "Style rule \u201c.later\u201d not allowed outside an \u201c@scope\u201d rule in a \u201cstyle\u201d element in \u201cbody\u201d.",
     "html/elements/style/in-body-import-novalid.html": "Rule \u201c@import\u201d not allowed outside an \u201c@scope\u201d rule in a \u201cstyle\u201d element in \u201cbody\u201d.",
