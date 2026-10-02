@@ -7,6 +7,7 @@
 
 package org.w3c.css.css;
 
+import org.w3c.css.atrules.css.AtRuleScope;
 import org.w3c.css.parser.AtRule;
 import org.w3c.css.parser.CssSelectors;
 import org.w3c.css.parser.CssStyle;
@@ -228,8 +229,9 @@ public class StyleSheet {
     }
 
     public void newAtRule(AtRule atRule) {
-        if (!openRuleStack.isEmpty()) {
-            // CSS Nesting: an at-rule nested in a style rule
+        if (!openRuleStack.isEmpty() || (atRule instanceof AtRuleScope)) {
+            // CSS Nesting: an at-rule nested in a style rule, or a @scope rule,
+            // whose body can hold declarations
             openRuleStack.add(new OpenFrame(atRule));
             return;
         }

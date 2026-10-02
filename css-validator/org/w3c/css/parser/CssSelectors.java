@@ -513,6 +513,55 @@ public final class CssSelectors extends SelectorsList
     }
 
     /**
+     * Returns <code>true</code> if :scope appears in this selector, not counting
+     * pseudo-class arguments
+     */
+    public boolean containsScope() {
+        for (CssSelectors s = this; s != null; s = s.next) {
+            for (Selector sel : s.getSelectors()) {
+                if ((sel instanceof PseudoClassSelector) && "scope".equals(sel.getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * In @scope, writes the scoping root before :scope, so that the rules of
+     * different @scope rules don't share selectors for conflict detection;
+     * :scope keeps its specificity, the scoping root :where(<scope-start>) has none
+     *
+     * @param ac        the context
+     * @param selectors the selectors
+     * @param root      the scoping root
+     * @return the selectors, with the scoping root before :scope
+     * @spec https://www.w3.org/TR/2024/WD-css-cascade-6-20240906/#scoped-rules
+     */
+    public static ArrayList<CssSelectors> qualifyScope(ApplContext ac, ArrayList<CssSelectors> selectors,
+                                                       Selector root)
+            throws InvalidParamException {
+        ArrayList<CssSelectors> qualified = new ArrayList<>(selectors.size());
+        String rootString = root.toString();
+        for (CssSelectors selector : selectors) {
+            ArrayList<ArrayList<Selector>> compounds = getCompounds(selector);
+            boolean changed = false;
+            for (ArrayList<Selector> compound : compounds) {
+                for (int i = 0; i < compound.size(); i++) {
+                    Selector s = compound.get(i);
+                    if ((s instanceof PseudoClassSelector) && "scope".equals(s.getName())
+                            && ((i == 0) || !compound.get(i - 1).toString().equals(rootString))) {
+                        compound.add(i++, root);
+                        changed = true;
+                    }
+                }
+            }
+            qualified.add(changed ? fromCompounds(ac, selector.getAtRule(), compounds) : selector);
+        }
+        return qualified;
+    }
+
+    /**
      * Copies selectors, assigning them to a new at-rule
      *
      * @param ac        the context

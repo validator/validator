@@ -241,93 +241,95 @@ public interface CssParserConstants {
   /** RegularExpression Id. */
   int LAYER_SYM = 115;
   /** RegularExpression Id. */
-  int PHONETIC_ALPHABET_SYM = 116;
+  int SCOPE_SYM = 116;
   /** RegularExpression Id. */
-  int SUPPORTS_SYM = 117;
+  int PHONETIC_ALPHABET_SYM = 117;
   /** RegularExpression Id. */
-  int VIEWPORT_SYM = 118;
+  int SUPPORTS_SYM = 118;
   /** RegularExpression Id. */
-  int ATKEYWORD = 119;
+  int VIEWPORT_SYM = 119;
   /** RegularExpression Id. */
-  int RANGE0 = 120;
+  int ATKEYWORD = 120;
   /** RegularExpression Id. */
-  int RANGE1 = 121;
+  int RANGE0 = 121;
   /** RegularExpression Id. */
-  int RANGE2 = 122;
+  int RANGE1 = 122;
   /** RegularExpression Id. */
-  int RANGE3 = 123;
+  int RANGE2 = 123;
   /** RegularExpression Id. */
-  int RANGE4 = 124;
+  int RANGE3 = 124;
   /** RegularExpression Id. */
-  int RANGE5 = 125;
+  int RANGE4 = 125;
   /** RegularExpression Id. */
-  int RANGE6 = 126;
+  int RANGE5 = 126;
   /** RegularExpression Id. */
-  int RANGE = 127;
+  int RANGE6 = 127;
   /** RegularExpression Id. */
-  int UNI = 128;
+  int RANGE = 128;
   /** RegularExpression Id. */
-  int UNICODERANGE = 129;
+  int UNI = 129;
   /** RegularExpression Id. */
-  int FUNCTIONLANG = 130;
+  int UNICODERANGE = 130;
   /** RegularExpression Id. */
-  int FUNCTIONDIR = 131;
+  int FUNCTIONLANG = 131;
   /** RegularExpression Id. */
-  int FUNCTIONIS = 132;
+  int FUNCTIONDIR = 132;
   /** RegularExpression Id. */
-  int FUNCTIONWHERE = 133;
+  int FUNCTIONIS = 133;
   /** RegularExpression Id. */
-  int FUNCTIONHAS = 134;
+  int FUNCTIONWHERE = 134;
   /** RegularExpression Id. */
-  int FUNCTIONSLOTTED = 135;
+  int FUNCTIONHAS = 135;
   /** RegularExpression Id. */
-  int FUNCTIONHOST = 136;
+  int FUNCTIONSLOTTED = 136;
   /** RegularExpression Id. */
-  int FUNCTIONHOSTCONTEXT = 137;
+  int FUNCTIONHOST = 137;
   /** RegularExpression Id. */
-  int FUNCTIONNTHCHILD = 138;
+  int FUNCTIONHOSTCONTEXT = 138;
   /** RegularExpression Id. */
-  int FUNCTIONNTHLASTCHILD = 139;
+  int FUNCTIONNTHCHILD = 139;
   /** RegularExpression Id. */
-  int FUNCTIONNTHCOL = 140;
+  int FUNCTIONNTHLASTCHILD = 140;
   /** RegularExpression Id. */
-  int FUNCTIONNTHLASTCOL = 141;
+  int FUNCTIONNTHCOL = 141;
   /** RegularExpression Id. */
-  int FUNCTIONNTHOFTYPE = 142;
+  int FUNCTIONNTHLASTCOL = 142;
   /** RegularExpression Id. */
-  int FUNCTIONNTHLASTOFTYPE = 143;
+  int FUNCTIONNTHOFTYPE = 143;
   /** RegularExpression Id. */
-  int FUNCTIONNOT = 144;
+  int FUNCTIONNTHLASTOFTYPE = 144;
   /** RegularExpression Id. */
-  int FUNCTIONCALC = 145;
+  int FUNCTIONNOT = 145;
   /** RegularExpression Id. */
-  int FUNCTIONMATHN = 146;
+  int FUNCTIONCALC = 146;
   /** RegularExpression Id. */
-  int FUNCTIONMATH1 = 147;
+  int FUNCTIONMATHN = 147;
   /** RegularExpression Id. */
-  int FUNCTIONMATH2 = 148;
+  int FUNCTIONMATH1 = 148;
   /** RegularExpression Id. */
-  int FUNCTIONROUND = 149;
+  int FUNCTIONMATH2 = 149;
   /** RegularExpression Id. */
-  int FUNCTIONCLAMP = 150;
+  int FUNCTIONROUND = 150;
   /** RegularExpression Id. */
-  int FUNCTIONATTR = 151;
+  int FUNCTIONCLAMP = 151;
   /** RegularExpression Id. */
-  int FUNCTIONVAR = 152;
+  int FUNCTIONATTR = 152;
   /** RegularExpression Id. */
-  int FUNCTIONENV = 153;
+  int FUNCTIONVAR = 153;
   /** RegularExpression Id. */
-  int FUNCTIONLAYER = 154;
+  int FUNCTIONENV = 154;
   /** RegularExpression Id. */
-  int FUNCTIONSELECTOR = 155;
+  int FUNCTIONLAYER = 155;
   /** RegularExpression Id. */
-  int FUNCTIONATRULE = 156;
+  int FUNCTIONSELECTOR = 156;
   /** RegularExpression Id. */
-  int FUNCTION = 157;
+  int FUNCTIONATRULE = 157;
   /** RegularExpression Id. */
-  int HTMLSTARTTAG = 158;
+  int FUNCTION = 158;
   /** RegularExpression Id. */
-  int HTMLENDTAG = 159;
+  int HTMLSTARTTAG = 159;
+  /** RegularExpression Id. */
+  int HTMLENDTAG = 160;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -450,6 +452,7 @@ public interface CssParserConstants {
     "\"@counter\"",
     "\"@counter-style\"",
     "\"@layer\"",
+    "\"@scope\"",
     "\"@phonetic-alphabet\"",
     "\"@supports\"",
     "\"@viewport\"",
