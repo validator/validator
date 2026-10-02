@@ -18,8 +18,9 @@ public class AtRuleLayer extends AtRule {
         return "layer";
     }
 
+    // statements (with layer names only) have no block
     public boolean isEmpty() {
-        return false;
+        return (layernames != null);
     }
 
     /**
@@ -68,6 +69,7 @@ public class AtRuleLayer extends AtRule {
                 }
                 ret.append(layer_name);
             }
+            ret.append(';');
         }
         return ret.toString();
     }

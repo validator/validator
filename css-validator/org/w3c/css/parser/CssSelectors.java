@@ -11,13 +11,21 @@ import org.w3c.css.atrules.css.AtRuleFontFace;
 import org.w3c.css.atrules.css.AtRulePage;
 import org.w3c.css.properties.css.CssProperty;
 import org.w3c.css.selectors.AttributeSelector;
+import org.w3c.css.selectors.NestingSelector;
 import org.w3c.css.selectors.PseudoClassSelector;
 import org.w3c.css.selectors.PseudoElementSelector;
 import org.w3c.css.selectors.PseudoFactory;
 import org.w3c.css.selectors.Selector;
 import org.w3c.css.selectors.SelectorsList;
 import org.w3c.css.selectors.TypeSelector;
+import org.w3c.css.selectors.UniversalSelector;
 import org.w3c.css.selectors.attributes.AttributeExact;
+import org.w3c.css.selectors.combinators.ChildCombinator;
+import org.w3c.css.selectors.combinators.ColumnCombinator;
+import org.w3c.css.selectors.combinators.DescendantCombinator;
+import org.w3c.css.selectors.combinators.NextSiblingCombinator;
+import org.w3c.css.selectors.combinators.SubsequentSiblingCombinator;
+import org.w3c.css.selectors.pseudofunctions.PseudoFunctionIs;
 import org.w3c.css.util.ApplContext;
 import org.w3c.css.util.CssProfile;
 import org.w3c.css.util.CssVersion;
@@ -343,6 +351,195 @@ public final class CssSelectors extends SelectorsList
         connector = COLUMN_COMBINATOR;
     }
 
+
+    public void addNesting() throws InvalidParamException {
+        addSelector(new NestingSelector());
+    }
+
+    /**
+     * Resolves a nested rule's selector against the parent rule's selectors
+     *
+     * @param ac         the context
+     * @param atRule     the at-rule the resolved selectors belong to
+     * @param parents    the parent rule's (resolved) selectors
+     * @param selector   the nested selector, as parsed as a relative selector
+     * @param hasNesting <code>true</code> if the nested selector contains the
+     *                   nesting selector, including in pseudo-class arguments
+     * @return the resolved selectors, one per parent selector
+     * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nest-selector
+     */
+    public static ArrayList<CssSelectors> resolveNesting(ApplContext ac, AtRule atRule,
+                                                         ArrayList<CssSelectors> parents,
+                                                         CssSelectors selector,
+                                                         boolean hasNesting)
+            throws InvalidParamException {
+        ArrayList<ArrayList<Selector>> nested = getCompounds(selector);
+        // the relative selector production adds a leading compound holding only the optional combinator
+        ArrayList<Selector> lead = nested.remove(0);
+        Selector combinator = lead.isEmpty() ? null : lead.get(0);
+        ArrayList<CssSelectors> resolved = new ArrayList<>(parents.size());
+        for (CssSelectors parent : parents) {
+            ArrayList<ArrayList<Selector>> parentCompounds = getCompounds(parent);
+            ArrayList<ArrayList<Selector>> compounds = new ArrayList<>();
+            // relative selectors, and selectors without nesting selector, are prefixed by the parent
+            if (combinator != null || !hasNesting) {
+                compounds.addAll(copyCompounds(parentCompounds));
+                compounds.get(compounds.size() - 1).add((combinator != null) ? combinator : new DescendantCombinator());
+            }
+            // FIXME the nesting selector is not resolved in pseudo-class arguments, as these are stored as strings
+            for (ArrayList<Selector> compound : nested) {
+                if (containsNesting(compound)) {
+                    substituteNesting(compounds, compound, parent, parentCompounds);
+                } else {
+                    compounds.add(new ArrayList<>(compound));
+                }
+            }
+            resolved.add(fromCompounds(ac, atRule, compounds));
+        }
+        return resolved;
+    }
+
+    /**
+     * Copies selectors, assigning them to a new at-rule
+     *
+     * @param ac        the context
+     * @param atRule    the at-rule the copies belong to
+     * @param selectors the selectors to copy
+     * @return the copies
+     */
+    public static ArrayList<CssSelectors> copy(ApplContext ac, AtRule atRule,
+                                               ArrayList<CssSelectors> selectors)
+            throws InvalidParamException {
+        ArrayList<CssSelectors> copies = new ArrayList<>(selectors.size());
+        for (CssSelectors selector : selectors) {
+            copies.add(fromCompounds(ac, atRule, copyCompounds(getCompounds(selector))));
+        }
+        return copies;
+    }
+
+    // replaces the nesting selector in a compound, with the parent's compounds when that is
+    // equivalent, otherwise with :is(parent)
+    private static void substituteNesting(ArrayList<ArrayList<Selector>> compounds,
+                                          ArrayList<Selector> compound,
+                                          CssSelectors parent,
+                                          ArrayList<ArrayList<Selector>> parentCompounds) {
+        ArrayList<Selector> parentLast = parentCompounds.get(parentCompounds.size() - 1);
+        ArrayList<Selector> others = new ArrayList<>();
+        Selector combinator = null;
+        for (Selector s : compound) {
+            if (isCombinator(s)) {
+                combinator = s;
+            } else if (!(s instanceof NestingSelector)) {
+                others.add(s);
+            }
+        }
+        Selector type = getTypeSelector(others);
+        Selector parentType = getTypeSelector(parentLast);
+        boolean isExact = (compounds.isEmpty() || parentCompounds.size() == 1)
+                && !(type != null && parentType != null)
+                && !containsPseudoElement(parentLast);
+        if (!isExact) {
+            ArrayList<CssSelectors> is = new ArrayList<>(1);
+            is.add(parent);
+            ArrayList<Selector> substituted = new ArrayList<>(compound.size());
+            for (Selector s : compound) {
+                substituted.add((s instanceof NestingSelector) ? new PseudoFunctionIs("is", is) : s);
+            }
+            compounds.add(substituted);
+            return;
+        }
+        ArrayList<ArrayList<Selector>> parentCopy = copyCompounds(parentCompounds);
+        ArrayList<Selector> merged = parentCopy.remove(parentCopy.size() - 1);
+        compounds.addAll(parentCopy);
+        // the type selector must come first
+        if (type != null) {
+            merged.add(0, type);
+            others.remove(type);
+        }
+        merged.addAll(others);
+        if (combinator != null) {
+            merged.add(combinator);
+        }
+        compounds.add(merged);
+    }
+
+    // returns the compounds of a selector, first to last, each with its trailing combinator
+    private static ArrayList<ArrayList<Selector>> getCompounds(CssSelectors selector) {
+        ArrayList<ArrayList<Selector>> compounds = new ArrayList<>();
+        for (CssSelectors s = selector; s != null; s = s.next) {
+            compounds.add(0, new ArrayList<>(s.getSelectors()));
+        }
+        return compounds;
+    }
+
+    private static ArrayList<ArrayList<Selector>> copyCompounds(ArrayList<ArrayList<Selector>> compounds) {
+        ArrayList<ArrayList<Selector>> copy = new ArrayList<>(compounds.size());
+        for (ArrayList<Selector> compound : compounds) {
+            copy.add(new ArrayList<>(compound));
+        }
+        return copy;
+    }
+
+    private static CssSelectors fromCompounds(ApplContext ac, AtRule atRule,
+                                              ArrayList<ArrayList<Selector>> compounds)
+            throws InvalidParamException {
+        CssSelectors selector = null;
+        for (ArrayList<Selector> compound : compounds) {
+            selector = new CssSelectors(ac, selector);
+            selector.setAtRule(atRule);
+            for (Selector s : compound) {
+                if (s instanceof TypeSelector) {
+                    selector.addType((TypeSelector) s);
+                } else if (s instanceof DescendantCombinator) {
+                    selector.addDescendantCombinator();
+                } else if (s instanceof ChildCombinator) {
+                    selector.addChildCombinator();
+                } else if (s instanceof NextSiblingCombinator) {
+                    selector.addNextSiblingCombinator();
+                } else if (s instanceof SubsequentSiblingCombinator) {
+                    selector.addSubsequentSiblingCombinator();
+                } else if (s instanceof ColumnCombinator) {
+                    selector.addColumnCombinator();
+                } else {
+                    selector.addSelector(s);
+                }
+            }
+        }
+        return selector;
+    }
+
+    private static boolean isCombinator(Selector s) {
+        return (s instanceof DescendantCombinator) || (s instanceof ChildCombinator)
+                || (s instanceof NextSiblingCombinator) || (s instanceof SubsequentSiblingCombinator)
+                || (s instanceof ColumnCombinator);
+    }
+
+    private static boolean containsNesting(ArrayList<Selector> compound) {
+        for (Selector s : compound) {
+            if (s instanceof NestingSelector) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean containsPseudoElement(ArrayList<Selector> compound) {
+        for (Selector s : compound) {
+            if (s instanceof PseudoElementSelector) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static Selector getTypeSelector(ArrayList<Selector> compound) {
+        for (Selector s : compound) {
+            if ((s instanceof TypeSelector) || (s instanceof UniversalSelector)) {
+                return s;
+            }
+        }
+        return null;
+    }
 
     public void addAttribute(AttributeSelector attribute)
             throws InvalidParamException {
