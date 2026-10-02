@@ -368,7 +368,7 @@ public final class CssSelectors extends SelectorsList
      *                   nesting selector, including in pseudo-class arguments
      * @param substitutions the resolved form of pseudo-classes whose arguments
      *                   contain the nesting selector, or null
-     * @return the resolved selectors, one per parent selector
+     * @return the resolved selectors, one for each combination of parent selectors
      * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nest-selector
      */
     public static ArrayList<CssSelectors> resolveNesting(ApplContext ac, AtRule atRule,
@@ -397,7 +397,7 @@ public final class CssSelectors extends SelectorsList
      * @param selector the argument
      * @param substitutions the resolved form of pseudo-classes whose arguments
      *                 contain the nesting selector, or null
-     * @return the resolved selectors, one per parent selector
+     * @return the resolved selectors, one for each combination of parent selectors
      * @spec https://www.w3.org/TR/2026/WD-css-nesting-1-20260122/#nest-selector
      */
     public static ArrayList<CssSelectors> resolveNestingInArgument(ApplContext ac, AtRule atRule,
@@ -425,23 +425,50 @@ public final class CssSelectors extends SelectorsList
         return false;
     }
 
-    // prefixes the compounds with each parent and the combinator, if any, and substitutes the nesting selector
+    /**
+     * The largest number of selectors a nested selector is resolved into, before
+     * :is() with all the parent selectors is used instead
+     */
+    public static final int MAX_NESTING_EXPANSION = 32;
+
+    // prefixes the compounds with a parent and the combinator, if any, and substitutes the
+    // nesting selector: each nesting selector, and the parent implied by the combinator,
+    // stands for any of the parents, so the resolved selectors are all the combinations
     private static ArrayList<CssSelectors> resolveNesting(ApplContext ac, AtRule atRule,
                                                           ArrayList<CssSelectors> parents,
                                                           ArrayList<ArrayList<Selector>> nested,
                                                           Selector combinator)
             throws InvalidParamException {
-        ArrayList<CssSelectors> resolved = new ArrayList<>(parents.size());
-        for (CssSelectors parent : parents) {
-            ArrayList<ArrayList<Selector>> parentCompounds = getCompounds(parent);
+        int occurrences = (combinator != null) ? 1 : 0;
+        for (ArrayList<Selector> compound : nested) {
+            if (containsNesting(compound)) {
+                occurrences++;
+            }
+        }
+        long combinations = 1;
+        for (int i = 0; (i < occurrences) && (combinations <= MAX_NESTING_EXPANSION); i++) {
+            combinations *= parents.size();
+        }
+        if (combinations > MAX_NESTING_EXPANSION) {
+            CssSelectors all = new CssSelectors(ac);
+            all.addPseudoFunction(new PseudoFunctionIs("is", parents));
+            ArrayList<CssSelectors> is = new ArrayList<>(1);
+            is.add(all);
+            return resolveNesting(ac, atRule, is, nested, combinator);
+        }
+        ArrayList<CssSelectors> resolved = new ArrayList<>();
+        int[] choice = new int[occurrences];
+        for (long n = 0; n < combinations; n++) {
             ArrayList<ArrayList<Selector>> compounds = new ArrayList<>();
+            int k = 0;
             if (combinator != null) {
-                compounds.addAll(copyCompounds(parentCompounds));
+                compounds.addAll(copyCompounds(getCompounds(parents.get(choice[k++]))));
                 compounds.get(compounds.size() - 1).add(combinator);
             }
             for (ArrayList<Selector> compound : nested) {
                 if (containsNesting(compound)) {
-                    substituteNesting(compounds, compound, parent, parentCompounds);
+                    CssSelectors parent = parents.get(choice[k++]);
+                    substituteNesting(compounds, compound, parent, getCompounds(parent));
                 } else {
                     compounds.add(new ArrayList<>(compound));
                 }
@@ -450,6 +477,13 @@ public final class CssSelectors extends SelectorsList
             // without a nesting selector to substitute, all parents give the same selector
             if (!containsString(resolved, selector)) {
                 resolved.add(selector);
+            }
+            // next combination
+            for (int i = occurrences - 1; i >= 0; i--) {
+                if (++choice[i] < parents.size()) {
+                    break;
+                }
+                choice[i] = 0;
             }
         }
         return resolved;
