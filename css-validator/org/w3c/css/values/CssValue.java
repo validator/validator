@@ -82,6 +82,10 @@ public abstract class CssValue {
         throw new ClassCastException("unknown");
     }
 
+    public boolean isCheckableValue() {
+        return false;
+    }
+
     public CssCheckableValue getCheckableValue() throws InvalidParamException {
         throw new ClassCastException("unknown");
     }

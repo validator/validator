@@ -62,7 +62,7 @@ public class CssCalc extends CssCheckableValue {
             if (value.getRawType() == CssTypes.CSS_CALC) {
                 CssCalc c = (CssCalc) value;
                 contains_variable = c.hasCssVariable();
-            } else if (value.getType() == CssTypes.CSS_VARIABLE) {
+            } else if (value.getRawType() == CssTypes.CSS_VARIABLE) {
                 contains_variable = true;
             }
         }
@@ -128,7 +128,7 @@ public class CssCalc extends CssCheckableValue {
                 throw new InvalidParamException("operator", oper, ac);
         }
         val2 = value;
-        if (val2.getType() == CssTypes.CSS_VARIABLE) {
+        if (val2.getRawType() == CssTypes.CSS_VARIABLE) {
             contains_variable = true;
         }
         _computeResultingType(false);

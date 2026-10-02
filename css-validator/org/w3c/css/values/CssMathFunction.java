@@ -485,6 +485,13 @@ public class CssMathFunction extends CssCheckableValue {
         }
     }
 
+    // a var() with a fallback reports the fallback's type, so getType() alone is
+    // not enough to tell that a value is dynamic
+    private static boolean valueHasVar(CssValue v)
+    throws InvalidParamException {
+        return v.isCheckableValue() && v.getCheckableValue().hasCssVariable();
+    }
+
     private void _computeResultingTypeList(boolean is_final)
             throws InvalidParamException {
         int valtype = CssTypes.CSS_MATH_FUNCTION;
@@ -495,7 +502,7 @@ public class CssMathFunction extends CssCheckableValue {
             if (firstVal) {
                 valtype = v.getType();
                 // Variable? defer to the next type
-                if (valtype == CssTypes.CSS_VARIABLE) {
+                if (valtype == CssTypes.CSS_VARIABLE || valueHasVar(v)) {
                     markCssVariable();
                     continue;
                 }
@@ -525,7 +532,8 @@ public class CssMathFunction extends CssCheckableValue {
                     continue;
                 }
                 // if it is a variable without a computed type, skip it
-                if ((v.getType() == CssTypes.CSS_VARIABLE) || (v.getRawType() == CssTypes.CSS_VARIABLE)) {
+                if ((v.getType() == CssTypes.CSS_VARIABLE) || (v.getRawType() == CssTypes.CSS_VARIABLE)
+                        || valueHasVar(v)) {
                     markCssVariable();
                     continue;
                 }
