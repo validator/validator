@@ -3,6 +3,6 @@
 <title>@page in a style element in body</title>
 <body>
 <div>
-<style>@page { margin: 1cm }</style>
+<style>@page { margin: 1cm } @page :first { margin-top: 2cm; @top-left { content: "x" } }</style>
 <p>Later</p>
 </div>

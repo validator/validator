@@ -37,10 +37,10 @@ import nu.validator.htmlparser.sax.HtmlParser;
 
 /**
  * Unit tests for BodyStyleTracker, which checks a "style" element in "body":
- * It must be the first child of its parent, and the top level of its style
- * sheet must only have "@scope" rules without a scope start, "@namespace"
- * rules, "@layer" statements, and "@media", "@supports", "@container",
- * "@starting-style", and "@layer" rules whose blocks follow the same rule.
+ * It must be the first child of its parent, and its style sheet must not
+ * have "@import" rules, and each style rule and each "@scope" rule with a
+ * scope start in it, other than those in an "@mixin" or "@supports-condition"
+ * rule, must be in an "@scope" rule without a scope start.
  *
  * See: https://github.com/validator/validator/issues/2143
  * See: https://github.com/whatwg/html/pull/13007
@@ -180,7 +180,7 @@ public class BodyStyleTrackerTest {
                 0);
 
         System.out.println();
-        System.out.println("Testing what the top level allows...");
+        System.out.println("Testing what the style sheet allows...");
         expectProblems("empty style sheet", sheet(""));
         expectProblems("comments and whitespace only",
                 sheet("\n  /* nothing */\n"));
@@ -205,9 +205,57 @@ public class BodyStyleTrackerTest {
                 sheet("\n  /* c */ @CHARSET \"utf-8\"; @scope { }"));
         expectProblems("at-rule names are case-insensitive",
                 sheet("@MEDIA screen { @Scope { p { } } }"));
+        expectProblems("at-rules with global effects",
+                sheet("@font-face { font-family: x } @keyframes k { }"
+                        + " @property --x { syntax: '*' } @page { }"
+                        + " @counter-style x { } @font-palette-values --p"
+                        + " { } @font-feature-values x { }"));
+        expectProblems("more at-rules with global effects",
+                sheet("@view-transition { navigation: auto }"
+                        + " @position-try --p { top: anchor(bottom) }"
+                        + " @color-profile --c { src: url(c.icc) }"
+                        + " @custom-media --narrow (width < 30em);"
+                        + " @function --f(--x) { @media (width > 1px) {"
+                        + " result: 2 } result: 1 }"));
+        expectProblems("keyframe rules aren't style rules",
+                sheet("@keyframes k { from { } 50% { } to { } }"
+                        + " @-webkit-keyframes k { from { } to { } }"));
+        expectProblems("@page with page selectors and margin rules",
+                sheet("@page :first { margin: 1cm; @top-left {"
+                        + " content: 'x' } }"));
+        expectProblems("@font-feature-values with feature value blocks",
+                sheet("@font-feature-values Font One { @swash {"
+                        + " fancy: 1 } }"));
+        expectProblems("at-rules with global effects in allowed group rules",
+                sheet("@media print { @font-face { font-family: x } }"
+                        + " @layer x { @supports (display: grid) {"
+                        + " @keyframes k { from { } } } }"));
+        expectProblems("at-rules with global effects in an allowed @scope",
+                sheet("@scope { @font-face { font-family: x }"
+                        + " @keyframes k { from { } } }"));
+        expectProblems("style rules and @scope with a scope start in @mixin",
+                sheet("@mixin --m { p { } & b { } @scope (.x) { p { } } }"
+                        + " @mixin --n(--x) { @media print { p { } } }"));
+        expectProblems("style rules in @supports-condition",
+                sheet("@supports-condition --nesting { & { } p { } }"
+                        + " @supports-condition --s { @scope (.x) { } }"));
+        expectProblems("@mixin and @supports-condition in a group rule",
+                sheet("@media print { @mixin --m { p { } }"
+                        + " @supports-condition --c { p { } } }"));
+        expectProblems("@mixin and @supports-condition are case-insensitive",
+                sheet("@MIXIN --m { p { } } @Supports-Condition --c {"
+                        + " p { } }"));
+        expectProblems("@charset that's not the first rule",
+                sheet("@scope { } @charset \"utf-8\";"));
+        expectProblems("a second @charset",
+                sheet("@charset \"utf-8\"; @charset \"utf-8\";"));
+        expectProblems("@charset in a group rule",
+                sheet("@media print { @charset \"utf-8\"; }"));
+        expectProblems("unknown at-rules without style rules",
+                sheet("@frobnicate { } @whatever;"));
 
         System.out.println();
-        System.out.println("Testing what the top level doesn't allow...");
+        System.out.println("Testing what the style sheet doesn't allow...");
         expectProblems("a style rule", sheet("p { color: red }"),
                 "STYLE_RULE: p");
         expectProblems("a style rule with a selector list",
@@ -228,39 +276,37 @@ public class BodyStyleTrackerTest {
                 "SCOPE_START: (.a)");
         expectProblems("@import", sheet("@import url(x.css);"),
                 "AT_RULE: @import");
-        expectProblems("at-rules with global effects",
-                sheet("@font-face { font-family: x } @keyframes k { }"
-                        + " @property --x { syntax: '*' } @page { }"
-                        + " @counter-style x { } @font-palette-values --p"
-                        + " { } @font-feature-values x { }"),
-                "AT_RULE: @font-face", "AT_RULE: @keyframes",
-                "AT_RULE: @property", "AT_RULE: @page",
-                "AT_RULE: @counter-style", "AT_RULE: @font-palette-values",
-                "AT_RULE: @font-feature-values");
-        expectProblems("@charset that's not the first rule",
-                sheet("@scope { } @charset \"utf-8\";"), "AT_RULE: @charset");
-        expectProblems("a second @charset",
-                sheet("@charset \"utf-8\"; @charset \"utf-8\";"),
-                "AT_RULE: @charset");
-        expectProblems("@charset in a group rule",
-                sheet("@media print { @charset \"utf-8\"; }"),
-                "AT_RULE: @charset");
-        expectProblems("an unknown at-rule",
-                sheet("@frobnicate { } @whatever;"), "AT_RULE: @frobnicate",
-                "AT_RULE: @whatever");
-        expectProblems("a disallowed at-rule in an allowed group rule",
-                sheet("@media print { @font-face { font-family: x } }"),
-                "AT_RULE: @font-face");
+        expectProblems("@IMPORT", sheet("@IMPORT url(x.css);"),
+                "AT_RULE: @IMPORT");
+        expectProblems("a style rule in @when and @else",
+                sheet("@when media(screen) { p { } } @else { b { } }"),
+                "STYLE_RULE: p", "STYLE_RULE: b");
+        expectProblems("a style rule in @navigation",
+                sheet("@navigation (at: --x) { p { } }"), "STYLE_RULE: p");
+        expectProblems("@scope with a scope start in @navigation",
+                sheet("@navigation (at: --x) { @scope (.a) { } }"),
+                "SCOPE_START: (.a)");
+        expectProblems("a style rule in @when in an allowed group rule",
+                sheet("@media print { @when media(screen) { p { } } }"),
+                "STYLE_RULE: p");
         expectProblems("everything after an allowed rule is still checked",
-                sheet("@scope { p { } } p { } @scope { } @import url(x);"),
-                "STYLE_RULE: p", "AT_RULE: @import");
+                sheet("@scope { p { } } p { } @scope { } @scope (.a) { }"),
+                "STYLE_RULE: p", "SCOPE_START: (.a)");
+        expectProblems("everything after @mixin is still checked",
+                sheet("@mixin --m { p { } } b { } @supports-condition --c {"
+                        + " p { } } i { }"),
+                "STYLE_RULE: b", "STYLE_RULE: i");
+        expectProblems("everything after a global at-rule is still checked",
+                sheet("@keyframes k { from { } } p { } @font-face {"
+                        + " font-family: x } @scope (.a) { }"),
+                "STYLE_RULE: p", "SCOPE_START: (.a)");
 
         System.out.println();
         System.out.println("Testing reported positions...");
         expectPositions("positions of problems",
-                sheet("@scope { }\np,\n  .a { }\n  @scope (.x) { }"
-                        + " @import url(x);"),
-                "2.1-3.4", "4.10-4.13", "4.19-4.25");
+                sheet("@import url(x);\n@scope { }\np,\n  .a { }\n"
+                        + "  @scope (.x) { }"),
+                "1.1-1.7", "3.1-4.4", "5.10-5.13");
 
         System.out.println();
         System.out.println(

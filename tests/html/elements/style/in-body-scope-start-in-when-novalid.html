@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>@scope with a scope start in @when in a style element in body</title>
+<body>
+<div class=card>
+<style>@when supports(display: grid) { @scope (.card) { :scope { display: grid } } }</style>
+<p>Later</p>
+</div>
