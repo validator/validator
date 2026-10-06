@@ -45,10 +45,10 @@ import nu.validator.checker.bodystyle.CssTokenizer.Token;
 
 /**
  * Checks a "style" element in "body": It must be the first child of its
- * parent (ignoring whitespace and comments), and the top level of its style
- * sheet must only have "@scope" rules without a scope start, "@namespace"
- * rules, "@layer" statements, and "@media", "@supports", "@container",
- * "@starting-style", and "@layer" rules whose blocks follow the same rule.
+ * parent (ignoring whitespace and comments), and its style sheet must not
+ * have "@import" rules, and each style rule and each "@scope" rule with a
+ * scope start in it, other than those in an "@mixin" or "@supports-condition"
+ * rule, must be in an "@scope" rule without a scope start.
  *
  * The scoping root of an "@scope" rule without a scope start is the "style"
  * element's parent — so its rules can only style the parent and what comes
@@ -65,15 +65,18 @@ public final class BodyStyleTracker {
     private static final String HTML = "http://www.w3.org/1999/xhtml";
 
     /**
-     * Group rules whose blocks can hold anything the top level can.
+     * Group rules whose blocks can hold style rules. The blocks of any other
+     * at-rules (e.g., "@keyframes", "@page", "@font-feature-values") hold
+     * declarations or rules of their own that aren't style rules.
      */
     private static final String[] GROUPING_RULES = { "media", "supports",
-            "container", "starting-style", "layer" };
+            "container", "starting-style", "layer", "when", "else",
+            "navigation" };
 
     /**
-     * Something the top level of the style sheet of a "style" element in
-     * "body" isn't allowed to have. Lines and columns are 1-based, and
-     * relative to the start of the style sheet; the end column is inclusive.
+     * Something the style sheet of a "style" element in "body" isn't allowed
+     * to have. Lines and columns are 1-based, and relative to the start of
+     * the style sheet; the end column is inclusive.
      */
     public static final class Problem {
 
@@ -91,8 +94,7 @@ public final class BodyStyleTracker {
             SCOPE_START,
 
             /**
-             * Any other at-rule that's not allowed; the text is its name,
-             * with the "@".
+             * An "@import" rule; the text is its name, with the "@".
              */
             AT_RULE
         }
@@ -239,7 +241,7 @@ public final class BodyStyleTracker {
 
     /**
      * Closes the current element. If it's a "style" element in "body",
-     * returns what the top level of its style sheet isn't allowed to have.
+     * returns what its style sheet isn't allowed to have.
      */
     public List<Problem> endElement(String uri, String localName) {
         boolean isHtml = HTML.equals(uri);
@@ -273,7 +275,7 @@ public final class BodyStyleTracker {
      * a rule, so it's never at the top level of the style sheet; Blink
      * (CSSParserImpl::ParseStyleSheet), Gecko (rust-cssparser), and WebKit
      * (CSSParser::parseStyleSheet) all drop it too. Any other "@charset" is
-     * invalid, and is checked like any other at-rule.
+     * invalid, and is left for the CSS checker to report.
      *
      * https://drafts.csswg.org/css-syntax/#parse-stylesheet
      */
@@ -298,7 +300,8 @@ public final class BodyStyleTracker {
 
     /**
      * Checks the rules between from and to: the top level of the style
-     * sheet, or the block of a group rule at the top level.
+     * sheet, or the block of a group rule that's not in an "@scope" rule
+     * without a scope start.
      */
     private static void checkBlock(String css, List<Token> tokens, int from,
             int to, List<Problem> problems) {
@@ -325,11 +328,12 @@ public final class BodyStyleTracker {
                 }
             } else {
                 String name = token.value.toLowerCase(Locale.ROOT);
-                if (!hasBlock) {
-                    if (!"namespace".equals(name) && !"layer".equals(name)) {
-                        problems.add(problem(css, Problem.Kind.AT_RULE,
-                                token.start, token.end));
-                    }
+                if ("import".equals(name)) {
+                    problems.add(problem(css, Problem.Kind.AT_RULE,
+                            token.start, token.end));
+                } else if (!hasBlock) {
+                    // "@namespace", "@layer" statements, "@custom-media",
+                    // and the like are all allowed.
                 } else if ("scope".equals(name)) {
                     int open = i + 1;
                     while (open < stop
@@ -343,20 +347,21 @@ public final class BodyStyleTracker {
                                 tokens.get(open).start,
                                 tokens.get(close).end));
                     }
-                } else if (isGroupingRule(name)) {
+                } else if (isOneOf(name, GROUPING_RULES)) {
                     checkBlock(css, tokens, stop + 1, next - 1, problems);
-                } else {
-                    problems.add(problem(css, Problem.Kind.AT_RULE,
-                            token.start, token.end));
                 }
+                // Any other at-rule with a block is allowed, and its block
+                // isn't checked: "@mixin" and "@supports-condition" are
+                // allowed to hold style rules and "@scope" rules with a scope
+                // start, and the blocks of the rest don't hold style rules.
             }
             i = next;
         }
     }
 
-    private static boolean isGroupingRule(String name) {
-        for (String grouping : GROUPING_RULES) {
-            if (grouping.equals(name)) {
+    private static boolean isOneOf(String name, String[] names) {
+        for (String candidate : names) {
+            if (candidate.equals(name)) {
                 return true;
             }
         }

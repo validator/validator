@@ -2385,9 +2385,8 @@ public class Assertions extends Checker {
     }
 
     /**
-     * Reports each rule that the top level of the style sheet of a "style"
-     * element in "body" isn't allowed to have, at its own position in the
-     * document.
+     * Reports each rule that the style sheet of a "style" element in "body"
+     * isn't allowed to have, at its own position in the document.
      */
     private void reportBodyStyleProblems(
             List<BodyStyleTracker.Problem> problems, StackNode styleNode)
@@ -2421,8 +2420,8 @@ public class Assertions extends Checker {
                     break;
                 default:
                     message = "Rule “" + problem.getText()
-                            + "” not allowed outside an “@scope” rule in"
-                            + " a “style” element in “body”.";
+                            + "” not allowed in a “style” element in"
+                            + " “body”.";
                     break;
             }
             SAXParseException spe = new SAXParseException(message,

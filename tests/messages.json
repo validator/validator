@@ -3178,7 +3178,7 @@
     "html/elements/style/in-body-before-summary-novalid.html": "Element \u201cdetails\u201d is missing a required instance of child element \u201csummary\u201d.",
     "html/elements/style/in-body-charset-not-first-novalid.html": "CSS: The @charset rule may only occur at the start of the style sheet. Please check that there are no spaces before it.",
     "html/elements/style/in-body-group-style-rule-novalid.html": "Style rule \u201c.later\u201d not allowed outside an \u201c@scope\u201d rule in a \u201cstyle\u201d element in \u201cbody\u201d.",
-    "html/elements/style/in-body-import-novalid.html": "Rule \u201c@import\u201d not allowed outside an \u201c@scope\u201d rule in a \u201cstyle\u201d element in \u201cbody\u201d.",
+    "html/elements/style/in-body-import-novalid.html": "Rule \u201c@import\u201d not allowed in a \u201cstyle\u201d element in \u201cbody\u201d.",
     "html/elements/style/in-body-in-a-in-p-novalid.html": "Element \u201cstyle\u201d not allowed as child of \u201ca\u201d in this context. Note: The \u201ca\u201d element has a transparent content model; its allowed content is inherited from its parent element.",
     "html/elements/style/in-body-in-p-novalid.html": "Element \u201cstyle\u201d not allowed as child of \u201cp\u201d in this context.",
     "html/elements/style/in-body-in-select-novalid.html": "Element \u201cstyle\u201d not allowed as child of \u201cselect\u201d in this context.",
