@@ -320,9 +320,10 @@ public final class BodyStyleTracker {
                     && tokens.get(stop).type == LEFT_BRACE;
             int next = hasBlock ? findClose(tokens, stop, to) + 1 : stop + 1;
             if (type != AT_KEYWORD) {
-                // A style rule; without a block, it's just junk that the
-                // CSS parser reports.
-                if (hasBlock) {
+                // A style rule; without a block, or without a prelude (so
+                // without a selector list), it's just junk that the CSS
+                // parser reports.
+                if (hasBlock && stop > i) {
                     problems.add(problem(css, Problem.Kind.STYLE_RULE,
                             token.start, lastNonWhitespace(tokens, i, stop)));
                 }

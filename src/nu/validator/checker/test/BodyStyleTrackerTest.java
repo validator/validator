@@ -253,6 +253,14 @@ public class BodyStyleTrackerTest {
                 sheet("@media print { @charset \"utf-8\"; }"));
         expectProblems("unknown at-rules without style rules",
                 sheet("@frobnicate { } @whatever;"));
+        expectProblems("a block with no prelude isn't a style rule",
+                sheet("{`p { color: red }`}"));
+        expectProblems("a block with no prelude after whitespace",
+                sheet("\n  { p { } }"));
+        expectProblems("a block with no prelude in an allowed group rule",
+                sheet("@media print { { } }"));
+        expectProblems("a block with no prelude after a style rule",
+                sheet("p { } { }"), "STYLE_RULE: p");
 
         System.out.println();
         System.out.println("Testing what the style sheet doesn't allow...");

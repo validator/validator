@@ -3172,6 +3172,7 @@
     "html/elements/style/in-body-after-figcaption-novalid.html": "A \u201cstyle\u201d element in \u201cbody\u201d must be the first child of its parent.",
     "html/elements/style/in-body-after-head-novalid.html": "\u201cstyle\u201d element between \u201chead\u201d and \u201cbody\u201d.",
     "html/elements/style/in-body-after-legend-novalid.html": "A \u201cstyle\u201d element in \u201cbody\u201d must be the first child of its parent.",
+    "html/elements/style/in-body-bare-block-novalid.html": "CSS: Parse Error.",
     "html/elements/style/in-body-before-figcaption-novalid.html": "Element \u201cimg\u201d not allowed as child of \u201cfigure\u201d in this context.",
     "html/elements/style/in-body-before-legend-novalid.html": "Element \u201clegend\u201d not allowed as child of \u201cfieldset\u201d in this context.",
     "html/elements/style/in-body-before-source-novalid.html": "Element \u201csource\u201d not allowed as child of \u201cvideo\u201d in this context. Note: The \u201cvideo\u201d element has a transparent content model; its allowed content is inherited from its parent element.",
