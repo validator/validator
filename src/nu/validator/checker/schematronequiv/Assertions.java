@@ -190,6 +190,26 @@ public class Assertions extends Checker {
         return false;
     }
 
+    /**
+     * Checks if a "loading" attribute value is in the Lazy state.
+     */
+    private static final boolean isLazyLoading(String loading) {
+        return AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                "lazy", loading);
+    }
+
+    /**
+     * Checks if an img element with the given attributes allows auto-sizes:
+     * Its "loading" attribute is in the Lazy state, and its "sizes" attribute
+     * value is "auto" or starts with "auto,".
+     *
+     * https://html.spec.whatwg.org/#allows-auto-sizes
+     */
+    private static final boolean imgAllowsAutoSizes(Attributes atts) {
+        return isLazyLoading(atts.getValue("", "loading"))
+                && sizesStartsWithAuto(atts.getValue("", "sizes"));
+    }
+
     private static final Map<String, String[]> INPUT_ATTRIBUTES = new HashMap<>();
 
     static {
@@ -3007,7 +3027,7 @@ public class Assertions extends Checker {
                         : "sizes";
                 String sizesVal = atts.getValue("", sizesName);
                 String loadingVal = atts.getValue("", "loading");
-                boolean isLazyLoaded = "lazy".equals(loadingVal);
+                boolean isLazyLoaded = isLazyLoading(loadingVal);
                 boolean sizesStartsWithAuto = sizesStartsWithAuto(sizesVal);
                 if (atts.getIndex("", srcSetName) > -1) {
                     String srcsetVal = atts.getValue("", srcSetName);
@@ -3023,22 +3043,12 @@ public class Assertions extends Checker {
                         if ("1".equals(System.getProperty(
                                 "nu.validator.checker.imageCandidateString.hasWidth"))) {
                             // Per HTML spec: sizes is required when srcset has
-                            // width descriptors, UNLESS loading=lazy (which
-                            // allows auto-sizes). For source elements in
-                            // picture, check is deferred until img is seen.
+                            // width descriptors. For a source element in
+                            // picture, it's required only if the following
+                            // img doesn't allow auto-sizes, so that check is
+                            // deferred until the img is seen.
                             if (atts.getIndex("", sizesName) < 0
-                                    && "img".equals(localName)
-                                    && !isLazyLoaded) {
-                                err("When the “" + srcSetName
-                                        + "” attribute has any image"
-                                        + " candidate string with a width"
-                                        + " descriptor, the “" + sizesName
-                                        + "” attribute must"
-                                        + " also be specified.");
-                            }
-                            // For link elements, keep the original behavior
-                            if (atts.getIndex("", sizesName) < 0
-                                    && "link".equals(localName)) {
+                                    && !"source".equals(localName)) {
                                 err("When the “" + srcSetName
                                         + "” attribute has any image"
                                         + " candidate string with a width"
@@ -3102,45 +3112,15 @@ public class Assertions extends Checker {
                                         + " must not be “all”.",
                                         locator);
                             }
-                            // Check source elements for sizes=auto without
-                            // loading=lazy on the img
-                            String sourceSizes = sourceAtts.get("sizes");
-                            if (sizesStartsWithAuto(sourceSizes)
-                                    && !isLazyLoaded) {
-                                err("The “sizes” attribute value"
-                                        + " starting with “auto” is"
-                                        + " only valid for lazy-loaded images."
-                                        + " The “img” element must"
-                                        + " have a “loading” attribute"
-                                        + " set to “lazy”.",
-                                        locator);
-                            }
-                            // Check source elements for missing sizes when
-                            // srcset has width descriptors and img is not lazy
-                            String sourceSrcset = sourceAtts.get("srcset");
-                            if (sourceSrcset != null && sourceSizes == null
-                                    && !isLazyLoaded) {
-                                // Check if source srcset has width descriptors
-                                try {
-                                    ImageCandidateStrings.THE_INSTANCE.checkValid(
-                                            sourceSrcset);
-                                    if ("1".equals(System.getProperty(
-                                            "nu.validator.checker.imageCandidateString.hasWidth"))) {
-                                        err("When the “srcset”"
-                                                + " attribute has any image"
-                                                + " candidate string with a"
-                                                + " width descriptor, the"
-                                                + " “sizes” attribute"
-                                                + " must also be specified.",
-                                                locator);
-                                    }
-                                } catch (DatatypeException e) {
-                                    // srcset validation errors handled elsewhere
-                                }
-                            }
                         }
                     }
-                } else if (atts.getIndex("", sizesName) > -1) {
+                } else if (atts.getIndex("", sizesName) > -1
+                        && !("img".equals(localName)
+                                && AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                        "auto", sizesVal))) {
+                    // Per HTML spec: without srcset, an img element may have
+                    // sizes="auto" if it's lazy-loaded; the check below
+                    // reports it if it's not.
                     err("The “" + sizesName + "” attribute must only"
                             + " be specified if the “" + srcSetName
                             + "” attribute is also specified.");
@@ -3150,35 +3130,33 @@ public class Assertions extends Checker {
                         && !isLazyLoaded) {
                     err("The “sizes” attribute value starting with"
                             + " “auto” is only valid for lazy-loaded"
-                            + " images. Add “loading=”“lazy”"
+                            + " images. Add “loading=\"lazy\"”"
                             + " to this element.");
                 }
             }
 
-            // Check source elements in picture when img is encountered
-            // This handles cases where img doesn't have srcset but sources do
+            // Check the sizes of the source elements in picture when the img
+            // is seen, since what they need depends on whether it allows
+            // auto-sizes:
+            // https://html.spec.whatwg.org/#the-source-element
             if ("img".equals(localName) && "picture".equals(parentName)
-                    && !siblingSources.isEmpty()) {
-                String loadingVal = atts.getValue("", "loading");
-                boolean isLazy = "lazy".equals(loadingVal);
+                    && !siblingSources.isEmpty()
+                    && !imgAllowsAutoSizes(atts)) {
                 for (Map.Entry<Locator, Map<String, String>> entry : siblingSources.entrySet()) {
                     Locator locator = entry.getKey();
                     Map<String, String> sourceAtts = entry.getValue();
                     String sourceSizes = sourceAtts.get("sizes");
                     String sourceSrcset = sourceAtts.get("srcset");
-                    // Check source for sizes=auto without loading=lazy on img
-                    if (sizesStartsWithAuto(sourceSizes) && !isLazy) {
-                        err("The “sizes” attribute value"
-                                + " starting with “auto” is"
-                                + " only valid for lazy-loaded images."
-                                + " The “img” element must"
-                                + " have a “loading” attribute"
-                                + " set to “lazy”.",
+                    if (sizesStartsWithAuto(sourceSizes)) {
+                        err("A “sizes” attribute value starting with"
+                                + " “auto” on a “source” element"
+                                + " requires the following “img”"
+                                + " element to have a “loading”"
+                                + " attribute set to “lazy” and a"
+                                + " “sizes” attribute value starting"
+                                + " with “auto”.",
                                 locator);
-                    }
-                    // Check source for missing sizes when srcset has width
-                    // descriptors and img is not lazy-loaded
-                    if (sourceSrcset != null && sourceSizes == null && !isLazy) {
+                    } else if (sourceSrcset != null && sourceSizes == null) {
                         try {
                             ImageCandidateStrings.THE_INSTANCE.checkValid(
                                     sourceSrcset);
@@ -3188,7 +3166,12 @@ public class Assertions extends Checker {
                                         + " has any image candidate string"
                                         + " with a width descriptor, the"
                                         + " “sizes” attribute must"
-                                        + " also be specified.",
+                                        + " also be specified — unless"
+                                        + " the following “img” element"
+                                        + " has a “loading” attribute set"
+                                        + " to “lazy” and a “sizes”"
+                                        + " attribute value starting with"
+                                        + " “auto”.",
                                         locator);
                             }
                         } catch (DatatypeException e) {
