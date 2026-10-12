@@ -59,15 +59,22 @@ public class CssCalc extends CssCheckableValue {
             this.ac = ac;
         }
         if (value != null) {
-            if (value.getRawType() == CssTypes.CSS_CALC) {
-                CssCalc c = (CssCalc) value;
-                contains_variable = c.hasCssVariable();
-            } else if (value.getRawType() == CssTypes.CSS_VARIABLE) {
-                contains_variable = true;
-            }
+            contains_variable = valueHasVar(value);
         }
         computed_type = value.getType();
         val1 = value;
+    }
+
+    // check the value contains a CssVariable or not
+    private static boolean valueHasVar(CssValue value) {
+        try {
+            return (value.getRawType() == CssTypes.CSS_VARIABLE) ||
+                    (value.isCheckableValue() &&
+                            value.getCheckableValue().hasCssVariable());
+        } catch (Exception ignored) {
+            // gated by isCheckableValue(), should never happen
+            return false;
+        }
     }
 
     public void setImplicitFunction(boolean v) {
@@ -98,7 +105,7 @@ public class CssCalc extends CssCheckableValue {
             throw new InvalidParamException("unrecognized", val1, ac);
         }
         val1 = value;
-        if (val1.getType() == CssTypes.CSS_VARIABLE) {
+        if (valueHasVar(val1)) {
             contains_variable = true;
         }
         _toString = null;
@@ -128,7 +135,7 @@ public class CssCalc extends CssCheckableValue {
                 throw new InvalidParamException("operator", oper, ac);
         }
         val2 = value;
-        if (val2.getRawType() == CssTypes.CSS_VARIABLE) {
+        if (valueHasVar(val2)) {
             contains_variable = true;
         }
         _computeResultingType(false);
