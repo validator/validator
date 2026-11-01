@@ -181,4 +181,32 @@ test.describe('API output formats', () => {
       expect(contentType).toContain('charset');
     });
   });
+
+  test.describe('Message filter pattern', () => {
+    test('filters out messages that match the pattern', async ({ request }) => {
+      const response = await request.post(
+        `${baseURL}?out=json&filterpattern=${encodeURIComponent('.*')}`, {
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+          },
+          data: invalidHTML,
+        });
+
+      expect(response.ok()).toBeTruthy();
+      const json = await response.json();
+      expect(json.messages).toEqual([]);
+    });
+
+    test('rejects a pattern that is not a valid regular expression', async ({ request }) => {
+      const response = await request.post(
+        `${baseURL}?out=json&filterpattern=${encodeURIComponent('(')}`, {
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+          },
+          data: invalidHTML,
+        });
+
+      expect(response.status()).toBe(400);
+    });
+  });
 });

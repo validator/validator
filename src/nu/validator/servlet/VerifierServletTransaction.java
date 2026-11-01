@@ -51,6 +51,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -911,7 +912,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         Pattern filterPattern = null;
         if (!"".equals(filterString)) {
-            filterPattern = Pattern.compile(filterString);
+            try {
+                filterPattern = Pattern.compile(filterString);
+            } catch (PatternSyntaxException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "Message filter isn't a valid regular expression: "
+                                + e.getDescription());
+                return;
+            }
         }
         if (request.getParameter("useragent") != null) {
             userAgent = scrub(request.getParameter("useragent"));
