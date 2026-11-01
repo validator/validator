@@ -900,7 +900,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     pipe = "|";
                 }
                 if (sb.length() != 0) {
-                    if (!"".equals(filterString)) {
+                    if ("".equals(filterString)) {
                         filterString = scrub(sb.toString());
                     } else {
                         filterString += "|" + scrub(sb.toString());
@@ -908,6 +908,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             } catch (Exception e) {
                 response.sendError(500, e.getMessage());
+                return;
             }
         }
         Pattern filterPattern = null;
