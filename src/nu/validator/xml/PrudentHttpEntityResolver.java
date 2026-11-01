@@ -46,12 +46,14 @@ import nu.validator.io.SystemIdIOException;
 
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.HttpClientTransport;
+import org.eclipse.jetty.client.HttpRedirector;
 import org.eclipse.jetty.client.transport.HttpClientTransportOverHTTP;
 import org.eclipse.jetty.client.Request;
 import org.eclipse.jetty.client.InputStreamResponseListener;
 import org.eclipse.jetty.client.ProxyAuthenticationProtocolHandler;
 import org.eclipse.jetty.client.WWWAuthenticationProtocolHandler;
 import org.eclipse.jetty.http.HttpField;
+import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.io.ClientConnector;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.apache.log4j.Logger;
@@ -374,6 +376,22 @@ public class PrudentHttpEntityResolver
                         "http://validator.nu/properties/ignore-response-status");
             }
             int statusCode = response.getStatus();
+            if (new HttpRedirector(client).isRedirect(response)) {
+                // The client follows redirects, so a redirect response gets
+                // here only if following it failed. Jetty then hands back the
+                // redirect response itself, and holds the failure until its
+                // body is read -- which the status check below lets happen
+                // when "checkerrorpages" turns it off. So report it now.
+                String msg = redirectFailureMessage(response, listener);
+                SAXParseException spe = new SAXParseException(msg, publicId,
+                        systemId, -1, -1,
+                        new SystemIdIOException(systemId, msg));
+                if (errorHandler != null) {
+                    errorHandler.fatalError(spe);
+                }
+                throw new ResourceNotRetrievableException(
+                        String.format("%s: %s", systemId, msg));
+            }
             if (statusCode != 200 && !ignoreResponseStatus) {
                 String msg = "HTTP resource not retrievable."
                         + " The HTTP status from the remote server was: "
@@ -508,6 +526,49 @@ public class PrudentHttpEntityResolver
         } catch (IOException | RuntimeException | SAXException e) {
             throw e;
         }
+    }
+
+    /**
+     * Describes why the client couldn't follow a redirect response.
+     */
+    private String redirectFailureMessage(
+            org.eclipse.jetty.client.Response response,
+            InputStreamResponseListener listener) {
+        String prefix = "HTTP resource not retrievable. ";
+        String location = response.getHeaders().get(HttpHeader.LOCATION);
+        if (location == null) {
+            return prefix + "The remote server sent a " + response.getStatus()
+                    + " redirect with no Location header.";
+        }
+        prefix += "The remote server redirected to “" + location
+                + "”";
+        try {
+            URL target = URL.parse(
+                    URL.parse(response.getRequest().getURI().toString()),
+                    location);
+            String scheme = target.scheme();
+            if (!("http".equals(scheme) || "https".equals(scheme))) {
+                return prefix + ", which isn't an http or https URL.";
+            }
+        } catch (GalimatiasParseException | RuntimeException e) {
+            return prefix + ", which isn't a valid URL.";
+        }
+        String reason = null;
+        try {
+            Throwable failure = listener.await(socketTimeoutMs,
+                    java.util.concurrent.TimeUnit.MILLISECONDS).getFailure();
+            if (failure != null) {
+                reason = failure.getMessage();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (java.util.concurrent.TimeoutException e) {
+            // Report the redirect without a reason.
+        }
+        if (reason == null || reason.isEmpty()) {
+            return prefix + ", which couldn't be followed.";
+        }
+        return prefix + ", which couldn't be followed: " + reason + ".";
     }
 
     /**

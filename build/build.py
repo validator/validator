@@ -1337,6 +1337,7 @@ class Release():
             'nu.validator.checker.test.NormalizationCheckerTest',
             'nu.validator.xml.test.CharacterUtilTest',
             'nu.validator.xml.test.BaseUriTrackerTest',
+            'nu.validator.xml.test.PrudentHttpEntityResolverTest',
             'nu.validator.source.test.SourceCodeTest',
         ]
         for testClass in testClasses:
@@ -1657,6 +1658,7 @@ class Release():
             'nu.validator.checker.test.NormalizationCheckerTest',
             'nu.validator.xml.test.CharacterUtilTest',
             'nu.validator.xml.test.BaseUriTrackerTest',
+            'nu.validator.xml.test.PrudentHttpEntityResolverTest',
             'nu.validator.source.test.SourceCodeTest',
         ]
 
