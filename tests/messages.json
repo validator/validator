@@ -3172,6 +3172,7 @@
     "html/elements/span/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
     "html/elements/strike/obsolete-novalid.html": "The \u201cstrike\u201d element is obsolete. Use \u201cdel\u201d or \u201cs\u201d element instead.",
     "html/elements/strong/model-novalid.html": "End tag \u201cp\u201d implied, but there were open elements.",
+    "html/elements/style/css-anchor-center-in-align-items-novalid.html": "CSS: \u201calign-items\u201d: \u201canchor-center\u201d is not a \u201calign-items\u201d value.",
     "html/elements/style/css-anchor-name-not-dashed-ident-novalid.html": "CSS: \u201canchor-name\u201d: \u201ca\u201d is not a \u201canchor-name\u201d value.",
     "html/elements/style/css-anchor-scope-all-in-list-novalid.html": "CSS: \u201canchor-scope\u201d: \u201call\u201d is not a \u201canchor-scope\u201d value.",
     "html/elements/style/css-position-anchor-list-novalid.html": "CSS: \u201cposition-anchor\u201d: Too many values or values are not recognized.",

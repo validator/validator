@@ -63,6 +63,21 @@ public class CssAlignSelf extends org.w3c.css.properties.css.CssAlignSelf {
         return null;
     }
 
+    // https://drafts.csswg.org/css-anchor-position-1/#anchor-center
+    public static final CssIdent anchor_center = CssIdent.getIdent("anchor-center");
+
+    /**
+     * Like getSelfPosition, but also allowing anchor-center, a self-position
+     * that only align-self and justify-self take (not align-items or
+     * justify-items).
+     */
+    public static CssIdent getSelfPositionOrAnchorCenter(CssIdent ident) {
+        if (anchor_center.equals(ident)) {
+            return anchor_center;
+        }
+        return getSelfPosition(ident);
+    }
+
     /**
      * Create a new CssAlignSelf
      */
@@ -118,7 +133,7 @@ public class CssAlignSelf extends org.w3c.css.properties.css.CssAlignSelf {
                 expression.next();
                 return CssAlignContent.baseline;
             }
-            if (getSelfPosition(ident) != null) {
+            if (getSelfPositionOrAnchorCenter(ident) != null) {
                 expression.next();
                 return val;
             }
@@ -157,7 +172,7 @@ public class CssAlignSelf extends org.w3c.css.properties.css.CssAlignSelf {
                     throw new InvalidParamException("value", val.toString(),
                             caller.getPropertyName(), ac);
                 }
-                if (getSelfPosition(val.getIdent()) == null) {
+                if (getSelfPositionOrAnchorCenter(val.getIdent()) == null) {
                     throw new InvalidParamException("value", val.toString(),
                             caller.getPropertyName(), ac);
                 }

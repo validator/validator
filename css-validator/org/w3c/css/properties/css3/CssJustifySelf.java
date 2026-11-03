@@ -41,7 +41,7 @@ public class CssJustifySelf extends org.w3c.css.properties.css.CssJustifySelf {
                 return id;
             }
         }
-        return CssAlignSelf.getSelfPosition(ident);
+        return CssAlignSelf.getSelfPositionOrAnchorCenter(ident);
     }
 
     /**
