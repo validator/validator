@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8>
+<title>CSS anchor() and anchor-size() functions and @position-try</title>
+<style>
+.a { top: anchor(--a bottom); }
+.b { left: anchor(center); }
+.c { right: anchor(--a 50%, 10px); }
+.d { bottom: anchor(outside --a, calc(1em + 2px)); }
+.e { width: anchor-size(width); }
+.f { height: anchor-size(--a self-block, 10%); }
+.g { margin-left: anchor-size(--a inline, 10px); }
+.h { max-inline-size: anchor-size(); }
+.i { min-height: anchor-size(10px); }
+.j { top: calc(anchor(bottom) + 10px); }
+.k { inset-block-start: anchor(--a end, anchor(--b start)); }
+.l { top: anchor(var(--side)); }
+@position-try --foo {
+    top: anchor(bottom);
+    position-area: top;
+    margin: 0;
+    align-self: anchor-center;
+    width: anchor-size(width);
+}
+@position-try --bar {
+    position-anchor: --a;
+    inset: 0 auto auto 0;
+}
+</style>
+</head>
+<body>
+</body>
+</html>

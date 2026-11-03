@@ -27,6 +27,7 @@ import org.w3c.css.atrules.css.AtRuleCounterStyle;
 import org.w3c.css.atrules.css.AtRuleFontFace;
 import org.w3c.css.atrules.css.AtRuleFontFeatureValues;
 import org.w3c.css.atrules.css.AtRuleFontPaletteValues;
+import org.w3c.css.atrules.css.AtRulePositionTry;
 import org.w3c.css.atrules.css.AtRuleKeyframes;
 import org.w3c.css.atrules.css.AtRuleLayer;
 import org.w3c.css.atrules.css.AtRuleScope;
@@ -74,6 +75,7 @@ import org.w3c.css.values.CssCheckableValue;
 import org.w3c.css.values.CssColor;
 import org.w3c.css.values.CssComparator;
 import org.w3c.css.values.CssDashedIdent;
+import org.w3c.css.values.CssAnchor;
 import org.w3c.css.values.CssEnv;
 import org.w3c.css.values.CssExpression;
 import org.w3c.css.values.CssFlexibleLength;
@@ -465,6 +467,10 @@ public abstract class CssParser {
             }
 	} else if ( token == FUNCTIONENV ) {
             if (v.getType() == CssTypes.CSS_ENV) {
+                expr.markCssVariable();
+            }
+	} else if ( token == FUNCTIONANCHOR ) {
+            if (((CssAnchor) v).hasCssVariable()) {
                 expr.markCssVariable();
             }
         } else if ( token == FUNCTIONCALC ) {
@@ -963,6 +969,7 @@ TOKEN [IGNORE_CASE] :
     < FONT_FACE_SYM           : "@font-face" >
   | < FONT_FEATURE_VALUES_SYM : "@font-feature-values" >
   | < FONT_PALETTE_VALUES_SYM : "@font-palette-values" >
+  | < POSITION_TRY_SYM        : "@position-try" >
   | < STYLISTIC_SYM	      : "@stylistic" >
   | < HISTORICAL_FORMS_SYM    : "@historical-forms" >
   | < STYLESET_SYM            : "@styleset" >
@@ -1038,6 +1045,8 @@ TOKEN [IGNORE_CASE] :
     | <FUNCTIONATTR          : "attr("             >
     | <FUNCTIONVAR           : "var("              >
     | <FUNCTIONENV           : "env("              >
+    | <FUNCTIONANCHOR        : "anchor("           >
+    | <FUNCTIONANCHORSIZE    : "anchor-size("      >
     | <FUNCTIONLAYER         : "layer("            >
     | <FUNCTIONSELECTOR      : "selector("         >
     | <FUNCTIONATRULE        : "at-rule("          >
@@ -1178,7 +1187,7 @@ void charset() :
 void nested_at_rules() : {
 }
 {
-  ( media() | page() | fontFace() | fontPaletteValues() | fontFeatureValues() | keyframes()
+  ( media() | page() | fontFace() | fontPaletteValues() | positionTry() | fontFeatureValues() | keyframes()
     | preference() | viewport() | colorprofile() | counterstyle()
     | phoneticAlphabet() | supports() | atRuleDeclaration() | layer() | scope() )
 }
@@ -1571,7 +1580,7 @@ CssIdent at_keyword():
        t=<PAGE_TOP_RIGHT_CORNER> | t=<PAGE_BOTTOM_LEFT_CORNER> | t=<PAGE_BOTTOM_LEFT> | t=<PAGE_BOTTOM_CENTER> |
        t=<PAGE_BOTTOM_RIGHT> | t=<PAGE_BOTTOM_RIGHT_CORNER> | t=<PAGE_LEFT_TOP> | t=<PAGE_LEFT_MIDDLE> |
        t=<PAGE_LEFT_BOTTOM> | t=<PAGE_RIGHT_TOP> | t=<PAGE_RIGHT_MIDDLE> | t=<PAGE_RIGHT_BOTTOM> |
-       t=<FONT_FACE_SYM> | t=<FONT_FEATURE_VALUES_SYM> | t=<FONT_PALETTE_VALUES_SYM> | t=<STYLISTIC_SYM> |
+       t=<FONT_FACE_SYM> | t=<FONT_FEATURE_VALUES_SYM> | t=<FONT_PALETTE_VALUES_SYM> | t=<POSITION_TRY_SYM> | t=<STYLISTIC_SYM> |
        t=<HISTORICAL_FORMS_SYM> | t=<STYLESET_SYM> | t=<CHARACTER_VARIANT_SYM> | t=<SWASH_SYM> |
        t=<ORNAMENTS_SYM> | t=<ANNOTATION_SYM> | t=<IMPORT_SYM> | t=<NAMESPACE_SYM> | t=<MEDIA_SYM> |
        t=<KEYFRAMES_SYM> | t=<PREF_SYM> | t=<COLOR_PROFILE> | t=<A_COUNTER> | t=<COUNTER_STYLE_SYM> | t=<LAYER_SYM> | t=<SCOPE_SYM> |
@@ -2110,6 +2119,54 @@ void fontPaletteValues() :
 
             }
         n=<DASHED_IDENT> ( <S> )* {
+            }
+        <LBRACE> ( <S> )* v=declarations() <RBRACE> ( <S> )*
+             {
+                 if (!notCss3) {
+                     addProperty(v);
+                     endOfRule();
+                     endOfAtRule();
+                 }
+                 if (v == null) {
+                     ac.getFrame().addWarning("no-declaration");
+                 } else {
+                     handleRule(s, v);
+                 }
+             }
+    } catch (ParseException e) {
+        if (!notCss3) {
+            addError(e, skipStatement());
+        }
+    } finally {
+        setAtRule(old);
+    }
+}
+
+void positionTry() :
+{
+    ArrayList<CssProperty> v;
+    AtRule old = getAtRule();
+    setAtRule(new AtRulePositionTry());
+    CssSelectors s = new CssSelectors(ac);
+    s.setAtRule(getAtRule());
+    Token n = null;
+    boolean notCss3 = (ac.getCssVersion().compareTo(CssVersion.CSS3) < 0);
+}
+{
+    try {
+        <POSITION_TRY_SYM> ( <S> )* 
+            {
+                if (notCss3) {
+                    skipStatement();
+                    addError(new InvalidParamException("noatruleyet", "", ac),
+                             getAtRule().toString());
+                } else {
+                    newAtRule(getAtRule());
+                }
+
+            }
+        n=<DASHED_IDENT> ( <S> )* {
+                ((AtRulePositionTry) getAtRule()).setName(n.image);
             }
         <LBRACE> ( <S> )* v=declarations() <RBRACE> ( <S> )*
              {
@@ -3946,6 +4003,7 @@ void term(CssExpression exp) :
         | func=attr() { setValue(func, exp, operator, null, FUNCTION); }
         | func=functionvar() { setValue(func, exp, operator, null, FUNCTIONVAR); }
         | func=functionenv() { setValue(func, exp, operator, null, FUNCTIONENV); }
+        | func=functionanchor() { setValue(func, exp, operator, null, FUNCTIONANCHOR); }
         | func=function() { setValue(func, exp, operator, null, FUNCTION); }
         | n=<STRING> { setValue(new CssString(), exp, operator, n, STRING); }
         | n=<DIV>  { setValue(new CssSwitch(), exp, operator, n, DIV); }
@@ -4383,6 +4441,7 @@ char operator = ' ';
     | v=attr()
     | v=functionvar()
     | v=functionenv()
+    | v=functionanchor()
 ) {
      return v;
    }
@@ -4477,6 +4536,17 @@ CssCheckableValue functionvar() :
         var.set(exp);
     }
     return var;
+  }
+}
+
+CssCheckableValue functionanchor() :
+{ Token n;
+ CssExpression exp = null;
+}
+{
+  ( n=<FUNCTIONANCHOR> | n=<FUNCTIONANCHORSIZE> ) ( <S> )* ( exp=expr() )? <RPAREN>
+  {
+    return new CssAnchor(ac, n.image, exp);
   }
 }
 
