@@ -27,6 +27,8 @@ jobs:
     name: Build on ${{ matrix.os }} with Java ${{ matrix.java }}
     needs: prep
     runs-on: ${{ matrix.os }}
+    # A failure with an early-access JDK shouldn't fail the whole run
+    continue-on-error: ${{ endsWith(matrix.java, '-ea') }}
     strategy:
       fail-fast: false
       matrix:
@@ -39,7 +41,9 @@ jobs:
           - os: ubuntu-latest
             java: 21
           - os: ubuntu-latest
-            java: 26
+            java: 27
+          - os: ubuntu-latest
+            java: 28-ea
 
     env:
       IS_MAIN_RELEASE_BUILDER: ${{ (github.event_name == 'push'
