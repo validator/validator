@@ -2501,9 +2501,11 @@ def main(argv, script_name=None):
                                                      stderr=subprocess.STDOUT)
         javaRawVersion = list(filter(lambda x: 'version' in x,
                                      javaRawVersion.splitlines()))
+        # The leading digits of the version string, which can have a suffix
+        # such as "-ea" or "-beta" (as in "28-ea" or "28-beta")
         javaEnvVersion = \
-            int(javaRawVersion[0].split()[2].strip('"').split('.')[0]
-                .replace('-ea', ''))
+            int(re.match(r'\d+',
+                         javaRawVersion[0].split()[2].strip('"')).group())
         if javaEnvVersion < 9:
             javaTargetVersion = ''
         release = Release()
