@@ -331,6 +331,14 @@ import org.w3c.css.properties.css.CssWrapAfter;
 import org.w3c.css.properties.css.CssWrapBefore;
 import org.w3c.css.properties.css.CssWrapInside;
 import org.w3c.css.properties.css.CssWritingMode;
+import org.w3c.css.properties.css.CssAnchorName;
+import org.w3c.css.properties.css.CssAnchorScope;
+import org.w3c.css.properties.css.CssPositionAnchor;
+import org.w3c.css.properties.css.CssPositionArea;
+import org.w3c.css.properties.css.CssPositionTry;
+import org.w3c.css.properties.css.CssPositionTryFallbacks;
+import org.w3c.css.properties.css.CssPositionTryOrder;
+import org.w3c.css.properties.css.CssPositionVisibility;
 import org.w3c.css.properties.css.counterstyle.CssAdditiveSymbols;
 import org.w3c.css.properties.css.counterstyle.CssFallback;
 import org.w3c.css.properties.css.counterstyle.CssNegative;
@@ -768,6 +776,14 @@ public class Css3Style extends ATSCStyle {
     public CssTranslate cssTranslate;
     public CssRotate cssRotate;
     public org.w3c.css.properties.css.CssZoom cssZoom;
+    public CssAnchorName cssAnchorName;
+    public CssAnchorScope cssAnchorScope;
+    public CssPositionAnchor cssPositionAnchor;
+    public CssPositionArea cssPositionArea;
+    public CssPositionTry cssPositionTry;
+    public CssPositionTryFallbacks cssPositionTryFallbacks;
+    public CssPositionTryOrder cssPositionTryOrder;
+    public CssPositionVisibility cssPositionVisibility;
 
     public org.w3c.css.properties.css.CssZoom getZoom() {
         if (cssZoom == null) {
@@ -3905,6 +3921,78 @@ public class Css3Style extends ATSCStyle {
                             new CssImageOrientation(), style, selector);
         }
         return cssImageOrientation;
+    }
+
+    public CssAnchorName getAnchorName() {
+        if (cssAnchorName == null) {
+            cssAnchorName =
+                    (CssAnchorName) style.CascadingOrder(new CssAnchorName(),
+                            style, selector);
+        }
+        return cssAnchorName;
+    }
+
+    public CssAnchorScope getAnchorScope() {
+        if (cssAnchorScope == null) {
+            cssAnchorScope =
+                    (CssAnchorScope) style.CascadingOrder(new CssAnchorScope(),
+                            style, selector);
+        }
+        return cssAnchorScope;
+    }
+
+    public CssPositionAnchor getPositionAnchor() {
+        if (cssPositionAnchor == null) {
+            cssPositionAnchor =
+                    (CssPositionAnchor) style.CascadingOrder(new CssPositionAnchor(),
+                            style, selector);
+        }
+        return cssPositionAnchor;
+    }
+
+    public CssPositionArea getPositionArea() {
+        if (cssPositionArea == null) {
+            cssPositionArea =
+                    (CssPositionArea) style.CascadingOrder(new CssPositionArea(),
+                            style, selector);
+        }
+        return cssPositionArea;
+    }
+
+    public CssPositionTry getPositionTry() {
+        if (cssPositionTry == null) {
+            cssPositionTry =
+                    (CssPositionTry) style.CascadingOrder(new CssPositionTry(),
+                            style, selector);
+        }
+        return cssPositionTry;
+    }
+
+    public CssPositionTryFallbacks getPositionTryFallbacks() {
+        if (cssPositionTryFallbacks == null) {
+            cssPositionTryFallbacks =
+                    (CssPositionTryFallbacks) style.CascadingOrder(new CssPositionTryFallbacks(),
+                            style, selector);
+        }
+        return cssPositionTryFallbacks;
+    }
+
+    public CssPositionTryOrder getPositionTryOrder() {
+        if (cssPositionTryOrder == null) {
+            cssPositionTryOrder =
+                    (CssPositionTryOrder) style.CascadingOrder(new CssPositionTryOrder(),
+                            style, selector);
+        }
+        return cssPositionTryOrder;
+    }
+
+    public CssPositionVisibility getPositionVisibility() {
+        if (cssPositionVisibility == null) {
+            cssPositionVisibility =
+                    (CssPositionVisibility) style.CascadingOrder(new CssPositionVisibility(),
+                            style, selector);
+        }
+        return cssPositionVisibility;
     }
 
     public CssImageResolution getImageResolution() {

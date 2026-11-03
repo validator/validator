@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8>
+<title>CSS anchor positioning properties and values</title>
+<style>
+.v1 { anchor-name: none; }
+.v2 { anchor-name: --a; }
+.v3 { anchor-name: --a, --b; }
+.v4 { anchor-name: inherit; }
+.v5 { anchor-scope: all; }
+.v6 { anchor-scope: none; }
+.v7 { anchor-scope: --a, --b; }
+.v8 { position-anchor: auto; }
+.v9 { position-anchor: normal; }
+.v10 { position-anchor: none; }
+.v11 { position-anchor: match-parent; }
+.v12 { position-anchor: --a; }
+.v13 { position-area: none; }
+.v14 { position-area: top; }
+.v15 { position-area: center; }
+.v16 { position-area: bottom span-right; }
+.v17 { position-area: span-right bottom; }
+.v18 { position-area: center center; }
+.v19 { position-area: span-all left; }
+.v20 { position-area: block-start inline-end; }
+.v21 { position-area: span-self-inline-end self-block-start; }
+.v22 { position-area: start end; }
+.v23 { position-area: span-start span-start; }
+.v24 { position-area: self-start center; }
+.v25 { position-area: x-start y-end; }
+.v26 { position-area: unset; }
+.v27 { position-try-fallbacks: none; }
+.v28 { position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; }
+.v29 { position-try-fallbacks: --foo; }
+.v30 { position-try-fallbacks: --foo flip-x, flip-y --bar, top left; }
+.v31 { position-try-fallbacks: flip-x flip-y flip-start flip-block flip-inline; }
+.v32 { position-try-fallbacks: bottom span-right, --foo; }
+.v33 { position-try-order: normal; }
+.v34 { position-try-order: most-inline-size; }
+.v35 { position-try: --foo; }
+.v36 { position-try: most-width --foo, flip-block; }
+.v37 { position-try: normal none; }
+.v38 { position-try: most-height top, flip-x; }
+.v39 { position-try: revert; }
+.v40 { position-visibility: always; }
+.v41 { position-visibility: anchor-visible; }
+.v42 { position-visibility: no-overflow anchor-valid; }
+.v43 { position-visibility: anchor-valid anchor-visible no-overflow; }
+.dfn-panel {
+    inset: auto;
+    position-area: bottom span-right;
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+}
+.dfn-panel.activated {
+    position-area: none;
+}
+</style>
+</head>
+<body>
+</body>
+</html>
