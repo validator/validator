@@ -3,6 +3,7 @@ docs/*.1
 nbproject
 build/__init__.pyc
 build/__pycache__/
+build/bikeshed
 build/build.pyc
 build/dist
 build/dist-war

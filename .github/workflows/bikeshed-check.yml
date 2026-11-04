@@ -1,0 +1,45 @@
+name: Bikeshed check
+
+# Runs "python checker.py bikeshed-test", which generates
+# tests/bikeshed/bikeshed-features.bs with the current Bikeshed (through the
+# W3C spec generator), then checks the result the way w3c/spec-prod does, with
+# --also-check-css. That catches markup or CSS that a new Bikeshed release
+# starts emitting and the checker doesn't support yet, before spec editors run
+# into it. And the daily run catches a Bikeshed change on days nothing's pushed.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  bikeshed-check:
+    name: Check a Bikeshed-generated spec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Java JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 25
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Build vnu.jar
+        run: python checker.py build
+      - name: Generate the spec with the current Bikeshed, and check it
+        run: python checker.py bikeshed-test
+      - name: Upload the generated spec
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: bikeshed-features-html
+          path: build/bikeshed/bikeshed-features.html
+          if-no-files-found: ignore

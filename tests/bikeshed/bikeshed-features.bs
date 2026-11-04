@@ -1,0 +1,130 @@
+<pre class=metadata>
+Title: Bikeshed Features Test
+Shortname: bikeshed-features-test
+Level: None
+Status: ED
+Group: browser-testing-tools
+URL: https://validator.github.io/validator/bikeshed-features-test/
+Repository: validator/validator
+Editor: Example Editor, Example Org https://example.org/, w3cid 1
+Abstract: A document that uses as many Bikeshed features as practical, so that the HTML checker can check the markup and CSS that Bikeshed generates for them.
+Boilerplate: conformance no
+Complain About: accidental-2119 yes, missing-example-ids yes
+Default Ref Status: current
+Markup Shorthands: markdown yes, css yes, idl yes, biblio yes, dfn yes, algorithm yes
+Include MDN Panels: yes
+Include Can I Use Panels: yes
+WPT Path Prefix: /html/semantics/
+WPT Display: open
+Indent: 4
+</pre>
+
+<pre class=link-defaults>
+spec:html; type:element; text:a
+spec:dom; type:interface; text:Document
+</pre>
+
+Introduction {#intro}
+=====================
+
+This document links to [[HTML]], [[!DOM]], and [[CSS-ANCHOR-POSITION-1]], and
+to the {{Window}} interface, the <{a}> element, and the 'display' property.
+
+Note: This is a note.
+
+Issue: This is an issue.
+
+<div class=example id=example-code>
+    An example with syntax-highlighted code:
+
+    <pre highlight=js>
+    const widget = new Widget();
+    widget.frobnicate(5);
+    </pre>
+
+    <pre highlight=css>
+    .x { position-area: bottom span-right; }
+    </pre>
+
+    <pre highlight=html>
+    &lt;p class="x">Hello&lt;/p>
+    </pre>
+</div>
+
+<p class=advisement>This is an advisement.</p>
+
+<p class=assertion>This is an assertion.</p>
+
+Definitions {#definitions}
+==========================
+
+A <dfn export>widget</dfn> is a thing that can be <dfn>frobnicated</dfn>.
+Every [=widget=] has a <dfn for=widget>frob count</dfn>, initially 0.
+
+<div algorithm>
+    To <dfn>frobnicate</dfn> a [=widget=] |widget| by an integer |n|:
+
+    1. Let |count| be |widget|'s [=widget/frob count=].
+    1. Set |widget|'s [=widget/frob count=] to |count| + |n|.
+    1. Return |count|.
+</div>
+
+The [=frobnicate=] algorithm is used by {{Widget/frobnicate()}}.
+
+<wpt>
+    anchors/anchor-position-001.html
+</wpt>
+
+IDL {#idl}
+==========
+
+<pre class=idl>
+[Exposed=Window]
+interface Widget {
+    constructor();
+    undefined frobnicate(long n);
+    readonly attribute long frobCount;
+};
+</pre>
+
+The <dfn method for=Widget>frobnicate(|n|)</dfn> method steps are to
+[=frobnicate=] [=this=] by |n|.
+
+The <dfn attribute for=Widget>frobCount</dfn> getter steps are to return
+[=this=]'s [=widget/frob count=].
+
+CSS {#css}
+==========
+
+<pre class=propdef>
+Name: frob-color
+Value: <<color>> | auto
+Initial: auto
+Applies to: all elements
+Inherited: yes
+Percentages: n/a
+Computed value: as specified
+Canonical order: per grammar
+Animation type: by computed value
+</pre>
+
+The 'frob-color' property sets the color of a [=widget=].
+
+<pre class=railroad>
+T: frob(
+N: <integer>
+Opt:
+    T: ,
+    N: <color>
+T: )
+</pre>
+
+<table class=data>
+    <thead>
+        <tr><th>Widget<th>Frob count
+    </thead>
+    <tbody>
+        <tr><td>First<td>0
+        <tr><td>Second<td>5
+    </tbody>
+</table>
