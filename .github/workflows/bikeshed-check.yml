@@ -5,7 +5,8 @@ name: Bikeshed check
 # W3C spec generator), then checks the result the way w3c/spec-prod does, with
 # --also-check-css. That catches markup or CSS that a new Bikeshed release
 # starts emitting and the checker doesn't support yet, before spec editors run
-# into it. And the daily run catches a Bikeshed change on days nothing's pushed.
+# into it. And the scheduled runs, twice a day, catch a Bikeshed change even
+# when nothing gets pushed here.
 
 on:
   push:
@@ -13,7 +14,7 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: '17 3 * * *'
+    - cron: '17 3,15 * * *'
 
 permissions:
   contents: read
