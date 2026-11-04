@@ -373,9 +373,6 @@ public class SimpleCommandLineValidator {
 
     private static void setup(String schemaUrl) throws SAXException, Exception {
         setErrorHandler();
-        if (cssCheckingEnabled()) {
-            errorHandler.setLineOffset(-1);
-        }
         errorHandler.setHtml(true);
         errorHandler.start(null);
         validator.setAllowCss(cssCheckingEnabled());
@@ -575,7 +572,7 @@ public class SimpleCommandLineValidator {
     }
 
     private static boolean cssCheckingEnabled() {
-        return forceCSS || alsoCheckCSS;
+        return forceCSS || alsoCheckCSS || skipNonCSS;
     }
 
     private static boolean isCss(File file) {

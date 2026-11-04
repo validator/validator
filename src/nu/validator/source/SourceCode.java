@@ -84,8 +84,8 @@ public final class SourceCode implements CharacterHandler {
         this.locationRecorder = new LocationRecorder(this);
     }
 
-    public void setIsCss() {
-        this.isCss = true;
+    public void setIsCss(boolean isCss) {
+        this.isCss = isCss;
     }
 
     public boolean getIsCss() {

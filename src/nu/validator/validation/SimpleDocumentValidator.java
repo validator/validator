@@ -579,7 +579,7 @@ public class SimpleDocumentValidator {
         Enumeration<InputStream> streams = Collections.enumeration(streamsList);
         is.setByteStream(new SequenceInputStream(streams));
         is.setEncoding(charset);
-        sourceCode.setIsCss();
+        sourceCode.setIsCss(true);
         sourceCode.initialize(is);
         try {
             htmlReader.parse(is);
@@ -591,6 +591,7 @@ public class SimpleDocumentValidator {
      * Parses a document with the text/html parser and validates it.
      */
     private void checkAsHTML(InputSource is) throws IOException, SAXException {
+        sourceCode.setIsCss(false);
         sourceCode.initialize(is);
         try {
             htmlReader.parse(is);
@@ -603,6 +604,7 @@ public class SimpleDocumentValidator {
      */
     private void checkAsXML(InputSource is) throws IOException, SAXException {
         xmlParser.setCharacterHandler(sourceCode);
+        sourceCode.setIsCss(false);
         sourceCode.initialize(is);
         try {
             xmlReader.parse(is);

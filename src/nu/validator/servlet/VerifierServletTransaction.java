@@ -1191,8 +1191,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 Enumeration<InputStream> e = Collections.enumeration(streams);
                 documentInput.setByteStream(new SequenceInputStream(e));
                 documentInput.setEncoding(charset);
-                errorHandler.setLineOffset(-1);
-                sourceCode.setIsCss();
+                sourceCode.setIsCss(true);
                 parser = ParserMode.HTML;
                 loadDocAndSetupParser();
             }

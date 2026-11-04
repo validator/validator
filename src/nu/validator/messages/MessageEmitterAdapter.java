@@ -784,7 +784,8 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         }
 
         if (showSource) {
-            SourceHandler sourceHandler = emitter.startFullSource(lineOffset);
+            SourceHandler sourceHandler = emitter.startFullSource(
+                    effectiveLineOffset());
             if (sourceHandler != null) {
                 sourceCode.emitSource(sourceHandler);
             }
@@ -2152,9 +2153,22 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             int oneBasedFirstLine, int oneBasedFirstColumn,
             int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
             throws SAXException {
+        int offset = effectiveLineOffset();
         emitter.startMessage(type, systemId, (oneBasedFirstLine == -1) ? -1
-                : oneBasedFirstLine + lineOffset, oneBasedFirstColumn,
-                (oneBasedLastLine == -1) ? -1 : oneBasedLastLine + lineOffset,
+                : oneBasedFirstLine + offset, oneBasedFirstColumn,
+                (oneBasedLastLine == -1) ? -1 : oneBasedLastLine + offset,
                 oneBasedLastColumn, exact);
+    }
+
+    /**
+     * Returns the line offset for the document being checked: the configured
+     * one, minus one for a CSS document, which gets checked inside an HTML
+     * wrapper whose first line comes before the CSS.
+     */
+    private int effectiveLineOffset() {
+        if (sourceCode != null && sourceCode.getIsCss()) {
+            return lineOffset - 1;
+        }
+        return lineOffset;
     }
 }

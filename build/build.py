@@ -1344,6 +1344,7 @@ class Release():
             'nu.validator.xml.test.BaseUriTrackerTest',
             'nu.validator.xml.test.PrudentHttpEntityResolverTest',
             'nu.validator.source.test.SourceCodeTest',
+            'nu.validator.validation.test.CssLineOffsetTest',
         ]
         for testClass in testClasses:
             print(f"\nRunning {testClass}...")
@@ -1683,6 +1684,7 @@ class Release():
             'nu.validator.xml.test.BaseUriTrackerTest',
             'nu.validator.xml.test.PrudentHttpEntityResolverTest',
             'nu.validator.source.test.SourceCodeTest',
+            'nu.validator.validation.test.CssLineOffsetTest',
         ]
 
         # Run unit tests with JaCoCo agent
