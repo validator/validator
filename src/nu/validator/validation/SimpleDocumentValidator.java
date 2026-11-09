@@ -397,6 +397,12 @@ public class SimpleDocumentValidator {
                 true);
         if (!noStream) {
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+        } else {
+            // The parser reports errors while it builds the tree, before the tree's events reach the wiretap —
+            // so the location recorder has to get the parser's events as the tree gets built, too.
+            ContentHandler recorder = sourceCode.getLocationRecorder();
+            htmlParser.setTreeBuildingWiretap(recorder,
+                    (LexicalHandler) recorder);
         }
         HashMap<String, String> profileMap = new HashMap<>();
         profileMap.put("html-strict", "warn");

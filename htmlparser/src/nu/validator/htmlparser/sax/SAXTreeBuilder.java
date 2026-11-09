@@ -23,7 +23,9 @@
 
 package nu.validator.htmlparser.sax;
 
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.ext.LexicalHandler;
 
 import nu.validator.htmlparser.impl.HtmlAttributes;
 import nu.validator.htmlparser.impl.TreeBuilder;
@@ -45,23 +47,53 @@ class SAXTreeBuilder extends TreeBuilder<Element> {
 
     private Node cachedTablePreviousSibling = null;
 
+    private ContentHandler wiretapContentHandler = null;
+
+    private LexicalHandler wiretapLexicalHandler = null;
+
     SAXTreeBuilder() {
         super();
     }
 
+    /**
+     * Sets handlers that get, while the tree is being built, the events a
+     * streaming parse would emit at the same points, with the tokenizer as
+     * their locator.
+     *
+     * @param contentHandler the content handler, or null
+     * @param lexicalHandler the lexical handler, or null
+     */
+    void setWiretap(ContentHandler contentHandler,
+            LexicalHandler lexicalHandler) {
+        wiretapContentHandler = contentHandler;
+        wiretapLexicalHandler = lexicalHandler;
+    }
+
     @Override
-    protected void appendComment(Element parent, char[] buf, int start, int length) {
+    protected void appendComment(Element parent, char[] buf, int start, int length)
+            throws SAXException {
         parent.appendChild(new Comment(tokenizer, buf, start, length));
+        if (wiretapLexicalHandler != null) {
+            wiretapLexicalHandler.comment(buf, start, length);
+        }
     }
 
     @Override
-    protected void appendCommentToDocument(char[] buf, int start, int length) {
+    protected void appendCommentToDocument(char[] buf, int start, int length)
+            throws SAXException {
         document.appendChild(new Comment(tokenizer, buf, start, length));
+        if (wiretapLexicalHandler != null) {
+            wiretapLexicalHandler.comment(buf, start, length);
+        }
     }
 
     @Override
-    protected void appendCharacters(Element parent, char[] buf, int start, int length) {
+    protected void appendCharacters(Element parent, char[] buf, int start, int length)
+            throws SAXException {
         parent.appendChild(new Characters(tokenizer, buf, start, length));
+        if (wiretapContentHandler != null) {
+            wiretapContentHandler.characters(buf, start, length);
+        }
     }
 
     @Override
@@ -91,10 +123,15 @@ class SAXTreeBuilder extends TreeBuilder<Element> {
      * @see nu.validator.htmlparser.impl.TreeBuilder#appendDoctypeToDocument(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    protected void appendDoctypeToDocument(String name, String publicIdentifier, String systemIdentifier) {
+    protected void appendDoctypeToDocument(String name, String publicIdentifier, String systemIdentifier)
+            throws SAXException {
          DTD dtd = new DTD(tokenizer, name, publicIdentifier, systemIdentifier);
          dtd.setEndLocator(tokenizer);
          document.appendChild(dtd);
+         if (wiretapLexicalHandler != null) {
+             wiretapLexicalHandler.startDTD(name, publicIdentifier, systemIdentifier);
+             wiretapLexicalHandler.endDTD();
+         }
     }
 
     /**
@@ -124,16 +161,43 @@ class SAXTreeBuilder extends TreeBuilder<Element> {
         document.setEndLocator(tokenizer);
         cachedTable = null;
         cachedTablePreviousSibling = null;
+        if (wiretapContentHandler != null) {
+            wiretapContentHandler.endDocument();
+        }
     }
 
     /**
      * @see nu.validator.htmlparser.impl.TreeBuilder#start()
      */
     @Override
-    protected void start(boolean fragment) {
+    protected void start(boolean fragment) throws SAXException {
         document = new Document(tokenizer);
         cachedTable = null;
         cachedTablePreviousSibling = null;
+        if (wiretapContentHandler != null) {
+            wiretapContentHandler.setDocumentLocator(tokenizer);
+            if (!fragment) {
+                wiretapContentHandler.startDocument();
+            }
+        }
+    }
+
+    @Override
+    protected void elementPushed(String ns, String name, Element node)
+            throws SAXException {
+        if (wiretapContentHandler != null) {
+            wiretapContentHandler.startElement(ns, name, name,
+                    node.getAttributes());
+        }
+    }
+
+    @Override
+    protected void elementPopped(String ns, String name, Element node)
+            throws SAXException {
+        node.setEndLocator(tokenizer);
+        if (wiretapContentHandler != null) {
+            wiretapContentHandler.endElement(ns, name, name);
+        }
     }
 
     @Override
@@ -171,6 +235,9 @@ class SAXTreeBuilder extends TreeBuilder<Element> {
             cachedTablePreviousSibling = child;
         } else {
             stackParent.appendChild(child);
+        }
+        if (wiretapContentHandler != null) {
+            wiretapContentHandler.characters(buf, start, length);
         }
     }
 

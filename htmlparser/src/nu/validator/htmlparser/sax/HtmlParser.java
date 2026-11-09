@@ -99,6 +99,10 @@ public class HtmlParser implements XMLReader {
 
     private LexicalHandler lexicalHandler = null;
 
+    private ContentHandler treeBuildingContentHandler = null;
+
+    private LexicalHandler treeBuildingLexicalHandler = null;
+
     private DTDHandler dtdHandler = null;
 
     private EntityResolver entityResolver = null;
@@ -172,6 +176,8 @@ public class HtmlParser implements XMLReader {
         if (driver == null) {
             if (streamabilityViolationPolicy == XmlViolationPolicy.ALLOW) {
                 this.saxTreeBuilder = new SAXTreeBuilder();
+                this.saxTreeBuilder.setWiretap(treeBuildingContentHandler,
+                        treeBuildingLexicalHandler);
                 this.treeBuilder = this.saxTreeBuilder;
                 this.saxStreamer = null;
                 this.driver = new Driver(newTokenizer(treeBuilder, true));
@@ -568,6 +574,29 @@ public class HtmlParser implements XMLReader {
             if (saxStreamer != null) {
                 saxStreamer.setLexicalHandler(handler);
             }
+        }
+    }
+
+    /**
+     * Sets handlers that get events while the parser builds a tree (that is,
+     * when the streamability violation policy is <code>ALLOW</code>): The
+     * events a streaming parse would emit, at the same points in the input,
+     * and with the tokenizer as their locator. So they report the same
+     * locations as a streaming parse does, interleaved with any errors
+     * reported to the error handler. They don't form a well-formed SAX
+     * stream, since the tree builder can move nodes after creating them;
+     * the handlers set with <code>setContentHandler</code> and
+     * <code>setLexicalHandler</code> get the events for the finished tree.
+     *
+     * @param contentHandler the content handler, or null
+     * @param lexicalHandler the lexical handler, or null
+     */
+    public void setTreeBuildingWiretap(ContentHandler contentHandler,
+            LexicalHandler lexicalHandler) {
+        treeBuildingContentHandler = contentHandler;
+        treeBuildingLexicalHandler = lexicalHandler;
+        if (saxTreeBuilder != null) {
+            saxTreeBuilder.setWiretap(contentHandler, lexicalHandler);
         }
     }
 

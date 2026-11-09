@@ -1345,6 +1345,7 @@ class Release():
             'nu.validator.xml.test.PrudentHttpEntityResolverTest',
             'nu.validator.source.test.SourceCodeTest',
             'nu.validator.validation.test.CssLineOffsetTest',
+            'nu.validator.validation.test.NoStreamLocationTest',
         ]
         for testClass in testClasses:
             print(f"\nRunning {testClass}...")
@@ -1685,6 +1686,7 @@ class Release():
             'nu.validator.xml.test.PrudentHttpEntityResolverTest',
             'nu.validator.source.test.SourceCodeTest',
             'nu.validator.validation.test.CssLineOffsetTest',
+            'nu.validator.validation.test.NoStreamLocationTest',
         ]
 
         # Run unit tests with JaCoCo agent
