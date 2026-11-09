@@ -2081,7 +2081,9 @@ public abstract class TreeBuilder<T> implements TokenHandler,
                                 reconstructTheActiveFormattingElements();
                                 if (TreeBuilder.NOT_FOUND_ON_STACK != findLastInScope("nobr")) {
                                     errFooSeenWhenFooOpen(name);
-                                    adoptionAgencyEndTag("nobr");
+                                    if (!adoptionAgencyEndTag("nobr")) {
+                                        anyOtherEndTagInBody("nobr");
+                                    }
                                     reconstructTheActiveFormattingElements();
                                 }
                                 appendToCurrentNodeAndPushFormattingElementMayFoster(
@@ -3695,30 +3697,8 @@ public abstract class TreeBuilder<T> implements TokenHandler,
                             // else handle like any other tag
                             // CPPONLY: MOZ_FALLTHROUGH;
                         default:
-                            if (isCurrent(name)) {
-                                pop();
-                                break endtagloop;
-                            }
-
-                            eltPos = currentPtr;
-                            for (;;) {
-                                StackNode<T> node = stack[eltPos];
-                                if (node.ns == "http://www.w3.org/1999/xhtml" && node.name == name) {
-                                    generateImpliedEndTagsExceptFor(name);
-                                    if (errorHandler != null
-                                            && !isCurrent(name)) {
-                                        errUnclosedElements(eltPos, name);
-                                    }
-                                    while (currentPtr >= eltPos) {
-                                        pop();
-                                    }
-                                    break endtagloop;
-                                } else if (eltPos == 0 || node.isSpecial()) {
-                                    errStrayEndTag(name);
-                                    break endtagloop;
-                                }
-                                eltPos--;
-                            }
+                            anyOtherEndTagInBody(name);
+                            break endtagloop;
                     }
                     // CPPONLY: MOZ_FALLTHROUGH;
                 case IN_HEAD:
@@ -4431,6 +4411,36 @@ public abstract class TreeBuilder<T> implements TokenHandler,
                 listOfActiveFormattingElements, pos, listPtr - pos);
         assert debugOnlyClearLastListSlot();
         listPtr--;
+    }
+
+    /**
+     * The "any other end tag" entry of the "in body" insertion mode.
+     */
+    private void anyOtherEndTagInBody(@Local String name) throws SAXException {
+        if (isCurrent(name)) {
+            pop();
+            return;
+        }
+
+        int eltPos = currentPtr;
+        for (;;) {
+            StackNode<T> node = stack[eltPos];
+            if (node.ns == "http://www.w3.org/1999/xhtml" && node.name == name) {
+                generateImpliedEndTagsExceptFor(name);
+                if (errorHandler != null
+                        && !isCurrent(name)) {
+                    errUnclosedElements(eltPos, name);
+                }
+                while (currentPtr >= eltPos) {
+                    pop();
+                }
+                return;
+            } else if (eltPos == 0 || node.isSpecial()) {
+                errStrayEndTag(name);
+                return;
+            }
+            eltPos--;
+        }
     }
 
     /**
