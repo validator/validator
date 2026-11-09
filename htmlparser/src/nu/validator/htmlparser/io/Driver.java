@@ -194,10 +194,10 @@ public class Driver implements EncodingDeclarationHandler {
         if (is == null) {
             throw new IllegalArgumentException("InputSource was null.");
         }
+        tokenizer.initLocation(is.getPublicId(), is.getSystemId());
         tokenizer.start();
         confidence = Confidence.TENTATIVE;
         rewindableInputStream = null;
-        tokenizer.initLocation(is.getPublicId(), is.getSystemId());
         this.reader = is.getCharacterStream();
         this.characterEncoding = encodingFromExternalDeclaration(is.getEncoding());
         if (this.reader == null) {
