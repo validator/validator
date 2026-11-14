@@ -966,6 +966,12 @@ public class Assertions extends Checker {
             "textPath", "title", "tref", "tspan", "use", "view", "vkern"
     ));
 
+    private static final String ACTIVE_DESCENDANT_WARNING = "Attribute"
+            + " “aria-activedescendant” value should either refer to a"
+            + " descendant element, or refer to a descendant of an element"
+            + " referenced by attribute “aria-controls”, or be"
+            + " accompanied by attribute “aria-owns”.";
+
     private static final String h1WarningMessage = "Consider using the"
             + " “h1” element as a top-level heading only — or else"
             + " use the “headingoffset” attribute (otherwise, all"
@@ -1231,6 +1237,15 @@ public class Assertions extends Checker {
          */
         public String getActiveDescendant() {
             return activeDescendant;
+        }
+
+        /**
+         * Returns the attributes.
+         *
+         * @return the attributes
+         */
+        public Attributes getAttributes() {
+            return atts;
         }
 
         /**
@@ -1678,6 +1693,19 @@ public class Assertions extends Checker {
     }
 
     /**
+     * Returns the ID of the nearest open element that has one, or null.
+     */
+    private String nearestAncestorId() {
+        for (int i = currentPtr; i > 0; i--) {
+            String id = stack[i].getAttributes().getValue("", "id");
+            if (id != null && !"".equals(id)) {
+                return id;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Returns the stack position of the select element in whose list of
      * options an option element with a parent at the given stack position
      * is, or -1 if that option element is in no select element's list of
@@ -1711,6 +1739,14 @@ public class Assertions extends Checker {
     private Map<StackNode, TaintableLocatorImpl> openMediaElements = new HashMap<>();
 
     private Map<StackNode, Locator> openActiveDescendants = new HashMap<>();
+
+    private LinkedHashSet<IdrefLocator> activeDescendantsWithAriaControls = new LinkedHashSet<>();
+
+    /**
+     * Maps each ID to the ID of the nearest ancestor of its element that has
+     * an ID, or to null if no ancestor has one.
+     */
+    private Map<String, String> idParents = new HashMap<>();
 
     private LinkedHashSet<IdReference> formControlReferences = new LinkedHashSet<>();
 
@@ -1966,6 +2002,24 @@ public class Assertions extends Checker {
                         + idrefLocator.getIdref() + "”, which is not"
                         + " the ID of any element in this document.",
                         idrefLocator.getLocator());
+            }
+        }
+
+        // aria-activedescendant referring to a descendant of an element that
+        // aria-controls refers to
+        for (IdrefLocator idrefLocator : activeDescendantsWithAriaControls) {
+            Set<String> controlled = new HashSet<>(Arrays.asList(
+                    AttributeUtil.split(idrefLocator.getAdditional())));
+            boolean found = false;
+            for (String id = idParents.get(idrefLocator.getIdref()); id != null;
+                    id = idParents.get(id)) {
+                if (controlled.contains(id)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                warn(ACTIVE_DESCENDANT_WARNING, idrefLocator.getLocator());
             }
         }
 
@@ -2258,10 +2312,16 @@ public class Assertions extends Checker {
             }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
-            warn("Attribute “aria-activedescendant” value should "
-                    + "either refer to a descendant element, or should "
-                    + "be accompanied by attribute “aria-owns”.",
-                    locator);
+            String controls = node.getAttributes().getValue("",
+                    "aria-controls");
+            if (controls != null && !"".equals(controls.trim())) {
+                // The value can instead refer to a descendant of an element that aria-controls refers to —
+                // and since that element can come later in the document, check for it in endDocument().
+                activeDescendantsWithAriaControls.add(new IdrefLocator(
+                        locator, node.getActiveDescendant(), controls));
+            } else {
+                warn(ACTIVE_DESCENDANT_WARNING, locator);
+            }
         }
     }
 
@@ -2490,6 +2550,8 @@ public class Assertions extends Checker {
         openLabels.clear();
         openMediaElements.clear();
         openActiveDescendants.clear();
+        activeDescendantsWithAriaControls.clear();
+        idParents.clear();
         ariaOwnsIdsByRole.clear();
         needsAriaOwner.clear();
         formControlReferences.clear();
@@ -5051,6 +5113,12 @@ public class Assertions extends Checker {
             }
         }
         allIds.putAll(ids);
+        if (!ids.isEmpty()) {
+            String parentId = nearestAncestorId();
+            for (String id : ids.keySet()) {
+                idParents.putIfAbsent(id, parentId);
+            }
+        }
 
         // aria-activedescendant accompanied by aria-owns
         if (activeDescendant != null && !"".equals(activeDescendant)) {

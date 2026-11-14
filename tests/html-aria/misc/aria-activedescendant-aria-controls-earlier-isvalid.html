@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>aria-activedescendant in an earlier element aria-controls refers to</title>
+<div id="lb" role="listbox" aria-label="Options">
+  <div role="option" id="opt1" aria-selected="false">One</div>
+  <div role="option" id="opt2" aria-selected="false">Two</div>
+</div>
+<input type="text" id="cb" role="combobox" aria-label="Pick"
+  aria-expanded="true" aria-controls="lb" aria-activedescendant="opt2">
