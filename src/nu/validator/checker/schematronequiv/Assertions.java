@@ -904,6 +904,79 @@ public class Assertions extends Checker {
     }
 
     /**
+     * Map of element names to the implicit roles that ARIA in HTML gives them,
+     * for each element whose implicit role doesn't depend on its attributes or
+     * its context. See implicitRole() for the elements whose role does.
+     */
+    private static final Map<String, String> ARIA_IN_HTML_IMPLICIT_ROLE = new HashMap<>();
+
+    static {
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("address", "group");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("article", "article");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("aside", "complementary");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("b", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("bdi", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("bdo", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("blockquote", "blockquote");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("body", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("button", "button");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("caption", "caption");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("code", "code");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("data", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("datalist", "listbox");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("del", "deletion");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("details", "group");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("dfn", "term");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("dialog", "dialog");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("div", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("em", "emphasis");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("fieldset", "group");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("figure", "figure");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("form", "form");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("h1", "heading");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("h2", "heading");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("h3", "heading");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("h4", "heading");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("h5", "heading");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("h6", "heading");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("hgroup", "group");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("hr", "separator");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("html", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("i", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("ins", "insertion");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("main", "main");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("math", "math");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("menu", "list");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("meter", "meter");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("nav", "navigation");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("ol", "list");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("optgroup", "group");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("output", "status");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("p", "paragraph");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("pre", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("progress", "progressbar");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("q", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("s", "deletion");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("samp", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("search", "search");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("selectedcontent", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("small", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("span", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("strong", "strong");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("sub", "subscript");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("sup", "superscript");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("table", "table");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("tbody", "rowgroup");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("textarea", "textbox");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("tfoot", "rowgroup");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("thead", "rowgroup");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("time", "time");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("tr", "row");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("u", "generic");
+        ARIA_IN_HTML_IMPLICIT_ROLE.put("ul", "list");
+    }
+
+    /**
      * Names of link types that are considered as "External Resource" according to https://html.spec.whatwg.org/multipage/links.html#linkTypes
      */
     private static final String[] EXTERNAL_RESOURCE_LINK_REL = new String[] {
@@ -1869,6 +1942,61 @@ public class Assertions extends Checker {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the implicit role that ARIA in HTML gives an HTML element with
+     * no "role" attribute, or null for an element that has no corresponding
+     * role, or whose implicit role this doesn't determine (e.g., "td", "th",
+     * "select", "option", "img" with an empty "alt", and custom elements).
+     */
+    private String implicitRole(String localName, Attributes atts,
+            StackNode parent) {
+        String role = ARIA_IN_HTML_IMPLICIT_ROLE.get(localName);
+        if (role != null) {
+            return role;
+        }
+        switch (localName) {
+            case "a":
+            case "area":
+                return atts.getIndex("", "href") >= 0 ? "link" : "generic";
+            case "section":
+                return hasNonEmptyAttribute(atts, "aria-label")
+                        || hasNonEmptyAttribute(atts, "aria-labelledby")
+                        || hasNonEmptyAttribute(atts, "title") ? "region"
+                                : "generic";
+            case "header":
+                return isDescendantOfSectioningElement() ? "generic"
+                        : "banner";
+            case "footer":
+                return isDescendantOfSectioningElement() ? "generic"
+                        : "contentinfo";
+            case "img":
+                return hasNonEmptyAttribute(atts, "alt") ? "img" : null;
+            case "li":
+                if (parent == null) {
+                    return null;
+                }
+                List<String> parentRoles = parent.roles;
+                boolean parentIsList = parentRoles == null
+                        ? ("ul".equals(parent.getName())
+                                || "ol".equals(parent.getName())
+                                || "menu".equals(parent.getName()))
+                        : parentRoles.contains("list");
+                return parentIsList ? "listitem" : "generic";
+            case "input":
+                String type = atts.getValue("", "type");
+                type = type == null ? "text" : type.trim().toLowerCase();
+                return INPUT_TYPES_WITH_IMPLICIT_ROLE.get(type);
+            default:
+                return null;
+        }
+    }
+
+    private static boolean hasNonEmptyAttribute(Attributes atts,
+            String name) {
+        String value = atts.getValue("", name);
+        return value != null && !"".equals(value.trim());
     }
 
     // Per-spec, these are warnings rather than errors — for now.
@@ -3492,6 +3620,22 @@ public class Assertions extends Checker {
                                 + " element with “role=main”.");
                     }
                     hasVisibleMainRole = true;
+                }
+            } else {
+                String implicitRole = implicitRole(localName, atts, parent);
+                if (implicitRole != null) {
+                    for (Map.Entry<String, String[]> attributeAndRoles : ARIA_DEPRECATED_ATTRIBUTES_BY_ROLE.entrySet()) {
+                        if (atts.getIndex("", attributeAndRoles.getKey()) >= 0
+                                && Arrays.binarySearch(
+                                        attributeAndRoles.getValue(),
+                                        implicitRole) >= 0) {
+                            warn("The “" + attributeAndRoles.getKey()
+                                    + "” attribute should not be used on"
+                                    + " element “" + localName + "”, since"
+                                    + " its implicit role is “"
+                                    + implicitRole + "”.");
+                        }
+                    }
                 }
             }
 
