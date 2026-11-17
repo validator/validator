@@ -860,8 +860,11 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
 
     if _type == "jar":
         classpath_item = []
-        classpath_item.append(os.pathsep.join(extrasJarPaths()))
+        # vnu.jar goes first: apache-log4j-extras carries its own copy of
+        # the log4j 1.2.17 core classes, which would otherwise shadow the
+        # reload4j ones in vnu.jar.
         classpath_item.append(vnuJar)
+        classpath_item.append(os.pathsep.join(extrasJarPaths()))
         args.append('-classpath')
         args.append(os.pathsep.join(classpath_item))
 
