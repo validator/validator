@@ -8,6 +8,8 @@ This test verifies that the `nu.validator:validator` Maven artifact works correc
 2. **Shaded classes present** - Confirms that jing-trang classes are correctly shaded to `nu.validator.vendor.thaiopensource.*`
 3. **No unshaded classes** - Verifies that the original `com.thaiopensource.*` classes are NOT present (to avoid conflicts)
 4. **Basic validation** - Tests that HTML validation works without `NoClassDefFoundError`
+5. **No log4j** - Verifies that the artifact doesn't bring in log4j (reload4j is an optional dependency)
+6. **Command-line validator** - Runs `nu.validator.client.SimpleCommandLineValidator` with the artifact's classpath, on a file and on a document fetched by URL, and checks that it writes nothing to stderr
 
 ## Running locally
 

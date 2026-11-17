@@ -1349,6 +1349,7 @@ class Release():
             'nu.validator.source.test.SourceCodeTest',
             'nu.validator.validation.test.CssLineOffsetTest',
             'nu.validator.validation.test.NoStreamLocationTest',
+            'nu.validator.validation.test.LoggingTest',
         ]
         for testClass in testClasses:
             print(f"\nRunning {testClass}...")
@@ -1690,6 +1691,7 @@ class Release():
             'nu.validator.source.test.SourceCodeTest',
             'nu.validator.validation.test.CssLineOffsetTest',
             'nu.validator.validation.test.NoStreamLocationTest',
+            'nu.validator.validation.test.LoggingTest',
         ]
 
         # Run unit tests with JaCoCo agent

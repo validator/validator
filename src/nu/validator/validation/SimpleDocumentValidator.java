@@ -90,14 +90,11 @@ import nu.validator.vendor.thaiopensource.validate.prop.rng.RngProperty;
 import nu.validator.vendor.thaiopensource.validate.rng.CompactSchemaReader;
 import nu.validator.vendor.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Simple validation interface.
@@ -123,6 +120,8 @@ public class SimpleDocumentValidator {
     private TypedInputSource documentInput;
 
     private PrudentHttpEntityResolver httpRes;
+
+    private boolean logUrls;
 
     private XMLReader htmlReader;
 
@@ -164,6 +163,7 @@ public class SimpleDocumentValidator {
                         new PrudentHttpEntityResolver(-1, true, errorHandler);
                     httpResolver.setAllowRnc(true);
                     httpResolver.setAllowGenericXml(true);
+                    httpResolver.setLogUrls(logUrls);
                     schemaInput = (TypedInputSource) httpResolver.resolveEntity(null, schemaUrl);
                 } else if (schemaUrl.startsWith("file:")) {
                     schemaInput = new TypedInputSource();
@@ -208,20 +208,21 @@ public class SimpleDocumentValidator {
     private static final byte[] CSS_CHECKING_EPILOG = "\n</style>".getBytes();
 
     public SimpleDocumentValidator() {
-        this(true, true, true);
+        this(true, true);
     }
 
     /* *
      * Constructs a <code>SimpleDocumentValidator</code>.
      *
-     * @param initializeLog4j <code>true</code> to initialize log4j,
-     * <code>false</code> to not initialize log4j. Use this parameter to prevent
-     * <code>SimpleDocumentValidator</code> from overwriting an existing log4j
-     * configuration when calling <code>SimpleDocumentValidator</code> from an
-     * application that already has log4j configured.
+     * @param initializeLog4j ignored. <code>SimpleDocumentValidator</code>
+     * doesn't configure logging; it logs through SLF4J, to whatever logging
+     * backend the application that calls it uses.
+     *
+     * @deprecated Use <code>SimpleDocumentValidator()</code>.
      */
+    @Deprecated
     public SimpleDocumentValidator(boolean initializeLog4j) {
-        this(initializeLog4j, true, true);
+        this(true, true);
     }
 
     public SourceCode getSourceCode() {
@@ -235,12 +236,6 @@ public class SimpleDocumentValidator {
     /* *
      * Constructs a <code>SimpleDocumentValidator</code>.
      *
-     * @param initializeLog4j <code>true</code> to initialize log4j,
-     * <code>false</code> to not initialize log4j. Use this parameter to prevent
-     * <code>SimpleDocumentValidator</code> from overwriting an existing log4j
-     * configuration when calling <code>SimpleDocumentValidator</code> from an
-     * application that already has log4j configured.
-     *
      * @param logUrls <code>true</code> to log the URLs of http/https input
      * documents, <code>false</code> to not log the URLs. Use this
      * parameter to prevent <code>SimpleDocumentValidator</code> from
@@ -252,31 +247,32 @@ public class SimpleDocumentValidator {
      * parameter to prevent <code>SimpleDocumentValidator</code> from
      * performing language detection.
      */
-    public SimpleDocumentValidator(boolean initializeLog4j, boolean logUrls,
+    public SimpleDocumentValidator(boolean logUrls,
             boolean enableLanguageDetection) {
         System.setProperty("nu.validator.checker.enableLangDetection", "0");
         if (enableLanguageDetection) {
             System.setProperty("nu.validator.checker.enableLangDetection", "1");
         }
-        if (initializeLog4j) {
-            Properties properties = new Properties();
-            try {
-                properties.load(
-                        SimpleDocumentValidator.class.getClassLoader().getResourceAsStream(
-                                "nu/validator/localentities/files/log4j.properties"));
-                if (!logUrls) {
-                    properties.setProperty(
-                            "log4j.logger.nu.validator.xml.PrudentHttpEntityResolver",
-                            "FATAL");
-                }
-                PropertyConfigurator.configure(properties);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        this.logUrls = logUrls;
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
+    }
+
+    /* *
+     * Constructs a <code>SimpleDocumentValidator</code>.
+     *
+     * @param initializeLog4j ignored. <code>SimpleDocumentValidator</code>
+     * doesn't configure logging; it logs through SLF4J, to whatever logging
+     * backend the application that calls it uses.
+     *
+     * @deprecated Use
+     * <code>SimpleDocumentValidator(logUrls, enableLanguageDetection)</code>.
+     */
+    @Deprecated
+    public SimpleDocumentValidator(boolean initializeLog4j, boolean logUrls,
+            boolean enableLanguageDetection) {
+        this(logUrls, enableLanguageDetection);
     }
 
     /* *
@@ -548,6 +544,7 @@ public class SimpleDocumentValidator {
         }
         httpRes.setAllowHtml(true);
         httpRes.setUserAgent(userAgent);
+        httpRes.setLogUrls(logUrls);
         if (additionalHeaders != null && !additionalHeaders.isEmpty()) {
             httpRes.setAdditionalRequestHeaders(additionalHeaders);
         }

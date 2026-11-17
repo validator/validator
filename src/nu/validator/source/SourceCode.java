@@ -34,14 +34,15 @@ import nu.validator.collections.TailBiasedSortedSet;
 import nu.validator.htmlparser.common.CharacterHandler;
 import nu.validator.xml.TypedInputSource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 public final class SourceCode implements CharacterHandler {
-    private static final Logger log4j = Logger.getLogger(SourceCode.class);
+    private static final Logger log4j = LoggerFactory.getLogger(SourceCode.class);
 
     private static Location[] SOURCE_LOCATION_ARRAY_TYPE = new Location[0];
 
@@ -183,7 +184,7 @@ public final class SourceCode implements CharacterHandler {
     }
 
     public void addLocatorLocation(int oneBasedLine, int oneBasedColumn) {
-        log4j.debug(oneBasedLine + ", " + oneBasedColumn);
+        log4j.trace("{}, {}", oneBasedLine, oneBasedColumn);
         reverseSortedLocations.add(new Location(this, oneBasedLine - 1,
                 oneBasedColumn - 1));
     }

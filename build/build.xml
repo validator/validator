@@ -181,7 +181,10 @@ DEALINGS IN THE SOFTWARE.
   <property name="javax-jms-api-version" value="2.0.1" />
   <property name="jsr305-version" value="3.0.2" />
   <property name="portlet-api-version" value="3.0.1" />
-  <property name="slf4j-api-version" value="1.7.29" />
+  <!-- vnu.jar and the war bundle SLF4J 1.7, so that an application that
+       uses SLF4J 2 with a provider of its own gets no warning about a
+       second provider. -->
+  <property name="slf4j-api-version" value="1.7.36" />
   <property name="slf4j-reload4j-version" value="1.7.36" />
   <target name="dl-deps-modules" unless="${offline}">
     <echo>Downloading dependencies (modules dependencies)</echo>
@@ -342,6 +345,7 @@ DEALINGS IN THE SOFTWARE.
       <lib file="${depsDir}/jchardet-${jchardet-version}.jar"/>
       <lib file="${depsDir}/reload4j-${reload4j-version}.jar"/>
       <lib file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
+      <lib file="${depsDir}/slf4j-reload4j-${slf4j-reload4j-version}.jar"/>
       <lib file="${depsDir}/jakarta.json-${jakarta.json-version}.jar"/>
       <lib file="${depsDir}/jakarta.servlet-api-${jakarta.servlet-api-version}.jar"/>
       <!-- PrudentHttpEntityResolver and VerifierServletTransaction use the
@@ -380,6 +384,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="jetty-http-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-io-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="reload4j-${reload4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="slf4j-api-${slf4j-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="htmlunit-csp-${htmlunit-csp-version}.jar" />
     <pathelement location="css-validator/css-validator.jar"/>
     <pathelement location="${jarsDir}/galimatias.jar"/>
@@ -490,6 +495,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jakarta.servlet-api-${jakarta.servlet-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="reload4j-${reload4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="slf4j-api-${slf4j-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="htmlunit-csp-${htmlunit-csp-version}.jar" />
     <pathelement location="css-validator/css-validator.jar"/>
     <pathelement location="${jarsDir}/galimatias.jar"/>
@@ -542,6 +548,7 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="jetty-ee10-servlet-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="reload4j-${reload4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="slf4j-api-${slf4j-api-version}.jar" />
     <pathelement path="${validator.build.basedir}/core/classes/"/>
   </path>
 
@@ -778,7 +785,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging-version}"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="jakarta.servlet" artifactId="jakarta.servlet-api" version="${jakarta.servlet-api-version}"/>
-      <dependency groupId="ch.qos.reload4j" artifactId="reload4j" version="${reload4j-version}"/>
+      <dependency groupId="ch.qos.reload4j" artifactId="reload4j" version="${reload4j-version}" optional="true"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-client" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="${jetty-version}"/>

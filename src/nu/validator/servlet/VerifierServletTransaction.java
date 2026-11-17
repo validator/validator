@@ -138,7 +138,8 @@ import nu.validator.vendor.thaiopensource.validate.prop.rng.RngProperty;
 import nu.validator.vendor.thaiopensource.validate.prop.wrap.WrapProperty;
 import nu.validator.vendor.thaiopensource.validate.rng.CompactSchemaReader;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibm.icu.text.Normalizer;
 
@@ -153,7 +154,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN, GNU
     }
 
-    private static final Logger log4j = Logger.getLogger(VerifierServletTransaction.class);
+    private static final Logger log4j = LoggerFactory.getLogger(VerifierServletTransaction.class);
 
     private static final Pattern SPACE = Pattern.compile("\\s+");
 
@@ -1977,7 +1978,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         schemaInput = (TypedInputSource) resolver.resolveEntity(
                 null, url);
         } catch (ClassCastException e) {
-            log4j.fatal(url, e);
+            log4j.error(url, e);
             throw e;
         }
         SchemaReader sr = null;
