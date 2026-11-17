@@ -13,7 +13,7 @@
   <script crossorigin="" defer="" src="https://resources.whatwg.org/commit-snapshot-shortcut-key.js"></script>
   <header id="head" class="head with-buttons">
    <a href="https://whatwg.org/" class="logo"><img width="100" alt="WHATWG" crossorigin="" class="darkmode-aware" src="https://resources.whatwg.org/logo.svg" height="100"></a>
-   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">16 November 2026</span></p></hgroup>
+   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">17 November 2026</span></p></hgroup>
    
    <nav>
     
@@ -32,7 +32,7 @@
     <div>
      <a href="https://github.com/whatwg/html" class="changes"><span><strong>Contribute on GitHub</strong> <code>whatwg/html repository</code></span></a>
      <a href="https://github.com/whatwg/html/commits" class="changes"><span><strong>Commits</strong> <code>on GitHub</code></span></a>
-     <a id="commit-snapshot-link" href="/commit-snapshots/efcc0bcdec596651e2cb316ab076c0bdc7c4d120/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
+     <a id="commit-snapshot-link" href="/commit-snapshots/823898c0c763fb4026c1518208e1b60d7c18315e/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
     </div>
     <div>
      <a href="https://github.com/whatwg/html/issues" class="feedback"><span><strong>Open Issues</strong> <code>filed on GitHub</code></span></a>
@@ -59596,13 +59596,12 @@ END:VCARD</pre>
   <h4 id="user-activation-data-model"><span class="secno">6.4.1</span> Data model<a href="#user-activation-data-model" class="self-link"></a></h4>
 
   <div data-var-scope="">
-  <p>For the purpose of tracking user activation, each <code id="user-activation-data-model:window"><a href="#window">Window</a></code> <var>W</var> has two
-  relevant values:</p>
+  <p>For the purpose of tracking user activation, each <code id="user-activation-data-model:window"><a href="#window">Window</a></code> <var>W</var> has the
+  following relevant values:</p>
 
   <ul><li><p>A <dfn id="last-activation-timestamp">last activation timestamp</dfn>, which is either a
    <code id="user-activation-data-model:domhighrestimestamp"><a data-x-internal="domhighrestimestamp" href="https://w3c.github.io/hr-time/#dom-domhighrestimestamp">DOMHighResTimeStamp</a></code>, positive infinity (indicating that <var>W</var> has never been
-   activated), or negative infinity (indicating that the activation has been <a href="#consume-user-activation" id="user-activation-data-model:consume-user-activation">consumed</a>). Initially positive infinity.</p></li><li><p>A <dfn id="last-history-action-activation-timestamp">last history-action activation timestamp</dfn>, which is either a
-   <code id="user-activation-data-model:domhighrestimestamp-2"><a data-x-internal="domhighrestimestamp" href="https://w3c.github.io/hr-time/#dom-domhighrestimestamp">DOMHighResTimeStamp</a></code> or positive infinity, initially positive infinity.</p></li></ul>
+   activated), or negative infinity (indicating that the activation has been <a href="#consume-user-activation" id="user-activation-data-model:consume-user-activation">consumed</a>). Initially positive infinity.</p></li><li><p>A <dfn id="has-history-action-activation">has history-action activation</dfn> boolean, initially false.</p></li><li><p>A <dfn id="has-sticky-activation">has sticky activation</dfn> boolean, initially false.</p></li></ul>
   </div>
 
   <p>A user agent also defines a <dfn id="transient-activation-duration">transient activation duration</dfn>, which is a constant
@@ -59617,19 +59616,19 @@ END:VCARD</pre>
 
   <dl><dt><dfn id="sticky-activation" data-export="">Sticky activation</dfn></dt><dd>
     <div data-algorithm="">
-    <p>When the <a id="user-activation-data-model:current-high-resolution-time" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" data-x-internal="current-high-resolution-time">current high resolution time</a> given <var>W</var> is greater than or
-    equal to the <a href="#last-activation-timestamp" id="user-activation-data-model:last-activation-timestamp">last activation timestamp</a> in <var>W</var>, <var>W</var> is said to
+    <p>When <var>W</var>'s <a href="#has-sticky-activation" id="user-activation-data-model:has-sticky-activation">has sticky activation</a> is true, then <var>W</var> is said to
     have <a href="#sticky-activation" id="user-activation-data-model:sticky-activation">sticky activation</a>.</p>
     </div>
 
     <p>This is <var>W</var>'s historical activation state, indicating whether the user has ever
     interacted in <var>W</var>. It starts false, then changes to true (and never changes back to
-    false) when <var>W</var> gets the very first <a href="#activation-notification" id="user-activation-data-model:activation-notification">activation notification</a>.</p>
+    false) when <var>W</var> gets the very first <a href="#activation-notification" id="user-activation-data-model:activation-notification">activation notification</a>. It is also
+    carried over between windows for same-origin navigations, reloads, and traversals (including <a href="#note-sticky-activation-carry-over">during reactivation from bfcache</a>).</p>
    </dd><dt><dfn id="transient-activation" data-export="">Transient activation</dfn></dt><dd>
     <div data-algorithm="">
-    <p>When the <a id="user-activation-data-model:current-high-resolution-time-2" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" data-x-internal="current-high-resolution-time">current high resolution time</a> given <var>W</var> is greater than or
-    equal to the <a href="#last-activation-timestamp" id="user-activation-data-model:last-activation-timestamp-2">last activation timestamp</a> in <var>W</var>, and less than the
-    <a href="#last-activation-timestamp" id="user-activation-data-model:last-activation-timestamp-3">last activation timestamp</a> in <var>W</var> plus the <a href="#transient-activation-duration" id="user-activation-data-model:transient-activation-duration-2">transient activation
+    <p>When the <a id="user-activation-data-model:current-high-resolution-time" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" data-x-internal="current-high-resolution-time">current high resolution time</a> given <var>W</var> is greater than or
+    equal to the <a href="#last-activation-timestamp" id="user-activation-data-model:last-activation-timestamp">last activation timestamp</a> in <var>W</var>, and less than the
+    <a href="#last-activation-timestamp" id="user-activation-data-model:last-activation-timestamp-2">last activation timestamp</a> in <var>W</var> plus the <a href="#transient-activation-duration" id="user-activation-data-model:transient-activation-duration-2">transient activation
     duration</a>, then <var>W</var> is said to have <a href="#transient-activation" id="user-activation-data-model:transient-activation">transient activation</a>.</p>
     </div>
 
@@ -59644,9 +59643,8 @@ END:VCARD</pre>
     </div>
    </dd><dt><dfn id="history-action-activation">History-action activation</dfn></dt><dd>
     <div data-algorithm="">
-    <p>When the <a href="#last-history-action-activation-timestamp" id="user-activation-data-model:last-history-action-activation-timestamp">last history-action activation timestamp</a> of <var>W</var> is not equal
-    to the <a href="#last-activation-timestamp" id="user-activation-data-model:last-activation-timestamp-4">last activation timestamp</a> of <var>W</var>, then <var>W</var> is said to have
-    <a href="#history-action-activation" id="user-activation-data-model:history-action-activation">history-action activation</a>.</p>
+    <p>When <var>W</var>'s <a href="#has-history-action-activation" id="user-activation-data-model:has-history-action-activation">has history-action activation</a> is true, then <var>W</var> is
+    said to have <a href="#history-action-activation" id="user-activation-data-model:history-action-activation">history-action activation</a>.</p>
     </div>
 
     <p>This is a special variant of user activation, used to allow access to certain session history
@@ -59658,16 +59656,14 @@ END:VCARD</pre>
    </dd></dl>
   </div>
 
-  <p class="note">The <a href="#last-activation-timestamp" id="user-activation-data-model:last-activation-timestamp-5">last activation timestamp</a> and <a href="#last-history-action-activation-timestamp" id="user-activation-data-model:last-history-action-activation-timestamp-2">last history-action
-  activation timestamp</a> are retained even after the <code id="user-activation-data-model:document"><a href="#document">Document</a></code> changes its
-  <a href="#fully-active" id="user-activation-data-model:fully-active">fully active</a> status (e.g., after navigating away from a <code id="user-activation-data-model:document-2"><a href="#document">Document</a></code>, or
-  navigating to a cached <code id="user-activation-data-model:document-3"><a href="#document">Document</a></code>). This means <a href="#sticky-activation" id="user-activation-data-model:sticky-activation-2">sticky activation</a> state
-  spans multiple navigations as long as the same <code id="user-activation-data-model:document-4"><a href="#document">Document</a></code> gets reused. For the
-  transient activation state, the original <a href="#activation-expiry" id="user-activation-data-model:activation-expiry">expiry</a> time
-  remains unchanged (i.e., the state still expires within the <a href="#transient-activation-duration" id="user-activation-data-model:transient-activation-duration-4">transient activation
-  duration</a> limit from the original <a href="#activation-triggering-input-event" id="user-activation-data-model:activation-triggering-input-event">activation triggering input event</a>). It is
-  important to consider this when deciding whether to base certain things off <a href="#sticky-activation" id="user-activation-data-model:sticky-activation-3">sticky
-  activation</a> or <a href="#transient-activation" id="user-activation-data-model:transient-activation-4">transient activation</a>.</p>
+  <p class="note">The underlying values are retained even after the <code id="user-activation-data-model:document"><a href="#document">Document</a></code> changes
+  its <a href="#fully-active" id="user-activation-data-model:fully-active">fully active</a> status (e.g., after navigating away from a <code id="user-activation-data-model:document-2"><a href="#document">Document</a></code>, or
+  navigating to a cached <code id="user-activation-data-model:document-3"><a href="#document">Document</a></code>). This means <a href="#sticky-activation" id="user-activation-data-model:sticky-activation-2">sticky activation</a> and
+  <a href="#history-action-activation" id="user-activation-data-model:history-action-activation-2">history-action activation</a> span multiple navigations as long as the same
+  <code id="user-activation-data-model:document-4"><a href="#document">Document</a></code> gets reused. For the transient activation state, the original <a href="#activation-expiry" id="user-activation-data-model:activation-expiry">expiry</a> time remains unchanged (i.e., the state still expires
+  within the <a href="#transient-activation-duration" id="user-activation-data-model:transient-activation-duration-4">transient activation duration</a> limit from the original <a href="#activation-triggering-input-event" id="user-activation-data-model:activation-triggering-input-event">activation
+  triggering input event</a>). It is important to consider this when deciding what type of
+  activation to base certain things on.</p>
 
   <h4 id="user-activation-processing-model"><span class="secno">6.4.2</span> Processing model<a href="#user-activation-processing-model" class="self-link"></a></h4>
 
@@ -59682,10 +59678,10 @@ END:VCARD</pre>
    navigables</a>, filtered to include only those <a href="#navigable" id="user-activation-processing-model:navigable">navigables</a>
    whose <a href="#nav-document" id="user-activation-processing-model:nav-document">active document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="user-activation-processing-model:concept-document-origin" data-x-internal="concept-document-origin">origin</a> is <a href="#same-origin" id="user-activation-processing-model:same-origin">same origin</a> with
    <var>document</var>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="user-activation-processing-model:concept-document-origin-2" data-x-internal="concept-document-origin">origin</a>.</p></li><li>
-    <p><a href="https://infra.spec.whatwg.org/#list-iterate" id="user-activation-processing-model:list-iterate" data-x-internal="list-iterate">For each</a> <var>window</var> in <var>windows</var>:</p>
+    <p><a href="https://infra.spec.whatwg.org/#list-iterate" id="user-activation-processing-model:list-iterate" data-x-internal="list-iterate">For each</a> <var>window</var> of <var>windows</var>:</p>
 
     <ol><li><p>Set <var>window</var>'s <a href="#last-activation-timestamp" id="user-activation-processing-model:last-activation-timestamp">last activation timestamp</a> to the <a id="user-activation-processing-model:current-high-resolution-time" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" data-x-internal="current-high-resolution-time">current
-     high resolution time</a>.</p></li><li><p><a href="#notify-the-close-watcher-manager-about-user-activation" id="user-activation-processing-model:notify-the-close-watcher-manager-about-user-activation">Notify the close watcher manager about user activation</a> given
+     high resolution time</a>.</p></li><li><p>Set <var>window</var>'s <a href="#has-history-action-activation" id="user-activation-processing-model:has-history-action-activation">has history-action activation</a> to true.</p></li><li><p>Set <var>window</var>'s <a href="#has-sticky-activation" id="user-activation-processing-model:has-sticky-activation">has sticky activation</a> to true.</p></li><li><p><a href="#notify-the-close-watcher-manager-about-user-activation" id="user-activation-processing-model:notify-the-close-watcher-manager-about-user-activation">Notify the close watcher manager about user activation</a> given
      <var>window</var>.</p></li></ol>
    </li></ol>
   </div>
@@ -59709,7 +59705,7 @@ END:VCARD</pre>
    <a href="#nav-top" id="user-activation-processing-model:nav-top">top-level traversable</a>.</p></li><li><p>Let <var>navigables</var> be the <a href="#inclusive-descendant-navigables" id="user-activation-processing-model:inclusive-descendant-navigables">inclusive descendant navigables</a> of
    <var>top</var>'s <a href="#nav-document" id="user-activation-processing-model:nav-document-2">active document</a>.</p></li><li><p>Let <var>windows</var> be the list of <code id="user-activation-processing-model:window-2"><a href="#window">Window</a></code> objects constructed by taking
    the <a href="#nav-window" id="user-activation-processing-model:nav-window-3">active window</a> of each item in
-   <var>navigables</var>.</p></li><li><p><a href="https://infra.spec.whatwg.org/#list-iterate" id="user-activation-processing-model:list-iterate-2" data-x-internal="list-iterate">For each</a> <var>window</var> in <var>windows</var>, if
+   <var>navigables</var>.</p></li><li><p><a href="https://infra.spec.whatwg.org/#list-iterate" id="user-activation-processing-model:list-iterate-2" data-x-internal="list-iterate">For each</a> <var>window</var> of <var>windows</var>, if
    <var>window</var>'s <a href="#last-activation-timestamp" id="user-activation-processing-model:last-activation-timestamp-2">last activation timestamp</a> is not positive infinity, then set
    <var>window</var>'s <a href="#last-activation-timestamp" id="user-activation-processing-model:last-activation-timestamp-3">last activation timestamp</a> to negative infinity.</p></li></ol>
   </div>
@@ -59724,9 +59720,8 @@ END:VCARD</pre>
    <a href="#nav-top" id="user-activation-processing-model:nav-top-2">top-level traversable</a>.</p></li><li><p>Let <var>navigables</var> be the <a href="#inclusive-descendant-navigables" id="user-activation-processing-model:inclusive-descendant-navigables-2">inclusive descendant navigables</a> of
    <var>top</var>'s <a href="#nav-document" id="user-activation-processing-model:nav-document-3">active document</a>.</p></li><li><p>Let <var>windows</var> be the list of <code id="user-activation-processing-model:window-4"><a href="#window">Window</a></code> objects constructed by taking
    the <a href="#nav-window" id="user-activation-processing-model:nav-window-4">active window</a> of each item in
-   <var>navigables</var>.</p></li><li><p><a href="https://infra.spec.whatwg.org/#list-iterate" id="user-activation-processing-model:list-iterate-3" data-x-internal="list-iterate">For each</a> <var>window</var> in <var>windows</var>, set
-   <var>window</var>'s <a href="#last-history-action-activation-timestamp" id="user-activation-processing-model:last-history-action-activation-timestamp">last history-action activation timestamp</a> to <var>window</var>'s
-   <a href="#last-activation-timestamp" id="user-activation-processing-model:last-activation-timestamp-4">last activation timestamp</a>.</p></li></ol>
+   <var>navigables</var>.</p></li><li><p><a href="https://infra.spec.whatwg.org/#list-iterate" id="user-activation-processing-model:list-iterate-3" data-x-internal="list-iterate">For each</a> <var>window</var> of <var>windows</var>, set
+   <var>window</var>'s <a href="#has-history-action-activation" id="user-activation-processing-model:has-history-action-activation-2">has history-action activation</a> to false.</p></li></ol>
   </div>
 
   <p class="note">Note the asymmetry in the sets of <a href="#browsing-context" id="user-activation-processing-model:browsing-context">browsing
@@ -72526,17 +72521,24 @@ forwardButton<c- p="">.</c->disabled <c- o="">=</c-> <c- o="">!</c->navigation<c
     <p class="note">A string is treated as HTML. It's used to store the source of an <a href="#an-iframe-srcdoc-document" id="document-state:an-iframe-srcdoc-document"><code>iframe</code> <code>srcdoc</code> document</a>.</p>
    </li><li><p>A <dfn data-dfn-for="document state" id="document-state-reload-pending">reload pending</dfn>
    boolean, initially false.</p></li><li><p>An <dfn data-dfn-for="document state" id="document-state-ever-populated">ever populated</dfn>
-   boolean, initially false.</p></li><li><p id="she-bc-name">A <dfn data-dfn-for="document
+   boolean, initially false.</p></li><li>
+    <p>A <dfn data-dfn-for="document state" id="document-state-created-via-cross-origin-redirects">was
+    created via cross-origin redirects</dfn> boolean, initially false.</p>
+
+    <p class="note">This is set to true if a <code id="document-state:document-13"><a href="#document">Document</a></code> whose <a href="#was-created-via-cross-origin-redirects" id="document-state:was-created-via-cross-origin-redirects">was created via
+    cross-origin redirects</a> is true was ever stored in the <a href="#document-state-document" id="document-state:document-state-document-2">document</a>. It is never set back to false, so it also
+    applies to later navigations that reuse the same document state.</p>
+   </li><li><p id="she-bc-name">A <dfn data-dfn-for="document
    state" id="document-state-nav-target-name">navigable target name</dfn> string, initially the empty string.</p></li><li><p>A <dfn data-dfn-for="document state" id="document-state-not-restored-reasons">not restored
    reasons</dfn>, a <a href="#nrr-struct" id="document-state:nrr-struct">not restored reasons</a> or null, initially
    null.</p></li></ul>
 
-  <p>User agents may <a href="#destroy-a-document-and-its-descendants" id="document-state:destroy-a-document-and-its-descendants">destroy a document and its descendants</a> given the <a href="#document-state-document" id="document-state:document-state-document-2">documents</a> of <a href="#document-state-2" id="document-state:document-state-2">document
-  states</a> with non-null <a href="#document-state-document" id="document-state:document-state-document-3">documents</a>, as long as
-  the <code id="document-state:document-13"><a href="#document">Document</a></code> is not <a href="#fully-active" id="document-state:fully-active-2">fully active</a>.</p>
+  <p>User agents may <a href="#destroy-a-document-and-its-descendants" id="document-state:destroy-a-document-and-its-descendants">destroy a document and its descendants</a> given the <a href="#document-state-document" id="document-state:document-state-document-3">documents</a> of <a href="#document-state-2" id="document-state:document-state-2">document
+  states</a> with non-null <a href="#document-state-document" id="document-state:document-state-document-4">documents</a>, as long as
+  the <code id="document-state:document-14"><a href="#document">Document</a></code> is not <a href="#fully-active" id="document-state:fully-active-2">fully active</a>.</p>
 
   <p>Apart from that restriction, this standard does not specify when user agents should destroy
-  the <a href="#document-state-document" id="document-state:document-state-document-4">document</a> stored in a <a href="#document-state-2" id="document-state:document-state-2-2">document
+  the <a href="#document-state-document" id="document-state:document-state-document-5">document</a> stored in a <a href="#document-state-2" id="document-state:document-state-2-2">document
   state</a>, versus keeping it cached.</p>
 
   <hr>
@@ -72582,11 +72584,11 @@ forwardButton<c- p="">.</c->disabled <c- o="">=</c-> <c- o="">!</c->navigation<c
 
   <hr>
 
-  <p>A <code id="document-state:document-14"><a href="#document">Document</a></code> has a <dfn id="latest-entry">latest entry</dfn>, a <a href="#session-history-entry" id="document-state:session-history-entry-5">session history entry</a> or
+  <p>A <code id="document-state:document-15"><a href="#document">Document</a></code> has a <dfn id="latest-entry">latest entry</dfn>, a <a href="#session-history-entry" id="document-state:session-history-entry-5">session history entry</a> or
   null.</p>
 
   <p class="note">This is the entry that was most recently represented by a given
-  <code id="document-state:document-15"><a href="#document">Document</a></code>. A single <code id="document-state:document-16"><a href="#document">Document</a></code> can represent many <a href="#session-history-entry" id="document-state:session-history-entry-6">session history entries</a> over time, as many contiguous <a href="#session-history-entry" id="document-state:session-history-entry-7">session history entries</a> can share the same <a href="#she-document-state" id="document-state:she-document-state-5">document state</a> as explained above.</p>
+  <code id="document-state:document-16"><a href="#document">Document</a></code>. A single <code id="document-state:document-17"><a href="#document">Document</a></code> can represent many <a href="#session-history-entry" id="document-state:session-history-entry-6">session history entries</a> over time, as many contiguous <a href="#session-history-entry" id="document-state:session-history-entry-7">session history entries</a> can share the same <a href="#she-document-state" id="document-state:she-document-state-5">document state</a> as explained above.</p>
 
 
   <h5 id="centralized-modifications-of-session-history"><span class="secno">7.4.1.3</span> Centralized modifications of session history<a href="#centralized-modifications-of-session-history" class="self-link"></a></h5>
@@ -74048,25 +74050,33 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
       <ol><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-13">document state</a>'s
        <a href="#document-state-ever-populated" id="populating-a-session-history-entry:document-state-ever-populated">ever populated</a> to true.</p></li><li>
+        <p>If <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-14">document state</a>'s <a href="#document-state-document" id="populating-a-session-history-entry:document-state-document-11">document</a>'s <a href="#was-created-via-cross-origin-redirects" id="populating-a-session-history-entry:was-created-via-cross-origin-redirects">was created via cross-origin
+        redirects</a> is true, then set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-15">document state</a>'s <a href="#document-state-created-via-cross-origin-redirects" id="populating-a-session-history-entry:document-state-created-via-cross-origin-redirects">was created via cross-origin
+        redirects</a> to true.</p>
+
+        <p class="note">This is checked in <a href="#apply-the-history-step" id="populating-a-session-history-entry:apply-the-history-step">apply the history step</a> to decide whether
+        <a href="#sticky-activation" id="populating-a-session-history-entry:sticky-activation">sticky activation</a> is <a href="#note-sticky-activation-carry-over">carried
+        over</a>.</p>
+       </li><li>
         <p>If <var>saveExtraDocumentState</var> is true:</p>
 
-        <ol><li><p>Let <var>document</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-14">document state</a>'s <a href="#document-state-document" id="populating-a-session-history-entry:document-state-document-11">document</a>.</p></li><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-15">document state</a>'s
+        <ol><li><p>Let <var>document</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-16">document state</a>'s <a href="#document-state-document" id="populating-a-session-history-entry:document-state-document-12">document</a>.</p></li><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-17">document state</a>'s
          <a href="#document-state-origin" id="populating-a-session-history-entry:document-state-origin">origin</a> to <var>document</var>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="populating-a-session-history-entry:concept-document-origin" data-x-internal="concept-document-origin">origin</a>.</p></li><li>
           <p>If <var>document</var>'s <a href="https://dom.spec.whatwg.org/#concept-document-url" id="populating-a-session-history-entry:the-document's-address" data-x-internal="the-document's-address">URL</a>
           <a href="#requires-storing-the-policy-container-in-history" id="populating-a-session-history-entry:requires-storing-the-policy-container-in-history">requires storing the policy container in history</a>:</p>
 
           <ol><li><p><a id="populating-a-session-history-entry:assert-3" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>navigationParams</var> is a <a href="#navigation-params" id="populating-a-session-history-entry:navigation-params-2">navigation
            params</a> (i.e., neither null nor a <a href="#non-fetch-scheme-navigation-params" id="populating-a-session-history-entry:non-fetch-scheme-navigation-params-3">non-fetch scheme navigation
-           params</a>).</p></li><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-16">document state</a>'s
+           params</a>).</p></li><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-18">document state</a>'s
            <a href="#document-state-history-policy-container" id="populating-a-session-history-entry:document-state-history-policy-container">history policy container</a>
            to <var>navigationParams</var>'s <a href="#navigation-params-policy-container" id="populating-a-session-history-entry:navigation-params-policy-container-4">policy container</a>.</p></li></ol>
          </li></ol>
        </li><li>
-        <p>If <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-17">document state</a>'s <a href="#document-state-request-referrer" id="populating-a-session-history-entry:document-state-request-referrer">request referrer</a> is "<code>client</code>", and <var>navigationParams</var> is a <a href="#navigation-params" id="populating-a-session-history-entry:navigation-params-3">navigation
+        <p>If <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-19">document state</a>'s <a href="#document-state-request-referrer" id="populating-a-session-history-entry:document-state-request-referrer">request referrer</a> is "<code>client</code>", and <var>navigationParams</var> is a <a href="#navigation-params" id="populating-a-session-history-entry:navigation-params-3">navigation
         params</a> (i.e., neither null nor a <a href="#non-fetch-scheme-navigation-params" id="populating-a-session-history-entry:non-fetch-scheme-navigation-params-4">non-fetch scheme navigation
         params</a>):</p>
 
-        <ol><li><p><a id="populating-a-session-history-entry:assert-4" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>navigationParams</var>'s <a href="#navigation-params-request" id="populating-a-session-history-entry:navigation-params-request-2">request</a> is not null.</p></li><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-18">document state</a>'s
+        <ol><li><p><a id="populating-a-session-history-entry:assert-4" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>navigationParams</var>'s <a href="#navigation-params-request" id="populating-a-session-history-entry:navigation-params-request-2">request</a> is not null.</p></li><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-20">document state</a>'s
          <a href="#document-state-request-referrer" id="populating-a-session-history-entry:document-state-request-referrer-2">request referrer</a> to
          <var>navigationParams</var>'s <a href="#navigation-params-request" id="populating-a-session-history-entry:navigation-params-request-3">request</a>'s
          <a href="https://fetch.spec.whatwg.org/#concept-request-referrer" id="populating-a-session-history-entry:concept-request-referrer" data-x-internal="concept-request-referrer">referrer</a>.</p></li></ol>
@@ -74082,7 +74092,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
   <var>userInvolvement</var>, a <a href="#navigation-id" id="populating-a-session-history-entry:navigation-id-2">navigation ID</a>-or-null <var>navigationId</var>, and a
   <code id="populating-a-session-history-entry:navigationtimingtype-2"><a data-x-internal="navigationtimingtype" href="https://w3c.github.io/navigation-timing/#dom-navigationtimingtype">NavigationTimingType</a></code> <var>navTimingType</var>:</p>
 
-  <ol><li><p>Let <var>documentResource</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-19">document state</a>'s <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-3">resource</a>.</p></li><li>
+  <ol><li><p>Let <var>documentResource</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-21">document state</a>'s <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-3">resource</a>.</p></li><li>
     <p>Let <var>response</var> be a new <a href="https://fetch.spec.whatwg.org/#concept-response" id="populating-a-session-history-entry:concept-response" data-x-internal="concept-response">response</a> with</p>
 
     <dl class="props"><dt><a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-2" data-x-internal="concept-response-url">URL</a></dt><dd><code id="populating-a-session-history-entry:about:srcdoc"><a href="#about:srcdoc">about:srcdoc</a></code></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-response-header-list" id="populating-a-session-history-entry:concept-response-header-list" data-x-internal="concept-response-header-list">header list</a></dt><dd>« (`<code id="populating-a-session-history-entry:content-type"><a href="#content-type">Content-Type</a></code>`, `<code>text/html</code>`) »</dd><dt><a href="https://fetch.spec.whatwg.org/#concept-response-body" id="populating-a-session-history-entry:concept-response-body" data-x-internal="concept-response-body">body</a></dt><dd>the <a href="https://encoding.spec.whatwg.org/#utf-8-encode" id="populating-a-session-history-entry:utf-8-encode" data-x-internal="utf-8-encode">UTF-8 encoding</a> of <var>documentResource</var>,
@@ -74090,20 +74100,20 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
    </li><li><p>Let <var>responseOrigin</var> be the result of <a href="#determining-the-origin" id="populating-a-session-history-entry:determining-the-origin">determining the origin</a> given
    <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-3" data-x-internal="concept-response-url">URL</a>,
    <var>targetSnapshotParams</var>'s <a href="#target-snapshot-params-sandbox" id="populating-a-session-history-entry:target-snapshot-params-sandbox-2">sandboxing
-   flags</a>, and <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-20">document state</a>'s
+   flags</a>, and <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-22">document state</a>'s
    <a href="#document-state-origin" id="populating-a-session-history-entry:document-state-origin-2">origin</a>.</p></li><li><p>Let <var>coop</var> be a new <a href="#cross-origin-opener-policy" id="populating-a-session-history-entry:cross-origin-opener-policy">opener policy</a>.</p></li><li>
     <p>Let <var>coopEnforcementResult</var> be a new <a href="#coop-enforcement-result" id="populating-a-session-history-entry:coop-enforcement-result">opener
     policy enforcement result</a> with</p>
 
     <dl class="props"><dt><a href="#coop-enforcement-url" id="populating-a-session-history-entry:coop-enforcement-url">url</a></dt><dd><var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-4" data-x-internal="concept-response-url">URL</a></dd><dt><a href="#coop-enforcement-origin" id="populating-a-session-history-entry:coop-enforcement-origin">origin</a></dt><dd><var>responseOrigin</var></dd><dt><a href="#coop-enforcement-coop" id="populating-a-session-history-entry:coop-enforcement-coop">opener policy</a></dt><dd><var>coop</var></dd></dl>
    </li><li><p>Let <var>policyContainer</var> be the result of <a href="#determining-navigation-params-policy-container" id="populating-a-session-history-entry:determining-navigation-params-policy-container">determining navigation params policy container</a> given
-   <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-5" data-x-internal="concept-response-url">URL</a>, <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-21">document state</a>'s <a href="#document-state-history-policy-container" id="populating-a-session-history-entry:document-state-history-policy-container-2">history policy container</a>, null,
+   <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-5" data-x-internal="concept-response-url">URL</a>, <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-23">document state</a>'s <a href="#document-state-history-policy-container" id="populating-a-session-history-entry:document-state-history-policy-container-2">history policy container</a>, null,
    <var>navigable</var>'s <a href="#nav-container-document" id="populating-a-session-history-entry:nav-container-document">container document</a>'s <a href="#concept-document-policy-container" id="populating-a-session-history-entry:concept-document-policy-container">policy container</a>, and null.</p></li><li>
     <p>Return a new <a href="#navigation-params" id="populating-a-session-history-entry:navigation-params-4">navigation params</a>, with</p>
 
     <dl class="props"><dt><a href="#navigation-params-id" id="populating-a-session-history-entry:navigation-params-id">id</a></dt><dd><var>navigationId</var></dd><dt><a href="#navigation-params-navigable" id="populating-a-session-history-entry:navigation-params-navigable">navigable</a></dt><dd><var>navigable</var></dd><dt><a href="#navigation-params-request" id="populating-a-session-history-entry:navigation-params-request-4">request</a></dt><dd>null</dd><dt><a href="#navigation-params-response" id="populating-a-session-history-entry:navigation-params-response-9">response</a></dt><dd><var>response</var></dd><dt><a href="#navigation-params-fetch-controller" id="populating-a-session-history-entry:navigation-params-fetch-controller">fetch controller</a></dt><dd>null</dd><dt><a href="#navigation-params-commit-early-hints" id="populating-a-session-history-entry:navigation-params-commit-early-hints">commit early hints</a></dt><dd>null</dd><dt><a href="#navigation-params-coop-enforcement-result" id="populating-a-session-history-entry:navigation-params-coop-enforcement-result">COOP enforcement result</a></dt><dd><var>coopEnforcementResult</var></dd><dt><a href="#navigation-params-reserved-environment" id="populating-a-session-history-entry:navigation-params-reserved-environment-3">reserved environment</a></dt><dd>null</dd><dt><a href="#navigation-params-origin" id="populating-a-session-history-entry:navigation-params-origin-2">origin</a></dt><dd><var>responseOrigin</var></dd><dt><a href="#navigation-params-policy-container" id="populating-a-session-history-entry:navigation-params-policy-container-5">policy container</a></dt><dd><var>policyContainer</var></dd><dt><a href="#navigation-params-sandboxing" id="populating-a-session-history-entry:navigation-params-sandboxing-2">final sandboxing flag set</a></dt><dd><var>targetSnapshotParams</var>'s <a href="#target-snapshot-params-sandbox" id="populating-a-session-history-entry:target-snapshot-params-sandbox-3">sandboxing
      flags</a></dd><dt><a href="#navigation-params-iframe-referrer-policy" id="populating-a-session-history-entry:navigation-params-iframe-referrer-policy"><code>iframe</code> element referrer policy</a></dt><dd><var>targetSnapshotParams</var>'s <a href="#target-snapshot-params-iframe-referrer-policy" id="populating-a-session-history-entry:target-snapshot-params-iframe-referrer-policy"><code>iframe</code> element referrer
-     policy</a></dd><dt><a href="#navigation-params-coop" id="populating-a-session-history-entry:navigation-params-coop">opener policy</a></dt><dd><var>coop</var></dd><dt><a href="#navigation-params-nav-timing-type" id="populating-a-session-history-entry:navigation-params-nav-timing-type">navigation timing type</a></dt><dd><var>navTimingType</var></dd><dt><a href="#navigation-params-about-base-url" id="populating-a-session-history-entry:navigation-params-about-base-url">about base URL</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-22">document state</a>'s <a href="#document-state-about-base-url" id="populating-a-session-history-entry:document-state-about-base-url">about base URL</a></dd><dt><a href="#navigation-params-user-involvement" id="populating-a-session-history-entry:navigation-params-user-involvement">user involvement</a></dt><dd><var>userInvolvement</var></dd></dl>
+     policy</a></dd><dt><a href="#navigation-params-coop" id="populating-a-session-history-entry:navigation-params-coop">opener policy</a></dt><dd><var>coop</var></dd><dt><a href="#navigation-params-nav-timing-type" id="populating-a-session-history-entry:navigation-params-nav-timing-type">navigation timing type</a></dt><dd><var>navTimingType</var></dd><dt><a href="#navigation-params-about-base-url" id="populating-a-session-history-entry:navigation-params-about-base-url">about base URL</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-24">document state</a>'s <a href="#document-state-about-base-url" id="populating-a-session-history-entry:document-state-about-base-url">about base URL</a></dd><dt><a href="#navigation-params-user-involvement" id="populating-a-session-history-entry:navigation-params-user-involvement">user involvement</a></dt><dd><var>userInvolvement</var></dd></dl>
    </li></ol>
   </div>
 
@@ -74120,16 +74130,16 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
   <p class="note">This algorithm mutates <var>entry</var>.</p>
 
-  <ol><li><p><a id="populating-a-session-history-entry:assert-5" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: this is running <a href="#in-parallel" id="populating-a-session-history-entry:in-parallel-2">in parallel</a>.</p></li><li><p>Let <var>documentResource</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-23">document state</a>'s <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-4">resource</a>.</p></li><li>
+  <ol><li><p><a id="populating-a-session-history-entry:assert-5" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: this is running <a href="#in-parallel" id="populating-a-session-history-entry:in-parallel-2">in parallel</a>.</p></li><li><p>Let <var>documentResource</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-25">document state</a>'s <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-4">resource</a>.</p></li><li>
     <p>Let <var>request</var> be a new <a href="https://fetch.spec.whatwg.org/#concept-request" id="populating-a-session-history-entry:concept-request" data-x-internal="concept-request">request</a>, with</p>
 
     <dl class="props"><dt><a href="https://fetch.spec.whatwg.org/#concept-request-url" id="populating-a-session-history-entry:concept-request-url" data-x-internal="concept-request-url">URL</a></dt><dd><var>entry</var>'s <a href="#she-url" id="populating-a-session-history-entry:she-url-4">URL</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-client" id="populating-a-session-history-entry:concept-request-client" data-x-internal="concept-request-client">client</a></dt><dd><var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-client" id="populating-a-session-history-entry:source-snapshot-params-client">fetch
      client</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-destination" id="populating-a-session-history-entry:concept-request-destination" data-x-internal="concept-request-destination">destination</a></dt><dd>"<code>document</code>" <span class="note">The destination is updated below when
      <var>navigable</var> has a <a href="#nav-container" id="populating-a-session-history-entry:nav-container">container</a>.</span></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode" id="populating-a-session-history-entry:concept-request-credentials-mode" data-x-internal="concept-request-credentials-mode">credentials mode</a></dt><dd>"<code>include</code>"</dd><dt><a id="populating-a-session-history-entry:use-url-credentials-flag" href="https://fetch.spec.whatwg.org/#concept-request-use-url-credentials-flag" data-x-internal="use-url-credentials-flag">use-URL-credentials flag</a></dt><dd>set</dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-redirect-mode" id="populating-a-session-history-entry:concept-request-redirect-mode" data-x-internal="concept-request-redirect-mode">redirect mode</a></dt><dd>"<code>manual</code>"</dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-replaces-client-id" id="populating-a-session-history-entry:concept-request-replaces-client-id" data-x-internal="concept-request-replaces-client-id">replaces client id</a></dt><dd><var>navigable</var>'s <a href="#nav-document" id="populating-a-session-history-entry:nav-document-2">active document</a>'s <a href="#relevant-settings-object" id="populating-a-session-history-entry:relevant-settings-object">relevant
-     settings object</a>'s <a href="#concept-environment-id" id="populating-a-session-history-entry:concept-environment-id">id</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-mode" id="populating-a-session-history-entry:concept-request-mode" data-x-internal="concept-request-mode">mode</a></dt><dd>"<code>navigate</code>"</dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-referrer" id="populating-a-session-history-entry:concept-request-referrer-2" data-x-internal="concept-request-referrer">referrer</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-24">document state</a>'s <a href="#document-state-request-referrer" id="populating-a-session-history-entry:document-state-request-referrer-3">request referrer</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-referrer-policy" id="populating-a-session-history-entry:concept-request-referrer-policy" data-x-internal="concept-request-referrer-policy">referrer policy</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-25">document state</a>'s <a href="#document-state-request-referrer-policy" id="populating-a-session-history-entry:document-state-request-referrer-policy">request referrer policy</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-policy-container" id="populating-a-session-history-entry:concept-request-policy-container" data-x-internal="concept-request-policy-container">policy container</a></dt><dd><var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-policy-container" id="populating-a-session-history-entry:source-snapshot-params-policy-container">source policy container</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-window" id="populating-a-session-history-entry:concept-request-traversable-for-user-prompts" data-x-internal="concept-request-traversable-for-user-prompts">traversable for user prompts</a></dt><dd><var>navigable</var>'s <a href="#nav-top" id="populating-a-session-history-entry:nav-top">top-level traversable</a></dd></dl>
+     settings object</a>'s <a href="#concept-environment-id" id="populating-a-session-history-entry:concept-environment-id">id</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-mode" id="populating-a-session-history-entry:concept-request-mode" data-x-internal="concept-request-mode">mode</a></dt><dd>"<code>navigate</code>"</dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-referrer" id="populating-a-session-history-entry:concept-request-referrer-2" data-x-internal="concept-request-referrer">referrer</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-26">document state</a>'s <a href="#document-state-request-referrer" id="populating-a-session-history-entry:document-state-request-referrer-3">request referrer</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-referrer-policy" id="populating-a-session-history-entry:concept-request-referrer-policy" data-x-internal="concept-request-referrer-policy">referrer policy</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-27">document state</a>'s <a href="#document-state-request-referrer-policy" id="populating-a-session-history-entry:document-state-request-referrer-policy">request referrer policy</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-policy-container" id="populating-a-session-history-entry:concept-request-policy-container" data-x-internal="concept-request-policy-container">policy container</a></dt><dd><var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-policy-container" id="populating-a-session-history-entry:source-snapshot-params-policy-container">source policy container</a></dd><dt><a href="https://fetch.spec.whatwg.org/#concept-request-window" id="populating-a-session-history-entry:concept-request-traversable-for-user-prompts" data-x-internal="concept-request-traversable-for-user-prompts">traversable for user prompts</a></dt><dd><var>navigable</var>'s <a href="#nav-top" id="populating-a-session-history-entry:nav-top">top-level traversable</a></dd></dl>
    </li><li><p>If <var>navigable</var> is a <a href="#top-level-traversable" id="populating-a-session-history-entry:top-level-traversable">top-level traversable</a>, then set
    <var>request</var>'s <a id="populating-a-session-history-entry:top-level-navigation-initiator-origin" href="https://fetch.spec.whatwg.org/#request-top-level-navigation-initiator-origin" data-x-internal="top-level-navigation-initiator-origin">top-level navigation initiator origin</a> to <var>entry</var>'s
-   <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-26">document state</a>'s <a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-3">initiator origin</a>.</p></li><li>
+   <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-28">document state</a>'s <a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-3">initiator origin</a>.</p></li><li>
     <p>If <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-client" id="populating-a-session-history-entry:concept-request-client-2" data-x-internal="concept-request-client">client</a> is null:</p>
 
     <p class="note">This <a href="#assert-null-sourcedocument">only occurs</a> in the case of a
@@ -74147,9 +74157,9 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
      to <var>documentResource</var>'s <a href="#post-resource-request-content-type" id="populating-a-session-history-entry:post-resource-request-content-type">request
      content-type</a> in <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="populating-a-session-history-entry:concept-request-header-list" data-x-internal="concept-request-header-list">header
      list</a>.</p></li></ol>
-   </li><li><p>If <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-27">document state</a>'s <a href="#document-state-reload-pending" id="populating-a-session-history-entry:document-state-reload-pending">reload pending</a> is true, then set
+   </li><li><p>If <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-29">document state</a>'s <a href="#document-state-reload-pending" id="populating-a-session-history-entry:document-state-reload-pending">reload pending</a> is true, then set
    <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-reload-navigation-flag" id="populating-a-session-history-entry:concept-request-reload-navigation-flag" data-x-internal="concept-request-reload-navigation-flag">reload-navigation
-   flag</a>.</p></li><li><p>Otherwise, if <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-28">document
+   flag</a>.</p></li><li><p>Otherwise, if <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-30">document
    state</a>'s <a href="#document-state-ever-populated" id="populating-a-session-history-entry:document-state-ever-populated-2">ever populated</a> is true, then
    set <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-history-navigation-flag" id="populating-a-session-history-entry:concept-request-history-navigation-flag" data-x-internal="concept-request-history-navigation-flag">history-navigation flag</a>.</p></li><li><p>If <var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-activation" id="populating-a-session-history-entry:source-snapshot-params-activation-2">has
    transient activation</a> is true, then set <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#request-user-activation" id="populating-a-session-history-entry:concept-request-user-activation" data-x-internal="concept-request-user-activation">user-activation</a> to true.</p></li><li>
@@ -74172,7 +74182,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
     policy enforcement result</a>, with</p>
 
     <dl class="props"><dt><a href="#coop-enforcement-url" id="populating-a-session-history-entry:coop-enforcement-url-2">url</a></dt><dd><var>navigable</var>'s <a href="#nav-document" id="populating-a-session-history-entry:nav-document-3">active document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-url" id="populating-a-session-history-entry:the-document's-address-2" data-x-internal="the-document's-address">URL</a></dd><dt><a href="#coop-enforcement-origin" id="populating-a-session-history-entry:coop-enforcement-origin-2">origin</a></dt><dd><var>navigable</var>'s <a href="#nav-document" id="populating-a-session-history-entry:nav-document-4">active document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="populating-a-session-history-entry:concept-document-origin-2" data-x-internal="concept-document-origin">origin</a></dd><dt><a href="#coop-enforcement-coop" id="populating-a-session-history-entry:coop-enforcement-coop-2">opener policy</a></dt><dd><var>navigable</var>'s <a href="#nav-document" id="populating-a-session-history-entry:nav-document-5">active document</a>'s <a href="#concept-document-coop" id="populating-a-session-history-entry:concept-document-coop">opener policy</a></dd><dt><a href="#coop-enforcement-source" id="populating-a-session-history-entry:coop-enforcement-source">current context is navigation source</a></dt><dd>true if <var>navigable</var>'s <a href="#nav-document" id="populating-a-session-history-entry:nav-document-6">active document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="populating-a-session-history-entry:concept-document-origin-3" data-x-internal="concept-document-origin">origin</a> is <a href="#same-origin" id="populating-a-session-history-entry:same-origin">same origin</a> with
-     <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-29">document state</a>'s <a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-4">initiator origin</a> otherwise false</dd></dl>
+     <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-31">document state</a>'s <a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-4">initiator origin</a> otherwise false</dd></dl>
    </li><li><p>Let <var>finalSandboxFlags</var> be an empty <a href="#sandboxing-flag-set" id="populating-a-session-history-entry:sandboxing-flag-set">sandboxing flag set</a>.</p></li><li><p>Let <var>responsePolicyContainer</var> be null.</p></li><li><p>Let <var>responseCOOP</var> be a new <a href="#cross-origin-opener-policy" id="populating-a-session-history-entry:cross-origin-opener-policy-2">opener policy</a>.</p></li><li><p>Let <var>locationURL</var> be null.</p></li><li><p>Let <var>currentURL</var> be <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-current-url" id="populating-a-session-history-entry:concept-request-current-url" data-x-internal="concept-request-current-url">current URL</a>.</p></li><li><p>Let <var>commitEarlyHints</var> be null.</p></li><li>
     <p>While true:</p>
 
@@ -74249,7 +74259,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       <p>Otherwise, proceed onward.</p>
      </li><li>
       <p>If <var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-body" id="populating-a-session-history-entry:concept-request-body-2" data-x-internal="concept-request-body">body</a> is null, then set
-      <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-30">document state</a>'s <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-5">resource</a> to null.</p>
+      <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-32">document state</a>'s <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-5">resource</a> to null.</p>
 
       <p class="note">Fetch unsets the <a href="https://fetch.spec.whatwg.org/#concept-request-body" id="populating-a-session-history-entry:concept-request-body-3" data-x-internal="concept-request-body">body</a> for
       particular redirects.</p>
@@ -74261,7 +74271,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
      flags</a>.</p></li><li>
       <p>Set <var>responseOrigin</var> to the result of <a href="#determining-the-origin" id="populating-a-session-history-entry:determining-the-origin-2">determining the origin</a> given
       <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-6" data-x-internal="concept-response-url">URL</a>,
-      <var>finalSandboxFlags</var>, and <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-31">document state</a>'s <a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-5">initiator origin</a>.</p>
+      <var>finalSandboxFlags</var>, and <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-33">document state</a>'s <a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-5">initiator origin</a>.</p>
 
       <p class="note">If <var>response</var> is a redirect, then <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-7" data-x-internal="concept-response-url">URL</a> will be the URL that led to the redirect to
       <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-location-url" id="populating-a-session-history-entry:concept-response-location-url" data-x-internal="concept-response-location-url">location URL</a>; it
@@ -74300,8 +74310,8 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       <a id="populating-a-session-history-entry:http(s)-scheme-2" href="https://fetch.spec.whatwg.org/#http-scheme" data-x-internal="http(s)-scheme">HTTP(S) scheme</a> responses, as in Fetch; other responses are still subject to <a href="#check-a-navigation-response's-adherence-to-its-embedder-policy" id="populating-a-session-history-entry:check-a-navigation-response's-adherence-to-its-embedder-policy-2">checking a navigation
       response's adherence to its embedder policy</a>.</p>
      </li><li><p>Set <var>locationURL</var> to <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-location-url" id="populating-a-session-history-entry:concept-response-location-url-3" data-x-internal="concept-response-location-url">location URL</a> given <var>currentURL</var>'s <a href="https://url.spec.whatwg.org/#concept-url-fragment" id="populating-a-session-history-entry:concept-url-fragment" data-x-internal="concept-url-fragment">fragment</a>.</p></li><li><p>If <var>locationURL</var> is failure or null, then <a id="populating-a-session-history-entry:break-4" href="https://infra.spec.whatwg.org/#iteration-break" data-x-internal="break">break</a>.</p></li><li><p><a id="populating-a-session-history-entry:assert-6" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>locationURL</var> is a <a id="populating-a-session-history-entry:url" href="https://url.spec.whatwg.org/#concept-url" data-x-internal="url">URL</a>.</p></li><li><p>Set <var>entry</var>'s <a href="#she-classic-history-api-state" id="populating-a-session-history-entry:she-classic-history-api-state">classic history API
-     state</a> to <a href="#structuredserializeforstorage" id="populating-a-session-history-entry:structuredserializeforstorage">StructuredSerializeForStorage</a>(null).</p></li><li><p>Let <var>oldDocState</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-32">document state</a>.</p></li><li>
-      <p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-33">document state</a> to a new
+     state</a> to <a href="#structuredserializeforstorage" id="populating-a-session-history-entry:structuredserializeforstorage">StructuredSerializeForStorage</a>(null).</p></li><li><p>Let <var>oldDocState</var> be <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-34">document state</a>.</p></li><li>
+      <p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-35">document state</a> to a new
       <a href="#document-state-2" id="populating-a-session-history-entry:document-state-2">document state</a>, with
 
       </p><dl class="props"><dt><a href="#document-state-history-policy-container" id="populating-a-session-history-entry:document-state-history-policy-container-3">history policy container</a></dt><dd>a <a href="#clone-a-policy-container" id="populating-a-session-history-entry:clone-a-policy-container">clone</a> of the <var>oldDocState</var>'s
@@ -74310,17 +74320,19 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
        referrer</a></dd><dt><a href="#document-state-request-referrer-policy" id="populating-a-session-history-entry:document-state-request-referrer-policy-2">request referrer policy</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-request-referrer-policy" id="populating-a-session-history-entry:document-state-request-referrer-policy-3">request
        referrer policy</a></dd><dt><a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-6">initiator origin</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-initiator-origin" id="populating-a-session-history-entry:document-state-initiator-origin-7">initiator
        origin</a></dd><dt><a href="#document-state-origin" id="populating-a-session-history-entry:document-state-origin-3">origin</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-origin" id="populating-a-session-history-entry:document-state-origin-4">origin</a></dd><dt><a href="#document-state-about-base-url" id="populating-a-session-history-entry:document-state-about-base-url-2">about base URL</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-about-base-url" id="populating-a-session-history-entry:document-state-about-base-url-3">about base URL</a></dd><dt><a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-6">resource</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-7">resource</a></dd><dt><a href="#document-state-ever-populated" id="populating-a-session-history-entry:document-state-ever-populated-3">ever populated</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-ever-populated" id="populating-a-session-history-entry:document-state-ever-populated-4">ever
-       populated</a></dd><dt><a href="#document-state-nav-target-name" id="populating-a-session-history-entry:document-state-nav-target-name">navigable target name</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-nav-target-name" id="populating-a-session-history-entry:document-state-nav-target-name-2">navigable target
+       populated</a></dd><dt><a href="#document-state-created-via-cross-origin-redirects" id="populating-a-session-history-entry:document-state-created-via-cross-origin-redirects-2">was created via
+       cross-origin redirects</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-created-via-cross-origin-redirects" id="populating-a-session-history-entry:document-state-created-via-cross-origin-redirects-3">was created via cross-origin
+       redirects</a></dd><dt><a href="#document-state-nav-target-name" id="populating-a-session-history-entry:document-state-nav-target-name">navigable target name</a></dt><dd><var>oldDocState</var>'s <a href="#document-state-nav-target-name" id="populating-a-session-history-entry:document-state-nav-target-name-2">navigable target
        name</a></dd></dl>
 
       
       <p class="note">For the navigation case, only <var>entry</var> referenced
       <var>oldDocState</var>, which was created <a href="#navigation-create-document-state">early
       in the navigate algorithm</a>. So for navigations, this is functionally just an update to
-      <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-34">document state</a>. For the traversal
+      <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-36">document state</a>. For the traversal
       case, it's possible adjacent <a href="#session-history-entry" id="populating-a-session-history-entry:session-history-entry-7">session history
       entries</a> also reference <var>oldDocState</var>, in which case they will continue doing
-      so even after we've updated <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-35">document
+      so even after we've updated <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-37">document
       state</a>.</p>
 
       <p class="note"><var>oldDocState</var>'s <a href="#document-state-history-policy-container" id="populating-a-session-history-entry:document-state-history-policy-container-5">history policy container</a> is only ever
@@ -74333,8 +74345,8 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
        
 <table class="jake-diagram"><thead><tr><td></td><th class="step">0</th><th class="step">1</th><th class="step">2</th><th class="step current">3</th></tr></thead><tbody><tr><th><code>top</code></th><td colspan="1" class="doc-0 next-is-same-doc">/a</td><td colspan="1" class="doc-0 prev-is-same-doc next-is-same-doc">/a#foo</td><td colspan="1" class="doc-0 prev-is-same-doc">/a#bar</td><td colspan="1" class="doc-2 current">/b</td></tr></tbody></table>
 
-       <p>Also assume that the <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-36">document state</a> shared by
-       the entries in steps 0, 1, and 2 has a null <a href="#document-state-document" id="populating-a-session-history-entry:document-state-document-12">document</a>, i.e., <a href="#note-bfcache">bfcache</a>
+       <p>Also assume that the <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-38">document state</a> shared by
+       the entries in steps 0, 1, and 2 has a null <a href="#document-state-document" id="populating-a-session-history-entry:document-state-document-13">document</a>, i.e., <a href="#note-bfcache">bfcache</a>
        is not in play.</p>
 
        <p>Now consider the scenario where we traverse back to step 2, but this time when fetching
@@ -74342,7 +74354,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
        header pointing to <code>/c</code>. That is, <var>locationURL</var> points to
        <code>/c</code> and so we have reached this step instead of <a href="https://infra.spec.whatwg.org/#iteration-break" id="populating-a-session-history-entry:break-5" data-x-internal="break">breaking</a> out of the loop.</p>
 
-       <p>In this case, we replace the <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-37">document state</a> of
+       <p>In this case, we replace the <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-39">document state</a> of
        the <a href="#session-history-entry" id="populating-a-session-history-entry:session-history-entry-8">session history entry</a> occupying step 2, but we do <em>not</em> replace the
        document state of the entries occupying steps 0 and 1. The resulting <a href="#jake-diagram" id="populating-a-session-history-entry:jake-diagram-2">Jake
        diagram</a> looks like this:</p>
@@ -74361,7 +74373,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       <p>If <var>locationURL</var>'s <a href="https://url.spec.whatwg.org/#concept-url-scheme" id="populating-a-session-history-entry:concept-url-scheme-4" data-x-internal="concept-url-scheme">scheme</a> is not an
       <a id="populating-a-session-history-entry:http(s)-scheme-3" href="https://fetch.spec.whatwg.org/#http-scheme" data-x-internal="http(s)-scheme">HTTP(S) scheme</a>:</p>
 
-      <ol><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-38">document state</a>'s
+      <ol><li><p>Set <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-40">document state</a>'s
        <a href="#document-state-resource" id="populating-a-session-history-entry:document-state-resource-8">resource</a> to null.</p></li><li><p><a id="populating-a-session-history-entry:break-6" href="https://infra.spec.whatwg.org/#iteration-break" data-x-internal="break">Break</a>.</p></li></ol>
      </li><li><p>Set <var>currentURL</var> to <var>locationURL</var>.</p></li><li><p>Set <var>entry</var>'s <a href="#she-url" id="populating-a-session-history-entry:she-url-5">URL</a> to
      <var>currentURL</var>.</p></li></ol>
@@ -74397,7 +74409,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
     like network errors.</p>
    </li><li><p><a id="populating-a-session-history-entry:assert-7" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>locationURL</var> is null and <var>response</var> is not a
    <a id="populating-a-session-history-entry:network-error-8" href="https://fetch.spec.whatwg.org/#concept-network-error" data-x-internal="network-error">network error</a>.</p></li><li><p>Let <var>resultPolicyContainer</var> be the result of <a href="#determining-navigation-params-policy-container" id="populating-a-session-history-entry:determining-navigation-params-policy-container-2">determining navigation params
-   policy container</a> given <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-10" data-x-internal="concept-response-url">URL</a>, <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-39">document state</a>'s <a href="#document-state-history-policy-container" id="populating-a-session-history-entry:document-state-history-policy-container-6">history policy container</a>,
+   policy container</a> given <var>response</var>'s <a href="https://fetch.spec.whatwg.org/#concept-response-url" id="populating-a-session-history-entry:concept-response-url-10" data-x-internal="concept-response-url">URL</a>, <var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-41">document state</a>'s <a href="#document-state-history-policy-container" id="populating-a-session-history-entry:document-state-history-policy-container-6">history policy container</a>,
    <var>sourceSnapshotParams</var>'s <a href="#source-snapshot-params-policy-container" id="populating-a-session-history-entry:source-snapshot-params-policy-container-2">source
    policy container</a>, null, and <var>responsePolicyContainer</var>.</p></li><li>
     <p>If <var>navigable</var>'s <a href="#nav-container" id="populating-a-session-history-entry:nav-container-6">container</a> is an
@@ -74410,7 +74422,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
    </li><li>
     <p>Return a new <a href="#navigation-params" id="populating-a-session-history-entry:navigation-params-6">navigation params</a>, with</p>
 
-    <dl class="props"><dt><a href="#navigation-params-id" id="populating-a-session-history-entry:navigation-params-id-2">id</a></dt><dd><var>navigationId</var></dd><dt><a href="#navigation-params-navigable" id="populating-a-session-history-entry:navigation-params-navigable-2">navigable</a></dt><dd><var>navigable</var></dd><dt><a href="#navigation-params-request" id="populating-a-session-history-entry:navigation-params-request-5">request</a></dt><dd><var>request</var></dd><dt><a href="#navigation-params-response" id="populating-a-session-history-entry:navigation-params-response-10">response</a></dt><dd><var>response</var></dd><dt><a href="#navigation-params-fetch-controller" id="populating-a-session-history-entry:navigation-params-fetch-controller-2">fetch controller</a></dt><dd><var>fetchController</var></dd><dt><a href="#navigation-params-commit-early-hints" id="populating-a-session-history-entry:navigation-params-commit-early-hints-2">commit early hints</a></dt><dd><var>commitEarlyHints</var></dd><dt><a href="#navigation-params-coop" id="populating-a-session-history-entry:navigation-params-coop-2">opener policy</a></dt><dd><var>responseCOOP</var></dd><dt><a href="#navigation-params-reserved-environment" id="populating-a-session-history-entry:navigation-params-reserved-environment-4">reserved environment</a></dt><dd><var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-reserved-client" id="populating-a-session-history-entry:concept-request-reserved-client-10" data-x-internal="concept-request-reserved-client">reserved client</a></dd><dt><a href="#navigation-params-origin" id="populating-a-session-history-entry:navigation-params-origin-3">origin</a></dt><dd><var>responseOrigin</var></dd><dt><a href="#navigation-params-policy-container" id="populating-a-session-history-entry:navigation-params-policy-container-6">policy container</a></dt><dd><var>resultPolicyContainer</var></dd><dt><a href="#navigation-params-sandboxing" id="populating-a-session-history-entry:navigation-params-sandboxing-3">final sandboxing flag set</a></dt><dd><var>finalSandboxFlags</var></dd><dt><a href="#navigation-params-coop-enforcement-result" id="populating-a-session-history-entry:navigation-params-coop-enforcement-result-2">COOP enforcement result</a></dt><dd><var>coopEnforcementResult</var></dd><dt><a href="#navigation-params-nav-timing-type" id="populating-a-session-history-entry:navigation-params-nav-timing-type-2">navigation timing type</a></dt><dd><var>navTimingType</var></dd><dt><a href="#navigation-params-about-base-url" id="populating-a-session-history-entry:navigation-params-about-base-url-2">about base URL</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-40">document state</a>'s <a href="#document-state-about-base-url" id="populating-a-session-history-entry:document-state-about-base-url-4">about base URL</a></dd><dt><a href="#navigation-params-user-involvement" id="populating-a-session-history-entry:navigation-params-user-involvement-2">user involvement</a></dt><dd><var>userInvolvement</var></dd></dl>
+    <dl class="props"><dt><a href="#navigation-params-id" id="populating-a-session-history-entry:navigation-params-id-2">id</a></dt><dd><var>navigationId</var></dd><dt><a href="#navigation-params-navigable" id="populating-a-session-history-entry:navigation-params-navigable-2">navigable</a></dt><dd><var>navigable</var></dd><dt><a href="#navigation-params-request" id="populating-a-session-history-entry:navigation-params-request-5">request</a></dt><dd><var>request</var></dd><dt><a href="#navigation-params-response" id="populating-a-session-history-entry:navigation-params-response-10">response</a></dt><dd><var>response</var></dd><dt><a href="#navigation-params-fetch-controller" id="populating-a-session-history-entry:navigation-params-fetch-controller-2">fetch controller</a></dt><dd><var>fetchController</var></dd><dt><a href="#navigation-params-commit-early-hints" id="populating-a-session-history-entry:navigation-params-commit-early-hints-2">commit early hints</a></dt><dd><var>commitEarlyHints</var></dd><dt><a href="#navigation-params-coop" id="populating-a-session-history-entry:navigation-params-coop-2">opener policy</a></dt><dd><var>responseCOOP</var></dd><dt><a href="#navigation-params-reserved-environment" id="populating-a-session-history-entry:navigation-params-reserved-environment-4">reserved environment</a></dt><dd><var>request</var>'s <a href="https://fetch.spec.whatwg.org/#concept-request-reserved-client" id="populating-a-session-history-entry:concept-request-reserved-client-10" data-x-internal="concept-request-reserved-client">reserved client</a></dd><dt><a href="#navigation-params-origin" id="populating-a-session-history-entry:navigation-params-origin-3">origin</a></dt><dd><var>responseOrigin</var></dd><dt><a href="#navigation-params-policy-container" id="populating-a-session-history-entry:navigation-params-policy-container-6">policy container</a></dt><dd><var>resultPolicyContainer</var></dd><dt><a href="#navigation-params-sandboxing" id="populating-a-session-history-entry:navigation-params-sandboxing-3">final sandboxing flag set</a></dt><dd><var>finalSandboxFlags</var></dd><dt><a href="#navigation-params-coop-enforcement-result" id="populating-a-session-history-entry:navigation-params-coop-enforcement-result-2">COOP enforcement result</a></dt><dd><var>coopEnforcementResult</var></dd><dt><a href="#navigation-params-nav-timing-type" id="populating-a-session-history-entry:navigation-params-nav-timing-type-2">navigation timing type</a></dt><dd><var>navTimingType</var></dd><dt><a href="#navigation-params-about-base-url" id="populating-a-session-history-entry:navigation-params-about-base-url-2">about base URL</a></dt><dd><var>entry</var>'s <a href="#she-document-state" id="populating-a-session-history-entry:she-document-state-42">document state</a>'s <a href="#document-state-about-base-url" id="populating-a-session-history-entry:document-state-about-base-url-4">about base URL</a></dd><dt><a href="#navigation-params-user-involvement" id="populating-a-session-history-entry:navigation-params-user-involvement-2">user involvement</a></dt><dd><var>userInvolvement</var></dd></dl>
    </li></ol>
   </div>
 
@@ -74806,7 +74818,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       than before it, so they no longer jump the queue. <a href="#sync-navigation-steps-queue-jumping-examples">More details can be found here</a>.</p>
      </li><li><p>Let <var>entriesForNavigationAPI</var> be the result of <a href="#getting-session-history-entries-for-the-navigation-api" id="updating-the-traversable:getting-session-history-entries-for-the-navigation-api">getting session history
      entries for the navigation API</a> given <var>navigable</var> and
-     <var>targetStep</var>.</p></li><li>
+     <var>targetStep</var>.</p></li><li><p>Let <var>stickyActivationToCarryOver</var> be false.</p></li><li>
       <p>If <var>changingNavigableContinuation</var>'s <a href="#changing-nav-continuation-update-only" id="updating-the-traversable:changing-nav-continuation-update-only-4">update-only</a> is true, or
       <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-9">document</a> is
       <var>displayedDocument</var>:</p>
@@ -74824,7 +74836,32 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
      </li><li>
       <p>Otherwise:</p>
 
-      <ol><li><p><a id="updating-the-traversable:assert-7" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>navigationType</var> is not null.</p></li><li><p><a href="#deactivate-a-document-for-a-cross-document-navigation" id="updating-the-traversable:deactivate-a-document-for-a-cross-document-navigation">Deactivate</a>
+      <ol><li><p><a id="updating-the-traversable:assert-7" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>navigationType</var> is not null.</p></li><li>
+        <p>If all of the following are true:</p>
+
+        <ul><li><p><var>displayedDocument</var>'s <a href="#concept-relevant-global" id="updating-the-traversable:concept-relevant-global">relevant global object</a> has <a href="#sticky-activation" id="updating-the-traversable:sticky-activation">sticky
+         activation</a>;</p></li><li><p><var>displayedDocument</var>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="updating-the-traversable:concept-document-origin-3" data-x-internal="concept-document-origin">origin</a>
+         is <a href="#same-origin" id="updating-the-traversable:same-origin-4">same origin</a> with <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-10">document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="updating-the-traversable:concept-document-origin-4" data-x-internal="concept-document-origin">origin</a>;</p></li><li><p><var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-11">document</a>'s <a href="#was-created-via-cross-origin-redirects" id="updating-the-traversable:was-created-via-cross-origin-redirects">was
+         created via cross-origin redirects</a> is false; and</p></li><li><p><var>navigationType</var> is "<code id="updating-the-traversable:dom-navigationtype-reload-3"><a href="#dom-navigationtype-reload">reload</a></code>", or both of the following are
+         true:</p>
+
+          <ul><li><p><var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-13">document
+           state</a>'s <a href="#document-state-initiator-origin" id="updating-the-traversable:document-state-initiator-origin-2">initiator origin</a> is
+           not null and is <a href="#same-origin" id="updating-the-traversable:same-origin-5">same origin</a> with <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-12">document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="updating-the-traversable:concept-document-origin-5" data-x-internal="concept-document-origin">origin</a>; and</p></li><li><p><var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-14">document
+           state</a>'s <a href="#document-state-created-via-cross-origin-redirects" id="updating-the-traversable:document-state-created-via-cross-origin-redirects">was
+           created via cross-origin redirects</a> is false,</p></li></ul>
+         </li></ul>
+
+        <p>then set <var>stickyActivationToCarryOver</var> to true.</p>
+
+        <p id="note-sticky-activation-carry-over" class="note"><a href="#note-sticky-activation-carry-over" class="self-link"></a>This allows sticky activation to
+        survive same-origin navigations, reloads, and traversals, including to a <a href="#note-bfcache">bfcached</a> document that did not previously have it. The remaining
+        conditions ensure that a cross-origin document cannot cause this, either by initiating the
+        navigation or by redirecting to the destination. Because <a href="#document-state-initiator-origin" id="updating-the-traversable:document-state-initiator-origin-3">initiator origin</a> and <a href="#document-state-created-via-cross-origin-redirects" id="updating-the-traversable:document-state-created-via-cross-origin-redirects-2">was created via cross-origin
+        redirects</a> are stored on the <a href="#she-document-state" id="updating-the-traversable:she-document-state-15">document state</a>
+        and never reset, this holds even if <var>targetEntry</var>'s document was evicted from
+        bfcache and <a href="#attempt-to-populate-the-history-entry's-document" id="updating-the-traversable:attempt-to-populate-the-history-entry's-document-2">repopulated</a>.</p>
+       </li><li><p><a href="#deactivate-a-document-for-a-cross-document-navigation" id="updating-the-traversable:deactivate-a-document-for-a-cross-document-navigation">Deactivate</a>
        <var>displayedDocument</var>, given <var>userInvolvement</var>, <var>targetEntry</var>,
        <var>navigationType</var>, and <var>afterPotentialUnloads</var>.</p></li></ol>
      </li><li>
@@ -74833,13 +74870,14 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       <ol><li><p>Let <var>previousEntry</var> be <var>navigable</var>'s <a href="#nav-active-history-entry" id="updating-the-traversable:nav-active-history-entry-3">active session history entry</a>.</p></li><li><p>If <var>changingNavigableContinuation</var>'s <a href="#changing-nav-continuation-update-only" id="updating-the-traversable:changing-nav-continuation-update-only-5">update-only</a> is false, then
        <a href="#activate-history-entry" id="updating-the-traversable:activate-history-entry">activate history entry</a> <var>targetEntry</var> for
        <var>navigable</var>.</p></li><li><p>Let <var>updateDocument</var> be an algorithm step which performs <a href="#update-document-for-history-step-application" id="updating-the-traversable:update-document-for-history-step-application">update
-       document for history step application</a> given <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-10">document</a>, <var>targetEntry</var>,
+       document for history step application</a> given <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-13">document</a>, <var>targetEntry</var>,
        <var>changingNavigableContinuation</var>'s <a href="#changing-nav-continuation-update-only" id="updating-the-traversable:changing-nav-continuation-update-only-6">update-only</a>,
        <var>scriptHistoryLength</var>, <var>scriptHistoryIndex</var>, <var>navigationType</var>,
-       <var>entriesForNavigationAPI</var>, and <var>previousEntry</var>.</p></li><li><p>If <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-11">document</a> is equal to
+       <var>entriesForNavigationAPI</var>, <var>previousEntry</var>, and
+       <var>stickyActivationToCarryOver</var>.</p></li><li><p>If <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-14">document</a> is equal to
        <var>displayedDocument</var>, then perform <var>updateDocument</var>.</p></li><li><p>Otherwise, <a href="#queue-a-global-task" id="updating-the-traversable:queue-a-global-task-5">queue a global task</a> on the <a href="#navigation-and-traversal-task-source" id="updating-the-traversable:navigation-and-traversal-task-source-5">navigation and traversal task
-       source</a> given <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-12">document</a>'s
-       <a href="#concept-relevant-global" id="updating-the-traversable:concept-relevant-global">relevant global object</a> to perform <var>updateDocument</var>.</p></li><li><p>Increment <var>completedChangeJobs</var>.</p></li></ol>
+       source</a> given <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-15">document</a>'s
+       <a href="#concept-relevant-global" id="updating-the-traversable:concept-relevant-global-2">relevant global object</a> to perform <var>updateDocument</var>.</p></li><li><p>Increment <var>completedChangeJobs</var>.</p></li></ol>
      </li></ol>
    </li><li>
     <p>Let <var>totalNonchangingJobs</var> be the <a href="https://infra.spec.whatwg.org/#list-size" id="updating-the-traversable:list-size-2" data-x-internal="list-size">size</a> of
@@ -74873,7 +74911,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
    <a href="#node-navigable" id="updating-the-traversable:node-navigable">node navigable</a>.</p></li><li><p>Let <var>potentiallyTriggerViewTransition</var> be false.</p></li><li><p>Let <var>isBrowserUINavigation</var> be true if
    <var>userNavigationInvolvement</var> is "<code id="updating-the-traversable:uni-browser-ui"><a href="#uni-browser-ui">browser UI</a></code>"; otherwise false.</p></li><li><p>Set <var>potentiallyTriggerViewTransition</var> to the result of calling
    <a id="updating-the-traversable:can-navigation-trigger-a-cross-document-view-transition" href="https://drafts.csswg.org/css-view-transitions-2/#navigation-can-trigger-a-cross-document-view-transition" data-x-internal="can-navigation-trigger-a-cross-document-view-transition">can navigation trigger a cross-document view-transition?</a> given
-   <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-13">document</a>, <var>navigationType</var>, and
+   <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-16">document</a>, <var>navigationType</var>, and
    <var>isBrowserUINavigation</var>.</p></li><li>
     <p>If <var>potentiallyTriggerViewTransition</var> is false:</p>
 
@@ -74889,7 +74927,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       <p class="note">This allows new <a href="#navigate" id="updating-the-traversable:navigate-3">navigations</a> of
       <var>navigable</var> to start, whereas during the traversal they were blocked.</p>
      </li><li><p><a href="#unload-a-document-and-its-descendants" id="updating-the-traversable:unload-a-document-and-its-descendants">Unload a document and its descendants</a> given
-     <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-14">document</a>, <var>afterPotentialUnloads</var>, and
+     <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-17">document</a>, <var>afterPotentialUnloads</var>, and
      <var>firePageSwapBeforeUnload</var>.</p></li></ol>
    </li><li>
     <p>Otherwise, <a href="#queue-a-global-task" id="updating-the-traversable:queue-a-global-task-7">queue a global task</a> on the
@@ -74909,11 +74947,11 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
           <p class="note">This allows new <a href="#navigate" id="updating-the-traversable:navigate-4">navigations</a> of
           <var>navigable</var> to start, whereas during the traversal they were blocked.</p>
          </li><li><p><a href="#unload-a-document-and-its-descendants" id="updating-the-traversable:unload-a-document-and-its-descendants-2">Unload a document and its descendants</a> given
-         <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-15">document</a>, and <var>afterPotentialUnloads</var>.</p></li></ol>
+         <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-18">document</a>, and <var>afterPotentialUnloads</var>.</p></li></ol>
        </li></ol>
      </li><li><p>Let <var>viewTransition</var> be the result of
      <a id="updating-the-traversable:setting-up-a-cross-document-view-transition" href="https://drafts.csswg.org/css-view-transitions-2/#setup-cross-document-view-transition" data-x-internal="setting-up-a-cross-document-view-transition">setting up a cross-document view-transition</a> given
-     <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-16">document</a>, and
+     <var>displayedDocument</var>, <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-19">document</a>, and
      <var>proceedWithNavigationAfterViewTransitionCapture</var>.</p></li><li><p><a href="#fire-the-pageswap-event" id="updating-the-traversable:fire-the-pageswap-event-2">Fire the <code>pageswap</code> event</a> given
      <var>displayedDocument</var>, <var>targetEntry</var>, <var>navigationType</var>, and
      <var>viewTransition</var>.</p>
@@ -74937,14 +74975,14 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
   <ol><li><p><a id="updating-the-traversable:assert-8" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: this is running as part of a <a href="#concept-task" id="updating-the-traversable:concept-task">task</a> queued on <var>displayedDocument</var>'s
    <a href="#relevant-agent" id="updating-the-traversable:relevant-agent">relevant agent</a>'s <a href="#concept-agent-event-loop" id="updating-the-traversable:concept-agent-event-loop">event loop</a>.</p></li><li><p>Let <var>navigation</var> be <var>displayedDocument</var>'s
-   <a href="#concept-relevant-global" id="updating-the-traversable:concept-relevant-global-2">relevant global object</a>'s <a href="#window-navigation-api" id="updating-the-traversable:window-navigation-api-3">navigation API</a>.</p></li><li><p>Let <var>activation</var> be null.</p></li><li>
+   <a href="#concept-relevant-global" id="updating-the-traversable:concept-relevant-global-3">relevant global object</a>'s <a href="#window-navigation-api" id="updating-the-traversable:window-navigation-api-3">navigation API</a>.</p></li><li><p>Let <var>activation</var> be null.</p></li><li>
     <p>If all of the following are true:</p>
 
-    <ul><li><p><var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-17">document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="updating-the-traversable:concept-document-origin-3" data-x-internal="concept-document-origin">origin</a> is <a href="#same-origin" id="updating-the-traversable:same-origin-4">same origin</a> with
-     <var>displayedDocument</var>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="updating-the-traversable:concept-document-origin-4" data-x-internal="concept-document-origin">origin</a>;
-     and</p></li><li><p><var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-18">document</a>'s
-     <a href="#was-created-via-cross-origin-redirects" id="updating-the-traversable:was-created-via-cross-origin-redirects">was created via cross-origin redirects</a> is false, or <var>targetEntry</var>'s
-     <a href="#she-document" id="updating-the-traversable:she-document-19">document</a>'s <a href="#latest-entry" id="updating-the-traversable:latest-entry">latest entry</a> is not null,</p></li></ul>
+    <ul><li><p><var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-20">document</a>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="updating-the-traversable:concept-document-origin-6" data-x-internal="concept-document-origin">origin</a> is <a href="#same-origin" id="updating-the-traversable:same-origin-6">same origin</a> with
+     <var>displayedDocument</var>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="updating-the-traversable:concept-document-origin-7" data-x-internal="concept-document-origin">origin</a>;
+     and</p></li><li><p><var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-21">document</a>'s
+     <a href="#was-created-via-cross-origin-redirects" id="updating-the-traversable:was-created-via-cross-origin-redirects-2">was created via cross-origin redirects</a> is false, or <var>targetEntry</var>'s
+     <a href="#she-document" id="updating-the-traversable:she-document-22">document</a>'s <a href="#latest-entry" id="updating-the-traversable:latest-entry">latest entry</a> is not null,</p></li></ul>
 
     <p>then:</p>
 
@@ -74952,7 +74990,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       <p>Let <var>destinationEntry</var> be determined by switching on
       <var>navigationType</var>:</p>
 
-      <dl class="switch"><dt>"<code id="updating-the-traversable:dom-navigationtype-reload-3"><a href="#dom-navigationtype-reload">reload</a></code>"</dt><dd><p>The <a href="#navigation-current-entry" id="updating-the-traversable:navigation-current-entry">current entry</a> of
+      <dl class="switch"><dt>"<code id="updating-the-traversable:dom-navigationtype-reload-4"><a href="#dom-navigationtype-reload">reload</a></code>"</dt><dd><p>The <a href="#navigation-current-entry" id="updating-the-traversable:navigation-current-entry">current entry</a> of
        <var>navigation</var></p></dd><dt>"<code id="updating-the-traversable:dom-navigationtype-traverse-5"><a href="#dom-navigationtype-traverse">traverse</a></code>"</dt><dd><p>The <code id="updating-the-traversable:navigationhistoryentry"><a href="#navigationhistoryentry">NavigationHistoryEntry</a></code> in <var>navigation</var>'s <a href="#navigation-entry-list" id="updating-the-traversable:navigation-entry-list">entry list</a> whose <a href="#nhe-she" id="updating-the-traversable:nhe-she">session history entry</a> is <var>targetEntry</var></p></dd><dt>"<code id="updating-the-traversable:dom-navigationtype-push-2"><a href="#dom-navigationtype-push">push</a></code>"</dt><dt>"<code id="updating-the-traversable:dom-navigationtype-replace-2"><a href="#dom-navigationtype-replace">replace</a></code>"</dt><dd><p>A new <code id="updating-the-traversable:navigationhistoryentry-2"><a href="#navigationhistoryentry">NavigationHistoryEntry</a></code> in <var>displayedDocument</var>'s <a href="#concept-relevant-realm" id="updating-the-traversable:concept-relevant-realm">relevant realm</a> with its <a href="#nhe-she" id="updating-the-traversable:nhe-she-2">session history entry</a> set to <var>targetEntry</var></p></dd></dl>
      </li><li>
       <p>Set <var>activation</var> to a <a id="updating-the-traversable:new" href="https://webidl.spec.whatwg.org/#new" data-x-internal="new">new</a> <code id="updating-the-traversable:navigationactivation"><a href="#navigationactivation">NavigationActivation</a></code>
@@ -74968,7 +75006,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
     <code id="updating-the-traversable:pageswapevent"><a href="#pageswapevent">PageSwapEvent</a></code>, unless the new document is being restored from <a href="#note-bfcache">bfcache</a>.</p>
    </li><li><p><a href="https://dom.spec.whatwg.org/#concept-event-fire" id="updating-the-traversable:concept-event-fire" data-x-internal="concept-event-fire">Fire an event</a> named
    <code id="updating-the-traversable:event-pageswap"><a href="#event-pageswap">pageswap</a></code> at <var>displayedDocument</var>'s
-   <a href="#concept-relevant-global" id="updating-the-traversable:concept-relevant-global-3">relevant global object</a>, using <code id="updating-the-traversable:pageswapevent-2"><a href="#pageswapevent">PageSwapEvent</a></code> with its <code id="updating-the-traversable:dom-pageswapevent-activation-2"><a href="#dom-pageswapevent-activation">activation</a></code> set to <var>activation</var>,
+   <a href="#concept-relevant-global" id="updating-the-traversable:concept-relevant-global-4">relevant global object</a>, using <code id="updating-the-traversable:pageswapevent-2"><a href="#pageswapevent">PageSwapEvent</a></code> with its <code id="updating-the-traversable:dom-pageswapevent-activation-2"><a href="#dom-pageswapevent-activation">activation</a></code> set to <var>activation</var>,
    and its <code id="updating-the-traversable:dom-pageswapevent-viewtransition"><a href="#dom-pageswapevent-viewtransition">viewTransition</a></code> set to
    <var>viewTransition</var>.</p></li></ol>
   </div>
@@ -74977,7 +75015,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
   <p>To <dfn id="activate-history-entry">activate history entry</dfn> <a href="#session-history-entry" id="updating-the-traversable:session-history-entry-4">session history entry</a> <var>entry</var> for
   <a href="#navigable" id="updating-the-traversable:navigable-8">navigable</a> <var>navigable</var>:</p>
 
-  <ol><li><p><a href="#save-persisted-state" id="updating-the-traversable:save-persisted-state">Save persisted state</a> to the <a href="#navigable" id="updating-the-traversable:navigable-9">navigable</a>'s <a href="#nav-active-history-entry" id="updating-the-traversable:nav-active-history-entry-4">active session history entry</a>.</p></li><li><p>Let <var>newDocument</var> be <var>entry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-20">document</a>.</p></li><li><p><a id="updating-the-traversable:assert-9" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>newDocument</var>'s <a href="#is-initial-about:blank" id="updating-the-traversable:is-initial-about:blank">is initial
+  <ol><li><p><a href="#save-persisted-state" id="updating-the-traversable:save-persisted-state">Save persisted state</a> to the <a href="#navigable" id="updating-the-traversable:navigable-9">navigable</a>'s <a href="#nav-active-history-entry" id="updating-the-traversable:nav-active-history-entry-4">active session history entry</a>.</p></li><li><p>Let <var>newDocument</var> be <var>entry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-23">document</a>.</p></li><li><p><a id="updating-the-traversable:assert-9" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>newDocument</var>'s <a href="#is-initial-about:blank" id="updating-the-traversable:is-initial-about:blank">is initial
    <code>about:blank</code></a> is false, i.e., we never traverse back to the <a href="#is-initial-about:blank" id="updating-the-traversable:is-initial-about:blank-2">initial <code>about:blank</code></a> <code id="updating-the-traversable:document-4"><a href="#document">Document</a></code> because it
    always gets <a href="#navigate-convert-to-replace">replaced</a> when we navigate away from
    it.</p></li><li><p>Set <var>navigable</var>'s <a href="#nav-active-history-entry" id="updating-the-traversable:nav-active-history-entry-5">active session history
@@ -75034,10 +75072,10 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
     <ol><li><p>Let <var>targetEntry</var> be the result of <a href="#getting-the-target-history-entry" id="updating-the-traversable:getting-the-target-history-entry-2">getting the target history
      entry</a> given <var>navigable</var> and <var>targetStep</var>.</p></li><li><p>If <var>targetEntry</var> is not <var>navigable</var>'s <a href="#nav-current-history-entry" id="updating-the-traversable:nav-current-history-entry-3">current session history entry</a> or
-     <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-13">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-6">reload pending</a> is true, then <a href="https://infra.spec.whatwg.org/#list-append" id="updating-the-traversable:list-append-2" data-x-internal="list-append">append</a> <var>navigable</var> to <var>results</var>.</p></li><li>
-      <p>If <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-21">document</a> is
+     <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-16">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-6">reload pending</a> is true, then <a href="https://infra.spec.whatwg.org/#list-append" id="updating-the-traversable:list-append-2" data-x-internal="list-append">append</a> <var>navigable</var> to <var>results</var>.</p></li><li>
+      <p>If <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-24">document</a> is
       <var>navigable</var>'s <a href="#nav-document" id="updating-the-traversable:nav-document-4">active document</a>, and
-      <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-14">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-7">reload pending</a> is false, then <a href="https://infra.spec.whatwg.org/#list-extend" id="updating-the-traversable:list-extend" data-x-internal="list-extend">extend</a> <var>navigablesToCheck</var> with the <a href="#child-navigable" id="updating-the-traversable:child-navigable">child navigables</a> of <var>navigable</var>.</p>
+      <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-17">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-7">reload pending</a> is false, then <a href="https://infra.spec.whatwg.org/#list-extend" id="updating-the-traversable:list-extend" data-x-internal="list-extend">extend</a> <var>navigablesToCheck</var> with the <a href="#child-navigable" id="updating-the-traversable:child-navigable">child navigables</a> of <var>navigable</var>.</p>
 
       <p class="note">Adding <a href="#child-navigable" id="updating-the-traversable:child-navigable-2">child navigables</a> to
       <var>navigablesToCheck</var> means those navigables will also be checked by this loop. <a href="#child-navigable" id="updating-the-traversable:child-navigable-3">Child navigables</a> are only checked if the
@@ -75069,7 +75107,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
     <ol><li><p>Let <var>targetEntry</var> be the result of <a href="#getting-the-target-history-entry" id="updating-the-traversable:getting-the-target-history-entry-3">getting the target history
      entry</a> given <var>navigable</var> and <var>targetStep</var>.</p></li><li>
       <p>If <var>targetEntry</var> is <var>navigable</var>'s <a href="#nav-current-history-entry" id="updating-the-traversable:nav-current-history-entry-5">current session history entry</a> and
-      <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-15">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-8">reload pending</a> is false:</p>
+      <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-18">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-8">reload pending</a> is false:</p>
 
       <ol><li><p><a href="https://infra.spec.whatwg.org/#list-append" id="updating-the-traversable:list-append-3" data-x-internal="list-append">Append</a> <var>navigable</var> to
        <var>results</var>.</p></li><li>
@@ -75144,9 +75182,9 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
     <ol><li><p>Let <var>targetEntry</var> be the result of <a href="#getting-the-target-history-entry" id="updating-the-traversable:getting-the-target-history-entry-5">getting the target history
      entry</a> given <var>navigable</var> and <var>targetStep</var>.</p></li><li>
-      <p>If <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-22">document</a> is not
+      <p>If <var>targetEntry</var>'s <a href="#she-document" id="updating-the-traversable:she-document-25">document</a> is not
       <var>navigable</var>'s <a href="#nav-document" id="updating-the-traversable:nav-document-7">active document</a> or
-      <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-16">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-9">reload pending</a> is true, then <a href="https://infra.spec.whatwg.org/#list-append" id="updating-the-traversable:list-append-4" data-x-internal="list-append">append</a> <var>navigable</var> to <var>results</var>.</p>
+      <var>targetEntry</var>'s <a href="#she-document-state" id="updating-the-traversable:she-document-state-19">document state</a>'s <a href="#document-state-reload-pending" id="updating-the-traversable:document-state-reload-pending-9">reload pending</a> is true, then <a href="https://infra.spec.whatwg.org/#list-append" id="updating-the-traversable:list-append-4" data-x-internal="list-append">append</a> <var>navigable</var> to <var>results</var>.</p>
 
       <p class="note">Although <var>navigable</var>'s <a href="#nav-active-history-entry" id="updating-the-traversable:nav-active-history-entry-7">active history entry</a> can change synchronously, the
       new entry will always have the same <code id="updating-the-traversable:document-5"><a href="#document">Document</a></code>, so accessing
@@ -75172,13 +75210,15 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
   <var>doNotReactivate</var>, integers <var>scriptHistoryLength</var> and
   <var>scriptHistoryIndex</var>, <code id="updating-the-document:navigationtype"><a href="#navigationtype">NavigationType</a></code>-or-null <var>navigationType</var>, an
   optional <a id="updating-the-document:list" href="https://infra.spec.whatwg.org/#list" data-x-internal="list">list</a> of <a href="#session-history-entry" id="updating-the-document:session-history-entry-2">session history entries</a>
-  <var>entriesForNavigationAPI</var>, and an optional <a href="#session-history-entry" id="updating-the-document:session-history-entry-3">session history entry</a>
-  <var>previousEntryForActivation</var>:</p>
+  <var>entriesForNavigationAPI</var>, an optional <a href="#session-history-entry" id="updating-the-document:session-history-entry-3">session history entry</a>
+  <var>previousEntryForActivation</var>, and an optional boolean
+  <var>stickyActivationToCarryOver</var> (default false):</p>
 
   <ol><li><p>Let <var>documentIsNew</var> be true if <var>document</var>'s <a href="#latest-entry" id="updating-the-document:latest-entry">latest entry</a>
    is null; otherwise false.</p></li><li><p>Let <var>documentsEntryChanged</var> be true if <var>document</var>'s <a href="#latest-entry" id="updating-the-document:latest-entry-2">latest
-   entry</a> is not <var>entry</var>; otherwise false.</p></li><li><p>Set <var>document</var>'s <a href="#doc-history" id="updating-the-document:doc-history">history object</a>'s <a href="#concept-history-index" id="updating-the-document:concept-history-index">index</a> to <var>scriptHistoryIndex</var>.</p></li><li><p>Set <var>document</var>'s <a href="#doc-history" id="updating-the-document:doc-history-2">history object</a>'s <a href="#concept-history-length" id="updating-the-document:concept-history-length">length</a> to <var>scriptHistoryLength</var>.</p></li><li><p>Let <var>navigation</var> be <var>history</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global">relevant global object</a>'s
-   <a href="#window-navigation-api" id="updating-the-document:window-navigation-api">navigation API</a>.</p></li><li>
+   entry</a> is not <var>entry</var>; otherwise false.</p></li><li><p>Set <var>document</var>'s <a href="#doc-history" id="updating-the-document:doc-history">history object</a>'s <a href="#concept-history-index" id="updating-the-document:concept-history-index">index</a> to <var>scriptHistoryIndex</var>.</p></li><li><p>Set <var>document</var>'s <a href="#doc-history" id="updating-the-document:doc-history-2">history object</a>'s <a href="#concept-history-length" id="updating-the-document:concept-history-length">length</a> to <var>scriptHistoryLength</var>.</p></li><li><p>Let <var>navigation</var> be <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global">relevant global object</a>'s
+   <a href="#window-navigation-api" id="updating-the-document:window-navigation-api">navigation API</a>.</p></li><li><p>If <var>stickyActivationToCarryOver</var> is true, then set <var>document</var>'s
+   <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-2">relevant global object</a>'s <a href="#has-sticky-activation" id="updating-the-document:has-sticky-activation">has sticky activation</a> to true.</p></li><li>
     <p>If <var>documentsEntryChanged</var> is true:</p>
 
     <ol><li><p>Let <var>oldURL</var> be <var>document</var>'s <a href="#latest-entry" id="updating-the-document:latest-entry-3">latest entry</a>'s <a href="#she-url" id="updating-the-document:she-url">URL</a>.</p></li><li><p>Set <var>document</var>'s <a href="#latest-entry" id="updating-the-document:latest-entry-4">latest entry</a> to <var>entry</var>.</p></li><li><p><a href="#restore-the-history-object-state" id="updating-the-document:restore-the-history-object-state">Restore the history object state</a> given <var>document</var> and
@@ -75186,7 +75226,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
       <p>If <var>documentIsNew</var> is false:</p>
 
       <ol><li><p><a id="updating-the-document:assert" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>navigationType</var> is not null.</p></li><li><p><a href="#update-the-navigation-api-entries-for-a-same-document-navigation" id="updating-the-document:update-the-navigation-api-entries-for-a-same-document-navigation">Update the navigation API entries for a same-document navigation</a> given
-       <var>navigation</var>, <var>entry</var>, and <var>navigationType</var>.</p></li><li><p><a href="https://dom.spec.whatwg.org/#concept-event-fire" id="updating-the-document:concept-event-fire" data-x-internal="concept-event-fire">Fire an event</a> named <code id="updating-the-document:event-popstate"><a href="#event-popstate">popstate</a></code> at <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-2">relevant global
+       <var>navigation</var>, <var>entry</var>, and <var>navigationType</var>.</p></li><li><p><a href="https://dom.spec.whatwg.org/#concept-event-fire" id="updating-the-document:concept-event-fire" data-x-internal="concept-event-fire">Fire an event</a> named <code id="updating-the-document:event-popstate"><a href="#event-popstate">popstate</a></code> at <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-3">relevant global
        object</a>, using <code id="updating-the-document:popstateevent"><a href="#popstateevent">PopStateEvent</a></code>, with the <code id="updating-the-document:dom-popstateevent-state"><a href="#dom-popstateevent-state">state</a></code> attribute initialized to <var>document</var>'s
        <a href="#doc-history" id="updating-the-document:doc-history-3">history object</a>'s <a href="#concept-history-state" id="updating-the-document:concept-history-state">state</a> and <code id="updating-the-document:dom-popstateevent-hasuavisualtransition"><a href="#dom-popstateevent-hasuavisualtransition">hasUAVisualTransition</a></code> initialized to
        true if a visual transition, to display a cached rendered state of the <a href="#latest-entry" id="updating-the-document:latest-entry-5">latest
@@ -75194,8 +75234,8 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
        </li><li><p><a href="#restore-persisted-state" id="updating-the-document:restore-persisted-state">Restore persisted state</a> given <var>entry</var>.</p></li><li><p>If <var>oldURL</var>'s <a href="https://url.spec.whatwg.org/#concept-url-fragment" id="updating-the-document:concept-url-fragment" data-x-internal="concept-url-fragment">fragment</a> is not
        equal to <var>entry</var>'s <a href="#she-url" id="updating-the-document:she-url-2">URL</a>'s <a href="https://url.spec.whatwg.org/#concept-url-fragment" id="updating-the-document:concept-url-fragment-2" data-x-internal="concept-url-fragment">fragment</a>, then <a href="#queue-a-global-task" id="updating-the-document:queue-a-global-task">queue a global task</a> on the
-       <a href="#dom-manipulation-task-source" id="updating-the-document:dom-manipulation-task-source">DOM manipulation task source</a> given <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-3">relevant global
-       object</a> to <a href="https://dom.spec.whatwg.org/#concept-event-fire" id="updating-the-document:concept-event-fire-2" data-x-internal="concept-event-fire">fire an event</a> named <code id="updating-the-document:event-hashchange"><a href="#event-hashchange">hashchange</a></code> at <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-4">relevant global
+       <a href="#dom-manipulation-task-source" id="updating-the-document:dom-manipulation-task-source">DOM manipulation task source</a> given <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-4">relevant global
+       object</a> to <a href="https://dom.spec.whatwg.org/#concept-event-fire" id="updating-the-document:concept-event-fire-2" data-x-internal="concept-event-fire">fire an event</a> named <code id="updating-the-document:event-hashchange"><a href="#event-hashchange">hashchange</a></code> at <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-5">relevant global
        object</a>, using <code id="updating-the-document:hashchangeevent"><a href="#hashchangeevent">HashChangeEvent</a></code>, with the <code id="updating-the-document:dom-hashchangeevent-oldurl"><a href="#dom-hashchangeevent-oldurl">oldURL</a></code> attribute initialized to the <a href="https://url.spec.whatwg.org/#concept-url-serializer" id="updating-the-document:concept-url-serializer" data-x-internal="concept-url-serializer">serialization</a> of <var>oldURL</var> and the <code id="updating-the-document:dom-hashchangeevent-newurl"><a href="#dom-hashchangeevent-newurl">newURL</a></code> attribute initialized to the <a href="https://url.spec.whatwg.org/#concept-url-serializer" id="updating-the-document:concept-url-serializer-2" data-x-internal="concept-url-serializer">serialization</a> of <var>entry</var>'s <a href="#she-url" id="updating-the-document:she-url-3">URL</a>.</p></li></ol>
      </li><li>
       <p>Otherwise:</p>
@@ -75268,7 +75308,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
   <div data-algorithm="">
   <p>To <dfn id="make-active">make active</dfn> a <code id="updating-the-document:document-3"><a href="#document">Document</a></code> <var>document</var>:</p>
 
-  <ol><li><p>Let <var>window</var> be <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-5">relevant global
+  <ol><li><p>Let <var>window</var> be <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-6">relevant global
    object</a>.</p></li><li><p>Set <var>document</var>'s <a href="#concept-document-bc" id="updating-the-document:concept-document-bc">browsing context</a>'s
    <a href="#active-document" id="updating-the-document:active-document">active document</a> to <var>document</var>.</p></li><li><p>Set <var>document</var>'s <a href="#concept-document-bc" id="updating-the-document:concept-document-bc-2">browsing context</a>'s
    <code id="updating-the-document:windowproxy"><a href="#windowproxy">WindowProxy</a></code>'s <a href="#concept-windowproxy-window" id="updating-the-document:concept-windowproxy-window">[[Window]]</a> internal
@@ -75292,18 +75332,18 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
 
     <ol><li><p><a id="updating-the-document:assert-5" href="https://infra.spec.whatwg.org/#assert" data-x-internal="assert">Assert</a>: <var>document</var>'s <a href="#suspension-time" id="updating-the-document:suspension-time">suspension time</a> is not
      zero.</p></li><li><p>Let <var>suspendDuration</var> be the <a id="updating-the-document:current-high-resolution-time" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" data-x-internal="current-high-resolution-time">current high resolution time</a> minus
-     <var>document</var>'s <a href="#suspension-time" id="updating-the-document:suspension-time-2">suspension time</a>.</p></li><li><p>Let <var>activeTimers</var> be <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-6">relevant global
+     <var>document</var>'s <a href="#suspension-time" id="updating-the-document:suspension-time-2">suspension time</a>.</p></li><li><p>Let <var>activeTimers</var> be <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-7">relevant global
      object</a>'s <a href="#map-of-active-timers" id="updating-the-document:map-of-active-timers">map of active timers</a>.</p></li><li><p>For each <var>handle</var> in <var>document</var>'s <a href="#suspended-timer-handles" id="updating-the-document:suspended-timer-handles-2">suspended timer
      handles</a>, if <var>activeTimers</var>[<var>handle</var>] <a href="https://infra.spec.whatwg.org/#map-exists" id="updating-the-document:map-exists" data-x-internal="map-exists">exists</a>, then increase <var>activeTimers</var>[<var>handle</var>] by
      <var>suspendDuration</var>.</p></li></ol>
    </li><li><p><a href="#update-the-navigation-api-entries-for-reactivation" id="updating-the-document:update-the-navigation-api-entries-for-reactivation">Update the navigation API entries for reactivation</a> given
-   <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-7">relevant global object</a>'s <a href="#window-navigation-api" id="updating-the-document:window-navigation-api-2">navigation API</a>, <var>entriesForNavigationAPI</var>, and
+   <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-8">relevant global object</a>'s <a href="#window-navigation-api" id="updating-the-document:window-navigation-api-2">navigation API</a>, <var>entriesForNavigationAPI</var>, and
    <var>reactivatedEntry</var>.</p></li><li>
     <p>If <var>document</var>'s <a href="#current-document-readiness" id="updating-the-document:current-document-readiness">current document readiness</a> is "<code>complete</code>", and <var>document</var>'s <a href="#page-showing" id="updating-the-document:page-showing">page showing</a> is false:</p>
 
     <ol><li><p>Set <var>document</var>'s <a href="#page-showing" id="updating-the-document:page-showing-2">page showing</a> to true.</p></li><li><p>Set <var>document</var>'s <a href="#has-been-revealed" id="updating-the-document:has-been-revealed">has been revealed</a> to false.</p>
 
-     </li><li><p><a href="#update-the-visibility-state" id="updating-the-document:update-the-visibility-state">Update the visibility state</a> of <var>document</var> to "<code>visible</code>".</p></li><li><p><a href="#fire-a-page-transition-event" id="updating-the-document:fire-a-page-transition-event">Fire a page transition event</a> named <code id="updating-the-document:event-pageshow"><a href="#event-pageshow">pageshow</a></code> at <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-8">relevant global
+     </li><li><p><a href="#update-the-visibility-state" id="updating-the-document:update-the-visibility-state">Update the visibility state</a> of <var>document</var> to "<code>visible</code>".</p></li><li><p><a href="#fire-a-page-transition-event" id="updating-the-document:fire-a-page-transition-event">Fire a page transition event</a> named <code id="updating-the-document:event-pageshow"><a href="#event-pageshow">pageshow</a></code> at <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-9">relevant global
      object</a> with true.</p></li></ol>
 
     
@@ -75317,7 +75357,7 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
   <ol><li><p>Wait for an <a id="updating-the-document:implementation-defined" href="https://infra.spec.whatwg.org/#implementation-defined" data-x-internal="implementation-defined">implementation-defined</a> amount of time. (This is intended to allow
    the user agent to optimize the user experience in the face of performance concerns.)</p></li><li>
     <p><a href="#queue-a-global-task" id="updating-the-document:queue-a-global-task-2">Queue a global task</a> on the <a href="#navigation-and-traversal-task-source" id="updating-the-document:navigation-and-traversal-task-source">navigation and traversal task source</a>
-    given <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-9">relevant global object</a> to run these steps:</p>
+    given <var>document</var>'s <a href="#concept-relevant-global" id="updating-the-document:concept-relevant-global-10">relevant global object</a> to run these steps:</p>
 
     <ol><li><p>If <var>document</var> has no parser, or its parser has <a href="#stop-parsing" id="updating-the-document:stop-parsing">stopped parsing</a>, or the user agent has reason to believe the user is no longer
      interested in scrolling to the <a href="https://url.spec.whatwg.org/#concept-url-fragment" id="updating-the-document:concept-url-fragment-3" data-x-internal="concept-url-fragment">fragment</a>, then abort
@@ -75599,30 +75639,33 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
   <a href="#concept-document-bc" id="shared-document-creation-infrastructure:concept-document-bc">browsing context</a>-less <code id="shared-document-creation-infrastructure:document-3"><a href="#document">Document</a></code> objects can
   be created via various APIs, such as <code id="shared-document-creation-infrastructure:dom-domimplementation-createhtmldocument"><a data-x-internal="dom-domimplementation-createhtmldocument" href="https://dom.spec.whatwg.org/#dom-domimplementation-createhtmldocument">document.implementation.createHTMLDocument()</a></code>.</p>
 
-  <ol><li>
+  <ol><li><p>Let <var>navigable</var> be <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable">navigable</a>.</p></li><li>
     <p>Let <var>browsingContext</var> be the result of <a href="#obtain-browsing-context-navigation" id="shared-document-creation-infrastructure:obtain-browsing-context-navigation">obtaining a browsing context to use for a
     navigation response</a> given <var>navigationParams</var>.</p>
 
     <p class="note">This can result in a <a href="#browsing-context-group-switches-due-to-cross-origin-opener-policy">browsing context
     group switch</a>, in which case <var>browsingContext</var> will be a <a href="#creating-a-new-browsing-context" id="shared-document-creation-infrastructure:creating-a-new-browsing-context-2">newly-created</a> <a href="#browsing-context" id="shared-document-creation-infrastructure:browsing-context">browsing context</a> instead
-    of being <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable">navigable</a>'s <a href="#nav-bc" id="shared-document-creation-infrastructure:nav-bc">active browsing
-    context</a>. In such a case, the created <code id="shared-document-creation-infrastructure:window"><a href="#window">Window</a></code>, <code id="shared-document-creation-infrastructure:document-4"><a href="#document">Document</a></code>, and
-    <a id="shared-document-creation-infrastructure:agent" href="https://tc39.es/ecma262/#sec-agents" data-x-internal="agent">agent</a> will not end up being used; because the created <code id="shared-document-creation-infrastructure:document-5"><a href="#document">Document</a></code>'s
-    <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="shared-document-creation-infrastructure:concept-document-origin" data-x-internal="concept-document-origin">origin</a> is <a href="#concept-origin-opaque" id="shared-document-creation-infrastructure:concept-origin-opaque">opaque</a>, we will end up creating a new <a id="shared-document-creation-infrastructure:agent-2" href="https://tc39.es/ecma262/#sec-agents" data-x-internal="agent">agent</a>
+    of being <var>navigable</var>'s <a href="#nav-bc" id="shared-document-creation-infrastructure:nav-bc">active browsing context</a>. In such a
+    case, the created <code id="shared-document-creation-infrastructure:window"><a href="#window">Window</a></code>, <code id="shared-document-creation-infrastructure:document-4"><a href="#document">Document</a></code>, and <a id="shared-document-creation-infrastructure:agent" href="https://tc39.es/ecma262/#sec-agents" data-x-internal="agent">agent</a> will not
+    end up being used; because the created <code id="shared-document-creation-infrastructure:document-5"><a href="#document">Document</a></code>'s <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="shared-document-creation-infrastructure:concept-document-origin" data-x-internal="concept-document-origin">origin</a> is <a href="#concept-origin-opaque" id="shared-document-creation-infrastructure:concept-origin-opaque">opaque</a>, we will end up creating a new <a id="shared-document-creation-infrastructure:agent-2" href="https://tc39.es/ecma262/#sec-agents" data-x-internal="agent">agent</a>
     and <code id="shared-document-creation-infrastructure:window-2"><a href="#window">Window</a></code> <a href="#create-new-agent-and-window">later in this algorithm</a> to
     go along with the new <code id="shared-document-creation-infrastructure:document-6"><a href="#document">Document</a></code>.</p>
    </li><li>
     <p>Let <var>permissionsPolicy</var> be the result of <a id="shared-document-creation-infrastructure:creating-a-permissions-policy-from-a-response" href="https://w3c.github.io/webappsec-feature-policy/#create-from-response" data-x-internal="creating-a-permissions-policy-from-a-response">creating a permissions policy from a
-    response</a> given <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable-2">navigable</a>'s <a href="#nav-container" id="shared-document-creation-infrastructure:nav-container">container</a>, <var>navigationParams</var>'s <a href="#navigation-params-origin" id="shared-document-creation-infrastructure:navigation-params-origin">origin</a>, and <var>navigationParams</var>'s <a href="#navigation-params-response" id="shared-document-creation-infrastructure:navigation-params-response">response</a>. <a href="#refsPERMISSIONSPOLICY">[PERMISSIONSPOLICY]</a></p>
+    response</a> given <var>navigable</var>'s <a href="#nav-container" id="shared-document-creation-infrastructure:nav-container">container</a>,
+    <var>navigationParams</var>'s <a href="#navigation-params-origin" id="shared-document-creation-infrastructure:navigation-params-origin">origin</a>, and
+    <var>navigationParams</var>'s <a href="#navigation-params-response" id="shared-document-creation-infrastructure:navigation-params-response">response</a>.
+    <a href="#refsPERMISSIONSPOLICY">[PERMISSIONSPOLICY]</a></p>
 
     <div class="note">
      <p>The <a id="shared-document-creation-infrastructure:creating-a-permissions-policy-from-a-response-2" href="https://w3c.github.io/webappsec-feature-policy/#create-from-response" data-x-internal="creating-a-permissions-policy-from-a-response">creating a permissions policy from a response</a> algorithm makes use of the
      passed <a href="#concept-origin" id="shared-document-creation-infrastructure:concept-origin">origin</a>. If <code id="shared-document-creation-infrastructure:dom-document-domain"><a href="#dom-document-domain">document.domain</a></code> has
-     been used for <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable-3">navigable</a>'s <a href="#nav-container-document" id="shared-document-creation-infrastructure:nav-container-document">container document</a>, then its <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="shared-document-creation-infrastructure:concept-document-origin-2" data-x-internal="concept-document-origin">origin</a> cannot be <a href="#same-origin-domain" id="shared-document-creation-infrastructure:same-origin-domain">same origin-domain</a> with
-     the passed origin, because these steps run before the <var>document</var> is created, so it
-     cannot itself yet have used <code id="shared-document-creation-infrastructure:dom-document-domain-2"><a href="#dom-document-domain">document.domain</a></code>. Note
-     that this means that Permissions Policy checks are less permissive compared to doing a
-     <a href="#same-origin" id="shared-document-creation-infrastructure:same-origin">same origin</a> check instead.</p>
+     been used for <var>navigable</var>'s <a href="#nav-container-document" id="shared-document-creation-infrastructure:nav-container-document">container
+     document</a>, then its <a href="https://dom.spec.whatwg.org/#concept-document-origin" id="shared-document-creation-infrastructure:concept-document-origin-2" data-x-internal="concept-document-origin">origin</a> cannot be
+     <a href="#same-origin-domain" id="shared-document-creation-infrastructure:same-origin-domain">same origin-domain</a> with the passed origin, because these steps run before the
+     <var>document</var> is created, so it cannot itself yet have used <code id="shared-document-creation-infrastructure:dom-document-domain-2"><a href="#dom-document-domain">document.domain</a></code>. Note that this means that Permissions
+     Policy checks are less permissive compared to doing a <a href="#same-origin" id="shared-document-creation-infrastructure:same-origin">same origin</a> check
+     instead.</p>
 
      <p>See below for some examples of this in action.</p>
     </div>
@@ -75656,9 +75699,9 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
        <code id="shared-document-creation-infrastructure:windowproxy"><a href="#windowproxy">WindowProxy</a></code> object.</p></li></ul>
      </li><li><p>Set <var>window</var> to the <a href="#concept-realm-global" id="shared-document-creation-infrastructure:concept-realm-global">global
      object</a> of <var>realmExecutionContext</var>'s Realm component.</p></li><li><p>Let <var>topLevelCreationURL</var> be <var>creationURL</var>.</p></li><li><p>Let <var>topLevelOrigin</var> be <var>navigationParams</var>'s <a href="#navigation-params-origin" id="shared-document-creation-infrastructure:navigation-params-origin-4">origin</a>.</p></li><li>
-      <p>If <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable-4">navigable</a>'s <a href="#nav-container" id="shared-document-creation-infrastructure:nav-container-2">container</a> is not null:</p>
+      <p>If <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable-2">navigable</a>'s <a href="#nav-container" id="shared-document-creation-infrastructure:nav-container-2">container</a> is not null:</p>
 
-      <ol><li><p>Let <var>parentEnvironment</var> be <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable-5">navigable</a>'s <a href="#nav-container" id="shared-document-creation-infrastructure:nav-container-3">container</a>'s <a href="#relevant-settings-object" id="shared-document-creation-infrastructure:relevant-settings-object">relevant settings object</a>.</p></li><li><p>Set <var>topLevelCreationURL</var> to <var>parentEnvironment</var>'s <a href="#concept-environment-top-level-creation-url" id="shared-document-creation-infrastructure:concept-environment-top-level-creation-url">top-level
+      <ol><li><p>Let <var>parentEnvironment</var> be <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable-3">navigable</a>'s <a href="#nav-container" id="shared-document-creation-infrastructure:nav-container-3">container</a>'s <a href="#relevant-settings-object" id="shared-document-creation-infrastructure:relevant-settings-object">relevant settings object</a>.</p></li><li><p>Set <var>topLevelCreationURL</var> to <var>parentEnvironment</var>'s <a href="#concept-environment-top-level-creation-url" id="shared-document-creation-infrastructure:concept-environment-top-level-creation-url">top-level
        creation URL</a>.</p></li><li><p>Set <var>topLevelOrigin</var> to <var>parentEnvironment</var>'s <a href="#concept-environment-top-level-origin" id="shared-document-creation-infrastructure:concept-environment-top-level-origin">top-level
        origin</a>.</p></li></ol>
      </li><li><p><a href="#set-up-a-window-environment-settings-object" id="shared-document-creation-infrastructure:set-up-a-window-environment-settings-object">Set up a window environment settings object</a> with <var>creationURL</var>,
@@ -75736,9 +75779,9 @@ location<c- p="">.</c->href <c- o="">=</c-> <c- t="">'#foo'</c-><c- p="">;</c-><
    hints</a> with <var>document</var>.</p></li><li><p><a href="#process-link-headers" id="shared-document-creation-infrastructure:process-link-headers">Process link headers</a> given <var>document</var>,
    <var>navigationParams</var>'s <a href="#navigation-params-response" id="shared-document-creation-infrastructure:navigation-params-response-13">response</a>, and
    "<code>pre-media</code>".</p></li><li>
-    <p>If <var>navigationParams</var>'s <a href="#navigation-params-navigable" id="shared-document-creation-infrastructure:navigation-params-navigable-6">navigable</a>
-    is a <a href="#top-level-traversable" id="shared-document-creation-infrastructure:top-level-traversable">top-level traversable</a>, then <a href="#process-the-speculation-rules-header" id="shared-document-creation-infrastructure:process-the-speculation-rules-header">process the `<code>Speculation-Rules</code>`
-    header</a> given <var>document</var> and <var>navigationParams</var>'s <a href="#navigation-params-response" id="shared-document-creation-infrastructure:navigation-params-response-14">response</a>.</p>
+    <p>If <var>navigable</var> is a <a href="#top-level-traversable" id="shared-document-creation-infrastructure:top-level-traversable">top-level traversable</a>, then <a href="#process-the-speculation-rules-header" id="shared-document-creation-infrastructure:process-the-speculation-rules-header">process the
+    `<code>Speculation-Rules</code>` header</a> given <var>document</var> and
+    <var>navigationParams</var>'s <a href="#navigation-params-response" id="shared-document-creation-infrastructure:navigation-params-response-14">response</a>.</p>
 
     <p class="note">This is conditional because <a href="#step-consider-speculative-loads-top-level-only">speculative loads are only considered for
     top-level traversables</a>, so it would be wasteful to fetch these rules otherwise.</p>
