@@ -188,8 +188,8 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         validInputTypesByAttributeName.put("alt", new String[] {
                 "#attr-input-alt", "image" });
         validInputTypesByAttributeName.put("autocomplete", new String[] {
-                "#attr-input-autocomplete", "text", "search", "url", "tel",
-                "email", "password", "date", "month", "week",
+                "#attr-fe-autocomplete", "hidden", "text", "search", "url",
+                "tel", "email", "password", "date", "month", "week",
                 "time", "datetime-local", "number", "range", "color" });
         validInputTypesByAttributeName.put("autofocus",
                 new String[] { "#attr-fe-autofocus" });
@@ -198,7 +198,8 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         validInputTypesByAttributeName.put("colorspace", new String[] {
                 "#attr-input-colorspace", "color" });
         validInputTypesByAttributeName.put("dirname", new String[] {
-                "#attr-input-dirname", "text", "search" });
+                "#attr-fe-dirname", "hidden", "text", "search", "url", "tel",
+                "email", "password", "submit" });
         validInputTypesByAttributeName.put("disabled",
                 new String[] { "#attr-fe-disabled" });
         validInputTypesByAttributeName.put("form",
@@ -228,6 +229,9 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         validInputTypesByAttributeName.put("min", new String[] {
                 "#attr-input-min", "date", "month", "week", "time",
                 "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("minlength", new String[] {
+                "#attr-input-minlength", "text", "search", "url", "tel",
+                "email", "password" });
         validInputTypesByAttributeName.put("multiple", new String[] {
                 "#attr-input-multiple", "email", "file" });
         validInputTypesByAttributeName.put("name",
@@ -238,6 +242,11 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         validInputTypesByAttributeName.put("placeholder", new String[] {
                 "#attr-input-placeholder", "text", "search", "url", "tel",
                 "email", "password", "number" });
+        validInputTypesByAttributeName.put("popovertarget", new String[] {
+                "#attr-popovertarget", "submit", "image", "reset", "button" });
+        validInputTypesByAttributeName.put("popovertargetaction",
+                new String[] { "#attr-popovertargetaction", "submit", "image",
+                        "reset", "button" });
         validInputTypesByAttributeName.put("readonly", new String[] {
                 "#attr-input-readonly", "text", "search", "url", "tel",
                 "email", "password", "date", "month", "week",
