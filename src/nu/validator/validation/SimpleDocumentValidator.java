@@ -403,6 +403,9 @@ public class SimpleDocumentValidator {
             ContentHandler recorder = sourceCode.getLocationRecorder();
             htmlParser.setTreeBuildingWiretap(recorder,
                     (LexicalHandler) recorder);
+            // The checker checks the markup, and selectedcontent content in the tree only ever comes from the
+            // parser's clone of the selected option — so leave it out, as a streaming parse does.
+            htmlParser.setCloningOptionsIntoSelectedcontent(false);
         }
         HashMap<String, String> profileMap = new HashMap<>();
         profileMap.put("html-strict", "warn");

@@ -71,6 +71,14 @@ public class NoStreamLocationTest {
     private static final String END_TAG = "<!DOCTYPE html>\n"
             + "<html lang=\"en\">\n<title>T</title>\n<dl><div></div></dl>\n";
 
+    // A selectedcontent element, which a tree-building parse fills with a
+    // clone of the selected option's content
+    private static final String SELECTEDCONTENT = "<!DOCTYPE html>\n"
+            + "<html lang=\"en\">\n<title>T</title>\n<select>\n"
+            + "<button><selectedcontent></selectedcontent></button>\n"
+            + "<option>Alpha</option>\n<option selected><b>Beta</b></option>\n"
+            + "</select>\n";
+
     private static File dir;
 
     private static File write(String name, String content) throws Exception {
@@ -132,6 +140,7 @@ public class NoStreamLocationTest {
         File foster = write("foster.html", FOSTER);
         File comment = write("comment.html", COMMENT);
         File endTag = write("end-tag.html", END_TAG);
+        File selectedcontent = write("selectedcontent.html", SELECTEDCONTENT);
 
         System.out.println("Testing --no-stream ranges...");
         String gnu = check(html, true, false);
@@ -157,6 +166,7 @@ public class NoStreamLocationTest {
         expectSame("GNU output, comment and doctype", comment, false);
         expectSame("JSON output, comment and doctype", comment, true);
         expectSame("GNU output, message at an end tag", endTag, false);
+        expectSame("GNU output, selectedcontent", selectedcontent, false);
 
         for (File file : dir.listFiles()) {
             file.delete();

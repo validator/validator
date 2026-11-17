@@ -51,6 +51,8 @@ class SAXTreeBuilder extends TreeBuilder<Element> {
 
     private LexicalHandler wiretapLexicalHandler = null;
 
+    private boolean cloningOptionsIntoSelectedcontent = true;
+
     SAXTreeBuilder() {
         super();
     }
@@ -67,6 +69,17 @@ class SAXTreeBuilder extends TreeBuilder<Element> {
             LexicalHandler lexicalHandler) {
         wiretapContentHandler = contentHandler;
         wiretapLexicalHandler = lexicalHandler;
+    }
+
+    /**
+     * Sets whether a popped option element gets cloned into its select
+     * element's selectedcontent element, as the spec's "maybe clone an option
+     * into selectedcontent" says to.
+     *
+     * @param cloning <code>true</code> to clone, which is the default
+     */
+    void setCloningOptionsIntoSelectedcontent(boolean cloning) {
+        cloningOptionsIntoSelectedcontent = cloning;
     }
 
     @Override
@@ -270,6 +283,9 @@ class SAXTreeBuilder extends TreeBuilder<Element> {
     // https://html.spec.whatwg.org/multipage/form-elements.html#maybe-clone-an-option-into-selectedcontent
     // Implements "maybe clone an option into selectedcontent"
     protected void optionElementPopped(Element option) throws SAXException {
+        if (!cloningOptionsIntoSelectedcontent) {
+            return;
+        }
         // Find the nearest ancestor <select> element
         Element select = findAncestor(option, "select");
         if (select == null) {

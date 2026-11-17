@@ -103,6 +103,8 @@ public class HtmlParser implements XMLReader {
 
     private LexicalHandler treeBuildingLexicalHandler = null;
 
+    private boolean cloningOptionsIntoSelectedcontent = true;
+
     private DTDHandler dtdHandler = null;
 
     private EntityResolver entityResolver = null;
@@ -178,6 +180,8 @@ public class HtmlParser implements XMLReader {
                 this.saxTreeBuilder = new SAXTreeBuilder();
                 this.saxTreeBuilder.setWiretap(treeBuildingContentHandler,
                         treeBuildingLexicalHandler);
+                this.saxTreeBuilder.setCloningOptionsIntoSelectedcontent(
+                        cloningOptionsIntoSelectedcontent);
                 this.treeBuilder = this.saxTreeBuilder;
                 this.saxStreamer = null;
                 this.driver = new Driver(newTokenizer(treeBuilder, true));
@@ -597,6 +601,22 @@ public class HtmlParser implements XMLReader {
         treeBuildingLexicalHandler = lexicalHandler;
         if (saxTreeBuilder != null) {
             saxTreeBuilder.setWiretap(contentHandler, lexicalHandler);
+        }
+    }
+
+    /**
+     * Sets whether, when the parser builds a tree, it clones the content of a
+     * select element's selected option element into the select element's
+     * selectedcontent element, as the spec says to. Turning that off leaves
+     * selectedcontent elements as the source has them, which is what a
+     * streaming parse emits. This has no effect on a streaming parse.
+     *
+     * @param cloning <code>true</code> to clone, which is the default
+     */
+    public void setCloningOptionsIntoSelectedcontent(boolean cloning) {
+        cloningOptionsIntoSelectedcontent = cloning;
+        if (saxTreeBuilder != null) {
+            saxTreeBuilder.setCloningOptionsIntoSelectedcontent(cloning);
         }
     }
 
