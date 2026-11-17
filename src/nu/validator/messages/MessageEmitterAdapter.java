@@ -183,6 +183,8 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
     static {
         validInputTypesByAttributeName.put("accept", new String[] {
                 "#attr-input-accept", "file" });
+        validInputTypesByAttributeName.put("alpha", new String[] {
+                "#attr-input-alpha", "color" });
         validInputTypesByAttributeName.put("alt", new String[] {
                 "#attr-input-alt", "image" });
         validInputTypesByAttributeName.put("autocomplete", new String[] {
@@ -193,6 +195,8 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
                 new String[] { "#attr-fe-autofocus" });
         validInputTypesByAttributeName.put("checked", new String[] {
                 "#attr-input-checked", "checkbox", "radio" });
+        validInputTypesByAttributeName.put("colorspace", new String[] {
+                "#attr-input-colorspace", "color" });
         validInputTypesByAttributeName.put("dirname", new String[] {
                 "#attr-input-dirname", "text", "search" });
         validInputTypesByAttributeName.put("disabled",
