@@ -1041,9 +1041,27 @@ public class Assertions extends Checker {
 
     private static final String ACTIVE_DESCENDANT_WARNING = "Attribute"
             + " “aria-activedescendant” value should either refer to a"
-            + " descendant element, or refer to a descendant of an element"
-            + " referenced by attribute “aria-controls”, or be"
-            + " accompanied by attribute “aria-owns”.";
+            + " descendant element, or be accompanied by attribute"
+            + " “aria-owns” — or, on an element whose role is “combobox”,"
+            + " “searchbox”, or “textbox”, refer to a descendant of an"
+            + " element that supports “aria-activedescendant” and that"
+            + " attribute “aria-controls” refers to.";
+
+    /**
+     * Roles of an element whose aria-activedescendant value can refer to a
+     * descendant of an element that its aria-controls value refers to.
+     */
+    private static final Set<String> ACTIVE_DESCENDANT_CONTROLLING_ROLES = Set.of(
+            "combobox", "searchbox", "textbox");
+
+    /**
+     * Roles that support aria-activedescendant: the ones it's used in, and the
+     * ones it inherits into.
+     */
+    private static final Set<String> ROLES_SUPPORTING_ACTIVE_DESCENDANT = Set.of(
+            "application", "combobox", "grid", "group", "listbox", "menu",
+            "menubar", "radiogroup", "row", "searchbox", "spinbutton",
+            "tablist", "textbox", "toolbar", "tree", "treegrid");
 
     private static final String h1WarningMessage = "Consider using the"
             + " “h1” element as a top-level heading only — or else"
@@ -1821,6 +1839,12 @@ public class Assertions extends Checker {
      */
     private Map<String, String> idParents = new HashMap<>();
 
+    /**
+     * Maps each ID to the role of its element (see elementRole()), for each
+     * element whose role is known.
+     */
+    private Map<String, String> idRoles = new HashMap<>();
+
     private LinkedHashSet<IdReference> formControlReferences = new LinkedHashSet<>();
 
     private LinkedHashSet<IdrefLocator> commandForReferences = new LinkedHashSet<>();
@@ -1948,7 +1972,7 @@ public class Assertions extends Checker {
      * Returns the implicit role that ARIA in HTML gives an HTML element with
      * no "role" attribute, or null for an element that has no corresponding
      * role, or whose implicit role this doesn't determine (e.g., "td", "th",
-     * "select", "option", "img" with an empty "alt", and custom elements).
+     * "option", "img" with an empty "alt", and custom elements).
      */
     private String implicitRole(String localName, Attributes atts,
             StackNode parent) {
@@ -1991,10 +2015,49 @@ public class Assertions extends Checker {
                         && atts.getIndex("", "switch") >= 0) {
                     return "switch";
                 }
-                return INPUT_TYPES_WITH_IMPLICIT_ROLE.get(type);
+                boolean hasList = atts.getIndex("", "list") >= 0;
+                switch (type) {
+                    case "text":
+                    case "email":
+                    case "tel":
+                    case "url":
+                        return hasList ? "combobox" : "textbox";
+                    case "search":
+                        return hasList ? "combobox" : "searchbox";
+                    default:
+                        return INPUT_TYPES_WITH_IMPLICIT_ROLE.get(type);
+                }
+            case "select":
+                if (atts.getIndex("", "multiple") >= 0) {
+                    return "listbox";
+                }
+                String size = atts.getValue("", "size");
+                try {
+                    if (size != null && Integer.parseInt(size.trim()) > 1) {
+                        return "listbox";
+                    }
+                } catch (NumberFormatException e) {
+                }
+                return "combobox";
             default:
                 return null;
         }
+    }
+
+    /**
+     * Returns the role of an element: the first token of its "role" attribute
+     * value, or else, for an HTML element, its implicit role (see
+     * implicitRole()). Returns null if neither is known.
+     *
+     * @param htmlName the element's local name if it's an HTML element, or
+     *            null if it isn't
+     */
+    private String elementRole(List<String> roles, String htmlName,
+            Attributes atts, StackNode parent) {
+        if (roles != null && !roles.isEmpty() && !"".equals(roles.get(0))) {
+            return roles.get(0);
+        }
+        return htmlName == null ? null : implicitRole(htmlName, atts, parent);
     }
 
     private static boolean hasNonEmptyAttribute(Attributes atts,
@@ -2145,7 +2208,9 @@ public class Assertions extends Checker {
             boolean found = false;
             for (String id = idParents.get(idrefLocator.getIdref()); id != null;
                     id = idParents.get(id)) {
-                if (controlled.contains(id)) {
+                String role = idRoles.get(id);
+                if (controlled.contains(id) && (role == null
+                        || ROLES_SUPPORTING_ACTIVE_DESCENDANT.contains(role))) {
                     found = true;
                     break;
                 }
@@ -2446,7 +2511,11 @@ public class Assertions extends Checker {
         if ((locator = openActiveDescendants.remove(node)) != null) {
             String controls = node.getAttributes().getValue("",
                     "aria-controls");
-            if (controls != null && !"".equals(controls.trim())) {
+            String role = elementRole(node.roles, node.getName(),
+                    node.getAttributes(), null);
+            if (controls != null && !"".equals(controls.trim())
+                    && (role == null
+                            || ACTIVE_DESCENDANT_CONTROLLING_ROLES.contains(role))) {
                 // The value can instead refer to a descendant of an element that aria-controls refers to —
                 // and since that element can come later in the document, check for it in endDocument().
                 activeDescendantsWithAriaControls.add(new IdrefLocator(
@@ -2684,6 +2753,7 @@ public class Assertions extends Checker {
         openActiveDescendants.clear();
         activeDescendantsWithAriaControls.clear();
         idParents.clear();
+        idRoles.clear();
         ariaOwnsIdsByRole.clear();
         needsAriaOwner.clear();
         formControlReferences.clear();
@@ -5263,8 +5333,14 @@ public class Assertions extends Checker {
         allIds.putAll(ids);
         if (!ids.isEmpty()) {
             String parentId = nearestAncestorId();
+            String elementRole = elementRole(roles,
+                    "http://www.w3.org/1999/xhtml" == uri ? localName : null,
+                    atts, parent);
             for (String id : ids.keySet()) {
                 idParents.putIfAbsent(id, parentId);
+                if (elementRole != null) {
+                    idRoles.putIfAbsent(id, elementRole);
+                }
             }
         }
 

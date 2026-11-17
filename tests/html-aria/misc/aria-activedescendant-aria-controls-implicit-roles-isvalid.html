@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>aria-activedescendant referring into an aria-controls element, on elements with implicit roles</title>
+<input type="text" aria-label="Text" aria-activedescendant="opt1" aria-controls="lb1">
+<div id="lb1" role="listbox" aria-label="Options 1"><div role="option" id="opt1" aria-selected="true">One</div></div>
+<input type="search" aria-label="Search" aria-activedescendant="opt2" aria-controls="lb2">
+<div id="lb2" role="listbox" aria-label="Options 2"><div role="option" id="opt2" aria-selected="true">Two</div></div>
+<textarea aria-label="Textarea" aria-activedescendant="opt3" aria-controls="sel"></textarea>
+<select id="sel" multiple aria-label="Options 3"><option id="opt3">Three</option></select>
+<input type="email" aria-label="Email" aria-activedescendant="item1" aria-controls="tree">
+<div id="tree" role="tree" aria-label="Tree"><div role="treeitem" id="item1" aria-selected="true">Item</div></div>
