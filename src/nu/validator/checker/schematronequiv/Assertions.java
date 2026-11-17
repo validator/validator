@@ -1987,6 +1987,10 @@ public class Assertions extends Checker {
             case "input":
                 String type = atts.getValue("", "type");
                 type = type == null ? "text" : type.trim().toLowerCase();
+                if ("checkbox".equals(type)
+                        && atts.getIndex("", "switch") >= 0) {
+                    return "switch";
+                }
                 return INPUT_TYPES_WITH_IMPLICIT_ROLE.get(type);
             default:
                 return null;

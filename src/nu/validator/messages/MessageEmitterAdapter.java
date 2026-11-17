@@ -251,6 +251,8 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
         validInputTypesByAttributeName.put("step", new String[] {
                 "#attr-input-step", "date", "month", "week",
                 "time", "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("switch", new String[] {
+                "#attr-input-switch", "checkbox" });
         validInputTypesByAttributeName.put("type",
                 new String[] { "#attr-input-type" });
         validInputTypesByAttributeName.put("value",

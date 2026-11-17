@@ -179,7 +179,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	input.checkbox.attrs &=
 		(	shared-input.attrs
+		&	input.checkbox.attrs.switch?
 		)
+		input.checkbox.attrs.switch =
+			attribute switch {
+				w:string "switch" | w:string ""
+			}
 
 ## Radiobutton: <input type='radio'>, Extensions
 
