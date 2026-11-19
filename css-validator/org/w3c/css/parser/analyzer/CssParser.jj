@@ -3484,6 +3484,7 @@ void pseudo_element_selector(CssSelectors s) :
 {
 	Token n;
 	CssSelectors sel = null;
+	String args = null;
 }
 {
 	<PSEUDOELEMENT_SYM> ( ( n=ident() {
@@ -3511,6 +3512,15 @@ void pseudo_element_selector(CssSelectors s) :
 			removeThisRule();
 			ac.getFrame().addError(new CssError(getSourceFile(), getBeginLine(),
 						getBeginColumn(), getEndLine(), getEndColumn(), e));
+		}
+	}
+	| ( n=<FUNCTION> args=pseudo_element_args() <RPAREN> ) {
+		// functional pseudo-elements whose argument isn't a selector, like ::highlight() or ::part()
+		try {
+			s.setPseudoElementFun(ac, convertStringIndex(n.image, 0, n.image.length() -1, false).toLowerCase(), args);
+		} catch(InvalidParamException e) {
+			validSelector = false;
+			throw new ParseException(e.getMessage());
 		}
 	}
 	)
@@ -4768,6 +4778,83 @@ String skip_to_matching_brace() {
 	}
 	s.append(tok.image);
 	getNextToken();
+    }
+    return s.toString();
+}
+
+/*
+ * Returns the argument of a functional pseudo-element, up to its closing
+ * parenthesis: Like skip_to_matching_paren(), but with whitespace for each
+ * run of whitespace and comments, and wherever a comment the tokenizer skips
+ * separated two tokens, so that the argument can't be checked as one token
+ * where the source has two. Stops at a brace or semicolon, which leaves the
+ * closing parenthesis missing, so that error recovery skips just this rule.
+ */
+JAVACODE
+String pseudo_element_args() {
+    StringBuilder s = new StringBuilder();
+    Token prev = token;
+    Token tok;
+    int nesting = 1;
+    for (;;) {
+        tok = getToken(1);
+        if (tok.kind == EOF || tok.kind == LBRACE || tok.kind == RBRACE
+                || tok.kind == SEMICOLON) {
+            // no closing parenthesis; leave the rest for error recovery
+            break;
+        }
+        switch (tok.kind) {
+            case RPAREN:
+                nesting--;
+                break;
+            case LPAREN:
+            case FUNCTION:
+            case FUNCTIONLANG:
+            case FUNCTIONDIR:
+            case FUNCTIONIS:
+            case FUNCTIONWHERE:
+            case FUNCTIONHAS:
+            case FUNCTIONHOST:
+            case FUNCTIONHOSTCONTEXT:
+            case FUNCTIONSLOTTED:
+            case FUNCTIONNTHCHILD:
+            case FUNCTIONNTHLASTCHILD:
+            case FUNCTIONNTHCOL:
+            case FUNCTIONNTHLASTCOL:
+            case FUNCTIONNTHOFTYPE:
+            case FUNCTIONNTHLASTOFTYPE:
+            case FUNCTIONNOT:
+            case FUNCTIONCALC:
+            case FUNCTIONMATHN:
+            case FUNCTIONMATH1:
+            case FUNCTIONMATH2:
+            case FUNCTIONCLAMP:
+            case FUNCTIONROUND:
+            case FUNCTIONATTR:
+            case FUNCTIONVAR:
+            case FUNCTIONENV:
+                nesting++;
+                break;
+            default:
+                break;
+        }
+        if (nesting == 0) {
+            break;
+        }
+        if (tok.kind == S) {
+            // whitespace, along with any comments after it
+            s.append(' ');
+        } else {
+            if (tok.beginLine != prev.endLine
+                    || tok.beginColumn != prev.endColumn + 1) {
+                // two spaces, since an escape at the end of the previous
+                // token would take one as its terminator
+                s.append("  ");
+            }
+            s.append(tok.image);
+        }
+        prev = tok;
+        getNextToken();
     }
     return s.toString();
 }

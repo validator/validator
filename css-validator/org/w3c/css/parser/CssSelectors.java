@@ -26,6 +26,7 @@ import org.w3c.css.selectors.combinators.DescendantCombinator;
 import org.w3c.css.selectors.combinators.NextSiblingCombinator;
 import org.w3c.css.selectors.combinators.SubsequentSiblingCombinator;
 import org.w3c.css.selectors.pseudofunctions.PseudoFunctionIs;
+import org.w3c.css.selectors.pseudofunctions.PseudoFunctionPseudoElement;
 import org.w3c.css.util.ApplContext;
 import org.w3c.css.util.CssProfile;
 import org.w3c.css.util.CssVersion;
@@ -247,6 +248,26 @@ public final class CssSelectors extends SelectorsList
         }
         // the ident isn't a valid pseudo-something
         throw new InvalidParamException("pseudo", "::" + pseudo, ac);
+    }
+
+    /**
+     * Adds a functional pseudo-element whose argument isn't a selector
+     *
+     * @param pseudo the name of the pseudo-element
+     * @param param  its argument, as written
+     */
+    public void setPseudoElementFun(ApplContext ac, String pseudo, String param)
+            throws InvalidParamException {
+        if (ac.getTreatVendorExtensionsAsWarnings()
+                && ac.getCssVersion() != CssVersion.CSS1
+                && pseudo.startsWith("-")) {
+            // a vendor extension
+            addPseudoFunction(new PseudoFunctionPseudoElement(pseudo,
+                    (param == null) ? "" : param.trim()));
+            ac.getFrame().addWarning("vendor-ext-pseudo-element", "::" + pseudo + "()");
+            return;
+        }
+        addPseudoFunction(PseudoFactory.newPseudoElementFunction(pseudo, param, ac));
     }
 
     public void setPseudoFun(ApplContext ac, String pseudo, String param)

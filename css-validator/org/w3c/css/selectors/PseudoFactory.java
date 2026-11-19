@@ -17,6 +17,7 @@ import org.w3c.css.selectors.pseudofunctions.PseudoFunctionNthCol;
 import org.w3c.css.selectors.pseudofunctions.PseudoFunctionNthLastChild;
 import org.w3c.css.selectors.pseudofunctions.PseudoFunctionNthLastOfType;
 import org.w3c.css.selectors.pseudofunctions.PseudoFunctionNthOfType;
+import org.w3c.css.selectors.pseudofunctions.PseudoFunctionPseudoElement;
 import org.w3c.css.selectors.pseudofunctions.PseudoFunctionSlotted;
 import org.w3c.css.selectors.pseudofunctions.PseudoFunctionWhere;
 import org.w3c.css.util.ApplContext;
@@ -26,6 +27,13 @@ import org.w3c.css.util.InvalidParamException;
 import org.w3c.css.values.CssExpression;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * PseudoFactory<br />
@@ -101,6 +109,41 @@ public class PseudoFactory {
             "shadow"
     };
 
+    private static final String[] PSEUDOELEMENT_FUNCTION_CONSTANTSCSS3 = {
+            // https://drafts.csswg.org/css-pseudo-4/#selectordef-highlight 20261118
+            "highlight",
+            // https://drafts.csswg.org/css-shadow-1/#selectordef-part 20261118
+            "part",
+            // https://drafts.csswg.org/css-forms-1/#selectordef-picker 20261118
+            "picker",
+            // https://drafts.csswg.org/css-overflow-5/#selectordef-scroll-button 20261118
+            "scroll-button",
+            // https://drafts.csswg.org/css-view-transitions-2/#pseudo 20261118
+            "view-transition-group", "view-transition-image-pair",
+            "view-transition-old", "view-transition-new",
+            // https://drafts.csswg.org/css-view-transitions-2/#selectordef-view-transition-group-children 20261118
+            "view-transition-group-children"
+    };
+
+    // https://drafts.csswg.org/css-overflow-5/#typedef-scroll-button-direction
+    private static final Set<String> SCROLL_BUTTON_DIRECTIONS = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList("up", "down", "left", "right", "block-start",
+                    "block-end", "inline-start", "inline-end", "prev", "next")));
+
+    // https://www.w3.org/TR/css-values-4/#custom-idents
+    private static final Set<String> CUSTOM_IDENT_EXCLUSIONS = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList("initial", "inherit", "unset", "revert",
+                    "revert-layer", "default")));
+
+    // https://www.w3.org/TR/css-syntax-3/#ident-token-diagram
+    private static final String ESCAPE = "\\\\(?:[0-9a-fA-F]{1,6}(?:\\r\\n|[ \\t\\n\\r\\f])?|[^\\n\\r\\f0-9a-fA-F])";
+    private static final String IDENT = "(?:--|-?(?:[_a-zA-Z]|[^\\x00-\\x7F]|" + ESCAPE + "))"
+            + "(?:[_a-zA-Z0-9-]|[^\\x00-\\x7F]|" + ESCAPE + ")*";
+
+    // one token of a functional pseudo-element's argument, with any whitespace before it:
+    // an ident, '*', or '.'
+    private static final Pattern ARG_TOKEN = Pattern.compile("\\G([ \\t\\n\\r\\f]*)(?:(" + IDENT + ")|(\\*)|(\\.))");
+
     private static final String[] PSEUDOELEMENT_CONSTANTSCSS2 = {
             "first-line", "first-letter", "before", "after"
     };
@@ -170,6 +213,226 @@ public class PseudoFactory {
                 return null;
 
         }
+    }
+
+    /**
+     * Returns the possible functional pseudo-elements for a version
+     *
+     * @param version the CSS level to get associated functional pseudo-elements
+     * @return the possible functional pseudo-elements for the version
+     */
+    public static String[] getPseudoElementFunction(CssVersion version) {
+        switch (version) {
+            case CSS3:
+                return PSEUDOELEMENT_FUNCTION_CONSTANTSCSS3;
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Returns a functional pseudo-element whose argument isn't a selector, after
+     * checking that the argument matches the grammar for that pseudo-element
+     *
+     * @param name  the name of the pseudo-element
+     * @param param its argument, as written
+     * @throws InvalidParamException if the pseudo-element is unknown, or its
+     *                               argument doesn't match its grammar
+     */
+    public static PseudoFunctionSelector newPseudoElementFunction(String name,
+                                                                  String param,
+                                                                  ApplContext ac)
+            throws InvalidParamException {
+        String[] names = getPseudoElementFunction(ac.getCssVersion());
+        boolean known = false;
+        if (names != null) {
+            for (String s : names) {
+                if (s.equals(name)) {
+                    known = true;
+                    break;
+                }
+            }
+        }
+        if (!known) {
+            throw new InvalidParamException("pseudo", "::" + name + "()", ac);
+        }
+        String arg = (param == null) ? "" : param;
+        int[] span = new int[2];
+        ArrayList<ArgToken> tokens = tokenize(arg, span);
+        boolean valid = tokens != null && !tokens.isEmpty();
+        if (valid) {
+            switch (name) {
+                case "highlight":
+                    // ::highlight( '*' | <custom-ident> )
+                    valid = tokens.size() == 1
+                            && (tokens.get(0).isStar() || tokens.get(0).isCustomIdent());
+                    break;
+                case "part":
+                    // ::part( <ident>+ )
+                    for (ArgToken t : tokens) {
+                        valid = valid && t.ident != null;
+                    }
+                    break;
+                case "picker":
+                    // ::picker( <form-control-identifier>+ ), where
+                    // <form-control-identifier> = select
+                    for (ArgToken t : tokens) {
+                        valid = valid && t.ident != null && t.keyword().equals("select");
+                    }
+                    break;
+                case "scroll-button":
+                    // ::scroll-button( '*' | <scroll-button-direction> )
+                    valid = tokens.size() == 1 && (tokens.get(0).isStar()
+                            || (tokens.get(0).ident != null
+                            && SCROLL_BUTTON_DIRECTIONS.contains(tokens.get(0).keyword())));
+                    break;
+                case "view-transition-group-children":
+                    // ::view-transition-group-children( <pt-name-selector> ), where
+                    // <pt-name-selector> = '*' | <custom-ident>
+                    valid = tokens.size() == 1
+                            && (tokens.get(0).isStar() || tokens.get(0).isCustomIdent());
+                    break;
+                default:
+                    // the other ::view-transition-*() pseudo-elements
+                    valid = isPtNameAndClassSelector(tokens);
+                    break;
+            }
+        }
+        // the argument without the whitespace around it, but with any that ends an escape
+        String shown = (tokens == null) ? arg.trim() : arg.substring(span[0], span[1]);
+        if (!valid) {
+            throw new InvalidParamException("value", shown, "::" + name + "()", ac);
+        }
+        return new PseudoFunctionPseudoElement(name, shown);
+    }
+
+    /**
+     * A token in the argument of a functional pseudo-element: an ident, '*',
+     * or '.'
+     */
+    private static class ArgToken {
+        final String ident;
+        final char delim;
+        final boolean spaceBefore;
+
+        ArgToken(String ident, char delim, boolean spaceBefore) {
+            this.ident = ident;
+            this.delim = delim;
+            this.spaceBefore = spaceBefore;
+        }
+
+        boolean isStar() {
+            return delim == '*';
+        }
+
+        boolean isDot() {
+            return delim == '.';
+        }
+
+        // the ident with its escapes decoded, and ASCII-lowercased for comparing with keywords
+        String keyword() {
+            return decodeIdent(ident).toLowerCase(Locale.ROOT);
+        }
+
+        boolean isCustomIdent() {
+            return ident != null && !CUSTOM_IDENT_EXCLUSIONS.contains(keyword());
+        }
+    }
+
+    /**
+     * Splits the argument of a functional pseudo-element into idents, '*'s,
+     * and '.'s, or returns null if it has anything else
+     *
+     * @param span gets the start of the first token and the end of the last
+     */
+    private static ArrayList<ArgToken> tokenize(String arg, int[] span) {
+        ArrayList<ArgToken> tokens = new ArrayList<>();
+        Matcher m = ARG_TOKEN.matcher(arg);
+        int end = 0;
+        while (m.find()) {
+            if (tokens.isEmpty()) {
+                span[0] = m.end(1);
+            }
+            char delim = (m.group(3) != null) ? '*' : (m.group(4) != null) ? '.' : 0;
+            tokens.add(new ArgToken(m.group(2), delim, !m.group(1).isEmpty()));
+            end = m.end();
+        }
+        span[1] = end;
+        for (int i = end; i < arg.length(); i++) {
+            if (" \t\n\r\f".indexOf(arg.charAt(i)) < 0) {
+                return null;
+            }
+        }
+        return tokens;
+    }
+
+    private static boolean isHexDigit(char c) {
+        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+    }
+
+    /**
+     * Returns an ident with its escapes replaced by the characters they stand for
+     */
+    private static String decodeIdent(String ident) {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        int len = ident.length();
+        while (i < len) {
+            char c = ident.charAt(i);
+            if (c != '\\' || i + 1 >= len) {
+                sb.append(c);
+                i++;
+                continue;
+            }
+            int j = i + 1;
+            while (j < len && j - i <= 6 && isHexDigit(ident.charAt(j))) {
+                j++;
+            }
+            if (j == i + 1) {
+                sb.append(ident.charAt(j));
+                i = j + 1;
+                continue;
+            }
+            int cp = Integer.parseInt(ident.substring(i + 1, j), 16);
+            if (cp == 0 || cp > 0x10FFFF || (cp >= 0xD800 && cp <= 0xDFFF)) {
+                cp = 0xFFFD;
+            }
+            sb.appendCodePoint(cp);
+            if (ident.startsWith("\r\n", j)) {
+                j += 2;
+            } else if (j < len && " \t\n\r\f".indexOf(ident.charAt(j)) >= 0) {
+                j++;
+            }
+            i = j;
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Checks a <pt-name-and-class-selector>:
+     * <pt-name-selector> <pt-class-selector>? | <pt-class-selector>, where
+     * <pt-name-selector> = '*' | <custom-ident> and
+     * <pt-class-selector> = ['.' <custom-ident>]+
+     */
+    private static boolean isPtNameAndClassSelector(ArrayList<ArgToken> tokens) {
+        int i = 0;
+        int size = tokens.size();
+        if (tokens.get(0).isStar() || tokens.get(0).isCustomIdent()) {
+            i = 1;
+        }
+        while (i < size) {
+            if (i + 1 >= size || !tokens.get(i).isDot() || !tokens.get(i + 1).isCustomIdent()
+                    || tokens.get(i + 1).spaceBefore) {
+                return false;
+            }
+            i += 2;
+        }
+        for (int k = 1; k < size; k++) {
+            if (tokens.get(k).spaceBefore) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

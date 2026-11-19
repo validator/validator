@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8>
+<title>Functional pseudo-elements</title>
+<style>
+::highlight(search-result) { color: red; }
+p::highlight(*) { color: red; }
+::highlight(/* a comment */ \31 st-result) { color: red; }
+x-widget::part(label) { color: blue; }
+x-widget::part(label icon):hover { color: blue; }
+x-widget::part(main\ label) { color: blue; }
+select::picker(select) { border: none; }
+select::picker(SELECT) { border: none; }
+.carousel::scroll-button(*) { content: ""; }
+.carousel::scroll-button(inline-end) { content: ">"; }
+::view-transition-group(root) { animation-duration: 1s; }
+::view-transition-old(*) { animation-duration: 1s; }
+::view-transition-new(*.card) { animation-duration: 1s; }
+::view-transition-image-pair(.card.wide) { isolation: auto; }
+::view-transition-group-children(gallery) { overflow: clip; }
+</style>
+</head>
+<body>
+</body>
+</html>
