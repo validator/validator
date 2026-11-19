@@ -13,7 +13,7 @@
   <script crossorigin="" defer="" src="https://resources.whatwg.org/commit-snapshot-shortcut-key.js"></script>
   <header id="head" class="head with-buttons">
    <a href="https://whatwg.org/" class="logo"><img width="100" alt="WHATWG" crossorigin="" class="darkmode-aware" src="https://resources.whatwg.org/logo.svg" height="100"></a>
-   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">17 November 2026</span></p></hgroup>
+   <hgroup><h1 class="allcaps">HTML</h1><p id="living-standard">Living Standard — Last Updated <span class="pubdate">19 November 2026</span></p></hgroup>
    
    <nav>
     
@@ -32,7 +32,7 @@
     <div>
      <a href="https://github.com/whatwg/html" class="changes"><span><strong>Contribute on GitHub</strong> <code>whatwg/html repository</code></span></a>
      <a href="https://github.com/whatwg/html/commits" class="changes"><span><strong>Commits</strong> <code>on GitHub</code></span></a>
-     <a id="commit-snapshot-link" href="/commit-snapshots/823898c0c763fb4026c1518208e1b60d7c18315e/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
+     <a id="commit-snapshot-link" href="/commit-snapshots/94e4f346fdb450f5088da17ec5fe995e8860cf35/" class="changes" title="You can also press the 'y' key"><span><strong>Snapshot</strong> <code>as of this commit</code></span></a>
     </div>
     <div>
      <a href="https://github.com/whatwg/html/issues" class="feedback"><span><strong>Open Issues</strong> <code>filed on GitHub</code></span></a>
@@ -1921,6 +1921,9 @@ a<c- p="">.</c->setAttribute<c- p="">(</c-><c- t="">'href'</c-><c- p="">,</c-> <
 
     <p>The <dfn id="xml-name"><a href="https://www.w3.org/TR/xml/#NT-Name"><code>Name</code></a></dfn> production is defined in <cite>XML</cite>.
     <a href="#refsXML">[XML]</a></p>
+
+    <p>The term <dfn id="empty-element-tag"><a href="https://www.w3.org/TR/xml/#dt-eetag">empty-element tag</a></dfn> is
+    defined in <cite>XML</cite>. <a href="#refsXML">[XML]</a></p>
 
     <p>This specification also references the <dfn id="xml-stylesheet"><a href="https://www.w3.org/TR/xml-stylesheet/#the-xml-stylesheet-processing-instruction"><code>&lt;?xml-stylesheet?&gt;</code></a></dfn>
     processing instruction, defined in <cite>Associating Style Sheets with XML documents</cite>.
@@ -101230,6 +101233,9 @@ console<c- p="">.</c->assert<c- p="">(</c->container<c- p="">.</c->firstChild <c
   was in a <a href="#stack-of-open-elements" id="parsing-xhtml-documents:stack-of-open-elements">stack of open elements</a>. At the point where the element leaves that stack,
   the user agent must <a href="#finish-parsing-the-children" id="parsing-xhtml-documents:finish-parsing-the-children">finish parsing the children</a> of the element.</p>
 
+  <p>Immediately after inserting an element represented by an <a id="parsing-xhtml-documents:empty-element-tag" href="https://www.w3.org/TR/xml/#dt-eetag" data-x-internal="empty-element-tag">empty-element tag</a>, the
+  user agent must <a href="#finish-parsing-the-children" id="parsing-xhtml-documents:finish-parsing-the-children-2">finish parsing the children</a> of the element.</p>
+
   <p class="note">This is how various elements only start certain processes once the parser has seen
   all of their children; see the <a href="#html-element-children-parsed-steps" id="parsing-xhtml-documents:html-element-children-parsed-steps">HTML element children parsed steps</a>.</p>
 
@@ -101259,11 +101265,14 @@ console<c- p="">.</c->assert<c- p="">(</c->container<c- p="">.</c->firstChild <c
   document</a> and <a href="#intended-document" id="parsing-xhtml-documents:intended-document">intended document</a> set to the <code id="parsing-xhtml-documents:document-5"><a href="#document">Document</a></code> with which
   the parser is associated, and its <a href="#script-force-async" id="parsing-xhtml-documents:script-force-async">force async</a> set to
   false. If the parser was created as part of the <a href="#xml-fragment-parsing-algorithm" id="parsing-xhtml-documents:xml-fragment-parsing-algorithm">XML fragment parsing algorithm</a>, then
-  the element's <a href="#already-started" id="parsing-xhtml-documents:already-started">already started</a> must be set to true. When the element's end tag is
-  subsequently parsed, the user agent must <a href="#perform-a-microtask-checkpoint" id="parsing-xhtml-documents:perform-a-microtask-checkpoint">perform a microtask checkpoint</a>, and then
-  <a href="#prepare-the-script-element" id="parsing-xhtml-documents:prepare-the-script-element">prepare</a> the <code id="parsing-xhtml-documents:the-script-element-2"><a href="#the-script-element">script</a></code> element. If this
-  causes there to be a <a href="#pending-parsing-blocking-script" id="parsing-xhtml-documents:pending-parsing-blocking-script">pending parsing-blocking script</a>, then the user agent must run
-  the following steps:</p>
+  the element's <a href="#already-started" id="parsing-xhtml-documents:already-started">already started</a> must be set to true.</p>
+
+  <p>When the user agent <a href="#finish-parsing-the-children" id="parsing-xhtml-documents:finish-parsing-the-children-3">finishes parsing the
+  children</a> of the <code id="parsing-xhtml-documents:the-script-element-2"><a href="#the-script-element">script</a></code> element because its end tag was parsed or because it is
+  represented by an <a id="parsing-xhtml-documents:empty-element-tag-2" href="https://www.w3.org/TR/xml/#dt-eetag" data-x-internal="empty-element-tag">empty-element tag</a>, the user agent must <a href="#perform-a-microtask-checkpoint" id="parsing-xhtml-documents:perform-a-microtask-checkpoint">perform a microtask
+  checkpoint</a>, and then <a href="#prepare-the-script-element" id="parsing-xhtml-documents:prepare-the-script-element">prepare</a> the
+  <code id="parsing-xhtml-documents:the-script-element-3"><a href="#the-script-element">script</a></code> element. If this causes there to be a <a href="#pending-parsing-blocking-script" id="parsing-xhtml-documents:pending-parsing-blocking-script">pending parsing-blocking
+  script</a>, then the user agent must run the following steps:</p>
 
 
   <ol><li><p>Block this instance of the <a href="#xml-parser" id="parsing-xhtml-documents:xml-parser-4">XML parser</a>, such that the <a href="#event-loop" id="parsing-xhtml-documents:event-loop">event loop</a>
