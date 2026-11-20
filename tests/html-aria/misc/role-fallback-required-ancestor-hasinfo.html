@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>role=menuitem in, or owned by, an element whose role has a fallback token</title>
+<div role="menu group" aria-label="Options">
+  <div role="menuitem">Open</div>
+</div>
+<div role="menu group" aria-label="More" aria-owns="far-item"></div>
+<div role="menuitem" id="far-item">Owned through aria-owns</div>

@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.Arrays;
@@ -1974,7 +1975,8 @@ public class Assertions extends Checker {
             Set<String> requiredAncestorRoles) {
         for (String role : requiredAncestorRoles) {
             for (int i = 0; i < currentPtr; i++) {
-                if (role.equals(stack[currentPtr - i].getRole())) {
+                if (role.equals(firstRoleToken(stack[currentPtr - i].roles,
+                        stack[currentPtr - i].getRole()))) {
                     return true;
                 }
                 String openElementName = stack[currentPtr - i].getName();
@@ -1991,6 +1993,24 @@ public class Assertions extends Checker {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns an element's role: the first token of its "role" attribute value,
+     * ASCII-lowercased (any other tokens are fallbacks), or null if it has no
+     * role attribute.
+     *
+     * @param roles the tokens of the value, if the caller has them, or null
+     * @param role  the value, as written
+     */
+    private static String firstRoleToken(List<String> roles, String role) {
+        if (roles != null && !roles.isEmpty() && !"".equals(roles.get(0))) {
+            return roles.get(0);
+        }
+        if (role == null || "".equals(role.trim())) {
+            return null;
+        }
+        return role.trim().toLowerCase(Locale.ROOT).split("\\s+")[0];
     }
 
     private boolean isDescendantOfSectioningElement() {
@@ -4521,18 +4541,19 @@ public class Assertions extends Checker {
                 err("When the attribute “lang” in no namespace and the attribute “lang” in the XML namespace are both present, they must have the same value.");
             }
 
-            if (role != null && owns != null) {
+            String ownerRole = firstRoleToken(roles, role);
+            if (ownerRole != null && owns != null) {
                 for (Set<String> value : REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.values()) {
-                    if (value.contains(role)) {
+                    if (value.contains(ownerRole)) {
                         String[] ownedIds = AttributeUtil.split(owns);
                         for (String ownedId : ownedIds) {
                             Set<String> ownedIdsForThisRole = ariaOwnsIdsByRole.get(
-                                    role);
+                                    ownerRole);
                             if (ownedIdsForThisRole == null) {
                                 ownedIdsForThisRole = new HashSet<>();
                             }
                             ownedIdsForThisRole.add(ownedId);
-                            ariaOwnsIdsByRole.put(role, ownedIdsForThisRole);
+                            ariaOwnsIdsByRole.put(ownerRole, ownedIdsForThisRole);
                         }
                         break;
                     }
@@ -5286,8 +5307,9 @@ public class Assertions extends Checker {
         }
 
         // ARIA required owner/ancestors
-        Set<String> requiredAncestorRoles = REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(
-                role);
+        String firstRole = firstRoleToken(roles, role);
+        Set<String> requiredAncestorRoles = firstRole == null ? null
+                : REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.get(firstRole);
         if (requiredAncestorRoles != null && !"presentation".equals(parentRole)
                 && !"tbody".equals(localName) && !"tfoot".equals(localName)
                 && !"thead".equals(localName)) {
@@ -5296,9 +5318,9 @@ public class Assertions extends Checker {
                         && !"".equals(atts.getValue("", "id"))) {
                     needsAriaOwner.add(new IdrefLocator(
                             new LocatorImpl(getDocumentLocator()),
-                            atts.getValue("", "id"), role));
+                            atts.getValue("", "id"), firstRole));
                 } else {
-                    errContainedInOrOwnedBy(role, getDocumentLocator());
+                    errContainedInOrOwnedBy(firstRole, getDocumentLocator());
                 }
             }
         }
