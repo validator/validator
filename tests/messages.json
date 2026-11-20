@@ -181,6 +181,7 @@
     "html-aria/misc/more-than-one-visible-main-novalid.html": "A document must not include more than one visible \u201cmain\u201d element.",
     "html-aria/misc/multiple-role-main-haswarn.html": "A document should not include more than one visible element with \u201crole=main\u201d.",
     "html-aria/misc/placeholder-and-aria-placeholder-novalid.html": "The \u201caria-placeholder\u201d attribute must not be specified on elements that have a \u201cplaceholder\u201d attribute.",
+    "html-aria/misc/required-owner-implicit-or-svg-hasinfo.html": "Discarding superfluous token \u201cbutton\u201d from value of attribute \u201crole\u201d. Browsers only process the first token found that is a defined ARIA non-abstract role.",
     "html-aria/misc/role-alert-inside-h1-novalid.html": "An element with the attribute \u201crole=alert\u201d must not appear as a descendant of an \u201ch1\u201d, \u201ch2\u201d, \u201ch3\u201d, \u201ch4\u201d, \u201ch5\u201d, or \u201ch6\u201d element.",
     "html-aria/misc/role-alertdialog-inside-h1-novalid.html": "An element with the attribute \u201crole=alertdialog\u201d must not appear as a descendant of an \u201ch1\u201d, \u201ch2\u201d, \u201ch3\u201d, \u201ch4\u201d, \u201ch5\u201d, or \u201ch6\u201d element.",
     "html-aria/misc/role-application-inside-h1-novalid.html": "An element with the attribute \u201crole=application\u201d must not appear as a descendant of an \u201ch1\u201d, \u201ch2\u201d, \u201ch3\u201d, \u201ch4\u201d, \u201ch5\u201d, or \u201ch6\u201d element.",

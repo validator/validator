@@ -4541,24 +4541,6 @@ public class Assertions extends Checker {
                 err("When the attribute “lang” in no namespace and the attribute “lang” in the XML namespace are both present, they must have the same value.");
             }
 
-            String ownerRole = firstRoleToken(roles, role);
-            if (ownerRole != null && owns != null) {
-                for (Set<String> value : REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT.values()) {
-                    if (value.contains(ownerRole)) {
-                        String[] ownedIds = AttributeUtil.split(owns);
-                        for (String ownedId : ownedIds) {
-                            Set<String> ownedIdsForThisRole = ariaOwnsIdsByRole.get(
-                                    ownerRole);
-                            if (ownedIdsForThisRole == null) {
-                                ownedIdsForThisRole = new HashSet<>();
-                            }
-                            ownedIdsForThisRole.add(ownedId);
-                            ariaOwnsIdsByRole.put(ownerRole, ownedIdsForThisRole);
-                        }
-                        break;
-                    }
-                }
-            }
             if ("datalist" == localName) {
                 listIds.putAll(ids);
             }
@@ -5488,6 +5470,15 @@ public class Assertions extends Checker {
                 if (!ariaOwnerRoles.containsKey(ownedId)) {
                     ariaOwnerRoles.put(ownedId, ownerRole);
                 }
+            }
+            // elementRole() gives null for an element that isn't HTML, since
+            // only an HTML element's role tokens get parsed into a list.
+            String requiredOwnerRole = ownerRole != null ? ownerRole
+                    : firstRoleToken(roles, role);
+            if (requiredOwnerRole != null) {
+                ariaOwnsIdsByRole.computeIfAbsent(requiredOwnerRole,
+                        k -> new HashSet<>()).addAll(
+                                Arrays.asList(AttributeUtil.split(owns)));
             }
         }
         if (!ids.isEmpty()) {

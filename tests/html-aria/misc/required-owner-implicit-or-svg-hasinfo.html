@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>aria-owns from an element with an implicit role, or from SVG</title>
+<ul aria-owns="item1 item2"></ul>
+<div id="item1" role="listitem">One</div>
+<div id="item2" role="listitem button">Two</div>
+<svg>
+  <g role="menu" aria-label="Options" aria-owns="open close"></g>
+  <g id="open" role="menuitem" aria-label="Open"></g>
+  <g id="close" role="menuitem button" aria-label="Close"></g>
+</svg>
