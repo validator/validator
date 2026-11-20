@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Allowed children of role=menu and role=menubar</title>
+<div role="menubar" aria-label="Main">
+  <div role="menuitem">File</div>
+  <div role="separator"></div>
+  <hr>
+  <div role="menuitemcheckbox" aria-checked="false">Wrap</div>
+</div>
+<div role="menu" aria-label="Options">
+  <button hidden>Hidden</button>
+  <div aria-hidden="true"><button>Also hidden</button></div>
+  <button id="owned-elsewhere">Owned by the toolbar</button>
+  <div>
+    <div role="none"><div role="menuitem">Open</div></div>
+  </div>
+  <div role="group" aria-label="Sort">
+    <div role="menuitemradio" aria-checked="true">By name</div>
+    <div role="menuitemradio" aria-checked="false">By date</div>
+  </div>
+</div>
+<div role="toolbar" aria-label="Tools" aria-owns="owned-elsewhere"></div>
+<div role="menu" aria-label="More" aria-owns="owned-item"></div>
+<div role="menuitem" id="owned-item">Owned by the second menu</div>

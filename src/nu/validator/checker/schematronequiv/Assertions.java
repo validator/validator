@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -1055,6 +1056,25 @@ public class Assertions extends Checker {
             "combobox", "searchbox", "textbox");
 
     /**
+     * Roles of elements that aren't accessibility children themselves, but
+     * whose children are accessibility children of their nearest ancestor that
+     * has some other role.
+     */
+    private static final Set<String> ROLES_TRANSPARENT_TO_ACCESSIBILITY_CHILDREN = Set.of(
+            "generic", "none", "presentation");
+
+    private static final String MENU_CHILD_ERROR = "An element that is a"
+            + " child of an element with “role=menu” or “role=menubar” must"
+            + " have “role=group”, “role=menuitem”, “role=menuitemcheckbox”,"
+            + " “role=menuitemradio”, or “role=separator”.";
+
+    /**
+     * Allowed accessibility child roles of role=menu and role=menubar.
+     */
+    private static final Set<String> MENU_CHILD_ROLES = Set.of("group",
+            "menuitem", "menuitemcheckbox", "menuitemradio", "separator");
+
+    /**
      * Roles that support aria-activedescendant: the ones it's used in, and the
      * ones it inherits into.
      */
@@ -1845,6 +1865,21 @@ public class Assertions extends Checker {
      */
     private Map<String, String> idRoles = new HashMap<>();
 
+    /**
+     * Maps each ID that an aria-owns attribute refers to, to the role of the
+     * first element whose aria-owns refers to it (see elementRole()), or to
+     * null if that element's role isn't known.
+     */
+    private Map<String, String> ariaOwnerRoles = new LinkedHashMap<>();
+
+    /**
+     * Children of role=menu or role=menubar elements that have disallowed
+     * roles, and an ID, so that an aria-owns attribute could make them children
+     * of some other element instead: Each is reported in endDocument() unless
+     * an aria-owns attribute on an element that isn't a menu refers to its ID.
+     */
+    private List<Element> disallowedMenuChildrenWithIds = new ArrayList<>();
+
     private LinkedHashSet<IdReference> formControlReferences = new LinkedHashSet<>();
 
     private LinkedHashSet<IdrefLocator> commandForReferences = new LinkedHashSet<>();
@@ -2060,6 +2095,23 @@ public class Assertions extends Checker {
         return htmlName == null ? null : implicitRole(htmlName, atts, parent);
     }
 
+    private static boolean isMenuRole(String role) {
+        return "menu".equals(role) || "menubar".equals(role);
+    }
+
+    /**
+     * Returns true if an element is hidden from the accessibility tree by its
+     * own attributes: a "hidden" attribute, or aria-hidden="true".
+     */
+    private static boolean isHiddenFromAccessibilityTree(Attributes atts) {
+        if (atts == null) {
+            return false;
+        }
+        String ariaHidden = atts.getValue("", "aria-hidden");
+        return atts.getIndex("", "hidden") >= 0
+                || (ariaHidden != null && "true".equals(ariaHidden.trim()));
+    }
+
     private static boolean hasNonEmptyAttribute(Attributes atts,
             String name) {
         String value = atts.getValue("", name);
@@ -2197,6 +2249,30 @@ public class Assertions extends Checker {
                         + idrefLocator.getIdref() + "”, which is not"
                         + " the ID of any element in this document.",
                         idrefLocator.getLocator());
+            }
+        }
+
+        // disallowed children of role=menu or role=menubar that aria-owns
+        // doesn't make children of some element that isn't a menu
+        Set<String> reportedMenuChildIds = new HashSet<>();
+        for (Element child : disallowedMenuChildrenWithIds) {
+            String id = child.getAttributes().getValue("", "id");
+            if (id == null || !ariaOwnerRoles.containsKey(id)
+                    || isMenuRole(ariaOwnerRoles.get(id))) {
+                err(MENU_CHILD_ERROR, child.getLocator());
+                reportedMenuChildIds.add(id);
+            }
+        }
+        // elements with disallowed roles that aria-owns on a role=menu or
+        // role=menubar element makes children of it
+        for (Map.Entry<String, String> owned : ariaOwnerRoles.entrySet()) {
+            String id = owned.getKey();
+            String role = idRoles.get(id);
+            if (isMenuRole(owned.getValue()) && role != null
+                    && !reportedMenuChildIds.contains(id)
+                    && !ROLES_TRANSPARENT_TO_ACCESSIBILITY_CHILDREN.contains(role)
+                    && !MENU_CHILD_ROLES.contains(role) && allIds.containsKey(id)) {
+                err(MENU_CHILD_ERROR, allIds.get(id).getLocator());
             }
         }
 
@@ -2754,6 +2830,8 @@ public class Assertions extends Checker {
         activeDescendantsWithAriaControls.clear();
         idParents.clear();
         idRoles.clear();
+        ariaOwnerRoles.clear();
+        disallowedMenuChildrenWithIds.clear();
         ariaOwnsIdsByRole.clear();
         needsAriaOwner.clear();
         formControlReferences.clear();
@@ -5280,6 +5358,55 @@ public class Assertions extends Checker {
             }
         }
 
+        // ARIA: Authors MUST only add accessibility children with allowed roles
+        // (https://w3c.github.io/aria/#mustContain). For role=menu and
+        // role=menubar, those are group, menuitem, menuitemcheckbox,
+        // menuitemradio, and separator (https://w3c.github.io/aria/#menu). An
+        // accessibility child can be a descendant, with only elements whose
+        // role is generic or none in between, unless aria-owns makes it a child
+        // of some other element. Hidden elements aren't accessibility children
+        // at all. An "li" element is left to the "li" checks above.
+        if ("li" != localName && !isHiddenFromAccessibilityTree(atts)) {
+            String childRole = elementRole(roles,
+                    "http://www.w3.org/1999/xhtml" == uri ? localName : null,
+                    atts, parent);
+            if (childRole != null
+                    && !ROLES_TRANSPARENT_TO_ACCESSIBILITY_CHILDREN.contains(
+                            childRole)) {
+                StackNode roleParent = null;
+                boolean hidden = false;
+                for (int i = 0; i < currentPtr; i++) {
+                    StackNode a = stack[currentPtr - i];
+                    if (a == null) {
+                        continue;
+                    }
+                    if (isHiddenFromAccessibilityTree(a.getAttributes())) {
+                        hidden = true;
+                        break;
+                    }
+                    if (roleParent == null && a.roles != null
+                            && !a.roles.isEmpty()
+                            && !ROLES_TRANSPARENT_TO_ACCESSIBILITY_CHILDREN
+                                    .contains(a.roles.get(0))) {
+                        roleParent = a;
+                    }
+                }
+                // the first role token is the element's role; any others are fallbacks
+                if (!hidden && roleParent != null
+                        && ("menu".equals(roleParent.roles.get(0))
+                                || "menubar".equals(roleParent.roles.get(0)))
+                        && !MENU_CHILD_ROLES.contains(childRole)) {
+                    if (ids.isEmpty()) {
+                        err(MENU_CHILD_ERROR);
+                    } else {
+                        disallowedMenuChildrenWithIds.add(new Element(
+                                new LocatorImpl(getDocumentLocator()),
+                                localName, new AttributesImpl(atts)));
+                    }
+                }
+            }
+        }
+
         // ARIA 1.2 disallows “role=group” as an accessibility child
         // of “role=list” (https://github.com/w3c/aria/commit/6166d99).
         // Walk up to the nearest role-bearing ancestor (explicit or
@@ -5331,6 +5458,16 @@ public class Assertions extends Checker {
             }
         }
         allIds.putAll(ids);
+        if (owns != null) {
+            String ownerRole = elementRole(roles,
+                    "http://www.w3.org/1999/xhtml" == uri ? localName : null,
+                    atts, parent);
+            for (String ownedId : AttributeUtil.split(owns)) {
+                if (!ariaOwnerRoles.containsKey(ownedId)) {
+                    ariaOwnerRoles.put(ownedId, ownerRole);
+                }
+            }
+        }
         if (!ids.isEmpty()) {
             String parentId = nearestAncestorId();
             String elementRole = elementRole(roles,
