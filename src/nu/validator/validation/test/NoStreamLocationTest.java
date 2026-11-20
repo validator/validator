@@ -89,8 +89,8 @@ public class NoStreamLocationTest {
 
     private static String check(File file, boolean noStream, boolean json)
             throws Exception {
-        SimpleDocumentValidator validator = new SimpleDocumentValidator(true,
-                false, false);
+        SimpleDocumentValidator validator = new SimpleDocumentValidator(false,
+                false);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         MessageEmitter emitter = json
                 ? new JsonMessageEmitter(new Serializer(out), null, false, "")

@@ -22,7 +22,8 @@
 
 package nu.validator.source;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
@@ -30,7 +31,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.LexicalHandler;
 
 final class LocationRecorder implements ContentHandler, LexicalHandler {
-    private static final Logger log4j = Logger.getLogger(LocationRecorder.class);
+    private static final Logger log4j = LoggerFactory.getLogger(LocationRecorder.class);
 
     private final SourceCode owner;
     
@@ -51,7 +52,7 @@ final class LocationRecorder implements ContentHandler, LexicalHandler {
     private void addLocatorLocation() {
         if (locator != null) {
             String systemId = locator.getSystemId();
-            log4j.debug(systemId);
+            log4j.trace(systemId);
             if (uri == systemId || (uri != null && uri.equals(systemId))) {
                 owner.addLocatorLocation(locator.getLineNumber(), locator.getColumnNumber());
             }
@@ -97,7 +98,7 @@ final class LocationRecorder implements ContentHandler, LexicalHandler {
     @Override
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
-        log4j.debug(locator);
+        log4j.trace("{}", locator);
     }
 
     @Override

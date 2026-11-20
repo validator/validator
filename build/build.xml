@@ -149,7 +149,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="jakarta.servlet-api-version" value="6.1.0" />
   <property name="jakarta.json-version" value="2.0.1" />
   <property name="jchardet-version" value="1.0" />
-  <property name="log4j-version" value="1.2.17" />
+  <property name="reload4j-version" value="1.2.27" />
   <property name="mail-version" value="1.4.7" />
   <property name="htmlunit-csp-version" value="4.22.0" />
   <property name="jacoco-version" value="0.8.14" />
@@ -166,7 +166,7 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/commons-logging/commons-logging/${commons-logging-version}/commons-logging-${commons-logging-version}-api.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/javax/mail/mail/${mail-version}/mail-${mail-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/${jakarta.servlet-api-version}/jakarta.servlet-api-${jakarta.servlet-api-version}.jar"/>
-    <get-and-checksum url="https://repo1.maven.org/maven2/log4j/log4j/${log4j-version}/log4j-${log4j-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/ch/qos/reload4j/reload4j/${reload4j-version}/reload4j-${reload4j-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/${jchardet-version}/jchardet-${jchardet-version}.jar" checksum.pattern="{0} "/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/glassfish/jakarta.json/${jakarta.json-version}/jakarta.json-${jakarta.json-version}.jar"/>
   </target>
@@ -181,8 +181,11 @@ DEALINGS IN THE SOFTWARE.
   <property name="javax-jms-api-version" value="2.0.1" />
   <property name="jsr305-version" value="3.0.2" />
   <property name="portlet-api-version" value="3.0.1" />
-  <property name="slf4j-api-version" value="1.7.29" />
-  <property name="slf4j-log4j12-version" value="1.7.32" />
+  <!-- vnu.jar and the war bundle SLF4J 1.7, so that an application that
+       uses SLF4J 2 with a provider of its own gets no warning about a
+       second provider. -->
+  <property name="slf4j-api-version" value="1.7.36" />
+  <property name="slf4j-reload4j-version" value="1.7.36" />
   <target name="dl-deps-modules" unless="${offline}">
     <echo>Downloading dependencies (modules dependencies)</echo>
     <get-and-checksum url="https://repo1.maven.org/maven2/com/sun/activation/javax.activation/${javax-activation-version}/javax.activation-${javax-activation-version}.jar"/>
@@ -198,7 +201,7 @@ DEALINGS IN THE SOFTWARE.
     <get-and-checksum url="https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/${jsr305-version}/jsr305-${jsr305-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/javax/portlet/portlet-api/${portlet-api-version}/portlet-api-${portlet-api-version}.jar"/>
     <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/${slf4j-api-version}/slf4j-api-${slf4j-api-version}.jar"/>
-    <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-log4j12/${slf4j-log4j12-version}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
+    <get-and-checksum url="https://repo1.maven.org/maven2/org/slf4j/slf4j-reload4j/${slf4j-reload4j-version}/slf4j-reload4j-${slf4j-reload4j-version}.jar"/>
   </target>
 
   <target name="dl-deps-jacoco" unless="${offline}">
@@ -289,7 +292,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/jakarta.json-${jakarta.json-version}.jar" unless:true="${jar-without-deps}">
         <exclude name="module-info.class" />
       </zipfileset>
-      <zipfileset src="${depsDir}/log4j-${log4j-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/reload4j-${reload4j-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/htmlunit-csp-${htmlunit-csp-version}.jar" unless:true="${jar-without-deps}"/>
       <!-- module dependencies -->
       <!-- isorelax.jar classes are now included in jing-shaded.jar to avoid Maven conflicts -->
@@ -308,7 +311,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="${depsDir}/mail-${mail-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/portlet-api-${portlet-api-version}.jar" unless:true="${jar-without-deps}"/>
       <zipfileset src="${depsDir}/slf4j-api-${slf4j-api-version}.jar" unless:true="${jar-without-deps}"/>
-      <zipfileset src="${depsDir}/slf4j-log4j12-${slf4j-log4j12-version}.jar" unless:true="${jar-without-deps}"/>
+      <zipfileset src="${depsDir}/slf4j-reload4j-${slf4j-reload4j-version}.jar" unless:true="${jar-without-deps}"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
@@ -340,8 +343,9 @@ DEALINGS IN THE SOFTWARE.
       <lib file="${depsDir}/icu4j-${icu4j-version}.jar"/>
       <lib file="${depsDir}/htmlunit-csp-${htmlunit-csp-version}.jar"/>
       <lib file="${depsDir}/jchardet-${jchardet-version}.jar"/>
-      <lib file="${depsDir}/log4j-${log4j-version}.jar"/>
+      <lib file="${depsDir}/reload4j-${reload4j-version}.jar"/>
       <lib file="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
+      <lib file="${depsDir}/slf4j-reload4j-${slf4j-reload4j-version}.jar"/>
       <lib file="${depsDir}/jakarta.json-${jakarta.json-version}.jar"/>
       <lib file="${depsDir}/jakarta.servlet-api-${jakarta.servlet-api-version}.jar"/>
       <!-- PrudentHttpEntityResolver and VerifierServletTransaction use the
@@ -379,7 +383,8 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-http-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-io-${jetty-version}.jar" />
-    <fileset dir="${depsDir}/" includes="log4j-${log4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="reload4j-${reload4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="slf4j-api-${slf4j-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="htmlunit-csp-${htmlunit-csp-version}.jar" />
     <pathelement location="css-validator/css-validator.jar"/>
     <pathelement location="${jarsDir}/galimatias.jar"/>
@@ -489,7 +494,8 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="jetty-io-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jakarta.servlet-api-${jakarta.servlet-api-version}.jar" />
-    <fileset dir="${depsDir}/" includes="log4j-${log4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="reload4j-${reload4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="slf4j-api-${slf4j-api-version}.jar" />
     <fileset dir="${depsDir}/" includes="htmlunit-csp-${htmlunit-csp-version}.jar" />
     <pathelement location="css-validator/css-validator.jar"/>
     <pathelement location="${jarsDir}/galimatias.jar"/>
@@ -541,7 +547,8 @@ DEALINGS IN THE SOFTWARE.
     <fileset dir="${depsDir}/" includes="jetty-server-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-ee10-servlet-${jetty-version}.jar" />
     <fileset dir="${depsDir}/" includes="jetty-util-${jetty-version}.jar" />
-    <fileset dir="${depsDir}/" includes="log4j-${log4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="reload4j-${reload4j-version}.jar" />
+    <fileset dir="${depsDir}/" includes="slf4j-api-${slf4j-api-version}.jar" />
     <pathelement path="${validator.build.basedir}/core/classes/"/>
   </path>
 
@@ -553,7 +560,7 @@ DEALINGS IN THE SOFTWARE.
     <pathelement location="${depsDir}/jetty-security-${jetty-version}.jar" />
     <pathelement location="${depsDir}/jetty-session-${jetty-version}.jar" />
     <pathelement location="${depsDir}/slf4j-api-${slf4j-api-version}.jar"/>
-    <pathelement location="${depsDir}/slf4j-log4j12-${slf4j-log4j12-version}.jar"/>
+    <pathelement location="${depsDir}/slf4j-reload4j-${slf4j-reload4j-version}.jar"/>
   </path>
 
   <target name="validator-split-server"
@@ -778,7 +785,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="commons-logging" artifactId="commons-logging" version="${commons-logging-version}"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="jakarta.servlet" artifactId="jakarta.servlet-api" version="${jakarta.servlet-api-version}"/>
-      <dependency groupId="log4j" artifactId="log4j" version="${log4j-version}"/>
+      <dependency groupId="ch.qos.reload4j" artifactId="reload4j" version="${reload4j-version}" optional="true"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-client" version="${jetty-version}"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="${jetty-version}"/>
