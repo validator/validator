@@ -689,7 +689,7 @@ public class Assertions extends Checker {
 
     private static final Map<String, Set<String>> REQUIRED_ROLE_ANCESTOR_BY_DESCENDANT = new HashMap<>();
 
-    private static final Map<String, Set<String>> ariaOwnsIdsByRole = new HashMap<>();
+    private final Map<String, Set<String>> ariaOwnsIdsByRole = new HashMap<>();
 
     private static void registerRequiredAncestorRole(String parent,
             String child) {
