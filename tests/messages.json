@@ -323,6 +323,7 @@
     "html-rdfa/0314-novalid.html": "An \u201cli\u201d element that is a descendant of a \u201crole=listbox\u201d element or \u201crole=list\u201d element must not have any \u201crole\u201d value other than \u201cgroup\u201d or \u201coption\u201d.",
     "html-rdfa/0319-novalid.html": "Attribute \u201cxmlns:xpr\u201d not allowed here.",
     "html-rdfa/0320-novalid.html": "Attribute \u201csrc\u201d not allowed on element \u201ca\u201d at this point.",
+    "html-rdfa/prefix-tab-novalid.html": "Bad value \u201cdc:\thttp://purl.org/dc/terms/\u201d for attribute \u201cprefix\u201d on element \u201cp\u201d.",
     "html-rdfalite/0147.novalid.html": "Attribute \u201cxmlns:xmlzzz\u201d not allowed here.",
     "html-rdfalite/0319-novalid.html": "Attribute \u201cxmlns:xpr\u201d not allowed here.",
     "html-svg/animate-elem-24-t-novalid.html": "Duplicate ID \u201cMyFont\u201d.",

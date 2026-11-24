@@ -43,7 +43,7 @@ common.attrs.rdfa &=
 		attribute prefix {
 			(
 				xsd:string {
-					pattern = "\s*([\i-[:]][\c-[:]]*: [^ ]+)(\s+[\i-[:]][\c-[:]]*: [^ ]+)*\s*"
+					pattern = "\s*([\i-[:]][\c-[:]]*: +[^ ]+)(\s+[\i-[:]][\c-[:]]*: +[^ ]+)*\s*"
 				}
 				|	string ""
 			)
