@@ -33,15 +33,33 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
-      # Uses the same cache as the prep job in build.yml; see the comment
-      # there. The cache gets the full dl-all set, not just what the build
-      # step below needs, so that it's complete for the build.yml jobs, too.
+      # Uses the same caches as the prep job in build.yml; see the comment
+      # there. The dependencies cache gets the full dl-all set, not just what
+      # the build step below needs, so that it's complete for the build.yml
+      # jobs, too. And the build step runs the same jing-shade target that
+      # fills the Maven repository in prep.
+      - name: Compute the cache keys
+        id: keys
+        run: |
+          echo "deps=dependencies-${{ hashFiles('build/build.xml') }}" >> "$GITHUB_OUTPUT"
+          mvn_version=$(mvn -B --version | sed -n 's/^Apache Maven \([^ ]*\).*/\1/p')
+          if [ -z "$mvn_version" ]; then
+            echo "::error::Couldn't get the Maven version"
+            exit 1
+          fi
+          echo "m2=m2-maven-$mvn_version-${{ hashFiles('build/shade-with-maven.py') }}" >> "$GITHUB_OUTPUT"
       - name: Cache the dependencies
         id: deps-cache
         uses: actions/cache@v6
         with:
           path: dependencies
-          key: dependencies-${{ hashFiles('build/build.xml') }}
+          key: ${{ steps.keys.outputs.deps }}
+          enableCrossOsArchive: true
+      - name: Cache the Maven repository
+        uses: actions/cache@v6
+        with:
+          path: ~/.m2/repository
+          key: ${{ steps.keys.outputs.m2 }}
           enableCrossOsArchive: true
       - name: Download the dependencies
         if: steps.deps-cache.outputs.cache-hit != 'true'
