@@ -18,11 +18,56 @@ permissions:
   id-token: write
 
 jobs:
+  # The prep job downloads every jar that build/build.xml fetches from Maven
+  # Central, and caches the dependencies/ directory under a key made from
+  # build.xml's hash. Every other job restores that cache rather than fetching
+  # the jars itself — so a run makes no Maven Central requests at all unless
+  # build.xml has changed, and even then, only this job makes them. With 30-odd
+  # jobs each fetching the same jars, Maven Central's rate limit (HTTP 429)
+  # would fail a build now and then.
+  #
+  # The key has no restore-keys fallback on purpose: dependencyJarPaths() in
+  # build/build.py puts every jar in dependencies/ on a classpath, so jars left
+  # over from an older build.xml must never get restored. And the key is
+  # computed once here, on Linux, so the Windows job (whose checkout may give
+  # build.xml different line endings) gets the same key.
   prep:
     name: Prepare the build
     runs-on: ubuntu-latest
+    outputs:
+      deps-key: ${{ steps.deps-key.outputs.key }}
     steps:
       - uses: actions/checkout@v6
+      - name: Compute the dependencies cache key
+        id: deps-key
+        run: echo "key=dependencies-${{ hashFiles('build/build.xml') }}" >> "$GITHUB_OUTPUT"
+      - name: Cache the dependencies
+        id: deps-cache
+        uses: actions/cache@v6
+        with:
+          path: dependencies
+          key: ${{ steps.deps-key.outputs.key }}
+          enableCrossOsArchive: true
+      - name: Set up Java JDK
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 25
+      - name: Download the dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: |
+          max_attempts=3
+          attempt=1
+          until ant -f build/build.xml dl-all; do
+            if [ $attempt -ge $max_attempts ]; then
+              echo "::error::Downloading the dependencies failed after $max_attempts attempts"
+              exit 1
+            fi
+            echo "Attempt $attempt failed, retrying in 60 seconds..."
+            sleep 60
+            attempt=$((attempt + 1))
+          done
   build:
     name: Build on ${{ matrix.os }} with Java ${{ matrix.java }}
     needs: prep
@@ -68,6 +113,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Restore the dependencies from the cache
+        uses: actions/cache/restore@v6
+        with:
+          path: dependencies
+          key: ${{ needs.prep.outputs.deps-key }}
+          enableCrossOsArchive: true
       - name: Install dependencies
         run: python checker.py dldeps
       - name: Build
@@ -455,7 +506,7 @@ jobs:
 
   maven-release:
     name: Release new Maven package
-    needs: build
+    needs: [prep, build]
     if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
     permissions:
@@ -483,6 +534,13 @@ jobs:
         with:
           distribution: zulu
           java-version: 25
+      - name: Restore the dependencies from the cache
+        if: steps.check_version.outputs.exists == 'false'
+        uses: actions/cache/restore@v6
+        with:
+          path: dependencies
+          key: ${{ needs.prep.outputs.deps-key }}
+          enableCrossOsArchive: true
       - name: Install dependencies
         if: steps.check_version.outputs.exists == 'false'
         run: python checker.py dldeps
@@ -573,6 +631,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Restore the dependencies from the cache
+        uses: actions/cache/restore@v6
+        with:
+          path: dependencies
+          key: ${{ needs.prep.outputs.deps-key }}
+          enableCrossOsArchive: true
       - name: Run target ${{ matrix.target }}
         run: |
           max_attempts=3
@@ -601,13 +665,23 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Restore the dependencies from the cache
+        uses: actions/cache/restore@v6
+        with:
+          path: dependencies
+          key: ${{ needs.prep.outputs.deps-key }}
+          enableCrossOsArchive: true
       - name: Prepare experiment
         run: |
-          tar -cf /tmp/archive.tar .
+          # The checkout has no dependencies/ directory, so the reference
+          # copy gets none either; the experiment copy gets the restored jars,
+          # which distclean then has to remove.
+          tar -cf /tmp/archive.tar --exclude=./dependencies .
           mkdir -p _reference
           mkdir -p _experiment
           tar -C _reference -xf /tmp/archive.tar
           tar -C _experiment -xf /tmp/archive.tar
+          if [ -d dependencies ]; then mv dependencies _experiment/; fi
       - name: Run experiment
         run: |
           cd _experiment
@@ -630,6 +704,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      - name: Restore the dependencies from the cache
+        uses: actions/cache/restore@v6
+        with:
+          path: dependencies
+          key: ${{ needs.prep.outputs.deps-key }}
+          enableCrossOsArchive: true
       - name: Clean
         run: python checker.py clean
       - name: Build vnu.jar

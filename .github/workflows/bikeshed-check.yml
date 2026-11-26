@@ -33,6 +33,30 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
+      # Uses the same cache as the prep job in build.yml; see the comment
+      # there. The cache gets the full dl-all set, not just what the build
+      # step below needs, so that it's complete for the build.yml jobs, too.
+      - name: Cache the dependencies
+        id: deps-cache
+        uses: actions/cache@v6
+        with:
+          path: dependencies
+          key: dependencies-${{ hashFiles('build/build.xml') }}
+          enableCrossOsArchive: true
+      - name: Download the dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: |
+          max_attempts=3
+          attempt=1
+          until ant -f build/build.xml dl-all; do
+            if [ $attempt -ge $max_attempts ]; then
+              echo "::error::Downloading the dependencies failed after $max_attempts attempts"
+              exit 1
+            fi
+            echo "Attempt $attempt failed, retrying in 60 seconds..."
+            sleep 60
+            attempt=$((attempt + 1))
+          done
       - name: Build vnu.jar
         run: python checker.py build
       - name: Generate the spec with the current Bikeshed, and check it
