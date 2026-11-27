@@ -215,6 +215,7 @@ namespace local = ""
 			                    | id
 			                    | is
 			                    | slot
+			                    | customelementregistry
 			                    | class
 			                    | title
 			                    | dir

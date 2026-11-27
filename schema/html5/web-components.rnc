@@ -87,6 +87,13 @@ namespace c = "http://n.validator.nu/custom-elements/"
 ## The "is" attribute
 	common.attrs.other &= attribute is { common.data.custom.element.name }?
 
+## The "customelementregistry" attribute
+	common.attrs.other &= common.attrs.customelementregistry?
+	common.attrs.customelementregistry =
+		attribute customelementregistry {
+			w:string "customelementregistry" | w:string ""
+		}
+
 ## Slot: <slot>
 
 	slot.elem.flow =
