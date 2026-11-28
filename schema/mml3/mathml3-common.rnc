@@ -92,7 +92,7 @@ annotation-xml =
           notAllowed
         att-encoding.svg =
           attribute encoding {
-            string "SVG1.1"
+            string "SVG1.1" | string "image/svg+xml"
           }
     annotation-xml.mathml =
         element annotation-xml {
@@ -103,6 +103,9 @@ annotation-xml =
         att-encoding.mathml =
           attribute encoding {
             string "MathML" | string "MathML-Content" | string "MathML-Presentation"
+          | string "application/mathml+xml"
+          | string "application/mathml-content+xml"
+          | string "application/mathml-presentation+xml"
           }
 
 annotation.attributes = CommonAtt,
