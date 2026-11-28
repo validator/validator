@@ -9,6 +9,10 @@
     </layout>
   </appender>
 
+  <logger name="org.eclipse.jetty">
+    <level value="fatal"/>
+  </logger>
+
   <root>
     <priority value ="info" />
     <appender-ref ref="console" />

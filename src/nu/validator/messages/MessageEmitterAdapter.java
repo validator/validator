@@ -83,13 +83,14 @@ import nu.validator.vendor.thaiopensource.relaxng.exceptions.UnfinishedElementOn
 import nu.validator.vendor.thaiopensource.relaxng.exceptions.UnknownElementException;
 import nu.validator.vendor.thaiopensource.xml.util.Name;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.ibm.icu.text.Normalizer;
 
 @SuppressWarnings("unchecked")
 public class MessageEmitterAdapter implements InfoAwareErrorHandler {
 
-    private static final Logger log4j = Logger.getLogger(MessageEmitterAdapter.class);
+    private static final Logger log4j = LoggerFactory.getLogger(MessageEmitterAdapter.class);
 
     private final static Map<String, char[]> WELL_KNOWN_NAMESPACES = new HashMap<>();
 
@@ -1114,7 +1115,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
                 && systemId != null
                 && msg != null
                 && (systemId.startsWith("http:") || systemId.startsWith("https:"))) {
-            log4j.info(zapLf(new StringBuilder() //
+            log4j.info("{}", zapLf(new StringBuilder() //
                     .append(systemId).append('\t').append(msg)));
         }
         if (errorsOnly && type.getSuperType() == "info") {
@@ -1595,7 +1596,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
             if (humanReadable == null) {
                 if (loggingOk) {
-                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(
+                    log4j.info("{}", new StringBuilder().append("UNKNOWN_NS:\t").append(
                             ns));
                 }
                 messageTextString(messageTextHandler, ELEMENT, atSentenceStart);
@@ -1641,7 +1642,7 @@ public class MessageEmitterAdapter implements InfoAwareErrorHandler {
             char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
             if (humanReadable == null) {
                 if (loggingOk) {
-                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(
+                    log4j.info("{}", new StringBuilder().append("UNKNOWN_NS:\t").append(
                             ns));
                 }
                 messageTextString(messageTextHandler, ATTRIBUTE,

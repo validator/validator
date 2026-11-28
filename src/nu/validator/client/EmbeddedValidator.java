@@ -250,7 +250,7 @@ public class EmbeddedValidator {
 
         private OneOffValidator(boolean asciiQuotes, boolean detectLanguages, boolean forceHtml, int lineOffset, boolean loadEntities,
                 boolean noStream, OutputFormat outputFormat, String schemaUrl) throws SAXException {
-            this.validator = new SimpleDocumentValidator(true, false, !detectLanguages);
+            this.validator = new SimpleDocumentValidator(false, !detectLanguages);
             this.errorHandler = newErrorHandler(lineOffset, asciiQuotes, outputFormat);
             this.forceHtml = forceHtml;
             try {

@@ -860,8 +860,11 @@ def getRunArgs(heap="$((HEAP))", _type="jar"):
 
     if _type == "jar":
         classpath_item = []
-        classpath_item.append(os.pathsep.join(extrasJarPaths()))
+        # vnu.jar goes first: apache-log4j-extras carries its own copy of
+        # the log4j 1.2.17 core classes, which would otherwise shadow the
+        # reload4j ones in vnu.jar.
         classpath_item.append(vnuJar)
+        classpath_item.append(os.pathsep.join(extrasJarPaths()))
         args.append('-classpath')
         args.append(os.pathsep.join(classpath_item))
 
@@ -1346,6 +1349,7 @@ class Release():
             'nu.validator.source.test.SourceCodeTest',
             'nu.validator.validation.test.CssLineOffsetTest',
             'nu.validator.validation.test.NoStreamLocationTest',
+            'nu.validator.validation.test.LoggingTest',
         ]
         for testClass in testClasses:
             print(f"\nRunning {testClass}...")
@@ -1687,6 +1691,7 @@ class Release():
             'nu.validator.source.test.SourceCodeTest',
             'nu.validator.validation.test.CssLineOffsetTest',
             'nu.validator.validation.test.NoStreamLocationTest',
+            'nu.validator.validation.test.LoggingTest',
         ]
 
         # Run unit tests with JaCoCo agent

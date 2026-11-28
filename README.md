@@ -258,6 +258,9 @@ Gradle:
 >
 > Do not add `htmlparser` as a separate dependency; doing so will cause duplicate classes on the classpath. If you need to use the `htmlparser` classes for other purposes, just use the ones provided by the `nu.validator:validator` artifact.
 
+> [!NOTE]
+> The checker logs through [SLF4J](https://www.slf4j.org/), and the `nu.validator:validator` artifact doesn’t bring in a logging backend, so its log messages go to whichever backend your application already uses. If your application has no SLF4J provider, SLF4J prints a three-line “No SLF4J providers were found” notice to stderr once. To avoid that, add the SLF4J 2 provider for the logging library you use (for example, `ch.qos.logback:logback-classic`, or `org.apache.logging.log4j:log4j-slf4j2-impl` for Log4j 2), or add `org.slf4j:slf4j-nop` to discard the checker’s log messages.
+
 Basic usage Java code:
 
     String html = ...

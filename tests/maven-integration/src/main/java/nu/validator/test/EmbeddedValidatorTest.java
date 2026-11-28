@@ -3,9 +3,23 @@ package nu.validator.test;
 import nu.validator.client.EmbeddedValidator;
 import org.xml.sax.SAXException;
 
+import com.sun.net.httpserver.HttpServer;
+
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Integration test for the validator Maven artifact.
@@ -14,6 +28,8 @@ import java.nio.charset.StandardCharsets;
  * 1. The EmbeddedValidator can be instantiated
  * 2. Shaded jing-trang classes are present (nu.validator.vendor.thaiopensource.*)
  * 3. Basic HTML validation works without NoClassDefFoundError
+ * 4. The artifact brings in no log4j, and the command-line validator works
+ *    without it, with nothing but its results on stderr
  */
 public class EmbeddedValidatorTest {
 
@@ -25,6 +41,8 @@ public class EmbeddedValidatorTest {
             testValidHtml();
             testInvalidHtml();
             testShadedClasses();
+            testNoLog4j();
+            testCommandLineValidator();
             
             System.out.println("\n✅ All tests passed!");
             System.exit(0);
@@ -122,5 +140,77 @@ public class EmbeddedValidatorTest {
         } catch (ClassNotFoundException e) {
             System.out.println("✓ Unshaded class com.thaiopensource.validate.Schema not found (as expected)");
         }
+    }
+
+    private static void testNoLog4j() throws Exception {
+        System.out.println("\nTest 5: Verifying log4j is NOT on the classpath...");
+
+        try {
+            Class.forName("org.apache.log4j.Logger");
+            throw new Exception("Found org.apache.log4j.Logger - the artifact should not bring in log4j or reload4j");
+        } catch (ClassNotFoundException e) {
+            System.out.println("✓ org.apache.log4j.Logger not found (as expected)");
+        }
+    }
+
+    private static void testCommandLineValidator() throws Exception {
+        System.out.println("\nTest 6: Running the command-line validator from the artifact...");
+
+        String validHtml = "<!DOCTYPE html>\n" +
+                          "<html lang=\"en\">\n" +
+                          "<head><title>Test</title></head>\n" +
+                          "<body><p>Hello World</p></body>\n" +
+                          "</html>";
+        byte[] body = validHtml.getBytes(StandardCharsets.UTF_8);
+
+        Path file = Files.createTempFile("valid", ".html");
+        Files.write(file, body);
+        HttpServer server = HttpServer.create(
+                new InetSocketAddress(InetAddress.getLoopbackAddress(), 0), 0);
+        server.createContext("/valid.html", exchange -> {
+            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
+            exchange.sendResponseHeaders(200, body.length);
+            try (OutputStream out = exchange.getResponseBody()) {
+                out.write(body);
+            }
+        });
+        server.start();
+        try {
+            runCommandLineValidator(file.toString());
+            System.out.println("✓ Checked a file, with nothing on stderr");
+            runCommandLineValidator("http://127.0.0.1:"
+                    + server.getAddress().getPort() + "/valid.html");
+            System.out.println("✓ Checked a document by URL, with nothing on stderr");
+        } finally {
+            server.stop(0);
+            Files.delete(file);
+        }
+    }
+
+    private static void runCommandLineValidator(String document) throws Exception {
+        List<String> command = Arrays.asList(
+                Paths.get(System.getProperty("java.home"), "bin", "java").toString(),
+                "-Dnu.validator.servlet.allow-forbidden-hosts=true",
+                "-cp", classpath(),
+                "nu.validator.client.SimpleCommandLineValidator",
+                document);
+        Process process = new ProcessBuilder(command)
+                .redirectOutput(ProcessBuilder.Redirect.DISCARD)
+                .start();
+        String stderr = new String(process.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
+        int exitCode = process.waitFor();
+        if (exitCode != 0 || !stderr.isEmpty()) {
+            throw new Exception("Checking " + document + " exited with " + exitCode
+                    + " and printed to stderr:\n" + stderr);
+        }
+    }
+
+    // The classpath Maven runs this test with: the artifact and its dependencies.
+    private static String classpath() throws Exception {
+        List<String> entries = new ArrayList<>();
+        for (URL url : ((URLClassLoader) EmbeddedValidatorTest.class.getClassLoader()).getURLs()) {
+            entries.add(Paths.get(url.toURI()).toString());
+        }
+        return String.join(File.pathSeparator, entries);
     }
 }

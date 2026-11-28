@@ -37,7 +37,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.xml.PrudentHttpEntityResolver;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -50,7 +51,7 @@ public class VerifierServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 7811043632732680935L;
 
-    private static final Logger log4j = Logger.getLogger(VerifierServlet.class);
+    private static final Logger log4j = LoggerFactory.getLogger(VerifierServlet.class);
 
     static final String GENERIC_HOST = System.getProperty("nu.validator.servlet.host.generic", "");
 

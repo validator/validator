@@ -56,7 +56,8 @@ import org.eclipse.jetty.http.HttpField;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.io.ClientConnector;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
@@ -75,7 +76,7 @@ import io.mola.galimatias.GalimatiasParseException;
 public class PrudentHttpEntityResolver
         implements EntityResolver {
 
-    private static final Logger log4j = Logger.getLogger(PrudentHttpEntityResolver.class);
+    private static final Logger log4j = LoggerFactory.getLogger(PrudentHttpEntityResolver.class);
 
     private static HttpClient client;
 
@@ -121,6 +122,8 @@ public class PrudentHttpEntityResolver
     );
 
     private boolean allowForbiddenHosts = false;
+
+    private boolean logUrls = true;
 
     private String userAgent;
 
@@ -229,6 +232,10 @@ public class PrudentHttpEntityResolver
 
     public void setUserAgent(String ua) {
         userAgent = ua;
+    }
+
+    public void setLogUrls(boolean logUrls) {
+        this.logUrls = logUrls;
     }
 
     public void setAdditionalRequestHeaders(Map<String, String> headers) {
@@ -355,7 +362,9 @@ public class PrudentHttpEntityResolver
                     headers.put(entry.getKey(), entry.getValue());
                 }
             });
-            log4j.info(systemId);
+            if (logUrls) {
+                log4j.info(systemId);
+            }
             try {
                 if (url.port() > 65535) {
                     throw new IOException(
@@ -491,7 +500,7 @@ public class PrudentHttpEntityResolver
             }
             is.setByteStream(new ObservableInputStream(stream,
                     new StreamObserver() {
-                        private final Logger log4j = Logger.getLogger("nu.validator.xml.PrudentEntityResolver.StreamObserver");
+                        private final Logger log4j = LoggerFactory.getLogger("nu.validator.xml.PrudentEntityResolver.StreamObserver");
                         @Override
                         public void closeCalled() {
                             log4j.debug("closeCalled");

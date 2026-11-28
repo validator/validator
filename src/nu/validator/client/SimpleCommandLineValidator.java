@@ -49,6 +49,7 @@ import nu.validator.validation.SimpleDocumentValidator;
 import nu.validator.validation.SimpleDocumentValidator.SchemaReadException;
 import nu.validator.xml.SystemErrErrorHandler;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -320,9 +321,10 @@ public class SimpleCommandLineValidator {
             }
         }
         if (readFromStdIn) {
+            setUpLogging();
             InputSource is = new InputSource(System.in);
             if (noLangDetect) {
-                validator = new SimpleDocumentValidator(true, false, false);
+                validator = new SimpleDocumentValidator(false, false);
             } else {
                 validator = new SimpleDocumentValidator();
             }
@@ -336,10 +338,11 @@ public class SimpleCommandLineValidator {
             }
             end();
         } else if (hasFileArgs) {
+            setUpLogging();
             if (noLangDetect) {
-                validator = new SimpleDocumentValidator(true, false, false);
+                validator = new SimpleDocumentValidator(false, false);
             } else {
-                validator = new SimpleDocumentValidator(true, false, true);
+                validator = new SimpleDocumentValidator(false, true);
             }
             setup(schemaUrl);
             checkFiles(args, fileArgsStart);
@@ -349,6 +352,26 @@ public class SimpleCommandLineValidator {
             usage();
             System.exit(1);
         }
+    }
+
+    private static void setUpLogging() {
+        ClassLoader loader = SimpleCommandLineValidator.class.getClassLoader();
+        // With no SLF4J provider on the classpath (for example, when this
+        // class is run from the Maven artifact), SLF4J would print warnings
+        // to stderr, which is where the validation results go.
+        if (loader.getResource(
+                "META-INF/services/org.slf4j.spi.SLF4JServiceProvider") == null
+                && System.getProperty("slf4j.internal.verbosity") == null) {
+            System.setProperty("slf4j.internal.verbosity", "ERROR");
+        }
+        try {
+            Class.forName("org.apache.log4j.PropertyConfigurator", false,
+                    loader);
+        } catch (ClassNotFoundException e) {
+            return;
+        }
+        PropertyConfigurator.configure(loader.getResource(
+                "nu/validator/localentities/files/log4j.properties"));
     }
 
     private static void setSchema(String schemaUrl)

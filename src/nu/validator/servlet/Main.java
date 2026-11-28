@@ -42,7 +42,6 @@ import java.util.Enumeration;
 import jakarta.servlet.DispatcherType;
 
 import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.jetty.server.Connector;
@@ -55,6 +54,8 @@ import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee10.servlet.FilterHolder;
 import org.eclipse.jetty.ee10.servlet.ServletHolder;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version $Id$
@@ -164,12 +165,14 @@ public class Main {
                     System.getProperty("nu.validator.servlet.log4j-properties",
                             "log4j.properties"));
         }
-        Logger log4j = Logger.getLogger(Main.class);
+        org.apache.log4j.Logger mainLogger = org.apache.log4j.Logger.getLogger(
+                Main.class);
         ConsoleAppender console = new ConsoleAppender();
         console.setLayout(new PatternLayout("%m%n"));
         console.activateOptions();
-        log4j.setAdditivity(false);
-        log4j.addAppender(console);
+        mainLogger.setAdditivity(false);
+        mainLogger.addAppender(console);
+        Logger log4j = LoggerFactory.getLogger(Main.class);
 
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setContextPath("/");

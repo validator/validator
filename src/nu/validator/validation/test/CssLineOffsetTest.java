@@ -76,8 +76,8 @@ public class CssLineOffsetTest {
      */
     private static String check(int lineOffset, File... files)
             throws Exception {
-        SimpleDocumentValidator validator = new SimpleDocumentValidator(true,
-                false, false);
+        SimpleDocumentValidator validator = new SimpleDocumentValidator(false,
+                false);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         MessageEmitterAdapter errorHandler = new MessageEmitterAdapter(null,
                 validator.getSourceCode(), false,
