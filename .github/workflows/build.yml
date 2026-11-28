@@ -20,32 +20,37 @@ permissions:
 jobs:
   # The prep job fetches everything the build gets from Maven Central, and
   # caches it: The jars that build/build.xml downloads go in dependencies/,
-  # cached under a key made from build.xml's hash. And the Maven plugins that
-  # build/shade-with-maven.py runs (in the jing-shade target) go in
-  # ~/.m2/repository, cached under a key made from that script's hash and the
-  # Maven version. Every other job restores both caches rather than fetching
-  # anything itself — so a run makes no Maven Central requests at all unless
-  # one of those has changed, and even then, only this job makes them. With
-  # 30-odd jobs each fetching the same files, Maven Central's rate limit (HTTP
-  # 429) would fail a build now and then.
+  # cached under a key made from build.xml's hash. The jar that build.py's
+  # downloadExtras() downloads goes in extras/, cached under a key made from
+  # build.py's hash. And the Maven plugins that build/shade-with-maven.py
+  # runs (in the jing-shade target) go in ~/.m2/repository, cached under a
+  # key made from that script's hash and the Maven version. Every other job
+  # restores the caches it needs rather than fetching anything itself — so a
+  # run makes no Maven Central requests at all unless one of those files has
+  # changed, and even then, only this job makes them. With 30-odd jobs each
+  # fetching the same files, Maven Central's rate limit (HTTP 429) would
+  # fail a build now and then.
   #
-  # The keys have no restore-keys fallback on purpose: dependencyJarPaths() in
-  # build/build.py puts every jar in dependencies/ on a classpath, so jars left
-  # over from an older build.xml must never get restored. And the keys are
-  # computed once here, on Linux, so the Windows job (whose checkout may give
-  # build.xml different line endings) gets the same keys.
+  # No key has a restore-keys fallback, on purpose: build/build.py's
+  # dependencyJarPaths() puts every jar in dependencies/ and extras/ on a
+  # classpath, so jars left over from an older build.xml or build.py must
+  # never get restored. And the keys are computed once here, on Linux, so
+  # the Windows job (whose checkout may give build.xml different line
+  # endings) gets the same keys.
   prep:
     name: Prepare the build
     runs-on: ubuntu-latest
     outputs:
       deps-key: ${{ steps.keys.outputs.deps }}
       m2-key: ${{ steps.keys.outputs.m2 }}
+      extras-key: ${{ steps.keys.outputs.extras }}
     steps:
       - uses: actions/checkout@v6
       - name: Compute the cache keys
         id: keys
         run: |
           echo "deps=dependencies-${{ hashFiles('build/build.xml') }}" >> "$GITHUB_OUTPUT"
+          echo "extras=extras-${{ hashFiles('build/build.py') }}" >> "$GITHUB_OUTPUT"
           mvn_version=$(mvn -B --version | sed -n 's/^Apache Maven \([^ ]*\).*/\1/p')
           if [ -z "$mvn_version" ]; then
             echo "::error::Couldn't get the Maven version"
@@ -66,8 +71,18 @@ jobs:
           path: ~/.m2/repository
           key: ${{ steps.keys.outputs.m2 }}
           enableCrossOsArchive: true
+      - name: Cache the extras
+        id: extras-cache
+        uses: actions/cache@v6
+        with:
+          path: extras
+          key: ${{ steps.keys.outputs.extras }}
+          enableCrossOsArchive: true
       - name: Set up Java JDK
-        if: steps.deps-cache.outputs.cache-hit != 'true' || steps.m2-cache.outputs.cache-hit != 'true'
+        if: >-
+          steps.deps-cache.outputs.cache-hit != 'true' ||
+          steps.m2-cache.outputs.cache-hit != 'true' ||
+          steps.extras-cache.outputs.cache-hit != 'true'
         uses: actions/setup-java@v5
         with:
           distribution: zulu
@@ -80,6 +95,22 @@ jobs:
           until ant -f build/build.xml dl-all; do
             if [ $attempt -ge $max_attempts ]; then
               echo "::error::Downloading the dependencies failed after $max_attempts attempts"
+              exit 1
+            fi
+            echo "Attempt $attempt failed, retrying in 60 seconds..."
+            sleep 60
+            attempt=$((attempt + 1))
+          done
+      - name: Download the extras
+        if: steps.extras-cache.outputs.cache-hit != 'true'
+        run: |
+          # dldeps also runs dl-all, which skips every file already in
+          # dependencies/, so this downloads only the extras.
+          max_attempts=3
+          attempt=1
+          until python3 checker.py dldeps; do
+            if [ $attempt -ge $max_attempts ]; then
+              echo "::error::Downloading the extras failed after $max_attempts attempts"
               exit 1
             fi
             echo "Attempt $attempt failed, retrying in 60 seconds..."
@@ -159,6 +190,12 @@ jobs:
         with:
           path: ~/.m2/repository
           key: ${{ needs.prep.outputs.m2-key }}
+          enableCrossOsArchive: true
+      - name: Restore the extras from the cache
+        uses: actions/cache/restore@v6
+        with:
+          path: extras
+          key: ${{ needs.prep.outputs.extras-key }}
           enableCrossOsArchive: true
       - name: Install dependencies
         run: python checker.py dldeps
@@ -588,6 +625,13 @@ jobs:
         with:
           path: ~/.m2/repository
           key: ${{ needs.prep.outputs.m2-key }}
+          enableCrossOsArchive: true
+      - name: Restore the extras from the cache
+        if: steps.check_version.outputs.exists == 'false'
+        uses: actions/cache/restore@v6
+        with:
+          path: extras
+          key: ${{ needs.prep.outputs.extras-key }}
           enableCrossOsArchive: true
       - name: Install dependencies
         if: steps.check_version.outputs.exists == 'false'
