@@ -40,28 +40,8 @@
       <foreignObject height=0 width=0>foo</foreignObject>
     </svg>
 
-    <!-- phrasing content -->
+    <!-- phrasing content (<title> cannot have it, it only allows text) -->
     <svg>
-      <title>
-        fee
-        <a href="//example.com/">fi</a>
-        <em>fo</em>
-        <svg>
-          <title>fum</title>
-        </svg>
-        <svg>
-          <title>
-            <svg>
-              <title>
-                <svg>
-                  <title>Yes, this is somehow totally valid.</title>
-                </svg>
-              </title>
-            </svg>
-          </title>
-        </svg>
-      </title>
-
       <desc>
         fee
         <a href="//example.com/">fi</a>
@@ -70,15 +50,15 @@
           <title>fum</title>
         </svg>
         <svg>
-          <title>
+          <desc>
             <svg>
-              <title>
+              <desc>
                 <svg>
                   <title>Yes, this is somehow totally valid.</title>
                 </svg>
-              </title>
+              </desc>
             </svg>
-          </title>
+          </desc>
         </svg>
       </desc>
 
@@ -90,20 +70,20 @@
           <title>fum</title>
         </svg>
         <svg>
-          <title>
+          <desc>
             <svg>
-              <title>
+              <desc>
                 <svg>
                   <title>Yes, this is somehow totally valid.</title>
                 </svg>
-              </title>
+              </desc>
             </svg>
-          </title>
+          </desc>
         </svg>
       </foreignObject>
     </svg>
 
-    <!-- flow content (<title> cannot have it, it only allows phrasing) -->
+    <!-- flow content -->
     <svg>
       <desc>
         <section>
