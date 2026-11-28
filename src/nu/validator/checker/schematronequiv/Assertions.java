@@ -1015,30 +1015,49 @@ public class Assertions extends Checker {
     ));
 
     private static final Set<String> MATHML_ELEMENTS = new HashSet<>(Arrays.asList(
-            "annotation", "annotation-xml", "maction", "maligngroup", "malignmark", "math",
-            "menclose", "merror", "mfenced", "mfrac", "mglyph", "mi", "mlabeledtr",
-            "mlongdiv", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom",
-            "mprescripts", "mroot", "mrow", "ms", "mscarries", "mscarry", "msgroup",
-            "msline", "mspace", "msqrt", "msrow", "mstack", "mstyle", "msub", "msubsup",
-            "msup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "none",
-            "semantics"
+            "abs", "and", "annotation", "annotation-xml", "apply", "approx", "arccos",
+            "arccosh", "arccot", "arccoth", "arccsc", "arccsch", "arcsec", "arcsech",
+            "arcsin", "arcsinh", "arctan", "arctanh", "arg", "bind", "bvar", "card",
+            "cartesianproduct", "cbytes", "ceiling", "cerror", "ci", "cn", "codomain",
+            "complexes", "compose", "condition", "conjugate", "cos", "cosh", "cot", "coth",
+            "cs", "csc", "csch", "csymbol", "curl", "declare", "degree", "determinant",
+            "diff", "divergence", "divide", "domain", "domainofapplication", "emptyset",
+            "eq", "equivalent", "eulergamma", "exists", "exp", "exponentiale", "factorial",
+            "factorof", "false", "floor", "fn", "forall", "gcd", "geq", "grad", "gt",
+            "ident", "image", "imaginary", "imaginaryi", "implies", "in", "infinity",
+            "int", "integers", "intersect", "interval", "inverse", "lambda", "laplacian",
+            "lcm", "leq", "limit", "list", "ln", "log", "logbase", "lowlimit", "lt",
+            "maction", "maligngroup", "malignmark", "math", "matrix", "matrixrow", "max",
+            "mean", "median", "menclose", "merror", "mfenced", "mfrac", "mglyph", "mi",
+            "min", "minus", "mlabeledtr", "mlongdiv", "mmultiscripts", "mn", "mo", "mode",
+            "moment", "momentabout", "mover", "mpadded", "mphantom", "mprescripts",
+            "mroot", "mrow", "ms", "mscarries", "mscarry", "msgroup", "msline", "mspace",
+            "msqrt", "msrow", "mstack", "mstyle", "msub", "msubsup", "msup", "mtable",
+            "mtd", "mtext", "mtr", "munder", "munderover", "naturalnumbers", "neq", "none",
+            "not", "notanumber", "notin", "notprsubset", "notsubset", "or", "otherwise",
+            "outerproduct", "partialdiff", "pi", "piece", "piecewise", "plus", "power",
+            "primes", "product", "prsubset", "quotient", "rationals", "real", "reals",
+            "reln", "rem", "root", "scalarproduct", "sdev", "sec", "sech", "selector",
+            "semantics", "sep", "set", "setdiff", "share", "sin", "sinh", "subset", "sum",
+            "tan", "tanh", "tendsto", "times", "transpose", "true", "union", "uplimit",
+            "variance", "vector", "vectorproduct", "xor"
     ));
 
     private static final Set<String> SVG_ELEMENTS = new HashSet<>(Arrays.asList(
             "a", "altGlyph", "altGlyphDef", "altGlyphItem", "animate", "animateColor",
             "animateMotion", "animateTransform", "circle", "clipPath", "color-profile",
-            "cursor", "defs", "desc", "ellipse", "feBlend", "feColorMatrix",
-            "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting",
-            "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA",
-            "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge",
-            "feMergeNode", "feMorphology", "feOffset", "fePointLight",
-            "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence", "filter",
-            "font", "font-face", "font-face-format", "font-face-name", "font-face-src",
-            "font-face-uri", "foreignObject", "g", "glyph", "glyphRef", "hkern", "image",
-            "line", "linearGradient", "marker", "mask", "metadata", "missing-glyph",
-            "mpath", "path", "pattern", "polygon", "polyline", "radialGradient", "rect",
-            "script", "set", "stop", "style", "svg", "switch", "symbol", "text",
-            "textPath", "title", "tref", "tspan", "use", "view", "vkern"
+            "cursor", "definition-src", "defs", "desc", "ellipse", "feBlend",
+            "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix",
+            "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feDropShadow",
+            "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur",
+            "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset",
+            "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence",
+            "filter", "font", "font-face", "font-face-format", "font-face-name",
+            "font-face-src", "font-face-uri", "foreignObject", "g", "glyph", "glyphRef",
+            "hkern", "image", "line", "linearGradient", "marker", "mask", "metadata",
+            "missing-glyph", "mpath", "path", "pattern", "polygon", "polyline",
+            "radialGradient", "rect", "script", "set", "stop", "style", "svg", "switch",
+            "symbol", "text", "textPath", "title", "tref", "tspan", "use", "view", "vkern"
     ));
 
     private static final String ACTIVE_DESCENDANT_WARNING = "Attribute"
